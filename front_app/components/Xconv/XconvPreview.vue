@@ -14,12 +14,15 @@
         template(v-else)
           img(:src="base.done_record.browser_url")
 
-      .buttons.mb-0.is-centered.mt-4(v-if="development_p || true")
-        b-button.mb-0(@click="base.close_handle" v-if="development_p") 戻る
-        b-button.mb-0.has-text-weight-bold(@click="base.download_handle" type="is-primary" icon-left="download") ダウンロード
-        b-button.mb-0(@click="base.direct_link_handle" icon-left="link") 直リン
-        b-button.mb-0(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
-        b-button.mb-0(@click="base.json_show_handle") JSON
+      .buttons.is-centered.mt-4(v-if="development_p || true")
+        b-button(@click="base.close_handle" v-if="development_p") 戻る
+        b-button.has-text-weight-bold(@click="base.download_handle" type="is-primary" icon-left="download") ダウンロード
+        b-button(@click="base.direct_link_handle" icon-left="link") 直リン
+        b-button(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
+        b-button(@click="base.json_show_handle") JSON
+
+    b-message.mt-5(v-if="base.done_record.file_identify")
+      | {{base.done_record.file_identify}}
 
     template(v-if="base.done_record.successed_at && false")
       pre
@@ -55,6 +58,10 @@ export default {
 
     // フルスクリーンでは装飾しない
     > *:not(:fullscreen)
-      border: 2px solid $grey-lighter
+      border: 2px dashed $grey-lighter
       border-radius: 4px
+
+  .message
+    white-space: pre-wrap
+    word-break: break-all
 </style>

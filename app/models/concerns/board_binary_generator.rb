@@ -104,6 +104,10 @@ class BoardBinaryGenerator
     "/" + real_path.relative_path_from(Rails.public_path).to_s
   end
 
+  def browser_url
+    UrlProxy.wrap2(path: browser_path)
+  end
+
   def not_found_then_generate
     if @options[:disk_cache_enable] && file_exist?
       return
@@ -126,6 +130,16 @@ class BoardBinaryGenerator
 
   def filename
     "#{unique_key}.#{xout_format_info.real_ext}"
+  end
+
+  def file_identify
+    if file_exist?
+      # `file -LzbN #{real_path}`.strip
+      # `identify #{real_path}`.strip
+      Dir.chdir(real_path.dirname) do
+        `ffmpeg -hide_banner -i #{real_path.basename} 2>&1`.strip
+      end
+    end
   end
 
   private

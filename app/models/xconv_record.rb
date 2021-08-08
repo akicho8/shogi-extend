@@ -60,11 +60,13 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_info,
         :browser_url,
+        :file_identify,
       ],
     }
   }
 
   delegate :xconv_info_broadcast, :background_job_kick, to: "self.class"
+  delegate :browser_url, :file_identify, to: "generator"
 
   belongs_to :user
   belongs_to :recordable, polymorphic: true
@@ -107,10 +109,6 @@ class XconvRecord < ApplicationRecord
 
   def generator
     @generator ||= BoardBinaryGenerator.new(recordable, convert_params[:board_binary_generator_params])
-  end
-
-  def browser_url
-    UrlProxy.wrap2(path: generator.browser_path)
   end
 
   def main_process!
