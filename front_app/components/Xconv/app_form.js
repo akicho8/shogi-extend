@@ -1,11 +1,11 @@
-import { LoopInfo } from "./models/loop_info.js"
-import { ViewpointInfo } from "./models/viewpoint_info.js"
-import { ThemeInfo } from "./models/theme_info.js"
+import { LoopInfo          } from "./models/loop_info.js"
+import { ViewpointInfo     } from "./models/viewpoint_info.js"
+import { ThemeInfo         } from "./models/theme_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
-import { ParamInfo } from "./models/param_info.js"
-import { XoutFormatInfo } from "./models/xout_format_info.js"
+import { ParamInfo         } from "./models/param_info.js"
+import { XoutFormatInfo    } from "./models/xout_format_info.js"
 
-const TWITTER_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
+const TWITTER_ASPECT_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
 
 export const app_form = {
   data() {
@@ -172,16 +172,17 @@ export const app_form = {
     },
   },
   computed: {
-    LoopInfo()            { return LoopInfo            },
-    AnimationSizeInfo()   { return AnimationSizeInfo   },
-    animation_size_info() { return AnimationSizeInfo.fetch(this.animation_size_key)   },
-    ParamInfo()   { return ParamInfo   },
-    ViewpointInfo()   { return ViewpointInfo   },
-    viewpoint_info() { return ViewpointInfo.fetch(this.viewpoint_key)   },
-    ThemeInfo()   { return ThemeInfo   },
-    theme_info() { return ThemeInfo.fetch(this.theme_key)   },
-    XoutFormatInfo() { return XoutFormatInfo },
-    xout_format_info() { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
+    TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                             },
+    LoopInfo()                 { return LoopInfo                                             },
+    AnimationSizeInfo()        { return AnimationSizeInfo                                    },
+    animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key)     },
+    ParamInfo()                { return ParamInfo                                            },
+    ViewpointInfo()            { return ViewpointInfo                                        },
+    viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)              },
+    ThemeInfo()                { return ThemeInfo                                            },
+    theme_info()               { return ThemeInfo.fetch(this.theme_key)                      },
+    XoutFormatInfo()           { return XoutFormatInfo                                       },
+    xout_format_info()         { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
 
     body_field_type() {
       if (this.bs_error) {

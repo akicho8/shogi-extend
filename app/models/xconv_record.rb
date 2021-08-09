@@ -60,14 +60,14 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_info,
         :browser_url,
-        :ffprobe_attributes,
+        :ffprobe_info,
         :file_size,
       ],
     }
   }
 
   delegate :xconv_info_broadcast, :background_job_kick, to: "self.class"
-  delegate :browser_url, :ffprobe_attributes, :file_size, to: "generator"
+  delegate :browser_url, :ffprobe_info, :file_size, to: "generator"
 
   belongs_to :user
   belongs_to :recordable, polymorphic: true

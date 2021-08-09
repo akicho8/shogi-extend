@@ -40,7 +40,7 @@ export const app_review = {
   },
   computed: {
     done_record_stream() {
-      const streams = this.done_record?.ffprobe_attributes?.streams || []
+      const streams = this.done_record?.ffprobe_info?.direct_format?.streams || []
       return streams[0] || {}
     },
 
@@ -48,20 +48,46 @@ export const app_review = {
       const list = []
       let v = null
       if (this.done_record && this.done_record.successed_at) {
-        v = this.done_record_stream.pix_fmt
-        if (v) {
-          if (v !== "yuv420p") {
-            list.push(`ピクセルフォーマットがyuv420pでない : ${v}`)
+        {
+          const v = this.done_record_stream.pix_fmt
+          if (v) {
+            if (v !== "yuv420p") {
+              list.push(`ピクセルフォーマットが yuv420p ではない : ${v}`)
+            }
           }
         }
-        v = this.done_record.file_size
-        if (v >= 512 * 1024 * 1024) {
-          list.push(`ファイルサイズが512MBを超えている : ${v / (1024 * 1024)}MB`)
+
+        {
+          const max = 140
+          let v = this.done_record_stream.duration
+          if (v) {
+            v = Number(v)
+            if (v > max) {
+              list.push(`長さが${max}秒を超えている : ${v}秒`)
+            }
+          }
+        }
+
+        {
+          const max_kb = 512
+          const one_kb = 1024 * 1024
+          const v = this.done_record.file_size
+          if (v >= max_kb * one_kb) {
+            list.push(`ファイルサイズが512MBを超えている : ${v / one_kb}MB`)
+          }
+        }
+
+        {
+          const v = this.math_wh_normalize_aspect_ratio(this.i_width, this.i_height)
+          if (v) {
+            const max = Math.max(...v)
+            if (max > this.TWITTER_ASPECT_RATIO_MAX) {
+              list.push(`縦横比が大きすぎる : ${v.join(":")}`)
+            }
+          }
         }
       }
-      if (list.length > 0) {
-        return list
-      }
+      return this.presence(list)
     }
   },
 }

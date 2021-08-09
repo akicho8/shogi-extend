@@ -21,14 +21,13 @@
         b-button(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
         b-button(@click="base.json_show_handle") JSON
 
-    b-message.mt-5(v-if="development_p && base.review_error_messages" type="is-danger")
-      .content
-        ul
-          template(v-for="e in base.review_error_messages")
-            li {{e}}
+    b-message.mt-5(v-if="base.review_error_messages" :closable="false" type="is-danger" title="Tweetできない原因")
+      ul
+        template(v-for="e in base.review_error_messages")
+          li {{e}}
 
-    b-message.mt-5(v-if="base.done_record.ffprobe_attributes")
-      | {{JSON.stringify(base.done_record.ffprobe_attributes, null, 4)}}
+    b-message.mt-5(v-if="base.done_record.ffprobe_info")
+      | {{JSON.stringify(base.done_record.ffprobe_info.pretty_format, null, 4)}}
 
     template(v-if="base.done_record.successed_at && false")
       pre

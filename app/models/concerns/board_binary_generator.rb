@@ -132,13 +132,16 @@ class BoardBinaryGenerator
     "#{unique_key}.#{xout_format_info.real_ext}"
   end
 
-  def ffprobe_attributes
+  def ffprobe_info
     if real_path.exist?
       # `file -LzbN #{real_path}`.strip
       # `identify #{real_path}`.strip
       Dir.chdir(real_path.dirname) do
         # `ffprobe -hide_banner -i #{real_path.basename} 2>&1`.strip
-        JSON.parse(`ffprobe -pretty -print_format json -show_streams -hide_banner #{real_path.basename}`)
+        {
+          :pretty_format => JSON.parse(`ffprobe -pretty -print_format json -show_streams -hide_banner #{real_path.basename}`),
+          :direct_format => JSON.parse(`ffprobe         -print_format json -show_streams -hide_banner #{real_path.basename}`),
+        }
       end
     end
   end

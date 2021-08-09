@@ -20,11 +20,12 @@ export const app_queue_watch = {
           if (false) {
             this.sound_stop_all()
           }
-          this.sound_play("click")
           if (this.done_record.successed_at) {
+            this.sound_play("o")
             this.toast_ok("完了しました")
           }
           if (this.done_record.errored_at) {
+            this.sound_play("x")
             this.toast_ok("失敗しました")
           }
         }
