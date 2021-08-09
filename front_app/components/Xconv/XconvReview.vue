@@ -9,7 +9,7 @@
     template(v-if="base.done_record.successed_at")
       //- .box
       .is_review_box
-        template(v-if="xout_format_info.mime_group === 'video'")
+        template(v-if="xout_format_info.respond_html_tag === 'video'")
           video(:src="base.done_record.browser_url" controls autoplay loop)
         template(v-else)
           img(:src="base.done_record.browser_url")

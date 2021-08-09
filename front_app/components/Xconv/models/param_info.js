@@ -9,11 +9,12 @@ export class ParamInfo extends MemoryRecord {
       { key: "i_width",            type: "string",  name: "w",                          default: null,               desc: "", },
       { key: "i_height",           type: "string",  name: "h",                          default: null,               desc: "", },
       { key: "viewpoint_key",      type: "string",  name: "視点",                       default: "black",            desc: "", },
+      { key: "theme_key",      type: "string",  name: "テーマ",                       default: "light_mode",    desc: "", },
       { key: "delay_per_one",      type: "float",   name: "表示秒数/1枚",               default: 1.0,                desc: "", },
       { key: "end_frames",         type: "integer", name: "終了図だけ指定枚数ぶん停止", default: 3,                  desc: "デバッグ用", },
       { key: "sleep",              type: "integer", name: "遅延",                       default: 0,                  desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",             default: null,               desc: "", },
-      { key: "xout_format_key",    type: "string",  name: "出力形式",                   default: "is_format_mp4",    desc: "", },
+      { key: "xout_format_key",    type: "string",  name: "出力形式",                   default: "is_format_mp4_twitter",    desc: "", },
     ]
   }
 }

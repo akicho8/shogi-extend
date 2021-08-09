@@ -70,6 +70,7 @@
     .column.is-one-third2
       SimpleRadioButtons(:base="base" :model="base.LoopInfo" var_name="loop_key")
       SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
+      SimpleRadioButtons(:base="base" :model="base.ThemeInfo" var_name="theme_key")
 
       b-field(label="終了図停止枚数" message="ループする場合に最後の局面を少し止めて終局した風にする")
         b-numberinput(v-model="base.end_frames" :min="0" :max="15" :step="1" exponential)
