@@ -192,6 +192,18 @@ export default {
       })
     },
 
+    // 「アニメーション変換」
+    animation_export_handle() {
+      this.record_fetch(() => {
+        this.$router.push({
+          name: 'animation-export',
+          query: {
+            body: this.record.all_kifs.sfen,
+          },
+        })
+      })
+    },
+
     // 「KIFダウンロード」
     kifu_download_handle(e) {
       this.record_fetch(() => location.href = this.kifu_download_url(e))
