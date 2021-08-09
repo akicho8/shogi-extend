@@ -11,7 +11,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
 
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(@click="base.kifu_paper_handle" label="棋譜用紙 (PDF)")
-          b-menu-item.is_active_unset(@click="base.animation_export_handle" label="動画変換")
+          b-menu-item.is_active_unset(@click="base.animation_export_handle" label="アニメーション変換")
             
 
           b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
