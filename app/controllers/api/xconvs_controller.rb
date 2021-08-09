@@ -3,6 +3,7 @@ module Api
     FAST_RESPONSE = nil
 
     # curl -d _method=post http://localhost:3000/api/xconv/record_create.json
+    # ../../../front_app/components/Xconv/app_form.js
     def record_create
       if !current_user
         render html: "ログインしてください"
@@ -16,16 +17,17 @@ module Api
           return
         end
       end
+
       free_battle = FreeBattle.create!(kifu_body: params[:body], use_key: "adapter", user: current_user)
 
+      # 将来的には KIF などはここですぐ返したらいいんでは？
       if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
         generator = BoardBinaryGenerator.new(free_battle, params[:convert_params])
         generator.not_found_then_generate
-        url = UrlProxy.wrap2(path: generator.to_browser_path)
         render json: {
           response_hash: {
-            url: url,
-            free_battle: free_battle.as_json,
+            url: generator.browser_url,
+            free_battle: free_battle.as_json, # フロント側では未使用
           }
         }
         return

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_111800) do
+ActiveRecord::Schema.define(version: 2021_08_09_133500) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1327,7 +1327,7 @@ ActiveRecord::Schema.define(version: 2021_08_04_111800) do
     t.datetime "process_end_at", comment: "処理終了日時"
     t.datetime "successed_at", comment: "成功日時"
     t.datetime "errored_at", comment: "エラー日時"
-    t.string "error_message", comment: "エラーメッセージ"
+    t.text "error_message", comment: "エラーメッセージ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_xconv_records_on_created_at"

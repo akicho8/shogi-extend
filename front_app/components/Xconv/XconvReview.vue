@@ -1,5 +1,5 @@
 <template lang="pug">
-.XconvPreview.columns(v-if="base.done_record")
+.XconvReview.columns(v-if="base.done_record")
   .column
     //- b-message.mt-4(title="失敗" :closable="false" type="is-warning" v-if="base.done_record.errored_at")
     //-   | {{base.done_record.error_message}}
@@ -8,7 +8,7 @@
 
     template(v-if="base.done_record.successed_at")
       //- .box
-      .is_preview_box
+      .is_review_box
         template(v-if="xout_format_info.mime_group === 'video'")
           video(:src="base.done_record.browser_url" controls autoplay loop)
         template(v-else)
@@ -21,8 +21,14 @@
         b-button(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
         b-button(@click="base.json_show_handle") JSON
 
-    b-message.mt-5(v-if="base.done_record.file_identify")
-      | {{base.done_record.file_identify}}
+    b-message.mt-5(v-if="development_p && base.review_error_messages" type="is-danger")
+      .content
+        ul
+          template(v-for="e in base.review_error_messages")
+            li {{e}}
+
+    b-message.mt-5(v-if="base.done_record.ffprobe_attributes")
+      | {{JSON.stringify(base.done_record.ffprobe_attributes, null, 4)}}
 
     template(v-if="base.done_record.successed_at && false")
       pre
@@ -33,7 +39,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XconvPreview",
+  name: "XconvReview",
   mixins: [support_child],
   computed: {
     xout_format_key() { return this.base.done_record?.convert_params.board_binary_generator_params.xout_format_key },
@@ -43,10 +49,10 @@ export default {
 </script>
 
 <style lang="sass">
-.XconvPreview
+.XconvReview
   margin-top: 1.5rem
 
-  .is_preview_box
+  .is_review_box
     // タブレット以上では小さく
     +tablet
       margin: auto

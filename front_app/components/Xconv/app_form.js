@@ -95,9 +95,13 @@ export const app_form = {
 
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/xconv/record_create.json", this.post_params).then(e => {
+        // ../../../app/controllers/api/xconvs_controller.rb
         if (e.bs_error) {
           this.bs_error = e.bs_error
           this.error_show()
+        }
+        if (e.error_message) {
+          this.toast_ng(e.error_message)
         }
         if (e.response_hash) {
           this.response_hash = e.response_hash

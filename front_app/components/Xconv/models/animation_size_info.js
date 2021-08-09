@@ -20,8 +20,8 @@ export class AnimationSizeInfo extends MemoryRecord {
       { key: "is800x600",   name: "○ SVGA",         width:  800, height: 600,  type: "is-primary", message: null,   },
       { key: "is1024x768",  name: "◎ XGA",          width: 1024, height: 768,  type: "is-primary", message: null,   },
       { key: "is1200x630",  name: "△ OGP Image",    width: 1200, height: 630,  type: "is-primary", message: "無駄に横長になるのでおすすめしないがOGP画像の推奨サイズと合わせたいときに有用", },
-      { key: "is1280x960",  name: "○ Quad VGA",     width: 1280, height: 960,  type: "is-primary", message: null,   },
-      { key: "is1280x720",  name: "？ HD",           width: 1280, height: 720,  type: "is-primary", message: "推奨と書いているサイトもある",   },
+      { key: "is1280x960",  name: "◎ Quad VGA",     width: 1280, height: 960,  type: "is-primary", message: null,   },
+      { key: "is1280x720",  name: "○ HD",           width: 1280, height: 720,  type: "is-primary", message: "推奨と書いているサイトもある",   },
       { key: "is1600x1200", name: "△ UXGA",         width: 1600, height: 1200, type: "is-primary", message: "無駄にでかいので時間がかかる。SNS投稿するならここまででかくなくてもよい",       },
       // { key: "is3200x2400", name: "QUXGA 4:3",     width: 3200, height: 2400, type: "is-primary", message: null,  },
     ]

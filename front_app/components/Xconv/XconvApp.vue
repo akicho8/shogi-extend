@@ -14,7 +14,7 @@
   MainSection
     .container
       XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
-      XconvPreview(:base="base")
+      XconvReview(:base="base")
       XconvQueueWatch(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")
@@ -25,7 +25,7 @@
 
 import { support_parent   } from "./support_parent.js"
 import { app_chore        } from "./app_chore.js"
-import { app_preview        } from "./app_preview.js"
+import { app_review        } from "./app_review.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_action_cable } from "./app_action_cable.js"
 import { app_queue_watch } from "./app_queue_watch.js"
@@ -39,7 +39,7 @@ export default {
   mixins: [
     support_parent,
     app_chore,
-    app_preview,
+    app_review,
     app_sidebar,
     app_action_cable,
     app_queue_watch,

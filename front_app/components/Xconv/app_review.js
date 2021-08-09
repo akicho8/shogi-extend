@@ -1,4 +1,4 @@
-export const app_preview = {
+export const app_review = {
   data() {
     return {
       done_record:  null,
@@ -37,5 +37,31 @@ export const app_preview = {
       const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}.json`
       window.location.href = url
     },
+  },
+  computed: {
+    done_record_stream() {
+      const streams = this.done_record?.ffprobe_attributes?.streams || []
+      return streams[0] || {}
+    },
+
+    review_error_messages() {
+      const list = []
+      let v = null
+      if (this.done_record && this.done_record.successed_at) {
+        v = this.done_record_stream.pix_fmt
+        if (v) {
+          if (v !== "yuv420p") {
+            list.push(`ピクセルフォーマットがyuv420pでない : ${v}`)
+          }
+        }
+        v = this.done_record.file_size
+        if (v >= 512 * 1024 * 1024) {
+          list.push(`ファイルサイズが512MBを超えている : ${v / (1024 * 1024)}MB`)
+        }
+      }
+      if (list.length > 0) {
+        return list
+      }
+    }
   },
 }

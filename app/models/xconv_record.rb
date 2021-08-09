@@ -43,7 +43,7 @@ class XconvRecord < ApplicationRecord
         :processing_only_count => processing_only.count,
         :success_only_count    => success_only.count,
         :error_only_count      => error_only.count,
-        :xconv_records         => not_done.as_json(json_struct),
+        :xconv_records         => ordered_not_done.as_json(json_struct),
       }
     end
   end
@@ -60,27 +60,32 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_info,
         :browser_url,
-        :file_identify,
+        :ffprobe_attributes,
+        :file_size,
       ],
     }
   }
 
   delegate :xconv_info_broadcast, :background_job_kick, to: "self.class"
-  delegate :browser_url, :file_identify, to: "generator"
+  delegate :browser_url, :ffprobe_attributes, :file_size, to: "generator"
 
   belongs_to :user
   belongs_to :recordable, polymorphic: true
 
-  scope :standby_only,    -> { where(process_begin_at: nil)                                } # 未処理
-  scope :done_only,       -> { where.not(process_end_at: nil)                              } # 処理済み
-  scope :processing_only, -> { where.not(process_begin_at: nil).where(process_end_at: nil) } # 処理中
-  scope :process_started, -> { where.not(process_begin_at: nil)                            } # 開始以降
-  scope :ordered_process, -> { where(process_begin_at: nil).order(:created_at)             } # 上から処理する順
-  scope :not_done,        -> { where(process_end_at: nil).order(:created_at)               } # 完了していないもの
-  scope :error_only,      -> { where.not(errored_at: nil)                                  } # 失敗したもの
-  scope :success_only,    -> { where.not(successed_at: nil)                                } # 成功したもの
+  scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理
+  scope :done_only,        -> { where.not(process_end_at: nil)                              } # 処理済み(失敗しても入る)
+  scope :processing_only,  -> { where.not(process_begin_at: nil).where(process_end_at: nil) } # 処理中
+  scope :process_started,  -> { where.not(process_begin_at: nil)                            } # 開始以降
+  scope :ordered_process,  -> { where(process_begin_at: nil).order(:created_at)             } # 上から処理する順
+  scope :ordered_not_done, -> { where(process_end_at: nil).order(:created_at)               } # 完了していないもの(順序付き)
+  scope :not_done_only,    -> { where(process_end_at: nil)                                  } # 完了していないもの
+  scope :error_only,       -> { where.not(errored_at: nil)                                  } # 失敗したもの
+  scope :success_only,     -> { where.not(successed_at: nil)                                } # 成功したもの
 
-  serialize :convert_params # BUG: Hash を指定すると {} が null になる
+  # BUG: Hash を指定すると {} が null になる → 仕様だった
+  # https://github.com/rails/rails/issues/42928
+  # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html#method-i-serialize
+  serialize :convert_params
 
   before_validation do
     self.convert_params ||= {}

@@ -132,13 +132,20 @@ class BoardBinaryGenerator
     "#{unique_key}.#{xout_format_info.real_ext}"
   end
 
-  def file_identify
-    if file_exist?
+  def ffprobe_attributes
+    if real_path.exist?
       # `file -LzbN #{real_path}`.strip
       # `identify #{real_path}`.strip
       Dir.chdir(real_path.dirname) do
-        `ffmpeg -hide_banner -i #{real_path.basename} 2>&1`.strip
+        # `ffprobe -hide_banner -i #{real_path.basename} 2>&1`.strip
+        JSON.parse(`ffprobe -pretty -print_format json -show_streams -hide_banner #{real_path.basename}`)
       end
+    end
+  end
+
+  def file_size
+    if real_path.exist?
+      real_path.size
     end
   end
 
@@ -225,6 +232,8 @@ class BoardBinaryGenerator
     }
   end
 
+  # "-strict -2" はAACを使う場合に指定するm
+  # https://www.84kure.com/blog/2014/10/13/ffmpeg-%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E8%A6%9A%E3%81%88%E6%9B%B8%E3%81%8D/
   def yuv420_convert(bin)
     if xout_format_info.force_convert_to_yuv420p
       i_path = real_path.dirname + "i_#{real_path.basename}"
@@ -233,10 +242,16 @@ class BoardBinaryGenerator
       real_path.dirname.mkpath
       i_path.binwrite(bin)
 
+      # command = "ffmpeg -y -i #{i_path} -vf 'scale=if(gte(iw\,ih)\,min(1280\,iw)\,-2):if(lt(iw\,ih)\,min(1280\,ih)\,-2)' -c:v libx264 -x264-params crf=16 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
+      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
+
       command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
+
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command)
+      # Dir.chdir(real_path.dirname) do
       system(command, exception: true)
+      # end
 
       bin = o_path.read
 
