@@ -171,7 +171,7 @@ export default {
     //  bx = a
     //  x = a / b
     //
-    math_wh_normalize_ratio(w, h) {
+    math_wh_normalize_aspect_ratio(w, h) {
       w = w || 0
       h = h || 0
       if (w === 0 || h === 0) {
@@ -190,7 +190,7 @@ export default {
     // 人間向け表記の比率
     // 片方を1にするのではなく 4:3 などと表示する
     // ただOGPは 40:21 になり 1.91:1 の方が人間向け表記としてよく使われている
-    math_wh_gcd_ratio(w, h) {
+    math_wh_gcd_aspect_ratio(w, h) {
       w = w || 0
       h = h || 0
       if (w === 0 || h === 0) {

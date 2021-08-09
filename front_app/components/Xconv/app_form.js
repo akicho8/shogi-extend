@@ -230,8 +230,8 @@ export const app_form = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    i_size_ratio_human() {
-      let r = this.math_wh_gcd_ratio(this.i_width, this.i_height)
+    i_size_aspect_ratio_human() {
+      let r = this.math_wh_gcd_aspect_ratio(this.i_width, this.i_height)
       if (r == null) {
         return "? : ?"
       }
@@ -239,11 +239,11 @@ export const app_form = {
     },
 
     i_size_danger_p() {
-      let r = this.math_wh_normalize_ratio(this.i_width, this.i_height)
+      let r = this.math_wh_normalize_aspect_ratio(this.i_width, this.i_height)
       if (r == null) {
         return true
       }
-      return Math.max(...r) > TWITTER_RATIO_MAX
+      return Math.max(...r) > TWITTER_ASPECT_RATIO_MAX
     },
 
     ////////////////////////////////////////////////////////////////////////////////
