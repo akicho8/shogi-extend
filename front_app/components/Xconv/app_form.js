@@ -178,6 +178,7 @@ export const app_form = {
     ViewpointInfo()   { return ViewpointInfo   },
     viewpoint_info() { return ViewpointInfo.fetch(this.viewpoint_key)   },
     XoutFormatInfo() { return XoutFormatInfo },
+    xout_format_info() { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
 
     body_field_type() {
       if (this.bs_error) {

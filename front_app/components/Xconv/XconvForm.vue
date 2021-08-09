@@ -29,7 +29,7 @@
         b-field(label="サイズ" expanded :message="[base.animation_size_info.message, base.i_size_ratio_human]" )
           b-field(:type="{'is-danger': base.i_size_danger_p}")
             b-select(type="number" v-model="base.animation_size_key" @input="base.animation_size_key_input_handle")
-              option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.name")
+              option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name")
             b-input(required type="number" v-model="base.i_width"  :min="0" :max="development_p ? 3200 : 1600" :step="1" exponential expanded placeholder="width")
             b-input(required type="number" v-model="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" exponential expanded placeholder="height")
             p.control(v-if="development_p && false")
@@ -40,6 +40,23 @@
       b-field(:label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
         b-select(type="number" v-model="base.xout_format_key" @input="sound_play('click')")
           option(v-for="e in base.XoutFormatInfo.values" :value="e.key" v-text="e.name")
+
+      b-dropdown.xout_format_key_dropdown(v-model="base.xout_format_key")
+        template(#trigger)
+          b-button(:label="base.xout_format_info.name" icon-left="movie" icon-right="menu-down" )
+        template(v-for="e in base.XoutFormatInfo.values")
+          template(v-if="blank_p(e.development_only) || development_p")
+            b-dropdown-item(:value="e.key")
+              .media
+                .media-left
+                  | {{e.name}}
+                  //- | {{e.real_ext}}
+                .media-content
+                  //- .has-text-weight-bold {{e.name}}
+                  //- h3 {{e.name}}
+                  small {{e.message}}
+                  //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
+                  //- small {{e.message}}
 
       b-field(label="表示秒数/1枚" v-if="development_p && false")
         b-slider(:indicator="true" :tooltip="false" v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1")
@@ -115,4 +132,12 @@ export default {
       a:not(:first-child)
         margin-left: 0.25rem // aリンク同士の間を開ける
         font-weight: normal  // label のなかは bold になるため元に戻す
+  .xout_format_key_dropdown
+    .dropdown-item
+      &:not(.is-active)         // 選択してない項目だけ種類を青くする
+        .media-left
+          color: $primary
+      .media-left
+        min-width: 4ch
+        font-weight: bold
 </style>
