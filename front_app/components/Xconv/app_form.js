@@ -51,7 +51,8 @@ export const app_form = {
   },
   methods: {
     body_focus() {
-      this.desktop_focus_to(this.$refs.XconvForm.$refs.body.$refs.textarea)
+      // 開発時のホットリロードでは null.$refs になる
+      this.desktop_focus_to(this.$refs.XconvForm?.$refs.body.$refs?.textarea)
     },
     reset_handle() {
       this.sound_play("click")
