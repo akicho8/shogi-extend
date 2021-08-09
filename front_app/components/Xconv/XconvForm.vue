@@ -2,8 +2,27 @@
 .XconvForm
   .columns.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
     .column.is-half
-      b-field(label="棋譜" :type="base.body_field_type")
+      ////////////////////////////////////////////////////////////////////////////////
+      b-field.mb-0.body_field(:type="base.body_field_type")
+        template(#label)
+          .label_text 棋譜
+          a.is-size-7(@click="base.share_board_handle")
+            b-icon(icon="open-in-new" size="is-small")
+            | 将棋盤
+          a.is-size-7(@click="base.adapter_handle")
+            b-icon(icon="open-in-new" size="is-small")
+            | 棋譜変換
         b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
+      p.mt-0(v-if="false")
+        b-button(@click="base.share_board_handle" type="is-white" size="is-small" icon-left="open-in-new")
+          | 共有将棋盤で確認
+        a.is-size-7(@click="base.share_board_handle")
+          b-icon(icon="open-in-new" size="is-small")
+          | 共有将棋盤で確認
+      ////////////////////////////////////////////////////////////////////////////////
+
+        //- b-button(tag="nuxt-link" :to="{name: 'settings-battles', query: {query: 'ok'}}") リンク
+        //- b-menu-item(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: config.current_swars_user_key}}" @click.native="sound_play('click')" icon="account" label="プレイヤー情報" :disabled="!config.current_swars_user_key")
 
       //- https://buefy.org/documentation/field#combining-addons-and-groups
       b-field(grouped)
@@ -85,4 +104,14 @@ export default {
 .XconvForm
   .column > .field:not(:first-child)
     margin-top: 2rem
+  .body_field
+    label
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      .label_text
+        margin-right: auto // aリンクたちを右に押す
+      a:not(:first-child)
+        margin-left: 0.25rem // aリンク同士の間を開ける
+        font-weight: normal  // label のなかは bold になるため元に戻す
 </style>
