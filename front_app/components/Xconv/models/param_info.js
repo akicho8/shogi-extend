@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class FormQueryInfo extends MemoryRecord {
+export class ParamInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "body",               type: "string",  name: "棋譜",                       default: "",                 desc: "", },

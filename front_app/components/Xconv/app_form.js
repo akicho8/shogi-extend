@@ -1,7 +1,7 @@
 import { LoopInfo } from "../models/loop_info.js"
 import { ViewpointInfo } from "../models/viewpoint_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
-import { FormQueryInfo } from "./models/form_query_info.js"
+import { ParamInfo } from "./models/param_info.js"
 import { XoutFormatInfo } from "../models/xout_format_info.js"
 
 const TWITTER_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
@@ -29,7 +29,7 @@ export const app_form = {
   },
 
   created() {
-    this.form_params_set_form_query()
+    this.parmas_set_from_query()
     this.i_width  = this.i_width ?? this.animation_size_info.width
     this.i_height = this.i_height ?? this.animation_size_info.height
   },
@@ -130,8 +130,8 @@ export const app_form = {
       this.i_height = this.animation_size_info.height
     },
 
-    form_params_set_form_query() {
-      this.FormQueryInfo.values.forEach(e => {
+    parmas_set_from_query() {
+      this.ParamInfo.values.forEach(e => {
         let v = this.$route.query[e.key]
         if (this.present_p(v)) {
           if (e.type === "integer") {
@@ -173,8 +173,7 @@ export const app_form = {
     LoopInfo()            { return LoopInfo            },
     AnimationSizeInfo()   { return AnimationSizeInfo   },
     animation_size_info() { return AnimationSizeInfo.fetch(this.animation_size_key)   },
-    FormQueryInfo()   { return FormQueryInfo   },
-    form_query_info() { return FormQueryInfo.fetch(this.form_query_key)   },
+    ParamInfo()   { return ParamInfo   },
     ViewpointInfo()   { return ViewpointInfo   },
     viewpoint_info() { return ViewpointInfo.fetch(this.viewpoint_key)   },
     XoutFormatInfo() { return XoutFormatInfo },
