@@ -9,6 +9,13 @@ module Api
         return
       end
 
+      # 予約数制限
+      if c = current_reserve_limit
+        if current_user.xconv_records.not_done_only.count > c
+          render json: { error_message: "投入しすぎです。ある程度捌き終わってから再度投入してください" }
+          return
+        end
+      end
       free_battle = FreeBattle.create!(kifu_body: params[:body], use_key: "adapter", user: current_user)
 
       if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
@@ -59,6 +66,23 @@ module Api
       #   return
       # end
       #
+    end
+
+    def current_reserve_limit
+      if current_user
+        if current_user.permit_tag_list.include?("staff")
+          nil
+        else
+          reserve_limit_default
+        end
+      else
+        0
+      end
+    end
+
+    # 予約可能な数(処理中を含む)
+    def reserve_limit_default
+      (params[:reserve_limit].presence || 10).to_i
     end
   end
 end
