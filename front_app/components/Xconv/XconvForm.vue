@@ -1,6 +1,6 @@
 <template lang="pug">
 .XconvForm
-  .columns.is-centered
+  .columns.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
     .column.is-half
       b-field(label="棋譜" :type="base.body_field_type")
         b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
