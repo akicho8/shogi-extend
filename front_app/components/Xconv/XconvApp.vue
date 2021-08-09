@@ -7,6 +7,9 @@
     template(slot="brand")
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="reset_handle") アニメーション変換
+    template(slot="end")
+      NavbarItemLogin
+      NavbarItemProfileLink
 
   MainSection
     .container
