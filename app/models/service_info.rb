@@ -45,10 +45,10 @@ class ServiceInfo
     {
       display_p: !Rails.env.production?,
       experiment_p: false,
-      nuxt_link_to: {path: "/heavy-export"},
+      nuxt_link_to: {path: "/animation-export"},
       title: "アニメーション変換",
       attention_label: "NEW!",
-      og_image_key: "heavy-export",
+      og_image_key: "animation-export",
       description: "棋譜をアニメーション形式に変換する",
       features: [
         "1",
