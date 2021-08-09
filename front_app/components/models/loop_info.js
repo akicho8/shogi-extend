@@ -2,11 +2,11 @@ import MemoryRecord from 'js-memory-record'
 
 export class LoopInfo extends MemoryRecord {
   static get field_label() {
-    return "ループ (GIFでのみ有効)"
+    return "ループ"
   }
 
   static get field_message() {
-    return "この設定に関係なくTwitterでは60秒以下の動画はループする"
+    return "GIFにのみ有効だがTwitterではそれに構わず1分以下の動画はループする"
   }
 
   static get define() {
