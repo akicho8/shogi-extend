@@ -91,7 +91,7 @@ export const app_form = {
         return
       }
 
-      this.ga_click("アニメーション変換●")
+      this.ga_click("動画変換●")
 
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/xconv/record_create.json", this.post_params).then(e => {

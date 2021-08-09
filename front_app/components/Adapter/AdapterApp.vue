@@ -192,7 +192,7 @@ export default {
       })
     },
 
-    // 「アニメーション変換」
+    // 「動画変換」
     animation_export_handle() {
       this.record_fetch(() => {
         this.$router.push({

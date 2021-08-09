@@ -6,7 +6,7 @@
   MainNavbar
     template(slot="brand")
       NavbarItemHome
-      b-navbar-item.has-text-weight-bold(@click="reset_handle") アニメーション変換
+      b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画変換
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
@@ -56,13 +56,13 @@ export default {
     }
   },
   mounted() {
-    this.ga_click("アニメーション変換")
+    this.ga_click("動画変換")
   },
   computed: {
     base() { return this },
     meta() {
       return {
-        title: "アニメーション変換",
+        title: "動画変換",
         description: "棋譜をアニメーション形式に変換する",
         og_image_key: "xconv",
       }
