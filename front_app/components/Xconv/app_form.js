@@ -11,13 +11,13 @@ export const app_form = {
   data() {
     return {
       //////////////////////////////////////////////////////////////////////////////// POST前
-      body:               null, // 棋譜
+      body:               "",   // 棋譜
       loop_key:           null, // ループ
       animation_size_key: null, // 画像サイズ
       i_width:            null, // w
       i_height:           null, // h
       viewpoint_key:      null, // 視点
-      theme_key:     null, // テーマ
+      theme_key:          null, // テーマ
       delay_per_one:      null, // 表示秒数/1枚
       end_frames:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
