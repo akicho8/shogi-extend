@@ -17,9 +17,10 @@
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
 
-  .section_title BOT TEXTURE
-  ul
-    li: ExternalLink(beep href="https://www.irasutoya.com/") いらすとや
+  template(v-if="false")
+    .section_title BOT TEXTURE
+    ul
+      li: ExternalLink(beep href="https://www.irasutoya.com/") いらすとや
 
   .section_title SFX
   ul
