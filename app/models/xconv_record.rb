@@ -144,6 +144,8 @@ class XconvRecord < ApplicationRecord
 
   def status_info
     case
+    when errored_at
+      { name: error_message, type: "is-danger" }
     when !process_begin_at
       { name: "待ち", type: "" }
     when process_begin_at && !process_end_at

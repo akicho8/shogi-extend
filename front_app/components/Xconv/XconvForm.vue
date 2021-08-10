@@ -73,7 +73,7 @@
       b-field(label="1手あたりの秒数")
         b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
-      b-field(label="終了図停止枚数" :message="`最後に${base.end_seconds}秒停止する`")
+      b-field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
         b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
       .box(v-if="development_p")

@@ -33,8 +33,9 @@
           b-tag(rounded) {{row.id}}
       b-table-column(v-slot="{row}" field="name" label="名前")
         | {{row.user.name}}
-      b-table-column(v-slot="{row}" field="status_info.name" label="ステイタス")
-        | {{row.status_info.name}}
+      b-table-column(v-slot="{row}" field="status_info.name" label="状況")
+        b-progress(type="is-primary" show-value)
+          | {{row.status_info.name}}
 </template>
 
 <script>
