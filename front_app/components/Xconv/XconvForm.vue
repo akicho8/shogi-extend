@@ -62,9 +62,6 @@
       b-field(label="表示秒数/1枚" v-if="development_p && false")
         b-slider(:indicator="true" :tooltip="false" v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1")
 
-      b-field(label="表示秒数/1枚")
-        b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1" exponential @input="sound_play('click')")
-
       //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
       // SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
 
@@ -72,6 +69,9 @@
       SimpleRadioButtons(:base="base" :model="base.LoopInfo" var_name="loop_key")
       SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
       SimpleRadioButtons(:base="base" :model="base.ThemeInfo" var_name="theme_key")
+
+      b-field(label="1手あたりの秒数")
+        b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
       b-field(label="終了図停止枚数" :message="`最後に${base.end_seconds}秒停止する`")
         b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
