@@ -36,7 +36,7 @@ export class ReviewValidationInfo extends MemoryRecord {
           const one_kb = 1024 * 1024
           const v = context.done_record.file_size
           if (v >= max_kb * one_kb) {
-            return `ファイルサイズが512MBを超えている : ${v / one_kb}MB`
+            return `ファイルサイズが${max_kb}MBを超えている : ${v / one_kb}MB`
           }
         },
       },
@@ -47,7 +47,7 @@ export class ReviewValidationInfo extends MemoryRecord {
           if (v) {
             const max = Math.max(...v)
             if (max > context.TWITTER_ASPECT_RATIO_MAX) {
-              return `縦横比が大きすぎる : ${v.join(":")}`
+              return `縦横比が${context.TWITTER_ASPECT_RATIO_MAX}を超えている : ${v.join(":")}`
             }
           }
         },
