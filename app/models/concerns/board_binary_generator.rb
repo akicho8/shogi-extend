@@ -250,7 +250,7 @@ class BoardBinaryGenerator
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
       audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+      command = "ffmpeg -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
