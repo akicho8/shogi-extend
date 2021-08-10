@@ -72,7 +72,7 @@ module Api
 
     def current_reserve_limit
       if current_user
-        if current_user.permit_tag_list.include?("staff")
+        if current_user.permit_tag_list.include?("staff") && false
           nil
         else
           reserve_limit_default
@@ -84,7 +84,7 @@ module Api
 
     # 予約可能な数(処理中を含む)
     def reserve_limit_default
-      (params[:reserve_limit].presence || 10).to_i
+      (params[:reserve_limit].presence || 3).to_i
     end
   end
 end
