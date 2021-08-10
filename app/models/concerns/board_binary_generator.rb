@@ -44,12 +44,12 @@ class BoardBinaryGenerator
   end
 
   def to_browser_path
-    not_found_then_generate
+    generate_unless_exist
     browser_path
   end
 
   def to_real_path
-    not_found_then_generate
+    generate_unless_exist
     real_path
   end
 
@@ -116,7 +116,7 @@ class BoardBinaryGenerator
     UrlProxy.wrap2(path: browser_path)
   end
 
-  def not_found_then_generate
+  def generate_unless_exist
     if @options[:disk_cache_enable] && file_exist?
       return
     end

@@ -8,7 +8,7 @@ class XconvsController < ApplicationController
   # http://localhost:3000/animation-files/148?cache_delete=1
   #
   # ここで生成する
-  # http://localhost:3000/animation-files/148?cache_delete=1&not_found_then_generate=1
+  # http://localhost:3000/animation-files/148?cache_delete=1&generate_unless_exist=1
   #
   # JSON確認
   # http://localhost:3000/animation-files/148.json
@@ -19,8 +19,8 @@ class XconvsController < ApplicationController
       if params[:cache_delete]
         generator.cache_delete
       end
-      if params[:not_found_then_generate]
-        generator.not_found_then_generate
+      if params[:generate_unless_exist]
+        generator.generate_unless_exist
       end
     end
     respond_to do |format|

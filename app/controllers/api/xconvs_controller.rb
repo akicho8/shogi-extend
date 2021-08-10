@@ -23,7 +23,7 @@ module Api
       # 将来的には KIF などはここですぐ返したらいいんでは？
       if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
         generator = BoardBinaryGenerator.new(free_battle, params[:convert_params])
-        generator.not_found_then_generate
+        generator.generate_unless_exist
         render json: {
           response_hash: {
             url: generator.browser_url,

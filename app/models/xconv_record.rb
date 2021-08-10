@@ -153,7 +153,7 @@ class XconvRecord < ApplicationRecord
       if v = convert_params[:raise_message].presence
         raise v
       end
-      generator.not_found_then_generate
+      generator.generate_unless_exist
     rescue => error
       self.errored_at = Time.current
       self.error_message = error.message

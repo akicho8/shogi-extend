@@ -41,12 +41,12 @@ class Talk
   end
 
   def to_browser_path
-    not_found_then_generate
+    generate_unless_exist
     relative_path
   end
 
   def to_real_path
-    not_found_then_generate
+    generate_unless_exist
     real_path
   end
 
@@ -107,7 +107,7 @@ class Talk
     [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
   end
 
-  def not_found_then_generate
+  def generate_unless_exist
     if params[:disk_cache_enable] && real_path.exist?
       return
     end
