@@ -75,11 +75,11 @@
       b-field(label="終了図停止枚数" message="ループする場合に最後の局面を少し止めて終局した風にする")
         b-numberinput(v-model="base.end_frames" :min="0" :max="15" :step="1" exponential)
 
-      .box
-        b-field(label="*負荷" v-if="development_p")
+      .box(v-if="development_p")
+        b-field(label="*負荷")
           b-input(type="number" v-model="base.sleep" expanded)
 
-        b-field(label="*例外" v-if="development_p")
+        b-field(label="*例外")
           b-input(type="text" v-model="base.raise_message" expanded)
 
       //- SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
