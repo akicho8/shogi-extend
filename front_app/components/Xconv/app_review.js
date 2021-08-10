@@ -51,8 +51,10 @@ export const app_review = {
         {
           const v = this.done_record_stream.pix_fmt
           if (v) {
-            if (v !== "yuv420p") {
-              list.push(`ピクセルフォーマットが yuv420p ではない : ${v}`)
+            if (this.done_record_stream.codec_name === "h246") {
+              if (v !== "yuv420p") {
+                list.push(`色情報形式が yuv420p ではない : ${v}`)
+              }
             }
           }
         }
