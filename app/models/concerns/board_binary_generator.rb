@@ -55,7 +55,7 @@ class BoardBinaryGenerator
   def to_blob_options
     @to_blob_options ||= -> {
       # このクラスだけで扱うパラメータを除いてからチェック
-      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(PARAM_KEYS))
+      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
 
       opts = params.dup
       opts = opts.deep_symbolize_keys
