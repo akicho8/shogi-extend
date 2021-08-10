@@ -20,7 +20,7 @@
   - action_mailbox_incineration
   - active_storage_analysis
   - active_storage_purge
-  - my_gif_generate_queue
+  - xconv_record_only
   - low
 
 ################################################################################ staging

@@ -1,5 +1,5 @@
 class XconvSingleJob < ApplicationJob
-  queue_as :my_gif_generate_queue
+  queue_as :xconv_record_only
 
   def perform(params = {})
     XconvRecord.process_in_sidekiq

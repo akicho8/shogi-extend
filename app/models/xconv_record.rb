@@ -27,7 +27,7 @@
 class XconvRecord < ApplicationRecord
   class << self
     def background_job_kick
-      count = Sidekiq::Queue.new("my_gif_generate_queue").count
+      count = Sidekiq::Queue.new("xconv_record_only").count
       if count.zero? # 並列実行させないため
         XconvSingleJob.perform_later
       else
