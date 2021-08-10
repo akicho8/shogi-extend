@@ -2,6 +2,7 @@ require "pp"
 
 class BoardBinaryGenerator
   PAPPER = 1
+  PARAM_KEYS = [:xout_format_key, :turn] # params のうち、このクラスだけで扱うパラメータ
 
   class << self
     def cache_root
@@ -53,7 +54,8 @@ class BoardBinaryGenerator
 
   def to_blob_options
     @to_blob_options ||= -> {
-      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(:xout_format_key))
+      # このクラスだけで扱うパラメータを除いてからチェック
+      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(PARAM_KEYS))
 
       opts = params.dup
       opts = opts.deep_symbolize_keys
