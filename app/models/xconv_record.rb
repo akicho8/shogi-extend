@@ -25,7 +25,7 @@ class XconvRecord < ApplicationRecord
         "完了"   => done_only.count,
         "変換中" => processing_only.count,
         "失敗"   => error_only.count,
-        "完了"   => success_only.count,
+        "成功"   => success_only.count,
       }
     end
 
