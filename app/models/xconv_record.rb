@@ -1,3 +1,29 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Xconv record (xconv_records as XconvRecord)
+#
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | name             | desc             | type        | opts        | refs                       | index |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |                            |       |
+# | user_id          | User             | integer(8)  | NOT NULL    | => User#id                 | A     |
+# | recordable_type  | Recordable type  | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
+# | recordable_id    | Recordable       | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
+# | convert_params   | Convert params   | text(65535) | NOT NULL    |                            |       |
+# | process_begin_at | Process begin at | datetime    |             |                            | C     |
+# | process_end_at   | Process end at   | datetime    |             |                            | D     |
+# | successed_at     | Successed at     | datetime    |             |                            | E     |
+# | errored_at       | Errored at       | datetime    |             |                            | F     |
+# | error_message    | Error message    | text(65535) |             |                            |       |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |                            | G     |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
 class XconvRecord < ApplicationRecord
   class << self
     def background_job_kick
@@ -150,6 +176,19 @@ class XconvRecord < ApplicationRecord
       { name: "変換中", type: "is-primary" }
     else
       { name: "完了", type: "is-primary" }
+    end
+  end
+
+  def info
+    {}.tap do |e|
+      e["ID"]   = id
+      e["所有"] = user.name
+      e["状況"] = status_info ? status_info[:name] : ""
+      e["投入"] = created_at&.to_s(:ymdhms)
+      e["開始"] = process_begin_at&.to_s(:ymdhms)
+      e["成功"] = successed_at&.to_s(:ymdhms)
+      e["失敗"] = errored_at&.to_s(:ymdhms)
+      e["終了"] = process_end_at&.to_s(:ymdhms)
     end
   end
 

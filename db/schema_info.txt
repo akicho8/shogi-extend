@@ -2,6 +2,40 @@
 
 # == Schema Information ==
 #
+# ユーザー (users as User)
+#
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+# | name                   | desc                       | type        | opts                | refs | index |
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
+# | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
+# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
+# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
+# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
+# | name_input_at          | Name input at              | datetime    |                     |      |       |
+# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
+# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
+# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
+# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
+# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
+# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
+# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
+# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
+# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
+# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
+# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
+# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
+# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
+# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
+# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
+# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
+# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
 # 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
 #
 # |---------------+------------------+-------------+-------------+-------------------+-------|
@@ -47,40 +81,6 @@
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
 # |-------------------+-------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# ユーザー (users as User)
-#
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | name                   | desc                       | type        | opts                | refs | index |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
-# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
-# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
-# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
-# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
-# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
-# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
-# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
-# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
-# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
-# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
-# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
-# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
-# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
-# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
-# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
-# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
-# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
@@ -370,6 +370,31 @@
 # | spent_sec      | Spent sec   | integer(4) | NOT NULL    |              | E     |
 # | created_at     | 作成日時    | datetime   | NOT NULL    |              | F     |
 # |----------------+-------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Xconv record (xconv_records as XconvRecord)
+#
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | name             | desc             | type        | opts        | refs                       | index |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# | id               | ID               | integer(8)  | NOT NULL PK |                            |       |
+# | user_id          | User             | integer(8)  | NOT NULL    | => User#id                 | A     |
+# | recordable_type  | Recordable type  | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
+# | recordable_id    | Recordable       | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
+# | convert_params   | Convert params   | text(65535) | NOT NULL    |                            |       |
+# | process_begin_at | Process begin at | datetime    |             |                            | C     |
+# | process_end_at   | Process end at   | datetime    |             |                            | D     |
+# | successed_at     | Successed at     | datetime    |             |                            | E     |
+# | errored_at       | Errored at       | datetime    |             |                            | F     |
+# | error_message    | Error message    | text(65535) |             |                            |       |
+# | created_at       | 作成日時         | datetime    | NOT NULL    |                            | G     |
+# | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
+# |------------------+------------------+-------------+-------------+----------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
