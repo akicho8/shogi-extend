@@ -2,7 +2,13 @@ require "pp"
 
 class BoardBinaryGenerator
   PAPPER = 1
-  PARAM_KEYS = [:xout_format_key, :turn] # params のうち、このクラスだけで扱うパラメータ
+
+  # params のうち、このクラスだけで扱うパラメータ
+  PARAM_KEYS = [
+    :xout_format_key,
+    :turn,
+    :video_fps,
+  ]
 
   class << self
     def cache_root
@@ -252,7 +258,7 @@ class BoardBinaryGenerator
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
       audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+      command = "ffmpeg -r #{params[:video_fps]} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
@@ -269,5 +275,9 @@ class BoardBinaryGenerator
       end
     end
     bin
+  end
+
+  def video_fps
+    params[:video_fps].presence or raise ArgumentError, "video_fps is blank"
   end
 end

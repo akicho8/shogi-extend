@@ -34,8 +34,9 @@
       b-table-column(v-slot="{row}" field="name" label="名前")
         | {{row.user.name}}
       b-table-column(v-slot="{row}" field="status_info.name" label="状況")
-        b-progress(type="is-primary" show-value)
-          | {{row.status_info.name}}
+        | {{row.status_info.name}}
+        //- b-progress(type="is-primary" size="is-medium")
+        //-   | {{row.status_info.name}}
 </template>
 
 <script>

@@ -26,6 +26,8 @@
 
 class XconvRecord < ApplicationRecord
   class << self
+    # ワーカーが動いてなかったら動かす
+    # XconvRecord.background_job_kick
     def background_job_kick
       count = Sidekiq::Queue.new("xconv_record_only").count
       if count.zero? # 並列実行させないため
@@ -35,6 +37,7 @@ class XconvRecord < ApplicationRecord
       end
     end
 
+    # ワーカー関係なく全処理実行
     def process_in_sidekiq
       SlackAgent.message_send(key: "GIF変換 - Sidekiq", body: "開始")
       count = 0

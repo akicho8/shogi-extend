@@ -12,7 +12,7 @@
           a.is-size-7(@click="base.adapter_handle")
             b-icon(icon="open-in-new" size="is-small")
             | 棋譜変換
-        b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
+        b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="4" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
       p.mt-0(v-if="false")
         b-button(@click="base.share_board_handle" type="is-white" size="is-small" icon-left="open-in-new")
           | 共有将棋盤で確認
@@ -75,6 +75,9 @@
 
       b-field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
         b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+
+      b-field(label="FPS")
+        b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
 
       .box(v-if="development_p")
         b-field(label="*負荷")
