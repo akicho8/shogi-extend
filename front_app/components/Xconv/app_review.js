@@ -1,3 +1,5 @@
+import { ReviewValidationInfo } from "./models/review_validation_info.js"
+
 export const app_review = {
   data() {
     return {
@@ -46,50 +48,16 @@ export const app_review = {
 
     review_error_messages() {
       const list = []
-      let v = null
       if (this.done_record && this.done_record.successed_at) {
-        {
-          const v = this.done_record_stream.pix_fmt
-          if (v) {
-            if (this.done_record_stream.codec_name === "h246") {
-              if (v !== "yuv420p") {
-                list.push(`色情報形式が yuv420p ではない : ${v}`)
-              }
-            }
+        ReviewValidationInfo.values.forEach(e => {
+          const errors = e.validate(this)
+          console.log(errors)
+          if (this.present_p(errors)) {
+            list.push(errors)
           }
-        }
-
-        {
-          const max = 140
-          let v = this.done_record_stream.duration
-          if (v) {
-            v = Number(v)
-            if (v > max) {
-              list.push(`長さが${max}秒を超えている : ${v}秒`)
-            }
-          }
-        }
-
-        {
-          const max_kb = 512
-          const one_kb = 1024 * 1024
-          const v = this.done_record.file_size
-          if (v >= max_kb * one_kb) {
-            list.push(`ファイルサイズが512MBを超えている : ${v / one_kb}MB`)
-          }
-        }
-
-        {
-          const v = this.math_wh_normalize_aspect_ratio(this.i_width, this.i_height)
-          if (v) {
-            const max = Math.max(...v)
-            if (max > this.TWITTER_ASPECT_RATIO_MAX) {
-              list.push(`縦横比が大きすぎる : ${v.join(":")}`)
-            }
-          }
-        }
+        })
       }
-      return this.presence(list)
+      return this.presence(list.flat())
     }
   },
 }

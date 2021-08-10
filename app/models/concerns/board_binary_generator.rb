@@ -139,8 +139,8 @@ class BoardBinaryGenerator
       Dir.chdir(real_path.dirname) do
         # `ffprobe -hide_banner -i #{real_path.basename} 2>&1`.strip
         {
-          :pretty_format => JSON.parse(`ffprobe -pretty -print_format json -show_streams -hide_banner #{real_path.basename}`),
-          :direct_format => JSON.parse(`ffprobe         -print_format json -show_streams -hide_banner #{real_path.basename}`),
+          :pretty_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner -pretty #{real_path.basename}`),
+          :direct_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner         #{real_path.basename}`),
         }
       end
     end
@@ -250,7 +250,7 @@ class BoardBinaryGenerator
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
       audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+      command = "ffmpeg -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
