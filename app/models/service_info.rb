@@ -35,10 +35,10 @@ class ServiceInfo
       title: "アニメーション変換",
       attention_label: "NEW!",
       og_image_key: "animation-export",
-      description: "棋譜を動画形式に変換する",
+      description: "棋譜を動画形式に変換したいときにどうぞ",
       features: [
-        "GIF, MP4, MOV, APNG, WebP 対応",
-        "ちょっとしたカスタマイズ可",
+        "GIF, MP4 等に変換",
+        "カスタマイズ可",
       ],
     },
     {

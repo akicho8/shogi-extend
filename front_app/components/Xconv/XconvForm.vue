@@ -41,11 +41,11 @@
         b-select(type="number" v-model="base.xout_format_key" @input="sound_play('click')")
           option(v-for="e in base.XoutFormatInfo.values" :value="e.key" v-text="e.name")
 
-      b-dropdown.xout_format_key_dropdown(v-model="base.xout_format_key")
+      b-dropdown.xout_format_key_dropdown(v-model="base.xout_format_key" @active-change="sound_play('click')")
         template(#trigger)
           b-button(:label="base.xout_format_info.name" icon-left="movie" icon-right="menu-down" )
         template(v-for="e in base.XoutFormatInfo.values")
-          template(v-if="blank_p(e.development_only) || development_p")
+          template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
             b-dropdown-item(:value="e.key")
               .media
                 .media-left
@@ -54,7 +54,7 @@
                 .media-content
                   //- .has-text-weight-bold {{e.name}}
                   //- h3 {{e.name}}
-                  small {{e.message}}
+                  span {{e.message}}
                   //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                   //- small {{e.message}}
 
@@ -88,7 +88,7 @@
           | Label with custom
           span(class="has-text-primary is-italic") style
         template(v-for="e in base.XoutFormatInfo.values")
-          template(v-if="blank_p(e.development_only) || development_p")
+          template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
             b-radio-button(@input="sound_play('click')" v-model="base.xout_format_key" :native-value="e.key" :type="e.type")
               | {{e.name}}
 

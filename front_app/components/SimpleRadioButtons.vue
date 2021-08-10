@@ -1,7 +1,7 @@
 <template lang="pug">
 b-field(:label="model.field_label" :message="model.fetch(base[var_name]).message || model.field_message")
   template(v-for="e in model.values")
-    template(v-if="blank_p(e.development_only) || development_p")
+    template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
       b-radio-button(@input="sound_play('click')" v-model="base[var_name]" :native-value="e.key" :type="e.type")
         | {{e.name}}
 </template>
