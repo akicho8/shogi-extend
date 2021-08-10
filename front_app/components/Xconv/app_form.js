@@ -184,6 +184,8 @@ export const app_form = {
     XoutFormatInfo()           { return XoutFormatInfo                                       },
     xout_format_info()         { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
 
+    end_seconds() { return this.number_floor(this.delay_per_one * this.end_frames, 2) },
+
     body_field_type() {
       if (this.bs_error) {
         return "is-danger"

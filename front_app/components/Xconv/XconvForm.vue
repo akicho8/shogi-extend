@@ -37,32 +37,33 @@
                 | {{base.i_size_aspect_ratio_human}}
 
       //- https://buefy.org/documentation/field#combining-addons-and-groups
-      b-field(:label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
+      b-field(v-if="false" :label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
         b-select(type="number" v-model="base.xout_format_key" @input="sound_play('click')")
           option(v-for="e in base.XoutFormatInfo.values" :value="e.key" v-text="e.name")
 
-      b-dropdown.xout_format_key_dropdown(v-model="base.xout_format_key" @active-change="sound_play('click')")
-        template(#trigger)
-          b-button(:label="base.xout_format_info.name" icon-left="movie" icon-right="menu-down" )
-        template(v-for="e in base.XoutFormatInfo.values")
-          template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-            b-dropdown-item(:value="e.key")
-              .media
-                .media-left
-                  | {{e.name}}
-                  //- | {{e.real_ext}}
-                .media-content
-                  //- .has-text-weight-bold {{e.name}}
-                  //- h3 {{e.name}}
-                  span {{e.message}}
-                  //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
-                  //- small {{e.message}}
+      b-field(label="出力形式" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
+        b-dropdown.xout_format_key_dropdown.control(v-model="base.xout_format_key" @active-change="sound_play('click')")
+          template(#trigger)
+            b-button(:label="base.xout_format_info.name" icon-right="menu-down")
+          template(v-for="e in base.XoutFormatInfo.values")
+            template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
+              b-dropdown-item(:value="e.key")
+                .media
+                  .media-left
+                    | {{e.name}}
+                    //- | {{e.real_ext}}
+                  .media-content
+                    //- .has-text-weight-bold {{e.name}}
+                    //- h3 {{e.name}}
+                    span {{e.message}}
+                    //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
+                    //- small {{e.message}}
 
       b-field(label="表示秒数/1枚" v-if="development_p && false")
         b-slider(:indicator="true" :tooltip="false" v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1")
 
       b-field(label="表示秒数/1枚")
-        b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1" exponential)
+        b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1" exponential @input="sound_play('click')")
 
       //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
       // SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
@@ -72,8 +73,8 @@
       SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
       SimpleRadioButtons(:base="base" :model="base.ThemeInfo" var_name="theme_key")
 
-      b-field(label="終了図停止枚数" message="ループする場合に最後の局面を少し止めて終局した風にする")
-        b-numberinput(v-model="base.end_frames" :min="0" :max="15" :step="1" exponential)
+      b-field(label="終了図停止枚数" :message="`最後に${base.end_seconds}秒停止する`")
+        b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
       .box(v-if="development_p")
         b-field(label="*負荷")

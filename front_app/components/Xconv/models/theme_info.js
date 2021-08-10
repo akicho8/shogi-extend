@@ -11,8 +11,8 @@ export class ThemeInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "light_mode", name: "ライト", type: "is-primary", message: "明い", },
-      { key: "dark_mode",  name: "ダーク", type: "is-primary", message: "暗い", },
+      { key: "light_mode", name: "ライト", type: "is-primary", message: null, },
+      { key: "dark_mode",  name: "ダーク", type: "is-primary", message: null, },
     ]
   }
 }
