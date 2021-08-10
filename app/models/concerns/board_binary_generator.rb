@@ -174,8 +174,7 @@ class BoardBinaryGenerator
     if false
       parser.public_send("to_#{xout_format_info.real_ext}", to_blob_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
     else
-      if xout_format_info.real_ext.in?(["png", "jpg", "bmp"]) # FIXME: ぽりもるふぃっく
-        # png は to_blob の結果とする
+      if xout_format_info.formatter == "image"
         parser.image_formatter(to_blob_options.merge(image_format: xout_format_info.real_ext)).to_blob_binary
       else
         # mp4 は write で吐いたファイルを読み込んで返す
@@ -248,10 +247,13 @@ class BoardBinaryGenerator
       # command = "ffmpeg -y -i #{i_path} -vf 'scale=if(gte(iw\,ih)\,min(1280\,iw)\,-2):if(lt(iw\,ih)\,min(1280\,ih)\,-2)' -c:v libx264 -x264-params crf=16 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
 
-      command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
+      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
+      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
+      audio_options = "-strict -2 -acodec aac"
+      command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
-      Pathname("#{real_path}.ffmpeg_command.txt").write(command)
+      Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
       # Dir.chdir(real_path.dirname) do
       system(command, exception: true)
       # end

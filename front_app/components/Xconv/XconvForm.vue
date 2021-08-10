@@ -26,7 +26,7 @@
 
       //- https://buefy.org/documentation/field#combining-addons-and-groups
       b-field(grouped)
-        b-field(label="サイズ" expanded :message="[base.animation_size_info.message, base.i_size_ratio_human]" )
+        b-field(label="サイズ" expanded :message="[base.animation_size_info.message, base.i_size_aspect_ratio_human]" )
           b-field(:type="{'is-danger': base.i_size_danger_p}")
             b-select(type="number" v-model="base.animation_size_key" @input="base.animation_size_key_input_handle")
               option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name")
@@ -34,7 +34,7 @@
             b-input(required type="number" v-model="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" exponential expanded placeholder="height")
             p.control(v-if="development_p && false")
               span.button.is-static
-                | {{base.i_size_ratio_human}}
+                | {{base.i_size_aspect_ratio_human}}
 
       //- https://buefy.org/documentation/field#combining-addons-and-groups
       b-field(:label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
