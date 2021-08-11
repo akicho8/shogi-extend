@@ -183,8 +183,12 @@ module ShareBoardControllerMethods
         :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
         :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
         :remote_ip     => request.remote_ip, # メンバー情報で表示する
-        :remote_name   => (Resolv.getname(request.remote_ip.to_s) rescue nil), # 最低 6ms かかる
       })
+
+    # ステージングでフリーズしてタイムアウトが50%の確立で起きるので危険
+    if false
+      attrs[:remote_name] = (Resolv.getname(request.remote_ip.to_s) rescue nil) # 最低 6ms かかる
+    end
 
     attrs
   end
