@@ -213,7 +213,7 @@ export const app_form = {
           raise_message: this.raise_message,
 
           // パラメータの差異はなるべくここだけで吸収する
-          board_binary_generator_params: {
+          board_file_generator_params: {
             xout_format_key: this.xout_format_key,
             // for AnimationFormatter
             // animation_formatter_params: {

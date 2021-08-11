@@ -1,13 +1,15 @@
 require "pp"
 
-class BoardBinaryGenerator
+class BoardFileGenerator
   PAPPER = 1
 
+  # FIXME: これらは params ではなく options にいれるべき？
   # params のうち、このクラスだけで扱うパラメータ
   PARAM_KEYS = [
     :xout_format_key,
     :turn,
     :video_fps,
+    :basename_prefix,
   ]
 
   class << self
@@ -15,7 +17,7 @@ class BoardBinaryGenerator
       Rails.public_path.join("system", "board_images")
     end
 
-    # cap production rails:runner CODE='BoardBinaryGenerator.cache_delete_all'
+    # cap production rails:runner CODE='BoardFileGenerator.cache_delete_all'
     def cache_delete_all
       FileUtils.rm_rf(cache_root)
     end
@@ -137,7 +139,21 @@ class BoardBinaryGenerator
   end
 
   def filename
+    # "#{basename_prefix}_#{basename_parts.join("_")}.#{xout_format_info.real_ext}"
     "#{unique_key}.#{xout_format_info.real_ext}"
+  end
+
+  # def filename_human
+  #   "#{basename_human}.#{xout_format_info.real_ext}"
+  # end
+
+  def basename_parts
+    parts = []
+    parts << [to_blob_options[:width], to_blob_options[:height]].join("x")
+    if xout_format_info.force_convert_to_yuv420p
+      parts << "#{video_fps}fps"
+    end
+    parts
   end
 
   def ffprobe_info
@@ -258,7 +274,7 @@ class BoardBinaryGenerator
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
       audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg -r #{params[:video_fps]} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+      command = "ffmpeg -r #{video_fps} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
@@ -279,5 +295,9 @@ class BoardBinaryGenerator
 
   def video_fps
     params[:video_fps].presence or raise ArgumentError, "video_fps is blank"
+  end
+
+  def basename_prefix
+    params[:basename_prefix].presence || unique_key.slice(0, 8)
   end
 end

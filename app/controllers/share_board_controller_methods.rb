@@ -88,7 +88,7 @@ module ShareBoardControllerMethods
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
       params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
       params2 = params2.merge(xout_format_key: :is_format_png, turn: initial_turn, viewpoint: image_viewpoint)
-      generator = BoardBinaryGenerator.new(current_record, params2)
+      generator = BoardFileGenerator.new(current_record, params2)
       path = generator.to_real_path
       if stale?(last_modified: path.mtime, public: true)
         send_file path, type: Mime[generator.xout_format_info.real_ext], disposition: current_disposition, filename: current_filename

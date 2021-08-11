@@ -20,7 +20,7 @@ export const app_review = {
     other_window_open_handle() {
       this.sound_play("click")
       // TODO: JS に Hash#slice はないんか？
-      const { width, height } = this.done_record.convert_params.board_binary_generator_params
+      const { width, height } = this.done_record.convert_params.board_file_generator_params
       this.window_popup(this.done_record.browser_url, { width, height })
     },
     direct_link_handle() {

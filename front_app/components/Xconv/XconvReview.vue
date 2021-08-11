@@ -42,7 +42,7 @@ export default {
   mixins: [support_child],
   computed: {
     // ↓まぎらわしい。このコンポーネント内の done_record に対する情報
-    xout_format_key() { return this.base.done_record?.convert_params.board_binary_generator_params.xout_format_key },
+    xout_format_key() { return this.base.done_record?.convert_params.board_file_generator_params.xout_format_key },
     xout_format_info() { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
   },
 }

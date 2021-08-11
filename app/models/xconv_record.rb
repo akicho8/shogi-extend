@@ -142,7 +142,7 @@ class XconvRecord < ApplicationRecord
   # end
 
   def generator
-    @generator ||= BoardBinaryGenerator.new(recordable, convert_params[:board_binary_generator_params])
+    @generator ||= BoardFileGenerator.new(recordable, convert_params[:board_file_generator_params], {}.merge())
   end
 
   def main_process!
@@ -204,7 +204,7 @@ class XconvRecord < ApplicationRecord
 
   # for ActionMailer
   def xout_format_key
-    convert_params.fetch(:board_binary_generator_params).fetch(:xout_format_key)
+    convert_params.fetch(:board_file_generator_params).fetch(:xout_format_key)
   end
 
   def track(name, body = nil)
