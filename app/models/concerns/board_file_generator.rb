@@ -127,7 +127,7 @@ class BoardFileGenerator
   end
 
   def real_path
-    @real_path ||= self.class.cache_root.join(*dir_parts, filename)
+    @real_path ||= self.class.cache_root.join(*dir_parts, disk_filename)
   end
 
   def xout_format_key
@@ -138,21 +138,53 @@ class BoardFileGenerator
     XoutFormatInfo.fetch(xout_format_key)
   end
 
-  def filename
-    # "#{basename_prefix}_#{basename_parts.join("_")}.#{xout_format_info.real_ext}"
+  # system 以下に格納するとき用のファイル名
+  # 同じパラメータなら同じになるようにする
+  # 2回同じパラメータで生成しようとしたときに、2回目に1回目のファイルを参照できるなくなるから日付を含めてはいけない
+  def disk_filename
+    # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{xout_format_info.real_ext}"
     "#{unique_key}.#{xout_format_info.real_ext}"
+  end
+
+  # Rails側からダウンロードするときのわかりやすい名前
+  def filename_human
+    # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{xout_format_info.real_ext}"
+    basename = basename_human_parts.join("_")
+    "#{basename}.#{xout_format_info.real_ext}"
   end
 
   # def filename_human
   #   "#{basename_human}.#{xout_format_info.real_ext}"
   # end
 
-  def basename_parts
+  def basename_human_parts
     parts = []
-    parts << [to_blob_options[:width], to_blob_options[:height]].join("x")
-    if xout_format_info.force_convert_to_yuv420p
-      parts << "#{video_fps}fps"
+    # parts << [to_blob_options[:width], to_blob_options[:height]].join("x")
+    # if xout_format_info.force_convert_to_yuv420p
+    #   ffprobe_direct
+    #   parts << "#{video_fps}fps"
+    # end
+    e = ffprobe_direct["streams"][0]
+    if (w = e["coded_width"]) && (h = e["coded_height"])
+      parts << "#{w}x#{h}"
     end
+    if xout_format_info.real_ext.in?(["mp4", "mov"])
+      if v = e["r_frame_rate"]
+        parts << "#{v.to_i}fps"
+      end
+      if v = e["bit_rate"]
+        parts << "br#{v.to_i / 1024}Kbit"
+      end
+      if v = e["duration"]
+        parts << "#{v.to_f.ceil}s"
+      end
+      if v = e["pix_fmt"]
+        parts << v
+      end
+    else
+      # ...
+    end
+    # end
     parts
   end
 
@@ -168,6 +200,14 @@ class BoardFileGenerator
         }
       end
     end
+  end
+
+  def ffprobe_direct
+    # @ffprobe_direct ||= -> {
+    if real_path.exist?
+      JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
+    end
+    # }.call
   end
 
   def file_size

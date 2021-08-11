@@ -132,8 +132,8 @@ class UserMailer < ApplicationMailer
     end
 
     # 添付
-    real_path = xconv_record.generator.real_path
-    attachments[real_path.basename.to_s] = real_path.read
+    generator = xconv_record.generator
+    attachments[xconv_record.filename_human] = generator.real_path.read
 
     mail({
         subject: "#{xconv_record.xout_format_info.name} 変換完了 (添付あり)",

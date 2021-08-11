@@ -200,6 +200,15 @@ class XconvRecord < ApplicationRecord
     XoutFormatInfo.fetch(xout_format_key)
   end
 
+  # ダウンロード時にわかりやすい名前にする
+  def filename_human
+    [
+      id,
+      created_at.strftime("%Y%m%d%H%M%S"),
+      generator.filename_human,
+    ].join("_")
+  end
+
   private
 
   # for ActionMailer
