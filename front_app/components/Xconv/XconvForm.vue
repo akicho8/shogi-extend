@@ -76,8 +76,12 @@
       b-field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
         b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
+      //- b-field(label="FPS")
+      //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
+      //- b-field(label="FPS")
+      //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
       b-field(label="FPS")
-        b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
+        b-input(v-model="base.video_fps" required)
 
       .box(v-if="development_p")
         b-field(label="*負荷")

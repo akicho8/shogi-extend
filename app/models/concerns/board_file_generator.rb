@@ -96,7 +96,6 @@ class BoardFileGenerator
 
       opts.update(xout_format_info.override_options)
 
-
       opts
     }.call
   end
@@ -334,7 +333,7 @@ class BoardFileGenerator
   end
 
   def video_fps
-    params[:video_fps].presence or raise ArgumentError, "video_fps is blank"
+    params[:video_fps].to_f
   end
 
   def basename_prefix
