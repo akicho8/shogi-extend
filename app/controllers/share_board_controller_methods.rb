@@ -30,8 +30,6 @@ module ShareBoardControllerMethods
   end
 
   def show
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
-
     # nginx の設定で /share-board.\w+ は Rails 側にリクエストが来る
     # そこで format の指定がなかったり HTML だったりする場合にのみ Nuxt 側に飛ばす
     # 本当は Rails 側を経由したくないがこれまでの互換性を考慮するとこうするしかない
@@ -44,26 +42,20 @@ module ShareBoardControllerMethods
       redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
       return
     end
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     # アクセスがあれば「上げて」消さないようにするため
     current_record.update_columns(accessed_at: Time.current)
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     if request.format.json?
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       render json: config_params
       return
     end
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     # Twitter画像
     # http://localhost:3000/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+2g2f
     # パラメータで画像が変化するためキャッシュは危険
     # Rails側でレコードを作ってキャッシュするときに見ているのはSFENだけ
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
     if request.format.png?
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       # if stale?(current_record)
       # expires_in 3.hours, public: true
 
@@ -95,17 +87,11 @@ module ShareBoardControllerMethods
       # Twitter では og:image のパスは直接画像を返さないといけない
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
       # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       generator = BoardFileGenerator.new(current_record, params.merge(xout_format_key: :is_format_png, turn: initial_turn, viewpoint: image_viewpoint))
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       path = generator.to_real_path
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       if stale?(last_modified: path.mtime, public: true)
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
         send_file path, type: Mime[generator.xout_format_info.real_ext], disposition: current_disposition, filename: current_filename
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
       end
-      Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
       return
     end
@@ -145,7 +131,6 @@ module ShareBoardControllerMethods
   # ので、こっちで作るのであってる
   # http://localhost:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
   def current_og_image_path
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     # if true
     #   # params[:image_viewpoint] が渡せていないけどこれでいい
@@ -187,7 +172,6 @@ module ShareBoardControllerMethods
   end
 
   def current_json
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs = attrs.merge({
@@ -196,8 +180,6 @@ module ShareBoardControllerMethods
         :abstract_viewpoint => abstract_viewpoint,
         :title              => current_title,
       })
-
-    Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
     # リアルタイム共有
     attrs = attrs.merge({
