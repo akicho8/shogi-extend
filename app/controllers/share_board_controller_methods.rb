@@ -205,7 +205,7 @@ module ShareBoardControllerMethods
         :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
         :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
         :remote_ip     => request.remote_ip, # メンバー情報で表示する
-        :remote_name   => (Resolv.getname(request.remote_ip.to_s) rescue nil), # 最低 6ms かかる
+        # :remote_name   => (Resolv.getname(request.remote_ip.to_s) rescue nil), # 最低 6ms かかる
       })
     Rails.logger.info(["#{__FILE__}:#{__LINE__}", __method__, ])
 
