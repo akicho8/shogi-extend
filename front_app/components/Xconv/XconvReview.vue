@@ -9,14 +9,15 @@
     template(v-if="base.done_record.successed_at")
       //- .box
       .is_review_box
-        template(v-if="xout_format_info.respond_html_tag === 'video'")
+        template(v-if="base.done_xout_format_info.respond_html_tag === 'video'")
           video(:src="base.done_record.browser_url" controls autoplay loop)
         template(v-else)
           img(:src="base.done_record.browser_url")
 
       .buttons.is-centered.mt-4(v-if="development_p || true")
         b-button(@click="base.close_handle" v-if="development_p") 戻る
-        b-button.has-text-weight-bold(@click="base.download_handle" type="is-primary" icon-left="download") ダウンロード
+        b-button.has-text-weight-bold(@click="base.download_handle('inline')" type="is-primary" icon-left="download") inline
+        b-button.has-text-weight-bold(@click="base.download_handle('attachment')" type="is-primary" icon-left="download") attachment
         b-button(@click="base.direct_link_handle" icon-left="link") 直リン
         b-button(@click="base.other_window_open_handle" icon-left="open-in-new") 別で開く
         b-button(@click="base.json_show_handle") JSON
@@ -41,9 +42,6 @@ export default {
   name: "XconvReview",
   mixins: [support_child],
   computed: {
-    // ↓まぎらわしい。このコンポーネント内の done_record に対する情報
-    xout_format_key() { return this.base.done_record?.convert_params.board_file_generator_params.xout_format_key },
-    xout_format_info() { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
   },
 }
 </script>

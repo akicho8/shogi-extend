@@ -29,9 +29,11 @@ export const app_review = {
       // this.other_window_open(this.done_record.browser_url)
       this.url_open(this.done_record.browser_url, this.target_default)
     },
-    download_handle() {
+
+    download_handle(disposition) {
       this.sound_play("click")
-      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}`
+      // 拡張子をつけないと JSON を返してしまう
+      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}.${this.done_xout_format_info.real_ext}?disposition=${disposition}`
       window.location.href = url
     },
     json_show_handle() {
@@ -41,6 +43,10 @@ export const app_review = {
     },
   },
   computed: {
+    // ↓まぎらわしい。このコンポーネント内の done_record に対する情報
+    done_xout_format_key() { return this.done_record?.convert_params.board_file_generator_params.xout_format_key },
+    done_xout_format_info() { return this.XoutFormatInfo.fetch(this.done_xout_format_key) },
+
     done_record_stream() {
       const streams = this.done_record?.ffprobe_info?.direct_format?.streams || []
       return streams[0] || {}

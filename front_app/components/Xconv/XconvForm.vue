@@ -141,6 +141,12 @@ export default {
       a:not(:first-child)
         margin-left: 0.25rem // aリンク同士の間を開ける
         font-weight: normal  // label のなかは bold になるため元に戻す
+    textarea
+      +mobile
+        height: 8rem
+      +tablet
+        height: 10rem
+
   .xout_format_key_dropdown
     .dropdown-item
       &:not(.is-active)         // 選択してない項目だけ種類を青くする
