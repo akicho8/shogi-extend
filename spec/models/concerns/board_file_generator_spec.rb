@@ -8,10 +8,10 @@ RSpec.describe BoardFileGenerator, type: :model do
     end
   end
 
-  describe "to_blob_options" do
+  describe "xxx_formatter_options" do
     def test1(params)
       obj = BoardFileGenerator.new(FreeBattle.create!, params)
-      obj.to_blob_options
+      obj.xxx_formatter_options
     end
     it "works" do
       assert { test1({})                 == {width: 1200, height: 630} }

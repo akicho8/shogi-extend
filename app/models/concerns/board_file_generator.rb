@@ -60,13 +60,14 @@ class BoardFileGenerator
     FileUtils.rm_f("#{real_path}.rb")
   end
 
-  def to_blob_options
-    @to_blob_options ||= -> {
+  def xxx_formatter_options
+    @xxx_formatter_options ||= -> {
       # このクラスだけで扱うパラメータを除いてからチェック
-      Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
+      # Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
 
       opts = params.dup
       opts = opts.deep_symbolize_keys
+      opts = opts.slice(*Bioshogi::BinaryFormatter.all_options.keys) # 不要なオプションを取る
 
       # if opts[:image_preset] == "small"
       #   opts.update({
@@ -95,7 +96,6 @@ class BoardFileGenerator
 
       opts.update(xout_format_info.override_options)
 
-      opts = opts.slice(*Bioshogi::BinaryFormatter.all_options.keys) # 不要なオプションを取る
 
       opts
     }.call
@@ -159,7 +159,7 @@ class BoardFileGenerator
 
   def basename_human_parts
     parts = []
-    # parts << [to_blob_options[:width], to_blob_options[:height]].join("x")
+    # parts << [xxx_formatter_options[:width], xxx_formatter_options[:height]].join("x")
     # if xout_format_info.force_convert_to_yuv420p
     #   ffprobe_direct
     #   parts << "#{video_fps}fps"
@@ -229,21 +229,21 @@ class BoardFileGenerator
       xout_format_info.key,
       record.sfen_hash,
       turn,
-      to_blob_options,
+      xxx_formatter_options,
     ].join(":")
   end
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
     if false
-      parser.public_send("to_#{xout_format_info.real_ext}", to_blob_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
+      parser.public_send("to_#{xout_format_info.real_ext}", xxx_formatter_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
     else
       if xout_format_info.formatter == "image"
-        parser.image_formatter(to_blob_options.merge(image_format: xout_format_info.real_ext)).to_blob_binary
+        parser.image_formatter(xxx_formatter_options.merge(image_format: xout_format_info.real_ext)).to_blob_binary
       else
         # mp4 は write で吐いたファイルを読み込んで返す
         # こちらで png を処理すると foo-1.png などが生成されて to_write_binary は "" を返してしまう
-        parser.animation_formatter(to_blob_options.merge(animation_format: xout_format_info.real_ext)).to_write_binary
+        parser.animation_formatter(xxx_formatter_options.merge(animation_format: xout_format_info.real_ext)).to_write_binary
       end
     end
   end
@@ -251,7 +251,7 @@ class BoardFileGenerator
   def force_generate
     real_path.dirname.mkpath
     real_path.binwrite(yuv420_convert(to_blob))
-    Pathname("#{real_path}.rb").write(to_blob_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
+    Pathname("#{real_path}.rb").write(xxx_formatter_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
   def dir_parts

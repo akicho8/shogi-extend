@@ -159,8 +159,8 @@ module BattleControllerSharedMethods
       respond_to do |format|
         format.html
         format.png {
-          params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-          generator = BoardFileGenerator.new(current_record, params2.merge(xout_format_key: :is_format_png))
+          # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
+          generator = BoardFileGenerator.new(current_record, params.merge(xout_format_key: :is_format_png))
           send_file_or_redirect(generator)
         }
         # if Rails.env.development?
