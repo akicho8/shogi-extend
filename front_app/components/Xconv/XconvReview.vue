@@ -54,7 +54,7 @@ export default {
     // タブレット以上では小さく
     +tablet
       margin: auto
-      // max-width: 600px
+      max-width: 600px
 
     display: flex
     justify-content: center

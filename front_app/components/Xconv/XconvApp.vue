@@ -15,8 +15,9 @@
     .container
       XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
       XconvReview(:base="base")
-      XconvMyRecords(:base="base")
-      XconvQueueWatch(:base="base")
+      .columns
+        XconvMyRecords(:base="base")
+        XconvQueueWatch(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")
 </template>

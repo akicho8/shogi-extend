@@ -66,45 +66,54 @@
       // SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
 
     .column.is-one-third2
-      SimpleRadioButtons(:base="base" :model="base.LoopInfo" var_name="loop_key")
-      SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
-      SimpleRadioButtons(:base="base" :model="base.ThemeInfo" var_name="theme_key")
 
-      b-field(label="1手あたりの秒数")
-        b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="3" :step="0.1" exponential @input="sound_play('click')")
+      b-collapse(:open="false" position="is-bottom")
+        template(#trigger="props")
+          a
+            b-icon(:icon="!props.open ? 'menu-down' : 'menu-up'")
+            template(v-if="!props.open")
+              | すべてのフォームを表示する
+            template(v-else)
+              | 隠す
+        SimpleRadioButtons(:base="base" :model="base.LoopInfo" var_name="loop_key")
+        SimpleRadioButtons(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
+        SimpleRadioButtons(:base="base" :model="base.ThemeInfo" var_name="theme_key")
 
-      b-field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
-        b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+        b-field(label="1手あたりの秒数")
+          b-numberinput(v-model="base.delay_per_one" :min="0.1" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
-      //- b-field(label="FPS")
-      //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
-      //- b-field(label="FPS")
-      //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
-      b-field(label="FPS")
-        b-input(v-model="base.video_fps" required)
+        b-field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
+          b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
-      .box(v-if="development_p")
-        b-field(label="*負荷")
-          b-input(type="number" v-model="base.sleep" expanded)
+        //- b-field(label="FPS")
+        //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
+        //- b-field(label="FPS")
+        //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
+        b-field(label="FPS")
+          b-input(v-model="base.video_fps" required)
 
-        b-field(label="*例外")
-          b-input(type="text" v-model="base.raise_message" expanded)
+        .box(v-if="development_p")
+          b-field(label="*負荷")
+            b-input(type="number" v-model="base.sleep" expanded)
 
-      //- SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
-      b-field(v-if="false" :label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
-        template(#label)
-          | Label with custom
-          span(class="has-text-primary is-italic") style
-        template(v-for="e in base.XoutFormatInfo.values")
-          template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-            b-radio-button(@input="sound_play('click')" v-model="base.xout_format_key" :native-value="e.key" :type="e.type")
-              | {{e.name}}
+          b-field(label="*例外")
+            b-input(type="text" v-model="base.raise_message" expanded)
 
-      template(v-if="false")
-        b-field(:label="base.LoopInfo.field_label" :message="base.LoopInfo.fetch(base.loop_key).message || base.LoopInfo.field_message")
-          template(v-for="e in base.LoopInfo.values")
-            b-radio-button(@input="sound_play('click')" v-model="base.loop_key" :native-value="e.key" :type="e.type")
-              | {{e.name}}
+        //- SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
+        b-field(v-if="false" :label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
+          template(#label)
+            | Label with custom
+            span(class="has-text-primary is-italic") style
+          template(v-for="e in base.XoutFormatInfo.values")
+            template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
+              b-radio-button(@input="sound_play('click')" v-model="base.xout_format_key" :native-value="e.key" :type="e.type")
+                | {{e.name}}
+
+        template(v-if="false")
+          b-field(:label="base.LoopInfo.field_label" :message="base.LoopInfo.fetch(base.loop_key).message || base.LoopInfo.field_message")
+            template(v-for="e in base.LoopInfo.values")
+              b-radio-button(@input="sound_play('click')" v-model="base.loop_key" :native-value="e.key" :type="e.type")
+                | {{e.name}}
 
   .columns.is-centered
     .column
