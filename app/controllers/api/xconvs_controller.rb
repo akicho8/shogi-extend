@@ -85,7 +85,7 @@ module Api
 
     # 予約可能な数(処理中を含む)
     def reserve_limit_default
-      (params[:reserve_limit].presence || 3).to_i
+      (params[:reserve_limit].presence || XconvRecord.user_history_max).to_i
     end
   end
 end
