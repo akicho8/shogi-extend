@@ -16,11 +16,11 @@
 
       .buttons.is-centered.mt-4
         b-button(@click="base.close_handle" v-if="development_p") 続ける
-        b-button.has-text-weight-bold(@click="base.download_handle(done_record, 'inline')" type="is-primary" icon-left="download" v-if="development_p") inline
-        b-button.has-text-weight-bold(@click="base.download_handle(done_record, 'attachment')" type="is-primary" icon-left="download") ダウンロード
-        b-button(@click="base.direct_link_handle(done_record)" icon-left="link") 直リン
-        b-button(@click="base.other_window_open_handle(done_record)" icon-left="open-in-new") 別で開く
-        b-button(@click="base.json_show_handle(done_record)" v-if="development_p") JSON
+        b-button.has-text-weight-bold(@click="base.send_file_handle(base.done_record, 'inline')" type="is-primary" icon-left="download" v-if="development_p") inline
+        b-button.has-text-weight-bold(@click="base.send_file_handle(base.done_record, 'attachment')" type="is-primary" icon-left="download") ダウンロード
+        b-button(@click="base.direct_link_handle(base.done_record)" icon-left="link") 直リン
+        b-button(@click="base.other_window_open_handle(base.done_record)" icon-left="open-in-new") 別で開く
+        b-button(@click="base.json_show_handle(base.done_record)" v-if="development_p") JSON
 
     b-message.mt-5(v-if="base.review_error_messages" :closable="false" type="is-danger" title="Tweetできない原因")
       ul

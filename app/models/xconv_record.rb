@@ -75,6 +75,8 @@ class XconvRecord < ApplicationRecord
     end
   end
 
+  cattr_accessor(:user_history_max) { 5 }
+
   cattr_accessor(:json_struct_for_list) {
     {
       include: {
@@ -88,7 +90,7 @@ class XconvRecord < ApplicationRecord
         :status_info,
         :browser_url,
         # :ffprobe_info,
-        :file_size,
+        # :file_size,
       ],
     }
   }
@@ -105,14 +107,14 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_info,
         :browser_url,
-        :ffprobe_info,
-        :file_size,
+        # :ffprobe_info,
+        # :file_size,
       ],
     }
   }
 
   delegate :xconv_info_broadcast, :background_job_kick, to: "self.class"
-  delegate :browser_url, :ffprobe_info, :file_size, to: "generator"
+  delegate :browser_url, to: "generator"
 
   belongs_to :user
   belongs_to :recordable, polymorphic: true
@@ -132,6 +134,7 @@ class XconvRecord < ApplicationRecord
   # https://github.com/rails/rails/issues/42928
   # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html#method-i-serialize
   serialize :convert_params
+  serialize :ffprobe_info
 
   before_validation do
     self.convert_params ||= {}
@@ -163,11 +166,13 @@ class XconvRecord < ApplicationRecord
   end
 
   def main_process!
-    update!(process_begin_at: Time.current)
+    reset
+    self.process_begin_at = Time.current
+    save!
     user.my_records_broadcast
     xconv_info_broadcast
-    sleep(convert_params[:sleep].to_i)
     begin
+      sleep(convert_params[:sleep].to_i)
       if v = convert_params[:raise_message].presence
         raise v
       end
@@ -179,6 +184,8 @@ class XconvRecord < ApplicationRecord
       SystemMailer.notify_exception(error)
     else
       self.successed_at = Time.current
+      self.ffprobe_info = generator.ffprobe_info
+      self.file_size = generator.file_size
     ensure
       self.process_end_at = Time.current
       save!
@@ -189,6 +196,16 @@ class XconvRecord < ApplicationRecord
 
     SlackAgent.message_send(key: "アニメーション変換完了", body: browser_url)
     UserMailer.xconv_notify(self).deliver_later
+  end
+
+  def reset
+    self.process_begin_at = nil
+    self.process_end_at = nil
+    self.successed_at = nil
+    self.ffprobe_info = nil
+    self.file_size = nil
+    self.errored_at = nil
+    self.error_message = nil
   end
 
   def status_info
@@ -222,10 +239,12 @@ class XconvRecord < ApplicationRecord
 
   # ダウンロード時にわかりやすい名前にする
   def filename_human
+    basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format))
+    filename = "#{basename}.#{generator.real_ext}"
     [
       id,
       created_at.strftime("%Y%m%d%H%M%S"),
-      generator.filename_human,
+      filename,
     ].join("_")
   end
 

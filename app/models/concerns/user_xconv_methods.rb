@@ -9,7 +9,7 @@ module UserXconvMethods
   def my_records_broadcast
     bc_params = {
       # :my_records => xconv_records.done_only.limit(5).order(created_at: :desc).as_json(XconvRecord.json_struct_for_list),
-      :my_records => xconv_records.limit(5).order(created_at: :desc).as_json(XconvRecord.json_struct_for_list),
+      :my_records => xconv_records.limit(XconvRecord.user_history_max).order(created_at: :desc).as_json(XconvRecord.json_struct_for_list),
     }
     Xconv::RoomChannel.broadcast_to(self, {bc_action: :my_records_broadcasted, bc_params: bc_params})
   end

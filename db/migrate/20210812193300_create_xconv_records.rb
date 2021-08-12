@@ -35,6 +35,8 @@ class CreateXconvRecords < ActiveRecord::Migration[6.0]
       t.datetime :successed_at,     null: true,                     index: true,  comment: "成功日時"
       t.datetime :errored_at,       null: true,                     index: true,  comment: "エラー日時"
       t.text :error_message,        null: true,                                   comment: "エラーメッセージ"
+      t.integer :file_size,         null: true,                                   comment: "ファイルサイズ"
+      t.text :ffprobe_info,         null: true,                                   comment: "変換パラメータ"
       t.timestamps                  null: false
       t.index :created_at
     end

@@ -26,6 +26,8 @@ class BoardFileGenerator
   attr_accessor :record
   attr_accessor :params
 
+  delegate :real_ext, to: :xout_format_info
+
   def initialize(record, params = {}, options = {}, &block)
     @record = record
 
@@ -136,38 +138,37 @@ class BoardFileGenerator
   def xout_format_info
     XoutFormatInfo.fetch(xout_format_key)
   end
-
   # system 以下に格納するとき用のファイル名
   # 同じパラメータなら同じになるようにする
   # 2回同じパラメータで生成しようとしたときに、2回目に1回目のファイルを参照できるなくなるから日付を含めてはいけない
   def disk_filename
-    # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{xout_format_info.real_ext}"
-    "#{unique_key}.#{xout_format_info.real_ext}"
+    # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{real_ext}"
+    "#{unique_key}.#{real_ext}"
   end
 
   # Rails側からダウンロードするときのわかりやすい名前
-  def filename_human
-    # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{xout_format_info.real_ext}"
-    basename = basename_human_parts.join("_")
-    "#{basename}.#{xout_format_info.real_ext}"
-  end
-
   # def filename_human
-  #   "#{basename_human}.#{xout_format_info.real_ext}"
+  #   # "#{basename_prefix}_#{basename_human_parts.join("_")}.#{real_ext}"
+  #   basename = basename_human_parts.join("_")
+  #   "#{basename}.#{real_ext}"
   # end
 
-  def basename_human_parts
+  # def filename_human
+  #   "#{basename_human}.#{real_ext}"
+  # end
+
+  def basename_human_parts(direct_format)
     parts = []
     # parts << [xxx_formatter_options[:width], xxx_formatter_options[:height]].join("x")
     # if xout_format_info.force_convert_to_yuv420p
     #   ffprobe_direct
     #   parts << "#{video_fps}fps"
     # end
-    e = ffprobe_direct["streams"][0]
+    e = direct_format["streams"][0]
     if (w = e["coded_width"]) && (h = e["coded_height"])
       parts << "#{w}x#{h}"
     end
-    if xout_format_info.real_ext.in?(["mp4", "mov"])
+    if real_ext.in?(["mp4", "mov"])
       if v = e["r_frame_rate"]
         parts << "#{v.to_i}fps"
       end
@@ -189,10 +190,7 @@ class BoardFileGenerator
 
   def ffprobe_info
     if real_path.exist?
-      # `file -LzbN #{real_path}`.strip
-      # `identify #{real_path}`.strip
       Dir.chdir(real_path.dirname) do
-        # `ffprobe -hide_banner -i #{real_path.basename} 2>&1`.strip
         {
           :pretty_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner -pretty #{real_path.basename}`),
           :direct_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner         #{real_path.basename}`),
@@ -235,14 +233,14 @@ class BoardFileGenerator
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
     if false
-      parser.public_send("to_#{xout_format_info.real_ext}", xxx_formatter_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
+      parser.public_send("to_#{real_ext}", xxx_formatter_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
     else
       if xout_format_info.formatter == "image"
-        parser.image_formatter(xxx_formatter_options.merge(image_format: xout_format_info.real_ext)).to_blob_binary
+        parser.image_formatter(xxx_formatter_options.merge(image_format: real_ext)).to_blob_binary
       else
         # mp4 は write で吐いたファイルを読み込んで返す
         # こちらで png を処理すると foo-1.png などが生成されて to_write_binary は "" を返してしまう
-        parser.animation_formatter(xxx_formatter_options.merge(animation_format: xout_format_info.real_ext)).to_write_binary
+        parser.animation_formatter(xxx_formatter_options.merge(animation_format: real_ext)).to_write_binary
       end
     end
   end
