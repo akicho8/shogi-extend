@@ -210,6 +210,10 @@ class XconvRecord < ApplicationRecord
 
   def status_info
     case
+    when errored_at
+      { name: "失敗", type: "is-danger" }
+    when successed_at
+      { name: "成功", type: "is-success" }
     when !process_begin_at
       { name: "待ち", type: "" }
     when process_begin_at && !process_end_at
