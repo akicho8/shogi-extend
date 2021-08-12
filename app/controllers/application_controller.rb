@@ -118,4 +118,38 @@ class ApplicationController < ActionController::Base
       session[:admin_user]
     end
   end
+
+  concerning :RangeSupportMethods do
+    # for Mobile Safari (iOS)
+    # https://github.com/adamcooke/send_file_with_range
+    #
+    # ・Mobile Safari では send_file "file.mp4" で失敗する
+    # ・Mobile Google Chrome では成功する
+    # ・それならURLでmp4に直リンクでいいのでは？と思うかもしれない
+    # ・しかし Mobile Safari では mp4 がダウンロードできない
+    # ・これが致命的なので disposition: :attachment するために range 対応の send_file がいる
+    # ・もう一つの利点としてはダウンロード時のファイル名を調整できること
+    #
+    def send_file_with_range(path, options = {})
+      raise MissingFile, "Cannot read file #{path}" unless File.file?(path) && File.readable?(path)
+
+      file_size = File.size(path)
+      begin_point = 0
+      end_point = file_size - 1
+      status = :ok
+
+      if request.headers["range"]
+        status = :partial_content
+        if md = request.headers["range"].match(/bytes=(\d+)-(\d*)/)
+          begin_point, end_point = md.captures.collect(&:to_i)
+        end
+      end
+
+      content_length = end_point - begin_point + 1
+      response.header["Content-Range"] = "bytes #{begin_point}-#{end_point}/#{file_size}"
+      response.header["Content-Length"] = content_length.to_s
+      response.header["Accept-Ranges"] = "bytes"
+      send_data IO.binread(path, content_length, begin_point), options.merge(status: status)
+    end
+  end
 end
