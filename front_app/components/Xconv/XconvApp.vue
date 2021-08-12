@@ -15,6 +15,7 @@
     .container
       XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
       XconvReview(:base="base")
+      XconvMyRecords(:base="base")
       XconvQueueWatch(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")
@@ -28,7 +29,8 @@ import { app_chore        } from "./app_chore.js"
 import { app_review        } from "./app_review.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_action_cable } from "./app_action_cable.js"
-import { app_queue_watch } from "./app_queue_watch.js"
+import { app_other_queue_list } from "./app_other_queue_list.js"
+import { app_my_queue_list } from "./app_my_queue_list.js"
 import { app_form         } from "./app_form.js"
 //- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
@@ -42,7 +44,8 @@ export default {
     app_review,
     app_sidebar,
     app_action_cable,
-    app_queue_watch,
+    app_other_queue_list,
+    app_my_queue_list,
     app_form,
   ],
 

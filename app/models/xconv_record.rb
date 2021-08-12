@@ -39,13 +39,13 @@ class XconvRecord < ApplicationRecord
 
     # ワーカー関係なく全処理実行
     def process_in_sidekiq
-      SlackAgent.message_send(key: "GIF変換 - Sidekiq", body: "開始")
+      SlackAgent.message_send(key: "アニメーション変換 - Sidekiq", body: "開始")
       count = 0
       while e = ordered_process.first
         e.main_process!
         count += 1
       end
-      SlackAgent.message_send(key: "GIF変換 - Sidekiq", body: "終了 変換数:#{count}")
+      SlackAgent.message_send(key: "アニメーション変換 - Sidekiq", body: "終了 変換数:#{count}")
     end
 
     def info
@@ -58,11 +58,8 @@ class XconvRecord < ApplicationRecord
       }
     end
 
-    def xconv_info_broadcast(params = {})
-      ActionCable.server.broadcast("xconv/room_channel", {
-          bc_action: :xconv_record_list_broadcasted,
-          bc_params: xconv_info.merge(params),
-        })
+    def xconv_info_broadcast
+      ActionCable.server.broadcast("xconv/room_channel", {bc_action: :xconv_record_list_broadcasted, bc_params: xconv_info})
     end
 
     def xconv_info
@@ -72,12 +69,31 @@ class XconvRecord < ApplicationRecord
         :processing_only_count => processing_only.count,
         :success_only_count    => success_only.count,
         :error_only_count      => error_only.count,
-        :xconv_records         => ordered_not_done.as_json(json_struct),
+        :xconv_records         => ordered_not_done.as_json(json_struct_for_list),
+        # :xconv_records         => all.as_json(json_struct_for_list),
       }
     end
   end
 
-  cattr_accessor(:json_struct) {
+  cattr_accessor(:json_struct_for_list) {
+    {
+      include: {
+        :user => {
+          only: [
+            :name,
+          ],
+        },
+      },
+      methods: [
+        :status_info,
+        :browser_url,
+        # :ffprobe_info,
+        :file_size,
+      ],
+    }
+  }
+
+  cattr_accessor(:json_struct_for_done_record) {
     {
       include: {
         :user => {
@@ -107,6 +123,7 @@ class XconvRecord < ApplicationRecord
   scope :process_started,  -> { where.not(process_begin_at: nil)                            } # 開始以降
   scope :ordered_process,  -> { where(process_begin_at: nil).order(:created_at)             } # 上から処理する順
   scope :ordered_not_done, -> { where(process_end_at: nil).order(:created_at)               } # 完了していないもの(順序付き)
+  # scope :ordered_done,     -> { where.not(process_end_at: nil).order(:created_at)           } # 完了したもの(順序付き)
   scope :not_done_only,    -> { where(process_end_at: nil)                                  } # 完了していないもの
   scope :error_only,       -> { where.not(errored_at: nil)                                  } # 失敗したもの
   scope :success_only,     -> { where.not(successed_at: nil)                                } # 成功したもの
@@ -147,6 +164,7 @@ class XconvRecord < ApplicationRecord
 
   def main_process!
     update!(process_begin_at: Time.current)
+    user.my_records_broadcast
     xconv_info_broadcast
     sleep(convert_params[:sleep].to_i)
     begin
@@ -165,9 +183,11 @@ class XconvRecord < ApplicationRecord
       self.process_end_at = Time.current
       save!
     end
-    xconv_info_broadcast(done_record: as_json(json_struct))
+    user.my_records_broadcast
+    user.done_record_broadcast(self)
+    xconv_info_broadcast
 
-    SlackAgent.message_send(key: "GIF変換完了", body: browser_url)
+    SlackAgent.message_send(key: "アニメーション変換完了", body: browser_url)
     UserMailer.xconv_notify(self).deliver_later
   end
 
@@ -217,6 +237,6 @@ class XconvRecord < ApplicationRecord
   end
 
   def track(name, body = nil)
-    SlackAgent.message_send(key: "GIF変換 - #{name}", body: [user.name, id, recordable.to_param, body].compact)
+    SlackAgent.message_send(key: "アニメーション変換 - #{name}", body: [user.name, id, recordable.to_param, body].compact)
   end
 end

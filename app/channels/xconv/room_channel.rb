@@ -2,8 +2,14 @@ module Xconv
   class RoomChannel < ApplicationCable::Channel
     def subscribed
       subscribed_track("購読開始")
+
       stream_from "xconv/room_channel"
       XconvRecord.xconv_info_broadcast
+
+      if current_user
+        stream_for(current_user)
+        current_user.my_records_broadcast
+      end
     end
 
     def unsubscribed
@@ -33,7 +39,7 @@ module Xconv
     end
 
     def track(data, action, body)
-      key = "GIF変換 [#{room_code}] #{action}"
+      key = "アニメーション変換 [#{room_code}] #{action}"
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
@@ -47,7 +53,7 @@ module Xconv
       else
         body = ""
       end
-      SlackAgent.message_send(key: "GIF変換 #{action}", body: "#{body}")
+      SlackAgent.message_send(key: "アニメーション変換 #{action}", body: "#{body}")
     end
 
     def sfen_share_track_body(data)

@@ -12,7 +12,7 @@ export class XoutFormatInfo extends MemoryRecord {
   static get define() {
     return [
       // ../../../app/models/xout_format_info.rb
-      { key: "is_format_mp4_twitter",     name: "MP4",               real_ext: "mp4",  respond_html_tag: "video", environment: ["development", "staging", "production"], type: "is-primary", message: "◎Twitter ○画質 ◎シーク",                               },
+      { key: "is_format_mp4_twitter",     name: "MP4",               real_ext: "mp4",  respond_html_tag: "video", environment: ["development", "staging", "production"], type: "is-primary", message: "◎Twitter ◎画質 ◎シーク",                               },
       { key: "is_format_gif",             name: "GIF",               real_ext: "gif",  respond_html_tag: "image", environment: ["development", "staging", "production"], type: "is-primary", message: "◎Twitter ◎画質 ×シーク",                               },
       { key: "is_format_png",             name: "PNG",               real_ext: "png",  respond_html_tag: "image", environment: ["development", "staging", "production"], type: "is-primary", message: "◎Twitter ◎画質 ※最後の局面の画像",                     },
       { key: "is_format_webp",            name: "WebP",              real_ext: "webp", respond_html_tag: "image", environment: ["development", "staging", "production"], type: "is-primary", message: "×Twitter ◎画質 ×シーク",                               },

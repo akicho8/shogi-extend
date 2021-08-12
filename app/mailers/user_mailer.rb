@@ -120,7 +120,7 @@ class UserMailer < ApplicationMailer
     end
 
     if Rails.env.development?
-      body << "ID:#{xconv_record.id} のGIF変換が完了しました"
+      body << "ID:#{xconv_record.id} のアニメーション変換が完了しました"
 
       body << ""
       body << "--"

@@ -48,6 +48,7 @@ module Api
       if false
         xconv_record.main_process!
       else
+        current_user.my_records_broadcast
         XconvRecord.xconv_info_broadcast
         XconvRecord.background_job_kick
         render json: {
