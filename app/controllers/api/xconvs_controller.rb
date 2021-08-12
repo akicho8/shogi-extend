@@ -13,7 +13,7 @@ module Api
       # 予約数制限
       if c = current_reserve_limit
         if current_user.xconv_records.not_done_only.count > c
-          render json: { error_message: "投入しすぎ" }
+          render json: { error_message: "投入しすぎです" }
           return
         end
       end

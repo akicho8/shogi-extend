@@ -20,7 +20,7 @@
           b-tabs(expanded @input="sound_play('click')")
             b-tab-item(label="あなた")
               XconvMyRecords(:base="base")
-            b-tab-item(label="ぜんたい")
+            b-tab-item(label="全体")
               XconvQueueWatch(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")

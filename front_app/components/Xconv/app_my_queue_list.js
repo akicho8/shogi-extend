@@ -17,10 +17,10 @@ export const app_my_queue_list = {
       }
       this.sound_play("click")
       if (this.done_record.successed_at) {
-        this.toast_ok("完了しました")
+        this.toast_ok(`${this.done_record.id}番が完了しました`)
       }
       if (this.done_record.errored_at) {
-        this.toast_ok("失敗しました")
+        this.toast_ok(`${this.done_record.id}番が失敗しました`)
       }
     }
   },

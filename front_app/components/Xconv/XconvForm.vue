@@ -121,7 +121,7 @@
       b-field
         .control
           .buttons
-            b-button.has-text-weight-bold(@click="base.submit_handle" type="is-primary") 変換
+            b-button.has-text-weight-bold(@click="base.submit_handle" type="is-primary") 変換予約
 </template>
 
 <script>
