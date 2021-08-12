@@ -129,27 +129,35 @@ class ApplicationController < ActionController::Base
     # ・しかし Mobile Safari では mp4 がダウンロードできない
     # ・これが致命的なので disposition: :attachment するために range 対応の send_file がいる
     # ・もう一つの利点としてはダウンロード時のファイル名を調整できること
+    # ・Google Chrome で inline 表示するときこれにすると動かないので send_file を使う
     #
     def send_file_with_range(path, options = {})
       raise MissingFile, "Cannot read file #{path}" unless File.file?(path) && File.readable?(path)
 
-      file_size = File.size(path)
-      begin_point = 0
-      end_point = file_size - 1
-      status = :ok
+      if range_value = request.headers["range"]
+        file_size = File.size(path)
+        begin_point = 0
+        end_point = file_size - 1
+        status = :ok
 
-      if request.headers["range"]
         status = :partial_content
-        if md = request.headers["range"].match(/bytes=(\d+)-(\d*)/)
-          begin_point, end_point = md.captures.collect(&:to_i)
+        # Google Chrome: "bytes=0-"
+        # Mobile Safari: "bytes=0-1"
+        if md = range_value.match(/bytes=(?<begin_point>\d+)-(?<end_point>\d+)?/)
+          begin_point = md["begin_point"].to_i
+          if md["end_point"]
+            end_point = md["end_point"].to_i
+          end
         end
-      end
 
-      content_length = end_point - begin_point + 1
-      response.header["Content-Range"] = "bytes #{begin_point}-#{end_point}/#{file_size}"
-      response.header["Content-Length"] = content_length.to_s
-      response.header["Accept-Ranges"] = "bytes"
-      send_data IO.binread(path, content_length, begin_point), options.merge(status: status)
+        content_length = end_point - begin_point + 1
+        response.header["Content-Range"] = "bytes #{begin_point}-#{end_point}/#{file_size}"
+        response.header["Content-Length"] = content_length.to_s
+        response.header["Accept-Ranges"] = "bytes"
+        send_data IO.binread(path, content_length, begin_point), options.merge(status: status)
+      else
+        send_file path, options
+      end
     end
   end
 end

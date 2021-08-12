@@ -1,10 +1,14 @@
 class XconvsController < ApplicationController
-  if false
-    before_action :authenticate_xuser! # 使用禁止。これは current_user の管理と異なる
-  else
-    before_action do
-      unless current_user
-        redirect_to :login
+  LOGIN_REQUIRED = false
+
+  if LOGIN_REQUIRED
+    if false
+      before_action :authenticate_xuser! # 使用禁止。これは current_user の管理と異なる
+    else
+      before_action do
+        unless current_user
+          redirect_to :login
+        end
       end
     end
   end
@@ -21,7 +25,12 @@ class XconvsController < ApplicationController
   # JSON確認
   # http://localhost:3000/animation-files/148.json
   def show
-    xconv_record = current_user.xconv_records.find(params[:id])
+    if LOGIN_REQUIRED
+      scope = current_user.xconv_records
+    else
+      scope = XconvRecord.all
+    end
+    xconv_record = XconvRecord.find(params[:id])
     generator = xconv_record.generator
     if Rails.env.development?
       if params[:cache_delete]

@@ -17,28 +17,29 @@ export const app_review = {
       this.done_record = null
       // this.xconv_record   = null
     },
-    other_window_open_handle() {
+    other_window_open_handle(record) {
       this.sound_play("click")
-      // TODO: JS に Hash#slice はないんか？
-      const { width, height } = this.done_record.convert_params.board_file_generator_params
-      this.window_popup(this.done_record.browser_url, { width, height })
+      const { width, height } = record.convert_params.board_file_generator_params
+      this.window_popup(record.browser_url, { width, height })
     },
-    direct_link_handle() {
+    direct_link_handle(record) {
       this.sound_play("click")
       // window.location.href = this.done_record.browser_url
       // this.other_window_open(this.done_record.browser_url)
-      this.url_open(this.done_record.browser_url, this.target_default)
+      this.url_open(record.browser_url, this.target_default)
     },
 
-    download_handle(disposition) {
+    download_handle(record, disposition) {
       this.sound_play("click")
       // 拡張子をつけないと JSON を返してしまう
-      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}.${this.done_xout_format_info.real_ext}?disposition=${disposition}`
+      const xout_format_key = record.convert_params.board_file_generator_params.xout_format_key
+      const xout_format_info = this.XoutFormatInfo.fetch(xout_format_key)
+      const url = this.$config.MY_SITE_URL + `/animation-files/${record.id}.${xout_format_info.real_ext}?disposition=${disposition}`
       window.location.href = url
     },
-    json_show_handle() {
+    json_show_handle(record) {
       this.sound_play("click")
-      const url = this.$config.MY_SITE_URL + `/animation-files/${this.done_record.id}.json`
+      const url = this.$config.MY_SITE_URL + `/animation-files/${record.id}.json`
       window.location.href = url
     },
   },
