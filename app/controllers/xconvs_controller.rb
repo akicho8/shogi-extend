@@ -1,5 +1,13 @@
 class XconvsController < ApplicationController
-  before_action :authenticate_xuser!
+  if false
+    before_action :authenticate_xuser! # 使用禁止。これは current_user の管理と異なる
+  else
+    before_action do
+      unless current_user
+        redirect_to :login
+      end
+    end
+  end
 
   # ダウンロードさせるためにいったんRails側から送信している
   # が、system下のファイルに直リンクできるので不要かもしれない
