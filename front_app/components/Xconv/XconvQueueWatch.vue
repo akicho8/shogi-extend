@@ -24,7 +24,7 @@
     :paginated="false"
     :per-page="10"
     )
-    b-table-column(v-slot="{row}" label="予約ID" numeric)
+    b-table-column(v-slot="{row}" label="番号" numeric)
       template(v-if="base.xconv_record && base.xconv_record.id === row.id")
         b-tag(rounded type="is-primary") {{row.id}}
       template(v-else)
