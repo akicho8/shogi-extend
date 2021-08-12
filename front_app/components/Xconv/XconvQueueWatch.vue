@@ -1,5 +1,5 @@
 <template lang="pug">
-.XconvQueueWatch.column(v-if="base.xconv_info")
+.XconvQueueWatch(v-if="base.xconv_info")
   nav.level.is-mobile
     .level-item.has-text-centered
       div
@@ -17,7 +17,6 @@
       div
         p.heading 失敗
         p.title {{base.xconv_info.error_only_count}}
-
   b-table(
     v-if="base.xconv_info.xconv_records.length >= 1"
     :data="base.xconv_info.xconv_records"
