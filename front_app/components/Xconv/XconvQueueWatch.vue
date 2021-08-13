@@ -11,7 +11,7 @@
         p.title {{base.xconv_info.processing_only_count}}
     .level-item.has-text-centered
       div
-        p.heading 完了
+        p.heading 成功
         p.title {{base.xconv_info.success_only_count}}
     .level-item.has-text-centered(v-if="base.xconv_info.error_only_count > 0 || true")
       div
@@ -48,5 +48,5 @@ export default {
 
 <style lang="sass">
 .XconvQueueWatch
-  margin-top: 1.5rem
+  margin-top: 0rem
 </style>

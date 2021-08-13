@@ -3,6 +3,7 @@
   DebugBox(v-if="development_p")
     div foo:
 
+  XconvSidebar(:base="base")
   MainNavbar
     template(slot="brand")
       NavbarItemHome
@@ -10,6 +11,8 @@
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
+      b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
+        b-icon(icon="menu")
 
   MainSection
     .container
@@ -17,7 +20,7 @@
       XconvReview(:base="base")
       .columns
         .column
-          b-tabs(expanded @input="sound_play('click')")
+          b-tabs(expanded v-model="list_tab_index" @input="sound_play('click')")
             b-tab-item(label="あなた")
               XconvMyRecords(:base="base")
             b-tab-item(label="みんな")
@@ -37,6 +40,8 @@ import { app_action_cable } from "./app_action_cable.js"
 import { app_other_queue_list } from "./app_other_queue_list.js"
 import { app_my_queue_list } from "./app_my_queue_list.js"
 import { app_form         } from "./app_form.js"
+import { app_probe_show         } from "./app_probe_show.js"
+
 //- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
 import _ from "lodash"
@@ -52,15 +57,13 @@ export default {
     app_other_queue_list,
     app_my_queue_list,
     app_form,
+    app_probe_show,
   ],
 
   data() {
     return {
-      // データ
-      response_hash:   null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
-
-      // その他
-      // change_counter: 0, // 1:更新した状態からはじめる 0:更新してない状態(変更したいとボタンが反応しない状態)
+      list_tab_index: 0,   // 変換リスト切り替えタブ (本来不要なはずだけど v-model を指定しないとマウント時に中身が反映されない)
+      response_hash: null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
     }
   },
   mounted() {

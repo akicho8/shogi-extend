@@ -27,7 +27,7 @@
         template(v-for="e in base.review_error_messages")
           li {{e}}
 
-    b-message.mt-5(v-if="base.done_record.ffprobe_info")
+    b-message.mt-5(v-if="base.done_record.ffprobe_info && false")
       | {{JSON.stringify(base.done_record.ffprobe_info.pretty_format.streams[0], null, 4)}}
 
     template(v-if="base.done_record.successed_at && false")

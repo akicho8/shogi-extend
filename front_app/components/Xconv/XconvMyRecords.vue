@@ -20,6 +20,7 @@ b-table(
         b-button.mb-0(@click="base.send_file_handle(row, 'inline')"                       icon-left="eye")
         b-button.mb-0(@click="base.direct_link_handle(row)"                              icon-left="link")
         b-button.mb-0(@click="base.other_window_open_handle(row)"                        icon-left="open-in-new")
+        b-button.mb-0(@click="base.probe_show_modal_handle(row)"                        icon-left="dots-horizontal")
 </template>
 
 <script>
