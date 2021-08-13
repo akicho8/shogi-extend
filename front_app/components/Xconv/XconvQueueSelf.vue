@@ -8,11 +8,13 @@ b-table(
     //- template(v-if="base.xconv_record && base.xconv_record.id === row.id")
     //-   b-tag(rounded type="is-primary") {{row.id}}
     //- template(v-else)
-    b-tag(rounded) {{row.id}}
+    b-tag(rounded)
+      | {{row.id}}
     //- b-table-column(v-slot="{row}" field="name" label="名前")
     //-   | {{row.user.name}}
   b-table-column(v-slot="{row}" field="status_info.name" label="状況")
-    | {{row.status_info.name}}
+    b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
+      | {{row.status_info.name}}
   b-table-column(v-slot="{row}")
     template(v-if="row.successed_at")
       .buttons.are-small.mb-0
@@ -27,12 +29,12 @@ b-table(
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XconvMyRecords",
+  name: "XconvQueueSelf",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XconvMyRecords
+.XconvQueueSelf
   margin-top: 1.5rem
 </style>

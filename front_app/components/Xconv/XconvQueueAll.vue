@@ -1,5 +1,5 @@
 <template lang="pug">
-.XconvQueueWatch(v-if="base.xconv_info")
+.XconvQueueAll(v-if="base.xconv_info")
   nav.level.is-mobile
     .level-item.has-text-centered
       div
@@ -21,18 +21,19 @@
     v-if="base.xconv_info.xconv_records.length >= 1"
     :data="base.xconv_info.xconv_records"
     :mobile-cards="false"
-    :paginated="false"
-    :per-page="10"
     )
+    //- :paginated="false"
+    //- :per-page="10"
     b-table-column(v-slot="{row}" label="番号" numeric)
-      template(v-if="base.xconv_record && base.xconv_record.id === row.id")
-        b-tag(rounded type="is-primary") {{row.id}}
-      template(v-else)
+      template(v-if="row.user.id === g_current_user.id")
         b-tag(rounded) {{row.id}}
+      template(v-else)
+        b-tag(rounded type="is-white") {{row.id}}
     b-table-column(v-slot="{row}" field="name" label="名前")
-      | {{row.user.name}}
+      | {{string_truncate(row.user.name, {length: 10})}}
     b-table-column(v-slot="{row}" field="status_info.name" label="状況")
-      | {{row.status_info.name}}
+      b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
+        | {{row.status_info.name}}
       //- b-progress(type="is-primary" size="is-medium")
       //-   | {{row.status_info.name}}
 </template>
@@ -41,12 +42,12 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XconvQueueWatch",
+  name: "XconvQueueAll",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XconvQueueWatch
+.XconvQueueAll
   margin-top: 0rem
 </style>

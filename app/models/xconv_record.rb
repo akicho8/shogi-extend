@@ -82,6 +82,7 @@ class XconvRecord < ApplicationRecord
       include: {
         :user => {
           only: [
+            :id,
             :name,
           ],
         },
@@ -100,6 +101,7 @@ class XconvRecord < ApplicationRecord
       include: {
         :user => {
           only: [
+            :id,
             :name,
           ],
         },
@@ -211,15 +213,15 @@ class XconvRecord < ApplicationRecord
   def status_info
     case
     when errored_at
-      { name: "失敗", type: "is-danger" }
+      { name: "失敗", :class => "", type: "is-danger is-light" }
     when successed_at
-      { name: "成功", type: "is-success" }
+      { name: "成功", :class => "", type: "is-success is-light" }
     when !process_begin_at
-      { name: "待ち", type: "" }
+      { name: "待ち", :class => "", type: "" }
     when process_begin_at && !process_end_at
-      { name: "変換中", type: "is-primary" }
+      { name: "変換中", :class => "has-text-weight-bold", type: "is-danger is-light" }
     else
-      { name: "完了", type: "is-primary" }
+      { name: "完了", :class => "", type: "is-primary is-light" }
     end
   end
 

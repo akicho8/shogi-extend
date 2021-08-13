@@ -4,7 +4,7 @@ export class ParamInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "body",               type: "string",  name: "棋譜",              default: "",                      desc: "", },
-      { key: "xout_format_key",    type: "string",  name: "出力形式",          default: "is_format_mp4_twitter", desc: "", },
+      { key: "xout_format_key",    type: "string",  name: "出力形式",          default: "is_format_mp4_yuv420", desc: "", },
       { key: "animation_size_key", type: "string",  name: "サイズ",            default: "is1024x768",            desc: "", },
       { key: "i_width",            type: "string",  name: "w",                 default: null,                    desc: "", },
       { key: "i_height",           type: "string",  name: "h",                 default: null,                    desc: "", },

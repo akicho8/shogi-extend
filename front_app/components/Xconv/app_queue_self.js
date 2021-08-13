@@ -1,4 +1,4 @@
-export const app_my_queue_list = {
+export const app_queue_self = {
   data() {
     return {
       my_records: [],

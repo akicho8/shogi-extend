@@ -18,7 +18,7 @@ class XoutFormatInfo
     { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
     { key: "is_format_webp",            name: "WebP",                 real_ext: "webp", formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
     { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", formatter: "animation", override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_mp4_twitter",     name: "MP4",                  real_ext: "mp4",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
+    { key: "is_format_mp4_yuv420",     name: "MP4",                  real_ext: "mp4",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
     { key: "is_format_mov",             name: "MOV",                  real_ext: "mov",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
     { key: "is_format_png",             name: "PNG",                  real_ext: "png",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
     { key: "is_format_jpg",             name: "JPG",                  real_ext: "jpg",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },

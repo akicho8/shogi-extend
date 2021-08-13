@@ -1,4 +1,4 @@
-export const app_other_queue_list = {
+export const app_queue_all = {
   data() {
     return {
       xconv_info: null,

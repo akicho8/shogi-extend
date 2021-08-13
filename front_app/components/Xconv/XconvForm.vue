@@ -7,6 +7,8 @@
       XconvForm2(:base="base")
     b-tab-item(label="動画設定")
       XconvForm3(:base="base")
+    b-tab-item(label="デバッグ" v-if="development_p")
+      XconvForm4(:base="base")
 
   b-field.submit_field
     .control
@@ -30,11 +32,19 @@ export default {
   .tab-content
     padding: 0
 
+  .dropdown-item
+    &:not(.is-active)         // 選択してない項目だけ種類を青くする
+      .media-left
+        color: $primary
+    .media-left
+      font-weight: bold
+
   .main_field
     margin: 0
-    padding: 1rem 0
+    padding: 0.8rem 0 1.2rem
     +tablet
-      padding: 1rem 1.25rem
+      padding-left: 1.25rem
+      padding-right: 1.25rem
       &:hover
         background-color: $white-ter
 

@@ -22,9 +22,9 @@
         .column.is-half
           b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
             b-tab-item(label="あなた")
-              XconvMyRecords(:base="base")
+              XconvQueueSelf(:base="base")
             b-tab-item(label="みんな")
-              XconvQueueWatch(:base="base")
+              XconvQueueAll(:base="base")
 
   XconvDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -37,8 +37,8 @@ import { app_chore        } from "./app_chore.js"
 import { app_review        } from "./app_review.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_action_cable } from "./app_action_cable.js"
-import { app_other_queue_list } from "./app_other_queue_list.js"
-import { app_my_queue_list } from "./app_my_queue_list.js"
+import { app_queue_all } from "./app_queue_all.js"
+import { app_queue_self } from "./app_queue_self.js"
 import { app_form         } from "./app_form.js"
 import { app_probe_show         } from "./app_probe_show.js"
 import { app_foo_show         } from "./app_foo_show.js"
@@ -55,8 +55,8 @@ export default {
     app_review,
     app_sidebar,
     app_action_cable,
-    app_other_queue_list,
-    app_my_queue_list,
+    app_queue_all,
+    app_queue_self,
     app_form,
     app_probe_show,
     app_foo_show,

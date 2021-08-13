@@ -15,14 +15,9 @@ import { support_child } from "./support_child.js"
 export default {
   name: "XconvForm2",
   mixins: [support_child],
-  mounted() {
-    this.base.body_focus()
-  },
 }
 </script>
 
 <style lang="sass">
 .XconvForm2
-  // > .field:not(:first-child)
-  //   margin-top: 1.5rem
 </style>

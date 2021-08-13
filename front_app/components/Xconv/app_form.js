@@ -133,8 +133,12 @@ export const app_form = {
     },
 
     width_height_udpate() {
-      this.i_width = this.animation_size_info.width
-      this.i_height = this.animation_size_info.height
+      console.log(this.animation_size_info)
+      if (this.animation_size_info.key === "is_custom") {
+      } else {
+        this.i_width = this.animation_size_info.width
+        this.i_height = this.animation_size_info.height
+      }
     },
 
     parmas_set_from_query() {
