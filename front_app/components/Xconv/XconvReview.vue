@@ -1,5 +1,5 @@
 <template lang="pug">
-.XconvReview.column(v-if="base.done_record")
+.XconvReview.column.is-half(v-if="base.done_record")
   //- b-message.mt-4(title="失敗" :closable="false" type="is-warning" v-if="base.done_record.errored_at")
   //-   | {{base.done_record.error_message}}
   b-notification.mt-4(:closable="false" type="is-danger" v-if="base.done_record.errored_at")
@@ -48,13 +48,13 @@ export default {
 
 <style lang="sass">
 .XconvReview
-  margin-top: 1.5rem
+  // margin-top: 1.5rem
 
   .is_review_box
     // タブレット以上では小さく
-    +tablet
-      margin: auto
-      max-width: 600px
+    // +tablet
+    //   margin: auto
+    //   max-width: 600px
 
     display: flex
     justify-content: center

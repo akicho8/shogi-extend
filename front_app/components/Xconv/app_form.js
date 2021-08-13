@@ -28,6 +28,10 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// POST後
       xconv_record: null, // POSTして変換待ちになっているレコード
       bs_error: null,     // エラー情報
+
+      //////////////////////////////////////////////////////////////////////////////// レイアウト
+      form2_show_p: false,
+      form_tab_index: 0,
     }
   },
 
@@ -54,8 +58,8 @@ export const app_form = {
   },
   methods: {
     body_focus() {
-      // 開発時のホットリロードでは null.$refs になる
-      this.desktop_focus_to(this.$refs.XconvForm?.$refs.body.$refs?.textarea)
+      // // 開発時のホットリロードでは null.$refs になる
+      // this.desktop_focus_to(this.$refs.XconvForm?.$refs.body.$refs?.textarea)
     },
     reset_handle() {
       this.sound_play("click")
@@ -170,6 +174,11 @@ export const app_form = {
         },
       })
       this.other_window_open(e.href)
+    },
+
+    form2_show_toggle() {
+      this.sound_play("click")
+      this.form2_show_p = !this.form2_show_p
     },
   },
   computed: {

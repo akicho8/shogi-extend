@@ -16,12 +16,11 @@
 
   MainSection
     .container
-      .columns.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+      .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
         XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
         XconvReview(:base="base")
-      .columns
-        .column
-          b-tabs(expanded v-model="list_tab_index" @input="sound_play('click')")
+        .column.is-half
+          b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
             b-tab-item(label="あなた")
               XconvMyRecords(:base="base")
             b-tab-item(label="みんな")
@@ -92,8 +91,18 @@ export default {
     +tablet
       padding: 2rem
 
+  .list_tabs
+    .tab-content
+      padding: 0.75rem 0
+
   // .MainColumn
   //   // +tablet
   //   //   max-width: 40rem
 
+.STAGE-development
+  .XconvApp
+    .columns
+      border: 1px dashed change_color($danger, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>
