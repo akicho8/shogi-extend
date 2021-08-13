@@ -16,8 +16,9 @@
 
   MainSection
     .container
-      XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
-      XconvReview(:base="base")
+      .columns.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+        XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
+        XconvReview(:base="base")
       .columns
         .column
           b-tabs(expanded v-model="list_tab_index" @input="sound_play('click')")
