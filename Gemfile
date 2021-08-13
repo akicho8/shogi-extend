@@ -186,3 +186,6 @@ gem 'sidekiq'
 gem 'redis-namespace'
 
 gem "puma_worker_killer"
+
+# ffmpeg 外部実行のため
+gem "systemu"

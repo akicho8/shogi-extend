@@ -316,7 +316,17 @@ class BoardFileGenerator
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
       # Dir.chdir(real_path.dirname) do
-      system(command, exception: true)
+      case
+      when false
+        # ffmpeg が 1 で終了したことしかわからない
+        system(command, exception: true)
+      when true
+        # ffmpeg が 1 で終了したときのエラー出力がわかる
+        status, stdout, stderr = systemu(command)
+        if !status.success?
+          raise StandardError, stderr.strip
+        end
+      end
       # end
 
       bin = o_path.read
