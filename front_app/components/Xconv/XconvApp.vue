@@ -42,6 +42,7 @@ import { app_other_queue_list } from "./app_other_queue_list.js"
 import { app_my_queue_list } from "./app_my_queue_list.js"
 import { app_form         } from "./app_form.js"
 import { app_probe_show         } from "./app_probe_show.js"
+import { app_foo_show         } from "./app_foo_show.js"
 
 //- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
@@ -59,6 +60,7 @@ export default {
     app_my_queue_list,
     app_form,
     app_probe_show,
+    app_foo_show,
   ],
 
   data() {
