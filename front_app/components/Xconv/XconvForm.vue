@@ -8,10 +8,9 @@
     b-tab-item(label="動画設定")
       XconvForm3(:base="base")
 
-  b-field.main_field
+  b-field.submit_field
     .control
-      .buttons
-        b-button.has-text-weight-bold(@click="base.submit_handle" type="is-danger" icon-left="rocket-launch") 実行
+      b-button.has-text-weight-bold(@click="base.submit_handle" type="is-danger" icon-left="rocket-launch") 実行
 </template>
 
 <script>
@@ -38,4 +37,8 @@ export default {
       padding: 1rem 1.25rem
       &:hover
         background-color: $white-ter
+
+  .submit_field
+    margin: 0
+    padding: 1rem 0
 </style>

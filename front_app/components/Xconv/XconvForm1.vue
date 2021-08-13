@@ -52,7 +52,7 @@ export default {
         font-weight: normal  // label のなかは bold になるため元に戻す
     textarea
       +mobile
-        height: 8rem
+        height: 9rem
       +tablet
         height: 10rem
 </style>
