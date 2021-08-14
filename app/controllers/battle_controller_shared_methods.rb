@@ -185,7 +185,7 @@ module BattleControllerSharedMethods
         #
         #     if xconv_record = XconvRecord.find_by(recordable: current_record)
         #       # render html: xconv_record.to_html
-        #       render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
+        #       render html: [xconv_record.status_key, XconvRecord.info.to_html].join.html_safe
         #       return
         #     end
         #
@@ -196,7 +196,7 @@ module BattleControllerSharedMethods
         #       XconvRecord.background_job_kick
         #     end
         #
-        #     render html: "GIF#{xconv_record.status_info}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
+        #     render html: "GIF#{xconv_record.status_key}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
         #   }
         # end
         format.any { kif_data_send }

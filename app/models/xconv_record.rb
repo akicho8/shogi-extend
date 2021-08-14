@@ -89,7 +89,7 @@ class XconvRecord < ApplicationRecord
         },
       },
       methods: [
-        :status_info,
+        :status_key,
         :browser_url,
         # :ffprobe_info,
         # :file_size,
@@ -108,7 +108,7 @@ class XconvRecord < ApplicationRecord
         },
       },
       methods: [
-        :status_info,
+        :status_key,
         :browser_url,
         # :ffprobe_info,
         # :file_size,
@@ -211,18 +211,18 @@ class XconvRecord < ApplicationRecord
     self.error_message = nil
   end
 
-  def status_info
+  def status_key
     case
     when errored_at
-      { name: "失敗", :class => "", type: "is-danger is-light" }
+      "失敗"
     when successed_at
-      { name: "成功", :class => "", type: "is-success is-light" }
+      "成功"
     when !process_begin_at
-      { name: "待ち", :class => "", type: "" }
+      "待ち"
     when process_begin_at && !process_end_at
-      { name: "変換中", :class => "has-text-weight-bold", type: "is-danger is-light" }
+      "変換中"
     else
-      { name: "完了", :class => "", type: "is-primary is-light" }
+      "完了"
     end
   end
 
@@ -230,7 +230,7 @@ class XconvRecord < ApplicationRecord
     {}.tap do |e|
       e["ID"]   = id
       e["所有"] = user.name
-      e["状況"] = status_info ? status_info[:name] : ""
+      e["状況"] = status_key ? status_key[:name] : ""
       e["投入"] = created_at&.to_s(:ymdhms)
       e["開始"] = process_begin_at&.to_s(:ymdhms)
       e["成功"] = successed_at&.to_s(:ymdhms)

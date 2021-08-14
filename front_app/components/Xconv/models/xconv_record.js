@@ -1,5 +1,6 @@
 import { Model } from "./model.js"
 import { XoutFormatInfo } from "./xout_format_info.js"
+import { StatusInfo } from "./status_info.js"
 import _ from "lodash"
 
 export class XconvRecord extends Model {
@@ -18,6 +19,10 @@ export class XconvRecord extends Model {
   get to_wh() {
     const e = this.convert_params.board_file_generator_params
     return { width: e.width, height: e.height }
+  }
+
+  get status_info() {
+    return StatusInfo.fetch(this.status_key)
   }
 
   // private

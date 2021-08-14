@@ -28,7 +28,7 @@
       b-tag(rounded :class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
     b-table-column(v-slot="{row}" field="name" label="名前")
       | {{string_truncate(row.user.name, {length: 10})}}
-    b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered)
+    b-table-column(v-slot="{row}" field="status_key" label="状況" centered)
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
       //- b-progress(type="is-primary" size="is-medium")

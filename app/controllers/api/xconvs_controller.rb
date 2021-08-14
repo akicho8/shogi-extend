@@ -40,7 +40,7 @@ module Api
 
       # if xconv_record = XconvRecord.find_by(recordable: current_record)
       #   # render html: xconv_record.to_html
-      #   render html: [xconv_record.status_info, XconvRecord.info.to_html].join.html_safe
+      #   render html: [xconv_record.status_key, XconvRecord.info.to_html].join.html_safe
       #   return
       # end
 
