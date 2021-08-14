@@ -45,5 +45,8 @@ Vue.mixin({
     development_p() {
       return process.env.NODE_ENV === "development"
     },
+    development_or_staging_p() {
+      return this.development_p || this.$config.STAGE === "staging"
+    },
   },
 })
