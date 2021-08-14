@@ -16,17 +16,17 @@
     .panel
       .panel-heading post_params
       .panel-block
-        pre {{JSON.stringify(base.post_params, null, 4)}}
+        pre {{pretty_inspect(base.post_params)}}
   .column.is-4(v-if="base.response_hash")
     .panel
       .panel-heading response_hash
       .panel-block
-        pre {{JSON.stringify(base.response_hash, null, 4)}}
+        pre {{pretty_inspect(base.response_hash)}}
   .column.is-4(v-if="base.done_record")
     .panel
       .panel-heading done_record
       .panel-block
-        pre {{JSON.stringify(base.done_record, null, 4)}}
+        pre {{pretty_inspect(base.done_record)}}
 </template>
 
 <script>
