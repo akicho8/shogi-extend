@@ -75,7 +75,8 @@ class XconvRecord < ApplicationRecord
     end
   end
 
-  cattr_accessor(:user_history_max) { 5 }
+  cattr_accessor(:user_history_max) { 5 } # 履歴表示最大件数
+  cattr_accessor(:user_queue_max) { 3 }   # 未処理投入最大件数
 
   cattr_accessor(:json_struct_for_list) {
     {
