@@ -37,7 +37,7 @@ export default {
 
 <style lang="sass">
 .XconvQueueSelf
-  margin-top: 1.5rem
+  // margin-top: 0rem
   td
     vertical-align: middle
 </style>
