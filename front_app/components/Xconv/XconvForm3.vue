@@ -94,8 +94,8 @@
                   //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                   //- small {{e.message}}
 
-  b-field.main_field(label="表示秒数/1枚" v-if="development_p && false")
-    b-slider(:indicator="true" :tooltip="false" v-model="base.delay_per_one" :min="0.1" :max="5" :step="0.1")
+  b-field.main_field(label="着手秒数" v-if="development_p && false")
+    b-slider(:indicator="true" :tooltip="false" v-model="base.video_speed" :min="0.1" :max="5" :step="0.1")
 
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
   // SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")

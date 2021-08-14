@@ -18,7 +18,7 @@ export const app_form = {
       i_height:           null, // h
       viewpoint_key:      null, // 視点
       theme_key:          null, // テーマ
-      delay_per_one:      null, // 表示秒数/1枚
+      video_speed:      null, // 着手秒数
       // video_fps:     null, // fps
       end_frames:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
@@ -198,7 +198,7 @@ export const app_form = {
     XoutFormatInfo()           { return XoutFormatInfo                                       },
     xout_format_info()         { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
 
-    end_seconds() { return this.number_floor(this.delay_per_one * this.end_frames, 2) },
+    end_seconds() { return this.number_floor(this.video_speed * this.end_frames, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -231,7 +231,7 @@ export const app_form = {
             // for AnimationFormatter
             // animation_formatter_params: {
             loop_key: this.loop_key,
-            delay_per_one: this.delay_per_one,
+            video_speed: this.video_speed,
             // video_fps: this.video_fps,
             end_frames: this.end_frames,
             viewpoint: this.viewpoint_key,
