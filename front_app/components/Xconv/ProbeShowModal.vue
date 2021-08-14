@@ -55,6 +55,15 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ProbeShowModal
+  // スマホで閉じるボタンが押せない対策
+  +mobile
+    .animation-content
+      max-width: 90vw
+      .modal-card
+        max-height: 70vh
+        .modal-card-body
+          font-size: $size-7
+
   // +tablet
   //   width: 100%
   .modal-card-body
