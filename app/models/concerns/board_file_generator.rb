@@ -223,6 +223,7 @@ class BoardFileGenerator
   def unique_key_source_string
     [
       PAPPER,
+      ffmpeg_r_option,
       xout_format_info.key,
       record.sfen_hash,
       turn,
@@ -311,7 +312,7 @@ class BoardFileGenerator
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
       # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
       audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg -r #{video_fps} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+      command = "ffmpeg #{ffmpeg_r_option} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
 
       # command = "ruby -e '1 / 0'"
       Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
@@ -340,8 +341,13 @@ class BoardFileGenerator
     bin
   end
 
-  def video_fps
-    params[:video_fps].to_f
+  # フレームレートを指定値に変換する。指定しない場合は入力ファイルの値を継承
+  # http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%A4%CE%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3%A4%DE%A4%C8%A4%E1
+  # 小数で指定してはいけない
+  def ffmpeg_r_option
+    if v = params[:video_fps].presence
+      "-r #{v}"
+    end
   end
 
   def basename_prefix
