@@ -27,4 +27,12 @@ export const AnySupport = {
   hankaku_format(str) {
     return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
   },
+
+  pretty_inspect(value) { return JSON.stringify(value, null, 4)   },
+  // inspect(value)        { return JSON.stringify(value)            },
+  pretty_print(value)   { console.log(this.pretty_inspect(value)) },
+  // p(value)              { console.log(this.inspect(value))        },
+  // a(value)              { alert(this.inspect(value))              },
+  pretty_alert(value)   { alert(this.pretty_inspect(value))       },
+  a(value)              { alert(this.pretty_inspect(value))       },
 }
