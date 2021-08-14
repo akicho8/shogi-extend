@@ -43,6 +43,8 @@ import { app_form         } from "./app_form.js"
 import { app_probe_show         } from "./app_probe_show.js"
 import { app_foo_show         } from "./app_foo_show.js"
 
+import { XconvRecord } from "./models/xconv_record.js"
+
 //- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
 import _ from "lodash"
@@ -73,6 +75,7 @@ export default {
   },
   computed: {
     base() { return this },
+    XconvRecord() { return XconvRecord },
     meta() {
       return {
         title: "アニメーション変換",

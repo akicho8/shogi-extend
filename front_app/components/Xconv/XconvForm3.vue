@@ -115,7 +115,7 @@
   //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
   //- b-field.main_field(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
-  b-field.main_field(label="MP4のFPS(実験的設定)" message="1手1秒なら1FPSでいいような気もするがサイトによっては30FPS以上でないとだめかもしれない")
+  b-field.main_field(label="MP4のFPS(実験的設定)" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
     b-input(v-model="base.video_fps" required)
 </template>
 

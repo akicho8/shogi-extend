@@ -20,8 +20,6 @@
       | 共有将棋盤で確認
   ////////////////////////////////////////////////////////////////////////////////
 
-  SimpleRadioButtons.main_field(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
-
 </template>
 
 <script>

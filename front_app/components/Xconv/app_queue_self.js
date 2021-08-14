@@ -11,7 +11,7 @@ export const app_queue_self = {
     },
 
     done_record_broadcasted(data) {
-      this.done_record = data.done_record
+      this.done_record = new this.XconvRecord(this, data.done_record)
       if (false) {
         this.sound_stop_all()
       }

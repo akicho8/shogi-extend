@@ -4,7 +4,7 @@ b-table(
   :data="base.my_records"
   :mobile-cards="false"
   )
-  b-table-column(v-slot="{row}" label="番号" numeric)
+  b-table-column(v-slot="{row}" label="番号" numeric centered)
     //- template(v-if="base.xconv_record && base.xconv_record.id === row.id")
     //-   b-tag(rounded type="is-primary") {{row.id}}
     //- template(v-else)
@@ -12,7 +12,7 @@ b-table(
       | {{row.id}}
     //- b-table-column(v-slot="{row}" field="name" label="名前")
     //-   | {{row.user.name}}
-  b-table-column(v-slot="{row}" field="status_info.name" label="状況")
+  b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered)
     b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
       | {{row.status_info.name}}
   b-table-column(v-slot="{row}")

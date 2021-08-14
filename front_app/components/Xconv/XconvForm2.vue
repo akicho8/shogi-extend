@@ -1,5 +1,6 @@
 <template lang="pug">
 .XconvForm2
+  SimpleRadioButtons.main_field(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
   SimpleRadioButtons.main_field(:base="base" :model="base.ThemeInfo" var_name="theme_key")
 
   b-field.main_field(label="1手あたりの秒数")
