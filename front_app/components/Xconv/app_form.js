@@ -114,7 +114,7 @@ export const app_form = {
           this.response_hash = e.response_hash
           const xconv_record = e.response_hash.xconv_record
           if (xconv_record) {
-            this.xconv_record = xconv_record
+            this.xconv_record = new this.XconvRecord(this, xconv_record)
             this.toast_ok(`${this.xconv_record.id}番で予約しました`)
           }
         }

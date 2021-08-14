@@ -7,6 +7,7 @@ export const app_probe_show = {
       this.sound_play("click")
 
       this.$buefy.modal.open({
+        width: "",  // width ではなく max-width に設定される
         customClass: "ProbeShowModal",
         component: ProbeShowModal,
         parent: this,

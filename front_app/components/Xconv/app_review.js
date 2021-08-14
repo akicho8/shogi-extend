@@ -19,44 +19,29 @@ export const app_review = {
       // this.xconv_record   = null
     },
 
-    send_file_handle(record, disposition) {
+    main_download_handle(record) {
       this.sound_play("click")
-      window.location.href = this.xconv_record_rails_side_url(record, {disposition})
+      window.location.href = record.rails_side_download_url
+    },
+
+    main_show_handle(record) {
+      this.sound_play("click")
+      this.window_popup(record.rails_side_inline_url, record.to_wh)
     },
 
     json_show_handle(record) {
       this.sound_play("click")
-      const url = this.$config.MY_SITE_URL + `/animation-files/${record.id}.json`
-      window.location.href = url
+      this.other_window_open(record.rails_side_json_url)
     },
 
     other_window_direct_open_handle(record) {
       this.sound_play("click")
-      const { width, height } = record.convert_params.board_file_generator_params
-      this.window_popup(record.browser_url, { width, height })
+      this.window_popup(record.browser_url, record.to_wh)
     },
 
-    other_window_open_handle(record) {
+    secret_show_handle(record) {
       this.sound_play("click")
-      const { width, height } = record.convert_params.board_file_generator_params
-      this.window_popup(this.xconv_record_rails_side_url(record), { width, height })
-    },
-
-    direct_link_handle(record) {
-      this.sound_play("click")
-      // window.location.href = this.done_record.browser_url
-      // this.other_window_open(this.done_record.browser_url)
       this.url_open(record.browser_url, this.target_default)
-    },
-
-    // 拡張子をつけないと JSON を返してしまう
-    xconv_record_rails_side_url(record, params = {}) {
-      const key = record.convert_params.board_file_generator_params.xout_format_key
-      const info = this.XoutFormatInfo.fetch(key)
-      const url_base = this.$config.MY_SITE_URL + `/animation-files/${record.id}.${info.real_ext}`
-      const url = new URL(url_base)
-      _.each(params, (v, k) => url.searchParams.set(k, v))
-      return url.toString()
     },
   },
   computed: {

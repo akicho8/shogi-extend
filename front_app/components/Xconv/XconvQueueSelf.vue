@@ -1,5 +1,5 @@
 <template lang="pug">
-b-table(
+b-table.XconvQueueSelf(
   v-if="base.my_records.length >= 1"
   :data="base.my_records"
   :mobile-cards="false"
@@ -17,12 +17,12 @@ b-table(
       | {{row.status_info.name}}
   b-table-column(v-slot="{row}")
     template(v-if="row.successed_at")
-      .buttons.are-small.mb-0
-        b-button.mb-0(@click="base.send_file_handle(row, 'attachment')" type="is-primary" icon-left="download")
-        b-button.mb-0(@click="base.send_file_handle(row, 'inline')"                       icon-left="eye")
-        b-button.mb-0(@click="base.direct_link_handle(row)"                              icon-left="link")
-        b-button.mb-0(@click="base.other_window_open_handle(row)"                        icon-left="open-in-new")
-        b-button.mb-0(@click="base.probe_show_modal_handle(row)"                        icon-left="dots-horizontal")
+      .buttons.has-addons.are-small.mb-0
+        b-button.mb-0(@click="base.main_download_handle(row)"     icon-left="download" type="is-primary")
+        b-button.mb-0(@click="base.main_show_handle(row)"         icon-left="eye-outline")
+        b-button.mb-0(@click="base.secret_show_handle(row)"       icon-left="link" v-if="development_or_staging_p")
+        b-button.mb-0(@click="base.probe_show_modal_handle(row)"  icon-left="information-variant")
+        b-button.mb-0(@click="base.json_show_handle(row)"         icon-left="code-json" v-if="development_p")
 </template>
 
 <script>
@@ -37,4 +37,6 @@ export default {
 <style lang="sass">
 .XconvQueueSelf
   margin-top: 1.5rem
+  td
+    vertical-align: middle
 </style>

@@ -7,7 +7,7 @@ export const app_queue_self = {
 
   methods: {
     my_records_broadcasted(data) {
-      this.my_records = data.my_records
+      this.my_records = data.my_records.map(e => new this.XconvRecord(this, e))
     },
 
     done_record_broadcasted(data) {
