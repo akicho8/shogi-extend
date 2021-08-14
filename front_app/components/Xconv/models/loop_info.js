@@ -12,7 +12,7 @@ export class LoopInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "is_loop_infinite", name: "する",   type: "is-primary", message: null, },
-      { key: "is_loop_once",     name: "しない", type: "is-primary", message: null, },
+      { key: "is_loop_none",     name: "しない", type: "is-primary", message: null, },
     ]
   }
 }
