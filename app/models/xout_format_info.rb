@@ -15,7 +15,7 @@ class XoutFormatInfo
   include ApplicationMemoryRecord
   memory_record [
     # ../../front_app/components/xconv/models/xout_format_info.js
-    { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
+    { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  formatter: "animation",     override_options: {},                  force_convert_to_yuv420p: true, },
     { key: "is_format_webp",            name: "WebP",                 real_ext: "webp", formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
     { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", formatter: "animation", override_options: {},                      force_convert_to_yuv420p: false, },
     { key: "is_format_mp4_yuv420",     name: "MP4",                  real_ext: "mp4",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
