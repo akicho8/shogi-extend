@@ -32,8 +32,8 @@ class UserPreview < ActionMailer::Preview
       :board_file_generator_params => {
         :xout_format_key => "is_format_gif",
         :loop_key        => "is_loop_infinite",
-        :delay_per_one   => 1,
-        :video_fps       => 60,
+        :delay_per_one   => 1.0,
+        # :video_fps       => 60,
         :end_frames      => 1,
       },
     }

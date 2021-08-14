@@ -19,7 +19,7 @@ export const app_form = {
       viewpoint_key:      null, // 視点
       theme_key:          null, // テーマ
       delay_per_one:      null, // 表示秒数/1枚
-      video_fps:     null, // fps
+      // video_fps:     null, // fps
       end_frames:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
       raise_message:      null, // 例外メッセージ
@@ -232,7 +232,7 @@ export const app_form = {
             // animation_formatter_params: {
             loop_key: this.loop_key,
             delay_per_one: this.delay_per_one,
-            video_fps: this.video_fps,
+            // video_fps: this.video_fps,
             end_frames: this.end_frames,
             viewpoint: this.viewpoint_key,
             theme: this.theme_key,

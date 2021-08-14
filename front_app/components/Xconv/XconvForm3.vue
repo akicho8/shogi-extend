@@ -117,8 +117,8 @@
   //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
 
   // 分数形式なども受けつけるように文字列入力にすること
-  b-field.main_field(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
-    b-input(v-model="base.video_fps")
+  //- b-field.main_field(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
+  //-   b-input(v-model="base.video_fps")
 </template>
 
 <script>
