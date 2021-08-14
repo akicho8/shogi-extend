@@ -1,11 +1,11 @@
-GIT
-  remote: https://github.com/akicho8/bioshogi.git
-  revision: 082f010a2928e06a09952bc02dec3110d4bcc0b7
+PATH
+  remote: ../bioshogi
   specs:
     bioshogi (0.0.1)
       actionview
       activesupport
       memory_record
+      systemu
       table_format
       tree_support
 
