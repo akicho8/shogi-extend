@@ -1,5 +1,5 @@
 class XconvsController < ApplicationController
-  LOGIN_REQUIRED = false
+  LOGIN_REQUIRED = true
 
   if LOGIN_REQUIRED
     if false
