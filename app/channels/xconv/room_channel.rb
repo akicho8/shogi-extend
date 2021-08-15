@@ -9,6 +9,13 @@ module Xconv
       if current_user
         stream_for(current_user)
         current_user.my_records_broadcast
+
+        # 最後に変換したものを送る
+        if Rails.env.development? || true
+          if v = current_user.xconv_records.success_only.order(created_at: :desc).first
+            current_user.done_record_broadcast(v, noisy: false)
+          end
+        end
       end
     end
 

@@ -15,9 +15,11 @@ module UserXconvMethods
   end
 
   # 終了したもの
-  def done_record_broadcast(done_record)
+  def done_record_broadcast(done_record, params = {})
     bc_params = {
       :done_record => done_record.as_json(XconvRecord.json_struct_for_done_record),
+      :noisy => true,
+      **params,
     }
     Xconv::RoomChannel.broadcast_to(self, {bc_action: :done_record_broadcasted, bc_params: bc_params})
   end
