@@ -257,6 +257,8 @@ export const app_form = {
     },
 
     i_size_danger_p() {
+      return false
+
       let r = this.math_wh_normalize_aspect_ratio(this.i_width, this.i_height)
       if (r == null) {
         return true
