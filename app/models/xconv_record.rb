@@ -240,8 +240,8 @@ class XconvRecord < ApplicationRecord
   end
 
   # for ActionMailer
-  def xout_format_info
-    XoutFormatInfo.fetch(xout_format_key)
+  def recipe_info
+    RecipeInfo.fetch(recipe_key)
   end
 
   # ダウンロード時にわかりやすい名前にする
@@ -261,8 +261,8 @@ class XconvRecord < ApplicationRecord
   private
 
   # for ActionMailer
-  def xout_format_key
-    convert_params.fetch(:board_file_generator_params).fetch(:xout_format_key)
+  def recipe_key
+    convert_params.fetch(:board_file_generator_params).fetch(:recipe_key)
   end
 
   def track(name, body = nil)

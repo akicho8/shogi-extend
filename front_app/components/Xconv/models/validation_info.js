@@ -14,7 +14,7 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `時間が${Gs.time_format_human_hms(this.MP4_TIME_MAX)}以下`,
         human_value: (c, e) => `${Gs.time_format_human_hms(e.duration)}`,
         validate: (c, e) => {
-          if (e.xout_format_info.file_type === "video") {
+          if (e.recipe_info.file_type === "video") {
             let v = e.duration
             if (v != null)  {
               return v <= this.MP4_TIME_MAX
@@ -27,7 +27,7 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `容量が${this.MP4_SIZE_MB_MAX}MB以下`,
         human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
         validate: (c, e) => {
-          if (e.xout_format_info.file_type === "video") {
+          if (e.recipe_info.file_type === "video") {
             return e.file_size <= (this.MP4_SIZE_MB_MAX * 1024 * 1024)
           }
         },
@@ -37,7 +37,7 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `容量が${this.GIF_SIZE_MB_MAX}MB以下`,
         human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
         validate: (c, e) => {
-          if (e.xout_format_info.file_type === "image") {
+          if (e.recipe_info.file_type === "image") {
             return e.file_size <= (this.GIF_SIZE_MB_MAX * 1024 * 1024)
           }
         },
@@ -47,7 +47,7 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `アスペクト比が${c.TWITTER_ASPECT_RATIO_MAX}以下`,
         human_value: (c, e) => Gs.number_round(e.aspect_ratio_max, 2),
         validate: (c, e) => {
-          if (e.xout_format_info.file_type === "video") {
+          if (e.recipe_info.file_type === "video") {
             return e.aspect_ratio_max <= c.TWITTER_ASPECT_RATIO_MAX
           }
         },
@@ -57,7 +57,7 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => "色形式が YUV420",
         human_value: (c, e) => e.pix_fmt,
         validate: (c, e) => {
-          if (e.xout_format_info.file_type === "video") {
+          if (e.recipe_info.file_type === "video") {
             if (e.pix_fmt) {
               return e.pix_fmt === "yuv420p"
             }

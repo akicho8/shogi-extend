@@ -3,7 +3,7 @@ import { ViewpointInfo     } from "./models/viewpoint_info.js"
 import { ThemeInfo         } from "./models/theme_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
-import { XoutFormatInfo    } from "./models/xout_format_info.js"
+import { RecipeInfo    } from "./models/recipe_info.js"
 
 const TWITTER_ASPECT_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
 
@@ -23,7 +23,7 @@ export const app_form = {
       end_frames:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
       raise_message:      null, // 例外メッセージ
-      xout_format_key:    null, // 変換先
+      recipe_key:    null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xconv_record: null, // POSTして変換待ちになっているレコード
@@ -195,8 +195,8 @@ export const app_form = {
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)              },
     ThemeInfo()                { return ThemeInfo                                            },
     theme_info()               { return ThemeInfo.fetch(this.theme_key)                      },
-    XoutFormatInfo()           { return XoutFormatInfo                                       },
-    xout_format_info()         { return this.base.XoutFormatInfo.fetch(this.xout_format_key) },
+    RecipeInfo()           { return RecipeInfo                                       },
+    recipe_info()         { return this.base.RecipeInfo.fetch(this.recipe_key) },
 
     end_seconds() { return this.number_floor(this.video_speed * this.end_frames, 2) },
 
@@ -227,7 +227,7 @@ export const app_form = {
 
           // パラメータの差異はなるべくここだけで吸収する
           board_file_generator_params: {
-            xout_format_key: this.xout_format_key,
+            recipe_key: this.recipe_key,
             // for AnimationFormatter
             // animation_formatter_params: {
             loop_key: this.loop_key,

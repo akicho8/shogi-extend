@@ -1,11 +1,11 @@
 <template lang="pug">
 .XconvForm3
-  b-field.main_field.xout_format_key_field(label="出力フォーマット" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
+  b-field.main_field.recipe_key_field(label="出力フォーマット" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
-      b-dropdown(v-model="base.xout_format_key" @active-change="sound_play('click')")
+      b-dropdown(v-model="base.recipe_key" @active-change="sound_play('click')")
         template(#trigger)
-          b-button(:label="base.xout_format_info.name" icon-right="menu-down")
-        template(v-for="e in base.XoutFormatInfo.values")
+          b-button(:label="base.recipe_info.name" icon-right="menu-down")
+        template(v-for="e in base.RecipeInfo.values")
           template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
             b-dropdown-item(:value="e.key")
               .media
@@ -20,9 +20,9 @@
                   //- small {{e.message}}
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
-  b-field.main_field(v-if="development_or_staging_p" :label="base.XoutFormatInfo.field_label" :message="base.XoutFormatInfo.fetch(base.xout_format_key).message || base.XoutFormatInfo.field_message")
-    b-select(type="number" v-model="base.xout_format_key" @input="sound_play('click')")
-      option(v-for="e in base.XoutFormatInfo.values" :value="e.key" v-text="e.name")
+  b-field.main_field(v-if="development_or_staging_p" :label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
+    b-select(type="number" v-model="base.recipe_key" @input="sound_play('click')")
+      option(v-for="e in base.RecipeInfo.values" :value="e.key" v-text="e.name")
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
   b-field.main_field(grouped v-if="$config.STAGE !== 'production'")
@@ -84,7 +84,7 @@
     b-slider(:indicator="true" :tooltip="false" v-model="base.video_speed" :min="0.1" :max="5" :step="0.1")
 
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
-  // SimpleRadioButtons(:base="base" :model="base.XoutFormatInfo" var_name="xout_format_key")
+  // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
 
   //- b-collapse(:open="false" position="is-bottom")
   //-   template(#trigger="props")
@@ -95,7 +95,7 @@
   //-       template(v-else)
   //-         | 隠す
 
-  SimpleRadioButtons.main_field(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.xout_format_info.loop_key_enable")
+  SimpleRadioButtons.main_field(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
   //- b-field.main_field(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
@@ -120,7 +120,7 @@ export default {
 .XconvForm3
   // > .field:not(:first-child)
   //   margin-top: 1.5rem
-  .xout_format_key_field
+  .recipe_key_field
     .media-left
       min-width: 4ch
   .animation_size_field

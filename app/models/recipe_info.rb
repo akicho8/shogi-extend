@@ -11,10 +11,10 @@
 # ・yuv420p にすることで Twitter に投稿できる
 #
 
-class XoutFormatInfo
+class RecipeInfo
   include ApplicationMemoryRecord
   memory_record [
-    # ../../front_app/components/xconv/models/xout_format_info.js
+    # ../../front_app/components/xconv/models/recipe_info.js
     { key: "is_format_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_mp4",           media_p: true, override_options: {},                        },
     { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif", media_p: true, override_options: {},                   },
     { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png", media_p: true, override_options: {},                      },

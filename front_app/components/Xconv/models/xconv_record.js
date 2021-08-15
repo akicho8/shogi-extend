@@ -1,6 +1,6 @@
 import { Gs } from "../../../components/models/gs.js"
 import { Model } from "./model.js"
-import { XoutFormatInfo } from "./xout_format_info.js"
+import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"
 import _ from "lodash"
 
@@ -64,16 +64,16 @@ export class XconvRecord extends Model {
 
   // private
 
-  get xout_format_key() {
-    return this.convert_params.board_file_generator_params.xout_format_key
+  get recipe_key() {
+    return this.convert_params.board_file_generator_params.recipe_key
   }
 
-  get xout_format_info() {
-    return XoutFormatInfo.fetch(this.xout_format_key)
+  get recipe_info() {
+    return RecipeInfo.fetch(this.recipe_key)
   }
 
   get real_ext() {
-    return this.xout_format_info.real_ext
+    return this.recipe_info.real_ext
   }
 
   // Rails側のURL

@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class XoutFormatInfo extends MemoryRecord {
+export class XformatInfo extends MemoryRecord {
   static get field_label() {
     return "出力フォーマット"
   }
@@ -11,7 +11,7 @@ export class XoutFormatInfo extends MemoryRecord {
 
   static get define() {
     return [
-      // ../../../app/models/xout_format_info.rb
+      // ../../../app/models/xformat_info.rb
       { key: "is_format_mp4",  name: "MP4",  real_ext: "mp4",  loop_key_enable: false,  file_type: "video", environment: ["development", "staging", "production"], title: "一般的な動画形式",      message: "◎Twitter ◎画質 ◎シーク", media_p: true,  },
       { key: "is_format_gif",  name: "GIF",  real_ext: "gif",  loop_key_enable: true,   file_type: "image", environment: ["development", "staging", "production"], title: "一般的な画像切替形式",  message: "◎Twitter ◎画質 ×シーク", media_p: true,  },
       { key: "is_format_apng", name: "APNG", real_ext: "apng", loop_key_enable: true,   file_type: "image", environment: ["development", "staging", "production"], title: "Twitterが対応をやめた", message: "×Twitter ◎画質 ×シーク", media_p: true,  },

@@ -5,11 +5,11 @@
 
   template(v-if="base.done_record.successed_at")
     .is_review_box
-      template(v-if="base.done_record.xout_format_info.file_type === 'video'")
+      template(v-if="base.done_record.recipe_info.file_type === 'video'")
         video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
-      template(v-if="base.done_record.xout_format_info.file_type === 'image'")
+      template(v-if="base.done_record.recipe_info.file_type === 'image'")
         img(:src="base.done_record.rails_side_inline_url")
-      template(v-if="base.done_record.xout_format_info.file_type === 'zip'")
+      template(v-if="base.done_record.recipe_info.file_type === 'zip'")
         b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.has-addons.is-centered.mt-4

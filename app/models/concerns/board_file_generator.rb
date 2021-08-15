@@ -6,7 +6,7 @@ class BoardFileGenerator
   # FIXME: これらは params ではなく options にいれるべき？
   # params のうち、このクラスだけで扱うパラメータ
   PARAM_KEYS = [
-    :xout_format_key,
+    :recipe_key,
     :turn,
     # :video_fps,
     :basename_prefix,
@@ -35,7 +35,7 @@ class BoardFileGenerator
   attr_accessor :record
   attr_accessor :params
 
-  delegate :real_ext, to: :xout_format_info
+  delegate :real_ext, to: :recipe_info
 
   def initialize(record, params = {}, options = {}, &block)
     @record = record
@@ -103,7 +103,7 @@ class BoardFileGenerator
         end
       end
 
-      opts.update(xout_format_info.override_options)
+      opts.update(recipe_info.override_options)
 
       opts
     }.call
@@ -138,12 +138,12 @@ class BoardFileGenerator
     @real_path ||= self.class.cache_root.join(*dir_parts, disk_filename)
   end
 
-  def xout_format_key
-    params[:xout_format_key].presence || "is_format_png"
+  def recipe_key
+    params[:recipe_key].presence || "is_format_png"
   end
 
-  def xout_format_info
-    XoutFormatInfo.fetch(xout_format_key)
+  def recipe_info
+    RecipeInfo.fetch(recipe_key)
   end
   # system 以下に格納するとき用のファイル名
   # 同じパラメータなら同じになるようにする
@@ -194,7 +194,7 @@ class BoardFileGenerator
   end
 
   def ffprobe_info
-    if xout_format_info.media_p
+    if recipe_info.media_p
       if real_path.exist?
         Dir.chdir(real_path.dirname) do
           {
@@ -208,7 +208,7 @@ class BoardFileGenerator
 
   def ffprobe_direct
     # @ffprobe_direct ||= -> {
-    if xout_format_info.media_p
+    if recipe_info.media_p
       if real_path.exist?
         JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
       end
@@ -232,7 +232,7 @@ class BoardFileGenerator
   def unique_key_source_string
     [
       PAPPER,
-      xout_format_info.key,
+      recipe_info.key,
       record.sfen_hash,
       turn,
       xxx_formatter_options,
@@ -241,7 +241,7 @@ class BoardFileGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.public_send(xout_format_info.to_method, xxx_formatter_options)
+    parser.public_send(recipe_info.to_method, xxx_formatter_options)
   end
 
   def force_generate
@@ -287,7 +287,7 @@ class BoardFileGenerator
   # "-strict -2" はAACを使う場合に指定する
   # https://www.84kure.com/blog/2014/10/13/ffmpeg-%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E8%A6%9A%E3%81%88%E6%9B%B8%E3%81%8D/
   # def yuv420_convert(bin)
-  #   if xout_format_info.force_convert_to_yuv420p
+  #   if recipe_info.force_convert_to_yuv420p
   #     i_path = real_path.dirname + "i_#{real_path.basename}"
   #     o_path = real_path.dirname + "o_#{real_path.basename}"
   #

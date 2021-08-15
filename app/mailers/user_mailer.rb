@@ -136,7 +136,7 @@ class UserMailer < ApplicationMailer
     attachments[xconv_record.filename_human] = generator.real_path.read
 
     mail({
-        subject: "#{xconv_record.xout_format_info.name} 変換完了 (添付あり)",
+        subject: "#{xconv_record.recipe_info.name} 変換完了 (添付あり)",
         to: "#{xconv_record.user.name} <#{xconv_record.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n"),
