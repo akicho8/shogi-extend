@@ -43,6 +43,7 @@ import { app_queue_self } from "./app_queue_self.js"
 import { app_form         } from "./app_form.js"
 import { app_probe_show         } from "./app_probe_show.js"
 import { app_foo_show         } from "./app_foo_show.js"
+import { app_help         } from "./app_help.js"
 
 import { XconvRecord } from "./models/xconv_record.js"
 
@@ -63,6 +64,7 @@ export default {
     app_form,
     app_probe_show,
     app_foo_show,
+    app_help,
   ],
 
   data() {

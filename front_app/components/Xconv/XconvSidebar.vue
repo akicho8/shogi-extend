@@ -5,8 +5,10 @@ b-sidebar.is-unselectable.XconvSidebar(fullheight right overlay v-model="base.si
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
-        b-menu-list(label="対局")
-          b-menu-item.is_active_unset(icon="home-account" label="部屋に入る")
+        //- b-menu-list(label="対局")
+        //-   b-menu-item.is_active_unset(icon="home-account" label="部屋に入る")
+        b-menu-list(label="その他")
+          b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方" @click="base.general_help_modal_handle")
 
       //- .style_container.box.mt-5
       //-   .title.is-5 スタイル設定
@@ -42,21 +44,21 @@ export default {
   .menu-label
     margin-top: 2em
 
-  .b-slider
-    .b-slider-thumb-wrapper.has-indicator
-      .b-slider-thumb
-        padding: 8px 4px
-        font-size: 10px
+  // .b-slider
+  //   .b-slider-thumb-wrapper.has-indicator
+  //     .b-slider-thumb
+  //       padding: 8px 4px
+  //       font-size: 10px
 
-  .style_container
-    +mobile
-      display: none
-
-  .user_account
-    img
-      max-height: none
-      height: 32px
-      width: 32px
+  // .style_container
+  //   +mobile
+  //     display: none
+  // 
+  // .user_account
+  //   img
+  //     max-height: none
+  //     height: 32px
+  //     width: 32px
 
   .menu-list
     .icon

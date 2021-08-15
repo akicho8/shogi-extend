@@ -31,7 +31,7 @@ export const app_action_cable = {
         this.ac_room.perform(action, {
           ...this.ac_room_perform_default_params(),
           ...params,
-        }) // --> app/channels/share_board/room_channel.rb
+        }) // --> app/channels/xconv/room_channel.rb
       }
     },
 
