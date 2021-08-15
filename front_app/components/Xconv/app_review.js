@@ -1,4 +1,4 @@
-import { ReviewValidationInfo } from "./models/validation_info.js"
+import { ValidationInfo } from "./models/validation_info.js"
 import _ from "lodash"
 
 export const app_review = {
@@ -50,9 +50,9 @@ export const app_review = {
       if (this.done_record) {
         if (this.done_record.successed_at) {
           if (this.done_record.xout_format_info.media_p) {
-            ReviewValidationInfo.values.forEach(e => {
+            ValidationInfo.values.forEach(e => {
               const valid_p = e.validate(this, this.done_record)
-              if (typeof valid_p === undefined) {
+              if (valid_p == null) {
               } else {
                 list.push({
                   valid_p: valid_p,
