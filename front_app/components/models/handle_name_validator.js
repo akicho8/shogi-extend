@@ -1,6 +1,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import { AnySupport } from "./any_support.js"
+import { Gs } from "./gs.js"
 import { parse as TwitterEmojiParser } from 'twemoji-parser'
 
 export const HandleNameValidator = {
@@ -30,14 +30,14 @@ export const HandleNameValidator = {
       return null
     } else {
       const pepper = dayjs().format("YYYY-MM-DD")
-      const hash_number = AnySupport.hash_number_from_str([pepper, s].join("-"))
-      const prefix = AnySupport.ary_cycle_at(this.prefix_list, hash_number)
+      const hash_number = Gs.hash_number_from_str([pepper, s].join("-"))
+      const prefix = Gs.ary_cycle_at(this.prefix_list, hash_number)
       return `${prefix}${options.name}を入力してください`
     }
   },
   valid(s) {
     s = _.trim(s)
-    s = AnySupport.hankaku_format(s)
+    s = Gs.hankaku_format(s)
     let error = false
     if (!error) {
       error = (s.length === 0)

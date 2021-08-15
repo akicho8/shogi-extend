@@ -6,7 +6,7 @@ import twemoji from 'twemoji'
 
 const strip_tags = require('striptags')
 
-import { AnySupport } from "../components/models/any_support.js"
+import { Gs } from "../components/models/gs.js"
 import { HandleNameParser } from "../components/models/handle_name_parser.js"
 
 import Autolinker from 'autolinker'
@@ -15,7 +15,7 @@ import _ from "lodash"
 
 export default {
   methods: {
-    ...AnySupport,
+    ...Gs,
 
     ua_icon_key_get() {
       if (typeof window === "undefined") {
@@ -40,25 +40,6 @@ export default {
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // lodash の _.isEmpty は不自然な挙動なので使うべからず
-    blank_p(value) {
-      return value === undefined || value === null ||
-        (typeof value === "object" && Object.keys(value).length === 0) ||
-        (typeof value === "string" && value.trim().length === 0)
-    },
-
-    present_p(value) {
-      return !this.blank_p(value)
-    },
-
-    presence(value) {
-      if (this.blank_p(value)) {
-        return null
-      }
-      return value
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -128,88 +109,6 @@ export default {
         return v
       }
     },
-
-    rand(n) {
-      return Math.floor(Math.random() * n)
-    },
-
-    // float_to_perc(0.33, 2)    // => 33
-    // float_to_perc(0.333, 2)   // => 33.3
-    // float_to_perc(0.33333, 2) // => 33.33
-    float_to_perc(v, precision = 0) {
-      return this.number_floor(v * 100, precision)
-    },
-
-    // 0.1234 -> 12.34
-    float_to_perc2(v) {
-      const base = 100
-      return Math.trunc(v * 100 * base) / base
-    },
-
-    // 0.1234 -> 12
-    float_to_integer_percentage(v) {
-      return Math.trunc(v * 100)
-    },
-
-    // number_floor(0.3, 2)   // => 0.3
-    // number_floor(0.33, 2)  // => 0.33
-    // number_floor(0.333, 2) // => 0.33
-    number_floor(v, precision = 0) {
-      return _.floor(v, precision)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 片方を1に正規化した比率
-    //
-    //  100 : 50 = x : 1
-    //  50x = 100
-    //  x = 100 / 50
-    //  x = 2
-    //  ↓
-    //  a : b = x : 1
-    //  bx = a
-    //  x = a / b
-    //
-    math_wh_normalize_aspect_ratio(w, h) {
-      w = w || 0
-      h = h || 0
-      if (w === 0 || h === 0) {
-        return
-      }
-      if (w >= h) {
-        w = w / h
-        h = 1
-      } else {
-        h = h / w
-        w = 1
-      }
-      return [w, h]
-    },
-
-    // 人間向け表記の比率
-    // 片方を1にするのではなく 4:3 などと表示する
-    // ただOGPは 40:21 になり 1.91:1 の方が人間向け表記としてよく使われている
-    math_wh_gcd_aspect_ratio(w, h) {
-      w = w || 0
-      h = h || 0
-      if (w === 0 || h === 0) {
-        return
-      }
-      const v = this.math_gcd(w, h)
-      w = w / v
-      h = h / v
-      return [w, h]
-    },
-
-    math_gcd(a, b) {
-      if (b === 0) {
-        return a
-      }
-      return this.math_gcd(b, a % b)
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
 
     // list 内のインデックス from の要素を to に移動
     // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
