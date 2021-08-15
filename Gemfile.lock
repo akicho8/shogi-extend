@@ -5,7 +5,6 @@ PATH
       actionview
       activesupport
       memory_record
-      systemu
       table_format
       tree_support
 

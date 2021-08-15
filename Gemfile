@@ -129,7 +129,8 @@ end
 
 gem "bioshogi", path: "~/src/bioshogi"
 # gem "bioshogi", github: "akicho8/bioshogi"
-gem "rmagick"                   # for Bioshogi to_img method (mini-magickに変更したい)
+gem "rmagick"                   # for Bioshogi to_png
+gem "systemu"                   # for Bioshogi to_mp4
 
 gem "nokogiri" # for Swars::Agent
 
@@ -138,7 +139,7 @@ gem "faraday_middleware"        # リダイレクト先おっかけ機能付与
 
 gem "acts-as-taggable-on"
 
-gem "rubyzip", "~> 2.3.0", require: "zip" # KIF一括ダウンロード用
+gem "rubyzip", "~> 2.3.0", require: "zip" # KIF一括ダウンロード用, bioshogi to_animation_zip
 
 gem "whenever", require: false
 
@@ -186,6 +187,3 @@ gem 'sidekiq'
 gem 'redis-namespace'
 
 gem "puma_worker_killer"
-
-# ffmpeg 外部実行のため
-gem "systemu"
