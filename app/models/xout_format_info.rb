@@ -19,6 +19,7 @@ class XoutFormatInfo
     { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif", override_options: {},                   },
     { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png", override_options: {},                      },
     { key: "is_format_png",             name: "PNG",                  real_ext: "png",  to_method: "to_png",           override_options: {},                      },
+    { key: "is_format_zip",             name: "ZIP",                  real_ext: "zip",  to_method: "to_animation_zip", override_options: {},                      },
     # { key: "is_format_webp",            name: "WebP",                 real_ext: "webp", to_method: "image",          override_options: {},                      },
     # { key: "is_format_mov",             name: "MOV",                  real_ext: "mov",  to_method: "animation",      override_options: {},                        },
     # { key: "is_format_jpg",             name: "JPG",                  real_ext: "jpg",  to_method: "image",          override_options: {},                      },

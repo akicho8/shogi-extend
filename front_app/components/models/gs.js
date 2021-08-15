@@ -1,4 +1,5 @@
 import _ from "lodash"
+import dayjs from "dayjs"
 
 // vue_support.js の methods に追加する
 export const Gs = {
@@ -141,4 +142,16 @@ export const Gs = {
   number_round(v, precision = 0) { return _.round(v, precision) },
 
   ////////////////////////////////////////////////////////////////////////////////
+
+  time_format_human_hms(seconds) {
+    let format = ""
+    if (seconds < 60) {
+      format = "s秒"
+    } else if (seconds < 60 * 60) {
+      format = "m分s秒"
+    } else {
+      format = "H時間m分"
+    }
+    return dayjs.unix(seconds).format(format)
+  },
 }

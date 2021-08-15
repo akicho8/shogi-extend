@@ -26,7 +26,7 @@
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
   b-field.main_field(grouped v-if="$config.STAGE !== 'production'")
-    b-field(label="プリセット" :message="[base.animation_size_info.message]")
+    b-field(label="サイズプリセット" :message="[base.animation_size_info.message]")
       b-select(v-model="base.animation_size_key" @input="base.animation_size_key_input_handle" @click.native="sound_play('click')")
         option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name" v-if="e.environment == null || e.environment.includes($config.STAGE)")
     b-field.video_width_height(label="サイズ" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.animation_size_info.key === 'is_custom'")
@@ -34,7 +34,7 @@
       b-input(required type="number" v-model.number="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" expanded placeholder="height")
 
   b-field.main_field(grouped v-if="$config.STAGE !== 'production'")
-    b-field.animation_size_field(label="プリセット" :message="[base.animation_size_info.message]")
+    b-field.animation_size_field(label="サイズプリセット" :message="[base.animation_size_info.message]")
       b-dropdown.control(v-model="base.animation_size_key" @active-change="e => e && sound_play('click')" @input="base.animation_size_key_input_handle")
         template(#trigger)
           b-button(:label="base.animation_size_info.option_name" icon-right="menu-down")
@@ -55,11 +55,11 @@
 
   //////////////////////////////////////////////////////////////////////////////// 縦
   //- b-field.main_field
-  //-   b-field(label="プリセット" :message="[base.animation_size_info.message]" v-if="false")
+  //-   b-field(label="サイズプリセット" :message="[base.animation_size_info.message]" v-if="false")
   //-     b-select(v-model="base.animation_size_key" @input="base.animation_size_key_input_handle")
   //-       option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name")
 
-  b-field.main_field.animation_size_field(label="プリセット" :message="[base.animation_size_info.message]")
+  b-field.main_field.animation_size_field(label="サイズプリセット" :message="[base.animation_size_info.message]")
     .control
       // @active-change="sound_play('click')"
       b-dropdown(v-model="base.animation_size_key" @active-change="e => e && sound_play('click')" @input="base.animation_size_key_input_handle")

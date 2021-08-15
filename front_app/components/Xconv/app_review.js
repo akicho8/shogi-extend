@@ -1,4 +1,4 @@
-import { ReviewValidationInfo } from "./models/review_validation_info.js"
+import { ReviewValidationInfo } from "./models/validation_info.js"
 import _ from "lodash"
 
 export const app_review = {
@@ -47,18 +47,22 @@ export const app_review = {
   computed: {
     review_error_messages() {
       const list = []
-      if (this.done_record && this.done_record.successed_at) {
-        ReviewValidationInfo.values.forEach(e => {
-          const valid_p = e.validate(this, this.done_record)
-          if (typeof valid_p === undefined) {
-          } else {
-            list.push({
-              valid_p: valid_p,
-              should_be: e.should_be(this),
-              human_value: e.human_value(this, this.done_record),
+      if (this.done_record) {
+        if (this.done_record.successed_at) {
+          if (this.done_record.xout_format_info.validation_run_p) {
+            ReviewValidationInfo.values.forEach(e => {
+              const valid_p = e.validate(this, this.done_record)
+              if (typeof valid_p === undefined) {
+              } else {
+                list.push({
+                  valid_p: valid_p,
+                  should_be: e.should_be(this),
+                  human_value: e.human_value(this, this.done_record),
+                })
+              }
             })
           }
-        })
+        }
       }
       // return this.presence(list.flat())
       return list

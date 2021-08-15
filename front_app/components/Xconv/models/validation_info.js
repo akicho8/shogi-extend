@@ -1,25 +1,29 @@
 import MemoryRecord from 'js-memory-record'
 import { Gs } from "../../../components/models/gs.js"
+import dayjs from "dayjs"
 
 export class ReviewValidationInfo extends MemoryRecord {
+  static MOVIE_TIME_MAX = 140
+  static MOVIE_SIZE_KB_MAX = 512
+  
   static get define() {
     return [
       {
         name: "時間",
-        should_be: c => "時間が140秒以下",
-        human_value: (c, e) => `${e.duration}秒`,
+        should_be: c => `時間が${Gs.time_format_human_hms(this.MOVIE_TIME_MAX)}以下`,
+        human_value: (c, e) => `${Gs.time_format_human_hms(e.duration)}`,
         validate: (c, e) => {
           let v = e.duration
           if (v != null)  {
-            return v <= 140
+            return v <= this.MOVIE_TIME_MAX
           }
         },
       },
       {
         name: "容量",
-        should_be: c => "容量が512MB以下",
+        should_be: c => `容量が${this.MOVIE_SIZE_KB_MAX}MB以下`,
         human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
-        validate: (c, e) => e.file_size <= (512 * 1024 * 1024),
+        validate: (c, e) => e.file_size <= (this.MOVIE_SIZE_KB_MAX * 1024 * 1024),
       },
       {
         name: "アスペクト比",
@@ -28,8 +32,8 @@ export class ReviewValidationInfo extends MemoryRecord {
         validate: (c, e) => e.aspect_ratio_max <= c.TWITTER_ASPECT_RATIO_MAX,
       },
       {
-        name: "色情報形式",
-        should_be: c => "色情報形式が YUV420",
+        name: "色形式",
+        should_be: c => "色形式が YUV420",
         human_value: (c, e) => e.pix_fmt,
         validate: (c, e) => {
           if (e.pix_fmt) {
