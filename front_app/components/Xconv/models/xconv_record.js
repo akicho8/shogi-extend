@@ -1,3 +1,4 @@
+import { Gs } from "../../../components/models/gs.js"
 import { Model } from "./model.js"
 import { XoutFormatInfo } from "./xout_format_info.js"
 import { StatusInfo } from "./status_info.js"
@@ -23,6 +24,42 @@ export class XconvRecord extends Model {
 
   get status_info() {
     return StatusInfo.fetch(this.status_key)
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// video 情報
+
+  get video_stream() {
+    const streams = this.ffprobe_info?.direct_format?.streams || []
+    return streams[0] || {}
+  }
+
+  get pix_fmt() {
+    if (this.video_stream.codec_name === "h264") {
+      return this.video_stream.pix_fmt
+    }
+  }
+
+  get duration() {
+    let v = Gs.presence(this.video_stream.duration)
+    if (v) {
+      return Number(v)
+    }
+  }
+
+  get width() {
+    return this.video_stream.width
+  }
+
+  get height() {
+    return this.video_stream.height
+  }
+
+  get aspect_ratio() {
+    return Gs.math_wh_normalize_aspect_ratio(this.width, this.height)
+  }
+
+  get aspect_ratio_max() {
+    return Math.max(...this.aspect_ratio)
   }
 
   // private

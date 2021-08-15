@@ -1,14 +1,11 @@
 <template lang="pug">
 .XconvReview.column.is-half(v-if="base.done_record")
-  //- b-message.mt-4(title="失敗" :closable="false" type="is-warning" v-if="base.done_record.errored_at")
-  //-   | {{base.done_record.error_message}}
   b-notification(:closable="false" type="is-danger" v-if="base.done_record.errored_at")
     | {{base.done_record.error_message}}
 
   template(v-if="base.done_record.successed_at")
-    //- .box
     .is_review_box
-      template(v-if="base.done_xout_format_info.respond_html_tag === 'video'")
+      template(v-if="base.done_record.xout_format_info.respond_html_tag === 'video'")
         video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
       template(v-else)
         img(:src="base.done_record.rails_side_inline_url")
@@ -20,17 +17,6 @@
       b-button(@click="base.probe_show_modal_handle(base.done_record)"  icon-left="information-variant")
       b-button(@click="base.json_show_handle(base.done_record)"         icon-left="code-json" v-if="development_p")
       b-button(@click="base.close_handle"                               icon-left="close")
-
-      //- b-button( @click="base.send_file_handle(base.done_record, 'inline')"     type="is-primary" icon-left="download" v-if="development_p") inline
-      //- b-button( @click="base.send_file_handle(base.done_record, 'attachment')" type="is-primary" icon-left="download") ダウンロード
-      //- b-button( @click="base.secret_show_handle(base.done_record)"                               icon-left="link") 直リン
-      //- b-button( @click="base.main_show_handle(base.done_record)"                         icon-left="open-in-new") 別で開く
-      //- b-button( @click="base.probe_show_modal_handle(base.done_record)"                          icon-left="information")
-
-  b-message.mt-5(v-if="base.review_error_messages" :closable="false" type="is-danger" title="Tweetできない原因")
-    ul
-      template(v-for="e in base.review_error_messages")
-        li {{e}}
 
   b-message.mt-5(v-if="base.done_record.ffprobe_info && false")
     | {{JSON.stringify(base.done_record.ffprobe_info.pretty_format.streams[0], null, 4)}}

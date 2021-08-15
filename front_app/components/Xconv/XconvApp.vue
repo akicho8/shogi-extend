@@ -19,6 +19,7 @@
       .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
         XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
         XconvReview(:base="base")
+        XconvValidation(:base="base")
         .column.is-half
           b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
             b-tab-item(label="あなた")

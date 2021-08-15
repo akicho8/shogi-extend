@@ -1,54 +1,39 @@
 import MemoryRecord from 'js-memory-record'
+import { Gs } from "../../../components/models/gs.js"
 
 export class ReviewValidationInfo extends MemoryRecord {
   static get define() {
     return [
       {
-        name: "色情報形式",
-        validate: context => {
-          const v = context.done_record_stream.pix_fmt
-          if (v) {
-            if (context.done_record_stream.codec_name === "h264") {
-              if (v !== "yuv420p") {
-                return `色情報形式が yuv420p ではない : ${v}`
-              }
-            }
+        name: "時間",
+        should_be: c => "時間が140秒以下",
+        human_value: (c, e) => `${e.duration}秒`,
+        validate: (c, e) => {
+          let v = e.duration
+          if (v != null)  {
+            return v <= 140
           }
         },
       },
       {
-        name: "長さ",
-        validate: context => {
-          const max = 140
-          let v = context.done_record_stream.duration
-          if (v) {
-            v = Number(v)
-            if (v > max) {
-              return `長さが${max}秒を超えている : ${v}秒`
-            }
-          }
-        },
-      },
-      {
-        name: "ファイルサイズ",
-        validate: context => {
-          const max_kb = 512
-          const one_kb = 1024 * 1024
-          const v = context.done_record.file_size
-          if (v >= max_kb * one_kb) {
-            return `ファイルサイズが${max_kb}MBを超えている : ${v / one_kb}MB`
-          }
-        },
+        name: "容量",
+        should_be: c => "容量が512MB以下",
+        human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
+        validate: (c, e) => e.file_size <= (512 * 1024 * 1024),
       },
       {
         name: "アスペクト比",
-        validate: context => {
-          const v = context.math_wh_normalize_aspect_ratio(context.i_width, context.i_height)
-          if (v) {
-            const max = Math.max(...v)
-            if (max > context.TWITTER_ASPECT_RATIO_MAX) {
-              return `縦横比が${context.TWITTER_ASPECT_RATIO_MAX}を超えている : ${v.join(":")}`
-            }
+        should_be: c => `アスペクト比が${c.TWITTER_ASPECT_RATIO_MAX}以下`,
+        human_value: (c, e) => Gs.number_round(e.aspect_ratio_max, 2),
+        validate: (c, e) => e.aspect_ratio_max <= c.TWITTER_ASPECT_RATIO_MAX,
+      },
+      {
+        name: "色情報形式",
+        should_be: c => "色情報形式が YUV420",
+        human_value: (c, e) => e.pix_fmt,
+        validate: (c, e) => {
+          if (e.pix_fmt) {
+            return e.pix_fmt === "yuv420p"
           }
         },
       },
