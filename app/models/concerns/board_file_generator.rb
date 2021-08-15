@@ -165,19 +165,16 @@ class BoardFileGenerator
   # end
 
   def basename_human_parts(direct_format)
+    raise ArgumentError if direct_format.blank?
+
     parts = []
-    # parts << [xxx_formatter_options[:width], xxx_formatter_options[:height]].join("x")
-    # if xout_format_info.force_convert_to_yuv420p
-    #   ffprobe_direct
-    #   parts << "#{video_fps}fps"
-    # end
     e = direct_format["streams"][0]
-    if (w = e["coded_width"]) && (h = e["coded_height"])
+    if (w = e["width"]) && (h = e["height"])
       parts << "#{w}x#{h}"
     end
-    if real_ext.in?(["mp4", "mov"])
+    if real_ext.in?(["mp4", "mov", "gif"])
       if v = e["r_frame_rate"]
-        parts << "#{v.to_i}fps"
+        parts << "#{v.to_i}fps" # おかしい？
       end
       if v = e["bit_rate"]
         parts << "br#{v.to_i / 1024}Kbit"
@@ -191,25 +188,30 @@ class BoardFileGenerator
     else
       # ...
     end
+
     # end
     parts
   end
 
   def ffprobe_info
-    if real_path.exist?
-      Dir.chdir(real_path.dirname) do
-        {
-          :pretty_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner -pretty #{real_path.basename}`),
-          :direct_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner         #{real_path.basename}`),
-        }
+    if xout_format_info.media_p
+      if real_path.exist?
+        Dir.chdir(real_path.dirname) do
+          {
+            :pretty_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner -pretty #{real_path.basename}`),
+            :direct_format => JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner         #{real_path.basename}`),
+          }
+        end
       end
     end
   end
 
   def ffprobe_direct
     # @ffprobe_direct ||= -> {
-    if real_path.exist?
-      JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
+    if xout_format_info.media_p
+      if real_path.exist?
+        JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
+      end
     end
     # }.call
   end

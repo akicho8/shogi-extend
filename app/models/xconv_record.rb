@@ -246,13 +246,16 @@ class XconvRecord < ApplicationRecord
 
   # ダウンロード時にわかりやすい名前にする
   def filename_human
-    basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format)).join("_")
-    filename = "#{basename}.#{generator.real_ext}"
+    if ffprobe_info
+      basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format)).join("_")
+    else
+      basename = nil
+    end
     [
       id,
       created_at.strftime("%Y%m%d%H%M%S"),
-      filename,
-    ].join("_")
+      basename,
+    ].compact.join("_") + "." + generator.real_ext
   end
 
   private

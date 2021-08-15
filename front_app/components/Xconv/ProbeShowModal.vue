@@ -9,7 +9,9 @@
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
     template(v-if="record.ffprobe_info")
-      | {{JSON.stringify(record.ffprobe_info.pretty_format.streams[0], null, 4)}}
+      | {{pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
+    template(v-else)
+      | ?
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる

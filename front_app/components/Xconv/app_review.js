@@ -49,7 +49,7 @@ export const app_review = {
       const list = []
       if (this.done_record) {
         if (this.done_record.successed_at) {
-          if (this.done_record.xout_format_info.validation_run_p) {
+          if (this.done_record.xout_format_info.media_p) {
             ReviewValidationInfo.values.forEach(e => {
               const valid_p = e.validate(this, this.done_record)
               if (typeof valid_p === undefined) {

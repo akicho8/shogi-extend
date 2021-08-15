@@ -7,8 +7,10 @@
     .is_review_box
       template(v-if="base.done_record.xout_format_info.respond_html_tag === 'video'")
         video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
-      template(v-else)
+      template(v-if="base.done_record.xout_format_info.respond_html_tag === 'image'")
         img(:src="base.done_record.rails_side_inline_url")
+      template(v-if="base.done_record.xout_format_info.respond_html_tag === 'zip'")
+        b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.has-addons.is-centered.mt-4
       b-button(@click="base.main_download_handle(base.done_record)"     icon-left="download" type="is-primary")
@@ -17,13 +19,6 @@
       b-button(@click="base.probe_show_modal_handle(base.done_record)"  icon-left="information-variant")
       b-button(@click="base.json_show_handle(base.done_record)"         icon-left="code-json" v-if="development_p")
       b-button(@click="base.close_handle"                               icon-left="close")
-
-  b-message.mt-5(v-if="base.done_record.ffprobe_info && false")
-    | {{JSON.stringify(base.done_record.ffprobe_info.pretty_format.streams[0], null, 4)}}
-
-  template(v-if="base.done_record.successed_at && false")
-    pre
-      | {{base.done_record.browser_url}}
 </template>
 
 <script>
