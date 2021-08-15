@@ -8,9 +8,9 @@
         template(v-for="e in base.review_error_messages")
           li
             template(v-if="e.valid_p")
-              b-icon.mx-2(icon="check" type="is-success" size="is-small")
+              b-icon.mx-2(icon="check" type="is-success")
             template(v-else)
-              b-icon.mx-2(icon="alert" type="is-danger" size="is-small")
+              b-icon.mx-2(icon="alert" type="is-danger")
             span {{e.should_be}} → {{e.human_value}}
 </template>
 
