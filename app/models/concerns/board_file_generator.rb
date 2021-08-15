@@ -21,6 +21,15 @@ class BoardFileGenerator
     def cache_delete_all
       FileUtils.rm_rf(cache_root)
     end
+
+    def formatter_all_option_keys
+      @formatter_all_option_keys ||= [
+        Bioshogi::ImageFormatter,
+        Bioshogi::Mp4Formatter,
+        Bioshogi::AnimationGifFormatter,
+        Bioshogi::AnimationPngFormatter,
+      ].flat_map { |e| e.default_params.keys }
+    end
   end
 
   attr_accessor :record
@@ -69,7 +78,7 @@ class BoardFileGenerator
 
       opts = params.dup
       opts = opts.deep_symbolize_keys
-      opts = opts.slice(*Bioshogi::BinaryFormatter.all_options.keys) # 不要なオプションを取る
+      opts = opts.slice(*self.class.formatter_all_option_keys) # unique_key の揺らぎ防止
 
       # if opts[:image_preset] == "small"
       #   opts.update({
@@ -88,11 +97,9 @@ class BoardFileGenerator
       #
       # opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
 
-      default_size.each do |e|
-        if v = opts[e[:key]].presence || e[:default]
-          v = v.to_i
-          v = v.clamp(0, e[:max])
-          opts[e[:key]] = v
+      ImageSizeInfo.each do |e|
+        if v = opts[e.key].presence || e.default
+          opts[e.key] = v.to_i.clamp(-e.max, e.max)
         end
       end
 
@@ -110,7 +117,7 @@ class BoardFileGenerator
     real_path.exist?
   end
 
-  # system/ だと /s/system になってしまうので / から始めるようにする
+  # system/ だと /any/system になってしまうので / から始める
   def browser_path
     "/" + real_path.relative_path_from(Rails.public_path).to_s
   end
@@ -223,7 +230,6 @@ class BoardFileGenerator
   def unique_key_source_string
     [
       PAPPER,
-      ffmpeg_r_option,
       xout_format_info.key,
       record.sfen_hash,
       turn,
@@ -233,22 +239,12 @@ class BoardFileGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    if false
-      parser.public_send("to_#{real_ext}", xxx_formatter_options) # FIXME: やっぱりこのインターフェイスにした方がいいかも
-    else
-      if xout_format_info.formatter == "image"
-        parser.image_formatter(xxx_formatter_options.merge(image_format: real_ext)).to_blob_binary
-      else
-        # mp4 は write で吐いたファイルを読み込んで返す
-        # こちらで png を処理すると foo-1.png などが生成されて to_write_binary は "" を返してしまう
-        parser.animation_formatter(xxx_formatter_options.merge(animation_format: real_ext)).to_write_binary
-      end
-    end
+    parser.public_send(xout_format_info.to_method, xxx_formatter_options)
   end
 
   def force_generate
     real_path.dirname.mkpath
-    real_path.binwrite(yuv420_convert(to_blob))
+    real_path.binwrite(to_blob)
     Pathname("#{real_path}.rb").write(xxx_formatter_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
@@ -273,16 +269,6 @@ class BoardFileGenerator
   #   end
   # end
 
-  # 基本サイズは指定されてなくて下位互換のためOGP画像推奨サイズを初期値にしている
-  # 動画の場合は 4:3 にした方がいい
-  # 動画の場合はサイズが渡ってくる
-  def default_size
-    [
-      { key: :width,  default: 1200, max: Rails.env.development? ? 3200 : 1600, },
-      { key: :height, default:  630, max: Rails.env.development? ? 3200 : 1200, },
-    ]
-  end
-
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
   def parser_options
     {
@@ -296,50 +282,50 @@ class BoardFileGenerator
     }
   end
 
-  # "-strict -2" はAACを使う場合に指定するm
+  # "-strict -2" はAACを使う場合に指定する
   # https://www.84kure.com/blog/2014/10/13/ffmpeg-%E3%82%88%E3%81%8F%E4%BD%BF%E3%81%86%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E8%A6%9A%E3%81%88%E6%9B%B8%E3%81%8D/
-  def yuv420_convert(bin)
-    if xout_format_info.force_convert_to_yuv420p
-      i_path = real_path.dirname + "i_#{real_path.basename}"
-      o_path = real_path.dirname + "o_#{real_path.basename}"
-
-      real_path.dirname.mkpath
-      i_path.binwrite(bin)
-
-      # command = "ffmpeg -y -i #{i_path} -vf 'scale=if(gte(iw\,ih)\,min(1280\,iw)\,-2):if(lt(iw\,ih)\,min(1280\,ih)\,-2)' -c:v libx264 -x264-params crf=16 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
-      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
-
-      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
-      # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
-      audio_options = "-strict -2 -acodec aac"
-      command = "ffmpeg #{ffmpeg_r_option} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
-
-      # command = "ruby -e '1 / 0'"
-      Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
-      # Dir.chdir(real_path.dirname) do
-      case
-      when false
-        # ffmpeg が 1 で終了したことしかわからない
-        system(command, exception: true)
-      when true
-        # ffmpeg が 1 で終了したときのエラー出力がわかる
-        status, stdout, stderr = systemu(command)
-        if !status.success?
-          raise StandardError, stderr.strip
-        end
-      end
-      # end
-
-      bin = o_path.read
-
-      if Rails.env.development?
-      else
-        FileUtils.rm_f(i_path)
-        FileUtils.rm_f(o_path)
-      end
-    end
-    bin
-  end
+  # def yuv420_convert(bin)
+  #   if xout_format_info.force_convert_to_yuv420p
+  #     i_path = real_path.dirname + "i_#{real_path.basename}"
+  #     o_path = real_path.dirname + "o_#{real_path.basename}"
+  #
+  #     real_path.dirname.mkpath
+  #     i_path.binwrite(bin)
+  #
+  #     # command = "ffmpeg -y -i #{i_path} -vf 'scale=if(gte(iw\,ih)\,min(1280\,iw)\,-2):if(lt(iw\,ih)\,min(1280\,ih)\,-2)' -c:v libx264 -x264-params crf=16 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
+  #     # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
+  #
+  #     # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac #{o_path}"
+  #     # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -crf 18 -preset medium -tune stillimage #{o_path}"
+  #     audio_options = "-strict -2 -acodec aac"
+  #     command = "ffmpeg #{ffmpeg_r_option} -v warning -hide_banner -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p #{o_path}"
+  #
+  #     # command = "ruby -e '1 / 0'"
+  #     Pathname("#{real_path}.ffmpeg_command.txt").write(command.squish)
+  #     # Dir.chdir(real_path.dirname) do
+  #     case
+  #     when false
+  #       # ffmpeg が 1 で終了したことしかわからない
+  #       system(command, exception: true)
+  #     when true
+  #       # ffmpeg が 1 で終了したときのエラー出力がわかる
+  #       status, stdout, stderr = systemu(command)
+  #       if !status.success?
+  #         raise StandardError, stderr.strip
+  #       end
+  #     end
+  #     # end
+  #
+  #     bin = o_path.read
+  #
+  #     if Rails.env.development?
+  #     else
+  #       FileUtils.rm_f(i_path)
+  #       FileUtils.rm_f(o_path)
+  #     end
+  #   end
+  #   bin
+  # end
 
   # フレームレートを指定値に変換する。指定しない場合は入力ファイルの値を継承
   # http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%A4%CE%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3%A4%DE%A4%C8%A4%E1

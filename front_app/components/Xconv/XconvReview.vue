@@ -9,12 +9,12 @@
     //- .box
     .is_review_box
       template(v-if="base.done_xout_format_info.respond_html_tag === 'video'")
-        video(:src="base.done_record.browser_url" controls autoplay loop)
+        video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
       template(v-else)
-        img(:src="base.done_record.browser_url")
+        img(:src="base.done_record.rails_side_inline_url")
 
     .buttons.has-addons.is-centered.mt-4
-      b-button(@click="base.main_download_handle(base.done_record)"     icon-left="download" type="is-primary") {{base.done_record.id}}
+      b-button(@click="base.main_download_handle(base.done_record)"     icon-left="download" type="is-primary")
       b-button(@click="base.main_show_handle(base.done_record)"         icon-left="eye-outline")
       b-button(@click="base.secret_show_handle(base.done_record)"       icon-left="link" v-if="development_or_staging_p")
       b-button(@click="base.probe_show_modal_handle(base.done_record)"  icon-left="information-variant")

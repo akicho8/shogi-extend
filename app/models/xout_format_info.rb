@@ -15,16 +15,15 @@ class XoutFormatInfo
   include ApplicationMemoryRecord
   memory_record [
     # ../../front_app/components/xconv/models/xout_format_info.js
-    { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  formatter: "animation",     override_options: {},                  force_convert_to_yuv420p: true, },
-    { key: "is_format_webp",            name: "WebP",                 real_ext: "webp", formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", formatter: "animation", override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_mp4_yuv420",     name: "MP4",                  real_ext: "mp4",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
-    { key: "is_format_mov",             name: "MOV",                  real_ext: "mov",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: true,  },
-    { key: "is_format_png",             name: "PNG",                  real_ext: "png",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_jpg",             name: "JPG",                  real_ext: "jpg",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
-    # { key: "is_format_mjpeg",           name: "MJPEG",                real_ext: "mjpeg", formatter: "animation",     override_options: {},                 force_convert_to_yuv420p: false, },
-    { key: "is_format_bmp",             name: "BMP",                  real_ext: "bmp",  formatter: "image",     override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_mp4_yuv444p10le", name: "MP4 (yuv444p10le)",    real_ext: "mp4",  formatter: "animation", override_options: {},                      force_convert_to_yuv420p: false, },
-    { key: "is_format_mp4_noopt",       name: "MP4 (noopt)",          real_ext: "mp4",  formatter: "animation", override_options: {optimize_layer: false}, force_convert_to_yuv420p: true,  },
+    { key: "is_format_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_mp4",           override_options: {},                        },
+    { key: "is_format_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif", override_options: {},                   },
+    { key: "is_format_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png", override_options: {},                      },
+    { key: "is_format_png",             name: "PNG",                  real_ext: "png",  to_method: "to_png",           override_options: {},                      },
+    # { key: "is_format_webp",            name: "WebP",                 real_ext: "webp", to_method: "image",          override_options: {},                      },
+    # { key: "is_format_mov",             name: "MOV",                  real_ext: "mov",  to_method: "animation",      override_options: {},                        },
+    # { key: "is_format_jpg",             name: "JPG",                  real_ext: "jpg",  to_method: "image",          override_options: {},                      },
+    # { key: "is_format_bmp",             name: "BMP",                  real_ext: "bmp",  to_method: "image",          override_options: {},                      },
+    # { key: "is_format_mp4_yuv444p10le", name: "MP4 (yuv444p10le)",    real_ext: "mp4",  to_method: "animation",      override_options: {},                      },
+    # { key: "is_format_mp4_noopt",       name: "MP4 (noopt)",          real_ext: "mp4",  to_method: "animation",      override_options: {optimize_layer: false},   },
   ]
 end

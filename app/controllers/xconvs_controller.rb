@@ -42,7 +42,7 @@ class XconvsController < ApplicationController
     end
     respond_to do |format|
       format.json {
-        render json: xconv_record.as_json
+        render json: xconv_record.as_json(XconvRecord.json_struct_for_done_record)
       }
       format.all {
         unless generator.real_path.exist?
