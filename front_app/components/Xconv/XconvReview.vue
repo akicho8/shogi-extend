@@ -1,6 +1,9 @@
 <template lang="pug">
 .XconvReview.column.is-half(v-if="base.done_record")
-  b-notification(:closable="false" type="is-danger" v-if="base.done_record.errored_at")
+  b-message(type="is-danger" has-icon icon-size="is-medium" v-if="base.done_record.errored_at")
+    | {{base.done_record.error_message}}
+
+  b-notification(:closable="true" type="is-danger" v-if="base.done_record.errored_at && development_p")
     | {{base.done_record.error_message}}
 
   template(v-if="base.done_record.successed_at")
@@ -54,7 +57,12 @@ export default {
         border: 2px dashed $grey-lighter
         border-radius: 4px
 
-  .message
-    white-space: pre-wrap
-    word-break: break-all
+  // .message
+  // white-space: pre-wrap
+  // word-break: break-all
+  // .media-left
+  //   .icon
+  //     margin: auto
+  // .media-content
+  //   margin: auto
 </style>
