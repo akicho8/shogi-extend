@@ -18,7 +18,7 @@ export const app_form = {
       i_height:           null, // h
       viewpoint_key:      null, // 視点
       theme_key:          null, // テーマ
-      one_frame_duration:      null, // 着手秒数
+      one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
       end_frames:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)

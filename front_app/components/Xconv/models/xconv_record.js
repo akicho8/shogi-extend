@@ -62,6 +62,21 @@ export class XconvRecord extends Model {
     return Math.max(...this.aspect_ratio)
   }
 
+  // "2/1" --> 1 / 2 --> 0.5 fps
+  get frame_rate() {
+    let [n, d] = this.video_stream.r_frame_rate.split("/")
+    n = Number(n)
+    d = Number(d)
+    return Gs.number_floor(n / d, 2)
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// audio 情報
+
+  get audio_stream() {
+    const streams = this.ffprobe_info?.direct_format?.streams || []
+    return streams[1] || {}
+  }
+
   // private
 
   get recipe_key() {

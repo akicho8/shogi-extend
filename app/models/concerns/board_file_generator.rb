@@ -28,6 +28,7 @@ class BoardFileGenerator
         Bioshogi::Mp4Formatter,
         Bioshogi::AnimationGifFormatter,
         Bioshogi::AnimationPngFormatter,
+        Bioshogi::AnimationZipFormatter,
       ].flat_map { |e| e.default_params.keys }
     end
   end
@@ -71,8 +72,8 @@ class BoardFileGenerator
     FileUtils.rm_f("#{real_path}.rb")
   end
 
-  def xxx_formatter_options
-    @xxx_formatter_options ||= -> {
+  def to_method_options
+    @to_method_options ||= -> {
       # このクラスだけで扱うパラメータを除いてからチェック
       # Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
 
@@ -102,6 +103,12 @@ class BoardFileGenerator
           opts[e.key] = v.to_i.clamp(-e.max, e.max)
         end
       end
+
+      # if opts[:one_frame_duration] && opts[:end_frames]
+      #   one_frame_duration
+      # end
+      # if opts[:end_frames]
+      # fadeout_duration
 
       opts.update(recipe_info.override_options)
 
@@ -235,19 +242,19 @@ class BoardFileGenerator
       recipe_info.key,
       record.sfen_hash,
       turn,
-      xxx_formatter_options,
+      to_method_options,
     ].join(":")
   end
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.public_send(recipe_info.to_method, xxx_formatter_options)
+    parser.public_send(recipe_info.to_method, to_method_options)
   end
 
   def force_generate
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
-    Pathname("#{real_path}.rb").write(xxx_formatter_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
+    Pathname("#{real_path}.rb").write(to_method_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく
   end
 
   def dir_parts

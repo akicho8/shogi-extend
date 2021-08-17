@@ -6,7 +6,7 @@ export class LoopInfo extends MemoryRecord {
   }
 
   static get field_message() {
-    return "GIFにのみ有効だがTwitterでは1分以下ならループする"
+    return "GIFにのみ有効だけどTwitterでは1分以下ならループする"
   }
 
   static get define() {

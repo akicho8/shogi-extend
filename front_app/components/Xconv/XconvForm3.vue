@@ -80,7 +80,7 @@
     b-input(required type="number" v-model.number="base.i_width"  :min="0" :max="development_p ? 3200 : 1600" :step="1" expanded placeholder="width" )
     b-input(required type="number" v-model.number="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" expanded placeholder="height")
 
-  b-field.main_field(label="着手秒数" v-if="development_p && false")
+  b-field.main_field(label="1手N秒" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.one_frame_duration" :min="0.1" :max="5" :step="0.1")
 
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
