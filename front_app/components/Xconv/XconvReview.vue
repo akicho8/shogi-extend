@@ -5,10 +5,11 @@
 
   template(v-if="base.done_record.successed_at")
     .is_review_box
-      template(v-if="base.done_record.recipe_info.file_type === 'video'")
-        video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
-      template(v-if="base.done_record.recipe_info.file_type === 'image'")
-        img(:src="base.done_record.rails_side_inline_url")
+      .media_container
+        template(v-if="base.done_record.recipe_info.file_type === 'video'")
+          video(:src="base.done_record.rails_side_inline_url" controls autoplay loop)
+        template(v-if="base.done_record.recipe_info.file_type === 'image'")
+          img(:src="base.done_record.rails_side_inline_url")
       template(v-if="base.done_record.recipe_info.file_type === 'zip'")
         b-icon(icon="zip-box-outline" size="is-large")
 
@@ -48,9 +49,10 @@ export default {
     align-items: center
 
     // フルスクリーンでは装飾しない
-    > *:not(:fullscreen)
-      border: 2px dashed $grey-lighter
-      border-radius: 4px
+    .media_container
+      > *:not(:fullscreen)
+        border: 2px dashed $grey-lighter
+        border-radius: 4px
 
   .message
     white-space: pre-wrap
