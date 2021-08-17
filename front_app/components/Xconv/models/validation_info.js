@@ -44,8 +44,8 @@ export class ValidationInfo extends MemoryRecord {
         },
       },
       {
-        name: "音声形式",
-        should_be: c => `音声形式が AAC LC`,
+        name: "Audio形式",
+        should_be: c => `Audio形式が AAC LC`,
         human_value: (c, e) => `${e.audio_stream.codec_name} ${e.audio_stream.profile}`,
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
@@ -66,8 +66,8 @@ export class ValidationInfo extends MemoryRecord {
         },
       },
       {
-        name: "色形式",
-        should_be: c => "色形式が YUV420",
+        name: "画素形式",
+        should_be: c => "画素形式が YUV420",
         human_value: (c, e) => e.pix_fmt,
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
