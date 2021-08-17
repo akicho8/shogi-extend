@@ -180,18 +180,18 @@ class BoardFileGenerator
       parts << "#{w}x#{h}"
     end
     if real_ext.in?(["mp4", "mov", "gif"])
-      if v = e["r_frame_rate"]
-        parts << "#{v.to_i}fps" # おかしい？
-      end
-      if v = e["bit_rate"]
-        parts << "br#{v.to_i / 1024}Kbit"
-      end
+      # if v = e["r_frame_rate"]
+      #   parts << "#{v.to_i}fps" # おかしい？
+      # end
+      # if v = e["bit_rate"]
+      #   parts << "br#{v.to_i / 1024}Kbit"
+      # end
       if v = e["duration"]
         parts << "#{v.to_f.ceil}s"
       end
-      if v = e["pix_fmt"]
-        parts << v
-      end
+      # if v = e["pix_fmt"]
+      #   parts << v
+      # end
     else
       # ...
     end
