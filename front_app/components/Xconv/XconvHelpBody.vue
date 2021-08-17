@@ -27,14 +27,14 @@
       .article_body
         .content
           ul
-            li 作成者しかアクセスできないので直リンしても他者からは参照できない
-            li 定期的に古いのは削除するかもしれない
+            li 他者からは参照できない
+            li 定期的に古いのは削除する
           p なので直リンしない方が良い
 
     article
       h2 Twitterのアップロード条件は本当？
       .article_body
-        | 適当。Twitter側の条件は公表しないまま変わっているようなので結果に関係なくアップロードできたりできなかったりする。
+        | 正確とは限らない。Twitter側の条件は公表しないまま変わっているようなので結果に関係なくアップロードできたりできなかったりする。
 
     article
       h2 動画じゃなくて別の棋譜フォーマットにするには？
@@ -48,13 +48,13 @@
         | 「共有将棋盤」を使う。
         | 棋譜入力欄の「将棋盤」から飛べる。
 
-    article
+    article(v-if="development_or_staging_p")
       h2 分割するには？
       .article_body
         | https://kakashibata.hatenablog.jp/entry/2018/11/25/155437
         | ffmpeg -i input.mp4 -f image2 -start_number 0 -y %04d.png
 
-    article
+    article(v-if="development_or_staging_p")
       h2 連番画像から自分で動画化するには？
       .article_body
         | ffmpeg -hide_banner -framerate 1 -i %d.png -vcodec libx264 -pix_fmt yuv420p -r 1 -y _output.mp4

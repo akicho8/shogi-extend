@@ -4,7 +4,7 @@
     template(slot="brand")
       NavbarItemHome(icon="chevron-left" :to="{name: 'animation-export'}")
       b-navbar-item.has-text-weight-bold(tag="div")
-        | 共有将棋盤の使い方
+        | アニメーション変換の使い方
   MainSection
     .container
       .columns.is-centered.is-gapless
