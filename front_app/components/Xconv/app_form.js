@@ -1,6 +1,6 @@
 import { LoopInfo          } from "./models/loop_info.js"
 import { ViewpointInfo     } from "./models/viewpoint_info.js"
-import { ThemeInfo         } from "./models/theme_info.js"
+import { ColorThemeInfo         } from "./models/theme_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
 import { RecipeInfo    } from "./models/recipe_info.js"
@@ -17,7 +17,7 @@ export const app_form = {
       i_width:            null, // w
       i_height:           null, // h
       viewpoint_key:      null, // 視点
-      color_theme_key:          null, // テーマ
+      color_theme_key:          null, // 色テーマ
       one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
       end_duration:         null, // 終了図だけ指定枚数ぶん停止
@@ -193,8 +193,8 @@ export const app_form = {
     ParamInfo()                { return ParamInfo                                            },
     ViewpointInfo()            { return ViewpointInfo                                        },
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)              },
-    ThemeInfo()                { return ThemeInfo                                            },
-    theme_info()               { return ThemeInfo.fetch(this.color_theme_key)                      },
+    ColorThemeInfo()                { return ColorThemeInfo                                            },
+    theme_info()               { return ColorThemeInfo.fetch(this.color_theme_key)                      },
     RecipeInfo()           { return RecipeInfo                                       },
     recipe_info()         { return this.base.RecipeInfo.fetch(this.recipe_key) },
 
