@@ -17,7 +17,7 @@ export const app_form = {
       i_width:            null, // w
       i_height:           null, // h
       viewpoint_key:      null, // 視点
-      theme_key:          null, // テーマ
+      color_theme_key:          null, // テーマ
       one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
       end_duration:         null, // 終了図だけ指定枚数ぶん停止
@@ -194,11 +194,11 @@ export const app_form = {
     ViewpointInfo()            { return ViewpointInfo                                        },
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)              },
     ThemeInfo()                { return ThemeInfo                                            },
-    theme_info()               { return ThemeInfo.fetch(this.theme_key)                      },
+    theme_info()               { return ThemeInfo.fetch(this.color_theme_key)                      },
     RecipeInfo()           { return RecipeInfo                                       },
     recipe_info()         { return this.base.RecipeInfo.fetch(this.recipe_key) },
 
-    end_seconds() { return this.number_floor(this.one_frame_duration * this.end_duration, 2) },
+    // end_seconds() { return this.number_floor(this.one_frame_duration * this.end_duration, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -235,7 +235,7 @@ export const app_form = {
             // video_fps: this.video_fps,
             end_duration: this.end_duration,
             viewpoint: this.viewpoint_key,
-            theme: this.theme_key,
+            color_theme_key: this.color_theme_key,
             // width: this.animation_size_info.width,
             // height: this.animation_size_info.height,
             width: this.i_width,
