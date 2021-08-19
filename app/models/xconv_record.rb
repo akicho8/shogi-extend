@@ -169,36 +169,40 @@ class XconvRecord < ApplicationRecord
   end
 
   def main_process!
-    reset
-    self.process_begin_at = Time.current
-    save!
-    user.my_records_broadcast
-    xconv_info_broadcast
-    begin
-      sleep(convert_params[:sleep].to_i)
-      if v = convert_params[:raise_message].presence
-        raise v
-      end
-      generator.generate_unless_exist
-    rescue => error
-      self.errored_at = Time.current
-      self.error_message = error.message
-      SlackAgent.notify_exception(error)
-      SystemMailer.notify_exception(error)
-    else
-      self.successed_at = Time.current
-      self.ffprobe_info = generator.ffprobe_info
-      self.file_size = generator.file_size
-    ensure
-      self.process_end_at = Time.current
+    logger.tagged(to_param) do
+      reset
+      self.process_begin_at = Time.current
       save!
-    end
-    user.my_records_broadcast
-    user.done_record_broadcast(self)
-    xconv_info_broadcast
+      user.my_records_broadcast
+      xconv_info_broadcast
+      begin
+        sleep(convert_params[:sleep].to_i)
+        if v = convert_params[:raise_message].presence
+          raise v
+        end
+        generator.generate_unless_exist
+      rescue => error
+        logger.info(error)
+        self.errored_at = Time.current
+        self.error_message = error.message
+        SlackAgent.notify_exception(error)
+        SystemMailer.notify_exception(error)
+      else
+        logger.info("success")
+        self.successed_at = Time.current
+        self.ffprobe_info = generator.ffprobe_info
+        self.file_size = generator.file_size
+      ensure
+        self.process_end_at = Time.current
+        save!
+      end
+      user.my_records_broadcast
+      user.done_record_broadcast(self)
+      xconv_info_broadcast
 
-    SlackAgent.message_send(key: "アニメーション変換完了", body: browser_url)
-    UserMailer.xconv_notify(self).deliver_later
+      SlackAgent.message_send(key: "アニメーション変換完了", body: browser_url)
+      UserMailer.xconv_notify(self).deliver_later
+    end
   end
 
   def reset
