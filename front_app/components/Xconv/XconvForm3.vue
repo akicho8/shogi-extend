@@ -1,6 +1,6 @@
 <template lang="pug">
 .XconvForm3
-  b-field.main_field.recipe_key_field(label="出力フォーマット" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
+  b-field.main_field.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
       b-dropdown(v-model="base.recipe_key" @active-change="sound_play('click')")
         template(#trigger)
@@ -105,6 +105,8 @@
   // 分数形式なども受けつけるように文字列入力にすること
   //- b-field.main_field(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
   //-   b-input(v-model="base.video_fps")
+
+
 </template>
 
 <script>

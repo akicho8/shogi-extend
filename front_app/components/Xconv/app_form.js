@@ -1,6 +1,7 @@
 import { LoopInfo          } from "./models/loop_info.js"
 import { ViewpointInfo     } from "./models/viewpoint_info.js"
-import { ColorThemeInfo         } from "./models/theme_info.js"
+import { ColorThemeInfo         } from "./models/color_theme_info.js"
+import { AudioThemeInfo         } from "./models/audio_theme_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
 import { RecipeInfo    } from "./models/recipe_info.js"
@@ -18,6 +19,7 @@ export const app_form = {
       i_height:           null, // h
       viewpoint_key:      null, // 視点
       color_theme_key:          null, // 色テーマ
+      audio_theme_key:          null, // 曲テーマ
       one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
       end_duration:         null, // 終了図だけ指定枚数ぶん停止
@@ -186,17 +188,19 @@ export const app_form = {
     },
   },
   computed: {
-    TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                             },
-    LoopInfo()                 { return LoopInfo                                             },
-    AnimationSizeInfo()        { return AnimationSizeInfo                                    },
-    animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key)     },
-    ParamInfo()                { return ParamInfo                                            },
-    ViewpointInfo()            { return ViewpointInfo                                        },
-    viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)              },
-    ColorThemeInfo()                { return ColorThemeInfo                                            },
-    theme_info()               { return ColorThemeInfo.fetch(this.color_theme_key)                      },
-    RecipeInfo()           { return RecipeInfo                                       },
-    recipe_info()         { return this.base.RecipeInfo.fetch(this.recipe_key) },
+    TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
+    LoopInfo()                 { return LoopInfo                                         },
+    AnimationSizeInfo()        { return AnimationSizeInfo                                },
+    animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key) },
+    ParamInfo()                { return ParamInfo                                        },
+    ViewpointInfo()            { return ViewpointInfo                                    },
+    viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)          },
+    ColorThemeInfo()           { return ColorThemeInfo                                   },
+    color_theme_info()         { return ColorThemeInfo.fetch(this.color_theme_key)       },
+    AudioThemeInfo()           { return AudioThemeInfo                                   },
+    audio_theme_info()         { return AudioThemeInfo.fetch(this.audio_theme_key)       },
+    RecipeInfo()               { return RecipeInfo                                       },
+    recipe_info()              { return this.base.RecipeInfo.fetch(this.recipe_key)      },
 
     // end_seconds() { return this.number_floor(this.one_frame_duration * this.end_duration, 2) },
 
@@ -236,6 +240,7 @@ export const app_form = {
             end_duration: this.end_duration,
             viewpoint: this.viewpoint_key,
             color_theme_key: this.color_theme_key,
+            audio_theme_key: this.audio_theme_key,
             // width: this.animation_size_info.width,
             // height: this.animation_size_info.height,
             width: this.i_width,
