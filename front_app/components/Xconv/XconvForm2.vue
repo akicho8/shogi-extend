@@ -7,7 +7,7 @@
     b-numberinput(v-model="base.one_frame_duration" :min="0" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
   b-field.main_field(label="最後にN手ぶん停止" :message="`${base.end_seconds}秒`")
-    b-numberinput(v-model="base.end_frames" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+    b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 </template>
 
 <script>

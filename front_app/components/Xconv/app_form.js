@@ -20,7 +20,7 @@ export const app_form = {
       theme_key:          null, // テーマ
       one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
-      end_frames:         null, // 終了図だけ指定枚数ぶん停止
+      end_duration:         null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
       raise_message:      null, // 例外メッセージ
       recipe_key:    null, // 変換先
@@ -198,7 +198,7 @@ export const app_form = {
     RecipeInfo()           { return RecipeInfo                                       },
     recipe_info()         { return this.base.RecipeInfo.fetch(this.recipe_key) },
 
-    end_seconds() { return this.number_floor(this.one_frame_duration * this.end_frames, 2) },
+    end_seconds() { return this.number_floor(this.one_frame_duration * this.end_duration, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -233,7 +233,7 @@ export const app_form = {
             loop_key: this.loop_key,
             one_frame_duration: this.one_frame_duration,
             // video_fps: this.video_fps,
-            end_frames: this.end_frames,
+            end_duration: this.end_duration,
             viewpoint: this.viewpoint_key,
             theme: this.theme_key,
             // width: this.animation_size_info.width,

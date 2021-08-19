@@ -104,12 +104,6 @@ class BoardFileGenerator
         end
       end
 
-      # if opts[:one_frame_duration] && opts[:end_frames]
-      #   one_frame_duration
-      # end
-      # if opts[:end_frames]
-      # fadeout_duration
-
       opts.update(recipe_info.override_options)
 
       opts

@@ -13,7 +13,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "theme_key",          type: "string",  name: "テーマ",            default: "light_mode",            desc: "", },
       { key: "one_frame_duration",        type: "float",   name: "1手N秒",          default: 1.0,                     desc: "", },
       // { key: "video_fps",          type: "integer", name: "FPS",               default: 30,                      desc: "", },
-      { key: "end_frames",         type: "integer", name: "最後にN手ぶん停止", default: 5,                       desc: "", },
+      { key: "end_duration",         type: "integer", name: "最後に停止する秒数", default: 10,                   desc: "", },
       { key: "sleep",              type: "integer", name: "遅延",              default: 0,                       desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",    default: null,                    desc: "デバッグ用", },
     ]
