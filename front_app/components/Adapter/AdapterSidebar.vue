@@ -7,12 +7,11 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
       b-menu
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(@click="base.share_board_open_handle" label="共有将棋盤に転送")
+          b-menu-item.is_active_unset(@click="base.animation_export_handle" label="アニメーション変換" v-if="development_or_staging_p")
           b-menu-item.is_active_unset(@click="base.style_editor_open_handle" label="スタイルエディタに転送")
 
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(@click="base.kifu_paper_handle" label="棋譜用紙 (PDF)")
-          b-menu-item.is_active_unset(@click="base.animation_export_handle" label="アニメーション変換")
-            
 
           b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
             template(slot="label" slot-scope="props")
