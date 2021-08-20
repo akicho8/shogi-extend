@@ -2,6 +2,7 @@
 .XconvForm2
   SimpleRadioButtons.main_field(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
   SimpleRadioButtons.main_field(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key")
+  SimpleRadioButtons.main_field(:base="base" :model="base.Mp4GenerateInfo" var_name="mp4_generate_key")
   //- SimpleRadioButtons.main_field(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
 
   b-field.main_field.audio_theme_key_field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
