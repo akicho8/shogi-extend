@@ -27,6 +27,8 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("nanashi")).toEqual(false)
     expect(HandleNameValidator.valid("nanasi")).toEqual(false)
     expect(HandleNameValidator.valid("通りすがり")).toEqual(false)
+    expect(HandleNameValidator.valid("aa")).toEqual(false)
+    expect(HandleNameValidator.valid("aaa")).toEqual(false)
 
     expect(HandleNameValidator.valid("test")).toEqual(false)
     expect(HandleNameValidator.valid("テスト")).toEqual(false)

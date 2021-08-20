@@ -77,6 +77,7 @@ export const HandleNameValidator = {
       "テスト|test|てすと",
       "名前|ハンドルネーム",
       "^あ+$",
+      "^a+$",
       "戦犯",
       "初心者",
       "死",
