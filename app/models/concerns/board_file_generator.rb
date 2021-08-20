@@ -140,7 +140,7 @@ class BoardFileGenerator
   end
 
   def recipe_key
-    params[:recipe_key].presence || "is_format_png"
+    params[:recipe_key].presence || "is_recipe_png"
   end
 
   def recipe_info

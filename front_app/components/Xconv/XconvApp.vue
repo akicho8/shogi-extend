@@ -94,6 +94,8 @@ export default {
 <style lang="sass">
 .XconvApp
   .MainSection.section
+    +mobile
+      padding-bottom: 4rem
     +tablet
       padding: 2rem
 

@@ -160,12 +160,12 @@ module BattleControllerSharedMethods
         format.html
         format.png {
           # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-          generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_format_png))
+          generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_recipe_png))
           send_file_or_redirect(generator)
         }
         # if Rails.env.development?
         #   format.gif {
-        #     generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_format_gif))
+        #     generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_recipe_gif))
         #
         #     # FIXME: リダイレクト
         #

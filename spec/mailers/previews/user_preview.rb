@@ -30,7 +30,7 @@ class UserPreview < ActionMailer::Preview
       :sleep         => 0,
       :raise_message => "",
       :board_file_generator_params => {
-        :recipe_key => "is_format_gif",
+        :recipe_key => "is_recipe_gif",
       },
     }
 

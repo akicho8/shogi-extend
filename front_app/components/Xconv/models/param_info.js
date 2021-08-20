@@ -4,7 +4,7 @@ export class ParamInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "body",               type: "string",  name: "棋譜",               default: "",                                desc: "", },
-      { key: "recipe_key",         type: "string",  name: "出力フォーマット",   default: "is_format_mp4",                   desc: "", },
+      { key: "recipe_key",         type: "string",  name: "出力フォーマット",   default: "is_recipe_mp4",                   desc: "", },
       { key: "animation_size_key", type: "string",  name: "サイズ",             default: "is1024x768",                      desc: "", },
       { key: "i_width",            type: "string",  name: "w",                  default: null,                              desc: "", },
       { key: "i_height",           type: "string",  name: "h",                  default: null,                              desc: "", },
