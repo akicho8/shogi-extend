@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class Mp4CreateMethodInfo extends MemoryRecord {
+export class Mp4FactoryInfo extends MemoryRecord {
   static get field_label() {
     return "mp4生成方法"
   }

@@ -2,7 +2,7 @@ import { LoopInfo          } from "./models/loop_info.js"
 import { ViewpointInfo     } from "./models/viewpoint_info.js"
 import { ColorThemeInfo         } from "./models/color_theme_info.js"
 import { AudioThemeInfo         } from "./models/audio_theme_info.js"
-import { Mp4CreateMethodInfo         } from "./models/mp4_create_method_info.js"
+import { Mp4FactoryInfo         } from "./models/mp4_factory_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
 import { RecipeInfo    } from "./models/recipe_info.js"
@@ -21,7 +21,7 @@ export const app_form = {
       viewpoint_key:      null, // 視点
       color_theme_key:          null, // 色テーマ
       audio_theme_key:          null, // 曲テーマ
-      mp4_create_method_key:          null, // 生成方法
+      mp4_factory_key:          null, // 生成方法
       one_frame_duration:      null, // 1手N秒
       // video_fps:     null, // fps
       end_duration:         null, // 終了図だけ指定枚数ぶん停止
@@ -199,8 +199,8 @@ export const app_form = {
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)          },
     ColorThemeInfo()           { return ColorThemeInfo                                   },
     color_theme_info()         { return ColorThemeInfo.fetch(this.color_theme_key)       },
-    Mp4CreateMethodInfo()           { return Mp4CreateMethodInfo                                   },
-    mp4_create_method_info()         { return Mp4CreateMethodInfo.fetch(this.mp4_create_method_key)       },
+    Mp4FactoryInfo()           { return Mp4FactoryInfo                                   },
+    mp4_factory_info()         { return Mp4FactoryInfo.fetch(this.mp4_factory_key)       },
     AudioThemeInfo()           { return AudioThemeInfo                                   },
     audio_theme_info()         { return AudioThemeInfo.fetch(this.audio_theme_key)       },
     RecipeInfo()               { return RecipeInfo                                       },
@@ -245,7 +245,7 @@ export const app_form = {
             viewpoint: this.viewpoint_key,
             color_theme_key: this.color_theme_key,
             audio_theme_key: this.audio_theme_key,
-            mp4_create_method_key: this.mp4_create_method_key,
+            mp4_factory_key: this.mp4_factory_key,
             // width: this.animation_size_info.width,
             // height: this.animation_size_info.height,
             width: this.i_width,
