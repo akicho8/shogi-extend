@@ -7,14 +7,14 @@ b-field.main_field.XconvForm2AudioTheme(:label="base.AudioThemeInfo.field_label"
       template(v-for="e in base.AudioThemeInfo.values")
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           b-dropdown-item(:value="e.key" @click="sound_play('click')")
-            .media.is_line_break_on
+            .media
               //- .media-left
-              //-   | {{e.name}}
+              //-   //-   | {{e.name}}
               .media-content
                 //- .has-text-weight-bold {{e.name}}
                 //- h3 {{e.title}}
                 //- span {{e.message}}
-                .name {{e.name}}
+                | {{e.name}}
                 audio(:src="e.sample_m4a" controls @playing="exclusive_play_handle" :id="e.key")
                 //- audio(:src="require('../../../../bioshogi/lib/bioshogi/assets/audios/breakbeat_long.m4a')" controls)
                 //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
@@ -64,11 +64,17 @@ export default {
 .XconvForm2AudioTheme
   .dropdown-item
     padding: 1.0rem
-    .name
-      line-height: 1.5
+    // .media-left
+    //   white-space: normal
+    //   word-break: break-all
+    //   flex: 0 0 30%
+    .media-content
+      // flex: 0 0 70%
+      // line-height: 1.5
     audio
+      // width: 100px
       margin: auto
       margin-top: 0.75rem
-      height: 2rem // 調整できるけど Chrome 以外でおかしくなりそう
+      // height: 2rem // 調整できるけど Chrome 以外でおかしくなりそう
       display: block
 </style>

@@ -7,7 +7,7 @@ b-field.main_field.XconvForm2ColorTheme(:label="base.ColorThemeInfo.field_label"
       template(v-for="e in base.ColorThemeInfo.values")
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           b-dropdown-item(:value="e.key" @click="sound_play('click')")
-            .media.is_line_break_on
+            .media
               .media-left
                 | {{e.name}}
                 //- | {{e.real_ext}}
@@ -17,7 +17,7 @@ b-field.main_field.XconvForm2ColorTheme(:label="base.ColorThemeInfo.field_label"
                 //- span {{e.message}}
                 //- | {{e.thumbnail_url(base)}}
                 //- b-img(:src="e.thumbnail_url(base)")
-                img(:src="e.thumbnail_url(base)")
+                img.is-block(:src="e.thumbnail_url(base)")
                 //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                 //- small {{e.message}}
 </template>
@@ -33,11 +33,13 @@ export default {
 
 <style lang="sass">
 .XconvForm2ColorTheme
+  // 上下の不自然な隙間を取る
+  .dropdown-content
+    padding-top: 0
+    padding-bottom: 0
+
   .dropdown-item
     padding: 1.0rem
-    img
-      display: block
-      margin: auto
-      max-width: 128px
-      border-radius: 2px
+    .media-left
+      flex-basis: 40%
 </style>
