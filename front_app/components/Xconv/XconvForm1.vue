@@ -52,5 +52,5 @@ export default {
       +mobile
         height: 9rem
       +tablet
-        height: 10rem
+        height: 16rem
 </style>
