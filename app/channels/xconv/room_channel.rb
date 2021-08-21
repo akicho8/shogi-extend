@@ -1,26 +1,33 @@
 module Xconv
   class RoomChannel < ApplicationCable::Channel
+    # 回線不調で何回も呼ばれる
     def subscribed
       subscribed_track("購読開始")
-
       stream_from "xconv/room_channel"
-      XconvRecord.xconv_info_broadcast
-
       if current_user
         stream_for(current_user)
-        current_user.my_records_broadcast
-
-        # 最後に変換したものを送る
-        if Rails.env.development? || true
-          if v = current_user.xconv_records.success_only.order(created_at: :desc).first
-            current_user.done_record_broadcast(v, noisy: false)
-          end
-        end
       end
     end
 
+    # 回線不調で何回も呼ばれる
     def unsubscribed
       subscribed_track("購読停止")
+    end
+
+    # 1回だけ呼ぶ
+    def setup_request(data)
+      # みんなの履歴
+      XconvRecord.xconv_info_broadcast
+
+      if current_user
+        # あなたの履歴
+        current_user.my_records_broadcast
+
+        # レビュー
+        if v = current_user.xconv_records.success_only.order(created_at: :desc).first
+          current_user.done_record_broadcast(v, noisy: false)
+        end
+      end
     end
 
     def title_share(data)
@@ -61,23 +68,6 @@ module Xconv
         body = ""
       end
       SlackAgent.message_send(key: "アニメーション変換 #{action}", body: "#{body}")
-    end
-
-    def sfen_share_track_body(data)
-      lmi = data["lmi"]
-      player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
-
-      s = []
-      s << %([#{lmi["next_turn_offset"]}])
-      s << player_location.mark
-      s << lmi["kif_without_from"]
-      if v = data["next_user_name"]
-        s << "> #{v}"
-      end
-      if v = data["elapsed_sec"]
-        s << "#{-v}秒"
-      end
-      s.join(" ")
     end
   end
 end

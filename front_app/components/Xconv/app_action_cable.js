@@ -2,6 +2,7 @@ export const app_action_cable = {
   data() {
     return {
       ac_room: null, // subscriptions.create のインスタンス
+      connected_count: 0, // 接続回数
     }
   },
   mounted() {
@@ -14,7 +15,18 @@ export const app_action_cable = {
   methods: {
     room_create() {
       this.__assert__(this.ac_room == null, "this.ac_room == null")
-      this.ac_room = this.ac_subscription_create({channel: "Xconv::RoomChannel"})
+      this.ac_room = this.ac_subscription_create({channel: "Xconv::RoomChannel"}, {
+        connected: e => {
+          if (this.connected_count === 0) {
+            this.room_connected()
+          }
+          this.connected_count += 1
+        },
+      })
+    },
+
+    room_connected() {
+      this.ac_room_perform("setup_request", {})
     },
 
     room_destroy() {
