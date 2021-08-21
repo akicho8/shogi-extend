@@ -16,6 +16,8 @@ b-field.main_field.XconvForm2AudioTheme(:label="base.AudioThemeInfo.field_label"
                 //- span {{e.message}}
                 | {{e.name}}
                 audio(:src="e.sample_m4a" controls @playing="exclusive_play_handle" :id="e.key")
+                XconvAudioPlay(:src="e.sample_m4a" size="is-small" v-if="e.sample_m4a")
+
                 //- audio(:src="require('../../../../bioshogi/lib/bioshogi/assets/audios/breakbeat_long.m4a')" controls)
                 //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                 //- small {{e.message}}

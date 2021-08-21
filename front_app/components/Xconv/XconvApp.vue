@@ -17,6 +17,11 @@
   MainSection
     .container
       .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+        //- .column
+        //-   .box
+        //-     XconvAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a")
+        //-     XconvAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a" size="is-small")
+
         XconvForm(:base="base" ref="XconvForm" v-if="form_show_p")
         XconvReview(:base="base")
         XconvValidation(:base="base")
