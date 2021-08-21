@@ -2,7 +2,7 @@
 .XconvForm3
   b-field.main_field.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
-      b-dropdown(v-model="base.recipe_key" @active-change="sound_play('click')")
+      b-dropdown(v-model="base.recipe_key" @active-change="e => e && sound_play('click')")
         template(#trigger)
           b-button(:label="base.recipe_info.name" icon-right="menu-down")
         template(v-for="e in base.RecipeInfo.values")
@@ -25,7 +25,7 @@
       option(v-for="e in base.RecipeInfo.values" :value="e.key" v-text="e.name")
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
-  b-field.main_field(grouped v-if="$config.STAGE !== 'production'")
+  b-field.main_field(grouped v-if="development_or_staging_p")
     b-field(label="サイズプリセット" :message="[base.animation_size_info.message]")
       b-select(v-model="base.animation_size_key" @input="base.animation_size_key_input_handle" @click.native="sound_play('click')")
         option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name" v-if="e.environment == null || e.environment.includes($config.STAGE)")
@@ -33,7 +33,7 @@
       b-input(required type="number" v-model.number="base.i_width"  :min="0" :max="development_p ? 3200 : 1600" :step="1" expanded placeholder="width")
       b-input(required type="number" v-model.number="base.i_height" :min="0" :max="development_p ? 3200 : 1200" :step="1" expanded placeholder="height")
 
-  b-field.main_field(grouped v-if="$config.STAGE !== 'production'")
+  b-field.main_field(grouped v-if="development_or_staging_p")
     b-field.animation_size_field(label="サイズプリセット" :message="[base.animation_size_info.message]")
       b-dropdown.control(v-model="base.animation_size_key" @active-change="e => e && sound_play('click')" @input="base.animation_size_key_input_handle")
         template(#trigger)

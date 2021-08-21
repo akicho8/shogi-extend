@@ -12,9 +12,10 @@ export class ParamInfo extends MemoryRecord {
       { key: "viewpoint_key",      type: "string",  name: "視点",               default: "black",                           desc: "", },
       { key: "color_theme_key",    type: "string",  name: "色テーマ",           default: "light_mode",                      desc: "", },
       { key: "audio_theme_key",    type: "string",  name: "曲テーマ",           default: "audio_theme_positive_think_only", desc: "", },
-      { key: "mp4_factory_key",   type: "string",  name: "生成ツール",         default: "ffmpeg",                          desc: "", },
+      { key: "mp4_factory_key",    type: "string",  name: "生成ツール",         default: "ffmpeg",                           desc: "", },
+      // debug
       { key: "one_frame_duration", type: "float",   name: "1手N秒",             default: 1.0,                               desc: "", },
-      { key: "end_duration",       type: "integer", name: "最後に停止する秒数", default: 5,                                 desc: "", },
+      { key: "end_duration",       type: "integer", name: "最後に停止する秒数", default: 7,                                 desc: "", },
       { key: "sleep",              type: "integer", name: "遅延",               default: 0,                                 desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",     default: null,                              desc: "デバッグ用", },
     ]

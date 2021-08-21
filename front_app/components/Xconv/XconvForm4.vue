@@ -1,5 +1,7 @@
 <template lang="pug">
 .XconvForm4
+  SimpleRadioButtons.main_field(:base="base" :model="base.Mp4FactoryInfo" var_name="mp4_factory_key")
+
   b-field.main_field(label="負荷" v-if="development_p")
     b-input(type="number" v-model.number="base.sleep" expanded)
 

@@ -5,6 +5,12 @@ import { StatusInfo } from "./status_info.js"
 import _ from "lodash"
 
 export class XconvRecord extends Model {
+  get status_info() {
+    return StatusInfo.fetch(this.status_key)
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// URL
+
   get rails_side_inline_url() {
     return this.__rails_side_url()
   }
@@ -15,15 +21,6 @@ export class XconvRecord extends Model {
 
   get rails_side_json_url() {
     return this.__url_build("json")
-  }
-
-  get to_wh() {
-    const e = this.convert_params.board_file_generator_params
-    return { width: e.width, height: e.height }
-  }
-
-  get status_info() {
-    return StatusInfo.fetch(this.status_key)
   }
 
   //////////////////////////////////////////////////////////////////////////////// video 情報
@@ -59,6 +56,12 @@ export class XconvRecord extends Model {
       width: this.width,
       height: this.height,
     }
+  }
+
+  // FIXME: 動画の情報ではない
+  get to_wh() {
+    const e = this.convert_params.board_file_generator_params
+    return { width: e.width, height: e.height }
   }
 
   get aspect_ratio() {

@@ -10,7 +10,7 @@
     .is_review_box
       .media_container
         template(v-if="base.done_record.recipe_info.file_type === 'video'")
-          video(:src="base.done_record.rails_side_inline_url" controls :autoplay="true" :loop="false" v-bind="base.done_record.video_tag_attrs")
+          video(:src="base.done_record.rails_side_inline_url" controls :autoplay="false" :loop="false" v-bind="base.done_record.video_tag_attrs")
         template(v-if="base.done_record.recipe_info.file_type === 'image'")
           img(:src="base.done_record.rails_side_inline_url")
       template(v-if="base.done_record.recipe_info.file_type === 'zip'")
