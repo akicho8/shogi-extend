@@ -101,7 +101,7 @@ export default {
   .MainSection.section
     +mobile
       // ios Safari では底辺部分をタップするとスクロールしてしまい使いにくいためスペースをあける
-      padding-bottom: 4rem
+      padding-bottom: 8rem
     +tablet
       padding: 2rem
 
