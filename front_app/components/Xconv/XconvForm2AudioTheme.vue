@@ -48,6 +48,8 @@ export default {
 
     // ドロップダウンを開閉するタイミング
     active_change_handle(e) {
+      this.sound_stop_all()
+
       // 音を止めて最初に戻す
       this.media_elements().forEach(e => {
         e.pause()
