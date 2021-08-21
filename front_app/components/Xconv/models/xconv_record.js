@@ -54,6 +54,13 @@ export class XconvRecord extends Model {
     return this.video_stream.height
   }
 
+  get video_tag_attrs() {
+    return {
+      width: this.width,
+      height: this.height,
+    }
+  }
+
   get aspect_ratio() {
     return Gs.math_wh_normalize_aspect_ratio(this.width, this.height)
   }

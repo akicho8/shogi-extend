@@ -19,11 +19,12 @@ b-table.XconvQueueSelf(
     .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
       | {{row.error_message}}
     .buttons.has-addons.are-small.mb-0(v-if="row.successed_at")
-      b-button.mb-0(@click="base.main_download_handle(row)"     icon-left="download" type="is-primary")
-      b-button.mb-0(@click="base.main_show_handle(row)"         icon-left="eye-outline")
-      b-button.mb-0(@click="base.secret_show_handle(row)"       icon-left="link" v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.probe_show_modal_handle(row)"  icon-left="information-variant")
-      b-button.mb-0(@click="base.json_show_handle(row)"         icon-left="code-json" v-if="development_p")
+      b-button.mb-0(@click="base.main_download_handle(row)"     type="is-primary" icon-left="download")
+      b-button.mb-0(@click="base.load_handle(row)"              type=""           icon-left="open-in-app")
+      b-button.mb-0(@click="base.main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.secret_show_handle(row)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.json_show_handle(row)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
 </template>
 
 <script>

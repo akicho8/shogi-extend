@@ -34,6 +34,11 @@ export const app_review = {
       this.other_window_open(record.rails_side_json_url)
     },
 
+    load_handle(record) {
+      this.sound_play("click")
+      this.done_record = record
+    },
+
     other_window_direct_open_handle(record) {
       this.sound_play("click")
       this.window_popup(record.browser_url, record.to_wh)
