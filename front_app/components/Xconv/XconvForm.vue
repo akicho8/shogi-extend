@@ -32,13 +32,6 @@ export default {
   .tab-content
     padding: 0
 
-  .dropdown-item
-    &:not(.is-active)         // 選択してない項目だけ種類を青くする
-      .media-left
-        color: $primary
-    .media-left
-      font-weight: bold
-
   .main_field
     margin: 0
     padding: 0.8rem 0 1.2rem

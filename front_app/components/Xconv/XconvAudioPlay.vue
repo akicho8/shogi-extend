@@ -1,5 +1,5 @@
 <template lang="pug">
-b-button(rounded :icon-left="current_icon" @click.prevent.stop="click_handle" v-bind="$attrs" v-on="$listeners")
+b-button(:icon-left="current_icon" @click.prevent.stop="click_handle" v-bind="$attrs" v-on="$listeners")
 </template>
 
 <script>
@@ -48,6 +48,7 @@ export default {
         }
         Howler.stop()
         this.current_id = this.instance.play()
+        this.$emit('play', this.instance)
       } else {
         this.instance.stop()
         this.state = "stop"
