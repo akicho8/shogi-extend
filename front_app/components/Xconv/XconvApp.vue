@@ -95,6 +95,7 @@ export default {
 .XconvApp
   .MainSection.section
     +mobile
+      // ios Safari では底辺部分をタップするとスクロールしてしまい使いにくいためスペースをあける
       padding-bottom: 4rem
     +tablet
       padding: 2rem
