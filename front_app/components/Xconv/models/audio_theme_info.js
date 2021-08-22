@@ -2,7 +2,7 @@ import MemoryRecord from 'js-memory-record'
 
 export class AudioThemeInfo extends MemoryRecord {
   static get field_label() {
-    return "音"
+    return "BGM"
   }
 
   static get field_message() {
@@ -18,6 +18,7 @@ export class AudioThemeInfo extends MemoryRecord {
       { key: "audio_theme_dance",               name: "ヘッドスピンからのブレイクビート", type: "is-primary", environment: ["development", "staging", "production"], message: null, sample_m4a: null,                                                                              },
       { key: "audio_theme_war",                 name: "戦争系",                           type: "is-primary", environment: ["development", "staging",             ], message: null, sample_m4a: require('../../../../../bioshogi/lib/bioshogi/assets/audios/strategy.m4a'),        },
       { key: "audio_theme_stg",                 name: "STG系(いまいち)",                  type: "is-primary", environment: ["development", "staging",             ], message: null, sample_m4a: require('../../../../../bioshogi/lib/bioshogi/assets/audios/stg_like_type1a.m4a'), },
+      { key: "audio_theme_user",                name: "ユーザー指定",                     type: "is-primary", environment: ["development", "staging", "production"], message: null, sample_m4a: null, },
     ]
   }
 }

@@ -28,13 +28,5 @@ module Api
         end
       end
     end
-
-    private
-
-    def data_uri_scheme_to_bin(data_base64_body)
-      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
-      md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
-      Base64.decode64(md["base64_bin"])
-    end
   end
 end

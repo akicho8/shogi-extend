@@ -43,6 +43,22 @@ class ApplicationRecord < ActiveRecord::Base
         v or raise "must not happen"
       end
     end
+
+    def data_uri_scheme_to_bin(data_base64_body)
+      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<body>.*)/)
+      unless md
+        raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
+      end
+      Base64.decode64(md["body"])
+    end
+
+    def data_uri_scheme_to_content_type(data_base64_body)
+      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,/)
+      unless md
+        raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
+      end
+      md["content_type"]
+    end
   end
 
   delegate *[
@@ -50,6 +66,8 @@ class ApplicationRecord < ActiveRecord::Base
     :script_tag_escape,
     :double_blank_lines_to_one_line,
     :secure_random_urlsafe_base64_token,
+    :data_uri_scheme_to_bin,
+    :data_uri_scheme_to_content_type,
   ], to: "self.class"
 
   # "" → nil

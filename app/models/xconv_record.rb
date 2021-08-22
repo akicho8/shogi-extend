@@ -142,6 +142,7 @@ class XconvRecord < ApplicationRecord
   before_validation do
     self.convert_params ||= {}
     self.convert_params = convert_params.deep_symbolize_keys
+    BoardFileGenerator.params_rewrite!(convert_params[:board_file_generator_params])
 
     if changes_to_save[:error_message] && error_message
       self.error_message = error_message.lines.first.first(self.class.columns_hash["error_message"].limit)

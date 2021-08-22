@@ -181,7 +181,7 @@ module Api
       #   user = current_user
       #
       #   if v = params[:croped_image]
-      #     bin = data_uri_scheme_to_bin(v)
+      #     bin = ApplicationRecord.data_uri_scheme_to_bin(v)
       #     io = StringIO.new(bin)
       #     user.avatar.attach(io: io, filename: "user_icon.png")
       #   end
@@ -227,17 +227,6 @@ module Api
           e.update!(opened_at: Time.current)
         end
         { status: "success" }
-      end
-
-      private
-
-      # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
-      def data_uri_scheme_to_bin(data_base64_body)
-        raise "must not happen"
-
-        md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
-        md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
-        Base64.decode64(md["base64_bin"])
       end
     end
   end

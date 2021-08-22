@@ -12,6 +12,16 @@ b-field.main_field.XconvForm2AudioTheme(:label="base.AudioThemeInfo.field_label"
                 | {{e.name}}
               .media-right
                 XconvAudioPlay(:src="e.sample_m4a" size="is-small" v-if="e.sample_m4a" @play="e => current_play_instance = e")
+
+    .field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
+      input(type="file" @change="base.file_upload_handle")
+      template(v-if="base.audio_data_url")
+        .box
+          .media
+            .media-content
+              | {{base.audio_file.name}}
+            .media-right
+              XconvAudioPlay(:src="base.audio_data_url" size="is-small" v-if="base.audio_data_url" @play="e => current_play_instance = e")
 </template>
 
 <script>

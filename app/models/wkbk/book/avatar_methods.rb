@@ -92,14 +92,6 @@ module Wkbk
         file = list[(id || self.class.count.next).modulo(list.size)]
         ActionController::Base.helpers.asset_path(file) # asset_url にしてもURLにならないのはなぜ？
       end
-
-      def data_uri_scheme_to_bin(data_base64_body)
-        md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<body>.*)/)
-        unless md
-          raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
-        end
-        Base64.decode64(md["body"])
-      end
     end
   end
 end

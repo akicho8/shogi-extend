@@ -17,6 +17,15 @@
   MainSection
     .container
       .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+        //- b-upload(@input="file_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音off')")
+        //-   .field
+        //-     img(:src="audio_data_url" width="128px")
+        //-     template(v-if="audio_file")
+        //-       .box
+        //-         div {{audio_file.name}}
+        //-         div {{audio_file.size}}
+        //-         div {{audio_file.type}}
+
         //- .column
         //-   .box
         //-     XconvAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a")

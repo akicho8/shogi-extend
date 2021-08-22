@@ -1,6 +1,56 @@
 require "pp"
 
 class BoardFileGenerator
+  # base64で来ているデータを実際のファイルにしてパラメータを変更
+  #
+  #   params = {
+  #     :audio_theme_key => ...,
+  #     :uploaded_audio_attrs => {
+  #       :audio_file => {
+  #         :name => "blank.m4a",
+  #         :size => 1841,
+  #         :type => "audio/x-m4a",
+  #       },
+  #       :audio_data_url => "data:audio/x-m4a;base64,AAA...",
+  #     },
+  #   }
+  #
+  #   ↓
+  #
+  #   params = {
+  #     :audio_theme_key => nil,
+  #     :audio_part_a => "path/to/blank.m4a.m4a",
+  #   }
+  #
+  def self.params_rewrite!(params)
+    logger.tagged(:params_rewrite!) do
+      # if e[:audio_theme_key] == "audio_theme_user"
+      if e = params.delete(:uploaded_audio_attrs)
+        bin = ApplicationRecord.data_uri_scheme_to_bin(e[:audio_data_url])
+        logger.info { "bin: #{bin.size} bytes" }
+        logger.info { "audio_file: #{e[:audio_file].inspect}" }
+        basename = [SecureRandom.hex, e[:audio_file][:name]].join("_")
+        logger.info { "basename: #{basename}" }
+        # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:audio_data_url])
+        # extension = MiniMime.lookup_by_content_type(content_type).extension
+        # audio_part_a = Rails.root.join("tmp/audio_file/#{SecureRandom.hex}.#{extension}")
+        audio_part_a = Rails.root.join("tmp/audio_file/#{basename}")
+        logger.info { "audio_part_a: #{audio_part_a}" }
+        logger.info { "pwd: #{Dir.pwd}" }
+        audio_part_a.dirname.mkpath
+        audio_part_a.binwrite(bin)
+        logger.info { `ls -alh #{Shellwords.escape(audio_part_a)}`.strip }
+        params[:audio_theme_key] = nil
+        params[:audio_part_a] = audio_part_a.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
+        params[:audio_part_a_volume] = 1.0
+        params[:audio_part_b] = nil
+        # else
+        #   params[:audio_theme_key] == "audio_theme_none"
+      end
+    end
+    params
+  end
+
   PAPPER = 1
 
   # FIXME: これらは params ではなく options にいれるべき？
@@ -48,6 +98,10 @@ class BoardFileGenerator
     @params = {
     }.merge(params.to_options)
 
+    if false
+      self.class.params_rewrite!(@params) # いらんか？
+    end
+
     @options = {
       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
     }.merge(options)
@@ -77,8 +131,31 @@ class BoardFileGenerator
       # このクラスだけで扱うパラメータを除いてからチェック
       # Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
 
-      opts = params.dup
-      opts = opts.deep_symbolize_keys
+      opts = params.deep_symbolize_keys # dup を兼ねている
+
+      # if e = opts.delete(:uploaded_audio_attrs).presence
+      #   logger.tagged(:to_method_options) do
+      #     bin = ApplicationRecord.data_uri_scheme_to_bin(e[:audio_data_url])
+      #     logger.info { "bin: #{bin.size} bytes" }
+      #     basename = e[:audio_file][:name]
+      #     logger.info { "basename: #{basename}" }
+      #
+      #     # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:audio_data_url])
+      #     # audio_file.file
+      #     # extension = MiniMime.lookup_by_content_type(content_type).extension
+      #     # audio_part_a = Rails.root.join("tmp/audio_file/#{SecureRandom.hex}.#{extension}")
+      #     audio_part_a = Rails.root.join("tmp/audio_file/#{basename}")
+      #     logger.info { "audio_part_a: #{audio_part_a}" }
+      #     audio_part_a.dirname.mkpath
+      #     audio_part_a.write(bin)
+      #     logger.info { `ls -alh #{Shellwords.escape(audio_part_a)}`.strip }
+      #     opts[:audio_theme_key] = nil
+      #     opts[:audio_part_a] = audio_part_a.to_s
+      #     opts[:audio_part_a_volume] = 1.0
+      #     opts[:audio_part_b] = nil
+      #   end
+      # end
+
       opts = opts.slice(*self.class.formatter_all_option_keys) # unique_key の揺らぎ防止
 
       # if opts[:image_preset] == "small"
@@ -255,23 +332,6 @@ class BoardFileGenerator
     unique_key.match(/(.{2})(.{2})/).captures
   end
 
-  # def native_cast(e)
-  #   case e
-  #   when Integer, Float
-  #     e
-  #   when e == "true"
-  #     true
-  #   when e == "false"
-  #     false
-  #   when e == "on"
-  #     true
-  #   when e == "off"
-  #     false
-  #   when e.kind_of?(String)
-  #     Integer(e) rescue Float(e) rescue e
-  #   end
-  # end
-
   # PNGを最速で生成するため戦術チェックなどスキップできるものはぜんぶスキップする
   def parser_options
     {
@@ -293,7 +353,7 @@ class BoardFileGenerator
   #     o_path = real_path.dirname + "o_#{real_path.basename}"
   #
   #     real_path.dirname.mkpath
-  #     i_path.binwrite(bin)
+  #     i_path.write(bin)
   #
   #     # command = "ffmpeg -y -i #{i_path} -vf 'scale=if(gte(iw\,ih)\,min(1280\,iw)\,-2):if(lt(iw\,ih)\,min(1280\,ih)\,-2)' -c:v libx264 -x264-params crf=16 -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"
   #     # command = "ffmpeg -y -i #{i_path} -vcodec libx264 -pix_fmt yuv420p -strict -2 -acodec aac -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -c:a copy #{o_path}"

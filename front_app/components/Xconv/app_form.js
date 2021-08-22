@@ -36,6 +36,10 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// レイアウト
       form2_show_p: false,
       form_tab_index: 0,
+
+      //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
+      audio_data_url: null,
+      audio_file: null,
     }
   },
 
@@ -188,6 +192,14 @@ export const app_form = {
       this.sound_play("click")
       this.form2_show_p = !this.form2_show_p
     },
+
+    //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
+    file_upload_handle(e) {
+      this.audio_file = e.target.files[0]
+      const reader = new FileReader()
+      reader.addEventListener("load", () => this.audio_data_url = reader.result, false)
+      reader.readAsDataURL(this.audio_file)
+    },
   },
   computed: {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
@@ -235,7 +247,11 @@ export const app_form = {
 
           // パラメータの差異はなるべくここだけで吸収する
           board_file_generator_params: {
+            //////////////////////////////////////////////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
+            uploaded_audio_attrs: this.uploaded_audio_attrs,
+            //////////////////////////////////////////////////////////////////////////////// bioshogi まで伝わる
+
             // for AnimationFormatter
             // animation_formatter_params: {
             loop_key: this.loop_key,
@@ -250,9 +266,24 @@ export const app_form = {
             // height: this.animation_size_info.height,
             width: this.i_width,
             height: this.i_height,
-            // },
           },
         },
+      }
+    },
+
+    uploaded_audio_attrs() {
+      if (this.audio_theme_info.key === "audio_theme_user") {
+        if (this.audio_data_url) {
+          return {
+            // ログが見やすいようにこっちが先
+            audio_file: {
+              name: this.audio_file.name,
+              size: this.audio_file.size,
+              type: this.audio_file.type,
+            },
+            audio_data_url: this.audio_data_url,
+          }
+        }
       }
     },
 

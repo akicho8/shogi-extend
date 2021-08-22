@@ -2,7 +2,7 @@ import MemoryRecord from 'js-memory-record'
 
 export class ColorThemeInfo extends MemoryRecord {
   static get field_label() {
-    return "色"
+    return "配色"
   }
 
   static get field_message() {
