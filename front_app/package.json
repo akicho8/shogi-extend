@@ -24,7 +24,7 @@
     "js-memory-record": "^0.0.18",
     "lzma": "^2.3.2",
     "nuxt": "^2.14.7",
-    "nuxt-buefy": "^0.4.4",
+    "nuxt-buefy": "^0.4.8",
     "pattern.css": "^1.0.0",
     "secure-ls": "^1.2.6",
     "shogi-player": "^0.0.296",
