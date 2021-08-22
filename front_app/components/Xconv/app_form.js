@@ -38,8 +38,9 @@ export const app_form = {
       form_tab_index: 0,
 
       //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
-      audio_data_url: null,
-      audio_file: null,
+      audio_list: [],
+      audio_list_for_v_model: [], // b-upload の動作確認用
+      current_play_instance: null, // 最後に再生した Howl のインスタンス
     }
   },
 
@@ -194,12 +195,48 @@ export const app_form = {
     },
 
     //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
-    file_upload_handle(e) {
-      this.audio_file = e.target.files[0]
-      const reader = new FileReader()
-      reader.addEventListener("load", () => this.audio_data_url = reader.result, false)
-      reader.readAsDataURL(this.audio_file)
+
+    audio_file_upload_handle(files) {
+      if (files == null) {
+        this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
+      } else {
+        this.sound_play("click")
+        files.forEach(file => {
+          const reader = new FileReader()
+          reader.addEventListener("load", () => {
+            this.audio_list.push({
+              data_url: reader.result,
+              name: file.name,
+              size: file.size,
+              type: file.type,
+            })
+            this.toast_ok(`${file.name} をアップロードしました`)
+          }, false)
+          reader.readAsDataURL(file)
+        })
+      }
     },
+
+    audio_list_delete_at(index) {
+      this.sound_play("click")
+      this.base.audio_list.splice(index, 1)
+      this.base.audio_list_for_v_model.splice(index, 1)
+      this.toast_ok("削除しました")
+    },
+
+    // ドロップダウンを開閉するタイミング
+    active_change_handle(e) {
+      // 開いたときだけクリック音
+      if (e) {
+        this.sound_play('click')
+      } else {
+        if (this.current_play_instance) {
+          this.current_play_instance.stop()
+          this.current_play_instance = null
+        }
+      }
+    },
+
   },
   computed: {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
@@ -273,7 +310,7 @@ export const app_form = {
 
     uploaded_audio_attrs() {
       if (this.audio_theme_info.key === "audio_theme_user") {
-        if (this.audio_data_url) {
+        if (this.data_url) {
           return {
             // ログが見やすいようにこっちが先
             audio_file: {
@@ -281,7 +318,7 @@ export const app_form = {
               size: this.audio_file.size,
               type: this.audio_file.type,
             },
-            audio_data_url: this.audio_data_url,
+            data_url: this.data_url,
           }
         }
       }

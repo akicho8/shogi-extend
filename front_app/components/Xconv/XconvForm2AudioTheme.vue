@@ -1,27 +1,42 @@
 <template lang="pug">
-b-field.main_field.XconvForm2AudioTheme(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
-  .control
-    b-dropdown(v-model="base.audio_theme_key" @active-change="active_change_handle")
-      template(#trigger)
-        b-button(:label="base.audio_theme_info.name" icon-right="menu-down")
-      template(v-for="e in base.AudioThemeInfo.values")
-        template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-          b-dropdown-item(:value="e.key" @click="sound_play('click')")
-            .media
-              .media-left
-                | {{e.name}}
-              .media-right
-                XconvAudioPlay(:src="e.sample_m4a" size="is-small" v-if="e.sample_m4a" @play="e => current_play_instance = e")
+.XconvForm2AudioTheme
+  b-field.main_field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
+    .control
+      b-dropdown(v-model="base.audio_theme_key" @active-change="base.active_change_handle")
+        template(#trigger)
+          b-button(:label="base.audio_theme_info.name" icon-right="menu-down")
+        template(v-for="e in base.AudioThemeInfo.values")
+          template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
+            b-dropdown-item(:value="e.key" @click="sound_play('click')")
+              .media
+                .media-left
+                  b-button.is-invisible(v-if="!e.sample_m4a" icon-left="blank" size="is-small" type="is-ghost")
+                  XconvAudioPlay(:base="base" :src="e.sample_m4a" size="is-small" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
+                .media-content
+                  | {{e.name}}
 
-    .field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
-      input(type="file" @change="base.file_upload_handle")
-      template(v-if="base.audio_data_url")
-        .box
-          .media
-            .media-content
-              | {{base.audio_file.name}}
-            .media-right
-              XconvAudioPlay(:src="base.audio_data_url" size="is-small" v-if="base.audio_data_url" @play="e => current_play_instance = e")
+  b-field(v-if="base.audio_theme_info.key === 'audio_theme_user' || development_p" message="")
+    b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native expanded accept="audio/*")
+      .section
+        .content.has-text-centered
+          p
+            b-icon(icon="upload" size="is-large")
+          p
+            | ファイルをドロップまたはクリックしてください
+            br
+            span.is-size-7
+              | 2曲目があると開戦時に切り替わる
+
+  .box(v-if="base.audio_list.length >= 1")
+    .media(v-for="(file, index) in base.audio_list" :key="index")
+      .media-left
+        XconvAudioPlay(:base="base" :src="file.data_url" size="is-small" @play="e => base.current_play_instance = e" v-if="file.data_url")
+      .media-content
+        | {{file.name}}
+      .media-right
+        button.delete(size="is-small" @click="base.audio_list_delete_at(index)")
+        b-icon.is-clickable(icon="delete" @click.native="base.audio_list_delete_at(index)" type="is-danger" size="is-small")
+        b-button(icon-left="delete" size="is-small" @click="base.audio_list_delete_at(index)" type="is-danger")
 </template>
 
 <script>
@@ -30,49 +45,6 @@ import { support_child } from "./support_child.js"
 export default {
   name: "XconvForm2AudioTheme",
   mixins: [support_child],
-  data() {
-    return {
-      current_play_instance: null, // 最後に再生した Howl のインスタンス
-    }
-  },
-
-  methods: {
-    // 対象
-    // video も含めたらレビューのところも止まる
-    media_elements() {
-      // return document.querySelector(".XconvApp").querySelectorAll("audio, video")
-      return document.querySelector(".XconvApp").querySelectorAll("audio")
-    },
-
-    // 自分以外を停止する
-    exclusive_play_handle(current) {
-      this.media_elements().forEach(e => {
-        if (e.id !== current.target.id) {
-          e.pause()
-        }
-      })
-    },
-
-    // ドロップダウンを開閉するタイミング
-    active_change_handle(e) {
-
-      // 音を止めて最初に戻す
-      this.media_elements().forEach(e => {
-        e.pause()
-        e.currentTime = 0
-      })
-
-      // 開いたときだけクリック音
-      if (e) {
-        this.sound_play('click')
-      } else {
-        if (this.current_play_instance) {
-          this.current_play_instance.stop()
-          this.current_play_instance = null
-        }
-      }
-    },
-  },
 }
 </script>
 
@@ -85,24 +57,13 @@ export default {
 
   .dropdown-item
     padding: 0.75rem
-    .media
-      justify-content: space-between
 
-    .media-left, .media-left
-      margin: auto 0            // 縦を中央へ
-
-    // .media-left
-    //   //   white-space: normal
-    //   //   word-break: break-all
-    //   //   flex: 0 0 30%
-    //   // flex-basis:
-    // .media-right
-    //   // flex: 0 0 70%
-    //   // line-height: 1.5
-    // audio
-    //   // width: 100px
-    //   margin: auto
-    //   margin-top: 0.75rem
-    //   // height: 2rem // 調整できるけど Chrome 以外でおかしくなりそう
-    //   display: block
+  .media
+    justify-content: space-between
+    .media-left, .media-right, .media-content
+      display: flex
+      align-items: center
+      justify-content: flex-start
+    .media-content
+      line-height: 2.0
 </style>

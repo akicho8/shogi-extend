@@ -10,9 +10,9 @@ export default {
   name: "XconvAudioPlay",
   mixins: [support_child],
   props: {
-    src:              { type: String,  required: true,             },
-    play_duration:    { type: Number,  required: true, default: 5, },
-    fadeout_duration: { type: Number,  required: true, default: 3, },
+    src:              { type: String,  required: true,              },
+    play_duration:    { type: Number,  required: false, default: 5, },
+    fadeout_duration: { type: Number,  required: false, default: 3, },
   },
   data() {
     return {
