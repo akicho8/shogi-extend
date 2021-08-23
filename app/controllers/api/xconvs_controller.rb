@@ -2,6 +2,18 @@ module Api
   class XconvsController < ::Api::ApplicationController
     FAST_RESPONSE = nil
 
+    # curl http://localhost:3000/api/xconv/latest_info_reload.json
+    # ../../../front_app/components/Xconv/XconvApp.vue
+    def latest_info_reload
+      if !current_user
+        render json: {}
+        return
+      end
+
+      render json: {}
+      return
+    end
+
     # curl -d _method=post http://localhost:3000/api/xconv/record_create.json
     # ../../../front_app/components/Xconv/app_form.js
     def record_create

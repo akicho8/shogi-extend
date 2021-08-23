@@ -14,7 +14,8 @@ module Xconv
       subscribed_track("購読停止")
     end
 
-    # 1回だけ呼ぶ
+    # 接続後に1回だけ呼ぶ
+    # REVIEW: 最初に1回実行したいなら ActionCable ではなく Nuxt の fetch で行うべきじゃないか？
     def setup_request(data)
       # みんなの履歴
       XconvRecord.xconv_info_broadcast
@@ -23,7 +24,7 @@ module Xconv
         # あなたの履歴
         current_user.my_records_broadcast
 
-        # レビュー
+        # 直近1件を送る
         if v = current_user.xconv_records.success_only.order(created_at: :desc).first
           current_user.done_record_broadcast(v, noisy: false)
         end

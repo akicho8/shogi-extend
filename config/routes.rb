@@ -178,6 +178,7 @@ Rails.application.routes.draw do
     end
 
     resource :xconv, only: [] do
+      get :latest_info_reload
       post :record_create
       if Rails.env.development?
         get :record_create

@@ -90,6 +90,17 @@ export default {
   mounted() {
     this.ga_click("アニメーション変換")
   },
+
+  fetchOnServer: false,
+  fetch() {
+    this.debug_alert("fetch[begin]")
+    const params = {
+    }
+    return this.$axios.$get("/api/xconv/latest_info_reload.json", {params: params}).then(e => {
+      this.debug_alert("fetch[end]")
+    })
+  },
+
   computed: {
     base() { return this },
     XconvRecord() { return XconvRecord },
