@@ -34,37 +34,41 @@ class BoardFileGenerator
     def params_rewrite!(params)
       logger = Rails.logger
       logger.tagged(:params_rewrite!) do
-        # if e[:audio_theme_key] == "audio_theme_user"
-        if audio_list = params.delete(:audio_list).presence
-          params[:audio_theme_key] = nil
-          audio_list.take(2).each.with_index do |e, index|
-            logger.tagged(index) do
-              bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
-              logger.info { "bin: #{bin.size} bytes" }
-              logger.info { "attributes: #{e[:attributes].inspect}" }
-              if false
-                content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
-                extension = MiniMime.lookup_by_content_type(content_type).extension
-                audio_part_x = tmp_audio_file_dir.join("#{SecureRandom.hex}.#{extension}")
-              else
-                basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
-                logger.info { "basename: #{basename}" }
-                old_audio_file_clean(keep: 3, execute: true) if false
-                audio_part_x = tmp_audio_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
-              end
-              logger.info { "audio_part_x: #{audio_part_x}" }
-              logger.info { "pwd: #{Dir.pwd}" }
-              audio_part_x.dirname.mkpath
-              audio_part_x.binwrite(bin)
-              logger.info { `ls -alh #{Shellwords.escape(audio_part_x)}`.strip }
-              case index
-              when 0
-                params[:audio_part_a] = audio_part_x.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
-                params[:audio_part_a_volume] = 1.0
-                params[:audio_part_b] = nil
-              when 1
-                params[:audio_part_b] = audio_part_x.to_s
-                params[:audio_part_b_volume] = 1.0
+        if params[:audio_theme_key] == "audio_theme_user"
+
+          params[:audio_theme_key]     = nil
+          params[:audio_part_a]        = nil
+          params[:audio_part_a_volume] = 1.0
+          params[:audio_part_b]        = nil
+          params[:audio_part_b_volume] = 1.0
+
+          if audio_list = params.delete(:audio_list).presence
+            audio_list.take(2).each.with_index do |e, index|
+              logger.tagged(index) do
+                bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
+                logger.info { "bin: #{bin.size} bytes" }
+                logger.info { "attributes: #{e[:attributes].inspect}" }
+                if false
+                  content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
+                  extension = MiniMime.lookup_by_content_type(content_type).extension
+                  audio_part_x = tmp_audio_file_dir.join("#{SecureRandom.hex}.#{extension}")
+                else
+                  basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
+                  logger.info { "basename: #{basename}" }
+                  old_audio_file_clean(keep: 3, execute: true) if false
+                  audio_part_x = tmp_audio_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
+                end
+                logger.info { "audio_part_x: #{audio_part_x}" }
+                logger.info { "pwd: #{Dir.pwd}" }
+                audio_part_x.dirname.mkpath
+                audio_part_x.binwrite(bin)
+                logger.info { `ls -alh #{Shellwords.escape(audio_part_x)}`.strip }
+                case index
+                when 0
+                  params[:audio_part_a] = audio_part_x.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
+                when 1
+                  params[:audio_part_b] = audio_part_x.to_s
+                end
               end
             end
           end
