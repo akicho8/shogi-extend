@@ -70,7 +70,7 @@ module CardGenerator
 
     def display
       require "tmpdir"
-      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%m%H%M%S')}_#{SecureRandom.hex}.png"
+      file = "#{Dir.tmpdir}/#{Time.now.strftime('%Y%m%d%H%M%S')}_#{SecureRandom.hex}.png"
       canvas.write(file)
       system "open #{file}"
     end
