@@ -51,6 +51,7 @@ set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 # end
 
 append :linked_dirs, "storage"
+append :linked_dirs, "tmp/audio_file"
 
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"

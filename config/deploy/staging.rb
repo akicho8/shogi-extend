@@ -31,6 +31,7 @@ set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
 # set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://shogi-flow.xyz" + URI(e).request_uri }
 
 append :linked_dirs, "storage"
+append :linked_dirs, "tmp/audio_file"
 
 tp({
     application: fetch(:application),
