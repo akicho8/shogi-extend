@@ -10,8 +10,8 @@
             b-dropdown-item(:value="e.key" @click="sound_play('click')")
               .media
                 .media-left
-                  b-button.is-invisible(v-if="!e.sample_m4a" icon-left="blank" size="is-small" type="is-ghost")
-                  XconvAudioPlay(:base="base" :src="e.sample_m4a" size="is-small" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
+                  b-button(v-if="!e.sample_m4a" rounded icon-left="blank" size="is-small" type="is-ghost")
+                  XconvAudioPlay(:base="base" :src="e.sample_m4a" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
                 .media-content
                   | {{e.name}}
 
@@ -30,9 +30,9 @@
   .box(v-if="base.audio_list.length >= 1")
     .media(v-for="(file, index) in base.audio_list" :key="index")
       .media-left
-        XconvAudioPlay(:base="base" :src="file.data_url" size="is-small" @play="e => base.current_play_instance = e" v-if="file.data_url")
+        XconvAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
       .media-content
-        | {{file.name}}
+        | {{file.attributes.name}}
       .media-right
         button.delete(size="is-small" @click="base.audio_list_delete_at(index)")
         b-icon.is-clickable(icon="delete" @click.native="base.audio_list_delete_at(index)" type="is-danger" size="is-small")

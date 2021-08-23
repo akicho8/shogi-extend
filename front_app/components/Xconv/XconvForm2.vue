@@ -10,7 +10,7 @@
   XconvForm2ColorTheme(:base="base")
   XconvForm2AudioTheme(:base="base")
 
-  b-field.main_field(label="最後N秒停止" message="音のファイドアウト時間と連動している")
+  b-field.main_field(label="最後N秒停止" message="音のフェイドアウト時間と連動している")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 </template>
 

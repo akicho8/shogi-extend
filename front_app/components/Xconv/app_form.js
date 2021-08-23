@@ -205,10 +205,12 @@ export const app_form = {
           const reader = new FileReader()
           reader.addEventListener("load", () => {
             this.audio_list.push({
-              data_url: reader.result,
-              name: file.name,
-              size: file.size,
-              type: file.type,
+              attributes: {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+              },
+              url: reader.result,
             })
             this.toast_ok(`${file.name} をアップロードしました`)
           }, false)
@@ -286,7 +288,7 @@ export const app_form = {
           board_file_generator_params: {
             //////////////////////////////////////////////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
-            uploaded_audio_attrs: this.uploaded_audio_attrs,
+            audio_list: this.audio_list_if_enabled,
             //////////////////////////////////////////////////////////////////////////////// bioshogi まで伝わる
 
             // for AnimationFormatter
@@ -308,18 +310,10 @@ export const app_form = {
       }
     },
 
-    uploaded_audio_attrs() {
+    audio_list_if_enabled() {
       if (this.audio_theme_info.key === "audio_theme_user") {
-        if (this.data_url) {
-          return {
-            // ログが見やすいようにこっちが先
-            audio_file: {
-              name: this.audio_file.name,
-              size: this.audio_file.size,
-              type: this.audio_file.type,
-            },
-            data_url: this.data_url,
-          }
+        if (this.present_p(this.audio_list)) {
+          return this.audio_list
         }
       }
     },

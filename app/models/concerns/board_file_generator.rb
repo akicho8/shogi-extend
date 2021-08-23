@@ -1,54 +1,98 @@
 require "pp"
 
 class BoardFileGenerator
-  # base64で来ているデータを実際のファイルにしてパラメータを変更
-  #
-  #   params = {
-  #     :audio_theme_key => ...,
-  #     :uploaded_audio_attrs => {
-  #       :audio_file => {
-  #         :name => "blank.m4a",
-  #         :size => 1841,
-  #         :type => "audio/x-m4a",
-  #       },
-  #       :audio_data_url => "data:audio/x-m4a;base64,AAA...",
-  #     },
-  #   }
-  #
-  #   ↓
-  #
-  #   params = {
-  #     :audio_theme_key => nil,
-  #     :audio_part_a => "path/to/blank.m4a.m4a",
-  #   }
-  #
-  def self.params_rewrite!(params)
-    logger.tagged(:params_rewrite!) do
-      # if e[:audio_theme_key] == "audio_theme_user"
-      if e = params.delete(:uploaded_audio_attrs)
-        bin = ApplicationRecord.data_uri_scheme_to_bin(e[:audio_data_url])
-        logger.info { "bin: #{bin.size} bytes" }
-        logger.info { "audio_file: #{e[:audio_file].inspect}" }
-        basename = [SecureRandom.hex, e[:audio_file][:name]].join("_")
-        logger.info { "basename: #{basename}" }
-        # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:audio_data_url])
-        # extension = MiniMime.lookup_by_content_type(content_type).extension
-        # audio_part_a = Rails.root.join("tmp/audio_file/#{SecureRandom.hex}.#{extension}")
-        audio_part_a = Rails.root.join("tmp/audio_file/#{basename}")
-        logger.info { "audio_part_a: #{audio_part_a}" }
-        logger.info { "pwd: #{Dir.pwd}" }
-        audio_part_a.dirname.mkpath
-        audio_part_a.binwrite(bin)
-        logger.info { `ls -alh #{Shellwords.escape(audio_part_a)}`.strip }
-        params[:audio_theme_key] = nil
-        params[:audio_part_a] = audio_part_a.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
-        params[:audio_part_a_volume] = 1.0
-        params[:audio_part_b] = nil
-        # else
-        #   params[:audio_theme_key] == "audio_theme_none"
+  class << self
+    # base64で来ているデータを実際のファイルにしてパラメータを変更
+    #
+    #  ・配列でくるので [0] を a に [1] を b に割り当てる
+    #
+    #   params = {
+    #     :audio_theme_key => ...,
+    #     :audio_list => [
+    #       {
+    #         :url => "data:audio/x-m4a;base64,AAA...",
+    #         :attributes => {
+    #           :name => "part_a.m4a",
+    #           :size => 1841,
+    #           :type => "audio/x-m4a",
+    #         },
+    #       },
+    #       {
+    #         ...
+    #       },
+    #     ],
+    #   }
+    #
+    #   ↓
+    #
+    #   params = {
+    #     :audio_theme_key => nil,
+    #     :audio_part_a => "tmp/part_a.m4a",
+    #     :audio_part_b => "tmp/part_b.m4a",
+    #   }
+    #
+    def params_rewrite!(params)
+      logger = Rails.logger
+      logger.tagged(:params_rewrite!) do
+        # if e[:audio_theme_key] == "audio_theme_user"
+        if audio_list = params.delete(:audio_list).presence
+          params[:audio_theme_key] = nil
+          audio_list.take(2).each.with_index do |e, index|
+            logger.tagged(index) do
+              bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
+              logger.info { "bin: #{bin.size} bytes" }
+              logger.info { "attributes: #{e[:attributes].inspect}" }
+              if false
+                content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
+                extension = MiniMime.lookup_by_content_type(content_type).extension
+                audio_part_x = tmp_audio_file_dir.join("#{SecureRandom.hex}.#{extension}")
+              else
+                basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
+                logger.info { "basename: #{basename}" }
+                old_audio_file_clean(keep: 3, execute: true) if false
+                audio_part_x = tmp_audio_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
+              end
+              logger.info { "audio_part_x: #{audio_part_x}" }
+              logger.info { "pwd: #{Dir.pwd}" }
+              audio_part_x.dirname.mkpath
+              audio_part_x.binwrite(bin)
+              logger.info { `ls -alh #{Shellwords.escape(audio_part_x)}`.strip }
+              case index
+              when 0
+                params[:audio_part_a] = audio_part_x.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
+                params[:audio_part_a_volume] = 1.0
+                params[:audio_part_b] = nil
+              when 1
+                params[:audio_part_b] = audio_part_x.to_s
+                params[:audio_part_b_volume] = 1.0
+              end
+            end
+          end
+        end
+      end
+      params
+    end
+
+    # rails r 'BoardFileGenerator.old_audio_file_clean'
+    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 0)'
+    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 3, execute: true)'
+    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 0, execute: true)'
+    def old_audio_file_clean(keep: 365, execute: false)
+      logger = Rails.logger
+      logger.tagged(:old_audio_file_clean) do
+        files = tmp_audio_file_dir.glob("*").sort
+        files = files - files.last(keep)
+        if files.present?
+          all_files = files.flat_map { |e| e.glob("*") }
+          SystemMailer.simple_track(subject: "古い曲ファイル削除", body: all_files.join("\n")).deliver_later
+          FileUtils.rm_rf(files, noop: !execute, verbose: true)
+        end
       end
     end
-    params
+
+    def tmp_audio_file_dir
+      Rails.root.join("tmp/audio_file")
+    end
   end
 
   PAPPER = 1
@@ -135,12 +179,12 @@ class BoardFileGenerator
 
       # if e = opts.delete(:uploaded_audio_attrs).presence
       #   logger.tagged(:to_method_options) do
-      #     bin = ApplicationRecord.data_uri_scheme_to_bin(e[:audio_data_url])
+      #     bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
       #     logger.info { "bin: #{bin.size} bytes" }
       #     basename = e[:audio_file][:name]
       #     logger.info { "basename: #{basename}" }
       #
-      #     # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:audio_data_url])
+      #     # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
       #     # audio_file.file
       #     # extension = MiniMime.lookup_by_content_type(content_type).extension
       #     # audio_part_a = Rails.root.join("tmp/audio_file/#{SecureRandom.hex}.#{extension}")

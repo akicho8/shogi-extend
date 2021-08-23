@@ -1,5 +1,12 @@
 <template lang="pug">
-b-button(:icon-left="current_icon" @click.prevent.stop="click_handle" v-bind="$attrs" v-on="$listeners")
+b-button(
+  rounded
+  size="is-small"
+  :icon-left="current_icon"
+  @click.prevent.stop="click_handle"
+  v-bind="$attrs"
+  v-on="$listeners"
+  )
 </template>
 
 <script>
@@ -10,9 +17,9 @@ export default {
   name: "XconvAudioPlay",
   mixins: [support_child],
   props: {
-    src:              { type: String,  required: true,              },
-    play_duration:    { type: Number,  required: false, default: 5, },
-    fadeout_duration: { type: Number,  required: false, default: 3, },
+    src:              { type: String,  required: false, default: null, },
+    play_duration:    { type: Number,  required: false, default: 5,    },
+    fadeout_duration: { type: Number,  required: false, default: 3,    },
   },
   data() {
     return {
@@ -30,6 +37,9 @@ export default {
   },
   methods: {
     click_handle() {
+      if (!this.src) {
+        return
+      }
       if (this.state === 'stop') {
         if (this.instance === null) {
           this.instance = new Howl({
@@ -48,7 +58,14 @@ export default {
         }
         Howler.stop()
         this.current_id = this.instance.play()
-        this.$emit('play', this.instance)
+        if (true) {
+          // ここでフェイドアウト登録を行なってはいけない
+          // ここで行うと、そのあとで Howler.stop() による onstop が呼ばれて
+          // そこから fadeout_clear が実行されてフェイドアウトが解除されてしまう
+          // ここで行うなら stop() は実行してはいけない
+          // ただ他のところからも停止させられるので結局フェイドアウト登録は onplay で行うのがよさそう
+        }
+        this.$emit("play", this.instance)
       } else {
         this.instance.stop()
         this.state = "stop"
@@ -69,6 +86,9 @@ export default {
   },
   computed: {
     current_icon() {
+      if (!this.src) {
+        return "blank"
+      }
       if (this.state === 'play') {
         return "stop"
       } else {
