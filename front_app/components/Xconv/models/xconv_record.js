@@ -2,6 +2,7 @@ import { Gs } from "../../../components/models/gs.js"
 import { Model } from "./model.js"
 import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"
+import dayjs from "dayjs"
 import _ from "lodash"
 
 export class XconvRecord extends Model {
@@ -85,6 +86,17 @@ export class XconvRecord extends Model {
   get audio_stream() {
     const streams = this.ffprobe_info?.direct_format?.streams || []
     return streams[1] || {}
+  }
+
+  // その他
+
+  // 商用時間
+  get elapsed_human() {
+    if (this.successed_at) {
+      const b = dayjs(this.process_begin_at)
+      const e = dayjs(this.process_end_at)
+      return dayjs(e.diff(b)).format("s秒")
+    }
   }
 
   // private

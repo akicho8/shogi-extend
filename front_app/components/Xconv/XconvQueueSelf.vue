@@ -15,6 +15,8 @@ b-table.XconvQueueSelf(
   b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered)
     b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
       | {{row.status_info.name}}
+  b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :visible="development_or_staging_p")
+    | {{row.elapsed_human}}
   b-table-column(v-slot="{row}")
     .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
       | {{row.error_message}}
