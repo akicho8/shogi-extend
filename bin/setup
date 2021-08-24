@@ -20,6 +20,7 @@ chdir APP_ROOT do
 
   # Install JavaScript dependencies if using Yarn
   system('bin/yarn')
+  system('cd front_app && yarn')
   # system('cd error_page_app && yarn')
 
   # puts "\n== Copying sample files =="
