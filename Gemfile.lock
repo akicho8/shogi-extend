@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 4d06b102b1dd1c8d6de6cefd2706dfd660c82c54
+  revision: ed144d5f281f4a76a6619ffb90f92048bdbadbb4
   specs:
     bioshogi (0.0.1)
       actionview
@@ -332,7 +332,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.1)
+    rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
     rails_autolink (1.1.6)
       rails (> 3.1)
