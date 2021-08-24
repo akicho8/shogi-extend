@@ -91,6 +91,7 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_key,
         :browser_url,
+        :browser_path,
         # :ffprobe_info,
         # :file_size,
       ],
@@ -110,6 +111,7 @@ class XconvRecord < ApplicationRecord
       methods: [
         :status_key,
         :browser_url,
+        :browser_path,
         # :ffprobe_info,
         # :file_size,
       ],
@@ -117,7 +119,7 @@ class XconvRecord < ApplicationRecord
   }
 
   delegate :xconv_info_broadcast, :background_job_kick, to: "self.class"
-  delegate :browser_url, to: "generator"
+  # delegate :browser_url, to: "generator"
 
   belongs_to :user
   belongs_to :recordable, polymorphic: true
@@ -193,6 +195,8 @@ class XconvRecord < ApplicationRecord
         self.successed_at = Time.current
         self.ffprobe_info = generator.ffprobe_info
         self.file_size = generator.file_size
+        self.filename_human = filename_human_get
+        self.browser_path = generator.browser_path
       ensure
         self.process_end_at = Time.current
         save!
@@ -250,7 +254,7 @@ class XconvRecord < ApplicationRecord
   end
 
   # ダウンロード時にわかりやすい名前にする
-  def filename_human
+  def filename_human_get
     if ffprobe_info
       basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format)).join("_")
     else
@@ -261,6 +265,13 @@ class XconvRecord < ApplicationRecord
       created_at.strftime("%Y%m%d%H%M%S"),
       basename,
     ].compact.join("_") + "." + generator.real_ext
+  end
+
+  # REVIEW: 不要？
+  def browser_url
+    if browser_path
+      UrlProxy.wrap2(path: browser_path)
+    end
   end
 
   private

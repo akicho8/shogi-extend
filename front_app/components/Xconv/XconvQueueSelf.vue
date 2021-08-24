@@ -25,6 +25,8 @@ b-table.XconvQueueSelf(
       b-button.mb-0(@click="base.secret_show_handle(row)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
       b-button.mb-0(@click="base.probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
       b-button.mb-0(@click="base.json_show_handle(row)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
+      b-button.mb-0(tag="a" :href="row.browser_path"            type="is-light"   icon-left="download"                                v-if="development_or_staging_p") 直LN
+      b-button.mb-0(tag="a" :href="row.browser_path"            type="is-light"   icon-left="download" :download="row.filename_human" v-if="development_or_staging_p") 直DL
 </template>
 
 <script>

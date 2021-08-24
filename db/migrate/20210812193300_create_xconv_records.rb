@@ -37,6 +37,8 @@ class CreateXconvRecords < ActiveRecord::Migration[6.0]
       t.text :error_message,        null: true,                                   comment: "エラーメッセージ"
       t.integer :file_size,         null: true,                                   comment: "ファイルサイズ"
       t.text :ffprobe_info,         null: true,                                   comment: "変換パラメータ"
+      t.string :browser_path,       null: true,                                   comment: "生成したファイルへのパス"
+      t.string :filename_human,     null: true,                                   comment: "ダウンロードファイル名"
       t.timestamps                  null: false
       t.index :created_at
     end

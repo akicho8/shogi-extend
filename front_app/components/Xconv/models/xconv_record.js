@@ -119,9 +119,12 @@ export class XconvRecord extends Model {
   }
 
   __url_build(format, params = {}) {
-    const url_base = this.context.$config.MY_SITE_URL + `/animation-files/${this.id}.${format}`
-    const url = new URL(url_base)
-    _.each(params, (v, k) => url.searchParams.set(k, v))
-    return url.toString()
+    // const url_base = this.context.$config.MY_SITE_URL + `/animation-files/${this.id}.${format}`
+    // const url = new URL(url_base)
+    // _.each(params, (v, k) => url.searchParams.set(k, v))
+    // return url.toString()
+    const usp = new URLSearchParams()
+    _.each(params, (v, k) => usp.set(k, v))
+    return `/animation-files/${this.id}.${format}?${usp}`
   }
 }

@@ -373,6 +373,7 @@ if (process.env.NODE_ENV === 'development') {
   config.proxy["/assets"]     = process.env.MY_SITE_URL // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
   // config.proxy["/x.json"]     = process.env.MY_SITE_URL // for /x.json
   config.proxy["/admin"]     = process.env.MY_SITE_URL
+  config.proxy["/animation-files"]     = process.env.MY_SITE_URL
 }
 
 export default config

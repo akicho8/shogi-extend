@@ -1330,6 +1330,8 @@ ActiveRecord::Schema.define(version: 2021_08_12_193300) do
     t.text "error_message", comment: "エラーメッセージ"
     t.integer "file_size", comment: "ファイルサイズ"
     t.text "ffprobe_info", comment: "変換パラメータ"
+    t.string "browser_path", comment: "生成したファイルへのパス"
+    t.string "filename_human", comment: "ダウンロードファイル名"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_xconv_records_on_created_at"

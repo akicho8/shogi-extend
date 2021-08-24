@@ -37,7 +37,9 @@ module UrlProxy
         end
       end
 
-      path[:path] or raise "must not happen"
+      if path[:path].blank?
+        raise "path[:path] is blank"
+      end
 
       unless path[:path].start_with?("/")
         raise "path が / から始まっていない : #{path[:path].inspect}"
