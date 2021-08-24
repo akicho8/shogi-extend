@@ -16,11 +16,12 @@ export const app_queue_self = {
         if (false) {
           this.sound_stop_all()
         }
-        this.sound_play("click")
         if (this.done_record.successed_at) {
-          this.toast_ok(`${this.done_record.id}番が完了しました`)
+          this.sound_play("rooster")
+          this.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
         }
         if (this.done_record.errored_at) {
+          this.sound_play("x")
           this.toast_ok(`${this.done_record.id}番が失敗しました`)
         }
       }
