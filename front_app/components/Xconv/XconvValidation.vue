@@ -33,6 +33,10 @@ export default {
       display: flex
       align-items: center
       line-height: 2.5rem
+
+.STAGE-development
+  .XconvValidation
+    li
       &:hover
         background-color: $white-ter
 </style>
