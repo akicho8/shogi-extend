@@ -19,14 +19,16 @@ b-table.XconvQueueSelf(
     .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
       | {{row.error_message}}
     .buttons.has-addons.are-small.mb-0(v-if="row.successed_at")
-      b-button.mb-0(@click="base.main_download_handle(row)"     type="is-primary" icon-left="download")
-      b-button.mb-0(@click="base.load_handle(row)"              type=""           icon-left="open-in-app")
+      b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
+      b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
+
+      b-button.mb-0(@click="base.main_download_handle(row)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.load_handle(row)"              type="is-light"   icon-left="open-in-app"         v-if="development_or_staging_p")
       b-button.mb-0(@click="base.main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
       b-button.mb-0(@click="base.secret_show_handle(row)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
       b-button.mb-0(@click="base.probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
       b-button.mb-0(@click="base.json_show_handle(row)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
-      b-button.mb-0(tag="a" :href="row.browser_path"            type="is-light"   icon-left="download"                                v-if="development_or_staging_p") 直LN
-      b-button.mb-0(tag="a" :href="row.browser_path"            type="is-light"   icon-left="download" :download="row.filename_human" v-if="development_or_staging_p") 直DL
+
 </template>
 
 <script>

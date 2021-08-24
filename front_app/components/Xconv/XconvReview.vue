@@ -17,8 +17,10 @@
         b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.has-addons.is-centered.mt-3
-      b-button(@click="base.main_download_handle(base.done_record)"     type="is-primary" icon-left="download")
-      b-button(@click="base.main_show_handle(base.done_record)"         type=""           icon-left="eye-outline")
+      b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human")
+      b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
+      b-button(@click="base.main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
+      b-button(@click="base.main_show_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
       b-button(@click="base.secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
       b-button(@click="base.probe_show_modal_handle(base.done_record)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
       b-button(@click="base.json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")

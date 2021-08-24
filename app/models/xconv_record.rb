@@ -195,8 +195,7 @@ class XconvRecord < ApplicationRecord
         self.successed_at = Time.current
         self.ffprobe_info = generator.ffprobe_info
         self.file_size = generator.file_size
-        self.filename_human = filename_human_get
-        self.browser_path = generator.browser_path
+        symlink_real_path_to_human_path
       ensure
         self.process_end_at = Time.current
         save!
@@ -253,20 +252,6 @@ class XconvRecord < ApplicationRecord
     RecipeInfo.fetch(recipe_key)
   end
 
-  # ダウンロード時にわかりやすい名前にする
-  def filename_human_get
-    if ffprobe_info
-      basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format)).join("_")
-    else
-      basename = nil
-    end
-    [
-      id,
-      created_at.strftime("%Y%m%d%H%M%S"),
-      basename,
-    ].compact.join("_") + "." + generator.real_ext
-  end
-
   # REVIEW: 不要？
   def browser_url
     if browser_path
@@ -283,5 +268,28 @@ class XconvRecord < ApplicationRecord
 
   def track(name, body = nil)
     SlackAgent.message_send(key: "アニメーション変換 - #{name}", body: [user.name, id, recordable.to_param, body].compact)
+  end
+
+  # 生成ファイルにリンクする
+  def symlink_real_path_to_human_path
+    self.filename_human = filename_human_build
+    old = generator.real_path                   # 生成ファイル ~/src/shogi-extend/public/system/board_images/3e/3d/3e3dae2e6ad07d51fe12e171ebb337b6.mp4
+    new = old.dirname + filename_human          # 人間向け参照 ~/src/shogi-extend/public/system/board_images/3e/3d/2_20210824130750_1024x768_8s.mp4
+    FileUtils.symlink(old, new, force: true)
+    self.browser_path = "/" + new.relative_path_from(Rails.public_path).to_s
+  end
+
+  # ダウンロード時にわかりやすい名前にする
+  def filename_human_build
+    if ffprobe_info
+      basename = generator.basename_human_parts(ffprobe_info.fetch(:direct_format)).join("_")
+    else
+      basename = nil
+    end
+    [
+      id,
+      created_at.strftime("%Y%m%d%H%M%S"),
+      basename,
+    ].compact.join("_") + "." + generator.real_ext
   end
 end
