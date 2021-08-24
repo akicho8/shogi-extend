@@ -1117,6 +1117,20 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '指し手の消費秒数を表示'
+  describe "指し手の消費秒数を表示" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice")
+        clock_start
+        sleep(2)                                   # 2秒待つ
+        assert_move("77", "76", "☗7六歩")         # 初手を指す
+        action_log_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
+        # assert_text は overflow-x: hidden で隠れている場合があるためランダムに失敗する
+      end
+    end
+  end
+
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴'
   describe "操作履歴" do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴から過去の局面に戻る'
