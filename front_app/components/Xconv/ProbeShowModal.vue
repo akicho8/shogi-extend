@@ -8,10 +8,14 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   section.modal-card-body
-    template(v-if="record.ffprobe_info")
-      | {{pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
-    template(v-else)
-      | ?
+    b-tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
+      b-tab-item(label="a")
+        template(v-if="record.ffprobe_info")
+          | {{pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
+        template(v-else)
+          | ?
+      b-tab-item(label="b")
+        | あああああああああああああああああああああああ
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -30,6 +34,12 @@ export default {
   props: {
     record: { type: Object, required: true },
   },
+  data() {
+    return {
+      list_tab_index: 0,
+    }
+  },
+
   methods: {
     close_handle() {
       this.sound_play("click")
