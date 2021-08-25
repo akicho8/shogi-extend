@@ -37,8 +37,8 @@ class ServiceInfo
       og_image_key: "animation-export",
       description: "棋譜を動画形式に変換したいときにどうぞ",
       features: [
-        "GIF, MP4 等に変換",
-        "カスタマイズ可",
+        "mp4, gif, apng 等に変換",
+        "「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している",
       ],
     },
     {
