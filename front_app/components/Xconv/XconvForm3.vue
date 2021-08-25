@@ -7,7 +7,7 @@
           b-button(:label="base.recipe_info.name" icon-right="menu-down")
         template(v-for="e in base.RecipeInfo.values")
           template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-            b-dropdown-item(:value="e.key")
+            b-dropdown-item(:value="e.key" @click="sound_play('click')")
               .media
                 .media-left
                   | {{e.name}}
@@ -106,7 +106,6 @@
   //- b-field.main_field(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
   //-   b-input(v-model="base.video_fps")
 
-
 </template>
 
 <script>
@@ -123,8 +122,12 @@ export default {
   // > .field:not(:first-child)
   //   margin-top: 1.5rem
   .recipe_key_field
-    .media-left
-      min-width: 4ch
+    .dropdown-item
+      // +tablet
+      //   min-width: 256px
+      .media-left
+        flex-basis: 20%
+
   .animation_size_field
     .media-left
       min-width: 4rem

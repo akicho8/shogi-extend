@@ -1,7 +1,7 @@
 <template lang="pug">
 .XconvForm2
   SimpleRadioButtons.main_field(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
-  SimpleRadioButtons.main_field(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key" v-if="development_p")
+  //- SimpleRadioButtons.main_field(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key" v-if="development_p")
   //- SimpleRadioButtons.main_field(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
 
   b-field.main_field(label="1手N秒")

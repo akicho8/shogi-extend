@@ -12,7 +12,7 @@
 
   b-field.submit_field
     .control
-      b-button.has-text-weight-bold(@click="base.submit_handle" type="is-danger") 実行
+      b-button.has-text-weight-bold(@click="base.submit_handle" type="is-primary") 実行
 </template>
 
 <script>

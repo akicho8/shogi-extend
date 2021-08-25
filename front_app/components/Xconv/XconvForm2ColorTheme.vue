@@ -8,8 +8,8 @@ b-field.main_field.XconvForm2ColorTheme(:label="base.ColorThemeInfo.field_label"
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           b-dropdown-item(:value="e.key" @click="sound_play('click')")
             .media
-              .media-left
-                | {{e.name}}
+              .media-left(v-html="e.name")
+                //- | {{e.name}}
                 //- | {{e.real_ext}}
               .media-content
                 //- .has-text-weight-bold {{e.name}}
@@ -38,8 +38,13 @@ export default {
     padding-top: 0
     padding-bottom: 0
 
+
   .dropdown-item
     padding: 1.0rem
-    .media-left
-      flex-basis: 40%
+    +tablet
+      min-width: 20rem
+    .media
+      align-items: center
+      .media-left
+        flex-basis: 70%
 </style>

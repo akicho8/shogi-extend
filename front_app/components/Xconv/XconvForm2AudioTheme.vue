@@ -15,28 +15,30 @@
                 .media-content
                   | {{e.name}}
 
-  b-field(v-if="base.audio_theme_info.key === 'audio_theme_user' || development_p" message="")
-    b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native expanded accept="audio/*")
-      .section
-        .content.has-text-centered
-          p
-            b-icon(icon="upload" size="is-large")
-          p
-            | ファイルをドロップまたはクリックしてください
-            br
-            span.is-size-7
-              | 2曲目があると開戦時に切り替わる
+  .upload_block
+    b-field(v-if="base.audio_theme_info.key === 'audio_theme_user' || development_p" message="")
+      b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native expanded accept="audio/*")
+        .section
+          .content.has-text-centered
+            p
+              b-icon(icon="upload" size="is-medium")
+            p
+              //- | ファイルをドロップまたはクリックしてください
+              //- br
+              span.is-size-7
+                | 2曲目があると開戦時に切り替わる
 
-  .box(v-if="base.audio_list.length >= 1")
-    .media(v-for="(file, index) in base.audio_list" :key="index")
-      .media-left
-        XconvAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
-      .media-content
-        | {{file.attributes.name}}
-      .media-right
-        button.delete(size="is-small" @click="base.audio_list_delete_at(index)")
-        b-icon.is-clickable(icon="delete" @click.native="base.audio_list_delete_at(index)" type="is-danger" size="is-small")
-        b-button(icon-left="delete" size="is-small" @click="base.audio_list_delete_at(index)" type="is-danger")
+    .box_container
+      .box(v-if="base.audio_list.length >= 1")
+        .media(v-for="(file, index) in base.audio_list" :key="index")
+          .media-left
+            XconvAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
+          .media-content
+            | {{file.attributes.name}}
+          .media-right
+            button.delete(size="is-small" @click="base.audio_list_delete_at(index)" v-if="development_p")
+            b-icon.is-clickable(icon="delete" @click.native="base.audio_list_delete_at(index)" type="is-danger" size="is-small")
+            b-button(icon-left="delete" size="is-small" @click="base.audio_list_delete_at(index)" type="is-danger" v-if="development_p")
 </template>
 
 <script>
@@ -59,11 +61,19 @@ export default {
     padding: 0.75rem
 
   .media
-    justify-content: space-between
-    .media-left, .media-right, .media-content
-      display: flex
-      align-items: center
-      justify-content: flex-start
-    .media-content
-      line-height: 2.0
+    align-items: center
+
+  .upload_block
+    // アップロードするエリア
+    .upload
+      .section
+        padding: 1.5rem 0
+    // アップロードしたファイル
+    .box
+      .media
+        justify-content: space-between
+
+  .upload, .box_container
+    +tablet
+      padding: 0 1.25rem
 </style>

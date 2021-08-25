@@ -11,8 +11,8 @@ export class ViewpointInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "black", name: "▲ 先手", type: "is-primary", message: null, },
-      { key: "white", name: "△ 後手", type: "is-primary", message: null, },
+      { key: "black", name: "☗ 先手", type: "is-primary", message: null, },
+      { key: "white", name: "☖ 後手", type: "is-primary", message: null, },
     ]
   }
 }
