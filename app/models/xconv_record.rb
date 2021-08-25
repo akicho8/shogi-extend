@@ -16,6 +16,10 @@
 # | successed_at     | Successed at     | datetime    |             |                            | E     |
 # | errored_at       | Errored at       | datetime    |             |                            | F     |
 # | error_message    | Error message    | text(65535) |             |                            |       |
+# | file_size        | File size        | integer(4)  |             |                            |       |
+# | ffprobe_info     | Ffprobe info     | text(65535) |             |                            |       |
+# | browser_path     | Browser path     | string(255) |             |                            |       |
+# | filename_human   | Filename human   | string(255) |             |                            |       |
 # | created_at       | 作成日時         | datetime    | NOT NULL    |                            | G     |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
