@@ -1,7 +1,7 @@
 <template lang="pug">
 .XconvForm.column.is-half
   b-tabs.mb-0(expanded type="is-boxed" v-model="base.form_tab_index" @input="sound_play('click')")
-    b-tab-item(label="メイン")
+    b-tab-item(label="棋譜")
       XconvForm1(:base="base")
     b-tab-item(label="オプション")
       XconvForm2(:base="base")

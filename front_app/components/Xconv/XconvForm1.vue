@@ -3,7 +3,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   b-field.mb-0.body_field.one_block(:type="base.body_field_type")
     template(#label)
-      .label_text 棋譜
+      .label_text.is-invisible 棋譜
       a.is-size-7(@click="base.share_board_handle")
         b-icon(icon="open-in-new" size="is-small")
         | 将棋盤
