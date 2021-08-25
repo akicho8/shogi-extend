@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.main_field.XconvForm2ColorTheme(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
+b-field.one_block.XconvForm2ColorTheme(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
   .control
     b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play('click')")
       template(#trigger)
@@ -41,7 +41,7 @@ export default {
 
   .dropdown-item
     padding: 1.0rem
-    +tablet
+    +desktop
       min-width: 20rem
     .media
       align-items: center

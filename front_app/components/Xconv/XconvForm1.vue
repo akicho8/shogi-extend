@@ -1,7 +1,7 @@
 <template lang="pug">
 .XconvForm1
   ////////////////////////////////////////////////////////////////////////////////
-  b-field.mb-0.body_field.main_field(:type="base.body_field_type")
+  b-field.mb-0.body_field.one_block(:type="base.body_field_type")
     template(#label)
       .label_text 棋譜
       a.is-size-7(@click="base.share_board_handle")

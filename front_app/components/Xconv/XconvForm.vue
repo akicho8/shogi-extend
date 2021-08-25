@@ -32,7 +32,7 @@ export default {
   .tab-content
     padding: 0
 
-  .main_field
+  .one_block
     margin: 0
     padding: 0.8rem 0 1.2rem
     +tablet
@@ -40,6 +40,11 @@ export default {
       padding-right: 1.25rem
       &:hover
         background-color: $white-ter
+
+  .dropdown-item
+    padding: 0.75rem
+    .media
+      align-items: center // 縦中央寄せ
 
   .submit_field
     margin: 0
