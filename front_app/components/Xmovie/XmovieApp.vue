@@ -36,7 +36,7 @@ client-only
           XmovieReview(:base="base")
           XmovieValidation(:base="base")
           .column.is-half
-            b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
+            b-tabs.list_tabs(:expanded="false" type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
               b-tab-item(label="あなた")
                 XmovieQueueSelf(:base="base")
               b-tab-item(label="みんな")

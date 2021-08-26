@@ -1,6 +1,6 @@
 <template lang="pug">
 .XmovieForm.column.is-half
-  b-tabs.mb-0(expanded type="is-boxed" v-model="base.form_tab_index" @input="sound_play('click')")
+  b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sound_play('click')")
     b-tab-item(label="棋譜")
       XmovieForm1(:base="base")
     b-tab-item(label="オプション")
@@ -35,6 +35,8 @@ export default {
   .one_block
     margin: 0
     padding: 0.8rem 0 1.2rem
+    &.body_field
+      padding: 1.0rem
     +tablet
       padding-left: 1.25rem
       padding-right: 1.25rem
