@@ -2,7 +2,7 @@ import MemoryRecord from 'js-memory-record'
 
 export class MediaFactoryInfo extends MemoryRecord {
   static get field_label() {
-    return "mp4生成方法"
+    return "mp4,gif,apng,webp 生成に用いるツール"
   }
 
   static get field_message() {

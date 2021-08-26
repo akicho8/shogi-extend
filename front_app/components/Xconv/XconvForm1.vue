@@ -2,12 +2,12 @@
 .XconvForm1
   ////////////////////////////////////////////////////////////////////////////////
   b-field.mb-0.body_field.one_block(:type="base.body_field_type")
-    template(#label)
+    template(#label v-if="false")
       .label_text.is-invisible 棋譜
-      a.is-size-7(@click="base.share_board_handle")
+      a.is-size-7(@click="base.share_board_handle" v-if="development_p")
         b-icon(icon="open-in-new" size="is-small")
         | 将棋盤
-      a.is-size-7(@click="base.adapter_handle")
+      a.is-size-7(@click="base.adapter_handle" v-if="development_p")
         b-icon(icon="open-in-new" size="is-small")
         | 棋譜変換
     b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="4" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")

@@ -1,5 +1,8 @@
 <template lang="pug">
 .XconvForm2
+  XconvForm2ColorTheme(:base="base")
+  XconvForm2AudioTheme(:base="base")
+
   SimpleRadioButtons.one_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
   //- SimpleRadioButtons.one_block(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key" v-if="development_p")
   //- SimpleRadioButtons.one_block(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
@@ -7,10 +10,7 @@
   b-field.one_block(label="1手N秒")
     b-numberinput(v-model="base.one_frame_duration" :min="0" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
-  XconvForm2ColorTheme(:base="base")
-  XconvForm2AudioTheme(:base="base")
-
-  b-field.one_block(label="最後N秒停止" message="音のフェイドアウト時間と連動している")
+  b-field.one_block(label="最後N秒停止")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 </template>
 
