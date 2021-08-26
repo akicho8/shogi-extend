@@ -1,47 +1,48 @@
 <template lang="pug">
-.XmovieApp
-  DebugBox(v-if="development_p")
-    div foo:
+client-only
+  .XmovieApp
+    DebugBox(v-if="development_p")
+      div foo:
 
-  XmovieSidebar(:base="base")
-  MainNavbar
-    template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画生成
-    template(slot="end")
-      NavbarItemLogin
-      NavbarItemProfileLink
-      b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="development_p")
-        b-icon(icon="menu")
+    XmovieSidebar(:base="base")
+    MainNavbar
+      template(slot="brand")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画生成
+      template(slot="end")
+        NavbarItemLogin
+        NavbarItemProfileLink
+        b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="development_p")
+          b-icon(icon="menu")
 
-  MainSection
-    .container
-      .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
-        //- b-upload(@input="audio_file_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音off')")
-        //-   .field
-        //-     img(:src="url" width="128px")
-        //-     template(v-if="audio_file")
-        //-       .box
-        //-         div {{audio_file.name}}
-        //-         div {{audio_file.size}}
-        //-         div {{audio_file.type}}
+    MainSection
+      .container
+        .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+          //- b-upload(@input="audio_file_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音off')")
+          //-   .field
+          //-     img(:src="url" width="128px")
+          //-     template(v-if="audio_file")
+          //-       .box
+          //-         div {{audio_file.name}}
+          //-         div {{audio_file.size}}
+          //-         div {{audio_file.type}}
 
-        //- .column
-        //-   .box
-        //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a")
-        //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a" size="is-small")
+          //- .column
+          //-   .box
+          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a")
+          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a" size="is-small")
 
-        XmovieForm(:base="base" ref="XmovieForm" v-if="form_show_p")
-        XmovieReview(:base="base")
-        XmovieValidation(:base="base")
-        .column.is-half
-          b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
-            b-tab-item(label="あなた")
-              XmovieQueueSelf(:base="base")
-            b-tab-item(label="みんな")
-              XmovieQueueAll(:base="base")
+          XmovieForm(:base="base" ref="XmovieForm" v-if="form_show_p")
+          XmovieReview(:base="base")
+          XmovieValidation(:base="base")
+          .column.is-half
+            b-tabs.list_tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
+              b-tab-item(label="あなた")
+                XmovieQueueSelf(:base="base")
+              b-tab-item(label="みんな")
+                XmovieQueueAll(:base="base")
 
-  XmovieDebugPanels(:base="base" v-if="development_p")
+    XmovieDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
@@ -51,6 +52,7 @@ import { support_parent   } from "./support_parent.js"
 import { app_chore        } from "./app_chore.js"
 import { app_review        } from "./app_review.js"
 import { app_sidebar      } from "./app_sidebar.js"
+import { app_storage      } from "./app_storage.js"
 import { app_action_cable } from "./app_action_cable.js"
 import { app_queue_all } from "./app_queue_all.js"
 import { app_queue_self } from "./app_queue_self.js"
@@ -72,6 +74,7 @@ export default {
     app_chore,
     app_review,
     app_sidebar,
+    app_storage,
     app_action_cable,
     app_queue_all,
     app_queue_self,

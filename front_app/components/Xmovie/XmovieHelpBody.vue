@@ -68,18 +68,18 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+// import { support_child } from "./support_child.js"
 
 export default {
   name: "XmovieHelpBody",
-  mixins: [
-    support_child,
-  ],
-  data() {
-    return {
-      tab_index: 0,
-    }
-  },
+  // mixins: [
+  //   support_child,
+  // ],
+  // data() {
+  //   return {
+  //     // tab_index: 0,
+  //   }
+  // },
 }
 </script>
 

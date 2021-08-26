@@ -33,9 +33,6 @@
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 
-const HASH_MERGE_P = true // ハッシュは復元するときに初期値に対してマージするか？
-const SKIP_IF_PRESENT = true // 値があるものは上書きしない
-
 export const ls_support_mixin = {
   beforeDestroy() {
     this.ls_destroy()
@@ -85,7 +82,28 @@ export const ls_support_mixin = {
 
     ls_restore(hash) {
       this.ls_keys.forEach(key => {
-        this.ls_restore_one_from_hash(key, hash)
+
+        let exec = true
+
+        if (this.ls_config.SKIP_IF_PRESENT) {
+          const v = this.$data[key]
+          if (v != null) {
+            console.log(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${v}`)
+            exec = false
+          }
+        }
+
+        // if (this.ls_config.SKIP_IF_QUERY) {
+        //   const v = this.$route.query[key]
+        //   if (v != null) {
+        //     console.log(`[ls_restore] ${key} は復帰する前に同じキーのクエリがあるためスキップ : ${v}`)
+        //     exec = false
+        //   }
+        // }
+
+        if (exec) {
+          this.ls_restore_one_from_hash(key, hash)
+        }
       })
     },
 
@@ -95,7 +113,7 @@ export const ls_support_mixin = {
       let v = null
       if ((key in hash) && (hash[key] != null)) { // 保存している値が null のときは初期値に戻す
         const s = hash[key]             // => {a: 0,     } (stored value)
-        if (HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
+        if (this.ls_config.HASH_MERGE_P && _.isPlainObject(d) && _.isPlainObject(s)) {
           v = {..._.cloneDeep(d), ...s} // => {a: 0, b: 2} 初期値に対してマージ
           this.clog(`[ls_restore] ${key} <-- ${JSON.stringify(v)} (hash)`)
         } else {
@@ -112,15 +130,7 @@ export const ls_support_mixin = {
         alert(`data() に ${key} を null で定義してください`)
       }
 
-      const before_value = this.$data[key]
-      if (SKIP_IF_PRESENT && before_value != null) {
-        console.log(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
-        // if (this.development_p) {
-        //   alert(`[ls_restore] ${key} は復帰する前に値があるためスキップ : ${before_value}`)
-        // }
-      } else {
-        this.$data[key] = v
-      }
+      this.$data[key] = v
     },
 
     ls_reset() {
@@ -151,6 +161,19 @@ export const ls_support_mixin = {
 
     ls_attributes() {
       return this.ls_keys.reduce((a, e) => ({...a, [e]: this[e]}), {})
+    },
+
+    ls_config() {
+      return {
+        HASH_MERGE_P: true,    // ハッシュは復元するときに初期値に対してマージするか？
+        SKIP_IF_PRESENT: true, // 値があるものは上書きしない
+        // SKIP_IF_QUERY: false,  // クエリに同じものがある場合は復帰しない
+        ...this.ls_user_config,
+      }
+    },
+
+    ls_user_config() {
+      return {}
     },
   },
 }

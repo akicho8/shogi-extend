@@ -5,8 +5,8 @@ b-sidebar.is-unselectable.XmovieSidebar(fullheight right overlay v-model="base.s
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
-        //- b-menu-list(label="対局")
-        //-   b-menu-item.is_active_unset(icon="home-account" label="部屋に入る")
+        b-menu-list(label="Action")
+          b-menu-item.is_active_unset(icon="undo-variant" label="フォームを初期値に戻す" @click="base.data_reset_handle")
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方" @click="base.general_help_modal_handle")
 

@@ -1,11 +1,11 @@
 import { LoopInfo          } from "./models/loop_info.js"
 import { ViewpointInfo     } from "./models/viewpoint_info.js"
-import { ColorThemeInfo         } from "./models/color_theme_info.js"
-import { AudioThemeInfo         } from "./models/audio_theme_info.js"
-import { MediaFactoryInfo         } from "./models/media_factory_info.js"
+import { ColorThemeInfo    } from "./models/color_theme_info.js"
+import { AudioThemeInfo    } from "./models/audio_theme_info.js"
+import { MediaFactoryInfo  } from "./models/media_factory_info.js"
 import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
-import { RecipeInfo    } from "./models/recipe_info.js"
+import { RecipeInfo        } from "./models/recipe_info.js"
 
 const TWITTER_ASPECT_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
 
@@ -19,15 +19,14 @@ export const app_form = {
       i_width:            null, // w
       i_height:           null, // h
       viewpoint_key:      null, // 視点
-      color_theme_key:          null, // 色テーマ
-      audio_theme_key:          null, // 曲テーマ
-      media_factory_key:          null, // 生成方法
-      one_frame_duration:      null, // 1手N秒
-      // video_fps:     null, // fps
-      end_duration:         null, // 終了図だけ指定枚数ぶん停止
+      color_theme_key:    null, // 色テーマ
+      audio_theme_key:    null, // 曲テーマ
+      media_factory_key:  null, // 生成方法
+      one_frame_duration: null, // 1手N秒
+      end_duration:       null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
       raise_message:      null, // 例外メッセージ
-      recipe_key:    null, // 変換先
+      recipe_key:         null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xmovie_record: null, // POSTして変換待ちになっているレコード
@@ -44,11 +43,11 @@ export const app_form = {
     }
   },
 
-  created() {
-    this.parmas_set_from_query()
-    this.i_width  = this.i_width ?? this.animation_size_info.width
-    this.i_height = this.i_height ?? this.animation_size_info.height
-  },
+  // created() {
+  //   // this.data_set_by_query_or_default()
+  //   // this.i_width  = this.i_width ?? this.animation_size_info.width
+  //   // this.i_height = this.i_height ?? this.animation_size_info.height
+  // },
 
   watch: {
     body() {
@@ -59,13 +58,12 @@ export const app_form = {
       this.xmovie_record = null
       this.done_record = null
     },
-    // i_width() {
-    //   this.animation_size_key = "is_custom"
-    // },
-  },
-  mounted() {
   },
   methods: {
+    form_setup() {
+      this.i_width  = this.i_width ?? this.animation_size_info.width
+      this.i_height = this.i_height ?? this.animation_size_info.height
+    },
     body_focus() {
       // // 開発時のホットリロードでは null.$refs になる
       // this.desktop_focus_to(this.$refs.XmovieForm?.$refs.body.$refs?.textarea)
@@ -148,22 +146,6 @@ export const app_form = {
         this.i_width = this.animation_size_info.width
         this.i_height = this.animation_size_info.height
       }
-    },
-
-    parmas_set_from_query() {
-      this.ParamInfo.values.forEach(e => {
-        let v = this.$route.query[e.key]
-        if (this.present_p(v)) {
-          if (e.type === "integer") {
-            v = Math.trunc(Number(v))
-          } else if (e.type === "float") {
-            v = Number(v)
-          }
-          this.$data[e.key] = v
-        } else {
-          this.$data[e.key] = e.default
-        }
-      })
     },
 
     share_board_handle() {
