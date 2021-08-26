@@ -36,7 +36,7 @@ class KifuParser
 
   # def to_gif(*args)
   #   if Rails.env.production?
-  #     raise "いまのところproductionでのリアルタイムなアニメーション変換はサーバーが死ぬので禁止"
+  #     raise "いまのところproductionでのリアルタイムな動画生成はサーバーが死ぬので禁止"
   #   end
   #   core.to_gif(*args)
   # end

@@ -192,11 +192,11 @@ export default {
       })
     },
 
-    // 「アニメーション変換」
-    animation_export_handle() {
+    // 「動画生成」
+    movie_factory_handle() {
       this.record_fetch(() => {
         this.$router.push({
-          name: 'animation-export',
+          name: 'movie-factory',
           query: {
             body: this.record.all_kifs.sfen,
           },

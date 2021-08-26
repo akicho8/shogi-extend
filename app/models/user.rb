@@ -49,5 +49,5 @@ class User < ApplicationRecord
   include ::Wkbk::UserMethods
   include UserCrawlReservationMethods
   include UserZipDlLogMethods
-  include UserXconvMethods
+  include UserXmovieMethods
 end

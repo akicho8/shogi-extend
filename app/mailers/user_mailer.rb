@@ -109,35 +109,35 @@ class UserMailer < ApplicationMailer
   end
 
   # 棋譜取得完了
-  # UserMailer.xconv_notify(Swars::CrawlReservation.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/xconv_notify
-  def xconv_notify(xconv_record)
+  # UserMailer.xmovie_notify(Swars::CrawlReservation.first).deliver_later
+  # http://localhost:3000/rails/mailers/user/xmovie_notify
+  def xmovie_notify(xmovie_record)
     # 本文
     body = []
 
     if Rails.env.development?
-      body << xconv_record.browser_url
+      body << xmovie_record.browser_url
     end
 
     if Rails.env.development?
-      body << "ID:#{xconv_record.id} のアニメーション変換が完了しました"
+      body << "ID:#{xmovie_record.id} の動画生成が完了しました"
 
       body << ""
       body << "--"
       body << "SHOGI-EXTEND"
       body << url_for(:root)
       if Rails.env.development?
-        body << xconv_record.to_t
+        body << xmovie_record.to_t
       end
     end
 
     # 添付
-    generator = xconv_record.generator
-    attachments[xconv_record.filename_human] = generator.real_path.read
+    generator = xmovie_record.generator
+    attachments[xmovie_record.filename_human] = generator.real_path.read
 
     mail({
-        subject: "#{xconv_record.recipe_info.name} 変換完了 (添付あり)",
-        to: "#{xconv_record.user.name} <#{xconv_record.user.email}>",
+        subject: "#{xmovie_record.recipe_info.name} 変換完了 (添付あり)",
+        to: "#{xmovie_record.user.name} <#{xmovie_record.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n"),
       })

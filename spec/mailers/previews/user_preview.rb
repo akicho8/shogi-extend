@@ -24,8 +24,8 @@ class UserPreview < ActionMailer::Preview
     UserMailer.battle_fetch_notify(crawl_reservation)
   end
 
-  # http://localhost:3000/rails/mailers/user/xconv_notify
-  def xconv_notify
+  # http://localhost:3000/rails/mailers/user/xmovie_notify
+  def xmovie_notify
     convert_params = {
       :sleep         => 0,
       :raise_message => "",
@@ -35,8 +35,8 @@ class UserPreview < ActionMailer::Preview
     }
 
     free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
-    xconv_record = XconvRecord.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
-    xconv_record.main_process!
-    UserMailer.xconv_notify(xconv_record)
+    xmovie_record = XmovieRecord.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
+    xmovie_record.main_process!
+    UserMailer.xmovie_notify(xmovie_record)
   end
 end

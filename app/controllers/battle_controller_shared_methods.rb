@@ -183,20 +183,20 @@ module BattleControllerSharedMethods
         #       return
         #     end
         #
-        #     if xconv_record = XconvRecord.find_by(recordable: current_record)
-        #       # render html: xconv_record.to_html
-        #       render html: [xconv_record.status_key, XconvRecord.info.to_html].join.html_safe
+        #     if xmovie_record = XmovieRecord.find_by(recordable: current_record)
+        #       # render html: xmovie_record.to_html
+        #       render html: [xmovie_record.status_key, XmovieRecord.info.to_html].join.html_safe
         #       return
         #     end
         #
-        #     xconv_record = XconvRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
+        #     xmovie_record = XmovieRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
         #     if false
-        #       xconv_record.main_process!
+        #       xmovie_record.main_process!
         #     else
-        #       XconvRecord.background_job_kick
+        #       XmovieRecord.background_job_kick
         #     end
         #
-        #     render html: "GIF#{xconv_record.status_key}<br>終わったら #{current_user.email} に通知します#{XconvRecord.info.to_html}#{XconvRecord.order(:id).to_html}".html_safe
+        #     render html: "GIF#{xmovie_record.status_key}<br>終わったら #{current_user.email} に通知します#{XmovieRecord.info.to_html}#{XmovieRecord.order(:id).to_html}".html_safe
         #   }
         # end
         format.any { kif_data_send }

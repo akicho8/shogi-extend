@@ -89,7 +89,7 @@ Rails.application.routes.draw do
 
   resource :share_board, path: "share-board", only: [:show]
 
-  resources :xconvs, path: "animation-files", only: [:show]
+  resources :xmovies, path: "animation-files", only: [:show]
 
   ################################################################################ 将棋トレーニングバトル
 
@@ -177,7 +177,7 @@ Rails.application.routes.draw do
       post :record_create
     end
 
-    resource :xconv, only: [] do
+    resource :xmovie, only: [] do
       get :latest_info_reload
       post :record_create
       if Rails.env.development?

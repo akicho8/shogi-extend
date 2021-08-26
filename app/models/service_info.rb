@@ -31,10 +31,10 @@ class ServiceInfo
     {
       display_p: !Rails.env.production?,
       experiment_p: false,
-      nuxt_link_to: {path: "/animation-export"},
-      title: "アニメーション変換",
+      nuxt_link_to: {path: "/movie-factory"},
+      title: "動画生成",
       attention_label: "NEW!",
-      og_image_key: "animation-export",
+      og_image_key: "movie-factory",
       description: "棋譜を動画形式に変換したいときにどうぞ",
       features: [
         "mp4, gif, apng 等に変換",

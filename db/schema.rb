@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_25_153900) do
+ActiveRecord::Schema.define(version: 2021_08_26_132700) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1341,6 +1341,56 @@ ActiveRecord::Schema.define(version: 2021_08_25_153900) do
     t.index ["recordable_type", "recordable_id"], name: "index_xconv_records_on_recordable_type_and_recordable_id"
     t.index ["successed_at"], name: "index_xconv_records_on_successed_at"
     t.index ["user_id"], name: "index_xconv_records_on_user_id"
+  end
+
+  create_table "xmov_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "convert_params", null: false, comment: "変換パラメータ"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "successed_at", comment: "成功日時"
+    t.datetime "errored_at", comment: "エラー日時"
+    t.text "error_message", comment: "エラーメッセージ"
+    t.integer "file_size", comment: "ファイルサイズ"
+    t.text "ffprobe_info", comment: "変換パラメータ"
+    t.string "browser_path", comment: "生成したファイルへのパス"
+    t.string "filename_human", comment: "ダウンロードファイル名"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_xmov_records_on_created_at"
+    t.index ["errored_at"], name: "index_xmov_records_on_errored_at"
+    t.index ["process_begin_at"], name: "index_xmov_records_on_process_begin_at"
+    t.index ["process_end_at"], name: "index_xmov_records_on_process_end_at"
+    t.index ["recordable_type", "recordable_id"], name: "index_xmov_records_on_recordable_type_and_recordable_id"
+    t.index ["successed_at"], name: "index_xmov_records_on_successed_at"
+    t.index ["user_id"], name: "index_xmov_records_on_user_id"
+  end
+
+  create_table "xmovie_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "convert_params", null: false, comment: "変換パラメータ"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "successed_at", comment: "成功日時"
+    t.datetime "errored_at", comment: "エラー日時"
+    t.text "error_message", comment: "エラーメッセージ"
+    t.integer "file_size", comment: "ファイルサイズ"
+    t.text "ffprobe_info", comment: "変換パラメータ"
+    t.string "browser_path", comment: "生成したファイルへのパス"
+    t.string "filename_human", comment: "ダウンロードファイル名"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_xmovie_records_on_created_at"
+    t.index ["errored_at"], name: "index_xmovie_records_on_errored_at"
+    t.index ["process_begin_at"], name: "index_xmovie_records_on_process_begin_at"
+    t.index ["process_end_at"], name: "index_xmovie_records_on_process_end_at"
+    t.index ["recordable_type", "recordable_id"], name: "index_xmovie_records_on_recordable_type_and_recordable_id"
+    t.index ["successed_at"], name: "index_xmovie_records_on_successed_at"
+    t.index ["user_id"], name: "index_xmovie_records_on_user_id"
   end
 
   create_table "xy_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
