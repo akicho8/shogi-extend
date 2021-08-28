@@ -68,7 +68,7 @@ module Swars
           :user         => { key: battle.user.key },
           :medal_params => battle.medal_params(params),
           :grade_info   => { name: battle.grade.name, priority: battle.grade.priority },
-          :location     => { key: battle.location.key, hexagon_mark: battle.location.hexagon_mark },
+          :location     => { key: battle.location.key, pentagon_mark: battle.location.pentagon_mark },
           :judge        => { key: battle.judge_key, name: battle.judge_info.name },
         }
         [:attack, :defense].each do |key|
