@@ -306,7 +306,7 @@ export default {
     edit_mode_snapshot_sfen_set(v) {
       this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
       // if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから←編集モードでのみ
-      this.current_sfen = v
+      this.current_sfen = v // BUG: sfen を読み直してしまうため駒箱が消える
       // 意図せず共有してしまうのを防ぐため共有しない
       // if (false) {
       //   this.sfen_share_params_set()
