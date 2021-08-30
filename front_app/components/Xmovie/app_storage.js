@@ -40,6 +40,14 @@ export const app_storage = {
         }
       })
     },
+    // 無効な値なら初期値に戻す
+    // これをしないと localStorage に保存してある過去の値で復帰しようとしてアプリが起動しなくなる
+    restore_default_value_if_invalid_value() {
+      // TODO: ↓この部分を動的化する
+      if (!this.ColorThemeInfo.lookup(this.color_theme_key)) {
+        this.color_theme_key = this.ParamInfo.fetch("color_theme_key").default
+      }
+    },
   },
   computed: {
     ls_storage_key() {
