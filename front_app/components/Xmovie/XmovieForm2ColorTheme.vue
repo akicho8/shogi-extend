@@ -38,7 +38,6 @@ export default {
     padding-top: 0
     padding-bottom: 0
 
-
   .dropdown-item
     padding: 1.0rem
     +desktop

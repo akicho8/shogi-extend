@@ -8,7 +8,8 @@ export const app_storage = {
   beforeMount() {
     this.ls_setup()                     // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.data_set_by_query_or_default() // 2. query があれば上書きする。また null の変数には初期値を設定する
-    this.form_setup()                   // 3. 後処理
+    this.restore_default_value_if_invalid_value() // 3.不正な値を初期値に戻す
+    this.form_setup()                   // 4. 後処理
   },
   methods: {
     data_set_by_query_or_default() {
