@@ -11,15 +11,15 @@ export class ColorThemeInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "first_light_theme",     name: "白",                media_name: null, type: "is-primary", message: null, },
-      { key: "dark_theme",            name: "グレースケール",    media_name: null, type: "is-primary", message: null, },
-      { key: "pentagon_white_theme",  name: "白 + 六角形",       media_name: null, type: "is-primary", message: null, },
-      { key: "pentagon_basic_theme",  name: "基本形",            media_name: null, type: "is-primary", message: null, },
-      { key: "matrix_theme",          name: "マトリックス",      media_name: null, type: "is-primary", message: null, },
-      { key: "green_lcd_theme",       name: "緑",                media_name: null, type: "is-primary", message: null, },
-      { key: "orange_lcd_theme",      name: "オレンジ",          media_name: null, type: "is-primary", message: null, },
-      { key: "flip_violet_red_theme", name: "鬼○風 Violet Red", media_name: null, type: "is-primary", message: null, },
-      { key: "flip_green_theme",      name: "○滅風 緑",         media_name: null, type: "is-primary", message: null, },
+      { key: "shogi_extend_theme",      name: "基本形",            media_name: null, type: "is-primary", message: null, },
+      { key: "paper_simple_theme",      name: "白",                media_name: null, type: "is-primary", message: null, },
+      { key: "paper_shape_theme",       name: "白 + 六角形",       media_name: null, type: "is-primary", message: null, },
+      { key: "brightness_grey_theme",   name: "グレースケール",    media_name: null, type: "is-primary", message: null, },
+      { key: "brightness_matrix_theme", name: "マトリックス",      media_name: null, type: "is-primary", message: null, },
+      { key: "brightness_green_theme",  name: "緑",                media_name: null, type: "is-primary", message: null, },
+      { key: "brightness_orange_theme", name: "オレンジ",          media_name: null, type: "is-primary", message: null, },
+      { key: "kimetsu_red_theme",       name: "鬼○風 Violet Red", media_name: null, type: "is-primary", message: null, },
+      { key: "kimetsu_blue_theme",      name: "○滅風 緑",         media_name: null, type: "is-primary", message: null, },
     ]
   }
 
