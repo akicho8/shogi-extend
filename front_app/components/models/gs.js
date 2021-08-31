@@ -29,6 +29,7 @@ export const Gs = {
     return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
   },
 
+  short_inspect(value) { return JSON.stringify(value) },
   pretty_inspect(value) { return JSON.stringify(value, null, 4)   },
   // inspect(value)        { return JSON.stringify(value)            },
   pretty_print(value)   { console.log(this.pretty_inspect(value)) },

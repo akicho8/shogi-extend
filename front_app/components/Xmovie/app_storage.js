@@ -1,3 +1,5 @@
+const PARAMETER_VERSION = "1"   // 変更すればフォーム値が初期値に戻る
+
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import _ from "lodash"
 
@@ -44,15 +46,22 @@ export const app_storage = {
     // 無効な値なら初期値に戻す
     // これをしないと localStorage に保存してある過去の値で復帰しようとしてアプリが起動しなくなる
     restore_default_value_if_invalid_value() {
-      // TODO: ↓この部分を動的化する
-      if (!this.ColorThemeInfo.lookup(this.color_theme_key)) {
-        this.color_theme_key = this.ParamInfo.fetch("color_theme_key").default
-      }
+      this.ParamInfo.values.forEach(e => {
+        const value = this.$data[e.key]
+        if (e.relation) {
+          if (this[e.relation].lookup(value)) {
+            this.clog(`[設定値][OK] this.${e.key} は ${this.short_inspect(value)} のままで良い`)
+          } else {
+            this.$data[e.key] = e.default
+            this.clog(`[設定値][NG] this.${e.key} の ${this.short_inspect(value)} を ${this.short_inspect(e.default)} に変更`)
+          }
+        }
+      })
     },
   },
   computed: {
     ls_storage_key() {
-      return "movie-factory-v1"
+      return `movie-factory-v${PARAMETER_VERSION}`
     },
     ls_default() {
       return this.ParamInfo.values.filter(e => e.permanent).reduce((a, e, i) => ({...a, [e.key]: e.default}), {})
