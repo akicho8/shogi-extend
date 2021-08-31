@@ -176,52 +176,8 @@ class BoardFileGenerator
 
   def to_method_options
     @to_method_options ||= -> {
-      # このクラスだけで扱うパラメータを除いてからチェック
-      # Bioshogi::BinaryFormatter.assert_valid_keys(params.except(*PARAM_KEYS))
-
       opts = params.deep_symbolize_keys # dup を兼ねている
-
-      # if e = opts.delete(:uploaded_audio_attrs).presence
-      #   logger.tagged(:to_method_options) do
-      #     bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
-      #     logger.info { "bin: #{bin.size} bytes" }
-      #     basename = e[:audio_file][:name]
-      #     logger.info { "basename: #{basename}" }
-      #
-      #     # content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
-      #     # audio_file.file
-      #     # extension = MiniMime.lookup_by_content_type(content_type).extension
-      #     # audio_part_a = Rails.root.join("tmp/audio_file/#{SecureRandom.hex}.#{extension}")
-      #     audio_part_a = Rails.root.join("tmp/audio_file/#{basename}")
-      #     logger.info { "audio_part_a: #{audio_part_a}" }
-      #     audio_part_a.dirname.mkpath
-      #     audio_part_a.write(bin)
-      #     logger.info { `ls -alh #{Shellwords.escape(audio_part_a)}`.strip }
-      #     opts[:audio_theme_key] = nil
-      #     opts[:audio_part_a] = audio_part_a.to_s
-      #     opts[:audio_part_a_volume] = 1.0
-      #     opts[:audio_part_b] = nil
-      #   end
-      # end
-
       opts = opts.slice(*self.class.formatter_all_option_keys) # unique_key の揺らぎ防止
-
-      # if opts[:image_preset] == "small"
-      #   opts.update({
-      #                 width: 320,
-      #                 height: 256,
-      #                 piece_pull_down_rate:  { black: 0.06, white: 0      },
-      #                 piece_pull_right_rate: { black: 0.06, white: -0.045 },
-      #               })
-      # end
-
-      # opts                                                # => {"width" => "",   "height" => "1234" }
-      # opts = opts.to_options                           # => {:width  => "",   :height  => "1234" }
-      # hash = opts.transform_values { |e| native_cast(e) } # => {:width  => "",   :height  => 1234   }
-      # hash = hash.reject { |k, v| v.blank? }                 # => {                 :height  => 1234   }
-      # opts = default_size.merge(hash)            # => {:width  => 1200, :height  => 1234   }
-      #
-      # opts = opts.deep_symbolize_keys # opts[:piece_pull_right_rate][:black] でアクセスできるようにするため
 
       ImageSizeInfo.each do |e|
         if v = opts[e.key].presence || e.default
@@ -229,9 +185,16 @@ class BoardFileGenerator
         end
       end
 
-      opts.update(recipe_info.override_options)
+      [
+        { key: :one_frame_duration, max: 3  },
+        { key: :end_duration,       max: 30 },
+      ].each do |e|
+        if v = opts[e[:key]].presence
+          opts[e[:key]] = v.clamp(0, e[:max])
+        end
+      end
 
-      opts
+      opts = opts.merge(recipe_info.override_options)
     }.call
   end
 
