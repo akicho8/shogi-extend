@@ -50,6 +50,14 @@
       .panel-block
         pre {{JSON.stringify(base.record, null, 4)}}
   .column.is-3
+    .panel.is_line_break_on
+      .panel-heading
+        | SFEN
+      .panel-block
+        | 操作 {{base.current_sfen}}
+      .panel-block
+        | 編集 {{base.edit_mode_sfen}}
+  .column.is-3
     .panel
       .panel-heading
         | CustomVarInfo

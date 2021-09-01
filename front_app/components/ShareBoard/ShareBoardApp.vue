@@ -220,6 +220,7 @@ export default {
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       sp_run_mode:   null, // 操作モードと局面編集モードの切り替え用
+      edit_mode_sfen:  null, // 編集モードでの棋譜
 
       DEFAULT_VARS: {},
     }
@@ -305,8 +306,11 @@ export default {
     // ・すぐに反映しないのは駒箱が消えてしまうから
     edit_mode_snapshot_sfen_set(v) {
       this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
-      // if (this.sp_run_mode === "edit_mode") { // 操作モードでも呼ばれるから←編集モードでのみ
-      this.current_sfen = v // BUG: sfen を読み直してしまうため駒箱が消える
+
+      // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
+      // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
+      this.edit_mode_sfen = v
+
       // 意図せず共有してしまうのを防ぐため共有しない
       // if (false) {
       //   this.sfen_share_params_set()
