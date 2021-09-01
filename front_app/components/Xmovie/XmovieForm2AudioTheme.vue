@@ -16,16 +16,10 @@
                   | {{e.name}}
 
   b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
-    b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native expanded accept="audio/*")
-      .section
-        .content.has-text-centered
-          p
-            b-icon(icon="upload" size="is-medium")
-          p
-            //- | ファイルをドロップまたはクリックしてください
-            //- br
-            span.is-size-7
-              | 2曲目があると開戦時に切り替わる
+    b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native accept="audio/*")
+      .is-flex.is-align-items-center.px-3.py-1
+        b-icon(icon="upload" size="is-small")
+        .is-size-7.ml-2 BGMのアップロード
 
   .box(v-if="base.audio_list.length >= 1")
     .media.is-justify-content-space-between(v-for="(file, index) in base.audio_list" :key="index")

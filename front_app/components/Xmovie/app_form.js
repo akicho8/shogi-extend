@@ -228,24 +228,27 @@ export const app_form = {
     //////////////////////////////////////////////////////////////////////////////// BGM ファイルアップロード
 
     bg_img_one_file_upload_handle(file) {
-      // if (files == null) {
-      //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
-      // } else {
-      this.sound_play("click")
-      // files.forEach(file => {
-      const reader = new FileReader()
-      reader.addEventListener("load", () => {
-        this.bg_img_one = {
-          attributes: {
-            name: file.name,
-            size: file.size,
-            type: file.type,
-          },
-          url: reader.result,
-        }
-        this.toast_ok(`${file.name} をアップロードしました`)
-      }, false)
-      reader.readAsDataURL(file)
+      if (file == null) {
+      } else {
+        // if (files == null) {
+        //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
+        // } else {
+        this.sound_play("click")
+        // files.forEach(file => {
+        const reader = new FileReader()
+        reader.addEventListener("load", () => {
+          this.bg_img_one = {
+            attributes: {
+              name: file.name,
+              size: file.size,
+              type: file.type,
+            },
+            url: reader.result,
+          }
+          this.toast_ok(`${file.name} をアップロードしました`)
+        }, false)
+        reader.readAsDataURL(file)
+      }
     },
 
     bg_img_one_delete_at() {
