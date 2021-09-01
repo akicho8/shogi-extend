@@ -40,6 +40,10 @@ export const app_form = {
       audio_list: [],
       audio_list_for_v_model: [], // b-upload の動作確認用
       current_play_instance: null, // 最後に再生した Howl のインスタンス
+
+      //////////////////////////////////////////////////////////////////////////////// 背景画像
+      bg_img_one: null,
+      bg_img_one_for_v_model: [], // b-upload の動作確認用
     }
   },
 
@@ -176,7 +180,7 @@ export const app_form = {
       this.form2_show_p = !this.form2_show_p
     },
 
-    //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
+    //////////////////////////////////////////////////////////////////////////////// BGM ファイルアップロード
 
     audio_file_upload_handle(files) {
       if (files == null) {
@@ -219,6 +223,35 @@ export const app_form = {
           this.current_play_instance = null
         }
       }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// BGM ファイルアップロード
+
+    bg_img_one_file_upload_handle(file) {
+      // if (files == null) {
+      //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
+      // } else {
+      this.sound_play("click")
+      // files.forEach(file => {
+      const reader = new FileReader()
+      reader.addEventListener("load", () => {
+        this.bg_img_one = {
+          attributes: {
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          },
+          url: reader.result,
+        }
+        this.toast_ok(`${file.name} をアップロードしました`)
+      }, false)
+      reader.readAsDataURL(file)
+    },
+
+    bg_img_one_delete_at() {
+      this.sound_play("click")
+      this.base.bg_img_one = null
+      this.toast_ok("削除しました")
     },
 
   },
@@ -271,6 +304,7 @@ export const app_form = {
             //////////////////////////////////////////////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
             audio_list: this.audio_list_if_enabled,
+            bg_img_one: this.bg_img_one_if_enabled,
             //////////////////////////////////////////////////////////////////////////////// bioshogi まで伝わる
 
             // for AnimationFormatter
@@ -298,6 +332,13 @@ export const app_form = {
           return this.audio_list
         }
       }
+    },
+
+    bg_img_one_if_enabled() {
+      // if (this.bg_img_one_theme_info.key === "bg_img_one_theme_user") {
+      // if (this.present_p(this.bg_img_one)) {
+      return this.bg_img_one
+      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
