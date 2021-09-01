@@ -150,8 +150,9 @@ class XmovieRecord < ApplicationRecord
     self.convert_params = convert_params.deep_symbolize_keys
     BoardFileGenerator.params_rewrite!(convert_params[:board_file_generator_params])
 
-    if changes_to_save[:error_message] && error_message
-      self.error_message = error_message.lines.first.first(self.class.columns_hash["error_message"].limit)
+    # XXX: error_message が "" とき予想に反して "".lines が [] になり first して転けるため present? で除外するの重要
+    if changes_to_save[:error_message] && v = error_message.presence
+      self.error_message = v.lines.first.first(self.class.columns_hash["error_message"].limit)
     end
   end
 
