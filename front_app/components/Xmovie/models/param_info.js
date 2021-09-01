@@ -18,7 +18,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "one_frame_duration", type: "float",   name: "1手N秒",             default: 1.0,                               permanent: true,  relation: null,                desc: "", },
       { key: "end_duration",       type: "integer", name: "最後に停止する秒数", default: 7,                                 permanent: true,  relation: null,                desc: "", },
       { key: "sleep",              type: "integer", name: "遅延",               default: 0,                                 permanent: true,  relation: null,                desc: "デバッグ用", },
-      { key: "raise_message",      type: "string",  name: "例外メッセージ",     default: null,                              permanent: true,  relation: null,                desc: "デバッグ用", },
+      { key: "raise_message",      type: "string",  name: "例外メッセージ",     default: "",                                permanent: true,  relation: null,                desc: "デバッグ用", },
     ]
   }
 }
