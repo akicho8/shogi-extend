@@ -24,7 +24,7 @@
         .size_info.is-size-7
           | {{base.bg_img_one.attributes.name}}
       .position_trash_icon(v-if="base.bg_img_one")
-        .icon_box.is-clickable(@click.prevent.stop="base.bg_img_one_delete_at")
+        .icon_box.is-clickable(@click.prevent.stop="base.bg_img_one_delete_handle")
           b-icon.has-text-white(icon="trash-can")
 </template>
 

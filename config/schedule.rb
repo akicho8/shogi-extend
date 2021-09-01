@@ -27,7 +27,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 every("5 3 * * *") do
   runner [
     %(SlackAgent.message_send(key: "CRON", body: "begin")),
-    %(BoardFileGenerator.old_audio_file_clean(keep: 3, execute: true)),
+    %(BoardFileGenerator.old_media_file_clean(keep: 3, execute: true)),
 
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",

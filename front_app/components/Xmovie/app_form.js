@@ -251,7 +251,7 @@ export const app_form = {
       }
     },
 
-    bg_img_one_delete_at() {
+    bg_img_one_delete_handle() {
       this.sound_play("click")
       this.base.bg_img_one = null
       this.toast_ok("削除しました")

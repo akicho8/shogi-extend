@@ -34,6 +34,7 @@ class BoardFileGenerator
     def params_rewrite!(params)
       logger = Rails.logger
       logger.tagged(:params_rewrite!) do
+
         if params[:audio_theme_key] == "audio_theme_user"
 
           params[:audio_theme_key]     = nil
@@ -45,24 +46,7 @@ class BoardFileGenerator
           if audio_list = params.delete(:audio_list).presence
             audio_list.take(2).each.with_index do |e, index|
               logger.tagged(index) do
-                bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
-                logger.info { "bin: #{bin.size} bytes" }
-                logger.info { "attributes: #{e[:attributes].inspect}" }
-                if false
-                  content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
-                  extension = MiniMime.lookup_by_content_type(content_type).extension
-                  audio_part_x = tmp_audio_file_dir.join("#{SecureRandom.hex}.#{extension}")
-                else
-                  basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
-                  logger.info { "basename: #{basename}" }
-                  old_audio_file_clean(keep: 3, execute: true) if false
-                  audio_part_x = tmp_audio_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
-                end
-                logger.info { "audio_part_x: #{audio_part_x}" }
-                logger.info { "pwd: #{Dir.pwd}" }
-                audio_part_x.dirname.mkpath
-                audio_part_x.binwrite(bin)
-                logger.info { `ls -alh #{Shellwords.escape(audio_part_x)}`.strip }
+                audio_part_x = foo(e)
                 case index
                 when 0
                   params[:audio_part_a] = audio_part_x.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
@@ -73,18 +57,34 @@ class BoardFileGenerator
             end
           end
         end
+
+        # if params[:audio_theme_key] == "audio_theme_user"
+        if true
+          # params[:audio_theme_key]     = nil
+          # params[:audio_part_a]        = nil
+          # params[:audio_part_a_volume] = 1.0
+          # params[:audio_part_b]        = nil
+          # params[:audio_part_b_volume] = 1.0
+
+          if bg_img_one = params.delete(:bg_img_one).presence
+            params[:override_params] = {
+              :bg_file => foo(bg_img_one).to_s,
+            }
+          end
+        end
       end
+
       params
     end
 
-    # rails r 'BoardFileGenerator.old_audio_file_clean'
-    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 0)'
-    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 3, execute: true)'
-    # rails r 'BoardFileGenerator.old_audio_file_clean(keep: 0, execute: true)'
-    def old_audio_file_clean(keep: 365, execute: false)
+    # rails r 'BoardFileGenerator.old_media_file_clean'
+    # rails r 'BoardFileGenerator.old_media_file_clean(keep: 0)'
+    # rails r 'BoardFileGenerator.old_media_file_clean(keep: 3, execute: true)'
+    # rails r 'BoardFileGenerator.old_media_file_clean(keep: 0, execute: true)'
+    def old_media_file_clean(keep: 365, execute: false)
       logger = Rails.logger
-      logger.tagged(:old_audio_file_clean) do
-        files = tmp_audio_file_dir.glob("*").sort
+      logger.tagged(:old_media_file_clean) do
+        files = tmp_media_file_dir.glob("*").sort
         files = files - files.last(keep)
         if files.present?
           all_files = files.flat_map { |e| e.glob("*") }
@@ -94,8 +94,31 @@ class BoardFileGenerator
       end
     end
 
-    def tmp_audio_file_dir
-      Rails.root.join("tmp/audio_file")
+    def foo(e)
+      logger = Rails.logger
+      bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
+      logger.info { "bin: #{bin.size} bytes" }
+      logger.info { "attributes: #{e[:attributes].inspect}" }
+      if false
+        content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
+        extension = MiniMime.lookup_by_content_type(content_type).extension
+        file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{extension}")
+      else
+        basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
+        logger.info { "basename: #{basename}" }
+        old_media_file_clean(keep: 3, execute: true) if false
+        file_path = tmp_media_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
+      end
+      logger.info { "file_path: #{file_path}" }
+      logger.info { "pwd: #{Dir.pwd}" }
+      file_path.dirname.mkpath
+      file_path.binwrite(bin)
+      logger.info { `ls -alh #{Shellwords.escape(file_path)}`.strip }
+      file_path
+    end
+
+    def tmp_media_file_dir
+      Rails.root.join("tmp/media_file")
     end
   end
 
