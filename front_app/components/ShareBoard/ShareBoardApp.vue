@@ -379,7 +379,9 @@ export default {
     },
     operation_invalid2_handle() {
       this.sound_play("x")
-      this.toast_ok("それは相手の駒です")
+      if (this.development_p) {
+        this.toast_ok("それは相手の駒です")
+      }
     },
   },
 
