@@ -11,7 +11,7 @@ RSpec.describe BoardFileGenerator, type: :model do
   describe "xxx_formatter_options" do
     def test1(params)
       obj = BoardFileGenerator.new(FreeBattle.create!, params)
-      obj.xxx_formatter_options
+      obj.to_method_options
     end
     it "works" do
       assert { test1({})                 == {width: 1200, height: 630} }

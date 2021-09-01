@@ -36,7 +36,6 @@ class BoardFileGenerator
       logger.tagged(:params_rewrite!) do
 
         if params[:audio_theme_key] == "audio_theme_user"
-
           params[:audio_theme_key]     = nil
           params[:audio_part_a]        = nil
           params[:audio_part_a_volume] = 1.0
@@ -46,30 +45,20 @@ class BoardFileGenerator
           if audio_list = params.delete(:audio_list).presence
             audio_list.take(2).each.with_index do |e, index|
               logger.tagged(index) do
-                audio_part_x = foo(e)
                 case index
                 when 0
-                  params[:audio_part_a] = audio_part_x.to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
+                  params[:audio_part_a] = data_uri_to_tmpfile(e).to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
                 when 1
-                  params[:audio_part_b] = audio_part_x.to_s
+                  params[:audio_part_b] = data_uri_to_tmpfile(e).to_s
                 end
               end
             end
           end
         end
 
-        # if params[:audio_theme_key] == "audio_theme_user"
         if true
-          # params[:audio_theme_key]     = nil
-          # params[:audio_part_a]        = nil
-          # params[:audio_part_a_volume] = 1.0
-          # params[:audio_part_b]        = nil
-          # params[:audio_part_b_volume] = 1.0
-
           if bg_img_one = params.delete(:bg_img_one).presence
-            params[:override_params] = {
-              :bg_file => foo(bg_img_one).to_s,
-            }
+            params[:override_params] = { bg_file: data_uri_to_tmpfile(bg_img_one).to_s }
           end
         end
       end
@@ -94,7 +83,7 @@ class BoardFileGenerator
       end
     end
 
-    def foo(e)
+    def data_uri_to_tmpfile(e)
       logger = Rails.logger
       bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
       logger.info { "bin: #{bin.size} bytes" }
