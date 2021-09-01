@@ -1131,6 +1131,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '編集モードで配置を変更しても駒箱が消えない'
+  describe "編集モードで配置を変更しても駒箱が消えない" do
+    it "works" do
+      visit_app
+      side_menu_open
+      menu_item_click("局面編集")
+      find(".EditToolBlock .dropdown:nth-of-type(2)").click # 左から2つ目の dropdown をクリック
+      menu_item_sub_menu_click("駒箱に駒を一式生成")
+      piece_move("77", "76")                                # 駒移動で edit_mode の sfen の emit が飛ぶ
+      assert_selector(".PieceBox .PieceTap")                # でも駒箱に駒は消えていない
+    end
+  end
+
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴'
   describe "操作履歴" do
     # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴から過去の局面に戻る'

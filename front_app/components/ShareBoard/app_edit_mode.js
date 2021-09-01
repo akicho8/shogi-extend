@@ -38,6 +38,7 @@ export const app_edit_mode = {
         this.edit_warn_modal_handle()
         return
       }
+      this.edit_mode_sfen = null // 編集モードで動かしたらこれに入る
       this.sp_run_mode = "edit_mode"
     },
 
@@ -45,6 +46,11 @@ export const app_edit_mode = {
     play_mode_handle() {
       this.sidebar_p = false
       this.sound_play("click")
+      // 編集モードの最後のSFENを play_mode の sfen に戻す
+      if (this.edit_mode_sfen) {
+        this.current_sfen = this.edit_mode_sfen
+        this.edit_mode_sfen = null
+      }
       this.sp_run_mode = "play_mode"
       this.shared_al_add({label: "局面編集後"})
     },
