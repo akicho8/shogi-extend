@@ -198,7 +198,7 @@ export const app_form = {
               },
               url: reader.result,
             })
-            this.toast_ok(`${file.name} をアップロードしました`)
+            this.toast_ok(`アップロードしました`)
           }, false)
           reader.readAsDataURL(file)
         })
@@ -245,7 +245,7 @@ export const app_form = {
             },
             url: reader.result,
           }
-          this.toast_ok(`${file.name} をアップロードしました`)
+          this.toast_ok(`アップロードしました`)
         }, false)
         reader.readAsDataURL(file)
       }
