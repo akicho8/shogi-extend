@@ -19,7 +19,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/xy"},
       title: "符号の鬼",
-      attention_label: "UPDATE!",
+      attention_label: nil,
       og_image_key: "xy",
       description: "符号マスター養成所",
       features: [
@@ -33,11 +33,11 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/vs"},
       title: "対人戦",
-      attention_label: "NEW!",
+      attention_label: nil,
       og_image_key: "share-board-vs",
       description: "気軽に対局したいときにどうぞ",
       features: [
-        "プレイ人数 1〜8人",
+        "プレイ人数 2〜8人",
         "いまんところはログイン不要",
         "これは共有将棋盤の「自動マッチング」へのショートカット",
       ],
@@ -72,7 +72,7 @@ class ServiceInfo
       experiment_p: false,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
-      attention_label: "UPDATE!",
+      attention_label: nil,
       og_image_key: "share-board",
       description: "リレー将棋・詰将棋作成・仲間内での対戦にどうぞ",
       features: [
