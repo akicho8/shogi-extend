@@ -22,8 +22,8 @@ export const app_form = {
       color_theme_key:    null, // 色テーマ
       audio_theme_key:    null, // 曲テーマ
       media_factory_key:  null, // 生成方法
-      one_frame_duration: null, // 1手N秒
-      end_duration:       null, // 終了図だけ指定枚数ぶん停止
+      one_frame_duration_sec: null, // 1手N秒
+      end_duration_sec:       null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
       raise_message:      null, // 例外メッセージ
       recipe_key:         null, // 変換先
@@ -275,7 +275,7 @@ export const app_form = {
     RecipeInfo()               { return RecipeInfo                                       },
     recipe_info()              { return this.base.RecipeInfo.fetch(this.recipe_key)      },
 
-    // end_seconds() { return this.number_floor(this.one_frame_duration * this.end_duration, 2) },
+    // end_seconds() { return this.number_floor(this.one_frame_duration_sec * this.end_duration_sec, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -313,9 +313,9 @@ export const app_form = {
             // for AnimationFormatter
             // animation_formatter_params: {
             loop_key: this.loop_key,
-            one_frame_duration: this.one_frame_duration,
+            one_frame_duration_sec: this.one_frame_duration_sec,
             // video_fps: this.video_fps,
-            end_duration: this.end_duration,
+            end_duration_sec: this.end_duration_sec,
             viewpoint: this.viewpoint_key,
             color_theme_key: this.color_theme_key,
             audio_theme_key: this.audio_theme_key,

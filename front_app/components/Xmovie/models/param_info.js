@@ -15,8 +15,8 @@ export class ParamInfo extends MemoryRecord {
       { key: "audio_theme_key",    type: "string",  name: "BGM",                default: "audio_theme_positive_think_only", permanent: true,  relation: "AudioThemeInfo",    desc: "", },
       { key: "media_factory_key",  type: "string",  name: "生成ツール",         default: "ffmpeg",                          permanent: true,  relation: "MediaFactoryInfo",  desc: "", },
       // debug
-      { key: "one_frame_duration", type: "float",   name: "1手N秒",             default: 1.0,                               permanent: true,  relation: null,                desc: "", },
-      { key: "end_duration",       type: "integer", name: "最後に停止する秒数", default: 7,                                 permanent: true,  relation: null,                desc: "", },
+      { key: "one_frame_duration_sec", type: "float",   name: "1手N秒",             default: 1.0,                               permanent: true,  relation: null,                desc: "", },
+      { key: "end_duration_sec",       type: "integer", name: "最後に停止する秒数", default: 7,                                 permanent: true,  relation: null,                desc: "", },
       { key: "sleep",              type: "integer", name: "遅延",               default: 0,                                 permanent: true,  relation: null,                desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",     default: "",                                permanent: true,  relation: null,                desc: "デバッグ用", },
     ]

@@ -8,10 +8,10 @@
   //- SimpleRadioButtons.one_block(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
 
   b-field.one_block(label="1手N秒")
-    b-numberinput(v-model="base.one_frame_duration" :min="0" :max="3" :step="0.1" exponential @input="sound_play('click')")
+    b-numberinput(v-model="base.one_frame_duration_sec" :min="0" :max="3" :step="0.1" exponential @input="sound_play('click')")
 
   b-field.one_block(label="最後N秒停止")
-    b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+    b-numberinput(v-model="base.end_duration_sec" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 </template>
 
 <script>

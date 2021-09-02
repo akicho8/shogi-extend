@@ -198,8 +198,8 @@ class BoardFileGenerator
       end
 
       [
-        { key: :one_frame_duration, max: 3  },
-        { key: :end_duration,       max: 30 },
+        { key: :one_frame_duration_sec, max: 5  },
+        { key: :end_duration_sec,       max: 30 },
       ].each do |e|
         if v = opts[e[:key]].presence
           opts[e[:key]] = v.clamp(0, e[:max])
@@ -235,6 +235,7 @@ class BoardFileGenerator
     force_generate
   end
 
+  # ファイルの存在は問わない
   def real_path
     @real_path ||= self.class.cache_root.join(*dir_parts, disk_filename)
   end
@@ -246,6 +247,7 @@ class BoardFileGenerator
   def recipe_info
     RecipeInfo.fetch(recipe_key)
   end
+
   # system 以下に格納するとき用のファイル名
   # 同じパラメータなら同じになるようにする
   # 2回同じパラメータで生成しようとしたときに、2回目に1回目のファイルを参照できるなくなるから日付を含めてはいけない
@@ -270,9 +272,11 @@ class BoardFileGenerator
 
     parts = []
     e = direct_format["streams"][0]
+
     if (w = e["width"]) && (h = e["height"])
       parts << "#{w}x#{h}"
     end
+
     if real_ext.in?(["mp4", "mov", "gif"])
       # if v = e["r_frame_rate"]
       #   parts << "#{v.to_i}fps" # おかしい？
