@@ -64,8 +64,11 @@ class UserMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
     subject_suffix = ""
-    if record.attachment_mode == "with_zip"
-      subject_suffix = "(添付あり)"
+
+    if Rails.env.development?
+      if record.attachment_mode == "with_zip"
+        subject_suffix = "(添付あり)"
+      end
     end
 
     subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了 #{subject_suffix}".squish
@@ -136,7 +139,7 @@ class UserMailer < ApplicationMailer
     attachments[xmovie_record.filename_human] = generator.real_path.read
 
     mail({
-        subject: "#{xmovie_record.recipe_info.name} 変換完了 (添付あり)",
+        subject: "#{xmovie_record.recipe_info.name} 変換完了",
         to: "#{xmovie_record.user.name} <#{xmovie_record.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n"),
