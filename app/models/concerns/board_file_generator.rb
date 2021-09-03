@@ -1,7 +1,7 @@
-require "pp"
-
 class BoardFileGenerator
   class << self
+    delegate :logger, to: "Rails"
+
     # base64で来ているデータを実際のファイルにしてパラメータを変更
     #
     #  ・配列でくるので [0] を a に [1] を b に割り当てる
@@ -32,7 +32,6 @@ class BoardFileGenerator
     #   }
     #
     def params_rewrite!(params)
-      logger = Rails.logger
       logger.tagged(:params_rewrite!) do
         if params[:audio_theme_key] == "audio_theme_user"
           params[:audio_theme_key]     = nil
@@ -41,15 +40,20 @@ class BoardFileGenerator
           params[:audio_part_b]        = nil
           params[:audio_part_b_volume] = 1.0
 
-          if ary = params.delete(:xaudio_list).presence
-            ary = ary.collect { |e| data_uri_to_tmpfile(e).to_s }
-            params.update(list.zip(:audio_part_a, :audio_part_b).to_h)
+          if e = params.delete(:au_file1).presence
+            params[:audio_part_a] = data_uri_to_tmpfile(e).to_s
+          end
+          if e = params.delete(:au_file2).presence
+            params[:audio_part_b] = data_uri_to_tmpfile(e).to_s
           end
         end
 
-        if ary = params.delete(:ximage_list).presence
-          ary = ary.collect { |e| data_uri_to_tmpfile(e).to_s }
-          params[:override_params] = ary.zip(:bg_file, :battle_field_texture).to_h
+        params[:override_params] ||= {}
+        if e = params.delete(:bg_file1).presence
+          params[:override_params][:bg_file] = data_uri_to_tmpfile(e).to_s
+        end
+        if e = params.delete(:bg_file2).presence
+          params[:override_params][:battle_field_texture] = data_uri_to_tmpfile(e).to_s
         end
       end
 
@@ -61,7 +65,6 @@ class BoardFileGenerator
     # rails r 'BoardFileGenerator.old_media_file_clean(keep: 3, execute: true)'
     # rails r 'BoardFileGenerator.old_media_file_clean(keep: 0, execute: true)'
     def old_media_file_clean(keep: 365, execute: false)
-      logger = Rails.logger
       logger.tagged(:old_media_file_clean) do
         files = tmp_media_file_dir.glob("*").sort
         files = files - files.last(keep)
@@ -74,7 +77,6 @@ class BoardFileGenerator
     end
 
     def data_uri_to_tmpfile(e)
-      logger = Rails.logger
       bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
       logger.info { "bin: #{bin.size} bytes" }
       logger.info { "attributes: #{e[:attributes].inspect}" }
@@ -137,6 +139,8 @@ class BoardFileGenerator
   attr_accessor :params
 
   delegate :real_ext, to: :recipe_info
+
+  delegate :logger, to: "Rails"
 
   def initialize(record, params = {}, options = {}, &block)
     @record = record

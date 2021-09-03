@@ -12,40 +12,9 @@
                 .media-left(v-html="e.name")
                 .media-content
                   img.is-block(:src="e.thumbnail_url(base)")
-  b-field
-    b-upload(v-model="base.ximage_list_for_v_model" multiple drag-drop @input="base.ximage_file_upload_handle" native accept="image/*")
-      .is-flex.is-align-items-center.px-3.py-1
-        b-icon(icon="upload" size="is-small")
-        .is-size-7.ml-2 背景画像のアップロード
 
-  .box(v-if="base.ximage_list.length >= 1")
-    .media.is-justify-content-space-between(v-for="(file, index) in base.ximage_list" :key="index")
-      .media-left
-        img(:src="file.url")
-        //- .position_filename(v-if="development_p")
-        //-   .size_info.is-size-7
-        //-     | {{file.attributes.name}}
-        //- .position_trash_icon(v-if="file")
-        //-   .icon_box.is-clickable(@click.prevent.stop="base.ximage_one_delete_handle")
-        //-     b-icon.has-text-white(icon="trash-can")
-
-        //- XmovieAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
-      .media-content
-        | {{file.attributes.name}}
-      .media-right
-        button.delete(size="is-small" @click="base.ximage_list_delete_at(index)" v-if="development_p")
-        b-icon.is-clickable(icon="delete" @click.native="base.ximage_list_delete_at(index)" type="is-danger" size="is-small")
-        b-button(icon-left="delete" size="is-small" @click="base.ximage_list_delete_at(index)" type="is-danger" v-if="development_p")
-
-  //- template(v-if="base.ximage_list")
-  //-   figure.image
-  //-     img(:src="base.ximage_list.url")
-  //-     .position_filename(v-if="development_p")
-  //-       .size_info.is-size-7
-  //-         | {{base.ximage_list.attributes.name}}
-  //-     .position_trash_icon(v-if="base.ximage_list")
-  //-       .icon_box.is-clickable(@click.prevent.stop="base.ximage_one_delete_handle")
-  //-         b-icon.has-text-white(icon="trash-can")
+  XmovieImageUpload(:base="base" label="背景" :file_info.sync="base.bg_file1")
+  XmovieImageUpload(:base="base" label="盤面" :file_info.sync="base.bg_file2")
 </template>
 
 <script>
@@ -88,8 +57,6 @@ export default {
       .media-left, .media-right
         justify-content: center
         // ↑メモする
-
-
 
       // .media-content
       //   flex-basis: 50%

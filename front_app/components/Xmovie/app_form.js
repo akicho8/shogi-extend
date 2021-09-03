@@ -13,24 +13,24 @@ export const app_form = {
   data() {
     return {
       //////////////////////////////////////////////////////////////////////////////// POST前
-      body:               "",   // 棋譜
-      loop_key:           null, // ループ
-      animation_size_key: null, // 画像サイズ
-      i_width:            null, // w
-      i_height:           null, // h
-      viewpoint_key:      null, // 視点
-      color_theme_key:    null, // 色テーマ
-      audio_theme_key:    null, // 曲テーマ
-      media_factory_key:  null, // 生成方法
+      body: "",                     // 棋譜
+      loop_key:               null, // ループ
+      animation_size_key:     null, // 画像サイズ
+      img_width:              null, // w
+      img_height:             null, // h
+      viewpoint_key:          null, // 視点
+      color_theme_key:        null, // 色テーマ
+      audio_theme_key:        null, // 曲テーマ
+      media_factory_key:      null, // 生成方法
       one_frame_duration_sec: null, // 1手N秒
       end_duration_sec:       null, // 終了図だけ指定枚数ぶん停止
-      sleep:              null, // 遅延(デバッグ用)
-      raise_message:      null, // 例外メッセージ
-      recipe_key:         null, // 変換先
+      sleep:                  null, // 遅延(デバッグ用)
+      raise_message:          null, // 例外メッセージ
+      recipe_key:             null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xmovie_record: null, // POSTして変換待ちになっているレコード
-      bs_error: null,     // エラー情報
+      bs_error:      null, // エラー情報
 
       //////////////////////////////////////////////////////////////////////////////// レイアウト
       form2_show_p: false,
@@ -42,15 +42,19 @@ export const app_form = {
       current_play_instance: null, // 最後に再生した Howl のインスタンス
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
-      ximage_list: [],
-      ximage_one_for_v_model: [], // b-upload の動作確認用
+      au_file1: null,
+      au_file2: null,
+
+      //////////////////////////////////////////////////////////////////////////////// 背景画像
+      bg_file1: null,
+      bg_file2: null,
     }
   },
 
   // created() {
   //   // this.data_set_by_query_or_default()
-  //   // this.i_width  = this.i_width ?? this.animation_size_info.width
-  //   // this.i_height = this.i_height ?? this.animation_size_info.height
+  //   // this.img_width  = this.img_width ?? this.animation_size_info.width
+  //   // this.img_height = this.img_height ?? this.animation_size_info.height
   // },
 
   watch: {
@@ -65,8 +69,8 @@ export const app_form = {
   },
   methods: {
     form_setup() {
-      this.i_width  = this.i_width ?? this.animation_size_info.width
-      this.i_height = this.i_height ?? this.animation_size_info.height
+      this.img_width  = this.img_width ?? this.animation_size_info.width
+      this.img_height = this.img_height ?? this.animation_size_info.height
     },
     body_focus() {
       // // 開発時のホットリロードでは null.$refs になる
@@ -147,8 +151,8 @@ export const app_form = {
       console.log(this.animation_size_info)
       if (this.animation_size_info.key === "is_custom") {
       } else {
-        this.i_width = this.animation_size_info.width
-        this.i_height = this.animation_size_info.height
+        this.img_width = this.animation_size_info.width
+        this.img_height = this.animation_size_info.height
       }
     },
 
@@ -225,37 +229,37 @@ export const app_form = {
       }
     },
 
-    //////////////////////////////////////////////////////////////////////////////// 画像 ファイルアップロード
-
-    ximage_file_upload_handle(files) {
-      if (files == null) {
-        this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
-      } else {
-        this.sound_play("click")
-        files.forEach(file => {
-          const reader = new FileReader()
-          reader.addEventListener("load", () => {
-            this.ximage_list.push({
-              attributes: {
-                name: file.name,
-                size: file.size,
-                type: file.type,
-              },
-              url: reader.result,
-            })
-            this.toast_ok(`アップロードしました`)
-          }, false)
-          reader.readAsDataURL(file)
-        })
-      }
-    },
-
-    ximage_list_delete_at(index) {
-      this.sound_play("click")
-      this.base.ximage_list.splice(index, 1)
-      // this.base.ximage_list_for_v_model.splice(index, 1)
-      this.toast_ok("削除しました")
-    },
+    // //////////////////////////////////////////////////////////////////////////////// 画像 ファイルアップロード
+    //
+    // ximage_file_upload_handle(files) {
+    //   if (files == null) {
+    //     this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
+    //   } else {
+    //     this.sound_play("click")
+    //     files.forEach(file => {
+    //       const reader = new FileReader()
+    //       reader.addEventListener("load", () => {
+    //         this.bg_file1.push({
+    //           attributes: {
+    //             name: file.name,
+    //             size: file.size,
+    //             type: file.type,
+    //           },
+    //           url: reader.result,
+    //         })
+    //         this.toast_ok(`アップロードしました`)
+    //       }, false)
+    //       reader.readAsDataURL(file)
+    //     })
+    //   }
+    // },
+    //
+    // bg_file1_delete_at(index) {
+    //   this.sound_play("click")
+    //   this.base.bg_file1.splice(index, 1)
+    //   // this.base.bg_file1_for_v_model.splice(index, 1)
+    //   this.toast_ok("削除しました")
+    // },
 
     // ximage_one_file_upload_handle(file) {
     //   if (file == null) {
@@ -267,7 +271,7 @@ export const app_form = {
     //     // files.forEach(file => {
     //     const reader = new FileReader()
     //     reader.addEventListener("load", () => {
-    //       this.ximage_list = {
+    //       this.bg_file1 = {
     //         attributes: {
     //           name: file.name,
     //           size: file.size,
@@ -283,7 +287,7 @@ export const app_form = {
     //
     // ximage_one_delete_handle() {
     //   this.sound_play("click")
-    //   this.base.ximage_list = null
+    //   this.base.bg_file1 = null
     //   this.toast_ok("削除しました")
     // },
 
@@ -334,50 +338,46 @@ export const app_form = {
 
           // パラメータの差異はなるべくここだけで吸収する
           board_file_generator_params: {
-            //////////////////////////////////////////////////////////////////////////////// BoardFileGenerator で処理
+            //////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
-            xaudio_list: this.xaudio_list_if_enabled,
-            ximage_list: this.ximage_one_if_enabled,
-            //////////////////////////////////////////////////////////////////////////////// bioshogi まで伝わる
+            ...this.au_file_if_enabled,
+            ...this.bg_file_if_enabled,
 
-            // for AnimationFormatter
-            // animation_formatter_params: {
-            loop_key: this.loop_key,
+            //////////////////////////////////////// bioshogi まで伝わる
+            loop_key:               this.loop_key,
             one_frame_duration_sec: this.one_frame_duration_sec,
-            // video_fps: this.video_fps,
-            end_duration_sec: this.end_duration_sec,
-            viewpoint: this.viewpoint_key,
-            color_theme_key: this.color_theme_key,
-            audio_theme_key: this.audio_theme_key,
-            media_factory_key: this.media_factory_key,
-            // width: this.animation_size_info.width,
-            // height: this.animation_size_info.height,
-            width: this.i_width,
-            height: this.i_height,
+            end_duration_sec:       this.end_duration_sec,
+            viewpoint:              this.viewpoint_key,
+            color_theme_key:        this.color_theme_key,
+            audio_theme_key:        this.audio_theme_key,
+            media_factory_key:      this.media_factory_key,
+            width:                  this.img_width,
+            height:                 this.img_height,
           },
         },
       }
     },
 
-    xaudio_list_if_enabled() {
+    au_file_if_enabled() {
       if (this.audio_theme_info.key === "audio_theme_user") {
-        if (this.present_p(this.xaudio_list)) {
-          return this.xaudio_list
+        return {
+          au_file1: this.au_file1,
+          au_file2: this.au_file2,
         }
       }
     },
 
-    ximage_one_if_enabled() {
-      // if (this.ximage_one_theme_info.key === "ximage_one_theme_user") {
-      // if (this.present_p(this.ximage_list)) {
-      return this.ximage_list
-      // }
+    bg_file_if_enabled() {
+      return {
+        bg_file1: this.bg_file1,
+        bg_file2: this.bg_file2,
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
     i_size_aspect_ratio_human() {
-      let r = this.math_wh_gcd_aspect_ratio(this.i_width, this.i_height)
+      let r = this.math_wh_gcd_aspect_ratio(this.img_width, this.img_height)
       if (r == null) {
         return "? : ?"
       }
@@ -387,7 +387,7 @@ export const app_form = {
     i_size_danger_p() {
       return false
 
-      let r = this.math_wh_normalize_aspect_ratio(this.i_width, this.i_height)
+      let r = this.math_wh_normalize_aspect_ratio(this.img_width, this.img_height)
       if (r == null) {
         return true
       }
