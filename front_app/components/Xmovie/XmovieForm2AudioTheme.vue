@@ -16,21 +16,21 @@
                   | {{e.name}}
 
   b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
-    b-upload(v-model="base.audio_list_for_v_model" multiple drag-drop @input="base.audio_file_upload_handle" native accept="audio/*")
+    b-upload(v-model="base.xaudio_list_for_v_model" multiple drag-drop @input="base.xaudio_file_upload_handle" native accept="audio/*")
       .is-flex.is-align-items-center.px-3.py-1
         b-icon(icon="upload" size="is-small")
         .is-size-7.ml-2 BGMのアップロード
 
-  .box(v-if="base.audio_list.length >= 1")
-    .media.is-justify-content-space-between(v-for="(file, index) in base.audio_list" :key="index")
+  .box(v-if="base.xaudio_list.length >= 1")
+    .media.is-justify-content-space-between(v-for="(file, index) in base.xaudio_list" :key="index")
       .media-left
         XmovieAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
       .media-content
         | {{file.attributes.name}}
       .media-right
-        button.delete(size="is-small" @click="base.audio_list_delete_at(index)" v-if="development_p")
-        b-icon.is-clickable(icon="delete" @click.native="base.audio_list_delete_at(index)" type="is-danger" size="is-small")
-        b-button(icon-left="delete" size="is-small" @click="base.audio_list_delete_at(index)" type="is-danger" v-if="development_p")
+        button.delete(size="is-small" @click="base.xaudio_list_delete_at(index)" v-if="development_p")
+        b-icon.is-clickable(icon="delete" @click.native="base.xaudio_list_delete_at(index)" type="is-danger" size="is-small")
+        b-button(icon-left="delete" size="is-small" @click="base.xaudio_list_delete_at(index)" type="is-danger" v-if="development_p")
 </template>
 
 <script>

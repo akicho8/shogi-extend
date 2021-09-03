@@ -27,13 +27,13 @@
       .panel-heading done_record
       .panel-block
         pre {{pretty_inspect(base.done_record)}}
-  .column.is-4(v-if="base.audio_list")
+  .column.is-4(v-if="base.xaudio_list")
     .panel
-      .panel-heading audio_list
+      .panel-heading xaudio_list
       .panel-block
-        pre {{pretty_inspect(base.audio_list)}}
+        pre {{pretty_inspect(base.xaudio_list)}}
       .panel-block
-        pre {{pretty_inspect(base.audio_list_for_v_model)}}
+        pre {{pretty_inspect(base.xaudio_list_for_v_model)}}
 </template>
 
 <script>

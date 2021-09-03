@@ -37,13 +37,13 @@ export const app_form = {
       form_tab_index: 0,
 
       //////////////////////////////////////////////////////////////////////////////// ファイルアップロード
-      audio_list: [],
-      audio_list_for_v_model: [], // b-upload の動作確認用
+      xaudio_list: [],
+      xaudio_list_for_v_model: [], // b-upload の動作確認用
       current_play_instance: null, // 最後に再生した Howl のインスタンス
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
-      bg_img_one: null,
-      bg_img_one_for_v_model: [], // b-upload の動作確認用
+      ximage_list: [],
+      ximage_one_for_v_model: [], // b-upload の動作確認用
     }
   },
 
@@ -182,7 +182,7 @@ export const app_form = {
 
     //////////////////////////////////////////////////////////////////////////////// BGM ファイルアップロード
 
-    audio_file_upload_handle(files) {
+    xaudio_file_upload_handle(files) {
       if (files == null) {
         this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
       } else {
@@ -190,7 +190,7 @@ export const app_form = {
         files.forEach(file => {
           const reader = new FileReader()
           reader.addEventListener("load", () => {
-            this.audio_list.push({
+            this.xaudio_list.push({
               attributes: {
                 name: file.name,
                 size: file.size,
@@ -205,10 +205,10 @@ export const app_form = {
       }
     },
 
-    audio_list_delete_at(index) {
+    xaudio_list_delete_at(index) {
       this.sound_play("click")
-      this.base.audio_list.splice(index, 1)
-      this.base.audio_list_for_v_model.splice(index, 1)
+      this.base.xaudio_list.splice(index, 1)
+      // this.base.xaudio_list_for_v_model.splice(index, 1)
       this.toast_ok("削除しました")
     },
 
@@ -225,37 +225,67 @@ export const app_form = {
       }
     },
 
-    //////////////////////////////////////////////////////////////////////////////// BGM ファイルアップロード
+    //////////////////////////////////////////////////////////////////////////////// 画像 ファイルアップロード
 
-    bg_img_one_file_upload_handle(file) {
-      if (file == null) {
+    ximage_file_upload_handle(files) {
+      if (files == null) {
+        this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
       } else {
-        // if (files == null) {
-        //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
-        // } else {
         this.sound_play("click")
-        // files.forEach(file => {
-        const reader = new FileReader()
-        reader.addEventListener("load", () => {
-          this.bg_img_one = {
-            attributes: {
-              name: file.name,
-              size: file.size,
-              type: file.type,
-            },
-            url: reader.result,
-          }
-          this.toast_ok(`アップロードしました`)
-        }, false)
-        reader.readAsDataURL(file)
+        files.forEach(file => {
+          const reader = new FileReader()
+          reader.addEventListener("load", () => {
+            this.ximage_list.push({
+              attributes: {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+              },
+              url: reader.result,
+            })
+            this.toast_ok(`アップロードしました`)
+          }, false)
+          reader.readAsDataURL(file)
+        })
       }
     },
 
-    bg_img_one_delete_handle() {
+    ximage_list_delete_at(index) {
       this.sound_play("click")
-      this.base.bg_img_one = null
+      this.base.ximage_list.splice(index, 1)
+      // this.base.ximage_list_for_v_model.splice(index, 1)
       this.toast_ok("削除しました")
     },
+
+    // ximage_one_file_upload_handle(file) {
+    //   if (file == null) {
+    //   } else {
+    //     // if (files == null) {
+    //     //   this.debug_alert("なぜか1つ上げて2つ目を上げようとしてダイアログキャンセルすると files が null で呼ばれる")
+    //     // } else {
+    //     this.sound_play("click")
+    //     // files.forEach(file => {
+    //     const reader = new FileReader()
+    //     reader.addEventListener("load", () => {
+    //       this.ximage_list = {
+    //         attributes: {
+    //           name: file.name,
+    //           size: file.size,
+    //           type: file.type,
+    //         },
+    //         url: reader.result,
+    //       }
+    //       this.toast_ok(`アップロードしました`)
+    //     }, false)
+    //     reader.readAsDataURL(file)
+    //   }
+    // },
+    //
+    // ximage_one_delete_handle() {
+    //   this.sound_play("click")
+    //   this.base.ximage_list = null
+    //   this.toast_ok("削除しました")
+    // },
 
   },
   computed: {
@@ -306,8 +336,8 @@ export const app_form = {
           board_file_generator_params: {
             //////////////////////////////////////////////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
-            audio_list: this.audio_list_if_enabled,
-            bg_img_one: this.bg_img_one_if_enabled,
+            xaudio_list: this.xaudio_list_if_enabled,
+            ximage_list: this.ximage_one_if_enabled,
             //////////////////////////////////////////////////////////////////////////////// bioshogi まで伝わる
 
             // for AnimationFormatter
@@ -329,18 +359,18 @@ export const app_form = {
       }
     },
 
-    audio_list_if_enabled() {
+    xaudio_list_if_enabled() {
       if (this.audio_theme_info.key === "audio_theme_user") {
-        if (this.present_p(this.audio_list)) {
-          return this.audio_list
+        if (this.present_p(this.xaudio_list)) {
+          return this.xaudio_list
         }
       }
     },
 
-    bg_img_one_if_enabled() {
-      // if (this.bg_img_one_theme_info.key === "bg_img_one_theme_user") {
-      // if (this.present_p(this.bg_img_one)) {
-      return this.bg_img_one
+    ximage_one_if_enabled() {
+      // if (this.ximage_one_theme_info.key === "ximage_one_theme_user") {
+      // if (this.present_p(this.ximage_list)) {
+      return this.ximage_list
       // }
     },
 

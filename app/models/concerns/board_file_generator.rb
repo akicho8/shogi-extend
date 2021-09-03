@@ -8,7 +8,7 @@ class BoardFileGenerator
     #
     #   params = {
     #     :audio_theme_key => ...,
-    #     :audio_list => [
+    #     :xaudio_list => [
     #       {
     #         :url => "data:audio/x-m4a;base64,AAA...",
     #         :attributes => {
@@ -34,7 +34,6 @@ class BoardFileGenerator
     def params_rewrite!(params)
       logger = Rails.logger
       logger.tagged(:params_rewrite!) do
-
         if params[:audio_theme_key] == "audio_theme_user"
           params[:audio_theme_key]     = nil
           params[:audio_part_a]        = nil
@@ -42,24 +41,15 @@ class BoardFileGenerator
           params[:audio_part_b]        = nil
           params[:audio_part_b_volume] = 1.0
 
-          if audio_list = params.delete(:audio_list).presence
-            audio_list.take(2).each.with_index do |e, index|
-              logger.tagged(index) do
-                case index
-                when 0
-                  params[:audio_part_a] = data_uri_to_tmpfile(e).to_s # 処理中はテンポラリディレクトリに移動するためフルパスで指定すること
-                when 1
-                  params[:audio_part_b] = data_uri_to_tmpfile(e).to_s
-                end
-              end
-            end
+          if ary = params.delete(:xaudio_list).presence
+            ary = ary.collect { |e| data_uri_to_tmpfile(e).to_s }
+            params.update(list.zip(:audio_part_a, :audio_part_b).to_h)
           end
         end
 
-        if true
-          if bg_img_one = params.delete(:bg_img_one).presence
-            params[:override_params] = { bg_file: data_uri_to_tmpfile(bg_img_one).to_s }
-          end
+        if ary = params.delete(:ximage_list).presence
+          ary = ary.collect { |e| data_uri_to_tmpfile(e).to_s }
+          params[:override_params] = ary.zip(:bg_file, :battle_field_texture).to_h
         end
       end
 
