@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_101300) do
+ActiveRecord::Schema.define(version: 2021_09_04_205700) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
