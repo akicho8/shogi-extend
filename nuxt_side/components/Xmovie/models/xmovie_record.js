@@ -97,10 +97,12 @@ export class XmovieRecord extends Model {
       const e = dayjs(this.process_end_at)
       const s = e.diff(b, "second")
       let format = null
-      if (s >= 60) {
-        format = "m分s秒"
+      if (s >= 60*60) {
+        format = "h[h]m[m]"
+      } else if (s >= 60) {
+        format = "m[m]"
       } else {
-        format = "s秒"
+        format = "s[s]"
       }
       return dayjs(e.diff(b)).format(format)
     }
