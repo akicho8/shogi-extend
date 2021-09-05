@@ -1,0 +1,8 @@
+#!/bin/sh
+curl -sI https://shogi-flow.xyz/ | head -1
+
+ssh s 'sudo systemctl daemon-reload'
+ssh s 'sudo systemctl restart nginx'
+ssh s 'sudo systemctl restart puma'
+ssh s 'sudo systemctl restart sidekiq'
+ssh s 'sudo systemctl restart nuxt'
