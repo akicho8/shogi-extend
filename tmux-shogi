@@ -34,6 +34,8 @@ tmux send-keys -t shogi.3 'cd ~/src/shogi-extend' C-m
 tmux select-pane -t shogi.3
 
 sleep 5
+open http://localhost:3000/admin/sidekiq
+
 # open http://10.0.1.2:3000/admin
 # open http://10.0.1.2:4000
 # open http://10.0.1.2:5000
