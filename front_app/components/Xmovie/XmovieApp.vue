@@ -12,7 +12,7 @@ client-only
       template(slot="end")
         NavbarItemLogin
         NavbarItemProfileLink
-        b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="development_p")
+        b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
           b-icon(icon="menu")
 
     MainSection
