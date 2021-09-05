@@ -139,7 +139,7 @@ class UserMailer < ApplicationMailer
     attachments[xmovie_record.filename_human] = generator.real_path.read
 
     mail({
-        subject: "#{xmovie_record.recipe_info.name} 変換完了",
+        subject: "【動画生成】#{xmovie_record.recipe_info.name} 変換完了",
         to: "#{xmovie_record.user.name} <#{xmovie_record.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n"),
