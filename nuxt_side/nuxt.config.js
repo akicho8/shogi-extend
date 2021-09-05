@@ -220,7 +220,7 @@ const config = {
   */
   modules: [
     // Doc: https://buefy.github.io/#/documentation
-    // ~/src/shogi-extend/front_app/node_modules/nuxt-buefy/lib/module.js
+    // ~/src/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
     [
       'nuxt-buefy',
       {
@@ -228,7 +228,7 @@ const config = {
         // materialDesignIconsHRef: '//cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css',
         materialDesignIconsHRef: "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css",
 
-        // ~/src/shogi-extend/front_app/node_modules/buefy/src/utils/config.js
+        // ~/src/shogi-extend/nuxt_side/node_modules/buefy/src/utils/config.js
         defaultTooltipType: "is-dark",
         defaultTooltipDelay: 20,
       }

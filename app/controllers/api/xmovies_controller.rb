@@ -3,7 +3,7 @@ module Api
     FAST_RESPONSE = nil
 
     # curl http://localhost:3000/api/xmovie/latest_info_reload.json
-    # ../../../front_app/components/Xmovie/XmovieApp.vue
+    # ../../../nuxt_side/components/Xmovie/XmovieApp.vue
     def latest_info_reload
       if !current_user
         render json: {}
@@ -15,7 +15,7 @@ module Api
     end
 
     # curl -d _method=post http://localhost:3000/api/xmovie/record_create.json
-    # ../../../front_app/components/Xmovie/app_form.js
+    # ../../../nuxt_side/components/Xmovie/app_form.js
     def record_create
       if !current_user
         render html: "ログインしてください"

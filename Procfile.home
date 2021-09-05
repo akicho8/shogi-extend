@@ -1,4 +1,4 @@
 web: DOMAIN=10.0.1.2 bundle exec bin/rails server -p $PORT -b 10.0.1.2
 webpack-watcher: bundle exec bin/webpack-dev-server
 sidekiq: DOMAIN=10.0.1.2 sidekiq
-front_app: (cd front_app && nuxt dev -p 4000 -H 10.0.1.2 -o --dotenv .env.home)
+nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -H 10.0.1.2 -o --dotenv .env.home)

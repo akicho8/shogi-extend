@@ -16,7 +16,7 @@
 class XmatchRuleInfo
   include ApplicationMemoryRecord
   memory_record [
-    # front_app/components/models/xmatch_rule_info.js
+    # nuxt_side/components/models/xmatch_rule_info.js
     { key: "rule_1vs1_10_15_00_0",         members_count_max: 2, name: "10分",     },
     { key: "rule_1vs1_03_10_00_0",         members_count_max: 2, name: "3分",      },
     { key: "rule_1vs1_00_10_60_0",         members_count_max: 2, name: "10秒",     },

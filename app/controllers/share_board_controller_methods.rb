@@ -140,7 +140,7 @@ module ShareBoardControllerMethods
     #   # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
     # end
 
-    # ../../front_app/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
+    # ../../nuxt_side/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
     args = params.to_unsafe_h.except(:action, :controller, :format)
     args = args.merge({
         :turn               => initial_turn,

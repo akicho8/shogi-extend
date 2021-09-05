@@ -1,0 +1,2 @@
+#!/bin/sh
+cap production nuxt_side:deploy nuxt:restart

@@ -24,7 +24,7 @@ module ShareBoard
       end
     end
 
-    # front_app/components/ShareBoard/app_room.js の ac_room_perform に合わせる
+    # nuxt_side/components/ShareBoard/app_room.js の ac_room_perform に合わせる
     def data_factory(params = {})
       {
         "from_connection_id" => SecureRandom.hex,

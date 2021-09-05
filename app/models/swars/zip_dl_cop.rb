@@ -1,7 +1,7 @@
 # 続きからダウンロード関連
 #
 # UI
-# front_app/components/Swars/SwarsBattleDownload.vue
+# nuxt_side/components/Swars/SwarsBattleDownload.vue
 #
 # ダウンロード記録
 # app/models/swars/zip_dl_log.rb

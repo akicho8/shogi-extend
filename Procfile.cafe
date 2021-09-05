@@ -1,4 +1,4 @@
 web: bundle exec bin/rails server -p $PORT
 webpack-dev-server: bundle exec bin/webpack-dev-server
 sidekiq: sidekiq
-front_app: (cd front_app && nuxt dev -p 4000 -o --dotenv .env.cafe)
+nuxt_side: (cd nuxt_side && nuxt dev -p 4000 -o --dotenv .env.cafe)

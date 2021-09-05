@@ -23,7 +23,7 @@ module ShareBoard
       end
     end
 
-    # front_app/components/ShareBoard/app_xmatch.js と合わせる
+    # nuxt_side/components/ShareBoard/app_xmatch.js と合わせる
     def data_factory(params = {})
       {
         "from_connection_id" => SecureRandom.hex,

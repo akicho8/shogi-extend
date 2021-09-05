@@ -1,4 +1,4 @@
-# front_app
+# nuxt_side
 
 > My super-duper Nuxt.js project
 

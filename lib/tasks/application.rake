@@ -48,9 +48,9 @@ namespace :my do
 
   desc "apple-touch-icon.png を元に favicon.ico の生成"
   task :favicon_generate do
-    system "convert front_app/static/apple-touch-icon.png -define icon:auto-resize front_app/static/favicon.ico"
-    system "ln -sfv ../../../front_app/static/favicon.ico            app/assets/images"
-    system "ln -sfv ../../../front_app/static/apple-touch-icon.png   app/assets/images"
+    system "convert nuxt_side/static/apple-touch-icon.png -define icon:auto-resize nuxt_side/static/favicon.ico"
+    system "ln -sfv ../../../nuxt_side/static/favicon.ico            app/assets/images"
+    system "ln -sfv ../../../nuxt_side/static/apple-touch-icon.png   app/assets/images"
     system "ls -al app/assets/images"
   end
 end

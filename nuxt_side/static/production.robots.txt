@@ -1,4 +1,4 @@
-# -*- compile-command: "scp production.robots.txt i:/var/www/shogi_web_production/current/front_app/static/robots.txt; curl https://www.shogi-extend.com/robots.txt | cat -n" -*-
+# -*- compile-command: "scp production.robots.txt i:/var/www/shogi_web_production/current/nuxt_side/static/robots.txt; curl https://www.shogi-extend.com/robots.txt | cat -n" -*-
 # https://developers.google.com/search/reference/robots_txt?hl=ja
 
 ################################################################################ Googlebot-image

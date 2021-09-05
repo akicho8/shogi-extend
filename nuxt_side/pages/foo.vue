@@ -1,3 +1,3 @@
 <template lang="pug">
-  p front_app/pages/foo.vue
+  p nuxt_side/pages/foo.vue
 </template>
