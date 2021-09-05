@@ -3,7 +3,6 @@
 *.bin
 *.sqlite*
 /public/packs
-/node_modules
 /storage
 /db/storage
 
@@ -12,7 +11,7 @@
 
 /experiment/_*
 /_*
-/node_modules
+node_modules
 yarn-debug.log*
 .yarn-integrity
 /spec/examples.txt

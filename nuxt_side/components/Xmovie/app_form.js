@@ -347,10 +347,8 @@ export const app_form = {
             recipe_key: this.recipe_key,
             ...this.au_file_if_enabled,
             ...this.bg_file_if_enabled,
-
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:               this.loop_key,
-            ...this.xfont_info.to_params,
             one_frame_duration_sec: this.one_frame_duration_sec,
             end_duration_sec:       this.end_duration_sec,
             viewpoint:              this.viewpoint_key,
@@ -359,6 +357,9 @@ export const app_form = {
             media_factory_key:      this.media_factory_key,
             width:                  this.img_width,
             height:                 this.img_height,
+            renderer_override_params: { // テーマの上書き
+              ...this.xfont_info.to_params,
+            },
           },
         },
       }
