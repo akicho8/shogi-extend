@@ -90,12 +90,19 @@ export class XmovieRecord extends Model {
 
   // その他
 
-  // 商用時間
+  // 所要時間
   get elapsed_human() {
     if (this.successed_at) {
       const b = dayjs(this.process_begin_at)
       const e = dayjs(this.process_end_at)
-      return dayjs(e.diff(b)).format("s秒")
+      const s = e.diff(b, "second")
+      let format = null
+      if (s >= 60) {
+        format = "m分s秒"
+      } else {
+        format = "s秒"
+      }
+      return dayjs(e.diff(b)).format(format)
     }
   }
 
