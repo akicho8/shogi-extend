@@ -42,6 +42,7 @@ class XmovieRecord < ApplicationRecord
     end
 
     # ワーカー関係なく全処理実行
+    # cap staging rails:runner CODE="XmovieRecord.process_in_sidekiq"
     def process_in_sidekiq
       SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "開始")
       count = 0
@@ -52,6 +53,7 @@ class XmovieRecord < ApplicationRecord
       SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "終了 変換数:#{count}")
     end
 
+    # cap staging rails:runner CODE="tp XmovieRecord.info"
     def info
       {
         "待ち"   => standby_only.count,
@@ -172,10 +174,12 @@ class XmovieRecord < ApplicationRecord
   #   xmovie_info_broadcast
   # end
 
+  # cap staging rails:runner CODE='XmovieRecord.last.generator.generate_unless_exist'
   def generator
     @generator ||= BoardFileGenerator.new(recordable, convert_params[:board_file_generator_params], {}.merge())
   end
 
+  # cap staging rails:runner CODE='XmovieRecord.last.main_process!'
   def main_process!
     logger.tagged(to_param) do
       reset
