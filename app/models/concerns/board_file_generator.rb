@@ -126,11 +126,11 @@ class BoardFileGenerator
 
     def formatter_all_option_keys
       @formatter_all_option_keys ||= [
-        Bioshogi::ImageFormatter,
-        Bioshogi::Mp4Formatter,
-        Bioshogi::AnimationGifFormatter,
-        Bioshogi::AnimationPngFormatter,
-        Bioshogi::AnimationZipFormatter,
+        Bioshogi::ImageRenderer,
+        Bioshogi::Mp4Builder,
+        Bioshogi::AnimationGifBuilder,
+        Bioshogi::AnimationPngBuilder,
+        Bioshogi::AnimationZipBuilder,
       ].flat_map { |e| e.default_params.keys }
     end
   end

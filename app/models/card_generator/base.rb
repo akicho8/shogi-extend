@@ -109,7 +109,7 @@ module CardGenerator
 
       draw = Magick::Draw.new
       draw.gravity        = Magick::CenterGravity
-      draw.font           = params[:font_file] || Bioshogi::ImageFormatter.default_params.fetch(:font_bold)
+      draw.font           = params[:font_file] || Bioshogi::ImageRenderer.default_params.fetch(:font_bold)
       draw.stroke_width   = params[:stroke_width]
       draw.stroke_opacity(params[:stroke_opacity])     # 効いてない (常に1.0)
       draw.stroke_antialias(params[:stroke_antialias]) # 効いてない (常にtrue)

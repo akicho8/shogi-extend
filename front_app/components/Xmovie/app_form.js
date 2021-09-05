@@ -1,4 +1,5 @@
 import { LoopInfo          } from "./models/loop_info.js"
+import { XfontInfo          } from "./models/xfont_info.js"
 import { ViewpointInfo     } from "./models/viewpoint_info.js"
 import { ColorThemeInfo    } from "./models/color_theme_info.js"
 import { AudioThemeInfo    } from "./models/audio_theme_info.js"
@@ -15,6 +16,7 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// POST前
       body: "",                     // 棋譜
       loop_key:               null, // ループ
+      xfont_key:               null, // ループ
       animation_size_key:     null, // 画像サイズ
       img_width:              null, // w
       img_height:             null, // h
@@ -295,6 +297,9 @@ export const app_form = {
   computed: {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
     LoopInfo()                 { return LoopInfo                                         },
+    loop_info()                { return LoopInfo.fetch(this.loop_key)                    },
+    XfontInfo()                 { return XfontInfo                                         },
+    xfont_info()                { return XfontInfo.fetch(this.xfont_key)                    },
     AnimationSizeInfo()        { return AnimationSizeInfo                                },
     animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key) },
     ParamInfo()                { return ParamInfo                                        },
@@ -345,6 +350,7 @@ export const app_form = {
 
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:               this.loop_key,
+            ...this.xfont_info.to_params,
             one_frame_duration_sec: this.one_frame_duration_sec,
             end_duration_sec:       this.end_duration_sec,
             viewpoint:              this.viewpoint_key,
@@ -395,6 +401,5 @@ export const app_form = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
   },
 }
