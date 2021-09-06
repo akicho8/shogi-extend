@@ -60,8 +60,9 @@ module Api
       if false
         xmovie_record.main_process!
       else
-        current_user.my_records_broadcast
-        XmovieRecord.xmovie_info_broadcast
+        current_user.my_records_singlecast
+        XmovieRecord.everyone_broadcast
+        XmovieRecord.zombie_kill # ゾンビを成仏させる
         XmovieRecord.background_job_kick
         render json: {
           response_hash: {

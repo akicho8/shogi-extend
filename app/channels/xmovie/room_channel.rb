@@ -2,7 +2,7 @@ module Xmovie
   class RoomChannel < ApplicationCable::Channel
     # 回線不調で何回も呼ばれる
     def subscribed
-      subscribed_track("購読開始")
+      # subscribed_track("購読開始")
       stream_from "xmovie/room_channel"
       if current_user
         stream_for(current_user)
@@ -11,30 +11,32 @@ module Xmovie
 
     # 回線不調で何回も呼ばれる
     def unsubscribed
-      subscribed_track("購読停止")
+      # subscribed_track("購読停止")
     end
 
     # 接続後に1回だけ呼ぶ
     # REVIEW: 最初に1回実行したいなら ActionCable ではなく Nuxt の fetch で行うべきじゃないか？
     def setup_request(data)
+      XmovieRecord.zombie_kill # ゾンビを成仏させる
+
       # みんなの履歴
-      XmovieRecord.xmovie_info_broadcast
+      XmovieRecord.everyone_broadcast
 
       if current_user
         # あなたの履歴
-        current_user.my_records_broadcast
+        current_user.my_records_singlecast
 
         # 直近1件を送る
         if v = current_user.xmovie_records.success_only.order(created_at: :desc).first
-          current_user.done_record_broadcast(v, noisy: false)
+          current_user.done_record_singlecast(v, noisy: false)
         end
       end
     end
 
-    def title_share(data)
-      track(data, "タイトル", "#{data["title"].inspect} に変更")
-      broadcast(:title_share_broadcasted, data)
-    end
+    # def title_share(data)
+    #   track(data, "タイトル", "#{data["title"].inspect} に変更")
+    #   broadcast(:title_share_broadcasted, data)
+    # end
 
     def ac_log(data)
       track(data, data["subject"], data["body"])

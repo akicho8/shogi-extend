@@ -6,11 +6,11 @@ export const app_queue_self = {
   },
 
   methods: {
-    my_records_broadcasted(data) {
+    my_records_singlecasted(data) {
       this.my_records = data.my_records.map(e => new this.XmovieRecord(this, e))
     },
 
-    done_record_broadcasted(data) {
+    done_record_singlecasted(data) {
       this.done_record = new this.XmovieRecord(this, data.done_record)
       if (data.noisy) {
         if (false) {

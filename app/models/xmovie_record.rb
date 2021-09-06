@@ -23,10 +23,6 @@
 # | created_at       | 作成日時         | datetime    | NOT NULL    |                            | G     |
 # | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
 
 class XmovieRecord < ApplicationRecord
   class << self
@@ -53,6 +49,48 @@ class XmovieRecord < ApplicationRecord
       SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "終了 変換数:#{count}")
     end
 
+    # ゾンビを成仏させる
+    #
+    # rails r "XmovieRecord.zombie_kill(expires_in:0.minutes)"
+    # cap staging rails:runner CODE="XmovieRecord.zombie_kill"
+    #
+    # 仕掛けている個所
+    # ・ページを開いて、ActionCable での接続の初回
+    # ・変換ボタンを押したタイミング
+    def zombie_kill(options = {})
+      options = {
+        expires_in: Rails.env.development? ? 0.minutes : 30.minutes,
+      }.merge(options)
+
+      logger.tagged("zombie_kill") do
+        error_count = 0
+
+        processing_only.where(arel_table[:process_begin_at].lteq(options[:expires_in].ago)).find_each do |e|
+          logger.tagged(e.to_param) do
+
+            e.process_end_at = Time.current
+            e.errored_at = Time.current
+
+            min = (e.errored_at - e.process_begin_at).fdiv(60).to_i
+            e.error_message = "#{min}分かけても完了しませんでした。おそらく ImageMagick が落ちています"
+            e.save!
+            logger.info("ゾンビ #{e.id} をエラーとする")
+
+            SlackAgent.message_send(key: "ゾンビ発見", body: "#{e.id} #{min}m #{e.user.name}")
+
+            e.user.my_records_singlecast
+            e.user.done_record_singlecast(e)
+
+            error_count += 1
+          end
+        end
+
+        if error_count > 0
+          everyone_broadcast
+        end
+      end
+    end
+
     # cap staging rails:runner CODE="tp XmovieRecord.info"
     def info
       {
@@ -64,7 +102,7 @@ class XmovieRecord < ApplicationRecord
       }
     end
 
-    def xmovie_info_broadcast
+    def everyone_broadcast
       ActionCable.server.broadcast("xmovie/room_channel", {bc_action: :xmovie_record_list_broadcasted, bc_params: xmovie_info})
     end
 
@@ -124,7 +162,7 @@ class XmovieRecord < ApplicationRecord
     }
   }
 
-  delegate :xmovie_info_broadcast, :background_job_kick, to: "self.class"
+  delegate :everyone_broadcast, :background_job_kick, to: "self.class"
   # delegate :browser_url, to: "generator"
 
   belongs_to :user
@@ -171,7 +209,7 @@ class XmovieRecord < ApplicationRecord
   # after_create_commit do
   #   track("登録")
   #   background_job_kick
-  #   xmovie_info_broadcast
+  #   everyone_broadcast
   # end
 
   # cap staging rails:runner CODE='XmovieRecord.last.generator.generate_unless_exist'
@@ -185,8 +223,8 @@ class XmovieRecord < ApplicationRecord
       reset
       self.process_begin_at = Time.current
       save!
-      user.my_records_broadcast
-      xmovie_info_broadcast
+      user.my_records_singlecast
+      everyone_broadcast
       begin
         sleep(convert_params[:sleep].to_i)
         if v = convert_params[:raise_message].presence
@@ -194,6 +232,7 @@ class XmovieRecord < ApplicationRecord
         end
         generator.generate_unless_exist
       rescue => error
+        reload  # zombie_kill で更新しているかもしれないため
         logger.info(error)
         self.errored_at = Time.current
         self.error_message = error.message
@@ -201,6 +240,9 @@ class XmovieRecord < ApplicationRecord
         SystemMailer.notify_exception(error)
       else
         logger.info("success")
+        reload # zombie_kill で errored_at を更新されたとき、これを入れないと、変化したことがわからず nil で上書きできない
+        self.errored_at = nil
+        self.error_message = nil
         self.successed_at = Time.current
         self.ffprobe_info = generator.ffprobe_info
         self.file_size = generator.file_size
@@ -209,9 +251,9 @@ class XmovieRecord < ApplicationRecord
         self.process_end_at = Time.current
         save!
       end
-      user.my_records_broadcast
-      user.done_record_broadcast(self)
-      xmovie_info_broadcast
+      user.my_records_singlecast
+      user.done_record_singlecast(self)
+      everyone_broadcast
 
       SlackAgent.message_send(key: "動画生成完了", body: browser_url)
       UserMailer.xmovie_notify(self).deliver_later
@@ -276,7 +318,7 @@ class XmovieRecord < ApplicationRecord
   end
 
   def track(name, body = nil)
-    SlackAgent.message_send(key: "動画生成 - #{name}", body: [user.name, id, recordable.to_param, body].compact)
+    SlackAgent.message_send(key: "動画生成 #{name} #{status_key}", body: [id, user.name, body].compact)
   end
 
   # 生成ファイルにリンクする
