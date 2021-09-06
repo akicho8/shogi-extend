@@ -59,7 +59,7 @@ class XmovieRecord < ApplicationRecord
     # ・変換ボタンを押したタイミング
     def zombie_kill(options = {})
       options = {
-        expires_in: Rails.env.development? ? 0.minutes : 30.minutes,
+        expires_in: 30.minutes,
       }.merge(options)
 
       logger.tagged("zombie_kill") do
