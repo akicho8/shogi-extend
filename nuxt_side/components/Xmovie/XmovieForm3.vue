@@ -101,7 +101,6 @@
   //-         | 隠す
 
   SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
-  SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 
   //- b-field.one_block(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")

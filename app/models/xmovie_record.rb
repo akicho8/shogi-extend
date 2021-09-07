@@ -40,13 +40,13 @@ class XmovieRecord < ApplicationRecord
     # ワーカー関係なく全処理実行
     # cap staging rails:runner CODE="XmovieRecord.process_in_sidekiq"
     def process_in_sidekiq
-      SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "開始")
+      # SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "開始")
       count = 0
       while e = ordered_process.first
         e.main_process!
         count += 1
       end
-      SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "終了 変換数:#{count}")
+      # SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "終了 変換数:#{count}")
     end
 
     # ゾンビを成仏させる
@@ -72,7 +72,7 @@ class XmovieRecord < ApplicationRecord
             e.errored_at = Time.current
 
             min = (e.errored_at - e.process_begin_at).fdiv(60).to_i
-            e.error_message = "#{min}分かけても完了しませんでした。おそらく ImageMagick が落ちています"
+            e.error_message = "#{min}分かけても完了しませんでした"
             e.save!
             logger.info("ゾンビ #{e.id} をエラーとする")
 
@@ -258,7 +258,8 @@ class XmovieRecord < ApplicationRecord
       user.done_record_singlecast(self)
       everyone_broadcast
 
-      SlackAgent.message_send(key: "動画生成完了", body: browser_url)
+      SlackAgent.message_send(key: "動画生成 #{user.name} 完了", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
+
       UserMailer.xmovie_notify(self).deliver_later
     end
   end

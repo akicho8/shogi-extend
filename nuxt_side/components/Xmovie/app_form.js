@@ -293,6 +293,10 @@ export const app_form = {
     //   this.toast_ok("削除しました")
     // },
 
+    one_frame_duration_sec_set_by_fps(fps) {
+      this.sound_play("click")
+      this.one_frame_duration_sec = 1.0 / fps
+    },
   },
   computed: {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
@@ -345,8 +349,8 @@ export const app_form = {
           board_file_generator_params: {
             //////////////////////////////////////// BoardFileGenerator で処理
             recipe_key: this.recipe_key,
-            ...this.au_file_if_enabled,
-            ...this.bg_file_if_enabled,
+            ...this.u_audio_file_if_enabled,
+            ...this.image_file_if_enabled,
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:               this.loop_key,
             one_frame_duration_sec: this.one_frame_duration_sec,
@@ -365,7 +369,7 @@ export const app_form = {
       }
     },
 
-    au_file_if_enabled() {
+    u_audio_file_if_enabled() {
       if (this.audio_theme_info.key === "audio_theme_custom") {
         return {
           u_audio_file_a: this.u_audio_file_a,
@@ -374,7 +378,7 @@ export const app_form = {
       }
     },
 
-    bg_file_if_enabled() {
+    image_file_if_enabled() {
       return {
         u_bg_file: this.u_bg_file,
         u_fg_file: this.u_fg_file,
@@ -402,5 +406,12 @@ export const app_form = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+    
+    fps_human() {
+      if (this.one_frame_duration_sec > 0) {
+        const v = this.number_round(1 / this.one_frame_duration_sec, 2)
+        return `${v} fps`
+      }
+    },
   },
 }

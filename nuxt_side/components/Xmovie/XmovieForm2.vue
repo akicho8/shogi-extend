@@ -7,11 +7,17 @@
   //- SimpleRadioButtons.one_block(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key" v-if="development_p")
   //- SimpleRadioButtons.one_block(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
 
-  b-field.one_block(label="1手N秒")
+  b-field.one_block(:message="base.fps_human")
+    template(#label)
+      | 1手N秒
+      template(v-for="fps in [60, 30, 20, 15]")
+        a.ml-2(class="has-text-primary is-italic" @click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
     b-numberinput(v-model="base.one_frame_duration_sec" :min="one_frame_duration_sec_step" :max="3" :step="one_frame_duration_sec_step" exponential @input="sound_play('click')")
 
   b-field.one_block(label="最後N秒停止")
     b-numberinput(v-model="base.end_duration_sec" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+
+  SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 </template>
 
 <script>
@@ -23,7 +29,7 @@ export default {
   computed: {
     one_frame_duration_sec_step() {
       if (this.base.one_frame_duration_sec <= 0.1) {
-        return 0.01
+        return 0.1
       } else {
         return 0.1
       }
