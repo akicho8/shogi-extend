@@ -1,6 +1,6 @@
 <template lang="pug">
 b-button(
-  rounded
+  :rounded="false"
   size="is-small"
   :icon-left="current_icon"
   @click.prevent.stop="click_handle"
