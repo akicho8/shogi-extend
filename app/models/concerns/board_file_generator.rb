@@ -53,7 +53,7 @@ class BoardFileGenerator
           params[:renderer_override_params][:bg_file] = data_uri_to_tmpfile(e).to_s
         end
         if e = params.delete(:bg_file2).presence
-          params[:renderer_override_params][:battle_field_texture] = data_uri_to_tmpfile(e).to_s
+          params[:renderer_override_params][:fg_file] = data_uri_to_tmpfile(e).to_s
         end
       end
 
