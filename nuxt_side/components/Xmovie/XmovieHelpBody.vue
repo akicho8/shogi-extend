@@ -2,7 +2,7 @@
 .XmovieHelpBody
   .content
     article
-      h2 どうやって使う？
+      h2 簡単な使い方
       .article_body
         ol
           li 棋譜を貼る
@@ -20,18 +20,18 @@
       .article_body
         p 定期的に古いのは削除するので直リンしない方が良い
 
-    article
+    article(v-if="development_p")
       h2 Twitterのアップロード条件は本当？
       .article_body
         | 正確とは限らない。Twitter側の条件は公表しないまま変わっているようなので結果に関係なくアップロードできたりできなかったりする。
 
-    article
+    article(v-if="development_p")
       h2 動画じゃなくて別の棋譜フォーマットにするには？
       .article_body
         | 「なんでも棋譜変換」を使う。
         | 棋譜入力欄の「棋譜変換」から飛べる。
 
-    article
+    article(v-if="development_p")
       h2 どういう内容の棋譜だったか事前に確認するには？
       .article_body
         | 「共有将棋盤」を使う。
