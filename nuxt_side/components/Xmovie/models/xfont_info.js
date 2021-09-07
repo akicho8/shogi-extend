@@ -2,7 +2,7 @@ import MemoryRecord from 'js-memory-record'
 
 export class XfontInfo extends MemoryRecord {
   static get field_label() {
-    return "駒の文字の太さ"
+    return "駒の書体の太さ"
   }
 
   static get field_message() {
