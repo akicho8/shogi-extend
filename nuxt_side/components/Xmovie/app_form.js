@@ -44,8 +44,8 @@ export const app_form = {
       current_play_instance: null, // 最後に再生した Howl のインスタンス
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
-      au_file1: null,
-      au_file2: null,
+      u_audio_file_a: null,
+      u_audio_file_b: null,
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
       u_bg_file: null,
@@ -368,8 +368,8 @@ export const app_form = {
     au_file_if_enabled() {
       if (this.audio_theme_info.key === "audio_theme_user") {
         return {
-          au_file1: this.au_file1,
-          au_file2: this.au_file2,
+          u_audio_file_a: this.u_audio_file_a,
+          u_audio_file_b: this.u_audio_file_b,
         }
       }
     },

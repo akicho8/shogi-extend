@@ -40,10 +40,10 @@ class BoardFileGenerator
           params[:audio_part_b]        = nil
           params[:audio_part_b_volume] = 1.0
 
-          if e = params.delete(:au_file1).presence
+          if e = params.delete(:u_audio_file_a).presence
             params[:audio_part_a] = data_uri_to_tmpfile(e).to_s
           end
-          if e = params.delete(:au_file2).presence
+          if e = params.delete(:u_audio_file_b).presence
             params[:audio_part_b] = data_uri_to_tmpfile(e).to_s
           end
         end

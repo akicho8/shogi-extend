@@ -16,8 +16,8 @@
                   | {{e.name}}
 
   //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
-  XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.au_file1")
-  XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.au_file2")
+  XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
+  XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
 
   //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
   //-   b-upload(v-model="base.xaudio_list_for_v_model" multiple drag-drop @input="base.xaudio_file_upload_handle" native accept="audio/*")
