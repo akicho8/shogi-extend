@@ -49,10 +49,10 @@ class BoardFileGenerator
         end
 
         params[:renderer_override_params] ||= {}
-        if e = params.delete(:bg_file1).presence
+        if e = params.delete(:u_bg_file).presence
           params[:renderer_override_params][:bg_file] = data_uri_to_tmpfile(e).to_s
         end
-        if e = params.delete(:bg_file2).presence
+        if e = params.delete(:u_fg_file).presence
           params[:renderer_override_params][:fg_file] = data_uri_to_tmpfile(e).to_s
         end
       end

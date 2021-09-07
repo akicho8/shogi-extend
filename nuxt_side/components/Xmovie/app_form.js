@@ -48,8 +48,8 @@ export const app_form = {
       au_file2: null,
 
       //////////////////////////////////////////////////////////////////////////////// 背景画像
-      bg_file1: null,
-      bg_file2: null,
+      u_bg_file: null,
+      u_fg_file: null,
     }
   },
 
@@ -241,7 +241,7 @@ export const app_form = {
     //     files.forEach(file => {
     //       const reader = new FileReader()
     //       reader.addEventListener("load", () => {
-    //         this.bg_file1.push({
+    //         this.u_bg_file.push({
     //           attributes: {
     //             name: file.name,
     //             size: file.size,
@@ -256,10 +256,10 @@ export const app_form = {
     //   }
     // },
     //
-    // bg_file1_delete_at(index) {
+    // u_bg_file_delete_at(index) {
     //   this.sound_play("click")
-    //   this.base.bg_file1.splice(index, 1)
-    //   // this.base.bg_file1_for_v_model.splice(index, 1)
+    //   this.base.u_bg_file.splice(index, 1)
+    //   // this.base.u_bg_file_for_v_model.splice(index, 1)
     //   this.toast_ok("削除しました")
     // },
 
@@ -273,7 +273,7 @@ export const app_form = {
     //     // files.forEach(file => {
     //     const reader = new FileReader()
     //     reader.addEventListener("load", () => {
-    //       this.bg_file1 = {
+    //       this.u_bg_file = {
     //         attributes: {
     //           name: file.name,
     //           size: file.size,
@@ -289,7 +289,7 @@ export const app_form = {
     //
     // ximage_one_delete_handle() {
     //   this.sound_play("click")
-    //   this.base.bg_file1 = null
+    //   this.base.u_bg_file = null
     //   this.toast_ok("削除しました")
     // },
 
@@ -376,8 +376,8 @@ export const app_form = {
 
     bg_file_if_enabled() {
       return {
-        bg_file1: this.bg_file1,
-        bg_file2: this.bg_file2,
+        u_bg_file: this.u_bg_file,
+        u_fg_file: this.u_fg_file,
       }
     },
 
