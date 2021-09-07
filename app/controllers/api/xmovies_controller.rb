@@ -1,6 +1,7 @@
 module Api
   class XmoviesController < ::Api::ApplicationController
     FAST_RESPONSE = nil
+    VALIDATE_TURN_MAX = 1525
 
     # curl http://localhost:3000/api/xmovie/latest_info_reload.json
     # ../../../nuxt_side/components/Xmovie/XmovieApp.vue
@@ -31,6 +32,11 @@ module Api
       end
 
       free_battle = FreeBattle.create!(kifu_body: params[:body], use_key: "adapter", user: current_user)
+
+      if free_battle.turn_max > VALIDATE_TURN_MAX
+        render json: { error_message: "手数が長すぎます" }
+        return
+      end
 
       # 将来的には KIF などはここですぐ返したらいいんでは？
       if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
