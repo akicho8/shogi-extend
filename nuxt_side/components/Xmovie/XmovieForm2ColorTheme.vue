@@ -2,6 +2,7 @@
 .XmovieForm2ColorTheme.one_block
   b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
     .control
+      //- :scrollable="desktop_p()" max-height="66.6vh"
       b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play('click')")
         template(#trigger)
           b-button(:label="base.color_theme_info.name" icon-right="menu-down")
