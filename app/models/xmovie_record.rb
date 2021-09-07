@@ -83,6 +83,9 @@ class XmovieRecord < ApplicationRecord
 
             error_count += 1
           end
+
+          # 必要？
+          # ActiveRecord::Base.connection.close
         end
 
         if error_count > 0
