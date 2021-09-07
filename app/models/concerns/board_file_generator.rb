@@ -33,7 +33,7 @@ class BoardFileGenerator
     #
     def params_rewrite!(params)
       logger.tagged(:params_rewrite!) do
-        if params[:audio_theme_key] == "audio_theme_user"
+        if params[:audio_theme_key] == "audio_theme_custom"
           params[:audio_theme_key]     = nil
           params[:audio_part_a]        = nil
           params[:audio_part_a_volume] = 1.0

@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieAudioUpload(v-if="base.audio_theme_info.key === 'audio_theme_user'")
+.XmovieAudioUpload(v-if="base.audio_theme_info.key === 'audio_theme_custom'")
   b-field
     b-upload(drag-drop @input="upload_handle" native accept="audio/*")
       .is-flex.is-align-items-center.px-3.py-1

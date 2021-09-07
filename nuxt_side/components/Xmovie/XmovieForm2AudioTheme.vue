@@ -7,19 +7,21 @@
           b-button(:label="base.audio_theme_info.name" icon-right="menu-down")
         template(v-for="e in base.AudioThemeInfo.values")
           template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-            b-dropdown-item(:value="e.key" @click="sound_play('click')")
-              .media
-                .media-left
-                  b-button(v-if="!e.sample_m4a" rounded icon-left="blank" size="is-small" type="is-ghost")
-                  XmovieAudioPlay(:base="base" :src="e.sample_m4a" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
-                .media-content
-                  | {{e.name}}
+            template(v-if="e.separator")
+              b-dropdown-item(separator)
+            template(v-else)
+              b-dropdown-item(:value="e.key" @click="sound_play('click')")
+                .media
+                  .media-left
+                    b-button(v-if="!e.sample_m4a" rounded icon-left="blank" size="is-small" type="is-ghost")
+                    XmovieAudioPlay(:base="base" :src="e.sample_m4a" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
+                  .media-content
+                    | {{e.name}}
 
-  //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
   XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
   XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
 
-  //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_user'")
+  //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_custom'")
   //-   b-upload(v-model="base.xaudio_list_for_v_model" multiple drag-drop @input="base.xaudio_file_upload_handle" native accept="audio/*")
   //-     .is-flex.is-align-items-center.px-3.py-1
   //-       b-icon(icon="upload" size="is-small")

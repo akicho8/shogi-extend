@@ -366,7 +366,7 @@ export const app_form = {
     },
 
     au_file_if_enabled() {
-      if (this.audio_theme_info.key === "audio_theme_user") {
+      if (this.audio_theme_info.key === "audio_theme_custom") {
         return {
           u_audio_file_a: this.u_audio_file_a,
           u_audio_file_b: this.u_audio_file_b,
