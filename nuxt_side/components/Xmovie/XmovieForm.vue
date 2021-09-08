@@ -5,7 +5,7 @@
       XmovieForm1(:base="base")
     b-tab-item(label="オプション")
       XmovieForm2(:base="base")
-    b-tab-item(label="動画設定")
+    b-tab-item(label="詳細設定")
       XmovieForm3(:base="base")
     b-tab-item(label="デバッグ" v-if="development_p")
       XmovieForm4(:base="base")

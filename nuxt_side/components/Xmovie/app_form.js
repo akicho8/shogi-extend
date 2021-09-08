@@ -406,11 +406,21 @@ export const app_form = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    
+
     fps_human() {
       if (this.one_frame_duration_sec > 0) {
         const v = this.number_round(1 / this.one_frame_duration_sec, 2)
         return `${v} fps`
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    one_frame_duration_sec_step() {
+      if (this.one_frame_duration_sec <= 0.1) {
+        return 0.1
+      } else {
+        return 0.1
       }
     },
   },
