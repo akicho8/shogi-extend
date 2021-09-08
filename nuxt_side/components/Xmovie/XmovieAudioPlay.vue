@@ -1,8 +1,7 @@
 <template lang="pug">
 b-button(
-  :rounded="false"
-  size="is-small"
   :icon-left="current_icon"
+  :type="current_type"
   @click.prevent.stop="click_handle"
   v-bind="$attrs"
   v-on="$listeners"
@@ -88,15 +87,18 @@ export default {
     current_icon() {
       if (!this.src) {
         return "blank"
-      }
-      if (this.state === 'play') {
+      } else if (this.state === 'play') {
         return "stop"
       } else {
         return "play"
       }
     },
+    current_type() {
+      if (!this.src) {
+        return "is-ghost"
+      }
+    },
   },
-
 }
 </script>
 

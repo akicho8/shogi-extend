@@ -13,10 +13,14 @@
               b-dropdown-item(:value="e.key" @click="sound_play('click')")
                 .media
                   .media-left
-                    b-button(v-if="!e.sample_m4a" rounded icon-left="blank" size="is-small" type="is-ghost")
-                    XmovieAudioPlay(:base="base" :src="e.sample_m4a" v-if="e.sample_m4a" @play="e => base.current_play_instance = e")
+                    XmovieAudioPlay(:base="base" :src="e.sample_m4a" @play="e => base.current_play_instance = e")
                   .media-content
-                    | {{e.name}}
+                    p {{e.name}}
+                    .author_block
+                      span(v-if="e.author_raw") {{e.author_raw}}
+                      span(v-if="e.author") 作曲: {{e.author}}
+                      a.ml-1(:href="e.source_url" v-if="e.source_url" target="_blank")
+                        b-icon(icon="open-in-new" size="is-small")
 
   XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
   XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
@@ -50,4 +54,16 @@ export default {
 
 <style lang="sass">
 .XmovieForm2AudioTheme
+  .dropdown-item
+    // 選択中でも a の icon が青いままなので白くする
+    &.is-active
+      a
+        color: unset
+    // 選択中していないときだけ作者を薄くする
+    &:not(.is-active)
+      .author_block
+        font-size: $size-7
+        color: $grey
+    .media
+      align-items: center
 </style>

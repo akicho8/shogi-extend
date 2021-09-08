@@ -45,8 +45,8 @@ export default {
 
   .dropdown-item
     padding: 0.75rem
-    .media
-      align-items: center // 縦中央寄せ
+    // .media
+    //   align-items: center // 縦中央寄せ
 
   .submit_field
     margin: 0

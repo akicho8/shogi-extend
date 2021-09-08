@@ -16,6 +16,7 @@
   ul
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
+    li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
 
   template(v-if="false")
     .section_title BOT TEXTURE
@@ -31,6 +32,16 @@
   .section_title 実戦詰将棋『一期一会』問題集
   ul
     li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式詰将棋500万問より
+
+  template(v-if="development_p")
+    .section_title 動画生成 BGMプリセット
+    ul
+      template(v-for="(list, author) in audio_author_info")
+        li
+          .song_author {{author}}
+          .song_items
+            template(v-for="record in list")
+              ExternalLink.song_item.is-block.is-italic(beep :href="record.source_url") {{record.name}}
 
   .section_title PROGRAM
   ul
@@ -63,6 +74,8 @@
 <script>
 import { html_background_black_mixin } from "../../components/models/html_background_black_mixin.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
+import { AudioThemeInfo } from '../../components/Xmovie/models/audio_theme_info.js'
+import _ from "lodash"
 
 export default {
   name: "about-credit",
@@ -99,6 +112,11 @@ export default {
         title: "クレジット",
       }
     },
+    AudioThemeInfo() { return AudioThemeInfo },
+    audio_author_info() {
+      const values = this.AudioThemeInfo.values.filter(e => e.author)
+      return _.groupBy(values, e => e.author)
+    },
   },
 }
 </script>
@@ -132,9 +150,17 @@ export default {
     color: #ffa305
     font-weight: normal
 
+  .song_author
+    margin-top: 2rem
+    font-size: $size-5
+  .song_items
+    .song_item
+      font-size: $size-6
+      color: $grey
+
   .thanks
     li
-      margin-top: 2rem
+      margin-top: 1.75rem
       &.kento
         .creator
           font-size: $size-3 * 1.25
