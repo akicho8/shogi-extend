@@ -137,7 +137,7 @@ class XmovieRecord < ApplicationRecord
       },
       methods: [
         :status_key,
-        :browser_url,
+        # :browser_url,
         :browser_path,
         # :ffprobe_info,
         # :file_size,
@@ -157,7 +157,7 @@ class XmovieRecord < ApplicationRecord
       },
       methods: [
         :status_key,
-        :browser_url,
+        # :browser_url,
         :browser_path,
         # :ffprobe_info,
         # :file_size,

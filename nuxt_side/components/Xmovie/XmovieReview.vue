@@ -10,20 +10,20 @@
     .is_review_box
       .media_container
         template(v-if="base.done_record.recipe_info.file_type === 'video'")
-          video(:src="base.done_record.rails_side_inline_url" controls :autoplay="false" :loop="false" v-bind="base.done_record.video_tag_attrs")
+          video(:src="base.done_record.browser_path" controls :autoplay="false" :loop="false" v-bind="base.done_record.video_tag_attrs")
         template(v-if="base.done_record.recipe_info.file_type === 'image'")
-          img(:src="base.done_record.rails_side_inline_url")
+          img(:src="base.done_record.browser_path")
       template(v-if="base.done_record.recipe_info.file_type === 'zip'")
         b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.has-addons.is-centered.mt-3
       b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human")
       b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
-      b-button(@click="base.main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
-      b-button(@click="base.main_show_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
-      b-button(@click="base.secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
-      b-button(@click="base.probe_show_modal_handle(base.done_record)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
-      b-button(@click="base.json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
+      b-button(@click="base.__main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
+      b-button(@click="base.__main_show_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
+      b-button(@click="base.__secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
+      b-button(@click="base.__probe_show_modal_handle(base.done_record)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
+      b-button(@click="base.__json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
       b-button(@click="base.close_handle"                               type=""           icon-left="close")
 </template>
 

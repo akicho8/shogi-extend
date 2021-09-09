@@ -24,12 +24,12 @@ b-table.XmovieQueueSelf(
       b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
       b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
 
-      b-button.mb-0(@click="base.main_download_handle(row)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.load_handle(row)"              type="is-light"   icon-left="open-in-app"         v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.secret_show_handle(row)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
-      b-button.mb-0(@click="base.json_show_handle(row)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__secret_show_handle(row)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
+      b-button.mb-0(@click="base.__json_show_handle(row)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
 
 </template>
 

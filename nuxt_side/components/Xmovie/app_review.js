@@ -19,34 +19,35 @@ export const app_review = {
       // this.xmovie_record   = null
     },
 
-    main_download_handle(record) {
+    __main_download_handle(record) {
       this.sound_play("click")
       window.location.href = record.rails_side_download_url
     },
 
-    main_show_handle(record) {
+    __main_show_handle(record) {
       this.sound_play("click")
       this.window_popup(record.rails_side_inline_url, record.to_wh)
     },
 
-    json_show_handle(record) {
+    __json_show_handle(record) {
       this.sound_play("click")
       this.other_window_open(record.rails_side_json_url)
     },
 
-    load_handle(record) {
+    __load_handle(record) {
       this.sound_play("click")
       this.done_record = record
     },
 
-    other_window_direct_open_handle(record) {
+    // 未使用
+    __other_window_direct_open_handle(record) {
       this.sound_play("click")
-      this.window_popup(record.browser_url, record.to_wh)
+      this.window_popup(record.browser_path, record.to_wh)
     },
 
-    secret_show_handle(record) {
+    __secret_show_handle(record) {
       this.sound_play("click")
-      this.url_open(record.browser_url, this.target_default)
+      this.url_open(record.browser_path, this.target_default)
     },
   },
   computed: {
