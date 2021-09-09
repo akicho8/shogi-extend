@@ -90,6 +90,14 @@ module Api
       #
     end
 
+    # curl -d _method=post http://localhost:3000/api/xmovie/zombie_kill.json
+    # ../../../nuxt_side/components/Xmovie/app_zombie.js
+    def zombie_kill
+      XmovieRecord.zombie_kill
+      # XmovieRecord.background_job_kick
+      render json: { status: "success" }
+    end
+
     def current_reserve_limit
       if current_user
         if current_user.permit_tag_list.include?("staff") && false

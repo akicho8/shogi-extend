@@ -180,8 +180,10 @@ Rails.application.routes.draw do
     resource :xmovie, only: [] do
       get :latest_info_reload
       post :record_create
+      post :zombie_kill
       if Rails.env.development?
         get :record_create
+        get :zombie_kill
       end
     end
 

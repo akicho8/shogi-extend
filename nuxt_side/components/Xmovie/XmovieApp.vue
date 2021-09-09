@@ -46,24 +46,21 @@ client-only
 </template>
 
 <script>
-//- const AUTO_APP_TO = true
-
 import { support_parent   } from "./support_parent.js"
 import { app_chore        } from "./app_chore.js"
-import { app_review        } from "./app_review.js"
+import { app_review       } from "./app_review.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_storage      } from "./app_storage.js"
 import { app_action_cable } from "./app_action_cable.js"
-import { app_queue_all } from "./app_queue_all.js"
-import { app_queue_self } from "./app_queue_self.js"
+import { app_queue_all    } from "./app_queue_all.js"
+import { app_queue_self   } from "./app_queue_self.js"
 import { app_form         } from "./app_form.js"
-import { app_probe_show         } from "./app_probe_show.js"
-import { app_foo_show         } from "./app_foo_show.js"
+import { app_zombie_kill       } from "./app_zombie_kill.js"
+import { app_probe_show   } from "./app_probe_show.js"
+import { app_foo_show     } from "./app_foo_show.js"
 import { app_help         } from "./app_help.js"
 
 import { XmovieRecord } from "./models/xmovie_record.js"
-
-//- import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
 import _ from "lodash"
 
@@ -79,6 +76,7 @@ export default {
     app_queue_all,
     app_queue_self,
     app_form,
+    app_zombie_kill,
     app_probe_show,
     app_foo_show,
     app_help,

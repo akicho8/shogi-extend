@@ -59,7 +59,7 @@ class XmovieRecord < ApplicationRecord
     # ・変換ボタンを押したタイミング
     def zombie_kill(options = {})
       options = {
-        expires_in: 30.minutes,
+        expires_in: 30.minutes, # N分以上かけて完了していなければ成仏させる
       }.merge(options)
 
       logger.tagged("zombie_kill") do
@@ -72,7 +72,7 @@ class XmovieRecord < ApplicationRecord
             e.errored_at = Time.current
 
             min = (e.errored_at - e.process_begin_at).fdiv(60).to_i
-            e.error_message = "#{min}分かけても完了しませんでした"
+            e.error_message = "タイムアウト(#{min}分)"
             e.save!
             logger.info("ゾンビ #{e.id} をエラーとする")
 
