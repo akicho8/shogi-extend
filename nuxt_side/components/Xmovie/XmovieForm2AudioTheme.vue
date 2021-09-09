@@ -14,7 +14,7 @@
                 .media
                   .media-left
                     XmovieAudioPlay(:base="base" :src="e.sample_m4a" @play="e => base.current_play_instance = e")
-                  .media-content
+                  .media-content.is_line_break_on
                     p {{e.name}}
                     .author_block
                       span(v-if="e.author_raw") {{e.author_raw}}
@@ -64,6 +64,4 @@ export default {
       .author_block
         font-size: $size-7
         color: $grey
-    .media
-      align-items: center
 </style>

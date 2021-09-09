@@ -47,6 +47,8 @@ export default {
     padding: 0.75rem
     // .media
     //   align-items: center // 縦中央寄せ
+    .media-content
+      overflow: visible // mobileにしたとき overflow-x: scroll にされてしまいグラグラするのを防ぐ
 
   .submit_field
     margin: 0
