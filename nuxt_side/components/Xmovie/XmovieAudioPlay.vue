@@ -17,7 +17,7 @@ export default {
   mixins: [support_child],
   props: {
     src:              { type: String,  required: false, default: null, },
-    play_duration:    { type: Number,  required: false, default: 7.5,  },
+    play_duration:    { type: Number,  required: false, default: 27.5, },
     fadeout_duration: { type: Number,  required: false, default: 2.5,  },
   },
   data() {

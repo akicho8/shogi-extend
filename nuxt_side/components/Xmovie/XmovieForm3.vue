@@ -2,15 +2,11 @@
 .XmovieForm3
   b-field.one_block(:message="base.fps_human")
     template(#label)
-      | 1手N秒
-      template(v-for="fps in [60, 30, 20, 15]")
-        a.ml-2(class="has-text-primary is-italic" @click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
+      p 1手N秒
+      b-taglist.fps_values
+        template(v-for="fps in [60, 30, 20, 15]")
+          a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
     b-numberinput(v-model="base.one_frame_duration_sec" :min="base.one_frame_duration_sec_step" :max="3" :step="base.one_frame_duration_sec_step" exponential @input="sound_play('click')")
-
-  b-field.one_block(label="最後N秒停止")
-    b-numberinput(v-model="base.end_duration_sec" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
-
-  SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 
   b-field.one_block.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
@@ -100,6 +96,13 @@
   b-field.one_block(label="1手N秒" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.one_frame_duration_sec" :min="0.1" :max="5" :step="0.1")
 
+  SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
+
+  b-field.one_block(label="最後に指定秒間停止")
+    b-numberinput(v-model="base.end_duration_sec" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+
+  SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
+
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
   // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
 
@@ -111,9 +114,6 @@
   //-         | すべてのフォームを表示する
   //-       template(v-else)
   //-         | 隠す
-
-  SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
-
   //- b-field.one_block(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
   //- b-field.one_block(label="FPS")
@@ -155,4 +155,8 @@ export default {
       visibility: hidden
     input
       width: 5rem
+
+  .fps_values
+    a:not(:first-child)
+      margin-left: 0.25rem
 </style>

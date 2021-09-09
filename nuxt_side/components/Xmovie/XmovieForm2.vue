@@ -1,12 +1,8 @@
 <template lang="pug">
 .XmovieForm2
+  SimpleRadioButtons.one_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
   XmovieForm2ColorTheme(:base="base")
   XmovieForm2AudioTheme(:base="base")
-
-  SimpleRadioButtons.one_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
-  //- SimpleRadioButtons.one_block(:base="base" :model="base.ColorThemeInfo" var_name="color_theme_key" v-if="development_p")
-  //- SimpleRadioButtons.one_block(:base="base" :model="base.AudioThemeInfo" var_name="audio_theme_key")
-
 </template>
 
 <script>

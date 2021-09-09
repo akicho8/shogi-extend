@@ -14,13 +14,19 @@
                 .media
                   .media-left
                     XmovieAudioPlay(:base="base" :src="e.sample_m4a" @play="e => base.current_play_instance = e")
-                  .media-content.is_line_break_on
-                    p {{e.name}}
-                    .author_block
-                      span(v-if="e.author_raw") {{e.author_raw}}
-                      span(v-if="e.author") 作曲: {{e.author}}
-                      a.ml-1(:href="e.source_url" v-if="e.source_url" target="_blank")
-                        b-icon(icon="open-in-new" size="is-small")
+                  .media-content
+                    | {{e.name}}
+                    .audio_desc
+                      .audio_desc_item(v-if="e.author_raw") {{e.author_raw}}
+                      .audio_desc_item(v-if="e.author") 作曲: {{e.author}}
+                      .audio_desc_item(v-if="e.audio_part_a_duration")
+                        span 長さ: {{e.duration_mmss}}
+                        span.ml-1(v-if="e.duration_sec >= 60") ({{e.duration_sec}}s)
+                      .audio_desc_item(v-if="e.loop_support_p") ループ対応
+
+                  .media-right
+                    a(:href="e.source_url" v-if="e.source_url" target="_blank")
+                      b-icon(icon="open-in-new" size="is-small")
 
   XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
   XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
@@ -61,7 +67,8 @@ export default {
         color: unset
     // 選択中していないときだけ作者を薄くする
     &:not(.is-active)
-      .author_block
+      .audio_desc
         font-size: $size-7
         color: $grey
+        .audio_desc_item
 </style>
