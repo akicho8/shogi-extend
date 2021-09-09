@@ -50,8 +50,10 @@ export class ColorThemeInfo extends MemoryRecord {
     const url = new URL(url_base)
     url.searchParams.set("body", SAMPLE_SFEN)
     url.searchParams.set("color_theme_key", this.key)
-    url.searchParams.set("width", 720)
-    url.searchParams.set("height", 540)
+    // url.searchParams.set("width", 720)
+    // url.searchParams.set("height", 540)
+    url.searchParams.set("width", 1280)
+    url.searchParams.set("height", 720)
     return url.toString()
   }
 }
