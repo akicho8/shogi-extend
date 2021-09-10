@@ -16,7 +16,7 @@ export const app_member_info_modal = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         onCancel: () => this.sound_play("click"),
       })
     },

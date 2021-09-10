@@ -43,7 +43,7 @@ export default {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         onCancel: () => {
           this.sound_play("click")
         },

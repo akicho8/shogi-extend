@@ -29,7 +29,7 @@ export const app_track_log = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         onCancel: () => { this.sound_play("click") },
         props: { base: this.base },
       })

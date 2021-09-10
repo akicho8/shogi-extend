@@ -57,7 +57,7 @@ export const app_ordered_members = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         onCancel: () => {
           this.sound_play("click")
           this.os_modal_close()

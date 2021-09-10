@@ -23,7 +23,7 @@ export const app_room_recreate = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         focusOn: "cancel",
         onCancel: () => {
           this.sound_play("click")

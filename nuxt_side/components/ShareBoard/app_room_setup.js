@@ -51,7 +51,7 @@ export const app_room_setup = {
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["escape", "outside"],
         onCancel: () => { this.sound_play("click") },
         props: { base: this.base },
       })
