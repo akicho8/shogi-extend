@@ -29,8 +29,8 @@ client-only
 
           //- .column
           //-   .box
-          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a")
-          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_m4a" size="is-small")
+          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_audio_source")
+          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_audio_source" size="is-small")
 
           XmovieForm(:base="base" ref="XmovieForm" v-if="form_show_p")
           XmovieReview(:base="base")

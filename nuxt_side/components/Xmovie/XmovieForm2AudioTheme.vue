@@ -12,16 +12,18 @@
             template(v-else)
               b-dropdown-item(:value="e.key" @click="sound_play('click')")
                 .media
-                  .media-left
-                    XmovieAudioPlay(:base="base" :src="e.sample_m4a" @play="e => base.current_play_instance = e")
+                  .media-left(v-if="e.sample_audio_source")
+                    XmovieAudioPlay(:base="base" :src="e.sample_audio_source" @play="e => base.current_play_instance = e")
                   .media-content
                     | {{e.name}}
-                    .audio_desc
+                    .audio_desc(v-if="e.audio_part_a_duration")
                       .audio_desc_item(v-if="e.author_raw") {{e.author_raw}}
                       .audio_desc_item(v-if="e.author") 作曲: {{e.author}}
-                      .audio_desc_item(v-if="e.audio_part_a_duration")
+                      .audio_desc_item
                         span 長さ: {{e.duration_mmss}}
                         span.ml-1(v-if="e.duration_sec >= 60") ({{e.duration_sec}}s)
+                      .audio_desc_item(v-if="e.bpm")
+                        span 速度: {{e.bpm}}BPM
                       .audio_desc_item(v-if="e.loop_support_p") ループ対応
 
                   .media-right
@@ -71,4 +73,7 @@ export default {
         font-size: $size-7
         color: $grey
         .audio_desc_item
+
+    .media-content
+      align-items: center       // 「カスタム」の文字を縦中央へ
 </style>
