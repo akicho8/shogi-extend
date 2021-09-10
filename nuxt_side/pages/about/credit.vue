@@ -34,11 +34,12 @@
     li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式詰将棋500万問より
 
   template(v-if="development_p")
-    .section_title 動画生成 BGMプリセット
+    .section_title 動画生成BGMプリセット使用曲
     ul
       template(v-for="(list, author) in audio_author_info")
         li
-          .song_author {{author}}
+          .song_author
+            ExternalLink(beep :href="AudioCreatorInfo.fetch(author).home_site_url") {{author}}
           .song_items
             template(v-for="record in list")
               ExternalLink.song_item.is-block.is-italic(beep :href="record.source_url") {{record.name}}
@@ -75,6 +76,7 @@
 import { html_background_black_mixin } from "../../components/models/html_background_black_mixin.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { AudioThemeInfo } from '../../components/Xmovie/models/audio_theme_info.js'
+import { AudioCreatorInfo } from '../../components/Xmovie/models/audio_creator_info.js'
 import _ from "lodash"
 
 export default {
@@ -113,6 +115,7 @@ export default {
       }
     },
     AudioThemeInfo() { return AudioThemeInfo },
+    AudioCreatorInfo() { return AudioCreatorInfo },
     audio_author_info() {
       const values = this.AudioThemeInfo.values.filter(e => e.author)
       return _.groupBy(values, e => e.author)
