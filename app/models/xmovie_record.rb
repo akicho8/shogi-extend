@@ -330,7 +330,10 @@ class XmovieRecord < ApplicationRecord
     self.filename_human = filename_human_build
     old = generator.real_path                   # 生成ファイル ~/src/shogi-extend/public/system/board_images/3e/3d/3e3dae2e6ad07d51fe12e171ebb337b6.mp4
     new = old.dirname + filename_human          # 人間向け参照 ~/src/shogi-extend/public/system/board_images/3e/3d/2_20210824130750_1024x768_8s.mp4
-    FileUtils.symlink(old, new, force: true)
+    # NOTE: フルパスでsymlinkするとデプロイでパスが切れてしまう
+    Dir.chdir(old.dirname) do
+      FileUtils.symlink(old.basename, new.basename, force: true)
+    end
     self.browser_path = "/" + new.relative_path_from(Rails.public_path).to_s
   end
 
