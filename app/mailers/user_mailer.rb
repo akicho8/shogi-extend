@@ -146,7 +146,7 @@ class UserMailer < ApplicationMailer
         subject: "【動画生成】[#{xmovie_record.id}] #{xmovie_record.recipe_info.name} 生成#{xmovie_record.status_key}",
         to: "#{xmovie_record.user.name} <#{xmovie_record.user.email}>",
         bcc: AppConfig[:admin_email],
-        body: body.join("\n"),
+        body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう
       })
   end
 end
