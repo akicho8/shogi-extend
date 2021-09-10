@@ -258,7 +258,7 @@ class XmovieRecord < ApplicationRecord
       user.done_record_singlecast(self)
       everyone_broadcast
 
-      SlackAgent.message_send(key: "動画生成 #{user.name} 完了", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
+      SlackAgent.message_send(key: "動画生成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
 
       UserMailer.xmovie_notify(self).deliver_later
     end

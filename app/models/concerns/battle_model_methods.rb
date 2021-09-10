@@ -331,6 +331,14 @@ module BattleModelMethods
       Bioshogi::Parser
     end
 
+    def share_board_path
+      params = {
+        body: sfen_body.gsub(/\s+/, "."),
+        abstract_viewpoint: "black",
+      }
+      "/share-board?#{params.to_query}"
+    end
+
     private
 
     # オプションはサブクラスで渡してもらう

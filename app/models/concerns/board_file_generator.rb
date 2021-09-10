@@ -305,15 +305,15 @@ class BoardFileGenerator
     end
   end
 
-  def ffprobe_direct
-    # @ffprobe_direct ||= -> {
-    if recipe_info.media_p
-      if real_path.exist?
-        JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
-      end
-    end
-    # }.call
-  end
+  # def ffprobe_direct
+  #   # @ffprobe_direct ||= -> {
+  #   if recipe_info.media_p
+  #     if real_path.exist?
+  #       JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)
+  #     end
+  #   end
+  #   # }.call
+  # end
 
   def file_size
     if real_path.exist?

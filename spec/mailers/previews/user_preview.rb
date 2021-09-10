@@ -30,10 +30,9 @@ class UserPreview < ActionMailer::Preview
       :sleep         => 0,
       :raise_message => "",
       :board_file_generator_params => {
-        :recipe_key => "is_recipe_gif",
+        :recipe_key => "is_recipe_png",
       },
     }
-
     free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
     xmovie_record = XmovieRecord.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
     xmovie_record.main_process!
