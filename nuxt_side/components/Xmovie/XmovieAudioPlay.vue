@@ -17,8 +17,8 @@ export default {
   mixins: [support_child],
   props: {
     src:              { type: String,  required: false, default: null, },
-    play_duration:    { type: Number,  required: false, default: 27.5, },
-    fadeout_duration: { type: Number,  required: false, default: 2.5,  },
+    play_duration:    { type: Number,  required: false, default: 27.0, },
+    fadeout_duration: { type: Number,  required: false, default:  2.5, },
   },
   data() {
     return {
@@ -43,16 +43,17 @@ export default {
         if (this.instance === null) {
           this.instance = new Howl({
             src: this.src,
-            onplay:  () => {
+            // loop: true, // ループにすると stop フェイドアウトが効かなくなる
+            onplay: () => {
               this.state = "play"
               this.__assert__(this.fadeout_id == null, "this.fadeout_id == null")
               this.fadeout_id = this.delay_block(this.play_duration, () => {
                 this.instance.fade(1, 0, 1000 * this.fadeout_duration, this.current_id)
               })
             },
-            onstop:  () => this.auto_stop("stop"),
-            onend:   () => this.auto_stop("end"),
-            onfade:  () => this.auto_stop("fade"),
+            onstop: () => this.auto_stop("stop"),
+            onend:  () => this.auto_stop("end"),
+            onfade: () => this.auto_stop("fade"),
           })
         }
         Howler.stop()
