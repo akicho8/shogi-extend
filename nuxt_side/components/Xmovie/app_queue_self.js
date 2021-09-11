@@ -2,6 +2,7 @@ export const app_queue_self = {
   data() {
     return {
       my_records: [],
+      progress_info: null,
     }
   },
 
@@ -12,6 +13,7 @@ export const app_queue_self = {
 
     done_record_singlecasted(data) {
       this.done_record = new this.XmovieRecord(this, data.done_record)
+      this.progress_info = null
       if (data.noisy) {
         if (false) {
           this.sound_stop_all()
@@ -30,6 +32,11 @@ export const app_queue_self = {
           this.toast_ok(`${this.done_record.id}番が失敗しました`)
         }
       }
-    }
+    },
+
+    progress_singlecasted(data) {
+      console.log(data.log)
+      this.progress_info = data
+    },
   },
 }

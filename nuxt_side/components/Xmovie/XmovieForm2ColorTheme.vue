@@ -16,7 +16,7 @@
                   .media-content
                     .is_line_break_on
                       | {{e.name}}
-                    img.is-block.mt-2(:src="e.thumbnail_url(base)")
+                    img.is-block.mt-2(:src="e.thumbnail_url(base)" loading="lazy")
 
   XmovieImageUpload(:base="base" label="背景" :file_info.sync="base.u_bg_file")
   XmovieImageUpload(:base="base" label="盤面" :file_info.sync="base.u_fg_file")

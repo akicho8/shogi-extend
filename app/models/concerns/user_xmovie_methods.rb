@@ -23,4 +23,9 @@ module UserXmovieMethods
     }
     Xmovie::RoomChannel.broadcast_to(self, {bc_action: :done_record_singlecasted, bc_params: bc_params})
   end
+
+  # 進捗
+  def progress_singlecast(params)
+    Xmovie::RoomChannel.broadcast_to(self, {bc_action: :progress_singlecasted, bc_params: bc_params})
+  end
 end

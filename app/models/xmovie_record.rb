@@ -217,7 +217,7 @@ class XmovieRecord < ApplicationRecord
 
   # cap staging rails:runner CODE='XmovieRecord.last.generator.generate_unless_exist'
   def generator
-    @generator ||= BoardFileGenerator.new(recordable, convert_params[:board_file_generator_params], {}.merge())
+    @generator ||= BoardFileGenerator.new(recordable, convert_params[:board_file_generator_params], progress_callback: method(:progress_callback), disk_cache_enable: !Rails.env.development?)
   end
 
   # cap staging rails:runner CODE='XmovieRecord.last.main_process!'
@@ -349,5 +349,15 @@ class XmovieRecord < ApplicationRecord
       created_at.strftime("%Y%m%d%H%M%S"),
       basename,
     ].compact.join("_") + "." + generator.real_ext
+  end
+
+  # 進捗通知
+  def progress_callback(e)
+    logger.tagged(:progress_callback) do
+      if e.trigger? || true
+        user.progress_singlecast(id: id, percent: e.percent, log: e.log, message: e.message)
+      end
+      logger.info(e.log)
+    end
   end
 end

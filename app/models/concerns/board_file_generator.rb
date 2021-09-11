@@ -129,7 +129,8 @@ class BoardFileGenerator
     end
 
     @options = {
-      disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
+      disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test? || Rails.env.development?,
+      progress_callback: nil,
     }.merge(options)
 
     if block_given?
@@ -312,7 +313,7 @@ class BoardFileGenerator
 
   def to_blob
     parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
-    parser.public_send(recipe_info.to_method, to_method_options)
+    parser.public_send(recipe_info.to_method, to_method_options.merge(progress_callback: @options[:progress_callback]))
   end
 
   def force_generate

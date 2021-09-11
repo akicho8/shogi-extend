@@ -25,7 +25,8 @@
     //- :paginated="false"
     //- :per-page="10"
     b-table-column(v-slot="{row}" label="番号" numeric centered)
-      b-tag(rounded :class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
+      //- b-tag(rounded :class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
+      span(:class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
     b-table-column(v-slot="{row}" field="name" label="名前")
       | {{string_truncate(row.user.name, {length: 10})}}
     b-table-column(v-slot="{row}" field="status_key" label="状況" centered)

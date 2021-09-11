@@ -33,6 +33,7 @@ client-only
           //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_breakbeat_only').sample_audio_source" size="is-small")
 
           XmovieForm(:base="base" ref="XmovieForm" v-if="form_show_p")
+          XmovieProgress(:base="base")
           XmovieReview(:base="base")
           XmovieValidation(:base="base")
           .column.is-half
