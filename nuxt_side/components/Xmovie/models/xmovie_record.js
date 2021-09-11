@@ -44,6 +44,13 @@ export class XmovieRecord extends Model {
     }
   }
 
+  get video_bit_rate() {
+    let v = Gs.presence(this.video_stream.bit_rate)
+    if (v) {
+      return Number(v)
+    }
+  }
+
   get width() {
     return this.video_stream.width
   }
@@ -86,6 +93,13 @@ export class XmovieRecord extends Model {
   get audio_stream() {
     const streams = this.ffprobe_info?.direct_format?.streams || []
     return streams[1] || {}
+  }
+
+  get audio_bit_rate() {
+    let v = Gs.presence(this.audio_stream.bit_rate)
+    if (v) {
+      return Number(v)
+    }
   }
 
   // その他

@@ -3,22 +3,26 @@ import { Gs } from "../../../components/models/gs.js"
 import dayjs from "dayjs"
 
 export class ValidationInfo extends MemoryRecord {
-  static MP4_TIME_MAX = 140
-  static MP4_SIZE_MB_MAX = 512
-  static GIF_SIZE_MB_MAX = 5 // GIF画像はモバイル端末なら5MBまでtwitter.comなら15MBまで追加できる https://help.twitter.com/ja/using-twitter/tweeting-gifs-and-pictures
-  static MP4_FPS_MAX = 60
+  // TWITTERに投稿できる動画と画像の仕様について
+  // https://nico-lab.net/twitter_upload_format_spec/
+  static MP4_TIME_SECOND_MAX           = 140
+  static MP4_SIZE_MB_MAX        = 512
+  static GIF_SIZE_MB_MAX        = 5 // GIF画像はモバイル端末なら5MBまでtwitter.comなら15MBまで追加できる https://help.twitter.com/ja/using-twitter/tweeting-gifs-and-pictures
+  static MP4_FPS_MAX            = 60
+  static MP4_VIDEO_BIT_RATE_KBPS_MAX = 5000
+  static MP4_AUDIO_BIT_RATE_KBPS_MAX = 128
 
   static get define() {
     return [
       {
         name: "時間",
-        should_be: c => `時間が${Gs.time_format_human_hms(this.MP4_TIME_MAX)}以下`,
+        should_be: c => `時間が${Gs.time_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
         human_value: (c, e) => `${Gs.time_format_human_hms(e.duration)}`,
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             let v = e.duration
             if (v != null)  {
-              return v <= this.MP4_TIME_MAX
+              return v <= this.MP4_TIME_SECOND_MAX
             }
           }
         },
@@ -43,9 +47,34 @@ export class ValidationInfo extends MemoryRecord {
           }
         },
       },
+
       {
-        name: "Audio形式",
-        should_be: c => `Audio形式が AAC LC`,
+        name: "映像ビットレート",
+        should_be: c => `映像ビットレートが${this.MP4_VIDEO_BIT_RATE_KBPS_MAX}kbps以下`,
+        human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)}kbps`,
+        validate: (c, e) => {
+          if (e.recipe_info.file_type === "video") {
+            return e.video_bit_rate <= this.MP4_VIDEO_BIT_RATE_KBPS_MAX * 1024
+          }
+        },
+      },
+
+      {
+        name: "音声ビットレート",
+        should_be: c => `音声ビットレートが${this.MP4_AUDIO_BIT_RATE_KBPS_MAX}kbps以下`,
+        human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)}kbps`,
+        validate: (c, e) => {
+          if (e.recipe_info.file_type === "video") {
+            if (Gs.present_p(e.audio_stream)) {
+              return e.audio_bit_rate <= this.MP4_AUDIO_BIT_RATE_KBPS_MAX * 1024
+            }
+          }
+        },
+      },
+
+      {
+        name: "音声形式",
+        should_be: c => `音声形式が AAC LC`,
         human_value: (c, e) => `${e.audio_stream.codec_name} ${e.audio_stream.profile}`,
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
@@ -55,6 +84,7 @@ export class ValidationInfo extends MemoryRecord {
           }
         },
       },
+
       {
         name: "アスペクト比",
         should_be: c => `アスペクト比が${c.TWITTER_ASPECT_RATIO_MAX}以下`,
