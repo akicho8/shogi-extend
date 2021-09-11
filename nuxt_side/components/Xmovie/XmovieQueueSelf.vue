@@ -20,7 +20,7 @@
     b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered)
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
-        span.ml-1(v-if="base.progress_info && base.progress_info.id === row.id")
+        span.ml-1(v-if="false && base.progress_info && base.progress_info.id === row.id")
           | {{number_round(base.progress_info.percent, 2)}} %
 
     b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :visible="development_or_staging_p")
