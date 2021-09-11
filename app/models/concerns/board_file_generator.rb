@@ -3,34 +3,6 @@ class BoardFileGenerator
     delegate :logger, to: "Rails"
 
     # base64で来ているデータを実際のファイルにしてパラメータを変更
-    #
-    #  ・配列でくるので [0] を a に [1] を b に割り当てる
-    #
-    #   params = {
-    #     :audio_theme_key => ...,
-    #     :xaudio_list => [
-    #       {
-    #         :url => "data:audio/x-m4a;base64,AAA...",
-    #         :attributes => {
-    #           :name => "part_a.m4a",
-    #           :size => 1841,
-    #           :type => "audio/x-m4a",
-    #         },
-    #       },
-    #       {
-    #         ...
-    #       },
-    #     ],
-    #   }
-    #
-    #   ↓
-    #
-    #   params = {
-    #     :audio_theme_key => nil,
-    #     :audio_part_a => "tmp/part_a.m4a",
-    #     :audio_part_b => "tmp/part_b.m4a",
-    #   }
-    #
     def params_rewrite!(params)
       logger.tagged(:params_rewrite!) do
         if params[:audio_theme_key] == "audio_theme_custom"
