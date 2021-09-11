@@ -54,10 +54,10 @@ export default {
     align-items: center
 
     // フルスクリーンでは装飾しない
-    .media_container
-      > *:not(:fullscreen)
-        border: 1px solid $grey-lighter
-        border-radius: 4px
+    // .media_container
+    //   > *:not(:fullscreen)
+    //     border: 1px solid $grey-lighter
+    //     border-radius: 4px
 
     // video
     //   width: 100vw
