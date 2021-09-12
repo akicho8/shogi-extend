@@ -10634,10 +10634,10 @@ sass-graph@2.2.5:
     scss-tokenizer "^0.2.3"
     yargs "^13.3.2"
 
-sass-loader@latest:
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.1.1.tgz#4ddd5a3d7638e7949065dd6e9c7c04037f7e663d"
-  integrity sha512-W6gVDXAd5hR/WHsPicvZdjAWHBcEJ44UahgxcIE196fW2ong0ZHMPO1kZuI5q0VlvMQZh32gpv69PLWQm70qrw==
+sass-loader@^10.1.1:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/sass-loader/-/sass-loader-10.2.0.tgz#3d64c1590f911013b3fa48a0b22a83d5e1494716"
+  integrity sha512-kUceLzC1gIHz0zNJPpqRsJyisWatGYNFRmv2CKZK2/ngMJgLqxTbXwe/hJ85luyvZkgqU3VlJ33UVF2T/0g6mw==
   dependencies:
     klona "^2.0.4"
     loader-utils "^2.0.0"
@@ -10869,10 +10869,10 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.298:
-  version "0.0.298"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.298.tgz#f2bfb323cd8719ed5b2db86bc2bd4768a8b5258b"
-  integrity sha512-gpG09uxejm61i0WYG3Lr/2K1pbdM1UNcYNBvb/RhPcMFrBqBrhpSRq4ZgfdE6H3MOOi7B/lBUBZ22QW1a/+qmw==
+shogi-player@^0.0.300:
+  version "0.0.300"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.300.tgz#f3418b646ccff6250096ed02be64a9e8143b439c"
+  integrity sha512-zkM+q8tYAw8X0uGkw7XALUno+A1g68VkT9KRSxuoJvqpkK/cyqXIuRtNYx9474HYwdERXt/nfEUDC8vuEh5NnA==
   dependencies:
     autolinker latest
     buefy "^0.9.8"
@@ -10888,7 +10888,7 @@ shogi-player@^0.0.298:
     pug-loader "^2.4.0"
     pug-plain-loader "^1.1.0"
     raw-loader "^4.0.2"
-    sass-loader latest
+    sass-loader "^10.1.1"
     vue-color "^2.7.1"
     xregexp "^4.3.0"
 
