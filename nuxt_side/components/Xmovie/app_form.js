@@ -8,6 +8,8 @@ import { AnimationSizeInfo } from "./models/animation_size_info.js"
 import { ParamInfo         } from "./models/param_info.js"
 import { RecipeInfo        } from "./models/recipe_info.js"
 
+import Big from "big.js"        // https://github.com/MikeMcl/big.js/
+
 const TWITTER_ASPECT_RATIO_MAX = 2.39  // Twitterでアップロードできるのは比率がこれ以下のとき
 
 export const app_form = {
@@ -297,6 +299,18 @@ export const app_form = {
       this.sound_play("click")
       this.one_frame_duration_sec = 1.0 / fps
     },
+    one_frame_duration_sec_set_by_value(v) {
+      this.sound_play("click")
+      this.one_frame_duration_sec = v
+    },
+    one_frame_duration_sec_add(v) {
+      this.sound_play("click")
+      this.one_frame_duration_sec = (new Big(this.one_frame_duration_sec)).plus(v).toNumber()
+    },
+    one_frame_duration_sec_mul(v) {
+      this.sound_play("click")
+      this.one_frame_duration_sec = (new Big(this.one_frame_duration_sec)).times(v).toNumber()
+    },
   },
   computed: {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
@@ -407,10 +421,15 @@ export const app_form = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    fps_human() {
+    fps_value() {
       if (this.one_frame_duration_sec > 0) {
-        const v = this.number_round(1 / this.one_frame_duration_sec, 2)
-        return `${v} fps`
+        return this.number_round(1 / this.one_frame_duration_sec, 2)
+      }
+    },
+
+    one_frame_duration_sec_message() {
+      if (this.one_frame_duration_sec > 0) {
+        return `${this.fps_value}fps ${this.one_frame_duration_sec_bpm120}BPM`
       }
     },
 
@@ -422,6 +441,14 @@ export const app_form = {
       } else {
         return 0.1
       }
+    },
+
+    one_frame_duration_sec_bpm120() {
+      return (new Big(this.one_frame_duration_sec)).times(120).toNumber()
+    },
+
+    one_frame_duration_sec_bpm60() {
+      return (new Big(this.one_frame_duration_sec)).times(60).toNumber()
     },
   },
 }

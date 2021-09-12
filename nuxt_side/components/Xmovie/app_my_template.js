@@ -1,19 +1,20 @@
-import FooShowModal from "./FooShowModal.vue"
+import MyTemplateModal from "./MyTemplateModal.vue"
 
-export const app_foo_show = {
+export const app_my_template = {
   methods: {
-    foo_show_modal_handle() {
+    my_template_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
 
       this.$buefy.modal.open({
-        customClass: "FooShowModal",
-        component: FooShowModal,
+        width: "", // width ではなく max-width に設定される
+        customClass: "MyTemplateModal",
+        component: MyTemplateModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
         animation: "",
-        canCancel: true,
+        canCancel: ["outside", "escape"],
         onCancel: () => {
           this.sound_play("click")
         },
