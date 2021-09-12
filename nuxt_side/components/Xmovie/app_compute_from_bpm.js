@@ -2,7 +2,7 @@ import ComputeFromBpmModal from "./ComputeFromBpmModal.vue"
 
 export const app_compute_from_bpm = {
   mounted() {
-    if (this.development_p) {
+    if (this.development_p && false) {
       this.$nextTick(() => this.compute_from_bpm_modal_handle())
     }
   },

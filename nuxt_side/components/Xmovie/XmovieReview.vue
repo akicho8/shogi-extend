@@ -1,9 +1,9 @@
 <template lang="pug">
 .XmovieReview.column.is-half(v-if="base.done_record")
-  b-message(type="is-danger" has-icon icon-size="is-medium" v-if="base.done_record.errored_at")
+  b-message(type="is-danger" v-if="base.done_record.errored_at")
     | {{base.done_record.error_message}}
 
-  b-notification(:closable="true" type="is-danger" v-if="base.done_record.errored_at && development_p")
+  b-notification(:closable="true" type="is-danger" v-if="base.done_record.errored_at && development_p && false")
     | {{base.done_record.error_message}}
 
   template(v-if="base.done_record.successed_at")
