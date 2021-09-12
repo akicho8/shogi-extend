@@ -1,13 +1,13 @@
 <template lang="pug">
 .XmovieForm3
   .one_frame_duration_sec_field.one_block
-    b-field(:message="base.one_frame_duration_sec_message" v-if="false")
-      template(#label)
-        p 1手N秒
-        b-taglist.fps_values
-          template(v-for="fps in [60, 30, 20, 15]")
-            a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
-      b-numberinput(key="numberinput-one_frame_duration_sec" v-model="base.one_frame_duration_sec" :min="base.one_frame_duration_sec_step" :max="3" :step="base.one_frame_duration_sec_step" exponential @input="sound_play('click')")
+    //- b-field(:message="base.one_frame_duration_sec_message" v-if="false")
+    //-   template(#label)
+    //-     p 1手N秒
+    //-     b-taglist.fps_values
+    //-       template(v-for="fps in [60, 30, 20, 15]")
+    //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
+    //-   b-numberinput(key="numberinput-one_frame_duration_sec" v-model="base.one_frame_duration_sec" :min="base.one_frame_duration_sec_step" :max="3" :step="base.one_frame_duration_sec_step" exponential @input="sound_play('click')")
 
     b-field(:message="base.one_frame_duration_sec_message")
       template(#label)
@@ -34,11 +34,11 @@
             .buttons.mb-0.has-addons.are-small.mt-2
               b-button.mb-0(@click.native="base.one_frame_duration_sec_mul(0.5)") ÷2
               b-button.mb-0(@click.native="base.one_frame_duration_sec_mul(2.0)") ×2
+
+        b-field(grouped).mb-0
           .control
             .buttons.mb-0.has-addons.are-small.mt-2
               b-button.mb-0(@click="base.compute_from_bpm_modal_handle") BPM
-
-        b-field(grouped).mb-0
           .control
             .buttons.mb-0.has-addons.are-small.mt-2
               template(v-for="fps in [60, 30, 20, 15]")
@@ -200,7 +200,7 @@ export default {
     input
       width: 5rem
 
-  .fps_values
-    a:not(:first-child)
-      margin-left: 0.25rem
+  // .fps_values
+  //   a:not(:first-child)
+  //     margin-left: 0.25rem
 </style>
