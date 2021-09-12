@@ -127,8 +127,8 @@ group :development do
   gem "aam"
 end
 
-gem "bioshogi", path: "~/src/bioshogi"
-# gem "bioshogi", github: "akicho8/bioshogi"
+# gem "bioshogi", path: "~/src/bioshogi"
+gem "bioshogi", github: "akicho8/bioshogi"
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_mp4
 
