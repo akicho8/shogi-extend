@@ -26,6 +26,7 @@ export const app_form = {
       color_theme_key:        null, // 色テーマ
       audio_theme_key:        null, // 曲テーマ
       media_factory_key:      null, // 生成方法
+      cover_text:             null, // 表紙文言
       one_frame_duration_sec: null, // 1手N秒
       end_duration_sec:       null, // 終了図だけ指定枚数ぶん停止
       sleep:                  null, // 遅延(デバッグ用)
@@ -373,6 +374,7 @@ export const app_form = {
             color_theme_key:        this.color_theme_key,
             audio_theme_key:        this.audio_theme_key,
             media_factory_key:      this.media_factory_key,
+            cover_text:             this.cover_text,
             width:                  this.img_width,
             height:                 this.img_height,
             renderer_override_params: { // テーマの上書き
