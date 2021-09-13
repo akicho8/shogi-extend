@@ -4,7 +4,7 @@ RSpec.describe BoardFileGenerator, type: :model do
   describe "to_browser_path" do
     it "works" do
       obj = BoardFileGenerator.new(FreeBattle.create!)
-      assert { obj.to_browser_path.match?(/system.*board_images.*png/) }
+      assert { obj.to_browser_path.match?(/system.*blob-files.*png/) }
     end
   end
 

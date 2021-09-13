@@ -88,7 +88,7 @@ class BoardFileGenerator
 
   class << self
     def cache_root
-      Rails.public_path.join("system", "board_images")
+      Rails.public_path.join("system", "blob-files")
     end
 
     # cap production rails:runner CODE='BoardFileGenerator.cache_delete_all'
