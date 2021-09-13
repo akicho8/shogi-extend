@@ -228,6 +228,7 @@ class XmovieRecord < ApplicationRecord
       save!
       user.my_records_singlecast
       everyone_broadcast
+      SystemMailer.fixed_track(subject: "【動画生成引数】[#{id}] #{user.name}(#{user.xmovie_records.count})", body: convert_params[:board_file_generator_params].to_t).deliver_later
       begin
         sleep(convert_params[:sleep].to_i)
         if v = convert_params[:raise_message].presence
@@ -240,7 +241,7 @@ class XmovieRecord < ApplicationRecord
         self.errored_at = Time.current
         self.error_message = error.message
         SlackAgent.notify_exception(error)
-        SystemMailer.notify_exception(error)
+        SystemMailer.notify_exception(error, convert_params)
       else
         logger.info("success")
         reload # zombie_kill で errored_at を更新されたとき、これを入れないと、変化したことがわからず nil で上書きできない

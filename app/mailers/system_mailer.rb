@@ -6,8 +6,16 @@ class SystemMailer < ApplicationMailer
     # rails r "p SystemMailer.notify_exception(Exception.new)"
     # rails r "p SystemMailer.notify_exception((1/0 rescue $!))"
     #
-    def notify_exception(error)
-      simple_track(subject: "#{error.message} (#{error.class.name})", body: [error.backtrace].compact.join("\n")).deliver_later
+    def notify_exception(error, params = {})
+      body = []
+      if params.present?
+        body << params.pretty_inspect
+      end
+      if error.backtrace
+        body << error.backtrace.take(4).join("\n")
+      end
+      body = body.join("\n") + "\n"
+      simple_track(subject: "#{error.message} (#{error.class.name})", body: body).deliver_later
     end
   end
 

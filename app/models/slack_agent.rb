@@ -6,15 +6,17 @@ module SlackAgent
 
   # rails r "SlackAgent.notify_exception(Exception.new)"
   # rails r "SlackAgent.notify_exception((1/0 rescue $!))"
-  def notify_exception(error)
+  def notify_exception(error, params = {})
     Rails.logger.info(error)
-
     out = []
     if error.message
       out << error.message
     end
     if error.backtrace
       out += error.backtrace.take(backtrace_lines_max)
+    end
+    if params.present?
+      out << params.pretty_inspect
     end
     message_send(key: error.class.name, body: out.compact.join("\n"))
   end
