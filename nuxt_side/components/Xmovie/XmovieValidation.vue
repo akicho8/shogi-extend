@@ -1,6 +1,6 @@
 <template lang="pug">
 .XmovieValidation.column.is-half(v-if="present_p(base.review_error_messages)")
-  .panel(:class="base.review_error_messages_valid_p ? 'is-success' : 'is-danger'" size="is-small")
+  .panel.is-twitter(:class="base.review_error_messages_valid_p ? 'x-is-success' : 'x-is-danger'" size="is-small")
     .panel-heading
       | Twitterアップロード条件
     .panel-block
