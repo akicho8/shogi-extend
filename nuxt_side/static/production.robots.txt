@@ -11,7 +11,7 @@
 #
 user-agent: Googlebot-Image
 disallow: /w/*.png
-disallow: /system/blob-files/*.png
+disallow: /system/x-files/*.png
 
 ################################################################################ 
 user-agent: SemrushBot
