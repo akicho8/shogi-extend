@@ -57,14 +57,15 @@ export const app_review = {
         if (this.done_record.successed_at) {
           if (this.done_record.recipe_info.media_p) {
             ValidationInfo.values.forEach(e => {
-              const valid_p = e.validate(this, this.done_record)
-              if (valid_p == null) {
-              } else {
-                list.push({
-                  valid_p: valid_p,
-                  should_be: e.should_be(this),
-                  human_value: e.human_value(this, this.done_record),
-                })
+              if (e.environment == null || e.environment.includes(this.$config.STAGE)) {
+                const valid_p = e.validate(this, this.done_record)
+                if (valid_p != null) {
+                  list.push({
+                    valid_p: valid_p,
+                    should_be: e.should_be(this),
+                    human_value: e.human_value(this, this.done_record),
+                  })
+                }
               }
             })
           }
