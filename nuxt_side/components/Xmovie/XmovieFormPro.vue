@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieForm3
+.XmovieFormPro
   .one_frame_duration_sec_field.one_block
     //- b-field(:message="base.one_frame_duration_sec_message" v-if="false")
     //-   template(#label)
@@ -167,7 +167,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm3",
+  name: "XmovieFormPro",
   mixins: [support_child],
   data() {
     return {
@@ -179,7 +179,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieForm3
+.XmovieFormPro
   .recipe_key_field
     .dropdown-item
       +desktop

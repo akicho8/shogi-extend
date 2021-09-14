@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieForm4
+.XmovieFormDebug
   SimpleRadioButtons.one_block(:base="base" :model="base.MediaFactoryInfo" var_name="media_factory_key")
 
   b-field.one_block(label="負荷" v-if="development_p")
@@ -13,11 +13,11 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm4",
+  name: "XmovieFormDebug",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieForm4
+.XmovieFormDebug
 </style>

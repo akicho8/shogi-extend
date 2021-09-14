@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieForm2AudioTheme.one_block
+.XmovieFormDesignAudioTheme.one_block
   b-field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
     .control
       b-dropdown(v-model="base.audio_theme_key" @active-change="base.active_change_handle")
@@ -55,13 +55,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm2AudioTheme",
+  name: "XmovieFormDesignAudioTheme",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieForm2AudioTheme
+.XmovieFormDesignAudioTheme
   .dropdown-item
     // 選択中でも a の icon が青いままなので白くする
     &.is-active

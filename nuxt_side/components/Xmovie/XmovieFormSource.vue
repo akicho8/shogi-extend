@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieForm1
+.XmovieFormSource
   ////////////////////////////////////////////////////////////////////////////////
   b-field.mb-0.body_field.one_block(:type="base.body_field_type")
     template(#label v-if="false")
@@ -26,7 +26,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm1",
+  name: "XmovieFormSource",
   mixins: [support_child],
   mounted() {
     this.base.body_focus()
@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieForm1
+.XmovieFormSource
   // .field:not(:first-child)
   //   margin-top: 1.5rem
   .body_field

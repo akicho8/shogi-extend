@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieForm2ColorTheme.one_block
+.XmovieFormDesignColorTheme.one_block
   b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
     .control
       //- :scrollable="desktop_p()" max-height="66.6vh"
@@ -27,13 +27,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm2ColorTheme",
+  name: "XmovieFormDesignColorTheme",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieForm2ColorTheme
+.XmovieFormDesignColorTheme
   // 上下の不自然な隙間を取る
   .dropdown-content
     padding-top: 0

@@ -2,13 +2,15 @@
 .XmovieForm.column.is-half
   b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sound_play('click')")
     b-tab-item(label="棋譜")
-      XmovieForm1(:base="base")
+      XmovieFormSource(:base="base")
     b-tab-item(label="オプション")
-      XmovieForm2(:base="base")
+      XmovieFormOption(:base="base")
+    b-tab-item(label="デザイン")
+      XmovieFormDesign(:base="base")
     b-tab-item(label="詳細設定")
-      XmovieForm3(:base="base")
+      XmovieFormPro(:base="base")
     b-tab-item(label="デバッグ" v-if="development_p")
-      XmovieForm4(:base="base")
+      XmovieFormDebug(:base="base")
 
   b-field.submit_field
     .control
