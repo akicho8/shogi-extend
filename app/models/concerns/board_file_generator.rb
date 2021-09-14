@@ -27,6 +27,9 @@ class BoardFileGenerator
         if e = params.delete(:u_fg_file).presence
           params[:renderer_override_params][:fg_file] = data_uri_to_tmpfile(e).to_s
         end
+        if e = params.delete(:u_pt_file).presence
+          params[:renderer_override_params][:pt_file] = data_uri_to_tmpfile(e).to_s
+        end
       end
 
       params

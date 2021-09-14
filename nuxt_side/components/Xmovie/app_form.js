@@ -53,6 +53,7 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// 背景画像
       u_bg_file: null,
       u_fg_file: null,
+      u_pt_file: null,
     }
   },
 
@@ -398,6 +399,7 @@ export const app_form = {
       return {
         u_bg_file: this.u_bg_file,
         u_fg_file: this.u_fg_file,
+        u_pt_file: this.u_pt_file,
       }
     },
 

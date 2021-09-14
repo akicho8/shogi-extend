@@ -1,5 +1,5 @@
 <template lang="pug">
-.about-credit.has-background-black.has-text-centered(@pointerdown="click_handle")
+.about-credit.has-background-black.has-text-centered.is-italic(@pointerdown="click_handle")
   b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .section_title.mt-0 PIECE TEXTURE
@@ -17,6 +17,17 @@
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
     li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
+
+  template(v-if="present_p(photo_author_info)")
+    .section_title BACKGROUND TEXTURE
+    ul
+      template(v-for="(list, author) in photo_author_info")
+        li
+          .xxx_author
+            | Photo by {{author}}
+          .xxx_items
+            template(v-for="e in list")
+              .is-size-7.is_line_break_on(v-html="auto_link(e.photo_url, {truncate: 140})" @click="sound_play('click')")
 
   template(v-if="false")
     .section_title BOT TEXTURE
@@ -38,11 +49,12 @@
     ul
       template(v-for="(list, author) in audio_author_info")
         li
-          .song_author
+          .xxx_author
             ExternalLink(beep :href="AudioCreatorInfo.fetch(author).home_site_url") {{author}}
-          .song_items
-            template(v-for="record in list")
-              ExternalLink.song_item.is-block.is-italic(beep :href="record.source_url") {{record.name}}
+          .xxx_items
+            .xxx_item(v-for="record in list")
+              ExternalLink.is-block(beep :href="record.source_url") {{record.name}}
+              .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="sound_play('click')")
 
   .section_title PROGRAM
   ul
@@ -77,6 +89,7 @@ import { html_background_black_mixin } from "../../components/models/html_backgr
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { AudioThemeInfo } from '../../components/Xmovie/models/audio_theme_info.js'
 import { AudioCreatorInfo } from '../../components/Xmovie/models/audio_creator_info.js'
+import { PhotoSourceInfo } from '../../components/Xmovie/models/photo_source_info.js'
 import _ from "lodash"
 
 export default {
@@ -114,12 +127,13 @@ export default {
         title: "クレジット",
       }
     },
-    AudioThemeInfo() { return AudioThemeInfo },
-    AudioCreatorInfo() { return AudioCreatorInfo },
-    audio_author_info() {
-      const values = this.AudioThemeInfo.values.filter(e => e.author)
-      return _.groupBy(values, e => e.author)
-    },
+    AudioCreatorInfo()  { return AudioCreatorInfo },
+
+    AudioThemeInfo()    { return AudioThemeInfo },
+    audio_author_info() { return _.groupBy(this.AudioThemeInfo.values.filter(e => e.author), e => e.author) },
+
+    PhotoSourceInfo()   { return PhotoSourceInfo },
+    photo_author_info() { return _.groupBy(this.PhotoSourceInfo.values.filter(e => e.author), e => e.author) },
   },
 }
 </script>
@@ -148,22 +162,21 @@ export default {
       font-size: $size-3
 
   .section_title
-    margin-top: 5rem
+    margin-top: 8rem
     display: inline-block
     color: #ffa305
     font-weight: normal
 
-  .song_author
-    margin-top: 2rem
+  .xxx_author
+    margin-top: 4rem
     font-size: $size-5
-  .song_items
-    .song_item
-      font-size: $size-6
-      color: $grey
+  .xxx_items
+    .xxx_item
+      margin-top: 1rem
 
   .thanks
     li
-      margin-top: 1.75rem
+      margin-top: 2.75rem
       &.kento
         .creator
           font-size: $size-3 * 1.25

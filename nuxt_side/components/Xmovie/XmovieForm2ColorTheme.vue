@@ -18,8 +18,9 @@
                       | {{e.name}}
                     img.is-block.mt-2(:src="e.thumbnail_url(base)" loading="lazy")
 
-  XmovieImageUpload(:base="base" label="背景" :file_info.sync="base.u_bg_file")
-  XmovieImageUpload(:base="base" label="盤面" :file_info.sync="base.u_fg_file")
+  XmovieImageUpload(:base="base" label="背景"           :file_info.sync="base.u_bg_file")
+  XmovieImageUpload(:base="base" label="盤面テクスチャ" :file_info.sync="base.u_fg_file")
+  XmovieImageUpload(:base="base" label="駒テクスチャ"   :file_info.sync="base.u_pt_file")
 </template>
 
 <script>

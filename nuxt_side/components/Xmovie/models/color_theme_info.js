@@ -4,7 +4,7 @@ const SAMPLE_SFEN = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/
 
 export class ColorThemeInfo extends MemoryRecord {
   static get field_label() {
-    return "配色"
+    return "デザイン"
   }
 
   static get field_message() {
