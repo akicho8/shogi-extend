@@ -21,6 +21,7 @@ export class ColorThemeInfo extends MemoryRecord {
       { key: "color_theme_is_cg_wood2",                name: "CGの盤2",             media_name: null, type: "is-primary", message: null, },
       { key: "color_theme_is_cg_wood3",                name: "CGの盤3",             media_name: null, type: "is-primary", message: null, },
       { key: "color_theme_is_cg_wood4",                name: "CGの盤3",             media_name: null, type: "is-primary", message: null, },
+      { key: "color_theme_is_metal1",                  name: "メタル盤",            media_name: null, type: "is-primary", message: null, },
       { separator: true },
       { key: "color_theme_is_kimetsu_red",             name: "鬼滅風 Violet Red",   media_name: null, type: "is-primary", message: null, },
       { key: "color_theme_is_kimetsu_blue",            name: "鬼滅風 Sky Blue",     media_name: null, type: "is-primary", message: null, },
