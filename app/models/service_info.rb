@@ -37,7 +37,7 @@ class ServiceInfo
       og_image_key: "movie-factory",
       description: "棋譜を動画形式に変換したいときにどうぞ",
       features: [
-        "mp4, gif, apng 等に変換",
+        "mp4, gif, png, zip 等に変換",
         "「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している",
       ],
     },
