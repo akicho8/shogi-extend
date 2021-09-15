@@ -57,8 +57,8 @@ export class ColorThemeInfo extends MemoryRecord {
     url.searchParams.set("color_theme_key", this.key)
     // url.searchParams.set("width", 720)
     // url.searchParams.set("height", 540)
-    url.searchParams.set("width", 1280)
-    url.searchParams.set("height", 720)
+    url.searchParams.set("width", 1280 / 2)
+    url.searchParams.set("height", 720 / 2)
     return url.toString()
   }
 }
