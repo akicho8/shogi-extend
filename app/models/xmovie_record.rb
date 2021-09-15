@@ -237,7 +237,7 @@ class XmovieRecord < ApplicationRecord
         generator.generate_unless_exist
       rescue => error
         reload  # zombie_kill で更新しているかもしれないため
-        logger.info(error)
+        logger.info("#{error.message} (#{error.class.name})")
         self.errored_at = Time.current
         self.error_message = error.message
         SlackAgent.notify_exception(error)
