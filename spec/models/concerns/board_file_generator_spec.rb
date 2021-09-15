@@ -14,12 +14,12 @@ RSpec.describe BoardFileGenerator, type: :model do
       obj.to_method_options
     end
     it "works" do
-      assert { test1({})                 == {width: 1200, height: 630} }
-      assert { test1("width" => "")      == {width: 1200, height: 630} }
-      assert { test1("width" => "800")   == {width:  800, height: 630} }
-      assert { test1("height" => "9999") == {width: 1200, height: 1200} }
-      assert { test1("other" => "12.34") == {width: 1200, height: 630} }
-      assert { test1("other" => "true")  == {width: 1200, height: 630}  }
+      assert { test1({})                 == {width: 1200, height:  630} }
+      assert { test1("width" => "")      == {width: 1200, height:  630} }
+      assert { test1("width" => "800")   == {width:  800, height:  630} }
+      assert { test1("height" => "9999") == {width: 1200, height: 4096} }
+      assert { test1("other" => "12.34") == {width: 1200, height:  630} }
+      assert { test1("other" => "true")  == {width: 1200, height:  630} }
     end
   end
 
