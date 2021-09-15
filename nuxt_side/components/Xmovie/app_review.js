@@ -60,11 +60,17 @@ export const app_review = {
               if (e.environment == null || e.environment.includes(this.$config.STAGE)) {
                 const valid_p = e.validate(this, this.done_record)
                 if (valid_p != null) {
-                  list.push({
+                  const item = {
                     valid_p: valid_p,
                     should_be: e.should_be(this),
                     human_value: e.human_value(this, this.done_record),
-                  })
+                  }
+                  if (valid_p) {
+                    item.icon_args = { icon: "check", type: "is-success" }
+                  } else {
+                    item.icon_args = e.icon_args
+                  }
+                  list.push(item)
                 }
               }
             })

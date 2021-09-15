@@ -17,8 +17,8 @@ export const app_form = {
     return {
       //////////////////////////////////////////////////////////////////////////////// POST前
       body: "",                     // 棋譜
-      loop_key:               null, // ループ
-      xfont_key:               null, // ループ
+      loop_key:               null, // ループの有無(GIFの場合)
+      xfont_key:              null, // 駒を太字にする条件
       animation_size_key:     null, // 画像サイズ
       img_width:              null, // w
       img_height:             null, // h
@@ -27,6 +27,8 @@ export const app_form = {
       audio_theme_key:        null, // 曲テーマ
       media_factory_key:      null, // 生成方法
       cover_text:             null, // 表紙文言
+      video_crf:              null, // video品質レベル
+      audio_bit_rate:         null, // 音声ビットレート
       one_frame_duration_sec: null, // 1手N秒
       end_duration_sec:       null, // 終了図だけ指定枚数ぶん停止
       sleep:                  null, // 遅延(デバッグ用)
@@ -376,6 +378,8 @@ export const app_form = {
             audio_theme_key:        this.audio_theme_key,
             media_factory_key:      this.media_factory_key,
             cover_text:             this.cover_text,
+            video_crf:              this.video_crf,
+            audio_bit_rate:            this.audio_bit_rate,
             width:                  this.img_width,
             height:                 this.img_height,
             renderer_override_params: { // テーマの上書き

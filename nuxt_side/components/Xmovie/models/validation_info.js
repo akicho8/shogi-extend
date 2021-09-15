@@ -15,10 +15,12 @@ export class ValidationInfo extends MemoryRecord {
   static get define() {
     return [
       {
-        name: "時間",
-        should_be: c => `時間が${Gs.time_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
+        name: "長さ",
+        should_be: c => `長さが${Gs.time_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
         human_value: (c, e) => `${Gs.time_format_human_hms(e.duration)}`,
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             let v = e.duration
@@ -33,6 +35,8 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `容量が${this.MP4_SIZE_MB_MAX}MB以下`,
         human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             return e.file_size <= (this.MP4_SIZE_MB_MAX * 1024 * 1024)
@@ -44,6 +48,8 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `フレームレートが${this.MP4_FPS_MAX}fps以下`,
         human_value: (c, e) => `${e.frame_rate}fps`,
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             return e.frame_rate <= this.MP4_FPS_MAX
@@ -51,27 +57,32 @@ export class ValidationInfo extends MemoryRecord {
         },
       },
 
+      // https://developer.twitter.com/ja/docs/media/upload-media/uploading-media/media-best-practices
       {
-        name: "映像ビットレート",
-        should_be: c => `映像ビットレートが${this.MP4_VIDEO_BIT_RATE_KBPS_MAX}kbps以下`,
+        name: "映像ﾋﾞｯﾄﾚｰﾄ",
+        should_be: c => `映像ﾋﾞｯﾄﾚｰﾄが${this.MP4_VIDEO_BIT_RATE_KBPS_MAX}kbps程度(?)`,
         human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)}kbps`,
         environment: null,
+        alert_icon_key: "blank",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
-            return e.video_bit_rate <= this.MP4_VIDEO_BIT_RATE_KBPS_MAX * 1024
+            return e.video_bit_rate >= this.MP4_VIDEO_BIT_RATE_KBPS_MAX * 1024 || true
           }
         },
       },
 
       {
-        name: "音声ビットレート",
-        should_be: c => `音声ビットレートが${this.MP4_AUDIO_BIT_RATE_KBPS_MAX}kbps以下`,
+        name: "音声ﾋﾞｯﾄﾚｰﾄ",
+        should_be: c => `音声ﾋﾞｯﾄﾚｰﾄが${this.MP4_AUDIO_BIT_RATE_KBPS_MAX}kbps程度(?)`,
         human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)}kbps`,
-        environment: ["development"],
+        environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             if (Gs.present_p(e.audio_stream)) {
-              return e.audio_bit_rate <= this.MP4_AUDIO_BIT_RATE_KBPS_MAX * 1024
+              return e.audio_bit_rate >= this.MP4_AUDIO_BIT_RATE_KBPS_MAX * 1024 || true
             }
           }
         },
@@ -82,6 +93,8 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `音声形式が AAC LC`,
         human_value: (c, e) => `${e.audio_stream.codec_name} ${e.audio_stream.profile}`,
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             if (Gs.present_p(e.audio_stream)) {
@@ -96,6 +109,8 @@ export class ValidationInfo extends MemoryRecord {
         should_be: c => `アスペクト比が${c.TWITTER_ASPECT_RATIO_MAX}以下`,
         human_value: (c, e) => Gs.number_round(e.aspect_ratio_max, 2),
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             return e.aspect_ratio_max <= c.TWITTER_ASPECT_RATIO_MAX
@@ -104,9 +119,11 @@ export class ValidationInfo extends MemoryRecord {
       },
       {
         name: "画素形式",
-        should_be: c => "画素形式が YUV420",
+        should_be: c => "画素形式が YUV420 の p",
         human_value: (c, e) => e.pix_fmt,
         environment: null,
+        alert_icon_key: "alert",
+        alert_icon_type: "is-danger",
         validate: (c, e) => {
           if (e.recipe_info.file_type === "video") {
             if (e.pix_fmt) {
@@ -116,5 +133,12 @@ export class ValidationInfo extends MemoryRecord {
         },
       },
     ]
+  }
+
+  get icon_args() {
+    return {
+      icon: this.alert_icon_key,
+      type: this.alert_icon_type,
+    }
   }
 }

@@ -78,16 +78,16 @@ class BoardFileGenerator
     end
   end
 
-  PAPPER = 2
+  PAPPER = 3
 
   # FIXME: これらは params ではなく options にいれるべき？
   # params のうち、このクラスだけで扱うパラメータ
-  PARAM_KEYS = [
-    :recipe_key,
-    :turn,
-    # :video_fps,
-    :basename_prefix,
-  ]
+  # PARAM_KEYS = [
+  #   :recipe_key,
+  #   :turn,
+  #   # :video_fps,
+  #   :basename_prefix,
+  # ]
 
   class << self
     def cache_root

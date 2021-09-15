@@ -7,10 +7,7 @@
       ul
         template(v-for="e in base.review_error_messages")
           li
-            template(v-if="e.valid_p")
-              b-icon.mx-2(icon="check" type="is-success")
-            template(v-else)
-              b-icon.mx-2(icon="alert" type="is-danger")
+            b-icon.mx-2(v-bind="e.icon_args")
             span {{e.should_be}} → {{e.human_value}}
 </template>
 
