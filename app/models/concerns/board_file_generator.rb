@@ -78,7 +78,7 @@ class BoardFileGenerator
     end
   end
 
-  PAPPER = 3
+  PAPPER = 4
 
   # FIXME: これらは params ではなく options にいれるべき？
   # params のうち、このクラスだけで扱うパラメータ
