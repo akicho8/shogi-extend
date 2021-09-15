@@ -178,6 +178,10 @@ export class ClockBox {
     return this.single_clocks[this.current_location.code]
   }
 
+  get opponent() {
+    return this.single_clocks[this.current_location.flip.code]
+  }
+
   get current_index() {
     return this.turn_wrap(this.turn)
   }

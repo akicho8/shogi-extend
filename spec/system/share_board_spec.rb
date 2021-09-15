@@ -1117,18 +1117,30 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '指し手の消費秒数を表示'
+  describe "指し手の消費秒数を表示" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice")
+        clock_start
+        sleep(2)                                   # 2秒待つ
+        assert_move("77", "76", "☗7六歩")         # 初手を指す
+        action_log_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
+        # assert_text は overflow-x: hidden で隠れている場合があるためランダムに失敗する
+      end
+    end
+  end
+
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '編集モードで配置を変更しても駒箱が消えない'
   describe "編集モードで配置を変更しても駒箱が消えない" do
     it "works" do
       visit_app
       side_menu_open
       menu_item_click("局面編集")
-      # Capybara.default_max_wait_time = 1
-      # debugger
-      find(".EditToolBlock .dropdown:nth-of-type(2)").click
+      find(".EditToolBlock .dropdown:nth-of-type(2)").click # 左から2つ目の dropdown をクリック
       menu_item_sub_menu_click("駒箱に駒を一式生成")
-      piece_move("77", "76")
-      assert_selector(".PieceBox .PieceTap")
+      piece_move("77", "76")                                # 駒移動で edit_mode の sfen の emit が飛ぶ
+      assert_selector(".PieceBox .PieceTap")                # でも駒箱に駒は消えていない
     end
   end
 

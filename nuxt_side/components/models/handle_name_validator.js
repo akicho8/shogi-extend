@@ -36,7 +36,7 @@ export const HandleNameValidator = {
     }
   },
   valid(s) {
-    s = _.trim(s)
+    s = s.replace(/[\s\u3000]+/g, "").trim()
     s = Gs.hankaku_format(s)
     let error = false
     if (!error) {

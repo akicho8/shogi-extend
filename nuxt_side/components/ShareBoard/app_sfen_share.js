@@ -48,7 +48,7 @@ export const app_sfen_share = {
       }
 
       if (this.clock_box && this.clock_box.working_p) {
-        this.sfen_share_params["elapsed_sec"] = this.clock_box.elapsed_sec
+        this.sfen_share_params["elapsed_sec"] = this.clock_box.opponent.elapsed_sec_old // タップし終わったあとなので相手の情報を取る
       }
 
       this.sequence_code_embed()

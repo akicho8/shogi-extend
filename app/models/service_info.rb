@@ -50,7 +50,7 @@ class ServiceInfo
       og_image_key: "share-board-vs",
       description: "気軽に対局したいときにどうぞ",
       features: [
-        "プレイ人数 1〜8人",
+        "プレイ人数 2〜8人",
         "いまんところはログイン不要",
         "これは共有将棋盤の「自動マッチング」へのショートカット",
       ],
