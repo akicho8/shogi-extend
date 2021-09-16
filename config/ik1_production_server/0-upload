@@ -30,3 +30,5 @@ ssh i sudo chkconfig puma   on
 ssh i sudo chkconfig sidekiq on
 ssh i sudo chkconfig mysqld on
 ssh i sudo chkconfig redis  on
+
+echo "0-reload の実行で反映する"
