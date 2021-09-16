@@ -1,0 +1,106 @@
+<template lang="pug">
+//- (style="width:auto")
+.modal-card
+  ////////////////////////////////////////////////////////////////////////////////
+  header.modal-card-head.is-justify-content-space-between
+    p.modal-card-title.is-size-5.has-text-weight-bold
+      | BGM選択
+
+  ////////////////////////////////////////////////////////////////////////////////
+  section.modal-card-body
+    .columns.is-multiline.is-variable.is-0-mobile.is-1-tablet.is-2-desktop
+      template(v-for="e in base.AudioThemeInfo.values")
+        template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
+          template(v-if="!e.separator")
+            .column.is-4-tablet.is-3-desktop.is-2-widescreen
+              a.box(@click="click_handle(e)" :class="{'has-background-warning-light': e.key === base.audio_theme_key}")
+                .media
+                  .media-left(v-if="e.sample_source")
+                    XmovieAudioPlay(:base="base" :src="e.sample_source" @play="e => base.current_play_instance = e")
+                  .media-content
+                    templete(v-if="e.source_url")
+                      a(@click.stop="jump_to_source_url_handle(e)") {{e.name}}
+                    template(v-else)
+                      | {{e.name}}
+                    .audio_desc(v-if="e.audio_part_a_duration")
+                      .audio_desc_item(v-if="e.author_raw") {{e.author_raw}}
+                      .audio_desc_item(v-if="e.author") 作曲: {{e.author}}
+                      .audio_desc_item
+                        span 長さ: {{e.duration_mmss}}
+                        span.ml-1(v-if="e.duration_sec >= 60") ({{e.duration_sec}}s)
+                      .audio_desc_item(v-if="e.bpm")
+                        span 速度: {{e.bpm}}BPM
+                      .audio_desc_item(v-if="e.loop_support_p") ループ対応
+
+                  .media-right(v-if="false")
+                    a(:href="e.source_url" v-if="e.source_url" target="_blank")
+                      b-icon(icon="open-in-new" size="is-small")
+
+  footer.modal-card-foot
+    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+</template>
+
+<script>
+import { support_child   } from "./support_child.js"
+
+export default {
+  name: "AudioSelectModal",
+  mixins: [
+    support_child,
+  ],
+  methods: {
+    close_handle() {
+      this.sound_play("click")
+      this.$emit("close")
+    },
+    click_handle(e) {
+      if (this.base.audio_theme_key === e.key) {
+      } else {
+      }
+      this.sound_play("click")
+      this.base.audio_theme_key = e.key
+      this.$emit("close")
+    },
+    jump_to_source_url_handle(e) {
+      this.sound_play("click")
+      this.$buefy.dialog.confirm({
+        message: `本家に飛びますか？`,
+        cancelText: "キャンセル",
+        confirmText: `飛ぶ`,
+        focusOn: "confirm", // confirm or cancel
+        animation: "",
+        onCancel: () => this.sound_play("click"),
+        onConfirm: () => {
+          this.base.current_play_instance_stop() // 本家でBGMを聞くのだろうからこちらは消音
+          this.sound_play("click")
+          this.other_window_open(e.source_url)
+        },
+      })
+    },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "support.sass"
+.AudioSelectModal
+  .modal-card, .modal-card-content
+    +tablet
+      width: 100%
+  .modal-card-body
+    padding: 1.0rem
+    // .field:not(:first-child)
+    //   margin-top: 1.25rem
+    white-space: pre-wrap
+    word-break: break-all
+
+  .modal-card-foot
+    justify-content: space-between
+    .button
+      min-width: 6rem
+      font-weight: bold
+
+  .audio_desc
+    font-size: $size-7
+    color: $grey
+</style>

@@ -2,6 +2,10 @@
 .XmovieFormDesignAudioTheme.one_block
   b-field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
     .control
+      b-button(@click="base.audio_select_modal_handle" icon-right="view-comfy") {{base.audio_theme_info.name}}
+
+  b-field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message" v-if="development_p")
+    .control
       b-dropdown(v-model="base.audio_theme_key" @active-change="base.active_change_handle")
         template(#trigger)
           b-button(:label="base.audio_theme_info.name" icon-right="menu-down")

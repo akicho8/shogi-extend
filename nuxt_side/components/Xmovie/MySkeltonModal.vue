@@ -20,7 +20,7 @@
 import { support_child   } from "./support_child.js"
 
 export default {
-  name: "MyTemplateModal",
+  name: "MySkeltonModal",
   mixins: [
     support_child,
   ],
@@ -53,7 +53,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.MyTemplateModal
+.MySkeltonModal
   // +tablet
   //   width: 100%
   .modal-card-body

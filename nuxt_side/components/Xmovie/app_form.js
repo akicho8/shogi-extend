@@ -230,10 +230,14 @@ export const app_form = {
       if (e) {
         this.sound_play('click')
       } else {
-        if (this.current_play_instance) {
-          this.current_play_instance.stop()
-          this.current_play_instance = null
-        }
+        this.current_play_instance_stop()
+      }
+    },
+
+    current_play_instance_stop() {
+      if (this.current_play_instance) {
+        this.current_play_instance.stop()
+        this.current_play_instance = null
       }
     },
 

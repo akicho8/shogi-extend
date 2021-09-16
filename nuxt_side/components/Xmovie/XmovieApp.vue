@@ -59,7 +59,9 @@ import { app_queue_self       } from "./app_queue_self.js"
 import { app_form             } from "./app_form.js"
 import { app_zombie_kill      } from "./app_zombie_kill.js"
 import { app_probe_show       } from "./app_probe_show.js"
-import { app_my_template      } from "./app_my_template.js"
+import { app_my_skelton      } from "./app_my_skelton.js"
+import { app_color_select      } from "./app_color_select.js"
+import { app_audio_select      } from "./app_audio_select.js"
 import { app_compute_from_bpm } from "./app_compute_from_bpm.js"
 import { app_help             } from "./app_help.js"
 
@@ -81,7 +83,9 @@ export default {
     app_form,
     app_zombie_kill,
     app_probe_show,
-    app_my_template,
+    app_my_skelton,
+    app_color_select,
+    app_audio_select,
     app_compute_from_bpm,
     app_help,
   ],
