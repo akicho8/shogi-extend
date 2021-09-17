@@ -24,7 +24,7 @@
       b-button(@click="base.__secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")
       b-button(@click="base.__probe_show_modal_handle(base.done_record)"  type="is-light"   icon-left="information-variant" v-if="development_or_staging_p")
       b-button(@click="base.__json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           v-if="development_or_staging_p")
-      b-button(@click="base.close_handle"                               type=""           icon-left="close")
+      b-button(@click="base.close_handle"                               type=""           icon-left="close"                 v-if="development_or_staging_p")
 </template>
 
 <script>

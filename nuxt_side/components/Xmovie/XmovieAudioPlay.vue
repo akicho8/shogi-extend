@@ -41,8 +41,10 @@ export default {
       }
       if (this.state === 'stop') {
         if (this.instance === null) {
+          // https://github.com/goldfire/howler.js#documentation
           this.instance = new Howl({
             src: this.src,
+            // html5: true,
             // loop: true, // ループにすると stop フェイドアウトが効かなくなる
             onplay: () => {
               this.state = "play"
