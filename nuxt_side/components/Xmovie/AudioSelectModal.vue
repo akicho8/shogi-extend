@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       new_key: this.base.audio_theme_key,
-      ONE_CLICK_MODE_P: false,
+      ONE_CLICK_MODE_P: true,
     }
   },
 
