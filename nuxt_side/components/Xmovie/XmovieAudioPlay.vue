@@ -19,7 +19,7 @@ export default {
     src:              { type: String,  required: false, default: null, },
     play_duration:    { type: Number,  required: false, default: 17.5, },
     fadeout_duration: { type: Number,  required: false, default:  2.5, },
-    volume:           { type: Number,  required: false, default:  0.5, },
+    volume:           { type: Number,  required: false, default:  0.4, },
   },
   data() {
     return {
