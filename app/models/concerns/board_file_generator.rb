@@ -74,7 +74,7 @@ class BoardFileGenerator
     end
 
     def tmp_media_file_dir
-      Rails.root.join("tmp/media_file")
+      Rails.root.join("tmp/media_file") # config/deploy.rb と合わせる
     end
   end
 
