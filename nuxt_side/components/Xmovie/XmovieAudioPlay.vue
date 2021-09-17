@@ -17,7 +17,7 @@ export default {
   mixins: [support_child],
   props: {
     src:              { type: String,  required: false, default: null, },
-    play_duration:    { type: Number,  required: false, default: 27.0, },
+    play_duration:    { type: Number,  required: false, default: 17.5, },
     fadeout_duration: { type: Number,  required: false, default:  2.5, },
   },
   data() {
@@ -44,14 +44,14 @@ export default {
           // https://github.com/goldfire/howler.js#documentation
           this.instance = new Howl({
             src: this.src,
-            html5: true,
+            html5: true,   // 【超重要】Content-Range の分割レスポンスに対応するので failed 連発にならなくなる
             // loop: true, // ループにすると stop フェイドアウトが効かなくなる
             onplay: () => {
               this.state = "play"
-              // this.__assert__(this.fadeout_id == null, "this.fadeout_id == null")
-              // this.fadeout_id = this.delay_block(this.play_duration, () => {
-              //   this.instance.fade(1, 0, 1000 * this.fadeout_duration, this.current_id)
-              // })
+              this.__assert__(this.fadeout_id == null, "this.fadeout_id == null")
+              this.fadeout_id = this.delay_block(this.play_duration, () => {
+                this.instance.fade(1, 0, 1000 * this.fadeout_duration, this.current_id)
+              })
             },
             onstop: () => this.auto_stop("stop"),
             onend:  () => this.auto_stop("end"),
