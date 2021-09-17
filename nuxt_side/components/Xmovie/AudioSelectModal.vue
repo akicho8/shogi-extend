@@ -13,7 +13,7 @@
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           template(v-if="!e.separator")
             .column.is-4-tablet.is-3-desktop.is-2-widescreen
-              a.box(@click="click_handle(e)" :class="{'has-background-warning-light': e.key === base.audio_theme_key}")
+              a.box(@click="click_handle(e)" :class="{'has-background-warning-light': e.key === new_key}")
                 .media
                   .media-left(v-if="e.sample_source")
                     XmovieAudioPlay(:base="base" :src="e.sample_source" @play="e => base.current_play_instance = e")
@@ -31,13 +31,13 @@
                       .audio_desc_item(v-if="e.bpm")
                         span 速度: {{e.bpm}}BPM
                       .audio_desc_item(v-if="e.loop_support_p") ループ対応
-
                   .media-right(v-if="false")
                     a(:href="e.source_url" v-if="e.source_url" target="_blank")
                       b-icon(icon="open-in-new" size="is-small")
 
   footer.modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.submit_button(@click="submit_handle" type="is-primary" v-if="!ONE_CLICK_MODE_P") 適用
 </template>
 
 <script>
@@ -48,17 +48,34 @@ export default {
   mixins: [
     support_child,
   ],
+  data() {
+    return {
+      new_key: this.base.audio_theme_key,
+      ONE_CLICK_MODE_P: false,
+    }
+  },
+
   methods: {
     close_handle() {
       this.sound_play("click")
       this.$emit("close")
     },
     click_handle(e) {
-      if (this.base.audio_theme_key === e.key) {
+      if (this.ONE_CLICK_MODE_P) {
+        this.new_key = e.key
+        this.submit_handle()
       } else {
+        if (this.new_key === e.key) {
+          // this.submit_handle()
+        } else {
+          this.sound_play("click")
+          this.new_key = e.key
+        }
       }
+    },
+    submit_handle() {
       this.sound_play("click")
-      this.base.audio_theme_key = e.key
+      this.base.audio_theme_key = this.new_key
       this.$emit("close")
     },
     jump_to_source_url_handle(e) {
