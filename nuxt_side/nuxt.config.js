@@ -317,7 +317,8 @@ const config = {
         test: /\.(ogg|mp3|mp4|m4a|wav|mpe?g)$/i,
         loader: 'file-loader',
         options: {
-          name: '[path][name].[ext]'
+          // name: '[path][name]-[contenthash].[ext]'
+          name: 'blob/[name]-[contenthash].[ext]',
         },
       })
       config.module.rules.push({
