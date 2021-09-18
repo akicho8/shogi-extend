@@ -16,24 +16,24 @@ export const app_form = {
   data() {
     return {
       //////////////////////////////////////////////////////////////////////////////// POST前
-      body: "",                     // 棋譜
-      loop_key:               null, // ループの有無(GIFの場合)
-      xfont_key:              null, // 駒を太字にする条件
-      animation_size_key:     null, // 画像サイズ
-      img_width:              null, // w
-      img_height:             null, // h
-      viewpoint_key:          null, // 視点
-      color_theme_key:        null, // 色テーマ
-      audio_theme_key:        null, // 曲テーマ
-      media_factory_key:      null, // 生成方法
-      cover_text:             null, // 表紙文言
-      video_crf:              null, // video品質レベル
-      audio_bit_rate:         null, // 音声ビットレート
-      page_duration: null, // 1手N秒
+      body: "",                 // 棋譜
+      loop_key:           null, // ループの有無(GIFの場合)
+      xfont_key:          null, // 駒を太字にする条件
+      animation_size_key: null, // 画像サイズ
+      img_width:          null, // w
+      img_height:         null, // h
+      viewpoint_key:      null, // 視点
+      color_theme_key:    null, // 色テーマ
+      audio_theme_key:    null, // 曲テーマ
+      media_factory_key:  null, // 生成方法
+      cover_text:         null, // 表紙文言
+      video_crf:          null, // video品質レベル
+      audio_bit_rate:     null, // 音声ビットレート
+      page_duration:      null, // 1ページあたりの秒数
       end_duration:       null, // 終了図だけ指定枚数ぶん停止
-      sleep:                  null, // 遅延(デバッグ用)
-      raise_message:          null, // 例外メッセージ
-      recipe_key:             null, // 変換先
+      sleep:              null, // 遅延(デバッグ用)
+      raise_message:      null, // 例外メッセージ
+      recipe_key:         null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       xmovie_record: null, // POSTして変換待ちになっているレコード

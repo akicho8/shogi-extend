@@ -8,7 +8,7 @@
   .page_duration_field.one_block
     //- b-field(:message="base.page_duration_message" v-if="false")
     //-   template(#label)
-    //-     p 1手N秒
+    //-     p 1ページあたりの秒数
     //-     b-taglist.fps_values
     //-       template(v-for="fps in [60, 30, 20, 15]")
     //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
@@ -16,7 +16,7 @@
 
     b-field(:message="base.page_duration_message")
       template(#label)
-        p 1手N秒
+        p 1ページあたりの秒数
 
         //- b-taglist.mt-1
         //-   template(v-for="fps in [60, 30, 20, 15]")
@@ -136,7 +136,7 @@
       b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
-  b-field.one_block(label="1手N秒" v-if="development_p && false")
+  b-field.one_block(label="1ページあたりの秒数" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
 
   SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")

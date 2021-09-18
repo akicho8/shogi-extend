@@ -18,7 +18,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "cover_text",         type: "string",  name: "表紙文言",           default: "",                          permanent: true,  relation: null,                desc: "",           },
       { key: "video_crf",          type: "integer", name: "映像品質レベル",     default: 23,                          permanent: true,  relation: null,                desc: "",           },
       { key: "audio_bit_rate",     type: "string",  name: "音声ビットレート",   default: "128k",                      permanent: true,  relation: null,                desc: "",           },
-      { key: "page_duration",      type: "float",   name: "1手N秒",             default: 1.0,                         permanent: true,  relation: null,                desc: "",           },
+      { key: "page_duration",      type: "float",   name: "1ページあたりの秒数",             default: 1.0,                         permanent: true,  relation: null,                desc: "",           },
       { key: "end_duration",       type: "integer", name: "最後に指定秒間停止", default: 7,                           permanent: true,  relation: null,                desc: "",           },
       { key: "sleep",              type: "integer", name: "遅延",               default: 0,                           permanent: true,  relation: null,                desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",     default: "",                          permanent: true,  relation: null,                desc: "デバッグ用", },
