@@ -14,7 +14,7 @@
             .column.mt-5.is-one-quarter-desktop.is-one-third-tablet
               .content
                 .title.is-6.is-inline-block.is-marginless
-                  templete(v-if="!e.success")
+                  template(v-if="!e.success")
                     | 【反則】
                   | {{e.name}}
                 b-field.mt-3

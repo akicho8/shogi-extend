@@ -15,7 +15,7 @@
                   .media-left(v-if="e.sample_source")
                     XmovieAudioPlay(:base="base" :src="e.sample_source" @play="e => base.current_play_instance = e")
                   .media-content
-                    templete(v-if="e.source_url")
+                    template(v-if="e.source_url")
                       a(@click.stop="jump_to_source_url_handle(e)") {{e.name}}
                     template(v-else)
                       | {{e.name}}
