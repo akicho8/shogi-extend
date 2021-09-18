@@ -106,8 +106,7 @@ end
 if @environment == "production"
   every("30 2 * * *") do
     command [
-      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d www.shogi-extend.com),
-      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d     shogi-extend.com)
+      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d shogi-extend.com -d www.shogi-extend.com),
     ].join(";")
   end
 end
