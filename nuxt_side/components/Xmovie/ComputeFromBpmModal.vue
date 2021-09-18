@@ -1,16 +1,16 @@
 <template lang="pug">
 .modal-card
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | BPMから秒数を計算
 
-  section.modal-card-body
+  .modal-card-body
     b-field(:message="new_one_frame_duration_sec_message")
       b-input(v-model.number="new_bpm" expanded ref="main_input_tag")
 
-  footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.send_button(@click="submit_handle" type="is-primary") 適用
+  .modal-card-foot
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.submit_handle(@click="submit_handle" type="is-primary") 適用
 </template>
 
 <script>

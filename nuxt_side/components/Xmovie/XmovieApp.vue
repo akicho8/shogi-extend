@@ -142,6 +142,10 @@ export default {
   //   // +tablet
   //   //   max-width: 40rem
 
+  // for XmovieQueueAll, XmovieQueueSelf
+  .table_status_column
+    width: 5rem // "成功" が "変換中" になったときガクッとさせないための幅
+
 .STAGE-development
   .XmovieApp
     .columns

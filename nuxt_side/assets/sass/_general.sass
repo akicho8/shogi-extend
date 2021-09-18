@@ -128,3 +128,31 @@ a.no-decoration
   height: 1em
   width: 1em
   line-height: 1
+
+// 指定場所
+//
+// this.$buefy.modal.open({
+//   width: "", // width ではなく max-width に設定される
+//   customClass: "modal_basic ColorSelectModal",
+// })
+//
+.modal_basic
+  // ~/src/shogi-extend/nuxt_side/node_modules/bulma/sass/components/
+  +tablet
+    .modal-card, .modal-content
+      width: 100%               // 元凶の 640px を抹殺
+
+  +mobile
+    .animation-content
+      max-width: 96vw           // モバイル時の横幅は modal-card ではなくこちら
+    .modal-card, .modal-content
+      max-height: 80vh          // 小さくしないと下側の閉じるが押せない
+
+  .modal-card-title
+    font-weight: bold
+
+  .modal-card-foot
+    justify-content: space-between
+    .button
+      min-width: 6rem
+      font-weight: bold

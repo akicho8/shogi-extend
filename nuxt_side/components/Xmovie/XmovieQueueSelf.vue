@@ -8,7 +8,7 @@
     :data="base.my_records"
     :mobile-cards="false"
     )
-    b-table-column(v-slot="{row}" label="番号" numeric centered)
+    b-table-column(v-slot="{row}" label="番号" numeric centered :width="1")
       //- template(v-if="base.xmovie_record && base.xmovie_record.id === row.id")
       //-   b-tag(rounded type="is-primary") {{row.id}}
       //- template(v-else)
@@ -17,13 +17,15 @@
       | {{row.id}}
       //- b-table-column(v-slot="{row}" field="name" label="名前")
       //-   | {{row.user.name}}
-    b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered)
+
+    // "成功" が "変換中" になったときガクッとさせないための幅
+    b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered header-class="table_status_column")
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
         span.ml-1(v-if="false && base.progress_info && base.progress_info.id === row.id")
           | {{number_round(base.progress_info.percent, 2)}} %
 
-    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :visible="development_or_staging_p")
+    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :width="1" :visible="development_or_staging_p")
       | {{row.elapsed_human}}
     b-table-column(v-slot="{row}")
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")

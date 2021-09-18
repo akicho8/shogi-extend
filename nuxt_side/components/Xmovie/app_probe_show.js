@@ -8,7 +8,7 @@ export const app_probe_show = {
 
       this.$buefy.modal.open({
         width: "",  // width ではなく max-width に設定される
-        customClass: "ProbeShowModal",
+        customClass: "modal_basic ProbeShowModal",
         component: ProbeShowModal,
         parent: this,
         trapFocus: true,

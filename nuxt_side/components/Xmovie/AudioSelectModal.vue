@@ -1,13 +1,10 @@
 <template lang="pug">
-//- (style="width:auto")
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | BGM選択
-
-  ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+    .delete(@click="close_handle")
+  .modal-card-body
     .columns.is-multiline.is-variable.is-0-mobile.is-1-tablet.is-2-desktop
       template(v-for="e in base.AudioThemeInfo.values")
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
@@ -34,10 +31,9 @@
                   .media-right(v-if="false")
                     a(:href="e.source_url" v-if="e.source_url" target="_blank")
                       b-icon(icon="open-in-new" size="is-small")
-
-  footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
-    b-button.submit_button(@click="submit_handle" type="is-primary" v-if="!ONE_CLICK_MODE_P") 適用
+  .modal-card-foot
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.submit_handle(@click="submit_handle" type="is-primary" v-if="!ONE_CLICK_MODE_P") 適用
 </template>
 
 <script>
@@ -101,21 +97,10 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .AudioSelectModal
-  .modal-card, .modal-card-content
-    +tablet
-      width: 100%
   .modal-card-body
     padding: 1.0rem
-    // .field:not(:first-child)
-    //   margin-top: 1.25rem
     white-space: pre-wrap
     word-break: break-all
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 
   .audio_desc
     font-size: $size-7

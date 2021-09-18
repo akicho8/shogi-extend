@@ -2,18 +2,19 @@
 //- (style="width:auto")
 .modal-card
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | ファイル情報
+    .delete(@click="close_handle")
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     | OK
 
-  footer.modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+  .modal-card-foot
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     //- b-button.test_button(@click="test_handle" v-if="development_p") 追加
-    //- b-button.send_button(@click="send_handle" type="is-primary") 送信
+    //- b-button.submit_handle(@click="submit_handle" type="is-primary") 送信
 </template>
 
 <script>
@@ -36,7 +37,7 @@ export default {
     //   this.sound_play("click")
     //   this.base.ml_add_test()
     // },
-    // send_handle() {
+    // submit_handle() {
     //   if (this.present_p(this.base.message_body2)) {
     //     this.sound_play("click")
     //     this.base.message_share({message: this.base.message_body2})

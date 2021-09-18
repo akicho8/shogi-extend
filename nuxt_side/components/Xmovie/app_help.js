@@ -8,7 +8,7 @@ export const app_help = {
 
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "XmovieHelpModal",
+        customClass: "modal_basic XmovieHelpModal",
         component: XmovieHelpModal,
         fullScreen: false,
         parent: this,

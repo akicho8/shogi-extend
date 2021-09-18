@@ -22,18 +22,13 @@
     :data="base.xmovie_info.xmovie_records"
     :mobile-cards="false"
     )
-    //- :paginated="false"
-    //- :per-page="10"
-    b-table-column(v-slot="{row}" label="番号" numeric centered)
-      //- b-tag(rounded :class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
+    b-table-column(v-slot="{row}" label="番号" numeric centered :width="1")
       span(:class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
-    b-table-column(v-slot="{row}" field="name" label="名前")
-      | {{string_truncate(row.user.name, {length: 10})}}
-    b-table-column(v-slot="{row}" field="status_key" label="状況" centered)
+    b-table-column(v-slot="{row}" field="status_key" label="状況" centered header-class="table_status_column")
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
-      //- b-progress(type="is-primary" size="is-medium")
-      //-   | {{row.status_info.name}}
+    b-table-column(v-slot="{row}" field="name" label="所有者")
+      | {{string_truncate(row.user.name, {length: 10})}}
 </template>
 
 <script>

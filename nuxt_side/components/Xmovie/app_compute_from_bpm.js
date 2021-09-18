@@ -13,7 +13,7 @@ export const app_compute_from_bpm = {
 
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "ComputeFromBpmModal",
+        customClass: "modal_basic ComputeFromBpmModal",
         component: ComputeFromBpmModal,
         parent: this,
         trapFocus: true,

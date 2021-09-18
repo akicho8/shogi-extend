@@ -8,7 +8,7 @@ export const app_my_skelton = {
 
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "MySkeltonModal",
+        customClass: "modal_basic MySkeltonModal",
         component: MySkeltonModal,
         parent: this,
         trapFocus: true,

@@ -35,13 +35,35 @@ $custom-colors: (
 // 主用カラー
 $primary: $blue;
 
-// オーバーレイのとときも背景を明るめにする
+//////////////////////////////////////// ../../node_modules/bulma/sass/components/modal.sass
+
+// オーバーレイのとときの背景色
+// だいたい背景の情報を加味することが多いのだけどデフォルトでは暗すぎるため少し明るめにする
 $modal-background-background-color: bulmaRgba($black, 0.4);
+
+// tablet以上のときの幅
+// デフォルトの 640px に固定されると調整しずらい
+// 幅を狭めたいときは明示的に指定する
+$modal-content-width: 100%;
+
+// モバイル時の 100vh から引く値
+// デフォルトの 160px では表示範囲が大きすぎて iPhone だとフッターがスクロールして出てきたりして下のボタン押せない
+// なので 80vh になるように調整する
+// $modal-content-spacing-mobile: 20vh;
+// ここで指定しても .modal-card の max-height の設定が二箇所になったもう片方に負ける
+// 設計が理解不能なのでCSSで調整する
+
+// モーダルカードのタイトルが巨大すぎるので小さくする
+$modal-card-title-size: $size-6;
+
+//////////////////////////////////////// ../../node_modules/bulma/sass/components/navbar.sass
 
 // モバイルでナビバーをメニュー化しない
 // これをするとモバイルのときバーが小さくならない
 // が、メニュー化されることの弊害の方が大きいのでメニュー化を阻止する
 $navbar-breakpoint: 0;
+
+//////////////////////////////////////// ../../node_modules/bulma/sass/layout/section.sass
 
 // // PC用になっているので狭くする
 // $section-padding: 0rem;

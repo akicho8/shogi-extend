@@ -8,7 +8,7 @@ export const app_color_select = {
 
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "ColorSelectModal",
+        customClass: "modal_basic ColorSelectModal",
         component: ColorSelectModal,
         parent: this,
         trapFocus: true,
