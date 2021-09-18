@@ -29,6 +29,7 @@
             | で動画の長さが求まる。
           p
             | 手数に1を足しているのは初期配置の局面を追加しているから。
+            | (表紙がある場合はさらに +1 する)
           p
             | なので動画の長さから最長手数を逆算するときは、
             ul
@@ -57,32 +58,17 @@
         code 1手の秒数 * 120
         | ではまる BPM がわかる
         pre
-          | 1.5 * 120 = 180 BPM
-          | 1.4 * 120 = 168 BPM
-          | 1.3 * 120 = 156 BPM
-          | 1.2 * 120 = 144 BPM
           | 1.1 * 120 = 132 BPM
           | 1.0 * 120 = 120 BPM
           | 0.9 * 120 = 108 BPM
-          | 0.8 * 120 =  96 BPM
-          | 0.7 * 120 =  84 BPM
-          | 0.6 * 120 =  72 BPM
-          | 0.5 * 120 =  60 BPM
         | 逆に BPM にハメる1手の秒数を求めるには
         code BPM / 120
         | とする
         pre
-          | 160 / 120 = 1.333 s
-          | 150 / 120 = 1.25 s
-          | 140 / 120 = 1.167 s
           | 130 / 120 = 1.083 s
           | 120 / 120 = 1.0 s
           | 110 / 120 = 0.917 s
-          | 100 / 120 = 0.833 s
-          |  90 / 120 = 0.75 s
-          |  80 / 120 = 0.667 s
-          |  70 / 120 = 0.583 s
-          |  60 / 120 = 0.5 s
+        | この計算は自分でやらなくても <b>BPM</b> ボタンで BPM から秒に変換できる
 
     article
       h2 1手N秒入力欄の下のBPMについて
@@ -92,9 +78,9 @@
           li 1拍(4分音符)や4拍(全音符)毎に指すときは <b>×2</b> や <b>÷2</b> で調整する
 
     article(v-if="development_p")
-      h2 Twitterのアップロード条件は本当？
+      h2 Twitterのアップロード条件について
       .article_body
-        | Twitter側の条件は公表しないまま変わっているようなので結果に関係なくアップロードできたりできなかったりする
+        | 公表しないまま仕様が変わったり、「推奨」と書かれているだけだったりで実際どの閾値で失敗・成功するのかはよくわかっていない
 
     article(v-if="development_p")
       h2 動画じゃなくて別の棋譜フォーマットにするには？
@@ -107,17 +93,6 @@
       .article_body
         | 「共有将棋盤」を使う。
         | 棋譜入力欄の「将棋盤」から飛べる。
-
-    article(v-if="development_p")
-      h2 分割するには？
-      .article_body
-        | https://kakashibata.hatenablog.jp/entry/2018/11/25/155437
-        | ffmpeg -i input.mp4 -f image2 -start_number 0 -y %04d.png
-
-    article(v-if="development_p")
-      h2 連番画像から自分で動画化するには？
-      .article_body
-        | ffmpeg -hide_banner -framerate 1 -i %d.png -vcodec libx264 -pix_fmt yuv420p -r 1 -y _output.mp4
 
     article
       h2 ここに載ってない
