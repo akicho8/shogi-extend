@@ -5,40 +5,40 @@
 
   SimpleRadioButtons.one_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
 
-  .one_frame_duration_sec_field.one_block
-    //- b-field(:message="base.one_frame_duration_sec_message" v-if="false")
+  .page_duration_field.one_block
+    //- b-field(:message="base.page_duration_message" v-if="false")
     //-   template(#label)
     //-     p 1手N秒
     //-     b-taglist.fps_values
     //-       template(v-for="fps in [60, 30, 20, 15]")
-    //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
-    //-   b-numberinput(key="numberinput-one_frame_duration_sec" v-model="base.one_frame_duration_sec" :min="base.one_frame_duration_sec_step" :max="3" :step="base.one_frame_duration_sec_step" exponential @input="sound_play('click')")
+    //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
+    //-   b-numberinput(key="numberinput-page_duration" v-model="base.page_duration" :min="base.page_duration_step" :max="3" :step="base.page_duration_step" exponential @input="sound_play('click')")
 
-    b-field(:message="base.one_frame_duration_sec_message")
+    b-field(:message="base.page_duration_message")
       template(#label)
         p 1手N秒
 
         //- b-taglist.mt-1
         //-   template(v-for="fps in [60, 30, 20, 15]")
-        //-     //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
-        //-     b-tag.is-clickable(type="is-primary is-light" @click.native="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}fps
+        //-     //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
+        //-     b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_fps(fps)") {{fps}}fps
         //-   //- template(v-for="value in [0.5, 1.0, 1.5, 2.0]")
-        //-   //-   //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.one_frame_duration_sec_set_by_value(value)") {{value}}
-        //-   //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.one_frame_duration_sec_set_by_value(value)") {{value}}
-        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.one_frame_duration_sec_add(-0.1)") -0.1
-        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.one_frame_duration_sec_set_by_value(1.0)") 1.0
-        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.one_frame_duration_sec_add(+0.1)") +0.1
+        //-   //-   //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_value(value)") {{value}}
+        //-   //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_value(value)") {{value}}
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_add(-0.1)") -0.1
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_value(1.0)") 1.0
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_add(+0.1)") +0.1
 
         b-field(grouped).mb-0
           .control
             .buttons.mb-0.has-addons.are-small.mt-2
-              b-button.mb-0(@click.native="base.one_frame_duration_sec_add(-0.1)") -0.1
-              b-button.mb-0(@click.native="base.one_frame_duration_sec_set_by_value(1.0)") 1.0
-              b-button.mb-0(@click.native="base.one_frame_duration_sec_add(+0.1)") +0.1
+              b-button.mb-0(@click.native="base.page_duration_add(-0.1)") -0.1
+              b-button.mb-0(@click.native="base.page_duration_set_by_value(1.0)") 1.0
+              b-button.mb-0(@click.native="base.page_duration_add(+0.1)") +0.1
           .control
             .buttons.mb-0.has-addons.are-small.mt-2
-              b-button.mb-0(@click.native="base.one_frame_duration_sec_mul(0.5)") ÷2
-              b-button.mb-0(@click.native="base.one_frame_duration_sec_mul(2.0)") ×2
+              b-button.mb-0(@click.native="base.page_duration_mul(0.5)") ÷2
+              b-button.mb-0(@click.native="base.page_duration_mul(2.0)") ×2
 
         b-field(grouped).mb-0
           .control
@@ -47,9 +47,9 @@
           .control
             .buttons.mb-0.has-addons.are-small.mt-2
               template(v-for="fps in [60, 30, 20, 15]")
-                b-button.mb-0(@click="base.one_frame_duration_sec_set_by_fps(fps)") {{fps}}f
+                b-button.mb-0(@click="base.page_duration_set_by_fps(fps)") {{fps}}f
 
-      b-input(key="input-one_frame_duration_sec" v-model.number="base.one_frame_duration_sec")
+      b-input(key="input-page_duration" v-model.number="base.page_duration")
 
   b-field.one_block.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
@@ -137,12 +137,12 @@
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
   b-field.one_block(label="1手N秒" v-if="development_p && false")
-    b-slider(:indicator="true" :tooltip="false" v-model="base.one_frame_duration_sec" :min="0.1" :max="5" :step="0.1")
+    b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
 
   SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
   b-field.one_block(label="最後に指定秒間停止")
-    b-numberinput(v-model="base.end_duration_sec" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
+    b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
   SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 

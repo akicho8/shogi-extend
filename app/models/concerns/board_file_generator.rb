@@ -168,8 +168,8 @@ class BoardFileGenerator
       end
 
       [
-        { key: :one_frame_duration_sec, min: 1.fdiv(60), max: 5  }, # 0.0001 にされ  end_duration_sec = 7 なら70000個の画像を生成するはめになる
-        { key: :end_duration_sec,       min: 0,          max: 30 },
+        { key: :page_duration, min: 1.fdiv(60), max: 5  }, # 0.0001 にされ  end_duration = 7 なら70000個の画像を生成するはめになる
+        { key: :end_duration,       min: 0,          max: 30 },
       ].each do |e|
         if v = opts[e[:key]].presence
           opts[e[:key]] = v.clamp(e[:min], e[:max])

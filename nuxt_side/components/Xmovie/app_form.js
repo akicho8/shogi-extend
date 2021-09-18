@@ -29,8 +29,8 @@ export const app_form = {
       cover_text:             null, // 表紙文言
       video_crf:              null, // video品質レベル
       audio_bit_rate:         null, // 音声ビットレート
-      one_frame_duration_sec: null, // 1手N秒
-      end_duration_sec:       null, // 終了図だけ指定枚数ぶん停止
+      page_duration: null, // 1手N秒
+      end_duration:       null, // 終了図だけ指定枚数ぶん停止
       sleep:                  null, // 遅延(デバッグ用)
       raise_message:          null, // 例外メッセージ
       recipe_key:             null, // 変換先
@@ -303,21 +303,21 @@ export const app_form = {
     //   this.toast_ok("削除しました")
     // },
 
-    one_frame_duration_sec_set_by_fps(fps) {
+    page_duration_set_by_fps(fps) {
       this.sound_play("click")
-      this.one_frame_duration_sec = 1.0 / fps
+      this.page_duration = 1.0 / fps
     },
-    one_frame_duration_sec_set_by_value(v) {
+    page_duration_set_by_value(v) {
       this.sound_play("click")
-      this.one_frame_duration_sec = v
+      this.page_duration = v
     },
-    one_frame_duration_sec_add(v) {
+    page_duration_add(v) {
       this.sound_play("click")
-      this.one_frame_duration_sec = (new Big(this.one_frame_duration_sec)).plus(v).toNumber()
+      this.page_duration = (new Big(this.page_duration)).plus(v).toNumber()
     },
-    one_frame_duration_sec_mul(v) {
+    page_duration_mul(v) {
       this.sound_play("click")
-      this.one_frame_duration_sec = (new Big(this.one_frame_duration_sec)).times(v).toNumber()
+      this.page_duration = (new Big(this.page_duration)).times(v).toNumber()
     },
   },
   computed: {
@@ -340,7 +340,7 @@ export const app_form = {
     RecipeInfo()               { return RecipeInfo                                       },
     recipe_info()              { return this.base.RecipeInfo.fetch(this.recipe_key)      },
 
-    // end_seconds() { return this.number_floor(this.one_frame_duration_sec * this.end_duration_sec, 2) },
+    // end_seconds() { return this.number_floor(this.page_duration * this.end_duration, 2) },
 
     body_field_type() {
       if (this.bs_error) {
@@ -375,8 +375,8 @@ export const app_form = {
             ...this.image_file_if_enabled,
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:               this.loop_key,
-            one_frame_duration_sec: this.one_frame_duration_sec,
-            end_duration_sec:       this.end_duration_sec,
+            page_duration: this.page_duration,
+            end_duration:       this.end_duration,
             viewpoint:              this.viewpoint_key,
             color_theme_key:        this.color_theme_key,
             audio_theme_key:        this.audio_theme_key,
@@ -434,33 +434,33 @@ export const app_form = {
     ////////////////////////////////////////////////////////////////////////////////
 
     fps_value() {
-      if (this.one_frame_duration_sec > 0) {
-        return this.number_round(1 / this.one_frame_duration_sec, 2)
+      if (this.page_duration > 0) {
+        return this.number_round(1 / this.page_duration, 2)
       }
     },
 
-    one_frame_duration_sec_message() {
-      if (this.one_frame_duration_sec > 0) {
-        return `${this.fps_value}fps ${this.one_frame_duration_sec_bpm120}BPM`
+    page_duration_message() {
+      if (this.page_duration > 0) {
+        return `${this.fps_value}fps ${this.page_duration_bpm120}BPM`
       }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    one_frame_duration_sec_step() {
-      if (this.one_frame_duration_sec <= 0.1) {
+    page_duration_step() {
+      if (this.page_duration <= 0.1) {
         return 0.1
       } else {
         return 0.1
       }
     },
 
-    one_frame_duration_sec_bpm120() {
-      return (new Big(this.one_frame_duration_sec)).times(120).toNumber()
+    page_duration_bpm120() {
+      return (new Big(this.page_duration)).times(120).toNumber()
     },
 
-    one_frame_duration_sec_bpm60() {
-      return (new Big(this.one_frame_duration_sec)).times(60).toNumber()
+    page_duration_bpm60() {
+      return (new Big(this.page_duration)).times(60).toNumber()
     },
   },
 }
