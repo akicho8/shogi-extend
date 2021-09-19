@@ -1,5 +1,5 @@
 <template lang="pug">
-.service-infos.has-background-white-bis
+.AppEntryInfo.has-background-white-bis
   MainNavbar(:spaced="true")
     template(slot="brand")
       b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click")
@@ -82,14 +82,14 @@
 import { isMobile } from "@/components/models/is_mobile.js"
 
 export default {
-  name: "service-infos",
+  name: "AppEntryInfo",
   data () {
     return {
       config: null,
     }
   },
   fetch() {
-    return this.$axios.$get("/api/service_infos.json").then(config => {
+    return this.$axios.$get("/api/app_entry_infos.json").then(config => {
       this.config = config
     })
   },
@@ -113,7 +113,7 @@ export default {
 </script>
 
 <style lang="sass">
-.service-infos
+.AppEntryInfo
   .MainSection.section, .footer
     +mobile
       padding: 0.75rem

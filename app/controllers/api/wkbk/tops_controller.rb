@@ -30,7 +30,7 @@ module Api
       def index
         retv = {}
         retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
-        retv[:meta]  = ServiceInfo.fetch(:wkbk).og_meta
+        retv[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 

@@ -40,7 +40,7 @@ module Api
         retv = {}
         retv[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
         retv[:total]    = current_articles.total_count
-        retv[:meta]     = ServiceInfo.fetch(:wkbk).og_meta
+        retv[:meta]     = AppEntryInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 

@@ -1,4 +1,4 @@
-class ServiceInfo
+class AppEntryInfo
   include ApplicationMemoryRecord
   memory_record [
     {

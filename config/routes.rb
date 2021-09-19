@@ -196,7 +196,7 @@ Rails.application.routes.draw do
     end
 
     resource :talk, only: [:show, :create]
-    resources :service_infos, only: :index
+    resources :app_entry_infos, only: :index
     resources :users
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]
