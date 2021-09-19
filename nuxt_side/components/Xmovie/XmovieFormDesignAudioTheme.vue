@@ -17,7 +17,7 @@
               b-dropdown-item(:value="e.key" @click="sound_play('click')")
                 .media
                   .media-left(v-if="e.sample_source")
-                    XmovieAudioPlay(:base="base" :src="e.sample_source" @play="e => base.current_play_instance = e")
+                    XmovieAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.current_play_instance = e")
                   .media-content
                     | {{e.name}}
                     .audio_desc(v-if="e.audio_part_a_duration")

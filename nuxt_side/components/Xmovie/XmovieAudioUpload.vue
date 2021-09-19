@@ -7,7 +7,7 @@
         .is-size-7.ml-2 {{label}}
 
   .audio_preview(v-if="new_file_info")
-    XmovieAudioPlay(:base="base" :src="new_file_info.url" @play="e => base.current_play_instance = e")
+    XmovieAudioPlay(:base="base" :src="new_file_info.url" :volume="base.main_volume" @play="e => base.current_play_instance = e")
     .ml-2 {{new_file_info.attributes.name}}
     button.delete.ml-2(size="is-small" @click="delete_handle")
 </template>
