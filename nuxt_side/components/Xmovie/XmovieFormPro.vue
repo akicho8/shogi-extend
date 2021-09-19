@@ -136,6 +136,9 @@
       b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
+  b-field.one_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
+    b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play('click')")
+
   b-field.one_block(label="1ページあたりの秒数" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
 
@@ -146,8 +149,8 @@
 
   SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 
-  b-field.one_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
-    b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play('click')")
+  b-field.one_block(label="音量")
+    b-numberinput(v-model="base.main_volume" :min="0" :max="1.0" :step="0.1" exponential @input="sound_play('click')")
 
   b-field.one_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい")
     b-input(v-model="base.audio_bit_rate" placeholder="128k")

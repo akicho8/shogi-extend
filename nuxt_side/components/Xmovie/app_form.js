@@ -29,6 +29,7 @@ export const app_form = {
       cover_text:         null, // 表紙文言
       video_crf:          null, // video品質レベル
       audio_bit_rate:     null, // 音声ビットレート
+      main_volume:        null, // 音量
       page_duration:      null, // 1ページあたりの秒数
       end_duration:       null, // 終了図だけ指定枚数ぶん停止
       sleep:              null, // 遅延(デバッグ用)
@@ -374,18 +375,19 @@ export const app_form = {
             ...this.u_audio_file_if_enabled,
             ...this.image_file_if_enabled,
             //////////////////////////////////////// bioshogi まで伝わる
-            loop_key:               this.loop_key,
-            page_duration: this.page_duration,
-            end_duration:       this.end_duration,
-            viewpoint:              this.viewpoint_key,
-            color_theme_key:        this.color_theme_key,
-            audio_theme_key:        this.audio_theme_key,
-            media_factory_key:      this.media_factory_key,
-            cover_text:             this.cover_text,
-            video_crf:              this.video_crf,
-            audio_bit_rate:            this.audio_bit_rate,
-            width:                  this.img_width,
-            height:                 this.img_height,
+            loop_key:          this.loop_key,
+            page_duration:     this.page_duration,
+            end_duration:      this.end_duration,
+            viewpoint:         this.viewpoint_key,
+            color_theme_key:   this.color_theme_key,
+            audio_theme_key:   this.audio_theme_key,
+            media_factory_key: this.media_factory_key,
+            cover_text:        this.cover_text,
+            video_crf:         this.video_crf,
+            audio_bit_rate:    this.audio_bit_rate,
+            main_volume:       this.main_volume,
+            width:             this.img_width,
+            height:            this.img_height,
             renderer_override_params: { // テーマの上書き
               ...this.xfont_info.to_params,
             },

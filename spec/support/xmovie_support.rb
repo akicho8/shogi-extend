@@ -28,6 +28,7 @@ module XmovieSupport
             :cover_text               => "cover_text",
             :video_crf                => 23,
             :audio_bit_rate           => "128k",
+            :main_volume              => 0.5,
             :width                    => 2,
             :height                   => 2,
             :renderer_override_params => { },
