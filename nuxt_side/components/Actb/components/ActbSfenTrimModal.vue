@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ActbFixedSfenConfirmModal(:base="base" style="width: auto")
+.modal-card.ActbSfenTrimModal(:base="base" style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 局面を確定させてください
   section.modal-card-body
@@ -20,7 +20,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ActbFixedSfenConfirmModal",
+  name: "ActbSfenTrimModal",
   mixins: [
     support_child,
   ],
@@ -49,7 +49,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ActbFixedSfenConfirmModal
+.ActbSfenTrimModal
   .modal-card-body
     +mobile
       padding: 0

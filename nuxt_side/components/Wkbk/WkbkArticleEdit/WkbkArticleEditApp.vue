@@ -128,7 +128,7 @@ export default {
       const body = this.$route.query.body
       if (body) {
         this.placement_tab_handle()
-        this.extract_confirm({
+        this.sfen_trim_modal_handle({
           default_sp_body: body,
           default_sp_turn: parseInt(this.$route.query.turn ?? -1),
           default_sp_viewpoint: this.$route.query.viewpoint ?? "black",

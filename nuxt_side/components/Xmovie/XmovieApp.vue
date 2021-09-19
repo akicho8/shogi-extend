@@ -63,6 +63,7 @@ import { app_my_skelton      } from "./app_my_skelton.js"
 import { app_color_select      } from "./app_color_select.js"
 import { app_audio_select      } from "./app_audio_select.js"
 import { app_compute_from_bpm } from "./app_compute_from_bpm.js"
+import { app_source_trim } from "./app_source_trim.js"
 import { app_help             } from "./app_help.js"
 
 import { XmovieRecord } from "./models/xmovie_record.js"
@@ -87,6 +88,7 @@ export default {
     app_color_select,
     app_audio_select,
     app_compute_from_bpm,
+    app_source_trim,
     app_help,
   ],
 

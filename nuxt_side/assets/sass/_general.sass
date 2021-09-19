@@ -129,13 +129,19 @@ a.no-decoration
   width: 1em
   line-height: 1
 
-// 指定場所
+// モーダル
 //
 // this.$buefy.modal.open({
 //   width: "", // width ではなく max-width に設定される
 //   customClass: "modal_basic ColorSelectModal",
 // })
 //
+// 幅の指定例 (コンテンツの内容に合わせて最大だけを指定する場合)
+// +modal_max_width(640px)
+//  
+// 幅の指定例 (コンテンツの内容に関係なく指定)
+// +modal_width(640px)
+//  
 .modal_basic
   // ~/src/shogi-extend/nuxt_side/node_modules/bulma/sass/components/
   +tablet

@@ -7,7 +7,7 @@ import { parse as TwitterEmojiParser } from 'twemoji-parser'
 export const app_guardian = {
   methods: {
     // 指定番号の守護獣URL取得
-    guardian_url_from_index(index) {
+    guardian_url_base_index(index) {
       return this.ary_cycle_at(this.guardian_list, index)
     },
 

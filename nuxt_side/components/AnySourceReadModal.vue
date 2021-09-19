@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.AnySourceReadModal
+.modal-card
   header.modal-card-head
     p.modal-card-title.has-text-weight-bold.is-size-6
       | 棋譜の読み込み
@@ -47,8 +47,5 @@ export default {
 
 <style lang="sass">
 .AnySourceReadModal
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      font-weight: bold
+  +modal_width(640px)
 </style>

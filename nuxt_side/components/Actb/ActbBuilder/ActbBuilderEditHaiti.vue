@@ -40,7 +40,7 @@
 import { builder_support } from "./builder_support.js"
 
 import ActbAnySourceReadModal from "../components/ActbAnySourceReadModal.vue"
-import ActbFixedSfenConfirmModal   from "../components/ActbFixedSfenConfirmModal.vue"
+import ActbSfenTrimModal   from "../components/ActbSfenTrimModal.vue"
 
 export default {
   name: "ActbBuilderEditHaiti",
@@ -106,7 +106,7 @@ export default {
         hasModalCard: true,
         props: props,
         animation: "",
-        component: ActbFixedSfenConfirmModal,
+        component: ActbSfenTrimModal,
         events: {
           "update:fixed_sfen": fixed_sfen => {
             this.sound_play("click")
