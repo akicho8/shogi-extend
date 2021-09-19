@@ -141,15 +141,15 @@
 
   SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
-  b-field.one_block(label="最後に指定秒間停止")
+  b-field.one_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけﾌｪｲﾄﾞｱｳﾄする")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
   SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 
-  b-field.one_block(label="映像品質レベル")
+  b-field.one_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
     b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play('click')")
 
-  b-field.one_block(label="音声ビットレート")
+  b-field.one_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい")
     b-input(v-model="base.audio_bit_rate" placeholder="128k")
 
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
