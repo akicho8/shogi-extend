@@ -11,7 +11,7 @@ module UserXmovieMethods
       # :my_records => xmovie_records.done_only.limit(5).order(created_at: :desc).as_json(XmovieRecord.json_struct_for_list),
       :my_records => xmovie_records.limit(XmovieRecord.user_history_max).order(created_at: :desc).as_json(XmovieRecord.json_struct_for_list),
     }
-    Xmovie::RoomChannel.broadcast_to(self, {bc_action: :my_records_singlecasted, bc_params: bc_params})
+    Xmovie::GlobalRoomChannel.broadcast_to(self, {bc_action: :my_records_singlecasted, bc_params: bc_params})
   end
 
   # 終了したもの
@@ -21,11 +21,11 @@ module UserXmovieMethods
       :noisy => true,
       **params,
     }
-    Xmovie::RoomChannel.broadcast_to(self, {bc_action: :done_record_singlecasted, bc_params: bc_params})
+    Xmovie::GlobalRoomChannel.broadcast_to(self, {bc_action: :done_record_singlecasted, bc_params: bc_params})
   end
 
   # 進捗
   def progress_singlecast(bc_params)
-    Xmovie::RoomChannel.broadcast_to(self, {bc_action: :progress_singlecasted, bc_params: bc_params})
+    Xmovie::GlobalRoomChannel.broadcast_to(self, {bc_action: :progress_singlecasted, bc_params: bc_params})
   end
 end

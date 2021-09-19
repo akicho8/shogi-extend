@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Xmovie
-  RSpec.describe RoomChannel, type: :channel do
+  RSpec.describe GlobalRoomChannel, type: :channel do
     let(:user1) { User.create! }
 
     before do

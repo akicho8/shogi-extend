@@ -1,9 +1,9 @@
 module Xmovie
-  class RoomChannel < ApplicationCable::Channel
+  class GlobalRoomChannel < ApplicationCable::Channel
     # 回線不調で何回も呼ばれる
     def subscribed
       # subscribed_track("購読開始")
-      stream_from "xmovie/room_channel"
+      stream_from "xmovie/global_room_channel"
       if current_user
         stream_for(current_user)
       end
@@ -52,11 +52,11 @@ module Xmovie
         end
       end
       # bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
-      ActionCable.server.broadcast("xmovie/room_channel", {bc_action: bc_action, bc_params: bc_params})
+      ActionCable.server.broadcast("xmovie/global_room_channel", {bc_action: bc_action, bc_params: bc_params})
     end
 
     def track(data, action, body)
-      key = "動画生成 [#{room_code}] #{action}"
+      key = "動画生成 [#{global_room_code}] #{action}"
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end

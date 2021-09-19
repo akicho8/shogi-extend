@@ -110,7 +110,7 @@ class XmovieRecord < ApplicationRecord
     end
 
     def everyone_broadcast
-      ActionCable.server.broadcast("xmovie/room_channel", {bc_action: :xmovie_record_list_broadcasted, bc_params: xmovie_info})
+      ActionCable.server.broadcast("xmovie/global_room_channel", {bc_action: :xmovie_record_list_broadcasted, bc_params: xmovie_info})
     end
 
     def xmovie_info
