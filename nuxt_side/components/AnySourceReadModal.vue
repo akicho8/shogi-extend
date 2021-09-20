@@ -48,4 +48,6 @@ export default {
 <style lang="sass">
 .AnySourceReadModal
   +modal_width(640px)
+  textarea
+    word-break: break-all
 </style>

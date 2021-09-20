@@ -165,18 +165,6 @@ export const app_form = {
       }
     },
 
-    share_board_handle() {
-      this.sound_play("click")
-      const e = this.$router.resolve({
-        name: "share-board",
-        query: {
-          body: this.body,
-          abstract_viewpoint: this.viewpoint_key,
-        },
-      })
-      this.other_window_open(e.href)
-    },
-
     adapter_handle() {
       this.sound_play("click")
       const e = this.$router.resolve({
