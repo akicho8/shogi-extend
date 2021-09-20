@@ -95,7 +95,7 @@ export default {
       if (!this.src) {
         return "blank"
       } else if (this.state === "play") {
-        return "stop"
+        return "music" // "stop"
       } else {
         return "play"
       }
