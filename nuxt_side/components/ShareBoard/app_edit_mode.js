@@ -89,9 +89,7 @@ export const app_edit_mode = {
         events: {
           "update:any_source": any_source => {
             this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
-              if (e.bs_error) {
-                this.bs_error_message_dialog(e.bs_error)
-              }
+              this.bs_error_message_dialog(e)
               if (e.body) {
                 this.sound_play("click")
                 this.toast_ok("棋譜を読み込みました")

@@ -300,9 +300,7 @@ export default {
     },
 
     error_show() {
-      // this.bs_error_message_dialog(this.bs_error, this.append_message)
-      // this.talk(this.bs_error.message)
-      this.bs_error_message_dialog(this.bs_error)
+      this.bs_error_message_dialog(this)
     },
   },
 

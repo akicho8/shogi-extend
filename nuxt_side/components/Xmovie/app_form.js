@@ -148,7 +148,7 @@ export const app_form = {
     },
 
     error_show() {
-      this.bs_error_message_dialog(this.bs_error)
+      this.bs_error_message_dialog(this)
     },
 
     animation_size_key_input_handle(animation_size_key) {

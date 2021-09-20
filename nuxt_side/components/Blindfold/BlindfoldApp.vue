@@ -92,9 +92,7 @@ export default {
       this.sound_play('click')
       if (!this.yomiage_body) {
         await this.$axios.$post("/api/blindfold.json", {sfen: this.sp_body}).then(e => {
-          if (e.bs_error) {
-            this.bs_error_message_dialog(e.bs_error)
-          }
+          this.bs_error_message_dialog(e)
           if (e.yomiage_body) {
             this.yomiage_body = e.yomiage_body
           }

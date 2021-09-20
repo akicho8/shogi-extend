@@ -13,7 +13,10 @@ export const app_chore = {
         onConfirm: () => {
           const params = { any_source: this.body, to_format: "sfen" }
           this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
-            this.$router.push({name: "share-board", query: { body: e.body, abstract_viewpoint: this.viewpoint_key }})
+            this.bs_error_message_dialog(e)
+            if (e.body) {
+              this.$router.push({name: "share-board", query: { body: e.body, abstract_viewpoint: this.viewpoint_key }})
+            }
           })
         },
       })

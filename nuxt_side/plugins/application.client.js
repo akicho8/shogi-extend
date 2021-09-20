@@ -118,22 +118,22 @@ export default {
       })
     },
 
-    bs_error_message_dialog(bs_error, append_message = "") {
-      let message = ""
-      if (bs_error.message_prefix) {
-        message += `<p>${bs_error.message_prefix}</p>`
+    bs_error_message_dialog(attrs) {
+      const { bs_error } = attrs
+      if (bs_error) {
+        let message = ""
+        if (bs_error.message_prefix) {
+          message += `<p>${bs_error.message_prefix}</p>`
+        }
+        if (bs_error.message) {
+          message += `<p class="mt-2 is_line_break_on">${bs_error.message}</p>`
+        }
+        if (bs_error.board) {
+          message += `<div class="mt-2 mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
+        }
+        this.sound_play("x")
+        this.error_message_dialog(message)
       }
-      if (bs_error.message) {
-        message += `<p class="mt-2 is_line_break_on">${bs_error.message}</p>`
-      }
-      if (bs_error.board) {
-        message += `<div class="mt-2 mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
-      }
-      if (append_message) {
-        message += append_message
-      }
-      this.sound_play("x")
-      this.error_message_dialog(message)
     },
 
     notice_collector_has_error(response) {
