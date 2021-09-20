@@ -7,8 +7,10 @@
     //-   XmovieFormOption(:base="base")
     b-tab-item(label="デザイン")
       XmovieFormDesign(:base="base")
-    b-tab-item(label="詳細設定")
-      XmovieFormPro(:base="base")
+    b-tab-item(label="設定1")
+      XmovieFormPro1(:base="base")
+    b-tab-item(label="設定2")
+      XmovieFormPro2(:base="base")
     b-tab-item(label="デバッグ" v-if="development_p")
       XmovieFormDebug(:base="base")
 
