@@ -42,7 +42,8 @@ export const app_source_trim = {
         onCancel: () => this.sound_play("click"),
         events: {
           "update:submit": e => {
-            this.toast_ok("反映しました")
+            this.sound_play("click")
+            // this.toast_ok("反映しました")
             this.viewpoint_key = e.viewpoint
             this.body_update_by(e.full_sfen)
             modal_instance.close()

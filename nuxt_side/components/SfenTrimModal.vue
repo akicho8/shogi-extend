@@ -60,7 +60,7 @@ export default {
     }
   },
   created() {
-    this.reset_handle()
+    this.reset()
   },
   mounted() {
     this.talk("開始位置を決めてください")
@@ -83,6 +83,11 @@ export default {
     },
 
     reset_handle() {
+      this.sound_play("click")
+      this.reset()
+    },
+
+    reset() {
       this.sp_body      = this.default_sp_body
       this.sp_turn      = this.default_sp_turn
       this.sp_viewpoint = this.default_sp_viewpoint
@@ -97,7 +102,7 @@ export default {
     // this.turn_offset: 2 // 手目まで進めたと仮定
     // [a, b, c, d, e] の棋譜があって2からとした場合、b から始める棋譜 + c, d, e を作る
     from_handle() {
-      // this.sound_play("click")
+      this.sound_play("click")
       const info = this.sfen_parse(this.sp_body)
       const moves = _.drop(info.moves, this.turn_offset)            // [a, b, c, d, e].drop(2) => [c, d, e]
       this.base_sfen = this.sfen_normalize(this.snapshot_sfen)      // bから始まる棋譜の最後の手番を1にしたもの
