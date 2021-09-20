@@ -52,3 +52,15 @@
 .my-modal-background-background-color-dark
   .modal-background
     background-color: change_color($black, $alpha: 0.7)
+
+// デフォルトのダイアログのレイアウトが崩れているのを直す
+.dialog.modal
+  .modal-card-foot
+    button:last-of-type
+      margin-left: auto // this.$buefy.dialog.confirm で表示したときボタンが右寄りになるので左右に寄せる
+  .modal-card-body
+    .field
+      margin-top: unset            // 上に無駄な隙間があるのを取る
+      .help
+        &:empty
+          display: none            // ヘルプを表示していないときでも(高さを持っているため)無駄な隙間ができるのを防ぐ

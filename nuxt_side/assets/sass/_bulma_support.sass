@@ -35,25 +35,40 @@ a
   &:not(:hover)
     background-color: unset
 
-// デフォルトのダイアログのレイアウトが崩れているのを直す
 
-.dialog
-  .modal-card
-    .modal-card-title
-      font-size: $size-5             // タイトルが大きすぎる
-    .modal-card-body
-      .field
-        margin-top: unset            // 上に無駄な隙間があるのを取る
-        .help
-          &:empty
-            display: none            // ヘルプを表示していないときでも(高さを持っているため)無駄な隙間ができるのを防ぐ
-    .modal-card-foot
-      // 次のようにししたいが左側から並べられるのでできない
-      // OK だけのとき左側に来てしまう
-      // | [キャンセル]   [OK] |
-      // |                [OK] |
-      // flex-direction: row-reverse    // OKしかないときは右側に配置させるため
-      // justify-content: space-between // キャンセルは左側
+// モーダル
+//
+// this.$buefy.modal.open({
+//   width: "", // width ではなく max-width に設定される
+//   customClass: "modal_basic ColorSelectModal",
+// })
+//
+// 幅の指定例 (コンテンツの内容に合わせて最大だけを指定する場合)
+// +modal_max_width(640px)
+//
+// 幅の指定例 (コンテンツの内容に関係なく指定)
+// +modal_width(640px)
+//
+.modal_basic
+  // ~/src/shogi-extend/nuxt_side/node_modules/bulma/sass/components/
+  +tablet
+    .modal-card, .modal-content
+      width: 100%               // 元凶の 640px を抹殺
+
+  +mobile
+    .animation-content
+      max-width: 96vw           // モバイル時の横幅は modal-card ではなくこちら
+    .modal-card, .modal-content
+      max-height: 80vh          // 小さくしないと下側の閉じるが押せない
+
+  .modal-card-title
+    font-weight: bold
+
+  .modal-card-foot
+    justify-content: space-between
+    .button
+      min-width: 6rem
+      font-weight: bold
 
 ////////////////////////////////////////////////////////////////////////////////
 +mobile
