@@ -78,14 +78,8 @@ export const app_edit_mode = {
     any_source_read_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      const modal_instance = this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: "BasicModal AnySourceReadModal",
+      const modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
-        parent: this,
-        hasModalCard: true,
-        animation: "",
-        onCancel: () => this.sound_play("click"),
         events: {
           "update:any_source": any_source => {
             this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
