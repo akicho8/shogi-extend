@@ -84,6 +84,7 @@ export const app_chore = {
     modal_card_open(params = {}) {
       // this.sidebar_p = false
       // this.sound_play("click")
+      this.__assert__(this.present_p(params.component.name), "this.present_p(params.component.name)")
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
         customClass: `BasicModal ${params.component.name}`,

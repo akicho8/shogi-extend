@@ -1,11 +1,10 @@
 <template lang="pug">
-.modal-card.ClockBoxModal
+.modal-card
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
-      span.has-text-weight-bold
-        | 対局時計
-      span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}
+      | 対局時計
+      span.mx-1.has-text-grey(v-if="instance") {{instance.human_status}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -166,15 +165,10 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ClockBoxModal
-  +tablet
-    width: 32rem
+  +modal_width(32rem)
+
   .modal-card-body
-    padding: 2.0rem 2.0rem
-  .modal-card-foot
-    justify-content: space-between
-    .stop_button
-    .pause_button, .resume_button, .play_button
-      min-width: 6rem
+    padding: 2rem
 
   .field:not(:last-child)
     margin-bottom: 1.1rem
