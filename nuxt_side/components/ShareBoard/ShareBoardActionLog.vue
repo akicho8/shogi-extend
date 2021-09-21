@@ -39,6 +39,7 @@ export default {
 
       this.$buefy.modal.open({
         props: { base: this.base, action_log: e },
+        width: "", // width ではなく max-width に設定される
         customClass: "BasicModal ActionLogJumpPreviewModal",
         component: ActionLogJumpPreviewModal,
         parent: this,
