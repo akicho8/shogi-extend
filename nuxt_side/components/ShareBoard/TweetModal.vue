@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.TweetModal(style="width:auto")
+.modal-card
   .modal-card-head
     .modal-card-title ツイート
   .modal-card-body
@@ -16,15 +16,11 @@
 </template>
 
 <script>
+import { support_child } from "./support_child.js"
+
 export default {
   name: "TweetModal",
-  props: {
-    base:  { type: Object, required: true, },
-  },
-  data() {
-    return {
-    }
-  },
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -53,19 +49,12 @@ export default {
 
 <style lang="sass">
 .TweetModal
+  +modal_max_width(768px)
   .preview_image_container
     justify-content: center
     .preview_image
       flex-direction: column
       align-items: center
       justify-content: center
-      // img
-      //   border-radius: 0.4rem
-      //   // border: 1px solid $grey-lighter
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      font-weight: bold
-      min-width: 8rem
 </style>
 

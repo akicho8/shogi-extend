@@ -5,14 +5,9 @@ export const app_tweet = {
     tweet_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
+      this.modal_card_open({
         component: TweetModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
         props: { base: this.base },
-        onCancel: () => this.sound_play("click"),
       })
     },
 
