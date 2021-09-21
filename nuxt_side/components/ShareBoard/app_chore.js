@@ -78,24 +78,5 @@ export const app_chore = {
         this.$router.push({name: "index"})
       }
     },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    modal_card_open(params = {}) {
-      // this.sidebar_p = false
-      // this.sound_play("click")
-      this.__assert__(this.present_p(params.component.name), "this.present_p(params.component.name)")
-      return this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: `BasicModal ${params.component.name}`,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["outside", "escape"],
-        onCancel: () => this.sound_play("click"),
-        ...params,
-      })
-    },
   },
 }

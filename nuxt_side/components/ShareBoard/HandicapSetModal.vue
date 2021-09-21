@@ -1,19 +1,16 @@
 <template lang="pug">
-.modal-card.HandicapSetModal
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
       | 手合割
-    p
-      template(v-if="base.handicap_preset_info.handicap_level >= 1") +
+    div
+      span.mx-1 評価値
+      span(v-if="base.handicap_preset_info.handicap_level >= 1") +
       | {{base.handicap_preset_info.handicap_level}}
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     .select_container
       b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play('click')")
         option(v-for="e in base.HandicapPresetInfo.values" :value="e.key" v-text="e.name")
-
     .sp_container.mt-4
       CustomShogiPlayer(
         sp_summary="is_summary_off"
@@ -30,11 +27,9 @@
     .description_container.mt-4
       .description
         | {{base.handicap_preset_info.description}}
-
     .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
-      b-button.mb-0(@click="handicap_henkou(-1)" icon-left="chevron-left")
-      b-button.mb-0(@click="handicap_henkou(1)" icon-left="chevron-right")
-
+      b-button.mb-0(@click="next_handle(-1)" icon-left="chevron-left")
+      b-button.mb-0(@click="next_handle(1)" icon-left="chevron-right")
   .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.apply_button(@click="apply_handle" type="is-primary") 適用
@@ -45,11 +40,9 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "HandicapSetModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   methods: {
-    handicap_henkou(v) {
+    next_handle(v) {
       this.sound_play("click")
       const i = this.base.handicap_preset_info.code + v
       const new_index = this.ruby_like_modulo(i, this.base.HandicapPresetInfo.values.length)
@@ -72,8 +65,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .HandicapSetModal
-  +tablet
-    width: 32rem
+  +modal_width(32rem)
   .modal-card-body
     padding: 1.25rem
     .select_container
@@ -85,16 +77,9 @@ export default {
     .description_container
       display: flex
       justify-content: center
-      //- .description
-    //- width: 20rem
     .buttons_container
       .button
         min-width: 8rem
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 
   .CustomShogiPlayer
     width: 16rem
@@ -112,8 +97,6 @@ export default {
   .HandicapSetModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    // .CustomShogiPlayer
-    //   border: 1px dashed change_color($danger, $alpha: 0.5)
     .modal-card-body
       border: 1px dashed change_color($info, $alpha: 0.5)
 </style>

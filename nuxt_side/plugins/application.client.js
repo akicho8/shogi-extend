@@ -1,4 +1,4 @@
-import SnsLoginContainer         from "@/components/SnsLoginContainer.vue"
+import SnsLoginContainer from "@/components/SnsLoginContainer.vue"
 
 export default {
   methods: {
@@ -171,6 +171,25 @@ export default {
       } else {
         throw new Error("must not happen")
       }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// modal
+
+    modal_card_open(params = {}) {
+      // this.sidebar_p = false
+      // this.sound_play("click")
+      this.__assert__(this.present_p(params.component.name), "this.present_p(params.component.name)")
+      return this.$buefy.modal.open({
+        width: "", // width ではなく max-width に設定される
+        customClass: `BasicModal ${params.component.name}`,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        canCancel: ["outside", "escape"],
+        onCancel: () => this.sound_play("click"),
+        ...params,
+      })
     },
   },
 }
