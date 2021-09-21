@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.VsInputModal
   .modal-card-head
-    p.modal-card-title.is-size-6.has-text-weight-bold
+    .modal-card-title
       | 対戦相手で絞る
 
   .modal-card-body

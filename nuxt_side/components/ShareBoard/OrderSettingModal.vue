@@ -2,7 +2,7 @@
 .modal-card.OrderSettingModal(style="width:auto")
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
-    p.modal-card-title.is-size-5
+    .modal-card-title
       span.has-text-weight-bold
         | 順番設定
 

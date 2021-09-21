@@ -15,20 +15,15 @@ export const app_chore = {
     },
 
     // 視点設定変更
-    abstract_viewpoint_setting_handle() {
+    abstract_viewpoint_key_select_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
+      this.modal_card_open({
         component: AbstractViewpointKeySelectModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
         props: {
           abstract_viewpoint: this.abstract_viewpoint,
           permalink_for: this.permalink_for,
         },
-        onCancel: () => this.sound_play("click"),
         events: {
           "update:abstract_viewpoint": v => {
             this.abstract_viewpoint = v
@@ -86,5 +81,20 @@ export const app_chore = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    modal_card_open(params = {}) {
+      // this.sidebar_p = false
+      // this.sound_play("click")
+      this.$buefy.modal.open({
+        width: "", // width ではなく max-width に設定される
+        customClass: `BasicModal ${params.component.name}`,
+        parent: this,
+        trapFocus: true,
+        hasModalCard: true,
+        animation: "",
+        canCancel: ["outside", "escape"],
+        onCancel: () => this.sound_play("click"),
+        ...params,
+      })
+    },
   },
 }

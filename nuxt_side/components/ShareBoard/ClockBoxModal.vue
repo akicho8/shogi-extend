@@ -2,7 +2,7 @@
 .modal-card.ClockBoxModal
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
-    p.modal-card-title.is-size-5
+    .modal-card-title
       span.has-text-weight-bold
         | 対局時計
       span.mx-1.has-text-grey.is-size-6(v-if="instance") {{instance.human_status}}

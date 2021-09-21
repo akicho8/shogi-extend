@@ -1,7 +1,7 @@
 <template lang="pug">
 .KeyboardModal.modal-card.mx-4(style="width: auto")
-  header.modal-card-head
-    p.modal-card-title.is-size-6 キーボード操作
+  .modal-card-head
+    .modal-card-title キーボード操作
   .modal-card-body
     table.table.is-narrow
       tr

@@ -1,6 +1,6 @@
 <template lang="pug">
-.modal-card.AbstractViewpointKeySelectModal(style="width:auto")
-  header.modal-card-head
+.modal-card
+  .modal-card-head
     .modal-card-title ツイート画像の視点設定
   .modal-card-body
     .field.my-1
@@ -77,6 +77,7 @@ export default {
 
 <style lang="sass">
 .AbstractViewpointKeySelectModal
+  +modal_max_width(960px)
   .preview_image_container
     justify-content: center
     .preview_image

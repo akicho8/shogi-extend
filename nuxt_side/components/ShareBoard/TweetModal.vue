@@ -1,6 +1,6 @@
 <template lang="pug">
 .modal-card.TweetModal(style="width:auto")
-  header.modal-card-head
+  .modal-card-head
     .modal-card-title ツイート
   .modal-card-body
     .preview_image_container.is-flex

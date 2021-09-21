@@ -1,9 +1,9 @@
 <template lang="pug">
 .modal-card.WkbkBookShowDesc
   .modal-card-head
-    p.modal-card-title.is-size-6.is-flex-grow-0
+    .modal-card-title
       | {{base.book.title}}
-    p.modal-card-title.is-size-6.is-flex-grow-0
+    .modal-card-title
       | {{base.book.user.name}}
   .modal-card-body
     .content

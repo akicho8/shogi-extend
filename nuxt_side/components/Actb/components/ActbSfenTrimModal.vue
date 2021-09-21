@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.ActbSfenTrimModal(:base="base" style="width: auto")
-  header.modal-card-head
-    p.modal-card-title.is-size-6 局面を確定させてください
+  .modal-card-head
+    .modal-card-title 局面を確定させてください
   .modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"

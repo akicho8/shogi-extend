@@ -40,7 +40,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         b-menu-list(label="SNS共有")
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"           @click="base.tweet_modal_handle")
           b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー" @click="base.current_url_copy_handle")
-          b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定" @click="base.abstract_viewpoint_setting_handle")
+          b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定" @click="base.abstract_viewpoint_key_select_modal_handle")
 
         ShareBoardSidebarExport(:base="base")
 

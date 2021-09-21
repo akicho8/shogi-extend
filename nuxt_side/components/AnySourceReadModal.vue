@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card
-  header.modal-card-head
-    p.modal-card-title.has-text-weight-bold.is-size-6
+  .modal-card-head
+    .modal-card-title.is-size-6
       | 棋譜の読み込み
   .modal-card-body
     b-input(type="textarea" v-model.trim="any_source" ref="any_source" rows="6" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")

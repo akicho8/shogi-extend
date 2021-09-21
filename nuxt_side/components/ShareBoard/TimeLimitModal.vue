@@ -1,7 +1,7 @@
 <template lang="pug">
 //- time_limit_key
 .modal-card.TimeLimitModal(v-if="clock_running_p")
-  header.modal-card-head
+  .modal-card-head
     .modal-card-title
       template(v-if="time_limit_info.key === 'default'")
         | 時間切れで

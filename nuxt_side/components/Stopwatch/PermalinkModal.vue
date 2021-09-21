@@ -1,7 +1,7 @@
 <template lang="pug">
 .PermalinkModal.modal-card.mx-4(style="width: auto")
-  header.modal-card-head
-    p.modal-card-title.is-size-6 パーマリンク
+  .modal-card-head
+    .modal-card-title パーマリンク
   .modal-card-body.px-5.py-5
     b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンク(タイトルとURLをペアでブクマできる)")
       b-button(expanded tag="a" :href="base.permalink_url") {{base.book_title}}
