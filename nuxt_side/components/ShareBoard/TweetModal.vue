@@ -1,14 +1,14 @@
 <template lang="pug">
 .modal-card.TweetModal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title.is-size-5.has-text-weight-bold ツイート
-  section.modal-card-body
+    .modal-card-title ツイート
+  .modal-card-body
     .preview_image_container.is-flex
       .preview_image.is-flex
         .is-size-7.has-text-grey.has-text-centered(v-if="false")
           | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
         b-image.mr-1(:src="ogp_image_url")
-  footer.modal-card-foot
+  .modal-card-foot
     b-button(@click="close_handle") キャンセル
     //- b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
     b-button(@click="submit_handle" :type="base.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この局面をツイート

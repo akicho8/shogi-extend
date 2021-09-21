@@ -38,19 +38,15 @@ export default {
       this.sound_play("click")
 
       this.$buefy.modal.open({
+        props: { base: this.base, action_log: e },
+        customClass: "BasicModal ActionLogJumpPreviewModal",
         component: ActionLogJumpPreviewModal,
         parent: this,
         trapFocus: true,
         hasModalCard: true,
         animation: "",
         canCancel: ["escape", "outside"],
-        onCancel: () => {
-          this.sound_play("click")
-        },
-        props: {
-          base: this.base,
-          action_log: e,
-        },
+        onCancel: () => this.sound_play("click"),
       })
     },
     time_format(v) {

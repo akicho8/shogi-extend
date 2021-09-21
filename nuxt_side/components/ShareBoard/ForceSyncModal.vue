@@ -1,12 +1,12 @@
 <template lang="pug">
 .modal-card.ForceSyncModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 局面の転送
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     //- p
     //-   | 現在の局面を他の人の盤に転送します。
     template(v-if="true")
@@ -22,7 +22,7 @@
       //- p
       //-   | その他には対局後に<b>検討したい局面</b>に合わせたり、カスタマイズした駒落ち等の初期配置を配るときにも使えます
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") やめとく
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
     b-button.sync_button(@click="sync_handle" type="is-danger") 転送する

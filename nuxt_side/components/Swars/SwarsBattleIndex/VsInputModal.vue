@@ -1,10 +1,10 @@
 <template lang="pug">
 .modal-card.VsInputModal
-  header.modal-card-head.is-justify-content-space-between
+  .modal-card-head
     p.modal-card-title.is-size-6.has-text-weight-bold
       | 対戦相手で絞る
 
-  section.modal-card-body
+  .modal-card-body
     b-field
       b-input(
         v-model="input_body"
@@ -17,7 +17,7 @@
         b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': vs_user_keys.includes(str)}")
           | {{str}}
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.send_button(@click="search_handle" type="is-primary") 実行
 </template>

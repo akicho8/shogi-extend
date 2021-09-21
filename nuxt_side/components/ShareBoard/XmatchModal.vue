@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 自動マッチング
     p.is-size-5(v-if="base.current_xmatch_rule_key && base.xmatch_rest_seconds >= 1")
       | {{base.xmatch_rest_seconds}}
@@ -12,7 +12,7 @@
       //- b-icon(icon="account-edit" size="is-small")
       span.ml-1 {{base.user_name}}
 
-  section.modal-card-body
+  .modal-card-body
     b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
     template(v-if="base.xmatch_rules_members")
       .columns.is-mobile.is-multiline.is-variable.is-2-tablet.is-1-mobile
@@ -37,7 +37,7 @@
       //- | {{!!base.ac_lobby}}
       //- pre {{base.xmatch_rules_members}}
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") やめる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
     b-button.unselect_handle(@click="unselect_handle") 選択解除

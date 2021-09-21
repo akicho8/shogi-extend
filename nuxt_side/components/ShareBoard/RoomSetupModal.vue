@@ -1,12 +1,12 @@
 <template lang="pug">
 .modal-card.RoomSetupModal
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold.is-flex.is-align-items-center.is-flex-grow-0
+  .modal-card-head
+    .modal-card-title.is-flex.is-align-items-center.is-flex-grow-0
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
     b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
 
-  section.modal-card-body
+  .modal-card-body
     .content(v-if="false")
       ul
         li
@@ -45,7 +45,7 @@
       b-field(:label="label_wrap('ハンドルネーム')" label-position="on-border")
         b-input.new_user_name(v-model.trim="new_user_name" :disabled="present_p(base.ac_room)")
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     //- b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" :disabled="blank_p(base.ac_room)") 部屋URL
     template(v-if="base.ac_room")

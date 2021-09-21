@@ -1,12 +1,12 @@
 <template lang="pug">
 .modal-card.RoomRecreateModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 再起動
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     p
       | 音が出ないときに試すと直ることがあります
     p
@@ -14,7 +14,7 @@
     p
       | 部屋に他の人がいれば、その人の持っている最後の局面に合わせます
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
     b-button.apply_button(@click="apply_handle" type="is-danger") 実行

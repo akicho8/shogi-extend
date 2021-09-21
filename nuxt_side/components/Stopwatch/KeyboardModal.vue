@@ -2,7 +2,7 @@
 .KeyboardModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 キーボード操作
-  section.modal-card-body
+  .modal-card-body
     table.table.is-narrow
       tr
         th.has-text-right p k Space
@@ -22,7 +22,7 @@
       tr
         th.has-text-right t
         td 最後の解答の正誤を反転する
-  footer.modal-card-foot
+  .modal-card-foot
     button.button(type="button" @click="close_handle") 閉じる
 </template>
 

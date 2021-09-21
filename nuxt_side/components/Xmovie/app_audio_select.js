@@ -7,6 +7,7 @@ export const app_audio_select = {
       this.sound_play("click")
 
       this.$buefy.modal.open({
+        props: { base: this.base },
         width: "", // width ではなく max-width に設定される
         customClass: "BasicModal AudioSelectModal",
         component: AudioSelectModal,
@@ -15,12 +16,7 @@ export const app_audio_select = {
         hasModalCard: true,
         animation: "",
         canCancel: ["outside", "escape"],
-        onCancel: () => {
-          this.sound_play("click")
-        },
-        props: {
-          base: this.base,
-        },
+        onCancel: () => this.sound_play("click"),
       })
     },
   },

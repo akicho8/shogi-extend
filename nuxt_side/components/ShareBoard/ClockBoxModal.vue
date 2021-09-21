@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.ClockBoxModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
+  .modal-card-head
     p.modal-card-title.is-size-5
       span.has-text-weight-bold
         | 対局時計
@@ -14,7 +14,7 @@
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
         | 設定する場合は右上のスイッチを有効にしよう
@@ -59,7 +59,7 @@
           b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
         b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
           b-numberinput.every_plus(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown.mx-2(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")

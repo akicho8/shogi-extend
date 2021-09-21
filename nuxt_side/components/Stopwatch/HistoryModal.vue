@@ -2,7 +2,7 @@
 .HistoryModal.modal-card.is-size-7(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 履歴
-  section.modal-card-body
+  .modal-card-body
     b-table(
       :data="rows"
       :paginated="false"
@@ -17,7 +17,7 @@
       b-table-column(v-slot="props" field="event"      label="ｲﾍﾞﾝﾄ")         {{props.row.event}}
       b-table-column(v-slot="props" field="track"      label="問題")          {{props.row.current_track}}
       b-table-column(v-slot="props" field="summary"    label="ｻﾏﾘ")           {{props.row.summary}}
-  footer.modal-card-foot
+  .modal-card-foot
     button.button(type="button" @click="close_handle") 閉じる
 </template>
 

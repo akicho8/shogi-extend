@@ -1,12 +1,12 @@
 <template lang="pug">
 .modal-card
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | {{member_info.from_user_name}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     .table-container
       table.table.is-fullwidth
         tbody
@@ -23,7 +23,7 @@
     .box(v-if="development_p && false")
       | {{member_info}}
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
 </template>

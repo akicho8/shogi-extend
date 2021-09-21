@@ -2,9 +2,9 @@
 .modal-card.ActbAnySourceReadModal
   header.modal-card-head
     p.modal-card-title.is-size-6 棋譜の読み込み
-  section.modal-card-body
+  .modal-card-body
     b-input(type="textarea" v-model="any_source" ref="any_source")
-  footer.modal-card-foot
+  .modal-card-foot
     b-button(@click="submit_handle" type="is-primary") 読み込む
 </template>
 

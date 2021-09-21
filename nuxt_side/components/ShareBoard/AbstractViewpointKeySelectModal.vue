@@ -1,8 +1,8 @@
 <template lang="pug">
 .modal-card.AbstractViewpointKeySelectModal(style="width:auto")
   header.modal-card-head
-    p.modal-card-title.is-size-5.has-text-weight-bold ツイート画像の視点設定
-  section.modal-card-body
+    .modal-card-title ツイート画像の視点設定
+  .modal-card-body
     .field.my-1
       b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="black")
         | 常に☗ (詰将棋向け)
@@ -24,7 +24,7 @@
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
           | それをブラウザで開いたときの盤の視点
         b-image.ml-1(:src="opened_image_url")
-  footer.modal-card-foot
+  .modal-card-foot
     b-button(@click="close_handle") キャンセル
     b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
 </template>

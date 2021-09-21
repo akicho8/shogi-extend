@@ -1,16 +1,16 @@
 <template lang="pug">
 .modal-card.ShareBoardHelpModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 使い方
     b-tooltip(position="is-left" label="パーマリンク")
       a.permalink(href="/share-board/help" target="_blank")
         b-icon(icon="link")
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     ShareBoardHelpBody
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 

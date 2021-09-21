@@ -1,17 +1,17 @@
 <template lang="pug">
 .modal-card.MessageSendModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | メッセージ
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     ShareBoardMessageLog(:base="base" ref="ShareBoardMessageLog")
     b-field
       b-input(v-model="base.message_body" ref="message_input_tag")
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") 追加
     b-button.send_button(@click="send_handle" type="is-primary") 送信

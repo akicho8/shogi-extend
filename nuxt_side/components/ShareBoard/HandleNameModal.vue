@@ -1,16 +1,16 @@
 <template lang="pug">
 .modal-card
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | ハンドルネーム
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     b-field
       b-input(v-model.trim="new_name" ref="main_input_tag")
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.save_handle(@click="save_handle" type="is-primary") 保存
 </template>

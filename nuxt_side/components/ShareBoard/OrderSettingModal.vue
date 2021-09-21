@@ -1,7 +1,7 @@
 <template lang="pug">
 .modal-card.OrderSettingModal(style="width:auto")
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
+  .modal-card-head
     p.modal-card-title.is-size-5
       span.has-text-weight-bold
         | 順番設定
@@ -13,7 +13,7 @@
     b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_func_p" @input="main_switch_handle") 有効
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     .description(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
         | 設定する場合は右上のスイッチを有効にしよう
@@ -85,7 +85,7 @@
                   b-radio-button(v-model="base.new_move_guard_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
                     | {{e.name}}
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト

@@ -2,13 +2,13 @@
 //- time_limit_key
 .modal-card.TimeLimitModal(v-if="clock_running_p")
   header.modal-card-head
-    p.modal-card-title.is-size-5.has-text-weight-bold
+    .modal-card-title
       template(v-if="time_limit_info.key === 'default'")
         | 時間切れで
       template(v-if="time_limit_info.key === 'judge'")
         | 判定により
       | {{clock.current.location.flip.name}}の勝ち！
-  section.modal-card-body
+  .modal-card-body
     template(v-if="time_limit_info.key === 'judge'")
       p {{user_call_name(base.current_turn_user_name)}}は時間切れになったと思われますが{{base.cc_auto_time_limit_delay}}秒待っても本人からの通知がありませんでした
     template(v-if="clock.current.time_recovery_mode_p")
@@ -16,7 +16,7 @@
     template(v-else)
       p 時間切れになっても合意の上で続行できますが、<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
       p もし続行する場合は時計を再設定してください
-  footer.modal-card-foot
+  .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>
 

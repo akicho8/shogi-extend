@@ -2,7 +2,7 @@
 .modal-card.ActbSfenTrimModal(:base="base" style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 局面を確定させてください
-  section.modal-card-body
+  .modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
       sp_run_mode="view_mode"
@@ -12,7 +12,7 @@
       sp_controller="is_controller_on"
       @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
       )
-  footer.modal-card-foot
+  .modal-card-foot
     b-button(@click="submit_handle" type="is-primary") この局面にする
 </template>
 

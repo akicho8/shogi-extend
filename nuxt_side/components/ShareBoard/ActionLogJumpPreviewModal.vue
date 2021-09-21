@@ -1,12 +1,12 @@
 <template lang="pug">
-.modal-card.ActionLogJumpPreviewModal
+.modal-card
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 局面 \#{{new_turn_offset}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     .sp_container
       CustomShogiPlayer(
         sp_summary="is_summary_off"
@@ -28,7 +28,7 @@
       KifCopyButton(@click="kifu_copy_handle('kif')") コピー
       b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.apply_button(@click="apply_handle" type="is-primary") この局面まで戻る
 </template>

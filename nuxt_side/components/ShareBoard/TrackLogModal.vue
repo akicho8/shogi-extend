@@ -1,13 +1,13 @@
 <template lang="pug">
 .modal-card.TrackLogModal
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | ログ ({{base.track_logs.length}})
 
-  section.modal-card-body
+  .modal-card-body
     ShareBoardTrackLog(:base="base" ref="ShareBoardTrackLog")
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle") 閉じる
     b-button.close_button(@click="test_handle" v-if="development_p") テスト
     b-button.close_button(@click="clear_handle") クリア

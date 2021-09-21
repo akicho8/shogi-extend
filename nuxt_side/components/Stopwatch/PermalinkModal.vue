@@ -2,7 +2,7 @@
 .PermalinkModal.modal-card.mx-4(style="width: auto")
   header.modal-card-head
     p.modal-card-title.is-size-6 パーマリンク
-  section.modal-card-body.px-5.py-5
+  .modal-card-body.px-5.py-5
     b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンク(タイトルとURLをペアでブクマできる)")
       b-button(expanded tag="a" :href="base.permalink_url") {{base.book_title}}
     b-field(label="ブラウザ移行用URL" custom-class="is-small" type="is-primary" message="このURLをコピーして他のブラウザに持っていくと今と同じ状態で再開できる")
@@ -10,7 +10,7 @@
       p.control
         b-button(@click="clipboard_copy({text: base.permalink_url})" type="is-primary") コピー
 
-  footer.modal-card-foot
+  .modal-card-foot
     button.button(type="button" @click="close_handle") 閉じる
 </template>
 

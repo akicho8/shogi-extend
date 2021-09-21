@@ -1,15 +1,15 @@
 <template lang="pug">
 .modal-card.HandicapSetModal
   ////////////////////////////////////////////////////////////////////////////////
-  header.modal-card-head.is-justify-content-space-between
-    p.modal-card-title.is-size-5.has-text-weight-bold
+  .modal-card-head
+    .modal-card-title
       | 手合割
     p
       template(v-if="base.handicap_preset_info.handicap_level >= 1") +
       | {{base.handicap_preset_info.handicap_level}}
 
   ////////////////////////////////////////////////////////////////////////////////
-  section.modal-card-body
+  .modal-card-body
     .select_container
       b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play('click')")
         option(v-for="e in base.HandicapPresetInfo.values" :value="e.key" v-text="e.name")
@@ -35,7 +35,7 @@
       b-button.mb-0(@click="handicap_henkou(-1)" icon-left="chevron-left")
       b-button.mb-0(@click="handicap_henkou(1)" icon-left="chevron-right")
 
-  footer.modal-card-foot
+  .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.apply_button(@click="apply_handle" type="is-primary") 適用
 </template>
