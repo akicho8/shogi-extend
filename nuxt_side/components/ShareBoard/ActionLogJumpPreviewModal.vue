@@ -72,18 +72,12 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ActionLogJumpPreviewModal
-  +tablet
-    width: 32rem
+  +modal_width(512px)
+
   .modal-card-body
     padding: 1.25rem
     .buttons > *
       margin-bottom: 0
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 
 .STAGE-development
   .ActionLogJumpPreviewModal

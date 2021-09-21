@@ -152,7 +152,7 @@ export default {
 
 <style lang="sass">
 .SfenTrimModal
-  +modal_width(calc(640px - 128px))
+  +modal_width(512px)
 
   .sp_turn_input
     max-width: 4rem
