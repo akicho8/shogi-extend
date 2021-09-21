@@ -8,7 +8,7 @@ export const app_audio_select = {
 
       this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "modal_basic AudioSelectModal",
+        customClass: "BasicModal AudioSelectModal",
         component: AudioSelectModal,
         parent: this,
         trapFocus: true,

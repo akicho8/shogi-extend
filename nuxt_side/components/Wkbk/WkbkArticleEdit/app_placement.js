@@ -14,7 +14,7 @@ export const app_placement = {
       this.sound_play("click")
       const modal_instance = this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
-        customClass: "modal_basic AnySourceReadModal",
+        customClass: "BasicModal AnySourceReadModal",
         component: AnySourceReadModal,
         parent: this,
         hasModalCard: true,

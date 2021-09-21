@@ -33,7 +33,7 @@ export const app_source_trim = {
         parent: this,
         props: props,
         width: "", // width ではなく max-width に設定される
-        customClass: "modal_basic SfenTrimModal",
+        customClass: "BasicModal SfenTrimModal",
         component: SfenTrimModal,
         trapFocus: true,
         hasModalCard: true,
