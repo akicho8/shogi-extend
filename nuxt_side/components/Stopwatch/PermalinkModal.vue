@@ -1,17 +1,16 @@
 <template lang="pug">
-.PermalinkModal.modal-card.mx-4(style="width: auto")
+.modal-card
   .modal-card-head
     .modal-card-title パーマリンク
-  .modal-card-body.px-5.py-5
+  .modal-card-body
     b-field(label="PCブックマーク用" custom-class="is-small" type="is-primary" message="現在の状態をドラッグでブクマするときに便利なリンク(タイトルとURLをペアでブクマできる)")
       b-button(expanded tag="a" :href="base.permalink_url") {{base.book_title}}
     b-field(label="ブラウザ移行用URL" custom-class="is-small" type="is-primary" message="このURLをコピーして他のブラウザに持っていくと今と同じ状態で再開できる")
       b-input(expanded readonly :value="base.permalink_url")
       p.control
         b-button(@click="clipboard_copy({text: base.permalink_url})" type="is-primary") コピー
-
   .modal-card-foot
-    button.button(type="button" @click="close_handle") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>
@@ -31,12 +30,5 @@ export default {
 
 <style lang="sass">
 .PermalinkModal
-  tr:hover
-    cursor: pointer
-  tr > *
-    border-width: 0
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
+  +modal_width(512px)
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-.KeyboardModal.modal-card.mx-4(style="width: auto")
+.modal-card
   .modal-card-head
     .modal-card-title キーボード操作
   .modal-card-body
@@ -23,7 +23,7 @@
         th.has-text-right t
         td 最後の解答の正誤を反転する
   .modal-card-foot
-    button.button(type="button" @click="close_handle") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>
@@ -43,12 +43,7 @@ export default {
 
 <style lang="sass">
 .KeyboardModal
-  tr:hover
-    cursor: pointer
+  +modal_width_auto
   tr > *
     border-width: 0
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
 </style>

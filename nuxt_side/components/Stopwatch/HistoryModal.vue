@@ -1,8 +1,8 @@
 <template lang="pug">
-.HistoryModal.modal-card.is-size-7(style="width: auto")
+.modal-card
   .modal-card-head
     .modal-card-title 履歴
-  .modal-card-body
+  .modal-card-body.is-size-7
     b-table(
       :data="rows"
       :paginated="false"
@@ -18,7 +18,7 @@
       b-table-column(v-slot="props" field="track"      label="問題")          {{props.row.current_track}}
       b-table-column(v-slot="props" field="summary"    label="ｻﾏﾘ")           {{props.row.summary}}
   .modal-card-foot
-    button.button(type="button" @click="close_handle") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>
@@ -51,10 +51,7 @@ export default {
 
 <style lang="sass">
 .HistoryModal
+  +modal_width_auto
   tr:hover
     cursor: pointer
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
 </style>

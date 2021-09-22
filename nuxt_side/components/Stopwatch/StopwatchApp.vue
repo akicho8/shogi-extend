@@ -152,39 +152,27 @@ export default {
     parmalink_modal_show() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: { base: this },
+      this.modal_card_open({
         component: PermalinkModal,
-        animation: "",
-        onCancel: () => this.sound_play("click"),
+        props: { base: this },
       })
     },
 
     history_modal_show() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: { base: this },
+      this.modal_card_open({
         component: HistoryModal,
-        animation: "",
-        onCancel: () => this.sound_play("click"),
+        props: { base: this },
       })
     },
 
     keyboard_modal_show() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: { base: this },
+      this.modal_card_open({
         component: KeyboardModal,
-        animation: "",
-        onCancel: () => this.sound_play("click"),
+        props: { base: this },
       })
     },
 
