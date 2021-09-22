@@ -1,11 +1,8 @@
 <template lang="pug">
-.modal-card.ForceSyncModal
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
       | 局面の転送
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     //- p
     //-   | 現在の局面を他の人の盤に転送します。
@@ -21,7 +18,6 @@
       //-   | 同様に<b>初期配置に戻して再度対局する</b>場合も初手を指す人が左矢印で初期配置に戻してから指せばよいのですが、わからない場合は慣れている人が初期配置に戻した盤を全員に配ってから始めるとよいです
       //- p
       //-   | その他には対局後に<b>検討したい局面</b>に合わせたり、カスタマイズした駒落ち等の初期配置を配るときにも使えます
-
   .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") やめとく
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
@@ -33,9 +29,7 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "ForceSyncModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -57,15 +51,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ForceSyncModal
-  +tablet
-    width: 28rem
+  +modal_width(28rem)
   .modal-card-body
     padding: 1.5rem
     p:not(:first-child)
       margin-top: 0.75rem
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>
