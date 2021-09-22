@@ -58,14 +58,9 @@ export const app_support = {
       this.sound_play("click")
       this.sound_stop_all()
       this.talk(this.book.description)
-      this.$buefy.modal.open({
+      this.modal_card_open({
         component: WkbkBookShowDesc,
-        parent: this,
         props: { base: this.base },
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: true,
         onCancel:  () => {
           this.sound_stop_all()
           this.sound_play("click")

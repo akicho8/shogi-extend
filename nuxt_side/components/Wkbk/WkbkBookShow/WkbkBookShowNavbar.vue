@@ -14,11 +14,8 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
         b-navbar-item.px_5_if_tablet(@click.native="base.close_handle")
           b-icon(icon="chevron-left")
 
-        //- b-navbar-item(tag="a" @click.native="base.description_handle")
-        //-   b-icon(icon="information-outline")
-
-        //- b-navbar-item(tag="a" @click.native="base.description_handle")
-        //-   b-icon(icon="information-outline")
+      b-navbar-item(tag="a" @click.native="base.description_handle" v-if="development_p")
+        b-icon(icon="information-outline")
 
       template(v-if="base.is_standby_p && false")
         b-navbar-item(tag="div")

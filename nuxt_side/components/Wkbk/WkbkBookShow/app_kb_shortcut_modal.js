@@ -18,17 +18,10 @@ export const app_kb_shortcut_modal = {
       this.sound_play("click")
       this.kb_shortcut_modal_close()
       if (this.$kb_shortcut_modal) { alert("this.$kb_shortcut_modal") }
-      this.$kb_shortcut_modal = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: { base: this.base },
-        animation: "",
-        onCancel: () => { this.kb_shortcut_modal_close() },
-        canCancel: ["escape", "outside"],
+      this.$kb_shortcut_modal = this.modal_card_open({
         component: WkbkBookShowKbShortcutModal,
-        // events: {
-        //   "close": () => { alert("x") },
-        // },
+        props: { base: this.base },
+        onCancel: () => { this.kb_shortcut_modal_close() },
       })
       this.kb_shortcut_modal_p = true
 

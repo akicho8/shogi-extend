@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.WkbkBookShowDesc
+.modal-card
   .modal-card-head
     .modal-card-title
       | {{base.book.title}}
@@ -29,15 +29,12 @@ export default {
 </script>
 
 <style lang="sass">
+.WkbkBookShowDesc
+  .modal-card-foot
+    justify-content: flex-end
+
 .STAGE-development
   .WkbkBookShowDesc
     .content
       border: 1px dashed change_color($primary, $alpha: 0.5)
-
-.WkbkBookShowDesc
-  .modal-card-foot
-    justify-content: flex-end
-    .button
-      font-weight: bold
-      min-width: 4rem
 </style>

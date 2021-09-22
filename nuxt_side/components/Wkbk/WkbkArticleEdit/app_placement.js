@@ -1,5 +1,5 @@
 import SfenTrimModal from "../../SfenTrimModal.vue"
-import AnySourceReadModal    from "../../AnySourceReadModal.vue"
+import AnySourceReadModal from "../../AnySourceReadModal.vue"
 
 export const app_placement = {
   data() {
@@ -12,13 +12,8 @@ export const app_placement = {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sound_play("click")
-      const modal_instance = this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: "BasicModal AnySourceReadModal",
+      const modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
-        parent: this,
-        hasModalCard: true,
-        animation: "",
         events: {
           "update:any_source": any_source => {
             this.sound_play("click")
@@ -54,12 +49,9 @@ export const app_placement = {
 
     // 棋譜の読み込みタップ時の処理
     sfen_trim_modal_handle(props) {
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: props,
-        animation: "",
+      const modal_instance = this.modal_card_open({
         component: SfenTrimModal,
+        props: props,
         events: {
           "update:submit": e => {
             // this.toast_ok("反映しました")
