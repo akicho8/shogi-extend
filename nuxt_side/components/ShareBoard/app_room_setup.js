@@ -44,15 +44,8 @@ export const app_room_setup = {
     room_setup_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
-      this.$buefy.modal.open({
+      this.modal_card_open({
         component: RoomSetupModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
-        onCancel: () => { this.sound_play("click") },
         props: { base: this.base },
       })
     },

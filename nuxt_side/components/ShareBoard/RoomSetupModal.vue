@@ -1,11 +1,10 @@
 <template lang="pug">
-.modal-card.RoomSetupModal
+.modal-card
   .modal-card-head
-    .modal-card-title.is-flex.is-align-items-center.is-flex-grow-0
+    .modal-card-title
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
     b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
-
   .modal-card-body
     .content(v-if="false")
       ul
@@ -138,23 +137,13 @@ export default {
 
 <style lang="sass">
 .RoomSetupModal
-  +tablet
-    max-width: 20rem
-
-  .modal-card-head
-    // > *
-    //   line-height: 1
+  +modal_width(320px)
 
   .modal-card-body
     padding: 1.5rem
     li:not(:first-child)
       margin-top: 0.75rem
 
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      font-weight: bold
-      min-width: 6rem
   .field:not(:last-child)
     margin-bottom: 1.5rem
 </style>
