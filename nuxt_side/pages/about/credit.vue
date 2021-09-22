@@ -1,5 +1,5 @@
 <template lang="pug">
-.about-credit.has-background-black.has-text-centered.is-italic(@pointerdown="click_handle")
+.about-credit.has-background-black.has-text-centered(@pointerdown="click_handle")
   b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .section_title.mt-0 PIECE TEXTURE
