@@ -1,18 +1,12 @@
 <template lang="pug">
-.modal-card.OrderSettingModal(style="width:auto")
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
-      span.has-text-weight-bold
-        | 順番設定
-
+      | 順番設定
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
-
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_func_p" @input="main_switch_handle") 有効
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     .description(v-if="!base.order_func_p")
       .has-text-centered.has-text-grey.my-6
@@ -101,9 +95,7 @@ import { CycleIterator } from "@/components/models/cycle_iterator.js"
 
 export default {
   name: "OrderSettingModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   beforeMount() {
     this.base.os_modal_vars_setup()
   },
@@ -195,21 +187,14 @@ export default {
       })
     },
   },
-
-  computed: {
-  },
 }
 </script>
 
 <style lang="sass">
 @import "support.sass"
-
-.STAGE-development
-  .OrderSettingModal
-    .modal-card-body
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-
 .OrderSettingModal
+  +modal_width_auto
+
   .table
     td
       vertical-align: center
@@ -219,12 +204,11 @@ export default {
     p:not(:first-child)
       margin-top: 0.75rem
 
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
-
   .enable_toggle_handle
     min-width: 4rem
+
+.STAGE-development
+  .OrderSettingModal
+    .modal-card-body
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

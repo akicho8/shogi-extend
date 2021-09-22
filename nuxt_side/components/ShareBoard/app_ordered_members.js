@@ -49,21 +49,13 @@ export const app_ordered_members = {
     os_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
       this.__assert__(this.$os_modal_instance == null, "this.$os_modal_instance == null")
-      this.$os_modal_instance = this.$buefy.modal.open({
+      this.$os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
+        props: { base: this.base },
         onCancel: () => {
           this.sound_play("click")
           this.os_modal_close()
-        },
-        props: {
-          base: this.base,
         },
       })
     },
