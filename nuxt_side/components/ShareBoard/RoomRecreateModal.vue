@@ -1,11 +1,8 @@
 <template lang="pug">
-.modal-card.RoomRecreateModal
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
       | 再起動
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     p
       | 音が出ないときに試すと直ることがあります
@@ -13,7 +10,6 @@
       | いったん退室してブラウザをリロードして再度入室します
     p
       | 部屋に他の人がいれば、その人の持っている最後の局面に合わせます
-
   .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
@@ -25,9 +21,7 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "RoomRecreateModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -49,15 +43,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .RoomRecreateModal
-  +tablet
-    width: 26rem
+  +modal_width(26rem)
   .modal-card-body
     padding: 1.5rem
     p:not(:first-child)
       margin-top: 0.75rem
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>
