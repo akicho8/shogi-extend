@@ -1,11 +1,8 @@
 <template lang="pug">
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
       | {{member_info.from_user_name}}
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     .table-container
       table.table.is-fullwidth
@@ -19,10 +16,8 @@
                 template(v-else)
                   | {{row.value}}
                 span.mx-1(v-if="row.desc" v-text="row.desc" :class="row.desc_class")
-
     .box(v-if="development_p && false")
       | {{member_info}}
-
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
@@ -34,9 +29,7 @@ import dayjs from "dayjs"
 
 export default {
   name: "MemberInfoModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   props: {
     member_info: { type: Object, required: true, },
   },
@@ -46,9 +39,7 @@ export default {
       this.$emit("close")
     },
     ping_handle() {
-      // this.sound_play("click")
       this.base.member_info_ping_handle(this.member_info)
-      // this.$emit("close")
     },
     seconds_ago(v) {
       const seconds = Math.ceil((this.time_current_ms() - v) / 1000)
@@ -154,29 +145,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .MemberInfoModal
-  +tablet
-    .animation-content
-      max-width: 640px // $buefy.modal.open({width: 640}) 相当
-      .modal-card
-        width: auto    // buefyのデモを参考
-        .modal-card-body
-          padding: 1.25rem
-  +mobile
-    .animation-content
-      max-width: 96vw
-      .modal-card
-        max-height: 90vh
-        .modal-card-body
-          padding: 1.25rem 0.75rem
-
+  +modal_width(480px)
   th:not([align])
     white-space: nowrap
     text-align: right
     width: 1%
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>

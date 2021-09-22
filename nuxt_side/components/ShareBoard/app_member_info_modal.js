@@ -5,19 +5,12 @@ export const app_member_info_modal = {
     member_info_modal_handle(member_info) {
       this.sidebar_p = false
       this.sound_play("click")
-
-      // https://buefy.org/documentation/modal/
-      this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: "MemberInfoModal",
+      this.modal_card_open({
         component: MemberInfoModal,
-        parent: this,
-        props: { base: this.base, member_info: member_info },
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
-        onCancel: () => this.sound_play("click"),
+        props: {
+          base: this.base,
+          member_info: member_info,
+        },
       })
     },
   },
