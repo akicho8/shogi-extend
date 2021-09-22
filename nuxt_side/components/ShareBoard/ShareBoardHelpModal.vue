@@ -1,13 +1,11 @@
 <template lang="pug">
-.modal-card.ShareBoardHelpModal
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
       | 使い方
     b-tooltip(position="is-left" label="パーマリンク")
       a.permalink(href="/share-board/help" target="_blank")
         b-icon(icon="link")
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     ShareBoardHelpBody
   .modal-card-foot
@@ -19,9 +17,7 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "ShareBoardHelpModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.sound_play("click")
@@ -34,16 +30,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ShareBoardHelpModal
-  height: 80vh
-
-  // +tablet
-  //   width: 64rem
+  +modal_height(80vh)
   .modal-card-body
     padding: 0
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>

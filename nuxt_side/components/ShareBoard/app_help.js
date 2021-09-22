@@ -5,21 +5,9 @@ export const app_help = {
     general_help_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
-      this.$buefy.modal.open({
+      this.modal_card_open({
         component: ShareBoardHelpModal,
-        fullScreen: false,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
-        onCancel: () => {
-          this.sound_play("click")
-        },
-        props: {
-          base: this.base,
-        },
+        props: { base: this.base },
       })
     },
   },
