@@ -26,7 +26,7 @@
       b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.apply_button(@click="apply_handle" type="is-primary") この局面まで戻る
 </template>
 

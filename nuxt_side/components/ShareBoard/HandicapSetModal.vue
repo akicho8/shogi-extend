@@ -31,7 +31,7 @@
       b-button.mb-0(@click="next_handle(-1)" icon-left="chevron-left")
       b-button.mb-0(@click="next_handle(1)" icon-left="chevron-right")
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.apply_button(@click="apply_handle" type="is-primary") 適用
 </template>
 

@@ -11,7 +11,7 @@
     p
       | 部屋に他の人がいれば、その人の持っている最後の局面に合わせます
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
     b-button.apply_button(@click="apply_handle" type="is-danger") 実行
 </template>

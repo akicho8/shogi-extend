@@ -12,7 +12,7 @@
               b-radio-button(:class="e.key" @input="sound_play('click')" size="is-small" v-model="base[m.key]" :native-value="e.key" :type="e.type")
                 | {{e.name}}
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>

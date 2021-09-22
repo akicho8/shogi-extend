@@ -8,9 +8,9 @@
     ShareBoardTrackLog(:base="base" ref="ShareBoardTrackLog")
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle") 閉じる
-    b-button.close_button(@click="test_handle" v-if="development_p") テスト
-    b-button.close_button(@click="clear_handle") クリア
+    b-button.close_handle(@click="close_handle") 閉じる
+    b-button.close_handle(@click="test_handle" v-if="development_p") テスト
+    b-button.close_handle(@click="clear_handle") クリア
 </template>
 
 <script>
@@ -43,7 +43,6 @@ export default {
 <style lang="sass">
 .TrackLogModal
   +modal_width(50rem)
-  +modal_height(80vh)
   .modal-card-body
     padding: 0rem
 </style>

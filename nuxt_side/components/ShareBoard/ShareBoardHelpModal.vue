@@ -9,7 +9,7 @@
   .modal-card-body
     ShareBoardHelpBody
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ShareBoardHelpModal
-  +modal_height(80vh)
+  +modal_width(800px)
   .modal-card-body
     padding: 0
 </style>

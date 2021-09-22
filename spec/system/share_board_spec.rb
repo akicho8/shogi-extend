@@ -62,7 +62,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_text("部屋に入る")                # 「部屋に入る」のモーダルのタイトルも正しい
         find(".new_user_name input").set("alice") # ハンドルネームを入力する
         find(".entry_button").click               # 共有ボタンをクリックする
-        find(".close_button").click               # 閉じる
+        find(".close_handle").click               # 閉じる
       end
       assert_text("alice")                       # 入力したハンドルネームの人がメンバーリストに表示されている
       assert_move("77", "76", "☗7六歩")
@@ -84,7 +84,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         value = first(".new_user_name input").value
         assert { value == "alice" }                               # 以前入力したニックネームが復元されている
         first(".entry_button").click                              # 共有ボタンをクリックする
-        first(".close_button").click                              # 共有ボタンをクリックする
+        first(".close_handle").click                              # 共有ボタンをクリックする
       end
 
       assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
@@ -175,7 +175,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
-        first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click  # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_white_read_sec(@INITIAL_SEC)    # bob側は秒読みが満タン
@@ -234,12 +234,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
         assert_member_list(1, "is_turn_active", "alice")         # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")           # 2人目(bob)は待機中
         assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
@@ -284,7 +284,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
         first(".apply_button").click                       # 適用クリック
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       c_block do
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
@@ -516,7 +516,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
         clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
-        first(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
       end
       a_block do
         assert_move("77", "76", "☗7六歩")        # 初手を指す
@@ -751,7 +751,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       visit "/share-board"
       side_menu_open
       menu_item_click("使い方")
-      find(".close_button").click
+      find(".close_handle").click
     end
 
     it "モーダルからパーマリンクで飛ぶ" do
@@ -890,7 +890,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       side_menu_open
       menu_item_click("設定")               # モーダルを開く
       find(selector).click
-      find(".close_button").click           # 閉じる
+      find(".close_handle").click           # 閉じる
 
       place_click("77")                     # 77を持って
       place_click("87")                     # 87をタップ
@@ -1208,7 +1208,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       find(".new_room_code input").set(room_code) # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
       find(".entry_button").click                 # 共有ボタンをクリックする
-      find(".close_button").click                 # 閉じる
+      find(".close_handle").click                 # 閉じる
     end
     assert_text(user_name)                       # 入力したハンドルネームの人が参加している
   end
@@ -1347,7 +1347,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     side_menu_open
     menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
-    first(".close_button").click   # 閉じる
+    first(".close_handle").click   # 閉じる
   end
 
   # 手合割選択
@@ -1367,14 +1367,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
-    first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+    first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 
   # 対局時計を設置してPLAY押して閉じる
   def clock_start
     clock_open                               # 対局時計を開いて
     find(".play_button").click               # 開始
-    find(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
+    find(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
   end
 
   def assert_viewpoint(location_key)

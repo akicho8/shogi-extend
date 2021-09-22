@@ -45,7 +45,7 @@
         b-input.new_user_name(v-model.trim="new_user_name" :disabled="present_p(base.ac_room)")
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     //- b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" :disabled="blank_p(base.ac_room)") 部屋URL
     template(v-if="base.ac_room")
       b-button.leave_button(@click="leave_handle" type="is-danger") 退室

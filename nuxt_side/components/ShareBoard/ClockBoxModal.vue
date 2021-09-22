@@ -7,7 +7,7 @@
       span.mx-1.has-text-grey(v-if="instance") {{instance.human_status}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
-    a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
+    a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
 
     template(v-if="!instance || !instance.running_p")
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
@@ -59,7 +59,7 @@
         b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
           b-numberinput.every_plus(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
   .modal-card-foot
-    b-button.close_button.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown.mx-2(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
         b-button(slot="trigger" icon-left="menu-up") プリセット

@@ -4,7 +4,7 @@
     .modal-card-title
       | 順番設定
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
-    a.mx-2.close_button_for_capybara.delete(@click="close_handle" v-if="development_p")
+    a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_func_p" @input="main_switch_handle") 有効
   .modal-card-body
@@ -80,7 +80,7 @@
                     | {{e.name}}
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
       b-button.apply_button(@click="apply_handle" type="is-primary") 更新
