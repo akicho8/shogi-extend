@@ -64,10 +64,7 @@ export default {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sound_play("click")
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        animation: "",
+      const modal_instance = this.modal_card_open({
         component: ActbAnySourceReadModal,
         events: {
           "update:any_source": any_source => {
@@ -91,12 +88,9 @@ export default {
     // 棋譜の読み込みタップ時の処理
     fixed_sfen_confirm_handle(props) {
       this.toast_ok("局面を確定させてください")
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
-        props: props,
-        animation: "",
+      const modal_instance = this.modal_card_open({
         component: ActbSfenTrimModal,
+        props: props,
         events: {
           "update:fixed_sfen": fixed_sfen => {
             this.sound_play("click")

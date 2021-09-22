@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ActbSfenTrimModal(:base="base" style="width: auto")
+.modal-card
   .modal-card-head
     .modal-card-title 局面を確定させてください
   .modal-card-body
@@ -50,13 +50,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .ActbSfenTrimModal
-  .modal-card-body
-    +mobile
-      padding: 0
-      padding-top: 1.5rem
-      padding-bottom: 1rem
+  +modal_width(640px)
   .modal-card-foot
     justify-content: flex-end
-    .button
-      font-weight: bold
 </style>

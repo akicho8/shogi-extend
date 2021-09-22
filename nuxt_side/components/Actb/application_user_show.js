@@ -18,17 +18,12 @@ export const application_user_show = {
     },
 
     ov_user_show_modal(ov_user_info) {
-      this.$ov_user_modal = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
+      this.$ov_user_modal = this.modal_card_open({
+        component: ActbUserShow,
         props: {
           ov_user_info: ov_user_info,
           base: this.base,
         },
-        animation: "",
-        onCancel: () => this.sound_play("click"),
-        canCancel: ["escape", "outside"],
-        component: ActbUserShow,
       })
     },
 

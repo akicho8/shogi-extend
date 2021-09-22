@@ -1,15 +1,14 @@
 <template lang="pug">
-.modal-card.VsInputModal
+.modal-card
   .modal-card-head
     .modal-card-title
       | 対戦相手で絞る
-
   .modal-card-body
     b-field
       b-input(
         v-model="input_body"
         ref="main_input_tag"
-        @keydown.native.enter="search_handle"
+        @keydown.native.enter="apply_handle"
         placeholder="ウォーズIDを入力(複数指定可)"
         )
     b-taglist(v-if="present_p(base.remember_vs_user_keys)")
@@ -18,8 +17,8 @@
           | {{str}}
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") キャンセル
-    b-button.send_button(@click="search_handle" type="is-primary") 実行
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
+    b-button.apply_handle(@click="apply_handle" type="is-primary") 実行
 </template>
 
 <script>
@@ -54,7 +53,7 @@ export default {
       this.sound_play("click")
       this.$emit("close")
     },
-    search_handle() {
+    apply_handle() {
       this.sound_play("click")
       this.base.vs_user_keys_remember(this.input_body)
       this.base.vs_filter_run_handle(this.input_body)
@@ -71,13 +70,7 @@ export default {
 
 <style lang="sass">
 .VsInputModal
-  +tablet
-    width: 30rem
+  +modal_width(30rem)
   .modal-card-body
     padding: 1.0rem
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>

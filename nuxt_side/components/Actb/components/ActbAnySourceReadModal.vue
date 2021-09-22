@@ -1,5 +1,5 @@
 <template lang="pug">
-.modal-card.ActbAnySourceReadModal
+.modal-card
   .modal-card-head
     .modal-card-title 棋譜の読み込み
   .modal-card-body
@@ -30,8 +30,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .ActbAnySourceReadModal
+  +modal_width(640px)
   .modal-card-foot
     justify-content: flex-end
-    .button
-      font-weight: bold
 </style>

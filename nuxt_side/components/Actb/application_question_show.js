@@ -23,18 +23,13 @@ export const application_question_show = {
     },
 
     ov_question_show_modal(ov_question_info) {
-      this.$ov_question_modal = this.$buefy.modal.open({
-        parent: this,
-        hasModalCard: true,
+      this.$ov_question_modal = this.modal_card_open({
+        component: ActbQuestionShow,
+        fullScreen: true,
         props: {
           ov_question_info: ov_question_info,
           base: this.base,
         },
-        animation: "",
-        onCancel: () => this.sound_play("click"),
-        fullScreen: true,
-        canCancel: ["escape", "outside"],
-        component: ActbQuestionShow,
       })
     },
 

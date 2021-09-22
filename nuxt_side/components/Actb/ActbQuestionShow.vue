@@ -1,5 +1,5 @@
 <template lang="pug">
-.ActbApp.ActbQuestionShow.modal-card
+.modal-card
   .modal-card-body.box
     //- // 自分で閉じるボタン設置。組み込みのはもともとフルスクリーンを考慮しておらず、白地に白いボタンで見えないため。
     PageCloseButton(@click="delete_click_handle" position="is_absolute")
@@ -139,13 +139,9 @@ export default {
   mixins: [
     support_child,
   ],
-
   props: {
     ov_question_info: { type: Object, required: true },
   },
-
-
-
   data() {
     return {
       tab_index: 0,
@@ -253,58 +249,65 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ActbQuestionShow
-  &.modal-card
-    .modal-card-body
-      padding: 0 0 0.5rem
+  +modal_width(800px)
 
-    .right_top
-      position: absolute
-      top: 0
-      right: 0
+  .modal-card-body
+    padding: 0 0 0.5rem
 
-    .question_title
-      justify-content: center
-      align-items: center
+  .right_top
+    position: absolute
+    top: 0
+    right: 0
 
-    .tags
-      // .tag
-      //   &:first-child
-      //     padding-right: 0rem
-      //     font-weight: bold
-      //     color: $grey
-      //   &:not(:first-child)
-      //     padding-left: 0.25rem
+  .question_title
+    justify-content: center
+    align-items: center
 
-    // .avatar_image
-    //   img
-    //     vertical-align: bottom
+  .tags
+    // .tag
+    //   &:first-child
+    //     padding-right: 0rem
+    //     font-weight: bold
+    //     color: $grey
+    //   &:not(:first-child)
+    //     padding-left: 0.25rem
 
-    .author_name
-      flex-direction: row
-      justify-content: center
-      align-items: center
+  // .avatar_image
+  //   img
+  //     vertical-align: bottom
 
-    .tab-content
-      padding: 0
+  .author_name
+    flex-direction: row
+    justify-content: center
+    align-items: center
 
-    .sp_container
-      margin-top: 1.5rem
+  .tab-content
+    padding: 0
 
-    .moves_human_str
+  .sp_container
+    margin-top: 1.5rem
+    display: flex
+    align-items: center
+    justify-content: center
+    .CustomShogiPlayer
+      +tablet
+        width: 512px
 
-    .vote_container
-      justify-content: center
+  .moves_human_str
 
-      .ActbHistoryRowVote
-        .icon_with_counter
-          &.bad
-            margin-left: 1.5rem
-          &.clip
-            margin-left: 2rem
+  .vote_container
+    justify-content: center
 
-    .append_tag_list_field
+    .ActbHistoryRowVote
+      .icon_with_counter
+        &.bad
+          margin-left: 1.5rem
+        &.clip
+          margin-left: 2rem
 
-    .question_description
-      white-space: pre-line
-      margin: 0 1rem
+  .append_tag_list_field
+
+  .question_description
+    white-space: pre-line
+    margin: 0 1rem
 </style>

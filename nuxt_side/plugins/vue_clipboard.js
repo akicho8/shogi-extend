@@ -164,18 +164,18 @@ export default {
           },
           template: `
             <div class="modal-card">
-              <header class="modal-card-head">
+              <div class="modal-card-head">
                 <p class="modal-card-title">棋譜のコピーに失敗しました</p>
-              </header>
-              <section class="modal-card-body">
+              </div>
+              <div class="modal-card-body">
                 <p><small>こちらから手動でコピーしてみてください</small></p>
                 <b-field label="">
                   <b-input type="textarea" value="${params['text']}" ref="text_copy_textarea" rows="20" size="is-small"></b-input>
                 </b-field>
-              </section>
-              <footer class="modal-card-foot">
+              </div>
+              <div class="modal-card-foot">
                 <button class="button" type="button" @click="$parent.close()">閉じる</button>
-              </footer>
+              </div>
             </div>`,
         },
       })

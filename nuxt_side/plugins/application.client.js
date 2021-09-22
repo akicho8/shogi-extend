@@ -175,9 +175,8 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// modal
 
-    modal_card_open(params = {}) {
-      // this.sidebar_p = false
-      // this.sound_play("click")
+    modal_card_open(params) {
+      this.__assert__(this.present_p(params.component), "this.present_p(params.component)")
       this.__assert__(this.present_p(params.component.name), "this.present_p(params.component.name)")
       return this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される

@@ -1,5 +1,5 @@
 <template lang="pug">
-.ActbApp.ActbUserShow.modal-card
+.modal-card
   .modal-card-body.box
     PageCloseButton(@click="delete_click_handle" position="is_absolute")
     .user_container.is-flex
@@ -125,6 +125,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ActbUserShow
+  +modal_width(640px)
   .modal-card-body
     margin: 0rem 1rem
     padding: 1rem 1rem
