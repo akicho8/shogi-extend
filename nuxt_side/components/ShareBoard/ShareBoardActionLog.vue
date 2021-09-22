@@ -36,18 +36,12 @@ export default {
     },
     action_log_click_handle(e) {
       this.sound_play("click")
-
-      this.$buefy.modal.open({
-        props: { base: this.base, action_log: e },
-        width: "", // width ではなく max-width に設定される
-        customClass: "BasicModal ActionLogJumpPreviewModal",
+      this.modal_card_open({
         component: ActionLogJumpPreviewModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
-        onCancel: () => this.sound_play("click"),
+        props: {
+          base: this.base,
+          action_log: e,
+        },
       })
     },
     time_format(v) {
