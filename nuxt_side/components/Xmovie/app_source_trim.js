@@ -29,17 +29,8 @@ export const app_source_trim = {
     },
 
     sfen_trim_modal_handle(props) {
-      const modal_instance = this.$buefy.modal.open({
-        parent: this,
-        props: props,
-        width: "", // width ではなく max-width に設定される
-        customClass: "BasicModal SfenTrimModal",
+      const modal_instance = this.modal_card_open({
         component: SfenTrimModal,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["outside", "escape"],
-        onCancel: () => this.sound_play("click"),
         events: {
           "update:submit": e => {
             this.sound_play("click")

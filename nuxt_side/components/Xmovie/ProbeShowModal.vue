@@ -1,13 +1,9 @@
 <template lang="pug">
-//- (style="width:auto")
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
       | ファイル情報
     .delete(@click="close_handle")
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     //- b-tabs(expanded type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
     //-   b-tab-item(label="a")

@@ -3,19 +3,17 @@
   .modal-card-head
     .modal-card-title
       | BPMから秒数を計算
-
   .modal-card-body
     b-field(:message="new_page_duration_message")
       b-input(v-model.number="new_bpm" expanded ref="main_input_tag")
-
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.submit_handle(@click="submit_handle" type="is-primary") 適用
 </template>
 
 <script>
-import { support_child   } from "./support_child.js"
-import Big from "big.js"        // https://github.com/MikeMcl/big.js/
+import { support_child } from "./support_child.js"
+import Big from "big.js" // https://github.com/MikeMcl/big.js/
 
 export default {
   name: "ComputeFromBpmModal",
@@ -64,17 +62,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ComputeFromBpmModal
-  .modal-card, .modal-card-content
-    width: unset
-    min-width: 24rem
-
+  +modal_width(24rem)
   .modal-card-body
-    padding: 1.5rem 1.5rem
+    padding: 1.5rem
     // white-space: pre-wrap ← XXX: これがあると clerfix の高さがおかしくなり message の上にスペースが空いてしまう
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>

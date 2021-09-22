@@ -10,22 +10,9 @@ export const app_compute_from_bpm = {
     compute_from_bpm_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
-      this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: "BasicModal ComputeFromBpmModal",
+      this.modal_card_open({
         component: ComputeFromBpmModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["outside", "escape"],
-        onCancel: () => {
-          this.sound_play("click")
-        },
-        props: {
-          base: this.base,
-        },
+        props: { base: this.base },
       })
     },
   },

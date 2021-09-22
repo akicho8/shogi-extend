@@ -51,6 +51,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ColorSelectModal
+  +modal_width_auto
   .modal-card-body
     padding: 1.5rem
     white-space: pre-wrap

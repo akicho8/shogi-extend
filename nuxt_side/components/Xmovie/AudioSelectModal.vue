@@ -97,6 +97,8 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .AudioSelectModal
+  +modal_width_auto
+
   .modal-card-body
     padding: 1.0rem
     white-space: pre-wrap

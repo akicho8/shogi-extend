@@ -1,16 +1,11 @@
 <template lang="pug">
-//- (style="width:auto")
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
       | ファイル情報
     .delete(@click="close_handle")
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     | OK
-
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     //- b-button.test_button(@click="test_handle" v-if="development_p") 追加
@@ -55,18 +50,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .MySkeltonModal
-  // +tablet
-  //   width: 100%
+  +modal_width(640px)
   .modal-card-body
-    padding: 1.0rem 1.5rem
-    // .field:not(:first-child)
-    //   margin-top: 1.25rem
-    white-space: pre-wrap
-    word-break: break-all
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
+    padding: 1.5rem
 </style>
