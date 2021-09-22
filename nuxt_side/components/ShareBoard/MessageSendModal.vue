@@ -1,16 +1,12 @@
 <template lang="pug">
-.modal-card.MessageSendModal
-  ////////////////////////////////////////////////////////////////////////////////
+.modal-card
   .modal-card-head
     .modal-card-title
       | メッセージ
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     ShareBoardMessageLog(:base="base" ref="ShareBoardMessageLog")
     b-field
       b-input(v-model="base.message_body" ref="message_input_tag")
-
   .modal-card-foot
     b-button.close_button(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.test_button(@click="test_handle" v-if="development_p") 追加
@@ -24,9 +20,7 @@ const CLOSE_IF_BLANK_MESSAGE_POST = false // 空送信で閉じる
 
 export default {
   name: "MessageSendModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   mounted() {
     this.input_focus()
 
@@ -71,13 +65,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .MessageSendModal
-  +tablet
-    width: 24rem
+  +modal_width(24rem)
   .modal-card-body
     padding: 1.0rem
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 </style>
