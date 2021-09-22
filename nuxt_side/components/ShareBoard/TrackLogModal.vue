@@ -42,17 +42,8 @@ export default {
 
 <style lang="sass">
 .TrackLogModal
-  height: 80vh
-  +tablet
-    width: 50rem
+  +modal_width(50rem)
+  +modal_height(80vh)
   .modal-card-body
     padding: 0rem
-    // background-color: $black-bis
-    // .b-table
-    //   background-color: $black-bis
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      font-weight: bold
-      min-width: 8rem
 </style>

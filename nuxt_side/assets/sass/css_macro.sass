@@ -19,9 +19,9 @@
     .button
       margin-bottom: 0
 
-//////////////////////////////////////////////////////////////////////////////// modal      
-      
-// コンテンツの内容に合わせて「最大」だけを指定する場合
+//////////////////////////////////////////////////////////////////////////////// modal
+
+// コンテンツの内容で幅を決めるが大きくなりすぎるのを防ぐために「最大横幅」だけを指定する場合
 =modal_max_width($max_width)
   +tablet
     .animation-content
@@ -32,3 +32,8 @@
   +tablet
     .modal-card, .modal-content
       width: $width
+
+=modal_height($height)
+  +tablet
+    .modal-card, .modal-content
+      height: $height
