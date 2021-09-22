@@ -1,15 +1,11 @@
 <template lang="pug">
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
       | ハンドルネーム
-
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
     b-field
-      b-input(v-model.trim="new_name" ref="main_input_tag")
-
+      b-input(v-model.trim="new_name" ref="main_input_tag" size="is-large")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.save_handle(@click="save_handle" type="is-primary") 保存
@@ -20,9 +16,7 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "HandleNameModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   props: {
     params: { type: Object, required: false, default: null, },
   },
@@ -66,24 +60,7 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .HandleNameModal
-  +tablet
-    .animation-content
-      max-width: 640px // $buefy.modal.open({width: 640}) 相当
-      .modal-card
-        width: auto    // buefyのデモを参考
-        .modal-card-body
-          padding: 1.25rem
-  +mobile
-    .animation-content
-      max-width: 96vw
-      .modal-card
-        max-height: 90vh
-        .modal-card-body
-          padding: 1.25rem 0.75rem
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
+  +modal_width(320px)
+  .modal-card-body
+    padding: 1.5rem
 </style>

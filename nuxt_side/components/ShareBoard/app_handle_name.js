@@ -11,18 +11,12 @@ export const app_handle_name = {
       this.handle_name_modal_core()
     },
     handle_name_modal_core(params = {}) {
-      // https://buefy.org/documentation/modal/
-      this.$buefy.modal.open({
-        width: "", // width ではなく max-width に設定される
-        customClass: "HandleNameModal",
+      this.modal_card_open({
         component: HandleNameModal,
-        parent: this,
-        props: { base: this.base, params: params },
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
-        onCancel: () => this.sound_play("click"),
+        props: {
+          base: this.base,
+          params: params,
+        },
       })
     },
 
