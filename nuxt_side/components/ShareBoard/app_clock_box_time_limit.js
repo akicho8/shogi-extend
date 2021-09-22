@@ -84,12 +84,8 @@ export const app_clock_box_time_limit = {
       this.sound_play("lose")         // ちーん
 
       this.time_limit_modal_close()
-      this.time_limit_modal_instance = this.$buefy.modal.open({
+      this.time_limit_modal_instance = this.modal_card_open({
         component: TimeLimitModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
         props: {
           base: this.base,
           time_limit_key: time_limit_key,

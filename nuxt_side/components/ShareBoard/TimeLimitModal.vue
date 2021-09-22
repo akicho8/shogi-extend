@@ -1,6 +1,5 @@
 <template lang="pug">
-//- time_limit_key
-.modal-card.TimeLimitModal(v-if="clock_running_p")
+.modal-card(v-if="clock_running_p")
   .modal-card-head
     .modal-card-title
       template(v-if="time_limit_info.key === 'default'")
@@ -28,10 +27,6 @@ export default {
   props: {
     base:           { type: Object, required: true, },
     time_limit_key: { type: String, required: true, },
-  },
-  data() {
-    return {
-    }
   },
   mounted() {
     if (!this.clock_running_p) {
@@ -68,13 +63,10 @@ export default {
 
 <style lang="sass">
 .TimeLimitModal
-  +tablet
-    max-width: 25rem
+  +modal_max_width(25rem)
   .modal-card-body
     p:not(:first-child)
       margin-top: 0.75rem
   .modal-card-foot
     justify-content: flex-end
-    .button
-      font-weight: bold
 </style>
