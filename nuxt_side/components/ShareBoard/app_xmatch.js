@@ -65,23 +65,15 @@ export const app_xmatch = {
 
       // https://buefy.org/documentation/modal/
       this.xmatch_modal_close()
-      this.xmatch_modal_instance = this.$buefy.modal.open({
-        width: "",          // width ではなく max-width に設定される
-        customClass: "XmatchModal",
+      this.xmatch_modal_instance = this.modal_card_open({
         component: XmatchModal,
-        parent: this,
-        trapFocus: true,
-        hasModalCard: true,
-        animation: "",
-        canCancel: ["escape", "outside"],
+        props: { base: this.base },
         onCancel: () => {
-          //
           this.sound_play("click")
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
           this.base.rule_unselect("${name}がやめました")
           this.xmatch_modal_close()
         },
-        props: { base: this.base },
       })
     },
 

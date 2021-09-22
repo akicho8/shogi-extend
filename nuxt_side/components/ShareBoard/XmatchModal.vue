@@ -3,15 +3,11 @@
   .modal-card-head
     .modal-card-title
       | 自動マッチング
-    p.is-size-5(v-if="base.current_xmatch_rule_key && base.xmatch_rest_seconds >= 1")
+    p(v-if="base.current_xmatch_rule_key && base.xmatch_rest_seconds >= 1")
       | {{base.xmatch_rest_seconds}}
     a(@click="base.handle_name_modal_handle" v-if="!base.current_xmatch_rule_key && present_p(base.user_name)")
       b-icon(icon="pencil-outline" size="is-small")
-      //- b-icon(icon="pencil" size="is-small")
-      //- b-icon(icon="account-edit-outline" size="is-small")
-      //- b-icon(icon="account-edit" size="is-small")
       span.ml-1 {{base.user_name}}
-
   .modal-card-body
     b-loading(:is-full-page="true" :active="!base.xmatch_rules_members")
     template(v-if="base.xmatch_rules_members")
@@ -38,7 +34,7 @@
       //- pre {{base.xmatch_rules_members}}
 
   .modal-card-foot
-    b-button.close_button(@click="close_handle" icon-left="chevron-left") やめる
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") やめる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
     b-button.unselect_handle(@click="unselect_handle") 選択解除
 </template>
@@ -130,6 +126,8 @@ export default {
 
 <style lang="sass">
 .XmatchModal
+  +modal_width(640px)
+
   .modal-card-head
     > *
       line-height: 1
@@ -153,36 +151,21 @@ export default {
         .tag
           margin: calc(0.25rem / 2)
 
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      &.close_handle
-      &.unselect_handle
-        min-width: 8rem
-
   +tablet
-    .animation-content
-      max-width: 640px // $buefy.modal.open({width: 640}) 相当
-      .modal-card
-        width: auto    // buefyのデモを参考
-        .modal-card-body
-          padding: 1.25rem 1rem
-          .column
-            padding-top: 0.5rem
-            padding-bottom: 0.5rem
+    .modal-card-body
+      padding: 1.25rem 1rem
+      .column
+        padding-top: 0.5rem
+        padding-bottom: 0.5rem
 
   +mobile
-    .animation-content
-      max-width: 96vw
-      .modal-card
-        max-height: 90vh
-        .modal-card-body
-          padding: 1.25rem 0.75rem
-          .column
-            padding-top: 0.25rem
-            padding-bottom: 0.25rem
-            .box
-              padding: 0.75rem
+    .modal-card-body
+      padding: 1.25rem 0.75rem
+      .column
+        padding-top: 0.25rem
+        padding-bottom: 0.25rem
+        .box
+          padding: 0.75rem
 
 .STAGE-development
   .XmatchModal
