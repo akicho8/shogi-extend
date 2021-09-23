@@ -29,6 +29,21 @@ class AppEntryInfo
       ],
     },
     {
+      key: :kiwi_lemon_index,
+      display_p: !Rails.env.production?,
+      experiment_p: false,
+      nuxt_link_to: {path: "/video"},
+      title: "動画ギャラリー",
+      attention_label: "NEW!",
+      og_image_key: "video",
+      description: "棋譜を動画にしたいときにどうぞ",
+      features: [
+        "mp4, gif, png, zip 等に変換",
+        "「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している",
+      ],
+    },
+    {
+      key: :kiwi_lemon_new,
       display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/video/new"},

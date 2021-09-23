@@ -112,39 +112,39 @@ class UserMailer < ApplicationMailer
   end
 
   # 動画生成完了
-  # UserMailer.xmovie_notify(XmovieRecord.last).deliver_later
+  # UserMailer.xmovie_notify(Kiwi::Lemon.last).deliver_later
   # http://localhost:3000/rails/mailers/user/xmovie_notify
-  def xmovie_notify(xmovie_record)
+  def xmovie_notify(lemon)
     # 本文
     body = []
-    body << "登録: #{xmovie_record.created_at&.to_s(:ymdhms)}"
-    body << "開始: #{xmovie_record.process_begin_at&.to_s(:ymdhms)}"
-    body << "完了: #{xmovie_record.process_end_at&.to_s(:ymdhms)}"
-    body << "失敗: #{xmovie_record.error_message}" if xmovie_record.errored_at
-    body << "棋譜: #{UrlProxy.wrap2(xmovie_record.recordable.share_board_path)}"
+    body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
+    body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
+    body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
+    body << "失敗: #{lemon.error_message}" if lemon.errored_at
+    body << "棋譜: #{UrlProxy.wrap2(lemon.recordable.share_board_path)}"
     body << ""
     body << "--"
     body << "SHOGI-EXTEND"
     body << url_for(:root)
 
     if Rails.env.development?
-      body << xmovie_record.browser_url
-      body << xmovie_record.to_t
-      if xmovie_record.ffprobe_info
-        body << xmovie_record.ffprobe_info[:pretty_format]["streams"][0].to_t
-        body << xmovie_record.ffprobe_info[:direct_format]["streams"][0].to_t
+      body << lemon.browser_url
+      body << lemon.to_t
+      if lemon.ffprobe_info
+        body << lemon.ffprobe_info[:pretty_format]["streams"][0].to_t
+        body << lemon.ffprobe_info[:direct_format]["streams"][0].to_t
       end
     end
 
     # 添付
-    generator = xmovie_record.generator
+    generator = lemon.generator
     if generator.file_exist?
-      attachments[xmovie_record.filename_human] = generator.real_path.read
+      attachments[lemon.filename_human] = generator.real_path.read
     end
 
     mail({
-        subject: "【動画生成】[#{xmovie_record.id}] #{xmovie_record.recipe_info.name} 生成#{xmovie_record.status_key}",
-        to: "#{xmovie_record.user.name} <#{xmovie_record.user.email}>",
+        subject: "【動画生成】[#{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
+        to: "#{lemon.user.name} <#{lemon.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう
       })

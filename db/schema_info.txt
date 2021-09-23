@@ -84,7 +84,7 @@
 
 # == Schema Information ==
 #
-# Xmovie record (xmovie_records as XmovieRecord)
+# Kiwi record (lemons as Kiwi::Lemon)
 #
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
 # | name             | desc             | type        | opts        | refs                       | index |

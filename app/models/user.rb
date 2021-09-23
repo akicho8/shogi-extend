@@ -47,7 +47,7 @@ class User < ApplicationRecord
   include ::Actb::UserMethods
   include ::Emox::UserMethods
   include ::Wkbk::UserMethods
+  include ::Kiwi::UserMethods
   include UserCrawlReservationMethods
   include UserZipDlLogMethods
-  include UserXmovieMethods
 end

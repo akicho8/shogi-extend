@@ -19,10 +19,10 @@ module FrontendScript
       end
 
       battle = FreeBattle.create!(kifu_body: params[:body])
-      xmovie_record = XmovieRecord.create!(recordable: battle, user: h.current_user, convert_params: params)
-      xmovie_record.main_process!
+      lemon = Kiwi::Lemon.create!(recordable: battle, user: h.current_user, convert_params: params)
+      lemon.main_process!
       {
-        browser_url: xmovie_record.browser_url,
+        browser_url: lemon.browser_url,
       }
     end
 

@@ -183,20 +183,20 @@ module BattleControllerSharedMethods
         #       return
         #     end
         #
-        #     if xmovie_record = XmovieRecord.find_by(recordable: current_record)
-        #       # render html: xmovie_record.to_html
-        #       render html: [xmovie_record.status_key, XmovieRecord.info.to_html].join.html_safe
+        #     if lemon = Kiwi::Lemon.find_by(recordable: current_record)
+        #       # render html: lemon.to_html
+        #       render html: [lemon.status_key, Kiwi::Lemon.info.to_html].join.html_safe
         #       return
         #     end
         #
-        #     xmovie_record = XmovieRecord.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
+        #     lemon = Kiwi::Lemon.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
         #     if false
-        #       xmovie_record.main_process!
+        #       lemon.main_process!
         #     else
-        #       XmovieRecord.background_job_kick
+        #       Kiwi::Lemon.background_job_kick
         #     end
         #
-        #     render html: "GIF#{xmovie_record.status_key}<br>終わったら #{current_user.email} に通知します#{XmovieRecord.info.to_html}#{XmovieRecord.order(:id).to_html}".html_safe
+        #     render html: "GIF#{lemon.status_key}<br>終わったら #{current_user.email} に通知します#{Kiwi::Lemon.info.to_html}#{Kiwi::Lemon.order(:id).to_html}".html_safe
         #   }
         # end
         format.any { kif_data_send }

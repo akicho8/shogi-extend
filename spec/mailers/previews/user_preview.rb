@@ -34,8 +34,8 @@ class UserPreview < ActionMailer::Preview
       },
     }
     free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
-    xmovie_record = XmovieRecord.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
-    xmovie_record.main_process!
-    UserMailer.xmovie_notify(xmovie_record)
+    lemon = Kiwi::Lemon.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
+    lemon.main_process!
+    UserMailer.xmovie_notify(lemon)
   end
 end

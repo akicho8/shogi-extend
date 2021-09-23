@@ -1,5 +1,5 @@
 <template lang="pug">
-XmovieNewHelp
+KiwiLemonNewHelp
 </template>
 
 <script>

@@ -177,13 +177,16 @@ Rails.application.routes.draw do
       post :record_create
     end
 
-    resource :xmovie, only: [] do
-      get :latest_info_reload
-      post :record_create
-      post :zombie_kill
-      if Rails.env.development?
-        get :record_create
-        get :zombie_kill
+    namespace :kiwi, format: :json do
+      namespace :lemons do
+        get :index
+        get :latest_info_reload
+        post :record_create
+        post :zombie_kill
+        if Rails.env.development?
+          get :record_create
+          get :zombie_kill
+        end
       end
     end
 
