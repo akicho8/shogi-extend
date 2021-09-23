@@ -64,19 +64,18 @@ export const app_sfen_share_retry = {
       this.sfen_share_not_reach()
 
       const next_user_name = this.user_name_by_turn(this.sfen_share_params.turn_offset)
-      const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がないため再送しますか？`
+      const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がありません<br>再送しますか？`
       const message2 = `<span class="has-text-grey">(${this.retry_check_delay}秒後に再チェック)</span>`
       const message3 = `${message1}${message2}`
       // this.talk(message1)
 
       this.retry_confirm_close()
-      this.retry_confirm_instance = this.$buefy.dialog.confirm({
+      this.retry_confirm_instance = this.dialog_confirm({
         title: `同期失敗 (${this.x_retry_count}回目)`,
         message: message3,
         cancelText: "諦める",
         confirmText: "再送する",
         hasIcon: true,
-        animation: "",
         type: "is-warning",
         focusOn: "confirm",
         onCancel: () => {
@@ -117,7 +116,7 @@ export const app_sfen_share_retry = {
         if (this.order_func_p) {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
           if (params.x_retry_count >= 1) {
-            this.toast_warn(`次の手番の${this.user_call_name(params.next_user_name)}の反応がないため${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`, {duration: 1000 * RETRY_TOAST_SEC, toast_only: true})
+            this.toast_warn(`次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`, {duration: 1000 * RETRY_TOAST_SEC, toast_only: true})
           }
           if (params.next_user_name === this.user_name) {
             // 自分が下家なので上家に受信したことを伝える

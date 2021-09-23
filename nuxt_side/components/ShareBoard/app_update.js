@@ -26,10 +26,8 @@ export const app_update = {
     reload_modal_handle() {
       this.talk(MESSAGE)
       this.sound_stop_all()
-      this.$buefy.dialog.alert({
+      this.dialog_alert({
         message: MESSAGE,
-        animation: "",
-        confirmText: "OK",
         onConfirm: () => this.force_reload(),
       })
     },

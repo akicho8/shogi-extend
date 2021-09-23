@@ -190,5 +190,43 @@ export default {
         ...params,
       })
     },
+
+    dialog_prompt(params = {}) {
+      return this.$buefy.dialog.prompt({
+        title: null,
+        confirmText: "更新",
+        cancelText: "キャンセル",
+        animation: "",
+        inputAttrs: { type: "text", value: "", required: false },
+        onCancel: () => this.sound_play("click"),
+        onConfirm: value => {
+          this.debug_alert(value)
+          this.sound_play("click")
+        },
+        ...params,
+      })
+    },
+
+    dialog_confirm(params = {}) {
+      return this.$buefy.dialog.confirm({
+        // message: "本当に退室してもよろしいですか？<p class='has-text-grey is-size-7 mt-2'>初期配置に戻すために退室する必要はありません<br>左矢印で初期配置に戻ります</p>",
+        cancelText: "キャンセル",
+        // confirmText: "退室する",
+        // focusOn: "cancel",
+        animation: "",
+        onCancel: () => this.sound_play("click"),
+        onConfirm: () => this.sound_play("click"),
+        ...params,
+      })
+    },
+
+    dialog_alert(params = {}) {
+      return this.$buefy.dialog.alert({
+        animation: "",
+        confirmText: "OK",
+        onConfirm: () => this.sound_play("click"),
+        ...params,
+      })
+    },
   },
 }

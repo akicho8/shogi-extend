@@ -3,12 +3,15 @@ import _ from "lodash"
 
 export const app_chore = {
   methods: {
-    //////////////////////////////////////////////////////////////////////////////// Windowアクティブチェック
+    // Windowアクティブチェック
     window_active_change_user_hook(focus_p) {
       this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
       this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
+
+      // インターバル実行の再スタートで即座にメンバー情報を反映する
       this.member_info_bc_restart()
 
+      // ウィンドウを離れたらエントリー解除する
       if (!focus_p) {
         this.xmatch_window_blur()
       }
@@ -36,13 +39,10 @@ export const app_chore = {
     title_edit_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-      this.$buefy.dialog.prompt({
+      this.dialog_prompt({
         title: "タイトル",
         confirmText: "更新",
-        cancelText: "キャンセル",
-        animation: "",
         inputAttrs: { type: "text", value: this.current_title, required: false },
-        onCancel: () => this.sound_play("click"),
         onConfirm: value => {
           this.sound_play("click")
           this.current_title_set(value)
@@ -50,18 +50,29 @@ export const app_chore = {
       })
     },
 
+    // プロフィールアイコンを押して移動
+    profile_click_handle(e) {
+      this.exit_confirm_then(() => this.$router.push({name: "users-id", params: {id: this.g_current_user.id}}))
+    },
+
+    // ホームアイコンを押して退出
     exit_handle() {
+      this.exit_confirm_then(() => this.$router.push({name: "index"}))
+    },
+
+    // 退出するときはとりあえずこれをかます
+    exit_confirm_then(block = () => {}) {
       this.sound_play("click")
-      if (this.ac_room || this.clock_box) {
-
-        this.talk("本当に退室してもよろしいですか？")
-
-        this.$buefy.dialog.confirm({
-          message: "本当に退室してもよろしいですか？<p class='has-text-grey is-size-7 mt-2'>初期配置に戻すために退室する必要はありません<br>左矢印で初期配置に戻ります</p>",
-          cancelText: "キャンセル",
+      if (!this.exit_warning_p) {
+        block()
+      } else {
+        const message = "対局中のように見えますが本当に退室してもよろしいですか？"
+        this.talk(message)
+        this.dialog_confirm({
+          title: "退室",
+          message: message,
           confirmText: "退室する",
           focusOn: "cancel",
-          animation: "",
           onCancel: () => {
             this.sound_stop_all()
             this.sound_play("click")
@@ -71,12 +82,14 @@ export const app_chore = {
             this.sound_stop_all()
             this.sound_play("click")
             this.ac_log("退室", "実行")
-            this.$router.push({name: "index"})
+            block()
           },
         })
-      } else {
-        this.$router.push({name: "index"})
       }
     },
+  },
+
+  computed: {
+    exit_warning_p() { return this.ac_room || this.clock_box }, // 退出時警告を出すか？
   },
 }

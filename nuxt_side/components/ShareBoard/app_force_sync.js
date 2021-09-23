@@ -9,8 +9,7 @@ export const app_force_sync = {
     board_init_modal_handle() {
       this.sidebar_p = false
       this.sound_play("click")
-
-      this.$buefy.dialog.confirm({
+      this.dialog_confirm({
         title: "初期配置に戻す",
         message: `
           <p>次の処理を実行します</p>
@@ -21,14 +20,9 @@ export const app_force_sync = {
             </ol>
           </div>
         `,
-        cancelText: "キャンセル",
         confirmText: "本当に実行",
         type: "is-danger",
         focusOn: "cancel",
-        animation: "",
-        onCancel: () => {
-          this.sound_play("click")
-        },
         onConfirm: () => {
           this.sound_play("click")
           this.force_sync_turn_zero()
@@ -42,7 +36,7 @@ export const app_force_sync = {
       this.sidebar_p = false
       this.sound_play("click")
 
-      this.$buefy.dialog.confirm({
+      this.dialog_confirm({
         title: "1手戻す",
         message: `
           <p>次の処理を実行します</p>
@@ -53,14 +47,9 @@ export const app_force_sync = {
             </ol>
           </div>
         `,
-        cancelText: "キャンセル",
         confirmText: "本当に実行",
         type: "is-danger",
         focusOn: "cancel",
-        animation: "",
-        onCancel: () => {
-          this.sound_play("click")
-        },
         onConfirm: () => {
           this.sound_play("click")
           this.force_sync_turn_previous()

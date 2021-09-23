@@ -27,6 +27,7 @@
       a.panel-block(@click="base.reload_modal_handle") リロード確認
       a.panel-block(@click="base.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="base.room_leave_call({from_user_name: 'alice'})") 退室コール
+      a.panel-block(@click="base.exit_confirm_then()") 退室確認
       a.panel-block(:href="base.json_debug_url") JSON確認
   .column.is-2
     .panel
