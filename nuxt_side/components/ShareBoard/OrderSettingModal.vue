@@ -3,6 +3,10 @@
   .modal-card-head
     .modal-card-title
       | 順番設定
+      span.mx-1(v-if="base.order_func_p && base.new_ordered_members_odd_p")
+        b-tooltip(label="奇数では1周で先後が変わるぞ" position="is-right" size="is-small")
+          b-icon(icon="alert" type="is-warning" size="is-small")
+
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
