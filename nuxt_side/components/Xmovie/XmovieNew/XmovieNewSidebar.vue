@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.is-unselectable.XmovieSidebar(fullheight right overlay v-model="base.sidebar_p")
+b-sidebar.is-unselectable.XmovieNewSidebar(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
@@ -20,7 +20,7 @@ b-sidebar.is-unselectable.XmovieSidebar(fullheight right overlay v-model="base.s
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieSidebar",
+  name: "XmovieNewSidebar",
   mixins: [support_child],
   computed: {
     slider_attrs() {
@@ -37,7 +37,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.XmovieSidebar
+.XmovieNewSidebar
   .sidebar-content
     width: 20rem
 

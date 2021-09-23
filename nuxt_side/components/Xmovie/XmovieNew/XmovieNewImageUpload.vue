@@ -1,22 +1,21 @@
 <template lang="pug">
-.XmovieAudioUpload(v-if="base.audio_theme_info.key === 'audio_theme_custom'")
+.XmovieNewImageUpload
   b-field
-    b-upload(drag-drop @input="upload_handle" native accept="audio/*")
+    b-upload(drag-drop @input="upload_handle" native accept="image/*")
       .is-flex.is-align-items-center.px-3.py-1
         b-icon(icon="upload" size="is-small")
         .is-size-7.ml-2 {{label}}
 
-  .audio_preview(v-if="new_file_info")
-    XmovieAudioPlay(:base="base" :src="new_file_info.url" :volume="base.main_volume" @play="e => base.current_play_instance = e")
-    .ml-2 {{new_file_info.attributes.name}}
-    button.delete.ml-2(size="is-small" @click="delete_handle")
+  .image_preview(v-if="new_file_info")
+    img(:src="new_file_info.url")
+    button.delete(size="is-small" @click="delete_handle")
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieAudioUpload",
+  name: "XmovieNewImageUpload",
   mixins: [support_child],
   props: {
     label: { type: String, required: true },
@@ -62,11 +61,19 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieAudioUpload
+.XmovieNewImageUpload
   &:not(:first-child)
     margin-top: 1.5rem
 
-  .audio_preview
+  .image_preview
+    height: 8rem
     display: flex
     align-items: center
+    img
+      max-height: 100%
+      max-width:  100%
+      border: 1px solid $grey-lighter
+      border-radius: 4px
+    button
+      margin-left: 0.5rem
 </style>

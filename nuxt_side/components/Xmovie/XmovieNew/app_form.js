@@ -1,12 +1,12 @@
-import { LoopInfo          } from "./models/loop_info.js"
-import { XfontInfo          } from "./models/xfont_info.js"
-import { ViewpointInfo     } from "./models/viewpoint_info.js"
-import { ColorThemeInfo    } from "./models/color_theme_info.js"
-import { AudioThemeInfo    } from "./models/audio_theme_info.js"
-import { MediaFactoryInfo  } from "./models/media_factory_info.js"
-import { AnimationSizeInfo } from "./models/animation_size_info.js"
-import { ParamInfo         } from "./models/param_info.js"
-import { RecipeInfo        } from "./models/recipe_info.js"
+import { LoopInfo          } from "../models/loop_info.js"
+import { XfontInfo          } from "../models/xfont_info.js"
+import { ViewpointInfo     } from "../models/viewpoint_info.js"
+import { ColorThemeInfo    } from "../models/color_theme_info.js"
+import { AudioThemeInfo    } from "../models/audio_theme_info.js"
+import { MediaFactoryInfo  } from "../models/media_factory_info.js"
+import { AnimationSizeInfo } from "../models/animation_size_info.js"
+import { ParamInfo         } from "../models/param_info.js"
+import { RecipeInfo        } from "../models/recipe_info.js"
 
 import Big from "big.js"        // https://github.com/MikeMcl/big.js/
 
@@ -83,7 +83,7 @@ export const app_form = {
     },
     body_focus() {
       // // 開発時のホットリロードでは null.$refs になる
-      // this.desktop_focus_to(this.$refs.XmovieForm?.$refs.body.$refs?.textarea)
+      // this.desktop_focus_to(this.$refs.XmovieNewForm?.$refs.body.$refs?.textarea)
     },
     reset_handle() {
       this.sound_play("click")

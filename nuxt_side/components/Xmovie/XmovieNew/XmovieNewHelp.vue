@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieHelp
+.XmovieNewHelp
   MainNavbar
     template(slot="brand")
       NavbarItemHome(icon="chevron-left" :to="{name: 'movie-factory'}")
@@ -9,21 +9,21 @@
     .container
       .columns.is-centered.is-gapless
         .MainColumn.column
-          XmovieHelpBody
+          XmovieNewHelpBody
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieHelp",
+  name: "XmovieNewHelp",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "./support.sass"
-.XmovieHelp
+.XmovieNewHelp
   .MainSection.section
     +mobile
       padding: 0rem

@@ -1,18 +1,16 @@
 <template lang="pug">
-.XmovieFormDesign
-  XmovieFormDesignColorTheme(:base="base")
-  XmovieFormDesignAudioTheme(:base="base")
+.XmovieNewFormOption
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieFormDesign",
+  name: "XmovieNewFormOption",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieFormDesign
+.XmovieNewFormOption
 </style>

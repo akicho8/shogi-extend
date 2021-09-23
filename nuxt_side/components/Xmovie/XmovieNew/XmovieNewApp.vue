@@ -1,11 +1,11 @@
 <template lang="pug">
 client-only
-  .XmovieApp
+  .XmovieNewApp
 
     DebugBox(v-if="development_p")
       div foo:
 
-    XmovieSidebar(:base="base")
+    XmovieNewSidebar(:base="base")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -30,21 +30,21 @@ client-only
 
           //- .column
           //-   .box
-          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source")
-          //-     XmovieAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source" size="is-small")
+          //-     XmovieNewAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source")
+          //-     XmovieNewAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source" size="is-small")
 
-          XmovieForm(:base="base" ref="XmovieForm" v-if="form_show_p")
-          XmovieProgress(:base="base")
-          XmovieReview(:base="base")
-          XmovieValidation(:base="base")
+          XmovieNewForm(:base="base" ref="XmovieNewForm" v-if="form_show_p")
+          XmovieNewProgress(:base="base")
+          XmovieNewReview(:base="base")
+          XmovieNewValidation(:base="base")
           .column.is-half
             b-tabs.list_tabs(:expanded="false" type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
               b-tab-item(label="あなた")
-                XmovieQueueSelf(:base="base")
+                XmovieNewQueueSelf(:base="base")
               b-tab-item(label="みんな")
-                XmovieQueueAll(:base="base")
+                XmovieNewQueueAll(:base="base")
 
-    XmovieDebugPanels(:base="base" v-if="development_p")
+    XmovieNewDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
@@ -66,12 +66,12 @@ import { app_compute_from_bpm } from "./app_compute_from_bpm.js"
 import { app_source_trim } from "./app_source_trim.js"
 import { app_help             } from "./app_help.js"
 
-import { XmovieRecord } from "./models/xmovie_record.js"
+import { XmovieRecord } from "../models/xmovie_record.js"
 
 import _ from "lodash"
 
 export default {
-  name: "XmovieApp",
+  name: "XmovieNewApp",
   mixins: [
     support_parent,
     app_chore,
@@ -128,7 +128,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieApp
+.XmovieNewApp
   .MainSection.section
     +mobile
       // ios Safari では底辺部分をタップするとスクロールしてしまい使いにくいためスペースをあける
@@ -144,12 +144,12 @@ export default {
   //   // +tablet
   //   //   max-width: 40rem
 
-  // for XmovieQueueAll, XmovieQueueSelf
+  // for XmovieNewQueueAll, XmovieNewQueueSelf
   .table_status_column
     width: 5rem // "成功" が "変換中" になったときガクッとさせないための幅
 
 .STAGE-development
-  .XmovieApp
+  .XmovieNewApp
     .columns
       border: 1px dashed change_color($danger, $alpha: 0.5)
     .column

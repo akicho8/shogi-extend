@@ -1,18 +1,18 @@
 <template lang="pug">
-.XmovieForm.column.is-half
+.XmovieNewForm.column.is-half
   b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sound_play('click')")
     b-tab-item(label="棋譜")
-      XmovieFormSource(:base="base")
+      XmovieNewFormSource(:base="base")
     //- b-tab-item(label="オプション")
-    //-   XmovieFormOption(:base="base")
+    //-   XmovieNewFormOption(:base="base")
     b-tab-item(label="デザイン")
-      XmovieFormDesign(:base="base")
+      XmovieNewFormDesign(:base="base")
     b-tab-item(label="設定1")
-      XmovieFormPro1(:base="base")
+      XmovieNewFormPro1(:base="base")
     b-tab-item(label="設定2")
-      XmovieFormPro2(:base="base")
+      XmovieNewFormPro2(:base="base")
     b-tab-item(label="デバッグ" v-if="development_p")
-      XmovieFormDebug(:base="base")
+      XmovieNewFormDebug(:base="base")
 
   b-field.submit_field
     .control
@@ -23,7 +23,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieForm",
+  name: "XmovieNewForm",
   mixins: [support_child],
   mounted() {
     this.base.body_focus()
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieForm
+.XmovieNewForm
   .tab-content
     padding: 0
 

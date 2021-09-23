@@ -1,4 +1,4 @@
-import { ValidationInfo } from "./models/validation_info.js"
+import { ValidationInfo } from "../models/validation_info.js"
 import _ from "lodash"
 
 export const app_review = {

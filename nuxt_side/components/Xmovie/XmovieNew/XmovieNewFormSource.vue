@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieFormSource
+.XmovieNewFormSource
   ////////////////////////////////////////////////////////////////////////////////
   .one_block.body_field
     .buttons.mb-0.has-addons
@@ -32,7 +32,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieFormSource",
+  name: "XmovieNewFormSource",
   mixins: [support_child],
   mounted() {
     this.base.body_focus()
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieFormSource
+.XmovieNewFormSource
   // .field:not(:first-child)
   //   margin-top: 1.5rem
   .body_field

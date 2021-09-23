@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieValidation.column.is-half(v-if="present_p(base.review_error_messages)")
+.XmovieNewValidation.column.is-half(v-if="present_p(base.review_error_messages)")
   .panel.is-twitter(:class="base.review_error_messages_valid_p ? 'x-is-success' : 'x-is-danger'" size="is-small")
     .panel-heading
       | Twitterアップロード条件
@@ -15,13 +15,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieValidation",
+  name: "XmovieNewValidation",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieValidation
+.XmovieNewValidation
   .panel-block
     padding: 0.5rem
     ul
@@ -32,7 +32,7 @@ export default {
       line-height: 2.5rem
 
 .STAGE-development
-  .XmovieValidation
+  .XmovieNewValidation
     li
       &:hover
         background-color: $white-ter

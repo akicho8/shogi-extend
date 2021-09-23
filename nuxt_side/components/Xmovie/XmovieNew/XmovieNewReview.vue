@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieReview.column.is-half(v-if="base.done_record")
+.XmovieNewReview.column.is-half(v-if="base.done_record")
   b-message(type="is-danger" v-if="base.done_record.errored_at")
     | {{base.done_record.error_message}}
 
@@ -31,7 +31,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieReview",
+  name: "XmovieNewReview",
   mixins: [support_child],
   computed: {
   },
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieReview
+.XmovieNewReview
   // margin-top: 1.5rem
 
   .is_review_box

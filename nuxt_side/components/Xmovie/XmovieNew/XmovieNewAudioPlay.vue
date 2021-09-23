@@ -13,7 +13,7 @@ import { support_child } from "./support_child.js"
 import { Howl, Howler } from 'howler'
 
 export default {
-  name: "XmovieAudioPlay",
+  name: "XmovieNewAudioPlay",
   mixins: [support_child],
   props: {
     src:              { type: String,  required: false, default: null, },
@@ -110,5 +110,5 @@ export default {
 </script>
 
 <style lang="sass">
-.XmovieAudioPlay
+.XmovieNewAudioPlay
 </style>

@@ -1,4 +1,4 @@
-import XmovieHelpModal from "./XmovieHelpModal.vue"
+import XmovieNewHelpModal from "./XmovieNewHelpModal.vue"
 
 export const app_help = {
   methods: {
@@ -6,7 +6,7 @@ export const app_help = {
       this.sidebar_p = false
       this.sound_play("click")
       this.modal_card_open({
-        component: XmovieHelpModal,
+        component: XmovieNewHelpModal,
         props: { base: this.base },
       })
     },

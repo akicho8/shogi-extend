@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieQueueSelf
+.XmovieNewQueueSelf
   .progress_container(v-if="base.progress_info && false")
     b-progress(type="is-danger" :value="base.progress_info.percent" show-value format="percent")
 
@@ -46,13 +46,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieQueueSelf",
+  name: "XmovieNewQueueSelf",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieQueueSelf
+.XmovieNewQueueSelf
   // margin-top: 0rem
   td
     vertical-align: middle

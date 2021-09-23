@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.XmovieDebugPanels.is-centered
+.columns.is-multiline.XmovieNewDebugPanels.is-centered
   //- .column.is-2
   //-   .panel
   //-     .panel-heading
@@ -40,11 +40,11 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieDebugPanels",
+  name: "XmovieNewDebugPanels",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieDebugPanels
+.XmovieNewDebugPanels
 </style>

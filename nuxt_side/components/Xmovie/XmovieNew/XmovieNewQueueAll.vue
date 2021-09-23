@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieQueueAll(v-if="base.xmovie_info")
+.XmovieNewQueueAll(v-if="base.xmovie_info")
   nav.level.is-mobile
     .level-item.has-text-centered
       div
@@ -35,13 +35,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieQueueAll",
+  name: "XmovieNewQueueAll",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieQueueAll
+.XmovieNewQueueAll
   margin-top: 0rem
   td
     vertical-align: middle

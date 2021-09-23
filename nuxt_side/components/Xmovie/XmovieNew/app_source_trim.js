@@ -1,4 +1,4 @@
-import SfenTrimModal from "../SfenTrimModal.vue"
+import SfenTrimModal from "../../SfenTrimModal.vue"
 
 export const app_source_trim = {
   methods: {

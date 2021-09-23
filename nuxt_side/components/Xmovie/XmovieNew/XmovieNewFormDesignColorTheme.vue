@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieFormDesignColorTheme.one_block
+.XmovieNewFormDesignColorTheme.one_block
   b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
     .control
       b-button(@click="base.color_select_modal_handle" icon-right="view-comfy") {{base.color_theme_info.name}}
@@ -22,22 +22,22 @@
                       | {{e.name}}
                     img.is-block.mt-2(:src="e.thumbnail_url(base)" loading="lazy")
 
-  XmovieImageUpload(:base="base" label="背景"           :file_info.sync="base.u_bg_file")
-  XmovieImageUpload(:base="base" label="盤面テクスチャ" :file_info.sync="base.u_fg_file")
-  XmovieImageUpload(:base="base" label="駒テクスチャ"   :file_info.sync="base.u_pt_file")
+  XmovieNewImageUpload(:base="base" label="背景"           :file_info.sync="base.u_bg_file")
+  XmovieNewImageUpload(:base="base" label="盤面テクスチャ" :file_info.sync="base.u_fg_file")
+  XmovieNewImageUpload(:base="base" label="駒テクスチャ"   :file_info.sync="base.u_pt_file")
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieFormDesignColorTheme",
+  name: "XmovieNewFormDesignColorTheme",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieFormDesignColorTheme
+.XmovieNewFormDesignColorTheme
   // 上下の不自然な隙間を取る
   .dropdown-content
     padding-top: 0

@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieHelpBody.is_line_break_on
+.XmovieNewHelpBody.is_line_break_on
   .content
     article
       h2 簡単な使い方
@@ -105,13 +105,13 @@
 <script>
 
 export default {
-  name: "XmovieHelpBody",
+  name: "XmovieNewHelpBody",
 }
 </script>
 
 <style lang="sass">
 @import "support.sass"
-.XmovieHelpBody
+.XmovieNewHelpBody
   padding: 1.5rem
   article
     &:not(:first-child)

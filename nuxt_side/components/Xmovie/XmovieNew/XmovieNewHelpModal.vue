@@ -7,7 +7,7 @@
       a.permalink(href="/movie-factory/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    XmovieHelpBody
+    XmovieNewHelpBody
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
@@ -16,7 +16,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieHelpModal",
+  name: "XmovieNewHelpModal",
   mixins: [
     support_child,
   ],
@@ -31,7 +31,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.XmovieHelpModal
+.XmovieNewHelpModal
   +modal_max_width(800px)
   .modal-card-body
     padding: 0

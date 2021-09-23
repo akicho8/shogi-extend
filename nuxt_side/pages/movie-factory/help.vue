@@ -1,5 +1,5 @@
 <template lang="pug">
-XmovieHelp
+XmovieNewHelp
 </template>
 
 <script>

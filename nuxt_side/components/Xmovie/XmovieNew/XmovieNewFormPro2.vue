@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieFormPro2
+.XmovieNewFormPro2
   b-field.one_block.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
       b-dropdown(v-model="base.recipe_key" @active-change="e => e && sound_play('click')")
@@ -107,11 +107,11 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieFormPro2",
+  name: "XmovieNewFormPro2",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieFormPro2
+.XmovieNewFormPro2
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-.XmovieFormDesignAudioTheme.one_block
+.XmovieNewFormDesignAudioTheme.one_block
   b-field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
     .control
       b-button(@click="base.audio_select_modal_handle" icon-right="view-comfy") {{base.audio_theme_info.name}}
@@ -17,7 +17,7 @@
               b-dropdown-item(:value="e.key" @click="sound_play('click')")
                 .media
                   .media-left(v-if="e.sample_source")
-                    XmovieAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.current_play_instance = e")
+                    XmovieNewAudioPlay(:base="base" :src="e.sample_source" :volume="base.main_volume" @play="e => base.current_play_instance = e")
                   .media-content
                     | {{e.name}}
                     .audio_desc(v-if="e.audio_part_a_duration")
@@ -34,8 +34,8 @@
                     a(:href="e.source_url" v-if="e.source_url" target="_blank")
                       b-icon(icon="open-in-new" size="is-small")
 
-  XmovieAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
-  XmovieAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
+  XmovieNewAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
+  XmovieNewAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
 
   //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_custom'")
   //-   b-upload(v-model="base.xaudio_list_for_v_model" multiple drag-drop @input="base.xaudio_file_upload_handle" native accept="audio/*")
@@ -46,7 +46,7 @@
   //- .box(v-if="base.xaudio_list.length >= 1")
   //-   .media.is-justify-content-space-between(v-for="(file, index) in base.xaudio_list" :key="index")
   //-     .media-left
-  //-       XmovieAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
+  //-       XmovieNewAudioPlay(:base="base" :src="file.url" @play="e => base.current_play_instance = e" v-if="file.url")
   //-     .media-content
   //-       | {{file.attributes.name}}
   //-     .media-right
@@ -59,13 +59,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "XmovieFormDesignAudioTheme",
+  name: "XmovieNewFormDesignAudioTheme",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
-.XmovieFormDesignAudioTheme
+.XmovieNewFormDesignAudioTheme
   .dropdown-item
     // 選択中でも a の icon が青いままなので白くする
     &.is-active
