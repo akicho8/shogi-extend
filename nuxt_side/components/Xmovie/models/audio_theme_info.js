@@ -1,6 +1,6 @@
 import MemoryRecord from "js-memory-record"
 import dayjs from "dayjs"
-import { Gs } from "../../models/gs.js"
+import { Gs } from "@/components/models/gs.js"
 
 export class AudioThemeInfo extends MemoryRecord {
   static get field_label() {

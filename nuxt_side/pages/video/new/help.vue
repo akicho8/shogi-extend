@@ -4,13 +4,13 @@ XmovieNewHelp
 
 <script>
 export default {
-  name: "movie-factory-help",
+  name: "video-new-help",
   computed: {
     meta() {
       return {
         title: ["使い方", "動画生成"],
         description: "棋譜を動画に変換します",
-        og_image_key: "movie-factory",
+        og_image_key: "video-new",
       }
     }
   },

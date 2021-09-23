@@ -196,7 +196,7 @@ export default {
     movie_factory_handle() {
       this.record_fetch(() => {
         this.$router.push({
-          name: 'movie-factory',
+          name: 'video-new',
           query: {
             body: this.record.all_kifs.sfen,
           },

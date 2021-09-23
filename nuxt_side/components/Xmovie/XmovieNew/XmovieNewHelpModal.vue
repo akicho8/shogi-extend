@@ -4,7 +4,7 @@
     .modal-card-title
       | 使い方
     b-tooltip(position="is-left" label="パーマリンク")
-      a.permalink(href="/movie-factory/help" target="_blank")
+      a.permalink(href="/video/new/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
     XmovieNewHelpBody

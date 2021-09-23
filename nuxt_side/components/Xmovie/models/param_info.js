@@ -1,5 +1,5 @@
 import MemoryRecord from 'js-memory-record'
-import { Gs } from "../../models/gs.js"
+import { Gs } from "@/components/models/gs.js"
 
 export class ParamInfo extends MemoryRecord {
   static get define() {

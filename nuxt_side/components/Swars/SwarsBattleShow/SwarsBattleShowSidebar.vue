@@ -7,7 +7,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
       b-menu
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: base.share_board_query}" @click.native="sound_play('click')")
-          b-menu-item.is_active_unset(label="動画生成" tag="nuxt-link" :to="{name: 'movie-factory', query: {body: base.record.sfen_body, viewpoint_key: base.new_viewpoint}}" @click.native="sound_play('click')" v-if="development_or_staging_p")
+          b-menu-item.is_active_unset(label="動画生成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.record.sfen_body, viewpoint_key: base.new_viewpoint}}" @click.native="sound_play('click')" v-if="development_or_staging_p")
           b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.new_turn, viewpoint: base.new_viewpoint}}" @click.native="sound_play('click')")
           b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="sound_play('click')")
 

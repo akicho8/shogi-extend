@@ -2,7 +2,7 @@
 .XmovieNewHelp
   MainNavbar
     template(slot="brand")
-      NavbarItemHome(icon="chevron-left" :to="{name: 'movie-factory'}")
+      NavbarItemHome(icon="chevron-left" :to="{name: 'video-new'}")
       b-navbar-item.has-text-weight-bold(tag="div")
         | 動画生成の使い方
   MainSection

@@ -1,5 +1,5 @@
 import MemoryRecord from 'js-memory-record'
-import { Gs } from "../../../components/models/gs.js"
+import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
 export class ValidationInfo extends MemoryRecord {

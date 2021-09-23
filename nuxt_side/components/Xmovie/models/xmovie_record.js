@@ -1,4 +1,4 @@
-import { Gs } from "../../../components/models/gs.js"
+import { Gs } from "@/components/models/gs.js"
 import { Model } from "./model.js"
 import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"

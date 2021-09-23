@@ -31,10 +31,10 @@ class AppEntryInfo
     {
       display_p: !Rails.env.production?,
       experiment_p: false,
-      nuxt_link_to: {path: "/movie-factory"},
+      nuxt_link_to: {path: "/video/new"},
       title: "動画生成",
       attention_label: "NEW!",
-      og_image_key: "movie-factory",
+      og_image_key: "video-new",
       description: "棋譜を動画にしたいときにどうぞ",
       features: [
         "mp4, gif, png, zip 等に変換",

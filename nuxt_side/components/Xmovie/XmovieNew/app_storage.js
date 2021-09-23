@@ -61,7 +61,7 @@ export const app_storage = {
   },
   computed: {
     ls_storage_key() {
-      return `movie-factory-v${PARAMETER_VERSION}`
+      return `video-new-v${PARAMETER_VERSION}`
     },
     ls_default() {
       return this.ParamInfo.values.filter(e => e.permanent).reduce((a, e, i) => ({...a, [e.key]: e.default}), {})
