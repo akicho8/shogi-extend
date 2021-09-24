@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_235300) do
+ActiveRecord::Schema.define(version: 2021_09_25_093200) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -936,11 +936,36 @@ ActiveRecord::Schema.define(version: 2021_09_23_235300) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "kiwi_books", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lemon_id", null: false, comment: "動画"
+    t.string "title", limit: 100, null: false, comment: "タイトル"
+    t.text "description", null: false, comment: "説明"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
+    t.index ["key"], name: "index_kiwi_books_on_key", unique: true
+    t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id"
+    t.index ["user_id"], name: "index_kiwi_books_on_user_id"
+  end
+
+  create_table "kiwi_folders", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.integer "books_count", default: 0, null: false, comment: "問題集数"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_kiwi_folders_on_key", unique: true
+    t.index ["position"], name: "index_kiwi_folders_on_position"
+  end
+
   create_table "kiwi_lemons", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "所有者"
     t.string "recordable_type", null: false
     t.bigint "recordable_id", null: false, comment: "対象レコード"
-    t.text "convert_params", null: false, comment: "変換パラメータ"
+    t.text "all_params", null: false, comment: "変換パラメータ全部入り"
     t.datetime "process_begin_at", comment: "処理開始日時"
     t.datetime "process_end_at", comment: "処理終了日時"
     t.datetime "successed_at", comment: "成功日時"
@@ -950,14 +975,10 @@ ActiveRecord::Schema.define(version: 2021_09_23_235300) do
     t.text "ffprobe_info", comment: "変換パラメータ"
     t.string "browser_path", comment: "生成したファイルへのパス"
     t.string "filename_human", comment: "ダウンロードファイル名"
-    t.string "key", null: false
-    t.string "title", limit: 100, null: false, comment: "タイトル"
-    t.text "description", null: false, comment: "説明"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_kiwi_lemons_on_created_at"
     t.index ["errored_at"], name: "index_kiwi_lemons_on_errored_at"
-    t.index ["key"], name: "index_kiwi_lemons_on_key", unique: true
     t.index ["process_begin_at"], name: "index_kiwi_lemons_on_process_begin_at"
     t.index ["process_end_at"], name: "index_kiwi_lemons_on_process_end_at"
     t.index ["recordable_type", "recordable_id"], name: "index_kiwi_lemons_on_recordable_type_and_recordable_id"
@@ -1494,6 +1515,9 @@ ActiveRecord::Schema.define(version: 2021_09_23_235300) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
+  add_foreign_key "kiwi_books", "kiwi_folders", column: "folder_id"
+  add_foreign_key "kiwi_books", "kiwi_lemons", column: "lemon_id"
+  add_foreign_key "kiwi_books", "users"
   add_foreign_key "kiwi_lemons", "users"
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"

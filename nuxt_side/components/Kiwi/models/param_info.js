@@ -14,7 +14,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "viewpoint_key",      type: "string",  name: "視点",                default: "black",                     permanent: false, relation: "ViewpointInfo",     desc: "",           },
       { key: "color_theme_key",    type: "string",  name: "配色",                default: "color_theme_is_real_wood1", permanent: true,  relation: "ColorThemeInfo",    desc: "",           },
       { key: "audio_theme_key",    type: "string",  name: "BGM",                 default: "audio_theme_is_ds3479",     permanent: true,  relation: "AudioThemeInfo",    desc: "",           },
-      { key: "media_factory_key",  type: "string",  name: "生成ツール",          default: "ffmpeg",                    permanent: true,  relation: "MediaFactoryInfo",  desc: "",           },
+      { key: "factory_method_key",  type: "string",  name: "生成ツール",          default: "ffmpeg",                    permanent: true,  relation: "FactoryMethodInfo",  desc: "",           },
       { key: "cover_text",         type: "string",  name: "表紙文言",            default: "",                          permanent: true,  relation: null,                desc: "",           },
       { key: "video_crf",          type: "integer", name: "映像品質レベル",      default: 23,                          permanent: true,  relation: null,                desc: "",           },
       { key: "audio_bit_rate",     type: "string",  name: "音声ビットレート",    default: "128k",                      permanent: true,  relation: null,                desc: "",           },

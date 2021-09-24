@@ -89,7 +89,9 @@ Rails.application.routes.draw do
 
   resource :share_board, path: "share-board", only: [:show]
 
-  resources :xmovies, path: "animation-files", only: [:show]
+  namespace :kiwi, path: "" do
+    resources :lemons, path: "animation-files", only: [:show]
+  end
 
   ################################################################################ 将棋トレーニングバトル
 
@@ -178,6 +180,19 @@ Rails.application.routes.draw do
     end
 
     namespace :kiwi, format: :json do
+      namespace :tops do
+        get :index
+        get :sitemap
+      end
+      namespace :books do
+        get :top
+        get :index
+        get :show
+        get :edit
+        post :save
+        delete :destroy
+        get :download
+      end
       namespace :lemons do
         get :index
         get :latest_info_reload

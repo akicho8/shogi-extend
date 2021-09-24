@@ -93,7 +93,7 @@
 # | user_id          | User             | integer(8)  | NOT NULL    | => User#id                 | A     |
 # | recordable_type  | Recordable type  | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
 # | recordable_id    | Recordable       | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
-# | convert_params   | Convert params   | text(65535) | NOT NULL    |                            |       |
+# | all_params   | Convert params   | text(65535) | NOT NULL    |                            |       |
 # | process_begin_at | Process begin at | datetime    |             |                            | C     |
 # | process_end_at   | Process end at   | datetime    |             |                            | D     |
 # | successed_at     | Successed at     | datetime    |             |                            | E     |

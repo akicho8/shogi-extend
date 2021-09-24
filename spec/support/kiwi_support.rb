@@ -13,10 +13,10 @@ module KiwiSupport
     let(:params1) {
       {
         :body => "position startpos moves 7g7f 8c8d",
-        :lemon_params => {
+        :all_params => {
           :sleep => 0,
           :raise_message => "",
-          :board_file_generator_params => {
+          :media_builder_params => {
             :recipe_key               => "is_recipe_mp4",
             :loop_key                 => "is_loop_infinite",
             :page_duration            => 1,
@@ -24,7 +24,7 @@ module KiwiSupport
             :viewpoint                => "black",
             :color_theme_key          => "color_theme_is_real_wood1",
             :audio_theme_key          => "audio_theme_is_headspin_only",
-            :media_factory_key        => "ffmpeg",
+            :factory_method_key        => "ffmpeg",
             :cover_text               => "cover_text",
             :video_crf                => 23,
             :audio_bit_rate           => "128k",

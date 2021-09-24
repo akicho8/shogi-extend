@@ -11,10 +11,18 @@ export class Model {
   }
 
   get new_record_p() {
-    return this.id == null
+    return this.to_param == null
   }
 
   get persisted_p() {
-    return this.id != null
+    return this.to_param != null
+  }
+
+  get primary_key() {
+    return "id"
+  }
+
+  get to_param() {
+    return this[this.primary_key]
   }
 }

@@ -7,11 +7,11 @@ export const app_queue_self = {
   },
 
   methods: {
-    kiwi_my_records_singlecasted(data) {
+    kiwi_my_lemons_singlecasted(data) {
       this.my_records = data.my_records.map(e => new this.Lemon(this, e))
     },
 
-    kiwi_done_record_singlecasted(data) {
+    kiwi_done_lemon_singlecasted(data) {
       this.done_record = new this.Lemon(this, data.done_record)
       this.progress_info = null
       if (data.noisy) {

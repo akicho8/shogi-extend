@@ -68,7 +68,7 @@ export class Lemon extends Model {
 
   // FIXME: 動画の情報ではない
   get to_wh() {
-    const e = this.convert_params.board_file_generator_params
+    const e = this.all_params.media_builder_params
     return { width: e.width, height: e.height }
   }
 
@@ -125,7 +125,7 @@ export class Lemon extends Model {
   // private
 
   get recipe_key() {
-    return this.convert_params.board_file_generator_params.recipe_key
+    return this.all_params.media_builder_params.recipe_key
   }
 
   get recipe_info() {

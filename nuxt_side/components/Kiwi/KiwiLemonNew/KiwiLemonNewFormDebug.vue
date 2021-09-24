@@ -1,6 +1,6 @@
 <template lang="pug">
 .KiwiLemonNewFormDebug
-  SimpleRadioButtons.one_block(:base="base" :model="base.MediaFactoryInfo" var_name="media_factory_key")
+  SimpleRadioButtons.one_block(:base="base" :model="base.FactoryMethodInfo" var_name="factory_method_key")
 
   b-field.one_block(label="負荷" v-if="development_p")
     b-input(type="number" v-model.number="base.sleep" expanded)

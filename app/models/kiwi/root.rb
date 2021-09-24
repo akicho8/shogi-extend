@@ -11,34 +11,25 @@ module Kiwi
 
       [
         # Static
-        AnswerKind,
-        Sequence,
         Folder,
-        Lineage,
         # ActiveRecord
+        Book,
         Lemon,
-        Article,
       ].each do |e|
         e.setup(options)
       end
 
-      if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-        unless Article.exists?
-          Article.import_all
-        end
-      end
+      # if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
+      #   unless Article.exists?
+      #     Article.import_all
+      #   end
+      # end
     end
 
     def models
       [
-        Lemonship,
-        Article,
-        MovesAnswer,
         Lemon,
-        Lineage,
         Folder,
-        Sequence,
-        AnswerKind,
       ]
     end
 

@@ -1,0 +1,70 @@
+<template lang="pug">
+.KiwiBookShowTopMainCard
+  .card
+    .card-image
+      figure.image
+        video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false")
+    .card-content
+      .media
+        .media-left
+          nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+            img.is-rounded(:src="base.book.user.avatar_path" :alt="base.book.user.name")
+        .media-content
+          //- p(v-if="base.book.tag_list.length >= 1")
+          //-   span.tag_links
+          //-     template(v-for="tag in base.book.tag_list")
+          //-       a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
+          .title.is-4.mb-1 {{base.book.title}}
+          p
+            nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+              | {{base.book.user.name}}
+            span.ml-1 {{updated_time_format(base.book.updated_at)}}
+            b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
+
+          KiwiTagList.mt-1(:tag_list="base.book.tag_list" :tag_search_handle="base.tag_search_handle")
+
+          .content.mt-4(v-if="base.book.description")
+            .description(v-html="simple_format(auto_link(base.book.description))")
+      //- .card-footer
+      //- .card-footer-item
+      //-   b-button.has-text-weight-bold(type="is-primary" @click="base.play_start")
+      //-     | START
+      //- .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white(@click="base.play_start")
+      //-   | START
+      //- nuxt-link.card-footer-item(:to="{name: 'video-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play('click')" v-if="base.owner_p") 問題追加
+      //- nuxt-link.card-footer-item(:to="{name: 'video-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sound_play('click')" v-if="base.owner_p") 編集
+</template>
+
+<script>
+import { support_child } from "./support_child.js"
+
+export default {
+  name: "KiwiBookShowTopMainCard",
+  mixins: [support_child],
+}
+</script>
+
+<style lang="sass">
+@import "../support.sass"
+.STAGE-development
+  .KiwiBookShowTopMainCard
+
+.KiwiBookShowTopMainCard
+  .card-image
+    // 個数
+    .position_top_right
+      position: absolute
+      top: 0
+      right: 0
+      .tag
+        margin: 6px
+        background-color: change_color($black, $alpha: 0.5)
+
+  .hashtags
+    a:not(:first-child)
+      margin-left: 0.25rem
+
+  .media-content
+    p
+      line-height: 1.25rem
+</style>

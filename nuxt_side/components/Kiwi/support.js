@@ -1,4 +1,4 @@
-// import { FolderInfo } from './models/folder_info.js'
+import { FolderInfo } from './models/folder_info.js'
 import { KiwiConfig } from './models/kiwi_config.js'
 
 import _ from "lodash"
@@ -20,7 +20,7 @@ export const support = {
     },
   },
   computed: {
-    // FolderInfo() { return FolderInfo },
+    FolderInfo() { return FolderInfo },
     KiwiConfig() { return KiwiConfig },
     s_config() {
       return {

@@ -160,21 +160,21 @@ module BattleControllerSharedMethods
         format.html
         format.png {
           # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-          generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_recipe_png))
-          send_file_or_redirect(generator)
+          media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_png))
+          send_file_or_redirect(media_builder)
         }
         # if Rails.env.development?
         #   format.gif {
-        #     generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_recipe_gif))
+        #     media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_gif))
         #
         #     # FIXME: リダイレクト
         #
-        #     # url = UrlProxy.wrap2(path: generator.to_browser_path)
+        #     # url = UrlProxy.wrap2(path: media_builder.to_browser_path)
         #     # render html: url
         #     # return
         #
-        #     if generator.file_exist?
-        #       send_file_or_redirect(generator)
+        #     if media_builder.file_exist?
+        #       send_file_or_redirect(media_builder)
         #       return
         #     end
         #
@@ -189,7 +189,7 @@ module BattleControllerSharedMethods
         #       return
         #     end
         #
-        #     lemon = Kiwi::Lemon.create!(recordable: current_record, user: current_user, convert_params: params.to_unsafe_h)
+        #     lemon = Kiwi::Lemon.create!(recordable: current_record, user: current_user, all_params: params.to_unsafe_h)
         #     if false
         #       lemon.main_process!
         #     else
@@ -203,11 +203,11 @@ module BattleControllerSharedMethods
       end
     end
 
-    def send_file_or_redirect(generator)
+    def send_file_or_redirect(media_builder)
       if current_disposition == :attachment
-        send_file generator.to_real_path, type: Mime[generator.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
+        send_file media_builder.to_real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
       else
-        redirect_to generator.to_browser_path
+        redirect_to media_builder.to_browser_path
       end
     end
 

@@ -26,15 +26,15 @@ class UserPreview < ActionMailer::Preview
 
   # http://localhost:3000/rails/mailers/user/xmovie_notify
   def xmovie_notify
-    convert_params = {
+    all_params = {
       :sleep         => 0,
       :raise_message => "",
-      :board_file_generator_params => {
+      :media_builder_params => {
         :recipe_key => "is_recipe_png",
       },
     }
     free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
-    lemon = Kiwi::Lemon.create!(recordable: free_battle, user: User.sysop, convert_params: convert_params)
+    lemon = Kiwi::Lemon.create!(recordable: free_battle, user: User.sysop, all_params: all_params)
     lemon.main_process!
     UserMailer.xmovie_notify(lemon)
   end

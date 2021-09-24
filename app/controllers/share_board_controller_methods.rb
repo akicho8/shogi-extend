@@ -87,10 +87,10 @@ module ShareBoardControllerMethods
       # Twitter では og:image のパスは直接画像を返さないといけない
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
       # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-      generator = BoardFileGenerator.new(current_record, params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: image_viewpoint))
-      path = generator.to_real_path
+      media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: image_viewpoint))
+      path = media_builder.to_real_path
       if stale?(last_modified: path.mtime, public: true)
-        send_file path, type: Mime[generator.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
+        send_file path, type: Mime[media_builder.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
       end
 
       return

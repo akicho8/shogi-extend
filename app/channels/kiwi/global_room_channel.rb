@@ -24,11 +24,11 @@ module Kiwi
 
       if current_user
         # あなたの履歴
-        current_user.kiwi_my_records_singlecast
+        current_user.kiwi_my_lemons_singlecast
 
         # 直近1件を送る
-        if v = current_user.lemons.success_only.order(created_at: :desc).first
-          current_user.kiwi_done_record_singlecast(v, noisy: false)
+        if v = current_user.kiwi_lemons.success_only.order(created_at: :desc).first
+          current_user.kiwi_done_lemon_singlecast(v, noisy: false)
         end
       end
     end

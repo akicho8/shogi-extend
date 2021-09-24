@@ -19,6 +19,11 @@ export const app_review = {
       // this.lemon   = null
     },
 
+    __main_download_handle2(record) {
+      this.sound_play("click")
+      this.$router.push({name: "video-books-edit", query: { lemon_id: record.id }})
+    },
+
     __main_download_handle(record) {
       this.sound_play("click")
       window.location.href = record.rails_side_download_url

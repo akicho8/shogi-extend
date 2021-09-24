@@ -2,7 +2,19 @@
 #
 # Talk.new(source_text: "こんにちは")
 #
+# cap production rails:runner CODE='Talk.cache_delete_all'
+# rails r 'Talk.cache_delete_all'
 class Talk
+  include SystemFileMethods
+
+  class << self
+    def default_params
+      super.merge({
+          polly_params: {},
+        })
+    end
+  end
+
   cattr_accessor :replace_table do
     {
       "手番" => "てばん",
@@ -18,47 +30,6 @@ class Talk
   end
 
   cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
-
-  class << self
-    def cache_root
-      Rails.public_path.join("system", name.underscore)
-    end
-
-    # cap production rails:runner CODE='Talk.cache_delete_all'
-    # rails r 'Talk.cache_delete_all'
-    def cache_delete_all
-      FileUtils.rm_rf(cache_root)
-    end
-  end
-
-  attr_accessor :params
-
-  def initialize(params = {})
-    @params = {
-      polly_params: {},
-      disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test?,
-    }.merge(params)
-  end
-
-  def to_browser_path
-    generate_unless_exist
-    relative_path
-  end
-
-  def to_real_path
-    generate_unless_exist
-    real_path
-  end
-
-  def as_json(*)
-    {
-      browser_path: to_browser_path,
-    }
-  end
-
-  def cache_delete
-    FileUtils.rm_f(real_path)
-  end
 
   def normalized_text
     @normalized_text ||= -> {
@@ -91,31 +62,19 @@ class Talk
     params[:source_text].to_s
   end
 
-  def real_path
-    self.class.cache_root.join(*dir_parts, filename)
-  end
-
-  def filename
+  def disk_filename
     "#{unique_key}.mp3"
   end
 
-  def unique_key
-    @unique_key ||= Digest::MD5.hexdigest(unique_key_source_string)
+  def unique_key_source
+    [
+      polly_params[:voice_id],
+      polly_params[:sample_rate],
+      source_text,
+    ].join(":")
   end
 
-  def unique_key_source_string
-    [polly_params[:voice_id], polly_params[:sample_rate], source_text].join(":")
-  end
-
-  def generate_unless_exist
-    if params[:disk_cache_enable] && real_path.exist?
-      return
-    end
-
-    force_generate
-  end
-
-  def force_generate
+  def force_build
     params = polly_params.merge(text: normalized_text, response_target: real_path.to_s)
     real_path.dirname.mkpath
 
@@ -147,15 +106,6 @@ class Talk
 
   def voice_id
     "Mizuki"                    # or Takumi
-  end
-
-  # system/ だと /s/system になってしまうので / から始めるようにする
-  def relative_path
-    "/" + real_path.relative_path_from(Rails.public_path).to_s
-  end
-
-  def dir_parts
-    unique_key.match(/(.{2})(.{2})/).captures
   end
 
   def client

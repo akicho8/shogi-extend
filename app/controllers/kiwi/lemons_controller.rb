@@ -21,24 +21,24 @@ module Kiwi
     # http://localhost:3000/animation-files/148?cache_delete=1
     #
     # ここで生成する
-    # http://localhost:3000/animation-files/148?cache_delete=1&generate_unless_exist=1
+    # http://localhost:3000/animation-files/148?cache_delete=1&not_exist_then_build=1
     #
     # JSON確認
     # http://localhost:3000/animation-files/148.json
     def show
       if LOGIN_REQUIRED
-        scope = current_user.lemons
+        scope = current_user.kiwi_lemons
       else
         scope = Kiwi::Lemon.all
       end
       lemon = Kiwi::Lemon.find(params[:id])
-      generator = lemon.generator
+      media_builder = lemon.media_builder
       if Rails.env.development?
         if params[:cache_delete]
-          generator.cache_delete
+          media_builder.cache_delete
         end
-        if params[:generate_unless_exist]
-          generator.generate_unless_exist
+        if params[:not_exist_then_build]
+          media_builder.not_exist_then_build
         end
       end
       respond_to do |format|
@@ -46,10 +46,10 @@ module Kiwi
           render json: lemon.as_json(Kiwi::Lemon.json_struct_for_done_record)
         }
         format.all {
-          unless generator.real_path.exist?
+          unless media_builder.real_path.exist?
             raise ActionController::RoutingError, "ファイルが生成されていません"
           end
-          send_file_with_range generator.real_path, type: Mime[generator.recipe_info.real_ext], disposition: params[:disposition] || "inline", filename: lemon.filename_human
+          send_file_with_range media_builder.real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: params[:disposition] || "inline", filename: lemon.filename_human
         }
       end
     end

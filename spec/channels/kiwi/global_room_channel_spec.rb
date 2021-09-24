@@ -37,8 +37,8 @@ module Kiwi
         subscription.setup_request(data)
         # 次の3つが呼ばれるけどテストの書き方わからん
         # Kiwi::Lemon.everyone_broadcast
-        # current_user.kiwi_my_records_singlecast
-        # current_user.kiwi_done_record_singlecast
+        # current_user.kiwi_my_lemons_singlecast
+        # current_user.kiwi_done_lemon_singlecast
       end
     end
   end

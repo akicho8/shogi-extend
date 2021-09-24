@@ -137,9 +137,9 @@ class UserMailer < ApplicationMailer
     end
 
     # 添付
-    generator = lemon.generator
-    if generator.file_exist?
-      attachments[lemon.filename_human] = generator.real_path.read
+    media_builder = lemon.media_builder
+    if media_builder.file_exist?
+      attachments[lemon.filename_human] = media_builder.real_path.read
     end
 
     mail({

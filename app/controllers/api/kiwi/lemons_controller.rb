@@ -43,7 +43,7 @@ module Api
 
         # 予約数制限
         if c = current_reserve_limit
-          if current_user.lemons.not_done_only.count > c
+          if current_user.kiwi_lemons.not_done_only.count > c
             render json: { error_message: "投入しすぎです" }
             return
           end
@@ -58,11 +58,11 @@ module Api
 
         # 将来的には KIF などはここですぐ返したらいいんでは？
         if FAST_RESPONSE && free_battle.turn_max <= FAST_RESPONSE
-          generator = BoardFileGenerator.new(free_battle, params[:convert_params])
-          generator.generate_unless_exist
+          media_builder = MediaBuilder.new(free_battle, params[:all_params])
+          media_builder.not_exist_then_build
           render json: {
             response_hash: {
-              url: generator.browser_url,
+              url: media_builder.browser_url,
               free_battle: free_battle.as_json, # フロント側では未使用
             }
           }
@@ -80,11 +80,11 @@ module Api
         #   return
         # end
 
-        lemon = current_user.lemons.create!(recordable: free_battle, convert_params: params.to_unsafe_h[:lemon_params])
+        lemon = current_user.kiwi_lemons.create!(recordable: free_battle, all_params: params.to_unsafe_h[:all_params])
         if false
           lemon.main_process!
         else
-          current_user.kiwi_my_records_singlecast
+          current_user.kiwi_my_lemons_singlecast
           ::Kiwi::Lemon.everyone_broadcast
           ::Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
           ::Kiwi::Lemon.background_job_kick
@@ -101,8 +101,8 @@ module Api
         # # render html: url
         # # return
         #
-        # if generator.file_exist?
-        #   send_file_or_redirect(generator)
+        # if media_builder.file_exist?
+        #   send_file_or_redirect(media_builder)
         #   return
         # end
         #

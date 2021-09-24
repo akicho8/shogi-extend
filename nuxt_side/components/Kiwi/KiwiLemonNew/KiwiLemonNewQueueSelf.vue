@@ -33,6 +33,7 @@
       .buttons.has-addons.are-small.mb-0(v-if="row.successed_at")
         b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
         b-button.mb-0(@click="sound_play('click')" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
+        b-button.mb-0(@click="base.__main_download_handle2(row)"    type="is-light"                              icon-left="home")
 
         b-button.mb-0(@click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
         b-button.mb-0(@click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         v-if="development_or_staging_p")

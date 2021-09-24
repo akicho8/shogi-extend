@@ -3,7 +3,7 @@ import { XfontInfo          } from "../models/xfont_info.js"
 import { ViewpointInfo     } from "../models/viewpoint_info.js"
 import { ColorThemeInfo    } from "../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
-import { MediaFactoryInfo  } from "../models/media_factory_info.js"
+import { FactoryMethodInfo  } from "../models/factory_method_info.js"
 import { AnimationSizeInfo } from "../models/animation_size_info.js"
 import { ParamInfo         } from "../models/param_info.js"
 import { RecipeInfo        } from "../models/recipe_info.js"
@@ -25,7 +25,7 @@ export const app_form = {
       viewpoint_key:      null, // 視点
       color_theme_key:    null, // 色テーマ
       audio_theme_key:    null, // 曲テーマ
-      media_factory_key:  null, // 生成方法
+      factory_method_key:  null, // 生成方法
       cover_text:         null, // 表紙文言
       video_crf:          null, // video品質レベル
       audio_bit_rate:     null, // 音声ビットレート
@@ -322,8 +322,8 @@ export const app_form = {
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)          },
     ColorThemeInfo()           { return ColorThemeInfo                                   },
     color_theme_info()         { return ColorThemeInfo.fetch(this.color_theme_key)       },
-    MediaFactoryInfo()           { return MediaFactoryInfo                                   },
-    media_factory_info()         { return MediaFactoryInfo.fetch(this.media_factory_key)       },
+    FactoryMethodInfo()           { return FactoryMethodInfo                                   },
+    factory_method_info()         { return FactoryMethodInfo.fetch(this.factory_method_key)       },
     AudioThemeInfo()           { return AudioThemeInfo                                   },
     audio_theme_info()         { return AudioThemeInfo.fetch(this.audio_theme_key)       },
     RecipeInfo()               { return RecipeInfo                                       },
@@ -351,14 +351,14 @@ export const app_form = {
         // for Lemon
         body: this.body,
 
-        // for Lemon#convert_params
-        lemon_params: {
+        // for Lemon#all_params
+        all_params: {
           sleep: this.sleep,
           raise_message: this.raise_message,
 
           // パラメータの差異はなるべくここだけで吸収する
-          board_file_generator_params: {
-            //////////////////////////////////////// BoardFileGenerator で処理
+          media_builder_params: {
+            //////////////////////////////////////// MediaBuilder で処理
             recipe_key: this.recipe_key,
             ...this.u_audio_file_if_enabled,
             ...this.image_file_if_enabled,
@@ -369,7 +369,7 @@ export const app_form = {
             viewpoint:         this.viewpoint_key,
             color_theme_key:   this.color_theme_key,
             audio_theme_key:   this.audio_theme_key,
-            media_factory_key: this.media_factory_key,
+            factory_method_key: this.factory_method_key,
             cover_text:        this.cover_text,
             video_crf:         this.video_crf,
             audio_bit_rate:    this.audio_bit_rate,
