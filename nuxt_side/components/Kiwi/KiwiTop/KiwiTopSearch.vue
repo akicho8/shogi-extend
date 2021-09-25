@@ -6,7 +6,7 @@ b-field.KiwiTopSearch
     icon-clickable
     @icon-click="base.search_handle"
     v-model.trim="base.query"
-    rounded
+    :rounded="false"
     @keydown.native.enter="base.search_handle"
     )
 </template>
@@ -21,6 +21,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .KiwiTopSearch
 </style>

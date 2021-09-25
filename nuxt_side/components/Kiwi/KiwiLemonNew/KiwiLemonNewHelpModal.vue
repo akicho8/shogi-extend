@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .KiwiLemonNewHelpModal
   +modal_max_width(800px)
   .modal-card-body

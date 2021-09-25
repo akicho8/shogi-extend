@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "kiwi"
-    self.script_name = "動画生成"
+    self.script_name = "動画作成"
 
     def script_body
       lemon_hash = {}

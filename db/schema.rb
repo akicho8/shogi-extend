@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_25_093200) do
+ActiveRecord::Schema.define(version: 2021_09_25_133900) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -947,7 +947,7 @@ ActiveRecord::Schema.define(version: 2021_09_25_093200) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
     t.index ["key"], name: "index_kiwi_books_on_key", unique: true
-    t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id"
+    t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id", unique: true
     t.index ["user_id"], name: "index_kiwi_books_on_user_id"
   end
 

@@ -1,24 +1,23 @@
-import { SearchCategoryInfo } from "../models/search_category_info.js"
+import { SearchPresetInfo } from "../models/search_preset_info.js"
 
 export const app_search = {
   data() {
     return {
       query: null,
       tag:   null,
-      search_p: !!this.$route.query.query,
+      // search_p: !!this.$route.query.query,
     }
   },
   methods: {
-    search_by_category(e) {
+    search_preset_handle(e) {
       this.sound_play("click")
-      this.router_push({tag: e.tag})
+      this.router_push(e.to_params)
     },
-
     search_field_toggle_handle() {
       this.sound_play("click")
-      this.search_p = !this.search_p
+      // this.search_p = !this.search_p
     },
-    tag_search_handle(tag) {
+    tag_append_search_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")
@@ -35,9 +34,7 @@ export const app_search = {
     },
   },
   computed: {
-    tags() {
-      return this.tags_wrap(this.tag)
-    },
-    SearchCategoryInfo() { return SearchCategoryInfo },
+    tags() { return this.tags_wrap(this.tag) },
+    SearchPresetInfo() { return SearchPresetInfo },
   },
 }

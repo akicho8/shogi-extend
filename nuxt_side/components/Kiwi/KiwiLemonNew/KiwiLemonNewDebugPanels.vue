@@ -14,6 +14,11 @@
   //-     a.panel-block(@click="base.time_limit_modal_close") 閉じる
   .column.is-4
     .panel
+      .panel-heading 操作
+      a.panel-block(@click="base.book_new_handle(base.my_records[0])") 動画管理登録
+
+  .column.is-4
+    .panel
       .panel-heading post_params
       .panel-block
         pre {{pretty_inspect(base.post_params)}}

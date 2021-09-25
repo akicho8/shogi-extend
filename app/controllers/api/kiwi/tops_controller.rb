@@ -47,23 +47,9 @@ module Api
 
       def current_books
         @current_books ||= -> {
-          s = ::Kiwi::Book.public_only
-
-          # ログインしていればプライベートな問題集も混ぜる
-          if current_user
-            s = s.or(current_user.kiwi_books.joins(:folder))
-          end
-
-          s = s.search(params)
-          s = s.order(updated_at: :desc)
+          s = ::Kiwi::Book.search(params.merge(current_user: current_user))
+          s = s.order(created_at: :desc)
           s = page_scope(s)       # page_methods.rb
-
-          # # visible_articles_count のため
-          # s.each do |e|
-          #   e.current_user = current_user
-          # end
-
-          s
         }.call
       end
 

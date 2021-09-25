@@ -36,17 +36,6 @@ export default {
   .tab-content
     padding: 0
 
-  .one_block
-    margin: 0
-    padding: 0.8rem 0 1.2rem
-    &.body_field
-      padding: 1.0rem
-    +tablet
-      padding-left: 1.25rem
-      padding-right: 1.25rem
-      &:hover
-        background-color: $white-ter
-
   .dropdown-item
     padding: 0.75rem
     // .media
@@ -54,7 +43,4 @@ export default {
     .media-content
       overflow: visible // mobileにしたとき overflow-x: scroll にされてしまいグラグラするのを防ぐ
 
-  .submit_field
-    margin: 0
-    padding: 1rem 0
 </style>

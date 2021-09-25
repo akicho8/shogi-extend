@@ -9,26 +9,17 @@ export const app_table = {
       tag:         null,
       // sort_column: null,
       // sort_order:  null,
-      // scope:       null,
+      scope:       null,
 
       // jsonで貰うもの
       books: null, // null:まだ読み込んでいない [...]:読み込んだ
-      total: 0,
+      // total: 0,
 
       // b-table で開いたIDたち
       detailed_keys: [],
     }
   },
   methods: {
-    detail_set(enabled) {
-      this.sound_play('click')
-      if (enabled) {
-        this.detailed_keys = this.books.map(e => e.key)
-      } else {
-        this.detailed_keys = []
-      }
-    },
-
     page_change_handle(page) {
       if (page <= 1) {
         page = null
@@ -50,7 +41,7 @@ export const app_table = {
         page:        this.page,
         per:         this.per,
         tag:         this.tag,
-        // scope:       this.scope,
+        scope:       this.scope,
         // sort_column: this.sort_column,
         // sort_order:  this.sort_order,
       }

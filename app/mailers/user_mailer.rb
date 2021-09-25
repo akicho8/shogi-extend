@@ -111,7 +111,7 @@ class UserMailer < ApplicationMailer
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end
 
-  # 動画生成完了
+  # 動画作成完了
   # UserMailer.xmovie_notify(Kiwi::Lemon.last).deliver_later
   # http://localhost:3000/rails/mailers/user/xmovie_notify
   def xmovie_notify(lemon)
@@ -143,7 +143,7 @@ class UserMailer < ApplicationMailer
     end
 
     mail({
-        subject: "【動画生成】[#{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
+        subject: "【動画作成】[#{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
         to: "#{lemon.user.name} <#{lemon.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう

@@ -3,14 +3,14 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
   template(slot="brand")
     NavbarItemHome
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video'}")
-      | ギャラリー
+      | 動画
       //- span.is-hidden-mobile
       //-   | ギャラリー
       //- span.is-hidden-tablet
       //-   | 動画集
 
   template(slot="start")
-    b-navbar-item.is-hidden-touch.with_search_field(tag="div")
+    b-navbar-item(tag="div")
       KiwiTopSearch(:base="base")
 
   template(slot="end")
@@ -39,6 +39,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .KiwiTopNavbar
 </style>

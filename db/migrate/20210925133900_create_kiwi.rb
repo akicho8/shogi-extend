@@ -44,7 +44,7 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
         t.string     :key,                          null: false, index: { unique: true }
         t.belongs_to :user,                         null: false, foreign_key: true,                        comment: "作成者"
         t.belongs_to :folder,                       null: false, foreign_key: {to_table: :kiwi_folders},   comment: "フォルダ"
-        t.belongs_to :lemon,                        null: false, foreign_key: {to_table: :kiwi_lemons},   comment: "動画"
+        t.belongs_to :lemon, index: { unique: true }, null: false, foreign_key: {to_table: :kiwi_lemons},   comment: "動画"
         # t.belongs_to :sequence,                     null: false, foreign_key: {to_table: :kiwi_sequences}, comment: "順序"
         t.string     :title,       limit: 100,      null: false,                                           comment: "タイトル"
         t.text       :description, limit: 5000,     null: false,                                           comment: "説明"

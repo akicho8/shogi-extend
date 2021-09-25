@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewFormDesignAudioTheme.one_block
+.KiwiLemonNewFormDesignAudioTheme.field_block
   b-field(:label="base.AudioThemeInfo.field_label" :message="base.AudioThemeInfo.fetch(base.audio_theme_key).message || base.AudioThemeInfo.field_message")
     .control
       b-button(@click="base.audio_select_modal_handle" icon-right="view-comfy") {{base.audio_theme_info.name}}

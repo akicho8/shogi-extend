@@ -19,6 +19,7 @@
     .buttons.has-addons.is-centered.mt-3
       b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human")
       b-button(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank"               )
+      b-button(@click="base.book_new_handle(base.done_record)"            type=""                                      icon-left="upload")
       b-button(@click="base.__main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            v-if="development_or_staging_p")
       b-button(@click="base.__main_show_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         v-if="development_or_staging_p")
       b-button(@click="base.__secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                v-if="development_or_staging_p")

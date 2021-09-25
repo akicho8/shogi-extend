@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .KiwiLemonNewHelpBody
   padding: 1.5rem
   article

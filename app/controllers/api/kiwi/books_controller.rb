@@ -109,11 +109,11 @@ module Api
 
       private
 
-      def book_counts
-        ::Kiwi::BookIndexScopeInfo.inject({}) do |a, e|
-          a.merge(e.key => e.query_func[current_user].count)
-        end
-      end
+      # def book_counts
+      #   ::Kiwi::BookIndexScopeInfo.inject({}) do |a, e|
+      #     a.merge(e.key => e.query_func[current_user].count)
+      #   end
+      # end
 
       def current_books
         @current_books ||= -> {
@@ -128,14 +128,6 @@ module Api
           end
           s = page_scope(s)       # page_methods.rb
         }.call
-      end
-
-      def current_book_scope_info
-        ::Kiwi::BookIndexScopeInfo.fetch(current_scope)
-      end
-
-      def current_scope
-        (params[:scope].presence || :everyone).to_sym
       end
 
       # PageMethods override

@@ -56,7 +56,7 @@ module Kiwi
     end
 
     def track(data, action, body)
-      key = "動画生成 [#{global_room_code}] #{action}"
+      key = "動画作成 [#{global_room_code}] #{action}"
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
@@ -70,7 +70,7 @@ module Kiwi
       else
         body = ""
       end
-      SlackAgent.message_send(key: "動画生成 #{action}", body: "#{body}")
+      SlackAgent.message_send(key: "動画作成 #{action}", body: "#{body}")
     end
   end
 end

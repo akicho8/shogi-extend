@@ -2,7 +2,7 @@ module FrontendScript
   class GifGenerateScript < Base
     include AtomicScript::PostRedirectMethods
 
-    self.script_name = "リアルタイム動画生成"
+    self.script_name = "リアルタイム動画作成"
 
     def form_parts
       {

@@ -1,7 +1,7 @@
 <template lang="pug">
 .KiwiLemonNewFormSource
   ////////////////////////////////////////////////////////////////////////////////
-  .one_block.body_field
+  .field_block.body_field
     .buttons.mb-0.has-addons
       b-button.mb-0(@click="base.any_source_trim_handle" size="is-small") トリム
       b-button.mb-0(@click="base.any_source_edit_handle" size="is-small") 編集
@@ -42,9 +42,8 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewFormSource
-  // .field:not(:first-child)
-  //   margin-top: 1.5rem
   .body_field
+    padding: 1.0rem
     label
       display: flex
       align-items: center
@@ -55,8 +54,6 @@ export default {
         margin-left: 0.25rem // aリンク同士の間を開ける
         font-weight: normal  // label のなかは bold になるため元に戻す
     textarea
-      word-break: break-all
-
       +mobile
         height: 9rem
       +tablet

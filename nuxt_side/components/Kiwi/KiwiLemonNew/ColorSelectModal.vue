@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .ColorSelectModal
   +modal_width_auto
   .modal-card-body

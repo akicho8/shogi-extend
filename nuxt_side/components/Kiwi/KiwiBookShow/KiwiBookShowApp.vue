@@ -12,8 +12,9 @@ client-only
     KiwiBookShowNavbar(:base="base")
     KiwiBookShowSidebar(:base="base")
 
-    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
+    MainSection(v-if="!$fetchState.pending && !$fetchState.error")
+      .container.is-fluid
+        KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
 
     DebugPre(v-if="development_p")
       | {{$data}}
@@ -114,7 +115,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .STAGE-development
   .KiwiBookShowApp
     .container
@@ -125,7 +126,9 @@ export default {
       border: 1px dashed change_color($success, $alpha: 0.5)
 
 .KiwiBookShowApp
-  .MainTabs
-    .tab-content
-      display: none
+  .MainSection.section
+    +mobile
+      padding: 0.75rem
+    +tablet
+      padding: 1.5rem
 </style>

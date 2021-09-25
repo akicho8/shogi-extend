@@ -30,6 +30,7 @@
 
 module Kiwi
   class Lemon < ApplicationRecord
+    include BasicMethods
     include BuildMethods
     include ThumbnailMethods
     include InfoMethods

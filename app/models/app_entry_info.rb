@@ -47,7 +47,7 @@ class AppEntryInfo
       display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/video/new"},
-      title: "動画生成",
+      title: "動画作成",
       attention_label: "NEW!",
       og_image_key: "video-new",
       description: "棋譜を動画にしたいときにどうぞ",

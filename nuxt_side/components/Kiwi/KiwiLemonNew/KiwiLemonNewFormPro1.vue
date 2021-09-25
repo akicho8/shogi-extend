@@ -1,11 +1,11 @@
 <template lang="pug">
 .KiwiLemonNewFormPro1
-  b-field.one_block(label="表紙")
+  b-field.field_block(label="表紙")
     b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
 
-  SimpleRadioButtons.one_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
+  SimpleRadioButtons.field_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
 
-  .page_duration_field.one_block
+  .page_duration_field.field_block
     //- b-field(:message="base.page_duration_message" v-if="false")
     //-   template(#label)
     //-     p 1ページあたりの秒数
@@ -52,7 +52,7 @@
       b-input(key="input-page_duration" v-model.number="base.page_duration")
 
 
-  SimpleRadioButtons.one_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
+  SimpleRadioButtons.field_block(:base="base" :model="base.XfontInfo" var_name="xfont_key")
 
   //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
   // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
@@ -65,13 +65,13 @@
   //-         | すべてのフォームを表示する
   //-       template(v-else)
   //-         | 隠す
-  //- b-field.one_block(label="FPS")
+  //- b-field.field_block(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
-  //- b-field.one_block(label="FPS")
+  //- b-field.field_block(label="FPS")
   //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
 
   // 分数形式なども受けつけるように文字列入力にすること
-  //- b-field.one_block(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
+  //- b-field.field_block(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
   //-   b-input(v-model="base.video_fps")
 
 </template>

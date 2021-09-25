@@ -19,9 +19,31 @@ export const app_review = {
       // this.lemon   = null
     },
 
-    __main_download_handle2(record) {
+    book_new_handle(record) {
       this.sound_play("click")
-      this.$router.push({name: "video-books-edit", query: { lemon_id: record.id }})
+
+      this.dialog_confirm({
+        title: "動画管理登録",
+        message: `
+          <div class="content">
+            <p>次のことをしたい場合は登録してください</p>
+            <ol class="mt-0">
+              <li>動画専用のページを作りたい</li>
+              <li>みんなに公開したい</li>
+              <li>仲間内だけで共有したい</li>
+              <li>検討内容を追記して自分だけでこっそり見返したい</li>
+              <li>とりあえず残しときたい</li>
+            </ol>
+            <p>作成直後のファイルをダウンロードするだけなら不要です</p>
+          </div>
+        `,
+        confirmText: "登録する",
+        focusOn: "confirm", // confirm or cancel
+        onConfirm: () => {
+          this.sound_play("click")
+          this.$router.push({name: "video-books-new", query: {lemon_id: record.id}})
+        },
+      })
     },
 
     __main_download_handle(record) {

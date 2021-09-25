@@ -65,7 +65,7 @@
             a(@click="base.tweet_handle(row)") ツイート
           b-dropdown-item.is-hidden-desktop(separator)
           b-dropdown-item.is-hidden-desktop(has-link)
-            a.deleet キャンセル
+            a.delete キャンセル
 
         //- this.tweet_window_popup({text: this.book.tweet_body})
 

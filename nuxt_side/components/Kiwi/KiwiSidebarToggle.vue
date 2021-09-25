@@ -4,15 +4,15 @@ b-navbar-item.KiwiSidebarToggle(v-bind="$attrs" v-on="$listeners")
 </template>
 
 <script>
-import { support } from "./support.js"
+import { all_support } from "./all_support.js"
 export default {
   name: "KiwiSidebarToggle",
-  mixins: [support],
+  mixins: [all_support],
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./all_support.sass"
 .KiwiSidebarToggle
   +tablet
     padding-left: 1.5rem

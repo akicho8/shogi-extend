@@ -1,10 +1,10 @@
 import { FolderInfo } from './models/folder_info.js'
-import { WkbkConfig } from './models/wkbk_config.js'
+import { KiwiConfig } from './models/kiwi_config.js'
 
-export const support = {
+export const all_support = {
   computed: {
     FolderInfo() { return FolderInfo },
-    WkbkConfig() { return WkbkConfig },
+    KiwiConfig() { return KiwiConfig },
     s_config() {
       return {
         TRUNCATE_MAX: 20,

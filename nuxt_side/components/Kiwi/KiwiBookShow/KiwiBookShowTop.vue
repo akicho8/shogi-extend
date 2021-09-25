@@ -1,9 +1,14 @@
-<<template lang="pug">
-MainSection.KiwiBookShowTop
-  .container.is-fluid
-    .columns
-      .column
-        KiwiBookShowTopMainCard(:base="base")
+<template lang="pug">
+.KiwiBookShowTop.columns.is-multiline.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+  .column.is-12-tablet.is-10-desktop.is-8-widescreen
+    //- .column.is-narrow
+    figure.image
+      video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="true" :loop="false")
+    .mt-4
+      KiwiBookInfo(:base="base" :book="base.book")
+  .column
+    .box
+      | コメント1
 </template>
 
 <script>
@@ -16,15 +21,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
-.STAGE-development
-  .KiwiBookShowTop
-    .column, .book_container
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-
-.MainSection.section.KiwiBookShowTop
-  +mobile
-    padding: 1.0rem 0.75rem
-  +tablet
-    padding: 1.0rem 0.75rem
+@import "../all_support.sass"
+.KiwiBookShowTop
 </style>

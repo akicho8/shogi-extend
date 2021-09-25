@@ -4,7 +4,7 @@
     template(slot="brand")
       NavbarItemHome(icon="chevron-left" :to="{name: 'video-new'}")
       b-navbar-item.has-text-weight-bold(tag="div")
-        | 動画生成の使い方
+        | 動画作成の使い方
   MainSection
     .container
       .columns.is-centered.is-gapless
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./all_support.sass"
 .KiwiLemonNewHelp
   .MainSection.section
     +mobile

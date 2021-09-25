@@ -1,6 +1,6 @@
 <template lang="pug">
 .KiwiLemonNewFormPro2
-  b-field.one_block.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
+  b-field.field_block.recipe_key_field(:label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     .control
       b-dropdown(v-model="base.recipe_key" @active-change="e => e && sound_play('click')")
         template(#trigger)
@@ -20,12 +20,12 @@
                   //- small {{e.message}}
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
-  b-field.one_block(v-if="development_p" :label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
+  b-field.field_block(v-if="development_p" :label="base.RecipeInfo.field_label" :message="base.RecipeInfo.fetch(base.recipe_key).message || base.RecipeInfo.field_message")
     b-select(type="number" v-model="base.recipe_key" @input="sound_play('click')")
       option(v-for="e in base.RecipeInfo.values" :value="e.key" v-text="e.name")
 
   //- https://buefy.org/documentation/field#combining-addons-and-groups
-  b-field.one_block(grouped v-if="development_p && false")
+  b-field.field_block(grouped v-if="development_p && false")
     b-field(label="サイズプリセット" :message="[base.animation_size_info.message]")
       b-select(v-model="base.animation_size_key" @input="base.animation_size_key_input_handle" @click.native="sound_play('click')")
         option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name" v-if="e.environment == null || e.environment.includes($config.STAGE)")
@@ -33,7 +33,7 @@
       b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width")
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
-  b-field.one_block(grouped v-if="development_p && false")
+  b-field.field_block(grouped v-if="development_p && false")
     b-field.animation_size_field(label="サイズ" :message="[base.animation_size_info.message]")
       b-dropdown.control(v-model="base.animation_size_key" @active-change="e => e && sound_play('click')" @input="base.animation_size_key_input_handle")
         template(#trigger)
@@ -54,12 +54,12 @@
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" placeholder="height")
 
   //////////////////////////////////////////////////////////////////////////////// 縦
-  //- b-field.one_block
+  //- b-field.field_block
   //-   b-field(label="サイズプリセット" :message="[base.animation_size_info.message]" v-if="false")
   //-     b-select(v-model="base.animation_size_key" @input="base.animation_size_key_input_handle")
   //-       option(v-for="e in base.AnimationSizeInfo.values" :value="e.key" v-text="e.option_name")
 
-  .one_block.animation_size_field
+  .field_block.animation_size_field
     b-field(label="サイズ" :message="[base.animation_size_info.message]")
       .control
         // @active-change="sound_play('click')"
@@ -85,21 +85,21 @@
       b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
       b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
-  b-field.one_block(label="1ページあたりの秒数" v-if="development_p && false")
+  b-field.field_block(label="1ページあたりの秒数" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
 
-  SimpleRadioButtons.one_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
+  SimpleRadioButtons.field_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
-  b-field.one_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけﾌｪｲﾄﾞｱｳﾄする")
+  b-field.field_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけﾌｪｲﾄﾞｱｳﾄする")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play('click')")
 
-  b-field.one_block(label="音量")
+  b-field.field_block(label="音量")
     b-numberinput(v-model="base.main_volume" :min="0" :max="1.0" :step="0.1" exponential @input="sound_play('click')")
 
-  b-field.one_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい")
+  b-field.field_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい")
     b-input(v-model="base.audio_bit_rate" placeholder="128k")
 
-  b-field.one_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
+  b-field.field_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
     b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play('click')")
 </template>
 

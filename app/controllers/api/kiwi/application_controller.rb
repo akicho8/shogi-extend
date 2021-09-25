@@ -47,6 +47,16 @@ module Api
       rescue_from "KiwiPermissionError" do |error|
         render json: { statusCode: 403, message: "非公開" }, status: 403
       end
+
+      private
+
+      def current_book_scope_info
+        ::Kiwi::BookIndexScopeInfo.fetch(current_book_scope_key)
+      end
+
+      def current_book_scope_key
+        (params[:scope].presence || :everyone).to_sym
+      end
     end
   end
 end

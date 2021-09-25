@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewFormDesignColorTheme.one_block
+.KiwiLemonNewFormDesignColorTheme.field_block
   b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message")
     .control
       b-button(@click="base.color_select_modal_handle" icon-right="view-comfy") {{base.color_theme_info.name}}

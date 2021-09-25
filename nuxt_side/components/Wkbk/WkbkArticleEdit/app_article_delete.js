@@ -8,7 +8,7 @@ export const app_article_delete = {
         this.$buefy.dialog.confirm({
           type: "is-danger",
           hasIcon: true,
-          message: "本当に削除してもよろしいですか？",
+          message: "本当に削除してもよいか？",
           cancelText: "キャンセル",
           confirmText: "削除する",
           focusOn: "cancel",

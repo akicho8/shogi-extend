@@ -67,7 +67,7 @@ export const application_battle_sy_versus = {
     vs_func_toryo_handle(ms_flip = false) {
       this.$buefy.dialog.confirm({
         title: "投了",
-        message: `本当によろしいですか？`,
+        message: `本当によいか？`,
         confirmText: "投了する",
         cancelText: "考え直す",
         type: "is-danger",

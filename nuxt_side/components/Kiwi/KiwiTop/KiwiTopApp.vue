@@ -3,18 +3,16 @@
   DebugBox(v-if="development_p")
     p query: {{query}}
     p tag: {{tag}}
-    p search_p: {{search_p}}
+    //- p search_p: {{search_p}}
 
   p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
   .MainContainer
     KiwiTopSidebar(:base="base")
     KiwiTopNavbar(:base="base")
-    MainSection
+    MainSection(v-if="!$fetchState.pending && !$fetchState.error")
       .container.is-fluid
-        KiwiTopSearchAppear(:base="base")
-        KiwiTopCardListTag(:base="base")
-        KiwiTopCardList(:base="base")
+        KiwiTopContent(:base="base")
 
   DebugPre(v-if="development_p") {{$fetchState}}
   DebugPre(v-if="development_p") {{$data}}
@@ -59,11 +57,11 @@ export default {
     this.ga_click("動画一覧")
   },
 
-  // fetchOnServer: false,
+  fetchOnServer: false,
   fetch() {
     // this.__assert__(this.scope, "this.scope")
     this.query       = this.$route.query.query
-    // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     // this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -73,7 +71,7 @@ export default {
     // this.url_params とは異なり最終的な初期値を設定する
     const params = {
       query:       this.query,
-      // scope:       this.scope,
+      scope:       this.scope,
       page:        this.page,
       per:         this.per,
       // sort_column: this.sort_column,
@@ -107,7 +105,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .STAGE-development
   .columns
     border: 1px dashed change_color($danger, $alpha: 0.5)

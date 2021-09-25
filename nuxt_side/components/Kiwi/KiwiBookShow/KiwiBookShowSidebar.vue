@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.KiwiBookShowSidebar.is-unselectable(fullheight right overlay v-model="sidebar_p" v-if="base.book")
+b-sidebar.KiwiBookShowSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
@@ -23,17 +23,11 @@ import { support_child } from "./support_child.js"
 export default {
   name: "KiwiBookShowSidebar",
   mixins: [support_child],
-  computed: {
-    sidebar_p: {
-      set(v) { this.base.sidebar_set(v)   },
-      get()  { return this.base.sidebar_p },
-    },
-  },
 }
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .KiwiBookShowSidebar
   .sidebar-content
     width: unset

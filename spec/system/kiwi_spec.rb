@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe "動画生成", type: :system do
-  it "動画生成" do
+RSpec.describe "動画作成", type: :system do
+  it "動画作成" do
     visit "/video/new"
-    assert_text "動画生成"
+    assert_text "動画作成"
     doc_image
   end
 

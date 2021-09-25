@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .ComputeFromBpmModal
   +modal_width(24rem)
   .modal-card-body

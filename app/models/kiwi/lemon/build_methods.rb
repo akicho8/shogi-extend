@@ -16,13 +16,13 @@ module Kiwi
         # ワーカー関係なく全処理実行
         # cap staging rails:runner CODE="Kiwi::Lemon.process_in_sidekiq"
         def process_in_sidekiq
-          # SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "開始")
+          # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "開始")
           count = 0
           while e = ordered_process.first
             e.main_process!
             count += 1
           end
-          # SlackAgent.message_send(key: "動画生成 - Sidekiq", body: "終了 変換数:#{count}")
+          # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
         end
 
         # ゾンビを成仏させる
@@ -93,49 +93,16 @@ module Kiwi
             :success_only_count    => success_only.count,
             :error_only_count      => error_only.count,
             :lemons                => ordered_not_done.as_json(json_struct_for_list),
-            # :lemons         => all.as_json(json_struct_for_list),
           }
         end
       end
 
       included do
-
         cattr_accessor(:user_history_max) { 5 } # 履歴表示最大件数
         cattr_accessor(:user_queue_max) { 3 }   # 未処理投入最大件数
 
         delegate :everyone_broadcast, :background_job_kick, to: "self.class"
         # delegate :browser_url, to: "media_builder"
-
-        belongs_to :user
-        belongs_to :recordable, polymorphic: true
-
-        scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理
-        scope :done_only,        -> { where.not(process_end_at: nil)                              } # 処理済み(失敗しても入る)
-        scope :processing_only,  -> { where.not(process_begin_at: nil).where(process_end_at: nil) } # 処理中
-        scope :process_started,  -> { where.not(process_begin_at: nil)                            } # 開始以降
-        scope :ordered_process,  -> { where(process_begin_at: nil).order(:created_at)             } # 上から処理する順
-        scope :ordered_not_done, -> { where(process_end_at: nil).order(:created_at)               } # 完了していないもの(順序付き)
-        # scope :ordered_done,     -> { where.not(process_end_at: nil).order(:created_at)           } # 完了したもの(順序付き)
-        scope :not_done_only,    -> { where(process_end_at: nil)                                  } # 完了していないもの
-        scope :error_only,       -> { where.not(errored_at: nil)                                  } # 失敗したもの
-        scope :success_only,     -> { where.not(successed_at: nil)                                } # 成功したもの
-
-        # BUG: Hash を指定すると {} が null になるため、偶然空になったとき NOT NULL 制約でDB保存できない → 仕様らしい
-        # https://github.com/rails/rails/issues/42928
-        # https://api.rubyonrails.org/classes/ActiveRecord/AttributeMethods/Serialization/ClassMethods.html#method-i-serialize
-        serialize :all_params
-        serialize :ffprobe_info
-
-        before_validation do
-          self.all_params ||= {}
-          self.all_params = all_params.deep_symbolize_keys
-          MediaBuilder.params_rewrite!(all_params[:media_builder_params])
-
-          # XXX: error_message が "" とき予想に反して "".lines が [] になり first して転けるため present? で除外するの重要
-          if changes_to_save[:error_message] && v = error_message.presence
-            self.error_message = v.lines.first.first(self.class.columns_hash["error_message"].limit)
-          end
-        end
 
         after_commit do
           if previous_changes[:process_begin_at]
@@ -180,7 +147,7 @@ module Kiwi
           save!
           user.kiwi_my_lemons_singlecast
           everyone_broadcast
-          SystemMailer.fixed_track(subject: "【動画生成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
+          SystemMailer.fixed_track(subject: "【動画作成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
           begin
             sleep(all_params[:sleep].to_i)
             if v = all_params[:raise_message].presence
@@ -212,20 +179,10 @@ module Kiwi
           user.kiwi_done_lemon_singlecast(self)
           everyone_broadcast
 
-          SlackAgent.message_send(key: "動画生成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
+          SlackAgent.message_send(key: "動画作成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
 
           UserMailer.xmovie_notify(self).deliver_later
         end
-      end
-
-      def reset
-        self.process_begin_at = nil
-        self.process_end_at = nil
-        self.successed_at = nil
-        self.ffprobe_info = nil
-        self.file_size = nil
-        self.errored_at = nil
-        self.error_message = nil
       end
 
       def status_key
@@ -284,7 +241,7 @@ module Kiwi
       end
 
       def track(name, body = nil)
-        SlackAgent.message_send(key: "動画生成 #{name} #{status_key}", body: [id, user.name, body].compact)
+        SlackAgent.message_send(key: "動画作成 #{name} #{status_key}", body: [id, user.name, body].compact)
       end
 
       # 生成ファイルにリンクする

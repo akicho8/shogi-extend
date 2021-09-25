@@ -27,7 +27,6 @@ import dayjs from "dayjs"
 
 import { support_parent  } from "./support_parent.js"
 import { app_table       } from "./app_table.js"
-import { app_upload      } from "./app_upload.js"
 import { app_book_delete } from "./app_book_delete.js"
 import { app_storage     } from "./app_storage.js"
 
@@ -39,7 +38,6 @@ export default {
   mixins: [
     support_parent,
     app_table,
-    app_upload,
     app_book_delete,
     app_storage,
   ],
@@ -91,7 +89,7 @@ export default {
         return
       }
 
-      if (!this.book.title && false) {
+      if (this.blank_p(this.book.title)) {
         this.toast_warn("なんかしらのタイトルを捻り出してください")
         return
       }
@@ -141,7 +139,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .STAGE-development
   .KiwiBookEditApp
     .container

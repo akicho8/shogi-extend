@@ -1,7 +1,7 @@
 <template lang="pug">
 .ShareBoardSidebarExport
   b-menu-list(label="いろんな種類で棋譜取得")
-    b-menu-item.is_active_unset(icon="movie" label="動画生成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.current_sfen, viewpoint_key: base.sp_viewpoint}}" @click.native="sound_play('click')")
+    b-menu-item.is_active_unset(icon="movie" label="動画作成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.current_sfen, viewpoint_key: base.sp_viewpoint}}" @click.native="sound_play('click')")
 
     b-menu-item.is_active_unset(icon="eye" :expanded="false"
     @click="sound_play('click')")

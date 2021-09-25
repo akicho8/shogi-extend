@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { all_support } from "./all_support.js"
 
 export default {
   name: "KiwiFolder",
-  mixins: [support],
+  mixins: [all_support],
   props: {
     folder_key: { type: String, required: true,                       },
     size:       { type: String, required: false, default: "is-small", },
@@ -21,6 +21,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./all_support.sass"
 .KiwiFolder
 </style>

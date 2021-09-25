@@ -53,7 +53,22 @@ module Kiwi
     }
 
     scope :search, -> params {
-      base = all.joins(:folder, :user)
+      if ["public", "limited", "private"].include?(params[:scope])
+        if current_user = params[:current_user]
+          s = current_user.kiwi_books.folder_eq(params[:scope])
+        else
+          s = none
+        end
+      else
+        s = public_only
+        # # ログインしていればプライベートな問題集も混ぜる
+        if current_user = params[:current_user]
+          s = s.or(current_user.kiwi_books.joins(:folder))
+          # s = s.or(current_user.kiwi_books.folder_eq(:public))
+        end
+      end
+
+      base = s.joins(:folder, :user)
       s = base
       if v = params[:tag].to_s.split(/[,\s]+/).presence
         s = s.where(id: tagged_with(v))
@@ -79,10 +94,10 @@ module Kiwi
       # self.sequence_key ||= :bookship_shuffle
       self.key ||= secure_random_urlsafe_base64_token
 
-      if Rails.env.test? || Rails.env.development?
-        self.title       ||= key
-        self.description ||= "(description)"
-      end
+      # if Rails.env.test? || Rails.env.development?
+      #   self.title       ||= key
+      #   self.description ||= "(description)"
+      # end
 
       normalize_zenkaku_to_hankaku(:title, :description)
       normalize_blank_to_empty_string(:title, :description)
@@ -90,12 +105,14 @@ module Kiwi
 
     with_options presence: true do
       validates :title
+      validates :lemon_id
     end
 
     with_options allow_blank: true do
       validates :title, uniqueness: { scope: :user_id, case_sensitive: true, message: "が重複しています" }
       validates :title, length: { maximum: 100 }
       validates :description, length: { maximum: 5000 }
+      validates :lemon_id, uniqueness: { message: "はすでに登録しています" }
     end
 
     def page_url(options = {})
@@ -202,19 +219,25 @@ module Kiwi
       list = [
         title,
         *tag_list,
-        "インスタント将棋問題集",
+        "動画",
       ]
       list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
     end
 
     def default_assign
-      # この2つは localStorage から復帰する
+      # これらは localStorage から復帰する
       # self.folder_key ||= :public
-      # self.sequence_key ||= :bookship_shuffle
+
+      if lemon
+        if cover_text = lemon.all_params[:media_builder_params][:cover_text].presence
+          self.title ||= cover_text.lines.first.strip
+          self.description ||= cover_text.lines.drop(1).join.strip + "\n"
+        end
+      end
 
       if Rails.env.development?
         if user
-          self.title ||= "#{user.name}のインスタント将棋問題集第#{user.kiwi_books.count.next}弾(仮)"
+          self.title ||= "#{user.name}の動画#{user.kiwi_books.count.next}"
         end
         self.title       ||= "あ" * 80
         self.description ||= "い" * 256

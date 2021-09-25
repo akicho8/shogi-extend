@@ -9,7 +9,7 @@ client-only
     MainNavbar
       template(slot="brand")
         NavbarItemHome
-        b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画生成
+        b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画作成
       template(slot="end")
         NavbarItemLogin
         NavbarItemProfileLink
@@ -99,7 +99,7 @@ export default {
     }
   },
   mounted() {
-    this.ga_click("動画生成")
+    this.ga_click("動画作成")
   },
 
   fetchOnServer: false,
@@ -117,7 +117,7 @@ export default {
     Lemon() { return Lemon },
     meta() {
       return {
-        title: "動画生成",
+        title: "動画作成",
         description: "棋譜をアニメーション形式に変換する",
         og_image_key: "kiwi",
       }

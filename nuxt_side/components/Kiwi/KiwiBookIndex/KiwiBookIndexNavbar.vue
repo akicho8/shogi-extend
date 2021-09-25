@@ -5,16 +5,17 @@ MainNavbar.KiwiBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
     //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-books'}") インスタント将棋動画
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-books'}") 動画リスト
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-books'}") 管理
 
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-books-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
 
-    KiwiSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
+    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
+      b-icon(icon="menu")
 </template>
 
 <script>
@@ -27,6 +28,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .KiwiBookIndexNavbar
 </style>

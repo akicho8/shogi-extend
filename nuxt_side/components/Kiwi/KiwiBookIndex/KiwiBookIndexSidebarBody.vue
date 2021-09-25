@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .STAGE-development
   .KiwiBookIndexSidebarBody
     border: 1px dashed change_color($primary, $alpha: 0.5)

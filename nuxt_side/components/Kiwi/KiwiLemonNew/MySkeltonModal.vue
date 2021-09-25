@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .MySkeltonModal
   +modal_width(640px)
   .modal-card-body

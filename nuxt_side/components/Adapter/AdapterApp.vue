@@ -192,7 +192,7 @@ export default {
       })
     },
 
-    // 「動画生成」
+    // 「動画作成」
     movie_factory_handle() {
       this.record_fetch(() => {
         this.$router.push({

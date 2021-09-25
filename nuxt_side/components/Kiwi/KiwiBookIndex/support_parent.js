@@ -1,5 +1,5 @@
-import { support } from "../support.js"
+import { all_support } from "../all_support.js"
 
 export const support_parent = {
-  mixins: [support],
+  mixins: [all_support],
 }

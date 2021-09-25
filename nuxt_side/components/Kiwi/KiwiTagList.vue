@@ -1,30 +1,42 @@
 <template lang="pug">
-.KiwiTagList.buttons(v-if="tag_list.length >= 1")
+.buttons.KiwiTagList(v-if="present_p(tag_list)")
   b-button(
     v-for="tag in tag_list"
     :key="tag"
     rounded
     size="is-small"
-    type="is-primary is-light"
-    @click.prevent.stop="tag_search_handle(tag)"
+    @click.prevent.stop="tag_append_search_handle(tag)"
     )
     | {{tag}}
+    //- type="is-primary is-light"
+
+//- b-taglist.KiwiTagList(v-if="present_p(tag_list)")
+//-   b-tag.is-clickable(
+//-     v-for="tag in tag_list"
+//-     :key="tag"
+//-     rounded
+//-     size="is-small"
+//-     @click.native.prevent.stop="tag_append_search_handle(tag)"
+//-     )
+//-     | {{tag}}
+//-     //- type="is-primary is-light"
+
 </template>
 
 <script>
-import { support } from "./support.js"
+import { all_support } from "./all_support.js"
 
 export default {
   name: "KiwiTagList",
-  mixins: [support],
+  mixins: [all_support],
   props: {
     tag_list:          { type: Array,    required: true, },
-    tag_search_handle: { type: Function, required: true, },
+    tag_append_search_handle: { type: Function, required: true, },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./all_support.sass"
 .KiwiTagList
 </style>

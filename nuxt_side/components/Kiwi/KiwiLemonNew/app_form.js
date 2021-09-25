@@ -122,7 +122,7 @@ export const app_form = {
         return
       }
 
-      this.ga_click("動画生成●")
+      this.ga_click("動画作成●")
 
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/kiwi/lemons/record_create.json", this.post_params).then(e => {

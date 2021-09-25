@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import { support } from "./support.js"
+import { all_support } from "./all_support.js"
 export default {
   name: "KiwiUserName",
-  mixins: [support],
+  mixins: [all_support],
   props: {
     user: { type: Object, required: true, },
   },
@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "./all_support.sass"
 .KiwiUserName
   a
     color: unset

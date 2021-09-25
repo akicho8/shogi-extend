@@ -17,7 +17,7 @@ export const app_book_delete = {
         this.$buefy.dialog.confirm({
           type: "is-danger",
           hasIcon: true,
-          message: "本当に削除してもよろしいですか？<br><span class='has-text-grey-light'>問題は削除されません</span>",
+          message: "本当に削除してもよいか？<br><span class='has-text-grey-light'>問題は削除されません</span>",
           cancelText: "キャンセル",
           confirmText: "削除する",
           focusOn: "cancel",

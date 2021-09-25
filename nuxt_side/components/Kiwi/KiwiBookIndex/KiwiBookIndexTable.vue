@@ -1,7 +1,6 @@
 <template lang="pug">
 .KiwiBookIndexTable
   b-table(
-    v-if="base.visible_hash"
     :loading="base.$fetchState.pending"
     :data="base.books || []"
     :mobile-cards="true"
@@ -21,53 +20,58 @@
     @sort="base.sort_handle"
     )
 
-    b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable :width="1" :visible="!!base.visible_hash.key")
-      | {{row.key}}
+    //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BookIndexColumnInfo.fetch('key').name" sortable :width="1")
+    //-   | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
       nuxt-link(:to="{name: 'video-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
-        .image.avatar_image.is-inline-block
-          img(:src="row.avatar_path" :alt="row.title")
-
-        span.row_title(v-if="false")
+        //- .image.avatar_image.is-inline-block
+        //-   img(:src="row.avatar_path" :alt="row.title")
+        span.row_title
           | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
     //-     KiwiUserName(:user="row.user")
 
-    b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
+    b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable)
       KiwiFolder(:folder_key="row.folder_key")
 
-    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
+    //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable) {{row_time_format(row.created_at)}}
 
-    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
+    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable) {{row_time_format(row.updated_at)}}
 
-    b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric :visible="!!base.visible_hash.bookships_count") {{row.bookships_count}}
+    //- b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric) {{row.bookships_count}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //- nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}")
-      //-   b-icon(icon="edit")
+      //-   //- b-icon(icon="edit")
       //-   | 編集
-      nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}" v-if="false")
-        b-icon(icon="plus")
+      b-button(tag="nuxt-link" :to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" size="is-small") 編集
 
-      b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
-        a(slot="trigger")
-          b-icon(icon="dots-horizontal")
-        template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
-          b-dropdown-item(has-link)
-            nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
-          //- b-dropdown-item(has-link)
-          //-   nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
-          //- b-dropdown-item(separator)
-          b-dropdown-item(has-link)
-            a(@click="base.tweet_handle(row)") ツイート
-          b-dropdown-item.is-hidden-desktop(separator)
-          b-dropdown-item.is-hidden-desktop(has-link)
-            a.deleet キャンセル
+      //- nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}" v-if="false")
+      //-   b-icon(icon="plus")
 
-        //- this.tweet_window_popup({text: this.book.tweet_body})
+      //- b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
+      //-   b-dropdown-item(has-link)
+      //-     nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+      //-
+      //-   a(slot="trigger")
+      //-     b-icon(icon="dots-horizontal")
+      //-
+      //-   template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
+      //-     b-dropdown-item(has-link)
+      //-       nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+      //-     //- b-dropdown-item(has-link)
+      //-     //-   nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
+      //-     //- b-dropdown-item(separator)
+      //-     //- b-dropdown-item(has-link)
+      //-     //-   a(@click="base.tweet_handle(row)") ツイート
+      //-     //- b-dropdown-item.is-hidden-desktop(separator)
+      //-     //- b-dropdown-item.is-hidden-desktop(has-link)
+      //-     //-   a.delete キャンセル
+      //-
+      //-   //- this.tweet_window_popup({text: this.book.tweet_body})
 
     template(slot="empty" v-if="base.books != null")
       section.section.is-unselectable
@@ -89,7 +93,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
 .KiwiBookIndexTable
   //- th, td
   //-   vertical-align: top

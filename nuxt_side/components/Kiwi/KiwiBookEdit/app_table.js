@@ -39,7 +39,7 @@ export const app_table = {
       }
     },
 
-    tag_search_handle(tag) {
+    tag_append_search_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")

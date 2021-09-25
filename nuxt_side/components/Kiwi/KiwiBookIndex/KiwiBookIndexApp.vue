@@ -2,41 +2,21 @@
 .KiwiBookIndexApp
   client-only
     DebugBox(v-if="development_p")
-      p visible_hash: {{visible_hash}}
-      p scope: {{scope}}({{tab_index}})
       p page: {{page}}
 
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
-    .MainContainer
-      KiwiBookIndexSidebar(:base="base")
-      KiwiBookIndexNavbar(:base="base")
+    KiwiBookIndexSidebar(:base="base")
+    KiwiBookIndexNavbar(:base="base")
 
-      .left_and_right
-        .left_block.is-hidden-touch
-          b-sidebar(position="static" open type="is-white")
-            KiwiBookIndexSidebarBody(:base="base")
-        .right_block
-          //- KiwiBookIndexTab(:base="base")
-          KiwiBookIndexTable(:base="base")
+    MainSection
+      .container.is-fluid
+        .columns
+          .column
+            KiwiBookIndexTable(:base="base")
 
     DebugPre(v-if="development_p") {{$fetchState}}
     DebugPre(v-if="development_p") {{$data}}
-
-    //- .box
-    //-   template(v-if="$fetchState.pending")
-    //-     | pending
-    //-   template(v-else-if="$fetchState.error")
-    //-     | error
-    //-   template(v-else)
-    //-     | htlm
-    //-
-    //- KiwiBookIndexSidebar(:base="base")
-    //- KiwiBookIndexNavbar(:base="base")
-    //- .container
-    //-   KiwiBookIndexTab(:base="base")
-    //-   KiwiBookIndexTable(:base="base")
-
 </template>
 
 <script>
@@ -44,7 +24,6 @@ import { Book        } from "../models/book.js"
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"
-import { app_tabs       } from "./app_tabs.js"
 import { app_storage    } from "./app_storage.js"
 import { app_columns    } from "./app_columns.js"
 import { app_sidebar    } from "./app_sidebar.js"
@@ -54,14 +33,12 @@ export default {
   mixins: [
     support_parent,
     app_table,
-    app_tabs,
     app_storage,
     app_columns,
     app_sidebar,
   ],
 
   data() {
-    // console.log("[data]")
     return {
       meta: null,
     }
@@ -73,7 +50,7 @@ export default {
 
   mounted() {
     // console.log("[mounted]")
-    this.ga_click("動画一覧")
+    this.ga_click("動画管理")
   },
 
   // fetchOnServer: false,
@@ -99,11 +76,9 @@ export default {
     }
 
     return this.$axios.$get("/api/kiwi/books/index.json", {params}).then(e => {
-      this.meta        = e.meta
-      // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
-      this.books       = e.books.map(e => new Book(this, e))
-      this.total       = e.total
-      // this.book_counts = e.book_counts
+      // this.meta  = e.meta
+      this.books = e.books.map(e => new Book(this, e))
+      this.total = e.total
     })
   },
 
@@ -122,24 +97,16 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
+@import "../all_support.sass"
+.KiwiBookIndexApp
+  .MainSection.section
+    +mobile
+      padding-bottom: 12rem // ios Safari では底辺部分をタップするとスクロールしてしまい使いにくいためスペースをあける
+    +tablet
+      padding: 2rem
+
 .STAGE-development
   .KiwiBookIndexApp
     .container
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .left_and_right, .left_block, .right_block
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-
-.KiwiBookIndexApp
-  .left_and_right
-    display: flex
-    .left_block
-      .sidebar-content
-        box-shadow: unset
-    .right_block
-      width: 100%
-      +mobile
-        padding: 0.75rem 0.5rem
-      +tablet
-        padding: 1rem
 </style>

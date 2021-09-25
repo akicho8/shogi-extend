@@ -1,5 +1,6 @@
 import { Model } from "./model.js"
 import { Lemon } from "./lemon.js"
+import { FolderInfo } from "./folder_info.js"
 
 export class Book extends Model {
   constructor(context, attributes) {
@@ -49,5 +50,9 @@ export class Book extends Model {
       lemon_id:    this.lemon_id,
       tag_list:    this.tag_list,
     }
+  }
+
+  get folder_info() {
+    return FolderInfo.fetch(this.folder_key)
   }
 }

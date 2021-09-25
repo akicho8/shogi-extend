@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "all_support.sass"
 .ProbeShowModal
   .modal-card-body
     padding: 1.0rem 1.5rem

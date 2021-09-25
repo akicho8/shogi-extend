@@ -4,7 +4,7 @@ export const app_chore = {
       this.sound_play("click")
       this.$buefy.dialog.confirm({
         title: "共有将棋盤で編集しますか？",
-        message: "あっちのメニューの「動画生成」で戻ってこれます",
+        message: "あっちのメニューの「動画作成」で戻ってこれます",
         cancelText: "キャンセル",
         confirmText: "編集する",
         // focusOn: "confirm", // confirm or cancel
