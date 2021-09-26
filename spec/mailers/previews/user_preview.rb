@@ -6,36 +6,11 @@ class UserPreview < ActionMailer::Preview
     UserMailer.user_created(User.first)
   end
 
-  # http://localhost:3000/rails/mailers/user/question_owner_message
-  def question_owner_message
-    UserMailer.question_owner_message(Actb::QuestionMessage.first)
-  end
-
-  # http://localhost:3000/rails/mailers/user/question_other_message
-  def question_other_message
-    UserMailer.question_other_message(User.first, Actb::QuestionMessage.first)
-  end
-
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify
     user = User.create!
     battle = Swars::Battle.create!
     crawl_reservation = user.swars_crawl_reservations.create!(:target_user_key => battle.users.first.key)
     UserMailer.battle_fetch_notify(crawl_reservation)
-  end
-
-  # http://localhost:3000/rails/mailers/user/xmovie_notify
-  def xmovie_notify
-    all_params = {
-      :sleep         => 0,
-      :raise_message => "",
-      :media_builder_params => {
-        :recipe_key => "is_recipe_png",
-      },
-    }
-    free_battle = FreeBattle.create!(kifu_body: "68S", use_key: "adapter", user: User.sysop)
-    lemon = Kiwi::Lemon.create!(recordable: free_battle, user: User.sysop, all_params: all_params)
-    lemon.main_process!
-    UserMailer.xmovie_notify(lemon)
   end
 end

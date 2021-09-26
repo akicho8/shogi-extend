@@ -29,7 +29,7 @@ module Kiwi
           end
 
           # user = User.find_or_create_by(name: "alice")
-          # title = "非公開問題を含む公開問題集"
+          # title = "非公開問題を含む公開動画"
           # user.kiwi_bookships.destroy_all
           # # user.kiwi_articles.destroy_all
           # user.kiwi_books.destroy_all

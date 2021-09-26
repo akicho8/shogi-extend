@@ -82,7 +82,7 @@ module Kiwi
         end
 
         def everyone_broadcast
-          ActionCable.server.broadcast("kiwi/global_room_channel", {bc_action: :lemon_list_broadcasted, bc_params: kiwi_info})
+          ActionCable.server.broadcast("kiwi/lemon_room_channel", {bc_action: :lemon_list_broadcasted, bc_params: kiwi_info})
         end
 
         def kiwi_info
@@ -181,7 +181,7 @@ module Kiwi
 
           SlackAgent.message_send(key: "動画作成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
 
-          UserMailer.xmovie_notify(self).deliver_later
+          KiwiMailer.lemon_notify(self).deliver_later
         end
       end
 

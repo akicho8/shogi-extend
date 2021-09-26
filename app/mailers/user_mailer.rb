@@ -111,42 +111,4 @@ class UserMailer < ApplicationMailer
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end
 
-  # 動画作成完了
-  # UserMailer.xmovie_notify(Kiwi::Lemon.last).deliver_later
-  # http://localhost:3000/rails/mailers/user/xmovie_notify
-  def xmovie_notify(lemon)
-    # 本文
-    body = []
-    body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
-    body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
-    body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
-    body << "失敗: #{lemon.error_message}" if lemon.errored_at
-    body << "棋譜: #{UrlProxy.wrap2(lemon.recordable.share_board_path)}"
-    body << ""
-    body << "--"
-    body << "SHOGI-EXTEND"
-    body << url_for(:root)
-
-    if Rails.env.development?
-      body << lemon.browser_url
-      body << lemon.to_t
-      if lemon.ffprobe_info
-        body << lemon.ffprobe_info[:pretty_format]["streams"][0].to_t
-        body << lemon.ffprobe_info[:direct_format]["streams"][0].to_t
-      end
-    end
-
-    # 添付
-    media_builder = lemon.media_builder
-    if media_builder.file_exist?
-      attachments[lemon.filename_human] = media_builder.real_path.read
-    end
-
-    mail({
-        subject: "【動画作成】[#{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
-        to: "#{lemon.user.name} <#{lemon.user.email}>",
-        bcc: AppConfig[:admin_email],
-        body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう
-      })
-  end
 end

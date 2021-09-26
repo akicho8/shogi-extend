@@ -7,8 +7,7 @@
     .mt-4
       KiwiBookInfo(:base="base" :book="base.book")
   .column
-    .box
-      | コメント1
+     KiwiBookShowMessage(:base="base")
 </template>
 
 <script>

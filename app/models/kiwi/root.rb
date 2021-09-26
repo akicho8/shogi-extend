@@ -13,6 +13,7 @@ module Kiwi
         # Static
         Folder,
         # ActiveRecord
+        BookMessage,
         Book,
         Lemon,
       ].each do |e|
@@ -28,6 +29,8 @@ module Kiwi
 
     def models
       [
+        BookMessage,
+        Book,
         Lemon,
         Folder,
       ]

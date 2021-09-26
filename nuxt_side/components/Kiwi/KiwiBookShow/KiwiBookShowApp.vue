@@ -16,8 +16,7 @@ client-only
       .container.is-fluid
         KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
 
-    DebugPre(v-if="development_p")
-      | {{$data}}
+    KiwiBookShowDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
@@ -31,6 +30,8 @@ import { app_sidebar           } from "./app_sidebar.js"
 import { app_op                } from "./app_op.js"
 import { app_table             } from "./app_table.js"
 import { app_storage           } from "./app_storage.js"
+import { app_book_message           } from "./app_book_message.js"
+import { app_book_room      } from "./app_book_room.js"
 
 import _ from "lodash"
 
@@ -44,6 +45,8 @@ export default {
     app_op,
     app_table,
     app_storage,
+    app_book_message,
+    app_book_room,
   ],
 
   data() {
@@ -70,6 +73,7 @@ export default {
     this.clog("process.server", process.server)
 
     if (process.client) {
+      this.book_room_create()
       // this.play_start()
     }
     // this.mode_set("standby")

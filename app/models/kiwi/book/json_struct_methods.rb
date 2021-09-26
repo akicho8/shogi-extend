@@ -142,61 +142,62 @@ module Kiwi
                 ],
               },
               **lemon_struct,
+              **book_messages_struct,
             },
           }
         end
 
-        # 出題用
-        def article_json_struct_for_show
-          {
-            only: [
-              :id,              # 必要
-              :key,
-              :position,
-              :init_sfen,
-              :viewpoint,
-              :title,
-              :description,
-              :direction_message,
-              :turn_max,
-              :difficulty,
-            ],
-            methods: [
-              :folder_key,
-            ],
-            include: {
-              moves_answers: {
-                only: [
-                  :id,
-                  :moves_str,
-                  :moves_human_str,
-                ],
-              },
-            },
-          }
-        end
-
-        def json_struct_for_article_edit_form
-          {
-            only: [
-              :id,
-              :key,
-              :title,
-            ],
-            methods: [
-              :folder_key,
-            ],
-            include: {
-              folder: {
-                only: [
-                  :key,
-                  :id,
-                  :name,
-                ],
-              },
-            },
-          }
-        end
+        # # 出題用
+        # def article_json_struct_for_show
+        #   {
+        #     only: [
+        #       :id,              # 必要
+        #       :key,
+        #       :position,
+        #       :init_sfen,
+        #       :viewpoint,
+        #       :title,
+        #       :description,
+        #       :direction_message,
+        #       :turn_max,
+        #       :difficulty,
+        #     ],
+        #     methods: [
+        #       :folder_key,
+        #     ],
+        #     include: {
+        #       moves_answers: {
+        #         only: [
+        #           :id,
+        #           :moves_str,
+        #           :moves_human_str,
+        #         ],
+        #       },
+        #     },
+        #   }
+        # end
+        # 
+        # def json_struct_for_article_edit_form
+        #   {
+        #     only: [
+        #       :id,
+        #       :key,
+        #       :title,
+        #     ],
+        #     methods: [
+        #       :folder_key,
+        #     ],
+        #     include: {
+        #       folder: {
+        #         only: [
+        #           :key,
+        #           :id,
+        #           :name,
+        #         ],
+        #       },
+        #     },
+        #   }
+        # end
 
         def lemon_struct
           {
@@ -234,6 +235,14 @@ module Kiwi
                 # :file_size,
               ],
             }
+          }
+        end
+
+        def book_messages_struct
+          {
+            book_messages: {
+              **BookMessage.json_struct_type8,
+            },
           }
         end
       end

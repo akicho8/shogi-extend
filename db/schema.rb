@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_25_133900) do
+ActiveRecord::Schema.define(version: 2021_09_26_150500) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -936,6 +936,16 @@ ActiveRecord::Schema.define(version: 2021_09_25_133900) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "kiwi_book_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "book_id", null: false, comment: "動画"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id"], name: "index_kiwi_book_messages_on_book_id"
+    t.index ["user_id"], name: "index_kiwi_book_messages_on_user_id"
+  end
+
   create_table "kiwi_books", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
@@ -943,8 +953,10 @@ ActiveRecord::Schema.define(version: 2021_09_25_133900) do
     t.bigint "lemon_id", null: false, comment: "動画"
     t.string "title", limit: 100, null: false, comment: "タイトル"
     t.text "description", null: false, comment: "説明"
+    t.integer "book_messages_count", default: 0, null: false, comment: "コメント数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_messages_count"], name: "index_kiwi_books_on_book_messages_count"
     t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
     t.index ["key"], name: "index_kiwi_books_on_key", unique: true
     t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id", unique: true
@@ -1515,6 +1527,8 @@ ActiveRecord::Schema.define(version: 2021_09_25_133900) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
+  add_foreign_key "kiwi_book_messages", "kiwi_books", column: "book_id"
+  add_foreign_key "kiwi_book_messages", "users"
   add_foreign_key "kiwi_books", "kiwi_folders", column: "folder_id"
   add_foreign_key "kiwi_books", "kiwi_lemons", column: "lemon_id"
   add_foreign_key "kiwi_books", "users"

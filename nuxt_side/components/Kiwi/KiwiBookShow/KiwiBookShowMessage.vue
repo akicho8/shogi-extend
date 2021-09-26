@@ -1,0 +1,59 @@
+<template lang="pug">
+.KiwiBookShowMessage
+  .media(v-for="book_message in base.book.book_messages")
+    figure.media-left.is-clickable
+      .image.is-64x64.avatar_image
+        img.is-rounded(:src="book_message.user.avatar_path")
+    .media-content
+      .content
+        p
+          strong.is-clickable
+            | {{book_message.user.name}}
+          br
+          span(v-html="base.message_decorate(book_message.body)")
+          br
+          template(v-if="false")
+            small
+              a Like
+              a Reply
+              | · 3 hrs
+          span.diff_time_format.is-size-7.has-text-grey-light.is_line_break_off
+            | {{diff_time_format(book_message.created_at)}}
+      nav.level.is-mobile(v-if="false")
+        .level-left
+          a.level-item
+            span.icon.is-small
+              i.fas.fa-reply
+          a.level-item
+            span.icon.is-small
+              i.fas.fa-retweet
+          a.level-item
+            span.icon.is-small
+              i.fas.fa-heart
+  .media(v-if="base.g_current_user")
+    figure.media-left.is-clickable
+      .image.is-64x64.avatar_image
+        img.is-rounded(:src="base.g_current_user.avatar_path")
+    .media-content
+      .field
+        .control
+          textarea.textarea(v-model.trim="base.message_body")
+      .field
+        .control
+          button.button(@click="base.speak_handle" :class="{'is-primary': base.message_body.length >= 1}")
+            | 送信
+</template>
+
+<script>
+import { support_child } from "./support_child.js"
+
+export default {
+  name: "KiwiBookShowMessage",
+  mixins: [support_child],
+}
+</script>
+
+<style lang="sass">
+@import "../all_support.sass"
+.KiwiBookShowMessage
+</style>

@@ -1,11 +1,15 @@
 module Kiwi
-  class GlobalRoomChannel < ApplicationCable::Channel
+  class BookRoomChannel < ApplicationCable::Channel
     # 回線不調で何回も呼ばれる
     def subscribed
+      if book_id.blank?
+        reject
+        return
+      end
       # subscribed_track("購読開始")
-      stream_from "kiwi/global_room_channel"
+      stream_from "kiwi/book_room_channel/#{book_id}"
       if current_user
-        stream_for(current_user)
+        stream_for(current_user) # これは他と衝突する？
       end
     end
 
@@ -17,19 +21,21 @@ module Kiwi
     # 接続後に1回だけ呼ぶ
     # REVIEW: 最初に1回実行したいなら ActionCable ではなく Nuxt の fetch で行うべきじゃないか？
     def setup_request(data)
-      Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
-
-      # みんなの履歴
-      Kiwi::Lemon.everyone_broadcast
-
+      # Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
+      #
+      # # みんなの履歴
+      # Kiwi::Lemon.everyone_broadcast
+      #
       if current_user
         # あなたの履歴
-        current_user.kiwi_my_lemons_singlecast
-
-        # 直近1件を送る
-        if v = current_user.kiwi_lemons.success_only.order(created_at: :desc).first
-          current_user.kiwi_done_lemon_singlecast(v, noisy: false)
-        end
+        # current_user.kiwi_my_lemons_singlecast
+        #
+        # # 直近1件を送る
+        # if v = current_user.kiwi_lemons.success_only.order(created_at: :desc).first
+        #   current_user.kiwi_done_lemon_singlecast(v, noisy: false)
+        # end
+        current_user.kiwi_book_message_pong_singlecast
+        current_book.kiwi_book_message_pong_broadcast
       end
     end
 
@@ -42,6 +48,10 @@ module Kiwi
       track(data, data["subject"], data["body"])
     end
 
+    def speak(data)
+      current_user.kiwi_book_message_speak(current_book, data["message_body"])
+    end
+
     private
 
     def broadcast(bc_action, bc_params)
@@ -52,11 +62,11 @@ module Kiwi
         end
       end
       # bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
-      ActionCable.server.broadcast("kiwi/global_room_channel", {bc_action: bc_action, bc_params: bc_params})
+      ActionCable.server.broadcast("kiwi/book_room_channel/#{book_id}", {bc_action: bc_action, bc_params: bc_params})
     end
 
     def track(data, action, body)
-      key = "動画作成 [#{global_room_code}] #{action}"
+      key = "動画表示 [#{book_id}] #{action}"
       if Rails.env.development? && false
         SlackAgent.message_send(key: key, body: data)
       end
@@ -70,7 +80,15 @@ module Kiwi
       else
         body = ""
       end
-      SlackAgent.message_send(key: "動画作成 #{action}", body: "#{body}")
+      SlackAgent.message_send(key: "動画表示 #{action}", body: "#{body}")
+    end
+
+    def book_id
+      params["book_id"].presence
+    end
+
+    def current_book
+      @current_book ||= Kiwi::Book.find(book_id)
     end
   end
 end

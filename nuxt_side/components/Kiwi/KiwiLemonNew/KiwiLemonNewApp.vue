@@ -53,7 +53,7 @@ import { app_chore            } from "./app_chore.js"
 import { app_review           } from "./app_review.js"
 import { app_sidebar          } from "./app_sidebar.js"
 import { app_storage          } from "./app_storage.js"
-import { app_action_cable     } from "./app_action_cable.js"
+import { app_lemon_room     } from "./app_lemon_room.js"
 import { app_queue_all        } from "./app_queue_all.js"
 import { app_queue_self       } from "./app_queue_self.js"
 import { app_form             } from "./app_form.js"
@@ -78,7 +78,7 @@ export default {
     app_review,
     app_sidebar,
     app_storage,
-    app_action_cable,
+    app_lemon_room,
     app_queue_all,
     app_queue_self,
     app_form,
