@@ -1,7 +1,7 @@
 <template lang="pug">
 .KiwiBookEditForm
   .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop
-    .column
+    .column.form_block
       b-field.field_block(label="")
         .control
           video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false")
@@ -20,7 +20,7 @@
               span {{e.name}}
       b-field.submit_field
         .control
-          b-button.has-text-weight-bold.book_save_handle(@click="base.book_save_handle" type="is-primary" expanded :class="{disabled: !base.save_button_enabled}") 保存
+          b-button.has-text-weight-bold.book_save_handle(@click="base.book_save_handle" type="is-primary" expanded :class="{disabled: !base.save_button_enabled}") {{base.save_button_name}}
 </template>
 
 <script>

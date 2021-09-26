@@ -1,3 +1,9 @@
+// .field_block を囲むタグ
+// .field 同士のデフォルトの隙間を取る
+.form_block
+  .field
+    margin-bottom: 0
+
 // 基本的には b-field と合わせて使う
 //
 //   b-field.field_block(label="xxx")
@@ -12,7 +18,6 @@
 //       b-input
 //  
 .field_block
-  margin: 0
   padding: 0.8rem 0 1.2rem
   textarea
     word-break: break-all

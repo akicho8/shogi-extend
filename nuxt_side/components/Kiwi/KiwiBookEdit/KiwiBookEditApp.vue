@@ -121,8 +121,8 @@ export default {
   },
 
   computed: {
-    base()                { return this                                         },
-    save_button_name()    { return this.book.new_record_p ? "保存" : "更新" },
+    base()                { return this                                     },
+    save_button_name()    { return this.book.new_record_p ? "登録" : "更新" },
     // SequenceInfo()        { return SequenceInfo },
 
     //////////////////////////////////////////////////////////////////////////////// 編集権限
