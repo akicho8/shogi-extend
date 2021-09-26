@@ -4,6 +4,8 @@ b-sidebar.KiwiBookShowSidebar.is-unselectable(fullheight right overlay v-model="
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
+      .box
+        | とくに入れるもんなし
       b-menu
         //- b-menu-list(label="Action" v-if="base.is_running_p")
         b-menu-list(label="管理" v-if="development_p && false")

@@ -1,8 +1,8 @@
 <template lang="pug">
 .KiwiBookShowMessage
   .media(v-for="book_message in base.book.book_messages")
-    figure.media-left.is-clickable
-      .image.is-64x64.avatar_image
+    .media-left.is-clickable
+      .image.is-48x48
         img.is-rounded(:src="book_message.user.avatar_path")
     .media-content
       .content
@@ -17,9 +17,9 @@
               a Like
               a Reply
               | · 3 hrs
-          span.diff_time_format.is-size-7.has-text-grey-light.is_line_break_off
+          span.is-size-7.has-text-grey-light.is_line_break_off
             | {{diff_time_format(book_message.created_at)}}
-      nav.level.is-mobile(v-if="false")
+      .level.is-mobile(v-if="false")
         .level-left
           a.level-item
             span.icon.is-small
@@ -31,8 +31,8 @@
             span.icon.is-small
               i.fas.fa-heart
   .media(v-if="base.g_current_user")
-    figure.media-left.is-clickable
-      .image.is-64x64.avatar_image
+    .media-left.is-clickable
+      .image.is-48x48
         img.is-rounded(:src="base.g_current_user.avatar_path")
     .media-content
       .field
@@ -40,8 +40,7 @@
           textarea.textarea(v-model.trim="base.message_body")
       .field
         .control
-          button.button(@click="base.speak_handle" :class="{'is-primary': base.message_body.length >= 1}")
-            | 送信
+          b-button(@click="base.speak_handle" :class="{'is-primary': present_p(base.message_body)}") 送信
 </template>
 
 <script>

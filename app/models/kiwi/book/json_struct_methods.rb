@@ -137,8 +137,8 @@ module Kiwi
               folder: {
                 only: [
                   :key,
-                  :id,
-                  :name,
+                  # :id,
+                  # :name,
                 ],
               },
               **lemon_struct,
@@ -216,19 +216,19 @@ module Kiwi
                 # :created_at
                 # :updated_at
               ],
-              include: {
-                :user => {
-                  only: [
-                    :id,
-                    :name,
-                  ],
-                  methods: [
-                    :avatar_path,
-                  ],
-                },
-              },
+              # include: {
+              #   :user => {
+              #     only: [
+              #       :id,
+              #       :name,
+              #     ],
+              #     methods: [
+              #       :avatar_path,
+              #     ],
+              #   },
+              # },
               methods: [
-                :status_key,
+                # :status_key,
                 # :browser_url,
                 :thumbnail_browser_path,
                 # :ffprobe_info,
