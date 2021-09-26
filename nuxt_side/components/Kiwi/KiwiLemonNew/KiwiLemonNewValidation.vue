@@ -3,12 +3,15 @@
   .panel.is-twitter(:class="base.review_error_messages_valid_p ? 'x-is-success' : 'x-is-danger'" size="is-small")
     .panel-heading
       | Twitterアップロード条件
-    .panel-block
-      ul
-        template(v-for="e in base.review_error_messages")
-          li
-            b-icon.mx-2(v-bind="e.icon_args")
-            span {{e.should_be}} → {{e.human_value}}
+    .panel-block.is-flex-direction-column
+      template(v-for="e in base.review_error_messages")
+        .media
+          .media-left
+            b-icon(v-bind="e.icon_args")
+          .media-content
+            | {{e.should_be}}
+          .media-right
+            | {{e.human_value}}
 </template>
 
 <script>
@@ -22,18 +25,14 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewValidation
+  .media
+    padding: 0.25rem
+    margin: 0
+    border: 0
+    width: 100%
+    &:hover
+      background-color: $white-ter
+
   .panel-block
     padding: 0.5rem
-    ul
-      width: 100%
-    li
-      display: flex
-      align-items: center
-      line-height: 2.5rem
-
-.STAGE-development
-  .KiwiLemonNewValidation
-    li
-      &:hover
-        background-color: $white-ter
 </style>
