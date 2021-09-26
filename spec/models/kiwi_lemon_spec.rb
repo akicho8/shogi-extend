@@ -35,7 +35,7 @@ RSpec.describe Kiwi::Lemon, type: :model do
 
   def entry_only
     free_battle = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
-    user1.lemons.create!(recordable: free_battle, all_params: params1[:all_params])
+    user1.kiwi_lemons.create!(recordable: free_battle, all_params: params1[:all_params])
   end
 
   it "works" do

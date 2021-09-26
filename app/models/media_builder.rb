@@ -230,6 +230,10 @@ class MediaBuilder
   #   # }.call
   # end
 
+  def recipe_info
+    RecipeInfo.fetch(recipe_key)
+  end
+
   private
 
   # なるべく画像を共有したいのであってレコード毎にユニークにしたいわけじゃないので record.to_param を入れてはいけない
@@ -324,9 +328,5 @@ class MediaBuilder
 
   def recipe_key
     params[:recipe_key].presence || "is_recipe_png"
-  end
-
-  def recipe_info
-    RecipeInfo.fetch(recipe_key)
   end
 end

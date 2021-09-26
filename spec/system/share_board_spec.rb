@@ -435,7 +435,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       test1
       a_block do
         assert_text("同期失敗 (1回目)")
-        assert_text("次の手番のbobさんの反応がないため再送しますか？")
+        assert_text("次の手番のbobさんの反応がありません\n再送しますか？")
 
         click_text_match("再送する")
         assert_text("同期失敗 (2回目)")
