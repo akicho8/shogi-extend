@@ -92,13 +92,13 @@ module Kiwi
                   :avatar_path,
                 ]
               },
-              folder: {
-                only: [
-                  :key,
-                  :id,
-                  :name,
-                ],
-              },
+              # folder: {
+              #   only: [
+              #     :key,
+              #     :id,
+              #     :name,
+              #   ],
+              # },
             },
           }
         end
@@ -134,13 +134,13 @@ module Kiwi
                   :avatar_path,
                 ],
               },
-              folder: {
-                only: [
-                  :key,
-                  # :id,
-                  # :name,
-                ],
-              },
+              # folder: {
+              #   only: [
+              #     :key,
+              #     # :id,
+              #     # :name,
+              #   ],
+              # },
               **lemon_struct,
               **book_messages_struct,
             },

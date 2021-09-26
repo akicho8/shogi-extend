@@ -24,7 +24,7 @@
     //-   | {{row.key}}
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
-      nuxt-link(:to="{name: 'video-books-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
+      nuxt-link(:to="{name: 'video-watch-book_key', params: {book_key: row.key}}" @click.native="sound_play('click')")
         //- .image.avatar_image.is-inline-block
         //-   img(:src="row.avatar_path" :alt="row.title")
         span.row_title

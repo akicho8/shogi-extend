@@ -1,11 +1,9 @@
 <template lang="pug">
 .KiwiBookShowTop.columns.is-multiline.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
   .column.is-12-tablet.is-10-desktop.is-8-widescreen
-    //- .column.is-narrow
     figure.image
       video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="true" :loop="false")
-    .mt-4
-      KiwiBookInfo(:base="base" :book="base.book")
+    KiwiBookInfo.mt-4(:base="base" :book="base.book")
   .column
      KiwiBookShowMessage(:base="base")
 </template>

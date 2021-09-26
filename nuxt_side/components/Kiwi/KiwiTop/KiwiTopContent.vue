@@ -8,7 +8,7 @@
   KiwiTopTagList(:base="base")
 
   .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.books")
-    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-books-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
+    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
       .card-image
         figure.image
           img(:src="e.lemon.thumbnail_browser_path")
