@@ -32,8 +32,8 @@ export class ValidationInfo extends MemoryRecord {
       },
       {
         name: "容量",
-        should_be: c => `容量が${this.MP4_SIZE_MB_MAX}MB以下`,
-        human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)}MB`,
+        should_be: c => `容量が ${this.MP4_SIZE_MB_MAX} MB以下`,
+        human_value: (c, e) => `${Gs.number_round(e.file_size / (1024 * 1024), 2)} MB`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
@@ -45,8 +45,8 @@ export class ValidationInfo extends MemoryRecord {
       },
       {
         name: "フレームレート",
-        should_be: c => `フレームレートが${this.MP4_FPS_MAX}fps以下`,
-        human_value: (c, e) => `${e.frame_rate}fps`,
+        should_be: c => `フレームレートが ${this.MP4_FPS_MAX} fps以下`,
+        human_value: (c, e) => `${e.frame_rate} fps`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
@@ -60,8 +60,8 @@ export class ValidationInfo extends MemoryRecord {
       // https://developer.twitter.com/ja/docs/media/upload-media/uploading-media/media-best-practices
       {
         name: "映像ﾋﾞｯﾄﾚｰﾄ",
-        should_be: c => `映像ﾋﾞｯﾄﾚｰﾄが${this.MP4_VIDEO_BIT_RATE_KBPS_MAX}kbps程度(?)`,
-        human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)}kbps`,
+        should_be: c => `映像ﾋﾞｯﾄﾚｰﾄが ${this.MP4_VIDEO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
+        human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "blank",
         alert_icon_type: "is-danger",
@@ -74,8 +74,8 @@ export class ValidationInfo extends MemoryRecord {
 
       {
         name: "音声ﾋﾞｯﾄﾚｰﾄ",
-        should_be: c => `音声ﾋﾞｯﾄﾚｰﾄが${this.MP4_AUDIO_BIT_RATE_KBPS_MAX}kbps程度(?)`,
-        human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)}kbps`,
+        should_be: c => `音声ﾋﾞｯﾄﾚｰﾄが ${this.MP4_AUDIO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
+        human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
@@ -106,7 +106,7 @@ export class ValidationInfo extends MemoryRecord {
 
       {
         name: "アスペクト比",
-        should_be: c => `アスペクト比が${c.TWITTER_ASPECT_RATIO_MAX}以下`,
+        should_be: c => `アスペクト比が ${c.TWITTER_ASPECT_RATIO_MAX} 以下`,
         human_value: (c, e) => Gs.number_round(e.aspect_ratio_max, 2),
         environment: null,
         alert_icon_key: "alert",
