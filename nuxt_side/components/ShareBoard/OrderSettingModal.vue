@@ -4,7 +4,7 @@
     .modal-card-title
       | 順番設定
       span.mx-1(v-if="base.order_func_p && base.new_ordered_members_odd_p")
-        b-tooltip(label="奇数では1周で先後が変わるぞ" position="is-right" size="is-small")
+        b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
           b-icon(icon="alert" type="is-warning" size="is-small")
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
@@ -58,6 +58,8 @@
 
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
+        b-button.mb-0.furigoma_handle(@click="furigoma_handle" size="is-small") 振り駒
+        b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後入替
 
       hr
 
@@ -95,7 +97,8 @@ const SHUFFLE_MAX = 8
 
 import { support_child } from "./support_child.js"
 import _ from "lodash"
-import { CycleIterator } from "@/components/models/cycle_iterator.js"
+import { FurigomaPack } from "@/components/models/furigoma_pack.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "OrderSettingModal",
@@ -129,11 +132,16 @@ export default {
       this.base.tn_notify()
     },
 
+    // シャッフル
     shuffle_handle() {
       this.sound_play("click")
+      this.shuffle_core()
+      this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
+    },
 
+    shuffle_core() {
       const rows = this.base.os_table_rows
-      let a = rows.filter(e => e.enabled_p)
+      let a = rows.filter(e => e.enabled_p) // new_ordered_members と同じ
       let b = rows.filter(e => !e.enabled_p)
       for (let i = 0; i < SHUFFLE_MAX; i++) {
         const c = _.shuffle(a)
@@ -145,6 +153,66 @@ export default {
       }
     },
 
+    // 振り駒
+    furigoma_handle() {
+      // if (this.validate_present()) { return }
+      if (this.validate_members_even("振り駒")) { return }
+      this.sound_play("click")
+      const furigoma_pack = FurigomaPack.run({
+        furigoma_random_key: this.$route.query.furigoma_random_key,
+        shakashaka_count: this.$route.query.shakashaka_count,
+      })
+      if (furigoma_pack.swap_p) {
+        this.swap_core()
+      }
+      let message = `振り駒をした結果、${furigoma_pack.message}`
+      if (this.blank_p(this.base.new_ordered_members)) {
+        message += `でしたが誰も参加していませんでした`
+      } else {
+        const user_name = this.base.new_ordered_members[0].user_name
+        message += `で${this.user_call_name(user_name)}の先手になりました`
+      }
+      this.base.shared_al_add({label: "振り駒", message: message})
+    },
+
+    // 先後入替
+    swap_handle() {
+      // if (this.validate_present()) { return }
+      if (this.validate_members_even("先後入替")) { return }
+      this.sound_play("click")
+      this.swap_core()
+      this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
+    },
+
+    // 1人以上いること
+    validate_present() {
+      if (this.blank_p(this.base.new_ordered_members)) {
+        this.sound_play("x")
+        this.toast_warn(`誰も参加していません`)
+        return true
+      }
+    },
+
+    // 偶数人数であること
+    validate_members_even(name) {
+      if (this.base.new_ordered_members_odd_p) {
+        this.sound_play("x")
+        this.toast_warn(`チーム編成が変わってしまうため、参加人数が奇数のときは${name}できません`)
+        return true
+      }
+    },
+
+    // 先後入れ替え
+    swap_core() {
+      const rows = this.base.os_table_rows
+      let a = rows.filter(e => e.enabled_p) // new_ordered_members と同じ
+      let b = rows.filter(e => !e.enabled_p)
+      let c = this.ruby_like_each_slice_to_a(a, 2).flatMap(e => this.safe_reverse(e))
+      this.base.os_table_rows = [...c, ...b]
+      this.order_index_update()
+    },
+
+    // 更新
     apply_handle() {
       this.sound_play("click")
       this.form_params_share("更新")

@@ -350,7 +350,7 @@ export const app_ordered_members = {
 
     // 順番設定ダイアログ内での、参加者数は奇数か？
     new_ordered_members_odd_p() {
-      return this.new_ordered_members.length % 2 !== 0
+      return this.odd_p(this.new_ordered_members.length)
     },
 
     // 手番制限

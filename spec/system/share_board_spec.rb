@@ -859,8 +859,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定シャッフル'
-  describe "順番設定シャッフル" do
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のシャッフル'
+  describe "順番設定のシャッフル" do
     it "works" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
@@ -878,6 +878,55 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
         find(".shuffle_handle").click
         assert_order_setting_members ["2", "4", "1", "3"] # 4 2 がメンバーでシャッフルされて 2 4 になり、残り 1 3 を追加
+      end
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定の振り駒'
+  describe "順番設定の振り駒" do
+    def test1(shakashaka_count, message)
+      a_block do
+        visit_app({
+            :room_code                 => :my_room,
+            :force_user_name           => "1",
+            :ordered_member_names      => "1,2,3,4",
+            :handle_name_validate_skip => "true",
+            :furigoma_random_key       => "is_true",        # 毎回反転が起きる
+            :shakashaka_count          => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
+          })
+
+        side_menu_open
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+
+        assert_order_setting_members ["1", "2", "3", "4"]
+
+        find(".furigoma_handle").click
+        assert_text(message)
+      end
+    end
+
+    it "歩5枚" do
+      test1("2", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
+    end
+    it "と金5枚" do
+      test1("3", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
+    end
+  end
+
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定の先後入替'
+  describe "順番設定の先後入替" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
+
+        side_menu_open
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+
+        assert_order_setting_members ["1", "2", "3", "4"]
+
+        find(".swap_handle").click                        # 先後入替
+        assert_text("1さんが先後を入れ替えました")
+        assert_order_setting_members ["2", "1", "4", "3"] # 2つづつswapしていく
       end
     end
   end

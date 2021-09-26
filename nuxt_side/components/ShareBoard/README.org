@@ -94,7 +94,11 @@
 
 ** 順番設定済みのテスト
 
+   3人
    http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
+
+   4人
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 

@@ -35,7 +35,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
 
         //- .slice().reverse()
         template(v-if="false")
-          template(v-for="e in base.AnswerKindInfo.values.slice().reverse()")
+          template(v-for="e in safe_reverse(base.AnswerKindInfo.values)")
             b-navbar-item.has-text-weight-bold.px-5.is-clickable.is-unselectable(@click="base.next_handle(e)" v-if="base.current_xitem")
               b-icon(:icon="e.icon")
 

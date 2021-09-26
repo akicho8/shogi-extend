@@ -19,6 +19,26 @@ export const Gs = {
     return ary[this.ruby_like_modulo(index, ary.length)]
   },
 
+  // expect(Gs.ruby_like_each_slice_to_a(["a", "b", "c", "d"], 2)).toEqual([["a", "b"], ["c", "d"]])
+  // expect(Gs.ruby_like_each_slice_to_a(["a", "b", "c"], 2)).toEqual([["a", "b"], ["c"]])
+  // expect(() => Gs.ruby_like_each_slice_to_a(["a", "b"], 0)).toThrow()
+  // expect(Gs.ruby_like_each_slice_to_a([], 2)).toEqual([])
+  ruby_like_each_slice_to_a(ary, step) {
+    if (step <= 0) {
+      throw new Error("invalid slice size")
+    }
+    const new_ary = []
+    for (let i = 0; i < ary.length; i += step) {
+      new_ary.push(ary.slice(i, i + step))
+    }
+    return new_ary
+  },
+
+  // ary を破壊しない安全な reverse
+  safe_reverse(ary) {
+    return ary.slice().reverse()
+  },
+
   // 文字列からハッシュコードに変換
   // これは単純なものでよい
   hash_number_from_str(str) {
@@ -115,6 +135,14 @@ export const Gs = {
     return Math.floor(Math.random() * n)
   },
 
+  // 整数で min..max の間の乱数
+  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  rand_int_range(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  },
+
   ////////////////////////////////////////////////////////////////////////////////
 
   // float_to_perc(0.33, 2)    // => 33
@@ -141,6 +169,32 @@ export const Gs = {
   number_floor(v, precision = 0) { return _.floor(v, precision) },
   number_ceil(v, precision = 0) { return _.ceil(v, precision) },
   number_round(v, precision = 0) { return _.round(v, precision) },
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  n_times_collect(n, block) {
+    const ary = []
+    for (let i = 0; i < n; i++) {
+      ary.push(block(i))
+    }
+    return ary
+  },
+
+  n_times(n, block) {
+    for (let i = 0; i < n; i++) {
+      block(i)
+    }
+  },
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  even_p(v) {
+    return (v % 2) === 0
+  },
+
+  odd_p(v) {
+    return !this.even_p(v)
+  },
 
   ////////////////////////////////////////////////////////////////////////////////
 
