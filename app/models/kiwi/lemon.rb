@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Lemon (kiwi_lemons as Kiwi::Lemon)
+# 動画 (kiwi_lemons as Kiwi::Lemon)
 #
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
 # | name             | desc             | type        | opts        | refs                       | index |

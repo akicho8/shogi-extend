@@ -45,8 +45,8 @@ module Kiwi
         validates :body
       end
 
-      with_options allow_blank: true do
-        validates :body, length: { maximum: body_max_length }
+      with_options allow_blank: true do |o| # body_max_length を参照するためには o がいる
+        o.validates :body, length: { maximum: body_max_length }
       end
     end
 

@@ -3,7 +3,7 @@ module Kiwi
     concern :ThumbnailMethods do
       def thumbnail_build
         raise "thumbnail_real_path is blank" if thumbnail_real_path.blank?                                # /system/x-files/0f/16/3_20210925101219_2x2_3s.mp4
-        `ffmpeg -ss 00:00:00 -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}`
+        `ffmpeg -v warning -hide_banner -ss 00:00:00 -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}`
 
         # old = media_builder.real_path               # 生成ファイル ~/src/shogi-extend/public/system/x-files/3e/3d/3e3dae2e6ad07d51fe12e171ebb337b6.mp4
         # new = old.dirname + filename_human          # 人間向け参照 ~/src/shogi-extend/public/system/x-files/3e/3d/2_20210824130750_1024x768_8s.mp4
