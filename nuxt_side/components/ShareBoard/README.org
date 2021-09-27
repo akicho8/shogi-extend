@@ -100,6 +100,14 @@
    4人
    http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle
 
+** 振り駒
+
+   # 常に反転 x 2回 なので 歩5枚
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=2
+
+   # 常に反転 x 3回 なので と金5枚
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=3
+
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
    http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3

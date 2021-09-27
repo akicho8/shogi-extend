@@ -172,7 +172,7 @@ export default {
         const user_name = this.base.new_ordered_members[0].user_name
         message += `で${this.user_call_name(user_name)}の先手になりました`
       }
-      this.base.shared_al_add({label: "振り駒", message: message})
+      this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
     },
 
     // 先後入替

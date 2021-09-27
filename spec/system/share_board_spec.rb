@@ -884,7 +884,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定の振り駒'
   describe "順番設定の振り駒" do
-    def test1(shakashaka_count, message)
+    def test1(shakashaka_count, piece_names, message)
       a_block do
         visit_app({
             :room_code                 => :my_room,
@@ -901,15 +901,16 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_order_setting_members ["1", "2", "3", "4"]
 
         find(".furigoma_handle").click
+        assert_text(piece_names)
         assert_text(message)
       end
     end
 
     it "歩5枚" do
-      test1("2", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
+      test1("2", "歩歩歩歩歩", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
     end
     it "と金5枚" do
-      test1("3", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
+      test1("3", "ととととと", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
     end
   end
 
