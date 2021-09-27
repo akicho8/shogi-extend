@@ -434,15 +434,15 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       @RETRY_DELAY = 0  # しかも0秒後に応答確認
       test1
       a_block do
-        assert_text("同期失敗 (1回目)")
-        assert_text("次の手番のbobさんの反応がありません\n再送しますか？")
+        assert_text("同期失敗 1回目")
+        assert_text("次の手番のbobさんの反応がないので再送しますか？")
 
         click_text_match("再送する")
-        assert_text("同期失敗 (2回目)")
+        assert_text("同期失敗 2回目")
         assert_text("再送1")
 
         click_text_match("再送する")
-        assert_text("同期失敗 (3回目)")
+        assert_text("同期失敗 3回目")
         assert_text("再送2")
 
         doc_image
