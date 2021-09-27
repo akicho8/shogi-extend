@@ -156,22 +156,28 @@ export default {
     // 振り駒
     furigoma_handle() {
       // if (this.validate_present()) { return }
-      if (this.validate_members_even("振り駒")) { return }
-      this.sound_play("click")
+      // if (this.validate_members_even("振り駒")) { return }
       const furigoma_pack = FurigomaPack.run({
         furigoma_random_key: this.$route.query.furigoma_random_key,
         shakashaka_count: this.$route.query.shakashaka_count,
       })
+      const prefix = `振り駒をした結果、${furigoma_pack.message}`
+      if (this.blank_p(this.base.new_ordered_members)) {
+        this.sound_play("x")
+        this.toast_warn(`${prefix}でしたが誰も参加していませんでした`)
+        return
+      }
+      if (this.base.new_ordered_members_odd_p) {
+        this.sound_play("x")
+        this.toast_warn(`${prefix}でしたが参加人数が奇数のときはチーム編成が変わるので無効です`)
+        return
+      }
+      this.sound_play("click")
       if (furigoma_pack.swap_p) {
         this.swap_core()
       }
-      let message = `振り駒をした結果、${furigoma_pack.message}`
-      if (this.blank_p(this.base.new_ordered_members)) {
-        message += `でしたが誰も参加していませんでした`
-      } else {
-        const user_name = this.base.new_ordered_members[0].user_name
-        message += `で${this.user_call_name(user_name)}の先手になりました`
-      }
+      const user_name = this.base.new_ordered_members[0].user_name
+      const message = `${prefix}で${this.user_call_name(user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
     },
 
@@ -197,7 +203,7 @@ export default {
     validate_members_even(name) {
       if (this.base.new_ordered_members_odd_p) {
         this.sound_play("x")
-        this.toast_warn(`チーム編成が変わってしまうため、参加人数が奇数のときは${name}できません`)
+        this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
       }
     },
