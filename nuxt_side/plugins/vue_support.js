@@ -1,15 +1,6 @@
 // 汎用コード
-import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
-
-import twemoji from 'twemoji'
-
-const strip_tags = require('striptags')
-
 import { Gs } from "../components/models/gs.js"
-import { HandleNameParser } from "../components/models/handle_name_parser.js"
-
-import Autolinker from 'autolinker'
-
+import twemoji from 'twemoji'
 import _ from "lodash"
 
 export default {
@@ -183,30 +174,6 @@ export default {
     // tweet_window_popup({url: "https://example.com/"})
     tweet_window_popup(params) {
       this.window_popup(this.tweet_url_build_from_params(params))
-    },
-
-    kento_full_url({sfen, turn, viewpoint}) {
-      this.__assert__(sfen, "sfen is blank")
-
-      const info = SfenParser.parse(sfen)
-      const url = new URL("https://www.kento-shogi.com")
-
-      // initpos は position sfen と moves がない初期局面の sfen
-      url.searchParams.set("initpos", info.init_sfen_strip)
-
-      // 視点も対応してくれるかもしれないので入れとく
-      url.searchParams.set("viewpoint", viewpoint)
-
-      // moves は別のパラメータでスペースを . に置き換えている(KENTOの独自の工夫)
-      const { moves } = info.attributes
-      if (moves) {
-        url.searchParams.set("moves", moves.replace(/\s+/g, "."))
-      }
-
-      // #n が手数
-      url.hash = turn
-
-      return url.toString()
     },
 
     as_full_url(path) {
