@@ -36,17 +36,17 @@
 export default {
   name: "SfenTrimModal",
   props: {
-    default_sp_body:      { type: String, required: false, default: "",      },
+    default_sp_body:      { type: String, required: true,  default: "",      },
     default_sp_turn:      { type: Number, required: false, default: 0,       },
     default_sp_viewpoint: { type: String, required: false, default: "black", },
     next_jump_to:         { type: String, required: false, default: "first", }, // first or last。from選択後にtoはどこから始めるか
   },
   data() {
     return {
-      mode:      null, // 現在の状態 from or to
-      index:     null, // 開始
-      offset:    null, // 終了 (人間的には index + offset)
-      base_sfen: null, // 確定した開始局面
+      mode:          null, // 現在の状態 from or to
+      index:         null, // 開始
+      offset:        null, // 終了 (人間的には index + offset)
+      base_sfen:     null, // 確定した開始局面
 
       // ShogiPlayerのパラメータ
       sp_body:       null,
@@ -94,6 +94,7 @@ export default {
 
       this.mode = "from"
       this.index = this.sp_turn
+      this.__assert__(this.present_p(this.sp_body), "this.present_p(this.sp_body)")
       this.offset = this.sfen_parse(this.sp_body).moves.length
     },
 

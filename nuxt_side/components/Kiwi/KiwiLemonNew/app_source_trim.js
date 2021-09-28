@@ -30,11 +30,11 @@ export const app_source_trim = {
 
     sfen_trim_modal_handle(props) {
       const modal_instance = this.modal_card_open({
+        props: props,
         component: SfenTrimModal,
         events: {
           "update:submit": e => {
             this.sound_play("click")
-            // this.toast_ok("反映しました")
             this.viewpoint_key = e.viewpoint
             this.body_update_by(e.full_sfen)
             modal_instance.close()
