@@ -42,6 +42,13 @@ module MemoryRecordBind
         if key.kind_of? self
           return key
         end
+
+        # if Rails.env.test?
+        #   unless find_by(key: key)
+        #     setup
+        #   end
+        # end
+
         find_by!(key: key)
       rescue ActiveRecord::RecordNotFound => error
         if Rails.env.test? || Rails.env.development?

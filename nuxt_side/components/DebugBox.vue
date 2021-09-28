@@ -14,7 +14,7 @@ name: "DebugBox",
   },
   data() {
     return {
-      show_p: this.$route.query.__debug_box_disabled__ !== "on",
+      show_p: this.blank_p(this.$route.query.__debug_box_skip__),
     }
   },
   methods: {

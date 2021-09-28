@@ -1246,7 +1246,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def visit_app(args = {})
-    args = args.merge("__debug_box_disabled__" => "on")
+    args = args.merge("__debug_box_skip__" => "true")
     visit "/share-board?#{args.to_query}"
   end
 

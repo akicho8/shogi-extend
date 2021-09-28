@@ -2,7 +2,7 @@ module KiwiSupport
   extend ActiveSupport::Concern
 
   included do
-    before :context do
+    before do
       Actb.setup
       Emox.setup
       Wkbk.setup

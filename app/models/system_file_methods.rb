@@ -32,9 +32,9 @@ module SystemFileMethods
     # SystemFileMethods 用のパラメータ
     def default_options
       {
-        :disk_cache_enable => Rails.env.production? || Rails.env.staging? || Rails.env.test?,
+        :disk_cache_enable => Rails.env.production? || Rails.env.staging? || Rails.env.test? || Rails.env.development?,
         :progress_callback => nil,
-        :unique_key        => nil, # 明示的にキーを決める場合は指定
+        :unique_key        => nil, # 明示的にキーを決める場合は指定。これがユニークだとキャッシュヒットしないため disk_cache_enable は false と似た状況になる
       }
     end
   end
