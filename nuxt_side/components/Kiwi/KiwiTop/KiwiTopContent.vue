@@ -1,9 +1,10 @@
 <template lang="pug">
 .KiwiTopContent.columns.is-multiline.is-variable.is-0-mobile.is-1-tablet.is-2-desktop.is-3-widescreen
   .column.is-12
-    .buttons
+    .buttons.are-small
       template(v-for="e in base.SearchPresetInfo.values")
-        b-button(@click="base.search_preset_handle(e)") {{e.name}}
+        b-button(@click="base.search_preset_handle(e)" :type="{'is-primary': base.search_preset_info.key === e.key}")
+          | {{e.name}}
 
   KiwiTopTagList(:base="base")
 

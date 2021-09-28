@@ -1,4 +1,4 @@
-import { IndexScopeInfo } from "../models/index_scope_info.js"
+// import { IndexScopeInfo } from "../models/index_scope_info.js"
 
 export const app_tabs = {
   data() {
@@ -9,8 +9,8 @@ export const app_tabs = {
   },
 
   computed: {
-    IndexScopeInfo()     { return IndexScopeInfo                        },
-    current_scope_info() { return this.IndexScopeInfo.fetch(this.scope) },
+    // IndexScopeInfo()     { return IndexScopeInfo                        },
+    // current_scope_info() { return this.IndexScopeInfo.fetch(this.search_preset_key) },
 
     // // ログインしている → 公開
     // // ログインしてない → 全体

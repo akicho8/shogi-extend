@@ -10,7 +10,7 @@ b-sidebar.KiwiTopSidebar.is-unselectable(fullheight right overlay v-model="base.
           b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video'}" label="動画リスト" @click.native="sound_play('click')")
         //- b-menu-list(label="表示オプション" v-if="base.visible_hash")
         //-   b-menu-item.is_active_unset.sidebar_columns_toggle(@click="sound_play('click')")
-        //-     template(slot="label" slot-scope="props")
+        //-     template(slot="label" slot-search_preset_key="props")
         //-       | 表示カラム
         //-       b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
         //-     template(v-for="e in base.KiwiRecordIndexColumnInfo.values")

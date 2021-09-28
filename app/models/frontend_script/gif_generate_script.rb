@@ -20,7 +20,7 @@ module FrontendScript
 
       battle = FreeBattle.create!(kifu_body: params[:body])
       lemon = Kiwi::Lemon.create!(recordable: battle, user: h.current_user, all_params: params)
-      lemon.main_process!
+      lemon.main_process
       {
         browser_url: lemon.browser_url,
       }

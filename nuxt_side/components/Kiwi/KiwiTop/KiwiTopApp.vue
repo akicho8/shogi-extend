@@ -10,7 +10,8 @@
   .MainContainer
     KiwiTopSidebar(:base="base")
     KiwiTopNavbar(:base="base")
-    MainSection(v-if="!$fetchState.pending && !$fetchState.error")
+    //- (v-if="!$fetchState.pending && !$fetchState.error")
+    MainSection
       .container.is-fluid
         KiwiTopContent(:base="base")
 
@@ -59,9 +60,10 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    // this.__assert__(this.scope, "this.scope")
+    // this.__assert__(this.search_preset_key, "this.search_preset_key")
     this.query       = this.$route.query.query
-    this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    // this.search_preset_key = this.$route.query.search_preset_key ?? this.search_preset_key ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.search_preset_key = this.$route.query.search_preset_key
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     // this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -71,7 +73,7 @@ export default {
     // this.url_params とは異なり最終的な初期値を設定する
     const params = {
       query:       this.query,
-      scope:       this.scope,
+      search_preset_key:       this.search_preset_key,
       page:        this.page,
       per:         this.per,
       // sort_column: this.sort_column,
@@ -83,7 +85,7 @@ export default {
       if (this.query || this.tag) {
         this.meta.title = _.compact([this.query, ...this.tags]).join(" ") + ` - ${this.meta.title}`
       }
-      // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
+      // this.tab_index   = this.IndexScopeInfo.fetch(this.search_preset_key).code
       this.books = e.books.map(e => new Book(this, e))
       // this.total       = e.total
       // this.book_counts = e.book_counts

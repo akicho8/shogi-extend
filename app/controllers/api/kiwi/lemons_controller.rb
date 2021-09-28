@@ -112,7 +112,7 @@ module Api
 
         lemon = current_user.kiwi_lemons.create!(recordable: free_battle, all_params: params.to_unsafe_h[:all_params])
         if false
-          lemon.main_process!
+          lemon.main_process
         else
           current_user.kiwi_my_lemons_singlecast
           ::Kiwi::Lemon.everyone_broadcast

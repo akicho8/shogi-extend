@@ -191,7 +191,7 @@ module BattleControllerSharedMethods
         #
         #     lemon = Kiwi::Lemon.create!(recordable: current_record, user: current_user, all_params: params.to_unsafe_h)
         #     if false
-        #       lemon.main_process!
+        #       lemon.main_process
         #     else
         #       Kiwi::Lemon.background_job_kick
         #     end

@@ -40,7 +40,7 @@ RSpec.describe Kiwi::Lemon, type: :model do
 
   it "works" do
     record = entry_only
-    record.main_process!
+    record.main_process
     record.reload
     assert { record.status_key == "成功" }
     assert { record.browser_path.match?(%{/system/x-files/.*mp4}) }

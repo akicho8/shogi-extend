@@ -1,9 +1,9 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
+import { HandleNameParser } from "./handle_name_parser.js"
 import Autolinker from 'autolinker'
 const strip_tags = require('striptags')
-import { HandleNameParser } from "../components/models/handle_name_parser.js"
 
 // vue_support.js の methods に追加する
 export const Gs = {

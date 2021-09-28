@@ -9,7 +9,6 @@ export const app_table = {
       tag:         null,
       // sort_column: null,
       // sort_order:  null,
-      scope:       null,
 
       // jsonで貰うもの
       books: null, // null:まだ読み込んでいない [...]:読み込んだ
@@ -41,7 +40,7 @@ export const app_table = {
         page:        this.page,
         per:         this.per,
         tag:         this.tag,
-        scope:       this.scope,
+        search_preset_key:       this.search_preset_key,
         // sort_column: this.sort_column,
         // sort_order:  this.sort_order,
       }

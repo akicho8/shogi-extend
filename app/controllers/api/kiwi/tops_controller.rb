@@ -47,9 +47,10 @@ module Api
 
       def current_books
         @current_books ||= -> {
-          s = ::Kiwi::Book.search(params.merge(current_user: current_user))
-          s = s.order(created_at: :desc)
-          s = page_scope(s)       # page_methods.rb
+          # s = ::Kiwi::Book.all
+          s = ::Kiwi::Book.general_search(params.merge(current_user: current_user))
+          # s = s.order(created_at: :desc)
+          # s = page_scope(s)       # page_methods.rb
         }.call
       end
 

@@ -21,7 +21,7 @@ class KiwiPreview < ActionMailer::Preview
     user1 = User.sysop
     free_battle1 = user1.free_battles.create!(kifu_body: "68S", use_key: "kiwi_lemon")
     lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: all_params)
-    lemon1.main_process!
+    lemon1.main_process
     KiwiMailer.lemon_notify(lemon1)
   end
 end

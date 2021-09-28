@@ -19,7 +19,7 @@ module Kiwi
           # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "開始")
           count = 0
           while e = ordered_process.first
-            e.main_process!
+            e.main_process
             count += 1
           end
           # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
@@ -139,8 +139,8 @@ module Kiwi
         }.call
       end
 
-      # cap staging rails:runner CODE='Kiwi::Lemon.last.main_process!'
-      def main_process!
+      # cap staging rails:runner CODE='Kiwi::Lemon.last.main_process'
+      def main_process
         logger.tagged(to_param) do
           reset
           self.process_begin_at = Time.current
