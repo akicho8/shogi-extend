@@ -6,7 +6,7 @@ export class ParamInfo extends MemoryRecord {
     return [
       { key: "body",               type: "string",  name: "棋譜",                default: "",                          permanent: false, relation: null,                desc: "",           },
       { key: "recipe_key",         type: "string",  name: "出力フォーマット",    default: "is_recipe_mp4",             permanent: true,  relation: "RecipeInfo",        desc: "",           },
-      { key: "animation_size_key", type: "string",  name: "サイズ",              default: "is1280x720",                permanent: true,  relation: "AnimationSizeInfo", desc: "",           },
+      { key: "animation_size_key", type: "string",  name: "サイズ",              default: "is1920x1080",               permanent: true,  relation: "AnimationSizeInfo", desc: "",           },
       { key: "img_width",          type: "string",  name: "w",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "img_height",         type: "string",  name: "h",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "loop_key",           type: "string",  name: "ループ",              default: "is_loop_infinite",          permanent: true,  relation: null,                desc: "",           },

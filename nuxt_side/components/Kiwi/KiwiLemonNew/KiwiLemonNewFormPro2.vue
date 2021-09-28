@@ -12,7 +12,7 @@
                 .media-left
                   | {{e.name}}
                   //- | {{e.real_ext}}
-                .media-content
+                .media-content.is_line_break_on
                   //- .has-text-weight-bold {{e.name}}
                   h3 {{e.title}}
                   span {{e.message}}
@@ -114,4 +114,9 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewFormPro2
+  .dropdown-item
+    +desktop
+      min-width: 24rem
+    .media-left
+      flex-basis: 4rem
 </style>
