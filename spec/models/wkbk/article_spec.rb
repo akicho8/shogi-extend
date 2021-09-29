@@ -186,7 +186,7 @@ module Wkbk
       article.destroy!
     end
 
-    describe "default_assign" do
+    describe "form_values_default_assign" do
       it do
         @user = User.create!
 

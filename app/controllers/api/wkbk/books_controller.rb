@@ -68,7 +68,7 @@ module Api
         # edit_permission_valid!(book)
         else
           book = s.build
-          book.default_assign
+          book.form_values_default_assign
         end
         retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
         retv[:meta] = book.og_meta

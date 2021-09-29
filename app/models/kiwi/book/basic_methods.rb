@@ -218,7 +218,7 @@ module Kiwi
         list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
       end
 
-      def default_assign
+      def form_values_default_assign
         # これらは localStorage から復帰する
         # self.folder_key ||= :public
 

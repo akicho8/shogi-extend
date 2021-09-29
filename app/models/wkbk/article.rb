@@ -254,7 +254,7 @@ module Wkbk
       end
     end
 
-    def default_assign(params = {})
+    def form_values_default_assign(params = {})
       default_assign_from_source_article(params)
       default_assign_from_individual_params(params)
 

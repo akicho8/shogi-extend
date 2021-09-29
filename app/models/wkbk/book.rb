@@ -207,7 +207,7 @@ module Wkbk
       list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
     end
 
-    def default_assign
+    def form_values_default_assign
       # この2つは localStorage から復帰する
       # self.folder_key ||= :public
       # self.sequence_key ||= :bookship_shuffle

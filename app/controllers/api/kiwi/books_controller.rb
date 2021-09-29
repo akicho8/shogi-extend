@@ -70,7 +70,7 @@ module Api
           if current_lemon
             book.lemon = current_lemon
           end
-          book.default_assign
+          book.form_values_default_assign
         end
         retv[:book] = book.as_json(::Kiwi::Book.json_struct_for_edit)
         retv[:meta] = book.og_meta

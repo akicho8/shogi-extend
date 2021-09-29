@@ -32,7 +32,7 @@ tp lemon1
 
 # フォーム初期値
 book1 = user1.kiwi_books.build(lemon: lemon1)
-book1.default_assign
+book1.form_values_default_assign
 tp book1.attributes
 
 book1 = user1.kiwi_books.create!(lemon: lemon1, title: "タイトル#{user1.kiwi_books.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉))
