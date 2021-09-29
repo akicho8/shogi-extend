@@ -30,11 +30,11 @@ module BackendScript
     end
 
     def book_link_to(book)
-      h.link_to(book_image_tag(book) + "#{book.title}(#{book.articles.count})".html_safe, UrlProxy.wrap2("/rack/books/#{book.key}?force=true"))
+      h.link_to(book_image_tag(book) + "#{book.title}(#{book.articles.count})".html_safe, UrlProxy.full_url_for("/rack/books/#{book.key}?force=true"))
     end
 
     def article_link_to(article)
-      h.link_to(article.title, UrlProxy.wrap2("/rack/articles/#{article.key}?force=true"))
+      h.link_to(article.title, UrlProxy.full_url_for("/rack/articles/#{article.key}?force=true"))
     end
   end
 end

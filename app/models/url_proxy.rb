@@ -18,14 +18,14 @@ module UrlProxy
   #   workaround(*args)
   # end
 
-  # rails r "p UrlProxy.wrap('/about/terms')"
-  # rails r "p UrlProxy.wrap(path: '/swars/search', query: {query: 'devuser1'})"
-  def wrap(args)
-    workaround(args)
+  # rails r "p UrlProxy.url_for('/about/terms')"
+  # rails r "p UrlProxy.url_for(path: '/swars/search', query: {query: 'devuser1'})"
+  def wrap(*args)
+    workaround(*args)
   end
 
-  def wrap2(args)
-    workaround(args, long_url: true)
+  def full_url_for(*args)
+    workaround(*args, long_url: true)
   end
 
   # 開発環境のときだけ Nuxt 側に切り替える

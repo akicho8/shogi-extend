@@ -275,8 +275,8 @@ module Actb
     end
 
     def page_url(options = {})
-      # UrlProxy.wrap2("/actb/questions/#{id}")
-      UrlProxy.wrap2("/training?question_id=#{id}")
+      # UrlProxy.full_url_for("/actb/questions/#{id}")
+      UrlProxy.full_url_for("/training?question_id=#{id}")
       # Rails.application.routes.url_helpers.url_for([:actb, {only_path: false, question_id: id}.merge(options)])
     end
 

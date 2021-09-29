@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       path = { path: "/swars/search", query: query }
     end
 
-    UrlProxy.wrap(path)
+    UrlProxy.url_for(path)
   }
 
   get "w",       format: "html", to: redirect(&swars_search_shared_redirect_block)

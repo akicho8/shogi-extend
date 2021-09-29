@@ -100,7 +100,7 @@ module Wkbk
     end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/rack/books/#{key}")
+      UrlProxy.full_url_for("/rack/books/#{key}")
     end
 
     # jsから来たパラメーターでまとめて更新する

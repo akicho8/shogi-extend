@@ -9,7 +9,7 @@ class KiwiMailer < ApplicationMailer
     body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
-    body << "棋譜: #{UrlProxy.wrap2(lemon.recordable.share_board_path)}"
+    body << "棋譜: #{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
     body << ""
     body << "--"
     body << "SHOGI-EXTEND"
@@ -53,7 +53,7 @@ class KiwiMailer < ApplicationMailer
       out << ""
       out << "--"
       out << "▼動画"
-      out << UrlProxy.wrap2("/video")
+      out << UrlProxy.full_url_for("/video")
     end
 
     body = out.join("\n")

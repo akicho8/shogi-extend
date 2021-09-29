@@ -221,7 +221,7 @@ module Kiwi
       # REVIEW: 不要？
       def browser_url
         if browser_path
-          UrlProxy.wrap2(path: browser_path)
+          UrlProxy.full_url_for(path: browser_path)
         end
       end
 

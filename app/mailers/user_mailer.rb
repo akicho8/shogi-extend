@@ -35,7 +35,7 @@ class UserMailer < ApplicationMailer
       out << ""
       out << "--"
       out << "▼将棋トレーニングバトル"
-      out << UrlProxy.wrap2("/actb")
+      out << UrlProxy.full_url_for("/actb")
     end
 
     body = out.join("\n")
@@ -81,7 +81,7 @@ class UserMailer < ApplicationMailer
     out << ""
 
     out << "#{record.target_user.key}さんの棋譜"
-    out << UrlProxy.wrap2(path: "/swars/search", query: {query: record.target_user_key})
+    out << UrlProxy.full_url_for(path: "/swars/search", query: {query: record.target_user_key})
 
     out << ""
     out << "--"

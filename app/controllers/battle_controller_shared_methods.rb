@@ -169,7 +169,7 @@ module BattleControllerSharedMethods
         #
         #     # FIXME: リダイレクト
         #
-        #     # url = UrlProxy.wrap2(path: media_builder.to_browser_path)
+        #     # url = UrlProxy.full_url_for(path: media_builder.to_browser_path)
         #     # render html: url
         #     # return
         #

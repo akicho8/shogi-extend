@@ -72,7 +72,7 @@ module SystemFileMethods
   end
 
   def browser_url
-    UrlProxy.wrap2(path: browser_path)
+    UrlProxy.full_url_for(path: browser_path)
   end
 
   def not_exist_then_build

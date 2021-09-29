@@ -33,19 +33,19 @@ module Swars
       #   # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
       #   if modal_id = params[:modal_id].presence
       #     path = ["/swars/battles/#{modal_id}", query].compact.join("?")
-      #     redirect_to UrlProxy.wrap(path)
+      #     redirect_to UrlProxy.url_for(path)
       #     return
       #   end
       #
       #   if params[:latest_open_index] && current_swars_user_key
       #     external_app_key = params[:external_app_key] || :piyo_shogi
       #     path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
-      #     redirect_to UrlProxy.wrap(path)
+      #     redirect_to UrlProxy.url_for(path)
       #     return
       #   end
       #
       #   path = ["/swars/search", query].compact.join("?")
-      #   redirect_to UrlProxy.wrap(path)
+      #   redirect_to UrlProxy.url_for(path)
       #   return
       # end
     end

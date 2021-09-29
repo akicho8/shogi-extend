@@ -117,13 +117,13 @@ class KifuParser
 
   def show_url(path = nil)
     if v = swars_battle_key
-      UrlProxy.wrap2(["/swars/battles/#{v}", path].compact.join("/"))
+      UrlProxy.full_url_for(["/swars/battles/#{v}", path].compact.join("/"))
     end
   end
 
   def search_url
     if v = swars_battle_key
-      UrlProxy.wrap2("/swars/search?query=#{v}")
+      UrlProxy.full_url_for("/swars/search?query=#{v}")
     end
   end
 
@@ -140,7 +140,7 @@ class KifuParser
   end
 
   def share_board_url
-    UrlProxy.wrap2({
+    UrlProxy.full_url_for({
         path: "/share-board",
         query: {
           body: @core.to_sfen,

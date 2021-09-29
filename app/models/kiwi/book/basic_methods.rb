@@ -110,7 +110,7 @@ module Kiwi
       end
 
       def page_url(options = {})
-        UrlProxy.wrap2("/video/watch/#{key}")
+        UrlProxy.full_url_for("/video/watch/#{key}")
       end
 
       # jsから来たパラメーターでまとめて更新する

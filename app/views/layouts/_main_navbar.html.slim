@@ -9,7 +9,7 @@ nav#main_nav.navbar.is-primary
     #main_navar.navbar-menu
       .navbar-start
         - if Rails.env.development?
-          = link_to("nuxt_side", UrlProxy.wrap("/"), class: "navbar-item")
+          = link_to("nuxt_side", UrlProxy.url_for("/"), class: "navbar-item")
           = link_to("管理画面", [:admin, :root], class: ["navbar-item", ("is-active" if params[:controller].start_with?("admin/"))])
 
         - if session[:admin_user]
