@@ -15,7 +15,7 @@
       b-field.field_block(label="公開設定" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
-            b-radio-button(v-model="base.book.folder_key" :native-value="e.key" expanded)
+            b-radio-button(v-model="base.book.folder_key" :native-value="e.key" expanded @input="folder_key_input_handle")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
       b-field.submit_field
@@ -29,19 +29,13 @@ import { support_child } from "./support_child.js"
 export default {
   name: "KiwiBookEditForm",
   mixins: [support_child],
-  watch: {
-    "base.book.folder_key": {
-      handler(v) {
-        const folder_info = this.FolderInfo.fetch(v)
-        this.sound_play("click")
-        this.sound_stop_all()
-        this.talk(folder_info.name)
-      },
+  methods: {
+    folder_key_input_handle(e) {
+      this.sound_play("click")
+      const folder_info = this.FolderInfo.fetch(e)
+      this.talk(folder_info.name)
     },
   },
-  // computed: {
-  //   book() { return this.base.book },
-  // },
 }
 </script>
 
