@@ -12,7 +12,7 @@ export const app_search = {
   methods: {
     search_preset_handle(e) {
       this.sound_play("click")
-      this.router_push({search_preset_key: e.key, page: null})
+      this.router_push({search_preset_key: e.key, page: null, tag: null})
     },
     search_field_toggle_handle() {
       this.sound_play("click")
