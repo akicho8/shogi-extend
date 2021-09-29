@@ -38,6 +38,7 @@ describe('HandleNameValidator', () => {
   test('全部数字は禁止', () => {
     expect(HandleNameValidator.valid("123")).toEqual(false)
     expect(HandleNameValidator.valid("７７７")).toEqual(false)
+    expect(HandleNameValidator.valid("2.3")).toEqual(false)
   })
 
   test('NGワード', () => {

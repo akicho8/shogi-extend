@@ -1,11 +1,13 @@
 // 汎用コード
 import { Gs } from "../components/models/gs.js"
+import { SpUtils } from "../components/models/sp_utils.js"
 import twemoji from 'twemoji'
 import _ from "lodash"
 
 export default {
   methods: {
     ...Gs,
+    ...SpUtils,
 
     ua_icon_key_get() {
       if (typeof window === "undefined") {

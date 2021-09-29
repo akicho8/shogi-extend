@@ -36,17 +36,15 @@ export const HandleNameValidator = {
     }
   },
   valid(s) {
-    s = s.replace(/[\s\u3000]+/g, "").trim()
-    s = Gs.hankaku_format(s)
+    s = s.replace(/[\s\u3000]+/g, "") // 空白を取る
+    s = s.replace(/[\.]/g, "")        // "." を取る
+    s = Gs.hankaku_format(s)          // 半角化
     let error = false
     if (!error) {
       error = (s.length === 0)
     }
     if (!error) {
       error = (s.length > this.MAX_LENGTH)
-    }
-    if (!error) {
-      error = s.match(/^\d+$/)
     }
     if (!error) {
       error = s.match(new RegExp(this.ng_words.join("|"), "i"))
@@ -78,6 +76,7 @@ export const HandleNameValidator = {
       "名前|ハンドルネーム",
       "^あ+$",
       "^a+$",
+      "^\\d+$",
       "戦犯",
       "初心者",
       "死",
