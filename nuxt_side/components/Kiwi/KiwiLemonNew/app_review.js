@@ -28,10 +28,11 @@ export const app_review = {
           <div class="content">
             <p>登録すると次のことができるようになります</p>
             <ol class="mt-0">
-              <li>説明をつけた動画専用ページを作成</li>
+              <li>動画専用ページの作成</li>
+              <li>説明の追加</li>
               <li>みんなに公開</li>
               <li>仲間内だけで共有</li>
-              <li>検討内容を追記して自分だけでこっそり見返す</li>
+              <li>自分だけでこっそり見返す</li>
               <li>とりあえず残しとく</li>
             </ol>
             <p>作成直後のファイルをダウンロードするだけなら不要です</p>
@@ -41,7 +42,7 @@ export const app_review = {
         focusOn: "confirm", // confirm or cancel
         onConfirm: () => {
           this.sound_play("click")
-          this.$router.push({name: "video-new", query: {lemon_id: record.id}})
+          this.$router.push({name: "video-studio-new", query: {lemon_id: record.id}})
         },
       })
     },
