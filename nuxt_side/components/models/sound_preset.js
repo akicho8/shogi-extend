@@ -8,7 +8,7 @@ export class SoundPreset extends MemoryRecord {
       { key: "start",                                source: require("@/static/sound_effect/oto_logic/Quiz-Question03-1.mp3"),                                        volume: 0.15, },
       { key: "lose",                                 source: require("@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"),                                           volume: 0.30, },
       { key: "win",                                  source: require("@/static/sound_effect/soundeffect_lab/kansei.mp3"),                                             volume: 0.20, },
-      { key: "click",                                source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),       volume: 0.50, },
+      { key: "click",                                source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),       volume: 0.40, },
       { key: "poon",                                 source: require("@/assets/UniversalSoundFX/PUZZLES/PUZZLE_Success_Bright_Voice_Two_Note_Fast_Delay_stereo.wav"), volume: 0.10, },
       { key: "bird",                                 source: require("@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Bird_Crow_01_mono.wav"),                               volume: 0.50, },
       { key: "rooster",                              source: require("@/assets/UniversalSoundFX/ANIMALS/ANIMAL_Rooster_Crow_01_mono.wav"),                            volume: 0.30, },
