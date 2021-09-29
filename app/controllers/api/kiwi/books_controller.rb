@@ -56,8 +56,8 @@ module Api
       #
       # http://localhost:3000/api/kiwi/books/edit.json
       # http://localhost:3000/api/kiwi/books/edit.json?book_key=1
-      # http://localhost:4000/video/books/new
-      # http://localhost:4000/video/books/1/edit
+      # http://localhost:4000/video/watch/new
+      # http://localhost:4000/video/watch/1/edit
       def edit
         retv = {}
         retv[:config] = ::Kiwi::Config
