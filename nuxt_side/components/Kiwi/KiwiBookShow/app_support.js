@@ -6,7 +6,7 @@ export const app_support = {
     book_edit_handle() {
       if (this.owner_p) {
         this.sound_play("click")
-        this.$router.push({name: "video-books-book_key-edit", params: {book_key: this.book.key}})
+        this.$router.push({name: "video-studio-book_key-edit", params: {book_key: this.book.key}})
       }
     },
     // article_show_handle() {

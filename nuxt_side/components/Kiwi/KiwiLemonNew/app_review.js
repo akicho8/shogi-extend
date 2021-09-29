@@ -41,7 +41,7 @@ export const app_review = {
         focusOn: "confirm", // confirm or cancel
         onConfirm: () => {
           this.sound_play("click")
-          this.$router.push({name: "video-books-new", query: {lemon_id: record.id}})
+          this.$router.push({name: "video-new", query: {lemon_id: record.id}})
         },
       })
     },

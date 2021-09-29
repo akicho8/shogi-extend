@@ -2,7 +2,7 @@
 MainNavbar.KiwiBookEditNavbar(:spaced="false")
   template(v-if="base.book")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'video-books'}" @click.native="sound_play('click')")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")
         b-icon(icon="chevron-left")
     template(slot="start")
       b-navbar-item.px_0_if_mobile.has-text-weight-bold(tag="div")

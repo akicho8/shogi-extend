@@ -14,16 +14,16 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
       KiwiTopSearch(:base="base")
 
   template(slot="end")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")
+      b-icon(icon="video-plus-outline")
+
     NavbarItemLogin
     NavbarItemProfileLink
 
+    KiwiSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
+
     //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play('click')")
     //-   b-icon(icon="cog")
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-new'}" @click.native="sound_play('click')")
-      b-icon(icon="plus")
-
-    KiwiSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
 
     //- b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
     //-   b-icon(icon="magnify")

@@ -86,7 +86,7 @@ export default {
     router_push(params) {
       params = {...this.url_params, ...params}
       params = this.hash_compact_if_null(params)
-      this.$router.push({name: "video-books", query: params})
+      this.$router.push({name: "video-studio", query: params})
     },
   },
 

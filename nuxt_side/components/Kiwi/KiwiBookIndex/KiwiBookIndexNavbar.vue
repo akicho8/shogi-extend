@@ -4,15 +4,15 @@ MainNavbar.KiwiBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     //- NavbarItemHome
     b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-books'}") インスタント将棋動画
-    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-books'}") 動画管理
+    //- b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-studio'}") インスタント将棋動画
+    b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'video-studio'}") 動画管理
 
   template(slot="end")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-new'}" @click.native="sound_play('click')")
+      b-icon(icon="video-plus")
+
     NavbarItemLogin
     NavbarItemProfileLink
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-new'}" @click.native="sound_play('click')")
-      b-icon(icon="plus")
 
     b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
       b-icon(icon="menu")

@@ -113,8 +113,8 @@ export default {
             this.default_folder_key = this.book.folder_key
           }
 
-          // this.$router.push({name: "video-books", query: {scope: this.book.folder_key}})
-          this.$router.push({name: "video-books"})
+          // this.$router.push({name: "video-studio", query: {scope: this.book.folder_key}})
+          this.$router.push({name: "video-studio"})
         }
       })
     },

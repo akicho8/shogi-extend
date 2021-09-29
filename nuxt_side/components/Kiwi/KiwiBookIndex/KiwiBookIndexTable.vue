@@ -44,24 +44,24 @@
     //- b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric) {{row.bookships_count}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
-      //- nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}")
+      //- nuxt-link(:to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}")
       //-   //- b-icon(icon="edit")
       //-   | 編集
-      b-button(tag="nuxt-link" :to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" size="is-small") 編集
+      b-button(tag="nuxt-link" :to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}" size="is-small") 編集
 
       //- nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}" v-if="false")
       //-   b-icon(icon="plus")
 
       //- b-dropdown(append-to-body position="is-bottom-left" @active-change="sound_play('click')")
       //-   b-dropdown-item(has-link)
-      //-     nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+      //-     nuxt-link(:to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
       //-
       //-   a(slot="trigger")
       //-     b-icon(icon="dots-horizontal")
       //-
       //-   template(v-if="(g_current_user && g_current_user.id === row.user.id) || development_p")
       //-     b-dropdown-item(has-link)
-      //-       nuxt-link(:to="{name: 'video-books-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
+      //-       nuxt-link(:to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}" @click.native="sound_play('click')") 編集
       //-     //- b-dropdown-item(has-link)
       //-     //-   nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}"        @click.native="sound_play('click')") 問題追加
       //-     //- b-dropdown-item(separator)

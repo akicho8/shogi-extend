@@ -14,7 +14,7 @@ export const app_book_delete = {
             this.sound_play("click")
             this.$axios.$delete("/api/kiwi/books/destroy.json", {params: {book_id: book.id}}).then(e => {
               this.toast_ok("削除しました")
-              this.$router.push({name: "video-books"})
+              this.$router.push({name: "video-studio"})
             })
           },
         })
