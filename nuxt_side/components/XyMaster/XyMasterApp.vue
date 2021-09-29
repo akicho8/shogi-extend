@@ -47,9 +47,10 @@
             .time_container.fixed_font.is-size-3
               | {{time_format}}
 
-          .box.tweet_box_container.has-text-centered(v-if="mode === 'is_mode_goal'")
-            | {{summary}}
-            TweetButton.mt-2(:body="tweet_body" @after_click="sound_play('click')")
+          .tweet_box_container.mt-4(v-if="mode === 'is_mode_goal'")
+            .box.mb-0
+              | {{summary}}
+            TweetButton.mt-3(:body="tweet_body" @after_click="sound_play('click')")
 
         XyMasterRanking(:base="base")
 
@@ -537,6 +538,9 @@ export default {
       --sp_shadow_blur: 0                                     // 影なし
 
   .tweet_box_container
-    margin-top: 0.75rem
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
     white-space: pre-wrap
 </style>
