@@ -19,10 +19,12 @@ MainNavbar.KiwiBookShowNavbar(:spaced="false" centered wrapper-class="container 
       //-   b-navbar-item(tag="div")
       //-     | {{base.book.title}}
 
-  template(slot="start")
+  //- template(slot="start")
 
   template(slot="end")
-    KiwiSidebarToggle(@click="base.sidebar_toggle")
+    NavbarItemLogin
+    NavbarItemProfileLink
+    KiwiSidebarToggle(@click="base.sidebar_toggle"  v-if="false")
 </template>
 
 <script>

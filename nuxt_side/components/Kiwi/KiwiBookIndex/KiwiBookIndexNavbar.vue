@@ -14,7 +14,7 @@ MainNavbar.KiwiBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     NavbarItemLogin
     NavbarItemProfileLink
 
-    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
+    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="false")
       b-icon(icon="menu")
 </template>
 

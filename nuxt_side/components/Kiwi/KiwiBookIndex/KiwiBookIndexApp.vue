@@ -53,8 +53,10 @@ export default {
     this.ga_click("動画管理")
   },
 
-  // fetchOnServer: false,
+  fetchOnServer: false,
   fetch() {
+    if (this.sns_login_required()) { return }
+
     // console.log("[fetch]")
     // this.__assert__(this.scope, "this.scope")
 

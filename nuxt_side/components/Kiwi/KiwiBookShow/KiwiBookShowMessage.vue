@@ -2,12 +2,13 @@
 .KiwiBookShowMessage
   .media(v-for="book_message in base.book.book_messages")
     .media-left.is-clickable
-      .image.is-48x48
-        img.is-rounded(:src="book_message.user.avatar_path")
+      nuxt-link.image.is-48x48(:to="{name: 'users-id', params: {id: book_message.user.id}}" @click.native="sound_play('click')")
+        img.is-rounded(:src="book_message.user.avatar_path" :alt="book_message.user.name")
+
     .media-content
       .content
         p
-          strong.is-clickable
+          nuxt-link.user_link.has-text-weight-semibold(:to="{name: 'users-id', params: {id: book_message.user.id}}" @click.native="sound_play('click')")
             | {{book_message.user.name}}
           br
           span(v-html="base.message_decorate(book_message.body)")
@@ -55,4 +56,6 @@ export default {
 <style lang="sass">
 @import "../all_support.sass"
 .KiwiBookShowMessage
+  .user_link
+    color: inherit
 </style>
