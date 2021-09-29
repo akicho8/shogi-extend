@@ -41,13 +41,13 @@ export default {
       margin-left: 0.25rem // 基本の隙間はここだけ
     &.avatar_img
       display: block // inlineだと余計な隙間が生まれるため念のためblockにしておく
-      width: unset
-      height: 1.5em
+      width: 24px
+      height: 24px
       border-radius: 100%
     &.user_guardian
       .xemoji
-        width: unset
-        height: 1.5em
+        width: 24px
+        height: 24px
     &.user_name
       color: $primary
 
