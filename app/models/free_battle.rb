@@ -193,7 +193,7 @@ class FreeBattle < ApplicationRecord
       a.merge(player.location.key => player.skill_set.to_h)
     end
 
-    if use_info.key == :basic
+    if use_info.key == :basic || use_info.key == :kiwi_lemon
       self.defense_tag_list = ""
       self.attack_tag_list = ""
       self.technique_tag_list = ""
