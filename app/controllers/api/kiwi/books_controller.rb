@@ -137,8 +137,8 @@ module Api
       end
 
       def current_lemon
-        if current_user
-          if v = params[:lemon_id]
+        if v = params[:source_id].presence
+          if current_user
             current_user.kiwi_lemons.find(v)
           end
         end
