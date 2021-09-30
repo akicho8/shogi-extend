@@ -12,7 +12,7 @@ client-only
     KiwiBookShowNavbar(:base="base")
     KiwiBookShowSidebar(:base="base")
 
-    MainSection(v-if="!$fetchState.pending && !$fetchState.error")
+    MainSection(v-if="base.book")
       .container.is-fluid
         KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
 

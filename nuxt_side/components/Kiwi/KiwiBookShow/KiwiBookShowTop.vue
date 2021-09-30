@@ -14,6 +14,9 @@ import { support_child } from "./support_child.js"
 export default {
   name: "KiwiBookShowTop",
   mixins: [support_child],
+  mounted() {
+    this.__assert__(this.present_p(this.base.book), "this.present_p(this.base.book)")
+  },
 }
 </script>
 

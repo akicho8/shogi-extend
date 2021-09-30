@@ -38,7 +38,9 @@ export default {
     book: { type: Object, required: true,                       },
     type: { type: String, required: false, default: "is_full",  }, // is_full or is_compact
   },
-
+  mounted() {
+    this.__assert__(this.present_p(this.book), "this.present_p(this.book)")
+  },
   computed: {
     title_class() {
       return {

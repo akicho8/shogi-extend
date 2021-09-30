@@ -3,25 +3,9 @@ MainNavbar.KiwiBookShowNavbar(:spaced="false" centered wrapper-class="container 
   template(slot="brand")
     b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
-
-      //- template(v-if="base.is_running_p")
-      //-   b-navbar-item.px_5_if_tablet(@click.native="base.quit_handle")
-      //-     b-icon(icon="chevron-left")
-      //- 
-      //- template(v-if="base.is_goal_p")
-      //-   b-navbar-item.px_5_if_tablet(@click.native="base.close_handle")
-      //-     b-icon(icon="chevron-left")
-
-      //- b-navbar-item(tag="a" @click.native="base.description_handle" v-if="development_p")
-      //-   b-icon(icon="information-outline")
-
-      //- template(v-if="base.is_standby_p && false")
-      //-   b-navbar-item(tag="div")
-      //-     | {{base.book.title}}
-
-  //- template(slot="start")
-
   template(slot="end")
+    b-navbar-item.px_5_if_tablet(@click.native="sound_play('click')" :href="base.book.lemon.browser_path" :download="base.book.lemon.filename_human" v-if="base.book")
+      b-icon(icon="download")
     NavbarItemLogin
     NavbarItemProfileLink
     KiwiSidebarToggle(@click="base.sidebar_toggle"  v-if="false")

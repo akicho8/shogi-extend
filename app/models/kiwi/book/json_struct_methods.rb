@@ -212,7 +212,7 @@ module Kiwi
                 # :file_size,
                 # :ffprobe_info,
                 :browser_path,
-                # :filename_human,
+                :filename_human,
                 # :created_at
                 # :updated_at
               ],
