@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Wkbk
   RSpec.describe XitemsBuilder, type: :model do

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 # 参考: https://github.com/andrelugomes/hello-ruby-on-rails/blob/dbbbc848d391eee6cf0448f1af695fd9df73cf4e/rails-4-devise-linkedin/spec/controllers/omniauth_callbacks_controller_spec.rb
 RSpec.describe OmniauthCallbacksController, type: :controller do

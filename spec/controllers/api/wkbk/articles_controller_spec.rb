@@ -29,7 +29,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
   include WkbkSupportMethods

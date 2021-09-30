@@ -25,7 +25,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Tsl
   RSpec.describe Membership, type: :model do

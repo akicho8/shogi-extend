@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe MembershipMedalInfo, type: :model do

@@ -43,7 +43,7 @@
 # [Warning: Need to add relation] Actb::Question モデルに belongs_to :user を追加してください
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe Question, type: :model do

@@ -31,7 +31,7 @@
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model do

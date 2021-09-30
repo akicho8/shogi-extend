@@ -12,7 +12,7 @@
 # | position | 順序 | integer(4)  | NOT NULL    |      | A! C  |
 # |----------+------+-------------+-------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module TsMaster
   RSpec.describe Question, type: :model do

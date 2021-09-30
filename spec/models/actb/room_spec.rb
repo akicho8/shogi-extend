@@ -17,7 +17,7 @@
 # | bot_user_id   | Bot user      | integer(8) |                     |      | E     |
 # |---------------+---------------+------------+---------------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe Room, type: :model do

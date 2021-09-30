@@ -13,7 +13,7 @@
 # | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
 # |------------+--------------------+-------------+-------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe Grade, type: :model do

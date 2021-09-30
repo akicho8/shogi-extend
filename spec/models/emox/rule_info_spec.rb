@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Emox
   RSpec.describe RuleInfo, type: :model do

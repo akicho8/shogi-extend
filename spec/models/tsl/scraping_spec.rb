@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Tsl
   RSpec.describe Scraping, type: :model do

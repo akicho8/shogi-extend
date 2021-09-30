@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::ScriptsController, type: :controller do
   include WkbkSupportMethods

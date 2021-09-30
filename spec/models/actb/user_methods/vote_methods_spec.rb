@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe UserMethods::VoteMethods, type: :model do

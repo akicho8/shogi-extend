@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe Agent, type: :model do

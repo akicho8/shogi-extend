@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ShareBoardsController, type: :controller do
   it "HTMLの要求はNuxt側にリダイレクト" do

@@ -32,7 +32,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe FreeBattle, type: :model do
   let :record do

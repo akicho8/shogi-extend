@@ -33,7 +33,7 @@
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe User, type: :model do
