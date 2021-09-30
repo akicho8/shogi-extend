@@ -259,6 +259,7 @@ module Kiwi
 
         self.title       ||= ""
         self.description ||= ""
+        self.thumbnail_pos ||= 0
       end
 
       private
