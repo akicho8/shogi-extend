@@ -1,4 +1,8 @@
-# routes.rb で次のように定義した
+# Rails側 x Nuxt側 x development x production のカオスな環境でのURLの差異を吸収するよくわからない機能
+#
+# 経緯
+#
+# まず routes.rb で次のように定義した
 #
 #   direct :about_terms do |options = {}|
 #     if Rails.env.development?
@@ -10,20 +14,20 @@
 #
 # しかし link_to(..., :about_terms) とするとドメインの部分は省略され /about_terms/terms になってしまう
 # だからといって about_terms_url と書くのは本番でもドメインが含まれてしまっていや
-# なので独自に変換する
+# なので独自に変換することにした
+#
 module UrlProxy
   extend self
 
-  # def [](*args)
-  #   workaround(*args)
-  # end
-
+  # ホストなし
   # rails r "p UrlProxy.url_for('/about/terms')"
   # rails r "p UrlProxy.url_for(path: '/swars/search', query: {query: 'devuser1'})"
-  def wrap(*args)
+  def url_for(*args)
     workaround(*args)
   end
 
+  # ホストあり
+  # メールとかに埋めるとき用としたい
   def full_url_for(*args)
     workaround(*args, long_url: true)
   end
@@ -38,11 +42,11 @@ module UrlProxy
       end
 
       if path[:path].blank?
-        raise "path[:path] is blank"
+        raise ArgumentError, "path[:path] is blank"
       end
 
       unless path[:path].start_with?("/")
-        raise "path が / から始まっていない : #{path[:path].inspect}"
+        raise ArgumentError, "path が / から始まっていない : #{path[:path].inspect}"
       end
 
       path = [path[:path], query].compact.join("?")
@@ -53,10 +57,14 @@ module UrlProxy
       path = "http://#{domain}:4000" + path
     else
       if options[:long_url]
-        path = Rails.application.routes.url_helpers.url_for(:root).chop + path
+        path = host + path
       end
     end
 
     path
+  end
+
+  def host
+    @host ||= Rails.application.routes.url_helpers.url_for(:root).chop
   end
 end
