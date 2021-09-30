@@ -50,32 +50,6 @@ module Kiwi
     end
 
     # rails r 'user = User.create!; tp Kiwi.count_diff { user.destroy! }'
-    # >> |------------------------+--------+-------+------|
-    # >> | model                  | before | after | diff |
-    # >> |------------------------+--------+-------+------|
-    # >> | Folder           |      6 |     3 |   -3 |
-    # >> | Article         |      1 |     0 |   -1 |
-    # >> | MovesAnswer      |      1 |     0 |   -1 |
-    # >> | User                   |      2 |     1 |   -1 |
-    # >> | RoomMembership   |      2 |     1 |   -1 |
-    # >> | BattleMembership |      2 |     1 |   -1 |
-    # >> | SeasonXrecord    |      2 |     1 |   -1 |
-    # >> | MainXrecord      |      2 |     1 |   -1 |
-    # >> | Setting          |      2 |     1 |   -1 |
-    # >> | GoodMark         |      1 |     0 |   -1 |
-    # >> | BadMark          |      1 |     0 |   -1 |
-    # >> | ClipMark         |      1 |     0 |   -1 |
-    # >> | ArticleMessage  |      1 |     0 |   -1 |
-    # >> | Rule             |     12 |    12 |    0 |
-    # >> | Room             |      1 |     1 |    0 |
-    # >> | Skill            |     21 |    21 |    0 |
-    # >> | Battle           |      1 |     1 |    0 |
-    # >> | RoomMessage      |      0 |     0 |    0 |
-    # >> | Season           |      1 |     1 |    0 |
-    # >> | LobbyMessage     |      1 |     1 |    0 |
-    # >> | Judge            |      4 |     4 |    0 |
-    # >> | Lineage          |      8 |     8 |    0 |
-    # >> |------------------------+--------+-------+------|
     def count_diff(options = {})
       list = [User, *models]
       before = Vector[*list.collect(&:count)]

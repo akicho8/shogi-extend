@@ -20,7 +20,6 @@ module Kiwi
 
     with_options dependent: :restrict_with_exception do
       has_many :books
-      # has_many :articles
     end
   end
 end
