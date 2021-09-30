@@ -44,6 +44,7 @@ export class Book extends Model {
   // のちのち構造が変わってもここで吸収する
   get post_params() {
     return {
+      key:         this.key,
       title:       this.title,
       description: this.description,
       folder_key:  this.folder_key,
