@@ -3,7 +3,7 @@ module Kiwi
     concern :AvatarMethods do
       included do
         has_one_attached :avatar
-        after_commit :avatar_create_by_title_force_if_blank
+        # after_commit :avatar_create_by_title_force_if_blank
       end
 
       class_methods do
@@ -27,9 +27,11 @@ module Kiwi
 
       # アバターあってもなくても作る
       def avatar_create_by_title_force
+
         blob = CardGenerator.to_blob(body: title)
         io = StringIO.new(blob)
         avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
+
         # SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
       end
 
@@ -78,7 +80,6 @@ module Kiwi
 
       # アバターがあればパスを返す
       def raw_avatar_path
-
         if avatar.attached?
           # ▼Activestorrage service_url missing default_url_options[:host] · Issue #32866 · rails/rails
           # https://github.com/rails/rails/issues/32866

@@ -48,6 +48,7 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
         # t.belongs_to :sequence,                     null: false, foreign_key: {to_table: :kiwi_sequences}, comment: "順序"
         t.string     :title,       limit: 100,      null: false,                                           comment: "タイトル"
         t.text       :description, limit: 5000,     null: false,                                           comment: "説明"
+        t.float      :thumbnail_pos,   null: false, index: false,             comment: "サムネ位置"
         # t.integer    :bookships_count,  default: 0, null: false,                                           comment: "記事数"
         # t.integer    :answer_logs_count, default: 0, null: false,                                           comment: "解答数"
         t.integer :book_messages_count,      default: 0, null: false, index: true,  comment: "コメント数"

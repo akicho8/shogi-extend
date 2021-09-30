@@ -4,6 +4,8 @@ MainNavbar.KiwiBookShowNavbar(:spaced="false" centered wrapper-class="container 
     b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play('click')")
       b-icon(icon="chevron-left")
   template(slot="end")
+    b-navbar-item.px_5_if_tablet(@click.native="sound_play('click')" tag="nuxt-link" :to="{name: 'video-studio-book_key-edit', params: {book_key: base.book.key}}" v-if="base.book && base.owner_p")
+      b-icon(icon="pencil")
     b-navbar-item.px_5_if_tablet(@click.native="sound_play('click')" :href="base.book.lemon.browser_path" :download="base.book.lemon.filename_human" v-if="base.book")
       b-icon(icon="download")
     NavbarItemLogin

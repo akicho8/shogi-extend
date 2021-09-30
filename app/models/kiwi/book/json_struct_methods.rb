@@ -73,6 +73,7 @@ module Kiwi
               :lemon_id,
               :created_at,
               :updated_at,
+              :thumbnail_pos,
             ],
             methods: [
               :folder_key,

@@ -26,7 +26,7 @@ export const app_review = {
         title: "動画管理登録",
         message: `
           <div class="content">
-            <p>登録すると次のことができるようになります</p>
+            <p>登録したらできること</p>
             <ol class="mt-0">
               <li>動画専用ページの作成</li>
               <li>説明の追加</li>
@@ -35,9 +35,9 @@ export const app_review = {
               <li>自分だけでこっそり見返す</li>
               <li>とりあえず残しとく</li>
             </ol>
-            <p>作成直後のファイルをダウンロードするだけなら不要です</p>
           </div>
         `,
+        // <p>作成直後のファイルをダウンロードするだけなら不要です</p>
         confirmText: "登録する",
         focusOn: "confirm", // confirm or cancel
         onConfirm: () => {

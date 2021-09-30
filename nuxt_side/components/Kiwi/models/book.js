@@ -50,6 +50,7 @@ export class Book extends Model {
       folder_key:  this.folder_key,
       lemon_id:    this.lemon_id,
       tag_list:    this.tag_list,
+      thumbnail_pos:    this.thumbnail_pos,
     }
   }
 

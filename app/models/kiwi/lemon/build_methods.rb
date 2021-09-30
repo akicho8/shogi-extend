@@ -174,7 +174,7 @@ module Kiwi
             self.process_end_at = Time.current
             save!
           end
-          thumbnail_build
+          # thumbnail_build(0)
           user.kiwi_my_lemons_singlecast
           user.kiwi_done_lemon_singlecast(self)
           everyone_broadcast

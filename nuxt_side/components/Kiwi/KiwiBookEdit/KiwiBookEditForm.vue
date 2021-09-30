@@ -2,9 +2,19 @@
 .KiwiBookEditForm
   .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop
     .column.form_block
-      b-field.field_block(label="")
+      b-field.field_block(label="サムネ位置")
         .control
-          video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false")
+          .image
+            video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false" ref="video_tag")
+
+      .field_block(v-if="development_p && false")
+        b-field(label="サムネイルにする位置(秒)")
+          .control
+            b-button(@click="thumbnail_pos_set_handle") 反映
+          b-input(v-model.trim="base.book.thumbnail_pos")
+        .image.mt-4
+          img(:src="base.book.lemon.thumbnail_browser_path")
+
       b-field.field_block(label="タイトル")
         b-input(v-model.trim="base.book.title" required :maxlength="100" placeholder="動画について説明するタイトルを追加しよう")
       b-field.field_block(label="説明")
@@ -29,7 +39,21 @@ import { support_child } from "./support_child.js"
 export default {
   name: "KiwiBookEditForm",
   mixins: [support_child],
+  mounted() {
+    this.$refs.video_tag.currentTime = this.base.book.thumbnail_pos
+    this.$refs.video_tag.addEventListener("timeupdate", this.timeupdate_hook)
+  },
+  beforeDestroy() {
+    this.$refs.video_tag.removeEventListener("timeupdate", this.timeupdate_hook)
+  },
   methods: {
+    timeupdate_hook(e) {
+      this.base.book.thumbnail_pos = e.target.currentTime
+    },
+    thumbnail_pos_set_handle() {
+      this.sound_play("click")
+      this.base.book.thumbnail_pos = this.$refs.video_tag.currentTime
+    },
     folder_key_input_handle(e) {
       this.sound_play("click")
       const folder_info = this.FolderInfo.fetch(e)
@@ -43,6 +67,6 @@ export default {
 @import "../all_support.sass"
 .KiwiBookEditForm
   +tablet
-    video
+    .image
       max-width: 320px
 </style>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_26_150500) do
+ActiveRecord::Schema.define(version: 2021_09_30_184000) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -953,6 +953,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_150500) do
     t.bigint "lemon_id", null: false, comment: "動画"
     t.string "title", limit: 100, null: false, comment: "タイトル"
     t.text "description", null: false, comment: "説明"
+    t.float "thumbnail_pos", null: false, comment: "サムネ位置"
     t.integer "book_messages_count", default: 0, null: false, comment: "コメント数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

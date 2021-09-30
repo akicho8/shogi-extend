@@ -15,7 +15,7 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
 
   template(slot="end")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")
-      b-icon(icon="file-table")
+      b-icon(icon="table-cog")
 
     NavbarItemLogin
     NavbarItemProfileLink

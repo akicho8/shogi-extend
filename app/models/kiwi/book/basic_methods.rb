@@ -86,6 +86,7 @@ module Kiwi
           self.folder_key ||= :private
           # self.sequence_key ||= :bookship_shuffle
           self.key ||= secure_random_urlsafe_base64_token
+          self.thumbnail_pos ||= 0
 
           # if Rails.env.test? || Rails.env.development?
           #   self.title       ||= key
@@ -106,6 +107,14 @@ module Kiwi
           validates :title, length: { maximum: 100 }
           validates :description, length: { maximum: 5000 }
           validates :lemon_id, uniqueness: { message: "はすでに登録しています" }
+        end
+
+        after_validation do
+          if changes_to_save[:thumbnail_pos]
+            if lemon
+              lemon.thumbnail_build(thumbnail_pos)
+            end
+          end
         end
       end
 
@@ -135,6 +144,7 @@ module Kiwi
               :folder_key,
               :lemon_id,
               :tag_list,
+              :thumbnail_pos,
               # :sequence_key,
               # :new_file_src,    # nil 以外が来たらそれで画像作成
               # :raw_avatar_path, # nil が来たら画像削除
