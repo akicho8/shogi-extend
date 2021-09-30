@@ -113,12 +113,7 @@ module Kiwi
           end
         end
 
-        after_destroy_commit do
-          if real_path && real_path.exist?
-            FileUtils.rm_f(real_path)
-            FileUtils.rm_f("#{real_path}.rb")
-          end
-        end
+        after_destroy_commit :main_file_clean
 
         # 登録のタイミングで(変換ジョブがなければ)変換ジョブを放つ
         # after_create_commit do
@@ -230,6 +225,13 @@ module Kiwi
       def real_path
         if browser_path
           Rails.public_path.join(browser_path[1..-1])
+        end
+      end
+
+      def main_file_clean
+        if v = real_path
+          FileUtils.rm_f(v)
+          FileUtils.rm_f("#{v}.rb")
         end
       end
 

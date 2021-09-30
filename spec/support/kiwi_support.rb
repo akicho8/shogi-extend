@@ -2,6 +2,8 @@ module KiwiSupport
   extend ActiveSupport::Concern
 
   included do
+    include ActiveJob::TestHelper # for perform_enqueued_jobs
+
     before do
       Actb.setup
       Emox.setup
@@ -25,7 +27,7 @@ module KiwiSupport
             :color_theme_key          => "color_theme_is_real_wood1",
             :audio_theme_key          => "audio_theme_is_headspin_only",
             :factory_method_key        => "ffmpeg",
-            :cover_text               => "cover_text",
+            :cover_text               => "(cover_text)\n(description1)\n(description2)",
             :video_crf                => 23,
             :audio_bit_rate           => "128k",
             :main_volume              => 0.5,

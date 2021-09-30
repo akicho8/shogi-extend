@@ -1,9 +1,14 @@
 module Kiwi
   class Lemon
     concern :ThumbnailMethods do
+      included do
+        after_destroy_commit :thumbnail_clean
+      end
+
       def thumbnail_build(ss)
-        raise "thumbnail_real_path is blank" if thumbnail_real_path.blank?
-        safe_system("ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}")
+        if thumbnail_real_path
+          safe_system("ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}")
+        end
       end
 
       def thumbnail_real_path
@@ -15,6 +20,12 @@ module Kiwi
       def thumbnail_browser_path
         if v = thumbnail_real_path
           "/" + v.relative_path_from(Rails.public_path).to_s
+        end
+      end
+
+      def thumbnail_clean
+        if v = thumbnail_real_path
+          FileUtils.rm_f(v)
         end
       end
     end

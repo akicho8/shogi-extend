@@ -7,7 +7,7 @@
           .image
             video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false" ref="video_tag")
 
-      .field_block(v-if="development_p && false")
+      .field_block(v-if="development_p")
         b-field(label="サムネイルにする位置(秒)")
           .control
             b-button(@click="thumbnail_pos_set_handle") 反映

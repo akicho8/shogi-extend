@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Kiwi record (lemons as Kiwi::Lemon)
+# Kiwi record (lemons as Lemon)
 #
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
 # | name             | desc             | type        | opts        | refs                       | index |
@@ -30,43 +30,71 @@
 
 require "rails_helper"
 
-RSpec.describe Kiwi::Lemon, type: :model do
-  include KiwiSupport
+module Kiwi
+  RSpec.describe Lemon, type: :model do
+    include KiwiSupport
 
-  def entry_only
-    free_battle = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
-    user1.kiwi_lemons.create!(recordable: free_battle, all_params: params1[:all_params])
-  end
+    def entry_only
+      free_battle = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
+      user1.kiwi_lemons.create!(recordable: free_battle, all_params: params1[:all_params])
+    end
 
-  it "works" do
-    record = entry_only
-    record.main_process
-    record.reload
-    assert { record.status_key == "成功" }
-    assert { record.browser_path.match?(%{/system/x-files/.*mp4}) }
-  end
+    it "works" do
+      record = entry_only
+      record.main_process
+      record.reload
 
-  it "background_job_kick" do
-    entry_only
-    Kiwi::Lemon.background_job_kick
-  end
+      assert { record.status_key == "成功" }
 
-  it "process_in_sidekiq" do
-    entry_only
-    Kiwi::Lemon.process_in_sidekiq
-  end
+      assert { record.real_path.to_s.match?(/public/) }
+      assert { record.browser_path.match?(/system.*mp4/) }
 
-  it "zombie_kill" do
-    Kiwi::Lemon.zombie_kill
-  end
+      assert { record.thumbnail_browser_path.to_s.match?(/system.*thumbnail/) }
+      assert { record.thumbnail_real_path?(/public/) }
+    end
 
-  it "info" do
-    entry_only
-    assert { Kiwi::Lemon.info }
-  end
+    it "background_job_kick" do
+      entry_only
+      Lemon.background_job_kick
+    end
 
-  it "everyone_broadcast" do
-    entry_only
-    Kiwi::Lemon.everyone_broadcast
+    it "process_in_sidekiq" do
+      entry_only
+      Lemon.process_in_sidekiq
+    end
+
+    it "zombie_kill" do
+      Lemon.zombie_kill
+    end
+
+    it "info" do
+      entry_only
+      assert { Lemon.info }
+    end
+
+    it "everyone_broadcast" do
+      entry_only
+      Lemon.everyone_broadcast
+    end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> ......
+# >>
+# >> Top 6 slowest examples (18.59 seconds, 91.1% of total time):
+# >>   Kiwi::Lemon works
+# >>     9.81 seconds -:42
+# >>   Kiwi::Lemon process_in_sidekiq
+# >>     7.38 seconds -:62
+# >>   Kiwi::Lemon info
+# >>     0.398 seconds -:71
+# >>   Kiwi::Lemon background_job_kick
+# >>     0.39341 seconds -:57
+# >>   Kiwi::Lemon everyone_broadcast
+# >>     0.34802 seconds -:76
+# >>   Kiwi::Lemon zombie_kill
+# >>     0.26461 seconds -:67
+# >>
+# >> Finished in 20.4 seconds (files took 3.55 seconds to load)
+# >> 6 examples, 0 failures
+# >>

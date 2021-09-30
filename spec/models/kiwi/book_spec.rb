@@ -1,84 +1,68 @@
 require "rails_helper"
 
-module Wkbk
+module Kiwi
   RSpec.describe Book, type: :model do
-    include WkbkSupportMethods
-    include ActiveJob::TestHelper # for perform_enqueued_jobs
+    include KiwiSupport
 
     it "works" do
-      assert { Book.first }
+      Folder.setup
+      user1 = User.create!
+
+      # 動画作成
+      free_battle1 = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
+      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: params1[:all_params])
+      lemon1.main_process
+      # この時点でサムネは作らない
+      assert { lemon1.thumbnail_real_path.exist? == false }
+      tp lemon1 if $0 == "-"
+
+      # 動画管理登録 (フォーム初期値)
+      book1 = user1.kiwi_books.build(lemon: lemon1) # => #<Kiwi::Book id: nil, key: nil, user_id: 7, folder_id: nil, lemon_id: 7, title: nil, description: nil, thumbnail_pos: nil, book_messages_count: 0, created_at: nil, updated_at: nil, tag_list: nil>
+      book1.form_values_default_assign
+      tp book1.attributes if $0 == "-"           # => {"id"=>nil, "key"=>nil, "user_id"=>7, "folder_id"=>nil, "lemon_id"=>7, "title"=>"cover_text", "description"=>"\n", "thumbnail_pos"=>nil, "book_messages_count"=>0, "created_at"=>nil, "updated_at"=>nil, "tag_list"=>["居飛車", "相居飛車"]}
+      assert { book1.thumbnail_pos == 0 }
+      assert { book1.title == "(cover_text)" }
+      assert { book1.description == "(description1)\n(description2)" }
+      assert { book1.tag_list == ["居飛車", "相居飛車"] }
+
+      # 確認のためにあれば削除しておく
+      lemon1.thumbnail_clean
+      assert { !lemon1.thumbnail_real_path.exist? }
+
+      # 登録実行
+      # サムネ位置が nil -> 0.5 になることでサムネ作成される
+      book1 = user1.kiwi_books.create!(lemon: lemon1, title: "タイトル#{user1.kiwi_books.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉), thumbnail_pos: 0.5)
+      assert { book1.thumbnail_pos == 0.5 }
+      assert { lemon1.thumbnail_real_path.exist? }
+      assert { lemon1.thumbnail_browser_path }
+      tp book1 if $0 == "-" # => #<Kiwi::Book id: 1, key: "LGISalSHJdp", user_id: 7, folder_id: 9, lemon_id: 7, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, book_messages_count: 0, created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
+
+      # コメントされた
+      book1.book_messages.create!(user: user1, body: "(message1)")      # => #<Kiwi::BookMessage id: 1, user_id: 7, book_id: 1, body: "(message1)", created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900">
+      user1.kiwi_book_messages.create!(book: book1, body: "(message1)") # => #<Kiwi::BookMessage id: 2, user_id: 7, book_id: 1, body: "(message1)", created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900">
+      user1.kiwi_book_message_speak(book1, "(message1)")                # => #<Kiwi::BookMessage id: 3, user_id: 7, book_id: 1, body: "(message1)", created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900">
     end
 
-    it "sorted" do
-      assert { Book.sorted(sort_column: "id",        sort_order: "asc") }
-      assert { Book.sorted(sort_column: "user.id",   sort_order: "asc") }
-      assert { Book.sorted(sort_column: "folder.id", sort_order: "asc") }
-    end
+    it "検索" do
+      Book.destroy_all
+      Folder.setup
+      user1 = User.create!
+      free_battle1 = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
+      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: params1[:all_params])
+      book1 = user1.kiwi_books.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
+      assert { Book.general_search(query: "あひる").present? }
+      assert { Book.general_search(query: "(description)").present? }
+      assert { Book.general_search(query: "unknown").blank? }
+      assert { Book.general_search(tag: "a").present? }
+      assert { Book.general_search(tag: "c").blank? }
 
-    it "ordered_bookships" do
-      assert { Book.first.ordered_bookships }
-    end
-
-    it "bookships_order_by_ids" do
-      user = User.create!
-      book = user.wkbk_books.create!
-      book.articles << user.wkbk_articles.create!(key: "a")
-      book.articles << user.wkbk_articles.create!(key: "b")
-      ids = book.ordered_bookship_ids
-
-      assert { book.articles.order(:position).pluck(:key) == ["a", "b"] }
-      book.bookships_order_by_ids(ids.reverse)
-      assert { book.articles.order(:position).pluck(:key) == ["b", "a"] }
-    end
-
-    it "to_xitems" do
-      user = User.create!
-      book = user.wkbk_books.create!(sequence_key: :article_difficulty_desc)
-      book.articles << user.wkbk_articles.create!(difficulty: 1, folder_key: :public)
-      book.articles << user.wkbk_articles.create!(difficulty: 2, folder_key: :public)
-      book.articles << user.wkbk_articles.create!(difficulty: 3, folder_key: :private)
-      other_user = User.create!
-      records = book.to_xitems(other_user)
-      assert { records.collect { |e| e[:article]["difficulty"] } == [3, 2, 1] } # private も空として含めるため3がある
-      assert { records[0][:article]["title"] == nil }                           # private なので title を nil にしている
-    end
-
-    it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do
-      user = User.create!
-      book = user.wkbk_books.create!
-      book.articles << user.wkbk_articles.create!
-      book.articles << user.wkbk_articles.create!
-      book.articles << user.wkbk_articles.create!
-      book.bookships.preload(:article).to_a
-      book.as_json(::Wkbk::Book.json_struct_for_edit)
-    end
-
-    describe "search" do
-      it "search" do
-        Wkbk::Book.destroy_all
-        user = User.create!
-        book = user.wkbk_books.create!(title: "a", tag_list: "b")
-        book = user.wkbk_books.create!(title: "c", tag_list: "d")
-        assert { Book.search(query: "a").size === 1 }
-        assert { Book.search(query: "a", tag: "b").size === 1 }
-      end
-      it "アヒルを「あ」で検索" do
-        Wkbk::Book.destroy_all
-        user = User.create!
-        book = user.wkbk_books.create!(title: "アヒル")
-        assert { Book.search(query: "あ").size === 1 }
-      end
-    end
-
-    describe "simple_track" do
-      it "works" do
-        user = User.create!
-        book = user.wkbk_books.create!
-        perform_enqueued_jobs { book.simple_track }
-        mail = ActionMailer::Base.deliveries.last
-        assert { mail.to   == ["shogi.extend@gmail.com"] }
-        assert { mail.subject.match?(/問題集.*作成/) }
-      end
+      # public なので非公開スコープでは表示しない
+      assert { Book.general_search(current_user: user1, search_preset_key: "非公開").blank? }
+      # private なので非公開で表示する
+      book1.update!(folder_key: "private")
+      assert { Book.general_search(current_user: user1, search_preset_key: "非公開").present? }
+      # private でも自分用の動画はすべてに表示してたけどやめた
+      assert { Book.general_search(current_user: user1, search_preset_key: "すべて").blank? }
     end
   end
 end

@@ -26,59 +26,41 @@ module Kiwi
         scope :public_only_with_user, -> params {
           s = all.public_only
           if current_user = params[:current_user]
-            s = s.or(current_user.kiwi_books)
+            if false
+              s = s.or(current_user.kiwi_books)
+            end
           end
           s
         }
 
-        scope :general_search, -> params {
+        scope :search_by_search_preset_key, -> params {
           v = params[:search_preset_key].presence || "すべて"
-          s = SearchPresetInfo.fetch(v).func.call(all, params)
+          SearchPresetInfo.fetch(v).func.call(all, params)
+        }
 
-          # if v = params[:search_preset_key].presence
-          #   s = none
-          #   search_preset_info = SearchPresetInfo.fetch(v)
-          #   if v = search_preset_info.current_user_scope_key
-          #     if current_user = params[:current_user]
-          #       s = current_user.kiwi_books.folder_eq(v)
-          #     end
-          #   end
-          #   if v = search_preset_info.and_tags
-          #     s = s.tagged_with(v)
-          #   end
-          #   if v = search_preset_info.or_tags
-          #     s = s.tagged_with(v, any: true)
-          #   end
-          # else
-          #   s = public_only
-          #   # # ログインしていればプライベートな動画も混ぜる
-          #   if current_user = params[:current_user]
-          #     s = s.or(current_user.kiwi_books.joins(:folder))
-          #     # Kiwi::Book Load (0.5ms)  SELECT `kiwi_books`.* FROM `kiwi_books` INNER JOIN `kiwi_folders` ON `kiwi_folders`.`id` = `kiwi_books`.`folder_id` WHERE (`kiwi_folders`.`key` = 'public' OR `kiwi_books`.`user_id` = 1)
-          #   end
-          # end
+        scope :search_by_tag, -> params {
+          if v = params[:tag].to_s.split(/[,\s]+/).presence
+            where(id: tagged_with(v))
+          end
+        }
 
-          # # 文字列で検索
-          # base = s.joins(:folder, :user)
-          # s = base
-          # if v = params[:tag].to_s.split(/[,\s]+/).presence
-          #   s = s.where(id: tagged_with(v))
-          # end
-          #
-          # if v = params[:query].presence
-          #   v = [
-          #     v,
-          #     NKF.nkf("-w --hiragana", v),
-          #     NKF.nkf("-w --katakana", v),
-          #   ].uniq.collect { |e| "%#{e}%" }
-          #   s = s.where(arel_table[:title].matches_any(v))
-          #   s = s.or(base.where(arel_table[:description].matches_any(v)))
-          #   s = s.or(base.where(User.arel_table[:name].matches_any(v)))
-          # end
-          # # SELECT kiwi_books.* FROM kiwi_books INNER JOIN kiwi_folders ON kiwi_folders.id = kiwi_books.folder_id INNER JOIN users ON users.id = kiwi_books.user_id WHERE (title LIKE '%a%' OR description LIKE '%a%')"
-          # # SELECT kiwi_books.* FROM kiwi_books INNER JOIN kiwi_folders ON kiwi_folders.id = kiwi_books.folder_id INNER JOIN users ON users.id = kiwi_books.user_id WHERE ((title LIKE '%a%' OR description LIKE '%a%') OR users.name LIKE '%a%')"
-          # # SELECT kiwi_books.* FROM kiwi_books INNER JOIN kiwi_folders ON kiwi_folders.id = kiwi_books.folder_id INNER JOIN users ON users.id = kiwi_books.user_id WHERE (((title LIKE '%%a%%') OR (description LIKE '%%a%%')) OR users.name LIKE '%a%')"
+        scope :search_by_query, -> params {
+          if v = params[:query].presence
+            v = [
+              v,
+              NKF.nkf("-w --hiragana", v),
+              NKF.nkf("-w --katakana", v),
+            ].uniq.collect { |e| "%#{e}%" }
+            s = where(arel_table[:title].matches_any(v))
+            s = s.or(where(arel_table[:description].matches_any(v)))
+          end
+        }
 
+        scope :general_search, -> params {
+          s = joins(:folder, :user, :lemon)
+          s = s.search_by_search_preset_key(params)
+          s = s.search_by_tag(params)
+          s = s.search_by_query(params)
           s
         }
 
@@ -229,36 +211,36 @@ module Kiwi
       end
 
       def form_values_default_assign
+        return if persisted?
+
         # localStorage から復帰する属性は埋めない
         if false
           self.folder_key ||= :public
         end
 
         # 元動画の情報から拾えるものは拾って埋める
-        if new_record?
-          if lemon
-            self.tag_list = tag_list.presence || [:defense, :attack, :technique, :note].flat_map do |e|
-              lemon.recordable.public_send("#{e}_tag_list")
-            end
-
-            if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
-              a = s.lines
-              self.title       ||= a.first.strip
-              self.description ||= a.drop(1).join.strip + "\n"
-            end
+        if lemon
+          self.tag_list = tag_list.presence || [:defense, :attack, :technique, :note].flat_map do |e|
+            lemon.recordable.public_send("#{e}_tag_list")
           end
 
-          if Rails.env.development?
-            if user
-              self.title ||= "#{user.name}の動画#{user.kiwi_books.count.next}"
-            end
-            self.title       ||= "あ" * 80
-            self.description ||= "い" * 256
+          if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
+            a = s.lines
+            self.title       ||= a.first.strip
+            self.description ||= a.drop(1).join.strip
           end
         end
 
-        self.title       ||= ""
-        self.description ||= ""
+        if Rails.env.development?
+          if user
+            self.title ||= "#{user.name}の動画#{user.kiwi_books.count.next}"
+          end
+          self.title       ||= "あ" * 80
+          self.description ||= "い" * 256
+        end
+
+        self.title         ||= ""
+        self.description   ||= ""
         self.thumbnail_pos ||= 0
       end
 
