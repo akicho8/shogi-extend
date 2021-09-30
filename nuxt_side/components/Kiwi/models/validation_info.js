@@ -59,8 +59,8 @@ export class ValidationInfo extends MemoryRecord {
 
       // https://developer.twitter.com/ja/docs/media/upload-media/uploading-media/media-best-practices
       {
-        name: "映像ﾋﾞｯﾄﾚｰﾄ",
-        should_be: c => `映像ﾋﾞｯﾄﾚｰﾄが ${this.MP4_VIDEO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
+        name: "映像BR",
+        should_be: c => `映像BRが ${this.MP4_VIDEO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
         human_value: (c, e) => `${Gs.number_round(e.video_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "blank",
@@ -73,8 +73,8 @@ export class ValidationInfo extends MemoryRecord {
       },
 
       {
-        name: "音声ﾋﾞｯﾄﾚｰﾄ",
-        should_be: c => `音声ﾋﾞｯﾄﾚｰﾄが ${this.MP4_AUDIO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
+        name: "音声BR",
+        should_be: c => `音声BRが ${this.MP4_AUDIO_BIT_RATE_KBPS_MAX} kbps程度(?)`,
         human_value: (c, e) => `${Gs.number_round(e.audio_bit_rate / 1024, 2)} kbps`,
         environment: null,
         alert_icon_key: "alert",

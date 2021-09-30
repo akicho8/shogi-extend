@@ -99,7 +99,7 @@
   b-field.field_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい")
     b-input(v-model="base.audio_bit_rate" placeholder="128k")
 
-  b-field.field_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にﾋﾞｯﾄﾚｰﾄが倍になる")
+  b-field.field_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。-6毎にBRが倍になる")
     b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play('click')")
 </template>
 
