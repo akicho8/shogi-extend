@@ -225,24 +225,26 @@ module Kiwi
         end
 
         # 元動画の情報から拾えるものは拾って埋める
-        if lemon
-          self.tag_list = tag_list.presence || [:defense, :attack, :technique, :note].flat_map do |e|
-            lemon.recordable.public_send("#{e}_tag_list")
+        if new_record?
+          if lemon
+            self.tag_list = tag_list.presence || [:defense, :attack, :technique, :note].flat_map do |e|
+              lemon.recordable.public_send("#{e}_tag_list")
+            end
+
+            if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
+              a = s.lines
+              self.title       ||= a.first.strip
+              self.description ||= a.drop(1).join.strip + "\n"
+            end
           end
 
-          if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
-            a = s.lines
-            self.title       ||= a.first.strip
-            self.description ||= a.drop(1).join.strip + "\n"
+          if Rails.env.development?
+            if user
+              self.title ||= "#{user.name}の動画#{user.kiwi_books.count.next}"
+            end
+            self.title       ||= "あ" * 80
+            self.description ||= "い" * 256
           end
-        end
-
-        if Rails.env.development?
-          if user
-            self.title ||= "#{user.name}の動画#{user.kiwi_books.count.next}"
-          end
-          self.title       ||= "あ" * 80
-          self.description ||= "い" * 256
         end
 
         self.title       ||= ""
