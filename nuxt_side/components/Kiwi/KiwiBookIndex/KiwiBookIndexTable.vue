@@ -47,7 +47,7 @@
       //- nuxt-link(:to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}")
       //-   //- b-icon(icon="edit")
       //-   | 編集
-      b-button(tag="nuxt-link" :to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}" size="is-small") 編集
+      b-button(tag="nuxt-link" :to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}" size="is-small" @click.native="sound_play('click')") 編集
 
       //- nuxt-link(:to="{name: 'video-articles-new', query: {book_key: row.key}}" v-if="false")
       //-   b-icon(icon="plus")
