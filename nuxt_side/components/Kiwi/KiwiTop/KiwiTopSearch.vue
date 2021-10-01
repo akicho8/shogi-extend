@@ -23,4 +23,6 @@ export default {
 <style lang="sass">
 @import "../all_support.sass"
 .KiwiTopSearch
+  +mobile
+    max-width: 10rem
 </style>
