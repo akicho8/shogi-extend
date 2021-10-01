@@ -96,6 +96,7 @@ export default {
       // https://day.js.org/docs/en/durations/diffing
       const new_record_p = this.book.new_record_p
       const before_save_button_name = this.save_button_name
+      const loading = this.$buefy.loading.open()
       return this.$axios.$post("/api/kiwi/books/save.json", {book: this.book.post_params}).then(e => {
         if (e.form_error_message) {
           this.toast_warn(e.form_error_message)
@@ -115,6 +116,8 @@ export default {
           // this.$router.push({name: "video-studio", query: {scope: this.book.folder_key}})
           this.$router.push({name: "video-studio"})
         }
+      }).finally(() => {
+        loading.close()
       })
     },
   },
