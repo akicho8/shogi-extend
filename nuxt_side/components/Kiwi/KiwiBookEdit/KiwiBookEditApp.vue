@@ -13,10 +13,9 @@ client-only
 
     KiwiBookEditNavbar(:base="base")
 
-    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error")
-      MainSection
-        .container
-           KiwiBookEditForm(:base="base")
+    MainSection.when_mobile_footer_scroll_problem_workaround
+      .container(v-if="!$fetchState.pending && !$fetchState.error")
+        KiwiBookEditForm(:base="base")
 
     DebugPre(v-if="development_p") {{$data}}
 </template>
@@ -140,6 +139,13 @@ export default {
 
 <style lang="sass">
 @import "../all_support.sass"
+.KiwiBookEditApp
+  .MainSection.section
+    +mobile
+      padding: 0.5rem
+    +tablet
+      padding: 1.5rem
+
 .STAGE-development
   .KiwiBookEditApp
     .container
@@ -148,15 +154,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .column
       border: 1px dashed change_color($success, $alpha: 0.5)
-
-.KiwiBookEditApp
-  .MainSection.section
-    +mobile
-      padding: 0.5rem
-    +tablet
-      padding: 1.5rem
-
-  .MainTabs
-    .tab-content
-      display: none
+    .footer
+      border: 1px dashed change_color($success, $alpha: 0.5)
 </style>

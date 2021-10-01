@@ -9,7 +9,7 @@
     KiwiBookIndexSidebar(:base="base")
     KiwiBookIndexNavbar(:base="base")
 
-    MainSection
+    MainSection.when_mobile_footer_scroll_problem_workaround
       .container.is-fluid
         .columns
           .column

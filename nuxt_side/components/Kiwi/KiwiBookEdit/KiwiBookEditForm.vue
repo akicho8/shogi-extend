@@ -25,12 +25,12 @@
       b-field.field_block(label="公開設定" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
-            b-radio-button(v-model="base.book.folder_key" :native-value="e.key" expanded @input="folder_key_input_handle")
+            b-radio-button(v-model="base.book.folder_key" :native-value="e.key" @input="folder_key_input_handle")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
       b-field.submit_field
         .control
-          b-button.has-text-weight-bold.book_save_handle(@click="base.book_save_handle" type="is-primary" expanded :class="{disabled: !base.save_button_enabled}") {{base.save_button_name}}
+          b-button.has-text-weight-bold.book_save_handle(@click="base.book_save_handle" type="is-primary" :class="{disabled: !base.save_button_enabled}") {{base.save_button_name}}
 </template>
 
 <script>

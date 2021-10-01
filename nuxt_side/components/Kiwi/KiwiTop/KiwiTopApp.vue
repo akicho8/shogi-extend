@@ -7,13 +7,12 @@
 
   p(v-if="$fetchState.error" v-text="$fetchState.error.message")
 
-  .MainContainer
-    KiwiTopSidebar(:base="base")
-    KiwiTopNavbar(:base="base")
-    //- (v-if="!$fetchState.pending && !$fetchState.error")
-    MainSection
-      .container.is-fluid
-        KiwiTopContent(:base="base")
+  KiwiTopSidebar(:base="base")
+  KiwiTopNavbar(:base="base")
+  //- (v-if="!$fetchState.pending && !$fetchState.error")
+  MainSection.when_mobile_footer_scroll_problem_workaround
+    .container.is-fluid
+      KiwiTopContent(:base="base")
 
   DebugPre(v-if="development_p") {{$fetchState}}
   DebugPre(v-if="development_p") {{$data}}

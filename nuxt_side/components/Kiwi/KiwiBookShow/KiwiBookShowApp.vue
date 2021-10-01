@@ -12,7 +12,7 @@ client-only
     KiwiBookShowNavbar(:base="base")
     KiwiBookShowSidebar(:base="base")
 
-    MainSection(v-if="base.book")
+    MainSection.when_mobile_footer_scroll_problem_workaround(v-if="base.book")
       .container.is-fluid
         KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
 

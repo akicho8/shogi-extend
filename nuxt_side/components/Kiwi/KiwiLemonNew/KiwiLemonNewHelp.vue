@@ -5,7 +5,7 @@
       NavbarItemHome(icon="chevron-left" :to="{name: 'video-new'}")
       b-navbar-item.has-text-weight-bold(tag="div")
         | 動画作成の使い方
-  MainSection
+  MainSection.when_mobile_footer_scroll_problem_workaround
     .container
       .columns.is-centered.is-gapless
         .MainColumn.column

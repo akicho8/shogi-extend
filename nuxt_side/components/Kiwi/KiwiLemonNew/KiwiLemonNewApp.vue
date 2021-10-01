@@ -18,7 +18,7 @@ client-only
         b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
           b-icon(icon="menu")
 
-    MainSection
+    MainSection.when_mobile_footer_scroll_problem_workaround
       .container
         .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
           //- b-upload(@input="xaudio_file_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音off')")
