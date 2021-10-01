@@ -14,7 +14,7 @@
 node_modules
 yarn-debug.log*
 .yarn-integrity
-/spec/examples.txt
+/spec/test.txt
 /log
 /.byebug_history
 /*.rdb
