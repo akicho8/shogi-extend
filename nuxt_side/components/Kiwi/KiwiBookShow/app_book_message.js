@@ -19,7 +19,9 @@ export const app_book_message = {
       this.ac_book_room_perform("speak", {message_body: message_body}) // --> channels/kiwi/book_room_channel.rb
     },
     speak_broadcasted(params) {
+      this.sound_play("click")
       this.base.book.book_messages.push(params.book_message)
+      this.talk(params.book_message.body)
     },
     ////////////////////////////////////////////////////////////////////////////////
     message_decorate(str) {
