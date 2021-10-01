@@ -182,7 +182,13 @@ module Kiwi
       # end
 
       def og_image_path
-        avatar_path
+        if lemon
+          if e = lemon.thumbnail_real_path
+            if e.exist?
+              lemon.thumbnail_browser_path
+            end
+          end
+        end
       end
 
       def og_meta
@@ -205,7 +211,7 @@ module Kiwi
         list = [
           title,
           *tag_list,
-          "動画",
+          "将棋動画",
         ]
         list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
       end
