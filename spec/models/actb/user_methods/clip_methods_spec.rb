@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe UserMethods::ClipMethods, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     describe "保存リストに追加・解除" do
       def test1

@@ -19,7 +19,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Season, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "単に新しいレコードを作るだけでユーザーの新シーズンに切り替わる" do
       assert { Season.newest.generation                   == 1 }

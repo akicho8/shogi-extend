@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe RankingCop, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     def test1(rating)
       user = User.create!(name: "(#{rating})")

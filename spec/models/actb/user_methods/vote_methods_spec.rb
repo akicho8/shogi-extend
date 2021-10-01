@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe UserMethods::VoteMethods, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     describe "評価" do
       def test1(vote_key)

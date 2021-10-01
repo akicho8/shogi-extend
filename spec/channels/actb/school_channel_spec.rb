@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::SchoolChannel, type: :channel do
-  include ActbSupportMethods
+  include ActbSupport
 
   before do
     Actb::BaseChannel.redis.flushdb

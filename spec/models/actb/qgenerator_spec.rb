@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Qgenerator, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     before do
       question1

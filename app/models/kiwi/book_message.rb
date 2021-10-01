@@ -30,7 +30,7 @@ module Kiwi
       # 作者に通知
       if true
         if book.user != user
-          if book.user.email_valid? || Rails.env.test?
+          if book.user.email_valid?
             KiwiMailer.book_owner_message(self).deliver_later
           end
           # book.user.notifications.create!(book_message: self)
@@ -40,7 +40,7 @@ module Kiwi
       # 以前コメントした人たちにも通知
       if true
         member_users.each do |user|
-          if user.email_valid? || Rails.env.test?
+          if user.email_valid?
             KiwiMailer.book_other_message(user, self).deliver_later
           end
           # user.notifications.create!(book_message: self)

@@ -23,7 +23,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Battle, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "final_keyをセットしたタイミングで終了時刻も設定" do
       battle1.update!(final: Actb::Final.fetch(:f_success))

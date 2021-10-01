@@ -20,7 +20,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe OxRecord, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "ox_add" do
       question1.ox_add(:o_count)

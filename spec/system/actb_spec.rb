@@ -5,7 +5,7 @@ RSpec.describe "将棋トレーニングバトル", type: :system do
     Actb.setup
   end
 
-  # from ActbSupportMethods
+  # from ActbSupport
   let(:user1)     { User.create!                    }
   let(:question1) { user1.actb_questions.create_mock1 }
 

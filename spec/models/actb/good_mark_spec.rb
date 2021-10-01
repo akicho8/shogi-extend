@@ -21,7 +21,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe GoodMark, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "高評価" do
       assert { user1.actb_good_marks.create!(question: question1) }

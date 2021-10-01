@@ -1,4 +1,4 @@
-module ActbSupportMethods
+module ActbSupport
   extend ActiveSupport::Concern
 
   included do

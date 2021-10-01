@@ -17,7 +17,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Lineage, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it do
       Actb::Lineage.all.collect(&:key) # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]

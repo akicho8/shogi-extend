@@ -17,7 +17,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Final, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it do
       Actb::Final.all.collect(&:key) # => ["f_give_up", "f_disconnect", "f_success", "f_pending"]

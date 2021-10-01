@@ -17,7 +17,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Battle, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     def test1(skill_key, skill_point, diff)
       user1.actb_main_xrecord.update!(skill: Skill.fetch(skill_key), skill_point: skill_point)

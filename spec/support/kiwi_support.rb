@@ -11,6 +11,8 @@ module KiwiSupport
     end
 
     let(:user1) { User.create!(name: "user1", email: "user1@localhost", confirmed_at: Time.current) }
+    let(:user2) { User.create!(name: "user2", email: "user2@localhost", confirmed_at: Time.current) }
+    let(:user3) { User.create!(name: "user3", email: "user3@localhost", confirmed_at: Time.current) }
 
     let(:params1) {
       {
@@ -38,5 +40,21 @@ module KiwiSupport
         },
       }
     }
+
+    let(:free_battle1) do
+      user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
+    end
+
+    let(:lemon1) do
+      user1.kiwi_lemons.create!(recordable: free_battle1, all_params: params1[:all_params])
+    end
+
+    let(:book1) do
+      user1.kiwi_books.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
+    end
+
+    let(:book_message1) do
+      user1.kiwi_book_message_speak(book1, "(message1)")
+    end
   end
 end

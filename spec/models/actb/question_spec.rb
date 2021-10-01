@@ -47,7 +47,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Question, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     it do

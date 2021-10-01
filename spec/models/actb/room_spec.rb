@@ -21,7 +21,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Room, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "練習モードで作成した部屋から作ったバトルは練習モードを引き継いでいる" do
       room = Room.create_with_members!([User.bot, user1], practice: true, bot_user: User.bot)

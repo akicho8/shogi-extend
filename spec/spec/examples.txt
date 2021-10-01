@@ -1,4 +1,0 @@
-example_id                           | status | run_time        |
------------------------------------- | ------ | --------------- |
-./spec/models/kiwi/book_spec.rb[1:1] | passed | 10.11 seconds   |
-./spec/models/kiwi/book_spec.rb[1:2] | passed | 0.61047 seconds |

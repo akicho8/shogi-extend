@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  include ActbSupportMethods
+  include ActbSupport
 
   xit "works" do
     user1.actb_lobby_messages.create!(body: "(body)")

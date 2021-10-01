@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::Judge, type: :model do
-  include ActbSupportMethods
+  include ActbSupport
 
   let(:model)  { Actb::Judge       }
   let(:record) { Actb::Judge.first }

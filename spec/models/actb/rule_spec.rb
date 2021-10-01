@@ -17,7 +17,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Rule, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "class_methods" do
       Actb::Rule.all.collect(&:key) # => ["test_rule", "good_rule", "good_marathon_rule", "beginner_rule", "normal_rule", "pro_rule", "latest_rule", "technical_rule", "singleton_rule", "marathon_rule", "hybrid_rule", "classic_only_rule", "ahiru_only_rule"]

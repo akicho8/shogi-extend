@@ -17,7 +17,7 @@ require "rails_helper"
 
 module Actb
   RSpec.describe Judge, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it do
       Actb::Judge.all.collect(&:key) # => ["win", "lose", "draw", "pending"]
