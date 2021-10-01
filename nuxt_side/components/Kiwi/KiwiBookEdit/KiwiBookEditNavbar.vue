@@ -7,7 +7,7 @@ MainNavbar.KiwiBookEditNavbar(:spaced="false")
     template(slot="start")
       b-navbar-item.px_0_if_mobile.has-text-weight-bold(tag="div")
         template(v-if="base.book.new_record_p")
-          | 動画管理 (登録)
+          | 動画ライブラリ (登録)
         template(v-else)
           | 動画情報 (編集)
 

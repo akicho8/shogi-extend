@@ -50,7 +50,7 @@ export default {
 
   mounted() {
     // console.log("[mounted]")
-    this.ga_click("動画管理")
+    this.ga_click("動画ライブラリ")
   },
 
   fetchOnServer: false,

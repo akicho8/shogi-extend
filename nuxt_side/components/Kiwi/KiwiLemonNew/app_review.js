@@ -23,7 +23,7 @@ export const app_review = {
       this.sound_play("click")
 
       this.dialog_confirm({
-        title: "動画管理登録",
+        title: "動画ライブラリ登録",
         message: `
           <div class="content">
             <p>登録したらできること</p>

@@ -16,7 +16,7 @@ module Kiwi
       assert { lemon1.thumbnail_real_path.exist? == false }
       tp lemon1 if $0 == "-"
 
-      # 動画管理登録 (フォーム初期値)
+      # 動画ライブラリ登録 (フォーム初期値)
       book1 = user1.kiwi_books.build(lemon: lemon1) # => #<Kiwi::Book id: nil, key: nil, user_id: 7, folder_id: nil, lemon_id: 7, title: nil, description: nil, thumbnail_pos: nil, book_messages_count: 0, created_at: nil, updated_at: nil, tag_list: nil>
       book1.form_values_default_assign
       tp book1.attributes if $0 == "-"           # => {"id"=>nil, "key"=>nil, "user_id"=>7, "folder_id"=>nil, "lemon_id"=>7, "title"=>"cover_text", "description"=>"\n", "thumbnail_pos"=>nil, "book_messages_count"=>0, "created_at"=>nil, "updated_at"=>nil, "tag_list"=>["居飛車", "相居飛車"]}
