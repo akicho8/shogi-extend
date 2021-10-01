@@ -65,21 +65,17 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
       create_table :kiwi_lemons, force: true do |t|
         t.belongs_to :user,           null: false, foreign_key: true, comment: "所有者"
         t.belongs_to :recordable,     null: false, polymorphic: true, comment: "対象レコード"
-        t.text :all_params,          null: false,                    comment: "変換パラメータ全部入り"
+        t.text :all_params,           null: false,                    comment: "変換パラメータ全部入り"
         t.datetime :process_begin_at, null: true, index: true,        comment: "処理開始日時"
         t.datetime :process_end_at,   null: true, index: true,        comment: "処理終了日時"
         t.datetime :successed_at,     null: true, index: true,        comment: "成功日時"
         t.datetime :errored_at,       null: true, index: true,        comment: "エラー日時"
         t.text :error_message,        null: true,                     comment: "エラーメッセージ"
+        t.string :content_type,       null: true,                     comment: "コンテンツタイプ"
         t.integer :file_size,         null: true,                     comment: "ファイルサイズ"
         t.text :ffprobe_info,         null: true,                     comment: "変換パラメータ"
         t.string :browser_path,       null: true,                     comment: "生成したファイルへのパス"
         t.string :filename_human,     null: true,                     comment: "ダウンロードファイル名"
-
-        # t.string     :key,                          null: false, index: { unique: true }
-        # t.string     :title,       limit: 100,      null: false, comment: "タイトル"
-        # t.text       :description, limit: 5000,     null: false, comment: "説明"
-
         t.timestamps                  null: false
         t.index :created_at
       end

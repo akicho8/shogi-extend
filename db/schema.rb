@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_30_184000) do
+ActiveRecord::Schema.define(version: 2021_10_01_154200) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -984,6 +984,7 @@ ActiveRecord::Schema.define(version: 2021_09_30_184000) do
     t.datetime "successed_at", comment: "成功日時"
     t.datetime "errored_at", comment: "エラー日時"
     t.text "error_message", comment: "エラーメッセージ"
+    t.string "content_type", comment: "コンテンツタイプ"
     t.integer "file_size", comment: "ファイルサイズ"
     t.text "ffprobe_info", comment: "変換パラメータ"
     t.string "browser_path", comment: "生成したファイルへのパス"

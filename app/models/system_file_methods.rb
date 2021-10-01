@@ -101,6 +101,18 @@ module SystemFileMethods
     real_path.exist?
   end
 
+  def content_type
+    if real_path
+      if false
+        # config/initializers/mime_types.rb が反映されていないため "xxx.apng" は nil.content_type になる
+        MiniMime.lookup_by_filename(real_path).content_type
+      else
+        extname = real_path.extname[1..-1]           # => "apng"
+        Mime::Type.lookup_by_extension(extname).to_s # => "image/apng"
+      end
+    end
+  end
+
   private
 
   def disk_filename

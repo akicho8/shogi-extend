@@ -7,8 +7,6 @@ client-only
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
     b-loading(:active="$fetchState.pending")
 
-    //- b-navbar(fixed-top type="is-success")
-
     KiwiBookShowNavbar(:base="base")
     KiwiBookShowSidebar(:base="base")
 

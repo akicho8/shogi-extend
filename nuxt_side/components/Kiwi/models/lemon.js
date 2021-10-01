@@ -59,12 +59,12 @@ export class Lemon extends Model {
     return this.video_stream.height
   }
 
-  get video_tag_attrs() {
-    return {
-      width: this.width,
-      height: this.height,
-    }
-  }
+  // get video_tag_attrs() {
+  //   return {
+  //     width: this.width,
+  //     height: this.height,
+  //   }
+  // }
 
   // FIXME: 動画の情報ではない
   get to_wh() {

@@ -15,16 +15,16 @@ class RecipeInfo
   include ApplicationMemoryRecord
   memory_record [
     # ../../nuxt_side/components/kiwi/models/recipe_info.js
-    { key: "is_recipe_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_mp4",            media_p: true, override_options: {},                        },
-    { key: "is_recipe_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif",  media_p: true, override_options: {},                   },
-    { key: "is_recipe_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png",  media_p: true, override_options: {},                      },
-    { key: "is_recipe_webp",            name: "WebP",                 real_ext: "webp", to_method: "to_animation_webp", media_p: true, override_options: {},                      },
-    { key: "is_recipe_png",             name: "PNG",                  real_ext: "png",  to_method: "to_png",            media_p: true, override_options: {},                      },
-    { key: "is_recipe_zip",             name: "ZIP",                  real_ext: "zip",  to_method: "to_animation_zip",  media_p: false, override_options: {},                      },
-    # { key: "is_recipe_mov",             name: "MOV",                  real_ext: "mov",  to_method: "animation",       media_p: true, override_options: {},                        },
-    # { key: "is_recipe_jpg",             name: "JPG",                  real_ext: "jpg",  to_method: "image",           media_p: true, override_options: {},                      },
-    # { key: "is_recipe_bmp",             name: "BMP",                  real_ext: "bmp",  to_method: "image",           media_p: true, override_options: {},                      },
-    # { key: "is_recipe_mp4_yuv444p10le", name: "MP4 (yuv444p10le)",    real_ext: "mp4",  to_method: "animation",       media_p: true, override_options: {},                      },
-    # { key: "is_recipe_mp4_noopt",       name: "MP4 (noopt)",          real_ext: "mp4",  to_method: "animation",       media_p: true, override_options: {optimize_layer: false},   },
+    { key: "is_recipe_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_mp4",            media_p: true,  thumbnail_p: true, override_options: {},                        },
+    { key: "is_recipe_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif",  media_p: true,  thumbnail_p: false, override_options: {},                   },
+    { key: "is_recipe_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png",  media_p: true,  thumbnail_p: false, override_options: {},                      },
+    { key: "is_recipe_webp",            name: "WebP",                 real_ext: "webp", to_method: "to_animation_webp", media_p: true,  thumbnail_p: false, override_options: {},                      },
+    { key: "is_recipe_png",             name: "PNG",                  real_ext: "png",  to_method: "to_png",            media_p: true,  thumbnail_p: false, override_options: {},                      },
+    { key: "is_recipe_zip",             name: "ZIP",                  real_ext: "zip",  to_method: "to_animation_zip",  media_p: false,  thumbnail_p: false, override_options: {},                      },
+    # { key: "is_recipe_mov",             name: "MOV",                  real_ext: "mov",  to_method: "animation",       media_p: true,  thumbnail_p: false, override_options: {},                        },
+    # { key: "is_recipe_jpg",             name: "JPG",                  real_ext: "jpg",  to_method: "image",           media_p: true,  thumbnail_p: false, override_options: {},                      },
+    # { key: "is_recipe_bmp",             name: "BMP",                  real_ext: "bmp",  to_method: "image",           media_p: true,  thumbnail_p: false, override_options: {},                      },
+    # { key: "is_recipe_mp4_yuv444p10le", name: "MP4 (yuv444p10le)",    real_ext: "mp4",  to_method: "animation",       media_p: true,  thumbnail_p: false, override_options: {},                      },
+    # { key: "is_recipe_mp4_noopt",       name: "MP4 (noopt)",          real_ext: "mp4",  to_method: "animation",       media_p: true,  thumbnail_p: false, override_options: {optimize_layer: false},   },
   ]
 end

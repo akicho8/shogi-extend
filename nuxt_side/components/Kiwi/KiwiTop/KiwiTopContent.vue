@@ -11,8 +11,17 @@
   .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.books")
     nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
       .card-image
-        figure.image
-          img(:src="e.lemon.thumbnail_browser_path")
+        template(v-if="e.lemon.thumbnail_browser_path")
+          .image
+            img(:src="e.lemon.thumbnail_browser_path")
+        template(v-else-if="e.lemon.content_type.startsWith('image')")
+          .image
+            img(:src="e.lemon.browser_path")
+        template(v-else-if="e.lemon.content_type === 'application/zip'")
+          b-icon(icon="zip-box-outline" size="is-large")
+        template(v-else)
+          p e.lemon.content_type: {{e.lemon.content_type}}
+          p browser_path: {{e.lemon.browser_path}}
       .card-content
         KiwiBookInfo(:base="base" :book="e" :key="e.key" type="is_compact")
 </template>

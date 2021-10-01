@@ -131,6 +131,8 @@ module Kiwi
               only: [
                 :browser_path,
                 :filename_human,
+                :content_type,
+                # :all_params,
               ],
               methods: [
                 :thumbnail_browser_path,

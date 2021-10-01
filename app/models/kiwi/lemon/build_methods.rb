@@ -164,6 +164,7 @@ module Kiwi
             self.successed_at = Time.current
             self.ffprobe_info = media_builder.ffprobe_info
             self.file_size = media_builder.file_size
+            self.content_type = media_builder.content_type
             symlink_real_path_to_human_path(rename: true)
           ensure
             self.process_end_at = Time.current
