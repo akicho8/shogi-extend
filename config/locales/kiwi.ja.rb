@@ -16,9 +16,9 @@
         "kiwi/book"  => "アーカイブ",
       },
       attributes: {
-        # "kiwi/moves_answer" => {
-        #   :moves_str => "指し手",
-        # },
+        "kiwi/book" => {
+          :lemon_id => "動画ファイル",
+        },
       },
     },
   },
