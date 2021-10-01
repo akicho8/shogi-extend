@@ -35,7 +35,6 @@ a
   &:not(:hover)
     background-color: unset
 
-
 // モーダル
 //
 // this.$buefy.modal.open({
@@ -51,6 +50,16 @@ a
 //
 .BasicModal
   // ~/src/shogi-extend/nuxt_side/node_modules/bulma/sass/components/
+  .modal-card-title
+    font-weight: bold
+
+  .modal-card-foot
+    justify-content: space-between
+    .button
+      +tablet
+        min-width: 6rem
+      font-weight: bold
+
   +tablet
     .modal-card, .modal-content
       width: 100%               // 元凶の 640px を抹殺
@@ -60,15 +69,6 @@ a
       max-width: 96vw           // モバイル時の横幅は modal-card ではなくこちら
     .modal-card, .modal-content
       max-height: 80vh          // 小さくしないと下側の閉じるが押せない
-
-  .modal-card-title
-    font-weight: bold
-
-  .modal-card-foot
-    justify-content: space-between
-    .button
-      min-width: 6rem
-      font-weight: bold
 
 ////////////////////////////////////////////////////////////////////////////////
 +mobile

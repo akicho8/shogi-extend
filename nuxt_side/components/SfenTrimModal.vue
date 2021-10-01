@@ -26,8 +26,8 @@
       @update:turn_offset="turn_offset_set"
       )
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
-    b-button.reset_handle(@click="reset_handle" icon-left="undo") 元に戻す
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left")
+    b-button.reset_handle(@click="reset_handle" icon-left="undo")
     b-button.submit_handle(@click="from_handle" type="is-primary" v-if="mode === 'from'") {{index}}手目から
     b-button.submit_handle(@click="to_handle" type="is-primary" v-if="mode === 'to'") {{index}}+{{offset}}手目まで
 </template>
@@ -158,6 +158,7 @@ export default {
   .sp_turn_input
     max-width: 4rem
 
-  .submit_handle
-    min-width: 9rem ! important
+  // .submit_handle
+  //   +tablet
+  //     min-width: 9rem ! important
 </style>
