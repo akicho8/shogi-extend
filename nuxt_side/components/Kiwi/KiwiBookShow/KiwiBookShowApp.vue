@@ -2,7 +2,8 @@
 client-only
   .KiwiBookShowApp
     DebugBox(v-if="development_p")
-      p OK
+      p $fetchState.pending: {{$fetchState.pending}}
+      p ac_book_room_connected_count: {{ac_book_room_connected_count}}
 
     p(v-if="$fetchState.error" v-text="$fetchState.error.message")
     b-loading(:active="$fetchState.pending")
@@ -10,26 +11,25 @@ client-only
     KiwiBookShowNavbar(:base="base")
     KiwiBookShowSidebar(:base="base")
 
-    MainSection.when_mobile_footer_scroll_problem_workaround(v-if="base.book")
+    MainSection.when_mobile_footer_scroll_problem_workaround
       .container.is-fluid
-        KiwiBookShowTop(:base="base" ref="KiwiBookShowTop")
+        KiwiBookShowTop(:base="base" ref="KiwiBookShowTop" v-if="base.book")
 
     KiwiBookShowDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
-import { Book           } from "../models/book.js"
+import { Book             } from "../models/book.js"
 
-import { support_parent } from "./support_parent.js"
-
-import { app_mode              } from "./app_mode.js"
-import { app_support           } from "./app_support.js"
-import { app_sidebar           } from "./app_sidebar.js"
-import { app_op                } from "./app_op.js"
-import { app_table             } from "./app_table.js"
-import { app_storage           } from "./app_storage.js"
-import { app_book_message           } from "./app_book_message.js"
-import { app_book_room      } from "./app_book_room.js"
+import { support_parent   } from "./support_parent.js"
+import { app_mode         } from "./app_mode.js"
+import { app_support      } from "./app_support.js"
+import { app_sidebar      } from "./app_sidebar.js"
+import { app_op           } from "./app_op.js"
+import { app_table        } from "./app_table.js"
+import { app_storage      } from "./app_storage.js"
+import { app_book_message } from "./app_book_message.js"
+import { app_book_room    } from "./app_book_room.js"
 
 import _ from "lodash"
 
@@ -65,30 +65,14 @@ export default {
 
     this.config = e.config
     this.book = new Book(this, e.book)
-    // this.saved_xitems = _.cloneDeep(this.book.xitems)
 
     this.clog("process.client", process.client)
     this.clog("process.server", process.server)
 
     if (process.client) {
       this.book_room_create()
-      // this.play_start()
+      this.ga_click(`動画 ID:${this.book.id} ${this.book.title}`)
     }
-    // this.mode_set("standby")
-
-    // if (process.browser) {
-    // if (true) {
-    //   this.play_start()
-    // } else {
-    //   this.mode_set("standby")
-    // }
-
-    // this.st_init()
-  },
-
-  mounted() {
-    // this.clog("book", this.book)
-    // this.ga_click("インスタント将棋動画")
   },
 
   computed: {
@@ -96,22 +80,10 @@ export default {
     meta()    { return this.book?.og_meta },
 
     owner_p() {
-      if (this.book) {
-        return this.g_current_user && this.g_current_user.id === this.book.user.id
+      if (this.g_current_user && this.book) {
+        return this.g_current_user.id === this.book.user.id
       }
     },
-
-  // owner_p(user) {
-  //   // 新規レコードは誰でもオーナー
-  //   if (this.new_record_p) {
-  //     return true
-  //   }
-  //
-  //   if (user) {
-  //     return user.id === this.user.id
-  //   }
-  // }
-
   },
 }
 </script>
