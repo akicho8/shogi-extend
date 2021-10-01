@@ -52,7 +52,7 @@ RSpec.configure do |config|
   #
   # 絶対パスにしないと Rails.root 以外で実行したときファイルが参照できない
   #
-  config.example_status_persistence_file_path = "#{__dir__}/spec/examples.txt"
+  config.example_status_persistence_file_path = "#{__dir__}/test.txt"
 
   # 遅いテストをデフォルトで含めておいて遅いテストだけ実行できるようにする
   #
