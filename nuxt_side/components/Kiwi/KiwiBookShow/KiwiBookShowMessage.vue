@@ -33,8 +33,8 @@
               i.fas.fa-heart
   .media(v-if="base.g_current_user")
     .media-left.is-clickable
-      .image.is-48x48
-        img.is-rounded(:src="base.g_current_user.avatar_path")
+      nuxt-link.image.is-48x48(:to="{name: 'users-id', params: {id: base.g_current_user.id}}" @click.native="sound_play('click')")
+        img.is-rounded(:src="base.g_current_user.avatar_path" :alt="base.g_current_user.name")
     .media-content
       .field
         .control
