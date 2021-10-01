@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Kiwi record (lemons as Lemon)
+# 動画 (kiwi_lemons as Kiwi::Lemon)
 #
 # |------------------+------------------+-------------+-------------+----------------------------+-------|
 # | name             | desc             | type        | opts        | refs                       | index |
@@ -10,12 +10,13 @@
 # | user_id          | User             | integer(8)  | NOT NULL    | => User#id                 | A     |
 # | recordable_type  | Recordable type  | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
 # | recordable_id    | Recordable       | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
-# | all_params   | Convert params   | text(65535) | NOT NULL    |                            |       |
+# | all_params       | All params       | text(65535) | NOT NULL    |                            |       |
 # | process_begin_at | Process begin at | datetime    |             |                            | C     |
 # | process_end_at   | Process end at   | datetime    |             |                            | D     |
 # | successed_at     | Successed at     | datetime    |             |                            | E     |
 # | errored_at       | Errored at       | datetime    |             |                            | F     |
 # | error_message    | Error message    | text(65535) |             |                            |       |
+# | content_type     | Content type     | string(255) |             |                            |       |
 # | file_size        | File size        | integer(4)  |             |                            |       |
 # | ffprobe_info     | Ffprobe info     | text(65535) |             |                            |       |
 # | browser_path     | Browser path     | string(255) |             |                            |       |
@@ -49,8 +50,9 @@ module Kiwi
       assert { record.real_path.to_s.match?(/public/) }
       assert { record.browser_path.match?(/system.*mp4/) }
 
-      assert { record.thumbnail_browser_path.to_s.match?(/system.*thumbnail/) }
-      assert { record.thumbnail_real_path?(/public/) }
+      assert { record.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
+      assert { record.thumbnail_browser_path.match?(/system.*thumbnail/) }
+      assert { record.thumbnail_real_path.exist? == false }
     end
 
     it "background_job_kick" do

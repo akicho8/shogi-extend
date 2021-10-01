@@ -147,7 +147,7 @@ export default {
     +mobile
       padding: 0.5rem
     +tablet
-      padding: 1.5rem
+      padding: 1.0rem
 
 .STAGE-development
   .KiwiBookEditApp

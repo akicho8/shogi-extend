@@ -16,6 +16,7 @@
 # | successed_at     | Successed at     | datetime    |             |                            | E     |
 # | errored_at       | Errored at       | datetime    |             |                            | F     |
 # | error_message    | Error message    | text(65535) |             |                            |       |
+# | content_type     | Content type     | string(255) |             |                            |       |
 # | file_size        | File size        | integer(4)  |             |                            |       |
 # | ffprobe_info     | Ffprobe info     | text(65535) |             |                            |       |
 # | browser_path     | Browser path     | string(255) |             |                            |       |

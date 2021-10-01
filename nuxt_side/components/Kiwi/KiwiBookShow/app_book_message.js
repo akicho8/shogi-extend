@@ -2,6 +2,7 @@ export const app_book_message = {
   data() {
     return {
       message_body: null,
+      // loading: null,
     }
   },
   created() {
@@ -12,8 +13,11 @@ export const app_book_message = {
       this.message_body = ""
     },
     speak_handle() {
-      this.speak(this.message_body)
-      this.message_body = ""
+      if (this.present_p(this.message_body)) {
+        // this.loading = this.$buefy.loading.open()
+        this.speak(this.message_body)
+        this.message_body = ""
+      }
     },
     speak(message_body) {
       this.ac_book_room_perform("speak", {message_body: message_body}) // --> channels/kiwi/book_room_channel.rb
@@ -22,6 +26,7 @@ export const app_book_message = {
       this.sound_play("click")
       this.base.book.book_messages.push(params.book_message)
       this.talk(params.book_message.body)
+      // this.loading.close()
     },
     ////////////////////////////////////////////////////////////////////////////////
     message_decorate(str) {
