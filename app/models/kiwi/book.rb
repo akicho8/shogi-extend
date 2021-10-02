@@ -30,7 +30,6 @@ module Kiwi
     include BasicMethods
     include FolderMethods
     include InfoMethods
-    include AvatarMethods
     include JsonStructMethods
     include BookMessageMethods
     include AccessLogMethods
