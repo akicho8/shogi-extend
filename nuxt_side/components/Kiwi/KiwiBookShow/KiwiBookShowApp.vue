@@ -13,7 +13,7 @@ client-only
 
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container.is-fluid
-        KiwiBookShowTop(:base="base" ref="KiwiBookShowTop" v-if="base.book")
+        KiwiBookShowMain(:base="base" ref="KiwiBookShowMain" v-if="base.book")
 
     KiwiBookShowDebugPanels(:base="base" v-if="development_p")
 </template>

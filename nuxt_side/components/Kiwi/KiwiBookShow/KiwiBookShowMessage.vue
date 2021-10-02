@@ -1,10 +1,7 @@
 <template lang="pug">
 .KiwiBookShowMessage
   .media(v-for="book_message in base.book.book_messages")
-    .media-left.is-clickable
-      nuxt-link.image.is-48x48(:to="{name: 'users-id', params: {id: book_message.user.id}}" @click.native="sound_play('click')")
-        img.is-rounded(:src="book_message.user.avatar_path" :alt="book_message.user.name")
-
+    KiwiBookShowAvatarLinkTo(:base="base" :user="book_message.user")
     .media-content
       .content
         p
@@ -32,9 +29,7 @@
             span.icon.is-small
               i.fas.fa-heart
   .media(v-if="base.g_current_user")
-    .media-left.is-clickable
-      nuxt-link.image.is-48x48(:to="{name: 'users-id', params: {id: base.g_current_user.id}}" @click.native="sound_play('click')")
-        img.is-rounded(:src="base.g_current_user.avatar_path" :alt="base.g_current_user.name")
+    KiwiBookShowAvatarLinkTo(:base="base" :user="base.g_current_user")
     .media-content
       .field
         .control
