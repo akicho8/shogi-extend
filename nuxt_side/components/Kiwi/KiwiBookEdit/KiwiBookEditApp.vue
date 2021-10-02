@@ -14,29 +14,25 @@ client-only
     KiwiBookEditNavbar(:base="base")
 
     MainSection.when_mobile_footer_scroll_problem_workaround
-      .container(v-if="!$fetchState.pending && !$fetchState.error")
-        KiwiBookEditForm(:base="base")
+      .container
+        KiwiBookEditForm(:base="base" v-if="!$fetchState.pending && !$fetchState.error")
 
-    DebugPre(v-if="development_p") {{$data}}
+    KiwiBookEditDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
 import dayjs from "dayjs"
 
 import { support_parent  } from "./support_parent.js"
-import { app_table       } from "./app_table.js"
 import { app_book_delete } from "./app_book_delete.js"
 import { app_storage     } from "./app_storage.js"
 
 import { Book       } from "../models/book.js"
-// import { SequenceInfo } from "../models/sequence_info.js"
 
 export default {
   name: "KiwiBookEditApp",
   mixins: [
     support_parent,
-    app_table,
     app_book_delete,
     app_storage,
   ],

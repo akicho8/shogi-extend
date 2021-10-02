@@ -1,13 +1,27 @@
 <template lang="pug">
 .KiwiBookEditForm
-  .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop
-    .column.form_block
-      b-field.field_block(label="サムネ位置")
+  .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop.form_block
+    //- .column.is-6
+    //-   b-field.field_block(label="ソース")
+    //-     .control
+    //-       template(v-if="base.book.lemon.content_type.startsWith('video')")
+    //-         .image
+    //-           video.is-block(:src="base.book.lemon.browser_path" :poster="base.book.lemon.thumbnail_browser_path" controls :autoplay="false" :loop="false")
+    //-       template(v-else-if="base.book.lemon.content_type.startsWith('image')")
+    //-         .image
+    //-           img(:src="base.book.lemon.browser_path")
+    //-       template(v-else-if="base.book.lemon.content_type === 'application/zip'")
+    //-         b-icon(icon="zip-box-outline" size="is-large")
+    //-       template(v-else)
+    //-         p base.book.lemon.content_type: {{base.book.lemon.content_type}}
+    //-         p browser_path: {{base.book.lemon.browser_path}}
+    .column
+      b-field.field_block(label="サムネ位置" v-if="base.book.lemon.recipe_info.thumbnail_p")
         .control
           .image
             video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false" ref="video_tag")
 
-      .field_block(v-if="development_p")
+      .field_block(v-if="development_p && base.book.lemon.recipe_info.thumbnail_p")
         b-field(label="サムネイルにする位置(秒)")
           .control
             b-button(@click="thumbnail_pos_set_handle") 反映
@@ -40,11 +54,15 @@ export default {
   name: "KiwiBookEditForm",
   mixins: [support_child],
   mounted() {
-    this.$refs.video_tag.currentTime = this.base.book.thumbnail_pos
-    this.$refs.video_tag.addEventListener("timeupdate", this.timeupdate_hook)
+    if (this.$refs.video_tag) {
+      this.$refs.video_tag.currentTime = this.base.book.thumbnail_pos
+      this.$refs.video_tag.addEventListener("timeupdate", this.timeupdate_hook)
+    }
   },
   beforeDestroy() {
-    this.$refs.video_tag.removeEventListener("timeupdate", this.timeupdate_hook)
+    if (this.$refs.video_tag) {
+      this.$refs.video_tag.removeEventListener("timeupdate", this.timeupdate_hook)
+    }
   },
   methods: {
     timeupdate_hook(e) {

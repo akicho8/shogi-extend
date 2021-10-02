@@ -52,20 +52,30 @@ module Kiwi
               :title,
               :description,
               :lemon_id,
-              :created_at,
-              :updated_at,
-              :access_logs_count,
               :thumbnail_pos,
             ],
             methods: [
               :folder_key,
-              :tweet_body,
-              # :raw_avatar_path,
               :tag_list,
             ],
             include: {
-              **user_struct,
-              **lemon_struct,
+              user: {
+                only: [
+                  :id,
+                  :key,
+                ],
+              },
+              lemon: {
+                only: [
+                  :browser_path,
+                  :filename_human,
+                  :content_type,
+                  :all_params,
+                ],
+                methods: [
+                  :thumbnail_browser_path,
+                ],
+              }
             },
           }
         end

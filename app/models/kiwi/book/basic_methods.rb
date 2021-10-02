@@ -23,16 +23,6 @@ module Kiwi
           end
         }
 
-        # scope :user_histories, -> params {
-        #   if current_user = params[:current_user]
-        #     s = current_user.kiwi_access_books.select(:book_id, "MAX(created_at) as last_access_at").group(:book_id).order("last_access_at desc").limit(100)
-        #     ids = s.collect(&:book_id)
-        #     Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
-        #   else
-        #     none
-        #   end
-        # }
-
         scope :public_only_with_user, -> params {
           s = all.public_only
           if current_user = params[:current_user]
@@ -137,15 +127,9 @@ module Kiwi
               :lemon_id,
               :tag_list,
               :thumbnail_pos,
-              # :sequence_key,
-              # :new_file_src,    # nil 以外が来たらそれで画像作成
-              # :raw_avatar_path, # nil が来たら画像削除
             ])
           assign_attributes(attrs)
           save!
-
-          # ids = book[:ordered_bookships].collect { |e| e.fetch(:id) }
-          # bookships_order_by_ids(ids)
         end
 
         simple_track
