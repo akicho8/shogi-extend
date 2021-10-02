@@ -15,6 +15,7 @@
 # | description         | 説明                | text(65535) | NOT NULL            |              |       |
 # | thumbnail_pos       | Thumbnail pos       | float(24)   | NOT NULL            |              |       |
 # | book_messages_count | Book messages count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
+# | access_logs_count   | Access logs count   | integer(4)  | DEFAULT(0) NOT NULL |              | F     |
 # | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
 # | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
@@ -90,7 +91,7 @@ module Kiwi
       book1.update!(folder_key: "private")
       assert { Book.general_search(current_user: user1, search_preset_key: "非公開").present? }
       # private でも自分用の動画はすべてに表示してたけどやめた
-      assert { Book.general_search(current_user: user1, search_preset_key: "すべて").blank? }
+      assert { Book.general_search(current_user: user1, search_preset_key: "新着").blank? }
     end
   end
 end
