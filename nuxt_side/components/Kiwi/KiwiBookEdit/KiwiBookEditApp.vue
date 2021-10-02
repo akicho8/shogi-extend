@@ -45,7 +45,7 @@ export default {
     return {
       config: null,
       book: null,
-      meta: null,
+      // meta: null,
     }
   },
 
@@ -66,7 +66,7 @@ export default {
     // }
     this.config = e.config
     this.book = new Book(this, e.book)
-    this.meta = e.meta
+    // this.meta = e.meta
 
     // 前回保存したときの値を初期値にする
     if (this.book.new_record_p) {

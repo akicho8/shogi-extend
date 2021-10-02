@@ -76,7 +76,7 @@ module Api
           book.form_values_default_assign
         end
         retv[:book] = book.as_json(::Kiwi::Book.json_struct_for_edit)
-        retv[:meta] = book.og_meta
+        # retv[:meta] = book.og_meta
         # sleep(3)
         render json: retv
       end
