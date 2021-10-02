@@ -26,10 +26,10 @@
         KiwiBookInfo(:base="base" :book="e" :key="e.key")
 
   .column.is-12(v-if="base.xpage_info")
+    //- テーブルのページネーションに合わせとく
     .level
-      .level-left(v-if="false")
+      .level-left
         .level-item
-          | 何か表示したいものがある場合
       .level-right
         .level-item
           b-pagination(
