@@ -37,6 +37,6 @@ export const app_search = {
   computed: {
     tags() { return this.tags_wrap(this.tag) },
     SearchPresetInfo() { return SearchPresetInfo },
-    search_preset_info() { return this.SearchPresetInfo.fetch(this.search_preset_key || "すべて") },
+    search_preset_info() { return this.SearchPresetInfo.fetch(this.search_preset_key || this.SearchPresetInfo.values[0].key) },
   },
 }

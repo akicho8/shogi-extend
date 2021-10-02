@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_154200) do
+ActiveRecord::Schema.define(version: 2021_10_02_103500) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -936,6 +936,14 @@ ActiveRecord::Schema.define(version: 2021_10_01_154200) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", comment: "参照者"
+    t.bigint "book_id", null: false, comment: "動画"
+    t.datetime "created_at", null: false, comment: "記録日時"
+    t.index ["book_id"], name: "index_kiwi_access_logs_on_book_id"
+    t.index ["user_id"], name: "index_kiwi_access_logs_on_user_id"
+  end
+
   create_table "kiwi_book_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "発言者"
     t.bigint "book_id", null: false, comment: "動画"
@@ -955,8 +963,10 @@ ActiveRecord::Schema.define(version: 2021_10_01_154200) do
     t.text "description", null: false, comment: "説明"
     t.float "thumbnail_pos", null: false, comment: "サムネ位置"
     t.integer "book_messages_count", default: 0, null: false, comment: "コメント数"
+    t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["access_logs_count"], name: "index_kiwi_books_on_access_logs_count"
     t.index ["book_messages_count"], name: "index_kiwi_books_on_book_messages_count"
     t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
     t.index ["key"], name: "index_kiwi_books_on_key", unique: true
@@ -1504,6 +1514,8 @@ ActiveRecord::Schema.define(version: 2021_10_01_154200) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
+  add_foreign_key "kiwi_access_logs", "kiwi_books", column: "book_id"
+  add_foreign_key "kiwi_access_logs", "users"
   add_foreign_key "kiwi_book_messages", "kiwi_books", column: "book_id"
   add_foreign_key "kiwi_book_messages", "users"
   add_foreign_key "kiwi_books", "kiwi_folders", column: "folder_id"

@@ -24,6 +24,22 @@
           p browser_path: {{e.lemon.browser_path}}
       .card-content
         KiwiBookInfo(:base="base" :book="e" :key="e.key")
+
+  .column.is-12(v-if="base.xpage_info")
+    .level
+      .level-left(v-if="false")
+        .level-item
+          | 何か表示したいものがある場合
+      .level-right
+        .level-item
+          b-pagination(
+            :total="base.xpage_info.total_count"
+            :per-page="base.xpage_info.limit_value"
+            :current="base.xpage_info.current_page"
+            @change="base.page_change_handle"
+            order="is-right"
+            simple
+            )
 </template>
 
 <script>

@@ -47,8 +47,10 @@ module Api
         retv[:config] = ::Kiwi::Config
         book = ::Kiwi::Book.find_by!(key: params[:book_key])
         show_can!(book)
+        if axios_request_from_client? # 2度呼ばれるため仕方なく
+          book.access_logs.create!(user: current_user)
+        end
         v = book.as_json(::Kiwi::Book.json_struct_for_show)
-        # v[:xitems] = book.to_xitems(current_user)
         retv[:book] = v
         render json: retv
       end

@@ -52,6 +52,7 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
         # t.integer    :bookships_count,  default: 0, null: false,                                           comment: "記事数"
         # t.integer    :answer_logs_count, default: 0, null: false,                                           comment: "解答数"
         t.integer :book_messages_count,      default: 0, null: false, index: true,  comment: "コメント数"
+        t.integer :access_logs_count,        default: 0, null: false, index: true,  comment: "総アクセス数"
         t.timestamps
       end
 
@@ -60,6 +61,12 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
         t.belongs_to :book, foreign_key: {to_table: :kiwi_books}, null: false, comment: "動画"
         t.string :body, limit: 512,                               null: false, comment: "発言"
         t.timestamps
+      end
+
+      create_table :kiwi_access_logs, force: true do |t|
+        t.belongs_to :user, foreign_key: true,                    null: true,  comment: "参照者"
+        t.belongs_to :book, foreign_key: {to_table: :kiwi_books}, null: false, comment: "動画"
+        t.datetime :created_at,                                   null: false, comment: "記録日時"
       end
 
       create_table :kiwi_lemons, force: true do |t|

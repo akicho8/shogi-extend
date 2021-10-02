@@ -12,6 +12,12 @@
 
 // https://axios.nuxtjs.org/helpers
 export default function ({ $axios, error: nuxtError }) {
+  $axios.onRequest(config => {
+    // $axios.setHeader を使うと server のときしか値が入らない(謎)
+    // ヘッダーキーにアンダースコアを使うと何も言わずに削除されてめちゃくちゃはまる(怒)
+    config.headers.common["AxiosRequestFrom"] = process.client ? "client" : "server"
+  })
+
   $axios.onError(error => {
     if (process.env.NODE_ENV === "development") {
       console.log(JSON.stringify(error, null, 2))

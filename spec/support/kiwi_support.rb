@@ -56,5 +56,9 @@ module KiwiSupport
     let(:book_message1) do
       user1.kiwi_book_message_speak(book1, "(message1)")
     end
+
+    let(:access_log1) do
+      book1.access_logs.create!(user: user1)
+    end
   end
 end

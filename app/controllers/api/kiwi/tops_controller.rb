@@ -30,6 +30,7 @@ module Api
       def index
         retv = {}
         retv[:books] = current_books.as_json(::Kiwi::Book.json_struct_for_top)
+        retv[:xpage_info] = xpage_info(current_books)
         retv[:meta]  = AppEntryInfo.fetch(:kiwi_lemon_index).og_meta
         render json: retv
       end
@@ -38,25 +39,19 @@ module Api
       # http://localhost:4000/sitemap.xml
       def sitemap
         retv = {}
-        retv[:books]    = ::Kiwi::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
-        # retv[:articles] = ::Kiwi::Article.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+        retv[:books] = ::Kiwi::Book.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
         render json: retv
       end
 
       private
 
       def current_books
-        @current_books ||= -> {
-          # s = ::Kiwi::Book.all
-          s = ::Kiwi::Book.general_search(params.merge(current_user: current_user))
-          # s = s.order(created_at: :desc)
-          # s = page_scope(s)       # page_methods.rb
-        }.call
+        @current_books ||= page_scope(::Kiwi::Book.general_search(params.merge(current_user: current_user)).order(created_at: :desc))
       end
 
       # PageMethods override
       def default_per
-        50
+        100
       end
     end
   end

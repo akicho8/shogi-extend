@@ -10,22 +10,15 @@ module Kiwi
               :description,
               :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
               :tag_list,
             ],
             include: {
+              **user_struct,
               **lemon_struct,
-              user: {
-                only: [
-                  :id,
-                  :name,
-                ],
-                methods: [
-                  :avatar_path,
-                ],
-              },
             },
           }
         end
@@ -36,6 +29,7 @@ module Kiwi
               :key,
               :title,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
@@ -44,16 +38,8 @@ module Kiwi
               :tag_list,
             ],
             include: {
+              **user_struct,
               **lemon_struct,
-              user: {
-                only: [
-                  :id,
-                  :name,
-                ],
-                methods: [
-                  :avatar_path,
-                ],
-              },
             },
           }
         end
@@ -68,26 +54,18 @@ module Kiwi
               :lemon_id,
               :created_at,
               :updated_at,
+              :access_logs_count,
               :thumbnail_pos,
             ],
             methods: [
               :folder_key,
               :tweet_body,
-              :raw_avatar_path,
+              # :raw_avatar_path,
               :tag_list,
             ],
             include: {
+              **user_struct,
               **lemon_struct,
-              user: {
-                only: [
-                  :key,
-                  :id,
-                  :name,
-                ],
-                methods: [
-                  :avatar_path,
-                ]
-              },
             },
           }
         end
@@ -101,6 +79,7 @@ module Kiwi
               :description,
               :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
@@ -109,16 +88,7 @@ module Kiwi
               :tag_list,
             ],
             include: {
-              user: {
-                only: [
-                  :key,
-                  :id,
-                  :name,
-                ],
-                methods: [
-                  :avatar_path,
-                ],
-              },
+              **user_struct,
               **lemon_struct,
               **book_messages_struct,
             },
@@ -138,6 +108,21 @@ module Kiwi
                 :thumbnail_browser_path,
               ],
             }
+          }
+        end
+
+        def user_struct
+          {
+            user: {
+              only: [
+                :id,
+                :key,
+                :name,
+              ],
+              methods: [
+                :avatar_path,
+              ],
+            },
           }
         end
 

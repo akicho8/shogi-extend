@@ -50,6 +50,10 @@ export default {
   },
 
   async fetch() {
+    if (this.sns_login_required()) {
+      return
+    }
+
     const params = {
       ...this.$route.params,
       ...this.$route.query,
@@ -132,8 +136,8 @@ export default {
     disabled_p() { return !this.editable_p                           },
 
     owner_p() {
-      if (this.book) {
-        return this.g_current_user && this.g_current_user.id === this.book.user.id
+      if (this.book && this.g_current_user) {
+        return this.g_current_user.id === this.book.user.id
       }
     },
   },

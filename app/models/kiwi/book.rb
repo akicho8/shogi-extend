@@ -32,7 +32,8 @@ module Kiwi
     include InfoMethods
     include AvatarMethods
     include JsonStructMethods
-    include MockMethods
     include BookMessageMethods
+    include AccessLogMethods
+    include MockMethods
   end
 end

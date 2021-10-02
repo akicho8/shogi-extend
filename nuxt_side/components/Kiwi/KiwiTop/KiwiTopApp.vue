@@ -14,18 +14,17 @@
     .container.is-fluid
       KiwiTopContent(:base="base")
 
-  DebugPre(v-if="development_p") {{$fetchState}}
-  DebugPre(v-if="development_p") {{$data}}
+  KiwiTopDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
-import { Book } from "../models/book.js"
+import { Book      } from "../models/book.js"
+import { XpageInfo } from "../models/xpage_info.js"
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"
 import { app_tabs       } from "./app_tabs.js"
 import { app_storage    } from "./app_storage.js"
-import { app_columns    } from "./app_columns.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { app_search     } from "./app_search.js"
 
@@ -38,7 +37,6 @@ export default {
     app_table,
     app_tabs,
     app_storage,
-    app_columns,
     app_sidebar,
     app_search,
   ],
@@ -86,6 +84,7 @@ export default {
       }
       // this.tab_index   = this.IndexScopeInfo.fetch(this.search_preset_key).code
       this.books = e.books.map(e => new Book(this, e))
+      this.xpage_info = new XpageInfo(e.xpage_info)
       // this.total       = e.total
       // this.book_counts = e.book_counts
     })

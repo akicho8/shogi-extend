@@ -22,12 +22,16 @@
       .media-content
         .title.is_line_break_on.mb-0.is-5 {{base.book.title}}
 
-        .mt-1.is_line_break_on.has-text-grey
+        .mt-2.is_line_break_on.has-text-grey
           nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
             | {{base.book.user.name}}
           //- span.ml-1 {{updated_time_format(base.book.updated_at)}}
           span.ml-1 {{diff_time_format(base.book.updated_at)}}
-          b-icon.ml-1(:icon="base.book.folder_info.icon" size="is-small" v-if="base.book.folder_info.key != 'public'")
+
+          b-icon.ml-2(icon="eye" size="is-small")
+          span.ml-1 {{base.book.access_logs_count}}
+
+          b-icon.ml-2(:icon="base.book.folder_info.icon" size="is-small" v-if="base.book.folder_info.key != 'public'")
 
         KiwiTagList.mt-2(:tag_list="base.book.tag_list" :tag_append_search_handle="base.tag_append_search_handle")
         .content.mt-1(v-if="base.book.description")

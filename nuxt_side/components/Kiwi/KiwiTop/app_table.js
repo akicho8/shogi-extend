@@ -15,7 +15,9 @@ export const app_table = {
       // total: 0,
 
       // b-table で開いたIDたち
-      detailed_keys: [],
+      // detailed_keys: [],
+
+      xpage_info: null,
     }
   },
   methods: {

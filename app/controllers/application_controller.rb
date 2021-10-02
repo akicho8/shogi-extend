@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include CurrentUserMethods
+  include AxiosMethods
 
   skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
 

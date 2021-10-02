@@ -7,7 +7,6 @@ module Kiwi
 
       def thumbnail_build(ss)
         if thumbnail_real_path
-          p ["#{__FILE__}:#{__LINE__}", __method__, ]
           safe_system("ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}")
         end
       end

@@ -75,5 +75,34 @@ module Kiwi
         Kiwi::BookRoomChannel.broadcast_to(self, {bc_action: :kiwi_book_message_pong_singlecast, bc_params: {pong: "OK"}})
       end
     end
+
+    concerning :AccessLogMethods do
+      included do
+        with_options dependent: :destroy do
+          has_many :kiwi_access_logs, class_name: "Kiwi::AccessLog" do                                         # アクセスログたち
+            # 動画の視聴履歴(重複なし・直近順)
+            def foobar123
+              s = select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
+              max = 100
+              s = s.order("last_access_at desc").limit(max)
+              ids = s.collect(&:book_id)
+              Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
+            end
+          end
+          has_many :kiwi_access_books, through: :kiwi_access_logs, source: :book, class_name: "Kiwi::Book"   # 過去に見た履歴動画
+        end
+
+        # scope :kiwi_book_histories, -> {
+        #   s = kiwi_access_books.select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
+        #   s = s.order("last_access_at desc").limit(100)
+        #   ids = s.collect(&:book_id)
+        #   Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
+        # }
+      end
+
+      def kiwi_access_log_pong_singlecast
+        Kiwi::BookRoomChannel.broadcast_to(self, {bc_action: :kiwi_access_log_pong_singlecast, bc_params: {pong: "OK"}})
+      end
+    end
   end
 end

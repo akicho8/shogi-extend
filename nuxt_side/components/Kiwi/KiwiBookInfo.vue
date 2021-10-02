@@ -10,9 +10,13 @@
     .mt-1.is_line_break_on.has-text-grey
       | {{book.user.name}}
 
-      //- span.ml-1 {{updated_time_format(book.updated_at)}}
-      span.ml-1 {{diff_time_format(book.updated_at)}}
-      b-icon.ml-1(:icon="book.folder_info.icon" size="is-small" v-if="book.folder_info.key != 'public'")
+      span.ml-2 {{diff_time_format(book.updated_at)}}
+
+      p
+        b-icon(icon="eye" size="is-small")
+        span.ml-1 {{book.access_logs_count}}
+
+        b-icon.ml-2(:icon="book.folder_info.icon" size="is-small" v-if="book.folder_info.key != 'public'")
 </template>
 
 <script>

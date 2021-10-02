@@ -10,7 +10,6 @@ export const app_storage = {
   computed: {
     ls_default() {
       return {
-        // visible_hash: this.as_visible_hash(this.KiwiRecordIndexColumnInfo.values),
         // search_preset_key: this.default_scope,
       }
     },

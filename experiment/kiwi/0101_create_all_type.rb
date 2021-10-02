@@ -1,7 +1,7 @@
 require "./setup"
 
 Kiwi::Folder.setup
-Kiwi::Book.destroy_all
+# Kiwi::Book.destroy_all
 
 def create(recipe_key)
   recipe_info = RecipeInfo.fetch(recipe_key)
