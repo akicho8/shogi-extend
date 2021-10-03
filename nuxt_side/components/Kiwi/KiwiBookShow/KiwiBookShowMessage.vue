@@ -8,7 +8,11 @@
           nuxt-link.user_link.has-text-weight-semibold(:to="{name: 'users-id', params: {id: book_message.user.id}}" @click.native="sound_play('click')")
             | {{book_message.user.name}}
           br
-          span(v-html="base.message_decorate(book_message.body)")
+          template(v-if="book_message.deleted_at")
+            span.is_line_break_on.has-text-grey-light.is-italic
+              | コメントは削除されました
+          template(v-else)
+            span.is_line_break_on(v-html="base.message_decorate(book_message.body)")
           br
           template(v-if="false")
             small
@@ -16,7 +20,11 @@
               a Reply
               | · 3 hrs
           span.is-size-7.has-text-grey-light.is_line_break_off
+            | \#{{book_message.position}}
+          span.is-size-7.has-text-grey-light.is_line_break_off.ml-1
             | {{diff_time_format(book_message.created_at)}}
+          span.is-hidden
+            | {{book_message.id}}
       .level.is-mobile(v-if="false")
         .level-left
           a.level-item
@@ -53,4 +61,10 @@ export default {
 .KiwiBookShowMessage
   .user_link
     color: inherit
+
+.STAGE-development
+  .KiwiBookShowMessage
+    .media
+      &:hover
+        background-color: $white-ter
 </style>

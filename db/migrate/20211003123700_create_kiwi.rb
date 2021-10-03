@@ -60,6 +60,9 @@ class CreateKiwi < ActiveRecord::Migration[6.0]
         t.belongs_to :user, foreign_key: true,                    null: false, comment: "発言者"
         t.belongs_to :book, foreign_key: {to_table: :kiwi_books}, null: false, comment: "動画"
         t.string :body, limit: 512,                               null: false, comment: "発言"
+        t.integer :position, index: true,                         null: false, comment: "番号"
+        t.datetime :deleted_at,                                   null: true,  comment: "削除日時"
+        t.index [:book_id, :position], unique: true
         t.timestamps
       end
 

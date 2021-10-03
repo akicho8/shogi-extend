@@ -11,6 +11,7 @@ module Kiwi
               :created_at,
               :updated_at,
               :access_logs_count,
+              :book_messages_count,
             ],
             methods: [
               :folder_key,
@@ -30,6 +31,7 @@ module Kiwi
               :title,
               :updated_at,
               :access_logs_count,
+              :book_messages_count,
             ],
             methods: [
               :folder_key,
@@ -90,6 +92,7 @@ module Kiwi
               :created_at,
               :updated_at,
               :access_logs_count,
+              :book_messages_count,
             ],
             methods: [
               :folder_key,

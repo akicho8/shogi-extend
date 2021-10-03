@@ -7,8 +7,10 @@ module Kiwi
         {
           only: [
             :id,
+            :position,
             :body,
             :created_at,
+            :deleted_at,
           ],
           include: {
             user: {
@@ -28,6 +30,10 @@ module Kiwi
       belongs_to :user, class_name: "::User"
 
       before_validation do
+        if Rails.env.test?
+          self.body ||= "(body#{self.class.count.next})"
+        end
+
         if will_save_change_to_attribute?(:body) && body.present?
           self.body = double_blank_lines_to_one_line(body)
           self.body = body.strip

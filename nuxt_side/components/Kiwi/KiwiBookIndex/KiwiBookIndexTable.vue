@@ -34,14 +34,15 @@
     //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
     //-     KiwiUserName(:user="row.user")
 
+    b-table-column(v-slot="{row}" custom-key="access_logs_count" field="access_logs_count" :label="base.BookIndexColumnInfo.fetch('access_logs_count').name" sortable numeric) {{row.access_logs_count}}
+    b-table-column(v-slot="{row}" custom-key="book_messages_count" field="book_messages_count" :label="base.BookIndexColumnInfo.fetch('book_messages_count').name" sortable numeric) {{row.book_messages_count}}
+
     b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable)
       KiwiFolder(:folder_key="row.folder_key")
 
     //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable) {{row_time_format(row.created_at)}}
 
     b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable) {{row_time_format(row.updated_at)}}
-
-    //- b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric) {{row.bookships_count}}
 
     b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //- nuxt-link(:to="{name: 'video-studio-book_key-edit', params: {book_key: row.key}}")

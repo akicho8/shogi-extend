@@ -25,8 +25,17 @@ module Kiwi
     include KiwiSupport
     include MailerSupport
 
-    it "コメントするとメール送信する" do
+    before do
       Folder.setup
+    end
+
+    it "コメントすると動画の更新日時も更新する" do
+      assert { book1.updated_at == "2000-01-01".to_time }
+      Timecop.freeze("2000-01-02") { book1.book_messages.create!(user: user1) }
+      assert { book1.reload.updated_at == "2000-01-02".to_time }
+    end
+
+    it "コメントするとメール送信する" do
       perform_enqueued_jobs { book1.book_messages.create!(user: user2, body: "message") } # user1 さんのに user2 さんがコメント
       assert { deliveries.count == 1 }                                                    # 1件送信された
       assert { deliveries.last.from == ["shogi.extend@gmail.com"] }                       # from は運営のメール
@@ -44,20 +53,3 @@ module Kiwi
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> |----------------------------+---------------------+---------------------------------------------------------+------------|
-# >> | from                       | to                  | subject                                                 | body       |
-# >> |----------------------------+---------------------+---------------------------------------------------------+------------|
-# >> | ["shogi.extend@gmail.com"] | ["user1@localhost"] | user2さんが「アヒル」にコメントしました                 | message... |
-# >> | ["shogi.extend@gmail.com"] | ["user1@localhost"] | user3さんが「アヒル」にコメントしました                 | message... |
-# >> | ["shogi.extend@gmail.com"] | ["user2@localhost"] | 以前コメントした「アヒル」にuser3さんがコメントしました | message... |
-# >> |----------------------------+---------------------+---------------------------------------------------------+------------|
-# >> .
-# >>
-# >> Top 1 slowest examples (1.66 seconds, 47.9% of total time):
-# >>   Kiwi::BookMessage コメントするとメール送信する
-# >>     1.66 seconds -:28
-# >>
-# >> Finished in 3.47 seconds (files took 3.36 seconds to load)
-# >> 1 example, 0 failures
-# >>

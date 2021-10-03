@@ -15,8 +15,7 @@
           .column
             KiwiBookIndexTable(:base="base")
 
-    DebugPre(v-if="development_p") {{$fetchState}}
-    DebugPre(v-if="development_p") {{$data}}
+    KiwiBookIndexDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>

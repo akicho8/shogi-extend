@@ -13,8 +13,11 @@
       span.ml-2 {{diff_time_format(book.updated_at)}}
 
       p
-        b-icon(icon="eye" size="is-small")
+        b-icon(icon="eye-outline" size="is-small")
         span.ml-1 {{book.access_logs_count}}
+
+        b-icon.ml-2(icon="comment-outline" size="is-small")
+        span.ml-1 {{book.book_messages_count}}
 
         b-icon.ml-2(:icon="book.folder_info.icon" size="is-small" v-if="book.folder_info.key != 'public'")
 </template>

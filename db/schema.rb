@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_103500) do
+ActiveRecord::Schema.define(version: 2021_10_03_123700) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -948,9 +948,13 @@ ActiveRecord::Schema.define(version: 2021_10_02_103500) do
     t.bigint "user_id", null: false, comment: "発言者"
     t.bigint "book_id", null: false, comment: "動画"
     t.string "body", limit: 512, null: false, comment: "発言"
+    t.integer "position", null: false, comment: "番号"
+    t.datetime "deleted_at", comment: "削除日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["book_id", "position"], name: "index_kiwi_book_messages_on_book_id_and_position", unique: true
     t.index ["book_id"], name: "index_kiwi_book_messages_on_book_id"
+    t.index ["position"], name: "index_kiwi_book_messages_on_position"
     t.index ["user_id"], name: "index_kiwi_book_messages_on_user_id"
   end
 

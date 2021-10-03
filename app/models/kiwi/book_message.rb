@@ -22,7 +22,9 @@ module Kiwi
   class BookMessage < ApplicationRecord
     include MessageShared
 
-    belongs_to :book, counter_cache: true
+    belongs_to :book, counter_cache: true, touch: true
+
+    acts_as_list top_of_list: 1, scope: :book
 
     after_create_commit do
       Kiwi::BookMessageBroadcastJob.perform_later(self)
