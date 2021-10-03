@@ -16,7 +16,7 @@
   .modal-card-body
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
-        | 設定する場合は右上のスイッチを有効にしよう
+        | 設置する場合は右上のスイッチを有効にしよう
     template(v-if="instance")
       template(v-if="instance.running_p")
         .level.is-mobile
