@@ -95,8 +95,8 @@
       .panel-heading
         | 絵文字
       .panel-block.is-block
-        template(v-for="e in base.guardian_list")
-          span(v-xemoji) {{e}}
+        template(v-for="(e, i) in base.guardian_list")
+          span.mx-1(v-xemoji) {{i}}:{{e}}
 
 //- DebugPre(v-if="development_p") {{$data}}
 </template>
