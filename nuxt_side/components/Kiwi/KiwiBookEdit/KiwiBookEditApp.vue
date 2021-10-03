@@ -14,7 +14,7 @@ client-only
     KiwiBookEditNavbar(:base="base")
 
     MainSection.when_mobile_footer_scroll_problem_workaround
-      .container
+      .container.is-fluid
         KiwiBookEditForm(:base="base" v-if="!$fetchState.pending && !$fetchState.error")
 
     KiwiBookEditDebugPanels(:base="base" v-if="development_p")

@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.KiwiBookEditNavbar(:spaced="false")
+MainNavbar.KiwiBookEditNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(v-if="base.book")
     template(slot="brand")
       b-navbar-item(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")

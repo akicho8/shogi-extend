@@ -1,6 +1,7 @@
 <template lang="pug">
 .KiwiBookEditForm
-  .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop.form_block
+  .columns.is-centered.is-multiline.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd.form_block
+    //- .columns.is-variable.is-0-mobile.is-5-tablet.is-6-desktop
     //- .column.is-6
     //-   b-field.field_block(label="ソース")
     //-     .control
@@ -15,33 +16,54 @@
     //-       template(v-else)
     //-         p base.book.lemon.content_type: {{base.book.lemon.content_type}}
     //-         p browser_path: {{base.book.lemon.browser_path}}
-    .column
-      b-field.field_block(label="サムネ位置" v-if="base.book.lemon.recipe_info.thumbnail_p")
-        .control
-          .image
-            video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false" ref="video_tag")
 
-      .field_block(v-if="development_p && base.book.lemon.recipe_info.thumbnail_p")
-        b-field(label="サムネイルにする位置(秒)")
+    .column.is-12-tablet.is-3-desktop
+      .field_block(v-if="base.book.lemon.recipe_info.thumbnail_p")
+        b-field(label="サムネ位置" :message="`${base.book.thumbnail_pos}`")
           .control
-            b-button(@click="thumbnail_pos_set_handle") 反映
-          b-input(v-model.trim="base.book.thumbnail_pos")
-        .image.mt-4
-          img(:src="base.book.lemon.thumbnail_browser_path")
+            .image
+              video.is-block(:src="base.book.lemon.browser_path" controls :autoplay="false" :loop="false" ref="video_tag")
+        //- b-field.mt-3(label="")
+        //-   //- .control(v-if="development_p")
+        //-   //-   b-button(@click="thumbnail_pos_set_handle") 反映
+        //-   //- b-input(v-model.trim="base.book.thumbnail_pos" readonly expanded)
+        //-   .control
+        //-     p {{base.book.thumbnail_pos}}
+
+        //- .image.mt-4(v-if="development_p")
+        //-   img(:src="base.book.lemon.thumbnail_browser_path")
+
+      b-field.field_block(label="ソース" v-if="!base.book.lemon.recipe_info.thumbnail_p")
+        .control
+          template(v-if="base.book.lemon.content_type.startsWith('image')")
+            .image
+              img(:src="base.book.lemon.browser_path")
+          template(v-else-if="base.book.lemon.content_type === 'application/zip'")
+            b-icon(icon="zip-box-outline" size="is-large")
+          template(v-else)
+            p base.book.lemon.content_type: {{base.book.lemon.content_type}}
+            p browser_path: {{base.book.lemon.browser_path}}
+
+    .column.is-12-tablet.is-5-desktop
 
       b-field.field_block(label="タイトル")
         b-input(v-model.trim="base.book.title" required :maxlength="100" placeholder="動画について説明するタイトルを追加しよう")
+
       b-field.field_block(label="説明")
         b-input(v-model.trim="base.book.description" type="textarea" rows="5" :maxlength="5000" placeholder="動画の内容を紹介しよう")
+
+    .column.is-12-tablet.is-4-desktop
       b-field.field_block(label="タグ")
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.book.tag_list" rounded :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter']")
+
       b-field.field_block(label="公開設定" :message="FolderInfo.fetch(base.book.folder_key).message.book")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key" @input="folder_key_input_handle")
               b-icon(:icon="e.icon" size="is-small")
               span {{e.name}}
+    .column.is-12
       b-field.submit_field
         .control
           b-button.has-text-weight-bold.book_save_handle(@click="base.book_save_handle" type="is-primary" :class="{disabled: !base.save_button_enabled}") {{base.save_button_name}}
@@ -84,7 +106,7 @@ export default {
 <style lang="sass">
 @import "../all_support.sass"
 .KiwiBookEditForm
-  +tablet
-    .image
-      max-width: 320px
+  // +tablet
+  //   .image
+  //     max-width: 320px
 </style>
