@@ -25,10 +25,22 @@ module Kiwi
         end
       end
 
+      def thumbnail_browser_path_if_exist
+        if e = thumbnail_real_path
+          if e.exist?
+            thumbnail_browser_path
+          end
+        end
+      end
+
       def thumbnail_clean
         if v = thumbnail_real_path
           FileUtils.rm_f(v)
         end
+      end
+
+      def og_image_path
+        thumbnail_browser_path_if_exist || browser_path
       end
     end
   end

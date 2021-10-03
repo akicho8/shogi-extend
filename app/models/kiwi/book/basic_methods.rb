@@ -175,28 +175,18 @@ module Kiwi
       #   end
       # end
 
-      def og_image_path
-        if lemon
-          if e = lemon.thumbnail_real_path
-            if e.exist?
-              lemon.thumbnail_browser_path
-            end
-          end
-        end
-      end
-
       def og_meta
         if new_record?
           {
             :title       => "新規 - 動画",
             :description => description || "",
-            :og_image    => "video-books",
+            :og_image    => lemon.og_image_path,
           }
         else
           {
             :title       => [title, user.name].join(" - "),
             :description => description || "",
-            :og_image    => og_image_path || "video-books",
+            :og_image    => lemon.og_image_path,
           }
         end
       end

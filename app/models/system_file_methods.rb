@@ -71,6 +71,14 @@ module SystemFileMethods
     "/" + real_path.relative_path_from(Rails.public_path).to_s
   end
 
+  # def browser_path_if_exist
+  #   if e = real_path
+  #     if e.exist?
+  #       browser_path
+  #     end
+  #   end
+  # end
+  
   def browser_url
     UrlProxy.full_url_for(path: browser_path)
   end

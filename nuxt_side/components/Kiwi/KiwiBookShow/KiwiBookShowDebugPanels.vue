@@ -6,12 +6,18 @@
         | book
       .panel-block
         pre {{pretty_inspect(base.book)}}
-  .column.is-6
+  .column.is-3
     .panel
       .panel-heading
         | ActionCable
       .panel-block
         p 接続回数: {{base.ac_book_room_connected_count}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | OGP
+      .panel-block
+        pre {{pretty_inspect(base.meta)}}
 </template>
 
 <script>
