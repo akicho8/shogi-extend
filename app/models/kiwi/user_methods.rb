@@ -81,9 +81,8 @@ module Kiwi
         with_options dependent: :destroy do
           has_many :kiwi_access_logs, class_name: "Kiwi::AccessLog" do                                         # アクセスログたち
             # 動画の視聴履歴(重複なし・直近順)
-            def foobar123
+            def uniq_histories(max: 100)
               s = select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
-              max = 100
               s = s.order("last_access_at desc").limit(max)
               ids = s.collect(&:book_id)
               Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])

@@ -32,7 +32,7 @@ module Kiwi
 
       assert { access_log1.user.kiwi_access_logs == [access_log1] }
       assert { access_log1.user.kiwi_access_books == [book1]      }
-      assert { access_log1.user.kiwi_access_logs.foobar123 == [book1] }
+      assert { access_log1.user.kiwi_access_logs.uniq_histories == [book1] }
 
       assert { access_log1.book.access_logs == [access_log1]      }
       assert { access_log1.book.access_logs_count == 1            }
