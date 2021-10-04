@@ -178,19 +178,21 @@ module Kiwi
       # end
 
       def og_meta
-        if new_record?
-          {
-            :title       => "新規 - 動画",
-            :description => description || "",
-            :og_image    => lemon.og_image_path,
-          }
-        else
-          {
-            :title       => [title, user.name].join(" - "),
-            :description => description || "",
-            :og_image    => lemon.og_image_path,
-          }
-        end
+        {
+          :title       => [title, user.name].compact.join(" - "),
+          :description => description || "",
+          :og_image    => lemon.og_image_path,
+          :og_video    => lemon.og_video_path,
+        }
+        # if new_record?
+        #   {
+        #     :title       => "新規 - 動画",
+        #     :description => description || "",
+        #     :og_image    => lemon.og_image_path,
+        #     :og_video    => lemon.og_video_path,
+        #   }
+        # else
+        # end
       end
 
       def tweet_body

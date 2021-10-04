@@ -42,6 +42,12 @@ module Kiwi
       def og_image_path
         thumbnail_browser_path_if_exist || browser_path
       end
+
+      def og_video_path
+        if recipe_info.og_video
+          browser_path
+        end
+      end
     end
   end
 end

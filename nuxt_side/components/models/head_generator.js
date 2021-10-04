@@ -64,6 +64,12 @@ export class HeadGenerator {
       this.set("og:image", s)
     }
 
+    s = this.meta.og_video
+    if (s) {
+      s = this.$config.MY_SITE_URL + s
+      this.set("og:video", s)
+    }
+
     s = this.meta.twitter_card_is_small
     if (s) {
       this.set("twitter:card", "summary")
