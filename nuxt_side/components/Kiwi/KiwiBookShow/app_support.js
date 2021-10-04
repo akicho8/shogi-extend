@@ -15,7 +15,8 @@ export const app_support = {
     tweet_body_wrap() {
       let out = ""
       out += "\n"
-      out += this.book.tweet_body + " "
+      out += this.book.tweet_body
+      out += " "
       out += this.location_url_without_search_and_hash()
       return out
     },

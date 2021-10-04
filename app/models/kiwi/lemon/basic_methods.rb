@@ -46,9 +46,9 @@ module Kiwi
 
       def share_board_params
         {
-          :body               => recordable.sfen_body,
+          :body               => recordable.sfen_body.tr(" ", "."),
           :turn               => recordable.display_turn,
-          :abstract_viewpoint => all_params[:media_builder_params][:viewpoint],
+          :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint) || "black",
         }
       end
     end
