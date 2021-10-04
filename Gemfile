@@ -130,7 +130,7 @@ end
 # gem "bioshogi", path: "~/src/bioshogi"
 gem "bioshogi", github: "akicho8/bioshogi"
 gem "rmagick"                   # for Bioshogi to_png
-gem "systemu"                   # for Bioshogi to_mp4
+gem "systemu"                   # for Bioshogi to_animation_mp4
 
 gem "nokogiri" # for Swars::Agent
 

@@ -7,7 +7,7 @@ module Kiwi
 
       def thumbnail_build(ss)
         if thumbnail_real_path
-          safe_system("ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}")
+          Bioshogi::SystemSupport.strict_system "ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}"
         end
       end
 

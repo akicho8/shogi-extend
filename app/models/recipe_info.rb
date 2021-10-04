@@ -15,9 +15,9 @@ class RecipeInfo
   include ApplicationMemoryRecord
   memory_record [
     # ../../nuxt_side/components/kiwi/models/recipe_info.js
-    { key: "is_recipe_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_mp4",            media_p: true,  thumbnail_p: true, override_options: {},                        },
+    { key: "is_recipe_mp4",             name: "MP4",                  real_ext: "mp4",  to_method: "to_animation_mp4",            media_p: true,  thumbnail_p: true, override_options: {},                        },
     { key: "is_recipe_gif",             name: "GIF",                  real_ext: "gif",  to_method: "to_animation_gif",  media_p: true,  thumbnail_p: false, override_options: {},                   },
-    { key: "is_recipe_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_png",  media_p: true,  thumbnail_p: false, override_options: {},                      },
+    { key: "is_recipe_apng",            name: "APNG",                 real_ext: "apng", to_method: "to_animation_apng",  media_p: true,  thumbnail_p: false, override_options: {},                      },
     { key: "is_recipe_webp",            name: "WebP",                 real_ext: "webp", to_method: "to_animation_webp", media_p: true,  thumbnail_p: false, override_options: {},                      },
     { key: "is_recipe_png",             name: "PNG",                  real_ext: "png",  to_method: "to_png",            media_p: true,  thumbnail_p: false, override_options: {},                      },
     { key: "is_recipe_zip",             name: "ZIP",                  real_ext: "zip",  to_method: "to_animation_zip",  media_p: false,  thumbnail_p: false, override_options: {},                      },

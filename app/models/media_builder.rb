@@ -90,7 +90,7 @@ class MediaBuilder
     def formatter_all_option_keys
       @formatter_all_option_keys ||= [
         Bioshogi::ImageRenderer,
-        Bioshogi::Mp4Builder,
+        Bioshogi::AnimationMp4Builder,
         Bioshogi::AnimationGifBuilder,
         Bioshogi::AnimationPngBuilder,
         Bioshogi::AnimationZipBuilder,

@@ -59,14 +59,6 @@ class ApplicationRecord < ActiveRecord::Base
       end
       md["content_type"]
     end
-
-    def safe_system(command)
-      Rails.logger.info(command)
-      status, stdout, stderr = systemu(command)
-      if !status.success?
-        raise StandardError, "#{command}: #{stderr.strip}"
-      end
-    end
   end
 
   delegate *[
@@ -76,7 +68,6 @@ class ApplicationRecord < ActiveRecord::Base
     :secure_random_urlsafe_base64_token,
     :data_uri_scheme_to_bin,
     :data_uri_scheme_to_content_type,
-    :safe_system,
   ], to: "self.class"
 
   # "" → nil
