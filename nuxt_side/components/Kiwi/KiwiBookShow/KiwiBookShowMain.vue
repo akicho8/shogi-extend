@@ -16,7 +16,7 @@
 
     .media
       .media-left
-        nuxt-link.image.is_avatar_image(:class="image_class" :to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+        nuxt-link.image.is_avatar_image(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
           img.is-rounded(:src="base.book.user.avatar_path" :alt="base.book.user.name")
 
       .media-content
