@@ -43,6 +43,14 @@ module Kiwi
         self.errored_at = nil
         self.error_message = nil
       end
+
+      def share_board_params
+        {
+          :body               => recordable.sfen_body,
+          :turn               => recordable.display_turn,
+          :abstract_viewpoint => all_params[:media_builder_params][:viewpoint],
+        }
+      end
     end
   end
 end

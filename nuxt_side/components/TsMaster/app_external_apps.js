@@ -55,9 +55,5 @@ export const app_external_apps = {
       })
       return route_info.href
     },
-    
-    
-
-    
   },
 }

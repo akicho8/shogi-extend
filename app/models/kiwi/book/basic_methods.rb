@@ -5,6 +5,8 @@ module Kiwi
         belongs_to :user, class_name: "::User"
         belongs_to :lemon
 
+        delegate :share_board_params, to: :lemon
+
         acts_as_taggable
 
         scope :sorted, -> info {

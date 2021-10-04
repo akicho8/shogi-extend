@@ -3,6 +3,10 @@ import _ from "lodash"
 
 export const app_support = {
   methods: {
+    // share_board_open_handle() {
+    //   this.$router.push({name: "share-board", query: this.book.share_board_params})
+    // },
+
     book_edit_handle() {
       if (this.owner_p) {
         this.sound_play("click")
