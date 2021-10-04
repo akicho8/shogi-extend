@@ -1,17 +1,17 @@
 export const app_book_message = {
   data() {
     return {
-      message_body: null,
+      message_body: null,       // localStorage に保存する
       // loading: null,
     }
   },
-  created() {
-    this.speak_init()
-  },
+  // created() {
+  //   // this.speak_init()
+  // },
   methods: {
-    speak_init() {
-      this.message_body = ""
-    },
+    // speak_init() {
+    //   this.message_body = ""
+    // },
     speak_handle() {
       if (this.present_p(this.message_body)) {
         // this.loading = this.$buefy.loading.open()

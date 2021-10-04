@@ -23,6 +23,7 @@ export const app_storage = {
   computed: {
     ls_default() {
       return {
+        message_body: "",
         // article_title_display_key: this.ArticleTitleDisplayInfo.values[0].key,
         // correct_behavior_key:      this.CorrectBehaviorInfo.values[0].key,
         // viewpoint_flip_key:        this.ViewpointFlipInfo.values[0].key,
