@@ -5,7 +5,7 @@
     :key="tag"
     rounded
     size="is-small"
-    @click.prevent.stop="tag_append_search_handle(tag)"
+    @click.prevent.stop="tag_click_handle(tag)"
     )
     | {{tag}}
     //- type="is-primary is-light"
@@ -16,7 +16,7 @@
 //-     :key="tag"
 //-     rounded
 //-     size="is-small"
-//-     @click.native.prevent.stop="tag_append_search_handle(tag)"
+//-     @click.native.prevent.stop="tag_click_handle(tag)"
 //-     )
 //-     | {{tag}}
 //-     //- type="is-primary is-light"
@@ -31,7 +31,7 @@ export default {
   mixins: [all_support],
   props: {
     tag_list:          { type: Array,    required: true, },
-    tag_append_search_handle: { type: Function, required: true, },
+    tag_click_handle: { type: Function, required: true, },
   },
 }
 </script>

@@ -29,7 +29,7 @@ export const app_table = {
       }
     },
 
-    tag_append_search_handle(tag) {
+    tag_click_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
       this.router_push({tag})

@@ -18,7 +18,7 @@ export const app_search = {
       this.sound_play("click")
       // this.search_p = !this.search_p
     },
-    tag_append_search_handle(tag) {
+    tag_click_handle(tag) {
       this.sound_play("click")
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")

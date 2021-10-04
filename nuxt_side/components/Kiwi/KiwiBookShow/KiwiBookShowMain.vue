@@ -36,9 +36,9 @@
 
           b-icon.ml-2(:icon="base.book.folder_info.icon" size="is-small" v-if="base.book.folder_info.key != 'public'")
 
-        KiwiTagList.mt-2(:tag_list="base.book.tag_list" :tag_append_search_handle="base.tag_append_search_handle")
+        KiwiTagList.mt-2(:tag_list="base.book.tag_list" :tag_click_handle="base.tag_click_handle")
         .content.mt-1(v-if="base.book.description")
-          .description(v-html="simple_format(auto_link(base.book.description))")
+          .description(v-html="base.message_decorate(base.book.description)")
 
   .column
      KiwiBookShowMessage(:base="base")

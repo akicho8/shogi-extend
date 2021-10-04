@@ -15,7 +15,7 @@ b-sidebar.KiwiBookShowSidebar.is-unselectable(fullheight right overlay v-model="
           //- b-menu-item.is_active_unset(label="この動画に問題を追加" @click="base.article_new_handle"  :disabled="!base.owner_p")
 
         //- b-menu-list(label="その他")
-        //-   b-menu-item.is_active_unset(label="ツイート" @click.native="base.book_tweet_handle")
+        //-   b-menu-item.is_active_unset(label="ツイート" @click.native="base.tweet_handle")
         //-   b-menu-item.is_active_unset(label="キーボードショートカット" @click.native="base.kb_shortcut_modal_toggle_handle")
 </template>
 
