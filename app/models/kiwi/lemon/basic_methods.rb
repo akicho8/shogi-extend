@@ -48,8 +48,10 @@ module Kiwi
         {
           :body               => recordable.sfen_body.tr(" ", "."),
           :turn               => recordable.display_turn,
-          :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint) || "black",
-        }
+          :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint),
+          :color_theme_key    => all_params.dig(:media_builder_params, :color_theme_key),
+          :xfont_key          => all_params.dig(:media_builder_params, :xfont_key),
+        }.compact
       end
     end
   end
