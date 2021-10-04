@@ -35,6 +35,9 @@ module Kiwi
       end
 
       def reset
+        thumbnail_clean         # かならずサムネ削除が先
+        main_file_clean
+
         self.process_begin_at = nil
         self.process_end_at = nil
         self.successed_at = nil

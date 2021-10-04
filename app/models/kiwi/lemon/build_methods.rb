@@ -233,6 +233,7 @@ module Kiwi
         if v = real_path
           FileUtils.rm_f(v)
           FileUtils.rm_f("#{v}.rb")
+          self.browser_path = nil
         end
       end
 
