@@ -31,7 +31,6 @@ module PageMethods
       :current_page   => s.current_page,
       :limit_value    => s.limit_value,
       :total_pages    => s.total_pages,
-      :limit_value    => s.limit_value,
       :next_page      => s.next_page,
       :prev_page      => s.prev_page,
       :first_page_p   => s.first_page?,
