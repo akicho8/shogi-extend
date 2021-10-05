@@ -11,6 +11,13 @@ task :crontab do
   end
 end
 
+desc "最後にデプロイしたハッシュを確認する"
+task :revision do
+  on roles(:all) do
+    execute :tail, revision_log
+  end
+end
+
 desc "cap production yarn_cache_clean"
 task :yarn_cache_clean do
   on roles(:all) do
