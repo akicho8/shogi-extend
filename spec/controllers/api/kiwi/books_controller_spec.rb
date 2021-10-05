@@ -7,7 +7,6 @@ RSpec.describe Api::Kiwi::BooksController, type: :controller do
     Kiwi::Book.destroy_all
     Kiwi::Lemon.destroy_all
     User.destroy_all
-    Kiwi::Folder.setup
     [
       { key: "alice-public",  user: :alice, folder_key: :public,  },
       { key: "alice-private", user: :alice, folder_key: :private, },

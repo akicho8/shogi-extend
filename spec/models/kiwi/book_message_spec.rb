@@ -25,10 +25,6 @@ module Kiwi
     include KiwiSupport
     include MailerSupport
 
-    before do
-      Folder.setup
-    end
-
     it "コメントすると動画の更新日時も更新する" do
       assert { book1.updated_at == "2000-01-01".to_time }
       Timecop.freeze("2000-01-02") { book1.book_messages.create!(user: user1) }

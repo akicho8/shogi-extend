@@ -78,25 +78,22 @@ module Kiwi
       entry_only
       Lemon.everyone_broadcast
     end
+
+    it "Bookと結び付いていないレコードたち" do
+      lemon1
+      assert { Lemon.single_only == [lemon1] } # Book と結び付いていないものたち
+      book1
+      assert { Lemon.single_only == [] } # Book と結び付いたので空
+    end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> ......
+# >> .
 # >>
-# >> Top 6 slowest examples (18.59 seconds, 91.1% of total time):
-# >>   Kiwi::Lemon works
-# >>     9.81 seconds -:42
-# >>   Kiwi::Lemon process_in_sidekiq
-# >>     7.38 seconds -:62
-# >>   Kiwi::Lemon info
-# >>     0.398 seconds -:71
-# >>   Kiwi::Lemon background_job_kick
-# >>     0.39341 seconds -:57
-# >>   Kiwi::Lemon everyone_broadcast
-# >>     0.34802 seconds -:76
-# >>   Kiwi::Lemon zombie_kill
-# >>     0.26461 seconds -:67
+# >> Top 1 slowest examples (1.36 seconds, 43.2% of total time):
+# >>   Kiwi::Lemon Book を削除しても Lemon は削除されない
+# >>     1.36 seconds -:82
 # >>
-# >> Finished in 20.4 seconds (files took 3.55 seconds to load)
-# >> 6 examples, 0 failures
+# >> Finished in 3.14 seconds (files took 3.37 seconds to load)
+# >> 1 example, 0 failures
 # >>

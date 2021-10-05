@@ -22,10 +22,6 @@ module Kiwi
   RSpec.describe AccessLog, type: :model do
     include KiwiSupport
 
-    before do
-      Folder.setup
-    end
-
     it "ログインユーザーのアクセス" do
       assert { access_log1.user }
       assert { access_log1.book }

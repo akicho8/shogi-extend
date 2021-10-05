@@ -8,6 +8,7 @@ module KiwiSupport
       Actb.setup
       Emox.setup
       Wkbk.setup
+      Kiwi::Folder.setup
     end
 
     let(:user1) { User.create!(name: "user1", email: "user1@localhost", confirmed_at: Time.current) }

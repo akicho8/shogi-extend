@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_03_123700) do
+ActiveRecord::Schema.define(version: 2021_10_05_174700) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1518,14 +1518,6 @@ ActiveRecord::Schema.define(version: 2021_10_03_123700) do
   add_foreign_key "emox_settings", "emox_rules", column: "rule_id"
   add_foreign_key "emox_settings", "users"
   add_foreign_key "emox_vs_records", "emox_battles", column: "battle_id"
-  add_foreign_key "kiwi_access_logs", "kiwi_books", column: "book_id"
-  add_foreign_key "kiwi_access_logs", "users"
-  add_foreign_key "kiwi_book_messages", "kiwi_books", column: "book_id"
-  add_foreign_key "kiwi_book_messages", "users"
-  add_foreign_key "kiwi_books", "kiwi_folders", column: "folder_id"
-  add_foreign_key "kiwi_books", "kiwi_lemons", column: "lemon_id"
-  add_foreign_key "kiwi_books", "users"
-  add_foreign_key "kiwi_lemons", "users"
   add_foreign_key "swars_crawl_reservations", "users"
   add_foreign_key "swars_zip_dl_logs", "swars_users"
   add_foreign_key "swars_zip_dl_logs", "users"

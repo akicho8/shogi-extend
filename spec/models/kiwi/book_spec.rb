@@ -31,7 +31,6 @@ module Kiwi
     include KiwiSupport
 
     it "works" do
-      Folder.setup
       user1 = User.create!
 
       # 動画作成
@@ -79,7 +78,6 @@ module Kiwi
     end
 
     it "GIFのOGP画像はサムネではなく本体" do
-      Folder.setup
       user1 = User.create!
       free_battle1 = user1.free_battles.create!(kifu_body: gif_params1[:body], use_key: "kiwi_lemon")
       lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: gif_params1[:all_params])
@@ -89,7 +87,6 @@ module Kiwi
 
     it "検索" do
       Book.destroy_all
-      Folder.setup
       user1 = User.create!
       free_battle1 = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
       lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
@@ -108,68 +105,35 @@ module Kiwi
       # private でも自分用の動画はすべてに表示してたけどやめた
       assert { Book.general_search(current_user: user1, search_preset_key: "新着").blank? }
     end
+
+    describe "削除" do
+      before do
+        @model_group = ModelGroup[User, Lemon, Book]
+        book1
+      end
+      it "Book を削除しても Lemon は削除されない" do
+        assert { @model_group.diff { book1.destroy! } == [0, 0, -1] }
+      end
+      it "Lemon を削除すると Book も連動して削除する" do
+        assert { @model_group.diff { book1.lemon.destroy! } == [0, -1, -1] }
+      end
+      it "User を削除すると Lemon も Book も連動して削除する" do
+        assert { @model_group.diff { book1.user.destroy! } == [-1, -1, -1] }
+      end
+    end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> |------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |       errored_at |                                                                                                                                                                                                                                                                     |
-# >> |    error_message |                                                                                                                                                                                                                                                                     |
-# >> |     successed_at | 2000-01-01 00:00:00 +0900                                                                                                                                                                                                                                           |
-# >> |     ffprobe_info | {:pretty_format=>{"streams"=>[{"index"=>0, "codec_name"=>"h264", "codec_long_name"=>"H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10", "profile"=>"High", "codec_type"=>"video", "codec_tag_string"=>"avc1", "codec_tag"=>"0x31637661", "width"=>2, "height"=>2, "code... |
-# >> |        file_size | 101106                                                                                                                                                                                                                                                              |
-# >> |     content_type | video/mp4                                                                                                                                                                                                                                                           |
-# >> |   filename_human | 21_20000101000000_2x2_6s.mp4                                                                                                                                                                                                                                        |
-# >> |     browser_path | /system/x-files/fr/ee/21_20000101000000_2x2_6s.mp4                                                                                                                                                                                                                  |
-# >> |   process_end_at | 2000-01-01 00:00:00 +0900                                                                                                                                                                                                                                           |
-# >> |       all_params | {:sleep=>0, :raise_message=>"", :media_builder_params=>{:recipe_key=>"is_recipe_mp4", :loop_key=>"is_loop_infinite", :page_duration=>1, :end_duration=>2, :viewpoint=>"black", :color_theme_key=>"color_theme_is_real_wood1", :audio_theme_key=>"audio_theme_is_... |
-# >> |               id | 21                                                                                                                                                                                                                                                                  |
-# >> |          user_id | 21                                                                                                                                                                                                                                                                  |
-# >> |  recordable_type | FreeBattle                                                                                                                                                                                                                                                          |
-# >> |    recordable_id | 21                                                                                                                                                                                                                                                                  |
-# >> | process_begin_at | 2000-01-01 00:00:00 +0900                                                                                                                                                                                                                                           |
-# >> |       created_at | 2000-01-01 00:00:00 +0900                                                                                                                                                                                                                                           |
-# >> |       updated_at | 2000-01-01 00:00:00 +0900                                                                                                                                                                                                                                           |
-# >> |------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |---------------------+--------------------------------|
-# >> |                  id |                                |
-# >> |                 key |                                |
-# >> |             user_id | 21                             |
-# >> |           folder_id |                                |
-# >> |            lemon_id | 21                             |
-# >> |               title | (cover_text)                   |
-# >> |         description | (description1)\n(description2) |
-# >> |       thumbnail_pos | 0.0                            |
-# >> | book_messages_count | 0                              |
-# >> |   access_logs_count | 0                              |
-# >> |          created_at |                                |
-# >> |          updated_at |                                |
-# >> |            tag_list | 居飛車 相居飛車                |
-# >> |---------------------+--------------------------------|
-# >> |---------------------+----------------------------------------------|
-# >> |                  id | 20                                           |
-# >> |                 key | FIJOSUQRFOl                                  |
-# >> |             user_id | 21                                           |
-# >> |           folder_id | 63                                           |
-# >> |            lemon_id | 21                                           |
-# >> |               title | タイトル1タイトル1タイトル1タイトル1         |
-# >> |         description | descriptiondescriptiondescriptiondescription |
-# >> |       thumbnail_pos | 0.5                                          |
-# >> | book_messages_count | 0                                            |
-# >> |   access_logs_count | 0                                            |
-# >> |          created_at | 2000-01-01 00:00:00 +0900                    |
-# >> |          updated_at | 2000-01-01 00:00:00 +0900                    |
-# >> |            tag_list | 居飛車 嬉野流 右玉                           |
-# >> |---------------------+----------------------------------------------|
 # >> ...
-# >> 
-# >> Top 3 slowest examples (13.55 seconds, 88.2% of total time):
-# >>   Kiwi::Book works
-# >>     10.13 seconds -:33
-# >>   Kiwi::Book GIFのOGP画像はサムネではなく本体
-# >>     3.02 seconds -:81
-# >>   Kiwi::Book 検索
-# >>     0.40862 seconds -:90
-# >> 
-# >> Finished in 15.36 seconds (files took 3.53 seconds to load)
+# >>
+# >> Top 3 slowest examples (2.37 seconds, 56.4% of total time):
+# >>   Kiwi::Book 削除 Book を削除しても Lemon は削除されない
+# >>     1.42 seconds -:117
+# >>   Kiwi::Book 削除 User を削除すると Lemon も Book も連動して削除する
+# >>     0.59786 seconds -:123
+# >>   Kiwi::Book 削除 Lemon を削除すると Book も連動して削除する
+# >>     0.35415 seconds -:120
+# >>
+# >> Finished in 4.2 seconds (files took 3.42 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>
