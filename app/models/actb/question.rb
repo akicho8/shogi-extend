@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs | index |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |      | A     |
+# | key                 | キー                | string(255) | NOT NULL            |      | A     |
 # | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
 # | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |

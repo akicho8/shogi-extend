@@ -7,9 +7,11 @@
 # | name       | desc     | type        | opts        | refs         | index |
 # |------------+----------+-------------+-------------+--------------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | A     |
-# | book_id    | Book     | integer(8)  | NOT NULL    |              | B     |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | B     |
+# | book_id    | Book     | integer(8)  | NOT NULL    |              | A! C  |
 # | body       | 内容     | string(512) | NOT NULL    |              |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |              | A! D  |
+# | deleted_at | 削除日時 | datetime    |             |              |       |
 # | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
 # |------------+----------+-------------+-------------+--------------+-------|

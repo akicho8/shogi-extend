@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs         | index |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A!    |
+# | key                 | キー                | string(255) | NOT NULL            |              | A!    |
 # | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | C     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |              | D     |
 # | lemon_id            | 動画ファイル        | integer(8)  | NOT NULL            |              | B!    |
