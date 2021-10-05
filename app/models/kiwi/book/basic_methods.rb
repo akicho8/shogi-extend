@@ -72,6 +72,10 @@ module Kiwi
           self.key ||= secure_random_urlsafe_base64_token
           self.thumbnail_pos ||= 0
 
+          if user
+            self.title = title.presence || "#{user.name}の動画(#{user.kiwi_books.count.next})"
+          end
+
           # if Rails.env.test? || Rails.env.development?
           #   self.title       ||= key
           #   self.description ||= "(description)"

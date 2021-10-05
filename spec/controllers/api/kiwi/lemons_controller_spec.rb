@@ -13,7 +13,7 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller do
   end
 
   it "record_create" do
-    post :record_create, params: params1.as_json, as: :json
+    post :record_create, params: mp4_params1.as_json, as: :json
     assert { response.status == 200 }
   end
 

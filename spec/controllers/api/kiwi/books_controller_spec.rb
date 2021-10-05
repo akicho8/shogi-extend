@@ -1,0 +1,60 @@
+require "rails_helper"
+
+RSpec.describe Api::Kiwi::BooksController, type: :controller do
+  include KiwiSupport
+
+  before(:context) do
+    Kiwi::Book.destroy_all
+    Kiwi::Lemon.destroy_all
+    User.destroy_all
+    Kiwi::Folder.setup
+    [
+      { key: "alice-public",  user: :alice, folder_key: :public,  },
+      { key: "alice-private", user: :alice, folder_key: :private, },
+      { key: "bob-public",    user: :bob,   folder_key: :public,  },
+      { key: "bob-private",   user: :bob,   folder_key: :private, },
+    ].each do |e|
+      params = Kiwi::Lemon::PARAMS_EXAMPLE_MP4
+      user = User.find_or_create_by!(key: e[:user])
+      free_battle = user.free_battles.create!(kifu_body: params[:body], use_key: "kiwi_lemon")
+      lemon1 = user.kiwi_lemons.create!(recordable: free_battle, all_params: params[:all_params])
+      user.kiwi_books.create!(key: e[:key], lemon: lemon1, folder_key: e[:folder_key])
+    end
+  end
+
+  [
+    { get: [ :index, params: {                            }, ],                 status: 200, }, # トップは誰でも見れる
+
+    { get: [ :show,  params: { book_key: "alice-public",  }, ], login: "alice", status: 200, }, # 自分のなので見れる
+    { get: [ :show,  params: { book_key: "alice-private", }, ], login: "alice", status: 200, }, # 自分のなので見れる
+    { get: [ :show,  params: { book_key: "bob-public",    }, ], login: "alice", status: 200, }, # 他者のpublicなので見れる
+    { get: [ :show,  params: { book_key: "bob-private",   }, ], login: "alice", status: 403, }, # 他者のprivateなので見れない
+
+    { get: [ :edit,  params: {                            }, ], login: "alice", status: 200, }, # 新規なのでキーはない
+    { get: [ :edit,  params: { book_key: "alice-public",  }, ], login: "alice", status: 200, }, # 自分のなので編集できる
+    { get: [ :edit,  params: { book_key: "alice-private", }, ], login: "alice", status: 200, }, # 自分のなので編集できる
+
+    { get: [ :show,  params: { book_key: "alice-private", }, ],                 status: 403, }, # private はログインしてないから見れない
+    { get: [ :show,  params: { book_key: "bob-private",   }, ], login: "alice", status: 403, }, # ログインしていてもオーナーが違うの見れない
+
+    { get: [ :show,  params: { book_key: :x,              }, ],                 status: 404, }, # 対象の動画がない
+
+    { get: [ :edit,  params: { book_key: "bob-public",    }, ], login: "alice", status: 404, }, # 他者の編集ページには行けない
+    { get: [ :edit,  params: { book_key: "bob-private",   }, ], login: "alice", status: 404, }, # 他者の編集ページには行けない
+
+    # 権限に関わらずログインしていないので編集には行けない
+    { get: [ :edit,  params: {                            }, ],                 status: 403, },
+    { get: [ :edit,  params: { book_key: "alice-public",  }, ],                 status: 403, },
+    { get: [ :edit,  params: { book_key: "alice-private", }, ],                 status: 403, },
+    { get: [ :edit,  params: { book_key: "bob-public",    }, ],                 status: 403, },
+    { get: [ :edit,  params: { book_key: "bob-private",   }, ],                 status: 403, },
+  ].each do |e|
+    it "アクセス制限" do
+      if e[:login]
+        user_login(User.find_by!(key: e[:login]))
+      end
+      get *e[:get]
+      assert { response.status == e[:status] }
+    end
+  end
+end

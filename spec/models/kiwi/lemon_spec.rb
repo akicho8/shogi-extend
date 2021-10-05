@@ -36,8 +36,8 @@ module Kiwi
     include KiwiSupport
 
     def entry_only
-      free_battle = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
-      user1.kiwi_lemons.create!(recordable: free_battle, all_params: params1[:all_params])
+      free_battle = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
+      user1.kiwi_lemons.create!(recordable: free_battle, all_params: mp4_params1[:all_params])
     end
 
     it "works" do

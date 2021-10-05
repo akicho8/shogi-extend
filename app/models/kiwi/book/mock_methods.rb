@@ -10,10 +10,8 @@ module Kiwi
           end
         end
 
-        # rails r 'Kiwi::Book.mock_setup'
-        def mock_setup
-          DbCop.foreign_key_checks_disable
-
+        # rails r 'Kiwi::Book.mock_setup2'
+        def mock_setup2
           [
             { key: 1, user: :sysop, folder_key: :public,  },
             { key: 2, user: :sysop, folder_key: :limited, },
@@ -22,7 +20,9 @@ module Kiwi
             { key: 5, user: :bot,   folder_key: :limited, },
             { key: 6, user: :bot,   folder_key: :private, },
           ].each do |e|
-            tp e
+            if Rails.env.development?
+              tp e
+            end
 
             params1 = {
               :body => "position startpos moves 7g7f 8c8d",
@@ -59,6 +59,13 @@ module Kiwi
             book.access_logs.create!(user: user)
             book.access_logs.create!
           end
+        end
+
+        # rails r 'Kiwi::Book.mock_setup'
+        def mock_setup
+          DbCop.foreign_key_checks_disable
+
+          mock_setup2
 
           RecipeInfo.each do |recipe_info|
             tp recipe_info.key

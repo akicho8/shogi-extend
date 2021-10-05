@@ -35,8 +35,8 @@ module Kiwi
       user1 = User.create!
 
       # 動画作成
-      free_battle1 = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
-      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: params1[:all_params])
+      free_battle1 = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
+      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
       lemon1.main_process
       # この時点でサムネは作らない
       assert { lemon1.thumbnail_real_path.exist? == false }
@@ -91,8 +91,8 @@ module Kiwi
       Book.destroy_all
       Folder.setup
       user1 = User.create!
-      free_battle1 = user1.free_battles.create!(kifu_body: params1[:body], use_key: "kiwi_lemon")
-      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: params1[:all_params])
+      free_battle1 = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
+      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
       book1 = user1.kiwi_books.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
       assert { Book.general_search(query: "あひる").present? }
       assert { Book.general_search(query: "(description)").present? }

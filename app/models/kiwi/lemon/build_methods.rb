@@ -113,7 +113,7 @@ module Kiwi
           end
         end
 
-        after_destroy_commit :main_file_clean
+        before_destroy :main_file_clean
 
         # 登録のタイミングで(変換ジョブがなければ)変換ジョブを放つ
         # after_create_commit do
