@@ -21,6 +21,7 @@ export const app_review = {
 
     book_new_handle(record) {
       this.sound_play("click")
+      this.talk("登録しますか？")
 
       this.dialog_confirm({
         title: "動画ライブラリ登録",
@@ -28,17 +29,17 @@ export const app_review = {
           <div class="content">
             <p>登録したらできること</p>
             <ol class="mt-0">
-              <li>動画専用ページの作成</li>
-              <li>説明の追加</li>
+              <li>専用ページの作成</li>
+              <li>タイトルや説明の追加</li>
               <li>みんなに公開</li>
               <li>仲間内だけで共有</li>
               <li>自分だけでこっそり見返す</li>
-              <li>とりあえず残しとく</li>
             </ol>
           </div>
         `,
         // <p>作成直後のファイルをダウンロードするだけなら不要です</p>
         confirmText: "登録する",
+        cancelText: "しない",
         focusOn: "confirm", // confirm or cancel
         onConfirm: () => {
           this.sound_play("click")
