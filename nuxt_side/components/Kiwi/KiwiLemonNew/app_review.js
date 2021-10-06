@@ -48,6 +48,11 @@ export const app_review = {
       })
     },
 
+    download_handle() {
+      this.sound_play("click")
+      this.delay_block(1, () => this.talk("ダウンロードしました"))
+    },
+
     __main_download_handle(record) {
       this.sound_play("click")
       window.location.href = record.rails_side_download_url

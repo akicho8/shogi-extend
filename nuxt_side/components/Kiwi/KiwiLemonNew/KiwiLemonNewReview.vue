@@ -17,7 +17,7 @@
         b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.is-centered.mt-3
-      b-button.has-text-weight-bold(@click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human") ダウンロード
+      b-button.has-text-weight-bold(@click="base.download_handle" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human") ダウンロード
       b-button(@click="base.book_new_handle(base.done_record)"            type=""                                      icon-left="upload") ライブラリ登録
       b-button(v-if="development_or_staging_p" @click="sound_play('click')" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank" )
       b-button(v-if="development_or_staging_p" @click="base.__main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            )
