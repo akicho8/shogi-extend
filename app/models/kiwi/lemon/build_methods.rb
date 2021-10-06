@@ -104,12 +104,14 @@ module Kiwi
         delegate :everyone_broadcast, :background_job_kick, to: "self.class"
         # delegate :browser_url, to: "media_builder"
 
-        after_commit do
-          if previous_changes[:process_begin_at]
-            track("開始")
-          end
-          if previous_changes[:process_end_at]
-            track("完了")
+        if Rails.env.development?
+          after_commit do
+            if previous_changes[:process_begin_at]
+              track("開始")
+            end
+            if previous_changes[:process_end_at]
+              track("完了")
+            end
           end
         end
 
