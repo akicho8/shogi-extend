@@ -72,6 +72,7 @@ export default {
     submit_handle() {
       this.sound_play("click")
       this.base.audio_theme_key = this.new_key
+      this.talk(this.base.audio_theme_info.introduction)
       this.$emit("close")
     },
     jump_to_source_url_handle(e) {

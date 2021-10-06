@@ -78,4 +78,15 @@ export class AudioThemeInfo extends MemoryRecord {
   get loop_support_p() {
     return this.audio_part_a_loop
   }
+
+  get introduction() {
+    const a = []
+    if (this.author_raw || this.author) {
+      a.push(this.author_raw || `${this.author}さんの`)
+    }
+    if (this.name) {
+      a.push(this.name)
+    }
+    return a.join("")
+  }
 }
