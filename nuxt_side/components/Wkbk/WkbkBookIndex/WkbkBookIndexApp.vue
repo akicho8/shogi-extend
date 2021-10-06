@@ -6,7 +6,7 @@
       p scope: {{scope}}({{tab_index}})
       p page: {{page}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
 
     .MainContainer
       WkbkBookIndexSidebar(:base="base")

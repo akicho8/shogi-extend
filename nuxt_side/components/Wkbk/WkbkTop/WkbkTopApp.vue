@@ -5,7 +5,7 @@
     p tag: {{tag}}
     p search_p: {{search_p}}
 
-  p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+  FetchStateErrorMessage(:fetchState="$fetchState")
 
   .MainContainer
     WkbkTopSidebar(:base="base")

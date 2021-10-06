@@ -8,7 +8,7 @@ client-only
         p g_current_user.id: {{g_current_user && g_current_user.id}}
         p owner_p: {{owner_p}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
 
     WkbkArticleShowSidebar(:base="base")

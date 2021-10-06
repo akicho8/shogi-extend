@@ -4,7 +4,7 @@
     DebugBox(v-if="development_p")
       p page: {{page}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
 
     KiwiBookIndexSidebar(:base="base")
     KiwiBookIndexNavbar(:base="base")

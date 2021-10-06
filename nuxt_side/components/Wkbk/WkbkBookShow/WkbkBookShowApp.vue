@@ -15,7 +15,7 @@ client-only
         p current_index: {{current_index}}
         p max_count: {{max_count}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
 
     //- b-navbar(fixed-top type="is-success")

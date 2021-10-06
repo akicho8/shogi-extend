@@ -5,7 +5,7 @@ client-only
       p $fetchState.pending: {{$fetchState.pending}}
       p ac_book_room_connected_count: {{ac_book_room_connected_count}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
 
     KiwiBookShowNavbar(:base="base")

@@ -8,7 +8,7 @@ client-only
         p owner_p: {{owner_p}}
         p editable_p: {{editable_p}}
 
-    p(v-if="$fetchState.error" v-text="$fetchState.error.message")
+    FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
 
     KiwiBookEditNavbar(:base="base")
