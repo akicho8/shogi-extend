@@ -122,64 +122,22 @@ module Kiwi
       #   book.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
       #
       def update_from_js(params)
-        book = params.deep_symbolize_keys
+        params = params.symbolize_keys
         old_new_record = new_record?
 
-        ActiveRecord::Base.transaction do
-          attrs = book.slice(*[
-              :title,
-              :description,
-              :folder_key,
-              :lemon_id,
-              :tag_list,
-              :thumbnail_pos,
-            ])
-          assign_attributes(attrs)
-          save!
-        end
+        attrs = params.slice(*[
+            :title,
+            :description,
+            :folder_key,
+            :lemon_id,
+            :tag_list,
+            :thumbnail_pos,
+          ])
+        assign_attributes(attrs)
+        save!
 
-        simple_track
+        changed_then_notify
       end
-
-      def simple_track
-        str = created_at == updated_at ? "作成" : "更新"
-        SlackAgent.message_send(key: "動画#{str}", body: [title, page_url].join(" "))
-        subject = "#{user.name}さんが動画「#{title}」を#{str}"
-        body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-        SystemMailer.simple_track(subject: subject, body: body).deliver_later
-      end
-
-      # articles の並び替え
-      #
-      #   user = User.create!
-      #   book = user.kiwi_books.create!
-      #   book.articles << user.kiwi_articles.create!(key: "a")
-      #   book.articles << user.kiwi_articles.create!(key: "b")
-      #
-      #   book.articles.order(:position).pluck(:key) # => ["a", "b"]
-      #   book.bookships_order_by_ids(["b", "a"])
-      #   book.articles.order(:position).pluck(:key) # => ["b", "a"]
-      #
-      # 次の方法の方がわかりやすいかもしれないけどSQLがさらに articles.count 回発生する
-      #
-      #   Bookship.acts_as_list_no_update do
-      #     keys.each.with_index do |key, i|
-      #       bookship = book.bookships.joins(:article).find_by!(Article.arel_table[:key].eq(key))
-      #       bookship.position = i
-      #       bookship.save!(validate: false, touch: false)
-      #     end
-      #   end
-      #
-      # def bookships_order_by_ids(ids)
-      #   table = bookships.inject({}) {|a, e| a.merge(e.id => e) }
-      #   Bookship.acts_as_list_no_update do
-      #     ids.each.with_index do |id, i|
-      #       e = table.fetch(id)
-      #       e.position = i
-      #       e.save!(validate: false, touch: false)
-      #     end
-      #   end
-      # end
 
       def og_meta
         {
@@ -244,10 +202,15 @@ module Kiwi
 
       private
 
-      # 公開した直後か？
-      # def public_folder_posted?
-      #   saved_change_to_attribute?(:folder_id) && folder_eq(:public)
-      # end
+      def changed_then_notify
+        if saved_changes?
+          str = created_at == updated_at ? "作成" : "更新"
+          SlackAgent.message_send(key: "動画情報#{str}", body: [title, page_url].join(" "))
+          subject = "#{user.name}さんが動画情報「#{title}」を#{str}"
+          body = info.collect { |k, v| "#{k}: #{v}\n" }.join
+          SystemMailer.simple_track(subject: subject, body: body).deliver_later
+        end
+      end
     end
   end
 end
