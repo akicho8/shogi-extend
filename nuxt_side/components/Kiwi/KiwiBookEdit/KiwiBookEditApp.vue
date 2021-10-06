@@ -73,6 +73,12 @@ export default {
         this.book.folder_key = this.default_folder_key
       }
     }
+
+    if (this.book.new_record_p) {
+      if (this.book.lemon.recipe_info.thumbnail_p) {
+        this.toast_ok("サムネイルにする位置とかを決めてください")
+      }
+    }
   },
 
   methods: {
