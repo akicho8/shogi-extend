@@ -56,9 +56,6 @@ export default {
   fetch() {
     if (this.sns_login_required()) { return }
 
-    // console.log("[fetch]")
-    // this.__assert__(this.scope, "this.scope")
-
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per || this.KiwiConfig.value_of("per_page")
@@ -101,8 +98,6 @@ export default {
 @import "../all_support.sass"
 .KiwiBookIndexApp
   .MainSection.section
-    +mobile
-      padding-bottom: 12rem // ios Safari では底辺部分をタップするとスクロールしてしまい使いにくいためスペースをあける
     +tablet
       padding: 2rem
 

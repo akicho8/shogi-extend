@@ -3,7 +3,7 @@
   .column.is-12
     .buttons.are-small
       template(v-for="e in base.SearchPresetInfo.values")
-        b-button(@click="base.search_preset_handle(e)" :type="{'is-primary': base.search_preset_info.key === e.key}")
+        b-button(v-if="e.showable_p(g_current_user)" @click="base.search_preset_handle(e)" :type="{'is-primary': base.search_preset_info.key === e.key}")
           | {{e.name}}
 
   KiwiTopTagList(:base="base")
