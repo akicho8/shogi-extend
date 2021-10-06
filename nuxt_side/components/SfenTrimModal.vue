@@ -27,9 +27,10 @@
       )
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left")
-    b-button.reset_handle(@click="reset_handle" icon-left="undo")
+    b-button.undo_handle(@click="undo_handle" icon-left="undo")
     b-button.submit_handle(@click="from_handle" type="is-primary" v-if="mode === 'from'") {{index}}手目から
     b-button.submit_handle(@click="to_handle" type="is-primary" v-if="mode === 'to'") {{index}}+{{offset}}手目まで
+    b-button.submit_handle(@click="submit_handle" type="is-primary" v-if="mode === 'done'") 確定
 </template>
 
 <script>
@@ -43,10 +44,15 @@ export default {
   },
   data() {
     return {
-      mode:          null, // 現在の状態 from or to
+      mode:          null, // 現在の状態 from | to | done
       index:         null, // 開始
       offset:        null, // 終了 (人間的には index + offset)
       base_sfen:     null, // 確定した開始局面
+      emit_params:   null, // emit で返すパラメータ
+
+      // done から to 確定直前に戻るために保持する
+      save_sp_done:      null,
+      save_sp_turn:      null,
 
       // ShogiPlayerのパラメータ
       sp_body:       null,
@@ -82,9 +88,9 @@ export default {
       this.$emit("close")
     },
 
-    reset_handle() {
+    undo_handle() {
       this.sound_play("click")
-      this.reset()
+      this.undo()
     },
 
     reset() {
@@ -96,6 +102,28 @@ export default {
       this.index = this.sp_turn
       this.__assert__(this.present_p(this.sp_body), "this.present_p(this.sp_body)")
       this.offset = this.sfen_parse(this.sp_body).moves.length
+      this.emit_params = null
+    },
+
+    undo() {
+      if (this.mode === "from") {
+        this.reset()
+        return
+      }
+      if (this.mode === "to") {
+        this.reset()
+        return
+      }
+      if (this.mode === "done") {
+        this.done_to_to()
+        return
+      }
+    },
+
+    done_to_to() {
+      this.sp_body = this.save_sp_done
+      this.sp_turn = this.save_sp_turn
+      this.mode = "to"
     },
 
     // ここから
@@ -119,20 +147,31 @@ export default {
 
     // ここまで
     to_handle() {
-      // this.sound_play("click")
+      this.sound_play("click")
+
+      // done から to する前の状態に戻るために保持
+      this.save_sp_done = this.sp_body
+      this.save_sp_turn = this.turn_offset
 
       const info = this.sfen_parse(this.sp_body)
       const moves = _.take(info.moves, this.turn_offset) // [c, d, e].drop(2) => [c, d]
+
       this.sp_body = this.sfen_add_moves(this.base_sfen, moves)     // ShogiPlayer用にその手番から始まる棋譜にする
 
-      const params = {
+      this.emit_params = {
         base_sfen: this.base_sfen,    // 開始局面
         moves:     moves,             // 範囲の moves
         viewpoint: this.sp_viewpoint, // 視点
         full_sfen: this.sp_body,      // moves を含む sfen
       }
-      this.clog(params)
-      this.$emit("update:submit", params)
+      this.clog(this.emit_params)
+      this.mode = "done"        // 確定へ
+    },
+
+    // 確定
+    submit_handle() {
+      this.sound_play("click")
+      this.$emit("update:submit", this.emit_params)
     },
 
     // 1から始めるSFENに変換
