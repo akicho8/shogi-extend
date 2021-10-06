@@ -35,47 +35,41 @@ module Kiwi
   RSpec.describe Lemon, type: :model do
     include KiwiSupport
 
-    def entry_only
-      free_battle = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
-      user1.kiwi_lemons.create!(recordable: free_battle, all_params: mp4_params1[:all_params])
+    it "動画生成" do
+      lemon1.main_process
+      lemon1.reload
+
+      assert { lemon1.status_key == "成功" }
+
+      assert { lemon1.real_path.to_s.match?(/public/) }
+      assert { lemon1.browser_path.match?(/system.*mp4/) }
+
+      assert { lemon1.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
+      assert { lemon1.thumbnail_browser_path.match?(/system.*thumbnail/) }
+      assert { lemon1.thumbnail_real_path.exist? == false }
     end
 
-    it "works" do
-      record = entry_only
-      record.main_process
-      record.reload
-
-      assert { record.status_key == "成功" }
-
-      assert { record.real_path.to_s.match?(/public/) }
-      assert { record.browser_path.match?(/system.*mp4/) }
-
-      assert { record.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
-      assert { record.thumbnail_browser_path.match?(/system.*thumbnail/) }
-      assert { record.thumbnail_real_path.exist? == false }
-    end
-
-    it "background_job_kick" do
-      entry_only
+    it "ワーカーが動いてなかったら動かす" do
+      lemon1
       Lemon.background_job_kick
     end
 
-    it "process_in_sidekiq" do
-      entry_only
+    it "ワーカー関係なく全処理実行" do
+      lemon1
       Lemon.process_in_sidekiq
     end
 
-    it "zombie_kill" do
+    it "ゾンビを成仏させる" do
       Lemon.zombie_kill
     end
 
     it "info" do
-      entry_only
+      lemon1
       assert { Lemon.info }
     end
 
-    it "everyone_broadcast" do
-      entry_only
+    it "「みんな」の反映" do
+      lemon1
       Lemon.everyone_broadcast
     end
 
@@ -84,6 +78,14 @@ module Kiwi
       assert { Lemon.single_only == [lemon1] } # Book と結び付いていないものたち
       book1
       assert { Lemon.single_only == [] } # Book と結び付いたので空
+    end
+
+    it "reset" do
+      expect { lemon1.reset }.not_to raise_error
+    end
+
+    it "share_board_params" do
+      assert { lemon1.share_board_params }
     end
   end
 end

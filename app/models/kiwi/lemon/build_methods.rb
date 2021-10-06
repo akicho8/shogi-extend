@@ -81,6 +81,7 @@ module Kiwi
           }
         end
 
+        # 「みんな」の反映
         def everyone_broadcast
           ActionCable.server.broadcast("kiwi/lemon_room_channel", {bc_action: :lemon_list_broadcasted, bc_params: kiwi_info})
         end
