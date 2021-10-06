@@ -110,7 +110,7 @@ desc "間違わないようにバナー表示"
 before "deploy:starting", :starting_banner do
   message = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}"
   tp message
-  system "say -v Victoria "#{message}""
+  system %(say -v Victoria "#{message}")
 end
 
 desc "サーバー起動確認"
