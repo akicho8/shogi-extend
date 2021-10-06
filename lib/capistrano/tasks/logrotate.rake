@@ -10,12 +10,12 @@ after "deploy:updated", "logrotate:upload"
 after "deploy:updated", "logrotate:status"
 
 namespace :logrotate do
-  desc "cap production logrotate:template_show ローカルのテンプレートを確認"
+  desc "ローカルのテンプレートを確認"
   task :template_show do
     puts ERB.new(File.read("config/logrotate.erb")).result(binding)
   end
 
-  desc "cap production logrotate:upload ローカルのテンプレートをアップロード"
+  desc "ローカルのテンプレートをアップロード"
   task :upload do
     tmp_file = "/tmp/logrotate.#{fetch(:application)}_#{fetch(:stage)}.conf"
     etc_file = "/etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"
@@ -44,7 +44,7 @@ namespace :logrotate do
     end
   end
 
-  desc "cap production logrotate:run 必要なら実行"
+  desc "必要なら実行"
   task :run do
     on roles(:all) do |host|
       sudo :logrotate, "--verbose /etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"
@@ -52,7 +52,7 @@ namespace :logrotate do
     end
   end
 
-  desc "cap production logrotate:force_run 強制実行"
+  desc "強制実行"
   task :force_run do
     on roles(:all) do |host|
       sudo :logrotate, "--verbose --force /etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)} || true" # 実行する必要がなかったときに 0 を返さないため || true としている(が、それなら logrotate:run だけでよくね？)
@@ -60,7 +60,7 @@ namespace :logrotate do
     end
   end
 
-  desc "cap production logrotate:status 状態確認"
+  desc "状態確認"
   task :status do
     on roles(:all) do |host|
       execute :cat, "/etc/logrotate.d/#{fetch(:application)}_#{fetch(:stage)}"

@@ -1,10 +1,10 @@
-desc "credentials"
+desc "credentials の内容を表示"
 task :credentials do
   credentials = YAML.load(`rails credentials:show`)
   pp credentials
 end
 
-desc "cap production crontab"
+desc "CRONの設定内容表示"
 task :crontab do
   on roles(:all) do
     execute "crontab -l"
@@ -18,7 +18,7 @@ task :revision do
   end
 end
 
-desc "cap production yarn_cache_clean"
+desc "yarnで入れた古いパッケージの削除"
 task :yarn_cache_clean do
   on roles(:all) do
     # execute "ls -al ~/.cache/yarn/v1"
@@ -27,7 +27,7 @@ task :yarn_cache_clean do
   end
 end
 
-desc 'httpd を再起動'
+desc "httpd を再起動"
 task :httpd_restart do
   on roles(:all) do
     execute "sudo systemctl restart httpd"
@@ -40,10 +40,10 @@ end
 
 namespace :deploy do
 
-  # desc 'Restart application'
+  # desc "Restart application"
   # task :restart do
   #   on roles(:app), in: :sequence, wait: 5 do
-  #     execute :touch, release_path.join('tmp/restart.txt')
+  #     execute :touch, release_path.join("tmp/restart.txt")
   #   end
   # end
   #
@@ -59,34 +59,35 @@ namespace :deploy do
   #   on roles(:web), in: :groups, limit: 3, wait: 10 do
   #     # Here we can do anything such as:
   #     # within release_path do
-  #     #   execute :rake, 'cache:clear'
+  #     #   execute :rake, "cache:clear"
   #     # end
   #   end
   # end
   #
 
   if true
+    desc "アプリケーション全削除(危険)"
     task :app_clean do
       on roles(:all) do
-        execute :rm, '-rf', deploy_to
+        execute :rm, "-rf", deploy_to
         # execute :rake, "db:create"
       end
     end
-    # before 'deploy:starting', 'deploy:app_clean'
+    # before "deploy:starting", "deploy:app_clean"
 
-    desc 'db_seed must be run only one time right after the first deploy'
+    desc "db:seed の実行"
     task :db_seed do
       on roles(:db) do |host|
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute :rake, 'db:seed'
+            execute :rake, "db:seed"
           end
         end
       end
     end
-    after 'deploy:migrate', 'deploy:db_seed'
+    after "deploy:migrate", "deploy:db_seed"
 
-    # desc 'Runs rake db:migrate if migrations are set'
+    # desc "Runs rake db:migrate if migrations are set"
     task db_reset: [:set_rails_env] do
       on primary fetch(:migration_role) do
         within release_path do
@@ -98,18 +99,18 @@ namespace :deploy do
         end
       end
     end
-    # before 'deploy:migrate', 'deploy:db_reset'
+    # before "deploy:migrate", "deploy:db_reset"
   end
 
-  # set :app_version, '1.2.3'
-  # after :finished, 'airbrake:deploy'
+  # set :app_version, "1.2.3"
+  # after :finished, "airbrake:deploy"
 end
 
 desc "間違わないようにバナー表示"
 before "deploy:starting", :starting_banner do
   message = "#{fetch(:application)} #{fetch(:branch)} to #{fetch(:stage)}"
   tp message
-  system "say -v Victoria '#{message}'"
+  system "say -v Victoria "#{message}""
 end
 
 desc "サーバー起動確認"
@@ -124,7 +125,7 @@ desc "RAILS_CACHE_CLEAR=1 cap production deploy ならデプロイ後にキャ�
 after "deploy:finished", :rails_cache_clear do
   on roles(:all) do
     if ENV["RAILS_CACHE_CLEAR"]
-      execute "cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner 'Rails.cache.clear'"
+      execute %(cd #{current_path} && RAILS_ENV=#{fetch(:rails_env)} bin/rails runner "Rails.cache.clear")
     end
   end
 end
