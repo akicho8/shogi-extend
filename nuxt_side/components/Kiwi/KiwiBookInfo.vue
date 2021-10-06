@@ -5,9 +5,9 @@
       img.is-rounded(:src="book.user.avatar_path" :alt="book.user.name")
 
   .media-content
-    .title.is_line_break_on.mb-0.is-6 {{book.title}}
+    .title.is_line_break_on.mb-0 {{book.title}}
 
-    .mt-1.is_line_break_on.has-text-grey
+    .mt-1.is_line_break_on.has-text-grey.is_body
       | {{book.user.name}}
 
       span.ml-2 {{diff_time_format(book.updated_at)}}
@@ -46,4 +46,11 @@ export default {
 
   .image
     width: 24px
+
+  .media-content
+    .title
+      font-size: unset
+
+    +tablet
+      font-size: $size-7
 </style>
