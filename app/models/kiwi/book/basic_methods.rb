@@ -205,8 +205,8 @@ module Kiwi
       def changed_then_notify
         if saved_changes?
           str = created_at == updated_at ? "作成" : "更新"
-          SlackAgent.message_send(key: "動画情報#{str}", body: [title, page_url].join(" "))
-          subject = "#{user.name}さんが動画情報「#{title}」を#{str}"
+          SlackAgent.message_send(key: "動画#{str}", body: [title, page_url].join(" "))
+          subject = "#{user.name}さんが動画「#{title}」を#{str}"
           body = info.collect { |k, v| "#{k}: #{v}\n" }.join
           SystemMailer.simple_track(subject: subject, body: body).deliver_later
         end
