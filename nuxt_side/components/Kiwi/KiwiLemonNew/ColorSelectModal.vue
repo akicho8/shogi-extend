@@ -42,6 +42,7 @@ export default {
       }
       this.sound_play("click")
       this.base.color_theme_key = e.key
+      this.talk(this.base.color_theme_info.introduction)
       this.$emit("close")
     },
   },

@@ -84,4 +84,8 @@ export class ColorThemeInfo extends MemoryRecord {
     url.searchParams.set("height", 720 / 2)
     return url.toString()
   }
+
+  get introduction() {
+    return this.name
+  }
 }
