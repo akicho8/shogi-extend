@@ -25,5 +25,9 @@ export const app_support = {
       this.talk(tag)
       this.$router.push({name: "video", query: {tag: tag}})
     },
+    download_handle() {
+      this.sound_play("click")
+      this.delay_block(1, () => this.toast_ok("ダウンロードしました"))
+    },
   },
 }

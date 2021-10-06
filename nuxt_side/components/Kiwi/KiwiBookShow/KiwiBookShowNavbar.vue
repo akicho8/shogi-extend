@@ -8,7 +8,7 @@ MainNavbar.KiwiBookShowNavbar(:spaced="false" centered wrapper-class="container 
       b-icon(icon="pencil")
     b-navbar-item.px_5_if_tablet(@click.native="sound_play('click')" tag="nuxt-link" :to="{name: 'share-board', query: {...base.book.share_board_params, title: base.book.title}}" v-if="base.book")
       b-icon(icon="checkerboard")
-    b-navbar-item.px_5_if_tablet(@click.native="sound_play('click')" :href="base.book.lemon.browser_path" :download="base.book.lemon.filename_human" v-if="base.book")
+    b-navbar-item.px_5_if_tablet(@click.native="base.download_handle" :href="base.book.lemon.browser_path" :download="base.book.lemon.filename_human" v-if="base.book")
       b-icon(icon="download")
     b-navbar-item.px_5_if_tablet(@click="base.tweet_handle" v-if="base.book")
       b-icon(icon="twitter")
