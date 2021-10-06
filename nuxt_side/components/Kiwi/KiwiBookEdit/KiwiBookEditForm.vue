@@ -57,7 +57,7 @@
         //- https://buefy.org/documentation/taginput
         b-taginput(v-model="base.book.tag_list" rounded :on-paste-separators="[',', ' ']" :confirm-keys="[',', 'Tab', 'Enter']")
 
-      b-field.field_block(label="公開設定" :message="FolderInfo.fetch(base.book.folder_key).message.book")
+      b-field.field_block(label="公開設定" :message="FolderInfo.fetch(base.book.folder_key).message")
         b-field.is-marginless
           template(v-for="e in FolderInfo.values")
             b-radio-button(v-model="base.book.folder_key" :native-value="e.key" @input="folder_key_input_handle")
