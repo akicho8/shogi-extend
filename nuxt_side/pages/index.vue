@@ -32,7 +32,7 @@
                     ul.is-size-7.features
                       template(v-for="e in e.features")
                         li(v-html="e")
-  .footer(v-if="config")
+  .footer.when_mobile_footer_scroll_problem_workaround(v-if="config")
     .container
       .columns
         .column
@@ -128,7 +128,6 @@ export default {
 
   .footer
     color: $text
-    padding-bottom: 8rem
     .title
       font-size: $size-5
       font-weight: bold

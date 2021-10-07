@@ -129,3 +129,8 @@ a.no-decoration
   width: 1em
   line-height: 1
 
+// スマホで下の方を押すと何かが出てきて1回で押せないのが不便なのである程度無駄にスクロールできるようにする
+// .footer や .MainSection に指定する
+.when_mobile_footer_scroll_problem_workaround
+  +mobile
+    padding-bottom: calc(100vh / 3) ! important
