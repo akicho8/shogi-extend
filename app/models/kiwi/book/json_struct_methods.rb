@@ -99,7 +99,7 @@ module Kiwi
               :tweet_body,
               :og_meta,
               :tag_list,
-              :share_board_params,
+              :advanced_kif_info,
             ],
             include: {
               **user_struct,

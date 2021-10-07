@@ -3,9 +3,13 @@ import dayjs from "dayjs"
 import { HandleNameParser } from "./handle_name_parser.js"
 import Autolinker from 'autolinker'
 const strip_tags = require('striptags')
+import { DotSfen } from "@/components/models/dot_sfen.js"
 
 // vue_support.js の methods に追加する
 export const Gs = {
+  dot_sfen_escape(...args)   { return DotSfen.escape(...args)   }, // SFENの " " を "." に変更
+  dot_sfen_unescape(...args) { return DotSfen.unescape(...args) }, // SFENの "." を " " に変更
+
   ruby_like_modulo(v, n) {
     if (n === 0) {
       throw new Error("divided by 0")

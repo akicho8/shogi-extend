@@ -84,8 +84,8 @@ module Kiwi
       expect { lemon1.reset }.not_to raise_error
     end
 
-    it "share_board_params" do
-      assert { lemon1.share_board_params }
+    it "advanced_kif_info" do
+      assert { lemon1.advanced_kif_info }
     end
 
     it "jsonでBookと結び付いているかわかる" do
@@ -112,7 +112,7 @@ end
 # >>     9.54 seconds -:38
 # >>   Kiwi::Lemon ワーカー関係なく全処理実行
 # >>     7.51 seconds -:57
-# >>   Kiwi::Lemon share_board_params
+# >>   Kiwi::Lemon advanced_kif_info
 # >>     0.43673 seconds -:87
 # >>   Kiwi::Lemon Bookと結び付いていないレコードたち
 # >>     0.4317 seconds -:76

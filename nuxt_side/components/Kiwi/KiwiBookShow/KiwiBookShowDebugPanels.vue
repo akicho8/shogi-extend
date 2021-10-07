@@ -18,6 +18,12 @@
         | OGP
       .panel-block
         pre {{pretty_inspect(base.meta)}}
+  .column.is-3(v-if="base.book")
+    .panel
+      .panel-heading
+        | advanced_kif_info
+      .panel-block
+        pre {{pretty_inspect(base.book.advanced_kif_info)}}
 </template>
 
 <script>

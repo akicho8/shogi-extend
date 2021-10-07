@@ -5,21 +5,9 @@ import { FolderInfo } from "./folder_info.js"
 export class Book extends Model {
   constructor(context, attributes) {
     super(context, attributes)
-
     if (this.lemon) {
       this.lemon = new Lemon(this.context, this.lemon)
     }
-
-    // this.new_file_info = null   // b-upload で受けとる情報
-    // this.new_file_src  = null   // 読み込んだ内容
-
-    // vue の data に設定すると Book が Object になっている謎
-    // なのでここで入れているが何かがおもいっきり間違っている気がする
-    // あとでぜったいバグるところ
-    // if (this.folder) {
-    //   throw new Error("すでに this.folder がある")
-    // }
-    // this.folder = FolderInfo.fetch(this.folder_key).attributes
   }
 
   //////////////////////////////////////////////////////////////////////////////// 権限
@@ -44,13 +32,13 @@ export class Book extends Model {
   // のちのち構造が変わってもここで吸収する
   get post_params() {
     return {
-      key:         this.key,
-      title:       this.title,
-      description: this.description,
-      folder_key:  this.folder_key,
-      lemon_id:    this.lemon_id,
-      tag_list:    this.tag_list,
-      thumbnail_pos:    this.thumbnail_pos,
+      key:           this.key,
+      title:         this.title,
+      description:   this.description,
+      folder_key:    this.folder_key,
+      lemon_id:      this.lemon_id,
+      tag_list:      this.tag_list,
+      thumbnail_pos: this.thumbnail_pos,
     }
   }
 

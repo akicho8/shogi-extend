@@ -22,7 +22,7 @@ client-only
 import { Book             } from "../models/book.js"
 
 import { support_parent   } from "./support_parent.js"
-import { app_mode         } from "./app_mode.js"
+import { app_board         } from "./app_board.js"
 import { app_support      } from "./app_support.js"
 import { app_sidebar      } from "./app_sidebar.js"
 import { app_op           } from "./app_op.js"
@@ -37,7 +37,7 @@ export default {
   name: "KiwiBookShowApp",
   mixins: [
     support_parent,
-    app_mode,
+    app_board,
     app_support,
     app_sidebar,
     app_op,

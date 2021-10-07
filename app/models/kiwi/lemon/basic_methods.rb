@@ -49,9 +49,9 @@ module Kiwi
         self.error_message = nil
       end
 
-      def share_board_params
+      def advanced_kif_info
         {
-          :body               => recordable.sfen_body.tr(" ", "."),
+          :body               => recordable.sfen_body,
           :turn               => recordable.display_turn,
           :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint),
           :color_theme_key    => all_params.dig(:media_builder_params, :color_theme_key),
