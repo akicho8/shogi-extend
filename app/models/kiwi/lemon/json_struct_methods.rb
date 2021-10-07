@@ -4,14 +4,17 @@ module Kiwi
       class_methods do
         def json_struct_for_list
           {
-            # only: [
-            #   # all
-            # ],
+            # only: [...], # all
             include: {
               :user => {
                 only: [
                   :id,
                   :name,
+                ],
+              },
+              :book => {        # すでに動画ライブラリに結びついているか確認するため
+                only: [
+                  :key,
                 ],
               },
             },

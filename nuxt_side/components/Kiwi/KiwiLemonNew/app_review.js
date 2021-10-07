@@ -21,11 +21,22 @@ export const app_review = {
 
     book_new_handle(record) {
       this.sound_play("click")
-      this.talk("登録しますか？")
 
-      this.dialog_confirm({
-        title: "動画ライブラリ登録",
-        message: `
+      if (this.present_p(record.book)) {
+        this.toast_warn("すでに登録しています")
+        this.dialog_confirm({
+          message: "編集ページに移動しますか？",
+          confirmText: "移動する",
+          onConfirm: () => {
+            this.sound_play("click")
+            this.$router.push({name: 'video-studio-book_key-edit', params: {book_key: record.book.key}})
+          },
+        })
+      } else {
+        this.talk("登録しますか？")
+        this.dialog_confirm({
+          title: "動画ライブラリ登録",
+          message: `
           <div class="content">
             <p>登録したらできること</p>
             <ol class="mt-0">
@@ -37,15 +48,15 @@ export const app_review = {
             </ol>
           </div>
         `,
-        // <p>作成直後のファイルをダウンロードするだけなら不要です</p>
-        confirmText: "登録する",
-        cancelText: "しない",
-        focusOn: "confirm", // confirm or cancel
-        onConfirm: () => {
-          this.sound_play("click")
-          this.$router.push({name: "video-studio-new", query: {source_id: record.id}})
-        },
-      })
+          // <p>作成直後のファイルをダウンロードするだけなら不要です</p>
+          confirmText: "登録する",
+          cancelText: "しない",
+          onConfirm: () => {
+            this.sound_play("click")
+            this.$router.push({name: "video-studio-new", query: {source_id: record.id}})
+          },
+        })
+      }
     },
 
     download_handle() {
