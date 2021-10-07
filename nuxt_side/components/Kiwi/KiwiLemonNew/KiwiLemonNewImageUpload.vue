@@ -6,7 +6,7 @@
         b-icon(icon="upload" size="is-small")
         .is-size-7.ml-2 {{label}}
 
-  .image_preview(v-if="new_file_info")
+  .image_preview.mt-2(v-if="new_file_info")
     img(:src="new_file_info.url")
     button.delete(size="is-small" @click="delete_handle")
 </template>
