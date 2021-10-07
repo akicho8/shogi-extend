@@ -7,7 +7,7 @@
           b-button(:label="base.recipe_info.name" icon-right="menu-down")
         template(v-for="e in base.RecipeInfo.values")
           template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-            b-dropdown-item(:value="e.key" @click="sound_play('click')")
+            b-dropdown-item(:value="e.key" @click="recipe_click_handle")
               .media
                 .media-left
                   | {{e.name}}
@@ -109,6 +109,12 @@ import { support_child } from "./support_child.js"
 export default {
   name: "KiwiLemonNewFormPro2",
   mixins: [support_child],
+  methods: {
+    recipe_click_handle() {
+      this.sound_play("click")
+      this.talk(this.base.recipe_info.name)
+    },
+  },
 }
 </script>
 
