@@ -60,6 +60,7 @@ export default {
       this.sound_play("click")
       await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
+      this.$router.push("/")
     },
     back_handle() {
       this.sound_play("click")
