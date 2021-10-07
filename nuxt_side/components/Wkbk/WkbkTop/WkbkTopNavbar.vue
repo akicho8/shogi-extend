@@ -13,14 +13,14 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
       WkbkTopSearch(:base="base")
 
   template(slot="end")
-    NavbarItemLogin
-    NavbarItemProfileLink
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
-      b-icon(icon="cog")
-
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
       b-icon(icon="plus")
+
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
+      b-icon(icon="table-cog")
+
+    NavbarItemLogin
+    NavbarItemProfileLink
 
     WkbkSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
 

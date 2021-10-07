@@ -7,8 +7,8 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack-articles'}") 問題リスト
 
   template(slot="end")
-    NavbarItemLogin
-    NavbarItemProfileLink
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
+      b-icon(icon="plus")
 
     //- https://buefy.org/documentation/navbar
     b-navbar-dropdown(arrowless v-if="development_p")
@@ -21,8 +21,9 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
           .has-text-grey(v-else)
             | {{e.name}}
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
-      b-icon(icon="plus")
+
+    NavbarItemLogin
+    NavbarItemProfileLink
 
     WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
