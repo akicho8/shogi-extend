@@ -12,7 +12,7 @@
     article
       h2 待ちきれない
       .article_body
-        | 終わったらメールするので待たなくてもいい
+        p 終わったらメールするので待たなくてもいい
 
     article
       h2 出来たファイルに直リンしていい？
@@ -53,9 +53,17 @@
     article
       h2 動画から棋譜に変換するには？
       .article_body
-        | メタデータにSFEN形式の棋譜を入れてあるので ffprobe に読ませたり、
-        a.mx-1(href="https://mediaarea.net/MediaInfoOnline" target="_blank") https://mediaarea.net/MediaInfoOnline
-        | にアップロードして内容を取得し、「なんでも棋譜変換」等に投げる
+        ol
+          li
+            | ファイル内にSFEN形式の棋譜を入れてある
+          li
+            a(href="https://mediaarea.net/MediaInfoOnline" target="_blank") MediaInfoOnline
+            | にアップロードするとその内容を抽出できる
+          li ffmpeg の同梱ツール ffprobe でも抽出できる
+          li
+            | SFEN形式の棋譜は
+            a(href="https://www.shogi-extend.com/adapter" target="_blank") なんでも棋譜変換
+            | でKIF形式に変換できる
 
     article
       h2 曲にハメるには？
@@ -87,22 +95,22 @@
           li 2拍(2分音符)毎に1手指すのを想定したBPMを表示している
           li 1拍(4分音符)や4拍(全音符)毎に指すときは <b>×2</b> や <b>÷2</b> で調整する
 
-    article(v-if="development_p")
-      h2 Twitterのアップロード条件について
-      .article_body
-        | 公表しないまま仕様が変わったり、「推奨」と書かれているだけだったりで実際どの閾値で失敗・成功するのかはよくわかっていない
-
-    article(v-if="development_p")
-      h2 動画じゃなくて別の棋譜フォーマットにするには？
-      .article_body
-        | 「なんでも棋譜変換」を使う。
-        | 棋譜入力欄の「棋譜変換」から飛べる。
-
-    article(v-if="development_p")
-      h2 どういう内容の棋譜だったか事前に確認するには？
-      .article_body
-        | 「共有将棋盤」を使う。
-        | 棋譜入力欄の「将棋盤」から飛べる。
+    //- article(v-if="development_p")
+    //-   h2 Twitterのアップロード条件について
+    //-   .article_body
+    //-     | 公表しないまま仕様が変わったり、「推奨」と書かれているだけだったりで実際どの閾値で失敗・成功するのかはよくわかっていない
+    //-
+    //- article(v-if="development_p")
+    //-   h2 動画じゃなくて別の棋譜フォーマットにするには？
+    //-   .article_body
+    //-     | 「なんでも棋譜変換」を使う。
+    //-     | 棋譜入力欄の「棋譜変換」から飛べる。
+    //-
+    //- article(v-if="development_p")
+    //-   h2 どういう内容の棋譜だったか事前に確認するには？
+    //-   .article_body
+    //-     | 「共有将棋盤」を使う。
+    //-     | 棋譜入力欄の「将棋盤」から飛べる。
 
     article
       h2 ここに載ってない
