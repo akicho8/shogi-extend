@@ -1,5 +1,5 @@
 import { LoopInfo          } from "../models/loop_info.js"
-import { XfontInfo          } from "../models/xfont_info.js"
+import { XboldInfo          } from "../models/xbold_info.js"
 import { ViewpointInfo     } from "../models/viewpoint_info.js"
 import { ColorThemeInfo    } from "../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
@@ -18,7 +18,7 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// POST前
       body: "",                 // 棋譜
       loop_key:           null, // ループの有無(GIFの場合)
-      xfont_key:          null, // 駒を太字にする条件
+      xbold_key:          null, // 駒を太字にする条件
       animation_size_key: null, // 画像サイズ
       img_width:          null, // w
       img_height:         null, // h
@@ -313,8 +313,8 @@ export const app_form = {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
     LoopInfo()                 { return LoopInfo                                         },
     loop_info()                { return LoopInfo.fetch(this.loop_key)                    },
-    XfontInfo()                 { return XfontInfo                                         },
-    xfont_info()                { return XfontInfo.fetch(this.xfont_key)                    },
+    XboldInfo()                 { return XboldInfo                                         },
+    xbold_info()                { return XboldInfo.fetch(this.xbold_key)                    },
     AnimationSizeInfo()        { return AnimationSizeInfo                                },
     animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key) },
     ParamInfo()                { return ParamInfo                                        },
@@ -377,7 +377,7 @@ export const app_form = {
             width:             this.img_width,
             height:            this.img_height,
             renderer_override_params: { // テーマの上書き
-              ...this.xfont_info.to_params,
+              ...this.xbold_info.to_params,
             },
           },
         },
