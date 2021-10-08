@@ -20,8 +20,8 @@ export const app_form = {
       loop_key:           null, // ループの有無(GIFの場合)
       xbold_key:          null, // 駒を太字にする条件
       rect_size_key: null, // 画像サイズ
-      img_width:          null, // w
-      img_height:         null, // h
+      rect_width:          null, // w
+      rect_height:         null, // h
       viewpoint_key:      null, // 視点
       color_theme_key:    null, // 色テーマ
       audio_theme_key:    null, // 曲テーマ
@@ -62,8 +62,8 @@ export const app_form = {
 
   // created() {
   //   // this.data_set_by_query_or_default()
-  //   // this.img_width  = this.img_width ?? this.rect_size_info.width
-  //   // this.img_height = this.img_height ?? this.rect_size_info.height
+  //   // this.rect_width  = this.rect_width ?? this.rect_size_info.width
+  //   // this.rect_height = this.rect_height ?? this.rect_size_info.height
   // },
 
   watch: {
@@ -78,8 +78,8 @@ export const app_form = {
   },
   methods: {
     form_setup() {
-      this.img_width  = this.img_width ?? this.rect_size_info.width
-      this.img_height = this.img_height ?? this.rect_size_info.height
+      this.rect_width  = this.rect_width ?? this.rect_size_info.width
+      this.rect_height = this.rect_height ?? this.rect_size_info.height
     },
     body_focus() {
       // // 開発時のホットリロードでは null.$refs になる
@@ -160,8 +160,8 @@ export const app_form = {
       console.log(this.rect_size_info)
       if (this.rect_size_info.key === "is_custom") {
       } else {
-        this.img_width = this.rect_size_info.width
-        this.img_height = this.rect_size_info.height
+        this.rect_width = this.rect_size_info.width
+        this.rect_height = this.rect_size_info.height
       }
     },
 
@@ -374,8 +374,8 @@ export const app_form = {
             video_crf:         this.video_crf,
             audio_bit_rate:    this.audio_bit_rate,
             main_volume:       this.main_volume,
-            width:             this.img_width,
-            height:            this.img_height,
+            width:             this.rect_width,
+            height:            this.rect_height,
             renderer_override_params: { // テーマの上書き
               ...this.xbold_info.to_params,
             },
@@ -404,7 +404,7 @@ export const app_form = {
     ////////////////////////////////////////////////////////////////////////////////
 
     i_size_aspect_ratio_human() {
-      let r = this.math_wh_gcd_aspect_ratio(this.img_width, this.img_height)
+      let r = this.math_wh_gcd_aspect_ratio(this.rect_width, this.rect_height)
       if (r == null) {
         return "? : ?"
       }
@@ -414,7 +414,7 @@ export const app_form = {
     i_size_danger_p() {
       return false
 
-      let r = this.math_wh_normalize_aspect_ratio(this.img_width, this.img_height)
+      let r = this.math_wh_normalize_aspect_ratio(this.rect_width, this.rect_height)
       if (r == null) {
         return true
       }

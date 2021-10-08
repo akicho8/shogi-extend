@@ -30,8 +30,8 @@
       b-select(v-model="base.rect_size_key" @input="base.rect_size_key_input_handle" @click.native="sound_play('click')")
         option(v-for="e in base.RectSizeInfo.values" :value="e.key" v-text="e.option_name" v-if="e.environment == null || e.environment.includes($config.STAGE)")
     b-field.compact_wh_input(label="サイズ" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
-      b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width")
-      b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
+      b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" expanded placeholder="width")
+      b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
   b-field.field_block(grouped v-if="development_p && false")
     b-field.rect_size_field(label="サイズ" :message="[base.rect_size_info.message]")
@@ -50,8 +50,8 @@
                 //- small {{e.message}}
 
     b-field.compact_wh_input(label="サイズ(非表示)" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
-      b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" placeholder="width")
-      b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" placeholder="height")
+      b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" placeholder="width")
+      b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" placeholder="height")
 
   //////////////////////////////////////////////////////////////////////////////// 縦
   //- b-field.field_block
@@ -82,8 +82,8 @@
                       //- small {{e.message}}
 
     b-field(label="" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
-      b-input(required type="number" v-model.number="base.img_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
-      b-input(required type="number" v-model.number="base.img_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
+      b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
+      b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
   b-field.field_block(label="1ページあたりの秒数" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
