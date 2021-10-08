@@ -7,7 +7,7 @@ hr
       = render partial: "form", locals: {form: form}
       .field
         .control
-          =<> form.submit(name: :_submit, class: "button is-primary")
+          =<> form.submit(name: :_submit, class: "button is-primary has-text-weight-bold")
 
   - if current_record.persisted?
     .column.is-half
