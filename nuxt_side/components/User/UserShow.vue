@@ -99,7 +99,7 @@ export default {
 <style lang="sass">
 .UserShow-Sidebar
   .sidebar-content
-    width: unset
+    // width: unset
     a
       white-space: nowrap
     .menu-label
