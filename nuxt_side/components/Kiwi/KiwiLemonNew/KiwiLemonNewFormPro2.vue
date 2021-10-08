@@ -29,7 +29,7 @@
     b-field(label="サイズプリセット" :message="[base.rect_size_info.message]")
       b-select(v-model="base.rect_size_key" @input="base.rect_size_key_input_handle" @click.native="sound_play('click')")
         option(v-for="e in base.RectSizeInfo.values" :value="e.key" v-text="e.option_name" v-if="e.environment == null || e.environment.includes($config.STAGE)")
-    b-field.compact_wh_input(label="サイズ" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
+    b-field.compact_wh_input(label="サイズ" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_rect_size_custom'")
       b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" expanded placeholder="width")
       b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 
@@ -49,7 +49,7 @@
                 //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                 //- small {{e.message}}
 
-    b-field.compact_wh_input(label="サイズ(非表示)" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
+    b-field.compact_wh_input(label="サイズ(非表示)" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_rect_size_custom'")
       b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" placeholder="width")
       b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" placeholder="height")
 
@@ -81,7 +81,7 @@
                       //- small.is_line_break_on {{e.message}}{{e.message}}{{e.message}}{{e.message}}
                       //- small {{e.message}}
 
-    b-field(label="" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_custom'")
+    b-field(label="" :type="{'is-danger': base.i_size_danger_p}" :message="[base.i_size_aspect_ratio_human]" v-if="base.rect_size_info.key === 'is_rect_size_custom'")
       b-input(required type="number" v-model.number="base.rect_width"  :min="0" :max="4096" :step="1" expanded placeholder="width" )
       b-input(required type="number" v-model.number="base.rect_height" :min="0" :max="4096" :step="1" expanded placeholder="height")
 

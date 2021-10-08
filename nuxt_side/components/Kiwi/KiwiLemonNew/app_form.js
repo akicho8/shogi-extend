@@ -158,7 +158,7 @@ export const app_form = {
 
     width_height_udpate() {
       console.log(this.rect_size_info)
-      if (this.rect_size_info.key === "is_custom") {
+      if (this.rect_size_info.key === "is_rect_size_custom") {
       } else {
         this.rect_width = this.rect_size_info.width
         this.rect_height = this.rect_size_info.height
@@ -385,7 +385,7 @@ export const app_form = {
     },
 
     u_audio_file_if_enabled() {
-      if (this.audio_theme_info.key === "audio_theme_custom") {
+      if (this.audio_theme_info.key === "is_audio_theme_custom") {
         return {
           u_audio_file_a: this.u_audio_file_a,
           u_audio_file_b: this.u_audio_file_b,

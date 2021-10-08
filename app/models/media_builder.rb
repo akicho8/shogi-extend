@@ -7,7 +7,7 @@ class MediaBuilder
     # base64で来ているデータを実際のファイルにしてパラメータを変更
     def params_rewrite!(params)
       logger.tagged(:params_rewrite!) do
-        if params[:audio_theme_key] == "audio_theme_custom"
+        if params[:audio_theme_key] == "is_audio_theme_custom"
           params[:audio_theme_key]     = nil
           params[:audio_part_a]        = nil
           params[:audio_part_a_volume] = 1.0

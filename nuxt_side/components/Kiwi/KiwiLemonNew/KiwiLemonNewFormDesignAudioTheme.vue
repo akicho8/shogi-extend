@@ -37,7 +37,7 @@
   KiwiLemonNewAudioUpload(:base="base" label="序盤" :file_info.sync="base.u_audio_file_a")
   KiwiLemonNewAudioUpload(:base="base" label="中盤" :file_info.sync="base.u_audio_file_b")
 
-  //- b-field(v-if="base.audio_theme_info.key === 'audio_theme_custom'")
+  //- b-field(v-if="base.audio_theme_info.key === 'is_audio_theme_custom'")
   //-   b-upload(v-model="base.xaudio_list_for_v_model" multiple drag-drop @input="base.xaudio_file_upload_handle" native accept="audio/*")
   //-     .is-flex.is-align-items-center.px-3.py-1
   //-       b-icon(icon="upload" size="is-small")
