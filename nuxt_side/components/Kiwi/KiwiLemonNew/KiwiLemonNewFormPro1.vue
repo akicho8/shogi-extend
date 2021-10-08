@@ -54,7 +54,7 @@
 
   SimpleRadioButtons.field_block(:base="base" :model="base.XboldInfo" var_name="xbold_key")
 
-  //- SimpleRadioButtons(:base="base" :model="base.AnimationSizeInfo" var_name="animation_size_key")
+  //- SimpleRadioButtons(:base="base" :model="base.RectSizeInfo" var_name="rect_size_key")
   // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
 
   //- b-collapse(:open="false" position="is-bottom")
@@ -94,7 +94,7 @@ export default {
       .media-left
         flex-basis: 20%
 
-  .animation_size_field
+  .rect_size_field
     .dropdown-item
       +desktop
         min-width: 24rem

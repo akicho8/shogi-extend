@@ -4,7 +4,7 @@ import { ViewpointInfo     } from "../models/viewpoint_info.js"
 import { ColorThemeInfo    } from "../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
 import { FactoryMethodInfo  } from "../models/factory_method_info.js"
-import { AnimationSizeInfo } from "../models/animation_size_info.js"
+import { RectSizeInfo } from "../models/rect_size_info.js"
 import { ParamInfo         } from "../models/param_info.js"
 import { RecipeInfo        } from "../models/recipe_info.js"
 
@@ -19,7 +19,7 @@ export const app_form = {
       body: "",                 // 棋譜
       loop_key:           null, // ループの有無(GIFの場合)
       xbold_key:          null, // 駒を太字にする条件
-      animation_size_key: null, // 画像サイズ
+      rect_size_key: null, // 画像サイズ
       img_width:          null, // w
       img_height:         null, // h
       viewpoint_key:      null, // 視点
@@ -62,8 +62,8 @@ export const app_form = {
 
   // created() {
   //   // this.data_set_by_query_or_default()
-  //   // this.img_width  = this.img_width ?? this.animation_size_info.width
-  //   // this.img_height = this.img_height ?? this.animation_size_info.height
+  //   // this.img_width  = this.img_width ?? this.rect_size_info.width
+  //   // this.img_height = this.img_height ?? this.rect_size_info.height
   // },
 
   watch: {
@@ -78,8 +78,8 @@ export const app_form = {
   },
   methods: {
     form_setup() {
-      this.img_width  = this.img_width ?? this.animation_size_info.width
-      this.img_height = this.img_height ?? this.animation_size_info.height
+      this.img_width  = this.img_width ?? this.rect_size_info.width
+      this.img_height = this.img_height ?? this.rect_size_info.height
     },
     body_focus() {
       // // 開発時のホットリロードでは null.$refs になる
@@ -151,17 +151,17 @@ export const app_form = {
       this.bs_error_message_dialog(this)
     },
 
-    animation_size_key_input_handle(animation_size_key) {
+    rect_size_key_input_handle(rect_size_key) {
       this.sound_play("click")
       this.width_height_udpate()
     },
 
     width_height_udpate() {
-      console.log(this.animation_size_info)
-      if (this.animation_size_info.key === "is_custom") {
+      console.log(this.rect_size_info)
+      if (this.rect_size_info.key === "is_custom") {
       } else {
-        this.img_width = this.animation_size_info.width
-        this.img_height = this.animation_size_info.height
+        this.img_width = this.rect_size_info.width
+        this.img_height = this.rect_size_info.height
       }
     },
 
@@ -315,8 +315,8 @@ export const app_form = {
     loop_info()                { return LoopInfo.fetch(this.loop_key)                    },
     XboldInfo()                 { return XboldInfo                                         },
     xbold_info()                { return XboldInfo.fetch(this.xbold_key)                    },
-    AnimationSizeInfo()        { return AnimationSizeInfo                                },
-    animation_size_info()      { return AnimationSizeInfo.fetch(this.animation_size_key) },
+    RectSizeInfo()        { return RectSizeInfo                                },
+    rect_size_info()      { return RectSizeInfo.fetch(this.rect_size_key) },
     ParamInfo()                { return ParamInfo                                        },
     ViewpointInfo()            { return ViewpointInfo                                    },
     viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)          },
