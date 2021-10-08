@@ -29,8 +29,8 @@ module Kiwi
               :all_params => {
                 :media_builder_params => {
                   :recipe_key      => "is_recipe_mp4",
-                  :audio_theme_key => "audio_theme_is_dance_chain",
-                  :color_theme_key => "color_theme_is_real_wood1",
+                  :audio_theme_key => "is_audio_theme_dance_chain",
+                  :color_theme_key => "is_color_theme_real_wood1",
                   :cover_text => "(cover_text.title)\n(cover_text.description)",
                   # :width           => 2,
                   # :height          => 2,
@@ -75,8 +75,8 @@ module Kiwi
               :all_params => {
                 :media_builder_params => {
                   :recipe_key      => recipe_info.key,
-                  :audio_theme_key => "audio_theme_is_nc97718",
-                  :color_theme_key => "color_theme_is_real_wood1",
+                  :audio_theme_key => "is_audio_theme_nc97718",
+                  :color_theme_key => "is_color_theme_real_wood1",
                   :cover_text      => "(cover_text.title)\n(cover_text.description)",
                 },
               },

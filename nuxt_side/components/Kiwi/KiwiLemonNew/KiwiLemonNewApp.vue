@@ -32,8 +32,8 @@ client-only
 
           //- .column
           //-   .box
-          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source")
-          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('audio_theme_is_breakbeat_only').sample_source" size="is-small")
+          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('is_audio_theme_breakbeat_only').sample_source")
+          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('is_audio_theme_breakbeat_only').sample_source" size="is-small")
 
           KiwiLemonNewForm(:base="base" ref="KiwiLemonNewForm" v-if="form_show_p")
           KiwiLemonNewProgress(:base="base")

@@ -11,8 +11,8 @@ def create(recipe_key)
     :all_params => {
       :media_builder_params => {
         :recipe_key      => recipe_info.key,
-        :audio_theme_key => "audio_theme_is_none",
-        :color_theme_key => "color_theme_is_real_wood1",
+        :audio_theme_key => "is_audio_theme_none",
+        :color_theme_key => "is_color_theme_real_wood1",
         :cover_text      => "(cover_text.title)\n(cover_text.description)",
       },
     },
