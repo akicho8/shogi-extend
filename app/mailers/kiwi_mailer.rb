@@ -56,7 +56,7 @@ class KiwiMailer < ApplicationMailer
       out << UrlProxy.full_url_for("/video")
     end
 
-    body = out.join("\n")
+    body = out.join("\n") + "\n"
 
     mail(subject: subject, to: book_message.book.user.email, bcc: AppConfig[:admin_email], body: body)
   end
