@@ -10,7 +10,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "img_width",          type: "string",  name: "w",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "img_height",         type: "string",  name: "h",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "loop_key",           type: "string",  name: "ループ",              default: "is_loop_infinite",          permanent: true,  relation: null,                desc: "",           },
-      { key: "xfont_key",          type: "string",  name: "ループ",              default: "is_font_auto",              permanent: true,  relation: null,                desc: "",           },
+      { key: "xfont_key",          type: "string",  name: "駒を太字にする条件",  default: "is_font_bold",              permanent: true,  relation: null,                desc: "",           },
       { key: "viewpoint_key",      type: "string",  name: "視点",                default: "black",                     permanent: false, relation: "ViewpointInfo",     desc: "",           },
       { key: "color_theme_key",    type: "string",  name: "配色",                default: "color_theme_is_real_wood1", permanent: true,  relation: "ColorThemeInfo",    desc: "",           },
       { key: "audio_theme_key",    type: "string",  name: "BGM",                 default: "audio_theme_is_ds3479",     permanent: true,  relation: "AudioThemeInfo",    desc: "",           },
