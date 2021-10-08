@@ -1,7 +1,7 @@
 <template lang="pug">
 .KiwiBookShowMain.columns.is-multiline.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
   .column.is-12-tablet.is-10-desktop.is-8-widescreen
-    .block.CustomShogiPlayerGround(v-if="base.show_mode === 'is_board'")
+    .block.CustomShogiPlayerGround(v-show="base.show_mode === 'is_board'")
       .CustomShogiPlayerPosition
         CustomShogiPlayer.is_mobile_vertical_good_style(
           ref="main_sp"
