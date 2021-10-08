@@ -11,8 +11,8 @@ export class XboldInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "is_xbold_always", name: "常に太字",     type: "is-primary", message: null, to_params: { soldier_font_bold: true, stand_piece_font_bold: true, }, },
-      { key: "is_xbold_latest", name: "最後の指し手", type: "is-primary", message: null, to_params: {                                                       }, },
+      { key: "is_xbold_latest", name: "最後の指し手", type: "is-primary", message: "あっさり", to_params: {                                                       }, },
+      { key: "is_xbold_always", name: "常に太字",     type: "is-primary", message: "こってり", to_params: { soldier_font_bold: true, stand_piece_font_bold: true, }, },
     ]
   }
 }
