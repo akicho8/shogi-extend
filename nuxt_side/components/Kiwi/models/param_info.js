@@ -1,5 +1,4 @@
 import MemoryRecord from 'js-memory-record'
-import { Gs } from "@/components/models/gs.js"
 
 export class ParamInfo extends MemoryRecord {
   static get define() {
@@ -10,11 +9,11 @@ export class ParamInfo extends MemoryRecord {
       { key: "img_width",          type: "string",  name: "w",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "img_height",         type: "string",  name: "h",                   default: null,                        permanent: true,  relation: null,                desc: "",           },
       { key: "loop_key",           type: "string",  name: "ループ",              default: "is_loop_infinite",          permanent: true,  relation: null,                desc: "",           },
-      { key: "xbold_key",          type: "string",  name: "駒を太字にする条件",  default: "is_xbold_always",              permanent: true,  relation: null,                desc: "",           },
+      { key: "xbold_key",          type: "string",  name: "駒を太字にする条件",  default: "is_xbold_always",           permanent: true,  relation: null,                desc: "",           },
       { key: "viewpoint_key",      type: "string",  name: "視点",                default: "black",                     permanent: false, relation: "ViewpointInfo",     desc: "",           },
       { key: "color_theme_key",    type: "string",  name: "配色",                default: "is_color_theme_real_wood1", permanent: true,  relation: "ColorThemeInfo",    desc: "",           },
       { key: "audio_theme_key",    type: "string",  name: "BGM",                 default: "is_audio_theme_ds3479",     permanent: true,  relation: "AudioThemeInfo",    desc: "",           },
-      { key: "factory_method_key",  type: "string",  name: "生成ツール",          default: "ffmpeg",                    permanent: true,  relation: "FactoryMethodInfo",  desc: "",           },
+      { key: "factory_method_key", type: "string",  name: "生成ツール",          default: "is_factory_method_ffmpeg",  permanent: true,  relation: "FactoryMethodInfo",  desc: "",           },
       { key: "cover_text",         type: "string",  name: "表紙文言",            default: "",                          permanent: true,  relation: null,                desc: "",           },
       { key: "video_crf",          type: "integer", name: "映像品質レベル",      default: 23,                          permanent: true,  relation: null,                desc: "",           },
       { key: "audio_bit_rate",     type: "string",  name: "音声ビットレート",    default: "128k",                      permanent: true,  relation: null,                desc: "",           },
