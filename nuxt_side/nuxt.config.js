@@ -18,11 +18,11 @@ const SITE_DESC = [
 
 // https://github.com/nuxt-community/sitemap-module
 // http://localhost:4000/sitemap.xml
-const axios = require('axios')
+const axios = require("axios")
 const sitemap = {
   hostname: process.env.MY_NUXT_URL,
   gzip: true,
-  cacheTime: (process.env.NODE_ENV === 'development' ? 0 : 1000 * 60 * 60), // 1時間
+  cacheTime: (process.env.NODE_ENV === "development" ? 0 : 1000 * 60 * 60), // 1時間
   exclude: [
     "/experiment/**",
     "/settings/**",
@@ -70,8 +70,8 @@ const config = {
   //
   //   mode は DEPRECATED なので下に置き換え
   //
-  //   mode: 'spa'        → ssr: false
-  //   mode: 'universal'  → ssr: true
+  //   mode: "spa"        → ssr: false
+  //   mode: "universal"  → ssr: true
   //
   ssr: true,
 
@@ -79,13 +79,13 @@ const config = {
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'server', // なにこれ？
+  target: "server", // なにこれ？
 
   router: {
     // https://ja.nuxtjs.org/docs/2.x/configuration-glossary/configuration-router/#linkactiveclass
-    linkActiveClass: 'is-active',
+    linkActiveClass: "is-active",
 
-    // base: process.env.NODE_ENV === 'production' ? "/app/" : "/",
+    // base: process.env.NODE_ENV === "production" ? "/app/" : "/",
 
     // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
     // trailingSlash: false,
@@ -93,7 +93,7 @@ const config = {
 
   generate: {
     subFolders: false,  // false: xxx.html true: xxx/index.html
-    // dir: '../public', Railsの / を直接置き換える
+    // dir: "../public", Railsの / を直接置き換える
   },
 
   /*
@@ -108,15 +108,15 @@ const config = {
 
     htmlAttrs: {
       lang: "ja",
-      prefix: 'og: http://ogp.me/ns#',
+      prefix: "og: http://ogp.me/ns#",
       class: `NODE_ENV-${process.env.NODE_ENV} STAGE-${process.env.STAGE}`,
     },
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: SITE_DESC },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === 'development' ? process.env.MY_SITE_URL : "") + "/maincable" },
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: SITE_DESC },
+      { name: "action-cable-url", content: (process.env.NODE_ENV === "development" ? process.env.MY_SITE_URL : "") + "/maincable" },
 
       // 「ホーム画面に追加」したあとアプリのような画面にする設定
       //
@@ -131,8 +131,8 @@ const config = {
       //   https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
       //   https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb
       //
-      // { name: 'apple-mobile-web-app-capable',          content: 'yes'               },
-      // { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      // { name: "apple-mobile-web-app-capable",          content: "yes"               },
+      // { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
 
       ////////////////////////////////////////////////////////////////////////////////
       { hid: "og:site_name",   property: "og:site_name",   content: process.env.APP_NAME },
@@ -153,7 +153,7 @@ const config = {
     //   { src: "https://twemoji.maxcdn.com/v/latest/twemoji.min.js", crossorigin: "anonymous", },
     // ],
     link: [
-      { hid: "icon",             rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'          },
+      { hid: "icon",             rel: "icon", type: "image/x-icon", href: "/favicon.ico"          },
       { hid: "apple-touch-icon", rel: "apple-touch-icon",           href: "/apple-touch-icon.png" },
     ],
     // base: { href: process.env.MY_SITE_URL },
@@ -161,27 +161,31 @@ const config = {
   /*
   ** Customize the progress-bar color
   */
-  // loading: { color: 'hsl(348, 100%, 61%)' }, // bulma red color
-  // loading: { color: 'hsl(48,  100%, 67%)' }, // bulma yellow color
-  loading: { color: 'hsl(0, 0%, 21%)' }, // bulma grey-daker color
+  // loading: { color: "hsl(348, 100%, 61%)" }, // bulma red color
+  // loading: { color: "hsl(48,  100%, 67%)" }, // bulma yellow color
+  loading: { color: "hsl(0, 0%, 21%)" }, // bulma grey-daker color
   /*
   ** Global CSS
   */
   css: [
-    // 'application.sass'
-    // '~/assets/css/buefy.scss',
-    // '~/assets/sass/application.sass',
-    // '../app/javascript/stylesheets/application.sass',
-    './assets/sass/application.sass',
-    // '@/assets/custom-styles.scss'
+    // "application.sass"
+    // "~/assets/css/buefy.scss",
+    // "~/assets/sass/application.sass",
+    // "../app/javascript/stylesheets/application.sass",
+    "./assets/sass/application.sass",
+    // "@/assets/custom-styles.scss"
   ],
+
+  // これを有効する面倒な方法
+  // 1. yarn add --dev @nuxtjs/style-resources
+  // 2. modules に "@nuxtjs/style-resources" を追加
   styleResources: {
     sass: [
-      './assets/sass/styleResources.scss', // sass の項目に scss のファイルを与えないと読み込まれないのは謎
+      "./assets/sass/styleResources.scss", // sass の項目に scss のファイルを与えないと読み込まれない罠
     ],
     // scss: [
-    //   // '~assets/vars/*.scss',
-    //   // '~assets/abstracts/_mixins.scss'
+    //   // "~assets/vars/*.scss",
+    //   // "~assets/abstracts/_mixins.scss"
     // ]
   },
 
@@ -209,9 +213,9 @@ const config = {
   buildModules: [
     // https://github.com/nuxt-community/analytics-module
     [
-      '@nuxtjs/google-analytics',
+      "@nuxtjs/google-analytics",
       {
-        id: 'UA-109851345-1',
+        id: "UA-109851345-1",
         // // コメントアウトすると開発環境で確認できる
         // debug: {
         //   enabled: true,
@@ -227,10 +231,10 @@ const config = {
     // Doc: https://buefy.github.io/#/documentation
     // ~/src/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
     [
-      'nuxt-buefy',
+      "nuxt-buefy",
       {
         css: false,
-        // materialDesignIconsHRef: '//cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css',
+        // materialDesignIconsHRef: "//cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css",
         materialDesignIconsHRef: "https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css",
 
         // ~/src/shogi-extend/nuxt_side/node_modules/buefy/src/utils/config.js
@@ -239,15 +243,15 @@ const config = {
       }
     ],
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/proxy',
+    "@nuxtjs/axios",
+    "@nuxtjs/proxy",
 
     // https://pwa.nuxtjs.org/
-    // '@nuxtjs/onesignal',   // push通知
-    // '@nuxtjs/pwa',         // アプリ化
+    // "@nuxtjs/onesignal",   // push通知
+    // "@nuxtjs/pwa",         // アプリ化
 
-    '@nuxtjs/style-resources',
-    '@nuxtjs/sitemap',
+    "@nuxtjs/style-resources",  // これを書かないと styleResources が反応しない
+    "@nuxtjs/sitemap",
   ],
 
   sitemap,
@@ -257,8 +261,8 @@ const config = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    debug: process.env.NODE_ENV === 'development',
-    // proxy: process.env.NODE_ENV === 'development',
+    debug: process.env.NODE_ENV === "development",
+    // proxy: process.env.NODE_ENV === "development",
 
     // baseURL の設定があれば、何を実行しても 3000 の方に行くので /api は 3000 のような proxy を設定する必要はないっぽい
     // baseURL: process.env.MY_SITE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
@@ -286,14 +290,14 @@ const config = {
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: process.env.NODE_ENV === "production", // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
 
-    // TODO: 意味を調べる
+    // これは一体なんなんだ……？
     optimization: {
       splitChunks: {
         cacheGroups: {
           styles: {
-            name: 'styles',
+            name: "styles",
             test: /\.(scss|sass|css|vue)$/,
-            chunks: 'all',
+            chunks: "all",
             enforce: true,
           },
         },
@@ -302,35 +306,36 @@ const config = {
 
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: [
-      "shogi-player/components",
-    ], // 外側にあるファイルは import 文を require に変換しないと node でパースできない
+      "shogi-player", // これを入れないとクラス変数や "??" 構文が読み取れない
+    ], 
 
     // オーディオファイルをロードするように Webpack の設定を拡張するには？
     // https://ja.nuxtjs.org/faq/webpack-audio-files/
     //
-    //   <audio :src="require('@/assets/water.mp3')" controls></audio>
+    //   <audio :src="require("@/assets/water.mp3")" controls></audio>
     //   <audio src="@/assets/water.mp3" controls></audio>
     //
     loaders: {
       vue: {
         transformAssetUrls: {
-          audio: 'src'
+          audio: "src"
         }
       }
     },
 
+    // これを入れないと shogi-player で wav が読めない
     extend (config, ctx) {
       config.module.rules.push({
         test: /\.(ogg|mp3|mp4|m4a|wav|mpe?g)$/i,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          // name: '[path][name]-[contenthash].[ext]'
-          name: 'blob/[name]-[contenthash].[ext]',
+          // name: "[path][name]-[contenthash].[ext]"
+          name: "blob/[name]-[contenthash].[ext]",
         },
       })
       config.module.rules.push({
         test: /\.(txt|md|kif|ki2|csa|sfen)$/,
-        loader: 'raw-loader',
+        loader: "raw-loader",
         // exclude: /(node_modules)/,
       })
     },
@@ -370,7 +375,7 @@ const config = {
 }
 
 // :src="/rails/..." のときに 3000 に切り替えるための仕組みであって axios はなんも関係ない
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   // // これがないと CORS にひっかかる
   // // ↓これいらんはず
   // config.proxy["/api"]        = process.env.MY_SITE_URL
