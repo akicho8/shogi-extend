@@ -54,7 +54,7 @@
           .xxx_items
             .xxx_item(v-for="record in list")
               ExternalLink.is-block(beep :href="record.source_url") {{record.name}}
-              .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="sound_play('click')")
+              //- .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="sound_play('click')")
 
   .section_title PROGRAM
   ul
@@ -173,6 +173,9 @@ export default {
   .xxx_items
     .xxx_item
       margin-top: 1rem
+      a
+        font-size: $size-7
+        color: $grey-lighter
 
   .thanks
     li

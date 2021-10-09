@@ -23,6 +23,9 @@ export class AudioCreatorInfo extends MemoryRecord {
       { key: "天休ひさし",           home_site_url: "https://dova-s.jp/_contents/author/profile155.html",       },
       { key: "山口 壮",              home_site_url: "https://dova-s.jp/_contents/author/profile093.html",       },
       { key: "謝謝P/魔界Symphony",   home_site_url: "http://www.makai-symphony.com/",                           },
+      { key: "しゃろう",             home_site_url: "https://twitter.com/shlllllw",                             },
+      { key: "Keyta",                home_site_url: "https://dova-s.jp/_contents/author/profile181.html",       },
+      { key: "Regu",                 home_site_url: "https://dova-s.jp/_contents/author/profile076.html",       },
     ]
   }
 }
