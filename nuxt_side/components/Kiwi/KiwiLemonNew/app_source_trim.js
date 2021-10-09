@@ -34,7 +34,7 @@ export const app_source_trim = {
         props: props,
         component: SfenTrimModal,
         events: {
-          "update:submit": e => {
+          "update:apply": e => {
             this.viewpoint_key = e.viewpoint
             this.body_update_by(e.full_sfen)
             modal_instance.close()

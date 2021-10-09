@@ -53,7 +53,7 @@ export const app_placement = {
         component: SfenTrimModal,
         props: props,
         events: {
-          "update:submit": e => {
+          "update:apply": e => {
             // this.toast_ok("反映しました")
 
             this.base.article.viewpoint = e.viewpoint
