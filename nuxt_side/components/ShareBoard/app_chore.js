@@ -50,14 +50,25 @@ export const app_chore = {
       })
     },
 
+    // 動画生成
+    video_new_handle() {
+      this.exit_confirm_then(() => {
+        this.$router.push({name: "video-new", query: {body: this.current_sfen, viewpoint_key: this.sp_viewpoint}})
+      })
+    },
+
     // プロフィールアイコンを押して移動
     profile_click_handle(e) {
-      this.exit_confirm_then(() => this.$router.push({name: "users-id", params: {id: this.g_current_user.id}}))
+      this.exit_confirm_then(() => {
+        this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
+      })
     },
 
     // ホームアイコンを押して退出
     exit_handle() {
-      this.exit_confirm_then(() => this.$router.push({name: "index"}))
+      this.exit_confirm_then(() => {
+        this.$router.push({name: "index"})
+      })
     },
 
     // 退出するときはとりあえずこれをかます
