@@ -37,7 +37,6 @@ module Kiwi
           if book.user.email_valid?
             KiwiMailer.book_owner_message(self).deliver_later
           end
-          # book.user.notifications.create!(book_message: self)
         end
       end
 
@@ -47,7 +46,6 @@ module Kiwi
           if user.email_valid?
             KiwiMailer.book_other_message(user, self).deliver_later
           end
-          # user.notifications.create!(book_message: self)
         end
       end
 
@@ -56,10 +54,10 @@ module Kiwi
 
     # 関係者
     def member_users
-      users = book.book_message_users         # コメントした人たち
-      users = users - [user]                 # コメントした本人はコメント内容を知っているので送信しない
-      users = users - [book.user]        # 作者にはすでに送っているので送信しない
-      users = users.uniq                     # 複数通知しないように
+      users = book.book_message_users # コメントした人たち
+      users = users - [user]          # コメントした本人はコメント内容を知っているので送信しない
+      users = users - [book.user]     # 作者にはすでに book_owner_message で通知しているので(もし居ても)送信しない
+      users = users.uniq              # 複数通知しないようにするため
     end
   end
 end

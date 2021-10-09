@@ -3,7 +3,7 @@ module Kiwi
     included do
       cattr_accessor(:body_max_length) { 512 }
 
-      cattr_accessor(:json_struct_type8) do
+      cattr_accessor(:json_struct_for_show) do
         {
           only: [
             :id,
@@ -54,10 +54,6 @@ module Kiwi
       with_options allow_blank: true do |o| # body_max_length を参照するためには o がいる
         o.validates :body, length: { maximum: body_max_length }
       end
-    end
-
-    def as_json_type8
-      as_json(json_struct_type8)
     end
 
     def unescaped_body

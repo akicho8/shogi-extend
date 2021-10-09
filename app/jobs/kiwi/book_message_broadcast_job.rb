@@ -9,8 +9,7 @@ module Kiwi
     private
 
     def render_message(book_message)
-      # ApplicationController.renderer.render(partial: 'kiwi/messages/book_message', locals: { book_message: book_message })
-      book_message.as_json_type8
+      book_message.as_json(BookMessage.json_struct_for_show)
     end
   end
 end

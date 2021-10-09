@@ -143,7 +143,7 @@ module Kiwi
         def book_messages_struct
           {
             book_messages: {
-              **BookMessage.json_struct_type8,
+              **BookMessage.json_struct_for_show,
             },
           }
         end

@@ -36,7 +36,7 @@
           a.level-item
             span.icon.is-small
               i.fas.fa-heart
-  .media(v-if="base.g_current_user")
+  .media.MessageInput(v-if="base.g_current_user")
     KiwiBookShowAvatarLinkTo(:base="base" :user="base.g_current_user")
     .media-content
       .field
@@ -44,7 +44,7 @@
           textarea.textarea(v-model.trim="base.message_body")
       .field
         .control
-          b-button(@click="base.speak_handle" :class="{'is-primary': present_p(base.message_body)}") 送信
+          b-button.speak_handle(@click="base.speak_handle" :class="{'is-primary': present_p(base.message_body)}") 送信
 </template>
 
 <script>

@@ -49,7 +49,7 @@
 
             b-icon.ml-3(:icon="base.book.folder_info.icon" size="is-small" v-if="base.book.folder_info.key != 'public'")
           .nav_line_right
-            b-button(icon-left="hand-pointing-up" @click="base.switch_handle")
+            b-button.switch_handle(icon-left="hand-pointing-up" @click="base.switch_handle")
 
         KiwiTagList.mt-2(:tag_list="base.book.tag_list" :tag_click_handle="base.tag_click_handle")
         .content.mt-1(v-if="base.book.description")

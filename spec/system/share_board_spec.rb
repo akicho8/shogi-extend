@@ -1,40 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
+  include AliceBobCarol
+
   before do
-    @alice_window = Capybara.open_new_window
-    @bob_window = Capybara.open_new_window
-    @carol_window = Capybara.open_new_window
-
     XmatchRuleInfo.clear_all    # 重要
-  end
-
-  after do
-    [@alice_window, @bob_window, @carol_window].each(&:close)
-  end
-
-  def a_block(&block)
-    if block
-      Capybara.within_window(@alice_window, &block)
-    else
-      Capybara.switch_to_window(@alice_window)
-    end
-  end
-
-  def b_block(&block)
-    if block
-      Capybara.within_window(@bob_window, &block)
-    else
-      Capybara.switch_to_window(@bob_window)
-    end
-  end
-
-  def c_block(&block)
-    if block
-      Capybara.within_window(@carol_window, &block)
-    else
-      Capybara.switch_to_window(@carol_window)
-    end
   end
 
   it "最初に来たときのタイトルが正しい" do

@@ -60,11 +60,9 @@ RSpec.describe "動画作成", type: :system do
     find(".modal .submit_handle").click
   end
 
-  def visit_app(args = {})
-    args = args.merge({
-        :__debug_box_skip__                => "true",
-        :__color_theme_key_dropdown_skip__ => "true", # 色テーマ画像を作り直してしまうためスキップする
-      })
-    visit "/video/new?#{args.to_query}"
+  def visit_app(params = {})
+    visit2("/video/new", params.merge({
+          :__color_theme_key_dropdown_skip__ => "true", # 色テーマ画像を作り直してしまうためスキップする
+        })
   end
 end
