@@ -4,6 +4,7 @@ module Kiwi
       class_methods do
         # rails r 'Kiwi::Banana.alpha_zero_vs_elmo_build'
         # cap production rails:runner CODE='Kiwi::Banana.alpha_zero_vs_elmo_build'
+        # cap production rails:runner CODE='p User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")'
         def alpha_zero_vs_elmo_build(options = {})
           options = {
             # create_only: false,
@@ -21,12 +22,12 @@ module Kiwi
             { key: "TAs1CTDPsvd", number: 17, color_theme_key: :is_color_theme_radial_gradiention2 },
             { key: "wIW3tnZMnUD", number: 18, color_theme_key: :is_color_theme_radial_gradiention3 },
             { key: "nVxSJI7tlap", number: 23, color_theme_key: :is_color_theme_radial_gradiention4 },
-            { key: "qgeYRTJJ6tc", number: 32, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "TW5vDpMXgXW", number: 35, color_theme_key: :is_color_theme_radial_gradiention2 },
-            { key: "GDARn1MSPsu", number: 52, color_theme_key: :is_color_theme_radial_gradiention3 },
-            { key: "TISYdaPlwhQ", number: 76, color_theme_key: :is_color_theme_radial_gradiention4 },
-            { key: "q8Fsa72oSOs", number: 78, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "Fyq37jDjjxV", number: 81, color_theme_key: :is_color_theme_radial_gradiention2 },
+            { key: "qgeYRTJJ6tc", number: 32, color_theme_key: :is_color_theme_gradiention1 },
+            { key: "TW5vDpMXgXW", number: 35, color_theme_key: :is_color_theme_gradiention2 },
+            { key: "GDARn1MSPsu", number: 52, color_theme_key: :is_color_theme_gradiention3 },
+            { key: "TISYdaPlwhQ", number: 76, color_theme_key: :is_color_theme_gradiention4 },
+            { key: "q8Fsa72oSOs", number: 78, color_theme_key: :is_color_theme_plasma_blur1 },
+            { key: "Fyq37jDjjxV", number: 81, color_theme_key: :is_color_theme_plasma_blur2 },
           ].each.with_index do |params, i|
             tp params
 
@@ -51,6 +52,7 @@ module Kiwi
                 :end_duration    => 7,
                 :width           => 1920,
                 :height          => 1080,
+                :main_volume     => 0.3,
               },
             }
 
