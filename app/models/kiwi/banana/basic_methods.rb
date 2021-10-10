@@ -176,9 +176,7 @@ module Kiwi
 
         # 元動画の情報から拾えるものは拾って埋める
         if lemon
-          self.tag_list = tag_list.presence || [:defense, :attack, :technique, :note].flat_map do |e|
-            lemon.recordable.public_send("#{e}_tag_list")
-          end
+          self.tag_list = tag_list.presence || lemon.recordable.all_tag_names
 
           if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
             a = s.lines
