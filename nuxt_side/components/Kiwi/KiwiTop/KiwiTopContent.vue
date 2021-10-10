@@ -14,12 +14,13 @@
         template(v-if="e.lemon.thumbnail_browser_path")
           .image.is-16by9
             img(:src="e.lemon.thumbnail_browser_path")
-        template(v-else-if="e.lemon.content_type.startsWith('image')")
+        template(v-else-if="e.lemon.content_type && e.lemon.content_type.startsWith('image')")
           .image.is-16by9
             img(:src="e.lemon.browser_path")
         template(v-else-if="e.lemon.content_type === 'application/zip'")
           b-icon(icon="zip-box-outline" size="is-large")
         template(v-else)
+          p コンテンツ不明
           p e.lemon.content_type: {{e.lemon.content_type}}
           p browser_path: {{e.lemon.browser_path}}
       .card-content

@@ -14,17 +14,16 @@
           sp_slider="is_slider_on"
         )
     .block(v-show="base.show_mode === 'is_video'")
-      template(v-if="content_type.startsWith('video')")
-        .image
-          video.is-block(:src="base.banana.lemon.browser_path" :poster="base.banana.lemon.thumbnail_browser_path" controls :autoplay="true" :loop="false" ref="main_video")
-      template(v-else-if="content_type.startsWith('image')")
-        .image
-          img(:src="base.banana.lemon.browser_path")
-      template(v-else-if="content_type === 'application/zip'")
-        b-icon(icon="zip-box-outline" size="is-large")
-      template(v-else)
-        p content_type: {{content_type}}
-        p browser_path: {{base.banana.lemon.browser_path}}
+      template(v-if="content_type")
+        template(v-if="content_type.startsWith('video')")
+          .image
+            video.is-block(:src="base.banana.lemon.browser_path" controls :autoplay="true" :loop="false" ref="main_video")
+            //- video.is-block(:src="base.banana.lemon.browser_path" :poster="base.banana.lemon.thumbnail_browser_path" controls :autoplay="true" :loop="false" ref="main_video")
+        template(v-else-if="content_type.startsWith('image')")
+          .image
+            img(:src="base.banana.lemon.browser_path")
+        template(v-else-if="content_type === 'application/zip'")
+          b-icon(icon="zip-box-outline" size="is-large")
 
     .media
       .media-left
