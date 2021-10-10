@@ -26,6 +26,8 @@ export class AudioCreatorInfo extends MemoryRecord {
       { key: "しゃろう",             home_site_url: "https://twitter.com/shlllllw",                             },
       { key: "Keyta",                home_site_url: "https://dova-s.jp/_contents/author/profile181.html",       },
       { key: "Regu",                 home_site_url: "https://dova-s.jp/_contents/author/profile076.html",       },
+      { key: "龍崎一",               home_site_url: "https://www.losstime-life.com/",                           },
+      { key: "もっぴーさうんど",     home_site_url: "https://www.moppysound.com/",                              },
     ]
   }
 }
