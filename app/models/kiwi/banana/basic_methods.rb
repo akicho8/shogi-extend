@@ -67,19 +67,13 @@ module Kiwi
         }
 
         before_validation do
-          self.folder_key ||= :private
-          # self.sequence_key ||= :bananaship_shuffle
+          self.folder_key ||= :public
           self.key ||= secure_random_urlsafe_base64_token
           self.thumbnail_pos ||= 0
 
           if user
             self.title = title.presence || "#{user.name}の動画(#{user.kiwi_bananas.count.next})"
           end
-
-          # if Rails.env.test? || Rails.env.development?
-          #   self.title       ||= key
-          #   self.description ||= "(description)"
-          # end
 
           normalize_zenkaku_to_hankaku(:title, :description)
           normalize_blank_to_empty_string(:title, :description)
