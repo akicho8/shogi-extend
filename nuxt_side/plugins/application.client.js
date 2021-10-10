@@ -223,7 +223,6 @@ export default {
       return this.$buefy.dialog.alert({
         animation: "",
         confirmText: "OK",
-        animation: "",
         onConfirm: () => this.sound_play("click"),
         ...params,
       })
