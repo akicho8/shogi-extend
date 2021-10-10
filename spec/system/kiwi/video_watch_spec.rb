@@ -12,7 +12,6 @@ RSpec.describe "動画詳細", type: :system do
     login
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/kiwi/video_watch_spec.rb -e 'コメント送受信'
   it "コメント送受信" do
     a_block do
       visit2("/video/watch/1")                            # 動画詳細へ
@@ -30,7 +29,6 @@ RSpec.describe "動画詳細", type: :system do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/kiwi/video_watch_spec.rb -e '将棋盤に切り替え'
   it "将棋盤に切り替え" do
     visit2("/video/watch/1")                            # 動画詳細へ
 

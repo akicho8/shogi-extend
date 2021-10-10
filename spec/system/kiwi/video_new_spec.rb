@@ -23,9 +23,7 @@ RSpec.describe "動画作成", type: :system do
     doc_image
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/kiwi_spec.rb -e 'トリム'
   describe "トリム" do
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/kiwi_spec.rb -e '空の場合'
     it "空の場合" do
       find(".any_source_trim_handle").click      # 「トリム」ボタンを押す
       assert_text("0手目から")
@@ -36,7 +34,6 @@ RSpec.describe "動画作成", type: :system do
       value = find(".body_field textarea").value # フォームに平手の SFEN が入っている
       assert { value == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
     end
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/kiwi_spec.rb -e '入力済みの場合'
     it "入力済みの場合" do
       find(".body_field textarea").set("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
       find(".any_source_trim_handle").click      # 「トリム」ボタンを押す

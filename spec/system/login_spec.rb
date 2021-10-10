@@ -9,7 +9,6 @@ RSpec.describe "認証", type: :system, login_spec: true do
     target_user_destroy
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/login_spec.rb -e 'SNS経由で新規登録しながらログイン'
   describe "SNS経由で新規登録しながらログイン" do
     it "works" do
       twitter_login
@@ -17,7 +16,6 @@ RSpec.describe "認証", type: :system, login_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/login_spec.rb -e 'メールアドレス重複'
   describe "メールアドレス重複" do
     it "works" do
       eval_code(%(User.create!(name: "alice", email: "#{system_test_twitter_account[:email]}", confirmed_at: Time.current)))
