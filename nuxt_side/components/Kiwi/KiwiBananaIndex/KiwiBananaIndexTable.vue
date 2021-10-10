@@ -23,12 +23,14 @@
     //- b-table-column(v-slot="{row}" custom-key="key" field="key" :label="base.BananaIndexColumnInfo.fetch('key').name" sortable :width="1")
     //-   | {{row.key}}
 
-    b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BananaIndexColumnInfo.fetch('title').name" sortable)
-      nuxt-link(:to="{name: 'video-watch-banana_key', params: {banana_key: row.key}}" @click.native="sound_play('click')")
+    b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BananaIndexColumnInfo.fetch('title').name" sortable width="" cell-class="title_column")
+      nuxt-link.is_line_break_on(:to="{name: 'video-watch-banana_key', params: {banana_key: row.key}}" @click.native="sound_play('click')")
+        | {{row.title}}
         //- .image.avatar_image.is-inline-block
         //-   img(:src="row.avatar_path" :alt="row.title")
-        span.row_title
-          | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+        //- span.row_title
+        //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
+        //- | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BananaIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play('click')")
@@ -102,22 +104,22 @@ export default {
   th
     font-size: $size-7
 
-  td
-    // details アイコンが大きすぎる対策
-    &.chevron-cell
-      width: 0
-      padding-left: 0
-      padding-right: 0
-      .icon
-        height: auto
-        .mdi:before
-          font-size: 12px ! important
+  // td
+  //   // details アイコンが大きすぎる対策
+  //   &.chevron-cell
+  //     width: 0
+  //     padding-left: 0
+  //     padding-right: 0
+  //     .icon
+  //       height: auto
+  //       .mdi:before
+  //         font-size: 12px ! important
 
-    .tags
-      flex-wrap: nowrap
-      .tag
-        // 行が上下が広がってしまうのを防ぐ
-        height: auto
+    // .tags
+    //   flex-wrap: nowrap
+    //   .tag
+    //     // 行が上下が広がってしまうのを防ぐ
+    //     height: auto
 
   // モバイルでは CustomShogiPlayer を横幅最大にしたいので横のパディングを取る
   +mobile
@@ -125,14 +127,20 @@ export default {
       td, .detail-container
         padding: 0
 
-  .avatar_image
-    img
-      max-height: none
-      width:  calc(1200px * 0.15)
-      height: calc( 630px * 0.15)
-      border-radius: 6px
+  // .avatar_image
+  //   img
+  //     max-height: none
+  //     width:  calc(1200px * 0.15)
+  //     height: calc( 630px * 0.15)
+  //     border-radius: 6px
 
-  .row_title
-    margin-left: 0.5rem
-    vertical-align: top
+  // .row_title
+  //   margin-left: 0.5rem
+  //   vertical-align: top
+
+  // .row_title
+  //   max-width: 10rem
+  .title_column
+    +tablet
+      max-width: 50%
 </style>
