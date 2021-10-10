@@ -12,8 +12,8 @@
     },
     activerecord: {
       models: {
-        "kiwi/lemon" => "動画",
-        "kiwi/banana"  => "アーカイブ",
+        "kiwi/lemon"  => "動画",
+        "kiwi/banana" => "ライブラリ",
       },
       attributes: {
         "kiwi/banana" => {
