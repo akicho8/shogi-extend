@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# アーカイブ (kiwi_bananas as Kiwi::Banana)
+# ライブラリ (kiwi_bananas as Kiwi::Banana)
 #
 # |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
 # | name                  | desc                  | type        | opts                | refs         | index |
