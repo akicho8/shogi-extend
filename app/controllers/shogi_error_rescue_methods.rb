@@ -52,9 +52,9 @@ module ShogiErrorRescueMethods
   def as_bs_error(error)
     {
       bs_error: {
-        message_prefix: message_prefix_build(error),
-        message: error.message.lines.first.strip,
-        board: error.message.lines.drop(1).join,
+        :message_prefix => message_prefix_build(error),
+        :message        => error.message.lines.first.strip,
+        :board          => error.message.lines.drop(1).join,
       },
     }
   end
