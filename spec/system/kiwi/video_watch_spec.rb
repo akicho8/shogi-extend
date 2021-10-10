@@ -32,11 +32,11 @@ RSpec.describe "動画詳細", type: :system do
   it "将棋盤に切り替え" do
     visit2("/video/watch/1")                            # 動画詳細へ
 
-    find(".KiwiBookShowMain .switch_handle").click      # 切り替え
+    find(".KiwiBananaShowMain .switch_handle").click      # 切り替え
     assert_selector ".CustomShogiPlayer"                # 将棋盤 ON
     assert_no_selector "video"                          # 動画   OFF
 
-    find(".KiwiBookShowMain .switch_handle").click      # 切り替え
+    find(".KiwiBananaShowMain .switch_handle").click      # 切り替え
     assert_no_selector ".CustomShogiPlayer"             # 将棋盤 ON
     assert_selector "video"                             # 動画   OFF
   end
