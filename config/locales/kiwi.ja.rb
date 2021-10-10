@@ -13,10 +13,10 @@
     activerecord: {
       models: {
         "kiwi/lemon" => "動画",
-        "kiwi/book"  => "アーカイブ",
+        "kiwi/banana"  => "アーカイブ",
       },
       attributes: {
-        "kiwi/book" => {
+        "kiwi/banana" => {
           :lemon_id => "動画ファイル",
         },
       },

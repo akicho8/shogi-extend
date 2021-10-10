@@ -19,17 +19,17 @@ export const app_review = {
       // this.lemon   = null
     },
 
-    book_new_handle(record) {
+    banana_new_handle(record) {
       this.sound_play("click")
 
-      if (this.present_p(record.book)) {
+      if (this.present_p(record.banana)) {
         this.toast_warn("すでに登録しています")
         this.dialog_confirm({
           message: "編集ページに移動しますか？",
           confirmText: "移動する",
           onConfirm: () => {
             this.sound_play("click")
-            this.$router.push({name: 'video-studio-book_key-edit', params: {book_key: record.book.key}})
+            this.$router.push({name: 'video-studio-banana_key-edit', params: {banana_key: record.banana.key}})
           },
         })
       } else {

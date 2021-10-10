@@ -13,8 +13,8 @@ module Kiwi
         # Static
         Folder,
         # ActiveRecord
-        BookMessage,
-        Book,
+        BananaMessage,
+        Banana,
         Lemon,
       ].each do |e|
         e.setup(options)
@@ -29,8 +29,8 @@ module Kiwi
 
     def models
       [
-        BookMessage,
-        Book,
+        BananaMessage,
+        Banana,
         Lemon,
         Folder,
       ]

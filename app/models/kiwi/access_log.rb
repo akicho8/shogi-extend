@@ -8,7 +8,7 @@
 # |------------+----------+------------+-------------+--------------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8) |             | => ::User#id | A     |
-# | book_id    | Book     | integer(8) | NOT NULL    |              | B     |
+# | banana_id  | Banana   | integer(8) | NOT NULL    |              | B     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
@@ -19,6 +19,6 @@
 module Kiwi
   class AccessLog < ApplicationRecord
     belongs_to :user, class_name: "::User", optional: true
-    belongs_to :book, counter_cache: true
+    belongs_to :banana, counter_cache: true
   end
 end

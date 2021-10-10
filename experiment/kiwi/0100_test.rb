@@ -2,7 +2,7 @@ require "./setup"
 
 Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-Kiwi::Book.destroy_all
+Kiwi::Banana.destroy_all
 Kiwi::Lemon.destroy_all
 Kiwi::Folder.setup
 
@@ -34,30 +34,30 @@ lemon1.thumbnail_real_path.to_s    # => ""
 tp lemon1
 
 # フォーム初期値
-book1 = user1.kiwi_books.build(lemon: lemon1) # => #<Kiwi::Book id: nil, key: nil, user_id: 1, folder_id: nil, lemon_id: 32, title: nil, description: nil, thumbnail_pos: nil, book_messages_count: 0, access_logs_count: 0, created_at: nil, updated_at: nil, tag_list: nil>
-book1.form_values_default_assign
-tp book1.attributes             # => {"id"=>nil, "key"=>nil, "user_id"=>1, "folder_id"=>nil, "lemon_id"=>32, "title"=>"(cover_text.title)", "description"=>"(cover_text.description)", "thumbnail_pos"=>0.0, "book_messages_count"=>0, "access_logs_count"=>0, "created_at"=>nil, "updated_at"=>nil, "tag_list"=>["居飛車", "相居飛車"]}
-book1.lemon                     # => #<Kiwi::Lemon id: 32, user_id: 1, recordable_type: "FreeBattle", recordable_id: 54, all_params: {:media_builder_params=>{:tmpdir_remove=>false, :recipe_key=>"is_recipe_gif", :audio_theme_key=>"is_audio_theme_none", :color_theme_key=>"is_color_theme_real_wood1", :cover_text=>"(cover_text.title)\n(cover_text.description)", :renderer_override_params=>{}}}, process_begin_at: "2021-10-03 15:42:47.000000000 +0900", process_end_at: "2021-10-03 15:42:53.000000000 +0900", successed_at: "2021-10-03 15:42:53.000000000 +0900", errored_at: nil, error_message: nil, content_type: "image/gif", file_size: 331740, ffprobe_info: {:pretty_format=>{"streams"=>[{"index"=>0, "codec_name"=>"gif", "codec_long_name"=>"CompuServe GIF (Graphics Interchange Format)", "codec_type"=>"video", "codec_tag_string"=>"[0][0][0][0]", "codec_tag"=>"0x0000", "width"=>1200, "height"=>630, "coded_width"=>1200, "coded_height"=>630, "closed_captions"=>0, "has_b_frames"=>0, "pix_fmt"=>"bgra", "level"=>-99, "refs"=>1, "r_frame_rate"=>"1/1", "avg_frame_rate"=>"1/1", "time_base"=>"1/100", "start_pts"=>0, "start_time"=>"0:00:00.000000", "duration_ts"=>400, "duration"=>"0:00:04.000000", "nb_frames"=>"4", "disposition"=>{"default"=>0, "dub"=>0, "original"=>0, "comment"=>0, "lyrics"=>0, "karaoke"=>0, "forced"=>0, "hearing_impaired"=>0, "visual_impaired"=>0, "clean_effects"=>0, "attached_pic"=>0, "timed_thumbnails"=>0}}]}, :direct_format=>{"streams"=>[{"index"=>0, "codec_name"=>"gif", "codec_long_name"=>"CompuServe GIF (Graphics Interchange Format)", "codec_type"=>"video", "codec_tag_string"=>"[0][0][0][0]", "codec_tag"=>"0x0000", "width"=>1200, "height"=>630, "coded_width"=>1200, "coded_height"=>630, "closed_captions"=>0, "has_b_frames"=>0, "pix_fmt"=>"bgra", "level"=>-99, "refs"=>1, "r_frame_rate"=>"1/1", "avg_frame_rate"=>"1/1", "time_base"=>"1/100", "start_pts"=>0, "start_time"=>"0.000000", "duration_ts"=>400, "duration"=>"4.000000", "nb_frames"=>"4", "disposition"=>{"default"=>0, "dub"=>0, "original"=>0, "comment"=>0, "lyrics"=>0, "karaoke"=>0, "forced"=>0, "hearing_impaired"=>0, "visual_impaired"=>0, "clean_effects"=>0, "attached_pic"=>0, "timed_thumbnails"=>0}}]}}, browser_path: "/system/x-files/04/2a/32_20211003154247_1200x630_4...", filename_human: "32_20211003154247_1200x630_4s.gif", created_at: "2021-10-03 15:42:47.143975000 +0900", updated_at: "2021-10-03 15:42:53.194957000 +0900">
+banana1 = user1.kiwi_bananas.build(lemon: lemon1) # => #<Kiwi::Banana id: nil, key: nil, user_id: 1, folder_id: nil, lemon_id: 32, title: nil, description: nil, thumbnail_pos: nil, banana_messages_count: 0, access_logs_count: 0, created_at: nil, updated_at: nil, tag_list: nil>
+banana1.form_values_default_assign
+tp banana1.attributes             # => {"id"=>nil, "key"=>nil, "user_id"=>1, "folder_id"=>nil, "lemon_id"=>32, "title"=>"(cover_text.title)", "description"=>"(cover_text.description)", "thumbnail_pos"=>0.0, "banana_messages_count"=>0, "access_logs_count"=>0, "created_at"=>nil, "updated_at"=>nil, "tag_list"=>["居飛車", "相居飛車"]}
+banana1.lemon                     # => #<Kiwi::Lemon id: 32, user_id: 1, recordable_type: "FreeBattle", recordable_id: 54, all_params: {:media_builder_params=>{:tmpdir_remove=>false, :recipe_key=>"is_recipe_gif", :audio_theme_key=>"is_audio_theme_none", :color_theme_key=>"is_color_theme_real_wood1", :cover_text=>"(cover_text.title)\n(cover_text.description)", :renderer_override_params=>{}}}, process_begin_at: "2021-10-03 15:42:47.000000000 +0900", process_end_at: "2021-10-03 15:42:53.000000000 +0900", successed_at: "2021-10-03 15:42:53.000000000 +0900", errored_at: nil, error_message: nil, content_type: "image/gif", file_size: 331740, ffprobe_info: {:pretty_format=>{"streams"=>[{"index"=>0, "codec_name"=>"gif", "codec_long_name"=>"CompuServe GIF (Graphics Interchange Format)", "codec_type"=>"video", "codec_tag_string"=>"[0][0][0][0]", "codec_tag"=>"0x0000", "width"=>1200, "height"=>630, "coded_width"=>1200, "coded_height"=>630, "closed_captions"=>0, "has_b_frames"=>0, "pix_fmt"=>"bgra", "level"=>-99, "refs"=>1, "r_frame_rate"=>"1/1", "avg_frame_rate"=>"1/1", "time_base"=>"1/100", "start_pts"=>0, "start_time"=>"0:00:00.000000", "duration_ts"=>400, "duration"=>"0:00:04.000000", "nb_frames"=>"4", "disposition"=>{"default"=>0, "dub"=>0, "original"=>0, "comment"=>0, "lyrics"=>0, "karaoke"=>0, "forced"=>0, "hearing_impaired"=>0, "visual_impaired"=>0, "clean_effects"=>0, "attached_pic"=>0, "timed_thumbnails"=>0}}]}, :direct_format=>{"streams"=>[{"index"=>0, "codec_name"=>"gif", "codec_long_name"=>"CompuServe GIF (Graphics Interchange Format)", "codec_type"=>"video", "codec_tag_string"=>"[0][0][0][0]", "codec_tag"=>"0x0000", "width"=>1200, "height"=>630, "coded_width"=>1200, "coded_height"=>630, "closed_captions"=>0, "has_b_frames"=>0, "pix_fmt"=>"bgra", "level"=>-99, "refs"=>1, "r_frame_rate"=>"1/1", "avg_frame_rate"=>"1/1", "time_base"=>"1/100", "start_pts"=>0, "start_time"=>"0.000000", "duration_ts"=>400, "duration"=>"4.000000", "nb_frames"=>"4", "disposition"=>{"default"=>0, "dub"=>0, "original"=>0, "comment"=>0, "lyrics"=>0, "karaoke"=>0, "forced"=>0, "hearing_impaired"=>0, "visual_impaired"=>0, "clean_effects"=>0, "attached_pic"=>0, "timed_thumbnails"=>0}}]}}, browser_path: "/system/x-files/04/2a/32_20211003154247_1200x630_4...", filename_human: "32_20211003154247_1200x630_4s.gif", created_at: "2021-10-03 15:42:47.143975000 +0900", updated_at: "2021-10-03 15:42:53.194957000 +0900">
 
-book1 = user1.kiwi_books.create!(lemon: lemon1, folder_key: "public", title: "タイトル#{user1.kiwi_books.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉))
-book1.thumbnail_pos                 # => 0.0
+banana1 = user1.kiwi_bananas.create!(lemon: lemon1, folder_key: "public", title: "タイトル#{user1.kiwi_bananas.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉))
+banana1.thumbnail_pos                 # => 0.0
 lemon1.thumbnail_real_path      # => nil
 lemon1.thumbnail_browser_path   # => nil
-tp book1 # => #<Kiwi::Book id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, book_messages_count: 0, access_logs_count: 0, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
-lemon1.book # => #<Kiwi::Book id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, book_messages_count: 0, access_logs_count: 0, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
+tp banana1 # => #<Kiwi::Banana id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, banana_messages_count: 0, access_logs_count: 0, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
+lemon1.banana # => #<Kiwi::Banana id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, banana_messages_count: 0, access_logs_count: 0, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
 
 # アクセスログ
-book1.access_logs.create!(user: user1) # => #<Kiwi::AccessLog id: 44, user_id: 1, book_id: 32, created_at: "2021-10-03 15:42:53.000000000 +0900">
-tp user1.kiwi_access_logs                 # => #<ActiveRecord::Associations::CollectionProxy [#<Kiwi::AccessLog id: 44, user_id: 1, book_id: 32, created_at: "2021-10-03 15:42:53.000000000 +0900">]>
-tp user1.kiwi_access_logs.first.book      # => #<Kiwi::Book id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, book_messages_count: 0, access_logs_count: 1, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: nil>
-tp user1.kiwi_access_books                 # => #<ActiveRecord::Associations::CollectionProxy [#<Kiwi::Book id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, book_messages_count: 0, access_logs_count: 1, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: nil>]>
+banana1.access_logs.create!(user: user1) # => #<Kiwi::AccessLog id: 44, user_id: 1, banana_id: 32, created_at: "2021-10-03 15:42:53.000000000 +0900">
+tp user1.kiwi_access_logs                 # => #<ActiveRecord::Associations::CollectionProxy [#<Kiwi::AccessLog id: 44, user_id: 1, banana_id: 32, created_at: "2021-10-03 15:42:53.000000000 +0900">]>
+tp user1.kiwi_access_logs.first.banana      # => #<Kiwi::Banana id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, banana_messages_count: 0, access_logs_count: 1, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: nil>
+tp user1.kiwi_access_bananas                 # => #<ActiveRecord::Associations::CollectionProxy [#<Kiwi::Banana id: 32, key: "C4Y6yaXeJUK", user_id: 1, folder_id: 1, lemon_id: 32, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.0, banana_messages_count: 0, access_logs_count: 1, created_at: "2021-10-03 15:42:53.271123000 +0900", updated_at: "2021-10-03 15:42:53.271123000 +0900", tag_list: nil>]>
 
 # コメント
-book1.book_messages.create!(user: user1, body: "(message1)")      # => #<Kiwi::BookMessage id: 66, user_id: 1, book_id: 32, body: "(message1)", position: 1, deleted_at: nil, created_at: "2021-10-03 15:42:53.319801000 +0900", updated_at: "2021-10-03 15:42:53.319801000 +0900">
-user1.kiwi_book_messages.create!(book: book1, body: "(message1)") # => #<Kiwi::BookMessage id: 67, user_id: 1, book_id: 32, body: "(message1)", position: 2, deleted_at: nil, created_at: "2021-10-03 15:42:53.331886000 +0900", updated_at: "2021-10-03 15:42:53.331886000 +0900">
-user1.kiwi_book_message_speak(book1, "(message1)")                # => #<Kiwi::BookMessage id: 68, user_id: 1, book_id: 32, body: "(message1)", position: 3, deleted_at: nil, created_at: "2021-10-03 15:42:53.345906000 +0900", updated_at: "2021-10-03 15:42:53.345906000 +0900">
+banana1.banana_messages.create!(user: user1, body: "(message1)")      # => #<Kiwi::BananaMessage id: 66, user_id: 1, banana_id: 32, body: "(message1)", position: 1, deleted_at: nil, created_at: "2021-10-03 15:42:53.319801000 +0900", updated_at: "2021-10-03 15:42:53.319801000 +0900">
+user1.kiwi_banana_messages.create!(banana: banana1, body: "(message1)") # => #<Kiwi::BananaMessage id: 67, user_id: 1, banana_id: 32, body: "(message1)", position: 2, deleted_at: nil, created_at: "2021-10-03 15:42:53.331886000 +0900", updated_at: "2021-10-03 15:42:53.331886000 +0900">
+user1.kiwi_banana_message_speak(banana1, "(message1)")                # => #<Kiwi::BananaMessage id: 68, user_id: 1, banana_id: 32, body: "(message1)", position: 3, deleted_at: nil, created_at: "2021-10-03 15:42:53.345906000 +0900", updated_at: "2021-10-03 15:42:53.345906000 +0900">
 
-tp user1.kiwi_book_messages
+tp user1.kiwi_banana_messages
 
 # >> |--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |                 id | 54                                                                                                                                                                   |
@@ -181,7 +181,7 @@ tp user1.kiwi_book_messages
 # >> |               title | (cover_text.title)       |
 # >> |         description | (cover_text.description) |
 # >> |       thumbnail_pos | 0.0                      |
-# >> | book_messages_count | 0                        |
+# >> | banana_messages_count | 0                        |
 # >> |   access_logs_count | 0                        |
 # >> |          created_at |                          |
 # >> |          updated_at |                          |
@@ -196,14 +196,14 @@ tp user1.kiwi_book_messages
 # >> |               title | タイトル1タイトル1タイトル1タイトル1         |
 # >> |         description | descriptiondescriptiondescriptiondescription |
 # >> |       thumbnail_pos | 0.0                                          |
-# >> | book_messages_count | 0                                            |
+# >> | banana_messages_count | 0                                            |
 # >> |   access_logs_count | 0                                            |
 # >> |          created_at | 2021-10-03 15:42:53 +0900                    |
 # >> |          updated_at | 2021-10-03 15:42:53 +0900                    |
 # >> |            tag_list | 居飛車 嬉野流 右玉                           |
 # >> |---------------------+----------------------------------------------|
 # >> |----+---------+---------+---------------------------|
-# >> | id | user_id | book_id | created_at                |
+# >> | id | user_id | banana_id | created_at                |
 # >> |----+---------+---------+---------------------------|
 # >> | 44 |       1 |      32 | 2021-10-03 15:42:53 +0900 |
 # >> |----+---------+---------+---------------------------|
@@ -216,19 +216,19 @@ tp user1.kiwi_book_messages
 # >> |               title | タイトル1タイトル1タイトル1タイトル1         |
 # >> |         description | descriptiondescriptiondescriptiondescription |
 # >> |       thumbnail_pos | 0.0                                          |
-# >> | book_messages_count | 0                                            |
+# >> | banana_messages_count | 0                                            |
 # >> |   access_logs_count | 1                                            |
 # >> |          created_at | 2021-10-03 15:42:53 +0900                    |
 # >> |          updated_at | 2021-10-03 15:42:53 +0900                    |
 # >> |            tag_list |                                              |
 # >> |---------------------+----------------------------------------------|
 # >> |----+-------------+---------+-----------+----------+--------------------------------------+----------------------------------------------+---------------+---------------------+-------------------+---------------------------+---------------------------+----------|
-# >> | id | key         | user_id | folder_id | lemon_id | title                                | description                                  | thumbnail_pos | book_messages_count | access_logs_count | created_at                | updated_at                | tag_list |
+# >> | id | key         | user_id | folder_id | lemon_id | title                                | description                                  | thumbnail_pos | banana_messages_count | access_logs_count | created_at                | updated_at                | tag_list |
 # >> |----+-------------+---------+-----------+----------+--------------------------------------+----------------------------------------------+---------------+---------------------+-------------------+---------------------------+---------------------------+----------|
 # >> | 32 | C4Y6yaXeJUK |       1 |         1 |       32 | タイトル1タイトル1タイトル1タイトル1 | descriptiondescriptiondescriptiondescription |           0.0 |                   0 |                 1 | 2021-10-03 15:42:53 +0900 | 2021-10-03 15:42:53 +0900 |          |
 # >> |----+-------------+---------+-----------+----------+--------------------------------------+----------------------------------------------+---------------+---------------------+-------------------+---------------------------+---------------------------+----------|
 # >> |----+---------+---------+------------+----------+------------+---------------------------+---------------------------|
-# >> | id | user_id | book_id | body       | position | deleted_at | created_at                | updated_at                |
+# >> | id | user_id | banana_id | body       | position | deleted_at | created_at                | updated_at                |
 # >> |----+---------+---------+------------+----------+------------+---------------------------+---------------------------|
 # >> | 66 |       1 |      32 | (message1) |        1 |            | 2021-10-03 15:42:53 +0900 | 2021-10-03 15:42:53 +0900 |
 # >> | 67 |       1 |      32 | (message1) |        2 |            | 2021-10-03 15:42:53 +0900 | 2021-10-03 15:42:53 +0900 |

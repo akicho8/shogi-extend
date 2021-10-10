@@ -184,7 +184,7 @@ Rails.application.routes.draw do
         get :index
         get :sitemap
       end
-      namespace :books do
+      namespace :bananas do
         get :top
         get :index
         get :show

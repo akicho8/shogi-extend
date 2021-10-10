@@ -32,7 +32,7 @@
         | {{row.error_message}}
       .buttons.has-addons.are-small.mb-0(v-if="row.successed_at")
         b-button.mb-0(@click="base.download_handle" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
-        b-button.mb-0(@click="base.book_new_handle(row)" icon-left="upload")
+        b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload")
 
         b-button.mb-0(v-if="development_or_staging_p" @click="sound_play('click')" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
         b-button.mb-0(v-if="development_or_staging_p" @click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            )

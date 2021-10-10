@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { Book      } from "../models/book.js"
+import { Banana      } from "../models/banana.js"
 import { XpageInfo } from "../models/xpage_info.js"
 
 import { support_parent } from "./support_parent.js"
@@ -83,10 +83,10 @@ export default {
         this.meta.title = _.compact([this.query, ...this.tags]).join(" ") + ` - ${this.meta.title}`
       }
       // this.tab_index   = this.IndexScopeInfo.fetch(this.search_preset_key).code
-      this.books = e.books.map(e => new Book(this, e))
+      this.bananas = e.bananas.map(e => new Banana(this, e))
       this.xpage_info = new XpageInfo(e.xpage_info)
       // this.total       = e.total
-      // this.book_counts = e.book_counts
+      // this.banana_counts = e.banana_counts
     })
   },
 

@@ -8,8 +8,8 @@
 
   KiwiTopTagList(:base="base")
 
-  .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.books")
-    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
+  .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.bananas")
+    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-banana_key', params: {banana_key: e.key}}" @click.native="sound_play('click')")
       .card-image
         template(v-if="e.lemon.thumbnail_browser_path")
           .image.is-16by9
@@ -23,7 +23,7 @@
           p e.lemon.content_type: {{e.lemon.content_type}}
           p browser_path: {{e.lemon.browser_path}}
       .card-content
-        KiwiBookInfo(:base="base" :book="e" :key="e.key")
+        KiwiBananaInfo(:base="base" :banana="e" :key="e.key")
 
   .column.is-12(v-if="base.xpage_info")
     //- テーブルのページネーションに合わせとく

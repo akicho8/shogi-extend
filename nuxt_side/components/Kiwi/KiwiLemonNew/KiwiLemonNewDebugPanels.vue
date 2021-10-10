@@ -15,7 +15,7 @@
   .column.is-4
     .panel
       .panel-heading 操作
-      a.panel-block(@click="base.book_new_handle(base.my_records[0])") 動画ライブラリ登録
+      a.panel-block(@click="base.banana_new_handle(base.my_records[0])") 動画ライブラリ登録
 
   .column.is-4
     .panel

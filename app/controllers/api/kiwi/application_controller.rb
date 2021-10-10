@@ -50,11 +50,11 @@ module Api
 
       private
 
-      def current_book_scope_info
-        ::Kiwi::BookIndexScopeInfo.fetch(current_book_scope_key)
+      def current_banana_scope_info
+        ::Kiwi::BananaIndexScopeInfo.fetch(current_banana_scope_key)
       end
 
-      def current_book_scope_key
+      def current_banana_scope_key
         (params[:scope].presence || :everyone).to_sym
       end
     end

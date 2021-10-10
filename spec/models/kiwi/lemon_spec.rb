@@ -73,11 +73,11 @@ module Kiwi
       Lemon.everyone_broadcast
     end
 
-    it "Bookと結び付いていないレコードたち" do
+    it "Bananaと結び付いていないレコードたち" do
       lemon1
-      assert { Lemon.single_only == [lemon1] } # Book と結び付いていないものたち
-      book1
-      assert { Lemon.single_only == [] } # Book と結び付いたので空
+      assert { Lemon.single_only == [lemon1] } # Banana と結び付いていないものたち
+      banana1
+      assert { Lemon.single_only == [] } # Banana と結び付いたので空
     end
 
     it "reset" do
@@ -88,11 +88,11 @@ module Kiwi
       assert { lemon1.advanced_kif_info }
     end
 
-    it "jsonでBookと結び付いているかわかる" do
-      assert { lemon1.as_json(Lemon.json_struct_for_list)["book"] == nil }
-      book1
+    it "jsonでBananaと結び付いているかわかる" do
+      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] == nil }
+      banana1
       lemon1.reload
-      assert { lemon1.as_json(Lemon.json_struct_for_list)["book"] }
+      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] }
     end
   end
 end
@@ -114,11 +114,11 @@ end
 # >>     7.51 seconds -:57
 # >>   Kiwi::Lemon advanced_kif_info
 # >>     0.43673 seconds -:87
-# >>   Kiwi::Lemon Bookと結び付いていないレコードたち
+# >>   Kiwi::Lemon Bananaと結び付いていないレコードたち
 # >>     0.4317 seconds -:76
 # >>   Kiwi::Lemon reset
 # >>     0.42067 seconds -:83
-# >>   Kiwi::Lemon Bookと結び付いているか確認
+# >>   Kiwi::Lemon Bananaと結び付いているか確認
 # >>     0.41513 seconds -:91
 # >>   Kiwi::Lemon info
 # >>     0.41146 seconds -:66

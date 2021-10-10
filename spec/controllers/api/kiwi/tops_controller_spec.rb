@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Book (kiwi_books as Kiwi::Book)
+# Banana (kiwi_bananas as Kiwi::Banana)
 #
 # |----------------+--------------------+--------------+---------------------+--------------+-------|
 # | name           | desc               | type         | opts                | refs         | index |

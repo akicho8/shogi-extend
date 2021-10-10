@@ -26,16 +26,16 @@ module KiwiSupport
       user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
     end
 
-    let(:book1) do
-      user1.kiwi_books.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
+    let(:banana1) do
+      user1.kiwi_bananas.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
     end
 
-    let(:book_message1) do
-      user1.kiwi_book_message_speak(book1, "(message1)")
+    let(:banana_message1) do
+      user1.kiwi_banana_message_speak(banana1, "(message1)")
     end
 
     let(:access_log1) do
-      book1.access_logs.create!(user: user1)
+      banana1.access_logs.create!(user: user1)
     end
   end
 end

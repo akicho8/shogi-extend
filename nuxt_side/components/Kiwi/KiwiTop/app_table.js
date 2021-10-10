@@ -1,4 +1,4 @@
-// import { KiwiRecordIndexColumnInfo } from "../models/book_index_column_info.js"
+// import { KiwiRecordIndexColumnInfo } from "../models/banana_index_column_info.js"
 
 export const app_table = {
   data() {
@@ -11,7 +11,7 @@ export const app_table = {
       // sort_order:  null,
 
       // jsonで貰うもの
-      books: null, // null:まだ読み込んでいない [...]:読み込んだ
+      bananas: null, // null:まだ読み込んでいない [...]:読み込んだ
       // total: 0,
 
       // b-table で開いたIDたち

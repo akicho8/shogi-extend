@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_174700) do
+ActiveRecord::Schema.define(version: 2021_10_10_103000) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -938,27 +938,27 @@ ActiveRecord::Schema.define(version: 2021_10_05_174700) do
 
   create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", comment: "参照者"
-    t.bigint "book_id", null: false, comment: "動画"
+    t.bigint "banana_id", null: false, comment: "動画"
     t.datetime "created_at", null: false, comment: "記録日時"
-    t.index ["book_id"], name: "index_kiwi_access_logs_on_book_id"
+    t.index ["banana_id"], name: "index_kiwi_access_logs_on_banana_id"
     t.index ["user_id"], name: "index_kiwi_access_logs_on_user_id"
   end
 
-  create_table "kiwi_book_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_banana_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "発言者"
-    t.bigint "book_id", null: false, comment: "動画"
+    t.bigint "banana_id", null: false, comment: "動画"
     t.string "body", limit: 512, null: false, comment: "発言"
     t.integer "position", null: false, comment: "番号"
     t.datetime "deleted_at", comment: "削除日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id", "position"], name: "index_kiwi_book_messages_on_book_id_and_position", unique: true
-    t.index ["book_id"], name: "index_kiwi_book_messages_on_book_id"
-    t.index ["position"], name: "index_kiwi_book_messages_on_position"
-    t.index ["user_id"], name: "index_kiwi_book_messages_on_user_id"
+    t.index ["banana_id", "position"], name: "index_kiwi_banana_messages_on_banana_id_and_position", unique: true
+    t.index ["banana_id"], name: "index_kiwi_banana_messages_on_banana_id"
+    t.index ["position"], name: "index_kiwi_banana_messages_on_position"
+    t.index ["user_id"], name: "index_kiwi_banana_messages_on_user_id"
   end
 
-  create_table "kiwi_books", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "kiwi_bananas", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.bigint "user_id", null: false, comment: "作成者"
     t.bigint "folder_id", null: false, comment: "フォルダ"
@@ -966,22 +966,22 @@ ActiveRecord::Schema.define(version: 2021_10_05_174700) do
     t.string "title", limit: 100, null: false, comment: "タイトル"
     t.text "description", null: false, comment: "説明"
     t.float "thumbnail_pos", null: false, comment: "サムネ位置"
-    t.integer "book_messages_count", default: 0, null: false, comment: "コメント数"
+    t.integer "banana_messages_count", default: 0, null: false, comment: "コメント数"
     t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["access_logs_count"], name: "index_kiwi_books_on_access_logs_count"
-    t.index ["book_messages_count"], name: "index_kiwi_books_on_book_messages_count"
-    t.index ["folder_id"], name: "index_kiwi_books_on_folder_id"
-    t.index ["key"], name: "index_kiwi_books_on_key", unique: true
-    t.index ["lemon_id"], name: "index_kiwi_books_on_lemon_id", unique: true
-    t.index ["user_id"], name: "index_kiwi_books_on_user_id"
+    t.index ["access_logs_count"], name: "index_kiwi_bananas_on_access_logs_count"
+    t.index ["banana_messages_count"], name: "index_kiwi_bananas_on_banana_messages_count"
+    t.index ["folder_id"], name: "index_kiwi_bananas_on_folder_id"
+    t.index ["key"], name: "index_kiwi_bananas_on_key", unique: true
+    t.index ["lemon_id"], name: "index_kiwi_bananas_on_lemon_id", unique: true
+    t.index ["user_id"], name: "index_kiwi_bananas_on_user_id"
   end
 
   create_table "kiwi_folders", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.integer "books_count", default: 0, null: false, comment: "問題集数"
+    t.integer "bananas_count", default: 0, null: false, comment: "問題集数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_kiwi_folders_on_key", unique: true

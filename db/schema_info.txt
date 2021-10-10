@@ -133,14 +133,14 @@
 
 # == Schema Information ==
 #
-# Book message (kiwi_book_messages as Kiwi::BookMessage)
+# Banana message (kiwi_banana_messages as Kiwi::BananaMessage)
 #
 # |------------+----------+-------------+-------------+--------------+-------|
 # | name       | desc     | type        | opts        | refs         | index |
 # |------------+----------+-------------+-------------+--------------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | B     |
-# | book_id    | Book     | integer(8)  | NOT NULL    |              | A! C  |
+# | banana_id  | Banana   | integer(8)  | NOT NULL    |              | A! C  |
 # | body       | 内容     | string(512) | NOT NULL    |              |       |
 # | position   | 順序     | integer(4)  | NOT NULL    |              | A! D  |
 # | deleted_at | 削除日時 | datetime    |             |              |       |
@@ -184,24 +184,24 @@
 
 # == Schema Information ==
 #
-# アーカイブ (kiwi_books as Kiwi::Book)
+# アーカイブ (kiwi_bananas as Kiwi::Banana)
 #
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | name                | desc                | type        | opts                | refs         | index |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | キー                | string(255) | NOT NULL            |              | A!    |
-# | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | C     |
-# | folder_id           | Folder              | integer(8)  | NOT NULL            |              | D     |
-# | lemon_id            | 動画ファイル        | integer(8)  | NOT NULL            |              | B!    |
-# | title               | タイトル            | string(100) | NOT NULL            |              |       |
-# | description         | 説明                | text(65535) | NOT NULL            |              |       |
-# | thumbnail_pos       | Thumbnail pos       | float(24)   | NOT NULL            |              |       |
-# | book_messages_count | Book messages count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
-# | access_logs_count   | Access logs count   | integer(4)  | DEFAULT(0) NOT NULL |              | F     |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
+# | name                  | desc                  | type        | opts                | refs         | index |
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
+# | id                    | ID                    | integer(8)  | NOT NULL PK         |              |       |
+# | key                   | キー                  | string(255) | NOT NULL            |              | A!    |
+# | user_id               | User                  | integer(8)  | NOT NULL            | => ::User#id | C     |
+# | folder_id             | Folder                | integer(8)  | NOT NULL            |              | D     |
+# | lemon_id              | 動画ファイル          | integer(8)  | NOT NULL            |              | B!    |
+# | title                 | タイトル              | string(100) | NOT NULL            |              |       |
+# | description           | 説明                  | text(65535) | NOT NULL            |              |       |
+# | thumbnail_pos         | Thumbnail pos         | float(24)   | NOT NULL            |              |       |
+# | banana_messages_count | Banana messages count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
+# | access_logs_count     | Access logs count     | integer(4)  | DEFAULT(0) NOT NULL |              | F     |
+# | created_at            | 作成日時              | datetime    | NOT NULL            |              |       |
+# | updated_at            | 更新日時              | datetime    | NOT NULL            |              |       |
+# |-----------------------+-----------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -211,16 +211,16 @@
 #
 # Folder (kiwi_folders as Kiwi::Folder)
 #
-# |-------------+-------------+-------------+---------------------+------+-------|
-# | name        | desc        | type        | opts                | refs | index |
-# |-------------+-------------+-------------+---------------------+------+-------|
-# | id          | ID          | integer(8)  | NOT NULL PK         |      |       |
-# | key         | キー        | string(255) | NOT NULL            |      | A!    |
-# | position    | 順序        | integer(4)  | NOT NULL            |      | B     |
-# | books_count | Books count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at  | 作成日時    | datetime    | NOT NULL            |      |       |
-# | updated_at  | 更新日時    | datetime    | NOT NULL            |      |       |
-# |-------------+-------------+-------------+---------------------+------+-------|
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | name          | desc          | type        | opts                | refs | index |
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK         |      |       |
+# | key           | キー          | string(255) | NOT NULL            |      | A!    |
+# | position      | 順序          | integer(4)  | NOT NULL            |      | B     |
+# | bananas_count | Bananas count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL            |      |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL            |      |       |
+# |---------------+---------------+-------------+---------------------+------+-------|
 
 # == Schema Information ==
 #
@@ -231,7 +231,7 @@
 # |------------+----------+------------+-------------+--------------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8) |             | => ::User#id | A     |
-# | book_id    | Book     | integer(8) | NOT NULL    |              | B     |
+# | banana_id  | Banana   | integer(8) | NOT NULL    |              | B     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #

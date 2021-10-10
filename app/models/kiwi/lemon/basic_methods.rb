@@ -4,9 +4,9 @@ module Kiwi
       included do
         belongs_to :user                          # 所有者
         belongs_to :recordable, polymorphic: true # 棋譜情報
-        has_one :book, dependent: :destroy        # アーカイブしたときに結びつく
+        has_one :banana, dependent: :destroy        # アーカイブしたときに結びつく
 
-        scope :single_only,      -> { left_joins(:book).where(book: {id: nil})                    } # Bookと結びついていないもの
+        scope :single_only,      -> { left_joins(:banana).where(banana: {id: nil})                    } # Bananaと結びついていないもの
 
         scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理
         scope :done_only,        -> { where.not(process_end_at: nil)                              } # 処理済み(失敗しても入る)

@@ -39,15 +39,15 @@ class KiwiMailer < ApplicationMailer
   end
 
   # 動画の作者に通知
-  # KiwiMailer.book_owner_message(Kiwi::BookMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/book_owner_message
-  def book_owner_message(book_message)
-    subject = "#{book_message.user.name}さんが「#{book_message.book.title}」にコメントしました"
+  # KiwiMailer.banana_owner_message(Kiwi::BananaMessage.first).deliver_later
+  # http://localhost:3000/rails/mailers/user/banana_owner_message
+  def banana_owner_message(banana_message)
+    subject = "#{banana_message.user.name}さんが「#{banana_message.banana.title}」にコメントしました"
 
     out = []
-    out << book_message.unescaped_body
+    out << banana_message.unescaped_body
     out << ""
-    out << book_message.book.page_url
+    out << banana_message.banana.page_url
 
     if Rails.env.test? || Rails.env.development?
       out << ""
@@ -58,19 +58,19 @@ class KiwiMailer < ApplicationMailer
 
     body = out.join("\n") + "\n"
 
-    mail(subject: subject, to: book_message.book.user.email, bcc: AppConfig[:admin_email], body: body)
+    mail(subject: subject, to: banana_message.banana.user.email, bcc: AppConfig[:admin_email], body: body)
   end
 
   # 以前コメントした人に通知
-  # KiwiMailer.book_other_message(User.first, Kiwi::BookMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/book_other_message
-  def book_other_message(user, book_message)
-    subject = "以前コメントした「#{book_message.book.title}」に#{book_message.user.name}さんがコメントしました"
+  # KiwiMailer.banana_other_message(User.first, Kiwi::BananaMessage.first).deliver_later
+  # http://localhost:3000/rails/mailers/user/banana_other_message
+  def banana_other_message(user, banana_message)
+    subject = "以前コメントした「#{banana_message.banana.title}」に#{banana_message.user.name}さんがコメントしました"
 
     out = []
-    out << book_message.unescaped_body
+    out << banana_message.unescaped_body
     out << ""
-    out << book_message.book.page_url
+    out << banana_message.banana.page_url
 
     body = out.join("\n")
 

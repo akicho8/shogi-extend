@@ -1,14 +1,14 @@
 # http://localhost:3000/rails/mailers/kiwi
 
 class KiwiPreview < ActionMailer::Preview
-  # http://localhost:3000/rails/mailers/kiwi/book_owner_message
-  def book_owner_message
-    KiwiMailer.book_owner_message(Kiwi::BookMessage.first)
+  # http://localhost:3000/rails/mailers/kiwi/banana_owner_message
+  def banana_owner_message
+    KiwiMailer.banana_owner_message(Kiwi::BananaMessage.first)
   end
 
-  # http://localhost:3000/rails/mailers/kiwi/book_other_message
-  def book_other_message
-    KiwiMailer.book_other_message(User.first, Kiwi::BookMessage.first)
+  # http://localhost:3000/rails/mailers/kiwi/banana_other_message
+  def banana_other_message
+    KiwiMailer.banana_other_message(User.first, Kiwi::BananaMessage.first)
   end
 
   # http://localhost:3000/rails/mailers/kiwi/lemon_notify
