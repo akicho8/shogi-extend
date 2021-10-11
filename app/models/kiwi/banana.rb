@@ -35,6 +35,6 @@ module Kiwi
     include BananaMessageMethods
     include AccessLogMethods
     include MockMethods
-    include AlphaZeroVsElmoBuildMethods
+    include DefaultImportMethods
   end
 end
