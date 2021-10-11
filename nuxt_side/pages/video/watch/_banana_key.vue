@@ -1,3 +1,4 @@
 <template lang="pug">
-  nuxt-child
+KiwiBananaShowApp
+//- nuxt-child
 </template>
