@@ -87,7 +87,15 @@ const config = {
 
     // base: process.env.NODE_ENV === "production" ? "/app/" : "/",
 
+    // 最後のスラッシュ問題
+    //
+    // https://knote.dev/post/2020-03-19/nuxt-trailing-slash/
     // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
+    //
+    //   true   => かならず付ける。つけないと動かない。つまり /items/1 でテストしていたのが動かなくなる
+    //   false  => つけない。けど items/_key/index.vue の構成の場合は結局 /items/xxx/ になる
+    //   未設定 => どっちでもいい。ただし SEO に影響ある
+    //
     // trailingSlash: false,
   },
 
@@ -307,7 +315,7 @@ const config = {
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: [
       "shogi-player", // これを入れないとクラス変数や "??" 構文が読み取れない
-    ], 
+    ],
 
     // オーディオファイルをロードするように Webpack の設定を拡張するには？
     // https://ja.nuxtjs.org/faq/webpack-audio-files/
