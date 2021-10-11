@@ -87,8 +87,9 @@ const config = {
 
     // base: process.env.NODE_ENV === "production" ? "/app/" : "/",
 
+    // https://knote.dev/post/2020-03-19/nuxt-trailing-slash/
     // https://ja.nuxtjs.org/api/configuration-router/#trailingslash
-    // trailingSlash: false,
+    trailingSlash: true,        // 必ず最後に / をつける
   },
 
   generate: {
