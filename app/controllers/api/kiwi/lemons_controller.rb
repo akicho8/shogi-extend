@@ -35,9 +35,13 @@ module Api
       FAST_RESPONSE = nil
       VALIDATE_TURN_MAX = 1525
 
+      # 未使用
       # http://localhost:3000/api/kiwi/lemons/index.json
       # http://localhost:3000/api/kiwi/lemons/index.json?query=a&tag=b,c
       def index
+        if Rails.env.production?
+          raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+        end
         retv = {}
         retv[:lemons] = current_lemons.as_json(::Kiwi::Lemon.json_struct_for_index)
         retv[:meta]  = AppEntryInfo.fetch(:kiwi_lemon_index).og_meta
@@ -47,6 +51,9 @@ module Api
       # http://localhost:3000/api/kiwi/lemons/sitemap.json
       # http://localhost:4000/sitemap.xml
       def sitemap
+        if Rails.env.production?
+          raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+        end
         retv = {}
         retv[:lemons] = ::Kiwi::Lemon.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
         render json: retv
