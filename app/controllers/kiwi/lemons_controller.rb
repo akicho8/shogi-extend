@@ -3,27 +3,27 @@
 #
 # 動画 (kiwi_lemons as Kiwi::Lemon)
 #
-# |------------------+------------------+-------------+-------------+----------------------------+-------|
-# | name             | desc             | type        | opts        | refs                       | index |
-# |------------------+------------------+-------------+-------------+----------------------------+-------|
-# | id               | ID               | integer(8)  | NOT NULL PK |                            |       |
-# | user_id          | User             | integer(8)  | NOT NULL    | => User#id                 | A     |
-# | recordable_type  | Recordable type  | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
-# | recordable_id    | Recordable       | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
-# | all_params       | All params       | text(65535) | NOT NULL    |                            |       |
-# | process_begin_at | Process begin at | datetime    |             |                            | C     |
-# | process_end_at   | Process end at   | datetime    |             |                            | D     |
-# | successed_at     | Successed at     | datetime    |             |                            | E     |
-# | errored_at       | Errored at       | datetime    |             |                            | F     |
-# | error_message    | Error message    | text(65535) |             |                            |       |
-# | content_type     | Content type     | string(255) |             |                            |       |
-# | file_size        | File size        | integer(4)  |             |                            |       |
-# | ffprobe_info     | Ffprobe info     | text(65535) |             |                            |       |
-# | browser_path     | Browser path     | string(255) |             |                            |       |
-# | filename_human   | Filename human   | string(255) |             |                            |       |
-# | created_at       | 作成日時         | datetime    | NOT NULL    |                            | G     |
-# | updated_at       | 更新日時         | datetime    | NOT NULL    |                            |       |
-# |------------------+------------------+-------------+-------------+----------------------------+-------|
+# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
+# | name             | desc                     | type        | opts        | refs                       | index |
+# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
+# | id               | ID                       | integer(8)  | NOT NULL PK |                            |       |
+# | user_id          | 所有者                   | integer(8)  | NOT NULL    | => User#id                 | A     |
+# | recordable_type  | 棋譜情報(クラス名)       | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
+# | recordable_id    | 棋譜情報                 | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
+# | all_params       | 変換用全パラメータ       | text(65535) | NOT NULL    |                            |       |
+# | process_begin_at | 開始日時                 | datetime    |             |                            | C     |
+# | process_end_at   | 終了日時(失敗時も入る)   | datetime    |             |                            | D     |
+# | successed_at     | 正常終了日時             | datetime    |             |                            | E     |
+# | errored_at       | 失敗終了日時             | datetime    |             |                            | F     |
+# | error_message    | エラー文言               | text(65535) |             |                            |       |
+# | content_type     | 動画タイプ               | string(255) |             |                            |       |
+# | file_size        | 動画サイズ               | integer(4)  |             |                            |       |
+# | ffprobe_info     | ffprobeの内容            | text(65535) |             |                            |       |
+# | browser_path     | 動画WEBパス              | string(255) |             |                            |       |
+# | filename_human   | 動画の人間向けファイル名 | string(255) |             |                            |       |
+# | created_at       | 作成日時                 | datetime    | NOT NULL    |                            | G     |
+# | updated_at       | 更新日時                 | datetime    | NOT NULL    |                            |       |
+# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
