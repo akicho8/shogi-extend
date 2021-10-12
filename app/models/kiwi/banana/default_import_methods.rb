@@ -66,7 +66,7 @@ module Kiwi
                 :title         => "羽生善治特選 ##{i.next} #{versus} 百番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
                 :tag_list      => ["AlphaZero", "elmo", "羽生善治", "百番勝負", *info.mediator.normalized_names_with_alias],
-                :thumbnail_pos => 1 + (info.mediator.critical_turn || info.mediator.turn_info.turn_offset)
+                :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offse) # 歩と角以外の交換がある直前の局面
               },
             }
           end
