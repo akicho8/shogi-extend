@@ -26,7 +26,7 @@ module Kiwi
       def kiwi_my_lemons_singlecast
         bc_params = {
           # :my_records => lemons.done_only.limit(5).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list),
-          :my_records => kiwi_lemons.limit(Kiwi::Lemon.user_history_max).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list),
+          :my_records => kiwi_lemons.limit(Kiwi::Lemon.user_lemon_history_max).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list),
         }
         Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_my_lemons_singlecasted, bc_params: bc_params})
       end

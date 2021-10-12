@@ -80,7 +80,7 @@ module Api
         end
 
         # 予約数制限
-        if c = current_reserve_limit
+        if c = current_user_lemon_queue_max
           if current_user.kiwi_lemons.not_done_only.count > c
             render json: { error_message: "投入しすぎです" }
             return
@@ -154,12 +154,12 @@ module Api
         render json: { status: "success" }
       end
 
-      def current_reserve_limit
+      def current_user_lemon_queue_max
         if current_user
           if current_user.permit_tag_list.include?("staff") && false
             nil
           else
-            reserve_limit_default
+            user_lemon_queue_max_default
           end
         else
           0
@@ -167,8 +167,8 @@ module Api
       end
 
       # 予約可能な数(処理中を含む)
-      def reserve_limit_default
-        (params[:reserve_limit].presence || ::Kiwi::Lemon.user_queue_max).to_i
+      def user_lemon_queue_max_default
+        (params[:user_lemon_queue_max].presence || ::Kiwi::Lemon.user_lemon_queue_max).to_i
       end
 
       private

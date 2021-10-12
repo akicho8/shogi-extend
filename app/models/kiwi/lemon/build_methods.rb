@@ -99,8 +99,8 @@ module Kiwi
       end
 
       included do
-        cattr_accessor(:user_history_max) { 5 } # 履歴表示最大件数
-        cattr_accessor(:user_queue_max) { 3 }   # 未処理投入最大件数
+        cattr_accessor(:user_lemon_history_max) { 5 } # 履歴表示最大件数
+        cattr_accessor(:user_lemon_queue_max) { 3 }   # 未処理投入最大件数
 
         delegate :everyone_broadcast, :background_job_kick, to: "self.class"
         # delegate :browser_url, to: "media_builder"
