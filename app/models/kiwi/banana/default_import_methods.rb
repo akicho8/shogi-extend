@@ -15,8 +15,8 @@ module Kiwi
           # exit
 
           # puts alpha_zero_vs_elmo_params_list.to_yaml
+          import_all(alpha_zero_vs_elmo_params_list)
           import_all(default_records_list)
-          # import_all(alpha_zero_vs_elmo_params_list)
         end
 
         # rails r 'pp Kiwi::Banana.alpha_zero_vs_elmo_params_list'
