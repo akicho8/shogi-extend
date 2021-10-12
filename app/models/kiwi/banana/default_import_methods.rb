@@ -44,7 +44,6 @@ module Kiwi
             versus = "AlphaZero vs elmo"
             black_white = "先手:#{info.header["先手"]} 後手:#{info.header["後手"]}"
             judgment_message = info.judgment_message.remove(/^まで/).gsub(/先手|後手/, info.header.to_h)
-            normalized_names_with_alias = info.mediator.players.flat_map { |e| e.skill_set.normalized_names_with_alias }.uniq
 
             {
               :key  => params[:key],
@@ -66,7 +65,7 @@ module Kiwi
                 :folder_key    => "public",
                 :title         => "羽生善治特選 ##{i.next} #{versus} 百番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
-                :tag_list      => ["AlphaZero", "elmo", "羽生善治", "百番勝負", *normalized_names_with_alias],
+                :tag_list      => ["AlphaZero", "elmo", "羽生善治", "百番勝負", *info.mediator.normalized_names_with_alias],
                 :thumbnail_pos => 1 + (info.mediator.critical_turn || info.mediator.turn_info.turn_offset)
               },
             }
