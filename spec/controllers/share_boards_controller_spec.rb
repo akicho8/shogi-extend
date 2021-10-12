@@ -43,6 +43,7 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "IDではなく棋譜がキーになっている" do
+    FreeBattle.destroy_all
     2.times { get :show, params: { body: "position startpos moves 7g7f", format: "json" } }
     assert { FreeBattle.count == 1 }
   end
