@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe type: :system do
-  it "トップ" do
+RSpec.describe "トップ", type: :system do
+  it "works" do
     visit "/"
     assert_text "About"
     doc_image
