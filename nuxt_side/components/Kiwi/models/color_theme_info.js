@@ -51,6 +51,7 @@ export class ColorThemeInfo extends MemoryRecord {
       { key: "is_color_theme_kimetsu_blue",            name: "鬼滅風 Sky Blue",     media_name: null, type: "is-primary", message: null, },
       { separator: true },
       { key: "is_color_theme_style_editor_asahanada",  name: "浅縹 (あさはなだ)",   media_name: null, type: "is-primary", message: null, },
+      { key: "is_color_theme_style_editor_asagi",      name: "浅葱 (新撰組の青)",       media_name: null, type: "is-primary", message: null, },
       { key: "is_color_theme_style_editor_usubudou",   name: "薄葡萄 (うすぶどう)", media_name: null, type: "is-primary", message: null, },
       { key: "is_color_theme_style_editor_koiai",      name: "濃藍",                media_name: null, type: "is-primary", message: null, },
       { key: "is_color_theme_style_editor_kuromidori", name: "黒緑",                media_name: null, type: "is-primary", message: null, },

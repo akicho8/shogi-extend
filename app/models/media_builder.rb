@@ -80,7 +80,7 @@ class MediaBuilder
     end
   end
 
-  PAPPER = 3
+  PAPPER = 4
 
   class << self
     def output_subdir
