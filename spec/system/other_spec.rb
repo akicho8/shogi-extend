@@ -1,12 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "その他", type: :system do
-  it "トップ" do
-    visit "/"
-    assert_text "About"
-    doc_image
-  end
-
   it "符号の鬼" do
     XyMaster.setup
     visit "/xy"
