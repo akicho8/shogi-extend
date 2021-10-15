@@ -141,7 +141,14 @@ export const ls_support_mixin = {
 
   computed: {
     ls_storage_key() {
-      return this.$options.name || alert("ls_storage_key is not implemented")
+      if (!this.$options.name) {
+        alert("ls_storage_key is not implemented")
+      }
+      return _.compact([this.$options.name, this.ls_storage_key_suffix]).join("-")
+    },
+
+    ls_storage_key_suffix() {
+      return null
     },
 
     // 初期値を設定することで使われているキーがわかる

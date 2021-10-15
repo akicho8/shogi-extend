@@ -61,7 +61,7 @@ export const app_form = {
   },
 
   // created() {
-  //   // this.data_set_by_query_or_default()
+  //   // this.pc_data_set_by_query_or_default()
   //   // this.rect_width  = this.rect_width ?? this.rect_size_info.width
   //   // this.rect_height = this.rect_height ?? this.rect_size_info.height
   // },

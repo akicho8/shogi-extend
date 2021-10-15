@@ -21,6 +21,12 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
+  it "木目盤テクスチャ集" do
+    visit "/gallery"
+    assert_text "木目盤テクスチャ集"
+    doc_image
+  end
+
   # it "ストップウォッチ" do
   #   visit "/stopwatch"
   #   assert_text "Rails"

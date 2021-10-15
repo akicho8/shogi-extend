@@ -7,7 +7,7 @@ b-sidebar.GalleryTopSidebar.is-unselectable(fullheight right overlay v-model="ba
       b-menu
         b-menu-list(label="Action")
           //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-new'}" label="動画集作成" @click.native="sound_play('click')")
-          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video'}" label="動画リスト" @click.native="sound_play('click')")
+          b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video'}" label="木目盤テクスチャ集" @click.native="sound_play('click')")
 </template>
 
 <script>

@@ -1,49 +1,50 @@
 <template lang="pug">
 .GalleryTopApp
-  DebugBox(v-if="development_p")
-    p column_size_code: {{column_size_code}}
-  MainNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
-    template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold.px_0_if_mobile(@click.native="title_click_handle")
-        | 木目盤テクスチャ集
-    template(slot="end")
-      b-navbar-item.slider_container.is-hidden-mobile(tag="div")
-        b-slider(:min="0" :max="ColumnSizeInfo.values.length - 1" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
-          template(v-for="e in ColumnSizeInfo.values")
-            b-slider-tick(:value="e.code")
-  MainSection.when_mobile_footer_scroll_problem_workaround
-    .container.is-fluid
-      .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
-        .column.is-12
-          //- https://buefy.org/documentation/pagination
-          b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" simple)
-        template(v-for="(_, i) in page_items")
-          .column.is_texture(:class="column_size_info.column_class")
-            a.image.is-block(:href="filename_for(i)" target="_blank" @click="sound_play('click')")
-              img(:src="filename_for(i)")
-              .image_number
-                .image_number_body
-                  | {{display_number_for(i)}}
-        .column.is-12.cc_container.is-flex.is-justify-content-center
-          a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sound_play('click')")
-            img(src="by-sa.svg")
+  client-only
+    DebugBox(v-if="development_p")
+      p column_size_code: {{column_size_code}}
+    MainNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
+      template(slot="brand")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold.px_0_if_mobile(@click.native="title_click_handle")
+          | 木目盤テクスチャ集
+      template(slot="end")
+        b-navbar-item.slider_container.is-hidden-mobile(tag="div")
+          b-slider(:min="0" :max="ColumnSizeInfo.values.length - 1" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
+            template(v-for="e in ColumnSizeInfo.values")
+              b-slider-tick(:value="e.code")
+    MainSection.when_mobile_footer_scroll_problem_workaround
+      .container.is-fluid
+        .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
+          .column.is-12
+            //- https://buefy.org/documentation/pagination
+            b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" simple)
+          template(v-for="(_, i) in page_items")
+            .column.is_texture(:class="column_size_info.column_class" v-if="column_size_code !== null")
+              a.image.is-block(:href="filename_for(i)" target="_blank" @click="sound_play('click')")
+                img(:src="filename_for(i)")
+                .image_number
+                  .image_number_body
+                    | {{display_number_for(i)}}
+          .column.is-12.cc_container.is-flex.is-justify-content-center
+            a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sound_play('click')")
+              img(src="by-sa.svg")
 
-  //- DebugBox(v-if="development_p")
-  //-   p query: {{query}}
-  //-   p tag: {{tag}}
-  //-   //- p search_p: {{search_p}}
-  //-
-  //- FetchStateErrorMessage(:fetchState="$fetchState")
-  //-
-  //- GalleryTopSidebar(:base="base")
-  //- GalleryTopNavbar(:base="base")
-  //- //- (v-if="!$fetchState.pending && !$fetchState.error")
-  //- MainSection.when_mobile_footer_scroll_problem_workaround
-  //-   .container.is-fluid
-  //-     GalleryTopContent(:base="base")
-  //-
-  GalleryTopDebugPanels(:base="base" v-if="development_p")
+    //- DebugBox(v-if="development_p")
+    //-   p query: {{query}}
+    //-   p tag: {{tag}}
+    //-   //- p search_p: {{search_p}}
+    //-
+    //- FetchStateErrorMessage(:fetchState="$fetchState")
+    //-
+    //- GalleryTopSidebar(:base="base")
+    //- GalleryTopNavbar(:base="base")
+    //- //- (v-if="!$fetchState.pending && !$fetchState.error")
+    //- MainSection.when_mobile_footer_scroll_problem_workaround
+    //-   .container.is-fluid
+    //-     GalleryTopContent(:base="base")
+    //-
+    GalleryTopDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
@@ -51,24 +52,33 @@ import { ColumnSizeInfo } from "../models/column_size_info.js"
 // import { Banana      } from "../models/banana.js"
 // import { XpageInfo } from "../models/xpage_info.js"
 //
-// import { support_parent } from "./support_parent.js"
+import { support_parent } from "./support_parent.js"
 // import { app_table      } from "./app_table.js"
 // import { app_tabs       } from "./app_tabs.js"
-// import { app_storage    } from "./app_storage.js"
+import { app_storage    } from "./app_storage.js"
 // import { app_sidebar    } from "./app_sidebar.js"
 // import { app_search     } from "./app_search.js"
 //
 // import _ from "lodash"
+import { ParamInfo } from "./models/param_info.js"
 
 const ModExtsprintf = require('extsprintf')
 import { simple_patination_methods } from "@/components/simple_patination_methods.js"
 
 export default {
   name: "GalleryTopApp",
-  mixins: [simple_patination_methods],
+  mixins: [
+    support_parent,
+    simple_patination_methods,
+    // app_table,
+    // app_tabs,
+    app_storage,
+    // app_sidebar,
+    // app_search,
+  ],
   data() {
     return {
-      column_size_code: ColumnSizeInfo.fetch("is_size_s").code,
+      column_size_code: null,
     }
   },
   created() {
@@ -101,16 +111,8 @@ export default {
     default_per() { return 100 },
     ColumnSizeInfo() { return ColumnSizeInfo },
     column_size_info() { return ColumnSizeInfo.fetch(this.column_size_code) },
+    ParamInfo() { return ParamInfo },
   },
-  // name: "GalleryTopApp",
-  // mixins: [
-  //   support_parent,
-  //   app_table,
-  //   app_tabs,
-  //   app_storage,
-  //   app_sidebar,
-  //   app_search,
-  // ],
   //
   // data() {
   //   return {

@@ -6,7 +6,7 @@ b-sidebar.is-unselectable.GalleryLemonNewSidebar(fullheight right overlay v-mode
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset(icon="undo-variant" label="フォームを初期値に戻す" @click="base.data_reset_handle")
+          b-menu-item.is_active_unset(icon="undo-variant" label="フォームを初期値に戻す" @click="base.pc_data_reset_handle")
           //- b-menu-item.is_active_unset(tag="nuxt-link" :to="{name: 'video-studio'}" label="動画ライブラリ" @click.native="sound_play('click')")
 
         b-menu-list(label="その他")
