@@ -48,6 +48,8 @@
 </template>
 
 <script>
+const TOTAL_ITEMS = 720
+
 import { ColumnSizeInfo } from "../models/column_size_info.js"
 // import { Banana      } from "../models/banana.js"
 // import { XpageInfo } from "../models/xpage_info.js"
@@ -82,7 +84,7 @@ export default {
     }
   },
   created() {
-    this.total = 192
+    this.total = TOTAL_ITEMS
   },
   methods: {
     display_number_for(i) {
