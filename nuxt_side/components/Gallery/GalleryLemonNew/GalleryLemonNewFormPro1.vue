@@ -1,0 +1,113 @@
+<template lang="pug">
+.GalleryLemonNewFormPro1
+  b-field.field_block(label="表紙")
+    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
+
+  SimpleRadioButtons.field_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
+
+  .page_duration_field.field_block
+    //- b-field(:message="base.page_duration_message" v-if="false")
+    //-   template(#label)
+    //-     p 1ページあたりの秒数
+    //-     b-taglist.fps_values
+    //-       template(v-for="fps in [60, 30, 20, 15]")
+    //-         a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
+    //-   b-numberinput(key="numberinput-page_duration" v-model="base.page_duration" :min="base.page_duration_step" :max="3" :step="base.page_duration_step" exponential @input="sound_play('click')")
+
+    b-field(:message="base.page_duration_message")
+      template(#label)
+        p 1ページあたりの秒数
+
+        //- b-taglist.mt-1
+        //-   template(v-for="fps in [60, 30, 20, 15]")
+        //-     //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_fps(fps)") {{fps}}fps
+        //-     b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_fps(fps)") {{fps}}fps
+        //-   //- template(v-for="value in [0.5, 1.0, 1.5, 2.0]")
+        //-   //-   //- a.has-text-primary.is-italic.has-text-weight-normal(@click="base.page_duration_set_by_value(value)") {{value}}
+        //-   //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_value(value)") {{value}}
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_add(-0.1)") -0.1
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_set_by_value(1.0)") 1.0
+        //-   b-tag.is-clickable(type="is-primary is-light" @click.native="base.page_duration_add(+0.1)") +0.1
+
+        b-field(grouped).mb-0
+          .control
+            .buttons.mb-0.has-addons.are-small.mt-2
+              b-button.mb-0(@click.native="base.page_duration_add(-0.1)") -0.1
+              b-button.mb-0(@click.native="base.page_duration_set_by_value(1.0)") 1.0
+              b-button.mb-0(@click.native="base.page_duration_add(+0.1)") +0.1
+          .control
+            .buttons.mb-0.has-addons.are-small.mt-2
+              b-button.mb-0(@click.native="base.page_duration_mul(0.5)") ÷2
+              b-button.mb-0(@click.native="base.page_duration_mul(2.0)") ×2
+
+        b-field(grouped).mb-0
+          .control
+            .buttons.mb-0.has-addons.are-small.mt-2
+              b-button.mb-0(@click="base.compute_from_bpm_modal_handle") BPM
+          .control
+            .buttons.mb-0.has-addons.are-small.mt-2
+              template(v-for="fps in [60, 30, 20, 15]")
+                b-button.mb-0(@click="base.page_duration_set_by_fps(fps)") {{fps}}f
+
+      b-input(key="input-page_duration" v-model.number="base.page_duration")
+
+
+  SimpleRadioButtons.field_block(:base="base" :model="base.XboldInfo" var_name="xbold_key")
+
+  //- SimpleRadioButtons(:base="base" :model="base.RectSizeInfo" var_name="rect_size_key")
+  // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
+
+  //- b-collapse(:open="false" position="is-bottom")
+  //-   template(#trigger="props")
+  //-     a
+  //-       b-icon(:icon="!props.open ? 'menu-down' : 'menu-up'")
+  //-       template(v-if="!props.open")
+  //-         | すべてのフォームを表示する
+  //-       template(v-else)
+  //-         | 隠す
+  //- b-field.field_block(label="FPS")
+  //-   b-numberinput(v-model="base.video_fps" :min="30" :max="60" :step="1" exponential @input="sound_play('click')")
+  //- b-field.field_block(label="FPS")
+  //-   b-numberinput(v-model="base.video_fps" :min="1" :max="60" :step="0.01" exponential)
+
+  // 分数形式なども受けつけるように文字列入力にすること
+  //- b-field.field_block(label="MP4のFPS" message="1手1秒なら1FPSで良い気もするけど30FPS以上にしといた方が安全かもしれない")
+  //-   b-input(v-model="base.video_fps")
+
+</template>
+
+<script>
+import { support_child } from "./support_child.js"
+
+export default {
+  name: "GalleryLemonNewFormPro1",
+  mixins: [support_child],
+}
+</script>
+
+<style lang="sass">
+.GalleryLemonNewFormPro1
+  .recipe_key_field
+    .dropdown-item
+      +desktop
+        min-width: 24rem
+      .media-left
+        flex-basis: 20%
+
+  .rect_size_field
+    .dropdown-item
+      +desktop
+        min-width: 24rem
+      .media-left
+        flex-basis: 50%
+
+  .compact_wh_input
+    label
+      visibility: hidden
+    input
+      width: 5rem
+
+  // .fps_values
+  //   a:not(:first-child)
+  //     margin-left: 0.25rem
+</style>

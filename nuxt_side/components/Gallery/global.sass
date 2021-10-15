@@ -1,0 +1,37 @@
+// .field_block を囲むタグ
+// .field 同士のデフォルトの隙間を取る
+.form_block
+  .field
+    margin-bottom: 0
+
+// 基本的には b-field と合わせて使う
+//
+//   b-field.field_block(label="xxx")
+//     b-input
+//
+// 複数のフィールドがあるときは外側で覆う
+//
+//   .field_block
+//     b-field.field_block(label="xxx")
+//       b-input
+//     b-field.field_block(label="xxx")
+//       b-input
+//  
+.field_block
+  padding: 0.8rem 0 1.2rem
+  textarea
+    word-break: break-all
+  &.body_field
+    padding: 1.0rem
+  &:hover
+    background-color: $white-ter
+  +tablet
+    padding-left: 1.25rem
+    padding-right: 1.25rem
+
+// b-field.submit_field
+//   .control
+//     b-button.has-text-weight-bold(@click="base.submit_handle" type="is-primary" expanded) 実行
+.submit_field
+  margin: 0
+  padding: 1rem 0
