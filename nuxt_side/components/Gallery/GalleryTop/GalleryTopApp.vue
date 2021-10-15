@@ -1,5 +1,7 @@
 <template lang="pug">
 .GalleryTopApp
+  DebugBox(v-if="development_p")
+    p column_size_code: {{column_size_code}}
   MainNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
     template(slot="brand")
       NavbarItemHome
@@ -7,11 +9,9 @@
         | 木目盤テクスチャ集
     template(slot="end")
       b-navbar-item.slider_container.is-hidden-mobile(tag="div")
-        b-slider(:min="0" :max="3" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
-          b-slider-tick(:value="0")
-          b-slider-tick(:value="1")
-          b-slider-tick(:value="2")
-          b-slider-tick(:value="3")
+        b-slider(:min="0" :max="ColumnSizeInfo.values.length - 1" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
+          template(v-for="e in ColumnSizeInfo.values")
+            b-slider-tick(:value="e.code")
   MainSection.when_mobile_footer_scroll_problem_workaround
     .container.is-fluid
       .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
@@ -19,7 +19,7 @@
           //- https://buefy.org/documentation/pagination
           b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" simple)
         template(v-for="(_, i) in page_items")
-          .column.is_texture(:class="column_class")
+          .column.is_texture(:class="column_size_info.column_class")
             a.image.is-block(:href="filename_for(i)" target="_blank" @click="sound_play('click')")
               img(:src="filename_for(i)")
               .image_number
@@ -43,11 +43,11 @@
   //-   .container.is-fluid
   //-     GalleryTopContent(:base="base")
   //-
-  //- GalleryTopDebugPanels(:base="base" v-if="development_p")
-
+  GalleryTopDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
+import { ColumnSizeInfo } from "../models/column_size_info.js"
 // import { Banana      } from "../models/banana.js"
 // import { XpageInfo } from "../models/xpage_info.js"
 //
@@ -68,10 +68,9 @@ export default {
   mixins: [simple_patination_methods],
   data() {
     return {
-      column_size_code: 1,
+      column_size_code: ColumnSizeInfo.fetch("is_size_s").code,
     }
   },
-
   created() {
     this.total = 192
   },
@@ -86,33 +85,22 @@ export default {
       this.sound_play("click")
       this.page = 1
     },
-    slider_change_handle(v) {
+    slider_change_handle(code) {
       this.sound_play("click")
     },
   },
   computed: {
+    base() { return this },
     meta() {
       return {
         title: "木目盤テクスチャ集",
         description: "将棋盤用に特化した木目盤のテクスチャ集です",
-        og_image_key: "gallery_wood",
+        og_image_key: "gallery",
       }
     },
     default_per() { return 100 },
-    column_class() {
-      if (this.column_size_code === 0) {
-        return ["is-4-tablet", "is-3-desktop", "is-2-widescreen", "is-1-fullhd"]
-      }
-      if (this.column_size_code === 1) {
-        return ["is-6-tablet", "is-4-desktop", "is-3-widescreen", "is-2-fullhd"]
-      }
-      if (this.column_size_code === 2) {
-        return ["is-12-tablet", "is-6-desktop", "is-4-widescreen", "is-3-fullhd"]
-      }
-      if (this.column_size_code === 3) {
-        return ["is-12-tablet", "is-12-desktop", "is-6-widescreen", "is-4-fullhd"]
-      }
-    },
+    ColumnSizeInfo() { return ColumnSizeInfo },
+    column_size_info() { return ColumnSizeInfo.fetch(this.column_size_code) },
   },
   // name: "GalleryTopApp",
   // mixins: [
@@ -182,7 +170,6 @@ export default {
   // },
   //
   // computed: {
-  //   base() { return this },
   // },
 }
 </script>
