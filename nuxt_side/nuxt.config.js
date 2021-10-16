@@ -356,10 +356,11 @@ const config = {
   // このせいで本番環境なのに開発環境の設定で運用していて不可解な現象が起きていた
   publicRuntimeConfig: {
     CSR_BUILD_VERSION: BUILD_VERSION,
+    APP_NAME: "",
+    STAGE: "",
     MY_SITE_URL: "",
     MY_NUXT_URL: "",
-    STAGE: "",
-    APP_NAME: "",
+    MATERIAL_DIR_PREFIX: "",
   },
 
   // SSR側での定義で publicRuntimeConfig を上書きする

@@ -31,10 +31,13 @@ set :my_heartbeat_urls, ["https://shogi-flow.xyz/"]
 # set :open_urls, eval(Pathname("VALIDATE_URLS").read).collect { |e| "https://shogi-flow.xyz" + URI(e).request_uri }
 
 tp({
-    application: fetch(:application),
-    branch: fetch(:branch),
-    deploy_to: fetch(:deploy_to),
-    bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
+    :application    => fetch(:application),
+    :branch         => fetch(:branch),
+    :deploy_to      => fetch(:deploy_to),
+    :bundle_servers => fetch(:bundle_servers).collect(&:hostname).join(", "),
+    # :shared_path    => shared_path,
+    # :current_path   => current_path,
+    # :release_path   => release_path,
   })
 
 after "deploy:published", "puma:restart"

@@ -6,6 +6,12 @@
         | $data
       .panel-block
         pre {{pretty_inspect(base.$data)}}
+  .column.is-6
+    .panel
+      .panel-heading
+        | $config
+      .panel-block
+        pre {{pretty_inspect($config)}}
 </template>
 
 <script>
