@@ -13,6 +13,7 @@
           b-slider(:min="0" :max="ColumnSizeInfo.values.length - 1" :tooltip="false" rounded v-model="column_size_code" type="is-light" size="is-small" @input="slider_change_handle")
             template(v-for="e in ColumnSizeInfo.values")
               b-slider-tick(:value="e.code")
+
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container.is-fluid
         .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
