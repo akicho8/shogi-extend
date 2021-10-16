@@ -48,7 +48,7 @@
 </template>
 
 <script>
-const TOTAL_ITEMS = 540
+const TOTAL_ITEMS = 720
 
 import { ColumnSizeInfo } from "../models/column_size_info.js"
 // import { Banana      } from "../models/banana.js"
