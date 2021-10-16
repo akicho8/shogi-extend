@@ -29,7 +29,9 @@ namespace :nuxt_side do
         execute :rm, "-rf", "#{release_path}/nuxt_side/static"
         execute :rm, "-rf", "#{release_path}/nuxt_side/.nuxts"
 
-        upload! "nuxt_side/static", "#{release_path}/nuxt_side/", recursive: true # static は .nuxt の下に入らずそのまま配信されるため
+        if ENV["WITH_STATIC"]
+          upload! "nuxt_side/static", "#{release_path}/nuxt_side/", recursive: true # static は .nuxt の下に入らずそのまま配信されるため
+        end
         upload! "nuxt_side/.nuxt", "#{release_path}/nuxt_side/", recursive: true
 
         upload! "nuxt_side/.env.#{fetch(:stage)}", "#{release_path}/nuxt_side/"
