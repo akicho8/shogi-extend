@@ -20,7 +20,7 @@ export class ColorThemeInfo extends MemoryRecord {
       { key: "is_color_theme_groovy_board_texture05",  name: "木目盤5",             },
       { key: "is_color_theme_groovy_board_texture06",  name: "木目盤6",             },
       // { key: "is_color_theme_groovy_board_texture07",  name: "木目盤7",             },
-      // { key: "is_color_theme_groovy_board_texture08",  name: "木目盤8",             },
+      // { key: "is_color_theme_groovy_board_texture01",  name: "木目盤8",             },
       // { key: "is_color_theme_groovy_board_texture09",  name: "木目盤9",             },
       // { key: "is_color_theme_groovy_board_texture10",  name: "木目盤10",            },
       // { key: "is_color_theme_groovy_board_texture11",  name: "木目盤11",            },
