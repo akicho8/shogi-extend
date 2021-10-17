@@ -3,7 +3,9 @@ import MemoryRecord from 'js-memory-record'
 export class ParamInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "column_size_code",      type: "integer", name: "サイズ",              default: 1,                           permanent: true,  relation: "ColumnSizeInfo",    desc: "",           },
+      { key: "column_size_code",      type: "integer", name: "サイズ",              default: 1,                           permanent: true,   relation: "ColumnSizeInfo", desc: "",           },
+      { key: "per",                   type: "integer", name: "1ページのアイテム数", default: 108,                         permanent: false,  relation: null,             desc: "",           },
+      { key: "page",                  type: "integer", name: "ページ",              default: 1,                           permanent: false,  relation: null,             desc: "",           },
 
       // { key: "body",               type: "string",  name: "棋譜",                default: "",                          permanent: false, relation: null,                desc: "",           },
       // { key: "recipe_key",         type: "string",  name: "出力フォーマット",    default: "is_recipe_mp4",             permanent: true,  relation: "RecipeInfo",        desc: "",           },

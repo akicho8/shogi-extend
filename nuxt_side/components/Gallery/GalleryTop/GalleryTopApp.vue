@@ -19,7 +19,7 @@
         .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
           .column.is-12
             //- https://buefy.org/documentation/pagination
-            b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" simple)
+            b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" :simple="false")
           template(v-for="(_, i) in page_items")
             .column.is_texture(:class="column_size_info.column_class" v-if="column_size_code !== null")
               a.image.is-block(:href="filename_for(i)" target="_blank" @click="sound_play('click')")
@@ -65,7 +65,6 @@ import { app_storage    } from "./app_storage.js"
 // import _ from "lodash"
 import { ParamInfo } from "./models/param_info.js"
 
-const ModExtsprintf = require('extsprintf')
 import { simple_patination_methods } from "@/components/simple_patination_methods.js"
 
 export default {
@@ -94,12 +93,26 @@ export default {
     filename_for(i) {
       return this.sprintf(`${this.$config.MATERIAL_DIR_PREFIX}/material/board/%04d.png`, this.offset + i + 1)
     },
-    title_click_handle() {
-      this.sound_play("click")
-      this.page = 1
-    },
     slider_change_handle(code) {
       this.sound_play("click")
+    },
+    title_click_handle() {
+      this.page = 1
+      this.page_change_handle(null)
+    },
+    page_change_handle(page) {
+      this.sound_play("click")
+      this.router_push({page})
+    },
+    router_push(params) {
+      params = { per: this.per, ...params }
+      this.ParamInfo.values.forEach(e => {
+        const v = params[e.key]
+        if (this.blank_p(v) || v === e.default) {
+          delete params[e.key]
+        }
+      })
+      this.$router.push({name: "gallery", query: params})
     },
   },
   computed: {
@@ -111,7 +124,6 @@ export default {
         og_image_key: "gallery",
       }
     },
-    default_per() { return 100 },
     ColumnSizeInfo() { return ColumnSizeInfo },
     column_size_info() { return ColumnSizeInfo.fetch(this.column_size_code) },
     ParamInfo() { return ParamInfo },
