@@ -17,8 +17,8 @@ export const params_controller = {
   ],
   beforeMount() {
     this.__assert__(this.ParamInfo, "this.ParamInfo")
-    this.ls_setup()                               // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
-    this.pc_data_set_by_query_or_default()           // 2. query があれば上書きする。また null の変数には初期値を設定する
+    this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
+    this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
     this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
     this.pc_mounted()
   },
@@ -72,8 +72,11 @@ export const params_controller = {
     },
   },
   computed: {
-    ls_default() {
+    pc_ls_default() {
       return this.ParamInfo.values.filter(e => e.permanent).reduce((a, e, i) => ({...a, [e.key]: e.default}), {})
+    },
+    ls_default() {
+      return this.pc_ls_default
     },
   },
 }
