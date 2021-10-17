@@ -1,7 +1,7 @@
 import { LoopInfo          } from "../models/loop_info.js"
 import { XboldInfo          } from "../models/xbold_info.js"
 import { ViewpointInfo     } from "../models/viewpoint_info.js"
-import { ColorThemeInfo    } from "../models/color_theme_info.js"
+import { ColorThemeInfo    } from "../../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
 import { FactoryMethodInfo  } from "../models/factory_method_info.js"
 import { RectSizeInfo } from "../models/rect_size_info.js"
