@@ -17,9 +17,7 @@
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container.is-fluid
         .columns.is-multiline.is-variable.is-0-mobile.is-3-tablet.is-3-desktop.is-3-widescreen.is-3-fullhd
-          .column.is-12
-            //- https://buefy.org/documentation/pagination
-            b-pagination(:total="total" :per-page="per" :current.sync="page" @change="page_change_handle" order="default" :simple="false")
+          GalleryTopPagination(:base="base")
           template(v-for="(_, i) in page_items")
             .column.is_texture(:class="column_size_info.column_class" v-if="column_size_code !== null")
               a.image.is-block(:href="filename_for(i)" target="_blank" @click="sound_play('click')")
@@ -27,6 +25,7 @@
                 .image_number
                   .image_number_body
                     | {{display_number_for(i)}}
+          GalleryTopPagination(:base="base")
           .column.is-12.cc_container.is-flex.is-justify-content-center
             a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sound_play('click')")
               img(src="by-sa.svg")
