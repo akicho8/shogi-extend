@@ -4,6 +4,7 @@ import { HandleNameParser } from "./handle_name_parser.js"
 import Autolinker from 'autolinker'
 const strip_tags = require('striptags')
 // const ModExtsprintf = require('extsprintf')
+import { ScreenSizeDetector } from "./screen_size_detector.js"
 
 import Extsprintf from 'extsprintf'
 
@@ -11,9 +12,18 @@ import { DotSfen } from "@/components/models/dot_sfen.js"
 
 // vue_support.js の methods に追加する
 export const Gs = {
+  // Bulma のマクロの JS 版
+  // +mobile 相当は this.screen_match_p("mobile") とする
+  screen_match_p(type) {
+    return ScreenSizeDetector.match_p(type)
+  },
+
   dot_sfen_escape(...args)   { return DotSfen.escape(...args)   }, // SFENの " " を "." に変更
   dot_sfen_unescape(...args) { return DotSfen.unescape(...args) }, // SFENの "." を " " に変更
 
+  // 一周してくれる賢い剰余
+  // -1 % 3 => 2
+  //  4 % 3 => 1
   ruby_like_modulo(v, n) {
     if (n === 0) {
       throw new Error("divided by 0")
@@ -26,6 +36,10 @@ export const Gs = {
     return v + 0
   },
 
+  // 使用例
+  //  foo_next(sign) {
+  //    this.foo_key = this.ary_cycle_at(this.FooInfo.values, this.foo_info.code + sign).key
+  //  }
   ary_cycle_at(ary, index) {
     return ary[this.ruby_like_modulo(index, ary.length)]
   },
