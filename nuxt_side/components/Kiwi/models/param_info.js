@@ -11,7 +11,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "loop_key",           type: "string",  name: "ループ",              default: "is_loop_infinite",          permanent: true,  relation: null,                desc: "",           },
       { key: "xbold_key",          type: "string",  name: "駒を太字にする条件",  default: "is_xbold_latest",           permanent: true,  relation: null,                desc: "",           },
       { key: "viewpoint_key",      type: "string",  name: "視点",                default: "black",                     permanent: false, relation: "ViewpointInfo",     desc: "",           },
-      { key: "color_theme_key",    type: "string",  name: "配色",                default: "is_color_theme_groovy_board_texture01", permanent: true,  relation: "ColorThemeInfo",    desc: "",           },
+      { key: "color_theme_key",    type: "string",  name: "配色",                default: "is_color_theme_groovy_board_texture1", permanent: true,  relation: "ColorThemeInfo",    desc: "",           },
       { key: "audio_theme_key",    type: "string",  name: "BGM",                 default: "is_audio_theme_ds3479",     permanent: true,  relation: "AudioThemeInfo",    desc: "",           },
       { key: "factory_method_key", type: "string",  name: "生成ツール",          default: "is_factory_method_ffmpeg",  permanent: true,  relation: "FactoryMethodInfo", desc: "",           },
       { key: "cover_text",         type: "string",  name: "表紙文言",            default: "",                          permanent: true,  relation: null,                desc: "",           },

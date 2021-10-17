@@ -12,7 +12,7 @@ def create(recipe_key)
       :media_builder_params => {
         :recipe_key      => recipe_info.key,
         :audio_theme_key => "is_audio_theme_none",
-        :color_theme_key => "is_color_theme_groovy_board_texture01",
+        :color_theme_key => "is_color_theme_groovy_board_texture1",
         :cover_text      => "(cover_text.title)\n(cover_text.description)",
       },
     },

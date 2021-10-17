@@ -16,7 +16,7 @@
   ul
     li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
     li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
-    li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
+    //- li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
 
   template(v-if="present_p(photo_author_info)")
     .section_title BACKGROUND TEXTURE
