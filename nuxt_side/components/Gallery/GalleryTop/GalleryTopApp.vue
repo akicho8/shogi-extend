@@ -92,7 +92,7 @@ export default {
       return this.offset + i + 1
     },
     filename_for(i) {
-      return ModExtsprintf.sprintf("/material/board/%04d.png", this.offset + i + 1)
+      return this.sprintf(`${this.$config.MATERIAL_DIR_PREFIX}/material/board/%04d.png`, this.offset + i + 1)
     },
     title_click_handle() {
       this.sound_play("click")
