@@ -7,7 +7,7 @@
       .preview_image.is-flex
         .is-size-7.has-text-grey.has-text-centered(v-if="false")
           | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
-        b-image.mr-1(:src="ogp_image_url")
+        b-image(:src="ogp_image_url")
   .modal-card-foot
     b-button(@click="close_handle") キャンセル
     //- b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
