@@ -3,6 +3,10 @@ import dayjs from "dayjs"
 import { HandleNameParser } from "./handle_name_parser.js"
 import Autolinker from 'autolinker'
 const strip_tags = require('striptags')
+// const ModExtsprintf = require('extsprintf')
+
+import Extsprintf from 'extsprintf'
+
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
 // vue_support.js の methods に追加する
@@ -256,6 +260,10 @@ export const Gs = {
   strip_tags(...args) {
     return strip_tags(...args)
   },
+
+  sprintf(...args) { return Extsprintf.sprintf(...args) },
+  printf(...args)  { return Extsprintf.printf(...args)  },
+  fprintf(...args) { return Extsprintf.fprintf(...args) },
 
   user_call_name(str) {
     if (this.development_p) {
