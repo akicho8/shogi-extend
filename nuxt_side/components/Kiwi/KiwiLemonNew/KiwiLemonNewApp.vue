@@ -3,7 +3,7 @@ client-only
   .KiwiLemonNewApp
 
     DebugBox(v-if="development_p")
-      div foo:
+      p column_size_code: {{column_size_code}}
 
     KiwiLemonNewSidebar(:base="base")
     MainNavbar

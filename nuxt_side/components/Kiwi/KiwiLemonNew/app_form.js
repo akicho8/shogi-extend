@@ -5,7 +5,7 @@ import { ColorThemeInfo    } from "../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
 import { FactoryMethodInfo  } from "../models/factory_method_info.js"
 import { RectSizeInfo } from "../models/rect_size_info.js"
-import { ParamInfo         } from "../models/param_info.js"
+import { ParamInfo         } from "./models/param_info.js"
 import { RecipeInfo        } from "../models/recipe_info.js"
 
 import Big from "big.js"        // https://github.com/MikeMcl/big.js/

@@ -22,6 +22,7 @@ export class ParamInfo extends MemoryRecord {
       { key: "end_duration",       type: "integer", name: "最後に指定秒間停止",  default: 7,                           permanent: true,  relation: null,                desc: "",           },
       { key: "sleep",              type: "integer", name: "遅延",                default: 0,                           permanent: true,  relation: null,                desc: "デバッグ用", },
       { key: "raise_message",      type: "string",  name: "例外メッセージ",      default: "",                          permanent: true,  relation: null,                desc: "デバッグ用", },
+      { key: "column_size_code",   type: "integer", name: "カラムサイズ",        default: 1,                           permanent: true,  relation: "ColumnSizeInfo",    desc: "",           },
     ]
   }
 }
