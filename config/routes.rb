@@ -185,7 +185,6 @@ Rails.application.routes.draw do
         get :sitemap
       end
       namespace :bananas do
-        get :top
         get :index
         get :show
         get :edit
