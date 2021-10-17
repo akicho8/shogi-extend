@@ -33,6 +33,7 @@ export const app_urls = {
       })
     },
 
+    // FIXME: param_info で綺麗にする
     url_params_clean(url_params) {
       const e = {...url_params}
       if (this.blank_p(e.room_code)) {
@@ -62,6 +63,7 @@ export const app_urls = {
         room_code:            this.room_code,
         sp_run_mode:          this.sp_run_mode,
         sp_internal_rule_key: this.sp_internal_rule_key,
+        color_theme_key:      this.color_theme_key,
       }
       return this.url_params_clean(e)
     },

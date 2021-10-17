@@ -148,6 +148,7 @@ import { app_sidebar              } from "./app_sidebar.js"
 import { app_user_name            } from "./app_user_name.js"
 import { app_storage              } from "./app_storage.js"
 import { app_export               } from "./app_export.js"
+import { app_color_theme          } from "./app_color_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
@@ -158,6 +159,7 @@ import { window_active_detector   } from "./window_active_detector.js"
 export default {
   name: "ShareBoardApp",
   mixins: [
+    // どう見ても mixins の使い方を間違えている
     support_parent,
     app_vars,
     app_action_log,
@@ -193,6 +195,7 @@ export default {
     app_user_name,
     app_storage,
     app_export,
+    app_color_theme,
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
@@ -244,6 +247,7 @@ export default {
       this.current_title,
       this.abstract_viewpoint,
       this.room_code,
+      this.color_theme_key,
     ], () => {
       // 両方エラーになってしまう
       //   this.$router.replace({name: "share-board", query: this.current_url_params})

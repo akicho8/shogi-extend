@@ -4,6 +4,7 @@ export class ParamInfo extends MemoryRecord {
   static get define() {
     return [
       { key: "share_board_column_width",      type: "float",   name: "盤の大きさ",    default: 80.0,                        permanent: true,   relation: null,        desc: "",           },
+      { key: "color_theme_key",               type: "string",  name: "配色",          default: "is_color_theme_groovy_board_texture1", permanent: true,   relation: "ColorThemeInfo",        desc: "",           },
 
       // { key: "user_name",                     type: "string",  name: "名前",          default: "",                          permanent: true,   relation: null,        desc: "",           },
       // { key: "per",                   type: "integer", name: "1ページのアイテム数", default: 108,                         permanent: false,  relation: null,             desc: "",           },
