@@ -51,7 +51,7 @@ export default {
     },
 
     window_popup_if_desktop(url, options = {}) {
-      if (this.desktop_p) {
+      if (this.desktop_p()) {
         this.window_popup(url, options)
       } else {
         location.href = url
