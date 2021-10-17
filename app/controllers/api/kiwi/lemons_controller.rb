@@ -48,16 +48,18 @@ module Api
         render json: retv
       end
 
+      # こちらは対象にしない
+      # 見るのは banana の方
       # http://localhost:3000/api/kiwi/lemons/sitemap.json
       # http://localhost:4000/sitemap.xml
-      def sitemap
-        if Rails.env.production?
-          raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
-        end
-        retv = {}
-        retv[:lemons] = ::Kiwi::Lemon.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
-        render json: retv
-      end
+      # def sitemap
+      #   if Rails.env.production?
+      #     raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+      #   end
+      #   retv = {}
+      #   retv[:lemons] = ::Kiwi::Lemon.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
+      #   render json: retv
+      # end
 
       # curl http://localhost:3000/api/kiwi/lemons/latest_info_reload.json
       # ../../../nuxt_side/components/Kiwi/KiwiApp.vue
