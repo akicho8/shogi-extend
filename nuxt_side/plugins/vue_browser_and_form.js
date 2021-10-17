@@ -1,4 +1,5 @@
 import { isMobile } from "../components/models/is_mobile.js"
+import _ from "lodash"
 
 export default {
   methods: {
