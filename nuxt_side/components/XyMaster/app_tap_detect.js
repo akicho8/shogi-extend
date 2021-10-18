@@ -6,10 +6,8 @@ export const app_tap_detect = {
       tap_detect_key: null,
     }
   },
-  methods: {
-  },
   computed: {
-    TapDetectInfo()  { return TapDetectInfo                                         },
-    tap_detect_info() { return TapDetectInfo.fetch(this.tap_detect_key)                    },
+    TapDetectInfo()  { return TapDetectInfo  },
+    tap_detect_info() { return TapDetectInfo.fetch(this.tap_detect_key) },
   },
 }
