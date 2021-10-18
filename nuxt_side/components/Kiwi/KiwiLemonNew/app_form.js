@@ -361,7 +361,7 @@ export const app_form = {
             //////////////////////////////////////// MediaBuilder で処理
             recipe_key: this.recipe_key,
             ...this.u_audio_file_if_enabled,
-            ...this.image_file_if_enabled,
+            ...this.u_image_file_if_enabled,
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:          this.loop_key,
             page_duration:     this.page_duration,
@@ -369,6 +369,7 @@ export const app_form = {
             viewpoint:         this.viewpoint_key,
             color_theme_key:   this.color_theme_key,
             audio_theme_key:   this.audio_theme_key,
+            xbold_key:         this.xbold_key,
             factory_method_key: this.factory_method_key,
             cover_text:        this.cover_text,
             video_crf:         this.video_crf,
@@ -376,9 +377,9 @@ export const app_form = {
             main_volume:       this.main_volume,
             width:             this.rect_width,
             height:            this.rect_height,
-            renderer_override_params: { // テーマの上書き
-              ...this.xbold_info.to_params,
-            },
+            // renderer_override_params: { // テーマの上書き
+            //   ...this.xbold_info.to_params,
+            // },
           },
         },
       }
@@ -393,7 +394,7 @@ export const app_form = {
       }
     },
 
-    image_file_if_enabled() {
+    u_image_file_if_enabled() {
       return {
         u_bg_file: this.u_bg_file,
         u_fg_file: this.u_fg_file,

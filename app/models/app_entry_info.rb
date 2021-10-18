@@ -29,6 +29,21 @@ class AppEntryInfo
       ],
     },
     {
+      key: :gallery,
+      display_p: !Rails.env.production?,
+      experiment_p: false,
+      nuxt_link_to: {path: "/gallery"},
+      title: "木目盤テクスチャ集",
+      attention_label: "NEW!",
+      og_image_key: "gallery",
+      description: "将棋盤用の木が必要なときにどうぞ",
+      features: [
+        "サイズ: 1080x1080",
+        "木目: 基本3パターン",
+        "色相: 5パターン",
+      ],
+    },
+    {
       key: :kiwi_lemon_index,
       display_p: !Rails.env.production?,
       experiment_p: false,
