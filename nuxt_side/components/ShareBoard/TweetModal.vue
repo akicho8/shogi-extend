@@ -44,6 +44,7 @@ export default {
   },
   beforeMount() {
     this.screen_is_desktop = this.screen_match_p("desktop")
+    this.base.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
 
   methods: {
