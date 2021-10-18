@@ -26,6 +26,12 @@
 require "nkf"
 
 module Wkbk
+  # 更新日時を変更せずに公開設定を変更する
+  # cap staging rails:runner CODE='Wkbk::Book.find_by(key: "ukofXqKH2Qb").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "UYM9vQxphwI").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "a3em1Fm3jAI").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "mrOp1YMj5L4").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "BsMEXmoMIGa").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
   class Book < ApplicationRecord
     include FolderMethods
     include InfoMethods
