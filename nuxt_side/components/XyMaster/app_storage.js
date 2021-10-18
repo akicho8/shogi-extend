@@ -1,17 +1,11 @@
-import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
+import { params_controller } from "@/components/params_controller.js"
+import { ParamInfo } from "./models/param_info.js"
 
 export const app_storage = {
-  mixins: [
-    ls_support_mixin,
-  ],
-  data() {
-    return {
-    }
-  },
-  beforeMount() {
-    this.ls_setup()
-  },
+  mixins: [params_controller],
   computed: {
+    ParamInfo() { return ParamInfo },
+
     //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
     // |------------------+----------------------------------------|
     // | "xy_master"      | stopwatch のライブラリを使っていたころ |
@@ -23,6 +17,7 @@ export const app_storage = {
     },
     ls_default() {
       return {
+        ...this.pc_ls_default,
         rule_key:        this.default_rule_key,
         chart_rule_key:  this.default_rule_key,
         scope_key:       "scope_today",

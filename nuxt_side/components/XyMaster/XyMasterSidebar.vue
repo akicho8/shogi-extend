@@ -25,6 +25,10 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_star_size" :min="0" :max="100" :step="0.1")
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す
+
+      .box
+        .title.is-5 操作感
+        SimpleRadioButtons.x-field_block(:base="base" :model="base.Foo1Info" var_name="foo1_key")
 </template>
 
 <script>

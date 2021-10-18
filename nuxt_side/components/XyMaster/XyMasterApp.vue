@@ -41,7 +41,7 @@
                 :sp_viewpoint="current_rule.viewpoint"
                 :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
                 :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
-                :sp_board_cell_left_click_user_handle="() => true"
+                :sp_board_cell_left_click_user_handle="sp_board_cell_left_click_user_handle"
               )
 
             .time_container.fixed_font.is-size-3
@@ -84,6 +84,7 @@ import { app_ranking  } from "./app_ranking.js"
 import { app_sidebar  } from "./app_sidebar.js"
 import { app_storage  } from "./app_storage.js"
 import { app_style    } from "./app_style.js"
+import { app_foo1    } from "./app_foo1.js"
 import { app_tweet    } from "./app_tweet.js"
 import { app_chore    } from "./app_chore.js"
 
@@ -113,6 +114,7 @@ export default {
     app_sidebar,
     app_storage,
     app_style,
+    app_foo1,
     app_tweet,
     app_chore,
   ],
@@ -189,6 +191,18 @@ export default {
   methods: {
     // こっちは prevent.stop されてないので自分で呼ぶ
     sp_board_cell_pointerdown_user_handle(place, event) {
+      if (this.foo1_key === "pointerdown") {
+        return this.cell_tap_handle(place, event)
+      }
+    },
+
+    sp_board_cell_left_click_user_handle(place, event) {
+      if (this.foo1_key === "click") {
+        return this.cell_tap_handle(place, event)
+      }
+    },
+
+    cell_tap_handle(place, event) {
       if (this.mode === "is_mode_run") {
         if (this.tap_method_p) {
           this.input_valid(place)
