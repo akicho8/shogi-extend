@@ -10,7 +10,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
       //-     b-menu-item.is_active_unset(label="順番設定"              @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
       //-     b-menu-item.is_active_unset(label="対局時計"              @click="base.cc_modal_handle")
       .box
-        .title.is-5 スタイル設定
+        .title.is-5 スタイル
 
         b-field.is-hidden-desktop.mb-0(custom-class="is-small" label="横幅 (Touch端末のみ)")
           b-slider(v-bind="slider_attrs" v-model="base.touch_board_width" :min="0" :max="1" :step="0.001")
