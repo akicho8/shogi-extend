@@ -28,7 +28,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
 
       .box
         .title.is-5 操作感
-        SimpleRadioButtons.x-field_block(:base="base" :model="base.Foo1Info" var_name="foo1_key")
+        SimpleRadioButtons.x-field_block(:base="base" :model="base.TapDetectInfo" var_name="tap_detect_key")
 </template>
 
 <script>

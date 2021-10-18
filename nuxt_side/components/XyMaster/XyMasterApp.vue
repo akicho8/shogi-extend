@@ -84,7 +84,7 @@ import { app_ranking  } from "./app_ranking.js"
 import { app_sidebar  } from "./app_sidebar.js"
 import { app_storage  } from "./app_storage.js"
 import { app_style    } from "./app_style.js"
-import { app_foo1    } from "./app_foo1.js"
+import { app_tap_detect    } from "./app_tap_detect.js"
 import { app_tweet    } from "./app_tweet.js"
 import { app_chore    } from "./app_chore.js"
 
@@ -114,7 +114,7 @@ export default {
     app_sidebar,
     app_storage,
     app_style,
-    app_foo1,
+    app_tap_detect,
     app_tweet,
     app_chore,
   ],
@@ -191,13 +191,13 @@ export default {
   methods: {
     // こっちは prevent.stop されてないので自分で呼ぶ
     sp_board_cell_pointerdown_user_handle(place, event) {
-      if (this.foo1_key === "pointerdown") {
+      if (this.tap_detect_key === "pointerdown") {
         return this.cell_tap_handle(place, event)
       }
     },
 
     sp_board_cell_left_click_user_handle(place, event) {
-      if (this.foo1_key === "click") {
+      if (this.tap_detect_key === "click") {
         return this.cell_tap_handle(place, event)
       }
     },

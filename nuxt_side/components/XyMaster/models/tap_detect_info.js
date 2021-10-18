@@ -1,6 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
-export class Foo1Info extends MemoryRecord {
+export class TapDetectInfo extends MemoryRecord {
   static field_label = "タップを検出する方法"
 
   static get define() {
