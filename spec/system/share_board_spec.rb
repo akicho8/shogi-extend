@@ -1178,9 +1178,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  def visit_app(args = {})
-    args = args.merge("__debug_box_skip__" => "true")
-    visit "/share-board?#{args.to_query}"
+  def visit_app(*args)
+    visit2("/share-board", *args)
   end
 
   def room_setup(room_code, user_name)
