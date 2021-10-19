@@ -52,7 +52,7 @@
       b-input(key="input-page_duration" v-model.number="base.page_duration")
 
 
-  SimpleRadioButtons.field_block(:base="base" :model="base.XboldInfo" var_name="xbold_key")
+  SimpleRadioButtons.field_block(:base="base" :model="base.PieceFontWeightInfo" var_name="piece_font_weight_key")
 
   //- SimpleRadioButtons(:base="base" :model="base.RectSizeInfo" var_name="rect_size_key")
   // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")

@@ -1,5 +1,5 @@
 import { LoopInfo          } from "../models/loop_info.js"
-import { XboldInfo          } from "../models/xbold_info.js"
+import { PieceFontWeightInfo          } from "../models/piece_font_weight_info.js"
 import { ViewpointInfo     } from "../models/viewpoint_info.js"
 import { ColorThemeInfo    } from "../models/color_theme_info.js"
 import { AudioThemeInfo    } from "../models/audio_theme_info.js"
@@ -18,7 +18,7 @@ export const app_form = {
       //////////////////////////////////////////////////////////////////////////////// POST前
       body: "",                 // 棋譜
       loop_key:           null, // ループの有無(GIFの場合)
-      xbold_key:          null, // 駒を太字にする条件
+      piece_font_weight_key:          null, // 駒を太字にする条件
       rect_size_key: null, // 画像サイズ
       rect_width:          null, // w
       rect_height:         null, // h
@@ -313,8 +313,8 @@ export const app_form = {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
     LoopInfo()                 { return LoopInfo                                         },
     loop_info()                { return LoopInfo.fetch(this.loop_key)                    },
-    XboldInfo()                 { return XboldInfo                                         },
-    xbold_info()                { return XboldInfo.fetch(this.xbold_key)                    },
+    PieceFontWeightInfo()                 { return PieceFontWeightInfo                                         },
+    piece_font_weight_info()                { return PieceFontWeightInfo.fetch(this.piece_font_weight_key)                    },
     RectSizeInfo()        { return RectSizeInfo                                },
     rect_size_info()      { return RectSizeInfo.fetch(this.rect_size_key) },
     ParamInfo()                { return ParamInfo                                        },
@@ -377,7 +377,7 @@ export const app_form = {
             width:             this.rect_width,
             height:            this.rect_height,
             renderer_override_params: { // テーマの上書き
-              ...this.xbold_info.to_params,
+              ...this.piece_font_weight_info.to_params,
             },
           },
         },

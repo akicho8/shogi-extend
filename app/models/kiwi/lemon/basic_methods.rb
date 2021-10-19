@@ -55,7 +55,7 @@ module Kiwi
           :turn               => recordable.display_turn,
           :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint),
           :color_theme_key    => all_params.dig(:media_builder_params, :color_theme_key),
-          :xbold_key          => all_params.dig(:media_builder_params, :xbold_key),
+          :piece_font_weight_key          => all_params.dig(:media_builder_params, :piece_font_weight_key),
         }.compact
       end
     end
