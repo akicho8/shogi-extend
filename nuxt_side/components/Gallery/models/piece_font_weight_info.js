@@ -1,13 +1,8 @@
 import MemoryRecord from 'js-memory-record'
 
 export class PieceFontWeightInfo extends MemoryRecord {
-  static get field_label() {
-    return "駒書体の太さ"
-  }
-
-  static get field_message() {
-    return ""
-  }
+  static field_label = "駒書体の太さ"
+  static field_message = ""
 
   static get define() {
     return [

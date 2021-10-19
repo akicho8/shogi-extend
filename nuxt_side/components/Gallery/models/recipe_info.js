@@ -1,13 +1,8 @@
 import MemoryRecord from 'js-memory-record'
 
 export class RecipeInfo extends MemoryRecord {
-  static get field_label() {
-    return "出力フォーマット"
-  }
-
-  static get field_message() {
-    return ""
-  }
+  static field_label = "出力フォーマット"
+  static field_message = ""
 
   static get define() {
     return [

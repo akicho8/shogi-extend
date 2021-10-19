@@ -1,14 +1,8 @@
 import MemoryRecord from 'js-memory-record'
 
 export class RectSizeInfo extends MemoryRecord {
-  static get field_label() {
-    return "サイズ"
-  }
-
-  // 未使用
-  static get field_message() {
-    return ""
-  }
+  static field_label = "サイズ"
+  static field_message = ""
 
   static get define() {
     return [

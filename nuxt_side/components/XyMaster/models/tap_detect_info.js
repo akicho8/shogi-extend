@@ -1,9 +1,6 @@
 import MemoryRecord from 'js-memory-record'
 
 export class TapDetectInfo extends MemoryRecord {
-  // static get field_label() {
-  //   return "タップを検出する方法"
-  // }
   static field_label = "タップを検出する方法"
 
   static get define() {

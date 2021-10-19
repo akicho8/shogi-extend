@@ -1,13 +1,8 @@
 import MemoryRecord from 'js-memory-record'
 
 export class ViewpointInfo extends MemoryRecord {
-  static get field_label() {
-    return "視点"
-  }
-
-  static get field_message() {
-    return ""
-  }
+  static field_label = "視点"
+  static field_message = ""
 
   static get define() {
     return [

@@ -1,13 +1,8 @@
 import MemoryRecord from 'js-memory-record'
 
 export class DebugModeInfo extends MemoryRecord {
-  static get field_label() {
-    return "デバッグ"
-  }
-
-  static get field_message() {
-    return ""
-  }
+  static field_label = "デバッグ"
+  static field_message = ""
 
   static get define() {
     return [

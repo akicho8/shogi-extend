@@ -3,13 +3,8 @@ import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
 export class AudioThemeInfo extends MemoryRecord {
-  static get field_label() {
-    return "BGM"
-  }
-
-  static get field_message() {
-    return ""
-  }
+  static field_label = "BGM"
+  static field_message = ""
 
   static get define() {
     return [
