@@ -327,10 +327,10 @@ module Actb
     #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
     #   }
     #   question = user.actb_questions.build
-    #   question.update_from_js(params)
+    #   question.update_from_action(params)
     #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       question = params.deep_symbolize_keys
       @save_before_hash = current_hash
 

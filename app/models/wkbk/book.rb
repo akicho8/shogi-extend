@@ -117,10 +117,10 @@ module Wkbk
     #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
     #   }
     #   book = user.wkbk_books.build
-    #   book.update_from_js(params)
+    #   book.update_from_action(params)
     #   book.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       book = params.deep_symbolize_keys
       old_new_record = new_record?
 

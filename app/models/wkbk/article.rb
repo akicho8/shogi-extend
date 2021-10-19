@@ -146,10 +146,10 @@ module Wkbk
     #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
     #   }
     #   article = user.wkbk_articles.build
-    #   article.update_from_js(params)
+    #   article.update_from_action(params)
     #   article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       article = params.deep_symbolize_keys
 
       ActiveRecord::Base.transaction do

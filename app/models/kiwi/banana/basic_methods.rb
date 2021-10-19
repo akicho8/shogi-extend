@@ -112,10 +112,10 @@ module Kiwi
       #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
       #   }
       #   banana = user.kiwi_bananas.build
-      #   banana.update_from_js(params)
+      #   banana.update_from_action(params)
       #   banana.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
       #
-      def update_from_js(params)
+      def update_from_action(params)
         params = params.symbolize_keys
         rv = {}
         rv[:new_record] = new_record?

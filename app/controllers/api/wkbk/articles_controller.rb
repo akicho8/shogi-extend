@@ -100,7 +100,7 @@ module Api
           article = current_user.wkbk_articles.build
         end
         begin
-          article.update_from_js(params.to_unsafe_h[:article])
+          article.update_from_action(params.to_unsafe_h[:article])
           retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message

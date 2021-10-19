@@ -125,7 +125,7 @@ module Api
           question = current_user.actb_questions.build
         end
         begin
-          question.update_from_js(params.to_unsafe_h[:question])
+          question.update_from_action(params.to_unsafe_h[:question])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
@@ -139,7 +139,7 @@ module Api
           emotion = current_user.emotions.build
         end
         begin
-          emotion.update_from_js(params.to_unsafe_h[:emotion])
+          emotion.update_from_action(params.to_unsafe_h[:emotion])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end

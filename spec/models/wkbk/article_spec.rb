@@ -52,7 +52,7 @@ module Wkbk
       assert { article1.tweet_body }
     end
 
-    describe "update_from_js" do
+    describe "update_from_action" do
       it "works" do
         user1 = User.create!
         user1.wkbk_books.create!(key: "book1")
@@ -68,7 +68,7 @@ module Wkbk
         # 1つ目を作る
         article = user1.wkbk_articles.build
         perform_enqueued_jobs do
-          article.update_from_js(params)
+          article.update_from_action(params)
         end
 
         assert { article.persisted? }
@@ -84,7 +84,7 @@ module Wkbk
 
         # 同じ2つ目を作る→失敗
         article = user1.wkbk_articles.build
-        proc { article.update_from_js(params) }.should raise_error(ActiveRecord::RecordInvalid)
+        proc { article.update_from_action(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { article.persisted? == false }
         assert { article.turn_max == 0 }
       end
@@ -161,10 +161,10 @@ module Wkbk
     #
     #   assert { Wkbk::LobbyMessage.count == 0 }
     #
-    #   article1.update_from_js(folder_key: "public")
+    #   article1.update_from_action(folder_key: "public")
     #   assert { Wkbk::LobbyMessage.count == 1 }
     #
-    #   article1.update_from_js(folder_key: "private")
+    #   article1.update_from_action(folder_key: "private")
     #   assert { Wkbk::LobbyMessage.count == 1 }
     # end
 

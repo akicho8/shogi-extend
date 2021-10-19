@@ -86,7 +86,7 @@ module Api
           book = current_user.wkbk_books.build
         end
         begin
-          book.update_from_js(params.to_unsafe_h[:book])
+          book.update_from_action(params.to_unsafe_h[:book])
           retv[:book] = book.as_json(::Wkbk::Book.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message

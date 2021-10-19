@@ -122,8 +122,8 @@ module Kiwi
       end
     end
 
-    it "update_from_js" do
-      banana1.update_from_js({})
+    it "update_from_action" do
+      banana1.update_from_action({})
       assert { banana1.saved_changes? == false }
     end
   end

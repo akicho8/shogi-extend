@@ -14,13 +14,13 @@ params = {
 }.deep_symbolize_keys
 
 article = user.wkbk_articles.build
-article.update_from_js(params)
+article.update_from_action(params)
 article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 
 article = user.wkbk_articles.build
 begin
 # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-article.update_from_js(params)
+article.update_from_action(params)
 # ActiveRecord::Base.logger = nil
 rescue
 end

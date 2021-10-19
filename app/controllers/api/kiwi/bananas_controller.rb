@@ -90,7 +90,7 @@ module Api
         else
           banana = current_user.kiwi_bananas.build
         end
-        render json: banana.update_from_js(params.to_unsafe_h[:banana])
+        render json: banana.update_from_action(params.to_unsafe_h[:banana])
       end
 
       # DELETE http://localhost:3000/api/kiwi/bananas/destroy
