@@ -71,9 +71,9 @@ export default {
   mixins: [
     support_parent,
     simple_patination_methods,
+    app_storage,
     // app_table,
     // app_tabs,
-    app_storage,
     // app_sidebar,
     // app_search,
   ],
@@ -93,7 +93,9 @@ export default {
       return this.sprintf(`${this.$config.MATERIAL_DIR_PREFIX}/material/board/%04d.png`, this.offset + i + 1)
     },
     slider_change_handle(code) {
-      this.sound_play("click")
+      if (this.pc_standby_ok >= 1) {
+        this.sound_play("click")
+      }
     },
     title_click_handle() {
       this.page = 1

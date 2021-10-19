@@ -1,6 +1,13 @@
 // 使い方
 //
-//   // this.ParamInfo を参照できるようにしておく
+// ▼this.ParamInfo を参照できるようにしておく
+//
+//   import { ParamInfo         } from "./models/param_info.js"
+//   computed: {
+//      ParamInfo() { return ParamInfo },
+//   },
+//
+// ▼本体
 //
 //   import { params_controller } from "@/components/params_controller.js"
 //
@@ -8,19 +15,37 @@
 //     mixins: [params_controller],
 //   }
 //
-
+// ▼初回に @input="xxx_handle" などが反応してしまうのを回避するには？
+//
+//   xxx_handle() {
+//     if (this.pc_standby_ok >= 1) {
+//       this.sound_play('click')
+//     }
+//   }
+//
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 export const params_controller = {
   mixins: [
     ls_support_mixin,
   ],
+  data() {
+    return {
+      pc_standby_ok: 0,
+    }
+  },
   beforeMount() {
+    this.clog(`[params_controller] begin`)
     this.__assert__(this.ParamInfo, "this.ParamInfo")
     this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
     this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
     this.pc_mounted()
+    this.clog(`pc_standby_ok: ${this.pc_standby_ok}`)
+    this.$nextTick(() => {
+      this.pc_standby_ok += 1
+      this.clog(`pc_standby_ok: ${this.pc_standby_ok}`)
+    })
   },
   methods: {
     pc_mounted() {
