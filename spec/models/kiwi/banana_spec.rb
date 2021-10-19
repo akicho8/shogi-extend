@@ -36,6 +36,7 @@ module Kiwi
       # 動画作成
       free_battle1 = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
       lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
+      lemon1.thumbnail_clean    # テストが不安定になるので最初に消しておく
       lemon1.main_process
       # この時点でサムネは作らない
       assert { lemon1.thumbnail_real_path.exist? == false }
