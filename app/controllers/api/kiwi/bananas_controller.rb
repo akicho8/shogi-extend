@@ -85,19 +85,12 @@ module Api
       # POST http://localhost:3000/api/kiwi/bananas/save
       # nginx の client_max_body_size を調整が必要
       def save
-        retv = {}
         if v = params[:banana][:key]
           banana = current_user.kiwi_bananas.find_by!(key: v)
         else
           banana = current_user.kiwi_bananas.build
         end
-        begin
-          banana.update_from_js(params.to_unsafe_h[:banana])
-          retv[:banana] = banana.as_json(::Kiwi::Banana.json_struct_for_edit)
-        rescue ActiveRecord::RecordInvalid => error
-          retv[:form_error_message] = error.message
-        end
-        render json: retv
+        render json: banana.update_from_js(params.to_unsafe_h[:banana])
       end
 
       # DELETE http://localhost:3000/api/kiwi/bananas/destroy

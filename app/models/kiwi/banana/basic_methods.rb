@@ -117,20 +117,32 @@ module Kiwi
       #
       def update_from_js(params)
         params = params.symbolize_keys
-        old_new_record = new_record?
-
-        attrs = params.slice(*[
-            :title,
-            :description,
-            :folder_key,
-            :lemon_id,
-            :tag_list,
-            :thumbnail_pos,
-          ])
-        assign_attributes(attrs)
-        save!
-
-        changed_then_notify
+        rv = {}
+        rv[:new_record] = new_record?
+        begin
+          update!(params.slice(*[
+                :title,
+                :description,
+                :folder_key,
+                :lemon_id,
+                :tag_list,
+                :thumbnail_pos,
+              ]))
+          changed_then_notify
+          rv[:banana] = as_json(::Kiwi::Banana.json_struct_for_edit)
+          if saved_changes?
+            if saved_changes[:id]
+              rv[:message] = "作成しました"
+            else
+              rv[:message] = "更新しました"
+            end
+          else
+            rv[:message] = "何も変更しませんでした"
+          end
+        rescue ActiveRecord::RecordInvalid => error
+          rv[:form_error_message] = error.message
+        end
+        rv
       end
 
       def og_meta
@@ -192,11 +204,13 @@ module Kiwi
         self.thumbnail_pos ||= 0
       end
 
-      private
-
       def changed_then_notify
         if saved_changes?
-          str = created_at == updated_at ? "作成" : "更新"
+          if saved_changes[:id]
+            str = "作成"
+          else
+            str = "更新"
+          end
           SlackAgent.message_send(key: "動画#{str}", body: [title, page_url].join(" "))
           subject = "#{user.name}さんが動画「#{title}」を#{str}"
           body = info.collect { |k, v| "#{k}: #{v}\n" }.join

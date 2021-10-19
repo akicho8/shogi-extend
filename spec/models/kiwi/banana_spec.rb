@@ -121,6 +121,11 @@ module Kiwi
         assert { @model_group.diff { banana1.user.destroy! } == [-1, -1, -1] }
       end
     end
+
+    it "update_from_js" do
+      banana1.update_from_js({})
+      assert { banana1.saved_changes? == false }
+    end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

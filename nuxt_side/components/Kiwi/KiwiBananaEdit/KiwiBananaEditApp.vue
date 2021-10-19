@@ -100,8 +100,8 @@ export default {
       }
 
       // https://day.js.org/docs/en/durations/diffing
-      const new_record_p = this.banana.new_record_p
-      const before_save_button_name = this.save_button_name
+      // const new_record_p = this.banana.new_record_p
+      // const before_save_button_name = this.save_button_name
       const loading = this.$buefy.loading.open()
       return this.$axios.$post("/api/kiwi/bananas/save.json", {banana: this.banana.post_params}).then(e => {
         if (e.form_error_message) {
@@ -111,10 +111,11 @@ export default {
           this.banana = new Banana(this, e.banana)
 
           this.sound_stop_all()
-          this.toast_ok(`${before_save_button_name}しました`)
+          // this.toast_ok(`${before_save_button_name}しました`)
+          this.toast_ok(e.message)
 
           // 新規の初期値にするため保存しておく
-          if (new_record_p) {
+          if (e.new_record) {
             // this.default_sequence_key = this.banana.sequence_key
             this.default_folder_key = this.banana.folder_key
           }
