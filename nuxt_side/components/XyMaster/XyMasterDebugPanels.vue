@@ -14,7 +14,7 @@
       .panel-heading
         | その他
       a.panel-block(@click="base.name_input_dialog") 名前入力
-  .column.is-3
+      a.panel-block(@click="base.ios15_dialog_alert") iOS15の警告
     .panel
       .panel-heading
         | ランキングタブの各表示ページ

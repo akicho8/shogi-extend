@@ -1,8 +1,10 @@
 export const app_chore = {
-  data() {
-    return {
+  mounted() {
+    if (this.ios15_p) {
+      this.ios15_dialog_alert()
     }
   },
+
   methods: {
     place_talk(place) {
       const x = this.DIMENSION - place.x
@@ -22,7 +24,18 @@ export const app_chore = {
         }
       }
     },
+
+    ios15_dialog_alert() {
+      this.dialog_alert({
+        hasIcon: true,
+        type: "is-warning",
+        title: "残念なお知らせ",
+        message: "お使いの iPhone (iOS15) では連打できなくなってしまいました。すばやく2連続で正解しても2回目が無視されます。右上メニューの設定から「タップを検出する方法」を変更する手もありますが根本的な解決にはならないのでAndroid端末をおすすめします。",
+      })
+    },
   },
+
   computed: {
+    ios15_p() { return window.navigator.userAgent.match(/iPhone OS 15_/) },
   },
 }
