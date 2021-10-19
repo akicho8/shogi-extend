@@ -1166,6 +1166,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "ツイート" do
+    it "ツイートモーダル" do
+      a_block do
+        visit_app
+        find(".tweet_modal_handle").click   # モーダル起動
+        assert_text("この局面をツイート")
+        find(".TweetModal .dropdown").click # テーマ選択
+        assert_text("木目盤A")
+      end
+    end
+  end
+
   def visit_app(args = {})
     args = args.merge("__debug_box_skip__" => "true")
     visit "/share-board?#{args.to_query}"

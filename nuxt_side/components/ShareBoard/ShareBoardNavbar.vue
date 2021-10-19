@@ -28,7 +28,7 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="chat-processing")
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(@click="base.tweet_modal_handle" v-if="base.tweet_button_show_p")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="base.tweet_modal_handle" v-if="base.tweet_button_show_p")
       b-icon(icon="twitter" type="is-white")
 
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.edit_mode_p")
