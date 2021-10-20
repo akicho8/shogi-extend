@@ -87,10 +87,13 @@ export default {
   },
   methods: {
     display_number_for(i) {
+      return this.file_index(i)
+    },
+    file_index(i) {
       return this.offset + i + 1
     },
     filename_for(i) {
-      return this.sprintf(`${this.$config.MATERIAL_DIR_PREFIX}/material/board/%04d.png`, this.offset + i + 1)
+      return `${this.$config.MATERIAL_DIR_PREFIX}/material/board/${this.file_index(i)}.png`
     },
     slider_change_handle(code) {
       if (this.pc_standby_ok >= 1) {
