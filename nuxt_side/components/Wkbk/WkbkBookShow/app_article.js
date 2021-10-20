@@ -4,9 +4,9 @@ import { SfenParser } from 'shogi-player/components/models/sfen_parser.js'
 export const app_article = {
   methods: {
     // 盤上の駒の左右反転
-    sfen_hflip(sfen) {
-      if (this.soldier_hflip_info.key === "flip_on") {
-        sfen = SfenParser.sfen_hflip(sfen)
+    sfen_flop(sfen) {
+      if (this.soldier_flop_info.key === "flip_on") {
+        sfen = SfenParser.sfen_flop(sfen)
       }
       return sfen
     },

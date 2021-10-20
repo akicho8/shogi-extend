@@ -34,7 +34,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
             b-radio-button(size="is-small" v-model="base.viewpoint_flip_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
         b-field(custom-class="is-small" label="盤上の駒の左右反転")
           template(v-for="e in base.SoldierHflipInfo.values")
-            b-radio-button(size="is-small" v-model="base.soldier_hflip_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+            b-radio-button(size="is-small" v-model="base.soldier_flop_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
 </template>
 
 <script>

@@ -71,8 +71,8 @@ export const app_xitems = {
     },
 
     play_mode_advanced_moves_set(moves) {
-      if (this.soldier_hflip_info.key === "flip_on") {
-        moves = MoveHash.line_hflip(moves.join(" ")).split(/\s+/)
+      if (this.soldier_flop_info.key === "flip_on") {
+        moves = MoveHash.line_flop(moves.join(" ")).split(/\s+/)
       }
       if (this.current_article.moves_valid_p(moves)) {
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {

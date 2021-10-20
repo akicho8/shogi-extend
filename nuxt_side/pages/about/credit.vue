@@ -12,11 +12,11 @@
     li: ExternalLink(beep href="https://twitter.com/Shogi_Zuan") 将棋図案駒 (404)
     li: ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像 (404)
 
-  .section_title BOARD TEXTURE
-  ul
-    li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
-    li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
-    //- li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
+  //- .section_title BOARD TEXTURE
+  //- ul
+  //-   li: ExternalLink(beep href="http://free-paper-texture.com/") Paper-co
+  //-   li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
+  //-   //- li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
 
   template(v-if="present_p(photo_author_info)")
     .section_title BACKGROUND TEXTURE

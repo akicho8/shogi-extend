@@ -27,7 +27,7 @@ export const app_message = {
     message_share_broadcasted(params) {
       if (params.message) {
         this.$buefy.toast.open({
-          container: ".BoardWood",
+          container: ".MainBoard",
           message: `${params.from_user_name}: ${params.message}`,
           position: "is-top",
           type: "is-white",
