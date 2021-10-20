@@ -41,10 +41,10 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
 
     template(slot="end")
       template(v-if="base.is_standby_p")
-        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play('click')" v-if="base.owner_p")
-          b-icon(icon="plus")
         b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sound_play('click')" v-if="base.owner_p")
           b-icon(icon="pencil")
+        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play('click')" v-if="base.owner_p")
+          b-icon(icon="plus")
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle" v-if="development_p")
           b-icon(icon="twitter" type="is-white")
 
