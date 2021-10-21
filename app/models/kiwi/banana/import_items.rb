@@ -8,7 +8,7 @@ module Kiwi
         :all_params => {
           :media_builder_params => {
             :recipe_key      => :is_recipe_mp4,
-            :color_theme_key => :is_color_theme_gradiention1,
+            :color_theme_key => :is_color_theme_groovy_board_texture1,
             :audio_theme_key => :is_audio_theme_ds3480,
             :cover_text      => "最長手数詰将棋\nミクロコスモス 1525手詰\n作者: 橋本孝治\n『詰将棋探検隊』1995年発表",
             :page_duration   => 0.016666666666666666,
