@@ -125,6 +125,7 @@ export default {
     close_handle() {
       if (this.base.order_func_p && this.base.os_change.has_value_p) {
         this.sound_play("click")
+        this.talk("ちょっと待て")
         this.dialog_confirm({
           title: "本当に閉じてもよいか？",
           type: "is-warning",
