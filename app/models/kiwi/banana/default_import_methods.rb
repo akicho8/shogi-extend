@@ -27,12 +27,12 @@ module Kiwi
             { key: "TAs1CTDPsvd", number: 17, color_theme_key: :is_color_theme_radial_gradiention2 },
             { key: "wIW3tnZMnUD", number: 18, color_theme_key: :is_color_theme_radial_gradiention3 },
             { key: "nVxSJI7tlap", number: 23, color_theme_key: :is_color_theme_radial_gradiention4 },
-            { key: "qgeYRTJJ6tc", number: 32, color_theme_key: :is_color_theme_gradiention1 },
-            { key: "TW5vDpMXgXW", number: 35, color_theme_key: :is_color_theme_gradiention2 },
-            { key: "GDARn1MSPsu", number: 52, color_theme_key: :is_color_theme_gradiention3 },
-            { key: "TISYdaPlwhQ", number: 76, color_theme_key: :is_color_theme_gradiention4 },
-            { key: "q8Fsa72oSOs", number: 78, color_theme_key: :is_color_theme_plasma_blur1 },
-            { key: "Fyq37jDjjxV", number: 81, color_theme_key: :is_color_theme_plasma_blur2 },
+            { key: "qgeYRTJJ6tc", number: 32, color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "TW5vDpMXgXW", number: 35, color_theme_key: :is_color_theme_radial_gradiention2 },
+            { key: "GDARn1MSPsu", number: 52, color_theme_key: :is_color_theme_radial_gradiention3 },
+            { key: "TISYdaPlwhQ", number: 76, color_theme_key: :is_color_theme_radial_gradiention4 },
+            { key: "q8Fsa72oSOs", number: 78, color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "Fyq37jDjjxV", number: 81, color_theme_key: :is_color_theme_radial_gradiention2 },
           ].collect.with_index do |params, i|
             # tp params
 
@@ -53,7 +53,7 @@ module Kiwi
                   :recipe_key      => "is_recipe_mp4",
                   :color_theme_key => params[:color_theme_key], # ColorGradientInfo.fetch(i.modulo(ColorGradientInfo.count)).key,
                   :audio_theme_key => "is_audio_theme_ds3479",
-                  :cover_text      => "羽生善治特選 ##{i.next}\n#{versus} 百番勝負 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
+                  :cover_text      => "##{i.next}\n#{versus} 百番勝負\n羽生善治特選 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
                   :page_duration   => 1.0,
                   :end_duration    => 7,
                   :width           => 1920,
@@ -63,10 +63,10 @@ module Kiwi
               },
               :banana_params => {
                 :folder_key    => "public",
-                :title         => "羽生善治特選 ##{i.next} #{versus} 百番勝負 第#{params[:number]}局",
+                :title         => "##{i.next} #{versus} 百番勝負 羽生善治特選 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
                 :tag_list      => ["AlphaZero", "elmo", "羽生善治", "百番勝負", *info.mediator.normalized_names_with_alias],
-                :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offse) # 歩と角以外の交換がある直前の局面
+                :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
               },
             }
           end
