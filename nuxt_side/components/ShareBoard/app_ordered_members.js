@@ -1,4 +1,5 @@
 import OrderSettingModal from "./OrderSettingModal.vue"
+import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import _ from "lodash"
@@ -19,7 +20,7 @@ export const app_ordered_members = {
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
 
-      os_changes: null, // 変更したか？
+      os_change: null, // OsChange のインスタンス
     }
   },
 
@@ -83,7 +84,7 @@ export const app_ordered_members = {
       this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
-      this.os_changes = []
+      this.os_change = new OsChange()
     },
 
     os_table_rows_build() {
@@ -308,10 +309,6 @@ export const app_ordered_members = {
       return "不明"
     },
     ////////////////////////////////////////////////////////////////////////////////
-
-    os_change_push(str) {
-      this.os_changes.push(str)
-    },
   },
 
   computed: {
@@ -404,12 +401,6 @@ export const app_ordered_members = {
         if (this.ordered_members) {
           return this.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
         }
-      }
-    },
-
-    os_change_p() {
-      if (this.order_func_p) {
-        return this.present_p(this.os_changes)
       }
     },
   },

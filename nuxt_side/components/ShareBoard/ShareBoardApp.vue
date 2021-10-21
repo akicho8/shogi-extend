@@ -4,7 +4,7 @@ client-only
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
 
     DebugBox.is-hidden-mobile(v-if="development_p")
-      p os_changes: {{os_changes}}
+      p os_change: {{os_change}}
       p order_func_p: {{order_func_p}}
 
       p avatars_hash: {{avatars_hash}}

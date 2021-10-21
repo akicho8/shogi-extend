@@ -801,6 +801,20 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "順番設定で更新を押さないで閉じたら確認する" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice")
+        side_menu_open
+        menu_item_click("順番設定")               # 「順番設定」モーダルを開く
+        find(".main_switch").click                # 右上の有効スイッチをクリック
+        find(".shuffle_handle").click             # シャッフルする
+        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
+        click_text_match("更新せずに閉じる")      # 無視して閉じる
+      end
+    end
+  end
+
   describe "順番設定のシャッフル" do
     it "works" do
       a_block do

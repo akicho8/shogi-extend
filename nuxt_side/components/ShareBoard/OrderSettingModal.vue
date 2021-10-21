@@ -69,14 +69,15 @@
             b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
               b-field.is-marginless
                 template(v-for="e in base.AvatarKingInfo.values")
-                  b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                  b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="new_avatar_king_key_change_handle")
                     | {{e.name}}
           .column
             b-field(label="シャウト" custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
               b-field.is-marginless
                 template(v-for="e in base.ShoutModeInfo.values")
-                  b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                  b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
                     | {{e.name}}
+
         .columns.is-mobile(v-if="development_p && false")
           .column
             b-field(label="手番制限" custom-class="is-small" :message="base.MoveGuardInfo.fetch(base.new_move_guard_key).message")
@@ -89,7 +90,7 @@
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
-      b-button.apply_button(@click="apply_handle" :type="{'is-primary': base.os_change_p}") 更新
+      b-button.apply_button(@click="apply_handle" :type="{'is-primary': base.os_change.has_value_p}") 更新
 </template>
 
 <script>
@@ -122,25 +123,25 @@ export default {
     },
 
     close_handle() {
-      this.sound_play("click")
-      if (this.base.os_change_p) {
-        const something = _.uniq(this.base.os_changes).join("や")
+      if (this.base.order_func_p && this.base.os_change.has_value_p) {
+        this.sound_play("click")
         this.dialog_confirm({
-          title: "確認",
+          title: "本当に閉じてもよいか？",
           type: "is-warning",
           hasIcon: true,
-          message: `変更を適用せずに閉じようとしています。${something}の変更を適用してから閉じますか？`,
-          confirmText: "適用してから閉じる",
-          cancelText: "すぐ閉じる",
+          message: this.base.os_change.message,
+          confirmText: "更新せずに閉じる",
+          // cancelText: "閉じる",
           focusOn: "cancel",
           onConfirm: () => {
-            this.apply_handle()
-            this.direct_close_handle()
-          },
-          onCancel: () => {
+            // this.apply_handle()
             this.sound_play("click")
             this.direct_close_handle()
           },
+          // onCancel: () => {
+          //   this.sound_play("click")
+          //   // this.direct_close_handle()
+          // },
         })
       } else {
         this.sound_play("click")
@@ -163,7 +164,7 @@ export default {
       this.sound_play("click")
       this.shuffle_core()
       this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
-      this.base.os_change_push("シャッフル")
+      this.base.os_change.append("順番")
     },
 
     shuffle_core() {
@@ -206,7 +207,7 @@ export default {
       const user_name = this.base.new_ordered_members[0].user_name
       const message = `${prefix}で${this.user_call_name(user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
-      this.base.os_change_push("振り駒")
+      this.base.os_change.append("先後")
     },
 
     // 先後入替
@@ -216,7 +217,7 @@ export default {
       this.sound_play("click")
       this.swap_core()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
-      this.base.os_change_push("先後入替")
+      this.base.os_change.append("先後")
     },
 
     // 1人以上いること
@@ -247,11 +248,14 @@ export default {
       this.order_index_update()
     },
 
-    // 更新
-    apply_handle() {
+    new_avatar_king_key_change_handle() {
       this.sound_play("click")
-      this.form_params_share("更新")
-      this.base.os_changes = []
+      this.base.os_change.append("アバター")
+    },
+
+    new_shout_mode_key_change_handle() {
+      this.sound_play("click")
+      this.base.os_change.append("シャウト")
     },
 
     // 上下矢印ボタン
@@ -260,7 +264,7 @@ export default {
       const index = this.base.os_table_rows.findIndex(e => e.user_name === row.user_name)
       this.base.os_table_rows = this.ary_move(this.base.os_table_rows, index, index + sign)
       this.order_index_update()
-      this.base.os_change_push("順序変更")
+      this.base.os_change.append("順番")
     },
 
     // 参加 or 不参加ボタン
@@ -268,7 +272,14 @@ export default {
       this.sound_play("click")
       row.enabled_p = !row.enabled_p
       this.order_index_update()
-      this.base.os_change_push("観戦また参加")
+      this.base.os_change.append("参加")
+    },
+
+    // 更新
+    apply_handle() {
+      this.sound_play("click")
+      this.form_params_share("更新")
+      this.base.os_change.clear()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
