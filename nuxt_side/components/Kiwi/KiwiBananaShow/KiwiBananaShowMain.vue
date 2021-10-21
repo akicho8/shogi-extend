@@ -48,7 +48,9 @@
 
             b-icon.ml-3(:icon="base.banana.folder_info.icon" size="is-small" v-if="base.banana.folder_info.key != 'public'")
           .nav_line_right
-            b-button.switch_handle(icon-left="hand-pointing-up" @click="base.switch_handle")
+            .buttons.mb-0
+              b-button.mb-0.switch_handle(icon-left="hand-pointing-up" @click="base.switch_handle")
+              b-button.mb-0(type="is-primary" @click.native="sound_play('click')" tag="nuxt-link" :to="{name: 'video-studio-banana_key-edit', params: {banana_key: base.banana.key}}" v-if="base.banana && base.owner_p") 編集
 
         KiwiTagList.mt-2(:tag_list="base.banana.tag_list" :tag_click_handle="base.tag_click_handle")
         .content.mt-1(v-if="base.banana.description")
