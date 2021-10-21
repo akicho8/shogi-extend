@@ -53,7 +53,7 @@ module Kiwi
                   :recipe_key      => "is_recipe_mp4",
                   :color_theme_key => params[:color_theme_key], # ColorGradientInfo.fetch(i.modulo(ColorGradientInfo.count)).key,
                   :audio_theme_key => "is_audio_theme_ds3479",
-                  :cover_text      => "##{i.next}\n#{versus} 百番勝負\n羽生善治特選 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
+                  :cover_text      => "#{versus} 百番勝負\n羽生善治特選 ##{i.next} 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
                   :page_duration   => 1.0,
                   :end_duration    => 7,
                   :width           => 1920,
