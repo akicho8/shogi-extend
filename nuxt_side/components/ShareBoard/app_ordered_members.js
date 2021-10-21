@@ -18,6 +18,8 @@ export const app_ordered_members = {
       new_move_guard_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
+
+      os_changes: null, // 変更したか？
     }
   },
 
@@ -53,7 +55,9 @@ export const app_ordered_members = {
       this.$os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
         props: { base: this.base },
+        canCancel: [],
         onCancel: () => {
+          this.__assert__(false, "must not happen")
           this.sound_play("click")
           this.os_modal_close()
         },
@@ -79,6 +83,7 @@ export const app_ordered_members = {
       this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
+      this.os_changes = []
     },
 
     os_table_rows_build() {
@@ -262,8 +267,8 @@ export const app_ordered_members = {
     },
 
     order_lookup_from_name(name) {
-      if (this.base.order_func_p) {
-        if (this.base.ordered_members) {
+      if (this.order_func_p) {
+        if (this.ordered_members) {
           return this.user_names_hash[name]
         }
       }
@@ -303,6 +308,10 @@ export const app_ordered_members = {
       return "不明"
     },
     ////////////////////////////////////////////////////////////////////////////////
+
+    os_change_push(str) {
+      this.os_changes.push(str)
+    },
   },
 
   computed: {
@@ -391,10 +400,16 @@ export const app_ordered_members = {
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ
     user_names_hash() {
-      if (this.base.order_func_p) {
-        if (this.base.ordered_members) {
-          return this.base.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
+      if (this.order_func_p) {
+        if (this.ordered_members) {
+          return this.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
         }
+      }
+    },
+
+    os_change_p() {
+      if (this.order_func_p) {
+        return this.present_p(this.os_changes)
       }
     },
   },

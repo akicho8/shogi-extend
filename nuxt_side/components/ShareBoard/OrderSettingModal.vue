@@ -89,7 +89,7 @@
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_func_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
-      b-button.apply_button(@click="apply_handle" type="is-primary") 更新
+      b-button.apply_button(@click="apply_handle" :type="{'is-primary': base.os_change_p}") 更新
 </template>
 
 <script>
@@ -123,6 +123,32 @@ export default {
 
     close_handle() {
       this.sound_play("click")
+      if (this.base.os_change_p) {
+        const something = _.uniq(this.base.os_changes).join("や")
+        this.dialog_confirm({
+          title: "確認",
+          type: "is-warning",
+          hasIcon: true,
+          message: `変更を適用せずに閉じようとしています。${something}の変更を適用してから閉じますか？`,
+          confirmText: "適用してから閉じる",
+          cancelText: "すぐ閉じる",
+          focusOn: "cancel",
+          onConfirm: () => {
+            this.apply_handle()
+            this.direct_close_handle()
+          },
+          onCancel: () => {
+            this.sound_play("click")
+            this.direct_close_handle()
+          },
+        })
+      } else {
+        this.sound_play("click")
+        this.direct_close_handle()
+      }
+    },
+
+    direct_close_handle() {
       this.$emit("close")
       this.base.os_modal_close()
     },
@@ -137,6 +163,7 @@ export default {
       this.sound_play("click")
       this.shuffle_core()
       this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
+      this.base.os_change_push("シャッフル")
     },
 
     shuffle_core() {
@@ -179,6 +206,7 @@ export default {
       const user_name = this.base.new_ordered_members[0].user_name
       const message = `${prefix}で${this.user_call_name(user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
+      this.base.os_change_push("振り駒")
     },
 
     // 先後入替
@@ -188,6 +216,7 @@ export default {
       this.sound_play("click")
       this.swap_core()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
+      this.base.os_change_push("先後入替")
     },
 
     // 1人以上いること
@@ -222,6 +251,7 @@ export default {
     apply_handle() {
       this.sound_play("click")
       this.form_params_share("更新")
+      this.base.os_changes = []
     },
 
     // 上下矢印ボタン
@@ -230,6 +260,7 @@ export default {
       const index = this.base.os_table_rows.findIndex(e => e.user_name === row.user_name)
       this.base.os_table_rows = this.ary_move(this.base.os_table_rows, index, index + sign)
       this.order_index_update()
+      this.base.os_change_push("順序変更")
     },
 
     // 参加 or 不参加ボタン
@@ -237,6 +268,7 @@ export default {
       this.sound_play("click")
       row.enabled_p = !row.enabled_p
       this.order_index_update()
+      this.base.os_change_push("観戦また参加")
     },
 
     ////////////////////////////////////////////////////////////////////////////////
