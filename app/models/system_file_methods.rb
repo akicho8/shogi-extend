@@ -15,7 +15,7 @@ module SystemFileMethods
     end
 
     def output_root_dir
-      Rails.public_path.join("system", *output_subdirs.compact)
+      @output_root_dir ||= Rails.public_path.join("system", *Array(output_subdirs).compact)
     end
 
     # cap production rails:runner CODE='MediaBuilder.cache_delete_all'
