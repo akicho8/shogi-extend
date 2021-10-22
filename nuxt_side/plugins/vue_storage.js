@@ -1,4 +1,4 @@
-export default {
+export const vue_storage = {
   methods: {
     // created() {
     //   this.$_ls_load()

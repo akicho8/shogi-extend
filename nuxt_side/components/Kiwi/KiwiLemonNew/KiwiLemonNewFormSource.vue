@@ -2,11 +2,11 @@
 .KiwiLemonNewFormSource
   ////////////////////////////////////////////////////////////////////////////////
   .field_block.body_field
-    .buttons.mb-0.has-addons
+    .buttons.mb-0
       b-button.mb-0.any_source_trim_handle(@click="base.any_source_trim_handle" size="is-small") トリム
       b-button.mb-0.any_source_edit_handle(@click="base.any_source_edit_handle" size="is-small") 編集
 
-    b-field.mb-0.mt-1(:type="base.body_field_type")
+    b-field.mb-0.mt-2(:type="base.body_field_type")
       template(#label v-if="false")
         .label_text.is-invisible 棋譜
         a.is-size-7(@click="base.any_source_edit_handle" v-if="development_p")

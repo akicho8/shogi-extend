@@ -1,6 +1,6 @@
 import { HeadGenerator } from "@/components/models/head_generator.js"
 
-export default {
+export const vue_head = {
   head() {
     return (new HeadGenerator(this.$config, this.meta)).generate()
 

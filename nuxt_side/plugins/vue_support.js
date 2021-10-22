@@ -4,7 +4,7 @@ import { SpUtils } from "../components/models/sp_utils.js"
 import twemoji from 'twemoji'
 import _ from "lodash"
 
-export default {
+export const vue_support = {
   methods: {
     ...Gs,
     ...SpUtils,

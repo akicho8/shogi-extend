@@ -1,6 +1,6 @@
 import consumer from "../../app/javascript/channels/consumer.js" // FIXME: なんで Rails 側を見ないといけない？
 
-export default {
+export const vue_actioncable = {
   data() {
     return {
       ac_subgscriptions_count: 0,

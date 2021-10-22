@@ -5,7 +5,7 @@ import { Howl, Howler } from "howler"
 
 Howler.autoSuspend = false
 
-export default {
+export const vue_talk = {
   methods: {
     // しゃべる
     // ・tab_is_active_p() のときだけ条件を入れてはいけない

@@ -3,7 +3,7 @@
 // そのため1回目で失敗したときにキャッシュしておき、2度目で axios のアクセスが発声しないようにすることでコピーを成功させる
 const IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND = true
 
-export default {
+export const vue_clipboard = {
   data() {
     return {
       kif_clipboard_copy_cache: {},

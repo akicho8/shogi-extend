@@ -2,7 +2,7 @@ import { SoundPreset } from "@/components/models/sound_preset.js"
 import { Howl, Howler } from "howler"
 import _ from "lodash"
 
-export default {
+export const vue_sound = {
   methods: {
     sound_play(key, options = {}) {
       if (key) {

@@ -30,7 +30,7 @@
     b-table-column(v-slot="{row}")
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
         | {{row.error_message}}
-      .buttons.has-addons.are-small.mb-0(v-if="row.successed_at")
+      .buttons.are-small.mb-0(v-if="row.successed_at")
         b-button.mb-0(@click="base.download_handle" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload")
 

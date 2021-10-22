@@ -1,7 +1,7 @@
 import { isMobile } from "../components/models/is_mobile.js"
 import _ from "lodash"
 
-export default {
+export const vue_browser_and_form = {
   methods: {
     mobile_p()  { return isMobile.any()  },
     desktop_p() { return !isMobile.any() },

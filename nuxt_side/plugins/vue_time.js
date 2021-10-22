@@ -18,7 +18,7 @@ dayjs.locale('ja')
 import relativeTime from 'dayjs/plugin/relativeTime'
 dayjs.extend(relativeTime)
 
-export default {
+export const vue_time = {
   methods: {
     // debug console 用
     // GVI.dayjs()

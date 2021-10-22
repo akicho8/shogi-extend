@@ -50,7 +50,9 @@ export default {
       this.$emit("close")
     },
     slider_change_handle(code) {
-      this.sound_play("click")
+      if (this.mounted_next_p) {
+        this.sound_play("click")
+      }
     },
   },
 }

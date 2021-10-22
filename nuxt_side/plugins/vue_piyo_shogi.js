@@ -5,7 +5,7 @@ import { isMobile } from "@/components/models/is_mobile.js"
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
-export default {
+export const vue_piyo_shogi = {
   methods: {
     // app, web 自動切り替え
     // app のとき path があれば kif の URL を渡す

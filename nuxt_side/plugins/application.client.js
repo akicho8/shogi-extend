@@ -1,6 +1,6 @@
 import SnsLoginContainer from "@/components/SnsLoginContainer.vue"
 
-export default {
+export const vue_application = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
