@@ -83,8 +83,8 @@ class MediaBuilder
   PAPPER = 4
 
   class << self
-    def output_subdir
-      "x-files"
+    def output_subdirs
+      ["x-files", output_subdirs_env]
     end
 
     def formatter_all_option_keys
@@ -102,6 +102,14 @@ class MediaBuilder
     #       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test? || Rails.env.development?,
     #     })
     # end
+
+    private
+
+    def output_subdirs_env
+      if Rails.env.development? || Rails.env.test?
+        Rails.env
+      end
+    end
   end
 
   attr_accessor :record

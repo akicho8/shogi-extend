@@ -10,12 +10,12 @@ module SystemFileMethods
   class_methods do
     delegate :logger, to: "Rails"
 
-    def output_subdir
+    def output_subdirs
       name.underscore
     end
 
     def output_root_dir
-      Rails.public_path.join("system", output_subdir)
+      Rails.public_path.join("system", *output_subdirs.compact)
     end
 
     # cap production rails:runner CODE='MediaBuilder.cache_delete_all'
