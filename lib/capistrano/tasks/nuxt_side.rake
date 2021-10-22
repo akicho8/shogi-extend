@@ -27,7 +27,7 @@ namespace :nuxt_side do
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"
         execute :rm, "-rf", "#{release_path}/nuxt_side/static"
-        execute :rm, "-rf", "#{release_path}/nuxt_side/.nuxts"
+        execute :rm, "-rf", "#{release_path}/nuxt_side/.nuxt"
 
         # if ENV["WITH_STATIC"]
         upload! "nuxt_side/static", "#{release_path}/nuxt_side/", recursive: true # static は .nuxt の下に入らずそのまま配信されるため
