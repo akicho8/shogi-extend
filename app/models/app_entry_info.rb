@@ -30,7 +30,7 @@ class AppEntryInfo
     },
     {
       key: :gallery,
-      display_p: !Rails.env.production?,
+      display_p: !Rails.env.production? || true,
       experiment_p: false,
       nuxt_link_to: {path: "/gallery"},
       title: "木目テクスチャ集",
