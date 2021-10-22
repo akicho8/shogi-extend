@@ -8,12 +8,12 @@ export class ColorThemeInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "is_color_theme_groovy_board_texture1",   name: "木目盤A",            },
-      { key: "is_color_theme_groovy_board_texture2",   name: "木目盤B",            },
-      { key: "is_color_theme_groovy_board_texture3",   name: "木目盤C",            },
-      { key: "is_color_theme_groovy_board_texture4",   name: "木目盤D",            },
-      { key: "is_color_theme_groovy_board_texture5",   name: "木目盤E",            },
-      { key: "is_color_theme_groovy_board_texture6",   name: "木目盤F",            },
+      { key: "is_color_theme_groovy_board_texture1",   name: "木目盤A (濃)",       },
+      { key: "is_color_theme_groovy_board_texture2",   name: "木目盤B (濃)",       },
+      { key: "is_color_theme_groovy_board_texture3",   name: "木目盤C (濃)",       },
+      { key: "is_color_theme_groovy_board_texture4",   name: "木目盤D (薄)",       },
+      { key: "is_color_theme_groovy_board_texture5",   name: "木目盤E (薄)",       },
+      { key: "is_color_theme_groovy_board_texture6",   name: "木目盤F (薄)",       },
       { key: "is_color_theme_piyo",                    name: "ぴよ将棋風"  ,       },
       { key: "is_color_theme_club24",                  name: "新24" ,              },
       { key: "is_color_theme_wars_red",                name: "赤ウォーズ",         },
@@ -58,8 +58,8 @@ export class ColorThemeInfo extends MemoryRecord {
     const url = new URL(url_base)
     url.searchParams.set("body", SAMPLE_SFEN)
     url.searchParams.set("color_theme_key", this.key)
-    url.searchParams.set("width", 1280 / 1)
-    url.searchParams.set("height", 720 / 1)
+    url.searchParams.set("width", 1920 / 1)
+    url.searchParams.set("height", 1080 / 1)
     return url.toString()
   }
 
