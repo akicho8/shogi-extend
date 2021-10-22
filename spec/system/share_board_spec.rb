@@ -1187,7 +1187,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".tweet_modal_handle").click   # モーダル起動
         assert_text("この局面をツイート")
         find(".TweetModal .dropdown").click # テーマ選択
-        assert_text("木目盤A")
+        assert_text("木目A")
       end
     end
   end

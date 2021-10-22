@@ -33,7 +33,7 @@ class AppEntryInfo
       display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/gallery"},
-      title: "木目盤テクスチャ集",
+      title: "木目テクスチャ集",
       attention_label: "NEW!",
       og_image_key: "gallery",
       description: "将棋盤の木が必要なときにどうぞ",

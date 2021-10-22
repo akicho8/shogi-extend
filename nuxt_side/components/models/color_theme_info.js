@@ -8,12 +8,12 @@ export class ColorThemeInfo extends MemoryRecord {
 
   static get define() {
     return [
-      { key: "is_color_theme_groovy_board_texture1",   name: "木目盤A (濃)",       },
-      { key: "is_color_theme_groovy_board_texture2",   name: "木目盤B (濃)",       },
-      { key: "is_color_theme_groovy_board_texture3",   name: "木目盤C (濃)",       },
-      { key: "is_color_theme_groovy_board_texture4",   name: "木目盤D (薄)",       },
-      { key: "is_color_theme_groovy_board_texture5",   name: "木目盤E (薄)",       },
-      { key: "is_color_theme_groovy_board_texture6",   name: "木目盤F (薄)",       },
+      { key: "is_color_theme_groovy_board_texture1",   name: "木目A (濃)",       },
+      { key: "is_color_theme_groovy_board_texture2",   name: "木目B (濃)",       },
+      { key: "is_color_theme_groovy_board_texture3",   name: "木目C (濃)",       },
+      { key: "is_color_theme_groovy_board_texture4",   name: "木目D (薄)",       },
+      { key: "is_color_theme_groovy_board_texture5",   name: "木目E (薄)",       },
+      { key: "is_color_theme_groovy_board_texture6",   name: "木目F (薄)",       },
       { key: "is_color_theme_piyo",                    name: "ぴよ将棋風"  ,       },
       { key: "is_color_theme_club24",                  name: "新24" ,              },
       { key: "is_color_theme_wars_red",                name: "赤ウォーズ",         },
