@@ -14,13 +14,6 @@ const TOOLTIP_ENABLE = false
 const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
 const FONT_SIZE = 8
 
-// import PaletteBlackWhiteInfo from "@/components/models/palette_black_white_info.js"
-//
-// function color_select(context, alpha) {
-//   // https://www.chartjs.org/docs/latest/general/options.html#option-context
-//   return PaletteBlackWhiteInfo.fetch(context.datasetIndex).alpha(alpha)
-// }
-
 const CHART_CONFIG_DEFAULT = {
   type: "line",                 // barはデータ構造上うまくいかない
   options: {
