@@ -27,7 +27,7 @@ export const app_main_setting = {
     yomiage_mode_info()     { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)            },
 
     SpMoveCancelInfo()      { return SpMoveCancelInfo                                             },
-    sp_move_cancel_info()   { return this.SpMoveCancelInfo.fetch(this.sp_move_cancel)             },
+    sp_move_cancel_info()   { return this.SpMoveCancelInfo.fetch(this.sp_move_cancel_key)             },
 
     SpInternalRuleInfo()    { return SpInternalRuleInfo                                           },
     sp_internal_rule_info() { return this.SpInternalRuleInfo.fetch(this.sp_internal_rule_key)     },

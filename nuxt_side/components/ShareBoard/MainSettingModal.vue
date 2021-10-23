@@ -5,13 +5,9 @@
       | 設定
   .modal-card-body
     .columns.is-multiline
-      //- SimpleRadioButtons
       template(v-for="m in MainSettingInfo.values")
         .column.is-half-tablet
-          b-field(:class="m.key" custom-size="is-small" :label="base[m.model].field_label" :message="base[m.model].field_message")
-            template(v-for="e in base[m.model].values")
-              b-radio-button(:class="e.key" @input="sound_play_click()" size="is-small" v-model="base[m.key]" :native-value="e.key" :type="e.type")
-                | {{e.name}}
+          SimpleRadioButtons.field_block(:base="base" :model="m.model(base)" :var_name="m.key")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
