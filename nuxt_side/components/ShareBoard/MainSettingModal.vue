@@ -7,7 +7,7 @@
     .columns.is-multiline
       template(v-for="m in MainSettingInfo.values")
         .column.is-half-tablet
-          SimpleRadioButtons.field_block(:base="base" :model="m.model(base)" :var_name="m.key")
+          SimpleRadioButtons(:base="base" :model_name="base.ParamInfo.fetch(m.key).relation" :var_name="m.key")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>

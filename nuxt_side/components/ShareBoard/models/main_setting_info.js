@@ -1,5 +1,4 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { ParamInfo } from './param_info.js'
 
 export class MainSettingInfo extends ApplicationMemoryRecord {
   static get define() {
@@ -10,9 +9,5 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
       { key: "sp_internal_rule_key", },
       { key: "debug_mode_key",       },
     ]
-  }
-
-  model(context) {
-    return context[ParamInfo.fetch(this.key).relation]
   }
 }
