@@ -21,7 +21,7 @@ export const app_table = {
   },
   methods: {
     detail_set(enabled) {
-      this.sound_play('click')
+      this.sound_play_click()
       if (enabled) {
         this.detailed_keys = this.books.map(e => e.key)
       } else {
@@ -37,7 +37,7 @@ export const app_table = {
     },
 
     sort_handle(sort_column, sort_order) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.router_push({sort_column, sort_order})
     },
   },

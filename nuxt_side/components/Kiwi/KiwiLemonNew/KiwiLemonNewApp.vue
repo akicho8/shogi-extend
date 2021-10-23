@@ -11,7 +11,7 @@ client-only
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(@click="reset_handle") 動画作成
       template(slot="end")
-        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")
+        b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play_click()")
           b-icon(icon="table-cog")
         NavbarItemLogin
         NavbarItemProfileLink
@@ -40,7 +40,7 @@ client-only
           KiwiLemonNewReview(:base="base")
           KiwiLemonNewValidation(:base="base")
           .column.is-half
-            b-tabs.list_tabs(:expanded="false" type="is-boxed" v-model="list_tab_index" @input="sound_play('click')")
+            b-tabs.list_tabs(:expanded="false" type="is-boxed" v-model="list_tab_index" @input="sound_play_click()")
               b-tab-item(label="あなた")
                 KiwiLemonNewQueueSelf(:base="base")
               b-tab-item(label="みんな")

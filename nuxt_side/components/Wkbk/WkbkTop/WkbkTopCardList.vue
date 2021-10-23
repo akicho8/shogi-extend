@@ -2,7 +2,7 @@
 .WkbkTopCardList.columns.is-multiline
   .column.is-one-quarter-widescreen.is-one-third-desktop.is-half-tablet(v-for="e in base.books")
     //- https://bulma.io/documentation/components/card/
-    nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="sound_play('click')")
+    nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="sound_play_click()")
       .card-image
         figure.image
           img(:src="e.avatar_path" :alt="e.title")

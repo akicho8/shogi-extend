@@ -7,7 +7,7 @@ export const app_handle_name = {
     // ハンドルネーム入力
     handle_name_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.handle_name_modal_core()
     },
     handle_name_modal_core(params = {}) {

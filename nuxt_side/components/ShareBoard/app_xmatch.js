@@ -46,7 +46,7 @@ export const app_xmatch = {
     // 自動マッチングモーダル起動
     xmatch_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.xmatch_modal_core()
     },
 
@@ -69,7 +69,7 @@ export const app_xmatch = {
         component: XmatchModal,
         props: { base: this.base },
         onCancel: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
           this.base.rule_unselect("${name}がやめました")
           this.xmatch_modal_close()
@@ -152,9 +152,9 @@ export const app_xmatch = {
         this.current_xmatch_rule_key = params.xmatch_rule_key
       } else {
         // 他の人から自分
-        this.sound_play("click")
+        this.sound_play_click()
         this.tl_alert("他者がエントリー")
-        // this.sound_play("click")
+        // this.sound_play_click()
       }
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
@@ -162,7 +162,7 @@ export const app_xmatch = {
       this.vibrate(100)
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
-      // this.sound_play("click")
+      // this.sound_play_click()
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
         this.__assert__(params.members, "params.members")
@@ -248,7 +248,7 @@ export const app_xmatch = {
       if (params.delete_result === "deleted") {
         if (params.message) {
           if (!this.received_from_self(params)) {
-            this.sound_play("click")
+            this.sound_play_click()
           }
           this.toast_ok(_.template(params.message)({name: this.user_call_name(params.from_user_name)}))
         } else {

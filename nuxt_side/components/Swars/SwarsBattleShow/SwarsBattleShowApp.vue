@@ -37,12 +37,12 @@
 
       .app_buttons_container
         .buttons.is-centered
-          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play('click')")
-          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play('click')")
+          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play_click()")
+          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play_click()")
           KifCopyButton(@click="kifu_copy_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
-          TweetButton(:body="permalink_url" @after_click="sound_play('click')")
+          TweetButton(:body="permalink_url" @after_click="sound_play_click()")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.is-size-7-mobile
@@ -152,7 +152,7 @@ export default {
 
   methods: {
     tweet_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.tweet_window_popup({text: this.permalink_url})
     },
 
@@ -180,17 +180,17 @@ export default {
     },
 
     kifu_copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.kif_clipboard_copy({kc_path: this.record.show_path})
     },
 
     sidebar_toggle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.sidebar_p = !this.sidebar_p
     },
 
     back_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_to({name: "swars-search"})
     },
 

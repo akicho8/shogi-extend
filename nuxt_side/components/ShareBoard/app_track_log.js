@@ -22,7 +22,7 @@ export const app_track_log = {
   methods: {
     tl_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: TrackLogModal,
         props: { base: this.base },

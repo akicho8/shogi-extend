@@ -126,7 +126,7 @@ export default {
     },
 
     start_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       if (this.sns_login_required()) {
         return
@@ -141,7 +141,7 @@ export default {
     },
 
     rule_key_set_handle(rule) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.$axios.$put("/api/emox/rule_key_set_handle.json", {
         session_lock_token: this.current_user.session_lock_token,
@@ -162,13 +162,13 @@ export default {
 
     // ロビー → ルール選択 →●ロビー
     rule_cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.mode = "lobby"
     },
 
     // ロビー → ルール選択 → マッチング開始 →●ルール選択
     matching_cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.base.matching_interval_timer_clear()
 
@@ -182,7 +182,7 @@ export default {
 
     // メニュー内の切り替え
     menu_to(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.menu_component = v
     },
 
@@ -191,7 +191,7 @@ export default {
     lobby_handle() {
       if (this.mode === "lobby") {
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
         this.lobby_setup()
       }
     },

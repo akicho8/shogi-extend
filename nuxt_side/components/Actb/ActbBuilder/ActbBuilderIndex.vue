@@ -13,7 +13,7 @@
     ////////////////////////////////////////////////////////////////////////////////
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="bapp.builder_new_handle")
     //////////////////////////////////////////////////////////////////////////////// メニューで開くタイプ
-    b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play('click')")
+    b-dropdown.header_item.with_icon.ljust.px-3(:close-on-click="false" :mobile-modal="false" @active-change="sound_play_click()")
       b-icon(slot="trigger" icon="menu")
       template(v-for="e in QuestionIndexColumnInfo.values")
         b-dropdown-item.px-4(@click.native.stop="cb_toggle_handle(e)" :key="e.key")
@@ -230,7 +230,7 @@ export default {
 
     // タブが変更されたとき
     question_tab_index_change_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.say(this.question_current_tab_info.name)
       this.bapp.folder_change_handle(this.question_current_tab_info.key)
     },
@@ -252,7 +252,7 @@ export default {
 
     // チェックボックスが変更されたとき
     cb_input_handle(column, bool) {
-      this.sound_play('click')
+      this.sound_play_click()
       if (bool) {
         this.say(column.name)
       }
@@ -260,7 +260,7 @@ export default {
 
     // チェックボックスをトグルする
     cb_toggle_handle(column) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
       if (this.visible_hash[column.key]) {
         this.say(column.name)
@@ -269,11 +269,11 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// details
     detail_open_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.detailed_ids = this.bapp.questions.map(e => e.id)
     },
     detail_close_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.detailed_ids = []
     },
   },

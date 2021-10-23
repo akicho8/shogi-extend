@@ -6,7 +6,7 @@ b-menu-item.is_active_unset.SwarsBattleIndexFilterMenuItem(
   active-class=""
   :to="to"
   :class="{'has-text-weight-bold': active_p}"
-  @click.native="sound_play('click')"
+  @click.native="sound_play_click()"
   )
 </template>
 

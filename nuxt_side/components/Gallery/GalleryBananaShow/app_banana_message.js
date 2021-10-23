@@ -23,7 +23,7 @@ export const app_banana_message = {
       this.ac_banana_room_perform("speak", {message_body: message_body}) // --> channels/gallery/banana_room_channel.rb
     },
     speak_broadcasted(params) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.banana.banana_messages.push(params.banana_message)
       this.talk(params.banana_message.body)
       // this.loading.close()

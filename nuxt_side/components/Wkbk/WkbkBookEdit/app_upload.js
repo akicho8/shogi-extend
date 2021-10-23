@@ -3,7 +3,7 @@ import book_fallback from "@/static/book_fallback.png"
 export const app_upload = {
   methods: {
     upload_handle(v) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.book.new_file_info = v
       this.clog(v)
 
@@ -18,13 +18,13 @@ export const app_upload = {
     },
     upload_delete_handle() {
       if (this.book.new_file_src) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.toast_ok("いまアップロードした画像を削除しました")
         this.book.new_file_src = null
         return
       }
       if (this.book.raw_avatar_path) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.toast_ok("既存のアップロード画像を削除しました")
         this.book.raw_avatar_path = false
         return

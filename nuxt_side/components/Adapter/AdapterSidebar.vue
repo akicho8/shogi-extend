@@ -13,7 +13,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(@click="base.kifu_paper_handle" label="棋譜用紙 (PDF)")
 
-          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
+          b-menu-item.is_active_unset(:expanded="false" @click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -21,7 +21,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               template(v-if="e.show")
                 b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
 
-          b-menu-item.is_active_unset(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -29,7 +29,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               template(v-if="e.clipboard")
                 b-menu-item.is_active_unset(:label="e.name" @click="base.kifu_copy_handle(e)")
 
-          b-menu-item.is_active_unset(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -37,7 +37,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 
         b-menu-list(label="ANOTHER")
-          b-menu-item.is_active_unset(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play('click')")
+          b-menu-item.is_active_unset(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play_click()")
 </template>
 
 <script>

@@ -40,7 +40,7 @@ export default {
         }
         if (e.emotions) {
           this.$set(this.base.current_user, "emotions", e.emotions)
-          this.sound_play("click")
+          this.sound_play_click()
           this.ok_notice(`${before_save_button_name}しました`)
           this.$parent.current_component = "ActbEmotionIndex"
         }

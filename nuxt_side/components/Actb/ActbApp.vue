@@ -215,7 +215,7 @@ export default {
     rensyu_yameru_handle() {
       this.__assert__(this.room.bot_user_id != null, "this.room.bot_user_id != null")
       this.lobby_setup_without_cable()
-      this.sound_play("click")
+      this.sound_play_click()
     },
 
     lobby_setup_without_cable() {
@@ -279,7 +279,7 @@ export default {
       if (this.sns_login_required()) { return }
       if (this.handle_name_required()) { return }
 
-      this.sound_play("click")
+      this.sound_play_click()
       await this.reload_if_outdated()
       this.new_challenge_snackbar_clear() // 挑戦者登場の snackbar を消去
 
@@ -306,7 +306,7 @@ export default {
     },
 
     rule_key_set_handle(rule) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.api_put("rule_key_set_handle", {
         session_lock_token: this.current_user.session_lock_token,
@@ -327,13 +327,13 @@ export default {
 
     // ロビー → ルール選択 →●ロビー
     rule_cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.mode = "lobby"
     },
 
     // ロビー → ルール選択 → マッチング開始 →●ルール選択
     matching_cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.base.matching_interval_timer_clear()
 
@@ -347,7 +347,7 @@ export default {
 
     // メニュー内の切り替え
     menu_to(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.menu_component = v
     },
 
@@ -356,7 +356,7 @@ export default {
     lobby_handle() {
       if (this.mode === "lobby") {
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
         this.lobby_setup()
       }
     },
@@ -364,7 +364,7 @@ export default {
     emotion_index_handle() {
       if (this.mode === "emotion") {
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
         this.emotion_setup()
       }
     },

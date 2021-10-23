@@ -9,7 +9,7 @@
       | {{base.handicap_preset_info.handicap_level}}
   .modal-card-body
     .select_container
-      b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play('click')")
+      b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play_click()")
         option(v-for="e in base.HandicapPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
@@ -43,18 +43,18 @@ export default {
   mixins: [support_child],
   methods: {
     next_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       const i = this.base.handicap_preset_info.code + v
       const new_index = this.ruby_like_modulo(i, this.base.HandicapPresetInfo.values.length)
       const next = this.base.HandicapPresetInfo.fetch(new_index)
       this.base.handicap_preset_key = next.key
     },
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     apply_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.force_sync_handicap()
       this.$emit("close")
     },

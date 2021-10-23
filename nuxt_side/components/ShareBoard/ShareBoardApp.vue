@@ -266,7 +266,7 @@ export default {
   // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
   methods: {
     // internal_rule_input_handle() {
-    //   this.sound_play("click")
+    //   this.sound_play_click()
     // },
 
     // 再生モードで指したときmovesあり棋譜(URLに反映する)
@@ -359,7 +359,7 @@ export default {
     // 盤面のみ最初の状態に戻す
     reset_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.turn_offset  = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")

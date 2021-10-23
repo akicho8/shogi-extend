@@ -6,7 +6,7 @@ export const app_board = {
   },
   methods: {
     switch_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.show_mode === "is_video") {
         if (this.main_video()) {
           this.main_video().pause()

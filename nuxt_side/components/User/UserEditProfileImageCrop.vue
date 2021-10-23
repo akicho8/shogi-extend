@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.current_component = "UserEditProfileForm"
     },
 
@@ -149,7 +149,7 @@ export default {
 
     // 切り抜く
     clop_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
       this.__assert__(this.fcanvas, "this.fcanvas")
@@ -169,7 +169,7 @@ export default {
 
     // 少しずつ回転
     rotate_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       // http://fabricjs.com/docs/fabric.Object.html#rotate
       this.image_obj.rotate(this.rotate_next())
       this.fcanvas.renderAll()

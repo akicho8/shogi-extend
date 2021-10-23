@@ -27,7 +27,7 @@ export default {
   name: "SnsLoginContainer",
   methods: {
     click_handle(e) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.$emit("close")
       this.$buefy.loading.open()
       // 「Not found. Authentication passthru.」対策
@@ -40,7 +40,7 @@ export default {
       return this.login_url_build({social_media_key: e.key})
     },
     passowrd_login_click_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.$emit("close")
       this.login_url_jump()
     },

@@ -12,7 +12,7 @@
         br
         br
     .panel-block
-      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.re_ox_tweet_body1" size="" @after_click="sound_play('click')") ツイート
+      TweetButton.is-link.is-outlined.is-fullwidth(:body="base.re_ox_tweet_body1" size="" @after_click="sound_play_click()") ツイート
 </template>
 
 <script>

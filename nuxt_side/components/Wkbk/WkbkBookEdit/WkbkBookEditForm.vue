@@ -41,14 +41,14 @@ export default {
     "book.sequence_key": {
       handler(v) {
         const sequence_info = this.base.SequenceInfo.fetch(v)
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(sequence_info.name)
       },
     },
     "book.folder_key": {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
-        this.sound_play("click")
+        this.sound_play_click()
         this.sound_stop_all()
         this.talk(folder_info.name)
       },

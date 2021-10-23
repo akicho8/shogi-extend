@@ -31,11 +31,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     test_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.ml_add_test()
     },
     send_handle() {
@@ -50,7 +50,7 @@ export default {
           return
         }
       }
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.message_share({message: this.base.message_body})
       this.base.message_body = ""
       this.input_focus()

@@ -12,8 +12,8 @@
     b-icon(:icon="base.mode === 'menu'     ? 'menu'        : 'menu'"          :class="{'has-text-primary': base.mode === 'menu'}")
 
   b-dropdown(position="is-top-left" v-if="false")
-    b-button(slot="trigger" icon-left="menu" @click="sound_play('click')")
-    b-dropdown-item(@click="sound_play('click'); $router.push({name: 'index'})") TOP
+    b-button(slot="trigger" icon-left="menu" @click="sound_play_click()")
+    b-dropdown-item(@click="sound_play_click(); $router.push({name: 'index'})") TOP
 </template>
 
 <script>

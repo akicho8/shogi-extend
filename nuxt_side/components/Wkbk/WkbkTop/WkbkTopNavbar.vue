@@ -13,10 +13,10 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
       WkbkTopSearch(:base="base")
 
   template(slot="end")
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play_click()")
       b-icon(icon="plus")
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play('click')")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play_click()")
       b-icon(icon="table-cog")
 
     NavbarItemLogin

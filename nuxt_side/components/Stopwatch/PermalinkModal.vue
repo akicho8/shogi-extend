@@ -21,7 +21,7 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
   },

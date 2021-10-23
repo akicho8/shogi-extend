@@ -12,7 +12,7 @@ export const app_message = {
   methods: {
     message_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: MessageSendModal,
         props: { base: this.base },

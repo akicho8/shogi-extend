@@ -18,7 +18,7 @@
           ThreeStageLeaguePlayerChart(:config="config")
           b-table.mt-3(:data="config.memberships" :mobile-cards="false" hoverable)
             b-table-column(v-slot="{row}" field="league.generation" label="期" numeric sortable)
-              nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play('click')")
+              nuxt-link(:to="{name: 'three-stage-leagues-generation', params: {generation: row.league.generation}}" @click.native="sound_play_click()")
                 | {{row.league.generation}}
             //- b-table-column(v-slot="{row}" field="seat_count"        label="在" numeric sortable) {{row.seat_count}} / {{row.user.memberships_count}}
             b-table-column(v-slot="{row}" field="age"               label="歳" numeric sortable) {{row.age}}

@@ -8,7 +8,7 @@ export const app_force_sync = {
 
     board_init_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.dialog_confirm({
         title: "初期配置に戻す",
         message: `
@@ -24,7 +24,7 @@ export const app_force_sync = {
         type: "is-danger",
         focusOn: "cancel",
         onConfirm: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.force_sync_turn_zero()
         },
       })
@@ -34,7 +34,7 @@ export const app_force_sync = {
 
     force_sync_turn_previous_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.dialog_confirm({
         title: "1手戻す",
@@ -51,7 +51,7 @@ export const app_force_sync = {
         type: "is-danger",
         focusOn: "cancel",
         onConfirm: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.force_sync_turn_previous()
         },
       })
@@ -61,7 +61,7 @@ export const app_force_sync = {
 
     force_sync_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: ForceSyncModal,
         props: { base: this.base },

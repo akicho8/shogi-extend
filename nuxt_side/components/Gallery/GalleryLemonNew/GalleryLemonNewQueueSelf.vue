@@ -34,7 +34,7 @@
         b-button.mb-0(@click="base.download_handle" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload")
 
-        b-button.mb-0(v-if="development_or_staging_p" @click="sound_play('click')" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
+        b-button.mb-0(v-if="development_or_staging_p" @click="sound_play_click()" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
         b-button.mb-0(v-if="development_or_staging_p" @click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            )
         b-button.mb-0(v-if="development_or_staging_p" @click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         )
         b-button.mb-0(v-if="development_or_staging_p" @click="base.__main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         )

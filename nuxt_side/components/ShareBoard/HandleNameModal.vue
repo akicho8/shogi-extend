@@ -30,11 +30,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     save_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.new_name = _.trim(this.new_name)
       if (!this.base.handle_name_validate(this.new_name)) {
         return

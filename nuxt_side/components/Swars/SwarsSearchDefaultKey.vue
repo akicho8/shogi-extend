@@ -39,19 +39,19 @@ export default {
   },
   methods: {
     set_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("設定しました")
     },
     unset_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("消去しました")
     },
     back_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
   },

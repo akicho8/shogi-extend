@@ -181,7 +181,7 @@ export default {
 
     display_key_set(key) {
       if (this.display_key != key) {
-        this.sound_play('click')
+        this.sound_play_click()
         this.display_key = key
       }
     },

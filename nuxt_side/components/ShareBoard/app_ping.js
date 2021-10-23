@@ -20,7 +20,7 @@ export const app_ping = {
     // メンバーをタップしたとき
     // --> ShareBoardMemberList.vue
     member_info_ping_handle(e) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.ping_running_p()) {
         this.toast_warn("応答待ち")
       } else {

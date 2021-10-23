@@ -8,10 +8,10 @@
         .mt-0
           b-menu
             b-menu-list(label="Action")
-              b-menu-item.is_active_unset(label="プロフィール編集"   tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play('click')")
-              b-menu-item.is_active_unset(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play('click')")
-              b-menu-item.is_active_unset(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play('click')" v-if="development_p")
-              b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play('click')")
+              b-menu-item.is_active_unset(label="プロフィール編集"   tag="nuxt-link" :to="{name: 'settings-profile'}"        @click.native="sound_play_click()")
+              b-menu-item.is_active_unset(label="メールアドレス変更" tag="nuxt-link" :to="{name: 'settings-email'}"          @click.native="sound_play_click()")
+              b-menu-item.is_active_unset(label="ウォーズIDの設定"   tag="nuxt-link" :to="{name: 'settings-swars-user-key'}" @click.native="sound_play_click()" v-if="development_p")
+              b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="sound_play_click()")
             b-menu-list(label="その他")
               b-menu-item.is_active_unset(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
               b-menu-item.is_active_unset(label="ログアウト" @click="logout_handle")
@@ -57,13 +57,13 @@ export default {
   },
   methods: {
     async logout_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
       this.$router.push("/")
     },
     back_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_to()
     },
   },

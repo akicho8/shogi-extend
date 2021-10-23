@@ -15,7 +15,7 @@ export const app_edit_mode = {
         type: "is-danger",
         hasIcon: true,
         onConfirm: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.shared_al_add({label: "局面編集前"})
           this.sp_run_mode = "edit_mode"
         },
@@ -25,7 +25,7 @@ export const app_edit_mode = {
     // 編集モード
     edit_mode_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.ac_room) {
         this.edit_warn_modal_handle()
         return
@@ -37,7 +37,7 @@ export const app_edit_mode = {
     // 編集完了
     play_mode_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       // 編集モードの最後のSFENを play_mode の sfen に戻す
       if (this.edit_mode_sfen) {
         this.current_sfen = this.edit_mode_sfen
@@ -54,7 +54,7 @@ export const app_edit_mode = {
 
     // 玉配置/玉回収
     king_formation_auto_set(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.$refs.main_sp.sp_object().mediator.king_formation_auto_set_on_off(v)) {
         this.piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
@@ -69,7 +69,7 @@ export const app_edit_mode = {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       const modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
         events: {
@@ -77,7 +77,7 @@ export const app_edit_mode = {
             this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
               this.bs_error_message_dialog(e)
               if (e.body) {
-                this.sound_play("click")
+                this.sound_play_click()
                 this.toast_ok("棋譜を読み込みました")
                 this.shared_al_add({label: "棋譜読込前"})
                 this.current_sfen = e.body

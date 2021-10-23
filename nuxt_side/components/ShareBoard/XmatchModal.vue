@@ -54,20 +54,20 @@ export default {
   methods: {
     // やめる
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.rule_unselect("${name}がやめました")
       this.$emit("close")
     },
 
     // 選択解除
     unselect_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.rule_unselect("${name}が解除しました")
     },
 
     // ルール選択
     rule_click_handle(e) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
       // if (this.blank_p(this.base.user_name)) { とする手もある

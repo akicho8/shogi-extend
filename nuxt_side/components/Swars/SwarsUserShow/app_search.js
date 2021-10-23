@@ -11,12 +11,12 @@ export const app_search = {
     },
 
     win_lose_click_handle(judge) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$router.push({name: "swars-search", query: {query: `${this.info.user.key} judge:${judge}`}})
     },
 
     name_click_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.search_by_user_key_handle()
     },
 

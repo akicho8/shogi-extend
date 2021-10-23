@@ -5,7 +5,7 @@ export const app_columns = {
   },
   methods: {
     cb_toggle_handle(column) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.$set(this.visible_hash, column.key, !this.visible_hash[column.key])
     },
   },

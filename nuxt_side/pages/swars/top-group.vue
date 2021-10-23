@@ -12,7 +12,7 @@ client-only
           .column
             b-table(:data="records" :mobile-cards="false" hoverable)
               b-table-column(v-slot="{row}" field="user.name"  label="名前" sortable :width="1" numeric)
-                nuxt-link(:to="{name: 'swars-search', query: {query: row.user.key}}" @click.native="sound_play('click')")
+                nuxt-link(:to="{name: 'swars-search', query: {query: row.user.key}}" @click.native="sound_play_click()")
                   | {{row.user.name}}
               b-table-column(v-slot="{row}" field="win_ratio"  label="直近の勝敗" sortable cell-class="ox_sequense is_line_break_on")
                 | {{row.judge}}

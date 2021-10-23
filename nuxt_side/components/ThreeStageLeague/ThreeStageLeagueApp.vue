@@ -19,7 +19,7 @@
           .box.is-shadowless.is-inline-block.is-marginless
             .buttons.are-small
               template(v-for="league in config.leagues")
-                b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" exact-active-class="is-primary" @click.native="sound_play('click')")
+                b-button(tag="nuxt-link" :to="{name: 'three-stage-leagues-generation', params: {generation: league.generation}}" exact-active-class="is-primary" @click.native="sound_play_click()")
                   | {{league.generation}}
 
           b-table(
@@ -28,7 +28,7 @@
             hoverable
             )
             b-table-column(v-slot="{row}" field="age"        label="名前" sortable)
-              nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.user.level_up_generation || row.user.runner_up_count >= 2}" @click.native="sound_play('click')")
+              nuxt-link(:to="{name: 'three-stage-league-players-name', params: {name: row.user.name}}" :class="{'has-text-weight-bold': row.user.level_up_generation || row.user.runner_up_count >= 2}" @click.native="sound_play_click()")
                 | {{row.name_with_age}}
                 ThreeStageLeagueMark(:record="row")
 
@@ -45,7 +45,7 @@
               //-     span.mx-1 {{win}}
 
             b-table-column(v-slot="{row}")
-              a.no-decoration.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="sound_play('click')")
+              a.no-decoration.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="sound_play_click()")
                 b-icon(icon="account-question" size="is-small")
   DebugPre(v-if="development_p") {{config}}
 </template>

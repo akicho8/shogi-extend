@@ -6,7 +6,7 @@
     PageCloseButton(@click="back_handle" position="is_absolute")
     SwarsUserShowDropdownMenu(:base="base")
     SwarsUserShowHead(:base="base")
-    b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sound_play('click')")
+    b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sound_play_click()")
       b-tab-item(label="日付")
       b-tab-item(label="段級")
       b-tab-item(label="戦法")
@@ -106,7 +106,7 @@ export default {
     },
 
     back_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
 

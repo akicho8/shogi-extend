@@ -83,7 +83,7 @@
             b-field(label="手番制限" custom-class="is-small" :message="base.MoveGuardInfo.fetch(base.new_move_guard_key).message")
               b-field.is-marginless
                 template(v-for="e in base.MoveGuardInfo.values")
-                  b-radio-button(v-model="base.new_move_guard_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+                  b-radio-button(v-model="base.new_move_guard_key" :native-value="e.key" size="is-small" @input="sound_play_click()")
                     | {{e.name}}
 
   .modal-card-foot
@@ -111,7 +111,7 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     main_switch_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.order_func_share({order_func_p: v, message: v ? "有効" : "無効"})
 
       // 一番最初に有効にしたときは1度更新を押した状態にする
@@ -124,7 +124,7 @@ export default {
 
     close_handle() {
       if (this.base.order_func_p && this.base.os_change.has_value_p) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk("ちょっと待て")
         this.dialog_confirm({
           title: "本当に閉じてもよいか？",
@@ -136,16 +136,16 @@ export default {
           focusOn: "cancel",
           onConfirm: () => {
             // this.apply_handle()
-            this.sound_play("click")
+            this.sound_play_click()
             this.direct_close_handle()
           },
           // onCancel: () => {
-          //   this.sound_play("click")
+          //   this.sound_play_click()
           //   // this.direct_close_handle()
           // },
         })
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
         this.direct_close_handle()
       }
     },
@@ -156,13 +156,13 @@ export default {
     },
 
     test_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.tn_notify()
     },
 
     // シャッフル
     shuffle_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.shuffle_core()
       this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
       this.base.os_change.append("順番")
@@ -201,7 +201,7 @@ export default {
         this.toast_warn(`${prefix}でしたが参加人数が奇数のときはチーム編成が変わるので無効です`)
         return
       }
-      this.sound_play("click")
+      this.sound_play_click()
       if (furigoma_pack.swap_p) {
         this.swap_core()
       }
@@ -215,7 +215,7 @@ export default {
     swap_handle() {
       // if (this.validate_present()) { return }
       if (this.validate_members_even("先後入替")) { return }
-      this.sound_play("click")
+      this.sound_play_click()
       this.swap_core()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
       this.base.os_change.append("先後")
@@ -250,18 +250,18 @@ export default {
     },
 
     new_avatar_king_key_change_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.os_change.append("アバター")
     },
 
     new_shout_mode_key_change_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.os_change.append("シャウト")
     },
 
     // 上下矢印ボタン
     arrow_handle(row, sign) {
-      this.sound_play("click")
+      this.sound_play_click()
       const index = this.base.os_table_rows.findIndex(e => e.user_name === row.user_name)
       this.base.os_table_rows = this.ary_move(this.base.os_table_rows, index, index + sign)
       this.order_index_update()
@@ -270,7 +270,7 @@ export default {
 
     // 参加 or 不参加ボタン
     enable_toggle_handle(row) {
-      this.sound_play("click")
+      this.sound_play_click()
       row.enabled_p = !row.enabled_p
       this.order_index_update()
       this.base.os_change.append("参加")
@@ -278,7 +278,7 @@ export default {
 
     // 更新
     apply_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.form_params_share("更新")
       this.base.os_change.clear()
     },

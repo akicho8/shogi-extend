@@ -6,12 +6,12 @@ import { DotSfen } from "@/components/models/dot_sfen.js"
 export const ActionLogJumpPreviewModalButtons = {
   methods: {
     kifu_copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.general_kifu_copy(this.action_log.sfen, {to_format: "kif", turn: this.new_turn_offset})
       this.base.shared_al_add_simple("棋譜コピー")
     },
     room_code_except_url_copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.clipboard_copy({text: this.base.permalink_from_params(this.current_url_params)})
       this.base.shared_al_add_simple("棋譜リンクコピー")
     },

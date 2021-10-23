@@ -19,7 +19,7 @@
                   | {{e.name}}
                 b-field.mt-3
                   b-input(:value="_.trim(e.body)" readonly :rows="6" type="textarea")
-                b-button(tag="nuxt-link" :to="{name: 'adapter', query: {body: _.trim(e.body)}}" @click="sound_play('click')" size="is-small") テスト
+                b-button(tag="nuxt-link" :to="{name: 'adapter', query: {body: _.trim(e.body)}}" @click="sound_play_click()" size="is-small") テスト
 </template>
 
 <script>

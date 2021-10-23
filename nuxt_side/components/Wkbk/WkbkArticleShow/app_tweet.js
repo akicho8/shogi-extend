@@ -3,7 +3,7 @@ import _ from "lodash"
 export const app_tweet = {
   methods: {
     tweet_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.tweet_window_popup({text: this.tweet_body})
     },
   },

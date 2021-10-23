@@ -15,7 +15,7 @@ export const app_style = {
       this.xy_grid_star_size = null
     },
     style_default_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.touch_board_width = this.ls_default.touch_board_width
       this.xy_grid_stroke    = this.ls_default.xy_grid_stroke
       this.xy_grid_color     = this.ls_default.xy_grid_color

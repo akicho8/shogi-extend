@@ -81,12 +81,12 @@ export default {
     },
 
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
 
     undo_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.mode === "begin") {
         this.silent_reset()
         return
@@ -125,7 +125,7 @@ export default {
     // this.turn_offset: 2 // 手目まで進めたと仮定
     // [a, b, c, d, e] の棋譜があって2からとした場合、b から始める棋譜 + c, d, e を作る
     begin_apply() {
-      this.sound_play("click")
+      this.sound_play_click()
       const info = this.sfen_parse(this.sp_body)
       const moves = _.drop(info.moves, this.turn_offset)            // [a, b, c, d, e].drop(2) => [c, d, e]
       this.base_sfen = this.sfen_normalize(this.snapshot_sfen)      // bから始まる棋譜の最後の手番を1にしたもの
@@ -145,7 +145,7 @@ export default {
 
     // ここまで
     end_apply() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       // done から end する前の状態に戻るために保持
       this.save_sp_done = this.sp_body
@@ -169,7 +169,7 @@ export default {
 
     // 確定
     apply_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("update:apply", this.emit_params)
     },
 

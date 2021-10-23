@@ -35,7 +35,7 @@ export default {
       return [e.performed_at, e.turn_offset, e.from_connection_id || ""].join("-")
     },
     action_log_click_handle(e) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: ActionLogJumpPreviewModal,
         props: {

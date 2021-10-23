@@ -185,7 +185,7 @@ export default {
   },
   methods: {
     bar_click_handle(generation) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$router.push({name: "three-stage-leagues-generation", params: {generation: generation}})
     },
   },

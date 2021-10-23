@@ -123,7 +123,7 @@
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .tweet_button_container.buttons.is-centered.mt-6
-      TweetButton(:body="tweet_body" @after_click="sound_play('click')")
+      TweetButton(:body="tweet_body" @after_click="sound_play_click()")
 
     .box.question_description.has-background-white-ter.is-shadowless.is-size-7.mt-6(v-if="question.description")
       | {{question.description}}
@@ -175,12 +175,12 @@ export default {
     },
 
     delete_click_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
 
     tab_change_handle() {
-      // this.sound_play("click")
+      // this.sound_play_click()
       this.sp_turn_slider_auto_focus() // FIXME: 動いてない
     },
 
@@ -197,7 +197,7 @@ export default {
     },
 
     kifu_copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.general_kifu_copy(this.selected_sfen, {to_format: "kif"})
     },
 

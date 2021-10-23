@@ -7,7 +7,7 @@
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
       template(v-if="base.visible_hash[key]")
         template(v-for="name in m[key]")
-          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sound_play('click')")
+          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sound_play_click()")
             //- b-tag(rounded :type="key === 'attack_tag_list' ? 'is-danger' : 'is-warning is-light'") {{name}}
             b-tag(rounded) {{name}}
 </template>

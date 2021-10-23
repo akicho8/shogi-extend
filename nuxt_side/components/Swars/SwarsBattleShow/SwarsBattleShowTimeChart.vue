@@ -414,7 +414,7 @@ export default {
 
   watch: {
     zoom_p(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (v) {
         // 拡大
         const ticks = this._chart_config.options.scales.yAxes[0].ticks
@@ -556,7 +556,7 @@ export default {
 
     // 盤面の手数を変更
     api_board_turn_set(turn) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       if (turn > this.record.turn_max) {
         this.$emit("update:turn", this.record.turn_max)

@@ -51,7 +51,7 @@ export const app_ordered_members = {
     // 順番設定モーダル起動
     os_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.__assert__(this.$os_modal_instance == null, "this.$os_modal_instance == null")
       this.$os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
@@ -59,7 +59,7 @@ export const app_ordered_members = {
         canCancel: [],
         onCancel: () => {
           this.__assert__(false, "must not happen")
-          this.sound_play("click")
+          this.sound_play_click()
           this.os_modal_close()
         },
       })

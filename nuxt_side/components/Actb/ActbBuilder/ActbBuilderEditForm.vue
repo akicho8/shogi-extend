@@ -30,7 +30,7 @@
     b-switch(v-model="bapp.question.mate_skip" size="is-small") 最後は無駄合い (なので詰みチェックしない)
 
   b-collapse.mt-6(:open="source_author_collapse_open_p")
-    b-button(slot="trigger" @click="sound_play('click')" slot-scope="props" size="is-small") 作者が他者の場合
+    b-button(slot="trigger" @click="sound_play_click()" slot-scope="props" size="is-small") 作者が他者の場合
     .box.py-5.mt-2
       b-field
         b-switch(v-model="bapp.question.source_about_key" size="is-small" true-value="unknown" false-value="ascertained") 作者不詳
@@ -80,26 +80,26 @@ export default {
   watch: {
     "question.lineage_key": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.say(v)
       },
     },
     "question.mate_skip": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.say(v)
       },
     },
     "question.folder_key": {
       handler(v) {
         const folder_info = this.bapp.FolderInfo.fetch(v)
-        this.sound_play("click")
+        this.sound_play_click()
         this.say(folder_info.name)
       },
     },
     "question.difficulty_level": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.say(v)
       },
     },
@@ -108,7 +108,7 @@ export default {
         if (v === "unknown") {
           this.say("作者不詳")
         }
-        this.sound_play("click")
+        this.sound_play_click()
       },
     },
   },

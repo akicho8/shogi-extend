@@ -17,7 +17,7 @@ export const app_answer = {
 
     // 「この手順を正解とする」
     answer_create_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.answer_create(this.current_moves())
     },
 
@@ -58,7 +58,7 @@ export const app_answer = {
         this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.article.moves_answers.length - 1)
       })
 
-      this.sound_play("click")
+      this.sound_play_click()
       this.toast_ok("削除しました")
     },
   },

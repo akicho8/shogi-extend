@@ -27,14 +27,14 @@
 
     .media
       .media-left
-        nuxt-link.image.is_avatar_image(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sound_play('click')")
+        nuxt-link.image.is_avatar_image(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sound_play_click()")
           img.is-rounded(:src="base.banana.user.avatar_path" :alt="base.banana.user.name")
 
       .media-content
         .title.is_line_break_on.mb-0.is-5 {{base.banana.title}}
         .nav_line
           .nav_line_left.is_line_break_on.has-text-grey
-            nuxt-link(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sound_play('click')")
+            nuxt-link(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sound_play_click()")
               | {{base.banana.user.name}}
 
             //- span.ml-1 {{updated_time_format(base.banana.updated_at)}}

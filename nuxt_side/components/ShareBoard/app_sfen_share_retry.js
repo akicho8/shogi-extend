@@ -80,11 +80,11 @@ export const app_sfen_share_retry = {
         focusOn: "confirm",
         onCancel: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
         },
         onConfirm: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
           this.sfen_share()
         },
       })

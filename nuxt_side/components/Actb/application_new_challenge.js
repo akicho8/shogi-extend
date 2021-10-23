@@ -60,7 +60,7 @@ export const application_new_challenge = {
         actionText: "対戦する",
         queue: false,
         onAction: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.new_challenge_accept_handle(params)
         }
       })

@@ -3,7 +3,7 @@
   .modal-card-head
     .modal-card-title ツイート
 
-    b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play('click')" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle" v-if="development_or_staging_p")
+    b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle" v-if="development_or_staging_p")
       template(#trigger)
         b-button(:label="base.color_theme_info.name" icon-right="menu-down" size="is-small")
       template(v-for="e in base.ColorThemeInfo.values")
@@ -49,7 +49,7 @@ export default {
 
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     submit_handle() {

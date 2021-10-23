@@ -15,7 +15,7 @@ export const app_room_recreate = {
     // 再起動モーダル起動
     room_recreate_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: RoomRecreateModal,
         props: { base: this.base },

@@ -9,7 +9,7 @@
   .is-flex.rule_container
     template(v-for="(row, key) in base.info.rules_hash")
       template(v-if="blank_p(base.current_rule) || base.current_rule === row.rule_name")
-        nuxt-link.rule_one.is-clickable(tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key" @click.native="sound_play('click')")
+        nuxt-link.rule_one.is-clickable(tag="span" :to="{name: 'swars-search', query: {query: `${base.info.user.key} rule:${row.rule_name}`}}" :key="key" @click.native="sound_play_click()")
           span.rule_name.is-size-7.has-text-grey
             | {{row.rule_name}}
           span.grade_name.is-size-5

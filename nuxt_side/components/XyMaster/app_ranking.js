@@ -34,7 +34,7 @@ export const app_ranking = {
         inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
         canCancel: false,
         onCancel: () => {
-          this.sound_play("click")
+          this.sound_play_click()
         },
         onConfirm: value => {
           const message = HandleNameValidator.valid_with_message(value, {name: "名前"})
@@ -43,7 +43,7 @@ export const app_ranking = {
             this.toast_warn(message)
             this.name_input_dialog()
           } else {
-            this.sound_play("click")
+            this.sound_play_click()
             this.entry_name_set_and_record_post(value)
           }
         },

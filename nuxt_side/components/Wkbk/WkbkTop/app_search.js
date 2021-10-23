@@ -8,22 +8,22 @@ export const app_search = {
   },
   methods: {
     search_field_toggle_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.search_p = !this.search_p
     },
     tag_search_handle(tag) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")
       this.router_push({tag})
     },
     tag_remove_handle(tag) {
-      this.sound_play("click")
+      this.sound_play_click()
       tag = this.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },
     search_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.router_push({})
     },
   },

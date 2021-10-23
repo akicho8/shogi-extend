@@ -5,7 +5,7 @@ export const app_urls = {
     ////////////////////////////////////////////////////////////////////////////////
     room_code_only_url_copy_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       if (!this.room_code) {
         this.toast_warn("まだ合言葉を設定してません")
         return
@@ -16,13 +16,13 @@ export const app_urls = {
     // 棋譜リンクコピー
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.clipboard_copy({text: this.room_code_except_url})
     },
 
     other_app_click_handle(app_name) {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.shared_al_add({
         label: `${app_name}起動`,

@@ -54,11 +54,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     apply_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.action_log_jump({...this.action_log, turn_offset: this.new_turn_offset})
       this.$emit("close")
     },

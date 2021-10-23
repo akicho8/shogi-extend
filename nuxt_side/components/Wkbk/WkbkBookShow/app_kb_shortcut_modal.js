@@ -15,7 +15,7 @@ export const app_kb_shortcut_modal = {
       }
     },
     kb_shortcut_modal_show() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.kb_shortcut_modal_close()
       if (this.$kb_shortcut_modal) { alert("this.$kb_shortcut_modal") }
       this.$kb_shortcut_modal = this.modal_card_open({
@@ -31,7 +31,7 @@ export const app_kb_shortcut_modal = {
     },
     kb_shortcut_modal_close() {
       if (this.$kb_shortcut_modal) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.$kb_shortcut_modal.close()
         this.$kb_shortcut_modal = null
         this.kb_shortcut_modal_p = false

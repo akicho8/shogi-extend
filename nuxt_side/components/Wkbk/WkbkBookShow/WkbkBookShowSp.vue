@@ -38,7 +38,7 @@ MainSection.WkbkBookShowSp
           :vertical="false"
           :expanded="true"
           :animated="false"
-          @input="sound_play('click')"
+          @input="sound_play_click()"
           )
           template(v-for="(e, i) in base.current_article.moves_answers")
             b-tab-item(:label="`${i + 1}`")

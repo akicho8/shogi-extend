@@ -2,7 +2,7 @@
 MainNavbar.GalleryBananaEditNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(v-if="base.banana")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play('click')")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'video-studio'}" @click.native="sound_play_click()")
         b-icon(icon="chevron-left")
     template(slot="start")
       b-navbar-item.px_0_if_mobile.has-text-weight-bold(tag="div")
@@ -17,7 +17,7 @@ MainNavbar.GalleryBananaEditNavbar(:spaced="false" wrapper-class="container is-f
       //-   //- b-navbar-item(tag="div") {{base.banana.new_record_p ? '新規' : '編集'}}
     template(slot="end")
       //- https://buefy.org/documentation/navbar
-      b-navbar-dropdown(arrowless right @click.native="sound_play('click')")
+      b-navbar-dropdown(arrowless right @click.native="sound_play_click()")
         //- https://pictogrammers.github.io/@mdi/font/5.4.55/
         b-icon.px_5_if_tablet(icon="dots-vertical" slot="label")
         //- b-navbar-item(@click.prevent.stop="base.download_handle(base.banana)") ダウンロード

@@ -9,7 +9,7 @@ export const app_review = {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       // this.body = ""
 
       // this.response_hash   = null
@@ -20,7 +20,7 @@ export const app_review = {
     },
 
     banana_new_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       if (this.present_p(record.banana)) {
         this.toast_warn("すでに登録しています")
@@ -28,7 +28,7 @@ export const app_review = {
           message: "編集ページに移動しますか？",
           confirmText: "移動する",
           onConfirm: () => {
-            this.sound_play("click")
+            this.sound_play_click()
             this.$router.push({name: 'video-studio-banana_key-edit', params: {banana_key: record.banana.key}})
           },
         })
@@ -52,7 +52,7 @@ export const app_review = {
           confirmText: "登録する",
           cancelText: "しない",
           onConfirm: () => {
-            this.sound_play("click")
+            this.sound_play_click()
             this.$router.push({name: "video-studio-new", query: {source_id: record.id}})
           },
         })
@@ -60,38 +60,38 @@ export const app_review = {
     },
 
     download_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.delay_block(1, () => this.talk("ダウンロードしました"))
     },
 
     __main_download_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       window.location.href = record.rails_side_download_url
     },
 
     __main_show_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.window_popup(record.rails_side_inline_url, record.to_wh)
     },
 
     __json_show_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.other_window_open(record.rails_side_json_url)
     },
 
     __load_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.done_record = record
     },
 
     // 未使用
     __other_window_direct_open_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.window_popup(record.browser_path, record.to_wh)
     },
 
     __secret_show_handle(record) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.url_open(record.browser_path, this.target_default)
     },
   },

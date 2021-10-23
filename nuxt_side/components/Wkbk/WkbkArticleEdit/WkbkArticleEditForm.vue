@@ -52,11 +52,11 @@ MainSection.WkbkArticleEditForm
             .panel-block.book_cb_buttons.is-block
               template(v-for="e in base.books")
                 b-field
-                  b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key" expanded @input="sound_play('click')")
+                  b-checkbox-button(v-model="base.article.book_keys" :native-value="e.key" expanded @input="sound_play_click()")
                     b-icon(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small")
                     p.ml-2 {{e.title}}
           .panel-block.py-4
-            nuxt-link.is-size-7(:to="{name: 'rack-books-new'}" @click.native="sound_play('click')")
+            nuxt-link.is-size-7(:to="{name: 'rack-books-new'}" @click.native="sound_play_click()")
               b-icon(icon="plus" size="is-small")
               span.ml-1 新しい問題集
 </template>
@@ -78,26 +78,26 @@ export default {
   watch: {
     "article.lineage_key": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(v)
       },
     },
     "article.mate_skip": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(v)
       },
     },
     "article.difficulty": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(v)
       },
     },
     "article.folder_key": {
       handler(v) {
         const folder_info = this.FolderInfo.fetch(v)
-        this.sound_play("click")
+        this.sound_play_click()
         this.sound_stop_all()
         this.talk(folder_info.name)
       },

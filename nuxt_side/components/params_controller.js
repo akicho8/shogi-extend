@@ -19,7 +19,7 @@
 //
 //   xxx_handle() {
 //     if (this.pc_standby_ok >= 1) {
-//       this.sound_play('click')
+//       this.sound_play_click()
 //     }
 //   }
 //
@@ -74,7 +74,7 @@ export const params_controller = {
       })
     },
     pc_data_reset_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.sidebar_p = false
       this.pc_data_reset()
     },

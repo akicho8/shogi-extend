@@ -10,7 +10,7 @@
         .column.is-half-tablet
           b-field(:class="m.key" custom-size="is-small" :label="base[m.model].field_label" :message="base[m.model].field_message")
             template(v-for="e in base[m.model].values")
-              b-radio-button(:class="e.key" @input="sound_play('click')" size="is-small" v-model="base[m.key]" :native-value="e.key" :type="e.type")
+              b-radio-button(:class="e.key" @input="sound_play_click()" size="is-small" v-model="base[m.key]" :native-value="e.key" :type="e.type")
                 | {{e.name}}
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -25,7 +25,7 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
   },

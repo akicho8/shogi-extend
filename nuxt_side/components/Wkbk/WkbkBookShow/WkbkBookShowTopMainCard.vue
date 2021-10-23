@@ -10,7 +10,7 @@
     .card-content
       .media
         .media-left
-          nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+          nuxt-link.image.is-48x48.is-clickable(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play_click()")
             img.is-rounded(:src="base.book.user.avatar_path" :alt="base.book.user.name")
         .media-content
           //- p(v-if="base.book.tag_list.length >= 1")
@@ -19,7 +19,7 @@
           //-       a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
           .title.is-4.mb-1 {{base.book.title}}
           p
-            nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play('click')")
+            nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play_click()")
               | {{base.book.user.name}}
             span.ml-1 {{updated_time_format(base.book.updated_at)}}
             b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
@@ -34,8 +34,8 @@
       //-     | START
       .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white(@click="base.play_start")
         | START
-      //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play('click')" v-if="base.owner_p") 問題追加
-      //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sound_play('click')" v-if="base.owner_p") 編集
+      //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="sound_play_click()" v-if="base.owner_p") 問題追加
+      //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="sound_play_click()" v-if="base.owner_p") 編集
 </template>
 
 <script>

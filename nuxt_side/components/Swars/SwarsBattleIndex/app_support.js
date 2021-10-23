@@ -3,7 +3,7 @@ export const app_support = {
     // medal_click_handle(medal) {
     //   const message = medal.message
     //   if (message) {
-    //     this.sound_play("click")
+    //     this.sound_play_click()
     //     this.toast_ok(message)
     //   }
     // },

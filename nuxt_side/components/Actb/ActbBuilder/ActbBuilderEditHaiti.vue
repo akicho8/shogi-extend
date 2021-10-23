@@ -63,12 +63,12 @@ export default {
   methods: {
     // 棋譜の読み込みタップ時の処理
     any_source_read_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       const modal_instance = this.modal_card_open({
         component: ActbAnySourceReadModal,
         events: {
           "update:any_source": any_source => {
-            this.sound_play("click")
+            this.sound_play_click()
             this.$axios.$post("/api/general/any_source_to.json", { any_source: any_source, to_format: "sfen" }).then(e => {
               modal_instance.close()
               if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
@@ -93,7 +93,7 @@ export default {
         props: props,
         events: {
           "update:fixed_sfen": fixed_sfen => {
-            this.sound_play("click")
+            this.sound_play_click()
             this.toast_ok("反映しました")
             this.fixed_sfen_set(fixed_sfen)
             modal_instance.close()
@@ -114,7 +114,7 @@ export default {
 
     // 棋譜コピー
     kifu_copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.general_kifu_copy(this.bapp.question.init_sfen, {to_format: "kif"})
     },
 

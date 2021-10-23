@@ -76,7 +76,7 @@ export default {
 
   async created() {
     this.base.lobby_unsubscribe()
-    this.sound_play("click")
+    this.sound_play_click()
 
     // 一覧用のリソース
     await this.api_get("builder_form_resource_fetch", {}, e => {
@@ -114,7 +114,7 @@ export default {
     },
 
     edit_tab_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (false) {
         this.say(this.current_tab_info.name)
       }
@@ -189,7 +189,7 @@ export default {
       this.question.moves_answers.push({moves_str: moves.join(" "), end_sfen: this.mediator_snapshot_sfen})
       this.$nextTick(() => this.answer_tab_index = this.question.moves_answers.length - 1)
 
-      this.sound_play("click")
+      this.sound_play_click()
       this.ok_notice(`${this.question.moves_answers.length}つ目の正解を追加しました`, {onend: () => {
         if (this.question.moves_answers.length === 1) {
           this.ok_notice(`他の手順で正解がある場合は続けて追加してください`)
@@ -202,7 +202,7 @@ export default {
       this.$set(this.question, "moves_answers", new_ary)
       this.$nextTick(() => this.answer_tab_index = _.clamp(this.answer_tab_index, 0, this.question.moves_answers.length - 1))
 
-      this.sound_play("click")
+      this.sound_play_click()
       this.ok_notice("削除しました")
     },
 
@@ -250,7 +250,7 @@ export default {
         if (e.question) {
           this.question = new Question(e.question)
 
-          this.sound_play("click")
+          this.sound_play_click()
           this.ok_notice(`${before_save_button_name}しました`)
 
           if (this.base.config.save_and_back_to_index) {
@@ -268,7 +268,7 @@ export default {
     },
 
     question_edit_for(row) {
-      this.sound_play("click")
+      this.sound_play_click()
       // this.$ga.event("open", {event_category: "問題編集"})
 
       this.__assert__(row instanceof Question, `問題が Question でラップされてない ${Question.name}`)
@@ -300,7 +300,7 @@ export default {
     },
 
     tag_search_handle(tag) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.say(tag)
       this.page_info.tag = tag
       this.async_records_load()
@@ -355,7 +355,7 @@ export default {
 
     builder_index_handle(event = null) {
       if (event) {
-        this.sound_play("click")
+        this.sound_play_click()
       }
       this.question = null
     },

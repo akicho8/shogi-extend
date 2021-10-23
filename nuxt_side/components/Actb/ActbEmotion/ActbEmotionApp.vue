@@ -56,7 +56,7 @@ export default {
       this.__assert__(record, "record")
       this.current_record = record
       this.current_component = "ActbEmotionEdit"
-      this.sound_play("click")
+      this.sound_play_click()
     },
     // 新規編集
     new_handle() {

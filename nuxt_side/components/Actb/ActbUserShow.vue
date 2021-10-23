@@ -87,7 +87,7 @@ export default {
   ],
   methods: {
     delete_click_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
   },

@@ -21,7 +21,7 @@ export default {
   methods: {
     submit_handle() {
       this.sound_stop_all()
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
   },

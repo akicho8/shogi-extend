@@ -15,7 +15,7 @@
       .tabs.mb-6(v-if="true")
         ul
           template(v-for="(item, key) of items")
-            nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }" @click.native="sound_play('click')")
+            nuxt-link(:to="item.to" v-slot="{ href, route, navigate, isActive, isExactActive }" @click.native="sound_play_click()")
               li(:class="[isActive && 'is-active', isExactActive && '']")
                 a(:href="href" @click="navigate") {{item.title}}
       nuxt

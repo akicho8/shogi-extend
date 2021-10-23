@@ -12,7 +12,7 @@
         .column
           b-field(label="このブラウザから起動するぴよ将棋の種類" :message="new_piyo_shogi_type_info.message")
             template(v-for="e in PiyoShogiTypeInfo.values")
-              b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="sound_play('click')")
+              b-radio-button(v-model="new_piyo_shogi_type_key" :native-value="e.key" @input="sound_play_click()")
                 | {{e.name}}
 </template>
 
@@ -38,12 +38,12 @@ export default {
   },
   methods: {
     cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_to()
     },
 
     save_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.new_piyo_shogi_type_key != this.piyo_shogi_type_key) {
         this.piyo_shogi_type_key = this.new_piyo_shogi_type_key
         this.toast_ok(`${this.piyo_shogi_type_info.name}に変更しました`)

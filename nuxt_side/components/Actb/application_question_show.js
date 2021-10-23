@@ -11,7 +11,7 @@ export const application_question_show = {
     },
 
     ov_question_info_set(question_id) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.api_get("question_single_fetch", {question_id: question_id}, e => {
         if (e.ov_question_info) {
           const ov_question_info =  e.ov_question_info

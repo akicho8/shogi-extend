@@ -4,7 +4,7 @@ export const app_tweet = {
   methods: {
     tweet_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: TweetModal,
         props: { base: this.base },
@@ -13,7 +13,7 @@ export const app_tweet = {
 
     tweet_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       if (false) {
         // この方法だと1行目を空行にできない
         this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})

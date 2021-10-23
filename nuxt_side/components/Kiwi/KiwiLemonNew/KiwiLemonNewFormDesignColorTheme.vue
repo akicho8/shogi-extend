@@ -7,7 +7,7 @@
   b-field(:label="base.ColorThemeInfo.field_label" :message="base.ColorThemeInfo.fetch(base.color_theme_key).message || base.ColorThemeInfo.field_message" v-if="development_p && blank_p($route.query.__color_theme_key_dropdown_skip__)")
     .control
       //- :scrollable="desktop_p()" max-height="66.6vh"
-      b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play('click')")
+      b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play_click()")
         template(#trigger)
           b-button(:label="base.color_theme_info.name" icon-right="menu-down")
         template(v-for="e in base.ColorThemeInfo.values")
@@ -15,7 +15,7 @@
             template(v-if="e.separator")
               b-dropdown-item(separator)
             template(v-else)
-              b-dropdown-item(:value="e.key" @click="sound_play('click')")
+              b-dropdown-item(:value="e.key" @click="sound_play_click()")
                 .media
                   .media-content
                     .is_line_break_on

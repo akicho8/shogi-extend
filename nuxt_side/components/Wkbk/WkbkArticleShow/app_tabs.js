@@ -13,7 +13,7 @@ export const app_tabs = {
     },
 
     show_tab_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (false) {
         this.talk(this.current_tab_info.name)
       }

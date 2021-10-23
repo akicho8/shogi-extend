@@ -32,15 +32,15 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     test_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.force_sync("テスト転送")
     },
     sync_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.force_sync_direct()
       this.$emit("close")
     },

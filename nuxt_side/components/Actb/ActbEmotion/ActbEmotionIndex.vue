@@ -3,7 +3,7 @@
   .primary_header
     .header_center_title エモーション一覧
     b-icon.header_item.with_icon.rjust(icon="plus" @click.native="$parent.new_handle")
-    b-dropdown.header_item.with_icon.ljust.px-3(@active-change="sound_play('click')")
+    b-dropdown.header_item.with_icon.ljust.px-3(@active-change="sound_play_click()")
       b-icon(slot="trigger" icon="menu")
       b-dropdown-item.px-4(@click.native.stop="import_handle") プリセットインポート
       b-dropdown-item.px-4(@click.native.stop="destroy_all_handle") 全削除
@@ -67,7 +67,7 @@ export default {
   methods: {
     // タブが変更されたときの処理
     tab_change_hook() {
-      this.sound_play("click")
+      this.sound_play_click()
       // const func = this[`tab_change_hook_for_${this.$parent.current_folder.key}`]
       // if (func) {
       //   func()
@@ -77,7 +77,7 @@ export default {
     move_to_handle(record, move_to) {
       this.api_put("emotion_move_to_handle", {record_id: record.id, move_to: move_to}, e => {
         this.$set(this.base.current_user, "emotions", e.emotions)
-        this.sound_play("click")
+        this.sound_play_click()
       })
     },
     // 指定フォルダに入っているレコード(複数)を返す
@@ -88,7 +88,7 @@ export default {
     reset_handle() {
       this.api_put("emotions_reset_handle", {}, e => {
         this.$set(this.base.current_user, "emotions", e.emotions)
-        this.sound_play("click")
+        this.sound_play_click()
       })
 
       // this.$buefy.dialog.confirm({
@@ -103,7 +103,7 @@ export default {
       //   onConfirm: () => {
       //     this.api_put("emotions_reset_handle", {}, e => {
       //       this.$set(this.base.current_user, "emotions", e.emotions)
-      //       this.sound_play("click")
+      //       this.sound_play_click()
       //     })
       //   },
       //   onCancel:  () => { this.ok_notice("キャンセルしました") },
@@ -112,13 +112,13 @@ export default {
     destroy_all_handle() {
       this.api_put("emotions_destroy_all_handle", {}, e => {
         this.$set(this.base.current_user, "emotions", e.emotions)
-        this.sound_play("click")
+        this.sound_play_click()
       })
     },
     import_handle() {
       this.api_put("emotions_import_handle", {}, e => {
         this.$set(this.base.current_user, "emotions", e.emotions)
-        this.sound_play("click")
+        this.sound_play_click()
       })
     },
 
@@ -146,7 +146,7 @@ export default {
       }
       this.api_put("emotion_insert_at_handle", {record_id: this.dragging_row.id, insert_at: dropped_on_row_index}, e => {
         this.$set(this.base.current_user, "emotions", e.emotions)
-        // this.sound_play("click")
+        // this.sound_play_click()
       })
     },
     ////////////////////////////////////////////////////////////////////////////////

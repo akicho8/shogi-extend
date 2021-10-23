@@ -92,7 +92,7 @@ export default {
     this.clock_box = new ClockBox({
       turn: 0,
       clock_switch_hook: () => {
-        this.sound_play("click")
+        this.sound_play_click()
       },
       time_zero_callback: e => {
         this.sound_play("lose")
@@ -149,14 +149,14 @@ export default {
   },
   methods: {
     resume_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.clock_box.resume_handle()
       this.sound_stop_all()
     },
     pause_handle() {
       if (this.clock_box.running_p) {
         this.sound_stop_all()
-        this.sound_play("click")
+        this.sound_play_click()
         this.clock_box.pause_handle()
 
         if (false) {
@@ -179,7 +179,7 @@ export default {
       if (this.clock_box.running_p) {
         this.full_screen.off()
         this.sound_stop_all()
-        this.sound_play("click")
+        this.sound_play_click()
         this.clock_box.stop_handle()
       }
     },
@@ -217,7 +217,7 @@ export default {
       e.tap_on()
     },
     copy_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.say("左の設定を右にコピーしますか？")
 
       this.$buefy.dialog.confirm({
@@ -230,18 +230,18 @@ export default {
         trapFocus: true,
         onConfirm: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
           this.clock_box.copy_1p_to_2p()
           this.say("コピーしました")
         },
         onCancel: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
         },
       })
     },
     keyboard_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.sound_stop_all()
       const dialog = this.$buefy.dialog.alert({
         title: "ショートカットキー",
@@ -254,19 +254,19 @@ export default {
         trapFocus: true,
         onConfirm: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
         },
         onCancel: () => {
           this.sound_stop_all()
-          this.sound_play("click")
+          this.sound_play_click()
         },
       })
     },
     dropdown_active_change(on) {
       if (on) {
-        this.sound_play("click")
+        this.sound_play_click()
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
       }
     },
     rule_set(params) {

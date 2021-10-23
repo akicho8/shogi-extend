@@ -25,13 +25,13 @@ export const app_table = {
     // @sort="base.sort_handle"
 
     sort_handle(sort_column, sort_order) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.debug_alert(sort_column)
       this.book.ordered_bookships = _.orderBy(this.book.ordered_bookships, sort_column, sort_order)
     },
 
     detail_set(enabled) {
-      this.sound_play('click')
+      this.sound_play_click()
       if (enabled) {
         this.detailed_keys = this.articles.map(e => e.key)
       } else {
@@ -40,14 +40,14 @@ export const app_table = {
     },
 
     tag_search_handle(tag) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")
       this.router_push({tag})
     },
 
     tag_remove_handle(tag) {
-      this.sound_play("click")
+      this.sound_play_click()
       tag = this.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },

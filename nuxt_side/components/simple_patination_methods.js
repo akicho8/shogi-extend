@@ -12,7 +12,7 @@ export const simple_patination_methods = {
   // },
   methods: {
     page_change_handle(page) {
-      this.sound_play("click")
+      this.sound_play_click()
     },
   },
   computed: {

@@ -17,7 +17,7 @@
         template(v-for="e in config")
           template(v-if="(e.display_p && !e.experiment_p) || development_p")
             .column.is-one-third-desktop.is-half-tablet
-              nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play('click')")
+              nuxt-link.card.is-block(:to="e.nuxt_link_to" @click.native="sound_play_click()")
                 .card-image
                   figure.image
                     //- b-image.is-marginless(:src="`/ogp/${e.og_image_key}.png`")
@@ -41,7 +41,7 @@
             template(v-for="e in config")
               template(v-if="e.display_p && !e.experiment_p")
                 li
-                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play_click()") {{e.title}}
 
         .column
           .title Experiment
@@ -49,17 +49,17 @@
             template(v-for="e in config")
               template(v-if="e.display_p && e.experiment_p")
                 li
-                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play('click')") {{e.title}}
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play_click()") {{e.title}}
 
         .column
           .title About
           ul
             li
-              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play('click')") プライバシー
+              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play_click()") プライバシー
             li
-              nuxt-link(:to="{path: '/about/terms'}" @click.native="sound_play('click')") 利用規約
+              nuxt-link(:to="{path: '/about/terms'}" @click.native="sound_play_click()") 利用規約
             li
-              nuxt-link(:to="{path: '/about/credit'}" @click.native="sound_play('click')") クレジット
+              nuxt-link(:to="{path: '/about/credit'}" @click.native="sound_play_click()") クレジット
             li
               ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
 
@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     title_click() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.toast_ok("SHOGI-EXTEND は将棋の便利ツールを提供するサイトです")
     },
   },

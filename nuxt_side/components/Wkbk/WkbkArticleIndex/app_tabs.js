@@ -16,7 +16,7 @@ export const app_tabs = {
     // タブが変更されたときはページをリセットする
     tab_input_handle(index) {
       this.__assert__(index === this.tab_index, "index === this.tab_index")
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_scope_info.name)
       this.router_push({scope: this.current_scope_info.key, page: null})
     },

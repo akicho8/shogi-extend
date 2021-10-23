@@ -25,16 +25,16 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     // test_handle() {
-    //   this.sound_play("click")
+    //   this.sound_play_click()
     //   this.base.ml_add_test()
     // },
     // submit_handle() {
     //   if (this.present_p(this.base.message_body2)) {
-    //     this.sound_play("click")
+    //     this.sound_play_click()
     //     this.base.message_share({message: this.base.message_body2})
     //     this.base.message_body2 = ""
     //     this.input_focus()

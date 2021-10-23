@@ -86,7 +86,7 @@ export default {
   ],
   methods: {
     main_switch_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (v) {
         this.base.cc_create()
         this.base.cc_params_apply() // すぐにパラメータを反映する
@@ -97,12 +97,12 @@ export default {
       }
     },
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     play_handle() {
       this.__assert__(!this.instance.running_p)
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.cc_params_apply()
       this.base.cc_play_handle()
       this.base.clock_box_share("開始")
@@ -111,7 +111,7 @@ export default {
       }
     },
     stop_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.instance.running_p) {
         this.base.cc_stop_handle()
         this.base.clock_box_share("停止")
@@ -120,12 +120,12 @@ export default {
       }
     },
     pause_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.cc_pause_handle()
       this.base.clock_box_share("一時停止")
     },
     resume_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.cc_resume_handle()
       this.base.clock_box_share("再開")
       if (AUTO_CLOSE_IF_START_RESUME) {
@@ -133,7 +133,7 @@ export default {
       }
     },
     save_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.cc_params_apply()
       this.toast_ok("反映しました")
     },

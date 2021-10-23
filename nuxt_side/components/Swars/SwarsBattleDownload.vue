@@ -51,9 +51,9 @@
           b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="e.value" @input="zip_dl_max_change_handle")
             | {{e.name}}
       //- b-field.zip_dl_max(label="最大件数" custom-class="is-small" message="これ以上一気にダウンロードするときは「古い棋譜を補完」のほうを使ってください")
-      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play('click')" v-if="development_p")   0
-      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play('click')" v-if="development_p")   1
-      //-   b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play('click')") 50
+      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="0" @input="sound_play_click()" v-if="development_p")   0
+      //-   //- b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="1" @input="sound_play_click()" v-if="development_p")   1
+      //-   b-radio-button(size="is-small" v-model="zip_dl_max" :native-value="50" @input="sound_play_click()") 50
 
       b-field(label="ZIPの構造" custom-class="is-small" :message="current_zip_dl_structure_info.message")
         template(v-for="e in ZipDlStructureInfo.values")
@@ -136,7 +136,7 @@ export default {
 
   methods: {
     back_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_handle2()
     },
     back_handle2() {
@@ -144,7 +144,7 @@ export default {
     },
 
     zip_dl_scope_key_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_zip_dl_scope_info.name)
 
       if (v === "zdsk_continue") {
@@ -157,30 +157,30 @@ export default {
       }
     },
     zip_dl_format_key_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_zip_dl_format_info.name)
       if (v === "sfen" && false) {
         this.toast_ok("よくわからない場合は KIF にしてください")
       }
     },
     zip_dl_max_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_zip_dl_max_info.name)
     },
     body_encode_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_body_encode_info.name)
       if (v === "Shift_JIS" && false) {
         this.toast_ok("ShogiGUI で連続棋譜解析する場合はこっち")
       }
     },
     zip_dl_structure_key_change_handle(v) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.current_zip_dl_structure_info.name)
     },
 
     download_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       if (this.current_zip_dl_scope_info.count === 0) {
         this.toast_warn("データがありません")

@@ -4,27 +4,27 @@ import _ from "lodash"
 export const app_chore = {
   methods: {
     kifu_copy_handle(row) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.kif_clipboard_copy({kc_path: row.show_path})
     },
 
     bookmark_desc() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
         message: `検索初期値の設定の他には<b>検索直後</b>のURLを<b>ホーム画面に追加</b>かブックマークしてもウォーズIDの入力の手間を省けます`,
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',
-        onConfirm: () => this.sound_play("click"),
-        onCancel:  () => this.sound_play("click"),
+        onConfirm: () => this.sound_play_click(),
+        onCancel:  () => this.sound_play_click(),
       })
     },
 
     external_app_handle(info) {
       if (this.config.current_swars_user_key) {
-        this.sound_play("click")
+        this.sound_play_click()
         MyLocalStorage.set("external_app_setup", true)
         this.$router.push({
           name: 'swars-users-key-direct-open-external_app_key',
@@ -39,7 +39,7 @@ export const app_chore = {
     // 棋譜ダウンロード
     zip_dl_handle(e) {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
 
@@ -68,15 +68,15 @@ export const app_chore = {
 
     // vs_input_modal_handle() {
     //   this.sidebar_p = false
-    //   this.sound_play("click")
+    //   this.sound_play_click()
     //   this.$buefy.dialog.prompt({
     //     title: "対戦相手で絞る",
     //     confirmText: "実行",
     //     cancelText: "キャンセル",
     //     inputAttrs: { type: "text", value: "", required: false, placeholder: "対戦相手のウォーズIDを入力" },
-    //     onCancel: () => this.sound_play("click"),
+    //     onCancel: () => this.sound_play_click(),
     //     onConfirm: value => {
-    //       this.sound_play("click")
+    //       this.sound_play_click()
     //       value = _.trim(value)
     //       const new_query = [this.config.current_swars_user_key, `vs:${value}`].join(" ")
     //       this.$router.push({name: "swars-search", query: {query: new_query}})

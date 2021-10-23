@@ -21,7 +21,7 @@ export const application_history_vote = {
         }
       }
 
-      this.sound_play("click")
+      this.sound_play_click()
 
       const params = {
         question_id: history.question.id,
@@ -66,7 +66,7 @@ export const application_history_vote = {
     clip_handle(history, enabled) {
       if (this.login_required_warning_notice()) { return }
 
-      this.sound_play("click")
+      this.sound_play_click()
 
       const params = {
         question_id: history.question.id,

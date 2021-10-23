@@ -93,7 +93,7 @@ export default {
     },
 
     tab_change_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this[this.current_tab_info.handle_method_name]()
       this.fetch_handle()
     },
@@ -119,7 +119,7 @@ export default {
 
     // 音を出すためだけのフック
     dots_vertical_click_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       // if (!this.seasons) {
       //   this.seasons_fetch()
       // }
@@ -134,7 +134,7 @@ export default {
     },
 
     switch_to(season) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.season_id = season.id
       this.fetch_handle()
     },

@@ -4,7 +4,7 @@ export const app_source_trim = {
   methods: {
     // 入力済みの棋譜をいったん sfen に変換してから trim する
     any_source_trim_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       const params = {
         any_source: this.body,
         to_format: "sfen",

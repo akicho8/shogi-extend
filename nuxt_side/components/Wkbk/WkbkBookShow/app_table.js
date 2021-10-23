@@ -3,7 +3,7 @@ import _ from "lodash"
 export const app_table = {
   methods: {
     sort_handle(sort_column, sort_order) {
-      this.sound_play("click")
+      this.sound_play_click()
 
       if (false) {
         this.book.xitems = _.orderBy(this.book.xitems, sort_column, sort_order)

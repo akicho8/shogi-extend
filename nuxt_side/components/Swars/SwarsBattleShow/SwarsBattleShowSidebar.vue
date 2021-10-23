@@ -6,15 +6,15 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: base.share_board_query}" @click.native="sound_play('click')")
-          b-menu-item.is_active_unset(label="動画作成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.record.sfen_body, viewpoint_key: base.new_viewpoint}}" @click.native="sound_play('click')" v-if="development_or_staging_p")
-          b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.new_turn, viewpoint: base.new_viewpoint}}" @click.native="sound_play('click')")
-          b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="sound_play('click')")
+          b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: base.share_board_query}" @click.native="sound_play_click()")
+          b-menu-item.is_active_unset(label="動画作成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.record.sfen_body, viewpoint_key: base.new_viewpoint}}" @click.native="sound_play_click()" v-if="development_or_staging_p")
+          b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.new_turn, viewpoint: base.new_viewpoint}}" @click.native="sound_play_click()")
+          b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="sound_play_click()")
 
         b-menu-list(label="export")
-          b-menu-item.is_active_unset(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="sound_play('click')")
+          b-menu-item.is_active_unset(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="sound_play_click()")
 
-          b-menu-item.is_active_unset(:expanded="false" @click="sound_play('click')")
+          b-menu-item.is_active_unset(:expanded="false" @click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | 表示
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -22,7 +22,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               template(v-if="e.show")
                 b-menu-item.is_active_unset(:label="e.name" @click="base.sidebar_close" :target="target_default" :href="show_url_for(e.key)")
 
-          b-menu-item.is_active_unset(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | コピー
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -30,7 +30,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               template(v-if="e.clipboard")
                 b-menu-item.is_active_unset(:label="e.name" @click="swars_clipboard_copy_handle(e.key)")
 
-          b-menu-item.is_active_unset(@click="sound_play('click')")
+          b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
               span.ml-1 ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
@@ -81,7 +81,7 @@ export default {
       }
     },
     official_show_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.window_popup_if_desktop(this.official_show_url, {width: 400, height: 700})
     },
   },

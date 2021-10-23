@@ -14,14 +14,14 @@ export const app_mode = {
       if (this.is_running_p) {
         this.sound_stop_all()
         this.talk("途中で辞めました")
-        this.sound_play("click")
+        this.sound_play_click()
         this.mode_set("standby")
         this.re_ox_stop()
       }
     },
 
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.mode_set("standby")
     },
   },

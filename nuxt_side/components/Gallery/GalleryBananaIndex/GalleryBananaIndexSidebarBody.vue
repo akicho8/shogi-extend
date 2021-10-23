@@ -2,11 +2,11 @@
 .GalleryBananaIndexSidebarBody
   b-menu
     //- b-menu-list(label="コンテンツ")
-    //-   b-menu-item(tag="nuxt-link" :to="{name: 'video-articles'}" label="問題リスト"   @click.native="sound_play('click')")
-    //-   b-menu-item(tag="nuxt-link" :to="{name: 'video-studio'}"    label="木目テクスチャ集" @click.native="sound_play('click')")
+    //-   b-menu-item(tag="nuxt-link" :to="{name: 'video-articles'}" label="問題リスト"   @click.native="sound_play_click()")
+    //-   b-menu-item(tag="nuxt-link" :to="{name: 'video-studio'}"    label="木目テクスチャ集" @click.native="sound_play_click()")
 
     b-menu-list(label="表示オプション" v-if="base.visible_hash")
-      b-menu-item.is_active_unset.sidebar_columns_toggle(@click="sound_play('click')")
+      b-menu-item.is_active_unset.sidebar_columns_toggle(@click="sound_play_click()")
         template(slot="label" slot-scope="props")
           | 表示カラム
           b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")

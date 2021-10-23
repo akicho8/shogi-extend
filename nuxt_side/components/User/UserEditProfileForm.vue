@@ -15,7 +15,7 @@
     .container
       .columns.is-centered
         .column.has-text-centered
-          // @click.native="sound_play('click')" すると2連続で呼ばれてしまうので指定してない
+          // @click.native="sound_play_click()" すると2連続で呼ばれてしまうので指定してない
           // @click.native="toast_ok(1)" すると2回呼ばれていることがわかる
           b-upload(@input="avatar_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音OFF')")
             figure.image.is-clickable
@@ -43,13 +43,13 @@ export default {
   methods: {
     // キャンセル
     cancel_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
     },
 
     // アバター画像アップロード(と同時に切り抜きモードに移動)
     avatar_upload_handle(v) {
-      this.sound_play('click')
+      this.sound_play_click()
       this.base.upload_file_info = v
       this.base.current_component = "UserEditProfileImageCrop"
     },
@@ -61,7 +61,7 @@ export default {
 
     // 保存
     async save_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       // 変な名前を弾くため今は冗長だけどこれでいい
       if (this.name_invalid_p) {

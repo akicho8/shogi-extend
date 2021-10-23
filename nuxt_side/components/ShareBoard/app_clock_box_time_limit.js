@@ -91,7 +91,7 @@ export const app_clock_box_time_limit = {
           time_limit_key: time_limit_key,
         },
         onCancel: () => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.time_limit_modal_close()
         },
       })

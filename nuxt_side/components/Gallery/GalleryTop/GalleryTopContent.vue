@@ -9,7 +9,7 @@
   GalleryTopTagList(:base="base")
 
   .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.bananas")
-    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-banana_key', params: {banana_key: e.key}}" @click.native="sound_play('click')")
+    nuxt-link.card.is-clickable(tag="div" :to="{name: 'video-watch-banana_key', params: {banana_key: e.key}}" @click.native="sound_play_click()")
       .card-image
         template(v-if="e.lemon.thumbnail_browser_path")
           .image.is-16by9

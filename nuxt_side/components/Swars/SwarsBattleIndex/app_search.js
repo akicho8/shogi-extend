@@ -36,7 +36,7 @@ export const app_search = {
 
     // 検索すべてここで処理する
     interactive_search(params) { // private
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.$fetchState.pending) {
         this.toast_ng("連打すんな")
         return
@@ -61,7 +61,7 @@ export const app_search = {
     // b-table の @sort と @page-change に反応
     page_change_or_sort_handle(params) {
       this.$router.push({query: {...this.$route.query, ...params}}, () => {
-        this.sound_play("click")
+        this.sound_play_click()
       })
     },
 

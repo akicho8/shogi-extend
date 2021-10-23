@@ -21,9 +21,9 @@ export const vue_sound = {
     sound_play_random(keys, options = {}) {
       return this.sound_play(_.sample(keys), options)
     },
-    
-    click_play() {
-      this.sound_play("click")
+
+    sound_play_click(options = {}) {
+      this.sound_play("click", options)
     },
   },
 }

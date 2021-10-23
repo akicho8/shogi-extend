@@ -25,16 +25,16 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         .title.is-5 設定
         b-field(custom-class="is-small" label="問題タイトル表示")
           template(v-for="e in base.ArticleTitleDisplayInfo.values")
-            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
         b-field(custom-class="is-small" label="駒操作で正解したときの挙動")
           template(v-for="e in base.CorrectBehaviorInfo.values")
-            b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+            b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
         b-field(custom-class="is-small" label="視点の反転")
           template(v-for="e in base.ViewpointFlipInfo.values")
-            b-radio-button(size="is-small" v-model="base.viewpoint_flip_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+            b-radio-button(size="is-small" v-model="base.viewpoint_flip_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
         b-field(custom-class="is-small" label="盤上の駒の左右反転")
           template(v-for="e in base.SoldierHflipInfo.values")
-            b-radio-button(size="is-small" v-model="base.soldier_flop_key" :native-value="e.key" @input="sound_play('click')") {{e.name}}
+            b-radio-button(size="is-small" v-model="base.soldier_flop_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
 </template>
 
 <script>

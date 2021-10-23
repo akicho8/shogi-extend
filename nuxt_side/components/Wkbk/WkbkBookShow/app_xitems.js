@@ -14,7 +14,7 @@ export const app_xitems = {
   methods: {
     play_start() {
       if (!this.g_current_user) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.sns_login_required()
         return
       }
@@ -43,12 +43,12 @@ export const app_xitems = {
     },
 
     skip_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.next_process()
     },
 
     previous_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.next_process(-1)
     },
 
@@ -85,7 +85,7 @@ export const app_xitems = {
     },
 
     description_open_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.description_open_p = !this.description_open_p
     },
   },

@@ -10,7 +10,7 @@ export const app_core = {
 
   methods: {
     show_handle(row) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$router.push({
         name: "swars-battles-key",
         params: {

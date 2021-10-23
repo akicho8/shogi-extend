@@ -6,11 +6,11 @@ export const app_sidebar = {
   },
   methods: {
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.sidebar_p = !this.sidebar_p
     },
     sidebar_close() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.sidebar_p = false
     },
   },

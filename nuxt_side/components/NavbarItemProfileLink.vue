@@ -25,7 +25,7 @@ export default {
       if (this.click_fn) {
         this.click_fn(e)
       } else {
-        this.sound_play("click")
+        this.sound_play_click()
         this.$router.push({name: 'users-id', params: {id: this.new_user.id}})
       }
     },

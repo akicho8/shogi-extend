@@ -20,7 +20,7 @@ export const app_chore = {
     // 視点設定変更
     abstract_viewpoint_key_select_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: AbstractViewpointKeySelectModal,
         props: {
@@ -38,13 +38,13 @@ export const app_chore = {
     // タイトル編集
     title_edit_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.dialog_prompt({
         title: "タイトル",
         confirmText: "更新",
         inputAttrs: { type: "text", value: this.current_title, required: false },
         onConfirm: value => {
-          this.sound_play("click")
+          this.sound_play_click()
           this.current_title_set(value)
         },
       })
@@ -73,7 +73,7 @@ export const app_chore = {
 
     // 退出するときはとりあえずこれをかます
     exit_confirm_then(block = () => {}) {
-      this.sound_play("click")
+      this.sound_play_click()
       if (!this.exit_warning_p) {
         block()
       } else {
@@ -86,12 +86,12 @@ export const app_chore = {
           focusOn: "cancel",
           onCancel: () => {
             this.sound_stop_all()
-            this.sound_play("click")
+            this.sound_play_click()
             this.ac_log("退室", "キャンセル")
           },
           onConfirm: () => {
             this.sound_stop_all()
-            this.sound_play("click")
+            this.sound_play_click()
             this.ac_log("退室", "実行")
             block()
           },

@@ -56,7 +56,7 @@ export const application_history = {
     },
 
     history_tab_change_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base[this.history_current_tab_info.handle_method_name]()
     },
   },

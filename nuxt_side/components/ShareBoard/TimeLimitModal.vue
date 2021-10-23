@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.base.time_limit_modal_close()
       this.$emit("close")
     },

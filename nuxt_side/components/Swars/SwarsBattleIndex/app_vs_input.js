@@ -8,7 +8,7 @@ export const app_vs_input = {
     // 対戦相手ID入力するモーダルを開く
     vs_input_modal_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.modal_card_open({
         component: VsInputModal,
         props: { base: this.base },

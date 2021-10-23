@@ -83,7 +83,7 @@ export const application_battle = {
     },
 
     battle_continue_force_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.ac_battle_perform("battle_continue_force_handle")
     },
 
@@ -104,7 +104,7 @@ export const application_battle = {
 
     // 部屋から退出する
     room_leave_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.lobby_setup()
     },
   },

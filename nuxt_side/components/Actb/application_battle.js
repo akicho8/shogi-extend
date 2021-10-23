@@ -415,7 +415,7 @@ export const application_battle = {
       if (ms_flip) {
       } else {
         // 自分のときだけ成らす
-        this.sound_play("click")
+        this.sound_play_click()
       }
       this.ac_battle_perform("battle_continue_handle", {ms_flip: ms_flip})
     },
@@ -436,7 +436,7 @@ export const application_battle = {
     },
 
     battle_continue_force_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.ac_battle_perform("battle_continue_force_handle")
     },
 
@@ -461,7 +461,7 @@ export const application_battle = {
 
     // 部屋から退出する
     room_leave_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.battle_leave_handle()
       if (this.room.bot_user_id) {
         this.lobby_setup_without_cable()

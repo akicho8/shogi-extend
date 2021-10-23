@@ -17,7 +17,7 @@
       b-radio-button(v-model="font_key" native-value="mincho" size="is-small") 明朝
       b-radio-button(v-model="font_key" native-value="gothic" size="is-small") ゴシック
     b-field.mt-4(label="文字サイズ(%)" custom-class="is-small")
-      b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sound_play('click')")
+      b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sound_play_click()")
   .position_fixed.is_bottom_right.is_screen_only
     b-icon.is-clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
 
@@ -200,17 +200,17 @@ export default {
   },
   watch: {
     font_key() {
-      this.sound_play("click")
+      this.sound_play_click()
     },
   },
   methods: {
     back_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.back_to()
     },
 
     information_dialog_show() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.dialog_ok(`
          <div class="content">
            <ol>
@@ -229,7 +229,7 @@ export default {
     },
 
     printer_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       window.print()
     },
 

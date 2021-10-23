@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     async play_handle() {
-      this.sound_play('click')
+      this.sound_play_click()
       if (!this.yomiage_body) {
         await this.$axios.$post("/api/blindfold.json", {sfen: this.sp_body}).then(e => {
           this.bs_error_message_dialog(e)
@@ -108,11 +108,11 @@ export default {
     stop_handle() {
       this.sound_stop_all()
       this.talk_now = false
-      this.sound_play('click')
+      this.sound_play_click()
     },
 
     sidebar_toggle() {
-      this.sound_play('click')
+      this.sound_play_click()
       this.sidebar_p = !this.sidebar_p
     },
 
@@ -123,14 +123,14 @@ export default {
     },
 
     tweet_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.tweet_window_popup({text: this.tweet_body})
     },
 
     // 操作←→編集 切り替え
     mode_toggle_handle() {
       this.sidebar_p = false
-      this.sound_play("click")
+      this.sound_play_click()
       this.yomiage_body = null
       if (this.scene === "play_mode") {
         this.scene = "edit_mode"

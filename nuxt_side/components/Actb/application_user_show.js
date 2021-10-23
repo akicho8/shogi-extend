@@ -9,7 +9,7 @@ export const application_user_show = {
     },
 
     ov_user_info_set(user_id) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.api_get("user_single_fetch", {user_id: user_id}, e => {
         if (e.ov_user_info) {
           this.ov_user_show_modal(e.ov_user_info)

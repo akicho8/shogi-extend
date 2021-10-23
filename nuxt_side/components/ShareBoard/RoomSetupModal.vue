@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     leave_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       if (this.base.ac_room) {
         // this.toast_ok("退室しました")
         this.base.room_destroy()
@@ -83,15 +83,15 @@ export default {
       }
     },
     room_code_show_toggle_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.room_code_field_unlock()
     },
     close_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.$emit("close")
     },
     entry_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.new_room_code = _.trim(this.new_room_code)
       this.new_user_name = _.trim(this.new_user_name)

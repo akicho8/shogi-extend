@@ -12,13 +12,13 @@
         .has-text-centered
           b-field.is-inline-flex
             template(v-for="e in base.RuleInfo.values")
-              b-radio-button(v-model="base.chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+              b-radio-button(v-model="base.chart_rule_key" :native-value="e.key" size="is-small" @input="sound_play_click()")
                 | {{e.name}}
       .column
         .has-text-centered
           b-field.is-inline-flex
             template(v-for="e in base.ChartScopeInfo.values")
-              b-radio-button(v-model="base.chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play('click')")
+              b-radio-button(v-model="base.chart_scope_key" :native-value="e.key" size="is-small" @input="sound_play_click()")
                 | {{e.name}}
     .columns.is-centered
       .column.is-half

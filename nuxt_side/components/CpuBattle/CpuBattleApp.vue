@@ -254,7 +254,7 @@ export default {
     start_handle() {
       this.ga_click("CPU対戦●")
 
-      this.sound_play("click")
+      this.sound_play_click()
 
       this.sp_body_set()
 

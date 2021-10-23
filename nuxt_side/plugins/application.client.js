@@ -28,12 +28,12 @@ export const vue_application = {
         parent: this,
         component: SnsLoginContainer,
         animation: "",
-        onCancel: () => this.sound_play("click"),
+        onCancel: () => this.sound_play_click(),
       })
     },
 
     sns_login_modal_handle() {
-      this.sound_play("click")
+      this.sound_play_click()
       this.sns_login_modal_open()
     },
 
@@ -53,8 +53,8 @@ export const vue_application = {
         type: `is-${options.type}`,
         // hasIcon: true,
         message: message,
-        onConfirm: () => { this.sound_play("click") },
-        onCancel:  () => { this.sound_play("click") },
+        onConfirm: () => { this.sound_play_click() },
+        onCancel:  () => { this.sound_play_click() },
       })
     },
 
@@ -159,8 +159,8 @@ export const vue_application = {
           type: `is-${e.type}`,
           hasIcon: true,
           message: e.message,
-          onConfirm: () => { this.sound_play("click") },
-          onCancel:  () => { this.sound_play("click") },
+          onConfirm: () => { this.sound_play_click() },
+          onCancel:  () => { this.sound_play_click() },
         })
       } else if (e.method === "toast") {
         this.toast_ok(e.message, {type: `is-${e.type}`})
@@ -182,7 +182,7 @@ export const vue_application = {
         hasModalCard: true,
         animation: "",
         canCancel: ["outside", "escape"],
-        onCancel: () => this.sound_play("click"),
+        onCancel: () => this.sound_play_click(),
         ...params,
       })
     },
@@ -194,10 +194,10 @@ export const vue_application = {
         cancelText: "キャンセル",
         animation: "",
         inputAttrs: { type: "text", value: "", required: false },
-        onCancel: () => this.sound_play("click"),
+        onCancel: () => this.sound_play_click(),
         onConfirm: value => {
           this.debug_alert(value)
-          this.sound_play("click")
+          this.sound_play_click()
         },
         ...params,
       })
@@ -209,8 +209,8 @@ export const vue_application = {
         message: "本当にもよいか？",
         cancelText: "キャンセル",
         animation: "",
-        onCancel: () => this.sound_play("click"),
-        onConfirm: () => this.sound_play("click"),
+        onCancel: () => this.sound_play_click(),
+        onConfirm: () => this.sound_play_click(),
         ...params,
       })
     },
@@ -219,7 +219,7 @@ export const vue_application = {
       return this.$buefy.dialog.alert({
         animation: "",
         confirmText: "OK",
-        onConfirm: () => this.sound_play("click"),
+        onConfirm: () => this.sound_play_click(),
         ...params,
       })
     },

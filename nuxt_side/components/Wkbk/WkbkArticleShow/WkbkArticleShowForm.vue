@@ -57,13 +57,13 @@ export default {
   watch: {
     "article.lineage_key": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(v)
       },
     },
     "article.mate_skip": {
       handler(v) {
-        this.sound_play("click")
+        this.sound_play_click()
         this.talk(v)
       },
     },

@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     click_handle(e) {
-      this.sound_play("click")
+      this.sound_play_click()
       this.talk(this.model.fetch(this.base[this.var_name]).name)
     },
   },

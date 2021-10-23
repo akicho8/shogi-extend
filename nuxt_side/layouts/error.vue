@@ -3,7 +3,7 @@
 // [Vue warn]: The client-side rendered virtual DOM tree is not matching server-rendered content. This is likely caused by incorrect HTML markup, for example nesting block-level elements inside <p>, or missing <tbody>. Bailing hydration and performing full client-side render.
 client-only
   .error.has-background-primary
-    nuxt-link(to="/" @click.native="sound_play('click')")
+    nuxt-link(to="/" @click.native="sound_play_click()")
       b-icon(icon="chevron-left" size="is-large")
 
     .section.px-4.py-4
