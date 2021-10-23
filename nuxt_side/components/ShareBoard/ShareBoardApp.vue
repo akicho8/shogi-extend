@@ -113,11 +113,11 @@ client-only
 import _ from "lodash"
 
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
+import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
 import { Location                 } from "shogi-player/components/models/location.js"
 
 import { support_parent           } from "./support_parent.js"
 
-import { app_vars                 } from "./app_vars.js"
 import { app_action_log           } from "./app_action_log.js"
 import { app_message_logs         } from "./app_message_logs.js"
 import { app_clock_box            } from "./app_clock_box.js"
@@ -164,7 +164,7 @@ export default {
   mixins: [
     // どう見ても mixins の使い方を間違えている
     support_parent,
-    app_vars,
+    autoexec_methods,
     app_action_log,
     app_message_logs,
     app_clock_box,
@@ -262,18 +262,10 @@ export default {
 
     this.autoexec()
   },
+  
+  // http://localhost:4000/share-board?autoexec=general_setting_modal_handle
+  // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
   methods: {
-    // http://localhost:4000/share-board?autoexec=general_setting_modal_handle
-    // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
-    autoexec() {
-      this.$nextTick(() => {
-        const s = this.$route.query.autoexec
-        if (s) {
-          s.split(/[,\s]+/).forEach(e => this[e]())
-        }
-      })
-    },
-
     // internal_rule_input_handle() {
     //   this.sound_play("click")
     // },
