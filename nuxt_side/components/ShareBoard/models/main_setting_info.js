@@ -1,13 +1,18 @@
 import MemoryRecord from 'js-memory-record'
+import { ParamInfo } from './param_info.js'
 
 export class MainSettingInfo extends MemoryRecord {
   static get define() {
     return [
-      { key: "sp_move_cancel",       model: "SpMoveCancelInfo",   },
-      { key: "ctrl_mode_key",        model: "CtrlModeInfo",       },
-      { key: "yomiage_mode_key",     model: "YomiageModeInfo",    },
-      { key: "sp_internal_rule_key", model: "SpInternalRuleInfo", },
-      { key: "debug_mode_key",       model: "DebugModeInfo",      },
+      { key: "sp_move_cancel",       },
+      { key: "ctrl_mode_key",        },
+      { key: "yomiage_mode_key",     },
+      { key: "sp_internal_rule_key", },
+      { key: "debug_mode_key",       },
     ]
+  }
+  
+  get model() {
+    return ParamInfo.fetch(this.key).relation
   }
 }

@@ -227,22 +227,6 @@ export const vue_support = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    __assert__(value, message = null) {
-      if (!value) {
-        console.error(value)
-        alert(message || "ぶっこわれました")
-        debugger
-      }
-    },
-
-    __assert_equal__(expected, actual, message = null) {
-      if (actual !== expected) {
-        console.error(`<${expected}> expected but was <${actual}>`)
-        alert(message || "ぶっこわれました")
-        debugger
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // body ではなく html を対象にしないと隙間が見えてしまう

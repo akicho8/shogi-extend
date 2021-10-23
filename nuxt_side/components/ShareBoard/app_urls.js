@@ -33,22 +33,18 @@ export const app_urls = {
       })
     },
 
-    // FIXME: param_info で綺麗にする
     url_params_clean(url_params) {
-      const e = {...url_params}
-      if (this.blank_p(e.room_code)) {
-        delete e.room_code
+      const params = {...url_params}
+      if (this.blank_p(params.room_code)) {
+        delete params.room_code
       }
-      if (this.blank_p(e.title) || e.title === this.DEFAULT_VARS.title) {
-        delete e.title
-      }
-      if (e.sp_run_mode === this.DEFAULT_VARS.sp_run_mode) {
-        delete e.sp_run_mode
-      }
-      if (e.sp_internal_rule_key === this.DEFAULT_VARS.sp_internal_rule_key) {
-        delete e.sp_internal_rule_key
-      }
-      return e
+      this.ParamInfo.values.forEach(e => {
+        const v = params[e.key]
+        if (this.blank_p(v) || v === e.default_for(this)) {
+          delete params[e.key]
+        }
+      })
+      return params
     },
 
   },

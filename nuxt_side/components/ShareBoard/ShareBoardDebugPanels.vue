@@ -61,15 +61,9 @@
   .column.is-3
     .panel
       .panel-heading
-        | CustomVarInfo
+        | ls_attributes
       .panel-block
-        pre {{JSON.stringify(base.custom_var_all, null, 4)}}
-  .column.is-3
-    .panel
-      .panel-heading
-        | DEFAULT_VARS
-      .panel-block
-        pre {{JSON.stringify(base.DEFAULT_VARS, null, 4)}}
+        pre {{JSON.stringify(base.ls_attributes, null, 4)}}
   .column.is-4
     .panel
       .panel-heading

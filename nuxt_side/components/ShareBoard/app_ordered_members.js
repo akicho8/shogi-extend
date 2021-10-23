@@ -312,19 +312,20 @@ export const app_ordered_members = {
   },
 
   computed: {
-    MoveGuardInfo()   { return MoveGuardInfo                                    },
-    move_guard_info() { return this.MoveGuardInfo.fetch_if(this.move_guard_key) },
-    ShoutModeInfo()   { return ShoutModeInfo                                    },
-    shout_mode_info() { return this.ShoutModeInfo.fetch_if(this.shout_mode_key) },
+    MoveGuardInfo()   { return MoveGuardInfo                                 },
+    move_guard_info() { return this.MoveGuardInfo.fetch(this.move_guard_key) },
+
+    ShoutModeInfo()   { return ShoutModeInfo                                 },
+    shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
 
     // あとから接続した人に伝える内容
     om_params() {
       return {
         order_func_p:    this.order_func_p,
         ordered_members: this.ordered_members,
-        move_guard_key:      this.move_guard_key,
+        move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
-        shout_mode_key: this.shout_mode_key,
+        shout_mode_key:  this.shout_mode_key,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }

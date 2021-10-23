@@ -5,6 +5,7 @@
       | 設定
   .modal-card-body
     .columns.is-multiline
+      //- SimpleRadioButtons
       template(v-for="m in MainSettingInfo.values")
         .column.is-half-tablet
           b-field(:class="m.key" custom-size="is-small" :label="base[m.model].field_label" :message="base[m.model].field_message")

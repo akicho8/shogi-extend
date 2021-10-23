@@ -1,30 +1,12 @@
 <template lang="pug">
-ShareBoardApp(:config="config" v-if="config")
+client-only
+  //- client-only しないと ShareBoardApp の beforeMount が呼ばれる前に render されたりともうめちくちゃなことになる
+  ShareBoardApp(:config="config" v-if="config")
 </template>
 
 <script>
 export default {
   name: "share-board",
-
-  // asyncData を ↓ の fetch の方法にするとテストで Carol のタブが読み込まれなくなる(謎)
-
-  // data() {
-  //   return {
-  //     config: null,
-  //   }
-  // },
-
-  // fetch() {
-  //   return this.$axios.$get("/api/share_board", {params: this.$route.query}).then(e => {
-  //     // bs_error は 200 で来てしまうため自力でエラー画面に飛ばす FIXME: 自動で飛ばしたい
-  //     if (e.bs_error) {
-  //       this.$nuxt.error({statusCode: 400, message: e.bs_error.message}) // "400 Bad Request"
-  //       return
-  //     }
-  //     this.config = e
-  //   })
-  // },
-
   async asyncData({ $axios, query }) {
     const e = await $axios.$get("/api/share_board", {params: query})
     if (e.bs_error) {
@@ -32,14 +14,12 @@ export default {
     }
     return { config: e }
   },
-
   beforeMount() {
     // bs_error は 200 で来てしまうため自力でエラー画面に飛ばす
     if (this.bs_error) {
       this.$nuxt.error({statusCode: 400, message: this.bs_error.message}) // "400 Bad Request"
       return
     }
-
     if (this.blank_p(this.$route.query)) {
       this.ga_click("共有将棋盤")
     } else {

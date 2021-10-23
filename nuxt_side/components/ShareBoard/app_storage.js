@@ -5,7 +5,7 @@ export const app_storage = {
   mixins: [params_controller],
   data() {
     return {
-      share_board_column_width: null,
+      ...ParamInfo.null_value_data_hash,
       persistent_cc_params: null,
     }
   },
@@ -19,10 +19,8 @@ export const app_storage = {
     ls_default() {
       return {
         ...this.pc_ls_default,
-        // share_board_column_width: 80,
-        user_name: this.default_user_name,
+        user_name:            this.default_user_name,
         persistent_cc_params: this.default_persistent_cc_params,
-        sp_move_cancel: this.DEFAULT_VARS.sp_move_cancel,
       }
     },
   },

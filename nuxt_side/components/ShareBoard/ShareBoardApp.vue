@@ -1,8 +1,8 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style")
+    | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
-
     DebugBox.is-hidden-mobile(v-if="development_p")
       p os_change: {{os_change}}
       p order_func_p: {{order_func_p}}
@@ -230,14 +230,15 @@ export default {
       sp_run_mode:   null, // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen:  null, // 編集モードでの棋譜
 
-      DEFAULT_VARS: {},
+      //- DEFAULT_VARS: {},
     }
   },
-  created() {
-    this.vars_setup()
+  beforeMount() {
+    this.__trace__("ShareBoardApp", "beforeMount")
   },
-
   mounted() {
+    this.__trace__("ShareBoardApp", "mounted")
+
     // this.$nuxt.error({statusCode: 500, message: "xxx"})
     // return
 

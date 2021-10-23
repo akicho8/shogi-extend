@@ -10,6 +10,6 @@ export class ApplicationMemoryRecord extends MemoryRecord {
   //   },
   //
   static get null_value_data_hash() {
-    return this.values.reduce((a, e) => ({...a, [e.key]: null}), {}),
+    return this.values.reduce((a, e) => ({...a, [e.key]: null}), {})
   }
 }

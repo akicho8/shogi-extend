@@ -12,6 +12,37 @@ import { DotSfen } from "@/components/models/dot_sfen.js"
 
 // vue_support.js の methods に追加する
 export const Gs = {
+  __trace__(scope, method) {
+    let count = "-"
+    let side = "SSR"
+    if (typeof window !== 'undefined') {
+      side = "CSR"
+      if (window.$TRACE_COUNT_HASH == null) {
+        window.$TRACE_COUNT_HASH = {}
+        const key = `${scope}.${method}`
+        count = (window.$TRACE_COUNT_HASH[key] ?? 0) + 1
+        window.$TRACE_COUNT_HASH[key] = count
+      }
+    }
+    console.log(`[${side}][${scope}] ${method} (${count})`)
+  },
+
+  __assert__(value, message = null) {
+    if (!value) {
+      console.error(value)
+      alert(message || "ぶっこわれました")
+      debugger
+    }
+  },
+
+  __assert_equal__(expected, actual, message = null) {
+    if (actual !== expected) {
+      console.error(`<${expected}> expected but was <${actual}>`)
+      alert(message || "ぶっこわれました")
+      debugger
+    }
+  },
+
   // Bulma のマクロの JS 版
   // +mobile 相当は this.screen_match_p("mobile") とする
   screen_match_p(type) {

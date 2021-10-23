@@ -301,10 +301,10 @@ export const app_xmatch = {
     },
   },
   computed: {
-    XmatchRuleInfo() { return XmatchRuleInfo },
+    XmatchRuleInfo()      { return XmatchRuleInfo                                              },
     xmatch_rest_seconds() { return this.xmatch_wait_max - this.xmatch_interval_counter.counter },
 
-    XmatchAuthInfo()   { return XmatchAuthInfo                                    },
-    xmatch_auth_info() { return this.XmatchAuthInfo.fetch_if(this.xmatch_auth_key) },
+    XmatchAuthInfo()      { return XmatchAuthInfo                                              },
+    xmatch_auth_info()    { return this.XmatchAuthInfo.fetch(this.xmatch_auth_key)             },
   },
 }

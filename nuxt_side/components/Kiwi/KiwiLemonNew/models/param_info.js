@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import { ParamBase } from '@/components/models/param_base.js'
 
-export class ParamInfo extends MemoryRecord {
+export class ParamInfo extends ParamBase {
   static get define() {
     return [
       { key: "body",               type: "string",  name: "棋譜",                default: "",                          permanent: false, relation: null,                desc: "",           },

@@ -20,8 +20,8 @@ export const app_avatar = {
     },
   },
   computed: {
-    AvatarKingInfo()   { return AvatarKingInfo                                     },
-    avatar_king_info() { return this.AvatarKingInfo.fetch_if(this.avatar_king_key) },
+    AvatarKingInfo()   { return AvatarKingInfo                                  },
+    avatar_king_info() { return this.AvatarKingInfo.fetch(this.avatar_king_key) },
 
     component_raw_css() {
       let v = null
