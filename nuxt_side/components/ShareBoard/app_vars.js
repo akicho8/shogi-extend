@@ -1,4 +1,4 @@
-import { CustomVarInfo } from "./custom_var_info.js"
+import { CustomVarInfo } from "./models/custom_var_info.js"
 
 export const app_vars = {
   data() {
