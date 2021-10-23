@@ -62,10 +62,18 @@ RSpec.describe ShareBoardsController, type: :controller do
     get :show, params: { body: "68銀", abstract_viewpoint: "xxxx", format: "json" }
     assert { response.status == 200 }
   end
+
+  it "配色テーマのサムネイル画像" do
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cached=true
+    get :show, params: { color_theme_cached: "true", format: "png" }
+    assert { response.media_type == "image/png" }
+    assert { response["Content-Disposition"].match?(/is_color_theme_groovy_board_texture1/) }
+    assert { response.status == 200 }
+  end
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> ........
-# >> 
+# >>
 # >> Finished in 1.44 seconds (files took 2.51 seconds to load)
 # >> 8 examples, 0 failures
-# >> 
+# >>

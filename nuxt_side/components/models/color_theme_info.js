@@ -60,6 +60,7 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
     url.searchParams.set("color_theme_key", this.key)
     url.searchParams.set("width", 1920 / 1)
     url.searchParams.set("height", 1080 / 1)
+    url.searchParams.set("color_theme_cached", "true") // これを取ると実際に生成する
     return url.toString()
   }
 

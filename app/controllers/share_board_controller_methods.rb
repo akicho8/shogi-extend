@@ -43,6 +43,18 @@ module ShareBoardControllerMethods
       return
     end
 
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cached=true
+    if request.format.png?
+      if params[:color_theme_cached]
+        color_theme_key = params[:color_theme_key].presence || "is_color_theme_groovy_board_texture1"
+        path = Gem.find_files("../demo/color_theme/#{color_theme_key}.png").first || Rails.root.join("app/assets/images/fallback.png")
+        if stale?(last_modified: Pathname(path).mtime, public: true)
+          send_file path, type: Mime[:png], disposition: :inline
+        end
+        return
+      end
+    end
+
     # アクセスがあれば「上げて」消さないようにするため
     current_record.update_columns(accessed_at: Time.current)
 
