@@ -3,7 +3,6 @@ import { ColorThemeInfo } from "../models/color_theme_info.js"
 export const app_color_theme = {
   data() {
     return {
-      color_theme_key: null,
       color_theme_loading: null,
     }
   },

@@ -1,9 +1,9 @@
 import MainSettingModal from "./MainSettingModal.vue"
-import { CtrlModeInfo       } from "../../components/models/ctrl_mode_info.js"
-import { YomiageModeInfo    } from "../../components/models/yomiage_mode_info.js"
-import { SpMoveCancelInfo   } from "../../components/models/sp_move_cancel_info.js"
-import { SpInternalRuleInfo } from "../../components/models/sp_internal_rule_info.js"
-import { DebugModeInfo          } from "../../components/models/debug_mode_info.js"
+import { CtrlModeInfo       } from "./models/ctrl_mode_info.js"
+import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
+import { SpMoveCancelInfo   } from "./models/sp_move_cancel_info.js"
+import { SpInternalRuleInfo } from "./models/sp_internal_rule_info.js"
+import { DebugModeInfo      } from "./models/debug_mode_info.js"
 
 export const app_main_setting = {
   methods: {

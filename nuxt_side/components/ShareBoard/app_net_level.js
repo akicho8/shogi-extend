@@ -1,4 +1,4 @@
-import { NetLevelInfo } from "../models/net_level_info.js"
+import { NetLevelInfo } from "./models/net_level_info.js"
 
 import _ from "lodash"
 import dayjs from "dayjs"

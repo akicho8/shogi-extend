@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { TimeLimitInfo } from "../models/time_limit_info.js"
+import { TimeLimitInfo } from "./models/time_limit_info.js"
 
 export default {
   name: "TimeLimitModal",

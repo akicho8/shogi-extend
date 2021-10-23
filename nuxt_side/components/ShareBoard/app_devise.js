@@ -1,4 +1,4 @@
-import { UaIconInfo } from "../models/ua_icon_info.js"
+import { UaIconInfo } from "./models/ua_icon_info.js"
 
 export const app_devise = {
   data() {

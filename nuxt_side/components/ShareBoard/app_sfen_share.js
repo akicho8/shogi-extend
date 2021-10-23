@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { BehaviorEffectInfo } from "../models/behavior_effect_info.js"
+import { BehaviorEffectInfo } from "./models/behavior_effect_info.js"
 
 export const app_sfen_share = {
   data() {

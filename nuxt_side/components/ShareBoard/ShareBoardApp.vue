@@ -227,7 +227,6 @@ export default {
       turn_offset_max: null,                         // 最後の手数
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      sp_run_mode:   null, // 操作モードと局面編集モードの切り替え用
       edit_mode_sfen:  null, // 編集モードでの棋譜
 
       //- DEFAULT_VARS: {},
