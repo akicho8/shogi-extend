@@ -3,7 +3,7 @@
   b-field.field_block(label="表紙")
     b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
 
-  SimpleRadioButtons.field_block(:base="base" :model="base.ViewpointInfo" var_name="viewpoint_key")
+  SimpleRadioButtons.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint_key")
 
   .page_duration_field.field_block
     //- b-field(:message="base.page_duration_message" v-if="false")
@@ -52,10 +52,10 @@
       b-input(key="input-page_duration" v-model.number="base.page_duration")
 
 
-  SimpleRadioButtons.field_block(:base="base" :model="base.PieceFontWeightInfo" var_name="piece_font_weight_key")
+  SimpleRadioButtons.field_block(:base="base" model_name="PieceFontWeightInfo" var_name="piece_font_weight_key")
 
-  //- SimpleRadioButtons(:base="base" :model="base.RectSizeInfo" var_name="rect_size_key")
-  // SimpleRadioButtons(:base="base" :model="base.RecipeInfo" var_name="recipe_key")
+  //- SimpleRadioButtons(:base="base" model_name="RectSizeInfo" var_name="rect_size_key")
+  // SimpleRadioButtons(:base="base" model_name="RecipeInfo" var_name="recipe_key")
 
   //- b-collapse(:open="false" position="is-bottom")
   //-   template(#trigger="props")

@@ -88,7 +88,7 @@
   b-field.field_block(label="1ページあたりの秒数" v-if="development_p && false")
     b-slider(:indicator="true" :tooltip="false" v-model="base.page_duration" :min="0.1" :max="5" :step="0.1")
 
-  SimpleRadioButtons.field_block(:base="base" :model="base.LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
+  SimpleRadioButtons.field_block(:base="base" model_name="LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
   b-field.field_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけﾌｪｲﾄﾞｱｳﾄする")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play_click()")

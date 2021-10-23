@@ -1,6 +1,6 @@
 <template lang="pug">
 .GalleryLemonNewFormDebug
-  SimpleRadioButtons.field_block(:base="base" :model="base.FactoryMethodInfo" var_name="factory_method_key")
+  SimpleRadioButtons.field_block(:base="base" model_name="FactoryMethodInfo" var_name="factory_method_key")
 
   b-field.field_block(label="負荷" v-if="development_p")
     b-input(type="number" v-model.number="base.sleep" expanded)
