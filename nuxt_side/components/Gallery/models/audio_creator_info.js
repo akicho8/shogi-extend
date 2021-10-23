@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class AudioCreatorInfo extends MemoryRecord {
+export class AudioCreatorInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "369(みろく)",          home_site_url: "http://www.369musiq.com/",                                 },

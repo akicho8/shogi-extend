@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class PieceFontWeightInfo extends MemoryRecord {
+export class PieceFontWeightInfo extends ApplicationMemoryRecord {
   static field_label = "駒書体の太さ"
   static field_message = ""
 

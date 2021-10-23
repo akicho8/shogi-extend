@@ -1,4 +1,4 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class CpuStrategyInfo extends MemoryRecord {
+export class CpuStrategyInfo extends ApplicationMemoryRecord {
 }

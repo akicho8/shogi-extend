@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class QuestionIndexColumnInfo extends MemoryRecord {
+export class QuestionIndexColumnInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "id",                  name: "ID",       short_name: "ID",       visible: false, },

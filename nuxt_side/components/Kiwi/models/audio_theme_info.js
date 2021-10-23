@@ -1,8 +1,8 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-export class AudioThemeInfo extends MemoryRecord {
+export class AudioThemeInfo extends ApplicationMemoryRecord {
   static field_label = "BGM"
   static field_message = ""
 

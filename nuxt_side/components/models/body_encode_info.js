@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class BodyEncodeInfo extends MemoryRecord {
+export class BodyEncodeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "UTF-8",     message: "一般的な文字コード",                                           },

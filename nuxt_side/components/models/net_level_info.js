@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class NetLevelInfo extends MemoryRecord {
+export class NetLevelInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { name: "最悪",         threshold: 0.50, },

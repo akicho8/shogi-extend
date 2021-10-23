@@ -1,8 +1,8 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
-export class ValidationInfo extends MemoryRecord {
+export class ValidationInfo extends ApplicationMemoryRecord {
   // TWITTERに投稿できる動画と画像の仕様について
   // https://nico-lab.net/twitter_upload_format_spec/
   static MP4_TIME_SECOND_MAX           = 140

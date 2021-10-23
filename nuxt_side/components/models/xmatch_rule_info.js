@@ -1,7 +1,7 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import { HandicapPresetInfo } from "@/components/models/handicap_preset_info.js"
 
-export class XmatchRuleInfo extends MemoryRecord {
+export class XmatchRuleInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // app/models/xmatch_rule_info.rb

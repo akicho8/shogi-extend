@@ -22,7 +22,7 @@ client-only
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"

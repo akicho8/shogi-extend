@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class SearchPresetInfo extends MemoryRecord {
+export class SearchPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "新着",     login_required_p: false, },

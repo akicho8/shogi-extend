@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class AnswerKindInfo extends MemoryRecord {
+export class AnswerKindInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "correct", name: "正解",   sound_key: "o", name: "正解", icon: "circle-outline", type: "is-danger",  },

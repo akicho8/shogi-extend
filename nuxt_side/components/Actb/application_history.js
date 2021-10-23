@@ -1,8 +1,8 @@
 import { Question} from "./models/question.js"
 
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-class HistoryTabInfo extends MemoryRecord {
+class HistoryTabInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "history_index", tab_name: "履歴",       top_nav_name: "問題履歴"    },

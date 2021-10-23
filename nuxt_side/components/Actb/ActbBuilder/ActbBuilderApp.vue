@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import dayjs from "dayjs"
 
 import { builder_support } from "./builder_support.js"
@@ -15,7 +15,7 @@ import { Question    } from "../models/question.js"
 import { LineageInfo } from '../models/lineage_info.js'
 import { FolderInfo  } from '../models/folder_info.js'
 
-class TabInfo extends MemoryRecord {
+class TabInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "haiti_mode",  name: "配置", },

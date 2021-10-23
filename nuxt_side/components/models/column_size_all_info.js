@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class ColumnSizeAllInfo extends MemoryRecord {
+export class ColumnSizeAllInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "is_size_1",  name: "XS",  column_class: ["is-4-tablet",  "is-3-desktop",  "is-2-widescreen", "is-1-fullhd"],   },

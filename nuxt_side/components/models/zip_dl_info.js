@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class ZipDlInfo extends MemoryRecord {
+export class ZipDlInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { name: "KIF",             format_key: "kif",  body_encode: "UTF-8",     },

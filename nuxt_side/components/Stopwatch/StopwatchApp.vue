@@ -98,9 +98,9 @@ import PermalinkModal from './PermalinkModal.vue'
 import HistoryModal   from './HistoryModal.vue'
 import KeyboardModal  from './KeyboardModal.vue'
 
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-class AnswerInfo extends MemoryRecord {
+class AnswerInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "o", char_name: "o", name: "正解",   },

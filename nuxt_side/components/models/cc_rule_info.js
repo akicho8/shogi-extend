@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class CcRuleInfo extends MemoryRecord {
+export class CcRuleInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { name: "将棋ウォーズ 10分",           cc_params: { initial_main_min: 10, initial_read_sec:0,  initial_extra_sec: 0,  every_plus:0, }, },

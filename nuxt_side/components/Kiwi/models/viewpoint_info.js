@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class ViewpointInfo extends MemoryRecord {
+export class ViewpointInfo extends ApplicationMemoryRecord {
   static field_label = "視点"
   static field_message = ""
 

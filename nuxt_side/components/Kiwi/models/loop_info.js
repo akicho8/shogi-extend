@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class LoopInfo extends MemoryRecord {
+export class LoopInfo extends ApplicationMemoryRecord {
   static field_label = "ループ"
   static field_message = "GIFにのみ有効だけどTwitterでは1分以下ならループする"
 

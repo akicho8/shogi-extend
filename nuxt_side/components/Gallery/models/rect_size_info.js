@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class RectSizeInfo extends MemoryRecord {
+export class RectSizeInfo extends ApplicationMemoryRecord {
   static field_label = "サイズ"
   static field_message = ""
 

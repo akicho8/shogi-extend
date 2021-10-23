@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class PiyoShogiTypeInfo extends MemoryRecord {
+export class PiyoShogiTypeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "auto",   name: "自動判別",   message: "一般的なスマホやPCを使っている人向け",                                                                           },

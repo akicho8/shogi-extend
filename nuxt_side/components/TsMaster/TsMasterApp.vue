@@ -92,7 +92,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import { Soldier } from "shogi-player/components/models/soldier.js"
 import { Place } from "shogi-player/components/models/place.js"
 
@@ -110,13 +110,13 @@ import { app_external_apps } from "./app_external_apps.js"
 
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
-class RuleInfo extends MemoryRecord {
+class RuleInfo extends ApplicationMemoryRecord {
 }
 
-class ScopeInfo extends MemoryRecord {
+class ScopeInfo extends ApplicationMemoryRecord {
 }
 
-class ChartScopeInfo extends MemoryRecord {
+class ChartScopeInfo extends ApplicationMemoryRecord {
 }
 
 const COUNTDOWN_INTERVAL = 0.5  // カウントダウンはN秒毎に進む

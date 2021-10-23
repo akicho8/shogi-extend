@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class TapDetectInfo extends MemoryRecord {
+export class TapDetectInfo extends ApplicationMemoryRecord {
   static field_label = "タップを検出する方法"
 
   static get define() {

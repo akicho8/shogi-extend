@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class HandicapPresetInfo extends MemoryRecord {
+export class HandicapPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "平手",           handicap_level:    54, description: "1段級差 (下手先)", sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1", },

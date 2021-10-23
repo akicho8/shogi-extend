@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-class SocialMediaInfo extends MemoryRecord {
+class SocialMediaInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "twitter", name: "Twitter", },

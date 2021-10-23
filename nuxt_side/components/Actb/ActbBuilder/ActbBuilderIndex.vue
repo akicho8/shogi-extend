@@ -172,10 +172,10 @@ import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
 // 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
-class TabInfo extends MemoryRecord {
+class TabInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "all",    name: "全体",   hidden_if_empty: false, },

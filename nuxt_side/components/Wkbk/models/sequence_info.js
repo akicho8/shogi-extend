@@ -1,7 +1,7 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
 // app/models/wkbk/sequence_info.rb
-export class SequenceInfo extends MemoryRecord {
+export class SequenceInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "bookship_shuffle",         name: "シャッフル",        },

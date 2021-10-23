@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class FormatTypeInfo extends MemoryRecord {
+export class FormatTypeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "kif",           name: `KIF`,              name_with_turn: t => `KIF`,              format_key: "kif",  body_encode: "UTF-8",     show: true,  clipboard: true,  },

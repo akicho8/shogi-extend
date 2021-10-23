@@ -74,9 +74,9 @@ import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { isMobile } from "@/components/models/is_mobile.js"
 import { Dictionary } from "@/components/models/dictionary.js"
 
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-// class ScopeInfo extends MemoryRecord {
+// class ScopeInfo extends ApplicationMemoryRecord {
 //   static get define() {
 //     return [
 //       { key: "latest",    name: "直近",           },

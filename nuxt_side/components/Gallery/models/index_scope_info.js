@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class IndexScopeInfo extends MemoryRecord {
+export class IndexScopeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "everyone", name: "全体",   },

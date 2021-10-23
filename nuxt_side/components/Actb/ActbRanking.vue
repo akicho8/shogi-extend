@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-class TabInfo extends MemoryRecord {
+class TabInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "rating",             name: "総合",         unit: null,     },

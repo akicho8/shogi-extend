@@ -1,7 +1,7 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 import { ColumnSizeAllInfo } from './column_size_all_info.js'
 
-export class ColumnSizeInfo extends MemoryRecord {
+export class ColumnSizeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "is_size_2", },

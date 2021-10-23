@@ -1,9 +1,9 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
 // https://gka.github.io/chroma.js/#quick-start
 import chroma from 'chroma-js'
 
-export class PaletteInfo extends MemoryRecord {
+export class PaletteInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // https://bulma.io/documentation/modifiers/color-helpers/

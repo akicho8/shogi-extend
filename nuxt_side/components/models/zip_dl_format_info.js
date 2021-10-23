@@ -1,6 +1,6 @@
-import MemoryRecord from "js-memory-record"
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class ZipDlFormatInfo extends MemoryRecord {
+export class ZipDlFormatInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "kif",  message: "多くのソフトが対応している一般的な形式", },

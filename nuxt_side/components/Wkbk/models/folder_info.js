@@ -1,6 +1,6 @@
-import MemoryRecord from 'js-memory-record'
+import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
 
-export class FolderInfo extends MemoryRecord {
+export class FolderInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "public",   name: "公開",     icon: "eye-outline",  type: null, message: {article: "Googleに存在がばれる",                                                                  book: "トップに表示して誰でも参照できる"}, },
