@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class GalleryConfig extends MemoryRecord {
+export class GalleryConfig extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "per_page",                       value: 50,    description: "", },

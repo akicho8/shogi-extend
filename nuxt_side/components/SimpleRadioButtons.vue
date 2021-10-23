@@ -1,9 +1,16 @@
 <template lang="pug">
 b-field(:label="real_model.field_label" :message="current.message || real_model.field_message")
   template(v-for="e in real_model.values")
-    template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-      b-radio-button(@input="click_handle" v-model="base[var_name]" :native-value="e.key" :type="e.type" v-on="$listeners")
-        | {{e.name}}
+    b-radio-button(
+      v-if="e.environment == null || e.environment.includes($config.STAGE)"
+      :class="e.key"
+      @input="click_handle"
+      v-model="base[var_name]"
+      :native-value="e.key"
+      :type="e.type"
+      v-on="$listeners"
+      )
+      | {{e.name}}
 </template>
 
 <script>

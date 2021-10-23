@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class Dictionary extends MemoryRecord {
+export class Dictionary extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "id",               name: "ID",   },
