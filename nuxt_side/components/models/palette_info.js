@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 // https://gka.github.io/chroma.js/#quick-start
 import chroma from 'chroma-js'

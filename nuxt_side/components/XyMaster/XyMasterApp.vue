@@ -65,7 +65,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Soldier } from "shogi-player/components/models/soldier.js"
 import { Place } from "shogi-player/components/models/place.js"
 

@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { ColumnSizeAllInfo } from './column_size_all_info.js'
 
 export class ColumnSizeInfo extends ApplicationMemoryRecord {

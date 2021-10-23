@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 class SocialMediaInfo extends ApplicationMemoryRecord {
   static get define() {

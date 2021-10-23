@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 // app/models/wkbk/sequence_info.rb
 export class SequenceInfo extends ApplicationMemoryRecord {

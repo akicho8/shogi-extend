@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { HandicapPresetInfo } from "@/components/models/handicap_preset_info.js"
 
 export class XmatchRuleInfo extends ApplicationMemoryRecord {

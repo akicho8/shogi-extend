@@ -98,7 +98,7 @@ import PermalinkModal from './PermalinkModal.vue'
 import HistoryModal   from './HistoryModal.vue'
 import KeyboardModal  from './KeyboardModal.vue'
 
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 class AnswerInfo extends ApplicationMemoryRecord {
   static get define() {

@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { Location   } from "shogi-player/components/models/location.js"
-import { AvatarKingInfo } from "@/components/models/avatar_king_info.js"
+import { AvatarKingInfo } from "./models/avatar_king_info.js"
+import { GuardianDisplayInfo } from "./models/guardian_display_info.js"
 
 const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
 
@@ -22,6 +23,9 @@ export const app_avatar = {
   computed: {
     AvatarKingInfo()   { return AvatarKingInfo                                  },
     avatar_king_info() { return this.AvatarKingInfo.fetch(this.avatar_king_key) },
+
+    GuardianDisplayInfo()   { return GuardianDisplayInfo                                       },
+    guardian_display_info() { return this.GuardianDisplayInfo.fetch(this.guardian_display_key) },
 
     component_raw_css() {
       let v = null
@@ -63,7 +67,7 @@ export const app_avatar = {
                 }
               }
 
-              if (this.guardian_mode === "is_guardian_mode_on") {
+              if (this.guardian_display_info.key === "is_guardian_display_on") {
                 if (value == null) {
                   value = {
                     from_avatar_path: this.guardian_url_from_str(e.from_user_name),

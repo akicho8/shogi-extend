@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { TimeSupport } from "./time_support.js"
 
 import dayjs from "dayjs"

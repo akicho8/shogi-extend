@@ -1,6 +1,6 @@
 import { Question} from "./models/question.js"
 
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 class HistoryTabInfo extends ApplicationMemoryRecord {
   static get define() {

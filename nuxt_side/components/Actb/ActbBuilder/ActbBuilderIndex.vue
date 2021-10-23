@@ -172,7 +172,7 @@ import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 
 import { QuestionIndexColumnInfo } from "../models/question_index_column_info.js"
 
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 // 「全体」があったりして構造が異なるのでサーバー側で定義したものを利用していない
 class TabInfo extends ApplicationMemoryRecord {

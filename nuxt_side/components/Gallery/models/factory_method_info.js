@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class FactoryMethodInfo extends ApplicationMemoryRecord {
   static field_label = "mp4,gif,apng,webp 生成に用いるツール"

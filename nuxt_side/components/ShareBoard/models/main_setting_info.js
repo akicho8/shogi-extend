@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { ParamInfo } from './param_info.js'
 
 export class MainSettingInfo extends ApplicationMemoryRecord {

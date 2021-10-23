@@ -1,6 +1,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export const app_core = {
   data() {

@@ -1,4 +1,4 @@
-import ApplicationMemoryRecord from "@/components/models/application_memory_record.js"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class YomiageModeInfo extends ApplicationMemoryRecord {
   static field_label = "検討時の棋譜読み上げ"
