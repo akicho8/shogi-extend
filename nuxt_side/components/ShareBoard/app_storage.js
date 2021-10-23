@@ -1,5 +1,5 @@
 import { params_controller } from "@/components/params_controller.js"
-import { ParamInfo } from "./param_info.js"
+import { ParamInfo } from "./models/param_info.js"
 
 export const app_storage = {
   mixins: [params_controller],

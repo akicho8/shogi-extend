@@ -17,7 +17,7 @@
 
 <script>
 import { support_child   } from "./support_child.js"
-import { MainSettingInfo } from "./main_setting_info.js"
+import { MainSettingInfo } from "./models/main_setting_info.js"
 
 export default {
   name: "MainSettingModal",
