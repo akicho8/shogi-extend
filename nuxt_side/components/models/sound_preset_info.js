@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class SoundPreset extends ApplicationMemoryRecord {
+export class SoundPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "o",                                    source: require("@/static/sound_effect/oto_logic/Quiz-Correct_Answer02-1.mp3"),                                  volume: 0.20, },

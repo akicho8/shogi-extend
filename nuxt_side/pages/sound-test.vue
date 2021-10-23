@@ -7,7 +7,7 @@
   MainSection
     .container.is-fluid
       .buttons
-        template(v-for="e of SoundPreset.values")
+        template(v-for="e of SoundPresetInfo.values")
           b-button(@click="sound_play(e.key)") {{e.key}}
 
       .box
@@ -21,7 +21,7 @@
       b-numberinput(size="is-small" controls-position="compact" v-model="main_volume" :step="0.1" exponential)
 
       b-table.mt-4(
-        :data="SoundPreset.values"
+        :data="SoundPresetInfo.values"
         :mobile-cards="false"
         @click="row_play"
         narrowed
@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import { SoundPreset } from "@/components/models/sound_preset.js"
+import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import { Howler } from "howler"
 
 export default {
   name: "sound-test",
   data() {
     return {
-      volumes: SoundPreset.values.reduce((a, e) => ({...a, [e.key]: e.volume}), {}),
+      volumes: SoundPresetInfo.values.reduce((a, e) => ({...a, [e.key]: e.volume}), {}),
       main_volume: Howler.volume(),
     }
   },
@@ -54,11 +54,11 @@ export default {
       this.sound_play(row.key, {volume: this.volumes[row.key]})
     },
     all_play() {
-      SoundPreset.values.forEach(e => this.row_play(e))
+      SoundPresetInfo.values.forEach(e => this.row_play(e))
     },
   },
   computed: {
-    SoundPreset() { return SoundPreset },
+    SoundPresetInfo() { return SoundPresetInfo },
     Howler()      { return Howler      },
   },
 }
