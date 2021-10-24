@@ -24,8 +24,6 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require "nkf"
-
 module Kiwi
   class Banana < ApplicationRecord
     include BasicMethods
