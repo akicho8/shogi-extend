@@ -223,13 +223,11 @@ export default {
       abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
-      sp_viewpoint: this.config.record.board_viewpoint,       // 反転用
-      turn_offset_max: null,                         // 最後の手数
+      sp_viewpoint: this.config.record.board_viewpoint, // 反転用
+      turn_offset_max: null,                            // 最後の手数
 
       record:        this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      edit_mode_sfen:  null, // 編集モードでの棋譜
-
-      //- DEFAULT_VARS: {},
+      edit_mode_sfen:  null,             // 編集モードでの棋譜
     }
   },
   beforeMount() {

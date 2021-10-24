@@ -153,6 +153,10 @@ if true
         })
       visit "#{path}?#{params.to_query}"
     end
+
+    def current_query
+      Rack::Utils.parse_query(URI(current_url).query)
+    end
   end
 
   RSpec.configure do |config|

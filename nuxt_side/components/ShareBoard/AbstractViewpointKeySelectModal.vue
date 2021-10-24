@@ -3,18 +3,10 @@
   .modal-card-head
     .modal-card-title ツイート画像の視点設定
   .modal-card-body
-    .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="black")
-        | 常に☗ (詰将棋向け)
-    .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="white")
-        | 常に☖ (逃れ将棋向け)
-    .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="self")
-        | 1手指し継いだとき自分の視点 (リレー将棋のときのおすすめ)
-    .field.my-1
-      b-radio(size="is-small" v-model="new_abstract_viewpoint" native-value="opponent")
-        | 1手指し継いだとき相手の視点 (リレー将棋向け)
+    template(v-for="e in base.AbstractViewpointInfo.values")
+      .field.my-1
+        b-radio(size="is-small" v-model="new_abstract_viewpoint" :native-value="e.key" :class="e.key")
+          | {{e.name}}
     .preview_image_container.is-flex.mt-3
       .preview_image.is-flex
         .is-size-7.has-text-weight-bold.has-text-grey.has-text-centered
@@ -30,15 +22,14 @@
 </template>
 
 <script>
+import { support_child } from "./support_child.js"
+
 export default {
   name: "AbstractViewpointKeySelectModal",
-  props: {
-    abstract_viewpoint:  { type: String,   required: true, },
-    permalink_for: { type: Function, required: true, },
-  },
+  mixins: [support_child],
   data() {
     return {
-      new_abstract_viewpoint: this.abstract_viewpoint,
+      new_abstract_viewpoint: this.base.abstract_viewpoint,
     }
   },
   watch: {
@@ -53,10 +44,10 @@ export default {
     },
     submit_handle() {
       this.close_handle()
-      this.$emit("update:abstract_viewpoint", this.new_abstract_viewpoint)
+      this.base.abstract_viewpoint = this.new_abstract_viewpoint
     },
     preview_url(options = {}) {
-      return this.permalink_for({
+      return this.base.permalink_for({
         format: "png",
         abstract_viewpoint: this.new_abstract_viewpoint,
         disposition: "inline",
@@ -65,12 +56,8 @@ export default {
     },
   },
   computed: {
-    ogp_image_url() {
-      return this.preview_url({title: "ogp_image", __board_viewpoint_as_image_viewpoint__: false})
-    },
-    opened_image_url() {
-      return this.preview_url({title: "opened_image", __board_viewpoint_as_image_viewpoint__: true})
-    },
+    ogp_image_url()    { return this.preview_url({title: "ogp_image",    __board_viewpoint_as_image_viewpoint__: false}) },
+    opened_image_url() { return this.preview_url({title: "opened_image", __board_viewpoint_as_image_viewpoint__: true})  },
   },
 }
 </script>

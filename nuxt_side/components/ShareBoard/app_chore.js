@@ -1,4 +1,6 @@
 import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
+import { AbstractViewpointInfo } from "./models/abstract_viewpoint_info.js"
+
 import _ from "lodash"
 
 export const app_chore = {
@@ -23,15 +25,7 @@ export const app_chore = {
       this.sound_play_click()
       this.modal_card_open({
         component: AbstractViewpointKeySelectModal,
-        props: {
-          abstract_viewpoint: this.abstract_viewpoint,
-          permalink_for: this.permalink_for,
-        },
-        events: {
-          "update:abstract_viewpoint": v => {
-            this.abstract_viewpoint = v
-          }
-        },
+        props: { base: this.base },
       })
     },
 
@@ -101,6 +95,9 @@ export const app_chore = {
   },
 
   computed: {
+    AbstractViewpointInfo() { return AbstractViewpointInfo },
+    abstract_viewpoint_info() { return this.AbstractViewpointInfo.fetch(this.abstract_viewpoint) },
+
     exit_warning_p() { return this.ac_room || this.clock_box }, // 退出時警告を出すか？
   },
 }
