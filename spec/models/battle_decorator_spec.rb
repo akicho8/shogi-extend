@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe BattleDecorator, type: :model do
-  context "swars" do
+  describe "swars" do
     before do
       swars_battle_setup
       @battle = Swars::Battle.first
@@ -13,7 +13,7 @@ RSpec.describe BattleDecorator, type: :model do
     end
   end
 
-  context "free_battle" do
+  describe "free_battle" do
     before do
       @battle = FreeBattle.create!
       @decorator = @battle.battle_decorator(view_context: Object.new)

@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
     assert { User.create!(name: "a🦐b").name == "a🦐b" }
   end
 
-  context "リレーション" do
+  describe "リレーション" do
     it do
       user = User.create!
       assert { user.free_battles.to_a }
