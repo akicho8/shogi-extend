@@ -53,7 +53,7 @@ module Kiwi
                   :recipe_key      => "is_recipe_mp4",
                   :color_theme_key => params[:color_theme_key], # ColorGradientInfo.fetch(i.modulo(ColorGradientInfo.count)).key,
                   :audio_theme_key => "is_audio_theme_ds3479",
-                  :cover_text      => "#{versus} 百番勝負\n羽生善治特選 ##{i.next} 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
+                  :cover_text      => "羽生善治特選 ##{i.next}\n#{versus} 100番勝負 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
                   :page_duration   => 1.0,
                   :end_duration    => 7,
                   :width           => 1920,
@@ -64,9 +64,9 @@ module Kiwi
               },
               :banana_params => {
                 :folder_key    => "public",
-                :title         => "##{i.next} #{versus} 百番勝負 羽生善治特選 第#{params[:number]}局",
+                :title         => "##{i.next} 羽生善治特選 #{versus} 100番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
-                :tag_list      => ["AlphaZero", "elmo", "羽生善治", "百番勝負", *info.mediator.normalized_names_with_alias],
+                :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.mediator.normalized_names_with_alias],
                 :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
               },
             }
