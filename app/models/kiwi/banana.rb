@@ -34,5 +34,6 @@ module Kiwi
     include AccessLogMethods
     include MockMethods
     include DefaultImportMethods
+    include ChoreMethods
   end
 end

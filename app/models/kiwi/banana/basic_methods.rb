@@ -93,15 +93,9 @@ module Kiwi
 
         after_validation do
           if changes_to_save[:thumbnail_pos]
-            if lemon
-              lemon.thumbnail_build(thumbnail_pos)
-            end
+            thumbnail_rebuild
           end
         end
-      end
-
-      def page_url(options = {})
-        UrlProxy.full_url_for("/video/watch/#{key}")
       end
 
       # jsから来たパラメーターでまとめて更新する
@@ -143,33 +137,6 @@ module Kiwi
           rv[:form_error_message] = error.message
         end
         rv
-      end
-
-      def og_meta
-        {
-          :title       => [title, user.name].compact.join(" - "),
-          :description => description || "",
-          :og_image    => lemon.og_image_path,
-          :og_video    => lemon.og_video_path,
-        }
-        # if new_record?
-        #   {
-        #     :title       => "新規 - 動画",
-        #     :description => description || "",
-        #     :og_image    => lemon.og_image_path,
-        #     :og_video    => lemon.og_video_path,
-        #   }
-        # else
-        # end
-      end
-
-      def tweet_body
-        list = [
-          title,
-          *tag_list,
-          "将棋動画",
-        ]
-        list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
       end
 
       def form_values_default_assign
