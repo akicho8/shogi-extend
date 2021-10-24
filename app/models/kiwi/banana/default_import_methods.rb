@@ -113,6 +113,7 @@ module Kiwi
           lemon.main_process
 
           banana ||= user.kiwi_bananas.build(lemon: lemon, key: xparams[:key])
+          banana.send(:attribute_will_change!, :thumbnail_pos) # サムネを作り直す
           banana.update!(xparams[:banana_params])
 
           tp banana
