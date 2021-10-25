@@ -17,7 +17,7 @@ export class ParamInfo extends ParamBase {
       { key: "cover_text",            type: "string",  name: "表紙文言",            default: "",                                     permanent: true,  relation: null,                  desc: "",           },
       { key: "video_crf",             type: "integer", name: "映像品質レベル",      default: 23,                                     permanent: true,  relation: null,                  desc: "",           },
       { key: "audio_bit_rate",        type: "string",  name: "BGMビットレート",     default: "128k",                                 permanent: true,  relation: null,                  desc: "",           },
-      { key: "main_volume"   ,        type: "float",   name: "BGM音量",             default: 0.4,                                    permanent: true,  relation: null,                  desc: "",           },
+      { key: "main_volume"   ,        type: "float",   name: "BGM音量",             default: 0.7,                                    permanent: true,  relation: null,                  desc: "",           },
       { key: "page_duration",         type: "float",   name: "1ページあたりの秒数", default: 1.0,                                    permanent: true,  relation: null,                  desc: "",           },
       { key: "end_duration",          type: "integer", name: "最後に指定秒間停止",  default: 7,                                      permanent: true,  relation: null,                  desc: "",           },
       { key: "sleep",                 type: "integer", name: "遅延",                default: 0,                                      permanent: true,  relation: null,                  desc: "デバッグ用", },

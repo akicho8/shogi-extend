@@ -58,7 +58,7 @@ module Kiwi
                   :end_duration    => 7,
                   :width           => 1920,
                   :height          => 1080,
-                  :main_volume     => 0.4,
+                  :main_volume     => 0.7,
                   :viewpoint       => info.mediator.win_player.location.key, # 勝った方の視点にする
                 },
               },

@@ -64,8 +64,8 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "配色テーマのサムネイル画像" do
-    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cached=true
-    get :show, params: { color_theme_cached: "true", format: "png" }
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cache=true
+    get :show, params: { color_theme_cache: "true", format: "png" }
     assert { response.media_type == "image/png" }
     assert { response["Content-Disposition"].match?(/is_color_theme_groovy_board_texture1/) }
     assert { response.status == 200 }

@@ -43,11 +43,11 @@ module ShareBoardControllerMethods
       return
     end
 
-    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cached=true
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cache=true
     if request.format.png?
-      if params[:color_theme_cached]
+      if params[:color_theme_cache].to_s == "true"
         color_theme_key = params[:color_theme_key].presence || "is_color_theme_groovy_board_texture1"
-        path = Gem.find_files("../demo/color_theme/#{color_theme_key}.png").first || Rails.root.join("app/assets/images/fallback.png")
+        path = Gem.find_files("bioshogi/assets/images/color_theme_cache/#{color_theme_key}.png").first || Rails.root.join("app/assets/images/fallback.png")
         if stale?(last_modified: Pathname(path).mtime, public: true)
           send_file path, type: Mime[:png], disposition: :inline
           # send_data Pathname(path).read, type: Mime[:png], disposition: :inline
