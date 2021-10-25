@@ -10,7 +10,7 @@ class AppEntryInfo
       description: "他のアプリで検討したいときにどうぞ",
       features: [
         "ぴよ将棋や KENTO で検討できる",
-        "激指や ShogiGUI にはコピーして張り付け (CTRL+V)",
+        "その他のソフトにはコピーして張り付け (CTRL+V)",
         "プレイヤー戦力分析機能付き",
       ],
     },
