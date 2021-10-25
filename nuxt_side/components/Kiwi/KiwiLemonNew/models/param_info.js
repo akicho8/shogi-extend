@@ -9,7 +9,7 @@ export class ParamInfo extends ParamBase {
       { key: "rect_width",            type: "string",  name: "横幅",                default: null,                                   permanent: true,  relation: null,                  desc: "",           },
       { key: "rect_height",           type: "string",  name: "縦幅",                default: null,                                   permanent: true,  relation: null,                  desc: "",           },
       { key: "loop_key",              type: "string",  name: "ループ",              default: "is_loop_infinite",                     permanent: true,  relation: null,                  desc: "",           },
-      { key: "piece_font_weight_key", type: "string",  name: "駒書体の太さ",        default: "is_piece_font_weight_normal",          permanent: true,  relation: "PieceFontWeightInfo", desc: "",           },
+      { key: "piece_font_weight_key", type: "string",  name: "駒書体の太さ",        default: "is_piece_font_weight_auto",            permanent: true,  relation: "PieceFontWeightInfo", desc: "",           },
       { key: "viewpoint_key",         type: "string",  name: "視点",                default: "black",                                permanent: false, relation: "ViewpointInfo",       desc: "",           },
       { key: "color_theme_key",       type: "string",  name: "配色",                default: "is_color_theme_groovy_board_texture1", permanent: true,  relation: "ColorThemeInfo",      desc: "",           },
       { key: "audio_theme_key",       type: "string",  name: "BGM",                 default: "is_audio_theme_ds3479",                permanent: true,  relation: "AudioThemeInfo",      desc: "",           },
