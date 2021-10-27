@@ -49,6 +49,11 @@ module Kiwi
       assert { lemon1.thumbnail_real_path.exist? == false }
     end
 
+    it "指定の時間内にワーカーが動いてなかったら動かす" do
+      lemon1
+      Lemon.background_job_kick_if_period(notify: true)
+    end
+
     it "ワーカーが動いてなかったら動かす" do
       lemon1
       Lemon.background_job_kick
@@ -98,15 +103,15 @@ module Kiwi
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> F.........
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) Kiwi::Lemon 動画生成
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:49:in `block (2 levels) in <module:Kiwi>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Top 10 slowest examples (20.23 seconds, 91.9% of total time):
 # >>   Kiwi::Lemon 動画生成
 # >>     9.54 seconds -:38
@@ -128,11 +133,11 @@ end
 # >>     0.36031 seconds -:71
 # >>   Kiwi::Lemon ゾンビを成仏させる
 # >>     0.29867 seconds -:62
-# >> 
+# >>
 # >> Finished in 22.01 seconds (files took 3.41 seconds to load)
 # >> 10 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:38 # Kiwi::Lemon 動画生成
-# >> 
+# >>

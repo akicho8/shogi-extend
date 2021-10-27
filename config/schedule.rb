@@ -67,6 +67,8 @@ if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
 end
 
+every("0 * * * *") { runner "Kiwi::Lemon.background_job_kick_if_period(notify: true)" }
+
 every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"

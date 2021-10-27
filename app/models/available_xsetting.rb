@@ -17,9 +17,9 @@ class AvailableXsetting
     end
     if true
       list += [
-        {:key => :xsetting_lock_version, :var_type => :integer, :name => "管理ツールの設定の排他制御用", : default => 0, :form_type => nil, :form_enable => false, :other_form_options => {:required => true}},
-        {:key => :kiwi_process1_begin,   :var_type => :integer, :name => "動画変換開始時", :               default => 2, :form_type => nil, :form_enable => true},
-        {:key => :kiwi_process1_end,     :var_type => :integer, :name => "動画変換終了時", :               default => 6, :form_type => nil, :form_enable => true},
+        {:key => :xsetting_lock_version,                  :var_type => :integer, :name => "管理ツールの設定の排他制御用", :default => 0, :form_type => nil, :form_enable => false, :other_form_options => {:required => true}},
+        {:key => :kiwi_lemon_background_job_active_begin, :var_type => :integer, :name => "動画変換開始(hour)",           :default => 2, :form_type => nil, :form_enable => true},
+        {:key => :kiwi_lemon_background_job_active_end,   :var_type => :integer, :name => "動画変換終了(hour)",           :default => 6, :form_type => nil, :form_enable => true},
       ]
     end
     list

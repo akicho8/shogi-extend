@@ -193,7 +193,7 @@ module BattleControllerSharedMethods
         #     if false
         #       lemon.main_process
         #     else
-        #       Kiwi::Lemon.background_job_kick
+        #       Kiwi::Lemon.background_job_kick_if_period
         #     end
         #
         #     render html: "GIF#{lemon.status_key}<br>終わったら #{current_user.email} に通知します#{Kiwi::Lemon.info.to_html}#{Kiwi::Lemon.order(:id).to_html}".html_safe

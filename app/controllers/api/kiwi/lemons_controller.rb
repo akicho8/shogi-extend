@@ -127,7 +127,7 @@ module Api
           current_user.kiwi_my_lemons_singlecast
           ::Kiwi::Lemon.everyone_broadcast
           ::Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
-          ::Kiwi::Lemon.background_job_kick
+          ::Kiwi::Lemon.background_job_kick_if_period
           render json: {
             response_hash: {
               lemon: lemon.as_json,
@@ -152,7 +152,7 @@ module Api
       # ../../../nuxt_side/components/Kiwi/app_zombie.js
       def zombie_kill
         ::Kiwi::Lemon.zombie_kill
-        # ::Kiwi::Lemon.background_job_kick
+        # ::Kiwi::Lemon.background_job_kick_if_period
         render json: { status: "success" }
       end
 

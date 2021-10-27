@@ -2,8 +2,25 @@ module Kiwi
   class Lemon
     concern :BuildMethods do
       class_methods do
+        # 有効な時間内にワーカーが動いてなかったら動かす
+        # rails r 'Kiwi::Lemon.background_job_kick_if_period'
+        def background_job_kick_if_period(options = {})
+          options = {
+            time: Time.current,
+            notify: false,
+          }.merge(options)
+          range = Xsetting[:kiwi_lemon_background_job_active_begin]..Xsetting[:kiwi_lemon_background_job_active_end]
+          active = range.cover?(options[:time].hour)
+          if active
+            background_job_kick
+          end
+          if options[:notify]
+            AlertLog.notify(subject: "background_job_kick_if_period", body: active.to_s, slack_notify: true, mail_notify: true)
+          end
+        end
+
         # ワーカーが動いてなかったら動かす
-        # Kiwi::Lemon.background_job_kick
+        # rails r 'Kiwi::Lemon.background_job_kick'
         def background_job_kick
           count = Sidekiq::Queue.new("kiwi_lemon_only").count
           if count.zero? # 並列実行させないため
@@ -102,7 +119,7 @@ module Kiwi
         cattr_accessor(:user_lemon_history_max) { 5 } # 履歴表示最大件数
         cattr_accessor(:user_lemon_queue_max) { 3 }   # 未処理投入最大件数
 
-        delegate :everyone_broadcast, :background_job_kick, to: "self.class"
+        delegate :everyone_broadcast, :background_job_kick_if_period, to: "self.class"
         # delegate :browser_url, to: "media_builder"
 
         if Rails.env.development?
@@ -121,7 +138,7 @@ module Kiwi
         # 登録のタイミングで(変換ジョブがなければ)変換ジョブを放つ
         # after_create_commit do
         #   track("登録")
-        #   background_job_kick
+        #   background_job_kick_if_period
         #   everyone_broadcast
         # end
       end
