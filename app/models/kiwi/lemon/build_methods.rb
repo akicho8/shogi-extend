@@ -9,7 +9,7 @@ module Kiwi
             time: Time.current,
             notify: false,
           }.merge(options)
-          range = Xsetting[:kiwi_lemon_background_job_active_begin]..Xsetting[:kiwi_lemon_background_job_active_end]
+          range = Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end]
           active = range.cover?(options[:time].hour)
           if active
             background_job_kick
