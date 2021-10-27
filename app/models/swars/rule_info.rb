@@ -11,6 +11,9 @@ module Swars
 
     class << self
       def lookup(v)
+        if v.kind_of?(String)
+          v = ApplicationRecord.hankaku_format(v)
+        end
         super || invert_table[v]
       end
 
