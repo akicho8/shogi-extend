@@ -9,20 +9,20 @@ module Kiwi
           if count.zero? # 並列実行させないため
             KiwiLemonSingleJob.perform_later
           else
-            SlackAgent.message_send(key: "KiwiLemonSingleJob", body: ["すでに起動しているためスキップ", count])
+            SlackAgent.notify(subject: "KiwiLemonSingleJob", body: ["すでに起動しているためスキップ", count])
           end
         end
 
         # ワーカー関係なく全処理実行
         # cap staging rails:runner CODE="Kiwi::Lemon.process_in_sidekiq"
         def process_in_sidekiq
-          # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "開始")
+          # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "開始")
           count = 0
           while e = ordered_process.first
             e.main_process
             count += 1
           end
-          # SlackAgent.message_send(key: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
+          # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
         end
 
         # ゾンビを成仏させる
@@ -52,7 +52,7 @@ module Kiwi
                 e.save!
                 logger.info("ゾンビ #{e.id} をエラーとする")
 
-                SlackAgent.message_send(key: "ゾンビ発見", body: "#{e.id} #{min}m #{e.user.name}")
+                SlackAgent.notify(subject: "ゾンビ発見", body: "#{e.id} #{min}m #{e.user.name}")
 
                 e.user.kiwi_my_lemons_singlecast
                 e.user.kiwi_done_lemon_singlecast(e)
@@ -145,7 +145,7 @@ module Kiwi
           save!
           user.kiwi_my_lemons_singlecast
           everyone_broadcast
-          SystemMailer.fixed_track(subject: "【動画作成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
+          SystemMailer.notify(fixed: true, subject: "【動画作成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
           begin
             sleep(all_params[:sleep].to_i)
             if v = all_params[:raise_message].presence
@@ -178,7 +178,7 @@ module Kiwi
           user.kiwi_done_lemon_singlecast(self)
           everyone_broadcast
 
-          SlackAgent.message_send(key: "動画作成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
+          SlackAgent.notify(subject: "動画作成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
 
           KiwiMailer.lemon_notify(self).deliver_later
         end
@@ -248,7 +248,7 @@ module Kiwi
       end
 
       def track(name, body = nil)
-        SlackAgent.message_send(key: "動画作成 #{name} #{status_key}", body: [id, user.name, body].compact)
+        SlackAgent.notify(subject: "動画作成 #{name} #{status_key}", body: [id, user.name, body].compact)
       end
 
       # 生成ファイルにリンクする

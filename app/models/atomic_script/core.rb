@@ -84,7 +84,7 @@ module AtomicScript
     def basic_paginate(s, options = {})
       out = "".html_safe
       if s.respond_to?(:total_pages)
-        out << h.content_tag(:div, h.page_entries_info(s))
+        # out << h.content_tag(:div, h.page_entries_info(s))
         out << h.paginate(s, options)
       end
       out

@@ -269,7 +269,7 @@ module Api
     end
 
     def logging(title, body = nil)
-      slack_message(key: "CPU対戦 - #{title}", body: [logging_body_prefix, body].join)
+      slack_notify(subject: "CPU対戦 - #{title}", body: [logging_body_prefix, body].join)
     end
 
     def logging_body_prefix

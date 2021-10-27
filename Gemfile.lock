@@ -503,6 +503,7 @@ DEPENDENCIES
   devise
   devise-i18n
   devise-i18n-views
+  diff-lcs
   exception_notification
   factory_bot_rails
   faraday

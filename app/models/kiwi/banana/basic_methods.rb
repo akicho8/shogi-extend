@@ -178,10 +178,10 @@ module Kiwi
           else
             str = "更新"
           end
-          SlackAgent.message_send(key: "動画#{str}", body: [title, page_url].join(" "))
+          SlackAgent.notify(subject: "動画#{str}", body: [title, page_url].join(" "))
           subject = "#{user.name}さんが動画「#{title}」を#{str}"
           body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-          SystemMailer.simple_track(subject: subject, body: body).deliver_later
+          SystemMailer.notify(subject: subject, body: body).deliver_later
         end
       end
     end

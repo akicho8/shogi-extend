@@ -20,7 +20,7 @@ module ShogiErrorRescueMethods
         sleep(0.5)
       end
 
-      slack_message(key: error.class.name, body: [error.message, params].join("\n"), channel: "#adapter_error")
+      slack_notify(subject: error.class.name, body: [error.message, params].join("\n"), channel: "#adapter_error")
       ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
 
       case

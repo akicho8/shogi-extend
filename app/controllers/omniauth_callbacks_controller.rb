@@ -52,10 +52,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Google の場合なぜか auth.info.name にメールアドレスが入っている
     unless user
       if Rails.env.development? || Rails.env.staging?
-        SlackAgent.message_send(key: "omniauth", body: auth.as_json)
+        SlackAgent.notify(subject: "omniauth", body: auth.as_json)
       end
 
-      SlackAgent.message_send(key: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
+      SlackAgent.notify(subject: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
 
       user = User.create do |e|
         e.email         = auth.info.email # Twitterの場合は空文字列 (TODO: 空なのは認証していないってことなのでは？)
@@ -73,7 +73,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             user.avatar = {io: io, filename: filename, content_type: "image/png"}
             user.save
           else
-            SlackAgent.message_send(key: "auth.info.image is blank")
+            SlackAgent.notify(subject: "auth.info.image is blank")
           end
         end
       rescue => error
@@ -82,8 +82,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if user.invalid?
-      SlackAgent.message_send(key: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
-      # SystemMailer.simple_track(subject: "ユーザー作成失敗", body: user.attributes).deliver_later
+      SlackAgent.notify(subject: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
+      # SystemMailer.notify(subject: "ユーザー作成失敗", body: user.attributes).deliver_later
     end
 
     # ユーザーのメールアドレスが空だったり初期値なら設定する

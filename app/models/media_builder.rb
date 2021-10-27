@@ -47,7 +47,7 @@ class MediaBuilder
         files = files - files.last(keep)
         if files.present?
           all_files = files.flat_map { |e| e.glob("*") }
-          SystemMailer.simple_track(subject: "古い曲ファイル削除", body: all_files.join("\n")).deliver_later
+          SystemMailer.notify(subject: "古い曲ファイル削除", body: all_files.join("\n")).deliver_later
           FileUtils.rm_rf(files, noop: !execute, verbose: true)
         end
       end

@@ -13,13 +13,17 @@
 # |------------+----------+--------------+-------------+------+-------|
 
 class AlertLog < ApplicationRecord
-  # ==== Examples
-  #   AlertLog.track("メッセージ")
-  #   AlertLog.track("メッセージ", :body => "詳しい内容")
-  #
-  def self.track(subject, options = {})
-    create!(options.merge(subject: subject))
+  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)")'
+  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)", slack_notify: true)'
+  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)", slack_notify: true, mail_notify: true)'
+  def self.notify(params)
+    create!(params)
   end
+
+  attr_accessor :mail_notify
+  attr_accessor :slack_notify
+  attr_accessor :attachments
+  attr_accessor :to
 
   before_validation on: :create do
     [:subject, :body].each do |key|
@@ -27,25 +31,19 @@ class AlertLog < ApplicationRecord
     end
   end
 
-  attr_accessor :mail_notify, :to, :attachments, :slack_notify
-
-  # before_validation on: :create do
-  #   if subject
-  #     self.subject = subject.to_s.first(self.class.columns_hash["subject"].limit)
-  #   end
-  #   true
-  # end
-
-  # after_create do
-  #   if mail_notify
-  #     params = {:subject => subject, :body => body, :to => to} # to が空なら最後に値が入る
-  #     if attachments
-  #       params[:attachments] = attachments
-  #     end
-  #     MailCop.fixed_track(params).deliver_later
-  #   end
-  #   if slack_notify
-  #     Slacker.send_message([subject, body].join("\n").strip)
-  #   end
-  # end
+  after_create_commit do
+    if mail_notify
+      params = { subject: subject, body: body }
+      if attachments
+        params[:attachments] = attachments
+      end
+      if to
+        params[:to] = to
+      end
+      SystemMailer.notify(params).deliver_later
+    end
+    if slack_notify
+      SlackAgent.notify(subject: subject, body: body)
+    end
+  end
 end

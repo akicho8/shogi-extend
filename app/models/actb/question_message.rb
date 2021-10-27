@@ -47,7 +47,7 @@ module Actb
         end
       end
 
-      SlackAgent.message_send(key: "問題コメント", body: [body, question.page_url].join("\n"))
+      SlackAgent.notify(subject: "問題コメント", body: [body, question.page_url].join("\n"))
     end
 
     # 関係者

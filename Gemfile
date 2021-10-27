@@ -178,6 +178,9 @@ gem "rack-user_agent"
 # 休日判定
 gem "holiday_jp"
 
+# DiffCop
+gem "diff-lcs"
+
 # Rails Cache
 # たいして速くないのとCのビルドしたのがロードされないので使うのをやめた
 # gem "hiredis"

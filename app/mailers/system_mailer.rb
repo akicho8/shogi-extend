@@ -15,18 +15,17 @@ class SystemMailer < ApplicationMailer
         body << error.backtrace.take(4).join("\n")
       end
       body = body.join("\n") + "\n"
-      simple_track(subject: "#{error.message} (#{error.class.name})", body: body).deliver_later
+      notify(subject: "#{error.message} (#{error.class.name})", body: body).deliver_later
     end
   end
 
-  # rails r 'p SystemMailer.fixed_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
-  def fixed_track(params = {})
-    mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
-  end
-
-  # rails r 'p SystemMailer.simple_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
-  def simple_track(params = {})
-    mail(params.merge(subject: subject_decorate(params[:subject])))
+  # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
+  def notify(params = {})
+    hv = params.merge(subject: subject_decorate(params[:subject]))
+    if params[:fixed]
+      hv = fixed_format(hv)
+    end
+    mail(hv)
   end
 
   private

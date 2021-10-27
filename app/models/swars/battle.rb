@@ -328,7 +328,7 @@ module Swars
           end
         end
       end
-      SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
+      SlackAgent.notify(subject: "rule_key_bugfix_process", body: c.to_s)
     end
 
     concerning :TimeChartMethods do

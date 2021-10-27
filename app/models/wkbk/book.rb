@@ -141,15 +141,15 @@ module Wkbk
         bookships_order_by_ids(ids)
       end
 
-      simple_track
+      notify
     end
 
-    def simple_track
+    def notify
       str = created_at == updated_at ? "作成" : "更新"
-      SlackAgent.message_send(key: "問題集#{str}", body: [title, page_url].join(" "))
+      SlackAgent.notify(subject: "問題集#{str}", body: [title, page_url].join(" "))
       subject = "#{user.name}さんが問題集「#{title}」を#{str}"
       body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      SystemMailer.simple_track(subject: subject, body: body).deliver_later
+      SystemMailer.notify(subject: subject, body: body).deliver_later
     end
 
     # articles の並び替え

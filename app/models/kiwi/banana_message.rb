@@ -49,7 +49,7 @@ module Kiwi
         end
       end
 
-      SlackAgent.message_send(key: "問題コメント", body: [body, banana.page_url].join("\n"))
+      SlackAgent.notify(subject: "問題コメント", body: [body, banana.page_url].join("\n"))
     end
 
     # 関係者

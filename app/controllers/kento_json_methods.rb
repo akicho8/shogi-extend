@@ -39,7 +39,7 @@ module KentoJsonMethods
           # ウォーズ検索のクロール待ち時間と分けるためIPで判別しようかと思ったがIPはほぼランダムに変わる
           counter = Swars::Battle.continuity_run_counter("kento")
           if counter == 1
-            # slack_message(key: "KENTOアクセス元IP", body: request.remote_ip)
+            # slack_notify(subject: "KENTOアクセス元IP", body: request.remote_ip)
             Swars::Battle.throttle_user_import(user_key: current_swars_user.key, page_max: 1)
           end
         end
@@ -63,7 +63,7 @@ module KentoJsonMethods
         }
 
         if counter >= 45 && counter.pred.modulo(10).zero?
-          slack_message(key: "KENTO API(#{counter})", body: [request.remote_ip, Time.current.strftime("%H:%M:%S"), current_swars_user.key].join(" "))
+          slack_notify(subject: "KENTO API(#{counter})", body: [request.remote_ip, Time.current.strftime("%H:%M:%S"), current_swars_user.key].join(" "))
         end
         render json: json_hash.as_json
         return

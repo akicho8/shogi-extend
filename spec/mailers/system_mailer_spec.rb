@@ -1,9 +1,9 @@
 require "rails_helper"
 
 RSpec.describe SystemMailer, type: :mailer do
-  describe "fixed_track" do
+  describe "notify" do
     def mail
-      SystemMailer.fixed_track(subject: "(subject)")
+      SystemMailer.notify(fixed: true, subject: "(subject)")
     end
     it do
       assert { mail.from    == ["shogi.extend@gmail.com"]       }

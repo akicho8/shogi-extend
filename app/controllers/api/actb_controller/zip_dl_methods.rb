@@ -30,7 +30,7 @@ module Api
           end
 
           sec = "%.2f s" % (Time.current - t)
-          slack_message(key: "ZIP #{sec}", body: zip_filename)
+          slack_notify(subject: "ZIP #{sec}", body: zip_filename)
           send_data(zip_buffer.string, type: Mime[params[:format]], filename: zip_filename, disposition: "attachment")
         end
       end

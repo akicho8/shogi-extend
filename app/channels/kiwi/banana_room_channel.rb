@@ -68,10 +68,10 @@ module Kiwi
     def track(data, action, body)
       key = "動画表示 [#{banana_id}] #{action}"
       if Rails.env.development? && false
-        SlackAgent.message_send(key: key, body: data)
+        SlackAgent.notify(subject: key, body: data)
       end
 
-      SlackAgent.message_send(key: key, body: %(:#{data["ua_icon_key"]}: #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
+      SlackAgent.notify(subject: key, body: %(:#{data["ua_icon_key"]}: #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
     end
 
     def subscribed_track(action)
@@ -80,7 +80,7 @@ module Kiwi
       else
         body = ""
       end
-      SlackAgent.message_send(key: "動画表示 #{action}", body: "#{body}")
+      SlackAgent.notify(subject: "動画表示 #{action}", body: "#{body}")
     end
 
     def banana_id

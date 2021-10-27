@@ -18,11 +18,11 @@ module SlackAgent
     if params.present?
       out << params.pretty_inspect
     end
-    message_send(key: error.class.name, body: out.compact.join("\n"))
+    notify(key: error.class.name, body: out.compact.join("\n"))
   end
 
-  # rails r 'SlackAgent.message_send(key: "(key)", body: "(body)")'
-  def message_send(key: "", body: "", channel: nil)
+  # rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
+  def notify(params = {})
     if ENV["SETUP"]
       return
     end
@@ -31,20 +31,20 @@ module SlackAgent
       raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
-    params = {
-      :channel => channel || default_channel,
-      :text    => "#{timestamp}#{env}【#{key}】#{body}",
+    api_params = {
+      :channel => params[:channel] || default_channel,
+      :text    => "#{timestamp}#{env}【#{params[:subject]}】#{params[:body]}",
     }
 
     if Rails.env.test?
-      return params
+      return api_params
     end
 
     if ENV["SLACK_AGENT_DISABLE"].to_s == "true"
       return
     end
 
-    SlackAgentMessageSendJob.perform_later(params)
+    SlackAgentNotifyJob.perform_later(api_params)
   end
 
   private

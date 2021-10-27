@@ -384,8 +384,8 @@ module Actb
       # 「公開」フォルダに移動させたときに通知する
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
       if state = saved_after_state
-        SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
-        SystemMailer.fixed_track(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+        SlackAgent.notify(subject: "問題#{state}", body: [title, page_url].join(" "))
+        SystemMailer.notify(fixed: true, subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
         User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end

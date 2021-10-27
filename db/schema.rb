@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_10_103000) do
+ActiveRecord::Schema.define(version: 2021_10_27_075600) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1394,6 +1394,14 @@ ActiveRecord::Schema.define(version: 2021_10_10_103000) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_wkbk_sequences_on_key", unique: true
     t.index ["position"], name: "index_wkbk_sequences_on_position"
+  end
+
+  create_table "xsettings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "var_key", null: false
+    t.text "var_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["var_key"], name: "index_xsettings_on_var_key", unique: true
   end
 
   create_table "xy_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

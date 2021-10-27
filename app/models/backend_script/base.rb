@@ -7,6 +7,10 @@ module BackendScript
 
     delegate :current_user, to: :c
 
+    def __staff__
+      current_user
+    end
+
     # 土日祝日色
     def holiday_sunday_saturday_class(t)
       case

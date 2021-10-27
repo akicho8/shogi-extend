@@ -241,6 +241,20 @@
 
 # == Schema Information ==
 #
+# 設定 (xsettings as Xsetting)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | var_key    | 変数名   | string(255) | NOT NULL    |      | A!    |
+# | var_value  | 変数値   | text(65535) |             |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Membership (tsl_memberships as Tsl::Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|

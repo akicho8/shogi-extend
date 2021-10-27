@@ -198,7 +198,7 @@ module Api
       #   if user.saved_change_to_attribute?(:name_input_at)
       #     if v = user.saved_change_to_attribute(:name)
       #       pair = v.join("→")
-      #       SystemMailer.fixed_track(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
+      #       SystemMailer.notify(fixed: true, subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
       #     end
       #   end
       #
