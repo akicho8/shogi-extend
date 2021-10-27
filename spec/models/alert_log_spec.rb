@@ -1,22 +1,16 @@
+# -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# アラートログテーブル (alert_logs)
+# Alert log (alert_logs as AlertLog)
 #
-# +--------------+--------------+----------------+-------------+-----------------------+-------+
-# | カラム名     | 意味         | タイプ         | 属性        | 参照                  | INDEX |
-# +--------------+--------------+----------------+-------------+-----------------------+-------+
-# | id           | ID           | integer(4)     | NOT NULL PK |                       |       |
-# | target_id    | 対象ID       | integer(4)     |             | => (target_type)#id   | A     |
-# | target_type  | 対象タイプ   | string(255)    |             | モデル名(polymorphic) | A     |
-# | partner_id   | 相棒ID       | integer(4)     |             | => (partner_type)#id  | B     |
-# | partner_type | 相棒タイプ   | string(255)    |             | モデル名(polymorphic) | B     |
-# | level_code   | Level code   | integer(4)     | NOT NULL    |                       | C     |
-# | subject      | 題名         | string(255)    |             |                       |       |
-# | free_columns | Free columns | text => Hash   |             |                       |       |
-# | created_at   | 作成日時     | datetime       | NOT NULL    |                       |       |
-# | updated_at   | 更新日時     | datetime       | NOT NULL    |                       |       |
-# | body         | 本文         | text(16777215) |             |                       |       |
-# +--------------+--------------+----------------+-------------+-----------------------+-------+
+# |------------+----------+--------------+-------------+------+-------|
+# | name       | desc     | type         | opts        | refs | index |
+# |------------+----------+--------------+-------------+------+-------|
+# | id         | ID       | integer(8)   | NOT NULL PK |      |       |
+# | subject    | 件名     | string(255)  | NOT NULL    |      |       |
+# | body       | 内容     | string(8192) | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
+# |------------+----------+--------------+-------------+------+-------|
 
 require "rails_helper"
 
