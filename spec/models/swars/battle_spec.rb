@@ -39,6 +39,11 @@ module Swars
       Battle.create!
     end
 
+    it "keyの重複はDBでのみチェックする" do
+      Battle.create!(key: "x")
+      expect { Battle.create!(key: "x") }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
+
     describe "Twitterカード" do
       describe "to_twitter_card_params" do
         let :value do
@@ -143,19 +148,19 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .............F...
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:119:in `block (4 levels) in <module:Swars>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Finished in 5.67 seconds (files took 2.49 seconds to load)
 # >> 17 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:113 # Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
-# >> 
+# >>
