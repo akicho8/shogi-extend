@@ -55,7 +55,7 @@ RSpec.describe ShareBoardsController, type: :controller do
 
   it "Twitterカード用の画像パス" do
     get :show, params: { body: "68銀", abstract_viewpoint: "white", format: "json" }
-    assert { controller.current_og_image_path == "/share-board.png?abstract_viewpoint=white&body=position+startpos+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
+    assert { controller.current_og_image_path == "/share-board.png?abstract_viewpoint=white&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
   end
 
   it "abstract_viewpoint の値がおかしいときにエラーにしない" do
@@ -71,9 +71,3 @@ RSpec.describe ShareBoardsController, type: :controller do
     assert { response.status == 200 }
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ........
-# >>
-# >> Finished in 1.44 seconds (files took 2.51 seconds to load)
-# >> 8 examples, 0 failures
-# >>

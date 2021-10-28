@@ -80,9 +80,8 @@ class KifuParser
 
   def to_format_options
     {
-      compact: true,
-      no_embed_if_time_blank: true,
-      # position_startpos_disabled: true, # "position startpos ..." 形式にはしない
+      :compact                => true,
+      :no_embed_if_time_blank => true,
     }
   end
 

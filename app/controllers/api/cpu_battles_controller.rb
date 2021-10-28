@@ -5,18 +5,18 @@ module Api
 
     def config_params
       {
-        sp_params: sp_params,
+        :sp_params          => sp_params,
 
-        cpu_brain_infos: CpuBrainInfo,
-        cpu_brain_key: current_cpu_brain_key,
+        :cpu_brain_infos    => CpuBrainInfo,
+        :cpu_brain_key      => current_cpu_brain_key,
 
-        cpu_strategy_infos: CpuStrategyInfo,
-        cpu_strategy_key: current_cpu_strategy_key,
+        :cpu_strategy_infos => CpuStrategyInfo,
+        :cpu_strategy_key   => current_cpu_strategy_key,
 
-        cpu_preset_infos: CpuPresetInfo,
-        cpu_preset_key: current_cpu_preset_key,
+        :cpu_preset_infos   => CpuPresetInfo,
+        :cpu_preset_key     => current_cpu_preset_key,
 
-        judge_group: CpuBattleRecord.group(:judge_key).count,
+        :judge_group        => CpuBattleRecord.group(:judge_key).count,
       }
     end
 
@@ -126,8 +126,8 @@ module Api
 
         # info.move_infos.size - 0
 
-        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_sfen
-        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_history_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_history_sfen
         # render json: {failure_message: failure_message, before_sfen: before_sfen}
 
         final_decision(judge_key: :lose, irregular: true, message: message)
@@ -215,7 +215,7 @@ module Api
 
       # CPUの手を指す
       @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
-      @current_sfen = @mediator.to_sfen
+      @current_sfen = @mediator.to_history_sfen
       evaluation_value_generation
 
       yomiage_process # CPUの手の読み上げる

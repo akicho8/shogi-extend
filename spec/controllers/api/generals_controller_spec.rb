@@ -9,7 +9,7 @@ RSpec.describe Api::GeneralsController, type: :controller do
 
     describe "GETもPOSTも対応" do
       it "works" do
-        result = { body: "position startpos moves 7i6h", turn_max: 1}
+        result = { body: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h", turn_max: 1 }
         assert { test1(:get, :sfen)  == result }
         assert { test1(:post, :sfen) == result }
       end

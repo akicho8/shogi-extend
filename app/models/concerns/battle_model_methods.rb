@@ -83,7 +83,7 @@ module BattleModelMethods
     self.turn_max = info.mediator.turn_info.turn_offset
     self.critical_turn = info.mediator.critical_turn
     self.outbreak_turn = info.mediator.outbreak_turn
-    self.sfen_body = info.mediator.to_sfen
+    self.sfen_body = info.mediator.to_history_sfen
     self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
     preset_key_set(info)
@@ -300,7 +300,7 @@ module BattleModelMethods
     #
     #     {
     #       initial_state_board_sfen: mediator.initial_state_board_sfen, # => "startpos"
-    #       last_sfen: mediator.to_current_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+    #       last_sfen: mediator.to_snapshot_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
     #       moves: mediator.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
     #       kent_query: kent_query,
     #     }
