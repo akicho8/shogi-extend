@@ -26,7 +26,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::Kiwi::BananasController, type: :controller do
+RSpec.describe Api::Kiwi::BananasController, type: :controller, kiwi: true do
   include KiwiSupport
 
   before(:context) do

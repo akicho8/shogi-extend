@@ -23,7 +23,7 @@
 require "rails_helper"
 
 module Kiwi
-  RSpec.describe BananaMessage, type: :model do
+  RSpec.describe BananaMessage, type: :model, kiwi: true do
     include KiwiSupport
     include MailerSupport
 

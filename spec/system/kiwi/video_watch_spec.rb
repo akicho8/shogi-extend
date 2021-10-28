@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "動画詳細", type: :system do
+RSpec.describe "動画詳細", type: :system, kiwi: true do
   include KiwiSupport
   include AliceBobCarol
 

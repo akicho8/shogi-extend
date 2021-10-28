@@ -8,36 +8,42 @@ module Kiwi
           options = {
             time: Time.current,
             notify: false,
+            range: Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end],
           }.merge(options)
-          range = Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end]
-          active = range.cover?(options[:time].hour)
+          active = options[:range].cover?(options[:time].hour)
           if active
-            background_job_kick
+            background_job_kick(options)
           end
           if options[:notify]
             AlertLog.notify(subject: "background_job_kick_if_period", body: active.to_s, slack_notify: true, mail_notify: true)
           end
         end
 
-        # ワーカーが動いてなかったら動かす
+        # 時間に関係なくワーカーを作動させる
+        # ids で特定のレコードのみを処理できる
         # rails r 'Kiwi::Lemon.background_job_kick'
-        def background_job_kick
+        # rails r 'Kiwi::Lemon.background_job_kick(ids: [14])'
+        # cap staging rails:runner CODE="Kiwi::Lemon.background_job(ids:[14])"
+        # cap production rails:runner CODE="Kiwi::Lemon.background_job(ids:[14])"
+        def background_job_kick(options = {})
           count = Sidekiq::Queue.new("kiwi_lemon_only").count
           if count.zero? # 並列実行させないため
-            KiwiLemonSingleJob.perform_later
+            KiwiLemonSingleJob.perform_later(options)
           else
             SlackAgent.notify(subject: "KiwiLemonSingleJob", body: ["すでに起動しているためスキップ", count])
           end
         end
 
         # ワーカー関係なく全処理実行
-        # cap staging rails:runner CODE="Kiwi::Lemon.process_in_sidekiq"
-        def process_in_sidekiq
+        # cap staging rails:runner CODE="Kiwi::Lemon.background_job"
+        def background_job(options = {})
           # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "開始")
-          count = 0
-          while e = ordered_process.first
-            e.main_process
-            count += 1
+          if ids = Array.wrap(options[:ids])
+            find(ids).each(&:main_process)
+          else
+            while e = ordered_process.first
+              e.main_process
+            end
           end
           # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
         end

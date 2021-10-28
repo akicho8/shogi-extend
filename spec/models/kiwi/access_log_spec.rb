@@ -19,7 +19,7 @@
 require "rails_helper"
 
 module Kiwi
-  RSpec.describe AccessLog, type: :model do
+  RSpec.describe AccessLog, type: :model, kiwi: true do
     include KiwiSupport
 
     it "ログインユーザーのアクセス" do

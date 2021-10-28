@@ -32,7 +32,7 @@
 require "rails_helper"
 
 module Kiwi
-  RSpec.describe Lemon, type: :model do
+  RSpec.describe Lemon, type: :model, kiwi: true do
     include KiwiSupport
 
     it "動画生成" do
@@ -61,7 +61,7 @@ module Kiwi
 
     it "ワーカー関係なく全処理実行" do
       lemon1
-      Lemon.process_in_sidekiq
+      Lemon.background_job
     end
 
     it "ゾンビを成仏させる" do

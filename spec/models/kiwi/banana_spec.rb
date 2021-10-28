@@ -27,7 +27,7 @@
 require "rails_helper"
 
 module Kiwi
-  RSpec.describe Banana, type: :model do
+  RSpec.describe Banana, type: :model, kiwi: true do
     include KiwiSupport
 
     it "works" do

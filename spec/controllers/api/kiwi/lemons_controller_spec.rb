@@ -31,7 +31,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::Kiwi::LemonsController, type: :controller do
+RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
   include KiwiSupport
 
   before do

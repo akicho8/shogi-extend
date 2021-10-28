@@ -24,7 +24,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::Kiwi::TopsController, type: :controller do
+RSpec.describe Api::Kiwi::TopsController, type: :controller, kiwi: true do
   include KiwiSupport
 
   it "index" do
