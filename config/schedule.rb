@@ -69,7 +69,7 @@ end
 
 every("0 * * * *") { runner "Kiwi::Lemon.background_job_kick_if_period(notify: true)" }
 
-every("5 6 * * *") { command "sudo systemctl restart sidekiq" }
+every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
   # every("5 11 * * *") { command "ruby -e 'p 1 / 1'" }
