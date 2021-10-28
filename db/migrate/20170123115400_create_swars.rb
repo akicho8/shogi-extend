@@ -2,8 +2,8 @@ class CreateSwars < ActiveRecord::Migration[5.1]
   def change
     create_table :swars_users, force: true do |t|
       t.string :user_key,            null: false, index: {unique: true}, comment: "対局者名"
-      t.belongs_to :grade,           null: false, comment: "最高段級"
-      t.datetime :last_reception_at, null: true, index: true, comment: "受容日時"
+      t.belongs_to :grade,           null: false,                        comment: "最高段級"
+      t.datetime :last_reception_at, null: true, index: true,            comment: "受容日時"
       t.integer :search_logs_count,  null: true, default: 0
       t.timestamps                   null: false
 
@@ -12,26 +12,26 @@ class CreateSwars < ActiveRecord::Migration[5.1]
 
     create_table :swars_battles, force: true do |t|
       t.string :key,            null: false, index: {unique: true}, comment: "対局識別子"
-      t.datetime :battled_at,   null: false, index: true, comment: "対局開始日時"
-      t.string :rule_key,       null: false, index: true, comment: "ルール"
-      t.text :csa_seq,          null: false, comment: "棋譜の断片"
-      t.string :final_key,      null: false, index: true, comment: "結果詳細"
-      t.belongs_to :win_user,   null: true, comment: "勝者(ショートカット用)"
+      t.datetime :battled_at,   null: false, index: true,           comment: "対局開始日時"
+      t.string :rule_key,       null: false, index: true,           comment: "ルール"
+      t.text :csa_seq,          null: false,                        comment: "棋譜の断片"
+      t.string :final_key,      null: false, index: true,           comment: "結果詳細"
+      t.belongs_to :win_user,   null: true,                         comment: "勝者(ショートカット用)"
 
-      t.integer :turn_max,      null: false, index: true, comment: "手数"
-      t.text :meta_info,        null: false, comment: "棋譜メタ情報"
+      t.integer :turn_max,      null: false, index: true,           comment: "手数"
+      t.text :meta_info,        null: false,                        comment: "棋譜メタ情報"
 
-      t.datetime :accessed_at,  null: false, index: true, comment: "最終参照日時"
+      t.datetime :accessed_at,  null: false, index: true,           comment: "最終参照日時"
 
       t.string :preset_key,     null: false, index: true
 
       t.text :sfen_body,        null: false, limit: 65535
       t.string :sfen_hash,      null: false
 
-      t.integer :start_turn,    null: true, index: true, comment: "???"
-      t.integer :critical_turn, null: true, index: true, comment: "開戦"
-      t.integer :outbreak_turn, null: true, index: true, comment: "中盤"
-      t.integer :image_turn,    null: true,              comment: "???"
+      t.integer :start_turn,    null: true, index: true,            comment: "???"
+      t.integer :critical_turn, null: true, index: true,            comment: "開戦"
+      t.integer :outbreak_turn, null: true, index: true,            comment: "中盤"
+      t.integer :image_turn,    null: true,                         comment: "???"
 
       t.timestamps              null: false
     end
