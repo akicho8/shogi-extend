@@ -20,11 +20,11 @@ module Kiwi
         end
 
         # 時間に関係なくワーカーを作動させる
-        # ids で特定のレコードのみを処理できる
+        # id で特定のレコードのみを処理できる
         # rails r 'Kiwi::Lemon.background_job_kick'
-        # rails r 'Kiwi::Lemon.background_job_kick(ids: [14])'
-        # cap staging rails:runner CODE="Kiwi::Lemon.background_job(ids:[14])"
-        # cap production rails:runner CODE="Kiwi::Lemon.background_job(ids:[14])"
+        # rails r 'Kiwi::Lemon.background_job_kick(id: [14])'
+        # cap staging rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
+        # cap production rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         def background_job_kick(options = {})
           count = Sidekiq::Queue.new("kiwi_lemon_only").count
           if count.zero? # 並列実行させないため
@@ -38,8 +38,8 @@ module Kiwi
         # cap staging rails:runner CODE="Kiwi::Lemon.background_job"
         def background_job(options = {})
           # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "開始")
-          if ids = Array.wrap(options[:ids])
-            find(ids).each(&:main_process)
+          if id = options[:id]
+            find(id).each(&:main_process)
           else
             while e = ordered_process.first
               e.main_process
