@@ -8,9 +8,11 @@ module Kiwi
           options = {
             time: Time.current,
             notify: false,
-            range: Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end],
           }.merge(options)
-          active = options[:range].cover?(options[:time].hour)
+
+          # range を options に入れると ActiveJob のシリアライズで Range クラスなんか知らんと言われて死ぬ
+          range = Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end]
+          active = range.cover?(options[:time].hour)
           if active
             background_job_kick(options)
           end
