@@ -1,12 +1,13 @@
-import { LoopInfo          } from "../models/loop_info.js"
-import { PieceFontWeightInfo          } from "../models/piece_font_weight_info.js"
-import { ViewpointInfo     } from "../models/viewpoint_info.js"
-import { ColorThemeInfo    } from "../../models/color_theme_info.js"
-import { AudioThemeInfo    } from "../models/audio_theme_info.js"
-import { FactoryMethodInfo  } from "../models/factory_method_info.js"
-import { RectSizeInfo } from "../models/rect_size_info.js"
-import { ParamInfo         } from "./models/param_info.js"
-import { RecipeInfo        } from "../models/recipe_info.js"
+import { LoopInfo            } from "../models/loop_info.js"
+import { TurnEmbedInfo       } from "../models/turn_embed_info.js"
+import { PieceFontWeightInfo } from "../models/piece_font_weight_info.js"
+import { ViewpointInfo       } from "../models/viewpoint_info.js"
+import { ColorThemeInfo      } from "../../models/color_theme_info.js"
+import { AudioThemeInfo      } from "../models/audio_theme_info.js"
+import { FactoryMethodInfo   } from "../models/factory_method_info.js"
+import { RectSizeInfo        } from "../models/rect_size_info.js"
+import { ParamInfo           } from "./models/param_info.js"
+import { RecipeInfo          } from "../models/recipe_info.js"
 
 import Big from "big.js"        // https://github.com/MikeMcl/big.js/
 
@@ -17,24 +18,25 @@ export const app_form = {
     return {
       //////////////////////////////////////////////////////////////////////////////// POST前
       body: "",                 // 棋譜
-      loop_key:           null, // ループの有無(GIFの場合)
-      piece_font_weight_key:          null, // 駒を太字にする条件
-      rect_size_key: null, // 画像サイズ
-      rect_width:          null, // w
-      rect_height:         null, // h
-      viewpoint_key:      null, // 視点
-      color_theme_key:    null, // 色テーマ
-      audio_theme_key:    null, // 曲テーマ
-      factory_method_key:  null, // 生成方法
-      cover_text:         null, // 表紙文言
-      video_crf:          null, // video品質レベル
-      audio_bit_rate:     null, // 音声ビットレート
-      main_volume:        null, // 音量
-      page_duration:      null, // 1ページあたりの秒数
-      end_duration:       null, // 終了図だけ指定枚数ぶん停止
-      sleep:              null, // 遅延(デバッグ用)
-      raise_message:      null, // 例外メッセージ
-      recipe_key:         null, // 変換先
+      loop_key:              null, // ループの有無(GIFの場合)
+      turn_embed_key:        null, // 手数表示
+      piece_font_weight_key: null, // 駒を太字にする条件
+      rect_size_key:         null, // 画像サイズ
+      rect_width:            null, // w
+      rect_height:           null, // h
+      viewpoint_key:         null, // 視点
+      color_theme_key:       null, // 色テーマ
+      audio_theme_key:       null, // 曲テーマ
+      factory_method_key:    null, // 生成方法
+      cover_text:            null, // 表紙文言
+      video_crf:             null, // video品質レベル
+      audio_bit_rate:        null, // 音声ビットレート
+      main_volume:           null, // 音量
+      page_duration:         null, // 1ページあたりの秒数
+      end_duration:          null, // 終了図だけ指定枚数ぶん停止
+      sleep:                 null, // 遅延(デバッグ用)
+      raise_message:         null, // 例外メッセージ
+      recipe_key:            null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
       lemon: null, // POSTして変換待ちになっているレコード
@@ -313,6 +315,8 @@ export const app_form = {
     TWITTER_ASPECT_RATIO_MAX() { return TWITTER_ASPECT_RATIO_MAX                         },
     LoopInfo()                 { return LoopInfo                                         },
     loop_info()                { return LoopInfo.fetch(this.loop_key)                    },
+    TurnEmbedInfo()            { return TurnEmbedInfo                                         },
+    turn_embed_info()          { return TurnEmbedInfo.fetch(this.turn_embed_key)              },
     PieceFontWeightInfo()                 { return PieceFontWeightInfo                                         },
     piece_font_weight_info()                { return PieceFontWeightInfo.fetch(this.piece_font_weight_key)                    },
     RectSizeInfo()        { return RectSizeInfo                                },
@@ -364,6 +368,7 @@ export const app_form = {
             ...this.u_image_file_if_enabled,
             //////////////////////////////////////// bioshogi まで伝わる
             loop_key:          this.loop_key,
+            turn_embed_key:    this.turn_embed_key,
             page_duration:     this.page_duration,
             end_duration:      this.end_duration,
             viewpoint:         this.viewpoint_key,
@@ -372,6 +377,7 @@ export const app_form = {
             piece_font_weight_key:         this.piece_font_weight_key,
             factory_method_key: this.factory_method_key,
             cover_text:        this.cover_text,
+            // bottom_text:       this.audio_theme_info.bottom_text,
             video_crf:         this.video_crf,
             audio_bit_rate:    this.audio_bit_rate,
             main_volume:       this.main_volume,
