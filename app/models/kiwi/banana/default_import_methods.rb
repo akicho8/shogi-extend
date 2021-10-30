@@ -23,18 +23,18 @@ module Kiwi
         # rails r 'pp Kiwi::Banana.alpha_zero_vs_elmo_params_list'
         def alpha_zero_vs_elmo_params_list
           [
-            # { key: "Z8Yc9dPZek9", number: 1, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "RMl6paUAYM9", number: 12, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "TAs1CTDPsvd", number: 17, color_theme_key: :is_color_theme_radial_gradiention2 },
-            { key: "wIW3tnZMnUD", number: 18, color_theme_key: :is_color_theme_radial_gradiention3 },
-            { key: "nVxSJI7tlap", number: 23, color_theme_key: :is_color_theme_radial_gradiention4 },
-            { key: "qgeYRTJJ6tc", number: 32, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "TW5vDpMXgXW", number: 35, color_theme_key: :is_color_theme_radial_gradiention2 },
-            { key: "GDARn1MSPsu", number: 52, color_theme_key: :is_color_theme_radial_gradiention3 },
-            { key: "TISYdaPlwhQ", number: 76, color_theme_key: :is_color_theme_radial_gradiention4 },
-            { key: "q8Fsa72oSOs", number: 78, color_theme_key: :is_color_theme_radial_gradiention1 },
-            { key: "Fyq37jDjjxV", number: 81, color_theme_key: :is_color_theme_radial_gradiention2 },
-          ].collect.with_index do |params, i|
+            # { key: "Z8Yc9dPZek9", index: "?",  number: 1,  color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "RMl6paUAYM9", index: "1",  number: 12, color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "TAs1CTDPsvd", index: "2",  number: 17, color_theme_key: :is_color_theme_radial_gradiention2 },
+            { key: "wIW3tnZMnUD", index: "3",  number: 18, color_theme_key: :is_color_theme_radial_gradiention3 },
+            { key: "nVxSJI7tlap", index: "4",  number: 23, color_theme_key: :is_color_theme_radial_gradiention4 },
+            { key: "qgeYRTJJ6tc", index: "5",  number: 32, color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "TW5vDpMXgXW", index: "6",  number: 35, color_theme_key: :is_color_theme_radial_gradiention2 },
+            { key: "GDARn1MSPsu", index: "7",  number: 52, color_theme_key: :is_color_theme_radial_gradiention3 },
+            { key: "TISYdaPlwhQ", index: "8",  number: 76, color_theme_key: :is_color_theme_radial_gradiention4 },
+            { key: "q8Fsa72oSOs", index: "9",  number: 78, color_theme_key: :is_color_theme_radial_gradiention1 },
+            { key: "Fyq37jDjjxV", index: "10", number: 81, color_theme_key: :is_color_theme_radial_gradiention2 },
+          ].collect.with_index do |params|
             # tp params
 
             body = Rails.root.join("alpha_zero_vs_elmo", "#{params[:number]}.csa").read
@@ -54,7 +54,7 @@ module Kiwi
                   :recipe_key      => "is_recipe_mp4",
                   :color_theme_key => params[:color_theme_key], # ColorGradientInfo.fetch(i.modulo(ColorGradientInfo.count)).key,
                   :audio_theme_key => "is_audio_theme_ds3479",
-                  :cover_text      => "羽生善治特選 ##{i.next}\n#{versus} 100番勝負 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
+                  :cover_text      => "羽生善治特選 ##{params[:index]}\n#{versus} 100番勝負 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
                   :turn_embed_key  => "is_turn_embed_on",
                   :page_duration   => 1.0,
                   :end_duration    => 7,
@@ -66,7 +66,7 @@ module Kiwi
               },
               :banana_params => {
                 :folder_key    => "public",
-                :title         => "##{i.next} 羽生善治特選 #{versus} 100番勝負 第#{params[:number]}局",
+                :title         => "##{params[:index]} 羽生善治特選 #{versus} 100番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
                 :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.mediator.normalized_names_with_alias],
                 :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
