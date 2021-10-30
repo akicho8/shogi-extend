@@ -54,11 +54,12 @@ module Kiwi
                   :color_theme_key => params[:color_theme_key], # ColorGradientInfo.fetch(i.modulo(ColorGradientInfo.count)).key,
                   :audio_theme_key => "is_audio_theme_ds3479",
                   :cover_text      => "羽生善治特選 ##{i.next}\n#{versus} 100番勝負 第#{params[:number]}局\n#{black_white}\n#{judgment_message}",
+                  :turn_embed_key  => "is_turn_embed_on",
                   :page_duration   => 1.0,
                   :end_duration    => 7,
                   :width           => 1920,
                   :height          => 1080,
-                  :main_volume     => 0.7,
+                  :main_volume     => 0.8,
                   :viewpoint       => info.mediator.win_player.location.key, # 勝った方の視点にする
                 },
               },
