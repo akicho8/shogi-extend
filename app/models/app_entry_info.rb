@@ -51,10 +51,9 @@ class AppEntryInfo
       title: "動画ギャラリー",
       attention_label: "NEW!",
       og_image_key: "video",
-      description: "棋譜を動画にしたいときにどうぞ",
+      description: "動画作成で作った動画を登録するとここで見れる",
       features: [
-        "mp4, gif, png, zip 等に変換",
-        "「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している",
+        "これはオマケなんで Youtube の方にのっけたほうがいいかもしれない",
       ],
     },
     {
