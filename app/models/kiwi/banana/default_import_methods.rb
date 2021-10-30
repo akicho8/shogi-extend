@@ -5,6 +5,7 @@ module Kiwi
         # rails r 'Kiwi::Banana.default_data_import'
         # cap production rails:runner CODE='Kiwi::Banana.default_data_import'
         # cap production rails:runner CODE='p User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1")'
+        # RAILS_ENV=production nohup bundle exec bin/rails r 'Kiwi::Banana.default_data_import' &
         def default_data_import(options = {})
           # options = {
           #   # create_only: false,
@@ -16,7 +17,7 @@ module Kiwi
 
           # puts alpha_zero_vs_elmo_params_list.to_yaml
           import_all(alpha_zero_vs_elmo_params_list)
-          import_all(default_records_list)
+          # import_all(default_records_list)
         end
 
         # rails r 'pp Kiwi::Banana.alpha_zero_vs_elmo_params_list'
