@@ -4,6 +4,7 @@ client-only
     | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
+      p watching_member_count: {{watching_member_count}}
       p os_change: {{os_change}}
       p order_func_p: {{order_func_p}}
 

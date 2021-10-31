@@ -3,7 +3,7 @@
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
       ShareBoardAvatarLine(:base="base" :info="e" :key="`${e.from_connection_id}_${i}`")
-        .flex_item.is_line_break_on.message_body(v-html="auto_link(e.message)" v-xemoji)
+        .flex_item.is_line_break_on.message_body(:class="{'has-text-success': e.message_scope === 'ms_audience'}" v-html="auto_link(e.message)" v-xemoji)
 </template>
 
 <script>

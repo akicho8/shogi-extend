@@ -308,12 +308,36 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         find(".message_modal_handle").click              # aliceがメッセージモーダルを開く
         find(".MessageSendModal input").set("(message)") # メッセージ入力
-        doc_image
         find(".MessageSendModal .send_button").click     # 送信
         assert_text("(message)")                         # 自分自身にメッセージが届く
       end
       b_block do
         assert_text("(message)")                         # bobにもメッセージが届く
+      end
+    end
+
+    it "観戦者宛送信" do
+      a_block { visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle") }
+      b_block { visit_app(room_code: :my_room, force_user_name: "bob",   ordered_member_names: "alice", autoexec: "message_modal_handle") }
+      c_block { visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice", autoexec: "message_modal_handle") }
+
+      message1 = SecureRandom.hex
+      b_block { ms_audience_send_button(message1) }   # 観戦者の bob が観戦者送信した
+      b_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
+      a_block { assert_no_text(message1)          }   # alice には対局者なので届いていない
+      c_block { assert_text(message1)             }   # carol には観戦者なので届いている
+
+      message1 = SecureRandom.hex
+      a_block { ms_audience_send_button(message1) }   # 対局者の alice が送信した
+      a_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
+      b_block { assert_text(message1)             }   # bob   には観戦者なので届いている
+      c_block { assert_text(message1)             }   # carol には観戦者なので届いている
+    end
+
+    it "順番設定していても観戦者がいないときは観戦者宛を隠しておく" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle")
+        assert_no_selector(".MessageSendModal .ms_audience_send_button")
       end
     end
   end
@@ -1419,5 +1443,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # 履歴の上から index 目の行
   def action_log_row_of(index)
     find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+  end
+
+  # 観戦者宛送信
+  def ms_audience_send_button(message)
+    find(".MessageSendModal input").set(message)             # メッセージ入力
+    find(".MessageSendModal .ms_audience_send_button").click # 送信
   end
 end

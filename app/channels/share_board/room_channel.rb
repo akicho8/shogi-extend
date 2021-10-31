@@ -86,7 +86,11 @@ module ShareBoard
     end
 
     def message_share(data)
-      track(data, "チャット", data["message"])
+      action = "チャット"
+      if data["message_scope"] == "ms_audience"
+        action = "観戦チャ"
+      end
+      track(data, action, data["message"])
       broadcast(:message_share_broadcasted, data)
     end
 
