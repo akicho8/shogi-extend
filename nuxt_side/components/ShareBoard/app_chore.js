@@ -44,7 +44,7 @@ export const app_chore = {
       })
     },
 
-    // 動画生成
+    // 動画作成
     video_new_handle() {
       this.exit_confirm_then(() => {
         this.$router.push({name: "video-new", query: {body: this.current_sfen, viewpoint_key: this.sp_viewpoint}})

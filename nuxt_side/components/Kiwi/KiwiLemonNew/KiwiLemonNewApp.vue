@@ -119,7 +119,7 @@ export default {
     Lemon() { return Lemon },
     meta() {
       return {
-        title: "動画生成",
+        title: "動画作成",
         description: "棋譜を動画にしたいときにどうぞ。mp4, gif, png, zip に変換できます",
         og_image_key: "video-new",
       }

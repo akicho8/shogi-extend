@@ -35,7 +35,7 @@ module Kiwi
   RSpec.describe Lemon, type: :model, kiwi: true do
     include KiwiSupport
 
-    it "動画生成" do
+    it "動画作成" do
       lemon1.main_process
       lemon1.reload
 
@@ -106,14 +106,14 @@ end
 # >>
 # >> Failures:
 # >>
-# >>   1) Kiwi::Lemon 動画生成
+# >>   1) Kiwi::Lemon 動画作成
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:49:in `block (2 levels) in <module:Kiwi>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 # >>
 # >> Top 10 slowest examples (20.23 seconds, 91.9% of total time):
-# >>   Kiwi::Lemon 動画生成
+# >>   Kiwi::Lemon 動画作成
 # >>     9.54 seconds -:38
 # >>   Kiwi::Lemon ワーカー関係なく全処理実行
 # >>     7.51 seconds -:57
@@ -139,5 +139,5 @@ end
 # >>
 # >> Failed examples:
 # >>
-# >> rspec -:38 # Kiwi::Lemon 動画生成
+# >> rspec -:38 # Kiwi::Lemon 動画作成
 # >>
