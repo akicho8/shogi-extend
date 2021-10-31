@@ -44,7 +44,7 @@
   ul
     li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式詰将棋500万問より
 
-  template(v-if="development_p")
+  template(v-if="development_p || true")
     .section_title 動画作成BGMプリセット使用曲
     ul
       template(v-for="(list, author) in audio_author_info")
