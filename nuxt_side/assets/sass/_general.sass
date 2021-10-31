@@ -123,11 +123,21 @@ a.no-decoration
   text-overflow: ellipsis
   max-width: 0
 
+//////////////////////////////////////////////////////////////////////////////// xemoji
+
 // 共通化
 .xemoji
   height: 1em
   width: 1em
   line-height: 1
+
+// b-button のなかにある xemoji がある場合
+.xemoji_in_b_button
+  span
+    height: 100%
+    .xemoji
+      height: 1.6em
+      width: unset
 
 // スマホで下の方を押すと何かが出てきて1回で押せないのが不便なのである程度無駄にスクロールできるようにする
 // .footer や .MainSection に指定する
