@@ -12,13 +12,14 @@ export const app_force_sync = {
       this.dialog_confirm({
         title: "初期配置に戻す",
         message: `
-          <p>次の処理を実行します</p>
+          <p>次の処理を連続で実行します</p>
           <div class="content">
             <ol>
-              <li>ｽﾗｲﾀﾞｰで0手目に移動</li>
+              <li>スライダーで0手目に移動</li>
               <li>局面の転送</li>
             </ol>
           </div>
+          <p class="is-size-7 has-text-grey">途中で局面編集した場合は基点(0手目)の局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更する意図であれば手合割から平手を選択してください</p>
         `,
         confirmText: "本当に実行",
         type: "is-danger",
@@ -39,10 +40,10 @@ export const app_force_sync = {
       this.dialog_confirm({
         title: "1手戻す",
         message: `
-          <p>次の処理を実行します</p>
+          <p>次の処理を連続で実行します</p>
           <div class="content">
             <ol>
-              <li>ｽﾗｲﾀﾞｰで1手だけ戻す</li>
+              <li>スライダーで1手前に移動</li>
               <li>局面の転送</li>
             </ol>
           </div>
