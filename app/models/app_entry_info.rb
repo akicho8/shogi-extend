@@ -65,9 +65,9 @@ class AppEntryInfo
       title: "動画ギャラリー",
       attention_label: "NEW!",
       og_image_key: "video",
-      description: "動画作成で作った動画を登録するとここで見れる",
+      description: "動画作成のあとで登録するとここで見れる",
       features: [
-        "これはオマケなので Youtube の方にのっけたほうがいいかもしれない",
+        "ここはしょぼいので上げるならYoutubeに上げた方がいいかもしれない",
       ],
     },
     {
