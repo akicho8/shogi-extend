@@ -120,8 +120,8 @@ export default {
     meta() {
       return {
         title: "動画作成",
-        description: "棋譜をアニメーション形式に変換する",
-        og_image_key: "kiwi",
+        description: "棋譜を動画にしたいときにどうぞ",
+        og_image_key: "video-new",
       }
     },
   },
