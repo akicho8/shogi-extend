@@ -252,7 +252,7 @@ GEM
     net-scp (3.0.0)
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
-    nio4r (2.5.7)
+    nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -290,7 +290,7 @@ GEM
     orm_adapter (0.5.0)
     power_assert (1.1.7)
     public_suffix (4.0.6)
-    puma (5.3.2)
+    puma (5.5.1)
       nio4r (~> 2.0)
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
@@ -522,7 +522,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   omniauth-twitter
-  puma (~> 5.0)
+  puma (~> 5.5)
   puma_worker_killer
   rack-cors
   rack-mini-profiler (~> 2.0)
