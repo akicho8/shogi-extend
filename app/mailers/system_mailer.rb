@@ -6,19 +6,26 @@ class SystemMailer < ApplicationMailer
     # rails r "p SystemMailer.notify_exception(Exception.new)"
     # rails r "p SystemMailer.notify_exception((1/0 rescue $!))"
     #
-    def notify_exception(error)
-      simple_track(subject: "#{error.message} (#{error.class.name})", body: [error.backtrace].compact.join("\n")).deliver_later
+    def notify_exception(error, params = {})
+      body = []
+      if params.present?
+        body << params.pretty_inspect
+      end
+      if error.backtrace
+        body << error.backtrace.take(4).join("\n")
+      end
+      body = body.join("\n") + "\n"
+      notify(subject: "#{error.message} (#{error.class.name})", body: body).deliver_later
     end
   end
 
-  # rails r 'p SystemMailer.fixed_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
-  def fixed_track(params = {})
-    mail(fixed_format(params.merge(subject: subject_decorate(params[:subject]))))
-  end
-
-  # rails r 'p SystemMailer.simple_track(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
-  def simple_track(params = {})
-    mail(params.merge(subject: subject_decorate(params[:subject])))
+  # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
+  def notify(params = {})
+    hv = params.merge(subject: subject_decorate(params[:subject]))
+    if params[:fixed]
+      hv = fixed_format(hv)
+    end
+    mail(hv)
   end
 
   private

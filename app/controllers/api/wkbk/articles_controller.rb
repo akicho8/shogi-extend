@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs         | index |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A!    |
+# | key                 | キー                | string(255) | NOT NULL            |              | A!    |
 # | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
 # | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
@@ -40,7 +40,7 @@ module Api
         retv = {}
         retv[:articles] = current_articles.sorted(sort_info).as_json(::Wkbk::Article.json_struct_for_index)
         retv[:total]    = current_articles.total_count
-        retv[:meta]     = ServiceInfo.fetch(:wkbk).og_meta
+        retv[:meta]     = AppEntryInfo.fetch(:wkbk).og_meta
         render json: retv
       end
 
@@ -72,7 +72,7 @@ module Api
         else
           # article = current_user.wkbk_articles.build
           article = current_user.wkbk_articles.build
-          article.default_assign(params.merge(source_article: source_article, books: default_books))
+          article.form_values_default_assign(params.merge(source_article: source_article, books: default_books))
           # retv[:article] = ::Wkbk::Article.default_attributes.merge(book_key: default_book_key)
           # retv[:meta] = ::Wkbk::Article.new_og_meta
         end
@@ -100,7 +100,7 @@ module Api
           article = current_user.wkbk_articles.build
         end
         begin
-          article.update_from_js(params.to_unsafe_h[:article])
+          article.update_from_action(params.to_unsafe_h[:article])
           retv[:article] = article.as_json(::Wkbk::Article.json_struct_for_edit)
         rescue ActiveRecord::RecordInvalid => error
           retv[:form_error_message] = error.message

@@ -1,4 +1,3 @@
-
 require "rails_helper"
 
 RSpec.describe "新プレイヤー情報", type: :system do

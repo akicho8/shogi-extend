@@ -125,7 +125,7 @@ module Api
           question = current_user.actb_questions.build
         end
         begin
-          question.update_from_js(params.to_unsafe_h[:question])
+          question.update_from_action(params.to_unsafe_h[:question])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
@@ -139,7 +139,7 @@ module Api
           emotion = current_user.emotions.build
         end
         begin
-          emotion.update_from_js(params.to_unsafe_h[:emotion])
+          emotion.update_from_action(params.to_unsafe_h[:emotion])
         rescue ActiveRecord::RecordInvalid => error
           return { form_error_message: error.message }
         end
@@ -181,7 +181,7 @@ module Api
       #   user = current_user
       #
       #   if v = params[:croped_image]
-      #     bin = data_uri_scheme_to_bin(v)
+      #     bin = ApplicationRecord.data_uri_scheme_to_bin(v)
       #     io = StringIO.new(bin)
       #     user.avatar.attach(io: io, filename: "user_icon.png")
       #   end
@@ -198,7 +198,7 @@ module Api
       #   if user.saved_change_to_attribute?(:name_input_at)
       #     if v = user.saved_change_to_attribute(:name)
       #       pair = v.join("→")
-      #       SystemMailer.fixed_track(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
+      #       SystemMailer.notify(fixed: true, subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
       #     end
       #   end
       #
@@ -227,17 +227,6 @@ module Api
           e.update!(opened_at: Time.current)
         end
         { status: "success" }
-      end
-
-      private
-
-      # from app/javascript/actb_app/the_profile_edit_form.vue profile_update_handle
-      def data_uri_scheme_to_bin(data_base64_body)
-        raise "must not happen"
-
-        md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<base64_bin>.*)/)
-        md or raise ArgumentError, "Data URL scheme 形式になっていません : #{data_base64_body.inspect.truncate(80)}"
-        Base64.decode64(md["base64_bin"])
       end
     end
   end

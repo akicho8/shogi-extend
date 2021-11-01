@@ -3,21 +3,21 @@
 #
 # Rule (actb_rules as Actb::Rule)
 #
-# |------------+--------------------+-------------+-------------+------+-------|
-# | name       | desc               | type        | opts        | refs | index |
-# |------------+--------------------+-------------+-------------+------+-------|
-# | id         | ID                 | integer(8)  | NOT NULL PK |      |       |
-# | key        | ユニークなハッシュ | string(255) | NOT NULL    |      |       |
-# | position   | 順序               | integer(4)  | NOT NULL    |      | A     |
-# | created_at | 作成日時           | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時           | datetime    | NOT NULL    |      |       |
-# |------------+--------------------+-------------+-------------+------+-------|
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe Rule, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "class_methods" do
       Actb::Rule.all.collect(&:key) # => ["test_rule", "good_rule", "good_marathon_rule", "beginner_rule", "normal_rule", "pro_rule", "latest_rule", "technical_rule", "singleton_rule", "marathon_rule", "hybrid_rule", "classic_only_rule", "ahiru_only_rule"]

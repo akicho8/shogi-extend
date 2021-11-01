@@ -24,7 +24,7 @@ module ShareBoard
       end
     end
 
-    # front_app/components/ShareBoard/app_room.js の ac_room_perform に合わせる
+    # nuxt_side/components/ShareBoard/app_room.js の ac_room_perform に合わせる
     def data_factory(params = {})
       {
         "from_connection_id" => SecureRandom.hex,
@@ -190,7 +190,7 @@ module ShareBoard
         subscribe(room_code: room_code)
       end
       it do
-        data = data_factory("message" => "(message)")
+        data = data_factory("message" => "(message)", "message_scope" => "ms_audience")
         expect {
           subscription.message_share(data)
         }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "message_share_broadcasted", bc_params: data)

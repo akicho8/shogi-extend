@@ -60,7 +60,7 @@ module ApplicationCable
       body << params.inspect
 
       if ENV["ACTION_CABLE_SLACK_NOTIFY"]
-        SlackAgent.message_send(key: "#{self.class.name}##{method_name}", body: body.join)
+        SlackAgent.notify(subject: "#{self.class.name}##{method_name}", body: body.join)
       end
     end
 

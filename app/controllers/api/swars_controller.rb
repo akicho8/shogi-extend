@@ -49,7 +49,7 @@ module Api
         end
         notice_collector = NoticeCollector.single(:success, "予約しました(#{no}件待ち)", method: "dialog")
         n = ::Swars::CrawlReservation.active_only.count
-        slack_message(key: "棋譜取得の予約(#{n})", body: record.to_t)
+        slack_notify(subject: "棋譜取得の予約(#{n})", body: record.to_t)
         render json: { notice_collector: notice_collector }
       end
 

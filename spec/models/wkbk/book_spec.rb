@@ -3,27 +3,27 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
-# | name              | desc               | type        | opts                | refs         | index |
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
-# | id                | ID                 | integer(8)  | NOT NULL PK         |              |       |
-# | key               | ユニークなハッシュ | string(255) | NOT NULL            |              | A!    |
-# | user_id           | User               | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id         | Folder             | integer(8)  | NOT NULL            |              | C     |
-# | sequence_id       | Sequence           | integer(8)  | NOT NULL            |              | D     |
-# | title             | タイトル           | string(100) | NOT NULL            |              |       |
-# | description       | 説明               | text(65535) | NOT NULL            |              |       |
-# | bookships_count   | Bookships count    | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | answer_logs_count | Answer logs count  | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | created_at        | 作成日時           | datetime    | NOT NULL            |              |       |
-# | updated_at        | 更新日時           | datetime    | NOT NULL            |              |       |
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
+# | name              | desc              | type        | opts                | refs         | index |
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK         |              |       |
+# | key               | キー              | string(255) | NOT NULL            |              | A!    |
+# | user_id           | User              | integer(8)  | NOT NULL            | => ::User#id | B     |
+# | folder_id         | Folder            | integer(8)  | NOT NULL            |              | C     |
+# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |              | D     |
+# | title             | タイトル          | string(100) | NOT NULL            |              |       |
+# | description       | 説明              | text(65535) | NOT NULL            |              |       |
+# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Wkbk
   RSpec.describe Book, type: :model do
@@ -95,11 +95,11 @@ module Wkbk
       end
     end
 
-    describe "simple_track" do
+    describe "notify" do
       it "works" do
         user = User.create!
         book = user.wkbk_books.create!
-        perform_enqueued_jobs { book.simple_track }
+        perform_enqueued_jobs { book.notify }
         mail = ActionMailer::Base.deliveries.last
         assert { mail.to   == ["shogi.extend@gmail.com"] }
         assert { mail.subject.match?(/問題集.*作成/) }

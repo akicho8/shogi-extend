@@ -1,0 +1,8 @@
+#!/bin/sh
+ssh s sudo systemctl status nginx
+ssh s sudo systemctl status puma
+ssh s sudo systemctl status sidekiq
+ssh s sudo systemctl status nuxt
+
+curl -sI https://shogi-flow.xyz/ | head -1
+curl -sI http://shogi-flow.xyz/ | head -1

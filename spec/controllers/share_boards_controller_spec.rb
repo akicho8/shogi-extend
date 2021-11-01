@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ShareBoardsController, type: :controller do
   it "HTMLの要求はNuxt側にリダイレクト" do
@@ -6,6 +6,7 @@ RSpec.describe ShareBoardsController, type: :controller do
     assert { response.status == 302 }
   end
 
+  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/controllers/share_boards_controller_spec.rb -e '基本「58玉」'
   describe "基本「58玉」" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
@@ -42,6 +43,7 @@ RSpec.describe ShareBoardsController, type: :controller do
   end
 
   it "IDではなく棋譜がキーになっている" do
+    FreeBattle.destroy_all
     2.times { get :show, params: { body: "position startpos moves 7g7f", format: "json" } }
     assert { FreeBattle.count == 1 }
   end
@@ -53,17 +55,19 @@ RSpec.describe ShareBoardsController, type: :controller do
 
   it "Twitterカード用の画像パス" do
     get :show, params: { body: "68銀", abstract_viewpoint: "white", format: "json" }
-    assert { controller.current_og_image_path == "/share-board.png?abstract_viewpoint=white&body=position+startpos+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
+    assert { controller.current_og_image_path == "/share-board.png?abstract_viewpoint=white&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1" }
   end
 
   it "abstract_viewpoint の値がおかしいときにエラーにしない" do
     get :show, params: { body: "68銀", abstract_viewpoint: "xxxx", format: "json" }
     assert { response.status == 200 }
   end
+
+  it "配色テーマのサムネイル画像" do
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cache=true
+    get :show, params: { color_theme_cache: "true", format: "png" }
+    assert { response.media_type == "image/png" }
+    assert { response["Content-Disposition"].match?(/is_color_theme_groovy_board_texture1/) }
+    assert { response.status == 200 }
+  end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ........
-# >> 
-# >> Finished in 1.44 seconds (files took 2.51 seconds to load)
-# >> 8 examples, 0 failures
-# >> 

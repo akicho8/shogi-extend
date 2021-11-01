@@ -7,7 +7,7 @@ hr
       = render partial: "form", locals: {form: form}
       .field
         .control
-          =<> form.submit(name: :_submit, class: "button is-primary")
+          =<> form.submit(name: :_submit, class: "button is-primary has-text-weight-bold")
 
   - if current_record.persisted?
     .column.is-half
@@ -22,14 +22,13 @@ hr
                 = " - "
                 = link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put)
               - else
-                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-primary", "is-outlined", "has-background-#{e.key}"]) do
+                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-outlined", "has-background-#{e.key}", "has-text-white", "has-text-weight-bold"]) do
                   span(class="icon is-medium")
                     i(class="fab fa-#{e.key}")
                   span
                     = "#{e.name} アカウントと連携する"
           small
-            | アカウント連携を行うと簡単にログインできるようになります
+            | 連携を行うと安全かつ簡単にログインできるようになります
 - if false
   hr
   = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
-

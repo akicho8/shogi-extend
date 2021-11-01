@@ -1,2 +1,0 @@
-#!/bin/sh
-cap production front_app:deploy nuxt:restart

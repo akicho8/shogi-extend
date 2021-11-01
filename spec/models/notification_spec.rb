@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
-  include ActbSupportMethods
+  include ActbSupport
 
   it "works" do
     assert { notification1 }

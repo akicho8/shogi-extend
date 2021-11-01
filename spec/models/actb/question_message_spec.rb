@@ -18,11 +18,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe QuestionMessage, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
     include ActiveJob::TestHelper
 
     it "コメントするとメール送信する" do

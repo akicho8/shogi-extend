@@ -1,5 +1,5 @@
 module Wkbk
-  # front_app/components/Wkbk/models/sequence_info.js
+  # nuxt_side/components/Wkbk/models/sequence_info.js
   class SequenceInfo
     include ApplicationMemoryRecord
     memory_record [

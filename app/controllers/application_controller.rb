@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include CurrentUserMethods
+  include AxiosMethods
 
   skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
 
@@ -66,15 +67,15 @@ class ApplicationController < ActionController::Base
     included do
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
-      helper_method :slack_message
+      helper_method :slack_notify
     end
 
     def submitted?(name)
       params.key?(name)
     end
 
-    def slack_message(params = {})
-      SlackAgent.message_send(params)
+    def slack_notify(params = {})
+      SlackAgent.notify(params)
     end
 
     private
@@ -103,7 +104,7 @@ class ApplicationController < ActionController::Base
         retv = name.present? && password == Rails.application.credentials[:admin_password]
         if Rails.env.production? || Rails.env.test?
           Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
-            slack_message(key: "管理画面ログイン", body: [retv, name, password].inspect)
+            slack_notify(subject: "管理画面ログイン", body: [retv, name, password].inspect)
             nil
           end
         end
@@ -116,6 +117,48 @@ class ApplicationController < ActionController::Base
 
     def admin_user
       session[:admin_user]
+    end
+  end
+
+  concerning :RangeSupportMethods do
+    # for Mobile Safari (iOS)
+    # https://github.com/adamcooke/send_file_with_range
+    #
+    # ・Mobile Safari では send_file "file.mp4" で失敗する
+    # ・Mobile Google Chrome では成功する
+    # ・それならURLでmp4に直リンクでいいのでは？と思うかもしれない
+    # ・しかし Mobile Safari では mp4 がダウンロードできない
+    # ・これが致命的なので disposition: :attachment するために range 対応の send_file がいる
+    # ・もう一つの利点としてはダウンロード時のファイル名を調整できること
+    # ・Google Chrome で inline 表示するときこれにすると動かないので send_file を使う
+    #
+    def send_file_with_range(path, options = {})
+      raise MissingFile, "Cannot read file #{path}" unless File.file?(path) && File.readable?(path)
+
+      if range_value = request.headers["range"]
+        file_size = File.size(path)
+        begin_point = 0
+        end_point = file_size - 1
+        status = :ok
+
+        status = :partial_content
+        # Google Chrome: "bytes=0-"
+        # Mobile Safari: "bytes=0-1"
+        if md = range_value.match(/bytes=(?<begin_point>\d+)-(?<end_point>\d+)?/)
+          begin_point = md["begin_point"].to_i
+          if md["end_point"]
+            end_point = md["end_point"].to_i
+          end
+        end
+
+        content_length = end_point - begin_point + 1
+        response.header["Content-Range"] = "bytes #{begin_point}-#{end_point}/#{file_size}"
+        response.header["Content-Length"] = content_length.to_s
+        response.header["Accept-Ranges"] = "bytes"
+        send_data IO.binread(path, content_length, begin_point), options.merge(status: status)
+      else
+        send_file path, options
+      end
     end
   end
 end

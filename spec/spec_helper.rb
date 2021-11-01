@@ -45,18 +45,28 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  # Allows RSpec to persist some state between runs in order to support
-  # the `--only-failures` and `--next-failure` CLI options. We recommend
-  # you configure your source control system to ignore this file.
-  config.example_status_persistence_file_path = "spec/examples.txt"
+  # エラーのテストだけ実行
+  #
+  #   rspec --only-failures
+  #   rspec --next-failure
+  #
+  # 絶対パスにしないと Rails.root 以外で実行したときファイルが参照できない
+  #
+  config.example_status_persistence_file_path = "#{__dir__}/test.txt"
 
-  # rspec --tag slow_spec
+  # 遅いテストをデフォルトで含めておいて遅いテストだけ実行できるようにする
+  #
+  #   rspec --tag slow_spec
+  #
   config.filter_run_excluding :slow_spec => true
 
   # rspec --tag login_spec
   config.filter_run_excluding :login_spec => true
 
-  # SHARE_BOARD_SPEC_SKIP=1 rspec
+  # 時間のかかりすぎる共有将棋盤のテストを省略する
+  #
+  #   SHARE_BOARD_SPEC_SKIP=1 rspec
+  #
   if ENV["SHARE_BOARD_SPEC_SKIP"]
     config.filter_run_excluding :share_board_spec => true
   end

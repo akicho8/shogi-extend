@@ -10,7 +10,7 @@ AppConfig.deep_merge!({
     :per_page_list                       =>  [25],  # 1ページあたりの項目数選択肢リストの最初と最後を除いたもの
 
     ################################################################################ email
-    :admin_email_name                    =>  "SHOGI-EXTEND 運営",
+    :admin_email_name                    =>  "SHOGI-EXTEND BOT",
     :admin_email                         =>  "shogi.extend@gmail.com",
     :bot_email                           =>  "shogi.extend+bot@gmail.com",
 

@@ -741,6 +741,7 @@ module Swars
         hash[:battled_on]   = battled_at.to_date
         hash[:day_type]    = day_type_for(battled_at)
         hash[:judge_counts] = judge_counts_of(memberships)
+        hash[:all_tags] = nil   # ← 設定すればビュー側で出る
 
         s = Membership.where(id: memberships.collect(&:id)) # 再スコープ化
 
@@ -754,7 +755,7 @@ module Swars
         end
 
         # 戦法と囲いそれぞれ一番使われているもの1個ずつ計2個
-        if true
+        if false
           hash[:all_tags] = [:attack_tags, :defense_tags].flat_map { |tags_method|
             s.tag_counts_on(tags_method, at_least: at_least_value, order: "count desc", limit: 1)
           }.collect{ |e| e.attributes.slice("name", "count") }

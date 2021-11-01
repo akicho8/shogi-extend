@@ -24,7 +24,7 @@ module BackendScript
         "問題"     => article_link_to(record),
         "公開設定" => record.folder.name,
         "問題集"   => record.books.collect { |e| book_link_to(e) }.join("<br>").html_safe,
-        "作成者"   => h.link_to(record.user.name, UrlProxy.wrap2("/users/#{record.user.id}")),
+        "作成者"   => h.link_to(record.user.name, UrlProxy.full_url_for("/users/#{record.user.id}")),
         "解数"     => record.moves_answers.count,
         "難易度"   => record.difficulty,
         "種類"     => record.lineage.name,

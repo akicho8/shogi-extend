@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_04_111800) do
+ActiveRecord::Schema.define(version: 2021_10_27_075600) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -936,6 +936,84 @@ ActiveRecord::Schema.define(version: 2021_08_04_111800) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", comment: "参照者"
+    t.bigint "banana_id", null: false, comment: "動画"
+    t.datetime "created_at", null: false, comment: "記録日時"
+    t.index ["banana_id"], name: "index_kiwi_access_logs_on_banana_id"
+    t.index ["user_id"], name: "index_kiwi_access_logs_on_user_id"
+  end
+
+  create_table "kiwi_banana_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "発言者"
+    t.bigint "banana_id", null: false, comment: "動画"
+    t.string "body", limit: 512, null: false, comment: "発言"
+    t.integer "position", null: false, comment: "番号"
+    t.datetime "deleted_at", comment: "削除日時"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["banana_id", "position"], name: "index_kiwi_banana_messages_on_banana_id_and_position", unique: true
+    t.index ["banana_id"], name: "index_kiwi_banana_messages_on_banana_id"
+    t.index ["position"], name: "index_kiwi_banana_messages_on_position"
+    t.index ["user_id"], name: "index_kiwi_banana_messages_on_user_id"
+  end
+
+  create_table "kiwi_bananas", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.bigint "user_id", null: false, comment: "作成者"
+    t.bigint "folder_id", null: false, comment: "フォルダ"
+    t.bigint "lemon_id", null: false, comment: "動画"
+    t.string "title", limit: 100, null: false, comment: "タイトル"
+    t.text "description", null: false, comment: "説明"
+    t.float "thumbnail_pos", null: false, comment: "サムネ位置"
+    t.integer "banana_messages_count", default: 0, null: false, comment: "コメント数"
+    t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["access_logs_count"], name: "index_kiwi_bananas_on_access_logs_count"
+    t.index ["banana_messages_count"], name: "index_kiwi_bananas_on_banana_messages_count"
+    t.index ["folder_id"], name: "index_kiwi_bananas_on_folder_id"
+    t.index ["key"], name: "index_kiwi_bananas_on_key", unique: true
+    t.index ["lemon_id"], name: "index_kiwi_bananas_on_lemon_id", unique: true
+    t.index ["user_id"], name: "index_kiwi_bananas_on_user_id"
+  end
+
+  create_table "kiwi_folders", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", null: false
+    t.integer "bananas_count", default: 0, null: false, comment: "問題集数"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key"], name: "index_kiwi_folders_on_key", unique: true
+    t.index ["position"], name: "index_kiwi_folders_on_position"
+  end
+
+  create_table "kiwi_lemons", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", null: false, comment: "所有者"
+    t.string "recordable_type", null: false
+    t.bigint "recordable_id", null: false, comment: "対象レコード"
+    t.text "all_params", null: false, comment: "変換パラメータ全部入り"
+    t.datetime "process_begin_at", comment: "処理開始日時"
+    t.datetime "process_end_at", comment: "処理終了日時"
+    t.datetime "successed_at", comment: "成功日時"
+    t.datetime "errored_at", comment: "エラー日時"
+    t.text "error_message", comment: "エラーメッセージ"
+    t.string "content_type", comment: "コンテンツタイプ"
+    t.integer "file_size", comment: "ファイルサイズ"
+    t.text "ffprobe_info", comment: "変換パラメータ"
+    t.string "browser_path", comment: "生成したファイルへのパス"
+    t.string "filename_human", comment: "ダウンロードファイル名"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_kiwi_lemons_on_created_at"
+    t.index ["errored_at"], name: "index_kiwi_lemons_on_errored_at"
+    t.index ["process_begin_at"], name: "index_kiwi_lemons_on_process_begin_at"
+    t.index ["process_end_at"], name: "index_kiwi_lemons_on_process_end_at"
+    t.index ["recordable_type", "recordable_id"], name: "index_kiwi_lemons_on_recordable_type_and_recordable_id"
+    t.index ["successed_at"], name: "index_kiwi_lemons_on_successed_at"
+    t.index ["user_id"], name: "index_kiwi_lemons_on_user_id"
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "description", limit: 512, null: false, comment: "自己紹介"
@@ -1316,6 +1394,14 @@ ActiveRecord::Schema.define(version: 2021_08_04_111800) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["key"], name: "index_wkbk_sequences_on_key", unique: true
     t.index ["position"], name: "index_wkbk_sequences_on_position"
+  end
+
+  create_table "xsettings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "var_key", null: false
+    t.text "var_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["var_key"], name: "index_xsettings_on_var_key", unique: true
   end
 
   create_table "xy_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

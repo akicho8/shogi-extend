@@ -1,40 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
+  include AliceBobCarol
+
   before do
-    @alice_window = Capybara.open_new_window
-    @bob_window = Capybara.open_new_window
-    @carol_window = Capybara.open_new_window
-
     XmatchRuleInfo.clear_all    # 重要
-  end
-
-  after do
-    [@alice_window, @bob_window, @carol_window].each(&:close)
-  end
-
-  def a_block(&block)
-    if block
-      Capybara.within_window(@alice_window, &block)
-    else
-      Capybara.switch_to_window(@alice_window)
-    end
-  end
-
-  def b_block(&block)
-    if block
-      Capybara.within_window(@bob_window, &block)
-    else
-      Capybara.switch_to_window(@bob_window)
-    end
-  end
-
-  def c_block(&block)
-    if block
-      Capybara.within_window(@carol_window, &block)
-    else
-      Capybara.switch_to_window(@carol_window)
-    end
   end
 
   it "最初に来たときのタイトルが正しい" do
@@ -53,7 +23,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす'
   it "合言葉を含むURLから来てハンドルネーム入力して接続して駒を動かす" do
     a_block do
       visit "/share-board?room_code=my_room"     # 合言葉を含むURLから来る
@@ -62,7 +31,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_text("部屋に入る")                # 「部屋に入る」のモーダルのタイトルも正しい
         find(".new_user_name input").set("alice") # ハンドルネームを入力する
         find(".entry_button").click               # 共有ボタンをクリックする
-        find(".close_button").click               # 閉じる
+        find(".close_handle").click               # 閉じる
       end
       assert_text("alice")                       # 入力したハンドルネームの人がメンバーリストに表示されている
       assert_move("77", "76", "☗7六歩")
@@ -70,7 +39,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '一度入力したハンドルネームは記憶'
   # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
   it "一度入力したハンドルネームは記憶" do
     a_block do
@@ -84,7 +52,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         value = first(".new_user_name input").value
         assert { value == "alice" }                               # 以前入力したニックネームが復元されている
         first(".entry_button").click                              # 共有ボタンをクリックする
-        first(".close_button").click                              # 共有ボタンをクリックする
+        first(".close_handle").click                              # 共有ボタンをクリックする
       end
 
       assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
@@ -108,7 +76,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   # ordered_members が nil のまま共有されるレアケースのテストなので消してはいけない
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定OFF状態で共有'
   it "順番設定OFF状態で共有" do
     a_block do
       room_setup("my_room", "alice")
@@ -133,7 +100,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'タイトル共有'
   describe "タイトル共有" do
     it "works" do
       a_block do
@@ -153,7 +119,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計'
   describe "対局時計" do
     before do
       @INITIAL_SEC = 5
@@ -175,7 +140,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
-        first(".close_button_for_capybara").click  # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click  # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_white_read_sec(@INITIAL_SEC)    # bob側は秒読みが満タン
@@ -218,7 +183,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定で手番お知らせ'
   describe "順番設定で手番お知らせ" do
     it "works" do
       a_block do
@@ -227,46 +191,45 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
         side_menu_open
-        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く (まだ無効の状態)
+        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
         side_menu_open
-        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く
+        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
-        assert_member_list(1, "is_turn_active", "alice")         # 1人目(alice)に丸がついている
-        assert_member_list(2, "is_turn_standby", "bob")           # 2人目(bob)は待機中
-        assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
+        assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
+        assert_no_move("77", "76", "☗7六歩")               # なので2番目のbobは指せない
       end
       a_block do
-        assert_member_list(1, "is_turn_active", "alice")         # 1人目(alice)に丸がついている
+        assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
-        assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
+        assert_move("77", "76", "☗7六歩")                  # aliceが1番目なので指せる
       end
       b_block do
-        assert_text("(通知効果音)")                    # bobさんだけに牛が知らせている
+        assert_text("(通知効果音)")                        # bobさんだけに牛が知らせている
       end
       a_block do
         assert_text("次はbobさんの手番です")
-        assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
+        assert_no_move("33", "34", "☖3四歩")               # aliceもう指したので指せない
         assert_member_list(1, "is_turn_standby", "alice")  # 1人目(alice)に丸がついていない
-        assert_member_list(2, "is_turn_active", "bob")  # 2人目(bob)は指せるので丸がついている
+        assert_member_list(2, "is_turn_active", "bob")     # 2人目(bob)は指せるので丸がついている
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
-        assert_no_text("(通知効果音)")                 # aliceさんの手番なので出ない
+        assert_move("33", "34", "☖3四歩")                  # 2番目のbobは指せる
+        assert_no_text("(通知効果音)")                     # aliceさんの手番なので出ない
         assert_text("次はaliceさんの手番です")
       end
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '2人対戦で1人観戦'
   describe "2人対戦で1人観戦" do
     it "works" do
       a_block do
@@ -284,7 +247,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
         first(".apply_button").click                       # 適用クリック
-        first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       c_block do
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
@@ -307,7 +270,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定のあと一時的に機能OFFにしたので通知されない'
   describe "順番設定のあと一時的に機能OFFにしたので通知されない" do
     it "works" do
       a_block do
@@ -335,7 +297,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'メッセージ'
   describe "メッセージ" do
     it "works" do
       a_block do
@@ -347,7 +308,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         find(".message_modal_handle").click              # aliceがメッセージモーダルを開く
         find(".MessageSendModal input").set("(message)") # メッセージ入力
-        doc_image
         find(".MessageSendModal .send_button").click     # 送信
         assert_text("(message)")                         # 自分自身にメッセージが届く
       end
@@ -355,9 +315,33 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_text("(message)")                         # bobにもメッセージが届く
       end
     end
+
+    it "観戦者宛送信" do
+      a_block { visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle") }
+      b_block { visit_app(room_code: :my_room, force_user_name: "bob",   ordered_member_names: "alice", autoexec: "message_modal_handle") }
+      c_block { visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice", autoexec: "message_modal_handle") }
+
+      message1 = SecureRandom.hex
+      b_block { ms_audience_send_button(message1) }   # 観戦者の bob が観戦者送信した
+      b_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
+      a_block { assert_no_text(message1)          }   # alice には対局者なので届いていない
+      c_block { assert_text(message1)             }   # carol には観戦者なので届いている
+
+      message1 = SecureRandom.hex
+      a_block { ms_audience_send_button(message1) }   # 対局者の alice が送信した
+      a_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
+      b_block { assert_text(message1)             }   # bob   には観戦者なので届いている
+      c_block { assert_text(message1)             }   # carol には観戦者なので届いている
+    end
+
+    it "順番設定していても観戦者がいないときは観戦者宛を隠しておく" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle")
+        assert_no_selector(".MessageSendModal .ms_audience_send_button")
+      end
+    end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '片方が駒移動中に同期'
   describe "片方が駒移動中に同期" do
     it "works" do
       a_block do
@@ -382,7 +366,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面を戻していても同期されると最後の局面になる'
   describe "局面を戻していても同期されると最後の局面になる" do
     it "works" do
       a_block do
@@ -407,7 +390,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面再送'
   describe "局面再送" do
     def test1
       a_block do
@@ -434,15 +416,15 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       @RETRY_DELAY = 0  # しかも0秒後に応答確認
       test1
       a_block do
-        assert_text("同期失敗 (1回目)")
-        assert_text("次の手番のbobさんの反応がないため再送しますか？")
+        assert_text("同期失敗 1回目")
+        assert_text("次の手番のbobさんの反応がないので再送しますか？")
 
         click_text_match("再送する")
-        assert_text("同期失敗 (2回目)")
+        assert_text("同期失敗 2回目")
         assert_text("再送1")
 
         click_text_match("再送する")
-        assert_text("同期失敗 (3回目)")
+        assert_text("同期失敗 3回目")
         assert_text("再送2")
 
         doc_image
@@ -461,7 +443,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面の転送'
   describe "局面の転送" do
     it "works" do
       a_block do
@@ -498,7 +479,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '局面転送時に時計の手番調整'
   describe "局面転送時に時計の手番調整" do
     before do
       @INITIAL_SEC = 30
@@ -516,7 +496,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
         clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
-        first(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
+        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
       end
       a_block do
         assert_move("77", "76", "☗7六歩")        # 初手を指す
@@ -548,7 +528,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '再起動'
   describe "再起動" do
     it "先輩であっても再起動したら後輩になる" do
       a_block do
@@ -573,7 +552,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'メンバー情報'
   describe "メンバー情報" do
     it "works" do
       a_block do
@@ -585,7 +563,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'PING'
   describe "PING" do
     it "成功" do
       a_block do
@@ -622,7 +599,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'バージョンチェック'
   describe "バージョンチェック" do
     it "最新" do
       @API_VERSION = ShareBoardControllerMethods::API_VERSION
@@ -642,7 +618,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '初期配置に戻す'
   describe "初期配置に戻す" do
     it "works" do
       a_block do
@@ -670,7 +645,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '1手戻す'
   describe "1手戻す" do
     it "works" do
       a_block do
@@ -697,7 +671,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '不正なSFEN'
   describe "不正なSFEN" do
     it "意図したエラー画面が出ている" do
       visit("/share-board?body=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20%201%20moves%202g2f%203c3d%207g7f%204c4d%206g6f%203a4b%202f2e%204b3c%204i5h%204a3b%206i7h%208c8d%207i6h%207a6b%203i4h%206a5b%205i6i%205c5d%206h6g%202b3a%205g5f%208d8e%204h5g%205a6a%205f5e%205d5e%206f6e%208e8f%208g8f%203a8f%208h6f%208f3a%20P%2a8g%206b5c%208i7g%206a5a%203g3f%205c5d%205g4f%205a4a%203f3e%203d3e%204f3e%205b4c%202e2d%203c2d%203e2d%202c2d%202h2d%20P%2a2c%202d2f%201c1d%201g1f%20P%2a8f%208g8f%208b8f%20P%2a8g%208f8b%202i3g%20S%2a3e%202f2e%204c3d%202e2i%20P%2a3f%203g2e%202c2d%20P%2a3c%202a3c%202e3c%2B%203d3c")
@@ -705,7 +678,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '退室するとメンバー一覧から即削除'
   describe "退室するとメンバー一覧から即削除" do
     it "works" do
       a_block do
@@ -728,7 +700,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '対局時計初期値永続化'
   describe "対局時計初期値永続化" do
     it "works" do
       @CLOCK_VALUES = [1, 2, 3, 4]
@@ -745,13 +716,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '使い方'
   describe "使い方" do
     it "モーダルで開く" do
       visit "/share-board"
       side_menu_open
       menu_item_click("使い方")
-      find(".close_button").click
+      find(".close_handle").click
     end
 
     it "モーダルからパーマリンクで飛ぶ" do
@@ -769,7 +739,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '手合割'
   describe "手合割" do
     it "works" do
       a_block do
@@ -787,7 +756,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時計の初回PLAYで手番の人を示す'
   describe "時計の初回PLAYで手番の人を示す" do
     it "works" do
       a_block do
@@ -810,7 +778,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '「順番設定有効→退室→指す」では退室しているので再送は発動しない'
   describe "「順番設定有効→退室→指す」では退室しているので再送は発動しない" do
     it "works" do
       @RETRY_DELAY = 3
@@ -824,7 +791,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時計開始時に視点の自動設定'
   describe "時計開始時に視点の自動設定" do
     def test1(preset_key)
       a_block do
@@ -859,8 +825,21 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '順番設定シャッフル'
-  describe "順番設定シャッフル" do
+  describe "順番設定で更新を押さないで閉じたら確認する" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice")
+        side_menu_open
+        menu_item_click("順番設定")               # 「順番設定」モーダルを開く
+        find(".main_switch").click                # 右上の有効スイッチをクリック
+        find(".shuffle_handle").click             # シャッフルする
+        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
+        click_text_match("更新せずに閉じる")      # 無視して閉じる
+      end
+    end
+  end
+
+  describe "順番設定のシャッフル" do
     it "works" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
@@ -882,7 +861,54 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '持ち上げ駒キャンセル方法'
+  describe "順番設定の振り駒" do
+    def test1(shakashaka_count, piece_names, message)
+      a_block do
+        visit_app({
+            :room_code                 => :my_room,
+            :force_user_name           => "1",
+            :ordered_member_names      => "1,2,3,4",
+            :handle_name_validate_skip => "true",
+            :furigoma_random_key       => "is_true",        # 毎回反転が起きる
+            :shakashaka_count          => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
+          })
+
+        side_menu_open
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+
+        assert_order_setting_members ["1", "2", "3", "4"]
+
+        find(".furigoma_handle").click
+        assert_text(piece_names)
+        assert_text(message)
+      end
+    end
+
+    it "歩5枚" do
+      test1("2", "歩歩歩歩歩", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
+    end
+    it "と金5枚" do
+      test1("3", "ととととと", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
+    end
+  end
+
+  describe "順番設定の先後入替" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
+
+        side_menu_open
+        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+
+        assert_order_setting_members ["1", "2", "3", "4"]
+
+        find(".swap_handle").click                        # 先後入替
+        assert_text("1さんが先後を入れ替えました")
+        assert_order_setting_members ["2", "1", "4", "3"] # 2つづつswapしていく
+      end
+    end
+  end
+
   describe "持ち上げ駒キャンセル方法" do
     def test1(selector)
       visit_app(room_code: :my_room, force_user_name: "alice")
@@ -890,7 +916,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       side_menu_open
       menu_item_click("設定")               # モーダルを開く
       find(selector).click
-      find(".close_button").click           # 閉じる
+      find(".close_handle").click           # 閉じる
 
       place_click("77")                     # 77を持って
       place_click("87")                     # 87をタップ
@@ -907,14 +933,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自動マッチング'
   describe "自動マッチング" do
     before do
       Actb.setup
       Emox.setup
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '飛vs角を1vs1'
     it "飛vs角を1vs1" do
       a_block do
         visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")
@@ -951,7 +975,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '自分vs自分 平手'
     it "自分vs自分 平手" do
       a_block do
         visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")
@@ -965,7 +988,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '時間切れ'
     it "時間切れ" do
       @xmatch_wait_max = 2
       a_block do
@@ -980,7 +1002,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ログイン必須モード'
     it "ログイン必須モード" do
       a_block do
         logout                                        # ログアウト状態にする
@@ -990,7 +1011,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ハンドルネーム必須モード'
     it "ハンドルネーム必須モード" do
       a_block do
         logout                                                 # ログアウト状態にする
@@ -1005,7 +1025,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'シングルトン時間切れ'
   describe "シングルトン時間切れ" do
     before do
       @initial_read_sec = 5         # 5秒切れ負け
@@ -1040,7 +1059,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       b_block { assert_time_limit_modal_exist }
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約するがBCの方が速いのでキャンセルされる)'
     it "他者側(予約するがBCの方が速いのでキャンセルされる)" do
       @CC_TIME_LIMIT_BC_DELAY   = 2
       @CC_AUTO_TIME_LIMIT_DELAY = 4
@@ -1058,7 +1076,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block { assert_time_limit_modal_exist }
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '他者側(予約待ち0なので他者側で即発動)'
     it "他者側(予約待ち0なので他者側で即発動)" do
       @CC_TIME_LIMIT_BC_DELAY   = 5
       @CC_AUTO_TIME_LIMIT_DELAY = 0
@@ -1076,7 +1093,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'ハンドルネームバリデーション'
   describe "ハンドルネームバリデーション" do
     def test1(name, message)
       find(".HandleNameModal input").set(name)         # 不正な名前を入力する
@@ -1096,7 +1112,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'URLから来ても不正なハンドルネームは通さない'
   describe "URLから来ても不正なハンドルネームは通さない" do
     it "works" do
       a_block do
@@ -1106,7 +1121,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e 'KI2棋譜コピー'
   describe "KI2棋譜コピー" do
     it "works" do
       visit_app
@@ -1117,7 +1131,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '指し手の消費秒数を表示'
   describe "指し手の消費秒数を表示" do
     it "works" do
       a_block do
@@ -1131,7 +1144,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '編集モードで配置を変更しても駒箱が消えない'
   describe "編集モードで配置を変更しても駒箱が消えない" do
     it "works" do
       visit_app
@@ -1144,9 +1156,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴'
   describe "操作履歴" do
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴から過去の局面に戻る'
     it "操作履歴から過去の局面に戻る" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
@@ -1172,7 +1182,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/share_board_spec.rb -e '操作履歴モーダル内の補助機能'
     it "操作履歴モーダル内の補助機能" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
@@ -1195,9 +1204,33 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  def visit_app(args = {})
-    args = args.merge("__debug_box_disabled__" => "on")
-    visit "/share-board?#{args.to_query}"
+  describe "ツイート" do
+    it "ツイートモーダル" do
+      a_block do
+        visit_app
+        find(".tweet_modal_handle").click   # モーダル起動
+        assert_text("この局面をツイート")
+        find(".TweetModal .dropdown").click # テーマ選択
+        assert_text("木目A")
+      end
+    end
+
+    it "ツイート画像の視点設定" do
+      a_block do
+        visit_app
+        side_menu_open
+        menu_item_click("ツイート画像の視点設定")                 # 開く
+        assert_selector(".AbstractViewpointKeySelectModal")       # モーダルが開いている
+        find(".AbstractViewpointKeySelectModal .white").click     # 「常に☖」を選択
+        find(".submit_handle").click                              # 「保存」
+        assert_no_selector(".AbstractViewpointKeySelectModal")    # モーダルが閉じている
+        assert { current_query["abstract_viewpoint"] == "white" } # URLが変更になっている
+      end
+    end
+  end
+
+  def visit_app(*args)
+    visit2("/share-board", *args)
   end
 
   def room_setup(room_code, user_name)
@@ -1208,7 +1241,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       find(".new_room_code input").set(room_code) # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
       find(".entry_button").click                 # 共有ボタンをクリックする
-      find(".close_button").click                 # 閉じる
+      find(".close_handle").click                 # 閉じる
     end
     assert_text(user_name)                       # 入力したハンドルネームの人が参加している
   end
@@ -1347,7 +1380,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     side_menu_open
     menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
-    first(".close_button").click   # 閉じる
+    first(".close_handle").click   # 閉じる
   end
 
   # 手合割選択
@@ -1367,14 +1400,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
-    first(".close_button_for_capybara").click          # 閉じる (ヘッダーに置いている)
+    first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 
   # 対局時計を設置してPLAY押して閉じる
   def clock_start
     clock_open                               # 対局時計を開いて
     find(".play_button").click               # 開始
-    find(".close_button_for_capybara").click # 閉じる (ヘッダーに置いている)
+    find(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
   end
 
   def assert_viewpoint(location_key)
@@ -1410,5 +1443,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # 履歴の上から index 目の行
   def action_log_row_of(index)
     find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+  end
+
+  # 観戦者宛送信
+  def ms_audience_send_button(message)
+    find(".MessageSendModal input").set(message)             # メッセージ入力
+    find(".MessageSendModal .ms_audience_send_button").click # 送信
   end
 end

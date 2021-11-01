@@ -26,7 +26,8 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    %(SlackAgent.message_send(key: "CRON", body: "begin")),
+    %(SlackAgent.notify(subject: "CRON", body: "begin")),
+    %(MediaBuilder.old_media_file_clean(keep: 3, execute: true)),
 
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",
@@ -38,12 +39,12 @@ every("5 3 * * *") do
     "Swars::Battle.cleanup",
     "FreeBattle.cleanup",
 
-    # %(SlackAgent.message_send(key: "CRON", body: "obt_auto_max update")),
-    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.message_send(key: "obt_auto_max", body: i) }',
+    # %(SlackAgent.notify(subject: "CRON", body: "obt_auto_max update")),
+    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.notify(subject: "obt_auto_max", body: i) }',
 
-    # %(SlackAgent.message_send(key: "CRON", body: "耀龍四間飛車 update begin")),
+    # %(SlackAgent.notify(subject: "CRON", body: "耀龍四間飛車 update begin")),
     # %(ActsAsTaggableOn::Tag.find_by(name: "耀龍四間飛車").taggings.where(taggable_type: "Swars::Membership").order(id: :desc).in_batches.each_record{|e|e.taggable.battle.remake rescue nil}),
-    # %(SlackAgent.message_send(key: "CRON", body: "耀龍四間飛車 update end")),
+    # %(SlackAgent.notify(subject: "CRON", body: "耀龍四間飛車 update end")),
 
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
@@ -58,7 +59,7 @@ every("5 3 * * *") do
     "Emox::SchoolChannel.active_users_clear",
     "Emox::RoomChannel.active_users_clear",
 
-    %(SlackAgent.message_send(key: "CRON", body: "end")),
+    %(SlackAgent.notify(subject: "CRON", body: "end")),
   ].join(";")
 end
 
@@ -66,7 +67,9 @@ if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
 end
 
-every("15 5 * * *") { command "sudo systemctl restart sidekiq" }
+every("0 * * * *") { runner "Kiwi::Lemon.background_job_kick_if_period(notify: true)" }
+
+every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
   # every("5 11 * * *") { command "ruby -e 'p 1 / 1'" }
@@ -85,9 +88,9 @@ end
 # if @environment == "production"
 #   every("15 1 31 12 *") do
 #     runner [
-#       "SlackAgent.message_send(key: 'Question', body: 'start')",
+#       "SlackAgent.notify(subject: 'Question', body: 'start')",
 #       "TsMaster::Question.setup(reset: true)",
-#       "SlackAgent.message_send(key: 'Question', body: 'end')",
+#       "SlackAgent.notify(subject: 'Question', body: 'end')",
 #     ].join(";")
 #   end
 # end
@@ -105,8 +108,7 @@ end
 if @environment == "production"
   every("30 2 * * *") do
     command [
-      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d www.shogi-extend.com),
-      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d     shogi-extend.com)
+      %(sudo certbot certonly --webroot -w /var/www/letsencrypt --agree-tos -n --deploy-hook "service nginx restart" -d shogi-extend.com -d www.shogi-extend.com),
     ].join(";")
   end
 end

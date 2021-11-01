@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ApplicationRecord, type: :model do
   it "hankaku_format" do

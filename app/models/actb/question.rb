@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs | index |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |      | A     |
+# | key                 | キー                | string(255) | NOT NULL            |      | A     |
 # | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
 # | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
@@ -275,8 +275,8 @@ module Actb
     end
 
     def page_url(options = {})
-      # UrlProxy.wrap2("/actb/questions/#{id}")
-      UrlProxy.wrap2("/training?question_id=#{id}")
+      # UrlProxy.full_url_for("/actb/questions/#{id}")
+      UrlProxy.full_url_for("/training?question_id=#{id}")
       # Rails.application.routes.url_helpers.url_for([:actb, {only_path: false, question_id: id}.merge(options)])
     end
 
@@ -327,10 +327,10 @@ module Actb
     #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
     #   }
     #   question = user.actb_questions.build
-    #   question.update_from_js(params)
+    #   question.update_from_action(params)
     #   question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       question = params.deep_symbolize_keys
       @save_before_hash = current_hash
 
@@ -384,8 +384,8 @@ module Actb
       # 「公開」フォルダに移動させたときに通知する
       # created_at をトリガーにすると下書きを作成したときにも通知してしまう
       if state = saved_after_state
-        SlackAgent.message_send(key: "問題#{state}", body: [title, page_url].join(" "))
-        SystemMailer.fixed_track(subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
+        SlackAgent.notify(subject: "問題#{state}", body: [title, page_url].join(" "))
+        SystemMailer.notify(fixed: true, subject: "#{user.name}さんが「#{title}」を#{state}しました", body: info.to_t).deliver_later
         User.bot.lobby_speak("#{user.name}さんが#{linked_title}を#{state}しました")
       end
     end

@@ -18,11 +18,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe RoomMessage, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     # /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-rails-4.0.0/lib/rspec/rails/matchers/action_cable.rb
     it do

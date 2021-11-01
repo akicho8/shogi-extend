@@ -17,11 +17,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe ClipMark, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "保存" do
       assert { user1.actb_clip_marks.create!(question: question1) }

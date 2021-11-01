@@ -12,7 +12,7 @@
 # | updated_at | 更新日時   | datetime   | NOT NULL    |      |       |
 # |------------+------------+------------+-------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 module Tsl
   RSpec.describe League, type: :model do

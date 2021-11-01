@@ -1,2 +1,0 @@
-#!/bin/sh
-cap staging front_app:deploy nuxt:restart

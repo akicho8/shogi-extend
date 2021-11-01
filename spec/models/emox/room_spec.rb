@@ -21,7 +21,7 @@
 # [Warning: Need to add relation] Emox::Room モデルに belongs_to :bot_user を追加してください
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Emox
   RSpec.describe Room, type: :model do

@@ -1,0 +1,3 @@
+#!rails runner
+tp Time.current.to_s
+tp Rails.env

@@ -1,0 +1,1 @@
+Bioshogi.logger = Rails.logger

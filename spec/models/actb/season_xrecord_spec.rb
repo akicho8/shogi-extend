@@ -37,11 +37,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe SeasonXrecord, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "切断記録" do
       record = user1.actb_latest_xrecord

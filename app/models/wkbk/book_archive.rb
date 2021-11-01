@@ -42,7 +42,7 @@ module Wkbk
       end
 
       sec = "%.2f s" % (Time.current - t)
-      SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
+      SlackAgent.notify(subject: "ZIP #{sec}", body: zip_filename)
 
       io
     end

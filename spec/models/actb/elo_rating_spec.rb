@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 # spec/models/actb/elo_rating_spec.rb
 # experiment/elo_rating.rb

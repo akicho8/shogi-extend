@@ -1,0 +1,76 @@
+// 負のmarginの影響で mobile のとき画面をはみでる対策
+// https://github.com/jgthms/bulma/issues/1540
+// https://github.com/jgthms/bulma/issues/3122
++mobile
+  .columns
+    margin-left: unset
+    margin-right: unset
+  .column
+    padding-left: unset
+    padding-right: unset
+
+// b-navbar(wrapper-class="container") すると +mobile のとき b-navbar-item がめり込む対策
+// +touch
+//   .navbar > .container .navbar-menu, .container > .navbar .navbar-menu
+//     // margin-right: -0.75rem
+//     margin-right: 0
+//   .navbar > .container .navbar-brand, .container > .navbar .navbar-brand
+//     // margin-left: -0.75rem
+//     margin-left: 0
+
+.navbar > .container .navbar-menu, .container > .navbar .navbar-menu
+  // margin-right: -0.75rem
+  margin-right: 0
+.navbar > .container .navbar-brand, .container > .navbar .navbar-brand
+  // margin-left: -0.75rem
+  margin-left: 0
+
+// .button で長押しメニュー禁止になっているので a.button の場合のみ許可する(重要)
+a
+  &.button
+    -webkit-touch-callout: default
+
+// ブランドは背景色を変更しない。ただし hover のときはのぞく
+.navbar.is-primary .navbar-brand > a.navbar-item.is-active
+  &:not(:hover)
+    background-color: unset
+
+// モーダル
+//
+// this.$buefy.modal.open({
+//   width: "", // width ではなく max-width に設定される
+//   customClass: "BasicModal ColorSelectModal",
+// })
+//
+// 幅の指定例 (コンテンツの内容に合わせて最大だけを指定する場合)
+// +modal_max_width(640px)
+//
+// 幅の指定例 (コンテンツの内容に関係なく指定)
+// +modal_width(640px)
+//
+.BasicModal
+  // ~/src/shogi-extend/nuxt_side/node_modules/bulma/sass/components/
+  .modal-card-title
+    font-weight: bold
+
+  .modal-card-foot
+    justify-content: space-between
+    .button
+      +tablet
+        min-width: 6rem
+      font-weight: bold
+
+  +tablet
+    .modal-card, .modal-content
+      width: 100%               // 元凶の 640px を抹殺
+
+  +mobile
+    .animation-content
+      max-width: 96vw           // モバイル時の横幅は modal-card ではなくこちら
+    .modal-card, .modal-content
+      max-height: 80vh          // 小さくしないと下側の閉じるが押せない
+
+////////////////////////////////////////////////////////////////////////////////
++mobile
+  html
+    font-size: 15px

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::TsMaster::TimeRecordsController, type: :controller do
   it "questions_fetch" do

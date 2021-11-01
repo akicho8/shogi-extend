@@ -19,6 +19,7 @@ module Wkbk
       end
 
       # アバターがないなら作る
+      # cap staging rails:runner CODE='Wkbk::Book.find_each(&:avatar_create_by_title_force_if_blank)'
       def avatar_create_by_title_force_if_blank
         unless avatar.attached?
           avatar_create_by_title_force
@@ -26,18 +27,19 @@ module Wkbk
       end
 
       # アバターあってもなくても作る
+      # cap staging rails:runner CODE='Wkbk::Book.find_each(&:avatar_create_by_title_force)'
       def avatar_create_by_title_force
         blob = CardGenerator.to_blob(body: title)
         io = StringIO.new(blob)
         avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
-        # SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
+        # SlackAgent.notify(subject: self.class.name, body: "カード画像更新(#{title})")
       end
 
       # アップロードした base64 のあれをあれする
       # nil なら元のを消す
       def new_file_src=(v)
         if v
-          # SlackAgent.message_send(key: self.class.name, body: "カード画像更新(#{title})")
+          # SlackAgent.notify(subject: self.class.name, body: "カード画像更新(#{title})")
           v = data_uri_scheme_to_bin(v)
           io = StringIO.new(v)
           avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
@@ -91,14 +93,6 @@ module Wkbk
         list = self.class.fallback_image_files(:book)
         file = list[(id || self.class.count.next).modulo(list.size)]
         ActionController::Base.helpers.asset_path(file) # asset_url にしてもURLにならないのはなぜ？
-      end
-
-      def data_uri_scheme_to_bin(data_base64_body)
-        md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<body>.*)/)
-        unless md
-          raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
-        end
-        Base64.decode64(md["body"])
       end
     end
   end

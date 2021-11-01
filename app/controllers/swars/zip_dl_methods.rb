@@ -37,7 +37,7 @@ module Swars
 
         if zip_dl_cop.dli_over?
           # zip_dl_cop.to_config[:dl_limit_info]
-          slack_message(key: "ZIP-DL制限", body: current_user.name)
+          slack_notify(subject: "ZIP-DL制限", body: current_user.name)
           render plain: zip_dl_cop.dli_message, status: 404
           return
         end

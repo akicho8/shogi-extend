@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::QuestionChannel, type: :channel do
-  include ActbSupportMethods
+  include ActbSupport
 
   it do
     expect {

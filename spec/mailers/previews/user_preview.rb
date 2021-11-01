@@ -6,18 +6,11 @@ class UserPreview < ActionMailer::Preview
     UserMailer.user_created(User.first)
   end
 
-  # http://localhost:3000/rails/mailers/user/question_owner_message
-  def question_owner_message
-    UserMailer.question_owner_message(Actb::QuestionMessage.first)
-  end
-
-  # http://localhost:3000/rails/mailers/user/question_other_message
-  def question_other_message
-    UserMailer.question_other_message(User.first, Actb::QuestionMessage.first)
-  end
-
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify
-    UserMailer.battle_fetch_notify(Swars::CrawlReservation.first)
+    user = User.create!
+    battle = Swars::Battle.create!
+    crawl_reservation = user.swars_crawl_reservations.create!(:target_user_key => battle.users.first.key)
+    UserMailer.battle_fetch_notify(crawl_reservation)
   end
 end

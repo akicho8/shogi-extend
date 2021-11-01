@@ -260,10 +260,10 @@ module Swars
           preset_info = DirtyPresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info
 
           battle = Battle.new({
-              key: info[:key],
-              rule_key: info[:rule_key],
-              csa_seq: info[:csa_seq],
-              preset_key: preset_info.key,
+              :key        => info[:key],
+              :rule_key   => info[:rule_key],
+              :csa_seq    => info[:csa_seq],
+              :preset_key => preset_info.key,
             })
 
           if md = info[:__final_key].match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)
@@ -295,7 +295,7 @@ module Swars
 
           begin
             battle.save!
-          rescue ActiveRecord::RecordNotUnique, ActiveRecord::Deadlocked => error
+          rescue ActiveRecord::RecordNotUnique, ActiveRecord::Deadlocked => error # RecordNotUnique は DB の unique index 違反
             Rails.logger.info(error.inspect)
             false
           end

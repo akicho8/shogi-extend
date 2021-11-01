@@ -7,7 +7,7 @@ module Api
       user = current_user
 
       if v = params[:croped_image]
-        bin = data_uri_scheme_to_bin(v)
+        bin = ApplicationRecord.data_uri_scheme_to_bin(v)
         io = StringIO.new(bin)
         user.avatar.attach(io: io, filename: "avatar.png")
         # user.avatar_blob.saved_changes? # => true
@@ -23,7 +23,7 @@ module Api
       if user.saved_change_to_attribute?(:name_input_at)
         if v = user.saved_change_to_attribute(:name)
           pair = v.join("→")
-          SystemMailer.fixed_track(subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
+          SystemMailer.notify(fixed: true, subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
         end
       end
 

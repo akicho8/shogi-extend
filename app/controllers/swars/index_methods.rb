@@ -33,19 +33,19 @@ module Swars
       #   # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
       #   if modal_id = params[:modal_id].presence
       #     path = ["/swars/battles/#{modal_id}", query].compact.join("?")
-      #     redirect_to UrlProxy.wrap(path)
+      #     redirect_to UrlProxy.url_for(path)
       #     return
       #   end
       #
       #   if params[:latest_open_index] && current_swars_user_key
       #     external_app_key = params[:external_app_key] || :piyo_shogi
       #     path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
-      #     redirect_to UrlProxy.wrap(path)
+      #     redirect_to UrlProxy.url_for(path)
       #     return
       #   end
       #
       #   path = ["/swars/search", query].compact.join("?")
-      #   redirect_to UrlProxy.wrap(path)
+      #   redirect_to UrlProxy.url_for(path)
       #   return
       # end
     end
@@ -68,7 +68,7 @@ module Swars
           import_process2
         end
         if Rails.env.test?
-          slack_message(key: "新プ情報", body: current_swars_user.key)
+          slack_notify(subject: "新プ情報", body: current_swars_user.key)
         end
         render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
         return
@@ -172,7 +172,7 @@ module Swars
           if hit_count.nonzero?
             if Rails.env.production? || Rails.env.staging?
             else
-              slack_message(key: "検索", body: "#{current_swars_user_key} #{hit_count}件")
+              slack_notify(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
             end
           end
 
@@ -184,7 +184,7 @@ module Swars
                 e[:error].message.strip,
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].join("\n")
-              SystemMailer.fixed_track(subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
+              SystemMailer.notify(fixed: true, subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
             end
             message = errors.collect { |e|
               [

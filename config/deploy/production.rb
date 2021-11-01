@@ -50,17 +50,15 @@ set :my_heartbeat_urls, ["https://www.shogi-extend.com/"]
 #   append :linked_dirs, "storage"
 # end
 
-append :linked_dirs, "storage"
-
 after "deploy:published", "puma:restart"
 after "deploy:published", "sidekiq:restart"
 after "deploy:published", "nuxt:restart"
 
 tp({
-    application: fetch(:application),
-    branch: fetch(:branch),
-    deploy_to: fetch(:deploy_to),
-    bundle_servers: fetch(:bundle_servers).collect(&:hostname).join(", "),
+    :application    => fetch(:application),
+    :branch         => fetch(:branch),
+    :deploy_to      => fetch(:deploy_to),
+    :bundle_servers => fetch(:bundle_servers).collect(&:hostname).join(", "),
   })
 
 # USE_NEW_DOMAIN=1 cap production server_setting

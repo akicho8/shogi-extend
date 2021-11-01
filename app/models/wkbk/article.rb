@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs         | index |
 # |---------------------+---------------------+-------------+---------------------+--------------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |              | A!    |
+# | key                 | キー                | string(255) | NOT NULL            |              | A!    |
 # | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
 # | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
@@ -146,10 +146,10 @@ module Wkbk
     #     "time_limit_clock" => "1999-12-31T15:03:00.000Z",
     #   }
     #   article = user.wkbk_articles.build
-    #   article.update_from_js(params)
+    #   article.update_from_action(params)
     #   article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       article = params.deep_symbolize_keys
 
       ActiveRecord::Base.transaction do
@@ -193,15 +193,15 @@ module Wkbk
         end
       end
 
-      simple_track
+      notify
     end
 
-    def simple_track
+    def notify
       str = created_at == updated_at ? "作成" : "更新"
-      SlackAgent.message_send(key: "問題#{str}", body: [title, page_url].join(" "))
+      SlackAgent.notify(subject: "問題#{str}", body: [title, page_url].join(" "))
       subject = "#{user.name}さんが問題「#{title}」を#{str}"
       body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      SystemMailer.simple_track(subject: subject, body: body).deliver_later
+      SystemMailer.notify(subject: subject, body: body).deliver_later
     end
 
     def book_keys=(v)
@@ -254,7 +254,7 @@ module Wkbk
       end
     end
 
-    def default_assign(params = {})
+    def form_values_default_assign(params = {})
       default_assign_from_source_article(params)
       default_assign_from_individual_params(params)
 

@@ -17,11 +17,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe BadMark, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "低評価" do
       assert { user1.actb_bad_marks.create!(question: question1) }

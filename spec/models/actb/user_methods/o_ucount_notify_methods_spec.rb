@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe UserMethods::OUcountNotifyMethods, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "works" do
       assert { user1.o_ucount_notify_once }

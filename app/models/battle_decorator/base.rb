@@ -59,7 +59,7 @@ module BattleDecorator
           s = strategy_pack_core(location)
           s ||= "不明"
           s = s.remove(/△|▲/)
-          "#{location.hexagon_mark} #{s}"
+          "#{location.pentagon_mark} #{s}"
         }.join("<br>")
       end
     end
@@ -135,7 +135,7 @@ module BattleDecorator
       location = Bioshogi::Location.fetch(location)
       seconds = total_seconds_for(location)
       m, s = seconds.divmod(1.minutes)
-      [location.hexagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
+      [location.pentagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
     end
 
     def tournament_name

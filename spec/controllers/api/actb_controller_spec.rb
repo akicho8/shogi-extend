@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Api::ActbController, type: :controller do
-  include ActbSupportMethods
+  include ActbSupport
 
   before do
     @current_user = user_login

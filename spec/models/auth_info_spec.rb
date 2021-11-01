@@ -17,7 +17,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe AuthInfo, type: :model do
   include ActiveJob::TestHelper

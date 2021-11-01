@@ -31,7 +31,7 @@
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Swars::BattlesController, type: :controller do
   before do
@@ -138,8 +138,8 @@ RSpec.describe Swars::BattlesController, type: :controller do
   end
 
   describe "show" do
-    it "png" do
-      get :show, params: {id: record.to_param, format: "png", width: "", turn: 999}
+    it "PNG画像が見れる" do
+      get :show, params: { id: record.to_param, format: "png", width: "", turn: 999 }
       assert { response.status == 302 }
     end
 

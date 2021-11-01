@@ -32,7 +32,7 @@ exit
 # }.deep_symbolize_keys
 #
 # article = user.wkbk_articles.find_or_initialize_by(id: params[:article][:id])
-# article.update_from_js(params)
+# article.update_from_action(params)
 # article
 # article.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 

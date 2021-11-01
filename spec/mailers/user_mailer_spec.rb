@@ -4,7 +4,7 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-  include ActbSupportMethods
+  include ActbSupport
 
   describe "user_created" do
     it do

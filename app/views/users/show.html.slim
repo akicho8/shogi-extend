@@ -11,4 +11,4 @@ hr
           = link_to("編集", [:edit, current_record], class: "button is-primary is-outlined")
           - if Rails.env.development?
             =<> link_to("一覧", [current_plural_key])
-            =<> link_to("削除", [current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"})
+            =<> link_to("削除", [current_record], method: :delete, data: {confirm: "本当に削除してもよいか？"})

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Actb::LobbyChannel, type: :channel do
-  include ActbSupportMethods
+  include ActbSupport
 
   before do
     Actb::BaseChannel.redis.flushdb
@@ -72,7 +72,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
 
   describe "#matching_search" do
     # これは消してもいいかもしれない
-    context "同レートのマッチング" do
+    describe "同レートのマッチング" do
       it "マッチング" do
         # user1 が対戦待ち
         stub_connection current_user: user1
@@ -93,7 +93,7 @@ RSpec.describe Actb::LobbyChannel, type: :channel do
       end
     end
 
-    context "レートを考慮したマッチング" do
+    describe "レートを考慮したマッチング" do
       def user_of(rating)
         User.create!.tap do |e|
           e.actb_main_xrecord.update!(rating: rating)

@@ -3,21 +3,21 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
-# | name              | desc               | type        | opts                | refs         | index |
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
-# | id                | ID                 | integer(8)  | NOT NULL PK         |              |       |
-# | key               | ユニークなハッシュ | string(255) | NOT NULL            |              | A!    |
-# | user_id           | User               | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id         | Folder             | integer(8)  | NOT NULL            |              | C     |
-# | sequence_id       | Sequence           | integer(8)  | NOT NULL            |              | D     |
-# | title             | タイトル           | string(100) | NOT NULL            |              |       |
-# | description       | 説明               | text(65535) | NOT NULL            |              |       |
-# | bookships_count   | Bookships count    | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | answer_logs_count | Answer logs count  | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | created_at        | 作成日時           | datetime    | NOT NULL            |              |       |
-# | updated_at        | 更新日時           | datetime    | NOT NULL            |              |       |
-# |-------------------+--------------------+-------------+---------------------+--------------+-------|
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
+# | name              | desc              | type        | opts                | refs         | index |
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK         |              |       |
+# | key               | キー              | string(255) | NOT NULL            |              | A!    |
+# | user_id           | User              | integer(8)  | NOT NULL            | => ::User#id | B     |
+# | folder_id         | Folder            | integer(8)  | NOT NULL            |              | C     |
+# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |              | D     |
+# | title             | タイトル          | string(100) | NOT NULL            |              |       |
+# | description       | 説明              | text(65535) | NOT NULL            |              |       |
+# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
+# |-------------------+-------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -26,6 +26,12 @@
 require "nkf"
 
 module Wkbk
+  # 更新日時を変更せずに公開設定を変更する
+  # cap staging rails:runner CODE='Wkbk::Book.find_by(key: "ukofXqKH2Qb").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "UYM9vQxphwI").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "a3em1Fm3jAI").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "mrOp1YMj5L4").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
+  # cap production rails:runner CODE='Wkbk::Book.find_by(key: "BsMEXmoMIGa").tap { |e| e.assign_attributes(folder_key: :private); e.save!(touch: false) }'
   class Book < ApplicationRecord
     include FolderMethods
     include InfoMethods
@@ -100,7 +106,7 @@ module Wkbk
     end
 
     def page_url(options = {})
-      UrlProxy.wrap2("/rack/books/#{key}")
+      UrlProxy.full_url_for("/rack/books/#{key}")
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -111,10 +117,10 @@ module Wkbk
     #     "moves_answers"    => [{"moves_str"=>"4c5b"}],
     #   }
     #   book = user.wkbk_books.build
-    #   book.update_from_js(params)
+    #   book.update_from_action(params)
     #   book.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
     #
-    def update_from_js(params)
+    def update_from_action(params)
       book = params.deep_symbolize_keys
       old_new_record = new_record?
 
@@ -135,15 +141,15 @@ module Wkbk
         bookships_order_by_ids(ids)
       end
 
-      simple_track
+      notify
     end
 
-    def simple_track
+    def notify
       str = created_at == updated_at ? "作成" : "更新"
-      SlackAgent.message_send(key: "問題集#{str}", body: [title, page_url].join(" "))
+      SlackAgent.notify(subject: "問題集#{str}", body: [title, page_url].join(" "))
       subject = "#{user.name}さんが問題集「#{title}」を#{str}"
       body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      SystemMailer.simple_track(subject: subject, body: body).deliver_later
+      SystemMailer.notify(subject: subject, body: body).deliver_later
     end
 
     # articles の並び替え
@@ -207,7 +213,7 @@ module Wkbk
       list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
     end
 
-    def default_assign
+    def form_values_default_assign
       # この2つは localStorage から復帰する
       # self.folder_key ||= :public
       # self.sequence_key ||= :bookship_shuffle

@@ -1,7 +1,7 @@
 # 続きからダウンロード関連
 #
 # UI
-# front_app/components/Swars/SwarsBattleDownload.vue
+# nuxt_side/components/Swars/SwarsBattleDownload.vue
 #
 # ダウンロード記録
 # app/models/swars/zip_dl_log.rb
@@ -83,7 +83,7 @@ module Swars
     def to_zip
       io = nil
       @processed_sec = Benchmark.realtime { io = to_zip_output_stream }
-      SlackAgent.message_send(key: "ウォーズ棋譜ZIP-DL", body: to_summary)
+      SlackAgent.notify(subject: "ウォーズ棋譜ZIP-DL", body: to_summary)
 
       # 前回から続きのスコープが変化すると zip_filename にも影響するので最後の最後に呼ぶ
       swars_zip_dl_logs_create!

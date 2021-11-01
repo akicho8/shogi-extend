@@ -7,7 +7,7 @@
 # | name                   | desc                       | type        | opts                | refs | index |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 # | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | ユニークなハッシュ         | string(255) | NOT NULL            |      | A!    |
+# | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
 # | name                   | 名前                       | string(255) | NOT NULL            |      |       |
 # | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
 # | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
@@ -33,7 +33,7 @@
 # | locked_at              | ロック時刻                 | datetime    |                     |      |       |
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe UsersController, type: :controller do
   before do

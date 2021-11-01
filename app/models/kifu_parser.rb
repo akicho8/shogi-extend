@@ -30,6 +30,17 @@ class KifuParser
     core.to_bod(*args)
   end
 
+  def to_png(*args)
+    core.to_png(*args)
+  end
+
+  # def to_gif(*args)
+  #   if Rails.env.production?
+  #     raise "いまのところproductionでのリアルタイムな動画作成はサーバーが死ぬので禁止"
+  #   end
+  #   core.to_gif(*args)
+  # end
+
   def to_xxx(key = to_format, *args)
     public_send("to_#{key}", *args)
   end
@@ -69,9 +80,8 @@ class KifuParser
 
   def to_format_options
     {
-      compact: true,
-      no_embed_if_time_blank: true,
-      # position_startpos_disabled: true, # "position startpos ..." 形式にはしない
+      :compact                => true,
+      :no_embed_if_time_blank => true,
     }
   end
 
@@ -106,13 +116,13 @@ class KifuParser
 
   def show_url(path = nil)
     if v = swars_battle_key
-      UrlProxy.wrap2(["/swars/battles/#{v}", path].compact.join("/"))
+      UrlProxy.full_url_for(["/swars/battles/#{v}", path].compact.join("/"))
     end
   end
 
   def search_url
     if v = swars_battle_key
-      UrlProxy.wrap2("/swars/search?query=#{v}")
+      UrlProxy.full_url_for("/swars/search?query=#{v}")
     end
   end
 
@@ -129,7 +139,7 @@ class KifuParser
   end
 
   def share_board_url
-    UrlProxy.wrap2({
+    UrlProxy.full_url_for({
         path: "/share-board",
         query: {
           body: @core.to_sfen,

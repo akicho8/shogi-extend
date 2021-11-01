@@ -7,7 +7,7 @@ module ShareBoard
     end
 
     def subscribed
-      simple_track("購読開始")
+      notify("購読開始")
       stream_from "share_board/lobby_channel"
 
       data = { xmatch_rules_members: XmatchRuleInfo.xmatch_rules_members }
@@ -15,7 +15,7 @@ module ShareBoard
     end
 
     def unsubscribed
-      simple_track("購読停止")
+      notify("購読停止")
     end
 
     def rule_select(data)
@@ -49,19 +49,19 @@ module ShareBoard
     def track(data, action, body)
       key = "自動マッチング #{action}"
       if Rails.env.development? && false
-        SlackAgent.message_send(key: key, body: data)
+        SlackAgent.notify(subject: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
-      SlackAgent.message_send(key: key, body: ":#{data["ua_icon_key"]}: #{prefix} #{body}")
+      SlackAgent.notify(subject: key, body: ":#{data["ua_icon_key"]}: #{prefix} #{body}")
     end
 
-    def simple_track(action)
+    def notify(action)
       if current_user
         body = current_user.name
       else
         body = "(未ログイン)"
       end
-      SlackAgent.message_send(key: "自動マッチング #{action}", body: body)
+      SlackAgent.notify(subject: "自動マッチング #{action}", body: body)
     end
   end
 end

@@ -146,6 +146,17 @@ if true
       code = Array.wrap(code).flatten.join(";")
       visit "http://localhost:3000/eval?#{code.to_query(:code)}"
     end
+
+    def visit2(path, params = {})
+      params = params.merge({
+          :__debug_box_skip__ => "true",
+        })
+      visit "#{path}?#{params.to_query}"
+    end
+
+    def current_query
+      Rack::Utils.parse_query(URI(current_url).query)
+    end
   end
 
   RSpec.configure do |config|

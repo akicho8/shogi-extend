@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Admin::HomesController, type: :controller do
   it "認証が必要" do

@@ -1,0 +1,44 @@
+// styleResources で定義したいもの
+
+%is_line_break_off
+  white-space: nowrap
+
+%is_line_break_on
+  white-space: normal
+  word-break: break-all
+
+=icon_rorate_if_button_hover($button_class)
+  transition: transform 0.5s 0.3s ease-in-out
+  @at-root .#{$button_class}:hover
+    .left_icon
+      transform: rotate(360deg * 2 * -1)
+
+// .buttons で横マージンが入るのはいいけど下マージンは余計
+=bulma_buttons_button_bottom_marginless
+  .buttons
+    .button
+      margin-bottom: 0
+
+//////////////////////////////////////////////////////////////////////////////// modal
+
+// コンテンツの内容で幅を決めるが大きくなりすぎるのを防ぐために「最大横幅」だけを指定する場合
+=modal_max_width($max_width)
+  +tablet
+    .animation-content
+      max-width: $max_width
+
+// コンテンツの内容に関係なく明示指定
+=modal_width($width)
+  +tablet
+    .modal-card, .modal-content
+      width: $width
+
+=modal_height($height)
+  +tablet
+    .modal-card, .modal-content
+      height: $height
+
+// コンテンツの内容で幅を決める
+=modal_width_auto
+  +tablet
+    .modal-card, .modal-content

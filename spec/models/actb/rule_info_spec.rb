@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe RuleInfo, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     before do
       question1

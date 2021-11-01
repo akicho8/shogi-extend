@@ -1,0 +1,121 @@
+<template lang="pug">
+.KiwiTopApp
+  DebugBox(v-if="development_p")
+    p query: {{query}}
+    p tag: {{tag}}
+    //- p search_p: {{search_p}}
+
+  FetchStateErrorMessage(:fetchState="$fetchState")
+
+  KiwiTopSidebar(:base="base")
+  KiwiTopNavbar(:base="base")
+  //- (v-if="!$fetchState.pending && !$fetchState.error")
+  MainSection.when_mobile_footer_scroll_problem_workaround
+    .container.is-fluid
+      KiwiTopContent(:base="base")
+
+  KiwiTopDebugPanels(:base="base" v-if="development_p")
+</template>
+
+<script>
+import { Banana      } from "../models/banana.js"
+import { XpageInfo } from "../models/xpage_info.js"
+
+import { support_parent } from "./support_parent.js"
+import { app_table      } from "./app_table.js"
+import { app_tabs       } from "./app_tabs.js"
+import { app_storage    } from "./app_storage.js"
+import { app_sidebar    } from "./app_sidebar.js"
+import { app_search     } from "./app_search.js"
+
+import _ from "lodash"
+
+export default {
+  name: "KiwiTopApp",
+  mixins: [
+    support_parent,
+    app_table,
+    app_tabs,
+    app_storage,
+    app_sidebar,
+    app_search,
+  ],
+
+  data() {
+    return {
+      meta: null,
+    }
+  },
+
+  watch: {
+    "$route.query": "$fetch",
+  },
+
+  mounted() {
+    this.ga_click("動画一覧")
+  },
+
+  fetchOnServer: false,
+  fetch() {
+    // this.__assert__(this.search_preset_key, "this.search_preset_key")
+    this.query       = this.$route.query.query
+    // this.search_preset_key = this.$route.query.search_preset_key ?? this.search_preset_key ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.search_preset_key = this.$route.query.search_preset_key
+    this.page        = this.$route.query.page
+    this.per         = this.$route.query.per
+    // this.sort_column = this.$route.query.sort_column ?? "updated_at"
+    // this.sort_order  = this.$route.query.sort_order ?? "desc"
+    this.tag         = this.$route.query.tag
+
+    // this.url_params とは異なり最終的な初期値を設定する
+    const params = {
+      query:       this.query,
+      search_preset_key:       this.search_preset_key,
+      page:        this.page,
+      per:         this.per,
+      // sort_column: this.sort_column,
+      // sort_order:  this.sort_order,
+      tag:         this.tag,
+    }
+    return this.$axios.$get("/api/kiwi/tops/index.json", {params}).then(e => {
+      this.meta = e.meta
+      if (this.query || this.tag) {
+        this.meta.title = _.compact([this.query, ...this.tags]).join(" ") + ` - ${this.meta.title}`
+      }
+      // this.tab_index   = this.IndexScopeInfo.fetch(this.search_preset_key).code
+      this.bananas = e.bananas.map(e => new Banana(this, e))
+      this.xpage_info = new XpageInfo(e.xpage_info)
+      // this.total       = e.total
+      // this.banana_counts = e.banana_counts
+    })
+  },
+
+  methods: {
+    router_push(params) {
+      params = {...this.url_params, ...params}
+      params = this.hash_compact_if_blank(params)
+      this.$router.push({name: "video", query: params})
+    },
+  },
+
+  computed: {
+    base() { return this },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../all_support.sass"
+.STAGE-development
+  .columns
+    border: 1px dashed change_color($danger, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
+.KiwiTopApp
+  .MainSection.section
+    +mobile
+      padding: 0.75rem
+    +tablet
+      padding: 1.5rem
+</style>

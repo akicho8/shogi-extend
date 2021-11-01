@@ -21,7 +21,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module TsMaster
   RSpec.describe TimeRecord, type: :model do

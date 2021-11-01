@@ -12,4 +12,4 @@ p
       - if controller.respond_to?(:edit)
         =<> link_to("編集", [:edit, ns_prefix, current_record], class: "button button-success")
       - if controller.respond_to_destroy?
-        =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "button is-danger")
+        =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいか？"}, class: "button is-danger")

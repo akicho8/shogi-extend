@@ -119,7 +119,14 @@ module Swars
     end
 
     with_options allow_blank: true do
-      validates :key, uniqueness: { case_sensitive: true }
+      if false
+        # ・このバリデーションは不要
+        # ・RecordInvalid になってしまうから
+        # ・別にフォームじゃないので必要ない
+        # ・DB の index: { unique: true } にまかせる方がよい
+        # ・RecordNotUnique なら controller 側で判定できる
+        validates :key, uniqueness: { case_sensitive: true }
+      end
       validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
     end
 
@@ -328,7 +335,7 @@ module Swars
           end
         end
       end
-      SlackAgent.message_send(key: "rule_key_bugfix_process", body: c.to_s)
+      SlackAgent.notify(subject: "rule_key_bugfix_process", body: c.to_s)
     end
 
     concerning :TimeChartMethods do

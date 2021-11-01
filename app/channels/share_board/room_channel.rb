@@ -86,7 +86,11 @@ module ShareBoard
     end
 
     def message_share(data)
-      track(data, "チャット", data["message"])
+      action = "チャット"
+      if data["message_scope"] == "ms_audience"
+        action = "観戦チャ"
+      end
+      track(data, action, data["message"])
       broadcast(:message_share_broadcasted, data)
     end
 
@@ -134,10 +138,10 @@ module ShareBoard
     def track(data, action, body)
       key = "共有将棋盤 [#{room_code}] #{action}"
       if Rails.env.development? && false
-        SlackAgent.message_send(key: key, body: data)
+        SlackAgent.notify(subject: key, body: data)
       end
 
-      SlackAgent.message_send(key: key, body: %(:#{data["ua_icon_key"]}: #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
+      SlackAgent.notify(subject: key, body: %(:#{data["ua_icon_key"]}: #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
     end
 
     def subscribed_track(action)
@@ -146,7 +150,7 @@ module ShareBoard
       else
         body = ""
       end
-      SlackAgent.message_send(key: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
+      SlackAgent.notify(subject: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
     end
 
     def sfen_share_track_body(data)

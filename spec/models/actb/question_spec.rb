@@ -7,7 +7,7 @@
 # | name                | desc                | type        | opts                | refs | index |
 # |---------------------+---------------------+-------------+---------------------+------+-------|
 # | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
-# | key                 | ユニークなハッシュ  | string(255) | NOT NULL            |      | A     |
+# | key                 | キー                | string(255) | NOT NULL            |      | A     |
 # | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
 # | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
 # | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
@@ -43,18 +43,18 @@
 # [Warning: Need to add relation] Actb::Question モデルに belongs_to :user を追加してください
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe Question, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     it do
       assert { question1.valid? }
     end
 
-    describe "update_from_js 保存" do
+    describe "update_from_action 保存" do
       let :params do
         {
           :init_sfen        => "position sfen 4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
@@ -68,7 +68,7 @@ module Actb
         # 1つ目を作る
         question = user1.actb_questions.build
         perform_enqueued_jobs do
-          question.update_from_js(params)
+          question.update_from_action(params)
         end
 
         assert { question.persisted? }
@@ -82,7 +82,7 @@ module Actb
 
         # 同じ2つ目を作る→失敗
         question = user1.actb_questions.build
-        proc { question.update_from_js(params) }.should raise_error(ActiveRecord::RecordInvalid)
+        proc { question.update_from_action(params) }.should raise_error(ActiveRecord::RecordInvalid)
         assert { question.persisted? == false }
         assert { question.turn_max == nil }
       end
@@ -160,10 +160,10 @@ module Actb
 
       assert { Actb::LobbyMessage.count == 0 }
 
-      question1.update_from_js(folder_key: "active")
+      question1.update_from_action(folder_key: "active")
       assert { Actb::LobbyMessage.count == 1 }
 
-      question1.update_from_js(folder_key: "draft")
+      question1.update_from_action(folder_key: "draft")
       assert { Actb::LobbyMessage.count == 1 }
     end
 

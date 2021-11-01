@@ -1,0 +1,139 @@
+* 共有将棋盤
+
+  http://localhost:4000/share-board
+  https://shogi-flow.xyz/share-board
+  https://www.shogi-extend.com/share-board
+
+* 最初の盤共有について (app_room_board_setup.js)
+
+  盤情報が送られてきたときどの情報がいちばん正しいのかがわからない
+  そこでホストとおもわれるユーザーから送られた盤情報だけを反映したい
+  そこで盤共有を開始してから時間が立っているものほど正確性があるとする
+  その時間をタイマーで管理する
+  時間といってもわかりにくいので先輩度 active_level としている
+
+* シングルトン時間切れ
+
+  通常 当事者の時間が遅れている
+  |-----------+----------------+----------------------------+------------------|
+  |      時間 | 当事者         | 他者                       |                  |
+  |-----------+----------------+----------------------------+------------------|
+  | 00:00:000 |                | 時間切れになる             | 同時とは限らない |
+  | 00:00:000 |                | モーダル表示予約(3秒後)    |                  |
+  | 00:00:001 | 時間切れになる |                            | 若干のずれはある |
+  | 00:00:001 | モーダル表示   |                            |                  |
+  | 00:00:001 | 時間切れをBC   |                            |                  |
+  | 00:00:500 |                | BC受信                     |                  |
+  | 00:00:500 |                | モーダル表示予約キャンセル |                  |
+  | 00:00:500 |                | モーダル表示               |                  |
+  |-----------+----------------+----------------------------+------------------|
+
+  通常 当事者の時間が進んでいる
+  |-----------+----------------+------------------------+----------------------------------|
+  |      時間 | 当事者         | 他者                   |                                  |
+  |-----------+----------------+------------------------+----------------------------------|
+  | 00:00:001 | 時間切れになる |                        |                                  |
+  | 00:00:001 | モーダル表示   |                        |                                  |
+  | 00:00:001 | 時間切れをBC   |                        |                                  |
+  | 00:00:002 |                | BC受信                 | 通信環境が良すぎて一瞬で届いた   |
+  | 00:00:002 |                | モーダル表示           |                                  |
+  | 00:00:003 |                | 時間切れになる         |                                  |
+  | 00:00:000 |                | モーダル表示予約しない | すでにモーダルを表示しているため |
+  |-----------+----------------+------------------------+----------------------------------|
+
+  当事者が時間切れの寸前に指した
+  |-----------+------------+----------------------------+----------------------------|
+  |      時間 | 当事者     | 他者                       |                            |
+  |-----------+------------+----------------------------+----------------------------|
+  | 00:00:000 |            | 時間切れになる             | 同時とは限らない           |
+  | 00:00:000 |            | モーダル表示予約(3秒後)    |                            |
+  | 00:00:001 | ギリ指した |                            | すでに他者は「審議中」状態 |
+  | 00:00:001 | 指し手をBC |                            |                            |
+  | 00:00:500 |            | 指し手のBC受信             |                            |
+  | 00:00:500 |            | モーダル表示予約キャンセル | 審議中からのセーフ         |
+  |-----------+------------+----------------------------+----------------------------|
+
+  当事者が時間切れの寸前に逃亡
+  |-----------+--------+-------------------------+-------------------------------------------|
+  |      時間 | 当事者 | 他者                    |                                           |
+  |-----------+--------+-------------------------+-------------------------------------------|
+  | 00:00:000 | 切断   | 時間切れになる          |                                           |
+  | 00:00:000 |        | モーダル表示予約(3秒後) | 審議中                                    |
+  | 00:03:000 |        | モーダル表示            | 3秒待っても相手から何の反応もないので確定 |
+  |-----------+--------+-------------------------+-------------------------------------------|
+
+* URLパラメータ
+
+  |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
+  | key                         | desc                                                    | Example                                                                                 |
+  |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
+  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
+  | force_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&force_user_name=alice                       |
+  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
+  | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                         |
+  | ordered_member_names        | 順番設定の名前(複数)                                    |                                                                                         |
+  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                         |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                         |
+  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                         |
+  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                         |
+  | clock_box.play_handle       | true なら即開始                                         |                                                                                         |
+  | xmatch_auth_key            |                                                         |                                                                                         |
+  | xmatch_wait_max               |                                                         |                                                                                         |
+  |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
+
+* 開発用URL
+
+** alice と bob の部屋を作るには？
+
+  http://localhost:4000/share-board?room_code=my_room&force_user_name=alice
+  http://localhost:4000/share-board?room_code=my_room&force_user_name=bob
+
+** 順番設定済みで開始するには？
+
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
+
+** 順番設定済みのテスト
+
+   3人
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
+
+   4人
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle
+
+** 振り駒
+
+   # 常に反転 x 2回 なので 歩5枚
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=2
+
+   # 常に反転 x 3回 なので と金5枚
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=3
+
+** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
+
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
+
+** 再送モーダル発動確認するには？
+
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&SEND_SUCCESS_DELAY=-1
+
+** 時計設定済みで部屋に入るには？
+
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box.play_handle=true
+
+** プリセット指定
+
+   http://localhost:4000/share-board?handicap_preset_key=八枚落ち
+
+** 自動マッチング
+
+   http://localhost:4000/share-board?autoexec=xmatch_modal_handle
+
+** 順番設定あり・時計あり・すぐ時間切れになる
+
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
+
+** 観戦者だけでメッセージ (alice が対局者で bob, carol が観戦で、自分が bob)
+
+   http://localhost:4000/share-board?room_code=a&force_user_name=bob&ordered_member_names=alice,bob,carol&autoexec=message_modal_handle
+

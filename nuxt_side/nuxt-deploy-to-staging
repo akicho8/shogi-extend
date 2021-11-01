@@ -1,0 +1,2 @@
+#!/bin/sh
+cap staging nuxt_side:deploy nuxt:restart

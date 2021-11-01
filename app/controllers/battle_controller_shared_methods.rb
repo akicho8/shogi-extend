@@ -159,13 +159,55 @@ module BattleControllerSharedMethods
       respond_to do |format|
         format.html
         format.png {
-          if current_disposition == :attachment
-            send_file current_record.to_real_path(params), type: Mime[:png], disposition: current_disposition, filename: current_filename
-          else
-            redirect_to current_record.to_browser_path(params)
-          end
+          # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
+          media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_png))
+          send_file_or_redirect(media_builder)
         }
+        # if Rails.env.development?
+        #   format.gif {
+        #     media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_gif))
+        #
+        #     # FIXME: リダイレクト
+        #
+        #     # url = UrlProxy.full_url_for(path: media_builder.to_browser_path)
+        #     # render html: url
+        #     # return
+        #
+        #     if media_builder.file_exist?
+        #       send_file_or_redirect(media_builder)
+        #       return
+        #     end
+        #
+        #     if !current_user
+        #       render html: "ログインしてください"
+        #       return
+        #     end
+        #
+        #     if lemon = Kiwi::Lemon.find_by(recordable: current_record)
+        #       # render html: lemon.to_html
+        #       render html: [lemon.status_key, Kiwi::Lemon.info.to_html].join.html_safe
+        #       return
+        #     end
+        #
+        #     lemon = Kiwi::Lemon.create!(recordable: current_record, user: current_user, all_params: params.to_unsafe_h)
+        #     if false
+        #       lemon.main_process
+        #     else
+        #       Kiwi::Lemon.background_job_kick_if_period
+        #     end
+        #
+        #     render html: "GIF#{lemon.status_key}<br>終わったら #{current_user.email} に通知します#{Kiwi::Lemon.info.to_html}#{Kiwi::Lemon.order(:id).to_html}".html_safe
+        #   }
+        # end
         format.any { kif_data_send }
+      end
+    end
+
+    def send_file_or_redirect(media_builder)
+      if current_disposition == :attachment
+        send_file media_builder.to_real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
+      else
+        redirect_to media_builder.to_browser_path
       end
     end
 

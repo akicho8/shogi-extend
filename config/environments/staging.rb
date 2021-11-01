@@ -3,6 +3,8 @@ load "#{__dir__}/production.rb"
 Rails.application.configure do
   Rails.application.routes.default_url_options.update(protocol: "https", host: "shogi-flow.xyz")
 
+  config.log_level = :debug
+
   # ################################################################################ cache_store
   config.cache_store = :redis_cache_store, { db: 8 } # Rails.new
 

@@ -56,3 +56,6 @@ set :keep_releases, 1
 # else
 #   set :my_rails_relative_url_root, "/shogi"
 # end
+
+append :linked_dirs, "storage"
+append :linked_dirs, "tmp/media_file"

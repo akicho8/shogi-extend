@@ -8,3 +8,10 @@ Mime::Type.register_alias "text/plain", :ki2
 Mime::Type.register_alias "text/plain", :csa
 Mime::Type.register_alias "text/plain", :sfen
 Mime::Type.register_alias "text/plain", :bod
+
+# なぜか登録されていないので
+# rails r 'p Mime["webp"]'
+# rails r 'p Mime["mov"]'
+Mime::Type.register_alias "image/apng", :apng
+Mime::Type.register_alias "image/webp", :webp
+Mime::Type.register_alias "video/quicktime", :mov

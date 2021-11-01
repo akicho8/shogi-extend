@@ -39,8 +39,21 @@ module ShareBoardControllerMethods
     #
     if params[:format].blank? || request.format.html?
       query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
-      redirect_to UrlProxy.wrap(["/share-board", query].compact.join("?"))
+      redirect_to UrlProxy.url_for(["/share-board", query].compact.join("?"))
       return
+    end
+
+    # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_groovy_board_texture1&color_theme_cache=true
+    if request.format.png?
+      if params[:color_theme_cache].to_s == "true"
+        color_theme_key = params[:color_theme_key].presence || "is_color_theme_groovy_board_texture1"
+        path = Gem.find_files("bioshogi/assets/images/color_theme_cache/#{color_theme_key}.png").first || Rails.root.join("app/assets/images/fallback.png")
+        if stale?(last_modified: Pathname(path).mtime, public: true)
+          send_file path, type: Mime[:png], disposition: :inline
+          # send_data Pathname(path).read, type: Mime[:png], disposition: :inline
+        end
+        return
+      end
     end
 
     # アクセスがあれば「上げて」消さないようにするため
@@ -86,9 +99,11 @@ module ShareBoardControllerMethods
       # リダイレクトすると Twitter Card が不安定になり、Card Validator では実際警告が出ているため、
       # Twitter では og:image のパスは直接画像を返さないといけない
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
-      path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
+      # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
+      media_builder = MediaBuilder.new(current_record, params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: image_viewpoint))
+      path = media_builder.to_real_path
       if stale?(last_modified: path.mtime, public: true)
-        send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
+        send_file path, type: Mime[media_builder.recipe_info.real_ext], disposition: current_disposition, filename: current_filename
       end
 
       return
@@ -129,6 +144,7 @@ module ShareBoardControllerMethods
   # ので、こっちで作るのであってる
   # http://localhost:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
   def current_og_image_path
+
     # if true
     #   # params[:image_viewpoint] が渡せていないけどこれでいい
     #   # url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_viewpoint: image_viewpoint])
@@ -137,7 +153,7 @@ module ShareBoardControllerMethods
     #   # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
     # end
 
-    # ../../front_app/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
+    # ../../nuxt_side/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
     args = params.to_unsafe_h.except(:action, :controller, :format)
     args = args.merge({
         :turn               => initial_turn,
@@ -169,6 +185,7 @@ module ShareBoardControllerMethods
   end
 
   def current_json
+
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs = attrs.merge({
         :initial_turn       => initial_turn,

@@ -15,7 +15,6 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     doc_image
   end
 
-  # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/system/adapter_spec.rb -e 'エラー'
   it "エラー" do
     visit "/adapter"
     find("textarea").set("11玉")

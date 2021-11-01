@@ -14,13 +14,13 @@ params = {
 }.deep_symbolize_keys
 
 question = user.actb_questions.build
-question.update_from_js(params)
+question.update_from_action(params)
 question.moves_answers.collect{|e|e.moves_str} # => ["4c5b"]
 
 question = user.actb_questions.build
 begin
 # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-question.update_from_js(params)
+question.update_from_action(params)
 # ActiveRecord::Base.logger = nil
 rescue
 end

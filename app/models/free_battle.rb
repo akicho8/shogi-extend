@@ -3,30 +3,30 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |---------------+--------------------+-------------+-------------+------------+-------|
-# | name          | desc               | type        | opts        | refs       | index |
-# |---------------+--------------------+-------------+-------------+------------+-------|
-# | id            | ID                 | integer(8)  | NOT NULL PK |            |       |
-# | key           | ユニークなハッシュ | string(255) | NOT NULL    |            | A!    |
-# | title         | タイトル           | string(255) |             |            |       |
-# | kifu_body     | 棋譜               | text(65535) | NOT NULL    |            |       |
-# | sfen_body     | SFEN形式棋譜       | text(65535) | NOT NULL    |            |       |
-# | turn_max      | 手数               | integer(4)  | NOT NULL    |            | B     |
-# | meta_info     | 棋譜ヘッダー       | text(65535) | NOT NULL    |            |       |
-# | battled_at    | Battled at         | datetime    | NOT NULL    |            | C     |
-# | use_key       | Use key            | string(255) | NOT NULL    |            | D     |
-# | accessed_at   | Accessed at        | datetime    | NOT NULL    |            | E     |
-# | user_id       | User               | integer(8)  |             | => User#id | F     |
-# | preset_key    | Preset key         | string(255) | NOT NULL    |            | G     |
-# | description   | 説明               | text(65535) | NOT NULL    |            |       |
-# | sfen_hash     | Sfen hash          | string(255) | NOT NULL    |            |       |
-# | start_turn    | 開始局面           | integer(4)  |             |            | H     |
-# | critical_turn | 開戦               | integer(4)  |             |            | I     |
-# | outbreak_turn | Outbreak turn      | integer(4)  |             |            | J     |
-# | image_turn    | OGP画像の局面      | integer(4)  |             |            |       |
-# | created_at    | 作成日時           | datetime    | NOT NULL    |            |       |
-# | updated_at    | 更新日時           | datetime    | NOT NULL    |            |       |
-# |---------------+--------------------+-------------+-------------+------------+-------|
+# |---------------+---------------+-------------+-------------+------------+-------|
+# | name          | desc          | type        | opts        | refs       | index |
+# |---------------+---------------+-------------+-------------+------------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK |            |       |
+# | key           | キー          | string(255) | NOT NULL    |            | A!    |
+# | title         | タイトル      | string(255) |             |            |       |
+# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |            |       |
+# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |            |       |
+# | turn_max      | 手数          | integer(4)  | NOT NULL    |            | B     |
+# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |            |       |
+# | battled_at    | Battled at    | datetime    | NOT NULL    |            | C     |
+# | use_key       | Use key       | string(255) | NOT NULL    |            | D     |
+# | accessed_at   | 参照日時      | datetime    | NOT NULL    |            | E     |
+# | user_id       | User          | integer(8)  |             | => User#id | F     |
+# | preset_key    | Preset key    | string(255) | NOT NULL    |            | G     |
+# | description   | 説明          | text(65535) | NOT NULL    |            |       |
+# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |            |       |
+# | start_turn    | 開始局面      | integer(4)  |             |            | H     |
+# | critical_turn | 開戦          | integer(4)  |             |            | I     |
+# | outbreak_turn | Outbreak turn | integer(4)  |             |            | J     |
+# | image_turn    | OGP画像の局面 | integer(4)  |             |            |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL    |            |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL    |            |       |
+# |---------------+---------------+-------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -193,7 +193,7 @@ class FreeBattle < ApplicationRecord
       a.merge(player.location.key => player.skill_set.to_h)
     end
 
-    if use_info.key == :basic
+    if use_info.key == :basic || use_info.key == :kiwi_lemon
       self.defense_tag_list = ""
       self.attack_tag_list = ""
       self.technique_tag_list = ""
@@ -221,7 +221,7 @@ class FreeBattle < ApplicationRecord
           }
           if hash.values.any?(&:present?)
             hash.collect { |location_key, e|
-              [Bioshogi::Location.fetch(location_key).hexagon_mark, (e.presence || ["その他"]).join(" ")].join
+              [Bioshogi::Location.fetch(location_key).pentagon_mark, (e.presence || ["その他"]).join(" ")].join
             }.join(" vs ")
           end
         end

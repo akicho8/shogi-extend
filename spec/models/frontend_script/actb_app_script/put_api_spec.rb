@@ -1,5 +1,5 @@
 RSpec.describe "FrontendScript::ActbAppScript::PutApi", type: :model do
-  include ActbSupportMethods
+  include ActbSupport
 
   it do
     # テストは spec/controllers/scripts_controller_spec.rb で書く

@@ -78,7 +78,7 @@ module Actb
       self.folder = EmotionFolder.fetch_if(key)
     end
 
-    def update_from_js(params)
+    def update_from_action(params)
       update!(params.slice(:id, :name, :message, :voice, :folder_key))
     end
   end

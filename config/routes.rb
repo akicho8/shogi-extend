@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       path = { path: "/swars/search", query: query }
     end
 
-    UrlProxy.wrap(path)
+    UrlProxy.url_for(path)
   }
 
   get "w",       format: "html", to: redirect(&swars_search_shared_redirect_block)
@@ -88,6 +88,10 @@ Rails.application.routes.draw do
   ################################################################################ 他サービス
 
   resource :share_board, path: "share-board", only: [:show]
+
+  namespace :kiwi, path: "" do
+    resources :lemons, path: "animation-files", only: [:show]
+  end
 
   ################################################################################ 将棋トレーニングバトル
 
@@ -175,6 +179,31 @@ Rails.application.routes.draw do
       post :record_create
     end
 
+    namespace :kiwi, format: :json do
+      namespace :tops do
+        get :index
+        get :sitemap
+      end
+      namespace :bananas do
+        get :index
+        get :show
+        get :edit
+        post :save
+        delete :destroy
+        get :download
+      end
+      namespace :lemons do
+        get :index
+        get :latest_info_reload
+        post :record_create
+        post :zombie_kill
+        if Rails.env.development?
+          get :record_create
+          get :zombie_kill
+        end
+      end
+    end
+
     namespace :xy_master, format: "json" do
       resources :time_records, only: [:index, :create, :update]
     end
@@ -184,7 +213,7 @@ Rails.application.routes.draw do
     end
 
     resource :talk, only: [:show, :create]
-    resources :service_infos, only: :index
+    resources :app_entry_infos, only: :index
     resources :users
     resource :cpu_battle, only: [:show, :create]
     resource :share_board, only: [:show, :create]

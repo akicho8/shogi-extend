@@ -39,6 +39,7 @@ module Swars
       if user
         self.to_email ||= user.email
       end
+      self.attachment_mode ||= "with_zip"
     end
 
     with_options presence: true do
@@ -92,7 +93,7 @@ module Swars
       end
 
       sec = "%.2f s" % (Time.current - t)
-      SlackAgent.message_send(key: "ZIP #{sec}", body: zip_filename)
+      SlackAgent.notify(subject: "ZIP #{sec}", body: zip_filename)
 
       io
     end

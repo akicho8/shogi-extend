@@ -19,11 +19,11 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Actb
   RSpec.describe History, type: :model do
-    include ActbSupportMethods
+    include ActbSupport
 
     it "解答" do
       membership = battle1.memberships.first

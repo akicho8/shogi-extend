@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe CpuStrategyInfo, type: :model do
   it "score_table" do

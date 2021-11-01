@@ -31,7 +31,7 @@
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
-require 'rails_helper'
+require "rails_helper"
 
 module Swars
   RSpec.describe Membership, type: :model do
