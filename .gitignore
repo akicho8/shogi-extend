@@ -1,4 +1,6 @@
 /nuxt_side/static/material
+/screenshot
+
 /.yardoc
 *.sql
 *.bin
