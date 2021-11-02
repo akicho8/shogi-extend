@@ -10,7 +10,8 @@
       b-input(v-model="base.message_body" ref="message_input_tag")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left")
-    b-button.ms_audience_send_button.xemoji_in_b_button(@click="send_handle({message_scope: 'ms_audience'})" v-if="base.watching_member_count >= 1" v-xemoji) 🤫
+    b-tooltip(label="観戦者だけに送信" v-if="base.ms_audience_send_button_show_p")
+      b-button.ms_audience_send_button.xemoji_in_b_button(@click="send_handle({message_scope: 'ms_audience'})" v-xemoji) 🤫
     b-button.send_button(@click="send_handle()" type="is-primary") 送信
 </template>
 
