@@ -258,17 +258,9 @@ export default {
       this.$router.replace({query: this.current_url_params}).catch(e => {})
     })
 
-    window.addEventListener("beforeunload", e => {
-      alert(1)
-      this.debug_alert("beforeunload")
-      e.preventDefault()
-      e.stopPropagation()
-      e.stopImmediatePropagation()
-    })
-
     this.autoexec()
   },
-
+  
   // http://localhost:4000/share-board?autoexec=general_setting_modal_handle
   // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
   methods: {
