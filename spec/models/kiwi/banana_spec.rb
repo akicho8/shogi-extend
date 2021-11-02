@@ -38,7 +38,7 @@ module Kiwi
       lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
       lemon1.main_process
 
-      # lemon1.thumbnail_clean    # テストが不安定になるので最初に消しておく
+      lemon1.thumbnail_clean    # テストが不安定になるので最初に消しておく
       # # この時点でサムネは作らない
       assert { lemon1.thumbnail_real_path.exist? == false }
       tp lemon1 if $0 == "-"
