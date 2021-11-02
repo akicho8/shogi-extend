@@ -26,20 +26,18 @@ export const app_message = {
     },
 
     message_share_broadcasted(params) {
-      if (!this.message_share_received_p(params)) {
-        this.debug_alert(`「${params.message}」は表示されない`)
-        return
-      }
+      this.ml_add(params) // あとで表示するため対象でなくても受信はしておく
 
-      this.$buefy.toast.open({
-        container: ".MainBoard",
-        message: `${params.from_user_name}: ${params.message}`,
-        position: "is-top",
-        type: params.message_scope === "ms_audience" ? "is-success" : "is-white",
-        queue: false,
-      })
-      this.talk(params.message)
-      this.ml_add(params)
+      if (this.message_share_received_p(params)) {
+        this.$buefy.toast.open({
+          container: ".MainBoard",
+          message: `${params.from_user_name}: ${params.message}`,
+          position: "is-top",
+          type: params.message_scope === "ms_audience" ? "is-success" : "is-white",
+          queue: false,
+        })
+        this.talk(params.message)
+      }
     },
 
     // 受信したメッセージを表示してもよいか？

@@ -327,17 +327,24 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block { assert_no_text(message1)          }   # alice には対局者なので届いていない
       c_block { assert_text(message1)             }   # carol には観戦者なので届いている
 
-      message1 = SecureRandom.hex
-      a_block { ms_audience_send_button(message1) }   # 対局者の alice が送信した
-      a_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
-      b_block { assert_text(message1)             }   # bob   には観戦者なので届いている
-      c_block { assert_text(message1)             }   # carol には観戦者なので届いている
+      message2 = SecureRandom.hex
+      a_block { ms_audience_send_button(message2) }   # 対局者の alice が送信した
+      a_block { assert_text(message2)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
+      b_block { assert_text(message2)             }   # bob   には観戦者なので届いている
+      c_block { assert_text(message2)             }   # carol には観戦者なので届いている
+
+      b_block do
+        find(".MessageSendModal .close_handle").click # メッセージモーダルを閉じる
+        order_modal_main_switch_click("無効")         # 順番設定を解除する
+      end
+
+      a_block { assert_text(message1)             }   # bob の送信を alice は見えるようになった
     end
 
-    it "順番設定していても観戦者がいないときは観戦者宛を隠しておく" do
+    it "順番設定していたら観戦者がいなくても観戦者宛を表示する" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle")
-        assert_no_selector(".MessageSendModal .ms_audience_send_button")
+        assert_selector(".MessageSendModal .ms_audience_send_button")
       end
     end
   end
