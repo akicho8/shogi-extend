@@ -4,15 +4,33 @@
     .modal-card-title
       | メッセージ
     b-button.test_button(type="is-small" @click="test_handle" v-if="development_p") 追加
+
+    //- b-button.ms_audience_toggle_button.xemoji_in_b_button(v-if="base.ms_audience_toggle_button_show_p" @click="send_handle({message_scope_key: 'is_ms_out'})" v-xemoji) 🤫
+
   .modal-card-body
     ShareBoardMessageLog(:base="base" ref="ShareBoardMessageLog")
     b-field
       b-input(v-model="base.message_body" ref="message_input_tag")
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left")
-    b-tooltip(label="観戦者だけに送信" v-if="base.ms_audience_send_button_show_p")
-      b-button.ms_audience_send_button.xemoji_in_b_button(@click="send_handle({message_scope: 'ms_audience'})" v-xemoji) 🤫
-    b-button.send_button(@click="send_handle()" type="is-primary") 送信
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+
+    //- b-tooltip(label="観戦者だけに送信" v-if="base.ms_audience_send_button_show_p")
+    //-   b-button.ms_audience_send_button.xemoji_in_b_button(@click="send_handle({message_scope_key: 'is_ms_out'})" v-xemoji) 🤫
+    //- b-button.send_button(@click="send_handle()" type="is-primary") 送信
+
+    b-field
+      p.control
+        <b-button label="Button" type="is-primary" />
+      p.control
+        <b-dropdown>
+          <template #trigger>
+            <b-button type="is-primary" icon-left="menu-down" />
+          </template>
+          <b-dropdown-item>Action</b-dropdown-item>
+          <b-dropdown-item>Another action</b-dropdown-item>
+          <b-dropdown-item>Something else</b-dropdown-item>
+        </b-dropdown>
+
 </template>
 
 <script>

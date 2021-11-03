@@ -87,7 +87,7 @@ module ShareBoard
 
     def message_share(data)
       action = "チャット"
-      if data["message_scope"] == "ms_audience"
+      if data["message_scope_key"] == "is_ms_out"
         action = "観戦チャ"
       end
       track(data, action, data["message"])
