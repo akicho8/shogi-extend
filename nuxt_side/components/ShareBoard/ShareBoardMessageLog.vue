@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardMessageLog(v-if="base.message_logs.length >= 1")
+.ShareBoardMessageLog(v-if="base.message_logs.length >= 1 || true")
   .scroll_block
     template(v-for="(e, i) in base.message_logs")
       template(v-if="base.message_share_received_p(e)")
