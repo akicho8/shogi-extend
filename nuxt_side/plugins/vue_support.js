@@ -225,6 +225,27 @@ export const vue_support = {
       }
     },
 
+    // 正しいメールアドレスでなければ入力してもらう
+    //
+    //   async xxx() {
+    //     if (await this.email_required("動画が完成したら通知しますので正しいメールアドレスを教えてください")) {
+    //       return
+    //     }
+    //   }
+    //
+    async email_required(message = null) {
+      if (this.g_current_user) {
+        const { email } = await this.$axios.$get("/api/settings/email_fetch")
+        // アクティベートしてなければ email は空になっている
+        if (this.blank_p(email) || email.includes("@localhost")) {
+          this.toast_warn(message)
+          this.$router.push({name: "settings-email"})
+          return true
+        }
+      }
+      return false
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////////////

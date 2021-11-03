@@ -102,7 +102,7 @@ export const app_form = {
     //-   this.url_open(url, this.target_default)
     //- },
 
-    submit_handle() {
+    async submit_handle() {
       this.done_record = null
 
       //- this.record_fetch(() => {
@@ -111,6 +111,10 @@ export const app_form = {
       this.sound_play_click()
 
       if (this.sns_login_required()) {
+        return
+      }
+
+      if (await this.email_required("動画が完成したら通知するのでご利用のメールアドレスを教えてください")) {
         return
       }
 

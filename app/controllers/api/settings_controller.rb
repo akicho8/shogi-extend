@@ -43,6 +43,7 @@ module Api
       render json: { xnotice: xnotice }
     end
 
+    # アクティベートしてなければ email は空になっている
     # curl -d _method=put http://localhost:3000/api/settings/email_fetch.json
     def email_fetch
       render json: { email: current_user.email }
