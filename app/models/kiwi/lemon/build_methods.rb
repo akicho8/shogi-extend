@@ -171,6 +171,7 @@ module Kiwi
           user.kiwi_my_lemons_singlecast
           everyone_broadcast
           SystemMailer.notify(fixed: true, subject: "【動画作成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
+          SlackAgent.notify(subject: "動画作成 開始 [#{id}]", body: user.name)
           begin
             sleep(all_params[:sleep].to_i)
             if v = all_params[:raise_message].presence
