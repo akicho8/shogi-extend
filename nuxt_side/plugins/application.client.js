@@ -132,38 +132,32 @@ export const vue_application = {
       }
     },
 
-    notice_collector_has_error(response) {
+    //////////////////////////////////////////////////////////////////////////////// Xnotice
+
+    xnotice_has_error_p(response) {
       if (response) {
-        const notice_collector = response.notice_collector
-        if (notice_collector) {
-          return notice_collector.has_error
+        const xnotice = response.xnotice
+        if (xnotice) {
+          return xnotice.has_error_p
         }
       }
     },
 
-    notice_collector_run(response) {
+    xnotice_run_all(response) {
       if (response) {
-        const notice_collector = response.notice_collector
-        if (notice_collector) {
-          notice_collector.infos.forEach(e => this.notice_single_call(e))
+        const xnotice = response.xnotice
+        if (xnotice) {
+          xnotice.infos.forEach(e => this.xnotice_run(e))
         }
       }
     },
 
-    notice_single_call(e) {
-      if (false) {
-      } else if (e.method === "dialog") {
+    xnotice_run(e) {
+      if (e.method === "dialog") {
         this.talk(e.message)
-        this.$buefy.dialog.alert({
-          title: e.title,
-          type: `is-${e.type}`,
-          hasIcon: true,
-          message: e.message,
-          onConfirm: () => { this.sound_play_click() },
-          onCancel:  () => { this.sound_play_click() },
-        })
+        this.dialog_alert(e)
       } else if (e.method === "toast") {
-        this.toast_ok(e.message, {type: `is-${e.type}`})
+        this.toast_ok(e.message, {type: e.type})
       } else {
         throw new Error("must not happen")
       }

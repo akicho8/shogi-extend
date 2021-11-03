@@ -159,7 +159,7 @@ export default {
 
       this.ls_setup() // config から visible_hash や display_key を設定
 
-      this.notice_collector_run(this.config)
+      this.xnotice_run_all(this.config)
     })
   },
 

@@ -14,9 +14,9 @@ module Api
         current_user_clear
       end
       if current_user
-        render json: { notice_collector: NoticeCollector.single(:danger, "ログアウトできていません", method: "dialog") }
+        render json: { xnotice: Xnotice.add("ログアウトできていません", type: "is-danger", method: :dialog) }
       else
-        render json: { notice_collector: NoticeCollector.single(:success, "ログアウトしました") }
+        render json: { xnotice: Xnotice.add("ログアウトしました", type: "is-success") }
       end
     end
   end

@@ -41,7 +41,7 @@ export const actions = {
     // curl -d _method=delete http://localhost:3000/api/session/auth_user_logout.json
     return this.$axios.$delete("/api/session/auth_user_logout.json").then(e => {
       commit("m_auth_user_logout")
-      // FIXME: 結果を表示したいけどどうやって notice_collector_run を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
+      // FIXME: 結果を表示したいけどどうやって xnotice_run_all を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
     })
   },
 }

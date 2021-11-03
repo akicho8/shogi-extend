@@ -44,21 +44,21 @@ module Api
         record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
         if record.errors.present?
           error_messages = record.errors.full_messages.join(" ")
-          render json: { notice_collector: NoticeCollector.single(:warning, error_messages, method: "dialog") }
+          render json: { xnotice: Xnotice.add(error_messages, type: "is-warning", method: :dialog) }
           return
         end
-        notice_collector = NoticeCollector.single(:success, "予約しました(#{no}件待ち)", method: "dialog")
+        xnotice = Xnotice.add("予約しました(#{no}件待ち)", type: "is-success", method: :dialog)
         n = ::Swars::CrawlReservation.active_only.count
         slack_notify(subject: "棋譜取得の予約(#{n})", body: record.to_t)
-        render json: { notice_collector: notice_collector }
+        render json: { xnotice: xnotice }
       end
 
       def crawler_run
         before_count = ::Swars::CrawlReservation.active_only.count
         Swars::Crawler::ReservationCrawler.new.run
         after_count = ::Swars::CrawlReservation.active_only.count
-        notice_collector = NoticeCollector.single(:success, "取得処理実行完了(#{before_count}→#{after_count})")
-        render json: { notice_collector: notice_collector }
+        xnotice = Xnotice.add("取得処理実行完了(#{before_count}→#{after_count})", type: "is-success")
+        render json: { xnotice: xnotice }
       end
 
       private

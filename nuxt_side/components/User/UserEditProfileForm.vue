@@ -77,8 +77,8 @@ export default {
       }
 
       const retv = await this.$axios.$put("/api/settings/profile_update", params)
-      this.notice_collector_run(retv)
-      if (this.notice_collector_has_error(retv)) {
+      this.xnotice_run_all(retv)
+      if (this.xnotice_has_error_p(retv)) {
         return
       }
 

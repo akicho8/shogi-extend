@@ -23,7 +23,7 @@ export default {
       new_email: "",
     }
   },
-    meta() {
+  meta() {
     return {
       title: this.page_title,
     }
@@ -49,13 +49,9 @@ export default {
     async save_handle() {
       this.sound_play_click()
 
-      const params = {
-        email: this.new_email,
-      }
-
-      const retv = await this.$axios.$put("/api/settings/email_update", params)
-      this.notice_collector_run(retv)
-      if (this.notice_collector_has_error(retv)) {
+      const retv = await this.$axios.$put("/api/settings/email_update", {email: this.new_email})
+      this.xnotice_run_all(retv)
+      if (this.xnotice_has_error_p(retv)) {
         return
       }
 
@@ -64,9 +60,7 @@ export default {
     },
   },
   computed: {
-    page_title() {
-      return "メールアドレス変更"
-    },
+    page_title() { return "メールアドレス変更" },
   },
 }
 </script>

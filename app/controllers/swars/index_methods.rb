@@ -7,7 +7,7 @@ module Swars
     end
 
     def index
-      @notice_collector = NoticeCollector.new
+      @xnotice = Xnotice.new
 
       [
         :redirect_if_old_path,
@@ -87,7 +87,7 @@ module Swars
 
     def js_index_options
       {
-        :notice_collector       => @notice_collector,
+        :xnotice       => @xnotice,
         :import_enable_p        => import_enable?,
         :current_swars_user_key => current_swars_user ? current_swars_user.key : nil,
         :viewpoint              => current_viewpoint,
@@ -119,7 +119,7 @@ module Swars
     end
 
     def import_process
-      @notice_collector = NoticeCollector.new
+      @xnotice = Xnotice.new
 
       if import_enable?
         remember_swars_user_keys_update
@@ -150,7 +150,7 @@ module Swars
         success = Battle.throttle_user_import(import_params)
         if !success
           # ここを有効にするには rails dev:cache してキャッシュを有効にすること
-          @notice_collector.add(:warning, "さっき取得したばかりです", development_only: true)
+          @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
         end
 
         if success
@@ -160,13 +160,13 @@ module Swars
           if current_swars_user
             hit_count = current_swars_user.battles.count - before_count
             if hit_count.zero?
-              @notice_collector.add(:dark, "新しい棋譜は見つかりませんでした", development_only: true)
+              @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
             else
-              @notice_collector.add(:info, "#{hit_count}件、新しく見つかりました")
+              @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
             end
             current_swars_user.search_logs.create!
           else
-            @notice_collector.add(:warning, "#{current_swars_user_key}さんは存在しません")
+            @xnotice.add("#{current_swars_user_key}さんは存在しません", type: "is-warning")
           end
 
           if hit_count.nonzero?
@@ -192,7 +192,7 @@ module Swars
                 "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
               ].collect { |e| "#{e}\n" }.join
             }.join("\n").gsub(/\R/, "<br>")
-            @notice_collector.add(:danger, message, method: "dialog", title: "棋譜の不整合")
+            @xnotice.add(message, type: "is-danger", method: :dialog, title: "棋譜の不整合")
           end
         end
       end

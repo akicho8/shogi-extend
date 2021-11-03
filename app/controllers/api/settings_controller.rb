@@ -36,11 +36,11 @@ module Api
 
       saved_changes_p = changed_records.any?(&:saved_changes?) || params[:croped_image]
       if saved_changes_p
-        notice_collector = NoticeCollector.single(:success, "変更しました")
+        xnotice = Xnotice.add("変更しました", type: "is-success")
       else
-        notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
+        xnotice = Xnotice.add("変更はありませんでした", type: "is-info")
       end
-      render json: { notice_collector: notice_collector }
+      render json: { xnotice: xnotice }
     end
 
     # curl -d _method=put http://localhost:3000/api/settings/email_fetch.json
@@ -52,8 +52,7 @@ module Api
       user = current_user
 
       if user.email == params[:email]
-        notice_collector = NoticeCollector.single(:info, "変更はありませんでした")
-        render json: { notice_collector: notice_collector }
+        render json: { xnotice: Xnotice.add("変更はありませんでした", type: "is-info") }
         return
       end
 
@@ -64,8 +63,7 @@ module Api
         user.skip_reconfirmation! # メールを飛ばさずに既存ユーザーのメールアドレスを変更する
         user_save(user)
         return if performed?
-        notice_collector = NoticeCollector.single(:success, "メールアドレスを更新しました")
-        render json: { notice_collector: notice_collector }
+        render json: { xnotice: Xnotice.add("メールアドレスを更新しました", type: "is-success") }
         return
       end
 
@@ -73,8 +71,7 @@ module Api
       user.email = params[:email]
       user_save(user)
       return if performed?
-      notice_collector = NoticeCollector.single(:success, "メールを送信したので変更を確定させてください", method: "dialog")
-      render json: { notice_collector: notice_collector }
+      render json: { xnotice: Xnotice.add("新しいメールアドレスにメールを送信しました。本文の「アカウントの確認」リンクを踏んでメールアドレスの変更を確定させてください", type: "is-success", method: :dialog, title: "もう少し") }
     end
 
     # curl -d _method=put http://localhost:3000/api/settings/swars_user_key_fetch.json
@@ -83,8 +80,8 @@ module Api
     end
 
     def swars_user_key_update
-      notice_collector = NoticeCollector.single(:success, "変更しました(嘘)")
-      render json: { notice_collector: notice_collector }
+      xnotice = Xnotice.add("変更しました(嘘)", type: "is-success")
+      render json: { xnotice: xnotice }
     end
 
     private
@@ -92,7 +89,7 @@ module Api
     def user_save(user)
       unless user.save
         error_messages = user.errors.full_messages.join(" ")
-        render json: { notice_collector: NoticeCollector.single(:danger, error_messages, method: "dialog") }
+        render json: { xnotice: Xnotice.add(error_messages, type: "is-danger", method: :dialog) }
       end
     end
 

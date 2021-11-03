@@ -1,6 +1,6 @@
-class NoticeCollector
+class Xnotice
   class << self
-    def single(*args)
+    def add(*args)
       new.tap do |e|
         e.add(*args)
       end
@@ -13,18 +13,23 @@ class NoticeCollector
     @infos = []
   end
 
-  def add(type, message, options = {})
+  def add(message, options = {})
+    options = {
+      message: message,
+      method: :toast,
+    }.merge(options)
+
     if !Rails.env.development? && options[:development_only]
       return
     end
 
-    infos << { type: type, message: message, title: nil, method: :toast, **options }
+    infos << options
   end
 
   def as_json(*)
     {
-      :has_error => has_error?,
-      :infos     => infos,
+      :has_error_p => has_error?,
+      :infos       => infos,
     }
   end
 

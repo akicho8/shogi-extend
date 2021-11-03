@@ -98,12 +98,12 @@ export default {
       this.loading_p = true
       const retv = await this.$axios.$post("/api/swars/download_set", params)
       this.loading_p = false
-      this.notice_collector_run(retv)
+      this.xnotice_run_all(retv)
     },
 
     async crawler_run_handle_handle() {
       const retv = await this.$axios.$post("/api/swars/crawler_run")
-      this.notice_collector_run(retv)
+      this.xnotice_run_all(retv)
     },
 
     back_handle() {
