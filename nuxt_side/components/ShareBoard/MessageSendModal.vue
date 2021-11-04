@@ -12,27 +12,27 @@
 
     b-field(v-if="base.order_func_p")
       //- p.control
-      //-   b-button.send_button(@click="send_handle" :icon-left="base.message_scope_info.icon" :type="base.message_scope_info.type" v-xemoji) {{base.message_scope_info.label}}
+      //-   b-button.send_handle(@click="send_handle" :icon-left="base.message_scope_info.icon" :type="base.message_scope_info.type" v-xemoji) {{base.message_scope_info.label}}
       b-dropdown(animation="" position="is-bottom-left" v-model="base.message_scope_key" @active-change="e => e && sound_play_click()" @change="change_handle")
         template(#trigger)
-          b-button.dropdown_field_button(icon-right="dots-vertical" size="is-small")
+          b-button.message_scope_dropdown(icon-right="dots-vertical" size="is-small")
         template(v-for="e in base.MessageScopeInfo.values")
           b-dropdown-item(:key="e.key" :class="e.key" :value="e.key" v-text="e.name")
 
   .modal-card-body
     ShareBoardMessageLog(:base="base" ref="ShareBoardMessageLog")
     b-field
-      b-input(v-model="base.message_body" ref="message_input_tag")
+      b-input(v-model="base.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left")
 
     //- b-tooltip(label="観戦者だけに送信" v-if="base.ms_out_send_handle_show_p")
     //-   b-button.ms_out_send_handle.xemoji_in_b_button(@click="send_handle({message_scope_key: 'is_ms_out'})" v-xemoji) 🤫
-    //- b-button.send_button(@click="send_handle()" type="is-primary") 送信
+    //- b-button.send_handle(@click="send_handle()" type="is-primary") 送信
 
     //- b-field.dropdown_field
     //- p.control
-    b-button.send_button(:class="base.message_scope_info.class" :key="base.message_scope_info.key" @click="send_handle" :icon-left="base.message_scope_info.icon" :type="base.message_scope_info.type") {{base.message_scope_info.label}}
+    b-button.send_handle(:class="base.message_scope_info.class" :key="base.message_scope_info.key" @click="send_handle" :icon-left="base.message_scope_info.icon" :type="base.message_scope_info.type") {{base.message_scope_info.label}}
     //- p.control
     //-   b-dropdown(position="is-top-left" v-model="base.message_scope_key" @active-change="e => e && sound_play_click()" @change="change_handle")
     //-     template(#trigger)
@@ -69,6 +69,11 @@ export default {
     change_handle(key) {
       this.sound_play_click()
       this.talk(this.base.MessageScopeInfo.fetch(key).name)
+    },
+    enter_handle(e) {
+      if (this.keyboard_enter_p(e)) {
+        this.send_handle()
+      }
     },
     send_handle() {
       if (this.blank_p(this.base.message_body)) {

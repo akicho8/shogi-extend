@@ -280,6 +280,22 @@ export const vue_support = {
     click_vibrate() {
       this.vibrate(10)
     },
+
+    // b-input(@keydown.native.enter="enter_handle")
+    //
+    // enter_handle(e) {
+    //   if (this.keyboard_enter_p(e)) {
+    //     this.send_handle()
+    //   }
+    // },
+    //
+    // keyCode: 13   <-- 送信を意識した
+    // keyCode: 229  <-- IMEで変換した
+    //
+    keyboard_enter_p(e) {
+      this.debug_alert(e.keyCode)
+      return e.keyCode === 13
+    },
   },
 
   directives: {
