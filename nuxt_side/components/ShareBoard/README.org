@@ -133,7 +133,7 @@
    http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
    http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
 
-** 観戦者だけでメッセージ (alice が対局者で bob, carol が観戦で、自分が bob)
+** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
    http://localhost:4000/share-board?room_code=a&force_user_name=bob&ordered_member_names=alice,bob,carol&autoexec=message_modal_handle
 

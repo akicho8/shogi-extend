@@ -58,7 +58,7 @@ export default {
       width: 12rem
       display: inline-block
 
-  // メッセージアイコンは2つをずらして組み合わせる
+  // チャットアイコンは2つをずらして組み合わせる
   .message_modal_handle
     .icon
       position: relative
