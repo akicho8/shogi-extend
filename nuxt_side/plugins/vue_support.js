@@ -237,13 +237,23 @@ export const vue_support = {
       if (this.g_current_user) {
         const { email } = await this.$axios.$get("/api/settings/email_fetch")
         // アクティベートしてなければ email は空になっている
-        if (this.blank_p(email) || email.includes("@localhost")) {
+        if (this.blank_p(email) || email.includes("@localhost") || this.$route.query.email_required === "on") {
           this.toast_warn(message)
           this.$router.push({name: "settings-email"})
           return true
         }
       }
       return false
+    },
+
+    // login + 正しい email 必須
+    async sns_login_with_email_required() {
+      if (this.sns_login_required()) {
+        return
+      }
+      if (await this.email_required("正しいメールアドレスを設定してください")) {
+        return
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
