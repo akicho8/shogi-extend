@@ -46,7 +46,7 @@ export default {
   },
 
   async fetch() {
-    if (this.sns_login_required()) {
+    if (this.nuxt_login_required()) {
       return
     }
 
@@ -85,7 +85,7 @@ export default {
     banana_save_handle() {
       this.sound_play_click()
 
-      if (this.sns_login_required()) {
+      if (this.nuxt_login_required()) {
         return
       }
 

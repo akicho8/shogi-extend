@@ -46,7 +46,7 @@ export default {
   },
 
   async fetch() {
-    if (await this.sns_login_with_email_required()) { return }
+    if (this.nuxt_login_required()) { return }
 
     const params = {
       ...this.$route.params,

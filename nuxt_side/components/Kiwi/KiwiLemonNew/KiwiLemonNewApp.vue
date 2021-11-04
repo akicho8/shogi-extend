@@ -100,9 +100,9 @@ export default {
       response_hash: null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
     }
   },
-  async mounted() {
+  mounted() {
     this.ga_click("動画作成")
-    if (await this.sns_login_with_email_required()) { return }
+    if (this.nuxt_login_required()) { return }
   },
 
   fetchOnServer: false,

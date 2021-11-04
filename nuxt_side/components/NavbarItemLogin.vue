@@ -11,7 +11,7 @@ export default {
   methods: {
     click_handle() {
       this.sound_play_click()
-      this.sns_login_modal_open()
+      this.nuxt_login_modal_open()
     },
   },
 }

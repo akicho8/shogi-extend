@@ -37,7 +37,7 @@ export const app_handle_name = {
       if (message) {
         this.toast_warn(message)
         if (false) {
-          this.sns_login_modal_open()
+          this.nuxt_login_modal_open()
         }
         return false
       }

@@ -68,7 +68,7 @@ export const app_form = {
 
   watch: {
     body() {
-      if (this.sns_login_required()) {
+      if (this.nuxt_login_required()) {
         return
       }
       this.bs_error = null
@@ -108,7 +108,7 @@ export const app_form = {
       //- })
       this.sound_play_click()
 
-      if (this.sns_login_required()) {
+      if (this.nuxt_login_required()) {
         return
       }
 

@@ -75,9 +75,7 @@ export default {
       // ログインする気にない人にまで配慮して匿名で使ってもらおうとしてはいけない(重要)
       if (this.present_p(this.base.xmatch_auth_key)) {
         if (this.base.xmatch_auth_info.key === "login_required") {
-          if (this.sns_login_required()) {
-            return
-          }
+          if (this.nuxt_login_required()) { return }
         }
         if (this.base.xmatch_auth_info.key === "handle_name_required") {
           if (!HandleNameValidator.valid(this.base.user_name)) {

@@ -217,42 +217,17 @@ export const vue_support = {
     //   }
     // },
 
-    sns_login_required() {
-      if (!this.g_current_user || this.$route.query.sns_login_required === "on") {
+    nuxt_login_required() {
+      if (!this.g_current_user || this.$route.query.__nuxt_login_required_force === "login") {
         this.toast_ok("ログインしてください")
-        this.sns_login_modal_open()
+        this.nuxt_login_modal_open()
         return true
       }
-    },
-
-    // 正しいメールアドレスでなければ入力してもらう
-    //
-    //   async xxx() {
-    //     if (await this.email_required("動画が完成したら通知しますので正しいメールアドレスを教えてください")) {
-    //       return
-    //     }
-    //   }
-    //
-    async email_required(message = null) {
-      if (this.g_current_user) {
-        const { email } = await this.$axios.$get("/api/settings/email_fetch")
+      if (!this.g_current_user["email_valid?"] || this.$route.query.__nuxt_login_required_force === "email") {
         // アクティベートしてなければ email は空になっている
-        if (this.blank_p(email) || email.includes("@localhost") || this.$route.query.email_required === "on") {
-          this.toast_warn(message)
-          this.$router.push({name: "settings-email"})
-          return true
-        }
-      }
-      return false
-    },
-
-    // login + 正しい email 必須
-    async sns_login_with_email_required() {
-      if (this.sns_login_required()) {
-        return
-      }
-      if (await this.email_required("正しいメールアドレスを設定してください")) {
-        return
+        this.toast_warn("正しいメールアドレスを設定してください")
+        this.$router.push({name: "settings-email"})
+        return true
       }
     },
 

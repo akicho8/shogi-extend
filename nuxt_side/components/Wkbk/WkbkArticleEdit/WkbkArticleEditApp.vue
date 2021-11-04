@@ -87,6 +87,10 @@ export default {
     }
   },
 
+  mounted() {
+    if (this.nuxt_login_required()) { return }
+  },
+
   async fetch() {
     const params = {
       ...this.$route.params,

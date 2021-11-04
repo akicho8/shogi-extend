@@ -54,7 +54,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    if (await this.sns_login_with_email_required()) { return }
+    if (this.nuxt_login_required()) { return }
 
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page
