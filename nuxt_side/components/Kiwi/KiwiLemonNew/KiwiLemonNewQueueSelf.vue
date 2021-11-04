@@ -25,7 +25,7 @@
         span.ml-1(v-if="false && base.progress_info && base.progress_info.id === row.id")
           | {{number_round(base.progress_info.percent, 2)}} %
 
-    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :width="1" :visible="development_or_staging_p")
+    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :width="1" :visible="development_p")
       | {{row.elapsed_human}}
     b-table-column(v-slot="{row}")
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
@@ -34,13 +34,13 @@
         b-button.mb-0(@click="base.download_handle" tag="a" :href="row.browser_path"            type="is-primary" icon-left="download"    :download="row.filename_human")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload")
 
-        b-button.mb-0(v-if="development_or_staging_p" @click="sound_play_click()" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            )
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         )
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         )
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__secret_show_handle(row)"       type="is-light"   icon-left="link"                )
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" )
-        b-button.mb-0(v-if="development_or_staging_p" @click="base.__json_show_handle(row)"         type="is-light"   icon-left="code-json"           )
+        b-button.mb-0(v-if="development_p" @click="sound_play_click()" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
+        b-button.mb-0(v-if="development_p" @click="base.__main_download_handle(row)"     type="is-light"   icon-left="download"            )
+        b-button.mb-0(v-if="development_p" @click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         )
+        b-button.mb-0(v-if="development_p" @click="base.__main_show_handle(row)"         type="is-light"   icon-left="eye-outline"         )
+        b-button.mb-0(v-if="development_p" @click="base.__secret_show_handle(row)"       type="is-light"   icon-left="link"                )
+        b-button.mb-0(v-if="development_p" @click="base.__probe_show_modal_handle(row)"  type="is-light"   icon-left="information-variant" )
+        b-button.mb-0(v-if="development_p" @click="base.__json_show_handle(row)"         type="is-light"   icon-left="code-json"           )
 </template>
 
 <script>

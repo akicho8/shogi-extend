@@ -1,7 +1,7 @@
 <template lang="pug">
 .ShareBoardSidebarExport
   b-menu-list(label="いろんな種類で棋譜取得")
-    b-menu-item.is_active_unset(icon="movie" label="動画作成" @click.native="base.video_new_handle" v-if="development_or_staging_p || true")
+    b-menu-item.is_active_unset(icon="movie" label="動画作成" @click.native="base.video_new_handle")
 
     b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
