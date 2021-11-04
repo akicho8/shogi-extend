@@ -29,21 +29,6 @@
           .column.is-12.cc_container.is-flex.is-justify-content-center
             a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sound_play_click()")
               img(src="by-sa.svg")
-
-    //- DebugBox(v-if="development_p")
-    //-   p query: {{query}}
-    //-   p tag: {{tag}}
-    //-   //- p search_p: {{search_p}}
-    //-
-    //- FetchStateErrorMessage(:fetchState="$fetchState")
-    //-
-    //- GalleryTopSidebar(:base="base")
-    //- GalleryTopNavbar(:base="base")
-    //- //- (v-if="!$fetchState.pending && !$fetchState.error")
-    //- MainSection.when_mobile_footer_scroll_problem_workaround
-    //-   .container.is-fluid
-    //-     GalleryTopContent(:base="base")
-    //-
     GalleryTopDebugPanels(:base="base" v-if="development_p")
 </template>
 
@@ -51,17 +36,9 @@
 const TOTAL_ITEMS = 720
 
 import { ColumnSizeInfo } from "../../models/column_size_info.js"
-// import { Banana      } from "../models/banana.js"
-// import { XpageInfo } from "../models/xpage_info.js"
-//
 import { support_parent } from "./support_parent.js"
-// import { app_table      } from "./app_table.js"
-// import { app_tabs       } from "./app_tabs.js"
 import { app_storage    } from "./app_storage.js"
-// import { app_sidebar    } from "./app_sidebar.js"
-// import { app_search     } from "./app_search.js"
-//
-// import _ from "lodash"
+
 import { ParamInfo } from "./models/param_info.js"
 
 import { simple_patination_methods } from "@/components/simple_patination_methods.js"
@@ -72,10 +49,6 @@ export default {
     support_parent,
     simple_patination_methods,
     app_storage,
-    // app_table,
-    // app_tabs,
-    // app_sidebar,
-    // app_search,
   ],
   data() {
     return {
