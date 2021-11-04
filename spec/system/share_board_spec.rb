@@ -322,13 +322,13 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       c_block { visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice", autoexec: "message_modal_handle") }
 
       message1 = SecureRandom.hex
-      b_block { ms_audience_send_button(message1) }   # 観戦者の bob が観戦者送信した
+      b_block { ms_out_send_handle(message1) }   # 観戦者の bob が観戦者送信した
       b_block { assert_text(message1)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
       a_block { assert_no_text(message1)          }   # alice には対局者なので届いていない
       c_block { assert_text(message1)             }   # carol には観戦者なので届いている
 
       message2 = SecureRandom.hex
-      a_block { ms_audience_send_button(message2) }   # 対局者の alice が送信した
+      a_block { ms_out_send_handle(message2) }   # 対局者の alice が送信した
       a_block { assert_text(message2)             }   # 自分には (観戦者かに関係なく本人だから) 届いている
       b_block { assert_text(message2)             }   # bob   には観戦者なので届いている
       c_block { assert_text(message2)             }   # carol には観戦者なので届いている
@@ -344,7 +344,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "順番設定していたら観戦者がいなくても観戦者宛を表示する" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle")
-        assert_selector(".MessageSendModal .ms_audience_send_button")
+        assert_selector(".MessageSendModal .ms_out_send_handle")
       end
     end
   end
@@ -1453,8 +1453,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   # 観戦者宛送信
-  def ms_audience_send_button(message)
+  def ms_out_send_handle(message)
     find(".MessageSendModal input").set(message)             # メッセージ入力
-    find(".MessageSendModal .ms_audience_send_button").click # 送信
+    find(".MessageSendModal .ms_out_send_handle").click # 送信
   end
 end

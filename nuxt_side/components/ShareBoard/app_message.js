@@ -60,7 +60,7 @@ export const app_message = {
     message_scope_info() { return this.MessageScopeInfo.fetch(this.message_scope_key) },
 
     // 観戦者宛送信ボタンを表示する？
-    ms_audience_send_button_show_p() {
+    ms_out_send_handle_show_p() {
       if (false) {
         // 必要最低限表示したいときはこちらだけど利用者はボタンが出る条件が予想つかないかもしれない
         return this.watching_member_count >= 1 // 観戦者が1人以上いる場合
