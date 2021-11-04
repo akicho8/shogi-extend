@@ -46,9 +46,7 @@ export default {
   },
 
   async fetch() {
-    if (this.sns_login_required()) {
-      return
-    }
+    if (this.nuxt_login_required()) { return }
 
     const params = {
       ...this.$route.params,
@@ -84,10 +82,6 @@ export default {
   methods: {
     banana_save_handle() {
       this.sound_play_click()
-
-      if (this.sns_login_required()) {
-        return
-      }
 
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")

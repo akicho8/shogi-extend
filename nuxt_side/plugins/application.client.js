@@ -21,7 +21,7 @@ export const vue_application = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    sns_login_modal_open() {
+    nuxt_login_modal_open() {
       this.$buefy.modal.open({
         customClass: "my-modal-background-background-color-dark",
         width: "20rem",
@@ -32,9 +32,9 @@ export const vue_application = {
       })
     },
 
-    sns_login_modal_handle() {
+    nuxt_login_modal_handle() {
       this.sound_play_click()
-      this.sns_login_modal_open()
+      this.nuxt_login_modal_open()
     },
 
     ////////////////////////////////////////////////////////////////////////////////

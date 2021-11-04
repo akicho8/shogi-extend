@@ -33,10 +33,6 @@ export const app_article = {
     article_save_handle() {
       this.sound_play_click()
 
-      if (this.sns_login_required()) {
-        return true
-      }
-
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")
         return true

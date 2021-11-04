@@ -190,7 +190,7 @@ module ShareBoard
         subscribe(room_code: room_code)
       end
       it do
-        data = data_factory("message" => "(message)", "message_scope" => "ms_audience")
+        data = data_factory("message" => "(message)", "message_scope_key" => "is_ms_out")
         expect {
           subscription.message_share(data)
         }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "message_share_broadcasted", bc_params: data)

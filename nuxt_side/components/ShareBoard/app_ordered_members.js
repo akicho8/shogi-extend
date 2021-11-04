@@ -181,6 +181,9 @@ export const app_ordered_members = {
         this.tl_alert("order_func_share 自分→他者")
       }
       this.order_func_p = params.order_func_p
+      if (!this.order_func_p) {
+        this.message_scope_key = "is_ms_all"
+      }
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`)
       }

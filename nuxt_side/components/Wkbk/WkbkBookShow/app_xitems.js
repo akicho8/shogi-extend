@@ -13,12 +13,6 @@ export const app_xitems = {
 
   methods: {
     play_start() {
-      if (!this.g_current_user) {
-        this.sound_play_click()
-        this.sns_login_required()
-        return
-      }
-
       this.sound_play("start")
       this.mode_set("running")
 

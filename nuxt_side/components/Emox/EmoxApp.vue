@@ -128,7 +128,7 @@ export default {
     start_handle() {
       this.sound_play_click()
 
-      if (this.sns_login_required()) {
+      if (this.nuxt_login_required()) {
         return
       }
 

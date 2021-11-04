@@ -61,7 +61,7 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
-    if (this.sns_login_required()) {
+    if (this.nuxt_login_required()) {
       return
     }
 

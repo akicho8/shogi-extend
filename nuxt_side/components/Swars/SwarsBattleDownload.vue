@@ -110,9 +110,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    if (this.sns_login_required()) {
-      return
-    }
+    if (this.nuxt_login_required()) { return }
 
     if (true) {
       const e = this.current_params

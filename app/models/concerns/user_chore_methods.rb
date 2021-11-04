@@ -37,6 +37,7 @@ module UserChoreMethods
           :avatar_path,
           :description,
           :twitter_key,
+          :email_valid?,        # for nuxt_login_required
         ],
       })
   end

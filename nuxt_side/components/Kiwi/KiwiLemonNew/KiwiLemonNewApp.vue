@@ -102,6 +102,7 @@ export default {
   },
   mounted() {
     this.ga_click("動画作成")
+    if (this.nuxt_login_required()) { return }
   },
 
   fetchOnServer: false,
