@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: d9a53b0f5a4c5f84d0f181af2eec527f2052019d
+  revision: 38305d7728938655abe506215ed90be4145f77ca
   specs:
     bioshogi (0.0.1)
       actionview
@@ -207,7 +207,7 @@ GEM
     html_format (0.0.9)
       actionpack
       activesupport
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
