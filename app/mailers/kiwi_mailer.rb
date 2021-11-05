@@ -9,13 +9,15 @@ class KiwiMailer < ApplicationMailer
     body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
+    body << "ファイル: #{lemon.browser_url}" if lemon.browser_url
     body << "棋譜: #{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
     body << ""
     body << "--"
-    body << "SHOGI-EXTEND"
-    body << url_for(:root)
+    body << "動画作成 - SHOGI-EXTEND"
+    body << UrlProxy.full_url_for("/video/new")
 
     if Rails.env.development?
+      body << url_for(:root)
       body << lemon.browser_url
       body << lemon.to_t
       if lemon.ffprobe_info
@@ -25,9 +27,8 @@ class KiwiMailer < ApplicationMailer
     end
 
     # 添付
-    media_builder = lemon.media_builder
-    if media_builder.file_exist?
-      attachments[lemon.filename_human] = media_builder.real_path.read
+    if lemon.real_path.exist?
+      attachments[lemon.filename_human] = lemon.real_path.read
     end
 
     mail({

@@ -78,7 +78,7 @@ module SystemFileMethods
   #     end
   #   end
   # end
-  
+
   def browser_url
     UrlProxy.full_url_for(path: browser_path)
   end

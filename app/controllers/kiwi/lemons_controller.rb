@@ -77,10 +77,10 @@ module Kiwi
           render json: lemon.as_json(Kiwi::Lemon.json_struct_for_done_record)
         }
         format.all {
-          unless media_builder.real_path.exist?
+          unless lemon.real_path.exist?
             raise ActionController::RoutingError, "ファイルが生成されていません"
           end
-          send_file_with_range media_builder.real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: params[:disposition] || "inline", filename: lemon.filename_human
+          send_file_with_range lemon.real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: params[:disposition] || "inline", filename: lemon.filename_human
         }
       end
     end
