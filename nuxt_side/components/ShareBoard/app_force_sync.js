@@ -19,7 +19,7 @@ export const app_force_sync = {
               <li>局面の転送</li>
             </ol>
           </div>
-          <p class="is-size-7 has-text-grey">途中で局面編集した場合は基点(0手目)の局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更する意図であれば手合割から平手を選択してください</p>
+          <p class="is-size-7 has-text-grey">途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください</p>
         `,
         confirmText: "本当に実行",
         type: "is-danger",
