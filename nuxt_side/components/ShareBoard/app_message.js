@@ -44,10 +44,10 @@ export const app_message = {
     // 受信した発言を表示してもよいか？
     message_share_received_p(e) {
       let exec = true
-      if (e.message_scope_key === "is_ms_out") {      // 観戦者宛のとき
-        if (!this.received_from_self(e)) {          // 自分が送信者ではなく
-          if (this.self_is_member_p) {              // 自分が対局者の場合は
-            exec = false                            // 受信しない
+      if (e.message_scope_key === "is_ms_out") { // 観戦者宛のとき
+        if (!this.received_from_self(e)) {       // 自分が送信者ではなく
+          if (this.self_is_member_p) {           // 自分が対局者の場合は
+            exec = false                         // 受信しない
           }
         }
       }
@@ -60,7 +60,7 @@ export const app_message = {
     message_scope_info() { return this.MessageScopeInfo.fetch(this.message_scope_key) },
 
     // 観戦者宛送信ボタンを表示する？
-    ms_out_send_handle_show_p() {
+    message_scope_dropdown_show_p() {
       if (false) {
         // 必要最低限表示したいときはこちらだけど利用者はボタンが出る条件が予想つかないかもしれない
         return this.watching_member_count >= 1 // 観戦者が1人以上いる場合
