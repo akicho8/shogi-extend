@@ -486,15 +486,12 @@ module Swars
       end
 
       def test1
-        Battle.create!(csa_seq: csa_seq_generate(3)) do |e|
-          membership = e.memberships.build(user: @black)
-          membership.build_membership_extra
-        end
-        @black.user_info.used_piece_counts_records
+        battle = Battle.create!(csa_seq: csa_seq_generate(3))
+        battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
       end
 
       it do
-        assert { test1.reject { |e| e[:value].zero? } == [{name: "玉", value: 2}] }
+        assert { test1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
       end
     end
   end

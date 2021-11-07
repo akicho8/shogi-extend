@@ -99,6 +99,16 @@ const CHART_CONFIG_DEFAULT = {
         beforeLabel(tooltipItems, data) {
           return ""
         },
+        label(tooltipItem, data) {
+          const chart_element = this
+          const __vm__ = chart_element._chart.config.__vm__
+          const y = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]
+          if (__vm__.info.value_format === "percentage") {
+            return (y * 100).toFixed(2) + " %"
+          } else {
+            return `${y}`
+          }
+        },
       },
     },
   },
@@ -122,7 +132,8 @@ export default {
     // ・なので cloneDeep している
     // ・ただし function が消える
     // ・function が必要なときは直接 Vue の方に書いた方がいいのかもしれない
-    this._chart_config = _.cloneDeep(CHART_CONFIG_DEFAULT)
+    this.chart_setup(CHART_CONFIG_DEFAULT)
+    // this._chart_config = _.cloneDeep(CHART_CONFIG_DEFAULT)
     this._chart_config.data.labels = this.extract_labels
     this._chart_config.data.datasets[0].data = this.extract_values
 

@@ -299,7 +299,7 @@ module Swars
 
         ################################################################################
 
-        { name: "駒の使用頻度",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, },
+        { name: "駒の使用頻度",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
 
         ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
@@ -718,12 +718,17 @@ module Swars
         end
       end
 
-      list = Bioshogi::Piece.collect do |e|
-        { name: e.any_name(false), value: counts["#{e.sfen_char}0"] }
-      end
-      Bioshogi::Piece.each do |e|
-        if e.promotable
-          list << { name: e.any_name(true, char_type: :single_char), value: counts["#{e.sfen_char}1"] }
+      denominator = counts.values.sum
+      list = []
+
+      if denominator.positive?
+        Bioshogi::Piece.each do |e|
+          list << { name: e.any_name(false), value: counts["#{e.sfen_char}0"].fdiv(denominator) }
+        end
+        Bioshogi::Piece.each do |e|
+          if e.promotable
+            list << { name: e.any_name(true, char_type: :single_char), value: counts["#{e.sfen_char}1"].fdiv(denominator) }
+          end
         end
       end
 
