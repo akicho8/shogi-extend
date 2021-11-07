@@ -18,7 +18,12 @@ module Swars
     end
 
     def csa_seq_generate1(n)
-      [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
+      [
+        ["+5958OU", 600],
+        ["-5152OU", 600],
+        ["+5859OU", 600],
+        ["-5251OU", 600],
+      ].cycle.take(n)
     end
 
     def csa_seq_generate2(n, sec)

@@ -123,10 +123,10 @@ module Swars
         # Battle.multiple_battle_import(user_key: "chrono_", gtype: "")
         def multiple_battle_import(params = {})
           params = {
-            verbose: Rails.env.development?,
-            early_break: false, # 1ページ目で新しいものが見つからなければ終わる
-            error_capture: nil, # blockが渡されていれば呼ぶ
-            error_capture_fake: false, # trueならわざと例外
+            :verbose            => Rails.env.development?,
+            :early_break        => false, # 1ページ目で新しいものが見つからなければ終わる
+            :error_capture      => nil,   # blockが渡されていれば呼ぶ
+            :error_capture_fake => false, # trueならわざと例外
           }.merge(params)
 
           keys = []
@@ -275,16 +275,20 @@ module Swars
           end
 
           info[:user_infos].each.with_index do |e, i|
-            user = User.find_by!(user_key: e[:user_key])
-            grade = Grade.fetch(e[:grade_key])
-
             if winner_index
               judge_key = (i == winner_index) ? :win : :lose
             else
               judge_key = :draw
             end
+            membership = battle.memberships.build({
+                :user         => User.find_by!(user_key: e[:user_key]),
+                :grade        => Grade.fetch(e[:grade_key]),
+                :judge_key    => judge_key,
+                :location_key => Bioshogi::Location.fetch(i).key,
+              })
 
-            battle.memberships.build(user: user, grade: grade, judge_key: judge_key, location_key: Bioshogi::Location.fetch(i).key)
+            # membership.build_membership_extra(used_piece_counts: {[:foo, true] => 1})
+            membership.build_membership_extra
           end
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく

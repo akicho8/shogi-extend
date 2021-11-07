@@ -102,7 +102,7 @@ module Swars
         e = records.take(chart_bar_max).reverse
         {
           data: {
-            labels: e.collect { |e| e[:name].tr("→ー", "↓｜").chars },
+            labels: e.collect { |e| e[:name].tr("→ー", "↓｜").chars }, # NOTE: 配列にすることで無理矢理縦表記にする
             datasets: [
               {
                 label: nil,

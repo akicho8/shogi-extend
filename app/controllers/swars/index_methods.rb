@@ -58,6 +58,7 @@ module Swars
       end
     end
 
+    # http://localhost:3000/w.json?query=Yamada_Taro&format_type=user
     def swars_users_key_json_render
       if request.format.json? && format_type == "user"
         unless current_swars_user

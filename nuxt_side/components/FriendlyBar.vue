@@ -144,10 +144,20 @@ export default {
   mounted() {
     this.chart_create()
   },
+  methods: {
+    // tategaki_p が有効なら縦書きにする
+    // "成銀" --> ["成", "銀"]
+    name_decorate(str) {
+      if (this.info.tategaki_p) {
+        str = [...str]
+      }
+      return str
+    },
+  },
   computed: {
     data_list()      { return this.info.body || []             },
     data_count()     { return this.data_list.length            },
-    extract_labels() { return this.data_list.map(e => e.name)  },
+    extract_labels() { return this.data_list.map(e => this.name_decorate(e.name)) },
     extract_values() { return this.data_list.map(e => e.value) },
   },
 }
