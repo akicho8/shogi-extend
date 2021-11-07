@@ -298,6 +298,10 @@ module Swars
         { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
 
         ################################################################################
+
+        { name: "駒の使用頻度",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, },
+
+        ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
@@ -698,6 +702,32 @@ module Swars
           { name: hour.to_s, value: counts_hash[hour] || 0 }
         end
       end
+    end
+
+    ################################################################################ 駒の使用頻度
+
+    def used_piece_counts_records
+      counts = Hash.new(0)
+      s = ids_scope
+      # s = s.joins(:membership_extra) # SQLで参照しているわけではないので JOIN する必要なし
+      s = s.includes(:membership_extra) # 重要
+      s.each do |e|
+        # e.membership_extra.used_piece_counts # => {"B0"=>7, "G0"=>4, "K0"=>6, "L0"=>6, "N0"=>1, "P0"=>18, "P1"=>1, "R0"=>2, "S0"=>9}
+        if e = e.membership_extra
+          counts.update(e.used_piece_counts) { |_, a, b| a + b } # MySQL で hash を合体できれば置き換える
+        end
+      end
+
+      list = Bioshogi::Piece.collect do |e|
+        { name: e.any_name(false), value: counts["#{e.sfen_char}0"] }
+      end
+      Bioshogi::Piece.each do |e|
+        if e.promotable
+          list << { name: e.any_name(true, char_type: :single_char), value: counts["#{e.sfen_char}1"] }
+        end
+      end
+
+      list
     end
 
     private

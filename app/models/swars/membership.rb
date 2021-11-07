@@ -336,5 +336,11 @@ module Swars
         judge_info.key == :win
       end
     end
+
+    concerning :MembershipExtraMethods do
+      included do
+        has_one :membership_extra, dependent: :destroy, autosave: true
+      end
+    end
   end
 end

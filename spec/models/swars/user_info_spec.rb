@@ -479,23 +479,23 @@ module Swars
         assert { Timecop.freeze("2000-01-01 01:00") { test1 } == [{name: "0", value: 2}, {name: "1", value: 1}] }
       end
     end
+
+    describe "駒の使用頻度 used_piece_counts_records" do
+      before do
+        @black = User.create!
+      end
+
+      def test1
+        Battle.create!(csa_seq: csa_seq_generate(3)) do |e|
+          membership = e.memberships.build(user: @black)
+          membership.build_membership_extra
+        end
+        @black.user_info.used_piece_counts_records
+      end
+
+      it do
+        assert { test1.reject { |e| e[:value].zero? } == [{name: "玉", value: 2}] }
+      end
+    end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ...F..................
-# >>
-# >> Failures:
-# >>
-# >>   1) Swars::Battle to_hash 各タブの情報
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:62:in `block (3 levels) in <module:Swars>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >>
-# >> Finished in 11.04 seconds (files took 5.18 seconds to load)
-# >> 22 examples, 1 failure
-# >>
-# >> Failed examples:
-# >>
-# >> rspec -:52 # Swars::Battle to_hash 各タブの情報
-# >>

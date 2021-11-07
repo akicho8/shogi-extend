@@ -288,7 +288,7 @@ module Swars
               })
 
             # membership.build_membership_extra(used_piece_counts: {[:foo, true] => 1})
-            membership.build_membership_extra
+            # membership.build_membership_extra
           end
 
           # SQLをシンプルにするために勝者だけ、所有者的な意味で、Battle 自体に入れとく

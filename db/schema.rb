@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_075600) do
+ActiveRecord::Schema.define(version: 2021_11_07_165600) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1074,6 +1074,26 @@ ActiveRecord::Schema.define(version: 2021_10_27_075600) do
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_swars_grades_on_key", unique: true
     t.index ["priority"], name: "index_swars_grades_on_priority"
+  end
+
+  create_table "swars_membership_extras", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "membership_id", null: false, comment: "対局情報"
+    t.json "used_piece_counts", null: false, comment: "駒の使用頻度"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["membership_id"], name: "index_swars_membership_extras_on_membership_id", unique: true
+  end
+
+  create_table "swars_membership_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "membership_id", null: false, comment: "対局情報"
+    t.bigint "battle_id", null: false, comment: "対局"
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.json "use_piece_counts", null: false, comment: "移動させた駒数"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["battle_id"], name: "index_swars_membership_infos_on_battle_id"
+    t.index ["membership_id"], name: "index_swars_membership_infos_on_membership_id"
+    t.index ["user_id"], name: "index_swars_membership_infos_on_user_id"
   end
 
   create_table "swars_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

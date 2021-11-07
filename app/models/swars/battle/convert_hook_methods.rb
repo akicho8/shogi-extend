@@ -88,6 +88,14 @@ module Swars
       def parser_exec_after(info)
         memberships.each(&:think_columns_update)
 
+        # 駒の使用頻度を保存
+        info.mediator.players.each.with_index do |player, i|
+          m = memberships[i]
+          if e = m.membership_extra || m.build_membership_extra
+            e.used_piece_counts = player.used_piece_counts
+          end
+        end
+
         # 囲い対決などに使う
         if true
           info.mediator.players.each.with_index do |player, i|
