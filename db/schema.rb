@@ -1084,18 +1084,6 @@ ActiveRecord::Schema.define(version: 2021_11_07_165600) do
     t.index ["membership_id"], name: "index_swars_membership_extras_on_membership_id", unique: true
   end
 
-  create_table "swars_membership_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.bigint "membership_id", null: false, comment: "対局情報"
-    t.bigint "battle_id", null: false, comment: "対局"
-    t.bigint "user_id", null: false, comment: "対局者"
-    t.json "use_piece_counts", null: false, comment: "移動させた駒数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["battle_id"], name: "index_swars_membership_infos_on_battle_id"
-    t.index ["membership_id"], name: "index_swars_membership_infos_on_membership_id"
-    t.index ["user_id"], name: "index_swars_membership_infos_on_user_id"
-  end
-
   create_table "swars_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "battle_id", null: false, comment: "対局"
     t.bigint "user_id", null: false, comment: "対局者"
