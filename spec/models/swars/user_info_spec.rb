@@ -79,7 +79,7 @@ module Swars
       assert { User.create!.user_info.to_hash }
     end
 
-    describe "党派 formation_info_records" do
+    describe "派閥 formation_info_records" do
       before do
         @black = User.create!
       end

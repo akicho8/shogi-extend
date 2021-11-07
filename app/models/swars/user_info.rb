@@ -295,7 +295,7 @@ module Swars
 
     def etc_list
       list = [
-        { name: "党派",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
+        { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
 
         ################################################################################
 
