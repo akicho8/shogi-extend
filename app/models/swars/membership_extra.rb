@@ -24,7 +24,7 @@ module Swars
         # Swars::MembershipExtra.delete_all
         # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
         t = Time.current.midnight
-        r = "2000-11-01".to_time..."2021-12-01".to_time
+        r = "2021-10-01".to_time..."2021-12-01".to_time
         m = Swars::Membership.membership_extra_missing
         b = Swars::Battle.where(battled_at: r).where(memberships: m)
         total = b.count
