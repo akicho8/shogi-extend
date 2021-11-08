@@ -1,6 +1,6 @@
 // ウィンドウがアクティブか調べる
 // ・focus のとき +1 して blur のとき -1 することで 0 か 1 になるのか？
-// ・mobile safari のツイートリンクで Twitter App に飛んで戻ったとき 0 でも 1 でもなくなる
+// ・mobile safari の共有リンクで Twitter App に飛んで戻ったとき 0 でも 1 でもなくなる
 // ・なので focus や blur の一方が連続で呼ばれるのを考慮しないといけない
 
 // const USE_VISIBILITYCHANGE = true
