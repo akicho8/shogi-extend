@@ -24,14 +24,14 @@ module Swars
         # Swars::MembershipExtra.delete_all
         # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
         t = Time.current.midnight
-        r = "2021-10-01".to_time..."2021-12-01".to_time
+        r = "2021-08-01".to_time..."2021-12-01".to_time
         m = Swars::Membership.membership_extra_missing
         b = Swars::Battle.where(battled_at: r).where(memberships: m)
         total = b.count
         SlackAgent.notify(subject: "create_if_nothing", body: b.count)
         offset = 0
         b.find_in_batches do |av|
-          SlackAgent.notify(subject: "create_if_nothing", body: [offset, total])
+          SlackAgent.notify(subject: "create_if_nothing", body: [offset, total, offset.fdiv(total)])
           av.each(&:membership_extra_create_if_nothing)
           offset += av.size
         end
