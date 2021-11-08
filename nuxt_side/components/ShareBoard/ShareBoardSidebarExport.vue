@@ -1,7 +1,7 @@
 <template lang="pug">
 .ShareBoardSidebarExport
   b-menu-list(label="棋譜変換")
-    b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_download_modal_handle" v-if="base.image_download_modal_handle")
+    b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_download_modal_handle")
     b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
 
     b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play_click()")

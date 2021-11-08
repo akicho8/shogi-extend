@@ -2,21 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title ツイート
-
-    b-dropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
-      template(#trigger)
-        b-button(:label="base.color_theme_info.name" icon-right="menu-down" size="is-small")
-      template(v-for="e in base.ColorThemeInfo.values")
-        template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
-          template(v-if="e.separator")
-            b-dropdown-item(separator)
-          template(v-else)
-            b-dropdown-item(:value="e.key" @click="base.color_theme_item_click_handle(e)")
-              .media
-                .media-content
-                  .is_line_break_on.is-size-7
-                    | {{e.name}}
-                  img.is-block(:src="e.thumbnail_url(base)" loading="lazy")
+    ShareBoardColorThemeDropdown(:base="base")
 
   .modal-card-body
     .preview_image_container.is-flex
@@ -37,16 +23,9 @@ import { support_child } from "./support_child.js"
 export default {
   name: "TweetModal",
   mixins: [support_child],
-  data() {
-    return {
-      screen_is_desktop: null,
-    }
-  },
   beforeMount() {
-    this.screen_is_desktop = this.screen_match_p("desktop")
     this.base.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
-
   methods: {
     close_handle() {
       this.sound_play_click()
