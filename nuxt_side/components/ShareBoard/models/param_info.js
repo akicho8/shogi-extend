@@ -19,7 +19,8 @@ export class ParamInfo extends ParamBase {
       { key: "avatar_king_key",          type: "string",  name: "玉をアバターにする",            defaults: { development: null,                   production: "is_avatar_king_off",          }, permanent: false, relation: "AvatarKingInfo",      desc: null, },
       { key: "shout_mode_key",           type: "string",  name: "叫びモード",                    defaults: { development: null,                   production: "is_shout_mode_off",           }, permanent: false, relation: "ShoutModeInfo",       desc: null, },
       { key: "share_board_column_width", type: "float",   name: "盤の大きさ",                    defaults: { development: null,                   production: 80.0,                          }, permanent: true,  relation: null,                  desc: null, },
-      { key: "message_scope_key",        type: "string",  name: "発言スコープ",        defaults: { development: null,                   production: "is_ms_all",                      }, permanent: false, relation: "MessageScopeInfo",    desc: null, },
+      { key: "message_scope_key",        type: "string",  name: "発言スコープ",                  defaults: { development: null,                   production: "is_ms_all",                   }, permanent: false, relation: "MessageScopeInfo",    desc: null, },
+      { key: "image_size_key",           type: "string",  name: "ダウンロード画像サイズ",        defaults: { development: null,                   production: "is_image_size_1920x1080",     }, permanent: true,  relation: "ImageSizeInfo",       desc: null, },
     ]
   }
 }

@@ -144,7 +144,7 @@ import { app_room_members         } from "./app_room_members.js"
 import { app_net_level           } from "./app_net_level.js"
 import { app_ping                 } from "./app_ping.js"
 import { app_tweet                } from "./app_tweet.js"
-import { app_image_download                } from "./app_image_download.js"
+import { app_image_dl                } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
 import { app_message              } from "./app_message.js"
 import { app_main_setting         } from "./app_main_setting.js"
@@ -192,7 +192,7 @@ export default {
     app_net_level,
     app_ping,
     app_tweet,
-    app_image_download,
+    app_image_dl,
     app_update,
     app_message,
     app_main_setting,

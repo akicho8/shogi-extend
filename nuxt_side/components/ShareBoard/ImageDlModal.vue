@@ -4,6 +4,16 @@
     .modal-card-title 画像ダウンロード
     ShareBoardColorThemeDropdown(:base="base")
 
+    b-dropdown(v-model="base.image_size_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.image_size_key_change_handle")
+      template(#trigger)
+        b-button(:label="base.image_size_info.name" icon-right="menu-down" size="is-small")
+      template(v-for="e in base.ImageSizeInfo.values")
+        template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
+          template(v-if="e.separator")
+            b-dropdown-item(separator)
+          template(v-else)
+            b-dropdown-item(:value="e.key" @click="base.image_size_item_click_handle(e)") {{e.option_name}}
+
   .modal-card-body
     .preview_image_container.is-flex
       .preview_image.is-flex
@@ -17,12 +27,13 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ImageDownloadModal",
+  name: "ImageDlModal",
   mixins: [support_child],
   data() {
     return {
     }
   },
+
   beforeMount() {
     this.base.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
@@ -33,29 +44,17 @@ export default {
     },
     download_handle() {
       this.sound_play_click()
-      window.location.href = this.main_url({disposition: "attachment"})
-      this.base.shared_al_add_simple("画像ダウンロード")
-    },
-    main_url(options = {}) {
-      return this.base.permalink_for({
-        format: "png",
-        // abstract_viewpoint: this.base.abstract_viewpoint,
-        abstract_viewpoint: this.base.sp_viewpoint,
-        disposition: "inline",
-        ...options,
-      })
+      this.base.image_dl_run()
     },
   },
   computed: {
-    preview_url() {
-      return this.main_url()
-    },
+    preview_url() { return this.base.image_dl_preview_url() },
   },
 }
 </script>
 
 <style lang="sass">
-.ImageDownloadModal
+.ImageDlModal
   +modal_max_width(960px)
 
   .preview_image_container
