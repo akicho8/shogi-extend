@@ -20,6 +20,27 @@ module Swars
         kifu_body_for_test || kifu_body_from_csa_seq
       end
 
+      # 駒の使用頻度の情報がなければ保存
+      # Swars::Battle.find_each(&:membership_extra_create_if_nothing) }
+      def membership_extra_create_if_nothing
+        if m = memberships.first
+          unless m.membership_extra
+            membership_extra_build_if_nothing
+            memberships.each { |e| e.membership_extra.save! }
+          end
+        end
+      end
+
+      # 駒の使用頻度を保存
+      def membership_extra_build_if_nothing
+        fast_parsed_info.mediator.players.each.with_index do |player, i|
+          m = memberships[i]
+          unless m.membership_extra
+            m.build_membership_extra(used_piece_counts: player.used_piece_counts)
+          end
+        end
+      end
+
       private
 
       def kifu_body_from_csa_seq
@@ -89,12 +110,7 @@ module Swars
         memberships.each(&:think_columns_update)
 
         # 駒の使用頻度を保存
-        info.mediator.players.each.with_index do |player, i|
-          m = memberships[i]
-          if e = m.membership_extra || m.build_membership_extra
-            e.used_piece_counts = player.used_piece_counts
-          end
-        end
+        membership_extra_build_if_nothing
 
         # 囲い対決などに使う
         if true

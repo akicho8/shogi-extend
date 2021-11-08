@@ -15,6 +15,31 @@
 
 module Swars
   class MembershipExtra < ApplicationRecord
+    class << self
+      # cap production deploy:upload FILES=app/models/swars/membership_extra.rb
+      # RAILS_ENV=production nohup bundle exec bin/rails r 'Swars::MembershipExtra.create_if_nothing' &
+      def create_if_nothing
+        # production 更新
+        # r = t.advance(days: 0)...t.advance(days: 1)
+        # Swars::MembershipExtra.delete_all
+        # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+        t = Time.current.midnight
+        r = "2000-11-01".to_time..."2021-12-01".to_time
+        m = Swars::Membership.membership_extra_missing
+        b = Swars::Battle.where(battled_at: r).where(memberships: m)
+        total = b.count
+        SlackAgent.notify(subject: "create_if_nothing", body: b.count)
+        offset = 0
+        b.find_in_batches do |av|
+          SlackAgent.notify(subject: "create_if_nothing", body: [offset, total])
+          av.each(&:membership_extra_create_if_nothing)
+          offset += av.size
+        end
+        # tp Swars::MembershipExtra
+        SlackAgent.notify(subject: "create_if_nothing", body: "完了")
+      end
+    end
+
     belongs_to :membership      # プレイヤー対局情報
 
     before_validation on: :create do
