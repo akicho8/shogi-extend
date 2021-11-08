@@ -4,7 +4,7 @@
     .modal-card-title 画像ダウンロード
     ShareBoardColorThemeDropdown(:base="base")
 
-    b-dropdown(v-model="base.image_size_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.image_size_key_change_handle")
+    b-dropdown.image_size_key_dropdown(v-model="base.image_size_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" @change="base.image_size_key_change_handle")
       template(#trigger)
         b-button(:label="base.image_size_info.name" icon-right="menu-down" size="is-small")
       template(v-for="e in base.ImageSizeInfo.values")
@@ -12,7 +12,7 @@
           template(v-if="e.separator")
             b-dropdown-item(separator)
           template(v-else)
-            b-dropdown-item(:value="e.key" @click="base.image_size_item_click_handle(e)") {{e.option_name}}
+            b-dropdown-item(:class="e.key" :value="e.key" @click="base.image_size_item_click_handle(e)") {{e.option_name}}
 
   .modal-card-body
     .preview_image_container.is-flex

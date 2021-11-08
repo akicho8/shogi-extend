@@ -7,7 +7,7 @@ b-dropdown.ShareBoardColorThemeDropdown(v-model="base.color_theme_key" @active-c
       template(v-if="e.separator")
         b-dropdown-item(separator)
       template(v-else)
-        b-dropdown-item(:value="e.key" @click="base.color_theme_item_click_handle(e)")
+        b-dropdown-item(:class="e.key" :value="e.key" @click="base.color_theme_item_click_handle(e)")
           .media
             .media-content
               .is_line_break_on.is-size-7
