@@ -7,37 +7,6 @@ module Swars
       @FURIBI = "+2878HI"
     end
 
-    def csa_seq_generate(n)
-      seconds = 600
-      [
-        ["+5958OU", seconds],
-        ["-5152OU", seconds],
-        ["+5859OU", seconds],
-        ["-5251OU", seconds],
-      ].cycle.take(n)
-    end
-
-    def csa_seq_generate1(n)
-      [
-        ["+5958OU", 600],
-        ["-5152OU", 600],
-        ["+5859OU", 600],
-        ["-5251OU", 600],
-      ].cycle.take(n)
-    end
-
-    def csa_seq_generate2(n, sec)
-      list = csa_seq_generate1(n)
-      v = list.pop
-      v = [v.first, 600 - sec]
-      list + [v]
-    end
-
-    # before do
-    #   Battle.destroy_all
-    #   User.destroy_all
-    #   Swars.setup
-    # end
     describe "to_hash" do
       before do
         @record = Battle.create!
@@ -104,7 +73,7 @@ module Swars
       end
 
       def test1(judge_key, n)
-        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
         @black.user_info.avg_win_lose_turn_max.collect { |e| e[:value] }
@@ -124,7 +93,7 @@ module Swars
       end
 
       def test1(n, final_key, judge_key)
-        Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
         @black.user_info.avg_of_toryo_turn_max
@@ -143,7 +112,7 @@ module Swars
       end
 
       def test1(n)
-        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black)
         end
         @black.user_info.avg_of_turn_max
@@ -160,17 +129,8 @@ module Swars
         @black = User.create!
       end
 
-      def csa_seq_generate
-        [
-          ["+5958OU", 500], # 100秒
-          ["-5152OU", 600],
-          ["+5859OU", 300], # 200秒
-          ["-5251OU", 600],
-        ]
-      end
-
       def test1
-        Battle.create!(csa_seq: csa_seq_generate) do |e|
+        Battle.create!(csa_seq: csa_seq_generate5) do |e|
           e.memberships.build(user: @black)
         end
         [
@@ -234,17 +194,8 @@ module Swars
         @black = User.create!
       end
 
-      def csa_seq_generate
-        [
-          ["+5958OU", 500], # 100秒
-          ["-5152OU", 600],
-          ["+5859OU", 300], # 200秒
-          ["-5251OU", 600],
-        ]
-      end
-
       def test1(final_key)
-        Battle.create!(csa_seq: csa_seq_generate, final_key: final_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate5, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
         @black.user_info.avg_of_think_end_avg
@@ -258,18 +209,10 @@ module Swars
     end
 
     describe "将棋ウォーズの運営を支える力 kishin_info_records" do
-      def csa_seq_generate(n)
-        outbreak_csa + n.times.flat_map do |i|
-          seconds = 600 - (i * 4.seconds)
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
-        end
-      end
-
       def test1(rule_key, n)
-        Battle.create!(csa_seq: csa_seq_generate(n), rule_key: rule_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate4(n), rule_key: rule_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-
         @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
@@ -306,15 +249,8 @@ module Swars
         @black = User.create!
       end
 
-      def csa_seq_generate(n)
-        outbreak_csa + n.times.flat_map do |i|
-          seconds = 600 - (i * 4.seconds)
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
-        end
-      end
-
       def test1(n)
-        Battle.create!(csa_seq: csa_seq_generate(n)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate4(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
         @black.user_info.kishin_info_records_lv2&.collect { |e| e[:value] }
@@ -354,12 +290,9 @@ module Swars
       before do
         @black = User.create!
       end
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
 
       def test1(n)
-        Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         @black.user_info.disconnect_count
@@ -486,7 +419,7 @@ module Swars
       end
 
       def test1
-        battle = Battle.create!(csa_seq: csa_seq_generate(3))
+        battle = Battle.create!(csa_seq: csa_seq_generate1(3))
         battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
       end
 

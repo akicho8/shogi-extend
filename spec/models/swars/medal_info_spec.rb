@@ -75,14 +75,10 @@ module Swars
     end
 
     describe "切断マン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -96,15 +92,8 @@ module Swars
     end
 
     describe "居玉勝ちマン" do
-      def csa_seq_generate(n)
-        n.times.flat_map do |i|
-          seconds = 600 - (i * 2.seconds)
-          [["+2858HI", seconds], ["-5152OU", seconds], ["+5828HI", seconds], ["-5251OU", seconds]]
-        end
-      end
-
       before do
-        Battle.create!(csa_seq: csa_seq_generate(20)) do |e|
+        Battle.create!(csa_seq: csa_seq_generate6(50)) do |e|
           e.memberships.build(user: user)
         end
       end
@@ -115,13 +104,10 @@ module Swars
     end
 
     describe "切れ負けマン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
       def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -150,14 +136,10 @@ module Swars
     end
 
     describe "相手退席待ちマン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -170,14 +152,10 @@ module Swars
     end
 
     describe "絶対投了しないマン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -213,14 +191,10 @@ module Swars
     end
 
     describe "ただの千日手" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]] * n
-      end
-
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DRAW_SENNICHI) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
@@ -228,23 +202,16 @@ module Swars
       end
 
       it do
-        test(4).include?(:"ただの千日手")
-        test(3).include?(:"開幕千日手")
+        test(16).include?(:"ただの千日手")
+        test(12).include?(:"開幕千日手")
       end
     end
 
     describe "運営支えマン" do
-      def csa_seq_generate(n)
-        outbreak_csa + n.times.flat_map do |i|
-          seconds = 600 - (i * 4.seconds)
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
-        end
-      end
-
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate4(n), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
@@ -281,14 +248,10 @@ module Swars
     end
 
     describe "無気力マン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(n, final_key)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -307,31 +270,3 @@ module Swars
 
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ........F..
-# >>
-# >> Failures:
-# >>
-# >>   1) {:type=>:model} 運営支えマン
-# >>      Failure/Error: Unable to find - to read failed line
-# >>
-# >>      NameError:
-# >>        undefined local variable or method `outbreak_csa' for #<RSpec::ExampleGroups::TypeModel::Nested_8 "example at -:234">
-# >>      # -:218:in `csa_seq_generate'
-# >>      # -:227:in `test'
-# >>      # -:235:in `block (4 levels) in <module:Swars>'
-# >>      # <internal:prelude>:137:in `__enable'
-# >>      # <internal:prelude>:137:in `enable'
-# >>      # <internal:prelude>:137:in `__enable'
-# >>      # <internal:prelude>:137:in `enable'
-# >>      # -:235:in `block (3 levels) in <module:Swars>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >>
-# >> Finished in 20.82 seconds (files took 2.55 seconds to load)
-# >> 11 examples, 1 failure
-# >>
-# >> Failed examples:
-# >>
-# >> rspec -:234 # {:type=>:model} 運営支えマン
-# >>

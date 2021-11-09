@@ -38,14 +38,10 @@ module Swars
     end
 
     describe "切断マン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DISCONNECT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -59,14 +55,10 @@ module Swars
     end
 
     describe "絶対投了しないマン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 599], ["-5152OU", 599], ["+5859OU", 599], ["-5251OU", 599]].cycle.take(n)
-      end
-
       def test1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n, sec: 1), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -81,14 +73,10 @@ module Swars
     end
 
     describe "相手退席待ちマン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -138,14 +126,10 @@ module Swars
     end
 
     describe "無気力マン" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(n, final_key)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: final_key) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -164,14 +148,10 @@ module Swars
     end
 
     describe "ただの千日手" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]] * n
-      end
-
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :DRAW_SENNICHI) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
@@ -179,25 +159,18 @@ module Swars
       end
 
       it do
-        test(4)                 # => [:ただの千日手, "千日手"]
-        test(3)                 # => [:開幕千日手, "最初から千日手にした"]
-        assert { test(4) == [:ただの千日手, "千日手"]             }
-        assert { test(3) == [:開幕千日手, "最初から千日手にした"] }
+        test(4*4)                 # => [:ただの千日手, "千日手"]
+        test(3*4)                 # => [:開幕千日手, "最初から千日手にした"]
+        assert { test(4*4) == [:ただの千日手, "千日手"]             }
+        assert { test(3*4) == [:開幕千日手, "最初から千日手にした"] }
       end
     end
 
     describe "切れ負けマン" do
-      def csa_seq_generate(n)
-        n.times.flat_map do |i|
-          seconds = 600 - i * 30.seconds
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds], ["-5251OU", seconds]]
-        end
-      end
-
       def test1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(20), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate3(20, 30), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -211,17 +184,10 @@ module Swars
     end
 
     describe "運営支えマン" do
-      def csa_seq_generate(n)
-        outbreak_csa + n.times.flat_map do |i|
-          seconds = 600 - (i * 4.seconds)
-          [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - 2], ["-5251OU", seconds]]
-        end
-      end
-
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate(n), final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: csa_seq_generate4(n), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
@@ -235,12 +201,8 @@ module Swars
     end
 
     describe "段級差" do
-      def csa_seq_generate(n)
-        [["+5958OU", 600], ["-5152OU", 600], ["+5859OU", 600], ["-5251OU", 600]].cycle.take(n)
-      end
-
       def test1(*keys)
-        Battle.create!(csa_seq: csa_seq_generate(20)) { |e|
+        Battle.create!(csa_seq: csa_seq_generate1(20)) { |e|
           keys.each do |key|
             e.memberships.build(user: User.create!(grade_key: key))
           end
