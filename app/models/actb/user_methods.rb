@@ -294,19 +294,9 @@ module Actb
       end
 
       # rails r "tp User.first.actb_info"
-      def info
+      def legacy_info
         {
-          "ID"                 => id,
-          "名前"               => name,
-          "名前確定日時"       => name_input_at&.to_s(:distance),
-          "メールアドレス"     => email,
-          "プロバイダ"         => auth_infos.collect(&:provider).join(" "),
-          "Twitterアカウント"  => twitter_key,
-          "ログイン回数"       => sign_in_count,
-          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
-          "登録日時"           => created_at&.to_s(:distance),
-          "IP"                 => current_sign_in_ip,
-          "タグ"               => permit_tag_list,
+          **info,
 
           "オンライン"         => Actb::SchoolChannel.active_users.include?(self) ? "○" : "",
           "対戦中"             => Actb::RoomChannel.active_users.include?(self) ? "○" : "",
@@ -336,6 +326,22 @@ module Actb
 
           "ユニーク問題正解数(本日)"   => today_total_o_ucount,
           "ユニーク問題不正解数(本日)" => today_total_x_ucount,
+        }
+      end
+
+      def info
+        {
+          "ID"                 => id,
+          "名前"               => name,
+          "名前確定日時"       => name_input_at&.to_s(:distance),
+          "メールアドレス"     => email,
+          "プロバイダ"         => auth_infos.collect(&:provider).join(", "),
+          "Twitterアカウント"  => twitter_key,
+          "ログイン回数"       => sign_in_count,
+          "最終ログイン日時"   => current_sign_in_at&.to_s(:distance),
+          "登録日時"           => created_at&.to_s(:distance),
+          "IP"                 => current_sign_in_ip,
+          "タグ"               => permit_tag_list,
         }
       end
     end

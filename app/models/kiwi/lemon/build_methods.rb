@@ -129,7 +129,6 @@ module Kiwi
         cattr_accessor(:user_lemon_queue_max) { 3 }   # 未処理投入最大件数
 
         delegate :everyone_broadcast, :background_job_kick_if_period, to: "self.class"
-        # delegate :browser_url, to: "media_builder"
 
         if Rails.env.development?
           after_commit do
@@ -166,13 +165,14 @@ module Kiwi
       # cap staging rails:runner CODE='Kiwi::Lemon.last.main_process'
       def main_process
         logger.tagged(to_param) do
-          reset
-          self.process_begin_at = Time.current
-          save!
+          begin
+            reset
+            self.process_begin_at = Time.current
+            save!
+          end
           user.kiwi_my_lemons_singlecast
           everyone_broadcast
-          SystemMailer.notify(fixed: true, subject: "【動画作成引数】[#{id}] #{user.name}(#{user.kiwi_lemons.count})", body: all_params[:media_builder_params].to_t).deliver_later
-          SlackAgent.notify(subject: "動画作成 開始 [#{id}]", body: user.name)
+          start_notify
           begin
             sleep(all_params[:sleep].to_i)
             if v = all_params[:raise_message].presence
@@ -204,10 +204,7 @@ module Kiwi
           user.kiwi_my_lemons_singlecast
           user.kiwi_done_lemon_singlecast(self)
           everyone_broadcast
-
-          SlackAgent.notify(subject: "動画作成 #{status_key} #{user.name}", body: "[#{(process_end_at - process_begin_at)}s] #{browser_url} #{recordable.sfen_body}")
-
-          KiwiMailer.lemon_notify(self).deliver_later
+          end_notify
         end
       end
 
@@ -226,14 +223,23 @@ module Kiwi
         end
       end
 
+      # 変換にかかったトータル秒数
+      def processed_total_seconds
+        if process_begin_at && process_end_at
+          process_end_at - process_begin_at
+        end
+      end
+
       def info
         {}.tap do |e|
           e["ID"]   = id
           e["所有"] = user.name
-          e["状況"] = status_key ? status_key[:name] : ""
+          e["回数"] = "#{user.kiwi_lemons.count.next}回目"
+          e["状況"] = status_key
           e["投入"] = created_at&.to_s(:ymdhms)
           e["開始"] = process_begin_at&.to_s(:ymdhms)
           e["成功"] = successed_at&.to_s(:ymdhms)
+          e["所要"] = processed_total_seconds ? "#{processed_total_seconds}秒" : ""
           e["失敗"] = errored_at&.to_s(:ymdhms)
           e["終了"] = process_end_at&.to_s(:ymdhms)
         end
@@ -244,7 +250,6 @@ module Kiwi
         RecipeInfo.fetch(recipe_key)
       end
 
-      # REVIEW: 不要？
       def browser_url
         if browser_path
           UrlProxy.full_url_for(path: browser_path)
@@ -265,6 +270,36 @@ module Kiwi
           FileUtils.rm_f("#{v}.rb")
           self.browser_path = nil
         end
+      end
+
+      # rails r 'Kiwi::Lemon.first.start_notify'
+      def start_notify
+        SystemMailer.notify(fixed: true, subject: report_subject, body: report_text).deliver_later
+        SlackAgent.notify(subject: report_subject, body: browser_url)
+      end
+
+      # rails r 'Kiwi::Lemon.first.end_notify'
+      def end_notify
+        start_notify
+        KiwiMailer.lemon_notify(self).deliver_later
+      end
+
+      # rails r 'p Kiwi::Lemon.first.report_subject'
+      def report_subject
+        "[動画作成#{status_key}][##{id}] #{user.name} (#{user.kiwi_lemons.count.next}回目)"
+      end
+
+      # rails r 'puts Kiwi::Lemon.first.report_text'
+      def report_text
+        {
+          "変換パラメータ" => all_params[:media_builder_params].to_t,
+          "棋譜URL"        => UrlProxy.full_url_for(recordable.share_board_path),
+          "ブラウザURL"    => browser_url,
+          "状態"           => info.to_t,
+          "全体の状況"     => self.class.info.to_t,
+          "ユーザー"       => user.info.to_t,
+          "棋譜"           => recordable.kifu_body,
+        }.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")
       end
 
       private
