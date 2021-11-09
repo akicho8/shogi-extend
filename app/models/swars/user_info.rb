@@ -707,12 +707,12 @@ module Swars
     ################################################################################ 駒の使用頻度
 
     def used_piece_counts_records
-      if Rails.env.production?
-        if params[:with_used_piece_counts]
-        else
-          return
-        end
-      end
+      # if Rails.env.production?
+      #   if params[:with_used_piece_counts]
+      #   else
+      #     return
+      #   end
+      # end
 
       counts = Hash.new(0)
       s = ids_scope
