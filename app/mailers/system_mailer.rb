@@ -41,12 +41,8 @@ class SystemMailer < ApplicationMailer
         fixed: false,
       }.merge(params)
 
-      if true
-        s = params[:body].presence || ""
-        if s.respond_to?(:join)
-          s = s.join
-        end
-        params[:body] = s
+      [:subject, :body].each do |e|
+        params[e] = params[e].to_s
       end
 
       if params[:fixed]
