@@ -58,9 +58,10 @@ module Kiwi
         # 仕掛けている個所
         # ・ページを開いて、ActionCable での接続の初回
         # ・変換ボタンを押したタイミング
+        # ・CRON
         def zombie_kill(options = {})
           options = {
-            expires_in: 30.minutes, # N分以上かけて完了していなければ成仏させる
+            expires_in: 60.minutes, # N分以上かけて完了していなければ成仏させる
           }.merge(options)
 
           logger.tagged("zombie_kill") do
