@@ -21,11 +21,9 @@ class SystemMailer < ApplicationMailer
 
   # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
   def notify(params = {})
-    hv = params.merge(subject: subject_decorate(params[:subject]))
-    if params[:fixed]
-      hv = fixed_format(hv)
-    end
-    mail(hv)
+    params = params.merge(subject: subject_decorate(params[:subject]))
+    params = params_normalize(params)
+    mail(params)
   end
 
   private
@@ -38,9 +36,25 @@ class SystemMailer < ApplicationMailer
 
     private
 
-    def fixed_format(params)
-      body = crln_to_br_for_gmail(params[:body].to_s)
-      params.merge(content_type: "text/html", body: pre_tag(body))
+    def params_normalize(params)
+      params = {
+        fixed: false,
+      }.merge(params)
+
+      if true
+        s = params[:body].presence || ""
+        if s.respond_to?(:join)
+          s = s.join
+        end
+        params[:body] = s
+      end
+
+      if params[:fixed]
+        body = gmail_problem_workaround(params[:body])
+        params.update(content_type: "text/html", body: pre_tag(body))
+      end
+
+      params
     end
 
     def pre_tag(text)
@@ -48,7 +62,7 @@ class SystemMailer < ApplicationMailer
     end
 
     # GMailで改行が2重になる対策
-    def crln_to_br_for_gmail(text)
+    def gmail_problem_workaround(text)
       text.gsub("\n", "<br>")
     end
   end
