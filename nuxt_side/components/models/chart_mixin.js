@@ -30,6 +30,11 @@ export default {
       this._chart_config.__vm__ = this
     },
 
+    // aspectRatio の場合は update では反映されないので次のように作り直す
+    //
+    //   this._chart_config.options.aspectRatio = 5.0
+    //   this.chart_create()
+    //
     chart_create() {
       this.chart_destroy()
       this._chart_instance = new Chart(this.$refs.main_canvas, this._chart_config)

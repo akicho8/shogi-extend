@@ -299,7 +299,7 @@ module Swars
 
         ################################################################################
 
-        { name: "駒の使用頻度",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
+        { name: "駒の使用率",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
 
         ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
@@ -704,7 +704,7 @@ module Swars
       end
     end
 
-    ################################################################################ 駒の使用頻度
+    ################################################################################ 駒の使用率
 
     def used_piece_counts_records
       # if Rails.env.production?
@@ -841,7 +841,7 @@ module Swars
       tags.collect do |tag|
         {}.tap do |hash|
           hash[:tag] = tag.attributes.slice("name", "count")  # 戦法名
-          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用率, 遭遇率
+          hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用頻度, 遭遇率
 
           # 勝ち負け数
           c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).group("judge_key").count) # => {"win" => 1, "lose" => 0}

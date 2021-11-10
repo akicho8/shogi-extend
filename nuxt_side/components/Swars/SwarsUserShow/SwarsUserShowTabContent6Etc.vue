@@ -63,4 +63,6 @@ export default {
     margin: 0 0.5rem
     color: $grey-light
     font-size: $size-3
+  .box
+    position: relative
 </style>
