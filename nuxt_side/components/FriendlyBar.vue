@@ -174,7 +174,7 @@ const CHART_CONFIG_DEFAULT = {
 }
 
 import chart_mixin from '@/components/models/chart_mixin.js'
-import { BarZoomInfo } from "./models/bar_zoom_info.js"
+import { BarPresetInfo } from "./models/bar_preset_info.js"
 
 // http://localhost:3000/w?query=kinakom0chi&user_info_show=true
 export default {
@@ -187,7 +187,7 @@ export default {
   },
   data() {
     return {
-      bar_zoom_key: "bz_is_small",
+      bar_preset_key: "bp_is_default",
     }
   },
   created() {
@@ -223,12 +223,12 @@ export default {
   methods: {
     zoom_handle() {
       this.sound_play_click()
-      this.bar_zoom_key = this.BarZoomInfo.fetch(this.ruby_like_modulo(this.bar_zoom_info.code + 1, this.BarZoomInfo.values.length)).key
-      // this._chart_config.options.aspectRatio = this.bar_zoom_info.value
+      this.bar_preset_key = this.BarPresetInfo.fetch(this.ruby_like_modulo(this.bar_preset_info.code + 1, this.BarPresetInfo.values.length)).key
+      // this._chart_config.options.aspectRatio = this.bar_preset_info.value
       // this.chart_create()
       // this.debug_alert(this._chart_config.options.aspectRatio)
-      this._chart_config.options.aspectRatio                 = this.bar_zoom_info.aspect_ratio
-      this._chart_config.data.datasets[0].datalabels.display = this.bar_zoom_info.datalabels_display
+      this._chart_config.options.aspectRatio                 = this.bar_preset_info.aspect_ratio
+      this._chart_config.data.datasets[0].datalabels.display = this.bar_preset_info.datalabels_display
       this.chart_create()
     },
     // tategaki_p が有効なら縦書きにする
@@ -259,8 +259,8 @@ export default {
     },
   },
   computed: {
-    BarZoomInfo()    { return BarZoomInfo },
-    bar_zoom_info()  { return this.BarZoomInfo.fetch(this.bar_zoom_key) },
+    BarPresetInfo()    { return BarPresetInfo },
+    bar_preset_info()  { return this.BarPresetInfo.fetch(this.bar_preset_key) },
     data_list()      { return this.info.body || []             },
     data_count()     { return this.data_list.length            },
     extract_labels() { return this.data_list.map(e => this.name_decorate(e.name)) },
