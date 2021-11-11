@@ -1,19 +1,6 @@
 export const app_style = {
-  data() {
-    return {
-      touch_board_width: null, // touchデバイスでの将棋盤の幅(%)
-      xy_grid_stroke:    null, // 線の太さ
-      xy_grid_color:     null, // 線の色
-      xy_grid_star_size:     null, // 星の大きさ
-    }
-  },
   methods: {
-    style_reset() {
-      this.touch_board_width = null
-      this.xy_grid_stroke    = null
-      this.xy_grid_color     = null
-      this.xy_grid_star_size = null
-    },
+    // スタイルを初期値に戻す
     style_default_handle() {
       this.sound_play_click()
 

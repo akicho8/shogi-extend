@@ -21,7 +21,7 @@
             b-button(@click="help_dialog_show" icon-right="help")
 
           .DigitBoardTime.is-unselectable
-            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_method_p && is_mode_active")
+            .vector_container.has-text-weight-bold.is-inline-block(v-if="tap_mode_p && is_mode_active")
               template(v-if="mode === 'is_mode_ready'")
                 | ？？
               template(v-if="mode === 'is_mode_run'")
@@ -205,7 +205,7 @@ export default {
 
     cell_tap_handle(place, event) {
       if (this.mode === "is_mode_run") {
-        if (this.tap_method_p) {
+        if (this.tap_mode_p) {
           this.input_valid(place)
         } else {
           this.place_talk(place)
@@ -238,8 +238,6 @@ export default {
       this.chart_rule_key = null
       this.entry_name        = null
       this.current_pages     = null
-
-      this.style_reset()
     },
 
     init_other_variables() {
@@ -318,7 +316,7 @@ export default {
       if (this.mode != "is_mode_run") {
         return
       }
-      if (this.tap_method_p) {
+      if (this.tap_mode_p) {
         if (!this.development_p) {
           return
         }
@@ -375,7 +373,7 @@ export default {
 
       const p = this.next_place
 
-      if (this.kb_method_p) {
+      if (this.kb_mode_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
         this.sfen_clear()
@@ -443,13 +441,13 @@ export default {
     },
 
     sfen_set() {
-      if (this.tap_method_p) {
+      if (this.tap_mode_p) {
         this.sp_object().api_sfen_or_kif_set(this.board_preset_info.sfen)
       }
     },
 
     sfen_clear() {
-      if (this.kb_method_p) {
+      if (this.kb_mode_p) {
         this.sp_object().api_board_clear()
       }
     },
@@ -481,16 +479,12 @@ export default {
 
     NEXT_IF_X()      { return this.$route.query.NEXT_IF_X || NEXT_IF_X },
 
-    tap_method_p() { return this.rule_info.input_mode === "is_input_mode_tap" },
-    kb_method_p()  { return this.rule_info.input_mode === "is_input_mode_kb"  },
+    tap_mode_p() { return this.rule_info.input_mode === "is_input_mode_tap" },
+    kb_mode_p()  { return this.rule_info.input_mode === "is_input_mode_kb"  },
 
     current_rank() { return this.time_record.rank_info[this.scope_key].rank },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    sp_body() {
-      return "position sfen 9/6pl1/7n1/6n1k/6+B2/9/8N/6NKL/9 b - 1"
-    },
 
     default_rule_key() {
       if (isMobile.any()) {
