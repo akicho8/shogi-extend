@@ -46,7 +46,7 @@ export const app_tweet = {
     },
 
     time_over_p() {
-      return this.spent_sec >= this.current_rule.time_limit
+      return this.spent_sec >= this.rule_info.time_limit
     },
 
     tweet_url() {

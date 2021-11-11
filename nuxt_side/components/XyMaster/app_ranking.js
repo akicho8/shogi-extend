@@ -81,8 +81,8 @@ export const app_ranking = {
     },
 
     data_update(params) {
-      const rule_info = this.RuleInfo.fetch(params.time_record.rule_key)
-      this.$set(this.time_records_hash, rule_info.key, params.time_records)
+      const info = this.RuleInfo.fetch(params.time_record.rule_key)
+      this.$set(this.time_records_hash, info.key, params.time_records)
       this.time_record = params.time_record
     },
 

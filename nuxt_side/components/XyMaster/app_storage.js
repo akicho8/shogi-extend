@@ -2,16 +2,18 @@ import { params_controller } from "@/components/params_controller.js"
 import { ParamInfo } from "./models/param_info.js"
 
 export const app_storage = {
-  mixins: [params_controller],
+  mixins: [
+    params_controller,
+  ],
+  data() {
+    return {
+      ...ParamInfo.null_value_data_hash,
+    }
+  },
   computed: {
     ParamInfo() { return ParamInfo },
 
     //////////////////////////////////////////////////////////////////////////////// for ls_support_mixin
-    // |------------------+----------------------------------------|
-    // | "xy_master"      | stopwatch のライブラリを使っていたころ |
-    // | "new_xy_master"  | xy プレフィクスついていたころ          |
-    // | "new_xy_master2" | xy プレフィクスついてない現状          |
-    // |------------------+----------------------------------------|
     ls_storage_key() {
       return "new_xy_master2"
     },

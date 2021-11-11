@@ -1,5 +1,5 @@
 <template lang="pug">
-.XyMasterApp(:class="mode" :style="component_style")
+.XyMasterApp(:class="[mode, rule_info.input_mode]" :style="component_style")
   XyMasterSidebar(:base="base")
   XyMasterNavbar(:base="base")
   MainSection
@@ -13,7 +13,7 @@
 
             b-dropdown.is-pulled-left(v-model="rule_key" @click.native="sound_play_click()")
               button.button(slot="trigger")
-                span {{current_rule.name}}
+                span {{rule_info.name}}
                 b-icon(icon="menu-down")
               template(v-for="e in RuleInfo.values")
                 b-dropdown-item(:value="e.key") {{e.name}}
@@ -32,13 +32,16 @@
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
               //- 「持ちあげる処理」を無効にするために sp_board_cell_left_click_user_handle で true を返している
+              //- sp_run_mode="play_mode"
               CustomShogiPlayer(
                 ref="main_sp"
+                sp_run_mode="play_mode"
+                sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_summary="is_summary_off"
                 sp_pi_variant="is_pi_variant_b"
                 :sp_hidden_if_piece_stand_blank="true"
-                :sp_viewpoint="current_rule.viewpoint"
+                :sp_viewpoint="rule_info.viewpoint"
                 :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
                 :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
                 :sp_board_cell_left_click_user_handle="sp_board_cell_left_click_user_handle"
@@ -90,6 +93,7 @@ import { app_chore       } from "./app_chore.js"
 import { RuleInfo       } from "./models/rule_info.js"
 import { ScopeInfo      } from "./models/scope_info.js"
 import { ChartScopeInfo } from "./models/chart_scope_info.js"
+import { BoardPresetInfo } from "./models/board_preset_info.js"
 
 const COUNTDOWN_INTERVAL = 0.5     // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3       // カウントダウンはNから開始する
@@ -146,7 +150,7 @@ export default {
 
   mounted() {
     this.ga_click("符号の鬼")
-    this.sp_object().api_board_clear()
+    this.sfen_clear_or_set()
   },
 
   beforeDestroy() {
@@ -155,8 +159,13 @@ export default {
   },
 
   watch: {
+    board_preset_key(v) {
+      this.sfen_set()
+    },
+
     rule_key(v) {
-      this.current_rule_index = this.current_rule.code
+      this.current_rule_index = this.rule_info.code
+      this.sfen_clear_or_set()
     },
 
     current_rule_index(v) {
@@ -182,14 +191,16 @@ export default {
     // こっちは prevent.stop されてないので自分で呼ぶ
     sp_board_cell_pointerdown_user_handle(place, event) {
       if (this.tap_detect_key === "pointerdown") {
-        return this.cell_tap_handle(place, event)
+        this.cell_tap_handle(place, event)
       }
+      return true               // break
     },
 
     sp_board_cell_left_click_user_handle(place, event) {
       if (this.tap_detect_key === "click") {
-        return this.cell_tap_handle(place, event)
+        this.cell_tap_handle(place, event)
       }
+      return true               // break
     },
 
     cell_tap_handle(place, event) {
@@ -248,8 +259,9 @@ export default {
       this.sound_play_click()
       this.mode = "is_mode_ready"
       this.init_other_variables()
-      this.latest_rule = this.current_rule
-      this.sp_object().api_viewpoint_set(this.current_rule.viewpoint)
+      this.latest_rule = this.rule_info
+      this.sp_object().api_viewpoint_set(this.rule_info.viewpoint)
+      this.sfen_clear_or_set()
       this.interval_counter.start()
       this.scroll_set(false)
     },
@@ -299,7 +311,7 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.sp_object().api_board_clear()
+      this.sfen_clear()
     },
 
     keydown_handle_core(e) {
@@ -363,10 +375,10 @@ export default {
 
       const p = this.next_place
 
-      if (!this.tap_method_p) {
+      if (this.kb_method_p) {
         const soldier = Soldier.random()
         soldier.place = Place.fetch([p.x, p.y])
-        this.sp_object().api_board_clear()
+        this.sfen_clear()
         this.sp_object().api_place_on(soldier)
       }
 
@@ -429,13 +441,38 @@ export default {
       const { x, y } = xy
       return Place.fetch([x, y]).kanji_human
     },
+
+    sfen_set() {
+      if (this.tap_method_p) {
+        this.sp_object().api_sfen_or_kif_set(this.board_preset_info.sfen)
+      }
+    },
+
+    sfen_clear() {
+      if (this.kb_method_p) {
+        this.sp_object().api_board_clear()
+      }
+    },
+
+    sfen_clear_or_set() {
+      this.sfen_clear()
+      this.sfen_set()
+    },
   },
 
   computed: {
     base()           { return this           },
+
+    BoardPresetInfo()      { return BoardPresetInfo      },
+    board_preset_info() { return this.BoardPresetInfo.fetch(this.board_preset_key) },
+
     ScopeInfo()      { return ScopeInfo      },
-    ChartScopeInfo() { return ChartScopeInfo },
+    curent_scope() { return ScopeInfo.fetch(this.scope_key) },
+
     RuleInfo()       { return RuleInfo       },
+    rule_info() { return RuleInfo.fetch(this.rule_key) },
+
+    ChartScopeInfo() { return ChartScopeInfo },
     DIMENSION()      { return 9              }, // 盤面の辺サイズ
 
     is_mode_idol()   { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
@@ -444,18 +481,16 @@ export default {
 
     NEXT_IF_X()      { return this.$route.query.NEXT_IF_X || NEXT_IF_X },
 
-    curent_scope() {
-      return ScopeInfo.fetch(this.scope_key)
-    },
+    tap_method_p() { return this.rule_info.input_mode === "is_input_mode_tap" },
+    kb_method_p()  { return this.rule_info.input_mode === "is_input_mode_kb"  },
 
-    current_rule() {
-      return RuleInfo.fetch(this.rule_key)
-    },
-
-    tap_method_p()      { return this.current_rule.input_mode === "tap" },
-    keyboard_method_p() { return this.current_rule.input_mode === "keyboard" },
+    current_rank() { return this.time_record.rank_info[this.scope_key].rank },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    sp_body() {
+      return "position sfen 9/6pl1/7n1/6n1k/6+B2/9/8N/6NKL/9 b - 1"
+    },
 
     default_rule_key() {
       if (isMobile.any()) {
@@ -463,10 +498,6 @@ export default {
       } else {
         return "rule100"
       }
-    },
-
-    current_rank() {
-      return this.time_record.rank_info[this.scope_key].rank
     },
 
   },
@@ -529,17 +560,21 @@ export default {
         width: calc(100vmin * 0.50)
 
     .CustomShogiPlayer
-      --sp_board_padding: 0                                   // 盤の隙間なし
-      --sp_board_color: hsla(0, 0%, 0%, 0)                    // 盤の色
-      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1) // 外枠の太さ
-      --sp_grid_stroke: var(--xy_grid_stroke)                 // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%))                  // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%))                  // グリッド色
-      --sp_board_aspect_ratio: 1.0                            // 盤を正方形化
-      --sp_grid_star_size: calc(var(--xy_grid_star_size) * 1.0%)  // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))                   // 星の色
-      --sp_shadow_offset: 0                                   // 影なし
-      --sp_shadow_blur: 0                                     // 影なし
+      --sp_board_padding: 0                                                         // 盤の隙間なし
+      --sp_board_color: hsla(0, 0%, 0%, 0)                                          // 盤の色
+      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                       // 外枠の太さ
+      --sp_grid_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
+      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%)) // グリッド外枠色
+      --sp_grid_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
+      --sp_board_aspect_ratio: 1.0                                                  // 盤を正方形化
+      --sp_grid_star_size: calc(var(--xy_grid_star_size) * 1.0%)                    // 星の大きさ
+      --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
+      --sp_shadow_offset: 0                                                         // 影なし
+      --sp_shadow_blur: 0                                                           // 影なし
+
+  &.is_input_mode_tap
+    --sp_board_piece_rate: 76.6% // セル内の駒の大きさ
+    --sp_piece_opacity: 0.2      // 駒の非透明度
 
   .tweet_box_container
     display: flex
