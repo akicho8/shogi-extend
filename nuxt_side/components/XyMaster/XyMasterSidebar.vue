@@ -19,6 +19,9 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
         b-field(custom-class="is-small" label="星の大きさ")
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_star_size" :min="0" :max="100" :step="0.1")
 
+        b-field(custom-class="is-small" label="駒の濃さ")
+          b-slider(v-bind="slider_attrs" v-model="base.xy_piece_opacity" :min="0" :max="1.0" :step="0.001")
+
         SimpleRadioButtons(:base="base" model_name="BoardPresetInfo" var_name="board_preset_key")
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す

@@ -8,6 +8,7 @@ export const app_style = {
       this.xy_grid_stroke    = this.ls_default.xy_grid_stroke
       this.xy_grid_color     = this.ls_default.xy_grid_color
       this.xy_grid_star_size = this.ls_default.xy_grid_star_size
+      this.xy_piece_opacity    = this.ls_default.xy_piece_opacity
 
       this.board_preset_key  = this.ls_default.board_preset_key
     },
@@ -19,6 +20,7 @@ export const app_style = {
         "--xy_grid_stroke":    this.xy_grid_stroke,
         "--xy_grid_color":     this.xy_grid_color,
         "--xy_grid_star_size": this.xy_grid_star_size,
+        "--xy_piece_opacity":    this.xy_piece_opacity,
       }
     },
   },

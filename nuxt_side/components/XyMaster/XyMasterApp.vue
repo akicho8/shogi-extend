@@ -568,7 +568,7 @@ export default {
 
   &.is_input_mode_tap
     --sp_board_piece_rate: 76.6% // セル内の駒の大きさ
-    --sp_piece_opacity: 0.2      // 駒の非透明度
+    --sp_piece_opacity: var(--xy_piece_opacity) // 駒の濃さ
 
   .tweet_box_container
     display: flex

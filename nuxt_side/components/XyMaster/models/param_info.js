@@ -9,6 +9,7 @@ export class ParamInfo extends ParamBase {
       { key: "xy_grid_stroke",    type: "float",  name: "線の太さ",                       default:  1.0,          permanent: true, relation: null,              desc: "", },
       { key: "xy_grid_color",     type: "float",  name: "線の色",                         default:  0.0,          permanent: true, relation: null,              desc: "", },
       { key: "xy_grid_star_size", type: "float",  name: "星の大きさ",                     default:   16,          permanent: true, relation: null,              desc: "", },
+      { key: "xy_piece_opacity",  type: "float",  name: "駒の濃さ",                   default:  0.2,          permanent: true, relation: null,              desc: "", },
     ]
   }
 }
