@@ -4,11 +4,6 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
-      //- b-menu
-      //-   b-menu-list(label="リアルタイム共有")
-      //-     b-menu-item.is_active_unset(label="部屋に入る"            @click="base.room_setup_modal_handle")
-      //-     b-menu-item.is_active_unset(label="順番設定"              @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
-      //-     b-menu-item.is_active_unset(label="対局時計"              @click="base.cc_modal_handle")
       .box
         .title.is-5 スタイル
 

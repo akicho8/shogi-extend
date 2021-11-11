@@ -67,35 +67,29 @@ import dayjs from "dayjs"
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Soldier } from "shogi-player/components/models/soldier.js"
-import { Place } from "shogi-player/components/models/place.js"
+import { Place   } from "shogi-player/components/models/place.js"
 
 import { isMobile        } from "@/components/models/is_mobile.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
-import { support_parent } from "./support_parent.js"
+import { support_parent  } from "./support_parent.js"
+import { app_chart       } from "./app_chart.js"
+import { app_debug       } from "./app_debug.js"
+import { app_help        } from "./app_help.js"
+import { app_keyboard    } from "./app_keyboard.js"
+import { app_main        } from "./app_main.js"
+import { app_ranking     } from "./app_ranking.js"
+import { app_sidebar     } from "./app_sidebar.js"
+import { app_storage     } from "./app_storage.js"
+import { app_style       } from "./app_style.js"
+import { app_tap_detect  } from "./app_tap_detect.js"
+import { app_tweet       } from "./app_tweet.js"
+import { app_chore       } from "./app_chore.js"
 
-import { app_chart    } from "./app_chart.js"
-import { app_debug    } from "./app_debug.js"
-import { app_help     } from "./app_help.js"
-import { app_keyboard } from "./app_keyboard.js"
-import { app_main     } from "./app_main.js"
-import { app_ranking  } from "./app_ranking.js"
-import { app_sidebar  } from "./app_sidebar.js"
-import { app_storage  } from "./app_storage.js"
-import { app_style    } from "./app_style.js"
-import { app_tap_detect    } from "./app_tap_detect.js"
-import { app_tweet    } from "./app_tweet.js"
-import { app_chore    } from "./app_chore.js"
-
-class RuleInfo extends ApplicationMemoryRecord {
-}
-
-class ScopeInfo extends ApplicationMemoryRecord {
-}
-
-class ChartScopeInfo extends ApplicationMemoryRecord {
-}
+import { RuleInfo       } from "./models/rule_info.js"
+import { ScopeInfo      } from "./models/scope_info.js"
+import { ChartScopeInfo } from "./models/chart_scope_info.js"
 
 const COUNTDOWN_INTERVAL = 0.5     // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3       // カウントダウンはNから開始する
@@ -142,10 +136,6 @@ export default {
   },
 
   created() {
-    RuleInfo.memory_record_reset(this.config.rule_info)
-    ScopeInfo.memory_record_reset(this.config.scope_info)
-    ChartScopeInfo.memory_record_reset(this.config.chart_scope_info)
-
     this.init_other_variables()
   },
 

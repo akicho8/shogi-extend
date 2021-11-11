@@ -7,14 +7,14 @@ module XyMaster
   class RuleInfo
     include ApplicationMemoryRecord
     memory_record [
-      # { key: "rule1",     name: "1問",      o_count_max:   1, viewpoint: :black, input_mode: "keyboard", },
-      # { key: "rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, input_mode: "keyboard", },
-      # { key: "rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, input_mode: "keyboard", },
+      # { key: "rule1",     name: "1問",      o_count_max:   1, viewpoint: :black, },
+      # { key: "rule10",    name: "10問",     o_count_max:  10, viewpoint: :black, },
+      # { key: "rule30",    name: "30問",     o_count_max:  30, viewpoint: :black, },
 
-      { key: "rule100t",  name: "☗100問TAP", o_count_max: 100, viewpoint: :black,  input_mode: "tap",      time_limit: 60*3.5, },
-      { key: "rule100tw", name: "☖100問TAP", o_count_max: 100, viewpoint: :white,  input_mode: "tap",      time_limit: 60*3.5, },
-      { key: "rule100",   name: "☗100問",    o_count_max: 100, viewpoint: :black,  input_mode: "keyboard", time_limit: 60*3.5, },
-      { key: "rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: :white,  input_mode: "keyboard", time_limit: 60*3.5, },
+      { key: "rule100t",  name: "☗100問TAP",  },
+      { key: "rule100tw", name: "☖100問TAP",  },
+      { key: "rule100",   name: "☗100問",     },
+      { key: "rule100w",  name: "☖100問",     },
     ]
 
     cattr_accessor(:rank_max) { (Rails.env.production? || Rails.env.staging?) ? 100 : 100 }  # 位まで表示
@@ -261,10 +261,10 @@ module XyMaster
             palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))
             v = result.find_all { |e| e.entry_name == name }
             {
-              label: name.truncate(14),
-              data: v.collect { |e| {x: e.created_on, y: e.spent_sec } },
-              backgroundColor: palette.background_color,
-              borderColor: palette.border_color,
+              :label           => name.truncate(14),
+              :data            => v.collect { |e| { x: e.created_on, y: e.spent_sec } },
+              :backgroundColor => palette.background_color,
+              :borderColor     => palette.border_color,
               # その他のパラメータは共通なので次のファイルで指定する
               # app/javascript/packs/application.js
               # app/javascript/xy_master_chart_mod.js

@@ -32,7 +32,7 @@
             | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
           b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(props.row.spent_sec)}}
           b-table-column(v-slot="props" field="x_count"    label="X" sortable numeric centered) {{props.row.x_count}}
-          b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_visible") {{base.time_default_format(props.row.created_at)}}
+          b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(props.row.created_at)}}
 
   .has-text-centered-mobile
     b-switch(v-model="base.entry_name_uniq_p" @input="sound_play_click()") プレイヤー別順位

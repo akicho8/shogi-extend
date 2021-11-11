@@ -69,13 +69,10 @@ module Api
 
       def config_params
         {
-          :rule_info        => ::XyMaster::RuleInfo.as_json,
-          :scope_info       => ::XyMaster::ScopeInfo.as_json,
-          :chart_scope_info => ::XyMaster::ChartScopeInfo.as_json,
-          :per_page         => ::XyMaster::RuleInfo.per_page,
-          :rank_max         => ::XyMaster::RuleInfo.rank_max,
-          :count_all_gteq   => ::XyMaster::RuleInfo.count_all_gteq,
-          :description      => ::XyMaster::RuleInfo.description,
+          :per_page       => ::XyMaster::RuleInfo.per_page,
+          :rank_max       => ::XyMaster::RuleInfo.rank_max,
+          :count_all_gteq => ::XyMaster::RuleInfo.count_all_gteq,
+          :description    => ::XyMaster::RuleInfo.description,
         }
       end
 
@@ -83,8 +80,8 @@ module Api
 
       def result_attributes
         {
-          time_records: @time_record.rule.pure_info.time_records(params),
-          time_record: @time_record.as_json(methods: [:rank_info, :best_update_info, :rule_key]),
+          :time_records => @time_record.rule.pure_info.time_records(params),
+          :time_record  => @time_record.as_json(methods: [:rank_info, :best_update_info, :rule_key]),
         }
       end
 
