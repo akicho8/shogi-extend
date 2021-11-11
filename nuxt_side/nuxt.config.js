@@ -2,19 +2,19 @@ import dayjs from "dayjs"
 
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 
-const SITE_DESC = [
-  "将棋のいろんなツールを提供するサイト",
-  "将棋ウォーズ棋譜検索",
+const SITE_DESC = "将棋のいろんなツールを提供するサイト。" + [
+  "将棋ウォーズ棋譜検索・統計",
   "リレー将棋・ネット対戦・詰将棋作成",
   "符号練習",
   "問題集作成",
-  "棋譜の各種フォーマット変換",
-  "奨励会三段リーグ個人成績確認",
-  "将棋ウォーズの段級・戦法・囲いの統計",
-  "詰将棋等の学習の経過を見える化",
+  "棋譜の相互変換",
+  "棋譜の動画化",
+  "三段リーグ早見表",
+  "詰将棋問題用ストップウォッチ",
   "対局時計",
   "将棋AI対戦",
-].join("。") + "などの機能があります"
+  "将棋盤画像",
+].join("・") + "などがあります"
 
 // https://github.com/nuxt-community/sitemap-module
 // http://localhost:4000/sitemap.xml
