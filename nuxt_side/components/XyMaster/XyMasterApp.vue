@@ -309,7 +309,7 @@ export default {
 
     timer_stop() {
       this.interval_frame.stop()
-      this.sfen_clear()
+      this.sfen_clear_or_set()
     },
 
     keydown_handle_core(e) {
@@ -443,18 +443,22 @@ export default {
     sfen_set() {
       if (this.tap_mode_p) {
         this.sp_object().api_sfen_or_kif_set(this.board_preset_info.sfen)
+        this.debug_alert("set")
       }
     },
 
     sfen_clear() {
       if (this.kb_mode_p) {
         this.sp_object().api_board_clear()
+        this.debug_alert("clear")
       }
     },
 
     sfen_clear_or_set() {
-      this.sfen_clear()
-      this.sfen_set()
+      this.$nextTick(() => {
+        this.sfen_clear()
+        this.sfen_set()
+      })
     },
   },
 

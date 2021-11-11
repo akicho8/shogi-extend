@@ -9,6 +9,8 @@
       a.panel-block(@click="base.rebuild_handle") リビルド
       a.panel-block(@click="base.ls_reset") ブラウザに記憶した情報の削除
       a.panel-block(@click="base.var_init") 保存可能な変数のリセット
+      a.panel-block(@click="base.sfen_set") sfen_set
+      a.panel-block(@click="base.sfen_clear") sfen_clear
   .column.is-3
     .panel
       .panel-heading
