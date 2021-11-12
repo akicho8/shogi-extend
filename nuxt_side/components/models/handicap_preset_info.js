@@ -22,6 +22,7 @@ export class HandicapPresetInfo extends ApplicationMemoryRecord {
       { key: "十枚落ち",       handicap_level:  5783, description: "15段級差",       sfen: "position sfen 4k4/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",           },
       { key: "十九枚落ち",     handicap_level: 99999, description: "16段級差",       sfen: "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",                   },
       { key: "青空将棋",       handicap_level:  1428, description: "先手有利",       sfen: "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",                 },
+      { key: "バリケード将棋", handicap_level:  1104, description: "先手有利",       sfen: "position sfen 9/9/ppppppppp/7k1/9/1K7/PPPPPPPPP/9/9 b RBLrbl 1",                },
     ]
   }
 }
