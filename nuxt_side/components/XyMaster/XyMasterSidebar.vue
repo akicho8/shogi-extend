@@ -14,7 +14,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_stroke" :min="0.5" :max="2" :step="0.5")
 
         b-field(custom-class="is-small" label="グリッドの濃さ")
-          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-20" :max="+10" :step="0.1")
+          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-20" :max="+20" :step="0.1")
 
         b-field(custom-class="is-small" label="星の大きさ")
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_star_size" :min="0" :max="100" :step="0.1")
