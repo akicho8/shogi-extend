@@ -567,6 +567,7 @@ export default {
       --sp_board_aspect_ratio: 1.0                                                  // 盤を正方形化
       --sp_grid_star_size: calc(var(--xy_grid_star_size) * 1.0%)                    // 星の大きさ
       --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
+      --sp_grid_star_z_index: -1                                                    // 星を盤の裏に表示
       --sp_shadow_offset: 0                                                         // 影なし
       --sp_shadow_blur: 0                                                           // 影なし
 
