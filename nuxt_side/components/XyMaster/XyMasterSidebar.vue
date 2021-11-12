@@ -26,7 +26,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す
 
-      .box
+      .box(v-if="development_p")
         .title.is-5 操作感
         SimpleRadioButtons.x-field_block(:base="base" model_name="TapDetectInfo" var_name="tap_detect_key")
 </template>

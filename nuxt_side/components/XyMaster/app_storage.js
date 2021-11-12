@@ -10,6 +10,13 @@ export const app_storage = {
       ...ParamInfo.null_value_data_hash,
     }
   },
+  mounted() {
+    if (this.development_p) {
+    } else {
+      // production では pointerdown を強制する
+      this.tap_detect_key = "pointerdown"
+    }
+  },
   computed: {
     ParamInfo() { return ParamInfo },
 
