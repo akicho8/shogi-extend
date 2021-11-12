@@ -436,6 +436,7 @@ GEM
       net-ssh (>= 2.8.0)
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
+    stringio (3.0.1)
     systemu (2.6.5)
     table_format (0.0.8)
       activesupport
@@ -550,6 +551,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-commands-rspec
+  stringio
   systemu
   table_format
   test-prof
@@ -565,4 +567,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.2.25
+   2.2.31
