@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field(:label="real_model.field_label" :message="current.message || real_model.field_message")
+b-field(:label="real_model.field_label" :message="current.message || real_model.field_message" v-bind="$attrs")
   template(v-for="e in real_model.values")
     b-radio-button(
       v-if="e.environment == null || e.environment.includes($config.STAGE)"
