@@ -571,13 +571,9 @@ export default {
       --sp_shadow_offset: 0                                                         // 影なし
       --sp_shadow_blur: 0                                                           // 影なし
 
-      // .BoardRow
-      //   .BoardColumn:after
-      //     z-index: -1
-
   &.is_input_mode_tap
     --sp_board_piece_rate: 76.6% // セル内の駒の大きさ
-    --sp_piece_opacity: var(--xy_piece_opacity) // 駒の濃さ
+    --sp_piece_opacity: var(--xy_piece_opacity) // ゴーストの濃さ
 
   .tweet_box_container
     display: flex

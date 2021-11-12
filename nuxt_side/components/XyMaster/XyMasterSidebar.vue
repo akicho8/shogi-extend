@@ -17,12 +17,16 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
           b-slider(v-bind="slider_attrs" v-model="base.xy_grid_color" :min="-20" :max="+20" :step="0.1")
 
         b-field(custom-class="is-small" label="星の大きさ")
-          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_star_size" :min="0" :max="100" :step="0.1")
+          b-slider(v-bind="slider_attrs" v-model="base.xy_grid_star_size" :min="0" :max="200" :step="0.1")
 
-        b-field(custom-class="is-small" label="駒の濃さ")
+        hr
+
+        SimpleRadioButtons(:base="base" model_name="BoardPresetInfo" var_name="board_preset_key" custom-class="is-small")
+
+        b-field(custom-class="is-small" label="ゴーストの濃さ")
           b-slider(v-bind="slider_attrs" v-model="base.xy_piece_opacity" :min="0" :max="1.0" :step="0.001")
 
-        SimpleRadioButtons(:base="base" model_name="BoardPresetInfo" var_name="board_preset_key")
+        hr
 
         b-button.style_default_handle(@click="base.style_default_handle" size="is-small") デフォルトに戻す
 
@@ -63,7 +67,7 @@ export default {
     margin-top: 1.75rem
 
   .style_default_handle
-    margin-top: 2rem
+    // margin-top: 2rem
 
   .b-slider
     .b-slider-thumb-wrapper.has-indicator

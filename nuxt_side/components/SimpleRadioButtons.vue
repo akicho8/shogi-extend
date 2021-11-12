@@ -24,7 +24,7 @@ export default {
   methods: {
     click_handle(e) {
       this.sound_play_click()
-      this.talk(this.current.name)
+      this.talk(this.current.talk_message || this.current.name)
     },
   },
   computed: {
