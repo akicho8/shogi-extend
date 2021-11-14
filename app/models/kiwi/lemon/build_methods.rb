@@ -61,7 +61,7 @@ module Kiwi
         # ・CRON
         def zombie_kill(options = {})
           options = {
-            expires_in: 60.minutes, # N分以上かけて完了していなければ成仏させる
+            expires_in: 30.minutes, # N分以上かけて完了していなければ成仏させる
           }.merge(options)
 
           logger.tagged("zombie_kill") do
