@@ -3,11 +3,16 @@ module CurrentUserMethods
 
   included do
     helper_method :sysop?
+    helper_method :staff?
     helper_method :current_user
   end
 
   let :sysop? do
     current_user && current_user.sysop?
+  end
+
+  let :staff? do
+    current_user && current_user.staff?
   end
 
   def editable_record?(record)

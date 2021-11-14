@@ -34,4 +34,8 @@ module UserStaffMethods
   def bot?
     key == "bot"
   end
+
+  def staff?
+    permit_tag_list.include?("staff")
+  end
 end
