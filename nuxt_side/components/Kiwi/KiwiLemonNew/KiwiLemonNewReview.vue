@@ -22,7 +22,7 @@
       b-button(v-if="development_p" @click="sound_play_click()" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank" )
       b-button(v-if="development_p" @click="base.rails_attachment_show_handle(base.done_record)"     type="is-light"   icon-left="download"            )
       b-button(v-if="development_p" @click="base.rails_inline_show_test_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         )
-      b-button(v-if="development_p" @click="base.__other_window_open_if_pc_handle(base.done_record)"       type="is-light"   icon-left="link"                )
+      b-button(v-if="development_p" @click="base.other_window_open_if_pc_handle(base.done_record)"       type="is-light"   icon-left="link"                )
       b-button(v-if="development_p" @click="base.media_info_show_handle(base.done_record)"  type="is-light"   icon-left="information-variant" )
       b-button(v-if="development_p" @click="base.json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           )
       b-button(v-if="development_p" @click="base.close_handle"                               type=""           icon-left="close"                 )

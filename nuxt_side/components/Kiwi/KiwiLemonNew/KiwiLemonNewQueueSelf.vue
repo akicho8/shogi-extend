@@ -37,9 +37,9 @@
         b-button.mb-0(v-if="development_p" @click="base.retry_handle(row)"      icon-left="hammer")
         b-button.mb-0(v-if="development_p" @click="sound_play_click()" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
         b-button.mb-0(v-if="development_p" @click="base.rails_attachment_show_handle(row)"     type="is-light"   icon-left="download"            )
-        b-button.mb-0(v-if="development_p" @click="base.__load_handle(row)"              type="is-light"   icon-left="open-in-app"         )
+        b-button.mb-0(v-if="development_p" @click="base.load_handle(row)"              type="is-light"   icon-left="open-in-app"         )
         b-button.mb-0(v-if="development_p" @click="base.rails_inline_show_test_handle(row)"         type="is-light"   icon-left="eye-outline"         )
-        b-button.mb-0(v-if="development_p" @click="base.__other_window_open_if_pc_handle(row)"       type="is-light"   icon-left="link"                )
+        b-button.mb-0(v-if="development_p" @click="base.other_window_open_if_pc_handle(row)"       type="is-light"   icon-left="link"                )
         b-button.mb-0(v-if="development_p" @click="base.media_info_show_handle(row)"  type="is-light"   icon-left="information-variant" )
         b-button.mb-0(v-if="development_p" @click="base.json_show_handle(row)"         type="is-light"   icon-left="code-json"           )
 </template>

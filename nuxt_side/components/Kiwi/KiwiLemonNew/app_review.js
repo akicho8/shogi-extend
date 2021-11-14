@@ -87,7 +87,7 @@ export const app_review = {
       })
     },
 
-    __load_handle(record) {
+    load_handle(record) {
       this.sound_play_click()
       this.done_record = record
     },
@@ -98,7 +98,7 @@ export const app_review = {
       this.window_popup(record.browser_path, record.to_wh)
     },
 
-    __other_window_open_if_pc_handle(record) {
+    other_window_open_if_pc_handle(record) {
       this.sound_play_click()
       this.url_open(record.browser_path, this.target_default)
     },

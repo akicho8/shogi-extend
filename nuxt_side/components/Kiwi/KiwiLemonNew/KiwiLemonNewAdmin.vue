@@ -19,8 +19,10 @@
     :data="base.admin_info.lemons"
     :mobile-cards="false"
     )
+
     b-table-column(v-slot="{row}" field="id" label="ID" numeric centered sortable :width="1")
       | {{row.id}}
+
     b-table-column(v-slot="{row}" field="user.id" label="所有者" sortable :width="1")
       | {{row.user.name}}
 
@@ -33,24 +35,30 @@
 
     b-table-column(v-slot="{row}" field="successed_at" label="消費" centered sortable :width="1")
       | {{row.elapsed_human}}
+
     b-table-column(v-slot="{row}" field="all_params.media_builder_params.recipe_key" label="種類" centered sortable :width="1")
       | {{row.recipe_info.name}}
 
-    b-table-column(v-slot="{row}")
+    b-table-column(v-slot="{row}" field="created_at" label="登録" sortable)
+      | {{row_time_format(row.created_at)}}
+
+    b-table-column(v-slot="{row}" field="errored_at" label="エラー" sortable)
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
         | {{row.error_message}}
-      .buttons.are-small.mb-0(v-if="row.successed_at")
-        b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path"  type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
-        b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" title="ライブラリ登録")
-        b-button.mb-0(@click="base.retry_handle(row)"      icon-left="hammer" title="リトライ")
 
-        b-button.mb-0(@click="sound_play_click()"                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
-        b-button.mb-0(@click="base.rails_attachment_show_handle(row)"           type="is-light"   icon-left="download"                                           title="Rails側のコントローラ経由でダウンロードするテスト")
-        b-button.mb-0(@click="base.__load_handle(row)"                    type="is-light"   icon-left="open-in-app"                                        title="プレビューのレコードにコピー")
-        b-button.mb-0(@click="base.rails_inline_show_test_handle(row)"               type="is-light"   icon-left="eye-outline"                                        title="Rails側のコントローラ経由でインライン表示するテスト")
-        b-button.mb-0(@click="base.__other_window_open_if_pc_handle(row)" type="is-light"   icon-left="link"                                               title="モバイルならそのままでPCなら別ウィンドウで開く")
-        b-button.mb-0(@click="base.media_info_show_handle(row)"        type="is-light"   icon-left="information-variant"                                title="変換後のファイル情報を表示")
-        b-button.mb-0(@click="base.json_show_handle(row)"               type="is-light"   icon-left="code-json"                                          title="JSON確認")
+    b-table-column(v-slot="{row}" label="操作")
+      .buttons.are-small.mb-0
+        b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path" type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
+        b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" title="ライブラリ登録")
+        b-button.mb-0(@click="base.retry_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")
+        b-button.mb-0(@click="sound_play_click()"                                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
+        b-button.mb-0(@click="base.rails_attachment_show_handle(row)"                     type="is-light"   icon-left="download"                                           title="Rails側のコントローラ経由でダウンロードするテスト")
+        b-button.mb-0(@click="base.load_handle(row)"                                    type="is-light"   icon-left="open-in-app"                                        title="プレビューのレコードにコピー")
+        b-button.mb-0(@click="base.rails_inline_show_test_handle(row)"                    type="is-light"   icon-left="eye-outline"                                        title="Rails側のコントローラ経由でインライン表示するテスト")
+        b-button.mb-0(@click="base.other_window_open_if_pc_handle(row)"                 type="is-light"   icon-left="link"                                               title="モバイルならそのままでPCなら別ウィンドウで開く")
+        b-button.mb-0(@click="base.media_info_show_handle(row)"                           type="is-light"   icon-left="information-variant"                                title="変換後のファイル情報を表示")
+        b-button.mb-0(@click="base.json_show_handle(row)"                                 type="is-light"   icon-left="code-json"                                          title="JSON確認")
+
 </template>
 
 <script>
