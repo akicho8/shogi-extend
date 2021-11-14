@@ -2,6 +2,11 @@ module Kiwi
   class Lemon
     concern :BuildMethods do
       class_methods do
+        # Sidekiqのワーカー可動数
+        def sidekiq_queue_kiwi_lemon_only_count
+          Sidekiq::Queue.new("kiwi_lemon_only").count
+        end
+
         # 有効な時間内にワーカーが動いてなかったら動かす
         # rails r 'Kiwi::Lemon.background_job_kick_if_period'
         def background_job_kick_if_period(options = {})
@@ -28,12 +33,11 @@ module Kiwi
         # cap staging rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         # cap production rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         def background_job_kick(options = {})
-          count = Sidekiq::Queue.new("kiwi_lemon_only").count
-          if count.zero? # 並列実行させないため
-            KiwiLemonSingleJob.perform_later(options)
-          else
-            SlackAgent.notify(subject: "KiwiLemonSingleJob", body: ["すでに起動しているためスキップ", count])
+          if sidekiq_queue_kiwi_lemon_only_count.nonzero? # 並列実行させないため
+            SlackAgent.notify(subject: "KiwiLemonSingleJob", body: "稼働中")
+            return
           end
+          KiwiLemonSingleJob.perform_later(options)
         end
 
         # ワーカー関係なく全処理実行

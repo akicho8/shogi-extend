@@ -164,6 +164,20 @@ module Api
         render json: {}
       end
 
+      # 強制ゾンビ抹殺
+      # ただしワーカーが動いていないときのみ
+      # http://localhost:3000/api/kiwi/lemons/zombie_kill_now
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill_now.json
+      def zombie_kill_now
+        if staff?
+          if ::Kiwi::Lemon.sidekiq_queue_kiwi_lemon_only_count.zero?
+            ::Kiwi::Lemon.zombie_kill(expires_in: 0.minutes)
+            current_user.kiwi_admin_info_singlecasted # リロードも実行しておく
+          end
+        end
+        render json: {}
+      end
+
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json
       # ../../../nuxt_side/components/Kiwi/app_zombie.js
       def zombie_kill

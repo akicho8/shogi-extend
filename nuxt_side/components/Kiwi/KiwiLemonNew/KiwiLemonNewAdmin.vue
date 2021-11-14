@@ -2,29 +2,38 @@
 .KiwiLemonNewAdmin.column.is-12(v-if="base.admin_info")
   .title.is-6 管理用
 
-  .buttons
-    b-button(@click="base.all_info_reload") リロード
+  nav.level.is-mobile
+    .level-item.has-text-centered
+      .buttons.mb-0
+        b-button.mb-0(@click="base.all_info_reload") リロード
+        b-button.mb-0(@click="base.zombie_kill_now") ゾンビ抹殺
+    .level-item.has-text-centered
+      div
+        p.heading Worker
+        p.title {{base.admin_info.sidekiq_queue_kiwi_lemon_only_count}}
+
+  sidekiq_queue_kiwi_lemon_only_count
 
   b-table(
     v-if="present_p(base.admin_info.lemons)"
     :data="base.admin_info.lemons"
     :mobile-cards="false"
     )
-    b-table-column(v-slot="{row}" label="ID" numeric centered :width="1")
+    b-table-column(v-slot="{row}" field="id" label="ID" numeric centered sortable :width="1")
       | {{row.id}}
-    b-table-column(v-slot="{row}" field="name" label="所有者" :width="1")
+    b-table-column(v-slot="{row}" field="user.id" label="所有者" sortable :width="1")
       | {{row.user.name}}
 
     // "成功" が "変換中" になったときガクッとさせないための幅
-    b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered header-class="table_status_column")
+    b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered sortable header-class="table_status_column")
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
         span.ml-1(v-if="base.progress_info && base.progress_info.id === row.id")
           | {{number_round_s(base.progress_info.percent, 2)}} %
 
-    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered :width="1")
+    b-table-column(v-slot="{row}" field="successed_at" label="消費" centered sortable :width="1")
       | {{row.elapsed_human}}
-    b-table-column(v-slot="{row}" field="all_params.media_builder_params.recipe_key" label="種類" centered :width="1")
+    b-table-column(v-slot="{row}" field="all_params.media_builder_params.recipe_key" label="種類" centered sortable :width="1")
       | {{row.recipe_info.name}}
 
     b-table-column(v-slot="{row}")

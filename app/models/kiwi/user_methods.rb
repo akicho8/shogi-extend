@@ -31,10 +31,11 @@ module Kiwi
         Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_my_lemons_singlecasted, bc_params: bc_params})
       end
 
-      # 全体のレコード
+      # 管理者用の全体情報
       def kiwi_admin_info_singlecasted
         bc_params = {
           :lemons => Kiwi::Lemon.limit(50).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list), # 全部 for staff
+          :sidekiq_queue_kiwi_lemon_only_count => Kiwi::Lemon.sidekiq_queue_kiwi_lemon_only_count,
         }
         Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_admin_info_singlecasted, bc_params: bc_params})
       end
