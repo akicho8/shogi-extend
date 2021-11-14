@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewQueueAll(v-if="base.kiwi_info")
+.KiwiLemonNewQueueAll.column.is-half(v-if="base.kiwi_info")
   nav.level.is-mobile
     .level-item.has-text-centered
       div

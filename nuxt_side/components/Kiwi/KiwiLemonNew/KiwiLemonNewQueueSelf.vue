@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewQueueSelf
+.KiwiLemonNewQueueSelf.column.is-half
   .progress_container(v-if="base.progress_info && false")
     b-progress(type="is-danger" :value="base.progress_info.percent" show-value format="percent")
 
