@@ -5,7 +5,7 @@ class KiwiMailer < ApplicationMailer
   def lemon_notify(lemon)
     body = []
     if lemon.browser_url
-      body << "▼生成ファイル (本体を添付してあります)"
+      body << "▼生成ファイル (これを添付してある)"
       body << "#{lemon.browser_url}"
       body << ""
     end
@@ -19,7 +19,7 @@ class KiwiMailer < ApplicationMailer
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
     body << ""
     body << "--"
-    body << "動画作成 - SHOGI-EXTEND"
+    body << "動画作成"
     body << UrlProxy.full_url_for("/video/new")
 
     if Rails.env.development?
@@ -38,7 +38,7 @@ class KiwiMailer < ApplicationMailer
     end
 
     mail({
-        subject: "[動画作成][##{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
+        subject: "[動画作成][##{lemon.id}] #{lemon.recipe_info.name} #{lemon.status_key}",
         to: "#{lemon.user.name} <#{lemon.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう
