@@ -112,7 +112,7 @@ export const app_form = {
         return
       }
 
-      if (this.blank_p(this.body) && false) {
+      if (this.blank_p(this.body)) {
         this.toast_warn("棋譜を入力してください")
         return
       }
@@ -120,26 +120,31 @@ export const app_form = {
       this.ga_click("動画作成●")
 
       const loading = this.$buefy.loading.open()
-      this.$axios.$post("/api/kiwi/lemons/record_create.json", this.post_params).then(e => {
-        // ../../../../app/controllers/api/kiwi/lemons_controller.rb
-        if (e.bs_error) {
-          this.bs_error = e.bs_error
-          this.error_show()
-        }
-        if (e.error_message) {
-          this.toast_ng(e.error_message)
-        }
-        if (e.response_hash) {
-          this.response_hash = e.response_hash
-          const lemon = e.response_hash.lemon
-          if (lemon) {
-            this.lemon = new this.Lemon(this, lemon)
-            this.toast_ok(`${this.lemon.id}番で予約しました`)
-          }
-        }
-      }).finally(() => {
+      this.$axios.$post("/api/kiwi/lemons/record_create.json", this.post_params).then(e => this.success_proc(e)).finally(() => {
         loading.close()
       })
+    },
+
+    success_proc(e) {
+      // ../../../../app/controllers/api/kiwi/lemons_controller.rb
+      if (e.bs_error) {
+        this.bs_error = e.bs_error
+        this.error_show()
+      }
+      if (e.error_message) {
+        this.toast_ng(e.error_message)
+      }
+      if (e.response_hash) {
+        this.response_hash = e.response_hash
+        const lemon = e.response_hash.lemon
+        if (lemon) {
+          this.lemon = new this.Lemon(this, lemon)
+        }
+        const message = this.response_hash.message
+        if (message) {
+          this.toast_ok(message)
+        }
+      }
     },
 
     error_show() {

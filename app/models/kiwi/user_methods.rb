@@ -31,6 +31,14 @@ module Kiwi
         Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_my_lemons_singlecasted, bc_params: bc_params})
       end
 
+      # 全体のレコード
+      def kiwi_all_info_singlecasted
+        bc_params = {
+          :lemons => Kiwi::Lemon.limit(50).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list), # 全部 for staff
+        }
+        Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_all_info_singlecasted, bc_params: bc_params})
+      end
+
       # 終了したもの
       def kiwi_done_lemon_singlecast(done_record, params = {})
         bc_params = {

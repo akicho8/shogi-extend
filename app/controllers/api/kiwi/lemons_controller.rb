@@ -130,22 +130,38 @@ module Api
           ::Kiwi::Lemon.background_job_kick_if_period
           render json: {
             response_hash: {
-              lemon: lemon.as_json,
-              free_battle: free_battle.as_json,
-              # kiwi_info: ::Kiwi::Lemon.kiwi_info,
+              :lemon   => lemon.as_json,
+              :message => "#{lemon.id} 番で予約しました",
             }
           }
           return
         end
+      end
 
-        # # render html: url
-        # # return
-        #
-        # if media_builder.file_exist?
-        #   send_file_or_redirect(media_builder)
-        #   return
+      # http://localhost:3000/api/kiwi/lemons/retry_run.json?id=1
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/retry_run.json
+      # ../../../nuxt_side/components/Kiwi/app_form.js
+      def retry_run
+        lemon = ::Kiwi::Lemon.find(params[:id])
+        lemon.retry_run
+        # if staff?
+        #   current_user.kiwi_all_info_singlecasted
         # end
-        #
+        render json: {
+          response_hash: {
+            :lemon   => lemon.as_json,
+            :message => "#{lemon.id} 番で再予約しました",
+          },
+        }
+      end
+
+      # http://localhost:3000/api/kiwi/lemons/all_info_reload
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/all_info_reload.json
+      def all_info_reload
+        if staff?
+          current_user.kiwi_all_info_singlecasted
+        end
+        render json: {}
       end
 
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json

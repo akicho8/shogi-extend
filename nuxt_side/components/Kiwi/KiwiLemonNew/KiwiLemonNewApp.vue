@@ -45,6 +45,7 @@ client-only
                 KiwiLemonNewQueueSelf(:base="base")
               b-tab-item(label="みんな")
                 KiwiLemonNewQueueAll(:base="base")
+          KiwiLemonNewAdmin(:base="base")
 
     KiwiLemonNewDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -58,6 +59,7 @@ import { app_storage          } from "./app_storage.js"
 import { app_lemon_room     } from "./app_lemon_room.js"
 import { app_queue_all        } from "./app_queue_all.js"
 import { app_queue_self       } from "./app_queue_self.js"
+import { app_admin       } from "./app_admin.js"
 import { app_form             } from "./app_form.js"
 import { app_zombie_kill      } from "./app_zombie_kill.js"
 import { app_probe_show       } from "./app_probe_show.js"
@@ -83,6 +85,7 @@ export default {
     app_lemon_room,
     app_queue_all,
     app_queue_self,
+    app_admin,
     app_form,
     app_zombie_kill,
     app_probe_show,

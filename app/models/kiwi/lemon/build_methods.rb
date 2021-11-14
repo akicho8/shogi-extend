@@ -119,7 +119,7 @@ module Kiwi
             :processing_only_count => processing_only.count,
             :success_only_count    => success_only.count,
             :error_only_count      => error_only.count,
-            :lemons                => ordered_not_done.as_json(json_struct_for_list),
+            :lemons                => ordered_not_done.as_json(json_struct_for_list), # 変換中のもの
           }
         end
       end
@@ -300,6 +300,14 @@ module Kiwi
           "ユーザー"       => user.info.to_t,
           "棋譜"           => recordable.kifu_body,
         }.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")
+      end
+
+      def retry_run
+        reset
+        save!
+        user.kiwi_my_lemons_singlecast
+        Lemon.background_job_kick_if_period
+        Lemon.everyone_broadcast
       end
 
       private

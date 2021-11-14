@@ -1,16 +1,22 @@
 class KiwiMailer < ApplicationMailer
   # 動画作成完了
   # KiwiMailer.lemon_notify(Kiwi::Lemon.last).deliver_later
-  # http://localhost:3000/rails/mailers/user/lemon_notify
+  # http://localhost:3000/rails/mailers/kiwi/lemon_notify
   def lemon_notify(lemon)
-    # 本文
     body = []
+    if lemon.browser_url
+      body << "▼生成ファイル (本体を添付してあります)"
+      body << "#{lemon.browser_url}"
+      body << ""
+    end
+    body << "▼棋譜確認用"
+    body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
+    body << ""
+    body << "▼その他"
     body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
     body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
-    body << "ファイル: #{lemon.browser_url}" if lemon.browser_url
-    body << "棋譜: #{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
     body << ""
     body << "--"
     body << "動画作成 - SHOGI-EXTEND"
@@ -32,7 +38,7 @@ class KiwiMailer < ApplicationMailer
     end
 
     mail({
-        subject: "【動画作成】[#{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
+        subject: "[動画作成][##{lemon.id}] #{lemon.recipe_info.name} 生成#{lemon.status_key}",
         to: "#{lemon.user.name} <#{lemon.user.email}>",
         bcc: AppConfig[:admin_email],
         body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう

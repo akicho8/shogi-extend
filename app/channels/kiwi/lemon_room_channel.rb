@@ -30,6 +30,11 @@ module Kiwi
         if v = current_user.kiwi_lemons.success_only.order(created_at: :desc).first
           current_user.kiwi_done_lemon_singlecast(v, noisy: false)
         end
+
+        # 管理用
+        if current_user.staff? || Rails.env.development?
+          current_user.kiwi_all_info_singlecasted
+        end
       end
     end
 

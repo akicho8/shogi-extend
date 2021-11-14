@@ -18,7 +18,7 @@
         p.heading 失敗
         p.title {{base.kiwi_info.error_only_count}}
   b-table(
-    v-if="base.kiwi_info.lemons.length >= 1"
+    v-if="present_p(base.kiwi_info.lemons)"
     :data="base.kiwi_info.lemons"
     :mobile-cards="false"
     )

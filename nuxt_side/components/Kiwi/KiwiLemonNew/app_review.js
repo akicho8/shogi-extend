@@ -59,24 +59,32 @@ export const app_review = {
       }
     },
 
-    download_handle() {
+    download_talk_handle() {
       this.sound_play_click()
       this.delay_block(1, () => this.talk("ダウンロードしました"))
     },
 
-    __main_download_handle(record) {
+    rails_attachment_show_handle(record) {
       this.sound_play_click()
       window.location.href = record.rails_side_download_url
     },
 
-    __main_show_handle(record) {
+    rails_inline_show_test_handle(record) {
       this.sound_play_click()
       this.window_popup(record.rails_side_inline_url, record.to_wh)
     },
 
-    __json_show_handle(record) {
+    json_show_handle(record) {
       this.sound_play_click()
       this.other_window_open(record.rails_side_json_url)
+    },
+
+    retry_handle(record) {
+      this.sound_play_click()
+      const loading = this.$buefy.loading.open()
+      this.$axios.$post("/api/kiwi/lemons/retry_run.json", {id: record.id}).then(e => this.success_proc(e)).finally(() => {
+        loading.close()
+      })
     },
 
     __load_handle(record) {
@@ -85,12 +93,12 @@ export const app_review = {
     },
 
     // 未使用
-    __other_window_direct_open_handle(record) {
+    __other_window_open_handle(record) {
       this.sound_play_click()
       this.window_popup(record.browser_path, record.to_wh)
     },
 
-    __secret_show_handle(record) {
+    __other_window_open_if_pc_handle(record) {
       this.sound_play_click()
       this.url_open(record.browser_path, this.target_default)
     },

@@ -25,6 +25,7 @@ export const app_lemon_room = {
       })
     },
 
+    // 接続が確立したあと1回だけ呼ぶ処理
     lemon_room_connected() {
       this.ac_lemon_room_perform("setup_request", {})
     },

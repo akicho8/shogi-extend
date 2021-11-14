@@ -17,14 +17,14 @@
         b-icon(icon="zip-box-outline" size="is-large")
 
     .buttons.is-centered.mt-3
-      b-button.has-text-weight-bold(@click="base.download_handle" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human") ダウンロード
+      b-button.has-text-weight-bold(@click="base.download_talk_handle" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human") ダウンロード
       b-button(@click="base.banana_new_handle(base.done_record)"            type=""                                      icon-left="upload")
       b-button(v-if="development_p" @click="sound_play_click()" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank" )
-      b-button(v-if="development_p" @click="base.__main_download_handle(base.done_record)"     type="is-light"   icon-left="download"            )
-      b-button(v-if="development_p" @click="base.__main_show_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         )
-      b-button(v-if="development_p" @click="base.__secret_show_handle(base.done_record)"       type="is-light"   icon-left="link"                )
-      b-button(v-if="development_p" @click="base.__probe_show_modal_handle(base.done_record)"  type="is-light"   icon-left="information-variant" )
-      b-button(v-if="development_p" @click="base.__json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           )
+      b-button(v-if="development_p" @click="base.rails_attachment_show_handle(base.done_record)"     type="is-light"   icon-left="download"            )
+      b-button(v-if="development_p" @click="base.rails_inline_show_test_handle(base.done_record)"         type="is-light"   icon-left="eye-outline"         )
+      b-button(v-if="development_p" @click="base.__other_window_open_if_pc_handle(base.done_record)"       type="is-light"   icon-left="link"                )
+      b-button(v-if="development_p" @click="base.media_info_show_handle(base.done_record)"  type="is-light"   icon-left="information-variant" )
+      b-button(v-if="development_p" @click="base.json_show_handle(base.done_record)"         type="is-light"   icon-left="code-json"           )
       b-button(v-if="development_p" @click="base.close_handle"                               type=""           icon-left="close"                 )
 </template>
 
