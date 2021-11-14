@@ -33,7 +33,7 @@ module Kiwi
 
         # 管理用
         if current_user.staff? || Rails.env.development?
-          current_user.kiwi_all_info_singlecasted
+          current_user.kiwi_admin_info_singlecasted
         end
       end
     end

@@ -145,7 +145,7 @@ module Api
         lemon = ::Kiwi::Lemon.find(params[:id])
         lemon.retry_run
         # if staff?
-        #   current_user.kiwi_all_info_singlecasted
+        #   current_user.kiwi_admin_info_singlecasted
         # end
         render json: {
           response_hash: {
@@ -159,7 +159,7 @@ module Api
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/all_info_reload.json
       def all_info_reload
         if staff?
-          current_user.kiwi_all_info_singlecasted
+          current_user.kiwi_admin_info_singlecasted
         end
         render json: {}
       end
