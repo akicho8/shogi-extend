@@ -106,7 +106,7 @@ export class Lemon extends Model {
 
   // 所要時間
   get elapsed_human() {
-    if (this.successed_at) {
+    if (this.process_begin_at && this.process_end_at) {
       const b = dayjs(this.process_begin_at)
       const e = dayjs(this.process_end_at)
       const s = e.diff(b, "second")
