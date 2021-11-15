@@ -2,17 +2,12 @@ import { BoardPresetInfo } from "@/components/models/board_preset_info.js"
 import BoardPresetSelectModal from "./BoardPresetSelectModal.vue"
 
 export const app_board_preset_select = {
-  data() {
-    return {
-      board_preset_key: "平手",
-    }
-  },
-
   created() {
     this.sfen_set_by_url_params()
   },
 
   methods: {
+    // FIXME: 取る
     // 引数でプリセットの初期値設定
     // http://localhost:4000/share-board?board_preset_key=八枚落ち
     // これいらんか？
@@ -37,7 +32,7 @@ export const app_board_preset_select = {
     },
   },
   computed: {
-    BoardPresetInfo()   { return BoardPresetInfo                                      },
+    BoardPresetInfo()   { return BoardPresetInfo                                   },
     board_preset_info() { return this.BoardPresetInfo.fetch(this.board_preset_key) },
   },
 }

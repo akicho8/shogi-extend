@@ -21,6 +21,7 @@ export class ParamInfo extends ParamBase {
       { key: "board_width", type: "float",   name: "盤の大きさ",                    defaults: { development: null,                   production: 80.0,                          }, permanent: true,  relation: null,                  desc: null, },
       { key: "message_scope_key",        type: "string",  name: "発言スコープ",                  defaults: { development: null,                   production: "is_ms_all",                   }, permanent: false, relation: "MessageScopeInfo",    desc: null, },
       { key: "image_size_key",           type: "string",  name: "ダウンロード画像サイズ",        defaults: { development: null,                   production: "is_image_size_1920x1080",     }, permanent: true,  relation: "ImageSizeInfo",       desc: null, },
+      { key: "board_preset_key",         type: "string",  name: "手合割",                        defaults: { development: null,                   production: "平手",                        }, permanent: true,  relation: "BoardPresetInfo",     desc: null, },
     ]
   }
 }
