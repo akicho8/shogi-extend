@@ -420,7 +420,7 @@ export default {
 
     component_style() {
       return {
-        "--share_board_column_width": this.share_board_column_width,
+        "--board_width": this.board_width,
       }
     },
 
@@ -494,9 +494,9 @@ export default {
       padding-top: unset
       padding-bottom: unset
       &.is_sb_play_mode
-        max-width: calc(var(--share_board_column_width) * 1.0vmin)
+        max-width: calc(var(--board_width) * 1.0vmin)
       &.is_sb_edit_mode
-        max-width: calc(var(--share_board_column_width) * 1.0vmin * 0.75)
+        max-width: calc(var(--board_width) * 1.0vmin * 0.75)
   ////////////////////////////////////////////////////////////////////////////////
 
   +tablet

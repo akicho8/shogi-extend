@@ -54,7 +54,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
       .style_container.box.mt-5
         .title.is-5 スタイル設定
         b-field(custom-class="is-small" label="盤の大きさ")
-          b-slider(v-bind="slider_attrs" v-model="base.share_board_column_width" :min="0" :max="100" :step="1.0")
+          b-slider(v-bind="slider_attrs" v-model="base.board_width" :min="0" :max="100" :step="1.0")
 </template>
 
 <script>
