@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 手合割・変則将棋
+      | 手合割・変則配置
     div
       span.mx-1 評価値
       span(v-if="base.board_preset_info.handicap_level >= 1") +
