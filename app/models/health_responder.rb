@@ -11,17 +11,15 @@
 HealthResponder = Proc.new do |env|
   begin
     ActiveRecord::Migrator.current_version
-
     key = SecureRandom.hex
     val = SecureRandom.hex
     Rails.cache.write(key, val, expires_in: 3.second)
     if Rails.cache.read(key) != val
-      raise "Redisが起動していません"
+      raise "Redis is not running"
     end
-    Rails.cache.clear(key)
-
-    [200, {"Content-Type" => "text/plain"}, ["I'm fine."]]
+    Rails.cache.delete(key)
+    [200, {"Content-Type" => "text/plain"}, ["I'm fine\n"]]
   rescue => e
-    [500, {"Content-Type" => "text/plain"}, ["Something wrong. #{e.message}"]]
+    [500, {"Content-Type" => "text/plain"}, ["#{e.message} (#{e.class.name})\n"]]
   end
 end
