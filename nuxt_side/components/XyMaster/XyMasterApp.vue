@@ -93,7 +93,7 @@ import { app_chore       } from "./app_chore.js"
 import { RuleInfo       } from "./models/rule_info.js"
 import { ScopeInfo      } from "./models/scope_info.js"
 import { ChartScopeInfo } from "./models/chart_scope_info.js"
-import { BoardPresetInfo } from "./models/board_preset_info.js"
+import { GhostPresetInfo } from "./models/ghost_preset_info.js"
 
 const COUNTDOWN_INTERVAL = 0.5     // カウントダウンはN秒毎に進む
 const COUNTDOWN_MAX      = 3       // カウントダウンはNから開始する
@@ -159,7 +159,7 @@ export default {
   },
 
   watch: {
-    board_preset_key(v) {
+    ghost_preset_key(v) {
       this.sfen_set()
     },
 
@@ -442,7 +442,7 @@ export default {
 
     sfen_set() {
       if (this.tap_mode_p) {
-        this.sp_object().api_sfen_or_kif_set(this.board_preset_info.sfen)
+        this.sp_object().api_sfen_or_kif_set(this.ghost_preset_info.sfen)
         this.debug_alert("set")
       }
     },
@@ -465,8 +465,8 @@ export default {
   computed: {
     base()           { return this           },
 
-    BoardPresetInfo()      { return BoardPresetInfo      },
-    board_preset_info() { return this.BoardPresetInfo.fetch(this.board_preset_key) },
+    GhostPresetInfo()      { return GhostPresetInfo      },
+    ghost_preset_info() { return this.GhostPresetInfo.fetch(this.ghost_preset_key) },
 
     ScopeInfo()      { return ScopeInfo      },
     curent_scope() { return ScopeInfo.fetch(this.scope_key) },

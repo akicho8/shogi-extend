@@ -21,7 +21,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="base
 
         hr
 
-        SimpleRadioButtons(:base="base" model_name="BoardPresetInfo" var_name="board_preset_key" custom-class="is-small")
+        SimpleRadioButtons(:base="base" model_name="GhostPresetInfo" var_name="ghost_preset_key" custom-class="is-small")
 
         b-field(custom-class="is-small" label="ゴーストの濃さ")
           b-slider(v-bind="slider_attrs" v-model="base.xy_piece_opacity" :min="0" :max="1.0" :step="0.001")

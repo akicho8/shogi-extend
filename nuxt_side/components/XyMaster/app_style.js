@@ -10,7 +10,7 @@ export const app_style = {
       this.xy_grid_star_size = this.ls_default.xy_grid_star_size
       this.xy_piece_opacity    = this.ls_default.xy_piece_opacity
 
-      this.board_preset_key  = this.ls_default.board_preset_key
+      this.ghost_preset_key  = this.ls_default.ghost_preset_key
     },
   },
   computed: {
