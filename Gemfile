@@ -191,7 +191,4 @@ gem "redis-namespace"
 
 gem "puma_worker_killer"
 
-# この↓エラーが出るので仕方なく指定したらエラーは出なくなった。が、意味はわかってない
-# /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/bootsnap-1.7.6/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:23:in `require': superclass mismatch for class StringIO (TypeError)
-gem "stringio"
 
