@@ -1,10 +1,10 @@
-import { HandicapPresetInfo } from "@/components/models/handicap_preset_info.js"
+import { BoardPresetInfo } from "@/components/models/board_preset_info.js"
 import HandicapSetModal from "./HandicapSetModal.vue"
 
 export const app_handicap_set = {
   data() {
     return {
-      handicap_preset_key: "平手",
+      board_preset_key: "平手",
     }
   },
 
@@ -14,13 +14,13 @@ export const app_handicap_set = {
 
   methods: {
     // 引数でプリセットの初期値設定
-    // http://localhost:4000/share-board?handicap_preset_key=八枚落ち
+    // http://localhost:4000/share-board?board_preset_key=八枚落ち
     // これいらんか？
     sfen_set_by_url_params() {
-      const v = this.$route.query.handicap_preset_key
+      const v = this.$route.query.board_preset_key
       if (v) {
-        this.handicap_preset_key = v
-        const info = this.HandicapPresetInfo.fetch(v)
+        this.board_preset_key = v
+        const info = this.BoardPresetInfo.fetch(v)
         this.current_sfen = info.sfen
       }
     },
@@ -37,7 +37,7 @@ export const app_handicap_set = {
     },
   },
   computed: {
-    HandicapPresetInfo()   { return HandicapPresetInfo                                      },
-    handicap_preset_info() { return this.HandicapPresetInfo.fetch(this.handicap_preset_key) },
+    BoardPresetInfo()   { return BoardPresetInfo                                      },
+    board_preset_info() { return this.BoardPresetInfo.fetch(this.board_preset_key) },
   },
 }

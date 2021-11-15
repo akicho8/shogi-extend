@@ -198,7 +198,7 @@ export const app_xmatch = {
     xmatch_setup2_handicap(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.turn_offset = 0                                           // 手数0から始める
-      this.current_sfen = xmatch_rule_info.handicap_preset_info.sfen // 手合割の反映
+      this.current_sfen = xmatch_rule_info.board_preset_info.sfen // 手合割の反映
       this.sp_viewpoint_set_by_self_location()                       // 自分の場所を調べて正面をその視点にする
     },
     xmatch_setup3_clock(params) {

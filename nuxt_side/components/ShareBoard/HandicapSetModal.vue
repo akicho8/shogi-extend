@@ -5,12 +5,12 @@
       | 手合割
     div
       span.mx-1 評価値
-      span(v-if="base.handicap_preset_info.handicap_level >= 1") +
-      | {{base.handicap_preset_info.handicap_level}}
+      span(v-if="base.board_preset_info.handicap_level >= 1") +
+      | {{base.board_preset_info.handicap_level}}
   .modal-card-body
     .select_container
-      b-select.handicap_preset_key(v-model="base.handicap_preset_key" @input="sound_play_click()")
-        option(v-for="e in base.HandicapPresetInfo.values" :value="e.key" v-text="e.name")
+      b-select.board_preset_key(v-model="base.board_preset_key" @input="sound_play_click()")
+        option(v-for="e in base.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
         sp_summary="is_summary_off"
@@ -22,11 +22,11 @@
         :sp_op_disabled="true"
         :sp_sound_enabled="false"
         :sp_turn="0"
-        :sp_body="base.handicap_preset_info.sfen"
+        :sp_body="base.board_preset_info.sfen"
       )
     .description_container.mt-4
       .description
-        | {{base.handicap_preset_info.description}}
+        | {{base.board_preset_info.description}}
     .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
       b-button.mb-0(@click="next_handle(-1)" icon-left="chevron-left")
       b-button.mb-0(@click="next_handle(1)" icon-left="chevron-right")
@@ -44,10 +44,10 @@ export default {
   methods: {
     next_handle(v) {
       this.sound_play_click()
-      const i = this.base.handicap_preset_info.code + v
-      const new_index = this.ruby_like_modulo(i, this.base.HandicapPresetInfo.values.length)
-      const next = this.base.HandicapPresetInfo.fetch(new_index)
-      this.base.handicap_preset_key = next.key
+      const i = this.base.board_preset_info.code + v
+      const new_index = this.ruby_like_modulo(i, this.base.BoardPresetInfo.values.length)
+      const next = this.base.BoardPresetInfo.fetch(new_index)
+      this.base.board_preset_key = next.key
     },
     close_handle() {
       this.sound_play_click()

@@ -1429,7 +1429,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   def preset_select(preset_key)
     side_menu_open
     menu_item_click("手合割")
-    find(".HandicapSetModal .handicap_preset_key").select(preset_key)
+    find(".HandicapSetModal .board_preset_key").select(preset_key)
     find(".apply_button").click
   end
 

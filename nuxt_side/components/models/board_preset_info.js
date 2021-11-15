@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class HandicapPresetInfo extends ApplicationMemoryRecord {
+export class BoardPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       // sfen の b w  で最初の手番が決まる
