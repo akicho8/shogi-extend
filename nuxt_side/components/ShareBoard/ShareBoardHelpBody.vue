@@ -328,6 +328,11 @@
         p 手合割
 
     article
+      h2 バリケード将棋をするには？
+      .article_body
+        p 手合割
+
+    article
       h2 手合割の選択肢に希望のものがないんだが？
       .article_body
         ol
