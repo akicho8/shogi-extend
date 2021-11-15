@@ -2,9 +2,23 @@ module Kiwi
   class Lemon
     concern :BuildMethods do
       class_methods do
-        # Sidekiqのワーカー可動数
-        def sidekiq_queue_kiwi_lemon_only_count
+        # Queueに入っている数
+        # rails r 'p Kiwi::Lemon.sidekiq_queue_count'
+        # cap production rails:runner CODE='p Kiwi::Lemon.sidekiq_queue_count'
+        def sidekiq_queue_count
           Sidekiq::Queue.new("kiwi_lemon_only").count
+        end
+
+        # 実際に動作している個数
+        def sidekiq_run_count
+          Sidekiq::Workers.new.count { |_process_id, _thread_id, work| work["queue"] == "kiwi_lemon_only" }
+        end
+
+        # 実行中の数(0 or 1) + 待ち数(0 or 1)
+        # 0 から 1 にしかならない
+        # これが 0 のときだけキューに入れる
+        def sidekiq_task_count
+          sidekiq_run_count + sidekiq_queue_count
         end
 
         # 有効な時間内にワーカーが動いてなかったら動かす
@@ -26,15 +40,15 @@ module Kiwi
           end
         end
 
-        # 時間に関係なくワーカーを作動させる
+        # 時間に関係なく作動させる
         # id で特定のレコードのみを処理できる
         # rails r 'Kiwi::Lemon.background_job_kick'
         # rails r 'Kiwi::Lemon.background_job_kick(id: [14])'
         # cap staging rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         # cap production rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         def background_job_kick(options = {})
-          if sidekiq_queue_kiwi_lemon_only_count.nonzero? # 並列実行させないため
-            SlackAgent.notify(subject: "KiwiLemonSingleJob", body: "稼働中")
+          if sidekiq_task_count.nonzero?
+            SlackAgent.notify(subject: "background_job_kick", body: "すでに実行中またはキューで待っているのでキャンセル")
             return
           end
           KiwiLemonSingleJob.perform_later(options)

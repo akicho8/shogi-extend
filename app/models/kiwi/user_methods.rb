@@ -34,8 +34,9 @@ module Kiwi
       # 管理者用の全体情報
       def kiwi_admin_info_singlecasted
         bc_params = {
-          :lemons => Kiwi::Lemon.limit(50).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list), # 全部 for staff
-          :sidekiq_queue_kiwi_lemon_only_count => Kiwi::Lemon.sidekiq_queue_kiwi_lemon_only_count,
+          :lemons              => Kiwi::Lemon.limit(50).order(created_at: :desc).as_json(Kiwi::Lemon.json_struct_for_list), # 全部 for staff
+          :sidekiq_queue_count => Kiwi::Lemon.sidekiq_queue_count, # 待ち数
+          :sidekiq_run_count   => Kiwi::Lemon.sidekiq_run_count,   # 実行中数
         }
         Kiwi::LemonRoomChannel.broadcast_to(self, {bc_action: :kiwi_admin_info_singlecasted, bc_params: bc_params})
       end

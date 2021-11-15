@@ -165,12 +165,12 @@ module Api
       end
 
       # 強制ゾンビ抹殺
-      # ただしワーカーが動いていないときのみ
+      # ただし何も動いてないときのみ
       # http://localhost:3000/api/kiwi/lemons/zombie_kill_now
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill_now.json
       def zombie_kill_now
         if staff?
-          if ::Kiwi::Lemon.sidekiq_queue_kiwi_lemon_only_count.zero?
+          if ::Kiwi::Lemon.sidekiq_task_count.zero?
             ::Kiwi::Lemon.zombie_kill(expires_in: 0.minutes)
             current_user.kiwi_admin_info_singlecasted # リロードも実行しておく
           end

@@ -9,10 +9,12 @@
         b-button.mb-0(@click="base.zombie_kill_now") ゾンビ抹殺
     .level-item.has-text-centered
       div
-        p.heading Worker
-        p.title {{base.admin_info.sidekiq_queue_kiwi_lemon_only_count}}
-
-  sidekiq_queue_kiwi_lemon_only_count
+        .heading 待ち
+        .title {{base.admin_info.sidekiq_queue_count}}
+    .level-item.has-text-centered
+      div
+        .heading 実行中
+        .title {{base.admin_info.sidekiq_run_count}}
 
   b-table(
     v-if="present_p(base.admin_info.lemons)"
