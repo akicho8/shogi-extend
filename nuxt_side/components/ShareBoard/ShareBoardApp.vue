@@ -157,7 +157,7 @@ import { app_color_theme          } from "./app_color_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
-import { app_handicap_set         } from "./app_handicap_set.js"
+import { app_board_preset_select         } from "./app_board_preset_select.js"
 import { app_room_recreate        } from "./app_room_recreate.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
@@ -205,7 +205,7 @@ export default {
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
-    app_handicap_set,
+    app_board_preset_select,
     app_room_recreate,
     window_active_detector,
   ],

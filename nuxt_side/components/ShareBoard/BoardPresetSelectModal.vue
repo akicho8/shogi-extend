@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 手合割
+      | 手合割・変則将棋
     div
       span.mx-1 評価値
       span(v-if="base.board_preset_info.handicap_level >= 1") +
@@ -39,7 +39,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "HandicapSetModal",
+  name: "BoardPresetSelectModal",
   mixins: [support_child],
   methods: {
     next_handle(v) {
@@ -64,7 +64,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.HandicapSetModal
+.BoardPresetSelectModal
   +modal_width(32rem)
   .modal-card-body
     padding: 1.25rem
@@ -94,7 +94,7 @@ export default {
     --sp_stand_piece_h: 22px
 
 .STAGE-development
-  .HandicapSetModal
+  .BoardPresetSelectModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body

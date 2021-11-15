@@ -1,7 +1,7 @@
 import { BoardPresetInfo } from "@/components/models/board_preset_info.js"
-import HandicapSetModal from "./HandicapSetModal.vue"
+import BoardPresetSelectModal from "./BoardPresetSelectModal.vue"
 
-export const app_handicap_set = {
+export const app_board_preset_select = {
   data() {
     return {
       board_preset_key: "平手",
@@ -27,11 +27,11 @@ export const app_handicap_set = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    handicap_set_modal_handle() {
+    board_preset_select_modal_handle() {
       this.sidebar_p = false
       this.sound_play_click()
       this.modal_card_open({
-        component: HandicapSetModal,
+        component: BoardPresetSelectModal,
         props: { base: this.base },
       })
     },
