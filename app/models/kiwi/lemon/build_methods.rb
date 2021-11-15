@@ -10,6 +10,7 @@ module Kiwi
         end
 
         # 実際に動作している個数
+        # https://qiita.com/ts-3156/items/ec4608c7c9cf1494bcc1
         def sidekiq_run_count
           Sidekiq::Workers.new.count { |_process_id, _thread_id, work| work["queue"] == "kiwi_lemon_only" }
         end
