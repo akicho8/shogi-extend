@@ -1,28 +1,28 @@
 <template lang="pug">
 .ShareBoardSidebarExport
-  b-menu-list(label="棋譜変換")
+  b-menu-list(label="各種棋譜変換")
     b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_dl_modal_handle")
     b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
 
-    b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play_click()")
-      template(slot="label" slot-scope="props")
-        | 表示
-        b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-      template(v-for="e in base.FormatTypeInfo.values")
-        template(v-if="e.show")
-          b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
-
     b-menu-item.is_active_unset(icon="clipboard-plus-outline" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
-        | コピー
+        | 棋譜コピー
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
       template(v-for="e in base.FormatTypeInfo.values")
         template(v-if="e.clipboard")
           b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click="base.kifu_copy_handle(e)")
 
+    b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play_click()")
+      template(slot="label" slot-scope="props")
+        | 棋譜表示
+        b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
+      template(v-for="e in base.FormatTypeInfo.values")
+        template(v-if="e.show")
+          b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+
     b-menu-item.is_active_unset(icon="download" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
-        | ダウンロード
+        | 棋譜ダウンロード
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
       template(v-for="e in base.FormatTypeInfo.values")
         b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
