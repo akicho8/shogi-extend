@@ -6,12 +6,12 @@ export const app_admin = {
   },
 
   methods: {
-    all_info_reload() {
+    all_info_reload_handle() {
       this.sound_play_click()
       this.$axios.$post("/api/kiwi/lemons/all_info_reload.json", {})
     },
 
-    zombie_kill_now() {
+    zombie_kill_now_handle() {
       this.sound_play_click()
       this.$axios.$post("/api/kiwi/lemons/zombie_kill_now.json", {})
     },
