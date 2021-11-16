@@ -197,12 +197,14 @@ Rails.application.routes.draw do
         get :latest_info_reload
         post :record_create
         post :retry_run                  # for staff
+        post :destroy_run                  # for staff
         post :all_info_reload # for staff
         post :zombie_kill_now # for staff
         post :zombie_kill
         if Rails.env.development?
           get :record_create
           get :retry_run
+          get :destroy_run
           get :all_info_reload
           get :zombie_kill_now
           get :zombie_kill

@@ -52,7 +52,7 @@
       .buttons.is-flex-wrap-nowrap.are-small.mb-0
         b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path" type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" title="ライブラリ登録")
-        b-button.mb-0(@click="base.retry_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")
+        b-button.mb-0(@click="base.retry_run_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")
         b-button.mb-0(@click="sound_play_click()"                                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
         b-button.mb-0(@click="base.rails_attachment_show_handle(row)"                     type="is-light"   icon-left="download"                                           title="Rails側のコントローラ経由でダウンロードするテスト")
         b-button.mb-0(@click="base.load_handle(row)"                                    type="is-light"   icon-left="open-in-app"                                        title="プレビューのレコードにコピー")
@@ -60,6 +60,7 @@
         b-button.mb-0(@click="base.other_window_open_if_pc_handle(row)"                 type="is-light"   icon-left="link"                                               title="モバイルならそのままでPCなら別ウィンドウで開く")
         b-button.mb-0(@click="base.media_info_show_handle(row)"                           type="is-light"   icon-left="information-variant"                                title="変換後のファイル情報を表示")
         b-button.mb-0(@click="base.json_show_handle(row)"                                 type="is-light"   icon-left="code-json"                                          title="JSON確認")
+        b-button.mb-0(@click="base.destroy_run_handle(row)"    type="is-danger" icon-left="trash-can-outline" title="削除" v-if="row.errored_at || development_p")
 
 </template>
 

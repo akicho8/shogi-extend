@@ -34,7 +34,7 @@
         b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path"  type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload"                                                                                       title="動画ライブラリ登録")
 
-        b-button.mb-0(v-if="development_p" @click="base.retry_handle(row)"      icon-left="hammer")
+        b-button.mb-0(v-if="development_p" @click="base.retry_run_handle(row)"      icon-left="hammer")
         b-button.mb-0(v-if="development_p" @click="sound_play_click()" tag="a" :href="row.browser_path"            type=""           icon-left="eye-outline" target="_blank")
         b-button.mb-0(v-if="development_p" @click="base.rails_attachment_show_handle(row)"     type="is-light"   icon-left="download"            )
         b-button.mb-0(v-if="development_p" @click="base.load_handle(row)"              type="is-light"   icon-left="open-in-app"         )

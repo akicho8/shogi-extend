@@ -8,12 +8,12 @@ export const app_admin = {
   methods: {
     all_info_reload_handle() {
       this.sound_play_click()
-      this.$axios.$post("/api/kiwi/lemons/all_info_reload.json", {})
+      this.$axios.$post("/api/kiwi/lemons/all_info_reload.json", {}).then(e => this.success_proc(e))
     },
 
     zombie_kill_now_handle() {
       this.sound_play_click()
-      this.$axios.$post("/api/kiwi/lemons/zombie_kill_now.json", {})
+      this.$axios.$post("/api/kiwi/lemons/zombie_kill_now.json", {}).then(e => this.success_proc(e))
     },
 
     kiwi_admin_info_singlecasted(data) {

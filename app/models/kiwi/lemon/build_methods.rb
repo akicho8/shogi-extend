@@ -83,8 +83,9 @@ module Kiwi
             expires_in: 30.minutes, # N分以上かけて完了していなければ成仏させる
           }.merge(options)
 
+          error_count = 0
+
           logger.tagged("zombie_kill") do
-            error_count = 0
 
             processing_only.where(arel_table[:process_begin_at].lteq(options[:expires_in].ago)).find_each do |e|
               logger.tagged(e.to_param) do
@@ -113,6 +114,8 @@ module Kiwi
               everyone_broadcast
             end
           end
+
+          error_count
         end
 
         # cap staging rails:runner CODE="tp Kiwi::Lemon.info"
@@ -327,6 +330,10 @@ module Kiwi
         user.kiwi_my_lemons_singlecast
         Lemon.background_job_kick_if_period
         Lemon.everyone_broadcast
+      end
+
+      def destroy_run
+        destroy!
       end
 
       private

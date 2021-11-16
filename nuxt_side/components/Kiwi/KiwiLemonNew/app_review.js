@@ -79,10 +79,18 @@ export const app_review = {
       this.other_window_open(record.rails_side_json_url)
     },
 
-    retry_handle(record) {
+    retry_run_handle(record) {
       this.sound_play_click()
       const loading = this.$buefy.loading.open()
       this.$axios.$post("/api/kiwi/lemons/retry_run.json", {id: record.id}).then(e => this.success_proc(e)).finally(() => {
+        loading.close()
+      })
+    },
+
+    destroy_run_handle(record) {
+      this.sound_play_click()
+      const loading = this.$buefy.loading.open()
+      this.$axios.$post("/api/kiwi/lemons/destroy_run.json", {id: record.id}).then(e => this.success_proc(e)).finally(() => {
         loading.close()
       })
     },

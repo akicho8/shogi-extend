@@ -35,6 +35,12 @@ module Api
       FAST_RESPONSE = nil
       VALIDATE_TURN_MAX = 1525
 
+      before_action only: [:retry_run, :destroy_run, :all_info_reload, :zombie_kill_now] do
+        unless staff?
+          raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
+        end
+      end
+
       # 未使用
       # http://localhost:3000/api/kiwi/lemons/index.json
       # http://localhost:3000/api/kiwi/lemons/index.json?query=a&tag=b,c
@@ -144,9 +150,7 @@ module Api
       def retry_run
         lemon = ::Kiwi::Lemon.find(params[:id])
         lemon.retry_run
-        # if staff?
-        #   current_user.kiwi_admin_info_singlecasted
-        # end
+        current_user.kiwi_admin_info_singlecasted
         render json: {
           response_hash: {
             :lemon   => lemon.as_json,
@@ -155,13 +159,30 @@ module Api
         }
       end
 
+      # http://localhost:3000/api/kiwi/lemons/destroy_run.json?id=1
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/destroy_run.json
+      # ../../../nuxt_side/components/Kiwi/app_form.js
+      def destroy_run
+        lemon = ::Kiwi::Lemon.find(params[:id])
+        lemon.destroy_run
+        current_user.kiwi_admin_info_singlecasted
+        render json: {
+          response_hash: {
+            :lemon   => lemon.as_json,
+            :message => "#{lemon.id} 番を削除しました",
+          },
+        }
+      end
+
       # http://localhost:3000/api/kiwi/lemons/all_info_reload
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/all_info_reload.json
       def all_info_reload
-        if staff?
-          current_user.kiwi_admin_info_singlecasted
-        end
-        render json: {}
+        current_user.kiwi_admin_info_singlecasted
+        render json: {
+          response_hash: {
+            :message => "管理用情報のリロード完了",
+          },
+        }
       end
 
       # 強制ゾンビ抹殺
@@ -169,13 +190,16 @@ module Api
       # http://localhost:3000/api/kiwi/lemons/zombie_kill_now
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill_now.json
       def zombie_kill_now
-        if staff?
-          if ::Kiwi::Lemon.sidekiq_task_count.zero?
-            ::Kiwi::Lemon.zombie_kill(expires_in: 0.minutes)
-            current_user.kiwi_admin_info_singlecasted # リロードも実行しておく
-          end
+        count = 0
+        if ::Kiwi::Lemon.sidekiq_task_count.zero?
+          count = ::Kiwi::Lemon.zombie_kill(expires_in: 0.minutes)
+          current_user.kiwi_admin_info_singlecasted # リロードも実行しておく
         end
-        render json: {}
+        render json: {
+          response_hash: {
+            :message => "ゾンビを#{count}匹成仏させました",
+          },
+        }
       end
 
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json
