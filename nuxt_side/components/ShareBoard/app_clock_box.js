@@ -28,7 +28,7 @@ export const app_clock_box = {
       this.clock_box.play_handle()
     }
 
-    if (this.$route.query["clock_box.play_handle"] === "true") {
+    if (this.$route.query.clock_box_play_handle === "true") {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
@@ -42,7 +42,7 @@ export const app_clock_box = {
   methods: {
     cc_setup_by_url_params() {
       ["initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus"].forEach(key => {
-        const argv = this.$route.query[`clock_box.${key}`]
+        const argv = this.$route.query[`clock_box_${key}`]
         if (this.present_p(argv)) {
           const value = parseInt(argv)
           this.$set(this.cc_params, key, value)

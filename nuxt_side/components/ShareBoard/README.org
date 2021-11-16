@@ -72,11 +72,11 @@
   | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
   | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                         |
   | ordered_member_names        | 順番設定の名前(複数)                                    |                                                                                         |
-  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                         |
-  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                         |
-  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                         |
-  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                         |
-  | clock_box.play_handle       | true なら即開始                                         |                                                                                         |
+  | clock_box_initial_main_min  | 持ち時間(分)                                            |                                                                                         |
+  | clock_box_initial_read_sec  | 秒読み(秒)                                              |                                                                                         |
+  | clock_box_initial_extra_sec | 猶予(秒)                                                |                                                                                         |
+  | clock_box_every_plus        | 1手毎加算(秒)                                           |                                                                                         |
+  | clock_box_play_handle       | true なら即開始                                         |                                                                                         |
   | xmatch_auth_key            |                                                         |                                                                                         |
   | xmatch_wait_max               |                                                         |                                                                                         |
   |-----------------------------+---------------------------------------------------------+-----------------------------------------------------------------------------------------|
@@ -118,7 +118,7 @@
 
 ** 時計設定済みで部屋に入るには？
 
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** プリセット指定
 
@@ -130,8 +130,8 @@
 
 ** 順番設定あり・時計あり・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box.play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
