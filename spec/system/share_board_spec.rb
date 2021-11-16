@@ -1147,7 +1147,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       visit_app
       side_menu_open
-      menu_item_sub_menu_click("コピー")
+      menu_item_sub_menu_click("棋譜コピー")
       menu_item_click("KI2")
       assert_text("コピーしました")
     end
