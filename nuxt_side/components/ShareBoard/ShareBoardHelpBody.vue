@@ -160,7 +160,7 @@
         p 順番設定する
 
     article
-      h2 リレー将棋で観戦者が指した
+      h2 リレー将棋で観戦者が指しちゃった
       .article_body
         p 順番設定する
 
@@ -172,7 +172,7 @@
     article
       h2 検討したいのに駒が動かないんだが？
       .article_body
-        p 「順番設定」を解除する
+        p 順番設定を解除する
 
     article
       h2 部屋のリンクを伝えるには？
@@ -243,9 +243,18 @@
     article
       h2 観戦者だけ向けて発言するには？
       .article_body
-        .is-flex.is-align-items-center
-          b-button.xemoji_in_b_button(v-xemoji @click="sound_play_click()") 🤫
-          span.ml-1 をタップ
+        | チャットの右上から「観戦者宛」を選択
+
+        //- | チャットの右上の
+        //- b-button(icon="dots-vertical")
+        //- | で「観戦者宛」を選択
+
+        //-   b-button.xemoji_in_b_button(v-xemoji @click="sound_play_click()") 🤫
+        //-   span.ml-1 をタップ
+
+        //- .is-flex.is-align-items-center
+        //-   b-button.xemoji_in_b_button(v-xemoji @click="sound_play_click()") 🤫
+        //-   span.ml-1 をタップ
 
     article
       h2 観戦者宛の発言は対局が終わったら対局者も見れる？
