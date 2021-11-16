@@ -4,7 +4,7 @@
 
   nav.level.is-mobile
     .level-item.has-text-centered
-      .buttons.mb-0
+      .buttons.is-flex-wrap-nowrap.mb-0
         b-button.mb-0(@click="base.all_info_reload") リロード
         b-button.mb-0(@click="base.zombie_kill_now") ゾンビ抹殺
     .level-item.has-text-centered
@@ -49,7 +49,7 @@
         | {{row.error_message}}
 
     b-table-column(v-slot="{row}" label="操作")
-      .buttons.are-small.mb-0
+      .buttons.is-flex-wrap-nowrap.are-small.mb-0
         b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path" type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
         b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" title="ライブラリ登録")
         b-button.mb-0(@click="base.retry_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")

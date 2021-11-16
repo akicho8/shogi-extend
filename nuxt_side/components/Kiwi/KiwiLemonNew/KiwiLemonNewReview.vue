@@ -16,7 +16,7 @@
       template(v-if="base.done_record.recipe_info.file_type === 'zip'")
         b-icon(icon="zip-box-outline" size="is-large")
 
-    .buttons.is-centered.mt-3
+    .buttons.is-flex-wrap-nowrap.is-centered.mt-3
       b-button.has-text-weight-bold(@click="base.download_talk_handle" tag="a" :href="base.done_record.browser_path"            type="is-primary" icon-left="download"    :download="base.done_record.filename_human") ダウンロード
       b-button(@click="base.banana_new_handle(base.done_record)"            type=""                                      icon-left="upload")
       b-button(v-if="development_p" @click="sound_play_click()" tag="a" :href="base.done_record.browser_path"            type=""           icon-left="eye-outline" target="_blank" )

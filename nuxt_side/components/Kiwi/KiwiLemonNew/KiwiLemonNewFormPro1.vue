@@ -31,21 +31,21 @@
 
         b-field(grouped).mb-0
           .control
-            .buttons.mb-0.has-addons.are-small.mt-2
+            .buttons.is-flex-wrap-nowrap.mb-0.has-addons.are-small.mt-2
               b-button.mb-0(@click.native="base.page_duration_add(-0.1)") -0.1
               b-button.mb-0(@click.native="base.page_duration_set_by_value(1.0)") 1.0
               b-button.mb-0(@click.native="base.page_duration_add(+0.1)") +0.1
           .control
-            .buttons.mb-0.has-addons.are-small.mt-2
+            .buttons.is-flex-wrap-nowrap.mb-0.has-addons.are-small.mt-2
               b-button.mb-0(@click.native="base.page_duration_mul(0.5)") ÷2
               b-button.mb-0(@click.native="base.page_duration_mul(2.0)") ×2
 
         b-field(grouped).mb-0
           .control
-            .buttons.mb-0.has-addons.are-small.mt-2
+            .buttons.is-flex-wrap-nowrap.mb-0.has-addons.are-small.mt-2
               b-button.mb-0(@click="base.compute_from_bpm_modal_handle") BPM
           .control
-            .buttons.mb-0.has-addons.are-small.mt-2
+            .buttons.is-flex-wrap-nowrap.mb-0.has-addons.are-small.mt-2
               template(v-for="fps in [60, 30, 20, 15]")
                 b-button.mb-0(@click="base.page_duration_set_by_fps(fps)") {{fps}}f
 
