@@ -18,7 +18,7 @@ export class BoardPresetInfo extends ApplicationMemoryRecord {
       { key: "六枚落ち",       handicap_level:  2803, description: "10段級差",         sfen: "position sfen 2sgkgs2/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",       },
       { key: "トンボ",         handicap_level:  3815, description: "11〜12段級差",     sfen: "position sfen 4k4/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",       },
       { key: "八枚落ち",       handicap_level:  4658, description: "13段級差",         sfen: "position sfen 3gkg3/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",         },
-      { key: "先崎学九段推奨", handicap_level:  4898, description: "14段級差",         sfen: "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w RB 1",    }, // 初心者に配慮した先崎学九段推奨の手合割", },
+      { key: "先崎学プロ推奨", handicap_level:  4898, description: "14段級差",         sfen: "position sfen lnsgkgsnl/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w RB 1",    }, // 初心者に配慮した先崎学プロ推奨の手合割", },
       { key: "十枚落ち",       handicap_level:  5783, description: "15段級差",         sfen: "position sfen 4k4/9/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",           },
       { key: "十九枚落ち",     handicap_level: 99999, description: "16段級差",         sfen: "position sfen 4k4/9/9/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1",                   },
       { key: "青空将棋",       handicap_level:  1428, description: "先手有利",         sfen: "position sfen lnsgkgsnl/1r5b1/9/9/9/9/9/1B5R1/LNSGKGSNL b - 1",                 },
