@@ -35,38 +35,18 @@ module Api
       FAST_RESPONSE = nil
       VALIDATE_TURN_MAX = 1525
 
-      before_action only: [:retry_run, :destroy_run, :all_info_reload, :zombie_kill_now] do
+      before_action only: [
+        :retry_run,
+        :destroy_run,
+        :all_info_reload,
+        :zombie_kill_now,
+      ] do
         unless staff?
           raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
         end
       end
 
-      # 未使用
-      # http://localhost:3000/api/kiwi/lemons/index.json
-      # http://localhost:3000/api/kiwi/lemons/index.json?query=a&tag=b,c
-      def index
-        if Rails.env.production?
-          raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
-        end
-        retv = {}
-        retv[:lemons] = current_lemons.as_json(::Kiwi::Lemon.json_struct_for_index)
-        retv[:meta]  = AppEntryInfo.fetch(:kiwi_lemon_index).og_meta
-        render json: retv
-      end
-
-      # こちらは対象にしない
-      # 見るのは banana の方
-      # http://localhost:3000/api/kiwi/lemons/sitemap.json
-      # http://localhost:4000/sitemap.xml
-      # def sitemap
-      #   if Rails.env.production?
-      #     raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
-      #   end
-      #   retv = {}
-      #   retv[:lemons] = ::Kiwi::Lemon.public_only.order(updated_at: :desc).limit(1000).as_json(only: [:key])
-      #   render json: retv
-      # end
-
+      # 起動時に実行
       # curl http://localhost:3000/api/kiwi/lemons/latest_info_reload.json
       # ../../../nuxt_side/components/Kiwi/KiwiApp.vue
       def latest_info_reload
@@ -79,6 +59,7 @@ module Api
         return
       end
 
+      # フォームPOST時
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/record_create.json
       # ../../../nuxt_side/components/Kiwi/app_form.js
       def record_create
@@ -115,35 +96,31 @@ module Api
           return
         end
 
-        # if !current_user
-        #   render html: "ログインしてください"
-        #   return
-        # end
-
-        # if lemon = ::Kiwi::Lemon.find_by(recordable: current_record)
-        #   # render html: lemon.to_html
-        #   render html: [lemon.status_key, ::Kiwi::Lemon.info.to_html].join.html_safe
-        #   return
-        # end
-
         lemon = current_user.kiwi_lemons.create!(recordable: free_battle, all_params: params.to_unsafe_h[:all_params])
-        if false
-          lemon.main_process
-        else
-          current_user.kiwi_my_lemons_singlecast
-          ::Kiwi::Lemon.everyone_broadcast
-          ::Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
-          ::Kiwi::Lemon.background_job_kick_if_period
-          render json: {
-            response_hash: {
-              :lemon   => lemon.as_json,
-              :message => "#{lemon.id} 番で予約しました",
-            }
+        current_user.kiwi_my_lemons_singlecast
+        ::Kiwi::Lemon.everyone_broadcast
+        ::Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
+        ::Kiwi::Lemon.background_job_kick_if_period
+        render json: {
+          response_hash: {
+            :lemon   => lemon.as_json,
+            :message => "#{lemon.id} 番で予約しました",
           }
-          return
-        end
+        }
       end
 
+      # 定期的に呼び出してゾンビ削除
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json
+      # ../../../nuxt_side/components/Kiwi/app_zombie.js
+      def zombie_kill
+        ::Kiwi::Lemon.zombie_kill
+        # ::Kiwi::Lemon.background_job_kick_if_period
+        render json: { status: "success" }
+      end
+
+      ################################################################################
+
+      # リトライ (管理者専用)
       # http://localhost:3000/api/kiwi/lemons/retry_run.json?id=1
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/retry_run.json
       # ../../../nuxt_side/components/Kiwi/app_form.js
@@ -159,6 +136,7 @@ module Api
         }
       end
 
+      # 削除 (管理者専用)
       # http://localhost:3000/api/kiwi/lemons/destroy_run.json?id=1
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/destroy_run.json
       # ../../../nuxt_side/components/Kiwi/app_form.js
@@ -174,6 +152,7 @@ module Api
         }
       end
 
+      # 直近の一覧 (管理者専用)
       # http://localhost:3000/api/kiwi/lemons/all_info_reload
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/all_info_reload.json
       def all_info_reload
@@ -185,7 +164,7 @@ module Api
         }
       end
 
-      # 強制ゾンビ抹殺
+      # 強制ゾンビ抹殺 (管理者専用)
       # ただし何も動いてないときのみ
       # http://localhost:3000/api/kiwi/lemons/zombie_kill_now
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill_now.json
@@ -202,14 +181,9 @@ module Api
         }
       end
 
-      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json
-      # ../../../nuxt_side/components/Kiwi/app_zombie.js
-      def zombie_kill
-        ::Kiwi::Lemon.zombie_kill
-        # ::Kiwi::Lemon.background_job_kick_if_period
-        render json: { status: "success" }
-      end
+      private
 
+      # 予約数制限
       def current_user_lemon_queue_max
         if current_user
           if current_user.permit_tag_list.include?("staff") && false
@@ -225,35 +199,6 @@ module Api
       # 予約可能な数(処理中を含む)
       def user_lemon_queue_max_default
         (params[:user_lemon_queue_max].presence || ::Kiwi::Lemon.user_lemon_queue_max).to_i
-      end
-
-      private
-
-      def current_lemons
-        @current_lemons ||= -> {
-          s = ::Kiwi::Lemon.all
-
-          # ログインしていればプライベートな問題集も混ぜる
-          # if current_user
-          #   s = s.or(current_user.kiwi_lemons.joins(:folder))
-          # end
-
-          s = s.search(params)
-          s = s.order(updated_at: :desc)
-          s = page_scope(s)       # page_methods.rb
-
-          # # visible_articles_count のため
-          # s.each do |e|
-          #   e.current_user = current_user
-          # end
-
-          s
-        }.call
-      end
-
-      # PageMethods override
-      def default_per
-        50
       end
     end
   end

@@ -35,7 +35,7 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
   include KiwiSupport
 
   before do
-    @user1 = user_login
+    @user1 = user_login(User.sysop)
   end
 
   it "latest_info_reload" do
@@ -50,6 +50,26 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
 
   it "zombie_kill" do
     post :zombie_kill, params: {}.as_json, as: :json
+    assert { response.status == 200 }
+  end
+
+  it "retry_run" do
+    post :retry_run, params: {id: lemon1.id}.as_json, as: :json
+    assert { response.status == 200 }
+  end
+
+  it "destroy_run" do
+    post :destroy_run, params: {id: lemon1.id}.as_json, as: :json
+    assert { response.status == 200 }
+  end
+
+  it "all_info_reload" do
+    post :all_info_reload, params: {}.as_json, as: :json
+    assert { response.status == 200 }
+  end
+
+  it "zombie_kill_now" do
+    post :zombie_kill_now, params: {}.as_json, as: :json
     assert { response.status == 200 }
   end
 end
