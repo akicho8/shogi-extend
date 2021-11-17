@@ -53,7 +53,7 @@ module Kiwi
 
         def background_job_inactive_message
           unless background_job_kick_active?
-            "サーバーのリソース不足でまともに変換できないので#{::Kiwi::Lemon.background_job_range_to_s}で変換を試みます"
+            "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは#{::Kiwi::Lemon.background_job_range_to_s}の間だけで動画変換を試みます。気長にお待ちください。"
           end
         end
 

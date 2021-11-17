@@ -152,6 +152,7 @@ export const app_form = {
             title: "残念なお知らせ",
             message: alert_message,
           })
+          this.delay_block(3, () => this.talk(alert_message))
         }
       }
     },
