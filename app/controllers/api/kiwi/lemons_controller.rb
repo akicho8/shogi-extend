@@ -95,19 +95,21 @@ module Api
         lemon = current_user.kiwi_lemons.create!(recordable: free_battle, all_params: params.to_unsafe_h[:all_params])
         current_user.kiwi_my_lemons_singlecast
         ::Kiwi::Lemon.everyone_broadcast
-        ::Kiwi::Lemon.zombie_kill # ゾンビを成仏させる
-        ::Kiwi::Lemon.background_job_kick_if_period
+        ::Kiwi::Lemon.zombie_kill                   # ゾンビを成仏させる
+        ::Kiwi::Lemon.background_job_kick_if_period # 時間内なら変換する
+
         render json: {
           response_hash: {
-            :lemon   => lemon.as_json,
-            :message => "#{lemon.id} 番で予約しました",
+            :lemon         => lemon.as_json,
+            :message       => "#{lemon.id} 番で予約しました",
+            :alert_message => ::Kiwi::Lemon.background_job_inactive_message,
           }
         }
       end
 
       # 定期的に呼び出してゾンビ削除
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/zombie_kill.json
-      # ../../../nuxt_side/components/Kiwi/app_zombie.js
+      # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/app_zombie.js
       def zombie_kill
         ::Kiwi::Lemon.zombie_kill
         # ::Kiwi::Lemon.background_job_kick_if_period

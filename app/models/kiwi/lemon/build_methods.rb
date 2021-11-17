@@ -25,19 +25,35 @@ module Kiwi
         # 有効な時間内にワーカーが動いてなかったら動かす
         # rails r 'Kiwi::Lemon.background_job_kick_if_period'
         def background_job_kick_if_period(options = {})
-          options = {
-            time: Time.current,
-            notify: false,
-          }.merge(options)
-
-          # range を options に入れると ActiveJob のシリアライズで Range クラスなんか知らんと言われて死ぬ
-          range = Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end]
-          active = range.cover?(options[:time].hour)
-          if active
+          if background_job_kick_active?(options)
             background_job_kick(options)
           end
           if options[:notify]
             AlertLog.notify(subject: "background_job_kick_if_period", body: active.to_s, slack_notify: true, mail_notify: false)
+          end
+        end
+
+        def background_job_range
+          Xsetting[:kiwi_lemon_background_job_active_begin]...Xsetting[:kiwi_lemon_background_job_active_end]
+        end
+
+        def background_job_range_to_s
+          "#{background_job_range.first}時から#{background_job_range.last}時"
+        end
+
+        def background_job_kick_active?(options = {})
+          options = {
+            time: Time.current,
+          }.merge(options)
+
+          # range を options に入れると ActiveJob のシリアライズで組み込みクラスにも関わらず
+          # Range クラスなんか知らんと言われて死ぬので注意
+          background_job_range.cover?(options[:time].hour)
+        end
+
+        def background_job_inactive_message
+          unless background_job_kick_active?
+            "サーバーのリソース不足でまともに変換できないので#{::Kiwi::Lemon.background_job_range_to_s}で変換を試みます"
           end
         end
 

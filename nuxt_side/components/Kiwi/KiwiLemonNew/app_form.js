@@ -144,6 +144,15 @@ export const app_form = {
         if (message) {
           this.toast_ok(message)
         }
+        const alert_message = this.response_hash.alert_message
+        if (alert_message) {
+          this.dialog_alert({
+            hasIcon: true,
+            type: "is-warning",
+            title: "残念なお知らせ",
+            message: alert_message,
+          })
+        }
       }
     },
 
