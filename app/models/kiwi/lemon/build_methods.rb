@@ -29,7 +29,7 @@ module Kiwi
             background_job_kick(options)
           end
           if options[:notify]
-            AlertLog.notify(subject: "background_job_kick_if_period", body: active.to_s, slack_notify: true, mail_notify: false)
+            AlertLog.notify(subject: "background_job_kick_if_period", body: background_job_kick_active?(options).to_s, slack_notify: true, mail_notify: false)
           end
         end
 
