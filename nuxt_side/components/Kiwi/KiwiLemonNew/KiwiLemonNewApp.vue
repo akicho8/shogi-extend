@@ -26,30 +26,10 @@ client-only
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container
         .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
-          //- b-upload(@input="xaudio_file_upload_handle" @click.native="debug_alert('2回呼ばれる不具合があるため効果音off')")
-          //-   .field
-          //-     img(:src="url" width="128px")
-          //-     template(v-if="xaudio_file")
-          //-       .box
-          //-         div {{xaudio_file.name}}
-          //-         div {{xaudio_file.size}}
-          //-         div {{xaudio_file.type}}
-
-          //- .column
-          //-   .box
-          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('is_audio_theme_breakbeat_only').sample_source")
-          //-     KiwiLemonNewAudioPlay(:src="this.AudioThemeInfo.fetch('is_audio_theme_breakbeat_only').sample_source" size="is-small")
-
           KiwiLemonNewForm(:base="base" ref="KiwiLemonNewForm" v-if="form_show_p")
           KiwiLemonNewProgress(:base="base")
           KiwiLemonNewReview(:base="base")
           KiwiLemonNewValidation(:base="base")
-          //- .column.is-half(v-if="development_p")
-          //-   b-tabs.list_tabs(:expanded="false" type="is-boxed" v-model="list_tab_index" @input="sound_play_click()")
-          //-     b-tab-item(label="あなた")
-          //-       KiwiLemonNewQueueSelf(:base="base")
-          //-     b-tab-item(label="みんな")
-          //-       KiwiLemonNewQueueAll(:base="base")
           KiwiLemonNewQueueSelf(:base="base")
           KiwiLemonNewQueueAll(:base="base")
           KiwiLemonNewAdmin(:base="base")
