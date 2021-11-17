@@ -4,7 +4,7 @@ KiwiLemonNewHelp
 
 <script>
 export default {
-  name: "video-new-help",
+  name: "PagesVideoHelp",
   computed: {
     meta() {
       return {

@@ -47,21 +47,17 @@ module Api
       end
 
       # 起動時に実行
-      # curl http://localhost:3000/api/kiwi/lemons/latest_info_reload.json
-      # ../../../nuxt_side/components/Kiwi/KiwiApp.vue
-      def latest_info_reload
-        if !current_user
-          render json: {}
-          return
-        end
-
-        render json: {}
-        return
+      # curl http://localhost:3000/api/kiwi/lemons/xresource_fetch.json
+      # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/KiwiLemonNew
+      def xresource_fetch
+        render json: {
+          :background_job_active_hours => ::Kiwi::Lemon.background_job_range.to_a,
+        }
       end
 
       # フォームPOST時
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/record_create.json
-      # ../../../nuxt_side/components/Kiwi/app_form.js
+      # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/app_form.js
       def record_create
         if !current_user
           render html: "ログインしてください"
@@ -123,7 +119,7 @@ module Api
       # リトライ (管理者専用)
       # http://localhost:3000/api/kiwi/lemons/retry_run.json?id=1
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/retry_run.json
-      # ../../../nuxt_side/components/Kiwi/app_form.js
+      # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/app_form.js
       def retry_run
         lemon = ::Kiwi::Lemon.find(params[:id])
         lemon.retry_run
@@ -139,7 +135,7 @@ module Api
       # 削除 (管理者専用)
       # http://localhost:3000/api/kiwi/lemons/destroy_run.json?id=1
       # curl -d _method=post http://localhost:3000/api/kiwi/lemons/destroy_run.json
-      # ../../../nuxt_side/components/Kiwi/app_form.js
+      # ../../../../nuxt_side/components/Kiwi/KiwiLemonNew/app_form.js
       def destroy_run
         lemon = ::Kiwi::Lemon.find(params[:id])
         lemon.destroy_run

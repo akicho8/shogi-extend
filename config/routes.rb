@@ -194,7 +194,7 @@ Rails.application.routes.draw do
       end
       namespace :lemons do
         get :index
-        get :latest_info_reload
+        get :xresource_fetch
         post :record_create
         post :retry_run                  # for staff
         post :destroy_run                  # for staff

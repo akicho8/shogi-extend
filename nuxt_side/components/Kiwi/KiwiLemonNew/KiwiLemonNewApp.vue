@@ -4,6 +4,11 @@ client-only
 
     DebugBox(v-if="development_p")
       p column_size_code: {{column_size_code}}
+      p xresource: {{xresource}}
+      //- p $fetchState: {{$fetchState}}
+
+    //- FetchStateErrorMessage(:fetchState="$fetchState")
+    //- b-loading(:active="$fetchState.pending")
 
     KiwiLemonNewSidebar(:base="base")
     MainNavbar
@@ -105,20 +110,26 @@ export default {
       response_hash: null, // FreeBattle のインスタンスの属性たち + いろいろんな情報
     }
   },
+
+  props: {
+    xresource: { type: Object, required: true, },
+  },
+
   mounted() {
     this.ga_click("動画作成")
     if (this.nuxt_login_required()) { return }
   },
 
-  fetchOnServer: false,
-  fetch() {
-    this.debug_alert("fetch[begin]")
-    const params = {
-    }
-    return this.$axios.$get("/api/kiwi/lemons/latest_info_reload.json", {params: params}).then(e => {
-      this.debug_alert("fetch[end]")
-    })
-  },
+  // fetchOnServer: false,
+  // fetch() {
+  //   this.debug_alert("fetch begin")
+  //   const params = {
+  //   }
+  //   return this.$axios.$get("/api/kiwi/lemons/xresource_fetch.json", {params: params}).then(e => {
+  //     this.xresource = e
+  //     this.debug_alert("fetch end")
+  //   })
+  // },
 
   computed: {
     base() { return this },

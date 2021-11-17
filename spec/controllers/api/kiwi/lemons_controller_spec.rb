@@ -38,8 +38,8 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
     @user1 = user_login(User.sysop)
   end
 
-  it "latest_info_reload" do
-    post :latest_info_reload, params: {}.as_json, as: :json
+  it "xresource_fetch" do
+    post :xresource_fetch, params: {}.as_json, as: :json
     assert { response.status == 200 }
   end
 
