@@ -245,17 +245,6 @@
       .article_body
         | チャットの右上から「観戦者宛」を選択
 
-        //- | チャットの右上の
-        //- b-button(icon="dots-vertical")
-        //- | で「観戦者宛」を選択
-
-        //-   b-button.xemoji_in_b_button(v-xemoji @click="sound_play_click()") 🤫
-        //-   span.ml-1 をタップ
-
-        //- .is-flex.is-align-items-center
-        //-   b-button.xemoji_in_b_button(v-xemoji @click="sound_play_click()") 🤫
-        //-   span.ml-1 をタップ
-
     article
       h2 観戦者宛の発言は対局が終わったら対局者も見れる？
       .article_body

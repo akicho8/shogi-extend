@@ -1,10 +1,8 @@
 <template lang="pug">
 .MembershipMedal(:class="wrapper_class" @click="click_handle")
-  template(v-if="false")
-  .xemoji_wrap(v-else-if="params.emoji" v-xemoji :key="params.emoji") {{params.emoji}}
+  XemojiWrap(v-if="params.emoji" :str="params.emoji")
   b-icon(v-else-if="params.icon" :icon="params.icon" :type="params.type" size="is-small" :class="params.class")
-  template(v-else)
-    | {{params}}
+  template(v-else) {{params}}
 </template>
 
 <script>
@@ -43,7 +41,7 @@ export default {
   align-items: center
   justify-content: center
 
-  .xemoji_wrap
+  .XemojiWrap
     display: flex
 
   .xemoji, .icon

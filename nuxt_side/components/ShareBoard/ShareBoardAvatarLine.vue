@@ -1,8 +1,8 @@
 <template lang="pug">
 .ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
   img.avatar_img.flex_item(:src="info.from_avatar_path" v-if="info.from_avatar_path")
-  .user_guardian.flex_item.is-flex(v-if="base.guardian_display_key === 'is_guardian_display_on' && info.from_avatar_path == null" v-text="user_guardian" v-xemoji :key="user_guardian")
-  .user_name.flex_item(v-text="info.from_user_name" v-xemoji :key="info.from_user_name")
+  XemojiWrap.user_guardian.flex_item.is-flex(v-if="base.guardian_display_key === 'is_guardian_display_on' && info.from_avatar_path == null" :str="user_guardian")
+  XemojiWrap.user_name.flex_item(:str="info.from_user_name")
   slot
 </template>
 

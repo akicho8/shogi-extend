@@ -15,8 +15,7 @@ client-only
             | ログイン
           b-button.mt-4(type="is-primary is-outlined" @click="reload_handle" v-if="error_status_code === 500")
             | ブラウザをリロードする
-        .emoji.has-text-centered.is-unselectable(v-xemoji)
-          | {{charactor}}
+        XemojiWrap.has-text-centered.is-unselectable.is-block(:str="charactor")
     DebugPre(v-if="development_p")
       | {{error}}
 </template>
@@ -115,6 +114,6 @@ export default {
     background-color: var(--balloon-bg-color)
     border: 1px solid var(--balloon-fg-color)
 
-  .emoji
+  .XemojiWrap
     font-size: 80px
 </style>

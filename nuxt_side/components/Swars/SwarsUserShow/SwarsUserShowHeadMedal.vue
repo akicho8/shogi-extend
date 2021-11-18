@@ -2,9 +2,9 @@
 .SwarsUserShowHeadMedal(v-if="base.info.medal_list.length >= 1")
   .one_element(v-for="e in base.info.medal_list" @click="base.medal_click_handle(e)" :class="{'is-clickable': e.message}")
     template(v-if="false")
-    b-tag( v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
-    .raw(  v-else-if="e.method === 'raw'" v-xemoji :key="e.name") {{e.name}}
-    b-icon(v-else-if="e.method === 'icon'" :icon="e.name" :type="e.type" size="is-small")
+    b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
+    XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.name")
+    b-icon(         v-else-if="e.method === 'icon'" :icon="e.name" :type="e.type" size="is-small")
 </template>
 
 <script>
