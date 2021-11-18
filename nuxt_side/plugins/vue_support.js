@@ -311,10 +311,18 @@ export const vue_support = {
     // ・AndroidやWindowsで「ゴキブリ」が出ない
     // ・Windowsの残念な絵文字を置き換えれる
     //
+    // 【注意】
+    // 更新されるテーブル内のtdでこれを使うと更新されない
+    //
     xemoji: {
+      // https://jp.vuejs.org/v2/guide/custom-directive.html
       inserted(el) {
+        // el.__innerHTML__ = el.innerHTML
         el.innerHTML = twemoji.parse(el.innerHTML, { folder: "svg", ext: ".svg", className: "xemoji" })
-      }
+      },
+      // update(el) {
+      //   el.innerHTML = twemoji.parse(el.__innerHTML__, { folder: "svg", ext: ".svg", className: "xemoji" })
+      // },
     },
   },
 }

@@ -4,7 +4,7 @@
     .panel
       .panel-heading
         | デバッグ用
-      a.panel-block(@click="base.reset_all_handle") リセット
+      a.panel-block(@click="base.reset_all_handle") 全削除
       a.panel-block(@click="base.goal_handle") ゴール
       a.panel-block(@click="base.rebuild_handle") リビルド
       a.panel-block(@click="base.ls_reset") ブラウザに記憶した情報の削除

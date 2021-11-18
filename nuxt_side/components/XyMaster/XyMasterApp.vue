@@ -219,16 +219,14 @@ export default {
       return true
     },
 
-    time_records_hash_update() {
+    async time_records_hash_update() {
       if (this.scope_key) {
         const params = {
           time_records_hash_fetch: true,
           scope_key: this.scope_key,
           entry_name_uniq_p: this.entry_name_uniq_p,
         }
-        return this.$axios.$get("/api/xy_master/time_records.json", {params: params}).then(e => {
-          this.time_records_hash = e
-        })
+        this.time_records_hash = await this.$axios.$get("/api/xy_master/time_records.json", {params: params})
       }
     },
 

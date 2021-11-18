@@ -9,6 +9,7 @@
     template(v-for="e in base.RuleInfo.values")
       b-tab-item(:label="e.name" :value="e.key")
         b-table(
+          v-if="base.table_show_p"
           :data="base.time_records_hash[e.key]"
           :paginated="true"
           :per-page="base.config.per_page"
@@ -19,19 +20,20 @@
           :narrowed="true"
           default-sort-direction="desc"
           )
-          b-table-column(v-slot="props" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
+          b-table-column(v-slot="{row}" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
             template(v-if="false")
-            .medal(v-else-if="props.row.rank === 1" v-xemoji) 🥇
-            .medal(v-else-if="props.row.rank === 2" v-xemoji) 🥈
-            .medal(v-else-if="props.row.rank === 3" v-xemoji) 🥉
+            .medal(v-else-if="row.rank === 1" v-xemoji) 🥇
+            .medal(v-else-if="row.rank === 2" v-xemoji) 🥈
+            .medal(v-else-if="row.rank === 3" v-xemoji) 🥉
             template(v-else)
-              | {{props.row.rank}}
-          b-table-column(v-slot="props" field="entry_name" label="名前" sortable cell-class="entry_name_td")
+              | {{row.rank}}
+          b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
             span(v-xemoji)
-              | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
-          b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(props.row.spent_sec)}}
-          b-table-column(v-slot="props" field="x_count"    label="X" sortable numeric centered) {{props.row.x_count}}
-          b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(props.row.created_at)}}
+              | {{string_truncate(row.entry_name || '？？？', {length: 12})}}
+            | {{row.entry_name}}
+          b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(row.spent_sec)}}
+          b-table-column(v-slot="{row}" field="x_count"    label="X" sortable numeric centered) {{row.x_count}}
+          b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(row.created_at)}}
 
   .has-text-centered-mobile
     b-switch(v-model="base.entry_name_uniq_p" @input="sound_play_click()") プレイヤー別順位
