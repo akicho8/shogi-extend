@@ -21,12 +21,12 @@
           )
           b-table-column(v-slot="{row}" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
             template(v-if="medal_hash[row.rank]")
-              .medal(v-xemoji :key="medal_hash[row.rank]") {{medal_hash[row.rank]}}
+              XemojiWrap.medal(:str="medal_hash[row.rank]")
             template(v-else)
               | {{row.rank}}
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
-            span(v-xemoji :key="row.entry_name")
-              | {{string_truncate(row.entry_name || '？？？', {length: 12})}}
+            XemojiWrap(:str="string_truncate(row.entry_name || '？？？', {length: 12})")
+
           b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(row.spent_sec)}}
           b-table-column(v-slot="{row}" field="x_count"    label="X" sortable numeric centered) {{row.x_count}}
           b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(row.created_at)}}
