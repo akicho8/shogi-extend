@@ -26,10 +26,9 @@
             .medal(v-else-if="props.row.rank === 3" v-xemoji) 🥉
             template(v-else)
               | {{props.row.rank}}
-          b-table-column(v-slot="props" field="entry_name" label="名前"  sortable)
-            //- | 0123456789 0123456789 0123456789 0123456789 0123456789
-            //- | {{props.row.entry_name || '？？？'}}
-            | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
+          b-table-column(v-slot="props" field="entry_name" label="名前" sortable cell-class="entry_name_td")
+            span(v-xemoji)
+              | {{string_truncate(props.row.entry_name || '？？？', {length: 12})}}
           b-table-column(v-slot="props" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(props.row.spent_sec)}}
           b-table-column(v-slot="props" field="x_count"    label="X" sortable numeric centered) {{props.row.x_count}}
           b-table-column(v-slot="props" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(props.row.created_at)}}
@@ -79,4 +78,8 @@ export default {
         .xemoji
           height: 1.25em
           width: unset
+
+    .entry_name_td
+      img.xemoji
+        vertical-align: text-bottom
 </style>
