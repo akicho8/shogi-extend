@@ -1,7 +1,7 @@
 <template lang="pug">
 .MembershipMedal(:class="wrapper_class" @click="click_handle")
   template(v-if="false")
-  .xemoji_wrap(v-else-if="params.emoji" v-xemoji) {{params.emoji}}
+  .xemoji_wrap(v-else-if="params.emoji" v-xemoji :key="params.emoji") {{params.emoji}}
   b-icon(v-else-if="params.icon" :icon="params.icon" :type="params.type" size="is-small" :class="params.class")
   template(v-else)
     | {{params}}

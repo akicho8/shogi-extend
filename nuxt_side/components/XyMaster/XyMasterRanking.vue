@@ -20,10 +20,8 @@
           default-sort-direction="desc"
           )
           b-table-column(v-slot="{row}" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
-            template(v-if="false")
-            .medal(v-else-if="row.rank === 1" v-xemoji) 🥇
-            .medal(v-else-if="row.rank === 2" v-xemoji) 🥈
-            .medal(v-else-if="row.rank === 3" v-xemoji) 🥉
+            template(v-if="medal_hash[row.rank]")
+              .medal(v-xemoji :key="medal_hash[row.rank]") {{medal_hash[row.rank]}}
             template(v-else)
               | {{row.rank}}
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
@@ -43,6 +41,15 @@ import { support_child } from "./support_child.js"
 export default {
   name: "XyMasterRanking",
   mixins: [support_child],
+  computed: {
+    medal_hash() {
+      return {
+        "1": "🥇",
+        "2": "🥈",
+        "3": "🥉",
+      }
+    },
+  },
 }
 </script>
 
