@@ -14,6 +14,11 @@ export const getters = {
       }
     }
   },
+  g_current_user_name(state) {
+    if (state.g_current_user) {
+      return state.g_current_user.name
+    }
+  },
 }
 
 export const mutations = {

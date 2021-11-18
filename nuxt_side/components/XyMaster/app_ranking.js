@@ -18,12 +18,11 @@ export const app_ranking = {
   },
   methods: {
     ranking_goal_process() {
-      if (this.blank_p(this.current_entry_name)) {
+      if (this.blank_p(this.g_current_user_name)) {
         this.name_input_dialog()
         return
       }
-
-      this.entry_name_set_and_record_post(this.current_entry_name)
+      this.entry_name_set_and_record_post(this.g_current_user_name)
     },
 
     name_input_dialog() {

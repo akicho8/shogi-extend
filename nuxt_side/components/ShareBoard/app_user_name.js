@@ -11,13 +11,5 @@ export const app_user_name = {
     default_user_name() {
       return this.$route.query.default_user_name || this.g_current_user_name || ""
     },
-
-    // ログイン名
-    g_current_user_name() {
-      const v = this.g_current_user
-      if (v) {
-        return v.name
-      }
-    },
   },
 }

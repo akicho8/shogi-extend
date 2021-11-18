@@ -31,8 +31,8 @@ export const app_storage = {
         chart_rule_key:  this.default_rule_key,
         scope_key:       "scope_today",
         chart_scope_key: "chart_scope_recently",
-        entry_name:         this.current_entry_name,
-        current_pages:      {},
+        entry_name:      this.g_current_user_name || "",
+        current_pages:   {},
       }
     },
   },

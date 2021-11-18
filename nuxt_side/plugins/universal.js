@@ -38,6 +38,7 @@ Vue.mixin({
     ]),
     ...mapGetters("user", [
       "staff_p",
+      "g_current_user_name",
     ]),
     // ...mapState("swars", [
     //   "g_var1",
