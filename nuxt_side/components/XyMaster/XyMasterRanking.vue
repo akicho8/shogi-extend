@@ -9,7 +9,6 @@
     template(v-for="e in base.RuleInfo.values")
       b-tab-item(:label="e.name" :value="e.key")
         b-table(
-          v-if="base.table_show_p"
           :data="base.time_records_hash[e.key]"
           :paginated="true"
           :per-page="base.config.per_page"
@@ -28,9 +27,8 @@
             template(v-else)
               | {{row.rank}}
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
-            span(v-xemoji)
+            span(v-xemoji :key="row.entry_name")
               | {{string_truncate(row.entry_name || '？？？', {length: 12})}}
-            | {{row.entry_name}}
           b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(row.spent_sec)}}
           b-table-column(v-slot="{row}" field="x_count"    label="X" sortable numeric centered) {{row.x_count}}
           b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(row.created_at)}}

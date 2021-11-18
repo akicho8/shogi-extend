@@ -1,4 +1,4 @@
-const CONGRATS_LTEQ = 10      // N位以内ならおめでとう
+const CONGRATS_LTEQ = 10          // N位以内ならおめでとう
 
 import _ from "lodash"
 import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
@@ -7,7 +7,6 @@ export const app_ranking = {
   data() {
     return {
       entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
-      table_show_p: true,       // v-xemoji が更新れない対策
     }
   },
   watch: {
@@ -67,10 +66,6 @@ export const app_ranking = {
       if (this.current_rank <= this.config.rank_max) {
         this.$set(this.current_pages, this.current_rule_index, this.time_record.rank_info[this.scope_key].page)
       }
-
-      // b-table 内の v-xemoji の部分が更新されないので一瞬だけコンポーネントを消して作り直す(かなりバッドノウハウ)
-      this.table_show_p = false
-      this.$nextTick(() => this.table_show_p = true)
 
       this.talk(this.congrats_message) // おめでとう
 

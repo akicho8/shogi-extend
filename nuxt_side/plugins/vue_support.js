@@ -312,7 +312,8 @@ export const vue_support = {
     // ・Windowsの残念な絵文字を置き換えれる
     //
     // 【注意】
-    // 更新されるテーブル内のtdでこれを使うと更新されない
+    // 更新されるテーブル内のtdでこれを使うと更新されないので次のように key をつける
+    //   span(v-xemoji :key="name") {{name}}
     //
     xemoji: {
       // https://jp.vuejs.org/v2/guide/custom-directive.html
