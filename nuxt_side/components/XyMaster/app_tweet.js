@@ -3,12 +3,11 @@ import dayjs from "dayjs"
 export const app_tweet = {
   data() {
     return {
-      o_count:       null,      // 正解数
-      x_count:       null,      // 不正解数
-      micro_seconds: null,      // 経過時間
-      entry_name_uniq_p: false, // プレイヤー別順位ON/OFF
-      entry_name:    null,      // ランキングでの名前を保持しておく
-      latest_rule:   null,      // 最後に挑戦した最新のルール
+      o_count:       null, // 正解数
+      x_count:       null, // 不正解数
+      micro_seconds: null, // 経過時間
+      entry_name:    null, // ランキングでの名前を保持しておく
+      latest_rule:   null, // 最後に挑戦した最新のルール
     }
   },
   methods: {
@@ -92,15 +91,6 @@ export const app_tweet = {
 
     spent_sec() {
       return this.micro_seconds / 1000
-    },
-
-    // ログインしているとユーザー名がわかる
-    current_entry_name() {
-      if (this.g_current_user) {
-        return this.g_current_user.name
-      } else {
-        return ""  // これがないと null のまま localStorage に保存してエラーになる
-      }
     },
   },
 }
