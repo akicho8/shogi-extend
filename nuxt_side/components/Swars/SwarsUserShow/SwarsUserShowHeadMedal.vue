@@ -29,6 +29,8 @@ export default {
     .raw
       position: relative
       bottom: -0.2rem     // 絵文字は大きいので若干下げる
+      .xemoji
+        height: 1.0em
     .icon
       position: relative
       bottom: -0.1rem
