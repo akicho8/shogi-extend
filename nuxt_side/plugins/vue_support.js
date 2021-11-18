@@ -314,16 +314,13 @@ export const vue_support = {
     // 【注意】
     // 更新されるテーブル内のtdでこれを使うと更新されないので次のように key をつける
     //   span(v-xemoji :key="name") {{name}}
+    //   ↑これは面倒すぎるので XemojiWrap を使うこと
     //
     xemoji: {
       // https://jp.vuejs.org/v2/guide/custom-directive.html
       inserted(el) {
-        // el.__innerHTML__ = el.innerHTML
         el.innerHTML = twemoji.parse(el.innerHTML, { folder: "svg", ext: ".svg", className: "xemoji" })
       },
-      // update(el) {
-      //   el.innerHTML = twemoji.parse(el.__innerHTML__, { folder: "svg", ext: ".svg", className: "xemoji" })
-      // },
     },
   },
 }
