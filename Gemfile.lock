@@ -439,7 +439,7 @@ GEM
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
     systemu (2.6.5)
-    table_format (0.0.8)
+    table_format (0.0.10)
       activesupport
     temple (0.8.2)
     test-prof (1.0.7)

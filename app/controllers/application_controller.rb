@@ -14,6 +14,12 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  if Rails.env.development?
+    before_action do
+      logger.debug params.to_unsafe_h.to_t(truncate: 80)
+    end
+  end
+
   # http://localhost:3000/?force_error=1
   # https://www.shogi-extend.com/?force_error=1
   prepend_before_action do
