@@ -931,6 +931,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "N手毎交代" do
+    def test1(hand_every_n, order)
+      visit_app(hand_every_n: hand_every_n, room_code: :my_room, force_user_name: "a", ordered_member_names: "a,b,c", handle_name_validate_skip: "true")
+      assert_text("順序:#{order}")
+    end
+    it "works" do
+      test1(1, "abcabcabcab")
+      test1(2, "ababcacabcb")
+      test1(3, "abababcacac")
+    end
+  end
+
   describe "持ち上げ駒キャンセル方法" do
     def test1(selector)
       visit_app(room_code: :my_room, force_user_name: "alice")

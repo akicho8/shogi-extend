@@ -78,6 +78,20 @@
       .panel-block
         p.is_line_break_on {{$config.MY_SITE_URL + base.config.twitter_card_options.image}}
         img.is-block(:src=`$config.MY_SITE_URL + base.config.twitter_card_options.image` width="256")
+  .column.is-4
+    .panel
+      .panel-heading
+        | 順序
+      template(v-for="e in (base.ordered_members || [])")
+        .panel-block {{e}}
+  .column.is-4
+    .panel
+      .panel-heading
+        | 状態
+      .panel-block(v-if="base.order_func_p && base.ordered_members_present_p")
+        | 順序:
+        template(v-for="(_, i) in 11")
+          | {{base.ordered_members_cycle_at(i).user_name[0]}}
   .column.is-6.is-clipped
     .panel
       .panel-heading

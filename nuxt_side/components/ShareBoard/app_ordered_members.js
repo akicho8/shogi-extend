@@ -4,6 +4,8 @@ import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import _ from "lodash"
 const FAKE_P = false
+const HAND_EVERY_N_ENABLED = true // N手毎を有効にするか？
+const PAIR = 2
 
 export const app_ordered_members = {
   data() {
@@ -19,6 +21,7 @@ export const app_ordered_members = {
       new_move_guard_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
+      new_hand_every_n: null, // N手毎交代
 
       os_change: null, // OsChange のインスタンス
     }
@@ -84,6 +87,7 @@ export const app_ordered_members = {
       this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
+      this.new_hand_every_n = this.hand_every_n
       this.os_change = new OsChange()
     },
 
@@ -112,7 +116,7 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_members_cycle_at(index) {
+    ordered_members_cycle_at(turn) {
       if (!this.order_func_p) {
         // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
@@ -120,7 +124,19 @@ export const app_ordered_members = {
       if (this.ordered_members_blank_p) {
         return null
       }
-      return this.ary_cycle_at(this.ordered_members, index)
+
+      if (HAND_EVERY_N_ENABLED) {
+        // n = 3 # N手毎交代
+        // step = turn / (PAIR * n) * PAIR # => 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6
+        // offset = turn % PAIR            # => 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+        // step + offset                   # => 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 4, 5, 4, 5, 4, 5, 6, 7, 6, 7
+        this.assert_nonzero(this.hand_every_n)
+        const step = Math.trunc(turn / (PAIR * this.hand_every_n)) * PAIR
+        const offset = this.ruby_like_modulo(turn, PAIR)
+        turn = step + offset
+      }
+
+      return this.ary_cycle_at(this.ordered_members, turn)
     },
 
     // 局面 turn の手番のメンバーの名前
@@ -247,6 +263,7 @@ export const app_ordered_members = {
       this.move_guard_key = params.move_guard_key
       this.avatar_king_key = params.avatar_king_key
       this.shout_mode_key = params.shout_mode_key
+      this.hand_every_n = params.hand_every_n
     },
 
     // 自分の場所を調べて正面をその視点にする
@@ -329,6 +346,7 @@ export const app_ordered_members = {
         move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
         shout_mode_key:  this.shout_mode_key,
+        hand_every_n:  this.hand_every_n,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }

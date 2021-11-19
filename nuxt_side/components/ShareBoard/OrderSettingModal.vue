@@ -78,6 +78,10 @@
                   b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
                     | {{e.name}}
 
+          .column
+            b-field(label="N手毎交代" custom-class="is-small" message="")
+              b-numberinput(size="is-small" controls-position="compact" v-model="base.new_hand_every_n" :min="1" :max="10" :exponential="true" @input="sound_play_click()")
+
         .columns.is-mobile(v-if="development_p && false")
           .column
             b-field(label="手番制限" custom-class="is-small" :message="base.MoveGuardInfo.fetch(base.new_move_guard_key).message")
@@ -259,6 +263,11 @@ export default {
       this.base.os_change.append("シャウト")
     },
 
+    new_hand_every_n_change_handle() {
+      this.sound_play_click()
+      this.base.os_change.append("N手毎交代")
+    },
+
     // 上下矢印ボタン
     arrow_handle(row, sign) {
       this.sound_play_click()
@@ -305,6 +314,7 @@ export default {
         move_guard_key: this.base.new_move_guard_key,
         avatar_king_key: this.base.new_avatar_king_key,
         shout_mode_key: this.base.new_shout_mode_key,
+        hand_every_n: this.base.new_hand_every_n,
         message: message,
       })
     },
