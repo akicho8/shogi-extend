@@ -1277,7 +1277,9 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".ShareBoardColorThemeDropdown").click # 配色変更ドロップダウンを開く
         find(".is_color_theme_piyo").click          # 配色確定
 
-        find(".download_handle").click              # ダウンロード実行
+        if false
+          find(".download_handle").click            # ダウンロード実行
+        end
         find(".close_handle").click                 # 閉じる
       end
     end
