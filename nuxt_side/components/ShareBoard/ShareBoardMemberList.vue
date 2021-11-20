@@ -46,7 +46,7 @@ export default {
     },
     // 自分のターンか？
     turn_active_p(e) {
-      if (this.base.order_func_p) {
+      if (this.base.ordered_p) {
         if (this.base.ordered_members) {
           return this.base.current_turn_user_name === e.from_user_name
         }
@@ -56,8 +56,8 @@ export default {
       // if (this.base.member_is_disconnect(e)) {
       //   return "account-off"
       // }
-      // if (this.base.order_func_p) {
-      // if (this.base.order_func_p) {
+      // if (this.base.ordered_p) {
+      // if (this.base.ordered_p) {
       //   return "account-outline" // 観戦中のアイコン
       // } else {
       //   return "account"         // 通常のアイコン
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     member_infos() {
-      if (this.base.order_func_p) {
+      if (this.base.ordered_p) {
         if (this.base.ordered_members) {
           return _.sortBy(this.base.member_infos, e => {
             let found = null

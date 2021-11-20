@@ -190,7 +190,7 @@ export const app_room_setup = {
         this.current_sfen = params.sfen
         this.turn_offset = params.turn_offset
       }
-      if ("order_func_p" in params) {
+      if ("ordered_p" in params) {
         this.om_vars_copy_all_from(params)
       }
     },

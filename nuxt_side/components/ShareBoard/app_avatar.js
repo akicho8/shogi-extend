@@ -48,7 +48,7 @@ export const app_avatar = {
     //
     avatars_hash() {
       const hash = {}
-      if (this.order_func_p && this.ordered_members_present_p) {
+      if (this.ordered_p && this.ordered_members_present_p) {
         for (const e of this.member_infos) {
           const info = this.base.user_names_hash[e.from_user_name]
           if (info) { // 対局メンバーなら

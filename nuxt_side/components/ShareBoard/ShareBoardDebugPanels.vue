@@ -88,10 +88,10 @@
     .panel
       .panel-heading
         | 状態
-      .panel-block(v-if="base.order_func_p && base.ordered_members_present_p")
+      .panel-block(v-if="base.ordered_p && base.ordered_members_present_p")
         | 順序:
         template(v-for="(_, i) in 11")
-          | {{base.ordered_members_cycle_at(i).user_name[0]}}
+          | {{base.ordered_member_by_turn(i).user_name[0]}}
   .column.is-6.is-clipped
     .panel
       .panel-heading

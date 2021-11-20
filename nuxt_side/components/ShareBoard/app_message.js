@@ -66,7 +66,7 @@ export const app_message = {
         return this.watching_member_count >= 1 // 観戦者が1人以上いる場合
       }
       if (true) {
-        return this.order_func_p // 単に順番設定している場合
+        return this.ordered_p // 単に順番設定している場合
       }
     },
   },
