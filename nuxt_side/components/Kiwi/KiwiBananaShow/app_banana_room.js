@@ -260,7 +260,7 @@ export const app_banana_room = {
 //         this.current_sfen = params.sfen
 //         this.turn_offset = params.turn_offset
 //       }
-//       if ("ordered_p" in params) {
+//       if ("order_enable_p" in params) {
 //         this.om_vars_copy_all_from(params)
 //       }
 //     },

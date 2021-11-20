@@ -6,7 +6,7 @@ client-only
     DebugBox.is-hidden-mobile(v-if="development_p")
       p watching_member_count: {{watching_member_count}}
       p os_change: {{os_change}}
-      p ordered_p: {{ordered_p}}
+      p order_enable_p: {{order_enable_p}}
 
       p avatars_hash: {{avatars_hash}}
 
@@ -367,7 +367,7 @@ export default {
     },
 
     operation_invalid1_handle() {
-      if (this.base.ordered_p) {
+      if (this.base.order_enable_p) {
         if (this.base.ordered_members) {
           this.sound_play("x")
           const name = this.current_turn_user_name

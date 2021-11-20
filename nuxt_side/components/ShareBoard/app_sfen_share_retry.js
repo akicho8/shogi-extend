@@ -34,7 +34,7 @@ export const app_sfen_share_retry = {
     },
     sfen_share_callback_set() {
       if (RETRY_FUNCTION) {
-        if (this.ordered_p && this.ordered_members_present_p) {
+        if (this.order_enable_p && this.ordered_members_present_p) {
           if (this.RETRY_DELAY >= 0) {
             this.retry_delay_cancel()
             this.retry_delay_id = this.delay_block(this.retry_check_delay, () => {
@@ -113,7 +113,7 @@ export const app_sfen_share_retry = {
     // 指し手を受信した次に人が sfen_share_broadcasted のなかで呼ぶ
     received_ok_send(params) {
       if (RETRY_FUNCTION) {
-        if (this.ordered_p) {
+        if (this.order_enable_p) {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
           if (params.x_retry_count >= 1) {
             this.toast_warn(`次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`, {duration: 1000 * RETRY_TOAST_SEC, toast_only: true})

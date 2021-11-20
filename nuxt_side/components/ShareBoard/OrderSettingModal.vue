@@ -3,16 +3,16 @@
   .modal-card-head
     .modal-card-title
       | 順番設定
-      span.mx-1(v-if="base.ordered_p && base.new_ordered_members_odd_p")
+      span.mx-1(v-if="base.order_enable_p && base.new_ordered_members_odd_p")
         b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
           b-icon(icon="alert" type="is-warning" size="is-small")
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
-    b-switch.main_switch(size="is-small" type="is-primary" v-model="base.ordered_p" @input="main_switch_handle") 有効
+    b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_enable_p" @input="main_switch_handle") 有効
   .modal-card-body
-    .description(v-if="!base.ordered_p")
+    .description(v-if="!base.order_enable_p")
       .has-text-centered.has-text-grey.my-6
         | 設定する場合は右上のスイッチを有効にしよう
 
@@ -28,7 +28,7 @@
 
         p 対局後に<b>検討</b>するときは自由に駒を動かせたほうがよいので<b>無効</b>に戻してください
 
-    template(v-if="base.ordered_p")
+    template(v-if="base.order_enable_p")
       b-table(
         :data="base.os_table_rows"
         :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
@@ -92,7 +92,7 @@
 
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
-    template(v-if="base.ordered_p")
+    template(v-if="base.order_enable_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
       b-button.apply_button(@click="apply_handle" :type="{'is-primary': base.os_change.has_value_p}") 更新
 </template>
@@ -116,7 +116,7 @@ export default {
 
     main_switch_handle(v) {
       this.sound_play_click()
-      this.base.order_func_share({ordered_p: v, message: v ? "有効" : "無効"})
+      this.base.order_func_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 一番最初に有効にしたときは1度更新を押した状態にする
       if (v) {
@@ -127,7 +127,7 @@ export default {
     },
 
     close_handle() {
-      if (this.base.ordered_p && this.base.os_change.has_value_p) {
+      if (this.base.order_enable_p && this.base.os_change.has_value_p) {
         this.sound_play_click()
         this.talk("ちょっと待て")
         this.dialog_confirm({

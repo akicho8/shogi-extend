@@ -20,7 +20,7 @@ export const app_clock_box_time_limit = {
     // そこで関係者は数秒待ってから自分で時間切れダイアログを【まだ表示されてなかったら】表示する
     // 2秒後に表示するつもりで1秒後にBCが届いたら2秒後の発動はキャンセルする
     cc_time_zero_callback() {
-      if (this.ac_room && this.ordered_p) {
+      if (this.ac_room && this.order_enable_p) {
         if (this.current_turn_self_p) {
           this.cc_time_limit_modal_show_and_broadcast() // 当事者は発動してBC
         } else {
