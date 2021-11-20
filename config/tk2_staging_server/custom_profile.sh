@@ -15,4 +15,3 @@ export PATH=".bin:$PATH"
 
 # for logrtate
 export PATH="/usr/sbin:$PATH"
-

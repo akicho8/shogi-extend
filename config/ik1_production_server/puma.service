@@ -9,6 +9,7 @@
 [Unit]
 Description=puma production
 After=syslog.target network.target
+OnFailure=slack_notify@%n.service
 
 [Service]
 Type=simple
@@ -23,6 +24,7 @@ Environment="PORT=3000"
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec puma -C config/puma/production.rb'
 ExecStart=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma/production.rb"
 ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec pumactl -S /var/www/shogi_web_production/current/tmp/pids/puma.state stop"
+ExecStartPost=/home/deploy/slack_notify %n start
 # /usr/local/rbenv/bin/rbenv exec bundle exec pumactl
 # ExecStart="/usr/local/rbenv/shims/puma -e production -C config/puma/production.rb"
 # ExecStart="/var/www/shogi_web_production/current/.bin/puma -e production -C config/puma/production.rb"

@@ -9,6 +9,7 @@
 [Unit]
 Description=puma staging
 After=syslog.target network.target
+OnFailure=failed_notify@%n.service
 
 [Service]
 Type=simple
@@ -23,6 +24,8 @@ Environment="PORT=3000"
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec puma -C config/puma/staging.rb'
 ExecStart=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma/staging.rb"
 ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec pumactl -S /var/www/shogi_web_staging/current/tmp/pids/puma.state stop"
+ExecStartPost=/home/deploy/slack_notify %n start
+
 # /usr/local/rbenv/bin/rbenv exec bundle exec pumactl
 # ExecStart="/usr/local/rbenv/shims/puma -e staging -C config/puma/staging.rb"
 # ExecStart="/var/www/shogi_web_staging/current/.bin/puma -e staging -C config/puma/staging.rb"
@@ -58,7 +61,7 @@ Restart=always
 # # output goes to /var/log/syslog (Ubuntu) or /var/log/messages (CentOS)
 # StandardOutput=syslog
 # StandardError=syslog
-# 
+#
 # # This will default to "bundler" if we don't specify it
 # SyslogIdentifier=puma
 

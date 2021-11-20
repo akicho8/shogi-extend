@@ -1,0 +1,14 @@
+#!/bin/sh
+ssh s 'sudo touch               /etc/systemd/system/failed_notify@.service'
+ssh s 'sudo chown deploy:deploy /etc/systemd/system/failed_notify@.service'
+scp failed_notify@.service s:/etc/systemd/system
+scp slack_notify s:/home/deploy
+ssh s 'sudo systemctl daemon-reload'
+# test
+ssh s '/home/deploy/slack_notify sidekiq start'
+ssh s '/home/deploy/slack_notify puma    start'
+ssh s '/home/deploy/slack_notify nuxt    start'
+# kill test
+ssh s 'sudo systemctl kill sidekiq -s SIGKILL'
+ssh s 'sudo systemctl kill puma    -s SIGKILL'
+ssh s 'sudo systemctl kill nuxt    -s SIGKILL'

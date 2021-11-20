@@ -1,6 +1,6 @@
-# -*- coding: utf-8; compile-command: "scp nuxt.service s:/etc/systemd/system/; ssh s 'sudo systemctl daemon-reload; sudo systemctl restart nuxt; sudo systemctl status nuxt; sudo systemctl reset-failed nuxt'" -*-
+# -*- coding: utf-8; compile-command: "scp nuxt.service i:/etc/systemd/system/; ssh i 'sudo systemctl daemon-reload; sudo systemctl restart nuxt; sudo systemctl status nuxt; sudo systemctl reset-failed nuxt'" -*-
 
-# ssh s sudo systemctl status nuxt
+# ssh i sudo systemctl status nuxt
 # bundle binstub nuxt --bin=sbin
 
 # https://github.com/nuxt/nuxt/blob/master/docs/systemd.md
@@ -9,6 +9,7 @@
 [Unit]
 Description=nuxt production
 After=syslog.target network.target
+OnFailure=slack_notify@%n.service
 
 [Service]
 Type=simple
@@ -23,6 +24,7 @@ WorkingDirectory=/var/www/shogi_web_production/current/nuxt_side
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec nuxt -C config/nuxt/production.rb'
 # nuxt build --dotenv .env.production
 ExecStart=/bin/bash -lc "npx nuxt start -p 4000 --dotenv .env.production"
+ExecStartPost=/home/deploy/slack_notify %n start
 # ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl -S /var/www/shogi_web_production/current/nuxt_side/tmp/pids/nuxt.state stop"
 # /usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl
 # ExecStart="/usr/local/rbenv/shims/nuxt -e production -C config/nuxt/production.rb"
@@ -54,7 +56,7 @@ Restart=always
 # # output goes to /var/log/syslog (Ubuntu) or /var/log/messages (CentOS)
 # StandardOutput=syslog
 # StandardError=syslog
-# 
+#
 # # This will default to "bundler" if we don't specify it
 # SyslogIdentifier=nuxt
 

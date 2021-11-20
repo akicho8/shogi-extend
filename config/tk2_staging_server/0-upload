@@ -1,0 +1,41 @@
+#!/bin/sh
+ssh s 'sudo touch               /etc/nginx/nginx.conf'
+ssh s 'sudo chown deploy:deploy /etc/nginx/nginx.conf'
+
+ssh s 'sudo touch               /etc/nginx/conf.d/default.conf'
+ssh s 'sudo chown deploy:deploy /etc/nginx/conf.d/default.conf'
+
+ssh s 'sudo touch               /etc/systemd/system/puma.service'
+ssh s 'sudo chown deploy:deploy /etc/systemd/system/puma.service'
+
+ssh s 'sudo touch               /etc/systemd/system/sidekiq.service'
+ssh s 'sudo chown deploy:deploy /etc/systemd/system/sidekiq.service'
+
+ssh s 'sudo touch               /etc/systemd/system/nuxt.service'
+ssh s 'sudo chown deploy:deploy /etc/systemd/system/nuxt.service'
+
+ssh s 'sudo touch               /etc/systemd/system/failed_notify@.service'
+ssh s 'sudo chown deploy:deploy /etc/systemd/system/failed_notify@.service'
+
+ssh s 'sudo systemctl daemon-reload'
+
+ssh s 'mkdir -p /var/www/shogi_web_staging/current/config/puma'
+
+scp custom_profile.sh     s:/etc/profile.d
+scp nginx.conf            s:/etc/nginx/nginx.conf
+scp nginx_default.conf    s:/etc/nginx/conf.d/default.conf
+scp puma.service          s:/etc/systemd/system/
+scp sidekiq.service       s:/etc/systemd/system/
+scp nuxt.service          s:/etc/systemd/system/
+scp failed_notify@.service s:/etc/systemd/system/
+scp slack_notify          s:/home/deploy/
+scp ../puma/staging.rb s:/var/www/shogi_web_staging/current/config/puma/staging.rb
+
+ssh s sudo chkconfig httpd off
+ssh s sudo chkconfig nginx    on
+ssh s sudo chkconfig puma     on
+ssh s sudo chkconfig sidekiq  on
+ssh s sudo chkconfig mysqld   on
+ssh s sudo chkconfig redis    on
+
+echo "0-reload の実行で反映する"

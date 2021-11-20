@@ -25,10 +25,10 @@ scp nuxt.service          i:/etc/systemd/system/
 scp ../puma/production.rb i:/var/www/shogi_web_production/current/config/puma/production.rb
 
 ssh i sudo chkconfig httpd off
-ssh i sudo chkconfig nginx  on
-ssh i sudo chkconfig puma   on
-ssh i sudo chkconfig sidekiq on
-ssh i sudo chkconfig mysqld on
-ssh i sudo chkconfig redis  on
+ssh i sudo chkconfig nginx    on
+ssh i sudo chkconfig puma     on
+ssh i sudo chkconfig sidekiq  on
+ssh i sudo chkconfig mysqld   on
+ssh i sudo chkconfig redis    on
 
 echo "0-reload の実行で反映する"
