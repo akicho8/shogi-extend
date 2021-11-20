@@ -6,7 +6,10 @@ class KiwiMailer < ApplicationMailer
     body = []
     if lemon.browser_url
       body << "▼生成ファイル (これを添付してある)"
-      body << "#{lemon.browser_url}"
+      body << lemon.browser_url
+      body << ""
+      body << "▼動画ライブラリ登録はここから#{lemon.id}番の「↑」をタップ"
+      body << UrlProxy.full_url_for("/video/new")
       body << ""
     end
     body << "▼棋譜確認用"

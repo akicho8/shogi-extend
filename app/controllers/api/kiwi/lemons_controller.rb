@@ -40,6 +40,7 @@ module Api
         :destroy_run,
         :all_info_reload,
         :zombie_kill_now,
+        :background_job_kick,
       ] do
         unless staff?
           raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
@@ -175,6 +176,19 @@ module Api
         render json: {
           response_hash: {
             :message => "ゾンビを#{count}匹成仏させました",
+          },
+        }
+      end
+
+      # 時間に関係なくjob実行 (管理者専用)
+      # ただし何も動いてないときのみ
+      # http://localhost:3000/api/kiwi/lemons/background_job_kick
+      # curl -d _method=post http://localhost:3000/api/kiwi/lemons/background_job_kick.json
+      def background_job_kick
+        ::Kiwi::Lemon.background_job_kick
+        render json: {
+          response_hash: {
+            :message => "OK",
           },
         }
       end

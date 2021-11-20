@@ -36,7 +36,7 @@ every("5 3 * * *") do
     # "Swars::Crawler::RecentlyCrawler.run",
 
     # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
-    "Swars::Battle.cleanup",
+    "Swars::Battle.cleanup",    # 30分かかる
     "FreeBattle.cleanup",
 
     # %(SlackAgent.notify(subject: "CRON", body: "obt_auto_max update")),
@@ -58,6 +58,8 @@ every("5 3 * * *") do
     "Actb::RoomChannel.active_users_clear",
     "Emox::SchoolChannel.active_users_clear",
     "Emox::RoomChannel.active_users_clear",
+
+    "Kiwi::Lemon.background_job_for_cron", # 動画変換。job時間が 0...0 ならcronで実行する
 
     %(SlackAgent.notify(subject: "CRON", body: "end")),
   ].join(";")

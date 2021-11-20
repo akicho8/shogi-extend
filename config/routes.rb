@@ -200,6 +200,7 @@ Rails.application.routes.draw do
         post :destroy_run                  # for staff
         post :all_info_reload # for staff
         post :zombie_kill_now # for staff
+        post :background_job_kick # for staff
         post :zombie_kill
         if Rails.env.development?
           get :record_create
@@ -207,6 +208,7 @@ Rails.application.routes.draw do
           get :destroy_run
           get :all_info_reload
           get :zombie_kill_now
+          get :background_job_kick
           get :zombie_kill
         end
       end

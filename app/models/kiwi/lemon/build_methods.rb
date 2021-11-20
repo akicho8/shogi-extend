@@ -41,6 +41,14 @@ module Kiwi
           "#{background_job_range.first}時から#{background_job_range.last}時"
         end
 
+        def background_job_enabled?
+          !background_job_disabled?
+        end
+
+        def background_job_disabled?
+          background_job_range.size.zero?
+        end
+
         def background_job_kick_active?(options = {})
           options = {
             time: Time.current,
@@ -52,8 +60,22 @@ module Kiwi
         end
 
         def background_job_inactive_message
-          unless background_job_kick_active?
-            "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは#{::Kiwi::Lemon.background_job_range_to_s}の間だけで動画変換を試みます。気長にお待ちください。"
+          if background_job_disabled?
+            "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは夜中の間だけで変換作業を試みます。気長にお待ちください。"
+          else
+            unless background_job_kick_active?
+              "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは#{::Kiwi::Lemon.background_job_range_to_s}の間だけで動画変換を試みます。気長にお待ちください。"
+            end
+          end
+        end
+
+        # rails r 'Kiwi::Lemon.background_job_for_cron'
+        def background_job_for_cron
+          if background_job_disabled?
+            # if sidekiq_task_count.nonzero?
+            #   return
+            # end
+            background_job
           end
         end
 
@@ -72,6 +94,7 @@ module Kiwi
         end
 
         # ワーカー関係なく全処理実行
+        # cron のなかでも呼べる
         # cap staging rails:runner CODE="Kiwi::Lemon.background_job"
         def background_job(options = {})
           # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "開始")

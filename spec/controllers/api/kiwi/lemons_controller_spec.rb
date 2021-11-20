@@ -72,4 +72,9 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
     post :zombie_kill_now, params: {}.as_json, as: :json
     assert { response.status == 200 }
   end
+
+  it "background_job_kick" do
+    post :background_job_kick, params: {}.as_json, as: :json
+    assert { response.status == 200 }
+  end
 end

@@ -7,6 +7,7 @@
       .buttons.is-flex-wrap-nowrap.mb-0
         b-button.mb-0(@click="base.all_info_reload_handle") リロード
         b-button.mb-0(@click="base.zombie_kill_now_handle") ゾンビ抹殺
+        b-button.mb-0(@click="base.background_job_kick_handle") ジョブ実行(時間外可)
     .level-item.has-text-centered
       div
         .heading 待ち
