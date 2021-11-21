@@ -127,31 +127,35 @@ export default {
     },
 
     close_handle() {
-      if (this.base.order_enable_p && this.base.os_change.has_value_p) {
-        this.sound_play_click()
-        this.talk("ちょっと待て")
-        this.dialog_confirm({
-          title: "本当に閉じてもよいか？",
-          type: "is-warning",
-          hasIcon: true,
-          message: this.base.os_change.message,
-          confirmText: "更新せずに閉じる",
-          // cancelText: "閉じる",
-          focusOn: "cancel",
-          onConfirm: () => {
-            // this.apply_handle()
-            this.sound_play_click()
-            this.direct_close_handle()
-          },
-          // onCancel: () => {
-          //   this.sound_play_click()
-          //   // this.direct_close_handle()
-          // },
-        })
-      } else {
-        this.sound_play_click()
-        this.direct_close_handle()
+      if (this.os_change_but_save_p) {
+        this.os_confirm_if_not_save()
+        return
       }
+      this.sound_play_click()
+      this.direct_close_handle()
+    },
+
+    os_confirm_if_not_save() {
+      this.sound_play_click()
+      this.talk("ちょっと待て")
+      this.dialog_confirm({
+        title: "本当に閉じてもよいか？",
+        type: "is-warning",
+        hasIcon: true,
+        message: this.base.os_change.message,
+        confirmText: "更新せずに閉じる",
+        // cancelText: "閉じる",
+        focusOn: "cancel",
+        onConfirm: () => {
+          // this.apply_handle()
+          this.sound_play_click()
+          this.direct_close_handle()
+        },
+        // onCancel: () => {
+        //   this.sound_play_click()
+        //   // this.direct_close_handle()
+        // },
+      })
     },
 
     direct_close_handle() {
@@ -317,6 +321,12 @@ export default {
         hand_every_n: this.base.new_hand_every_n,
         message: message,
       })
+    },
+  },
+  computed: {
+    // 変更したけど保存してない？
+    os_change_but_save_p() {
+      return this.base.order_enable_p && this.base.os_change.has_value_p
     },
   },
 }
