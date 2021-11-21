@@ -41,7 +41,7 @@ export const app_message = {
       }
     },
 
-    // 受信した発言を表示してもよいか？
+    // 受信した発言を表示してもよいですか？
     message_share_received_p(e) {
       let exec = true
       if (e.message_scope_key === "is_ms_out") { // 観戦者宛のとき

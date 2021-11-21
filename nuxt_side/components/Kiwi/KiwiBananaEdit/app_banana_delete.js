@@ -7,7 +7,7 @@ export const app_banana_delete = {
       } else {
         this.dialog_confirm({
           type: "is-danger",
-          message: "本当に削除してもよいか？",
+          message: "本当に削除してもよいですか？",
           confirmText: "削除する",
           focusOn: "cancel",
           onConfirm: () => {

@@ -71,7 +71,7 @@ export const app_chore = {
       if (!this.exit_warning_p) {
         block()
       } else {
-        const message = "対局中のように見えますが本当に退室してもよいか？"
+        const message = "対局中のように見えますが本当に退室してもよいですか？"
         this.talk(message)
         this.dialog_confirm({
           title: "退室",

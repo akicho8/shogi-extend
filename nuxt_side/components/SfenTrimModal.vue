@@ -164,7 +164,7 @@ export default {
       }
       this.clog(this.emit_params)
       this.mode = "done"        // 確定へ
-      this.talk("これでよいか？")
+      this.talk("これでよいですか？")
     },
 
     // 確定

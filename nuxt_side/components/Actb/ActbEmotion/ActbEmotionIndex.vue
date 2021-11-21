@@ -93,7 +93,7 @@ export default {
 
       // this.$buefy.dialog.confirm({
       //   title: "リセット",
-      //   message: `初期値に戻します。既存のエモーションはいったんすべて消えますが、本当によいか？`,
+      //   message: `初期値に戻します。既存のエモーションはいったんすべて消えますが、本当によいですか？`,
       //   confirmText: "リセットする",
       //   // canCancel: ["outside", "escape"],
       //   cancelText: "キャンセル",

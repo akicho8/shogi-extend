@@ -19,6 +19,6 @@ hr
 - if current_record.persisted?
   =<> link_to("詳細", [ns_prefix, current_record], class: "button button-info")
 - if controller.respond_to_destroy? && current_record.persisted?
-  =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいか？"}, class: "button is-danger")
+  =<> link_to("削除", [ns_prefix, current_record], method: :delete, data: {confirm: "本当に削除してもよいですか？"}, class: "button is-danger")
 
 = render partial: "crud_debug"

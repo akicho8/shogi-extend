@@ -139,7 +139,7 @@ export default {
       this.sound_play_click()
       this.talk("ちょっと待て")
       this.dialog_confirm({
-        title: "本当に閉じてもよいか？",
+        title: "本当に閉じてもよいですか？",
         type: "is-warning",
         hasIcon: true,
         message: this.base.os_change.message,
