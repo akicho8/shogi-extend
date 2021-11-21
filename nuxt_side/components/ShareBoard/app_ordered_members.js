@@ -78,6 +78,20 @@ export const app_ordered_members = {
       }
     },
 
+    os_modal_close_confirm(params = {}) {
+      this.sound_play_click()
+      this.talk("変更を反映してください")
+      this.dialog_confirm({
+        title: "警告",
+        type: "is-warning",
+        hasIcon: true,
+        message: this.os_change ? this.os_change.message : "(os_change undefined)",
+        confirmText: "更新せずに閉じる",
+        focusOn: "cancel",
+        ...params,
+      })
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     // 順番設定モーダル内で使うデータの準備
@@ -429,6 +443,11 @@ export const app_ordered_members = {
           return this.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
         }
       }
+    },
+
+    // 変更したけど保存せずにモーダルを閉じようとしている？
+    os_modal_close_if_not_save_p() {
+      return this.order_enable_p && this.os_change.has_value_p
     },
   },
 }

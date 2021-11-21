@@ -66,7 +66,8 @@
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
       .buttons
-        b-button.stop_button(@click="stop_handle" icon-left="stop" v-if="instance.running_p && !instance.timer")
+        template(v-if="instance.running_p && !instance.timer")
+          b-button.stop_button(@click="stop_handle" icon-left="stop")
         template(v-if="instance.running_p && instance.timer")
           b-button.pause_button(@click="pause_handle" icon-left="pause" type="is-primary")
         template(v-if="instance.running_p && !instance.timer")
@@ -101,7 +102,18 @@ export default {
       this.$emit("close")
     },
     play_handle() {
-      this.__assert__(!this.instance.running_p)
+      if (this.base.clock_start_even_though_order_is_not_enabled_p) {
+        this.base.cc_play_confirm({
+          onConfirm: () => {
+            this.play_core_handle()
+          },
+        })
+        return
+      }
+      this.play_core_handle()
+    },
+    play_core_handle() {
+      this.__assert__(!this.clock_box)
       this.sound_play_click()
       this.base.cc_params_apply()
       this.base.cc_play_handle()

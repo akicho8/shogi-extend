@@ -289,9 +289,39 @@ export const app_clock_box = {
         }
       }
     },
+
+    cc_play_confirm(params = {}) {
+      this.sound_play_click()
+      this.talk("先に順番設定をしてください")
+      this.dialog_confirm({
+        title: "警告",
+        type: "is-warning",
+        iconSize: "is-small",
+        hasIcon: true,
+        message: `
+          <p>先に順番を設定してください</p>
+          <p>設定すると次が有効になります</p>
+          <div class="content">
+            <ul>
+              <li>手番を知らせる</li>
+              <li>手番でない人は指せなくする</li>
+              <li>指し手の伝達を保証する</li>
+            </ul>
+          </div>
+        `,
+        confirmText: "無視して開始する",
+        focusOn: "cancel",
+        ...params,
+      })
+    },
   },
   computed: {
     CcRuleInfo() { return CcRuleInfo },
+
+    // 順番設定を有効にしてないのに時計を開始しようとしている？
+    clock_start_even_though_order_is_not_enabled_p() {
+      return this.ac_room && !this.order_enable_p
+    },
 
     // return {
     //   black: { name: "先手", time: this.clock_box.single_clocks[0].to_time_format },
