@@ -1,7 +1,8 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { Gs } from "./gs.js"
-import { parse as TwitterEmojiParser } from 'twemoji-parser'
+import { parse as TwitterEmojiParser } from "twemoji-parser"
+import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 
 export const HandleNameValidator = {
   get MAX_LENGTH() { return 16 },
@@ -37,7 +38,7 @@ export const HandleNameValidator = {
   },
   valid(s) {
     s = s.replace(/[\s\u3000]+/g, "") // 空白を取る
-    s = s.replace(/[\.]/g, "")        // "." を取る
+    s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
     s = Gs.hankaku_format(s)          // 半角化
     let error = false
     if (!error) {
@@ -47,10 +48,13 @@ export const HandleNameValidator = {
       error = (s.length > this.MAX_LENGTH)
     }
     if (!error) {
-      error = s.match(new RegExp(this.ng_words.join("|"), "i"))
+      error = s.match(new RegExp(this.prefix_list.join("|"), "i")) // 素敵な○○
     }
     if (!error) {
-      error = (s.length <= 1 && !s.match(/[一-龠]/))
+      error = s.match(new RegExp(HandleNameNgWordList.join("|"), "i")) // 通りすがり
+    }
+    if (!error) {
+      error = (s.length <= 1 && !s.match(/[一-龠]/)) // 1文字のひらがな
     }
     if (!error) {
       error = [...s].length === TwitterEmojiParser(s).length // すべて絵文字
@@ -66,37 +70,6 @@ export const HandleNameValidator = {
       "フレンドリーな",
       "親しみのある",
       "捨てハンでない",
-    ]
-  },
-  get ng_words() {
-    return [
-      ...this.prefix_list,
-      "[な名][な無]し|nanash?i|無名|匿名|NONAME",
-      "テスト|test|てすと",
-      "名前|ハンドルネーム",
-      "^あ+$",
-      "^a+$",
-      "^\\d+$",
-      "戦.*犯",
-      "初心者",
-      "死",
-      "通りすがり",
-      "^あいう$",
-      "^あいうえ$",
-      "あいうえお",
-      "ゴミ",
-      "クズ",
-      "クソ",
-      "雑魚",
-      "糞",
-      "無駄",
-      "時間",
-      "。",
-      "、",
-      ",",
-      "sex",
-      "「",
-      "」",
     ]
   },
 }
