@@ -140,6 +140,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
+        find(".dialog.modal .button.is-warning").click # 「無視して開始する」
         first(".close_handle_for_capybara").click  # 閉じる (ヘッダーに置いている)
       end
       b_block do

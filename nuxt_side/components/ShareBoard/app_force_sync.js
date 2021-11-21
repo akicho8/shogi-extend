@@ -2,6 +2,8 @@
 // import dayjs from "dayjs"
 import ForceSyncModal from "./ForceSyncModal.vue"
 
+const ALWAYS_SYNC_ENABLE = true
+
 export const app_force_sync = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -99,15 +101,20 @@ export const app_force_sync = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    force_sync(message) {
+    always_sync(...args) {
+      if (ALWAYS_SYNC_ENABLE) {
+        this.force_sync(...args)
+      }
+    },
+
+    force_sync(message = "") {
       const params = {
-        message,
+        message: message,
         sfen: this.current_sfen,
         turn_offset: this.turn_offset,
       }
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
-
     force_sync_broadcasted(params) {
       this.setup_by_params(params) // これで current_location が更新される
       if (this.clock_box) {

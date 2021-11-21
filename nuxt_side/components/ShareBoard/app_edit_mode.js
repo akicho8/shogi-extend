@@ -45,6 +45,9 @@ export const app_edit_mode = {
       }
       this.sp_run_mode = "play_mode"
       this.shared_al_add({label: "局面編集後"})
+      if (this.ac_room) {
+        this.$nextTick(() => this.always_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))
+      }
     },
 
     // 駒箱調整
@@ -82,10 +85,16 @@ export const app_edit_mode = {
                 this.shared_al_add({label: "棋譜読込前"})
                 this.current_sfen = e.body
                 this.turn_offset = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-                this.delay_block(0.5, () => this.shared_al_add({label: "棋譜読込後"})) // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
                 this.sp_viewpoint = "black"
                 this.ac_log("棋譜読込", e.body)
                 modal_instance.close()
+
+                // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
+                this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後"}))
+
+                if (this.ac_room) {
+                  this.delay_block(0.2, () => this.always_sync(`${this.user_call_name(this.user_name)}が読み込んだ棋譜を転送しました`))
+                }
               }
             })
           },

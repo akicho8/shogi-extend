@@ -108,16 +108,36 @@
       .panel-block.is-block
         template(v-for="(e, i) in base.guardian_list")
           span.mx-1(v-xemoji) {{i}}:{{e}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | click
+      .panel-block
+        b-button(@click="func1") 連打
 
 //- DebugPre(v-if="development_p") {{$data}}
 </template>
 
 <script>
 import { support_child } from "./support_child.js"
+import _ from "lodash"
 
 export default {
   name: "ShareBoardDebugPanels",
   mixins: [support_child],
+
+  methods: {
+    func1() {
+      this.func2()
+    },
+    func2: _.debounce(function() {
+      this.func3()
+    }, 1000),
+    func3() {
+      this.debug_alert("click2")
+    },
+  },
+
 }
 </script>
 

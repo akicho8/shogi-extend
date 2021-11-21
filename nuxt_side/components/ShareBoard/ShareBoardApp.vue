@@ -79,6 +79,7 @@ client-only
               @update:turn_offset_max="v => turn_offset_max = v"
               @operation_invalid1="operation_invalid1_handle"
               @operation_invalid2="operation_invalid2_handle"
+              @one_way:sp_turn_user_changed="sp_turn_user_changed"
             )
 
             .footer_buttons(v-if="edit_mode_p")
@@ -111,6 +112,8 @@ client-only
 </template>
 
 <script>
+const DEBOUNCE_DELAY = 1000 * 1.5
+
 import _ from "lodash"
 
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
@@ -262,7 +265,7 @@ export default {
 
     this.autoexec()
   },
-  
+
   // http://localhost:4000/share-board?autoexec=general_setting_modal_handle
   // http://localhost:4000/share-board?autoexec=is_debug_mode_on,general_setting_modal_handle
   methods: {
@@ -319,6 +322,13 @@ export default {
       // }
       // }
     },
+
+    // ユーザーがコントローラやスライダーで操作し終わったら転送する
+    sp_turn_user_changed: _.debounce(function(v) {
+      if (this.ac_room) {
+        this.$nextTick(() => this.always_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`))
+      }
+    }, DEBOUNCE_DELAY),
 
     // private
 
