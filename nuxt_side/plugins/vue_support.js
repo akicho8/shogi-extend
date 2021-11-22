@@ -94,14 +94,15 @@ export const vue_support = {
       }
     },
 
-    debug_alert_core(message) {
+    debug_alert_core(message, options = {}) {
       if (message != null) {
         this.$buefy.toast.open({
           message: message.toString(),
           position: "is-bottom",
           type: "is-danger",
-          duration: 1000 * 2.5,
+          duration: 1000 * 4,
           queue: false,
+          ...options,
         })
       }
     },

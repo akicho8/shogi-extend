@@ -198,33 +198,33 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         side_menu_open
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
+        action_assert(0, "alice", "順番 ON")               # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
         first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
       end
       b_block do
-        assert_text("aliceさんが順番設定を有効にしました") # aliceが有効にしたことがbobに伝わった
+        action_assert(0, "alice", "順番 ON")
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
         first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
-        assert_no_move("77", "76", "☗7六歩")               # なので2番目のbobは指せない
+        assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
       end
       a_block do
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
-        assert_move("77", "76", "☗7六歩")                  # aliceが1番目なので指せる
+        assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
         assert_text("(通知効果音)")                        # bobさんだけに牛が知らせている
       end
       a_block do
         assert_text("次はbobさんの手番です")
-        assert_no_move("33", "34", "☖3四歩")               # aliceもう指したので指せない
+        assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
         assert_member_list(1, "is_turn_standby", "alice")  # 1人目(alice)に丸がついていない
         assert_member_list(2, "is_turn_active", "bob")     # 2人目(bob)は指せるので丸がついている
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                  # 2番目のbobは指せる
+        assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
         assert_no_text("(通知効果音)")                     # aliceさんの手番なので出ない
         assert_text("次はaliceさんの手番です")
       end
@@ -1518,6 +1518,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # 履歴の上から index 目の行
   def action_log_row_of(index)
     find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+  end
+
+  # 履歴の index 番目は user が behavior した
+  def action_assert(index, user, behavior)
+    within(action_log_row_of(index)) do
+      assert_text(user)
+      assert_text(behavior)
+    end
   end
 
   # メッセージ送信
