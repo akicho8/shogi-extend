@@ -66,9 +66,9 @@ client-only
               sp_debug_mode="is_debug_mode_off"
               sp_summary="is_summary_off"
 
-              :sp_play_mode_legal_move_only="strict_p"
-              :sp_play_mode_only_own_piece_to_move="strict_p"
-              :sp_play_mode_can_not_kill_same_team_soldier="strict_p"
+              :sp_play_mode_legal_move_only="sp_internal_rule_strict_p"
+              :sp_play_mode_only_own_piece_to_move="sp_internal_rule_strict_p"
+              :sp_play_mode_can_not_kill_same_team_soldier="sp_internal_rule_strict_p"
 
               :sp_move_cancel="sp_move_cancel_info.key"
 
@@ -326,7 +326,7 @@ export default {
     // ユーザーがコントローラやスライダーで操作し終わったら転送する
     sp_turn_user_changed: _.debounce(function(v) {
       if (this.ac_room) {
-        this.$nextTick(() => this.always_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`))
+        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`))
       }
     }, DEBOUNCE_DELAY),
 

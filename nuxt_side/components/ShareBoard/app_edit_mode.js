@@ -46,7 +46,7 @@ export const app_edit_mode = {
       this.sp_run_mode = "play_mode"
       this.shared_al_add({label: "局面編集後"})
       if (this.ac_room) {
-        this.$nextTick(() => this.always_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))
+        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))
       }
     },
 
@@ -93,7 +93,7 @@ export const app_edit_mode = {
                 this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後"}))
 
                 if (this.ac_room) {
-                  this.delay_block(0.2, () => this.always_sync(`${this.user_call_name(this.user_name)}が読み込んだ棋譜を転送しました`))
+                  this.delay_block(0.2, () => this.quick_sync(`${this.user_call_name(this.user_name)}が読み込んだ棋譜を転送しました`))
                 }
               }
             })

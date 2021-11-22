@@ -2,8 +2,6 @@
 // import dayjs from "dayjs"
 import ForceSyncModal from "./ForceSyncModal.vue"
 
-const ALWAYS_SYNC_ENABLE = true
-
 export const app_force_sync = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -101,8 +99,8 @@ export const app_force_sync = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    always_sync(...args) {
-      if (ALWAYS_SYNC_ENABLE) {
+    quick_sync(...args) {
+      if (this.quick_sync_info.key === "is_quick_sync_on") {
         this.force_sync(...args)
       }
     },

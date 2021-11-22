@@ -119,7 +119,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "対局時計" do
+  describe "対局時計基本" do
     before do
       @INITIAL_SEC = 5
     end
@@ -519,6 +519,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
         clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
+        find(".dialog.modal .button.is-warning").click # 「無視して開始する」
         first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
       end
       a_block do
@@ -1170,7 +1171,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice")
-        clock_start
+        clock_start_force
         sleep(2)                                   # 2秒待つ
         assert_move("77", "76", "☗7六歩")         # 初手を指す
         action_log_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
@@ -1193,11 +1194,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   describe "操作履歴" do
     it "操作履歴から過去の局面に戻る" do
+      def config
+        {
+          :room_code            => :my_room,
+          :ordered_member_names => "alice,bob",
+          :quick_sync_key       => "is_quick_sync_off", # 手動同期にしておく
+        }
+      end
+
       a_block do
-        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
+        visit_app(config.merge(force_user_name: "alice"))
       end
       b_block do
-        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+        visit_app(config.merge(force_user_name: "bob"))
       end
       a_block do
         assert_move("77", "76", "☗7六歩")
@@ -1460,11 +1469,20 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 
-  # 対局時計を設置してPLAY押して閉じる
+  # 順番設定済みの状態で対局時計を設置してPLAY押して閉じる
   def clock_start
     clock_open                               # 対局時計を開いて
     find(".play_button").click               # 開始
     find(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
+  end
+
+  # 順番設定をしてください状態で対局時計を設置してPLAY押して閉じる
+  # 順番設定をしてくださいのダイアログが出るが「無視して開始する」
+  def clock_start_force
+    clock_open                                     # 対局時計を開いて
+    find(".play_button").click                     # 開始
+    find(".dialog.modal .button.is-warning").click # 「無視して開始する」
+    find(".close_handle_for_capybara").click       # 閉じる (ヘッダーに置いている)
   end
 
   def assert_viewpoint(location_key)

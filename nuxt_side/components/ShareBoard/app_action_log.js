@@ -110,7 +110,7 @@ export const app_action_log = {
       this.turn_offset = e.turn_offset
 
       if (this.ac_room) {
-        this.$nextTick(() => this.always_sync(`${this.user_call_name(this.user_name)}が戻した局面を転送しました`))
+        this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が戻した局面を転送しました`))
       }
     },
   },
