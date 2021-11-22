@@ -16,7 +16,6 @@ export const HandleNameNgWordList = [
   "ゴミ",
   "クズ",
   "クソ",
-  "ヘボ",
   "雑魚",
   "無駄",
   "時間",
