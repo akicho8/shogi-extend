@@ -80,9 +80,9 @@ export const app_ordered_members = {
 
     os_modal_close_confirm(params = {}) {
       this.sound_play_click()
-      this.talk("変更を反映してください")
+      this.talk("ちょっ待てよ")
       this.dialog_confirm({
-        title: "警告",
+        title: "ちょ待てよ",
         type: "is-warning",
         hasIcon: true,
         message: this.os_change ? this.os_change.message : "(os_change undefined)",

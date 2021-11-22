@@ -292,21 +292,21 @@ export const app_clock_box = {
 
     cc_play_confirm(params = {}) {
       this.sound_play_click()
-      this.talk("先に順番設定をしてください")
+      this.talk("ちょっ待てよ")
       this.dialog_confirm({
-        title: "警告",
+        title: "ちょ待てよ",
         type: "is-warning",
         iconSize: "is-small",
         hasIcon: true,
         message: `
-          <p>先に順番を設定してください</p>
-          <p>設定すると次が有効になります</p>
           <div class="content">
-            <ul>
+            <p>先に順番設定をおすすめします</p>
+            <p class="mb-0">設定すると有効になるもの:</p>
+            <ol class="mt-2">
               <li>手番を知らせる</li>
               <li>手番でない人は指せなくする</li>
               <li>指し手の伝達を保証する</li>
-            </ul>
+            </ol>
           </div>
         `,
         confirmText: "無視して開始する",

@@ -19,7 +19,7 @@ export class OsChange {
   }
 
   get message() {
-    return `${this.something}の変更を適用しないまま閉じようとしています。適用するにはキャンセルして「更新」をタップしてください`
+    return `${this.something}の変更を適用しないまま閉じようとしています。適用するにはキャンセルして更新をタップしてください`
   }
 
   get has_value_p() {
