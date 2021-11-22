@@ -127,6 +127,9 @@ export default {
       if (this.instance.running_p) {
         this.base.cc_stop_handle()
         this.base.clock_box_share("停止")
+        if (this.base.ac_room && this.base.order_enable_p) {
+          this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。駒を誰でも動かせるようになります", {duration: 1000 * 10}))
+        }
       } else {
         this.toast_ok("すでにリセットしています")
       }
