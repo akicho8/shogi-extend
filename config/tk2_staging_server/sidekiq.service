@@ -44,6 +44,7 @@ Type=notify
 WatchdogSec=10
 
 WorkingDirectory=/var/www/shogi_web_staging/current
+EnvironmentFile=/etc/sysconfig/systemd_secret_env
 # If you use rbenv:
 ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec sidekiq -e staging'
 ExecStartPost=/home/deploy/slack_notify %n start

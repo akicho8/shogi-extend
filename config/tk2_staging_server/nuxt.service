@@ -18,6 +18,7 @@ Type=simple
 # WatchdogSec=10
 
 WorkingDirectory=/var/www/shogi_web_staging/current/nuxt_side
+EnvironmentFile=/etc/sysconfig/systemd_secret_env
 # Environment="RAILS_ENV=staging"
 # Environment="PORT=4000"
 # http://thoames.hatenadiary.jp/entry/2018/07/13/104308
@@ -56,7 +57,7 @@ Restart=always
 # # output goes to /var/log/syslog (Ubuntu) or /var/log/messages (CentOS)
 # StandardOutput=syslog
 # StandardError=syslog
-# 
+#
 # # This will default to "bundler" if we don't specify it
 # SyslogIdentifier=nuxt
 

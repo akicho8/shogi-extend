@@ -31,7 +31,6 @@ scp failed_notify@.service s:/etc/systemd/system/
 scp slack_notify          s:/home/deploy/
 scp ../puma/staging.rb s:/var/www/shogi_web_staging/current/config/puma/staging.rb
 
-ssh s sudo chkconfig httpd off
 ssh s sudo chkconfig nginx    on
 ssh s sudo chkconfig puma     on
 ssh s sudo chkconfig sidekiq  on

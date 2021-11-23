@@ -20,6 +20,8 @@ Type=simple
 WorkingDirectory=/var/www/shogi_web_staging/current
 Environment="RAILS_ENV=staging"
 Environment="PORT=3000"
+EnvironmentFile=/etc/sysconfig/systemd_secret_env
+
 # http://thoames.hatenadiary.jp/entry/2018/07/13/104308
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec puma -C config/puma/staging.rb'
 ExecStart=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec puma -C config/puma/staging.rb"
