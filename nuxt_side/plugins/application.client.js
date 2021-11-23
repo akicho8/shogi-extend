@@ -9,14 +9,13 @@ export const vue_application = {
     // つまり2窓で隣にYoutubeを開いてチャットを入力中であっても左側のブラウザは true になる
     // setInterval(() => console.log(this.tab_is_active_p()), 1000)
     tab_is_active_p() {
-      return !this.tab_is_hidden_p()
+      return document.visibilityState === "visible"
     },
 
     // https://developer.mozilla.org/ja/docs/Web/API/Document/visibilityState
     // document.visibilityState は visible か hidden を返す
     tab_is_hidden_p() {
-      // console.log("[hidden, visibilityState]", [document.hidden, document.visibilityState])
-      return document.hidden || document.visibilityState === "hidden"
+      return document.visibilityState === "hidden"
     },
 
     ////////////////////////////////////////////////////////////////////////////////
