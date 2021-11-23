@@ -17,21 +17,22 @@ class XmatchRuleInfo
   include ApplicationMemoryRecord
   memory_record [
     # nuxt_side/components/models/xmatch_rule_info.js
-    { key: "rule_1vs1_10_15_00_0",         members_count_max: 2, name: "10分",     },
-    { key: "rule_1vs1_03_10_00_0",         members_count_max: 2, name: "3分",      },
-    { key: "rule_1vs1_00_10_60_0",         members_count_max: 2, name: "10秒",     },
+    { key: "rule_1vs1_10_15_00_0",           members_count_max: 2, name: "10分",       },
+    { key: "rule_1vs1_03_10_00_0",           members_count_max: 2, name: "3分",        },
+    { key: "rule_1vs1_00_10_60_0",           members_count_max: 2, name: "10秒",       },
 
-    { key: "rule_1vs1_05_00_00_5",         members_count_max: 2, name: "1 vs 1",   },
-    { key: "rule_2vs2_05_00_00_5",         members_count_max: 4, name: "2 vs 2",   },
-    { key: "rule_3vs3_05_00_00_5",         members_count_max: 6, name: "3 vs 3",   },
-    { key: "rule_4vs4_05_00_00_5",         members_count_max: 8, name: "4 vs 4",   },
+    { key: "rule_1vs1_05_00_00_5",           members_count_max: 2, name: "1 vs 1",     },
+    { key: "rule_2vs2_05_00_00_5",           members_count_max: 4, name: "2 vs 2",     },
+    { key: "rule_3vs3_05_00_00_5",           members_count_max: 6, name: "3 vs 3",     },
+    { key: "rule_4vs4_05_00_00_5",           members_count_max: 8, name: "4 vs 4",     },
 
-    { key: "rule_self_05_00_00_5",         members_count_max: 1, name: "対自分",   },
-    { key: "rule_2vs2_05_00_00_5_pRvsB",   members_count_max: 4, name: "飛 vs 角", },
+    { key: "rule_1vs1_05_00_00_5_barricade", members_count_max: 2, name: "バリケード", },
+    { key: "rule_self_05_00_00_5",           members_count_max: 1, name: "対自分",     },
+    { key: "rule_2vs2_05_00_00_5_pRvsB",     members_count_max: 4, name: "飛 vs 角",   },
 
-    { key: "rule_1vs1_05_00_00_5_pRvsB",   members_count_max: 2, name: "飛1vs1角", },
-    { key: "rule_self_0_30_00_0_preset00", members_count_max: 1, name: "*☗視点",   },
-    { key: "rule_self_0_30_00_0_preset19", members_count_max: 1, name: "*☖視点",   },
+    { key: "rule_1vs1_05_00_00_5_pRvsB",     members_count_max: 2, name: "飛1vs1角",   },
+    { key: "rule_self_0_30_00_0_preset00",   members_count_max: 1, name: "*☗視点",     },
+    { key: "rule_self_0_30_00_0_preset19",   members_count_max: 1, name: "*☖視点",     },
   ]
 
   class << self
