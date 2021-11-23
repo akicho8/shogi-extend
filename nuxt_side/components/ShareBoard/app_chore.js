@@ -7,6 +7,7 @@ export const app_chore = {
   methods: {
     // Windowアクティブチェック
     window_active_change_user_hook(focus_p) {
+      this.debug_alert(`画面:${focus_p}`)
       this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
       this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
 
