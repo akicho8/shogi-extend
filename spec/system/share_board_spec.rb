@@ -660,7 +660,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         side_menu_open
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
-        buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
+        find(".apply_button").click                       # 「この局面まで戻る」
+        # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn_offset(0)                             # 0手に戻っている
       end
       b_block do
@@ -686,7 +687,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         side_menu_open
         menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
-        buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
+        find(".apply_button").click                       # 「この局面まで戻る」
+        # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn_offset(1)                             # 1手目に戻っている
       end
       b_block do

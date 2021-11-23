@@ -5,9 +5,9 @@
       | 局面の転送
   .modal-card-body
     p
-      | 現在の局面を他の人に転送します
+      | 現在の局面を他の人に配ります
     p.has-text-grey.is-size-7
-      | 自動で同期するようにしたので局面の転送は不要です (2021-11-23)
+      | 自動で転送するようにしたので基本的に手動で実行する必要はありません (2021-11-23)
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト

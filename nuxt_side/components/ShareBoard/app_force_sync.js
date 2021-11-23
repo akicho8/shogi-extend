@@ -1,6 +1,8 @@
-// import _ from "lodash"
-// import dayjs from "dayjs"
 import ForceSyncModal from "./ForceSyncModal.vue"
+import TurnChangeModal from "./TurnChangeModal.vue"
+import _ from "lodash"
+
+const CONFIRM_METHOD = false
 
 export const app_force_sync = {
   methods: {
@@ -9,19 +11,29 @@ export const app_force_sync = {
     board_init_modal_handle() {
       this.sidebar_p = false
       this.sound_play_click()
-      this.dialog_confirm({
-        title: "初期配置に戻す (0手目に移動する)",
-        message: `
-          途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください
-        `,
-        confirmText: "実行",
-        type: "is-danger",
-        focusOn: "cancel",
-        onConfirm: () => {
-          this.sound_play_click()
-          this.force_sync_turn_zero()
-        },
-      })
+
+      if (CONFIRM_METHOD) {
+        this.dialog_confirm({
+          title: "初期配置に戻す (0手目に移動する)",
+          message: `途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください`,
+          confirmText: "実行",
+          type: "is-danger",
+          focusOn: "cancel",
+          onConfirm: () => {
+            this.sound_play_click()
+            this.force_sync_turn_zero()
+          },
+        })
+      } else {
+        this.modal_card_open({
+          component: TurnChangeModal,
+          props: {
+            base: this.base,
+            sfen: this.current_sfen,
+            turn_offset: 0,
+          },
+        })
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -30,17 +42,28 @@ export const app_force_sync = {
       this.sidebar_p = false
       this.sound_play_click()
 
-      this.dialog_confirm({
-        title: "1手戻す",
-        message: "実行してもよろしいですか？",
-        confirmText: "実行",
-        type: "is-danger",
-        focusOn: "cancel",
-        onConfirm: () => {
-          this.sound_play_click()
-          this.force_sync_turn_previous()
-        },
-      })
+      if (CONFIRM_METHOD) {
+        this.dialog_confirm({
+          title: "1手戻す",
+          message: "実行してもよろしいですか？",
+          confirmText: "実行",
+          type: "is-danger",
+          focusOn: "cancel",
+          onConfirm: () => {
+            this.sound_play_click()
+            this.force_sync_turn_previous()
+          },
+        })
+      } else {
+        this.modal_card_open({
+          component: TurnChangeModal,
+          props: {
+            base: this.base,
+            sfen: this.current_sfen,
+            turn_offset: _.clamp(this.turn_offset - 1, 0, this.turn_offset),
+          },
+        })
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -80,6 +103,26 @@ export const app_force_sync = {
       this.current_sfen = this.board_preset_info.sfen
       this.ac_log("駒落適用", this.board_preset_info.name)
       this.force_sync(`${this.user_call_name(this.user_name)}が${this.board_preset_info.name}に変更しました`)
+    },
+
+    new_turn_set_and_sync(e) {
+      if (false) {
+        if (this.current_sfen === e.sfen && this.turn_offset === e.turn_offset) {
+          this.toast_ok("同じ局面です")
+          return
+        }
+      }
+
+      const diff = e.turn_offset - this.turn_offset
+
+      this.current_sfen = e.sfen
+      this.turn_offset = e.turn_offset
+
+      if (diff < 0) {
+        this.force_sync(`${this.user_call_name(this.user_name)}が${-diff}手戻しました`)
+      } else {
+        this.force_sync(`${this.user_call_name(this.user_name)}が${diff}手進めました`)
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
