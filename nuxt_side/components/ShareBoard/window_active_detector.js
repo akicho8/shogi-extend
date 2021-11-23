@@ -7,7 +7,7 @@
 // ・上下にスクロールした時点で blur になってしまう
 // ・なので visibilitychange に変更
 //
-const USE_VISIBILITYCHANGE = false
+const USE_VISIBILITYCHANGE = true
 
 export const window_active_detector = {
   data() {
