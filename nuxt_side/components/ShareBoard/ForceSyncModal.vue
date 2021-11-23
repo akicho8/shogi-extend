@@ -4,22 +4,12 @@
     .modal-card-title
       | 局面の転送
   .modal-card-body
-    //- p
-    //-   | 現在の局面を他の人の盤に転送します。
-    template(v-if="true")
-      p
-        | 局面の転送は着手したとき自動的に行いますが、
-        | これを使うと着手しなくても現在の局面を他者に転送します
-      //- p
-      //-   | よくありそうな使い道は<b>反則の取り消し</b>と<b>待った</b>です。
-      //-   | 本来は反則をした人が合意の上、小さい左矢印で1手戻して正しい手を指すだけでよいのですが、
-      //-   | 当人が慣れていない場合は慣れている人が1手戻した局面を転送してチャットで当人に正しい手を指すよう促せばよいです
-      //- p
-      //-   | 同様に<b>初期配置に戻して再度対局する</b>場合も初手を指す人が左矢印で初期配置に戻してから指せばよいのですが、わからない場合は慣れている人が初期配置に戻した盤を全員に配ってから始めるとよいです
-      //- p
-      //-   | その他には対局後に<b>検討したい局面</b>に合わせたり、カスタマイズした駒落ち等の初期配置を配るときにも使えます
+    p
+      | 現在の局面を他の人に転送します
+    p.has-text-grey.is-size-7
+      | 自動で同期するようにしたので局面の転送は不要です (2021-11-23)
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") やめとく
+    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.test_button(@click="test_handle" v-if="development_p") テスト
     b-button.sync_button(@click="sync_handle" type="is-danger") 転送する
 </template>
