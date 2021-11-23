@@ -10,18 +10,11 @@ export const app_force_sync = {
       this.sidebar_p = false
       this.sound_play_click()
       this.dialog_confirm({
-        title: "初期配置に戻す",
+        title: "初期配置に戻す (0手目に移動する)",
         message: `
-          <p>次の処理を連続で実行します</p>
-          <div class="content">
-            <ol>
-              <li>スライダーで0手目に移動</li>
-              <li>局面の転送</li>
-            </ol>
-          </div>
-          <p class="is-size-7 has-text-grey">途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください</p>
+          途中で局面編集した場合は開始局面が変わるため「平手の初期配置」にはなりません。平手の初期配置に変更するのであれば「手合割」で平手を選択してください
         `,
-        confirmText: "本当に実行",
+        confirmText: "実行",
         type: "is-danger",
         focusOn: "cancel",
         onConfirm: () => {
@@ -39,16 +32,8 @@ export const app_force_sync = {
 
       this.dialog_confirm({
         title: "1手戻す",
-        message: `
-          <p>次の処理を連続で実行します</p>
-          <div class="content">
-            <ol>
-              <li>スライダーで1手前に移動</li>
-              <li>局面の転送</li>
-            </ol>
-          </div>
-        `,
-        confirmText: "本当に実行",
+        message: "実行してもよろしいですか？",
+        confirmText: "実行",
         type: "is-danger",
         focusOn: "cancel",
         onConfirm: () => {
