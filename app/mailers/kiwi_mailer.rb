@@ -36,8 +36,10 @@ class KiwiMailer < ApplicationMailer
     end
 
     # 添付
-    if lemon.real_path.exist?
-      attachments[lemon.filename_human] = lemon.real_path.read
+    if lemon.real_path
+      if lemon.real_path.exist?
+        attachments[lemon.filename_human] = lemon.real_path.read
+      end
     end
 
     mail({
