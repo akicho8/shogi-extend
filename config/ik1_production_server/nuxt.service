@@ -9,7 +9,7 @@
 [Unit]
 Description=nuxt production
 After=syslog.target network.target
-OnFailure=slack_notify@%n.service
+OnFailure=failed_notify@%n.service
 
 [Service]
 Type=simple
@@ -18,6 +18,7 @@ Type=simple
 # WatchdogSec=10
 
 WorkingDirectory=/var/www/shogi_web_production/current/nuxt_side
+EnvironmentFile=/etc/sysconfig/systemd_secret_env
 # Environment="RAILS_ENV=production"
 # Environment="PORT=4000"
 # http://thoames.hatenadiary.jp/entry/2018/07/13/104308

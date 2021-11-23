@@ -1,23 +1,65 @@
 #!/usr/local/rbenv/shims/ruby
-# -*- coding: utf-8; compile-command: "scp slack_notify i:/home/deploy; ssh i '/home/deploy/slack_notify sidekiq failed'" -*-
+# -*- coding: utf-8; compile-command: "scp slack_notify i:/home/deploy; ssh i '/home/deploy/slack_notify sidekiq.service failed'" -*-
 
 require "slack-notifier"
-name, command = ARGV
-# status = `systemctl status --no-pager --full #{name}`
-color = {failed: "bad", start: "good"}.fetch(command.to_s, "bad")
-client = Slack::Notifier.new("https://hooks.slack.com/services/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", username: "systemd", icon_emoji: ":bow:")
-client.post(text: "#{name} #{command}")
-# client.post(text: ARGV.to_s)
 
-# client.post(text: "#{name} #{command}", attachments: [{fallback: command, text: status, color: color}])
+class App
+  def run
+    client.post(text: "#{icon_emoji} #{name} #{command} #{oneline}")
+  end
 
-# require "slack-notify"
-# command, name = ARGV
-# 
-# # icon_emoji = {failed: ":red_circle:", start: ":large_green_circle:"}.fetch(command.to_s, ":question:")
-# # client = SlackNotify.new(icon_emoji: icon_emoji, username: "systemd", webhook_url: "https://hooks.slack.com/services/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")
-# # status = `systemctl status --no-pager --full #{name}`
-# # client.notify(status)
-# 
-# client = SlackNotify.new(icon_emoji: ":bow:", username: "systemd", webhook_url: "https://hooks.slack.com/services/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")
-# client.notify("OK")
+  private
+
+  def client
+    Slack::Notifier.new(slack_webhook_url)
+  end
+
+  def oneline
+    status.match(/Active:\s*(.*)/).captures.first.strip
+  end
+
+  def color
+    {
+      :failed => "bad",
+      :start  => "good",
+    }.fetch(command.to_sym, "bad")
+  end
+
+  def status
+    `systemctl status --no-pager --full #{name}`
+  end
+
+  def icon_emoji
+    {
+      :failed => ":red_circle:",
+      :start  => ":large_green_circle:",
+    }.fetch(command.to_sym, ":question:")
+  end
+
+  def name
+    ARGV[0].to_s.scan(/\w+/).first
+  end
+
+  def command
+    ARGV[1]
+  end
+
+  # 結局単体で実行確認するとき自力で読み込んでるので EnvironmentFile で指定する意味がない
+  def slack_webhook_url
+    ENV[webhook_url_key] || webhook_url_from_envfile
+  end
+
+  def webhook_url_key
+    "SLACK_WEBHOOK_URL"
+  end
+
+  def webhook_url_from_envfile
+    File.read(systemd_secret_envfile).match(/#{webhook_url_key}=(.*)/).captures.first
+  end
+
+  def systemd_secret_envfile
+    "/etc/sysconfig/systemd_secret_env"
+  end
+
+  new.run
+end

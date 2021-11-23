@@ -1,8 +1,8 @@
-# -*- coding: utf-8; compile-command: "scp slack_notify@.service i:/etc/systemd/system; ssh i 'sudo systemctl daemon-reload';" -*-
-# /etc/systemd/system/slack_notify@.service
+# -*- coding: utf-8; compile-command: "scp failed_notify@.service i:/etc/systemd/system; ssh i 'sudo systemctl daemon-reload';" -*-
+# /etc/systemd/system/failed_notify@.service
 # https://qiita.com/JhonnyBravo/items/a28074c20fa9adf02be3#%E4%BE%8B2-typeoneshot-%E3%81%A7%E3%81%82%E3%82%8B%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9
 [Unit]
-Description="slack_notify"
+Description="failed_notify"
 
 [Service]
 Type=oneshot

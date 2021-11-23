@@ -19,7 +19,7 @@
 [Unit]
 Description=sidekiq production
 After=syslog.target network.target
-OnFailure=slack_notify@%n.service
+OnFailure=failed_notify@%n.service
 
 # See these pages for lots of options:
 #
@@ -44,9 +44,11 @@ Type=notify
 WatchdogSec=10
 
 WorkingDirectory=/var/www/shogi_web_production/current
+EnvironmentFile=/etc/sysconfig/systemd_secret_env
 # If you use rbenv:
 ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec sidekiq -e production'
 ExecStartPost=/home/deploy/slack_notify %n start
+
 # If you use the system's ruby:
 # ExecStart=/usr/local/bin/bundle exec sidekiq -e production
 # If you use rvm in production, don't.
