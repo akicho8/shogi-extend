@@ -13,6 +13,10 @@ ssh i ls -al /etc/systemd/system/puma.service
 ssh i ls -al /etc/systemd/system/sidekiq.service
 ssh i ls -al /etc/systemd/system/nuxt.service
 
+ssh i ls -al /home/deploy/slack_notify
+ssh i ls -al /etc/systemd/system/failed_notify@.service
+ssh i ls -al /etc/sysconfig/systemd_secret_env
+
 ssh i sudo systemctl status nginx
 ssh i sudo systemctl status puma
 ssh i sudo systemctl status sidekiq
