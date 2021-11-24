@@ -1,0 +1,25 @@
+#!/bin/sh
+ssh s ls -al /etc/profile.d/custom_profile.sh
+
+ssh s ls -al /etc/nginx/nginx.conf
+ssh s ls -al /etc/nginx/conf.d/default.conf
+ssh s sudo nginx -v
+ssh s sudo nginx -t
+
+ssh s ls -al /var/www/shogi_web_staging/current/config/puma/staging.rb
+
+ssh s ls -al /usr/lib/systemd/system/nginx.service
+ssh s ls -al /etc/systemd/system/puma.service
+ssh s ls -al /etc/systemd/system/sidekiq.service
+ssh s ls -al /etc/systemd/system/nuxt.service
+
+ssh s ls -al /home/deploy/slack_notify
+ssh s ls -al /etc/systemd/system/failed_notify@.service
+ssh s ls -al /etc/sysconfig/systemd_secret_env
+
+ssh s sudo systemctl status nginx
+ssh s sudo systemctl status puma
+ssh s sudo systemctl status sidekiq
+ssh s sudo systemctl status nuxt
+
+curl -sI https://shogi-flow.xyz/ | head -1
