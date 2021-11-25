@@ -5,6 +5,14 @@ module CurrentUserMethods
     helper_method :sysop?
     helper_method :staff?
     helper_method :current_user
+
+    if Rails.env.development? || Rails.env.test?
+      before_action do
+        if params[:_user_id] || params[:_login_by_key]
+          current_user
+        end
+      end
+    end
   end
 
   let :sysop? do
@@ -37,9 +45,12 @@ module CurrentUserMethods
     id = nil
     user = nil
 
-    if Rails.env.development? || Rails.env.test?
-      id ||= params[:_user_id]
+    # id ||= User.sysop.id
+    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "sysop")])
 
+    if Rails.env.development? || Rails.env.test?
+      # id ||= User.sysop.id
+      id ||= params[:_user_id]
       if v = params[:_login_by_key]
         if v = User.find_by(key: v)
           id ||= v.id
@@ -66,7 +77,7 @@ module CurrentUserMethods
 
       # _user_id パラメータが来ればそれ以降もログインした状態にさせる
       if Rails.env.development? || Rails.env.test?
-        if params[:_user_id]
+        if params[:_user_id].present? || params[:_login_by_key].present?
           current_user_set(user)
         end
       end

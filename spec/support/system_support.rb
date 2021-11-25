@@ -134,6 +134,11 @@ if true
       visit("http://localhost:3000/?_user_id=#{user.id}")
     end
 
+    # こちらを推奨
+    def login_by(key)
+      visit("http://localhost:3000/?_login_by_key=#{key}")
+    end
+
     def login
       login_as(User.sysop)
     end

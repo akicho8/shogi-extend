@@ -219,15 +219,24 @@ export const vue_support = {
     // },
 
     nuxt_login_required() {
+      // http://localhost:4000/video/new?__nuxt_login_required_force=login
       if (!this.g_current_user || this.$route.query.__nuxt_login_required_force === "login") {
         this.toast_ok("ログインしてください")
         this.nuxt_login_modal_open()
         return true
       }
+      // http://localhost:4000/video/new?__nuxt_login_required_force=email
       if (!this.g_current_user["email_valid?"] || this.$route.query.__nuxt_login_required_force === "email") {
         // アクティベートしてなければ email は空になっている
         this.toast_warn("正しいメールアドレスを設定してください")
         this.$router.push({name: "settings-email"})
+        return true
+      }
+      // http://localhost:4000/video/new?__nuxt_login_required_force=name
+      if (this.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
+        // なぜか名前が空の人がいる
+        this.toast_warn("名前を設定してください")
+        this.$router.push({name: "settings-profile"})
         return true
       }
     },

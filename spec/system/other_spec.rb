@@ -21,6 +21,24 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
+  describe "nuxt_login_required" do
+    before do
+      login_by("sysop")
+    end
+    it "login" do
+      visit2 "/video/new", __nuxt_login_required_force: "login"
+      assert_text "Google"
+    end
+    it "email" do
+      visit2 "/video/new", __nuxt_login_required_force: "email"
+      assert_text "メールアドレス"
+    end
+    it "name" do
+      visit2 "/video/new", __nuxt_login_required_force: "name"
+      assert_text "自己紹介"
+    end
+  end
+
   # it "ストップウォッチ" do
   #   visit "/stopwatch"
   #   assert_text "Rails"
