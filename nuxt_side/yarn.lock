@@ -3707,10 +3707,10 @@ buefy@^0.9.10:
   dependencies:
     bulma "0.9.3"
 
-buefy@^0.9.8:
-  version "0.9.8"
-  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.9.8.tgz#51fb52bf3bcf4b8db7668f0ca17f1a5e8cf7f499"
-  integrity sha512-VBGAD6WtmgpPdiRnBXaTleS3ifpNu9rbInAr54YL8KJw1RhCb8JtGYYYVRjllnDQmN0jQjC5lYoPR9KpfTe+Cw==
+buefy@^0.9.13:
+  version "0.9.13"
+  resolved "https://registry.yarnpkg.com/buefy/-/buefy-0.9.13.tgz#fa530257fc47a8cb00d1e36faa93bbeba4aefce0"
+  integrity sha512-W8QhvAz+YlKhxDQe/oag4Fl/zYTvXOPoNVr4pseYDR7r52Ta6s51iedBdvw4It68Sq+g7mcxIzwK7mv3PR6O4g==
   dependencies:
     bulma "0.9.3"
 
@@ -10874,13 +10874,13 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
-shogi-player@^0.0.307:
-  version "0.0.307"
-  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.307.tgz#29dd2489bfe2340faa0479cdf9556440a032baec"
-  integrity sha512-eRiRJt2kHxJuyW1QKO03PpXepPZyxoBWW2DUuKf/CFDAeKrvcJIPKzVaSrmLWIfq29ufoUUZKk6bmKZzBXgFTQ==
+shogi-player@^0.0.308:
+  version "0.0.308"
+  resolved "https://registry.yarnpkg.com/shogi-player/-/shogi-player-0.0.308.tgz#447994ee9dc0c28fe0ce9fa37a5e6968c31c1e30"
+  integrity sha512-oSh4XUcmPYRa+toO/+ogyuPRG1AKdptjUcDTTMnupbSxkHfdlv6L9/MwiUFWRTlO7JgfSZEFdzGUv9kHwGYXzw==
   dependencies:
     autolinker latest
-    buefy "^0.9.8"
+    buefy "^0.9.13"
     bulma "^0.9.3"
     chroma-js "^2.1.0"
     dayjs latest

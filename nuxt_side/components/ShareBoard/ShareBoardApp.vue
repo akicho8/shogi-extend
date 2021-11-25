@@ -67,6 +67,7 @@ client-only
               sp_summary="is_summary_off"
 
               :sp_play_mode_legal_move_only="sp_internal_rule_strict_p"
+              :sp_play_mode_legal_jump_only="false"
               :sp_play_mode_only_own_piece_to_move="sp_internal_rule_strict_p"
               :sp_play_mode_can_not_kill_same_team_soldier="sp_internal_rule_strict_p"
 
