@@ -65,6 +65,8 @@ every("5 3 * * *") do
   ].join(";")
 end
 
+every("0 18 * * *")  { runner "Kiwi::Lemon.background_job_for_cron" }
+
 if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
 end
