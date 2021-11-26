@@ -1297,6 +1297,39 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "手番でないのに動かそうとしたときの反応" do
+    def test1
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
+      end
+      b_block do
+        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+      end
+    end
+    it "時計OFF順番設定ONでは検討をしていると思われる" do
+      test1
+      b_block do
+        place_click("77")
+        assert_text("(今はaliceさんの手番です。検討する場合は順番設定を解除してください)")
+      end
+    end
+    it "時計ON順番設定ONは対局中と思われる" do
+      test1
+      b_block do
+        clock_start
+        place_click("77")
+        assert_text("(今はaliceさんの手番です)")
+      end
+    end
+    it "順番設定で誰も参加していない" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "")
+        place_click("77")
+        assert_text("(順番設定で対局者の指定がないので誰も操作できません)")
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end

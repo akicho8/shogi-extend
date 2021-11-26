@@ -383,15 +383,27 @@ export default {
       if (this.base.order_enable_p) {
         if (this.base.ordered_members) {
           this.sound_play("x")
+          let message = null
           const name = this.current_turn_user_name
           if (name) {
-            this.toast_ok(`今は${this.user_call_name(name)}の手番です`)
+            if (this.clock_box && this.clock_box.working_p) {
+              // 対局中
+              message = `今は${this.user_call_name(name)}の手番です`
+            } else {
+              // 時計停止中 (順番設定を解除し忘れている)
+              message = `今は${this.user_call_name(name)}の手番です。検討する場合は順番設定を解除してください`
+            }
           } else {
-            this.toast_ok(`順番設定で対局者の指定がないので誰も操作できません`)
+            message = `順番設定で対局者の指定がないので誰も操作できません`
+          }
+          if (message) {
+            this.toast_ok(message)
+            this.tl_add("OPVALID", `(${message})`)
           }
         }
       }
     },
+
     operation_invalid2_handle() {
       this.sound_play("x")
       if (this.development_p) {

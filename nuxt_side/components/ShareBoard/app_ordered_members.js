@@ -34,9 +34,10 @@ export const app_ordered_members = {
   methods: {
     // alice bob carol dave の順番で設定する場合は
     // ordered_member_names=alice,bob,carol,dave とする
+    // ordered_member_names= なら空で設定
     os_setup_by_url_params() {
-      const names = this.str_to_keywords(this.$route.query.ordered_member_names)
-      if (this.present_p(names)) {
+      if ("ordered_member_names" in this.$route.query) {
+        const names = this.str_to_keywords(this.$route.query.ordered_member_names)
         this.os_setup_by_names(names)
       }
     },
