@@ -292,9 +292,9 @@ export const app_clock_box = {
 
     cc_play_confirm(params = {}) {
       this.sound_play_click()
-      this.talk("ちょっ待てよ")
+      this.talk("ちょっと待った")
       this.dialog_confirm({
-        title: "ちょ待てよ",
+        title: "ちょっと待った",
         type: "is-warning",
         iconSize: "is-small",
         hasIcon: true,
