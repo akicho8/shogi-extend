@@ -103,7 +103,6 @@ export const app_clock_box = {
 
     cc_resume_handle() {
       this.clock_box.resume_handle()
-      this.sound_stop_all()
     },
     cc_pause_handle() {
       if (this.clock_box.running_p) {
