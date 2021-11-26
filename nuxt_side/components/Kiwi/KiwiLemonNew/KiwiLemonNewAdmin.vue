@@ -45,6 +45,9 @@
     b-table-column(v-slot="{row}" field="created_at" label="登録" sortable)
       | {{row_time_format(row.created_at)}}
 
+    b-table-column(v-slot="{row}" field="processed_at" label="終了" sortable)
+      | {{row_time_format(row.processed_at)}}
+
     b-table-column(v-slot="{row}" field="errored_at" label="エラー" sortable)
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
         | {{row.error_message}}
