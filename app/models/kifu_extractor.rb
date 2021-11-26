@@ -13,12 +13,8 @@ class KifuExtractor
       s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
     end
 
-    def convert(source)
-      parse(source) || source
-    end
-
-    def parse(source)
-      new(source).parse
+    def extract(*args)
+      new(*args).extract
     end
   end
 
@@ -36,7 +32,7 @@ class KifuExtractor
   end
 
   # 抽出した本体が読み込めて最後の局面まで行けるなら「SFENではなく」本体を返す
-  def parse
+  def extract
     extract_body
     if @body
       Bioshogi::Parser.parse(@body, {

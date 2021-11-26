@@ -163,7 +163,7 @@ class KifuParser
   end
 
   def source
-    @source ||= params[:source] || KifuExtractor.convert(any_source) # URLや戦術名→棋譜
+    @source ||= params[:source] || KifuExtractor.extract(any_source) || any_source # URLや戦術名→棋譜
   end
 
   def any_source

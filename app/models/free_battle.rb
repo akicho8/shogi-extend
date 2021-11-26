@@ -88,7 +88,7 @@ class FreeBattle < ApplicationRecord
     end
 
     if will_save_change_to_attribute?(:kifu_body) && kifu_body
-      if v = KifuExtractor.parse(kifu_body)
+      if v = KifuExtractor.extract(kifu_body)
         self.kifu_body = v
       end
     end

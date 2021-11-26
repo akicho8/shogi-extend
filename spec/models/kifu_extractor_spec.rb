@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe KifuExtractor, type: :model do
   def test1(text)
-    KifuExtractor.parse(text).truncate(512)
+    KifuExtractor.extract(text).to_s.truncate(512)
   end
 
   it "works" do
@@ -50,24 +50,12 @@ RSpec.describe KifuExtractor, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> F
+# >> .
 # >> 
-# >> Failures:
-# >> 
-# >>   1) KifuExtractor works
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:31:in `block (2 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
-# >> Top 1 slowest examples (1.42 seconds, 45.0% of total time):
+# >> Top 1 slowest examples (2.12 seconds, 54.2% of total time):
 # >>   KifuExtractor works
-# >>     1.42 seconds -:8
+# >>     2.12 seconds -:8
 # >> 
-# >> Finished in 3.15 seconds (files took 3.59 seconds to load)
-# >> 1 example, 1 failure
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:8 # KifuExtractor works
+# >> Finished in 3.92 seconds (files took 6.13 seconds to load)
+# >> 1 example, 0 failures
 # >> 
