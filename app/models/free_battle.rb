@@ -88,7 +88,7 @@ class FreeBattle < ApplicationRecord
     end
 
     if will_save_change_to_attribute?(:kifu_body) && kifu_body
-      if v = UrlEmbedKifuParser.parse(kifu_body)
+      if v = KifuExtractor.parse(kifu_body)
         self.kifu_body = v
       end
     end
@@ -167,7 +167,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def http_get_body(url)
-    UrlEmbedKifuParser.http_get_body(url)
+    KifuExtractor.http_get_body(url)
   end
 
   def fast_parser_options

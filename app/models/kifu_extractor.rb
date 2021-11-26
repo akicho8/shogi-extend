@@ -1,4 +1,4 @@
-class UrlEmbedKifuParser
+class KifuExtractor
   class << self
     def http_get_body(url)
       connection = Faraday.new do |builder|

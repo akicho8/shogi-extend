@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe UrlEmbedKifuParser, type: :model do
+RSpec.describe KifuExtractor, type: :model do
   def test1(text)
-    UrlEmbedKifuParser.parse(text).truncate(512)
+    KifuExtractor.parse(text).truncate(512)
   end
 
   it "works" do
@@ -54,14 +54,14 @@ end
 # >> 
 # >> Failures:
 # >> 
-# >>   1) UrlEmbedKifuParser works
+# >>   1) KifuExtractor works
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:31:in `block (2 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 # >> 
 # >> Top 1 slowest examples (1.42 seconds, 45.0% of total time):
-# >>   UrlEmbedKifuParser works
+# >>   KifuExtractor works
 # >>     1.42 seconds -:8
 # >> 
 # >> Finished in 3.15 seconds (files took 3.59 seconds to load)
@@ -69,5 +69,5 @@ end
 # >> 
 # >> Failed examples:
 # >> 
-# >> rspec -:8 # UrlEmbedKifuParser works
+# >> rspec -:8 # KifuExtractor works
 # >> 
