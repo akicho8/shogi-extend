@@ -122,22 +122,22 @@ export default {
         this.$emit("close")
       }
     },
+    pause_handle() {
+      this.sound_play_click()
+      this.base.cc_pause_handle()
+      this.base.clock_box_share("一時停止")
+      if (this.base.ac_room && this.base.order_enable_p) {
+        this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。手番に関係なく誰でも駒を動かせるようになります", {duration: 1000 * 10}))
+      }
+    },
     stop_handle() {
       this.sound_play_click()
       if (this.instance.running_p) {
         this.base.cc_stop_handle()
         this.base.clock_box_share("停止")
-        if (this.base.ac_room && this.base.order_enable_p) {
-          this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。駒を誰でも動かせるようになります", {duration: 1000 * 10}))
-        }
       } else {
-        this.toast_ok("すでにリセットしています")
+        this.toast_ok("すでに停止しています")
       }
-    },
-    pause_handle() {
-      this.sound_play_click()
-      this.base.cc_pause_handle()
-      this.base.clock_box_share("一時停止")
     },
     resume_handle() {
       this.sound_play_click()
