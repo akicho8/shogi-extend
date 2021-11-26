@@ -62,7 +62,7 @@ class AppEntryInfo
       display_p: !Rails.env.production? || true,
       experiment_p: false,
       nuxt_link_to: {path: "/video"},
-      title: "動画ギャラリー",
+      title: "動画ライブラリ",
       attention_label: "NEW!",
       og_image_key: "video",
       description: "動画作成のあとで登録するとここで見れる",
