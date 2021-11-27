@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Access log (Wkbk_access_logs as Wkbk::AccessLog)
+# Access log (wkbk_access_logs as Wkbk::AccessLog)
 #
 # |------------+----------+------------+-------------+--------------+-------|
 # | name       | desc     | type       | opts        | refs         | index |
 # |------------+----------+------------+-------------+--------------+-------|
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | user_id    | User     | integer(8) |             | => ::User#id | A     |
-# | banana_id  | Banana   | integer(8) | NOT NULL    |              | B     |
+# | book_id    | Book     | integer(8) | NOT NULL    |              | B     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #

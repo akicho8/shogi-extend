@@ -17,6 +17,7 @@
 # | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
 # |-------------------+-------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -121,7 +122,6 @@ module Wkbk
       s = s.search_by_search_preset_key(params)
       s = s.search_by_tag(params)
       s = s.search_by_query(params)
-      s
     }
 
     before_validation do
