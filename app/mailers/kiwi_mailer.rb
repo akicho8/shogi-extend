@@ -5,14 +5,22 @@ class KiwiMailer < ApplicationMailer
   def lemon_notify(lemon)
     body = []
     if lemon.browser_url
-      body << "▼生成ファイル (これを添付してある)"
+      if useless_mail_address?(lemon.user.email) || Rails.env.development? || Rails.env.test?
+        body << "※ #{lemon.user.email} の管理元がしょぼすぎて作成したファイルを添付できませんでした。ちゃんとしたメールアドレスへの変更をおすすめします。"
+        body << ""
+      end
+      if useless_mail_address?(lemon.user.email)
+        body << "▼生成ファイル"
+      else
+        body << "▼生成ファイル (添付してある)"
+      end
       body << lemon.browser_url
       body << ""
-      body << "▼動画ライブラリ登録はここから#{lemon.id}番の「↑」をタップ"
+      body << "▼ライブラリ登録はここ↓から#{lemon.id}番の「↑」ボタンをタップ"
       body << UrlProxy.full_url_for("/video/new")
       body << ""
     end
-    body << "▼棋譜確認用"
+    body << "▼再度作成するにはここ↓の右上メニューから「動画変換」をタップ"
     body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
     body << ""
     body << "▼その他"
@@ -25,6 +33,14 @@ class KiwiMailer < ApplicationMailer
     body << "動画作成"
     body << UrlProxy.full_url_for("/video/new")
 
+    unless useless_mail_address?(lemon.user.email)
+      if lemon.real_path
+        if lemon.real_path.exist?
+          attachments[lemon.filename_human] = lemon.real_path.read
+        end
+      end
+    end
+
     if Rails.env.development?
       body << url_for(:root)
       body << lemon.browser_url
@@ -32,13 +48,6 @@ class KiwiMailer < ApplicationMailer
       if lemon.ffprobe_info
         body << lemon.ffprobe_info[:pretty_format]["streams"][0].to_t
         body << lemon.ffprobe_info[:direct_format]["streams"][0].to_t
-      end
-    end
-
-    # 添付
-    if lemon.real_path
-      if lemon.real_path.exist?
-        attachments[lemon.filename_human] = lemon.real_path.read
       end
     end
 
