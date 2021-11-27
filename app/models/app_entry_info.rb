@@ -29,21 +29,6 @@ class AppEntryInfo
       ],
     },
     {
-      key: :gallery,
-      display_p: !Rails.env.production? || true,
-      experiment_p: false,
-      nuxt_link_to: {path: "/gallery"},
-      title: "木目テクスチャ集",
-      attention_label: "NEW!",
-      og_image_key: "gallery",
-      description: "将棋盤の木が必要なときにどうぞ",
-      features: [
-        "サイズ: 1080x1080",
-        "木目: 基本3パターン",
-        "色相: 5パターン",
-      ],
-    },
-    {
       key: :kiwi_lemon_new,
       display_p: !Rails.env.production? || true,
       experiment_p: false,
@@ -67,7 +52,7 @@ class AppEntryInfo
       og_image_key: "video",
       description: "動画作成のあとで登録するとここで見れる",
       features: [
-        "しょぼいので Youtube に上げた方がいいかもしれない",
+        "しょぼいので Youtube やニコニコ動画に上げた方がいいかもしれない",
       ],
     },
     {
@@ -79,9 +64,9 @@ class AppEntryInfo
       og_image_key: "share-board",
       description: "リレー将棋・詰将棋作成・仲間内での対戦にどうぞ",
       features: [
-        "SNS等にURLを貼って指し継ぐ時間無制限のリレー将棋",
-        "部屋を立ててリアルタイム盤面共有・対戦 (時計設置可)",
+        "秘密の部屋を立てて仲間内で対戦 (時計設置可)",
         "課題局面や詰将棋の作成・公開・共有",
+        "SNS等にURLを貼って指し継ぐ通信将棋",
         # "URLをTwitter等のSNSに貼ると局面画像が現れる",
         # "URLから訪れた人は指し継げる (駒を動かしながら詰将棋が解ける)",
         # "棋譜や視点の情報はすべてURLに含まれている",
@@ -99,7 +84,7 @@ class AppEntryInfo
       description: "気軽に対局したいときにどうぞ",
       features: [
         "プレイ人数 2〜8人",
-        "いまんところはログイン不要",
+        "いまんところログイン不要",
         "これは共有将棋盤の「自動マッチング」へのショートカット",
       ],
     },
@@ -249,6 +234,21 @@ class AppEntryInfo
       features: [
         "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
         "これで加工した画面は自由に使ってもらってかまいません",
+      ],
+    },
+    {
+      key: :gallery,
+      display_p: !Rails.env.production? || true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/gallery"},
+      title: "木目テクスチャ集",
+      attention_label: "NEW!!",
+      og_image_key: "gallery",
+      description: "将棋盤の木が必要なときにどうぞ",
+      features: [
+        "サイズ: 1080x1080",
+        "木目: 基本3パターン",
+        "色相: 5パターン",
       ],
     },
     {
