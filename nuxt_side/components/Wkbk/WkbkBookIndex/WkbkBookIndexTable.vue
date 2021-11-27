@@ -36,6 +36,8 @@
     //-   nuxt-link(:to="{name: 'users-id', params: {id: row.user.id}}" @click.native="sound_play_click()")
     //-     WkbkUserName(:user="row.user")
 
+    b-table-column(v-slot="{row}" custom-key="access_logs_count" field="access_logs_count" :label="base.BookIndexColumnInfo.fetch('access_logs_count').name" sortable numeric) {{row.access_logs_count}}
+
     b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
       WkbkFolder(:folder_key="row.folder_key")
 

@@ -21,8 +21,10 @@
           p
             nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play_click()")
               | {{base.book.user.name}}
-            span.ml-1 {{updated_time_format(base.book.updated_at)}}
-            b-icon.ml-1(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
+            span.ml-1 {{diff_time_format(base.book.updated_at)}}
+            b-icon.ml-2(icon="eye-outline" size="is-small")
+            span.ml-1 {{base.book.access_logs_count}}
+            b-icon.ml-2(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
 
           WkbkTagList.mt-1(:tag_list="base.book.tag_list" :tag_search_handle="base.tag_search_handle")
 

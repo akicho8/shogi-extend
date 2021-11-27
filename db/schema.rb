@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_07_165600) do
+ActiveRecord::Schema.define(version: 2021_11_27_151200) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1281,6 +1281,14 @@ ActiveRecord::Schema.define(version: 2021_11_07_165600) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "wkbk_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "user_id", comment: "参照者"
+    t.bigint "book_id", null: false, comment: "問題集"
+    t.datetime "created_at", null: false, comment: "記録日時"
+    t.index ["book_id"], name: "index_wkbk_access_logs_on_book_id"
+    t.index ["user_id"], name: "index_wkbk_access_logs_on_user_id"
+  end
+
   create_table "wkbk_answer_kinds", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
@@ -1342,6 +1350,8 @@ ActiveRecord::Schema.define(version: 2021_11_07_165600) do
     t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
+    t.index ["access_logs_count"], name: "index_wkbk_books_on_access_logs_count"
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
     t.index ["key"], name: "index_wkbk_books_on_key", unique: true
     t.index ["sequence_id"], name: "index_wkbk_books_on_sequence_id"

@@ -8,7 +8,9 @@ module Wkbk
               :key,
               :title,
               :bookships_count,
+              :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
@@ -36,7 +38,9 @@ module Wkbk
               :key,
               :title,
               :bookships_count,
+              :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
@@ -69,6 +73,7 @@ module Wkbk
               :bookships_count,
               :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,
@@ -131,6 +136,7 @@ module Wkbk
               :bookships_count,
               :created_at,
               :updated_at,
+              :access_logs_count,
             ],
             methods: [
               :folder_key,

@@ -1,17 +1,19 @@
+import { SearchPresetInfo } from "../models/search_preset_info.js"
+
 export const app_search = {
   data() {
     return {
-      query: null,
-      tag:   null,
-      search_p: !!this.$route.query.query,
+      search_preset_key: null,
+      query:             null,
+      tag:               null,
     }
   },
   methods: {
-    search_field_toggle_handle() {
+    search_preset_handle(e) {
       this.sound_play_click()
-      this.search_p = !this.search_p
+      this.router_push({search_preset_key: e.key, page: null, tag: null})
     },
-    tag_search_handle(tag) {
+    tag_click_handle(tag) {
       this.sound_play_click()
       this.talk(tag)
       tag = this.tags_append(this.tag, tag).join(",")
@@ -29,5 +31,7 @@ export const app_search = {
   },
   computed: {
     tags() { return this.tags_wrap(this.tag) },
+    SearchPresetInfo() { return SearchPresetInfo },
+    search_preset_info() { return this.SearchPresetInfo.fetch(this.search_preset_key || this.SearchPresetInfo.values[0].key) },
   },
 }

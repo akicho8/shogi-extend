@@ -38,6 +38,7 @@ module Wkbk
     include AvatarMethods
     include JsonStructMethods
     include MockMethods
+    include AccessLogMethods
 
     belongs_to :user, class_name: "::User"
 
@@ -59,25 +60,67 @@ module Wkbk
       end
     }
 
-    scope :search, -> params {
-      base = all.joins(:folder, :user)
-      s = base
-      if v = params[:tag].to_s.split(/[,\s]+/).presence
-        s = s.where(id: tagged_with(v))
+    # scope :search, -> params {
+    #   base = all.joins(:folder, :user)
+    #   s = base
+    #   if v = params[:tag].to_s.split(/[,\s]+/).presence
+    #     s = s.where(id: tagged_with(v))
+    #   end
+    #   if v = params[:query].presence
+    #     v = [
+    #       v,
+    #       NKF.nkf("-w --hiragana", v),
+    #       NKF.nkf("-w --katakana", v),
+    #     ].uniq.collect { |e| "%#{e}%" }
+    #     s = s.where(arel_table[:title].matches_any(v))
+    #     s = s.or(base.where(arel_table[:description].matches_any(v)))
+    #     s = s.or(base.where(User.arel_table[:name].matches_any(v)))
+    #   end
+    #   # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (title LIKE '%a%' OR description LIKE '%a%')"
+    #   # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE ((title LIKE '%a%' OR description LIKE '%a%') OR users.name LIKE '%a%')"
+    #   # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (((title LIKE '%%a%%') OR (description LIKE '%%a%%')) OR users.name LIKE '%a%')"
+    #   s
+    # }
+
+    scope :public_only_with_user, -> params {
+      s = all.public_only
+      if current_user = params[:current_user]
+        if false
+          s = s.or(current_user.wkbk_books)
+        end
       end
+      s
+    }
+
+    scope :search_by_search_preset_key, -> params {
+      v = params[:search_preset_key].presence || SearchPresetInfo.first.key
+      SearchPresetInfo.fetch(v).func.call(all, params)
+    }
+
+    scope :search_by_tag, -> params {
+      if v = params[:tag].to_s.split(/[,\s]+/).presence
+        where(id: tagged_with(v))
+      end
+    }
+
+    scope :search_by_query, -> params {
       if v = params[:query].presence
         v = [
           v,
           NKF.nkf("-w --hiragana", v),
           NKF.nkf("-w --katakana", v),
         ].uniq.collect { |e| "%#{e}%" }
-        s = s.where(arel_table[:title].matches_any(v))
-        s = s.or(base.where(arel_table[:description].matches_any(v)))
-        s = s.or(base.where(User.arel_table[:name].matches_any(v)))
+        s = where(arel_table[:title].matches_any(v))
+        s = s.or(where(arel_table[:description].matches_any(v)))
+        s = s.or(where(User.arel_table[:name].matches_any(v)))
       end
-      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (title LIKE '%a%' OR description LIKE '%a%')"
-      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE ((title LIKE '%a%' OR description LIKE '%a%') OR users.name LIKE '%a%')"
-      # SELECT wkbk_books.* FROM wkbk_books INNER JOIN wkbk_folders ON wkbk_folders.id = wkbk_books.folder_id INNER JOIN users ON users.id = wkbk_books.user_id WHERE (((title LIKE '%%a%%') OR (description LIKE '%%a%%')) OR users.name LIKE '%a%')"
+    }
+
+    scope :general_search, -> params {
+      s = joins(:folder, :user)
+      s = s.search_by_search_preset_key(params)
+      s = s.search_by_tag(params)
+      s = s.search_by_query(params)
       s
     }
 
@@ -126,14 +169,14 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = book.slice(*[
-                             :title,
-                             :description,
-                             :folder_key,
-                             :sequence_key,
-                             :new_file_src,    # nil 以外が来たらそれで画像作成
-                             :raw_avatar_path, # nil が来たら画像削除
-                             :tag_list,
-                           ])
+            :title,
+            :description,
+            :folder_key,
+            :sequence_key,
+            :new_file_src,    # nil 以外が来たらそれで画像作成
+            :raw_avatar_path, # nil が来たら画像削除
+            :tag_list,
+          ])
         assign_attributes(attrs)
         save!
 

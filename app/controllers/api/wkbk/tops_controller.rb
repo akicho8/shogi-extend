@@ -30,6 +30,7 @@ module Api
       def index
         retv = {}
         retv[:books] = current_books.as_json(::Wkbk::Book.json_struct_for_top)
+        retv[:xpage_info] = xpage_info(current_books)
         retv[:meta]  = AppEntryInfo.fetch(:wkbk).og_meta
         render json: retv
       end
@@ -46,30 +47,12 @@ module Api
       private
 
       def current_books
-        @current_books ||= -> {
-          s = ::Wkbk::Book.public_only
-
-          # ログインしていればプライベートな問題集も混ぜる
-          if current_user
-            s = s.or(current_user.wkbk_books.joins(:folder))
-          end
-
-          s = s.search(params)
-          s = s.order(updated_at: :desc)
-          s = page_scope(s)       # page_methods.rb
-
-          # # visible_articles_count のため
-          # s.each do |e|
-          #   e.current_user = current_user
-          # end
-
-          s
-        }.call
+        @current_books ||= page_scope(::Wkbk::Book.general_search(params.merge(current_user: current_user)).order(created_at: :desc))
       end
 
       # PageMethods override
       def default_per
-        50
+        100
       end
     end
   end

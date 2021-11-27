@@ -1,10 +1,9 @@
 <template lang="pug">
-.WkbkTopTagList.columns(v-if="base.tags.length >= 1")
-  .column
-    b-taglist
-      template(v-for="tag in base.tags")
-        b-tag(closable @close="base.tag_remove_handle(tag)")
-          | {{tag}}
+.WkbkTopTagList.column.is-12(v-if="present_p(base.tags)")
+  b-taglist.is-clipped
+    template(v-for="tag in base.tags")
+      b-tag(closable @close="base.tag_remove_handle(tag)" :key="tag")
+        | {{tag}}
 </template>
 
 <script>

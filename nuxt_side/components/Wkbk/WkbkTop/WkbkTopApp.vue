@@ -3,7 +3,6 @@
   DebugBox(v-if="development_p")
     p query: {{query}}
     p tag: {{tag}}
-    p search_p: {{search_p}}
 
   FetchStateErrorMessage(:fetchState="$fetchState")
 
@@ -12,7 +11,6 @@
 
   MainSection.when_mobile_footer_scroll_problem_workaround
     .container.is-fluid
-      //- WkbkTopSearchAppear(:base="base")
       WkbkTopTagList(:base="base")
       WkbkTopContent(:base="base")
 
@@ -22,6 +20,7 @@
 
 <script>
 import { Book           } from "../models/book.js"
+import { XpageInfo } from "../../models/xpage_info.js"
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"
@@ -64,6 +63,7 @@ export default {
     // this.__assert__(this.scope, "this.scope")
     this.query       = this.$route.query.query
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
+    this.search_preset_key = this.$route.query.search_preset_key
     this.page        = this.$route.query.page
     this.per         = this.$route.query.per
     // this.sort_column = this.$route.query.sort_column ?? "updated_at"
@@ -73,7 +73,8 @@ export default {
     // this.url_params とは異なり最終的な初期値を設定する
     const params = {
       query:       this.query,
-      // scope:       this.scope,
+      search_preset_key:       this.search_preset_key,
+  // scope:       this.scope,
       page:        this.page,
       per:         this.per,
       // sort_column: this.sort_column,
@@ -88,7 +89,8 @@ export default {
 
       // this.tab_index   = this.IndexScopeInfo.fetch(this.scope).code
       this.books       = e.books.map(e => new Book(e))
-      this.total       = e.total
+      // this.total       = e.total
+      this.xpage_info = new XpageInfo(e.xpage_info)
       // this.book_counts = e.book_counts
     })
   },

@@ -50,6 +50,34 @@ module Wkbk
     #   book
     # end
 
+    concerning :AccessLogMethods do
+      included do
+        with_options dependent: :destroy do
+          has_many :wkbk_access_logs, class_name: "Wkbk::AccessLog" do # アクセスログたち
+            # 動画の視聴履歴(重複なし・直近順)
+            def uniq_histories(max: 100)
+              s = select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
+              s = s.order("last_access_at desc").limit(max)
+              ids = s.collect(&:book_id)
+              Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
+            end
+          end
+          has_many :wkbk_access_books, through: :wkbk_access_logs, source: :book, class_name: "Wkbk::Book"   # 過去に見た履歴動画
+        end
+
+        # scope :wkbk_book_histories, -> {
+        #   s = wkbk_access_books.select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
+        #   s = s.order("last_access_at desc").limit(100)
+        #   ids = s.collect(&:book_id)
+        #   Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
+        # }
+      end
+
+      # def wkbk_access_log_pong_singlecast
+      #   Wkbk::BookRoomChannel.broadcast_to(self, {bc_action: :wkbk_access_log_pong_singlecast, bc_params: {pong: "OK"}})
+      # end
+    end
+
     concerning :UserInfoMethods do
       # rails r "tp User.first.wkbk_info"
 

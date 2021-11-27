@@ -47,6 +47,9 @@ module Api
         retv[:config] = ::Wkbk::Config
         book = ::Wkbk::Book.find_by!(key: params[:book_key])
         show_can!(book)
+        if axios_request_from_client? # 2度呼ばれるため仕方なく
+          book.access_logs.create!(user: current_user)
+        end
         v = book.as_json(::Wkbk::Book.json_struct_for_show)
         v[:xitems] = book.to_xitems(current_user)
         retv[:book] = v

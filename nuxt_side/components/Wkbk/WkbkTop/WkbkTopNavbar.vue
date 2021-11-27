@@ -23,9 +23,6 @@ MainNavbar.WkbkTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
     NavbarItemProfileLink
 
     WkbkSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
-
-    //- b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
-    //-   b-icon(icon="magnify")
 </template>
 
 <script>
