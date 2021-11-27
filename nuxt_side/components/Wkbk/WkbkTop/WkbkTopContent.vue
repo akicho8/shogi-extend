@@ -1,6 +1,6 @@
 <template lang="pug">
-.WkbkTopCardList.columns.is-multiline
-  .column.is-one-quarter-widescreen.is-one-third-desktop.is-half-tablet(v-for="e in base.books")
+.WkbkTopContent.columns.is-multiline
+  .column.is-4-tablet.is-3-desktop.is-2-widescreen(v-for="e in base.books")
     //- https://bulma.io/documentation/components/card/
     nuxt-link.card.is-block(:to="{name: 'rack-books-book_key', params: {book_key: e.key}}" @click.native="sound_play_click()")
       .card-image
@@ -12,14 +12,14 @@
       .card-content
         .media
           .media-left
-            figure.image.is-48x48
+            .image.is-square
               img.is-rounded(:src="e.user.avatar_path" :alt="e.user.name")
           .media-content
-            .title.is-5.mb-1 {{e.title}}
-            p {{e.user.name}}
-            p
-              | {{updated_time_format(e.updated_at)}}
-              b-icon.ml-1(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
+            .title.is_line_break_on.mb-0 {{e.title}}
+            .mt-1.is_line_break_on.has-text-grey.is_body.is-size-7
+              | {{e.user.name}}
+              span.ml-2 {{updated_time_format(e.updated_at)}}
+              b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
             WkbkTagList.mt-1(:tag_list="e.tag_list" :tag_search_handle="base.tag_search_handle" v-if="WkbkConfig.value_of('top_tag_display_p')")
 
         .content(v-if="false")
@@ -29,7 +29,7 @@
 <script>
 import { support_child } from "./support_child.js"
 export default {
-  name: "WkbkTopCardList",
+  name: "WkbkTopContent",
   mixins: [
     support_child,
   ],
@@ -39,22 +39,20 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 +mobile
-  .WkbkTopCardList.columns
+  .WkbkTopContent.columns
     margin-bottom: 0
     .column
       padding: 0
       &:not(:first-child)
         margin-top: 0.75rem
 
-.WkbkTopCardList
+.WkbkTopContent
   .user_avatar
     img
       max-height: none
       height: 18px
       width:  18px
   .card-image
-    figure.image
-
     // 個数
     .position_top_right
       position: absolute
@@ -63,6 +61,20 @@ export default {
       .tag
         margin: 6px
         background-color: change_color($black, $alpha: 0.5)
+
+  .media-content
+    overflow: visible // mobileにしたとき overflow-x: scroll にされてしまいグラグラするのを防ぐ
+
+  .card-content
+    .image
+      width: 24px
+
+  .media-content
+    .title
+      font-size: unset
+
+    // +tablet
+    //   font-size: $size-7
 
   .hashtags
     span:not(:first-child)

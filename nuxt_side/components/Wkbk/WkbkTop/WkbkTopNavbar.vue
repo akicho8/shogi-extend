@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WkbkTopNavbar(:spaced="false")
+MainNavbar.WkbkTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0")
   template(slot="brand")
     NavbarItemHome
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}")
@@ -9,11 +9,11 @@ MainNavbar.WkbkTopNavbar(:spaced="false")
         | 問題集
 
   template(slot="start")
-    b-navbar-item.is-hidden-touch.with_search_field(tag="div")
+    b-navbar-item(tag="div")
       WkbkTopSearch(:base="base")
 
   template(slot="end")
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play_click()")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-new'}" @click.native="sound_play_click()" v-if="true")
       b-icon(icon="plus")
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles'}" @click.native="sound_play_click()")

@@ -5,7 +5,6 @@
     :key="tag"
     rounded
     size="is-small"
-    type="is-primary is-light"
     @click.prevent.stop="tag_search_handle(tag)"
     )
     | {{tag}}

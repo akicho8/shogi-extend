@@ -7,14 +7,14 @@
 
   FetchStateErrorMessage(:fetchState="$fetchState")
 
-  .MainContainer
-    WkbkTopSidebar(:base="base")
-    WkbkTopNavbar(:base="base")
-    MainSection
-      .container
-        WkbkTopSearchAppear(:base="base")
-        WkbkTopCardListTag(:base="base")
-        WkbkTopCardList(:base="base")
+  WkbkTopSidebar(:base="base")
+  WkbkTopNavbar(:base="base")
+
+  MainSection.when_mobile_footer_scroll_problem_workaround
+    .container.is-fluid
+      //- WkbkTopSearchAppear(:base="base")
+      WkbkTopTagList(:base="base")
+      WkbkTopContent(:base="base")
 
   DebugPre(v-if="development_p") {{$fetchState}}
   DebugPre(v-if="development_p") {{$data}}

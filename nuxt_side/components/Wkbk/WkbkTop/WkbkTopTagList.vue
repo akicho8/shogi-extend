@@ -1,9 +1,9 @@
 <template lang="pug">
-.WkbkTopCardListTag.columns(v-if="base.tags.length >= 1")
+.WkbkTopTagList.columns(v-if="base.tags.length >= 1")
   .column
     b-taglist
       template(v-for="tag in base.tags")
-        b-tag(closable type="is-primary is-light" @close="base.tag_remove_handle(tag)")
+        b-tag(closable @close="base.tag_remove_handle(tag)")
           | {{tag}}
 </template>
 
@@ -11,14 +11,14 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "WkbkTopCardListTag",
+  name: "WkbkTopTagList",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.WkbkTopCardListTag
+.WkbkTopTagList
   display: flex
   justify-content: flex-start
   .tags, .tag

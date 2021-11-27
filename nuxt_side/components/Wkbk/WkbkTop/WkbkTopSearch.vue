@@ -6,7 +6,6 @@ b-field.WkbkTopSearch
     icon-clickable
     @icon-click="base.search_handle"
     v-model.trim="base.query"
-    rounded
     @keydown.native.enter="base.search_handle"
     )
 </template>
