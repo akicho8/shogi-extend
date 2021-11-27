@@ -32,6 +32,9 @@ export const vue_time = {
 
     // https://day.js.org/docs/en/parse/string-format
     row_time_format(t) {
+      if (this.blank_p(t)) {
+        return ""
+      }
       const date = dayjs(t)
       const diff_day = dayjs().diff(date, "day")
       const diff_year = dayjs().diff(date, "year")
