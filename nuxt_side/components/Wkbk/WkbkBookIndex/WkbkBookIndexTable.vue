@@ -26,10 +26,10 @@
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.BookIndexColumnInfo.fetch('title').name" sortable)
       nuxt-link(:to="{name: 'rack-books-book_key', params: {book_key: row.key}}" @click.native="sound_play_click()")
-        .image.avatar_image.is-inline-block
+        .image.avatar_image.is-inline-block(v-if="false")
           img(:src="row.avatar_path" :alt="row.title")
 
-        span.row_title(v-if="false")
+        span.row_title
           | {{string_truncate(row.title, {length: s_config.TRUNCATE_MAX})}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.BookIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
@@ -128,6 +128,5 @@ export default {
       border-radius: 6px
 
   .row_title
-    margin-left: 0.5rem
     vertical-align: top
 </style>
