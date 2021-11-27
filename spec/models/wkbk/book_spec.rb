@@ -17,6 +17,7 @@
 # | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
 # |-------------------+-------------------+-------------+---------------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -78,20 +79,20 @@ module Wkbk
       book.as_json(::Wkbk::Book.json_struct_for_edit)
     end
 
-    describe "search" do
-      it "search" do
+    describe "general_search" do
+      it "works" do
         Wkbk::Book.destroy_all
         user = User.create!
-        book = user.wkbk_books.create!(title: "a", tag_list: "b")
-        book = user.wkbk_books.create!(title: "c", tag_list: "d")
-        assert { Book.search(query: "a").size === 1 }
-        assert { Book.search(query: "a", tag: "b").size === 1 }
+        book = user.wkbk_books.create!(title: "a", tag_list: "b", folder_key: "public")
+        book = user.wkbk_books.create!(title: "c", tag_list: "d", folder_key: "public")
+        assert { Book.general_search(query: "a").size === 1 }
+        assert { Book.general_search(query: "a", tag: "b").size === 1 }
       end
       it "アヒルを「あ」で検索" do
         Wkbk::Book.destroy_all
         user = User.create!
-        book = user.wkbk_books.create!(title: "アヒル")
-        assert { Book.search(query: "あ").size === 1 }
+        book = user.wkbk_books.create!(title: "アヒル", folder_key: "public")
+        assert { Book.general_search(query: "あ").size === 1 }
       end
     end
 
