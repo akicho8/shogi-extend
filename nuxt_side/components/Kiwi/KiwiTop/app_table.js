@@ -1,5 +1,3 @@
-// import { KiwiRecordIndexColumnInfo } from "../models/banana_index_column_info.js"
-
 export const app_table = {
   data() {
     return {
@@ -34,8 +32,6 @@ export const app_table = {
     },
   },
   computed: {
-    // KiwiRecordIndexColumnInfo()  { return KiwiRecordIndexColumnInfo },
-
     url_params() {
       return {
         query:       this.query,

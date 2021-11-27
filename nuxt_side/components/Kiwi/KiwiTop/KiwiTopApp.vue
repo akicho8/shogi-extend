@@ -3,7 +3,6 @@
   DebugBox(v-if="development_p")
     p query: {{query}}
     p tag: {{tag}}
-    //- p search_p: {{search_p}}
 
   FetchStateErrorMessage(:fetchState="$fetchState")
 
@@ -19,7 +18,7 @@
 
 <script>
 import { Banana      } from "../models/banana.js"
-import { XpageInfo } from "../models/xpage_info.js"
+import { XpageInfo } from "../../models/xpage_info.js"
 
 import { support_parent } from "./support_parent.js"
 import { app_table      } from "./app_table.js"

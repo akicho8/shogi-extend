@@ -58,27 +58,4 @@ export default {
 .KiwiTopContent
   .card-content
     padding: 1rem
-
-//- +mobile
-//-   .KiwiTopContent.columns
-//-     margin-bottom: 0
-//-     .column
-//-       padding: 0
-//-       &:not(:first-child)
-//-         margin-top: 0.75rem
-
-// .KiwiTopContent
-//   .user_avatar
-//     img
-//       max-height: none
-//       height: 18px
-//       width:  18px
-//
-//   .hashtags
-//     span:not(:first-child)
-//       margin-left: 0.25rem
-//
-//   .media-content
-//     // p
-//     //   line-height: 1.25rem
 </style>

@@ -24,9 +24,6 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
 
     //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play_click()")
     //-   b-icon(icon="cog")
-
-    //- b-navbar-item.is-hidden-desktop.has-text-weight-bold(@click="base.search_field_toggle_handle")
-    //-   b-icon(icon="magnify")
 </template>
 
 <script>

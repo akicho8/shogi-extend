@@ -6,17 +6,12 @@ export const app_search = {
       search_preset_key: null,
       query:             null,
       tag:               null,
-      // search_p: !!this.$route.query.query,
     }
   },
   methods: {
     search_preset_handle(e) {
       this.sound_play_click()
       this.router_push({search_preset_key: e.key, page: null, tag: null})
-    },
-    search_field_toggle_handle() {
-      this.sound_play_click()
-      // this.search_p = !this.search_p
     },
     tag_click_handle(tag) {
       this.sound_play_click()
