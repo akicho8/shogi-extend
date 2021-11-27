@@ -173,7 +173,6 @@ class KifuParser
   def parser_options
     options = {
       :typical_error_case            => :embed,
-      :support_for_piyo_shogi_v4_1_5 => false,
     }
     if to_format == :bod
       options[:turn_limit] = turn_limit
