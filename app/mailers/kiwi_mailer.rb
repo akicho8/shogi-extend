@@ -6,7 +6,7 @@ class KiwiMailer < ApplicationMailer
     body = []
     if lemon.browser_url
       if useless_mail_address?(lemon.user.email) || Rails.env.development? || Rails.env.test?
-        body << "※ #{lemon.user.email} の管理元がしょぼすぎて作成したファイルを添付できませんでした。ちゃんとしたメールアドレスへの変更をおすすめします。"
+        body << "※ #{lemon.user.email} の管理元があれなのでファイルを添付できませんでした。ちゃんとしたメールアドレスへの変更をおすすめします。"
         body << ""
       end
       if useless_mail_address?(lemon.user.email)
