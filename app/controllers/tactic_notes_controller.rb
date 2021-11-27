@@ -236,7 +236,7 @@ class TacticNotesController < ApplicationController
           when /youtube.*watch/
             name = "動画"
           when /youtube/
-            name = "Youtube 検索"
+            name = "YouTube 検索"
           when /mudasure/
             name = "ムダスレ無き改革"
           else

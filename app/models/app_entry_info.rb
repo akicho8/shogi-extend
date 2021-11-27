@@ -52,7 +52,7 @@ class AppEntryInfo
       og_image_key: "video",
       description: "動画作成のあとで登録するとここで見れる",
       features: [
-        "しょぼいので Youtube やニコニコ動画に上げた方がいいかもしれない",
+        "しょぼいので YouTube やニコニコ動画に上げた方がいいかもしれない",
       ],
     },
     {
