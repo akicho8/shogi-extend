@@ -4,7 +4,7 @@
     .card-image
       figure.image
         img(:src="base.book.avatar_path" :alt="base.book.title")
-        .position_top_right
+        .position_on_image
           b-tag(rounded type="is-dark")
             | {{base.book.bookships_count}}
     .card-content
@@ -18,12 +18,14 @@
           //-     template(v-for="tag in base.book.tag_list")
           //-       a.has-text-link(@click.prevent.stop="base.tag_search_handle(tag)" :key="`${base.book.key}_${tag}`") \#{{tag}}
           .title.is-4.mb-1 {{base.book.title}}
-          p
+          .mt-1.is_line_break_on.has-text-grey.is-size-6
             nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="sound_play_click()")
               | {{base.book.user.name}}
-            span.ml-1 {{diff_time_format(base.book.updated_at)}}
+            span.ml-2 {{diff_time_format(base.book.updated_at)}}
+
             b-icon.ml-2(icon="eye-outline" size="is-small")
             span.ml-1 {{base.book.access_logs_count}}
+
             b-icon.ml-2(:icon="FolderInfo.fetch(base.book.folder_key).icon" size="is-small" v-if="base.book.folder_key != 'public'")
 
           WkbkTagList.mt-1(:tag_list="base.book.tag_list" :tag_search_handle="base.tag_search_handle")
@@ -57,10 +59,10 @@ export default {
 .WkbkBookShowTopMainCard
   .card-image
     // 個数
-    .position_top_right
+    .position_on_image
       position: absolute
       top: 0
-      right: 0
+      left: 0
       .tag
         margin: 6px
         background-color: change_color($black, $alpha: 0.5)

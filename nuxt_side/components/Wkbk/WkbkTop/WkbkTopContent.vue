@@ -27,9 +27,10 @@
             .mt-1.is_line_break_on.has-text-grey.is_body.is-size-7
               | {{e.user.name}}
               span.ml-2 {{diff_time_format(e.updated_at)}}
-              b-icon.ml-2(icon="eye-outline" size="is-small")
-              span.ml-1 {{e.access_logs_count}}
-              b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
+              p
+                b-icon(icon="eye-outline" size="is-small")
+                span.ml-1 {{e.access_logs_count}}
+                b-icon.ml-2(:icon="FolderInfo.fetch(e.folder_key).icon" size="is-small" v-if="e.folder_key != 'public'")
 
         .content(v-if="false")
           .description.is_truncate2(v-html="simple_format(auto_link(e.description))")
