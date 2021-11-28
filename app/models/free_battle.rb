@@ -171,7 +171,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def fast_parser_options
-    if use_info.key == :share_board
+    if use_info.key == :share_board || use_info.key == :kiwi_lemon
       # めちゃくちゃな操作でもエラーにしない
       {
         :candidate_enable => false,

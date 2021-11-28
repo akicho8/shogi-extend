@@ -111,4 +111,17 @@ RSpec.describe FreeBattle, type: :model do
       assert { record.preset_info.key == :"角落ち" }
     end
   end
+
+  describe "use_key" do
+    def test1(use_key)
+      double_pawn_sfen = "position sfen 4k4/9/4p4/9/9/9/4P4/9/4K4 b P 1 moves 5g5f 5c5d P*5e"
+      record = FreeBattle.create!(kifu_body: double_pawn_sfen, use_key: use_key)
+      record.turn_max
+    end
+
+    it "works" do
+      assert { test1(:basic)      == 2 } # 二歩の手前で止っている
+      assert { test1(:kiwi_lemon) == 3 } # 二歩を許可
+    end
+  end
 end
