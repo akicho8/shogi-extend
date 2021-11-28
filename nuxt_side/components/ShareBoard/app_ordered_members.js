@@ -265,12 +265,10 @@ export const app_ordered_members = {
           turn: this.current_turn,
         })
       }
-
-      this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
-    om_vars_copy_all_from(params) {
+    receive_om_vars(params) {
       this.__assert__("order_enable_p" in params, '"order_enable_p" in params')
       this.__assert__("ordered_members" in params, '"ordered_members" in params')
 
@@ -285,6 +283,7 @@ export const app_ordered_members = {
       this.avatar_king_key = params.avatar_king_key
       this.shout_mode_key  = params.shout_mode_key
       this.hand_every_n    = params.hand_every_n
+      this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
 
     // 自分の場所を調べて正面をその視点にする

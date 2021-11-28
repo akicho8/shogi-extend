@@ -59,7 +59,7 @@ export const app_room_board_setup = {
             this.active_level = params.active_level
             this.receive_title(params)
             this.receive_sfen(params)
-            this.om_vars_copy_all_from(params)
+            this.receive_om_vars(params)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

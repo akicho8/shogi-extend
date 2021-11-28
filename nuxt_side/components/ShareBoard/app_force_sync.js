@@ -154,7 +154,6 @@ export const app_force_sync = {
         this.toast_ok(params.message)
       }
       this.al_add({...params, label: `局面転送 #${params.turn}`})
-      this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
     },
   },
 }

@@ -183,6 +183,7 @@ export const app_room_setup = {
     receive_title(params) {
       this.__assert__("title" in params, '"title" in params')
       this.current_title = params.title
+      this.ac_log("タイ変更", `「${this.current_title}」への変更を受信`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -192,6 +193,8 @@ export const app_room_setup = {
 
       this.current_sfen = params.sfen
       this.current_turn = params.turn
+
+      this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
