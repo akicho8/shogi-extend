@@ -84,7 +84,7 @@
   .column.is-4
     .panel
       .panel-heading
-        | 順序
+        | 順番設定 ({{base.order_enable_p}})
       template(v-for="e in (base.ordered_members || [])")
         .panel-block {{e}}
   .column.is-4

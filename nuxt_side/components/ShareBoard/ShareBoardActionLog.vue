@@ -94,7 +94,7 @@ export default {
           .time_format
             display: block
 
-.STAGE-development
+.ShareBoardApp.debug_mode_p
   .ShareBoardActionLog
     .scroll_block
       // border-radius: 3px

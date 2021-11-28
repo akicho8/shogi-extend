@@ -436,6 +436,7 @@ export const app_ordered_members = {
     current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
+    self_is_watcher_p()         { return !this.self_is_member_p                         }, // 自分は観戦者か？
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ
     user_names_hash() {

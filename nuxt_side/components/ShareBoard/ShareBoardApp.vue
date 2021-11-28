@@ -379,36 +379,40 @@ export default {
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
     },
 
+    // 手番が違うのに操作しようとした
     operation_invalid1_handle() {
+      this.debug_alert("手番が違うのに操作しようとした")
       if (this.base.order_enable_p) {
-        if (this.base.ordered_members) {
-          this.sound_play("x")
-          let message = null
-          const name = this.current_turn_user_name
-          if (name) {
-            if (this.clock_box && this.clock_box.working_p) {
-              // 対局中
-              message = `今は${this.user_call_name(name)}の手番です`
-            } else {
-              // 時計停止中 (順番設定を解除し忘れている)
-              message = `今は${this.user_call_name(name)}の手番です。検討する場合は順番設定を解除してください`
-            }
+        this.sound_play("x")
+        const messages = []
+        const name = this.current_turn_user_name
+        if (name) {
+          messages.push(`今は${this.user_call_name(name)}の手番です`)
+          if (this.self_is_watcher_p) {
+            messages.push(`あなたは観戦者なので操作できません`)
+          }
+          if (this.clock_box && this.clock_box.working_p) {
+            // 対局中と思われる
           } else {
-            message = `順番設定で対局者の指定がないので誰も操作できません`
+            // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
+            messages.push(`検討する場合は順番設定を解除してください`)
           }
-          if (message) {
-            this.toast_ok(message)
-            this.tl_add("OPVALID", `(${message})`)
-          }
+        } else {
+          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
+        }
+        if (this.present_p(messages)) {
+          const full_message = messages.join("。")
+          this.toast_ok(full_message)
+          this.tl_add("OPVALID", `(${full_message})`)
         }
       }
     },
 
+    // 自分が手番だが相手の駒を動かそうとした
     operation_invalid2_handle() {
+      this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.sound_play("x")
-      if (this.development_p) {
-        this.toast_ok("それは相手の駒です")
-      }
+      this.toast_ok("それは相手の駒です")
     },
   },
 
