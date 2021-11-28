@@ -194,7 +194,7 @@ export default {
   +widescreen
     max-width: 16rem
 
-.STAGE-development
+.ShareBoardApp.debug_mode_p
   .ShareBoardMemberList
     .scroll_block
       // border-radius: 3px

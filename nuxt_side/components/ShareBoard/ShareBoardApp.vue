@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .ShareBoardApp(:style="component_style")
+  .ShareBoardApp(:style="component_style" :class="{'debug_mode_p': debug_mode_p}")
     | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
@@ -477,14 +477,13 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.STAGE-development
-  .ShareBoardApp
-    .CustomShogiPlayer
-    .ShogiPlayerGround
-    .ShogiPlayerWidth
-    .Membership
-    .columns, .column
-      border: 1px dashed change_color($success, $alpha: 0.5)
+.ShareBoardApp.debug_mode_p
+  .CustomShogiPlayer
+  .ShogiPlayerGround
+  .ShogiPlayerWidth
+  .Membership
+  .columns, .column
+    border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp
   .navbar-end

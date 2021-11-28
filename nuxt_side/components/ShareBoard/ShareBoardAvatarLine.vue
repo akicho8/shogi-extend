@@ -51,8 +51,9 @@ export default {
     &.user_name
       color: $primary
 
-.STAGE-development
+.ShareBoardApp.debug_mode_p
   .ShareBoardAvatarLine
+    flex-wrap: wrap
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .flex_item
       border: 1px dashed change_color($danger, $alpha: 0.5)
