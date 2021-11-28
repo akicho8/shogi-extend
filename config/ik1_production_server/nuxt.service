@@ -25,7 +25,7 @@ EnvironmentFile=/etc/sysconfig/systemd_secret_env
 # ExecStart=/bin/bash -lc 'exec /usr/local/rbenv/shims/bundle exec nuxt -C config/nuxt/production.rb'
 # nuxt build --dotenv .env.production
 ExecStart=/bin/bash -lc "npx nuxt start -p 4000 --dotenv .env.production"
-ExecStartPost=-/home/deploy/slack_notify %n start
+ExecStartPost=/home/deploy/slack_notify %n start
 # ExecStop=/bin/bash -lc "/usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl -S /var/www/shogi_web_production/current/nuxt_side/tmp/pids/nuxt.state stop"
 # /usr/local/rbenv/bin/rbenv exec bundle exec nuxtctl
 # ExecStart="/usr/local/rbenv/shims/nuxt -e production -C config/nuxt/production.rb"
