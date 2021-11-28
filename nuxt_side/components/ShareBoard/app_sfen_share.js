@@ -85,7 +85,7 @@ export const app_sfen_share = {
         this.fast_sound_effect_func(params)
 
         // 受信したSFENを盤に反映
-        this.setup_by_params(params)
+        this.receive_sfen(params)
       }
 
       this.clock_box_share_broadcasted(params.clock_box_params)

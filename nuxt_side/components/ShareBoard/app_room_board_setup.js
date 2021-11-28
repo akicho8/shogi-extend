@@ -41,7 +41,7 @@ export const app_room_board_setup = {
         ////////////////////////////////////////////////////////////////////////////////
         title: this.current_title,  // タイトル
         ...this.current_sfen_attrs, // 盤の状態
-        ...this.om_params,            // 順番設定
+        ...this.order_params_for_later_member,            // 順番設定
         ////////////////////////////////////////////////////////////////////////////////
       }) // --> app/channels/share_board/room_channel.rb
     },
@@ -57,7 +57,9 @@ export const app_room_board_setup = {
             this.ac_log("情報設定", `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`)
             this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
-            this.setup_by_params(params)
+            this.receive_title(params)
+            this.receive_sfen(params)
+            this.om_vars_copy_all_from(params)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

@@ -25,6 +25,7 @@ export const app_force_sync = {
           },
         })
       } else {
+        this.ac_log("盤面起動", "初期配置に戻す")
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
@@ -55,6 +56,7 @@ export const app_force_sync = {
           },
         })
       } else {
+        this.ac_log("盤面起動", "1手戻す")
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
@@ -118,11 +120,13 @@ export const app_force_sync = {
       this.current_sfen = e.sfen
       this.turn_offset = e.turn_offset
 
+      let message = null
       if (diff < 0) {
-        this.force_sync(`${this.user_call_name(this.user_name)}が${-diff}手戻しました`)
+        message = `${this.user_call_name(this.user_name)}が${-diff}手戻しました`
       } else {
-        this.force_sync(`${this.user_call_name(this.user_name)}が${diff}手進めました`)
+        message = `${this.user_call_name(this.user_name)}が${diff}手進めました`
       }
+      this.force_sync(message)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +146,7 @@ export const app_force_sync = {
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
-      this.setup_by_params(params) // これで current_location が更新される
+      this.receive_sfen(params) // これで current_location が更新される
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }

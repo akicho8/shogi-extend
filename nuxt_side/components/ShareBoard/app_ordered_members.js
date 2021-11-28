@@ -227,6 +227,7 @@ export const app_ordered_members = {
           turn_offset: this.turn_offset,
         })
       }
+      this.ac_log("順設受信", `順番${this.order_enable_p ? "ON" : "OFF"}を受信`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -264,22 +265,26 @@ export const app_ordered_members = {
           turn_offset: this.turn_offset,
         })
       }
+
+      this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
     om_vars_copy_all_from(params) {
       this.__assert__("order_enable_p" in params, '"order_enable_p" in params')
+      this.__assert__("ordered_members" in params, '"ordered_members" in params')
+
       this.tl_alert("順番設定パラメータを先代から受信")
 
-      this.order_enable_p    = params.order_enable_p
+      this.order_enable_p = params.order_enable_p
       this.om_vars_copy_from(params)
     },
     om_vars_copy_from(params) {
       this.ordered_members = params.ordered_members
-      this.move_guard_key = params.move_guard_key
+      this.move_guard_key  = params.move_guard_key
       this.avatar_king_key = params.avatar_king_key
-      this.shout_mode_key = params.shout_mode_key
-      this.hand_every_n = params.hand_every_n
+      this.shout_mode_key  = params.shout_mode_key
+      this.hand_every_n    = params.hand_every_n
     },
 
     // 自分の場所を調べて正面をその視点にする
@@ -355,9 +360,9 @@ export const app_ordered_members = {
     shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
 
     // あとから接続した人に伝える内容
-    om_params() {
+    order_params_for_later_member() {
       return {
-        order_enable_p:       this.order_enable_p,
+        order_enable_p:  this.order_enable_p,
         ordered_members: this.ordered_members,
         move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
@@ -437,6 +442,8 @@ export const app_ordered_members = {
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
     self_is_watcher_p()         { return !this.self_is_member_p                         }, // 自分は観戦者か？
+
+    ordered_member_names_oneline() { return (this.ordered_members || []).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ
     user_names_hash() {

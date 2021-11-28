@@ -22,7 +22,7 @@ module ShareBoard
     end
 
     def force_sync(data)
-      track(data, "局面転送", data.slice("turn_offset", "sfen"))
+      track(data, "局面転送", "[#{data["turn_offset"]}手目][#{data["message"]}]")
       broadcast(:force_sync_broadcasted, data)
     end
 
@@ -32,9 +32,7 @@ module ShareBoard
     end
 
     def received_ok(data)
-      if Rails.env.production? || true
-        track(data, "指手受信", "OK > #{data['to_user_name']}")
-      end
+      track(data, "指手受信", "OK > #{data['to_user_name']}")
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -70,18 +68,18 @@ module ShareBoard
     end
 
     def member_info_share(data)
-      track(data, "生存通知", "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})") unless Rails.env.production?
+      track(data, "生存通知", "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})")
       broadcast(:member_info_share_broadcasted, data)
     end
 
     def order_switch_share(data)
-      track(data, "順番設定", data["order_enable_p"] ? "ON" : "OFF")
+      track(data, "順番設定", "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布")
       broadcast(:order_switch_share_broadcasted, data)
     end
 
     def ordered_members_share(data)
       user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" → ")
-      track(data, "順番設定", "#{user_names} (#{data["avatar_king_key"]} #{data["shout_mode_key"]})")
+      track(data, "順番設定", "オーダー配布 #{user_names} (#{data["avatar_king_key"]} #{data["shout_mode_key"]})")
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
@@ -146,9 +144,9 @@ module ShareBoard
 
     def subscribed_track(action)
       if current_user
-        body = current_user.name
+        body = "ログイン ##{current_user.id} #{current_user.name}"
       else
-        body = ""
+        body = "非ログイン"
       end
       SlackAgent.notify(subject: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
     end

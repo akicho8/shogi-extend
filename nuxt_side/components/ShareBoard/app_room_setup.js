@@ -176,23 +176,22 @@ export const app_room_setup = {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
-        this.setup_by_params(params)
+        this.receive_title(params)
       }
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
+    receive_title(params) {
+      this.__assert__("title" in params, '"title" in params')
+      this.current_title = params.title
+    },
 
     ////////////////////////////////////////////////////////////////////////////////
-    setup_by_params(params) {
-      if ("title" in params) {
-        this.current_title = params.title
-      }
-      if ("sfen" in params) {
-        this.current_sfen = params.sfen
-        this.turn_offset = params.turn_offset
-      }
-      if ("order_enable_p" in params) {
-        this.om_vars_copy_all_from(params)
-      }
+    receive_sfen(params) {
+      this.__assert__("sfen" in params, '"sfen" in params')
+      this.__assert__("turn_offset" in params, '"turn_offset" in params')
+
+      this.current_sfen = params.sfen
+      this.turn_offset = params.turn_offset
     },
 
     ////////////////////////////////////////////////////////////////////////////////
