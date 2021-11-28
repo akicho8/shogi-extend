@@ -5,9 +5,15 @@ module Kiwi
         after_destroy_commit :thumbnail_clean
       end
 
-      def thumbnail_build(ss)
+      def thumbnail_build(pos)
+        if command = thumbnail_build_command(pos)
+          Bioshogi::SystemSupport.strict_system(command)
+        end
+      end
+
+      def thumbnail_build_command(pos)
         if thumbnail_real_path
-          Bioshogi::SystemSupport.strict_system "ffmpeg -v warning -hide_banner -ss #{ss} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}"
+          "ffmpeg -v warning -hide_banner -ss #{pos.clamp(0, ffmpeg_ss_option_max)} -i #{real_path} -vframes 1 -f image2 -y #{thumbnail_real_path}"
         end
       end
 
@@ -46,6 +52,24 @@ module Kiwi
       def og_video_path
         if recipe_info.og_video
           browser_path
+        end
+      end
+
+      def duration
+        if ffprobe_info
+          ffprobe_info[:direct_format]["streams"][0]["duration"].to_f
+        end
+      end
+
+      # 5.1 秒の動画で -ss 5 は失敗するため -ss 4 までとする
+      # 0.5 秒の動画なら -ss 0 とする
+      def ffmpeg_ss_option_max
+        if duration
+          v = duration.truncate.pred
+          if v < 0
+            v = 0
+          end
+          v
         end
       end
     end

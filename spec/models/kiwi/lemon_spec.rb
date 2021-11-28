@@ -99,45 +99,13 @@ module Kiwi
       lemon1.reload
       assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] }
     end
+
+    it "ffmpegのssオプションで動画の長さを指定すると失敗するため「長さ-1」でclampする" do
+      lemon1.main_process
+      lemon1.reload
+      assert { lemon1.duration == 6 }
+      assert { lemon1.ffmpeg_ss_option_max == 5 }
+      assert { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
+    end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> F.........
-# >>
-# >> Failures:
-# >>
-# >>   1) Kiwi::Lemon 動画作成
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:49:in `block (2 levels) in <module:Kiwi>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >>
-# >> Top 10 slowest examples (20.23 seconds, 91.9% of total time):
-# >>   Kiwi::Lemon 動画作成
-# >>     9.54 seconds -:38
-# >>   Kiwi::Lemon ワーカー関係なく全処理実行
-# >>     7.51 seconds -:57
-# >>   Kiwi::Lemon advanced_kif_info
-# >>     0.43673 seconds -:87
-# >>   Kiwi::Lemon Bananaと結び付いていないレコードたち
-# >>     0.4317 seconds -:76
-# >>   Kiwi::Lemon reset
-# >>     0.42067 seconds -:83
-# >>   Kiwi::Lemon Bananaと結び付いているか確認
-# >>     0.41513 seconds -:91
-# >>   Kiwi::Lemon info
-# >>     0.41146 seconds -:66
-# >>   Kiwi::Lemon ワーカーが動いてなかったら動かす
-# >>     0.40695 seconds -:52
-# >>   Kiwi::Lemon 「みんな」の反映
-# >>     0.36031 seconds -:71
-# >>   Kiwi::Lemon ゾンビを成仏させる
-# >>     0.29867 seconds -:62
-# >>
-# >> Finished in 22.01 seconds (files took 3.41 seconds to load)
-# >> 10 examples, 1 failure
-# >>
-# >> Failed examples:
-# >>
-# >> rspec -:38 # Kiwi::Lemon 動画作成
-# >>
