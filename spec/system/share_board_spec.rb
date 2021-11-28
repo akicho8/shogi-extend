@@ -1305,12 +1305,22 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       b_block do
         visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
+      c_block do
+        visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice,bob")
+      end
     end
     it "時計OFF順番設定ONでは検討をしていると思われる" do
       test1
       b_block do
         place_click("77")
         assert_text("(今はaliceさんの手番です。検討する場合は順番設定を解除してください)")
+      end
+    end
+    it "時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
+      test1
+      c_block do
+        place_click("77")
+        assert_text("(今はaliceさんの手番です。あなたは観戦者なので操作できません。検討する場合は順番設定を解除してください)")
       end
     end
     it "時計ON順番設定ONは対局中と思われる" do
