@@ -76,7 +76,7 @@ export const app_action_log = {
         },
         sfen: "position startpos",
         turn: i,
-        last_location_key: "white",
+        // last_location_key: "white",
         from_user_name: "あいうえお",
         performed_at: this.time_current_ms(),
       })

@@ -39,9 +39,9 @@ export const app_room_board_setup = {
       this.ac_room_perform("setup_info_send", {
         ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
-        title: this.current_title,  // タイトル
-        ...this.current_sfen_attrs, // 盤の状態
-        ...this.order_params_for_later_member,            // 順番設定
+        title: this.current_title,             // タイトル
+        ...this.current_sfen_and_turn,         // 棋譜と現在の局面(手数)
+        ...this.order_params_for_later_member, // 順番設定
         ////////////////////////////////////////////////////////////////////////////////
       }) // --> app/channels/share_board/room_channel.rb
     },

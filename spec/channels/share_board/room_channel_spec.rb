@@ -56,7 +56,7 @@ module ShareBoard
         data = data_factory({
             "sfen"              => "(sfen)",
             "turn_offset"       => 1,
-            "last_location_key" => "white",
+            # "last_location_key" => "white",
             "sequence_code"     => 1,
             "next_user_name"    => "bob",
             "lmi" => {

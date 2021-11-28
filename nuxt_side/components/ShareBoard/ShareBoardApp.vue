@@ -434,11 +434,12 @@ export default {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    current_sfen_attrs() {
+
+    current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる
       return {
         sfen: this.current_sfen,
         turn: this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
-        last_location_key: this.current_sfen_info.last_location.key,
+        //- last_location_key: this.current_sfen_info.last_location.key,
       }
     },
     current_sfen_info()            { return this.sfen_parse(this.current_sfen)                          },
@@ -446,6 +447,8 @@ export default {
     next_location()                { return this.current_sfen_info.next_location                        },
     current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) },
     base_location()                { return this.current_sfen_info.location_by_offset(0)                },
+
+    current_sfen_and_turn() { return { sfen: this.current_sfen, turn: this.current_turn } },
 
     component_style() {
       return {
