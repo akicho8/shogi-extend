@@ -214,7 +214,7 @@ export const app_ordered_members = {
       }
       this.order_enable_p = params.order_enable_p
       if (this.order_disable_p) {
-        this.message_scope_key = "is_ms_all"
+        this.message_scope_key = "is_message_scope_public"
       }
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`)

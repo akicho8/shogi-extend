@@ -87,7 +87,7 @@ module ShareBoard
 
     def message_share(data)
       action = "チャット"
-      if data["message_scope_key"] == "is_ms_out"
+      if data["message_scope_key"] == "is_message_scope_private"
         action = "観戦チャ"
       end
       track(data, action, data["message"])

@@ -4,7 +4,7 @@
     template(v-for="(e, i) in base.message_logs")
       template(v-if="base.message_share_received_p(e)")
         ShareBoardAvatarLine(:base="base" :info="e" :key="`${e.from_connection_id}_${i}`")
-          XemojiWrap.flex_item.is_line_break_on.message_body(:class="{'has-text-success': e.message_scope_key === 'is_ms_out'}" :str="auto_link(e.message)")
+          XemojiWrap.flex_item.is_line_break_on.message_body(:class="{'has-text-success': e.message_scope_key === 'is_message_scope_private'}" :str="auto_link(e.message)")
 </template>
 
 <script>

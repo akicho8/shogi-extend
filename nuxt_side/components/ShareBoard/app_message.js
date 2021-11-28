@@ -34,7 +34,7 @@ export const app_message = {
           container: ".MainBoard",
           message: `${params.from_user_name}: ${params.message}`,
           position: "is-top",
-          type: params.message_scope_key === "is_ms_out" ? "is-success" : "is-white",
+          type: params.message_scope_key === "is_message_scope_private" ? "is-success" : "is-white",
           queue: false,
         })
         this.talk(params.message)
@@ -44,7 +44,7 @@ export const app_message = {
     // 受信した発言を表示してもよいですか？
     message_share_received_p(e) {
       let exec = true
-      if (e.message_scope_key === "is_ms_out") { // 観戦者宛のとき
+      if (e.message_scope_key === "is_message_scope_private") { // 観戦者宛のとき
         if (!this.received_from_self(e)) {       // 自分が送信者ではなく
           if (this.self_is_member_p) {           // 自分が対局者の場合は
             exec = false                         // 受信しない

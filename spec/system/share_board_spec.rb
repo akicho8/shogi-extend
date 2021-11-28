@@ -324,13 +324,13 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       c_block { visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice", autoexec: "message_modal_handle") }
 
       message1 = SecureRandom.hex
-      b_block { message_send(:is_ms_out, message1) }   # 観戦者の bob が観戦者送信した
+      b_block { message_send(:is_message_scope_private, message1) }   # 観戦者の bob が観戦者送信した
       b_block { assert_text(message1)              }   # 自分には (観戦者かに関係なく本人だから) 届いている
       a_block { assert_no_text(message1)           }   # alice には対局者なので届いていない
       c_block { assert_text(message1)              }   # carol には観戦者なので届いている
 
       message2 = SecureRandom.hex
-      a_block { message_send(:is_ms_out, message2) }   # 対局者の alice が送信した
+      a_block { message_send(:is_message_scope_private, message2) }   # 対局者の alice が送信した
       a_block { assert_text(message2)              }   # 自分には (観戦者かに関係なく本人だから) 届いている
       b_block { assert_text(message2)              }   # bob   には観戦者なので届いている
       c_block { assert_text(message2)              }   # carol には観戦者なので届いている
