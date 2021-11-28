@@ -20,7 +20,7 @@ export const app_action_log = {
         message: `${label}しました`,
         // message_except_self: true,
         sfen: this.current_sfen,
-        turn_offset: this.turn_offset,
+        turn: this.current_turn,
       })
     },
     shared_al_add(e) {
@@ -50,7 +50,7 @@ export const app_action_log = {
 
       // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
       params.sfen ??= this.current_sfen
-      params.turn_offset ??= this.turn_offset
+      params.turn ??= this.current_turn
 
       // その他
       params.from_user_name ??= this.user_name
@@ -75,7 +75,7 @@ export const app_action_log = {
           yomiage:             "ななろくふ",
         },
         sfen: "position startpos",
-        turn_offset: i,
+        turn: i,
         last_location_key: "white",
         from_user_name: "あいうえお",
         performed_at: this.time_current_ms(),
@@ -84,7 +84,7 @@ export const app_action_log = {
       // this.al_add({
       //   label: "foo",
       //   sfen: "position startpos",
-      //   turn_offset: 0,
+      //   turn: 0,
       //   performed_at: this.time_current_ms(),
       // })
 
@@ -98,17 +98,17 @@ export const app_action_log = {
 
     action_log_jump(e) {
       if (false) {
-        if (this.current_sfen === e.sfen && this.turn_offset === e.turn_offset) {
+        if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
           this.toast_ok("同じ局面です")
           return
         }
       }
 
       this.__assert__('sfen' in e, "'sfen' in e")
-      this.__assert__('turn_offset' in e, "'turn_offset' in e")
+      this.__assert__('turn' in e, "'turn' in e")
 
       this.current_sfen = e.sfen
-      this.turn_offset = e.turn_offset
+      this.current_turn = e.turn
 
       if (this.ac_room) {
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が戻した局面を転送しました`))

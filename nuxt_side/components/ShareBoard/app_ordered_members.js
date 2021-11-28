@@ -224,7 +224,7 @@ export const app_ordered_members = {
           ...params,
           label: "順番 " + (params.order_enable_p ? "ON" : "OFF"),
           sfen: this.current_sfen,
-          turn_offset: this.turn_offset,
+          turn: this.current_turn,
         })
       }
       this.ac_log("順設受信", `順番${this.order_enable_p ? "ON" : "OFF"}を受信`)
@@ -262,7 +262,7 @@ export const app_ordered_members = {
           ...params,
           label: "順番更新",
           sfen: this.current_sfen,
-          turn_offset: this.turn_offset,
+          turn: this.current_turn,
         })
       }
 
@@ -438,7 +438,7 @@ export const app_ordered_members = {
     // private
     ordered_members_blank_p()   { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
     ordered_members_present_p() { return this.present_p(this.ordered_members)           }, // メンバーリストがある？
-    current_turn_user_name()    { return this.user_name_by_turn(this.turn_offset)       }, // 現在の局面のメンバーの名前
+    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 現在の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
     self_is_watcher_p()         { return !this.self_is_member_p                         }, // 自分は観戦者か？

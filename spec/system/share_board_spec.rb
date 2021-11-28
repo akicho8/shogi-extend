@@ -490,14 +490,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         sp_controller_click("previous")                   # 3手戻す
         sp_controller_click("previous")
         sp_controller_click("previous")
-        assert_turn_offset(1)
+        assert_turn(1)
 
         side_menu_open
         menu_item_click("局面の転送")           # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
       b_block do
-        assert_turn_offset(1)                             # bobの局面が戻っている
+        assert_turn(1)                             # bobの局面が戻っている
       end
     end
   end
@@ -527,7 +527,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       b_block do
         assert_clock_active_white                 # 時計は後手
-        assert_turn_offset(1)                     # 手数1
+        assert_turn(1)                     # 手数1
         sleep(1)                                  # bobは1秒考えていた
       end
       a_block do
@@ -537,7 +537,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         # first(".sync_button").click           # 反映する
         # find(".is_ctrl_mode_visible").click   # 表示したままにする
         sp_controller_click("previous")           # 1手戻す
-        assert_turn_offset(0)                     # 0手目に戻せてる
+        assert_turn(0)                     # 0手目に戻せてる
 
         side_menu_open
         menu_item_click("局面の転送")       # モーダルを開く
@@ -569,7 +569,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         sp_controller_click("first")                      # 再起動時にbobから受けとったか確認しやすいように0手目にしておく
 
         room_recreate_apply                               # 再起動実行
-        assert_turn_offset(1)                             # bobからもらったので1手目になっている
+        assert_turn(1)                             # bobからもらったので1手目になっている
         assert_member_list(1, "is_joined", "bob")         # 並びは後輩だったbobが先輩に
         assert_member_list(2, "is_joined", "alice")       # 先輩だったaliceは後輩になっている
       end
@@ -652,20 +652,20 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         assert_move("77", "76", "☗7六歩")                # aliceが指す
-        assert_turn_offset(1)                             # 1手進んでいる
+        assert_turn(1)                             # 1手進んでいる
       end
       b_block do
-        assert_turn_offset(1)                             # bob側も1手進んでいる
+        assert_turn(1)                             # bob側も1手進んでいる
       end
       a_block do
         side_menu_open
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
         find(".apply_button").click                       # 「この局面まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
-        assert_turn_offset(0)                             # 0手に戻っている
+        assert_turn(0)                             # 0手に戻っている
       end
       b_block do
-        assert_turn_offset(0)                             # bob側も0手に戻っている
+        assert_turn(0)                             # bob側も0手に戻っている
       end
     end
   end
@@ -689,10 +689,10 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
         find(".apply_button").click                       # 「この局面まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
-        assert_turn_offset(1)                             # 1手目に戻っている
+        assert_turn(1)                             # 1手目に戻っている
       end
       b_block do
-        assert_turn_offset(1)                             # bob側も1手に戻っている
+        assert_turn(1)                             # bob側も1手に戻っている
       end
     end
   end
@@ -1212,19 +1212,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         assert_move("77", "76", "☗7六歩")
-        assert_turn_offset(1)
+        assert_turn(1)
       end
       b_block do
         assert_move("33", "34", "☖3四歩")
-        assert_turn_offset(2)
+        assert_turn(2)
       end
       a_block do
         action_log_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
         first(".apply_button").click # この局面まで戻る実行
-        assert_turn_offset(1)        # 1手目に戻った
+        assert_turn(1)        # 1手目に戻った
       end
       b_block do
-        assert_turn_offset(2)        # 戻るのはalice側だけなのでbob側は2手目のまま
+        assert_turn(2)        # 戻るのはalice側だけなのでbob側は2手目のまま
       end
     end
 
@@ -1232,7 +1232,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
         assert_move("77", "76", "☗7六歩")               # 初手を指す
-        assert_turn_offset(1)
+        assert_turn(1)
         action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
         find(".KentoButton").click                      # 「KENTO」
@@ -1455,8 +1455,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     find(".sidebar_toggle_navbar_item").click
   end
 
-  def assert_turn_offset(turn_offset)
-    assert_text("##{turn_offset}", wait: 10)
+  def assert_turn(turn)
+    assert_text("##{turn}", wait: 10)
   end
 
   # 順番設定後の待ち

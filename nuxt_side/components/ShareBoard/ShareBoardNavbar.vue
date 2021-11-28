@@ -7,8 +7,8 @@ MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' 
     b-navbar-item.has-text-weight-bold.title_edit_navbar_item(@click="base.title_edit_handle")
       span.current_title.is_truncate
         | {{base.current_title || '？'}}
-        span.mx-1(v-if="base.play_mode_p && (base.turn_offset >= 1 || development_p)")
-          | \#{{base.turn_offset}}
+        span.mx-1(v-if="base.play_mode_p && (base.current_turn >= 1 || development_p)")
+          | \#{{base.current_turn}}
         span.mx-1(v-if="base.edit_mode_p")
           | (編集モード)
 

@@ -28,13 +28,13 @@ client-only
       p sp_human_side: {{sp_human_side}}
       p current_turn_self_p: {{current_turn_self_p}}
       p current_turn_user_name: {{current_turn_user_name}}
-      p turn_offset: {{turn_offset}}
+      p current_turn: {{current_turn}}
       p sp_viewpoint: {{sp_viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
       //- p user_name: {{JSON.stringify(user_name)}}
       //- p 人数: {{JSON.stringify(member_infos.length)}}
-      //- p 手数: {{turn_offset}} / {{turn_offset_max}}
+      //- p 手数: {{current_turn}} / {{turn_offset_max}}
       //- p SFEN: {{current_sfen}}
       //- p タイトル: {{current_title}}
       //- p 視点: {{abstract_viewpoint}}
@@ -54,7 +54,7 @@ client-only
               ref="main_sp"
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
-              :sp_turn="turn_offset"
+              :sp_turn="current_turn"
               :sp_body="current_sfen"
               :sp_sound_enabled="true"
               :sp_viewpoint.sync="sp_viewpoint"
@@ -76,7 +76,7 @@ client-only
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
               @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-              @update:turn_offset="v => turn_offset = v"
+              @update:turn_offset="v => current_turn = v"
               @update:turn_offset_max="v => turn_offset_max = v"
               @operation_invalid1="operation_invalid1_handle"
               @operation_invalid2="operation_invalid2_handle"
@@ -228,7 +228,7 @@ export default {
       // watch して url に反映するもの
       current_sfen:       this.config.record.sfen_body,          // 渡している棋譜
       current_title:      this.config.record.title,              // 現在のタイトル
-      turn_offset:        this.config.record.initial_turn,       // 現在の手数
+      current_turn:       this.config.record.initial_turn,       // 現在の手数
       abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
       // urlには反映しない
@@ -253,7 +253,7 @@ export default {
       this.sp_run_mode,
       this.sp_internal_rule_key,
       this.current_sfen,
-      this.turn_offset,
+      this.current_turn,
       this.current_title,
       this.abstract_viewpoint,
       this.room_code,
@@ -375,7 +375,7 @@ export default {
       this.sidebar_p = false
       this.sound_play_click()
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
-      this.turn_offset  = this.config.record.initial_turn     // 現在の手数
+      this.current_turn  = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
     },
 
@@ -423,28 +423,28 @@ export default {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },
     edit_mode_p() { return this.sp_run_mode === 'edit_mode' },
 
-    advanced_p()  { return this.turn_offset > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
+    advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     page_title() {
-      if (this.turn_offset === 0) {
+      if (this.current_turn === 0) {
         return this.current_title
       } else {
-        return `${this.current_title} ${this.turn_offset}手目`
+        return `${this.current_title} ${this.current_turn}手目`
       }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
     current_sfen_attrs() {
       return {
-        sfen:              this.current_sfen,
-        turn_offset:       this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
+        sfen: this.current_sfen,
+        turn: this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
         last_location_key: this.current_sfen_info.last_location.key,
       }
     },
     current_sfen_info()            { return this.sfen_parse(this.current_sfen)                          },
     current_sfen_turn_offset_max() { return this.current_sfen_info.turn_offset_max                      },
     next_location()                { return this.current_sfen_info.next_location                        },
-    current_location()             { return this.current_sfen_info.location_by_offset(this.turn_offset) },
+    current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) },
     base_location()                { return this.current_sfen_info.location_by_offset(0)                },
 
     component_style() {

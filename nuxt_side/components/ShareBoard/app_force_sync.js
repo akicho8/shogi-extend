@@ -31,7 +31,7 @@ export const app_force_sync = {
           props: {
             base: this.base,
             sfen: this.current_sfen,
-            turn_offset: 0,
+            turn: 0,
           },
         })
       }
@@ -62,7 +62,7 @@ export const app_force_sync = {
           props: {
             base: this.base,
             sfen: this.current_sfen,
-            turn_offset: _.clamp(this.turn_offset - 1, 0, this.turn_offset),
+            turn: _.clamp(this.current_turn - 1, 0, this.current_turn),
           },
         })
       }
@@ -82,26 +82,26 @@ export const app_force_sync = {
     ////////////////////////////////////////////////////////////////////////////////
 
     force_sync_direct() {
-      this.ac_log("局面操作", `「局面の転送」を実行 (${this.turn_offset}手目)`)
-      this.force_sync(`${this.user_call_name(this.user_name)}が現在の局面(${this.turn_offset}手目)を転送しました`)
+      this.ac_log("局面操作", `直接${this.current_turn}手目`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が現在の局面(${this.current_turn}手目)の局面を転送しました`)
     },
 
     force_sync_turn_zero() {
       this.ac_log("局面操作", "初期配置に戻す")
-      this.turn_offset = 0
+      this.current_turn = 0
       this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
     },
 
     force_sync_turn_previous() {
       this.ac_log("局面操作", "1手戻す")
-      if (this.turn_offset >= 1) {
-        this.turn_offset -= 1
+      if (this.current_turn >= 1) {
+        this.current_turn -= 1
       }
       this.force_sync(`${this.user_call_name(this.user_name)}が1手戻しました`)
     },
 
     force_sync_handicap() {
-      this.turn_offset = 0
+      this.current_turn = 0
       this.current_sfen = this.board_preset_info.sfen
       this.ac_log("駒落適用", this.board_preset_info.name)
       this.force_sync(`${this.user_call_name(this.user_name)}が${this.board_preset_info.name}に変更しました`)
@@ -109,16 +109,16 @@ export const app_force_sync = {
 
     new_turn_set_and_sync(e) {
       if (false) {
-        if (this.current_sfen === e.sfen && this.turn_offset === e.turn_offset) {
+        if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
           this.toast_ok("同じ局面です")
           return
         }
       }
 
-      const diff = e.turn_offset - this.turn_offset
+      const diff = e.turn - this.current_turn
 
       this.current_sfen = e.sfen
-      this.turn_offset = e.turn_offset
+      this.current_turn = e.turn
 
       let message = null
       if (diff < 0) {
@@ -141,7 +141,7 @@ export const app_force_sync = {
       const params = {
         message: message,
         sfen: this.current_sfen,
-        turn_offset: this.turn_offset,
+        turn: this.current_turn,
       }
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -153,8 +153,8 @@ export const app_force_sync = {
       if (params.message) {
         this.toast_ok(params.message)
       }
-      this.al_add({...params, label: `局面転送 #${params.turn_offset}`})
-      this.ac_log("局面受信", `${params.turn_offset}手目の局面を受信`)
+      this.al_add({...params, label: `局面転送 #${params.turn}`})
+      this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
     },
   },
 }

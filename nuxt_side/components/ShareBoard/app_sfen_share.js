@@ -28,7 +28,7 @@ export const app_sfen_share = {
           yomiage:             lmi.to_yomiage,          // "ななろくふ"
           effect_key:          lmi.effect_key,          // 効果音キー
         },
-        ...this.current_sfen_attrs, // turn_offset が含まれる
+        ...this.current_sfen_attrs, // turn が含まれる
         clock_box_params: this.clock_box_share_params_build(), // 指し手と合わせて時計の情報も送る
       }
 

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 局面 \#{{new_turn_offset}}
+      | 局面 \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -15,9 +15,9 @@
         :sp_view_mode_soldier_movable="false"
         :sp_viewpoint="base.sp_viewpoint"
         :sp_sound_enabled="true"
-        :sp_turn="turn_offset"
         :sp_body="sfen"
-        @update:turn_offset="v => new_turn_offset = v"
+        :sp_turn="turn"
+        @update:turn="v => new_turn = v"
       )
 
   .modal-card-foot
@@ -34,12 +34,12 @@ export default {
     support_child,
   ],
   props: {
-    sfen:        { type: String, required: true, },
-    turn_offset: { type: Number, required: true, },
+    sfen: { type: String, required: true, },
+    turn: { type: Number, required: true, },
   },
   data() {
     return {
-      new_turn_offset: this.turn_offset,
+      new_turn: this.turn,
     }
   },
   methods: {
@@ -49,7 +49,7 @@ export default {
     },
     apply_handle() {
       this.sound_play_click()
-      this.base.new_turn_set_and_sync({sfen: this.sfen, turn_offset: this.new_turn_offset})
+      this.base.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
       this.$emit("close")
     },
   },

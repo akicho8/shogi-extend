@@ -10,7 +10,7 @@
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
       template(v-for="e in base.FormatTypeInfo.values")
         template(v-if="e.clipboard")
-          b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click="base.kifu_copy_handle(e)")
+          b-menu-item.is_active_unset(:label="e.name_with_turn(base.current_turn)" @click="base.kifu_copy_handle(e)")
 
     b-menu-item.is_active_unset(icon="eye" :expanded="false" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
@@ -18,14 +18,14 @@
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
       template(v-for="e in base.FormatTypeInfo.values")
         template(v-if="e.show")
-          b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+          b-menu-item.is_active_unset(:label="e.name_with_turn(base.current_turn)" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
 
     b-menu-item.is_active_unset(icon="download" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
         | 棋譜ダウンロード
         b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
       template(v-for="e in base.FormatTypeInfo.values")
-        b-menu-item.is_active_unset(:label="e.name_with_turn(base.turn_offset)" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
+        b-menu-item.is_active_unset(:label="e.name_with_turn(base.current_turn)" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 </template>
 
 <script>

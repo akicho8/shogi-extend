@@ -7,7 +7,7 @@ export const ActionLogJumpPreviewModalButtons = {
   methods: {
     kifu_copy_handle() {
       this.sound_play_click()
-      this.general_kifu_copy(this.action_log.sfen, {to_format: "kif", turn: this.new_turn_offset})
+      this.general_kifu_copy(this.action_log.sfen, {to_format: "kif", turn: this.new_turn})
       this.base.shared_al_add_simple("棋譜コピー")
     },
     room_code_except_url_copy_handle() {
@@ -20,7 +20,7 @@ export const ActionLogJumpPreviewModalButtons = {
     piyo_shogi_app_with_params_url() {
       return this.piyo_shogi_auto_url({
         sfen: this.action_log.sfen,
-        turn: this.new_turn_offset,
+        turn: this.new_turn,
         viewpoint: this.base.sp_viewpoint,
         game_name: this.base.current_title,
       })
@@ -28,7 +28,7 @@ export const ActionLogJumpPreviewModalButtons = {
     kento_app_with_params_url() {
       return this.kento_full_url({
         sfen: this.action_log.sfen,
-        turn: this.new_turn_offset,
+        turn: this.new_turn,
         viewpoint: this.base.sp_viewpoint,
       })
     },
@@ -37,7 +37,7 @@ export const ActionLogJumpPreviewModalButtons = {
         // 必須
         body: DotSfen.escape(this.action_log.sfen),
         // オプション
-        turn: this.new_turn_offset,
+        turn: this.new_turn,
         title:  this.base.current_title,
         abstract_viewpoint: this.base.abstract_viewpoint, // TODO: メインの盤ではなくプレビュー盤の視点を渡した方がよい
       })

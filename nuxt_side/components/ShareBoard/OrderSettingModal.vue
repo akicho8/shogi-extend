@@ -41,7 +41,7 @@
             | {{row.order_index + 1}}
 
         b-table-column(v-slot="{row}" field="user_name" label="メンバー" cell-class="user_name")
-          span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.turn_offset)}")
+          span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.current_turn)}")
             | {{row.user_name}}
 
         b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)

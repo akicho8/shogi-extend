@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 局面 \#{{new_turn_offset}}
+      | 局面 \#{{new_turn}}
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
@@ -15,9 +15,9 @@
         :sp_view_mode_soldier_movable="false"
         :sp_viewpoint="base.sp_viewpoint"
         :sp_sound_enabled="true"
-        :sp_turn="action_log.turn_offset"
+        :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
-        @update:turn_offset="v => new_turn_offset = v"
+        @update:turn="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
@@ -45,12 +45,12 @@ export default {
   },
   data() {
     return {
-      new_turn_offset: this.action_log.turn_offset,
+      new_turn: this.action_log.turn,
     }
   },
   mounted() {
     this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
-    this.__assert__('turn_offset' in this.action_log, "'turn_offset' in this.action_log")
+    this.__assert__('turn' in this.action_log, "'turn' in this.action_log")
   },
   methods: {
     close_handle() {
@@ -59,7 +59,7 @@ export default {
     },
     apply_handle() {
       this.sound_play_click()
-      this.base.action_log_jump({...this.action_log, turn_offset: this.new_turn_offset})
+      this.base.action_log_jump({...this.action_log, turn: this.new_turn})
       this.$emit("close")
     },
   },

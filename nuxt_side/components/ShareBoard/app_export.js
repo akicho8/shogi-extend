@@ -12,7 +12,7 @@ export const app_export = {
     kifu_copy_handle(e) {
       this.sidebar_p = false
       this.sound_play_click()
-      this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.turn_offset})
+      this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.current_turn})
       this.shared_al_add_simple("棋譜コピー")
     },
 

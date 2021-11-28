@@ -22,7 +22,7 @@ module ShareBoard
     end
 
     def force_sync(data)
-      track(data, "局面転送", "[#{data["turn_offset"]}手目][#{data["message"]}]")
+      track(data, "局面転送", "[#{data["turn"]}手目][#{data["message"]}]")
       broadcast(:force_sync_broadcasted, data)
     end
 

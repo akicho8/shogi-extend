@@ -188,10 +188,10 @@ export const app_room_setup = {
     ////////////////////////////////////////////////////////////////////////////////
     receive_sfen(params) {
       this.__assert__("sfen" in params, '"sfen" in params')
-      this.__assert__("turn_offset" in params, '"turn_offset" in params')
+      this.__assert__("turn" in params, '"turn" in params')
 
       this.current_sfen = params.sfen
-      this.turn_offset = params.turn_offset
+      this.current_turn = params.turn
     },
 
     ////////////////////////////////////////////////////////////////////////////////

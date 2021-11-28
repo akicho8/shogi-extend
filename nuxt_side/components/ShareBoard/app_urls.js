@@ -29,7 +29,7 @@ export const app_urls = {
         message: `${app_name}を起動しました`,
         // message_except_self: false,
         sfen: this.current_sfen,
-        turn_offset: this.turn_offset,
+        turn: this.current_turn,
       })
     },
 
@@ -53,7 +53,7 @@ export const app_urls = {
       const e = {
         ...this.$route.query,                  // デバッグ用パラメータを保持するため
         body: DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
-        turn:                 this.turn_offset,
+        turn:                 this.current_turn,
         title:                this.current_title,
         abstract_viewpoint:   this.abstract_viewpoint,
         room_code:            this.room_code,
@@ -74,7 +74,7 @@ export const app_urls = {
       return this.piyo_shogi_auto_url({
         path: this.current_url,
         sfen: this.current_sfen,
-        turn: this.turn_offset,
+        turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
         game_name: this.current_title,
       })
@@ -83,7 +83,7 @@ export const app_urls = {
     kento_app_with_params_url() {
       return this.kento_full_url({
         sfen: this.current_sfen,
-        turn: this.turn_offset,
+        turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
       })
     },

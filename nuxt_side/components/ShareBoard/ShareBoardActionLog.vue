@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     action_log_key(e) {
-      return [e.performed_at, e.turn_offset, e.from_connection_id || ""].join("-")
+      return [e.performed_at, e.turn, e.from_connection_id || ""].join("-")
     },
     action_log_click_handle(e) {
       this.sound_play_click()
