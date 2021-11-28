@@ -49,7 +49,7 @@ export const app_action_log = {
 
       // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
       params.sfen ??= this.current_sfen
-      params.turn_offset ??= this.current_turn_offset
+      params.turn_offset ??= this.turn_offset
 
       // その他
       params.from_user_name ??= this.user_name
