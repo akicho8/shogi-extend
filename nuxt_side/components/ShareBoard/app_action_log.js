@@ -39,6 +39,7 @@ export const app_action_log = {
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
       }
+      this.ac_log("履歴追加", `「${params.label}」を受信`)
       // }
     },
 
