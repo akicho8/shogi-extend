@@ -90,7 +90,7 @@ export const app_edit_mode = {
                 modal_instance.close()
 
                 // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-                this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後"}))
+                this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後(本筋)"}))
 
                 if (this.ac_room) {
                   this.delay_block(0.2, () => this.quick_sync(`${this.user_call_name(this.user_name)}が読み込んだ棋譜を転送しました。「局面の転送」は不要です`))
