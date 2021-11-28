@@ -291,20 +291,20 @@ export const app_clock_box = {
 
     cc_play_confirm(params = {}) {
       this.sound_play_click()
-      this.talk("ちょっと待った")
+      this.talk("ちょっと待って。先に順番設定をしてください")
       this.dialog_confirm({
-        title: "ちょっと待った",
+        title: "ちょっと待って",
         type: "is-warning",
         iconSize: "is-small",
         hasIcon: true,
         message: `
           <div class="content">
-            <p>先に順番設定をおすすめします</p>
-            <p class="mb-0">設定すると有効になるもの:</p>
+            <p>先に<b>順番設定</b>をしてください</p>
+            <p class="mb-0 is-size-7">設定すると有効になるもの:</p>
             <ol class="mt-2">
               <li>手番を知らせる</li>
               <li>手番でない人は指せなくする</li>
-              <li>指し手の伝達を保証する</li>
+              <li>指し手の伝達を保証する ← <span class="has-text-danger">重要</span></li>
             </ol>
           </div>
         `,
