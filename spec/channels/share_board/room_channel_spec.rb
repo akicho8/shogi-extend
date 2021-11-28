@@ -163,8 +163,8 @@ module ShareBoard
       it do
         data = data_factory("order_enable_p" => true)
         expect {
-          subscription.order_func_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "order_func_share_broadcasted", bc_params: data)
+          subscription.order_switch_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "order_switch_share_broadcasted", bc_params: data)
       end
     end
 

@@ -203,14 +203,14 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    order_func_share(params) {
-      this.ac_room_perform("order_func_share", params) // --> app/channels/share_board/room_channel.rb
+    order_switch_share(params) {
+      this.ac_room_perform("order_switch_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    order_func_share_broadcasted(params) {
+    order_switch_share_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.tl_alert("order_func_share 自分→自分")
+        this.tl_alert("order_switch_share 自分→自分")
       } else {
-        this.tl_alert("order_func_share 自分→他者")
+        this.tl_alert("order_switch_share 自分→他者")
       }
       this.order_enable_p = params.order_enable_p
       if (this.order_disable_p) {

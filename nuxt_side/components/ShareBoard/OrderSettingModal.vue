@@ -116,7 +116,7 @@ export default {
 
     main_switch_handle(v) {
       this.sound_play_click()
-      this.base.order_func_share({order_enable_p: v, message: v ? "有効" : "無効"})
+      this.base.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 一番最初に有効にしたときは1度更新を押した状態にする
       if (v) {

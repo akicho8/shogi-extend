@@ -74,9 +74,9 @@ module ShareBoard
       broadcast(:member_info_share_broadcasted, data)
     end
 
-    def order_func_share(data)
+    def order_switch_share(data)
       track(data, "順番設定", data["order_enable_p"] ? "ON" : "OFF")
-      broadcast(:order_func_share_broadcasted, data)
+      broadcast(:order_switch_share_broadcasted, data)
     end
 
     def ordered_members_share(data)
