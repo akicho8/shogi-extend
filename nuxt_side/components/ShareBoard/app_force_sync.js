@@ -82,8 +82,8 @@ export const app_force_sync = {
     ////////////////////////////////////////////////////////////////////////////////
 
     force_sync_direct() {
-      this.ac_log("局面操作", `直接${this.turn_offset}手目`)
-      this.force_sync(`${this.user_call_name(this.user_name)}が${this.turn_offset}手目の局面を転送しました`)
+      this.ac_log("局面操作", `「局面の転送」を実行 (${this.turn_offset}手目)`)
+      this.force_sync(`${this.user_call_name(this.user_name)}が現在の局面(${this.turn_offset}手目)を転送しました`)
     },
 
     force_sync_turn_zero() {
@@ -154,6 +154,7 @@ export const app_force_sync = {
         this.toast_ok(params.message)
       }
       this.al_add({...params, label: `局面転送 #${params.turn_offset}`})
+      this.ac_log("局面受信", `${params.turn_offset}手目の局面を受信`)
     },
   },
 }
