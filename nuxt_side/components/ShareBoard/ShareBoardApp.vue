@@ -113,7 +113,7 @@ client-only
 </template>
 
 <script>
-const DEBOUNCE_DELAY = 1000 * 1.5
+const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 
 import _ from "lodash"
 
