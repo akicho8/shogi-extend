@@ -49,12 +49,15 @@ LIST_ALL = [
   { url: "/rack/books/1",            validations: { "og:image" => /active_storage/,                         }},
   { url: "/rack",                    validations: { "og:image" => /rack/, "og:title" => /問題集/, }},
 
+  { url: "/video",                   validations: { "og:image" => /video/,                         }},
+  { url: "/video/new",               validations: { "og:image" => /video\-new/,                    }},
+
   { url: "/users/1",                                                                 validations: { "code" => "200" }},
 
   { url: "/settings/profile",                                                        validations: { "code" => "404"                                                                                                                                      }},
   { url: "/settings/email",                                                          validations: { "code" => "404",                                                                                                                                      }},
 
-  { url: "/",                                                                        validations: { "title" => "SHOGI-EXTEND(d)",                                                                                                           }},
+  { url: "/",                                                                        validations: { "title" => "SHOGI-EXTEND(c)",                                                                                                           }},
   { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
   { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
   { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},

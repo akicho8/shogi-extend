@@ -42,7 +42,11 @@ export default {
 
   data() {
     return {
-      meta: null,
+      meta: {
+        title: "動画ライブラリ",
+        description: "コメントしたりできる",
+        og_image_key: "video",
+      },
     }
   },
 
