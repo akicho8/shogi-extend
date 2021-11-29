@@ -1340,6 +1340,21 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "N手まである棋譜の0手目を指している部屋に後から部屋に入ったときN手目になる不具合修正" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", body: "76歩")
+        sp_controll_button(:first).click # 最長1手まである棋譜の0手目に戻す
+        assert_turn(0)                   # 0手目に戻っている
+        sleep(2)                         # 1秒後に転送するためそれが切れるまで待つ
+      end
+      b_block do
+        visit_app(room_code: :my_room, force_user_name: "bob")
+        assert_turn(0)                   # あとから来た bob は1手目ではなく0手目の局面になっている
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1466,7 +1481,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def assert_turn(turn)
-    assert_text("##{turn}", wait: 10)
+    assert_text("current_turn:#{turn}", wait: 10)
   end
 
   # 順番設定後の待ち
@@ -1579,5 +1594,9 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     find(".MessageSendModal .dropdown .#{message_scope_key}").click  # スコープ選択
     find(".MessageSendModal input").set(message)                     # メッセージ入力
     find(".MessageSendModal .send_handle").click                     # 送信
+  end
+
+  def sp_controll_button(key)
+    find(".ShogiPlayer .NavigateBlock .button.#{key}")
   end
 end
