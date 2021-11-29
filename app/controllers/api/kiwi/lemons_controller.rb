@@ -67,7 +67,7 @@ module Api
 
         # 予約数制限
         if c = current_user_lemon_queue_max
-          if current_user.kiwi_lemons.not_done_only.count > c
+          if current_user.kiwi_lemons.not_done_only.count >= c
             render json: { error_message: "投入しすぎです" }
             return
           end
