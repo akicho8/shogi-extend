@@ -95,8 +95,10 @@
         | 順序:
         template(v-for="(_, i) in 11")
           | {{base.ordered_member_by_turn(i).user_name[0]}}
-      .panel-block
-        | current_turn:{{base.current_turn}}
+      .panel-block current_turn:{{base.current_turn}}
+      .panel-block order_enable_p:{{base.order_enable_p}}
+      .panel-block clock_box:{{!!base.clock_box}}
+      .panel-block current_title:{{base.current_title}}
 
   .column.is-6.is-clipped
     .panel
