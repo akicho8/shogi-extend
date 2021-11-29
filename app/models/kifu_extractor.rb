@@ -41,7 +41,7 @@ class KifuExtractor
           :candidate_enable               => false,
           :validate_enable                => false, # 二歩を許可するため
         }).mediator_run_once
-      body
+      @body
     end
   rescue Bioshogi::BioshogiError => error
     SlackAgent.notify_exception(error)
@@ -148,6 +148,7 @@ class KifuExtractor
             if v.present?
               if Bioshogi::Parser.accepted_class(v)
                 @body = v
+                break
               end
             end
           end
