@@ -107,5 +107,9 @@ module Kiwi
       assert { lemon1.ffmpeg_ss_option_max == 5 }
       assert { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
     end
+
+    it "tag_list" do
+      assert { lemon1.tag_list == ["居飛車", "相居飛車"] }
+    end
   end
 end

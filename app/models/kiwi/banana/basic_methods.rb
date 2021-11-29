@@ -149,7 +149,7 @@ module Kiwi
 
         # 元動画の情報から拾えるものは拾って埋める
         if lemon
-          self.tag_list = tag_list.presence || lemon.recordable.all_tag_names
+          self.tag_list = tag_list.presence || lemon.tag_list.presence || []
 
           if s = lemon.all_params.dig(:media_builder_params, :cover_text).presence # dig を使うな
             a = s.lines

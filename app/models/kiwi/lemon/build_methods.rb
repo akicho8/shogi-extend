@@ -359,6 +359,7 @@ module Kiwi
           "状態"           => info.to_t,
           "全体の状況"     => self.class.info.to_t,
           "ユーザー"       => user.info.to_t,
+          "タグ"           => tag_list,
           "棋譜"           => recordable.kifu_body,
         }.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")
       end
@@ -373,6 +374,11 @@ module Kiwi
 
       def destroy_run
         destroy!
+      end
+
+      # Banana フォームのタグの初期値としても使う
+      def tag_list
+        [*recordable.all_tag_names, recordable.preset_info.name] - ["平手"]
       end
 
       private
