@@ -2,9 +2,11 @@ module Api
   class SessionsController < ::Api::ApplicationController
     # curl http://localhost:3000/api/session/auth_user_fetch
     def auth_user_fetch
+      attrs = nil
       if current_user
-        render json: current_user.as_json_simple_public_profile
+        attrs = current_user.as_json_simple_public_profile
       end
+      render json: attrs
     end
 
     # curl -d _method=delete http://localhost:3000/api/session/auth_user_logout
