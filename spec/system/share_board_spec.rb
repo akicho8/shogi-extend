@@ -564,12 +564,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_member_list(2, "is_joined", "bob")         # 最後に追加される
         sleep(2)                                          # これでbobをレベル2ぐらいにはなる(aliceはレベル4)
       end
-      a_block do
+      b_block do
         assert_move("77", "76", "☗7六歩")                # aliceが指してbobの盤も同じになる
         sp_controller_click("first")                      # 再起動時にbobから受けとったか確認しやすいように0手目にしておく
-
+        assert_turn(0)
+      end
+      a_block do
         room_recreate_apply                               # 再起動実行
-        assert_turn(1)                             # bobからもらったので1手目になっている
+        assert_turn(0)                                    # bobから0手目をもらった
         assert_member_list(1, "is_joined", "bob")         # 並びは後輩だったbobが先輩に
         assert_member_list(2, "is_joined", "alice")       # 先輩だったaliceは後輩になっている
       end
@@ -1345,7 +1347,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       it "最大2手まである棋譜の1手目を指している部屋に入ったとき1手目になる" do
         a_block do
           visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", body: "76歩34歩")
-          sp_controll_button(:previous).click # 最長2手まである棋譜の1手目に戻す
+          sp_controller_click(:previous)      # 最長2手まである棋譜の1手目に戻す
           assert_turn(1)                      # 0手目に戻っている
           sleep(2)                            # 1秒後に転送するためそれが切れるまで待つ
         end
@@ -1632,9 +1634,5 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     find(".MessageSendModal .dropdown .#{message_scope_key}").click  # スコープ選択
     find(".MessageSendModal input").set(message)                     # メッセージ入力
     find(".MessageSendModal .send_handle").click                     # 送信
-  end
-
-  def sp_controll_button(key)
-    find(".ShogiPlayer .NavigateBlock .button.#{key}")
   end
 end
