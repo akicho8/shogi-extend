@@ -20,6 +20,7 @@ export const app_ranking = {
   methods: {
     ranking_goal_process() {
       if (this.blank_p(this.g_current_user_name)) {
+        this.delay_block(1.0, () => this.toast_ok("名前を入力してください。できれば入力の手間を省くためにログインしてください"))
         this.name_input_dialog()
         return
       }
