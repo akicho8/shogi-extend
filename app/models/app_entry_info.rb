@@ -30,7 +30,7 @@ class AppEntryInfo
     },
     {
       key: :kiwi_lemon_new,
-      display_p: !Rails.env.production? || true,
+      display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/video/new"},
       title: "動画作成",
@@ -44,7 +44,7 @@ class AppEntryInfo
     },
     {
       key: :kiwi_lemon_index,
-      display_p: !Rails.env.production? || true,
+      display_p: !Rails.env.production?,
       experiment_p: false,
       nuxt_link_to: {path: "/video"},
       title: "動画ライブラリ",
