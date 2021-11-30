@@ -13,6 +13,7 @@ export const app_banana_message = {
     //   this.message_body = ""
     // },
     speak_handle() {
+      if (this.nuxt_login_required()) { return } // アカウント利用制限発動
       if (this.present_p(this.message_body)) {
         // this.loading = this.$buefy.loading.open()
         this.speak(this.message_body)

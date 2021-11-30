@@ -53,6 +53,7 @@ module BackendScript
         "ロビーチャット非表示"   => :lobby_message_hidden,
         "ロビーチャット発言禁止" => :lobby_message_input_hidden,
         "問題新規作成禁止"       => :question_new_hidden,
+        "アカウント制限"         => :ban,
       }
     end
   end

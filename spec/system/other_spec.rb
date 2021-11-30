@@ -37,6 +37,10 @@ RSpec.describe "その他", type: :system do
       visit2 "/video/new", __nuxt_login_required_force: "name"
       assert_text "自己紹介"
     end
+    it "ban" do
+      visit2 "/video/new", __nuxt_login_required_force: "ban"
+      assert_text "shogi-mode.el"
+    end
   end
 
   # it "ストップウォッチ" do
