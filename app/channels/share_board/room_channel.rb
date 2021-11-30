@@ -144,9 +144,9 @@ module ShareBoard
 
     def subscribed_track(action)
       if current_user
-        body = "ログイン ##{current_user.id} #{current_user.name}"
+        body = "User ##{current_user.id} #{current_user.name} #{current_user.email}"
       else
-        body = "非ログイン"
+        body = "User 不明"
       end
       SlackAgent.notify(subject: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
     end

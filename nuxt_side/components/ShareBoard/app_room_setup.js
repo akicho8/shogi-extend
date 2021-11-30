@@ -183,7 +183,7 @@ export const app_room_setup = {
     receive_title(params) {
       this.__assert__("title" in params, '"title" in params')
       this.current_title = params.title
-      this.ac_log("タイ変更", `「${this.current_title}」への変更を受信`)
+      this.ac_log("タイ変更", `タイトル "${this.current_title}" を受信`)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
