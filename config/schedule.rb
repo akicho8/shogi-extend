@@ -71,11 +71,13 @@ if @environment == "staging"
   every("5 3 * * *") { runner "Swars::Crawler::ReservationCrawler.run" }
 end
 
-every("0 * * * *") do
-  runner [
-    %(Kiwi::Lemon.background_job_kick_if_period(notify: true)),
-    %(Kiwi::Lemon.zombie_kill),
-  ].join(";")
+if false
+  every("0 * * * *") do
+    runner [
+      %(Kiwi::Lemon.background_job_kick_if_period(notify: true)),
+      %(Kiwi::Lemon.zombie_kill),
+    ].join(";")
+  end
 end
 
 every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
