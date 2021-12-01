@@ -42,7 +42,7 @@
     b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BananaIndexColumnInfo.fetch('folder_key').name" sortable)
       KiwiFolder(:folder_key="row.folder_key")
 
-    //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BananaIndexColumnInfo.fetch('created_at').name" sortable) {{row_time_format(row.created_at)}}
+    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BananaIndexColumnInfo.fetch('created_at').name" sortable) {{row_time_format(row.created_at)}}
 
     b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BananaIndexColumnInfo.fetch('updated_at').name" sortable) {{row_time_format(row.updated_at)}}
 

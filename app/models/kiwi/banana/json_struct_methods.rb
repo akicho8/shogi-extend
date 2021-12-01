@@ -29,6 +29,7 @@ module Kiwi
             only: [
               :key,
               :title,
+              :created_at,
               :updated_at,
               :access_logs_count,
               :banana_messages_count,
