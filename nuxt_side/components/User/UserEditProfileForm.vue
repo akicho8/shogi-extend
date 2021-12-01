@@ -2,7 +2,7 @@
 .UserEditProfileForm.has-background-white-bis
   DebugBox(v-if="development_p")
     div valid_p        = {{valid_p}}
-    div name_invalid_p = {{name_invalid_p}}
+    div name_invalid_message = {{name_invalid_message}}
 
   MainNavbar
     template(slot="start")
@@ -22,7 +22,7 @@
               img.is-rounded(:src="image_source")
               .image_same_size_box
                 b-icon.has-text-white(icon="camera" size="is-large")
-          b-field(label-position="on-border" label="名前" :type="name_invalid_p ? 'is-danger' : ''")
+          b-field(label-position="on-border" label="名前" :type="{'is-danger': name_invalid_message && development_p}")
             b-input(type="text" v-model.trim="base.new_name")
 
           b-field(label-position="on-border" label="Twitterアカウント")
@@ -34,6 +34,8 @@
 
 <script>
 import _ from "lodash"
+
+import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 
 export default {
   name: "UserEditProfileForm",
@@ -63,9 +65,8 @@ export default {
     async save_handle() {
       this.sound_play_click()
 
-      // 変な名前を弾くため今は冗長だけどこれでいい
-      if (this.name_invalid_p) {
-        this.toast_warn("名前を入力してください")
+      if (this.name_invalid_message) {
+        this.toast_warn(this.name_invalid_message)
         return
       }
 
@@ -96,18 +97,12 @@ export default {
   computed: {
     // 入力がすべて保存できる状態か？
     valid_p() {
-      return !this.name_invalid_p
+      return !this.name_invalid_message
     },
 
     // 名前が不正か？
-    name_invalid_p() {
-      if (this.blank_p(this.base.new_name)) {
-        return true
-      }
-      if (/^([._])$/.test(this.base.new_name)) { // これはなんだ？？？ デバッグ用？
-        return true
-      }
-      return false
+    name_invalid_message() {
+      return HandleNameValidator.valid_with_message(this.base.new_name, {name: "名前"})
     },
 
     image_source() {
