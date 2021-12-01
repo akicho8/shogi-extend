@@ -27,6 +27,9 @@
       .container
         .columns.is-centered
           .column
+            b-message(type="is-danger" :closable="false" v-if="record.permit_tag_list.includes('ban')")
+              | このアカウントの利用を制限しています
+
             .has-text-centered
               .image
                 img.is-rounded.is-inline-block(:src="record.avatar_path")
@@ -125,6 +128,5 @@ export default {
     .column
       border: 1px dashed change_color($primary, $alpha: 0.1)
     .image
-
       border: 1px dashed change_color($danger, $alpha: 0.1)
 </style>
