@@ -342,6 +342,7 @@ module Actb
           "登録日時"           => created_at&.to_s(:distance),
           "IP"                 => current_sign_in_ip,
           "タグ"               => permit_tag_list,
+          "自己紹介"           => description.truncate(64),
         }
       end
     end

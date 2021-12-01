@@ -20,12 +20,12 @@ module Api
       user_save(user)
       return if performed?
 
-      if user.saved_change_to_attribute?(:name_input_at)
-        if v = user.saved_change_to_attribute(:name)
-          pair = v.join("→")
-          SystemMailer.notify(fixed: true, subject: "【名前確定】#{pair}", body: user.info.to_t).deliver_later
-        end
-      end
+      # if user.saved_change_to_attribute?(:name_input_at)
+      # if v = user.saved_change_to_attribute(:name)
+      #   pair = v.join("→")
+      #   SystemMailer.notify(fixed: true, subject: "【名前変更】#{pair}", body: user.info.to_t).deliver_later
+      # end
+      # end
 
       # 変更したかもしれないレコードたち
       changed_records = [
@@ -35,6 +35,9 @@ module Api
       ]
 
       saved_changes_p = changed_records.any?(&:saved_changes?) || params[:croped_image]
+      if saved_changes_p
+        SystemMailer.notify(fixed: true, subject: "【プロフィール変更】", body: user.info.to_t).deliver_later
+      end
       if saved_changes_p
         xnotice = Xnotice.add("変更しました", type: "is-success")
       else
