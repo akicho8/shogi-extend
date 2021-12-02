@@ -74,10 +74,22 @@ module Api
         end
 
         free_battle = FreeBattle.create!(kifu_body: params[:body], use_key: "kiwi_lemon", user: current_user)
-
         if free_battle.turn_max > VALIDATE_TURN_MAX
           render json: { error_message: "手数が長すぎます" }
           return
+        end
+
+        # みんな実行を連打するため前回と同じパラメータなら戻す
+        if true
+          str = params.to_unsafe_h.to_s
+          hash = Digest::MD5.hexdigest(str)
+          key = "#{controller_path}:#{action_name}:#{hash}"
+          value = Rails.cache.read(key)
+          if value
+            render json: { error_message: "すでに同じパラメータで投入しています" }
+            return
+          end
+          Rails.cache.write(key, true, expires_in: 1.hour)
         end
 
         # 将来的には KIF などはここですぐ返したらいいんでは？
