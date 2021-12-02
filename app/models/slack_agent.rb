@@ -55,7 +55,7 @@ module SlackAgent
   private
 
   def timestamp
-    Time.current.strftime("%T")
+    Time.current.strftime("%T.%L")
   end
 
   # 1秒に1回しか実行しないような wait を返す
