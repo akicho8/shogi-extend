@@ -187,7 +187,6 @@ module Kiwi
 
       included do
         cattr_accessor(:user_lemon_history_max) { 5 } # 履歴表示最大件数
-        cattr_accessor(:user_lemon_queue_max)   { 5 } # 未処理投入最大件数
 
         delegate :everyone_broadcast, :background_job_kick_if_period, to: "self.class"
 

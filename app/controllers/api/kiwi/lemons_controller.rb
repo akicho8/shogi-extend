@@ -66,7 +66,7 @@ module Api
         end
 
         # 予約数制限
-        if c = current_user_lemon_queue_max
+        if c = Xsetting[:user_lemon_queue_max]
           if current_user.kiwi_lemons.not_done_only.count >= c
             render json: { error_message: "投入しすぎです" }
             return
@@ -191,26 +191,6 @@ module Api
             :message => "OK",
           },
         }
-      end
-
-      private
-
-      # 予約数制限
-      def current_user_lemon_queue_max
-        if current_user
-          if current_user.permit_tag_list.include?("staff") && false
-            nil
-          else
-            user_lemon_queue_max_default
-          end
-        else
-          0
-        end
-      end
-
-      # 予約可能な数(処理中を含む)
-      def user_lemon_queue_max_default
-        (params[:user_lemon_queue_max].presence || ::Kiwi::Lemon.user_lemon_queue_max).to_i
       end
     end
   end
