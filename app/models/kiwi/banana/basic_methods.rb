@@ -125,11 +125,7 @@ module Kiwi
           changed_then_notify
           rv[:banana] = as_json(::Kiwi::Banana.json_struct_for_edit)
           if saved_changes?
-            if saved_changes[:id]
-              rv[:message] = "作成しました"
-            else
-              rv[:message] = "更新しました"
-            end
+            rv[:message] = "#{human_name_when_save}しました"
           else
             rv[:message] = "何も変更しませんでした"
           end
@@ -171,17 +167,26 @@ module Kiwi
         self.thumbnail_pos ||= 0
       end
 
+      private
+
       def changed_then_notify
         if saved_changes?
-          if saved_changes[:id]
-            str = "作成"
-          else
-            str = "更新"
-          end
-          SlackAgent.notify(subject: "動画#{str}", body: [title, page_url].join(" "))
-          subject = "#{user.name}さんが動画「#{title}」を#{str}"
-          body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-          SystemMailer.notify(subject: subject, body: body).deliver_later
+          subject = "動画ライブラリ#{human_name_when_save}"
+          body = [user.name, title, page_url].join(" ")
+          SlackAgent.notify(subject: subject, body: body)
+
+          subject = "#{user.name}さんが動画ライブラリ「#{title}」を#{human_name_when_save}しました"
+          body = info.to_t
+          SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
+        end
+      end
+
+      def human_name_when_save
+        raise "must not happen" unless saved_changes?
+        if saved_changes[:id]
+          "作成"
+        else
+          "更新"
         end
       end
     end
