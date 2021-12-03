@@ -90,7 +90,7 @@
 
   SimpleRadioButtons.field_block(:base="base" model_name="LoopInfo" var_name="loop_key" v-if="base.recipe_info.loop_key_enable")
 
-  b-field.field_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけﾌｪｲﾄﾞｱｳﾄする")
+  b-field.field_block(label="最後に指定秒間停止" message="7秒ぐらいが良い。BGMもこの秒数だけフェイドアウトする")
     b-numberinput(v-model="base.end_duration" :min="0" :max="10" :step="1" exponential @input="sound_play_click()")
 
   b-field.field_block(label="音量")
@@ -99,7 +99,7 @@
   b-field.field_block(label="音声ビットレート" message="Twitterの推奨は128kだけど厳密な制限はしてないっぽい (よくわからない場合はそのままで)")
     b-input(v-model="base.audio_bit_rate" placeholder="128k")
 
-  b-field.field_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。値が小さいほど品質が高くなる。ただし-6毎にBRが倍になる (よくわからない場合はそのままで)")
+  b-field.field_block(label="映像品質レベル" message="18〜23推奨。高←→低(ﾓﾊﾞｲﾙ向け)。値が小さいほど品質が高くなる。ただし-6毎にビットレートが倍になる (よくわからない場合はそのままで)")
     b-numberinput(v-model="base.video_crf" :min="0" :max="51" :step="1" exponential @input="sound_play_click()")
 </template>
 
