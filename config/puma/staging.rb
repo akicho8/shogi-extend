@@ -102,6 +102,8 @@ before_fork do
     #   SlackAgent.notify(subject: "puma再起動", body: worker.inspect)
     # }
 
+    config.pre_term         = -> (worker) { puts "Worker #{worker.inspect} being killed"                    }
+    config.rolling_pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed by rolling restart" }
   end
   PumaWorkerKiller.start
 end

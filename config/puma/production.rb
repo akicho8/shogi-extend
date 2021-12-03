@@ -94,6 +94,9 @@ before_fork do
     config.rolling_restart_frequency = 12 * 60 * 60 # 12時間毎に順番にworkerを再起動
 
     config.reaper_status_logs = true # 監視ログの表示
+
+    config.pre_term         = -> (worker) { puts "Worker #{worker.inspect} being killed"                    }
+    config.rolling_pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed by rolling restart" }
   end
   PumaWorkerKiller.start
 end
