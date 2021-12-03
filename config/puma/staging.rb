@@ -82,28 +82,30 @@ quiet false
 # https://github.com/schneems/puma_worker_killer
 # http://nekorails.hatenablog.com/entry/2018/10/12/101011
 # https://re-engines.com/2018/08/13/rails-puma-performance-tuning/
-before_fork do
-  require 'puma_worker_killer'
-  PumaWorkerKiller.config do |config|
-    # メモリ使用率で再起動
-    config.ram           = 512      # 512MBのメモリがあって
-    config.frequency     = 5 * 60   # 5分間ごとにチェックして
-    config.percent_usage = 0.9      # 0.9の使用量なら一番メモリ量の多いworkerを再起動
+if false
+  before_fork do
+    require 'puma_worker_killer'
+    PumaWorkerKiller.config do |config|
+      # メモリ使用率で再起動
+      config.ram           = 512      # 512MBのメモリがあって
+      config.frequency     = 5 * 60   # 5分間ごとにチェックして
+      config.percent_usage = 0.9      # 0.9の使用量なら一番メモリ量の多いworkerを再起動
 
-    # 時間で再起動
-    config.rolling_restart_frequency = 5 * 60 # 5分毎に順番にworkerを再起動
+      # 時間で再起動
+      config.rolling_restart_frequency = 5 * 60 # 5分毎に順番にworkerを再起動
 
-    config.reaper_status_logs = true # 監視ログの表示
+      config.reaper_status_logs = true # 監視ログの表示
 
-    # ↓動いているのかわからない
-    # config.pre_term = -> (worker) {
-    #   puts "Worker #{worker.inspect} being killed"
-    #   SystemMailer.notify(fixed: true, subject: "再起動", body: worker.inspect).deliver_now
-    #   SlackAgent.notify(subject: "puma再起動", body: worker.inspect)
-    # }
+      # ↓動いているのかわからない
+      # config.pre_term = -> (worker) {
+      #   puts "Worker #{worker.inspect} being killed"
+      #   SystemMailer.notify(fixed: true, subject: "再起動", body: worker.inspect).deliver_now
+      #   SlackAgent.notify(subject: "puma再起動", body: worker.inspect)
+      # }
 
-    config.pre_term         = -> (worker) { puts "Worker #{worker.inspect} being killed"                    }
-    config.rolling_pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed by rolling restart" }
+      config.pre_term         = -> (worker) { puts "Worker #{worker.inspect} being killed"                    }
+      config.rolling_pre_term = -> (worker) { puts "Worker #{worker.inspect} being killed by rolling restart" }
+    end
+    PumaWorkerKiller.start
   end
-  PumaWorkerKiller.start
 end
