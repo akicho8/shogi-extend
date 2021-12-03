@@ -16,6 +16,7 @@ class KiwiPreview < ActionMailer::Preview
     all_params = {
       :media_builder_params => {
         :recipe_key => "is_recipe_png",
+        :cover_text => "1行目\n2行目",
       },
     }
     user1 = User.sysop

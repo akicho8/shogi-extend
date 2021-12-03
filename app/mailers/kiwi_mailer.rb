@@ -29,6 +29,14 @@ class KiwiMailer < ApplicationMailer
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
     body << ""
+    if s = lemon.all_params[:media_builder_params][:cover_text].presence
+      body << "▼表紙"
+      body << s
+      body << ""
+    end
+    body << "▼元の棋譜"
+    body << lemon.recordable.kifu_body
+    body << ""
     body << "--"
     body << "動画作成"
     body << UrlProxy.full_url_for("/video/new")
