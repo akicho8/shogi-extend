@@ -1,8 +1,5 @@
 <template lang="pug">
 .KiwiLemonNewFormPro1
-  b-field.field_block(label="表紙")
-    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
-
   SimpleRadioButtons.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint_key")
 
   .page_duration_field.field_block
