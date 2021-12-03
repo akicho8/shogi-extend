@@ -16,11 +16,11 @@ class KiwiMailer < ApplicationMailer
       end
       body << lemon.browser_url
       body << ""
-      body << "▼ライブラリ登録はここ↓から#{lemon.id}番の「↑」ボタンをタップ"
+      body << "▼ライブラリ登録はここ↓から#{lemon.id}番の「↑」ボタンをタップする"
       body << UrlProxy.full_url_for("/video/new")
       body << ""
     end
-    body << "▼再度作成するにはここ↓の右上メニューから「動画変換」をタップ"
+    body << "▼棋譜の確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
     body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
     body << ""
     body << "▼その他"
