@@ -41,4 +41,29 @@ module UserChoreMethods
         ],
       })
   end
+
+  # rails r 'User.sysop.change_notify'
+  def change_notify
+    if saved_changes? || profile.saved_changes?
+      change_notify_force
+    end
+  end
+
+  # rails r 'User.sysop.change_notify_force'
+  def change_notify_force
+    body = [
+      self,
+      profile,
+    ].collect { |e|
+      e.saved_changes.collect { |attr, (before, after)|
+        {
+          "属性"   => attr,
+          "変更前" => before,
+          "変更後" => after,
+        }
+      }.to_t
+    }.join
+    body = info.to_t + body
+    SystemMailer.notify(fixed: true, subject: "【プロフィール変更】#{name}", body: body).deliver_later
+  end
 end

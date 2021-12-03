@@ -18,7 +18,9 @@ module Api
       user.profile.description = params[:profile_description]
       user.profile.twitter_key = params[:profile_twitter_key]
       user_save(user)
-      return if performed?
+      if performed?
+        return
+      end
 
       # if user.saved_change_to_attribute?(:name_input_at)
       # if v = user.saved_change_to_attribute(:name)
@@ -28,16 +30,15 @@ module Api
       # end
 
       # 変更したかもしれないレコードたち
+
+      user.change_notify
+
       changed_records = [
         user,
         user.profile,
         user.avatar_blob, # ← 上で user.save! しちゃったせいで saved_changes? は常に false になっとるっぽい
       ]
-
       saved_changes_p = changed_records.any?(&:saved_changes?) || params[:croped_image]
-      if saved_changes_p
-        SystemMailer.notify(fixed: true, subject: "【プロフィール変更】", body: user.info.to_t).deliver_later
-      end
       if saved_changes_p
         xnotice = Xnotice.add("変更しました", type: "is-success")
       else
