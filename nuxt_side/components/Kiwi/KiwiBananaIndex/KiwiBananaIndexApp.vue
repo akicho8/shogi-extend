@@ -49,7 +49,7 @@ export default {
 
   mounted() {
     // console.log("[mounted]")
-    this.ga_click("動画ライブラリ")
+    this.ga_click("動画スタジオ")
   },
 
   fetchOnServer: false,
