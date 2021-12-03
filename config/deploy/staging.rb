@@ -40,6 +40,6 @@ tp({
     # :release_path   => release_path,
   })
 
-after "deploy:published", "puma:restart"
-after "deploy:published", "sidekiq:restart"
 after "deploy:published", "nuxt:restart"
+after "deploy:published", "sidekiq:restart"
+after "deploy:published", "puma:restart"
