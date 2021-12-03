@@ -20,7 +20,8 @@ module ShogiErrorRescueMethods
         sleep(0.5)
       end
 
-      slack_notify(subject: error.class.name, body: [error.message, params].join("\n"), channel: "#adapter_error")
+      body = [error.message, params].join("\n")
+      SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
       ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
 
       case
@@ -69,21 +70,5 @@ module ShogiErrorRescueMethods
       s << "#{e.input.input.values.join}"
     end
     s.join(" ").squish.presence
-  end
-
-  def error_html_build(e)
-    h = ApplicationController.helpers
-    lines = e.message.lines
-    s = lines.first.strip.html_safe
-    if field = lines.drop(1).presence
-      s += h.tag.div(field.join.html_safe, :class => "error_message_pre_with_margin").html_safe
-    end
-    if Rails.env.development?
-      # ActionDispatch::Cookies::CookieOverflow になるので入れてはいけない
-      # if v = e.backtrace
-      #   s += h.tag.div(v.first(8).join("\n").html_safe, :class => "error_message_pre_with_margin").html_safe
-      # end
-    end
-    s.html_safe
   end
 end

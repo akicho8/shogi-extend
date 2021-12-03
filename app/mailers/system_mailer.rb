@@ -21,7 +21,8 @@ class SystemMailer < ApplicationMailer
 
   # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
   def notify(params = {})
-    params = params.merge(subject: subject_decorate(params[:subject]))
+    subject = [params[:emoji], subject_decorate(params[:subject])].join
+    params = params.merge(subject: subject)
     params = params_normalize(params)
     mail(params)
   end
