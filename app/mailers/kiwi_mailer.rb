@@ -122,7 +122,6 @@ class KiwiMailer < ApplicationMailer
 
     body = out.join("\n")
 
-    user = banana_message.banana.user
     to = "#{user.name} <#{user.email}>"
 
     mail(subject: subject, body: body, to: user.email, bcc: AppConfig[:admin_email])
