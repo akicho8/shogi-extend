@@ -2,7 +2,7 @@
 .KiwiLemonNewForm.column.is-half.form_block
   b-tabs.mb-0(:expanded="false" type="is-boxed" v-model="base.form_tab_index" @input="sound_play_click()")
     b-tab-item(label="テキスト")
-      KiwiLemonNewFormSource(:base="base")
+      KiwiLemonNewFormText(:base="base")
     //- b-tab-item(label="オプション")
     //-   KiwiLemonNewFormOption(:base="base")
     b-tab-item(label="デザイン")

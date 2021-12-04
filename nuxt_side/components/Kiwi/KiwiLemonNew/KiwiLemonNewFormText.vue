@@ -1,5 +1,5 @@
 <template lang="pug">
-.KiwiLemonNewFormSource
+.KiwiLemonNewFormText
   ////////////////////////////////////////////////////////////////////////////////
   .field_block.body_field
     b-field(label="棋譜")
@@ -37,7 +37,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "KiwiLemonNewFormSource",
+  name: "KiwiLemonNewFormText",
   mixins: [support_child],
   mounted() {
     this.base.body_focus()
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="sass">
-.KiwiLemonNewFormSource
+.KiwiLemonNewFormText
   .body_field
     label
       display: flex
