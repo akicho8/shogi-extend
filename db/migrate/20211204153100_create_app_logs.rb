@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Alert log (app_logs as AppLog)
+# App log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
 # | name       | desc     | type         | opts        | refs | index |
