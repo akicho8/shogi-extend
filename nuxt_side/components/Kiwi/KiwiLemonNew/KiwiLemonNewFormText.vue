@@ -27,7 +27,7 @@
         | 共有将棋盤で確認
 
   b-field.field_block(label="表紙")
-    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="5" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
+    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -57,9 +57,9 @@ export default {
       a:not(:first-child)
         margin-left: 0.25rem // aリンク同士の間を開ける
         font-weight: normal  // label のなかは bold になるため元に戻す
-    textarea
-      +mobile
-        height: 9rem
-      +tablet
-        height: 16rem
+    // textarea
+    //   +mobile
+    //     height: 9rem
+    //   +tablet
+    //     height: 16rem
 </style>
