@@ -46,7 +46,6 @@ export default {
 <style lang="sass">
 .KiwiLemonNewFormSource
   .body_field
-    padding: 1.0rem
     label
       display: flex
       align-items: center
