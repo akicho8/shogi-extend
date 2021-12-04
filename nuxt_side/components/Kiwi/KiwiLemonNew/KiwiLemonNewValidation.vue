@@ -2,7 +2,7 @@
 .KiwiLemonNewValidation.column.is-half(v-if="present_p(base.review_error_messages)")
   .panel.is-twitter(:class="base.review_error_messages_valid_p ? 'x-is-success' : 'x-is-danger'" size="is-small")
     .panel-heading
-      | Twitterアップロード条件
+      | \#{{base.done_record.id}} Twitterアップロード条件
     .panel-block.is-flex-direction-column
       template(v-for="e in base.review_error_messages")
         .media
