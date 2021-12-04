@@ -83,7 +83,7 @@ module Api
         if true
           str = params.to_unsafe_h.to_s
           hash = Digest::MD5.hexdigest(str)
-          key = "#{controller_path}:#{action_name}:#{hash}"
+          key = [current_user.id, controller_path, action_name, hash].join(":")
           value = Rails.cache.read(key)
           if value
             render json: { error_message: "すでに同じパラメータで投入しています" }
