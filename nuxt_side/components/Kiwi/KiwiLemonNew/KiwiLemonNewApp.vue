@@ -26,7 +26,7 @@ client-only
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container
         .columns.is-multiline.is-centered.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
-          KiwiLemonNewForm(:base="base" ref="KiwiLemonNewForm" v-if="form_show_p")
+          KiwiLemonNewForm(:base="base" ref="KiwiLemonNewForm")
           KiwiLemonNewProgress(:base="base")
           KiwiLemonNewReview(:base="base")
           KiwiLemonNewValidation(:base="base")

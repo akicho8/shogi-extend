@@ -10,14 +10,7 @@
     :scrollable="true"
     )
     b-table-column(v-slot="{row}" label="番号" numeric centered :width="1")
-      //- template(v-if="base.lemon && base.lemon.id === row.id")
-      //-   b-tag(rounded type="is-primary") {{row.id}}
-      //- template(v-else)
-      //- b-tag(rounded)
-      //-   | {{row.id}}
       | {{row.id}}
-      //- b-table-column(v-slot="{row}" field="name" label="名前")
-      //-   | {{row.user.name}}
 
     // "成功" が "変換中" になったときガクッとさせないための幅
     b-table-column(v-slot="{row}" field="status_info.name" label="状況" centered header-class="table_status_column")

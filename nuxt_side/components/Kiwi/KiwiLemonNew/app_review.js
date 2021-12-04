@@ -10,7 +10,7 @@ export const app_review = {
   methods: {
     close_handle() {
       this.sound_play_click()
-      this.lemon = null
+      this.posted_record = null
       this.done_record = null
     },
 

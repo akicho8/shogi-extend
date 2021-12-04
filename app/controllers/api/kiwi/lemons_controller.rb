@@ -113,7 +113,7 @@ module Api
 
         render json: {
           response_hash: {
-            :lemon         => lemon.as_json,
+            :posted_record => lemon.as_json,
             :message       => "#{lemon.id} 番で予約しました",
             :alert_message => ::Kiwi::Lemon.background_job_inactive_message,
           }
@@ -141,7 +141,7 @@ module Api
         current_user.kiwi_admin_info_singlecasted
         render json: {
           response_hash: {
-            :lemon   => lemon.as_json,
+            :posted_record => lemon.as_json,
             :message => "#{lemon.id} 番で再予約しました",
           },
         }
@@ -157,7 +157,7 @@ module Api
         current_user.kiwi_admin_info_singlecasted
         render json: {
           response_hash: {
-            :lemon   => lemon.as_json,
+            :destroyed_record => lemon.as_json, # 未使用
             :message => "#{lemon.id} 番を削除しました",
           },
         }

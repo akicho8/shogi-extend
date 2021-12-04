@@ -39,7 +39,7 @@ export const app_form = {
       recipe_key:            null, // 変換先
 
       //////////////////////////////////////////////////////////////////////////////// POST後
-      lemon: null, // POSTして変換待ちになっているレコード
+      posted_record: null, // POSTして変換待ちになっているレコード
       bs_error:      null, // エラー情報
 
       //////////////////////////////////////////////////////////////////////////////// レイアウト
@@ -71,7 +71,7 @@ export const app_form = {
   watch: {
     body() {
       this.bs_error = null
-      this.lemon = null
+      this.posted_record = null
       this.done_record = null
     },
   },
@@ -88,23 +88,14 @@ export const app_form = {
       this.sound_play_click()
       this.body = ""
 
-      this.response_hash   = null
-      // this.kiwi_info    = null
-      this.done_record = null
-      this.lemon   = null
-
-      // this.body_focus()
+      this.response_hash = null
+      this.done_record   = null
+      this.posted_record = null
     },
-    //- app_open(url) {
-    //-   this.url_open(url, this.target_default)
-    //- },
 
     submit_handle() {
       this.done_record = null
 
-      //- this.record_fetch(() => {
-      //-   this.toast_ok(`${this.record.turn_max}手の棋譜として読み取りました`)
-      //- })
       this.sound_play_click()
 
       if (this.bs_error) {
@@ -136,14 +127,17 @@ export const app_form = {
       }
       if (e.response_hash) {
         this.response_hash = e.response_hash
-        const lemon = e.response_hash.lemon
-        if (lemon) {
-          this.lemon = new this.Lemon(this, lemon)
+
+        const posted_record = e.response_hash.posted_record
+        if (posted_record) {
+          this.posted_record = new this.Lemon(this, posted_record)
         }
+
         const message = this.response_hash.message
         if (message) {
           this.toast_ok(message)
         }
+
         const alert_message = this.response_hash.alert_message
         if (alert_message) {
           this.dialog_alert({
@@ -347,16 +341,9 @@ export const app_form = {
       if (this.bs_error) {
         return "is-danger"
       }
-      if (this.lemon) {
+      if (this.posted_record) {
         return "is-success"
       }
-    },
-    form_show_p() {
-      return true
-      // return this.blank_p(this.lemon)
-    },
-    processing_p() {
-      return this.lemon && !this.done_record
     },
     post_params() {
       return {
