@@ -19,8 +19,11 @@
         b-navbar-item \#{{turn_offset}}
 
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(@click="start_handle" v-if="mode === 'standby'") 対局開始
-      b-navbar-item.has-text-weight-bold(@click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'") 投了
+      b-navbar-item.has-text-weight-bold(tag="div" @click="start_handle" v-if="mode === 'standby'")
+        .button.is-primary.is-light 対局開始
+
+      b-navbar-item.has-text-weight-bold(tag="div" @click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'")
+        .button.is-primary.is-light 投了
 
   MainSection.is_mobile_padding_zero
     .container
@@ -36,6 +39,7 @@
               :sp_viewpoint.sync="sp_viewpoint"
               sp_summary="is_summary_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
+              v-bind="free_move_attrs"
               ref="main_sp"
             )
           .has-text-centered.mt-3(v-if="mode === 'standby'")
@@ -212,6 +216,17 @@ export default {
         cpu_strategy_key:           this.cpu_strategy_key,
         cpu_strategy_random_number: this.cpu_strategy_random_number,
         cpu_preset_key:             this.cpu_preset_key,
+      }
+    },
+
+    free_move_attrs() {
+      return {
+        sp_play_mode_legal_move_only:                false, // play_mode で合法手のみに絞る
+        sp_play_mode_legal_jump_only:                false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
+        sp_play_mode_auto_promote:                   false, // play_mode で死に駒になるときは自動的に成る
+        sp_play_mode_not_put_if_death_soldier:       false, // play_mode で死に駒になるときは置けないようにする
+        sp_play_mode_only_own_piece_to_move:         false, // play_mode では自分手番とき自分の駒しか動かせないようにする
+        sp_play_mode_can_not_kill_same_team_soldier: false, // play_mode では自分の駒で同じ仲間の駒を取れないようにする
       }
     },
   },

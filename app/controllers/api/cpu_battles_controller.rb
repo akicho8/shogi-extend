@@ -22,7 +22,6 @@ module Api
 
     def sp_params
       {
-        board_style_key: params[:board_style_key] || "a", # BoardStyleInfo
       }.merge(params.to_unsafe_h.to_options)
     end
 
