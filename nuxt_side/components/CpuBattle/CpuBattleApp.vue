@@ -19,7 +19,7 @@
         b-navbar-item \#{{turn_offset}}
 
     template(slot="end")
-      b-navbar-item.has-text-weight-bold(tag="div" @click="start_handle" v-if="mode === 'standby'")
+      b-navbar-item.has-text-weight-bold.start_handle(tag="div" @click="start_handle" v-if="mode === 'standby'")
         .button.is-primary.is-light 対局開始
 
       b-navbar-item.has-text-weight-bold(tag="div" @click="give_up_handle" :loading="give_up_processing" v-if="mode === 'playing'")
