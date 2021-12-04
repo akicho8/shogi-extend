@@ -2,21 +2,12 @@
 .KiwiLemonNewFormText
   ////////////////////////////////////////////////////////////////////////////////
   .field_block.body_field
-    b-field(label="棋譜")
-
-    .buttons.is-flex-wrap-nowrap.mb-0.mt-1
-      b-button.mb-0.any_source_trim_handle(@click="base.any_source_trim_handle" size="is-small") トリム
-      b-button.mb-0.any_source_edit_handle(@click="base.any_source_edit_handle" size="is-small") 編集
 
     b-field.mb-0.mt-2(:type="base.body_field_type")
-      template(#label v-if="false")
-        .label_text.is-invisible 棋譜
-        a.is-size-7(@click="base.any_source_edit_handle" v-if="development_p")
-          b-icon(icon="open-in-new" size="is-small")
-          | 将棋盤
-        a.is-size-7(@click="base.adapter_handle" v-if="development_p")
-          b-icon(icon="open-in-new" size="is-small")
-          | 棋譜変換
+      template(#label)
+        .label_text 棋譜
+        b-button.mb-0.ml-1.any_source_trim_handle(@click="base.any_source_trim_handle" size="is-small") トリム
+        b-button.mb-0.ml-1.any_source_edit_handle(@click="base.any_source_edit_handle" size="is-small") 編集
       b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="4" placeholder="KIF KI2 CSA SFEN BOD の中身またはURL。KENTOや将棋DB2のSFEN風パラメータを含むURL。棋譜ファイルへのURLをコンテンツに含むサイトのURL。戦法名・囲い名などを入力してください")
 
     p.mt-0(v-if="false")
@@ -53,13 +44,5 @@ export default {
       align-items: center
       justify-content: flex-start
       .label_text
-        margin-right: auto // aリンクたちを右に押す
-      a:not(:first-child)
-        margin-left: 0.25rem // aリンク同士の間を開ける
-        font-weight: normal  // label のなかは bold になるため元に戻す
-    // textarea
-    //   +mobile
-    //     height: 9rem
-    //   +tablet
-    //     height: 16rem
+        margin-right: auto      // 自分より右側のやつらを右端に飛ばす
 </style>
