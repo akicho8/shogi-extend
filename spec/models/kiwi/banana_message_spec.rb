@@ -42,12 +42,36 @@ module Kiwi
       perform_enqueued_jobs { banana1.banana_messages.create!(user: user3, body: "message") } # user3 が続けてコメント
       assert { deliveries.count == 1+2 }                                                  # 追加で2件送られている
 
-      assert { deliveries.second.subject == "user3さんが「アヒル」にコメントしました"                 }
+      assert { deliveries.second.subject == "📝user3さんが「アヒル」にコメントしました"                 }
       assert { deliveries.second.to      == ["user1@localhost"]                                       }
-      assert { deliveries.third.subject  == "以前コメントした「アヒル」にuser3さんがコメントしました" }
+      assert { deliveries.third.subject  == "📝以前コメントした「アヒル」にuser3さんがコメントしました" }
       assert { deliveries.third.to       == ["user2@localhost"]                                       }
 
       tp deliveries_info if $0 == "-"
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> .F
+# >> 
+# >> Failures:
+# >> 
+# >>   1) Kiwi::BananaMessage コメントするとメール送信する
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:48:in `block (2 levels) in <module:Kiwi>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+# >> 
+# >> Top 2 slowest examples (2.65 seconds, 54.5% of total time):
+# >>   Kiwi::BananaMessage コメントすると動画の更新日時も更新する
+# >>     1.76 seconds -:30
+# >>   Kiwi::BananaMessage コメントするとメール送信する
+# >>     0.89121 seconds -:36
+# >> 
+# >> Finished in 4.86 seconds (files took 3.63 seconds to load)
+# >> 2 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:36 # Kiwi::BananaMessage コメントするとメール送信する
+# >> 
