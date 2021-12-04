@@ -24,7 +24,7 @@ export const app_urls = {
       this.sidebar_p = false
       this.sound_play_click()
 
-      this.shared_history_add({
+      this.shared_al_add({
         label: `${app_name}起動`,
         message: `${app_name}を起動しました`,
         // message_except_self: false,

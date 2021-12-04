@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 const ACTION_LOG_MAX = 100
 const ACTION_LOG_PUSH_TO = "top"
 
-export const app_history = {
+export const app_action_log = {
   data() {
     return {
       action_logs: [],
@@ -14,8 +14,8 @@ export const app_history = {
     //////////////////////////////////////////////////////////////////////////////// 共有版
 
     // 発動する側の棋譜を持っている
-    shared_history_add_simple(label) {
-      this.shared_history_add({
+    shared_al_add_simple(label) {
+      this.shared_al_add({
         label: label,
         message: `${label}しました`,
         // message_except_self: true,
@@ -23,10 +23,10 @@ export const app_history = {
         turn: this.current_turn,
       })
     },
-    shared_history_add(e) {
-      this.ac_room_perform("shared_history_add", e) // --> app/channels/share_board/room_channel.rb
+    shared_al_add(e) {
+      this.ac_room_perform("shared_al_add", e) // --> app/channels/share_board/room_channel.rb
     },
-    shared_history_add_broadcasted(params) {
+    shared_al_add_broadcasted(params) {
       // let exec = true
       if (this.received_from_self(params)) {
         // if (params.message_except_self) {
@@ -34,7 +34,7 @@ export const app_history = {
         // }
       } else {
       }
-      this.history_add(params)
+      this.al_add(params)
       // if (exec || this.development_p) {
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
@@ -45,7 +45,7 @@ export const app_history = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    history_add(params) {
+    al_add(params) {
       params = {...params}
 
       // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
@@ -65,9 +65,9 @@ export const app_history = {
         this.al_scroll_to_bottom()
       }
     },
-    history_add_test() {
+    al_add_test() {
       const i = this.base.action_logs.length
-      this.history_add({
+      this.al_add({
         lmi: {
           kif_without_from:    "☗00歩",
           next_turn_offset:    i,
@@ -81,7 +81,7 @@ export const app_history = {
         performed_at: this.time_current_ms(),
       })
 
-      // this.history_add({
+      // this.al_add({
       //   label: "foo",
       //   sfen: "position startpos",
       //   turn: 0,
@@ -90,7 +90,7 @@ export const app_history = {
 
     },
     al_scroll_to_bottom() {
-      const e = this.$refs.ShareBoardHistory
+      const e = this.$refs.ShareBoardActionLog
       if (e) {
         this.scroll_to_bottom(e.$refs.scroll_block)
       }

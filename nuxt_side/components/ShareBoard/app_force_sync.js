@@ -153,7 +153,7 @@ export const app_force_sync = {
       if (params.message) {
         this.toast_ok(params.message)
       }
-      this.history_add({...params, label: `局面転送 #${params.turn}`})
+      this.al_add({...params, label: `局面転送 #${params.turn}`})
     },
   },
 }

@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardHistory.column
+.ShareBoardActionLog.column
   .scroll_block(ref="scroll_block")
     template(v-for="(e, i) in filtered_action_logs")
       ShareBoardAvatarLine.is-clickable(:base="base" :info="e" tag="a" :key="action_log_key(e)" @click="action_log_click_handle(e)")
@@ -16,17 +16,17 @@
 import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
-import HistoryJumpPreviewModal from "./HistoryJumpPreviewModal.vue"
+import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal.vue"
 
 export default {
-  name: "ShareBoardHistory",
+  name: "ShareBoardActionLog",
   mixins: [
     support_child,
   ],
   mounted() {
     if (this.development_p) {
       for (let i = 0; i < 3; i++) {
-        this.base.history_add_test()
+        this.base.al_add_test()
       }
     }
   },
@@ -37,7 +37,7 @@ export default {
     action_log_click_handle(e) {
       this.sound_play_click()
       this.modal_card_open({
-        component: HistoryJumpPreviewModal,
+        component: ActionLogJumpPreviewModal,
         props: {
           base: this.base,
           action_log: e,
@@ -60,7 +60,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardHistory.column
+.ShareBoardActionLog.column
   position: relative
   +tablet
     max-width: 8rem
@@ -95,7 +95,7 @@ export default {
             display: block
 
 .ShareBoardApp.debug_mode_p
-  .ShareBoardHistory
+  .ShareBoardActionLog
     .scroll_block
       // border-radius: 3px
       // background-color: $white-ter

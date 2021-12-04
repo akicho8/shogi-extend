@@ -106,7 +106,7 @@ client-only
             .room_code.is-clickable(@click="room_setup_modal_handle" v-if="false")
               | {{room_code}}
 
-          ShareBoardHistory(:base="base" ref="ShareBoardHistory" v-if="ac_room")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
 
         ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
@@ -123,7 +123,7 @@ import { Location                 } from "shogi-player/components/models/locatio
 
 import { support_parent           } from "./support_parent.js"
 
-import { app_history           } from "./app_history.js"
+import { app_action_log           } from "./app_action_log.js"
 import { app_message_logs         } from "./app_message_logs.js"
 import { app_clock_box            } from "./app_clock_box.js"
 import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
@@ -172,7 +172,7 @@ export default {
     // どう見ても mixins の使い方を間違えている
     support_parent,
     autoexec_methods,
-    app_history,
+    app_action_log,
     app_message_logs,
     app_clock_box,
     app_clock_box_time_limit,
@@ -535,10 +535,10 @@ export default {
       order: 1
     .MainColumn
       order: 2
-    .ShareBoardHistory
+    .ShareBoardActionLog
       order: 3
   +mobile
-    .ShareBoardHistory
+    .ShareBoardActionLog
       margin-top: 1rem
     .ShareBoardMemberList
       margin-top: 1rem

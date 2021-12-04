@@ -16,7 +16,7 @@ export const app_edit_mode = {
         hasIcon: true,
         onConfirm: () => {
           this.sound_play_click()
-          this.shared_history_add({label: "局面編集前"})
+          this.shared_al_add({label: "局面編集前"})
           this.sp_run_mode = "edit_mode"
         },
       })
@@ -44,7 +44,7 @@ export const app_edit_mode = {
         this.edit_mode_sfen = null
       }
       this.sp_run_mode = "play_mode"
-      this.shared_history_add({label: "局面編集後"})
+      this.shared_al_add({label: "局面編集後"})
       if (this.ac_room) {
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))
       }
@@ -82,7 +82,7 @@ export const app_edit_mode = {
               if (e.body) {
                 this.sound_play_click()
                 this.toast_ok("棋譜を読み込みました")
-                this.shared_history_add({label: "棋譜読込前"})
+                this.shared_al_add({label: "棋譜読込前"})
                 this.current_sfen = e.body
                 this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
                 this.sp_viewpoint = "black"
@@ -90,7 +90,7 @@ export const app_edit_mode = {
                 modal_instance.close()
 
                 // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-                this.delay_block(0.1, () => this.shared_history_add({label: "棋譜読込後(本筋)"}))
+                this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後(本筋)"}))
 
                 if (this.ac_room) {
                   this.delay_block(0.2, () => this.quick_sync(`${this.user_call_name(this.user_name)}が読み込んだ棋譜を転送しました。「局面の転送」は不要です`))

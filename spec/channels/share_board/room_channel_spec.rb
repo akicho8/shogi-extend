@@ -226,8 +226,8 @@ module ShareBoard
       it do
         data = data_factory("label" => "(label)", message: "(message)")
         expect {
-          subscription.shared_history_add(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_history_add_broadcasted", bc_params: data)
+          subscription.shared_al_add(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_al_add_broadcasted", bc_params: data)
       end
     end
   end
