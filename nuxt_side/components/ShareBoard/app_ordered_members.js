@@ -220,7 +220,7 @@ export const app_ordered_members = {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`)
       }
       if (this.present_p(params.message)) {
-        this.al_add({
+        this.history_add({
           ...params,
           label: "順番 " + (params.order_enable_p ? "ON" : "OFF"),
           sfen: this.current_sfen,
@@ -258,7 +258,7 @@ export const app_ordered_members = {
       }
 
       if (this.present_p(params.message)) {
-        this.al_add({
+        this.history_add({
           ...params,
           label: "順番更新",
           sfen: this.current_sfen,

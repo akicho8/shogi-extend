@@ -1179,7 +1179,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         clock_start_force
         sleep(2)                                   # 2秒待つ
         assert_move("77", "76", "☗7六歩")         # 初手を指す
-        action_log_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
+        history_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
         # assert_text は overflow-x: hidden で隠れている場合があるためランダムに失敗する
       end
     end
@@ -1222,7 +1222,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_turn(2)
       end
       a_block do
-        action_log_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
+        history_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
         first(".apply_button").click # この局面まで戻る実行
         assert_turn(1)        # 1手目に戻った
       end
@@ -1236,7 +1236,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
         assert_move("77", "76", "☗7六歩")               # 初手を指す
         assert_turn(1)
-        action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
+        history_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
         find(".KentoButton").click                      # 「KENTO」
         assert_text("KENTO起動")
@@ -1617,13 +1617,13 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   # 履歴の上から index 目の行
-  def action_log_row_of(index)
-    find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+  def history_row_of(index)
+    find(".ShareBoardHistory .ShareBoardAvatarLine:nth-child(#{index.next})")
   end
 
   # 履歴の index 番目は user が behavior した
   def action_assert(index, user, behavior)
-    within(action_log_row_of(index)) do
+    within(history_row_of(index)) do
       assert_text(user)
       assert_text(behavior)
     end

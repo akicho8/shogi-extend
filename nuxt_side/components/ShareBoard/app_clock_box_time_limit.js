@@ -49,7 +49,7 @@ export const app_clock_box_time_limit = {
         // 当事者側がすぐにBCしてきてすでにモーダルを表示しているため何もしないでおく
         this.tl_add("TIME_LIMIT", `他者側 なんと予約する前に当事者からBCされてモーダルを表示していた`)
       } else {
-        this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_time_limit_delay}秒待ち`})
+        this.history_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_time_limit_delay}秒待ち`})
         this.tl_alert("審議中")
         this.cc_auto_time_limit_delay_stop()
         this.cc_auto_time_limit_delay_id = this.delay_block(this.cc_auto_time_limit_delay, () => this.time_limit_modal_handle("judge"))

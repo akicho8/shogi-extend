@@ -178,7 +178,7 @@ export const app_room_setup = {
       } else {
       }
       this.receive_title(params)
-      this.al_add({...params, label: "タイトル変更"})
+      this.history_add({...params, label: "タイトル変更"})
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
     receive_title(params) {

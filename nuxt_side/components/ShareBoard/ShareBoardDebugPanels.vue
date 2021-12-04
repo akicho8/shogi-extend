@@ -22,7 +22,7 @@
       a.panel-block(@click="base.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="base.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="base.member_info_bc_restart") 生存通知
-      a.panel-block(@click="base.al_add_test") 指し手
+      a.panel-block(@click="base.history_add_test") 指し手
       a.panel-block(@click="base.clock_box_share()") 時計同期
       a.panel-block(@click="base.reload_modal_handle") リロード確認
       a.panel-block(@click="base.room_entry_call({from_user_name: 'alice'})") 入室コール

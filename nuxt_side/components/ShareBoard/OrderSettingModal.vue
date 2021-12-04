@@ -154,7 +154,7 @@ export default {
     shuffle_handle() {
       this.sound_play_click()
       this.shuffle_core()
-      this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
+      this.base.shared_history_add({label: "シャッフル", message: "シャッフルしました"})
       this.base.os_change.append("順番")
     },
 
@@ -197,7 +197,7 @@ export default {
       }
       const user_name = this.base.new_ordered_members[0].user_name
       const message = `${prefix}で${this.user_call_name(user_name)}の先手になりました`
-      this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
+      this.base.shared_history_add({label: furigoma_pack.piece_names, message: message})
       this.base.os_change.append("先後")
     },
 
@@ -207,7 +207,7 @@ export default {
       if (this.validate_members_even("先後入替")) { return }
       this.sound_play_click()
       this.swap_core()
-      this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
+      this.base.shared_history_add({label: "先後入替", message: "先後を入れ替えました"})
       this.base.os_change.append("先後")
     },
 

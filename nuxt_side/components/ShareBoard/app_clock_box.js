@@ -258,7 +258,7 @@ export const app_clock_box = {
         room_code_except_url: null, // 絶対に使わないので消しておく
       }
 
-      this.al_add(params)
+      this.history_add(params)
     },
 
     cc_location_change_and_call(params) {

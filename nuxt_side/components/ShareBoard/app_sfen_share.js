@@ -133,7 +133,7 @@ export const app_sfen_share = {
         this.received_ok_send(params)
       }
 
-      this.al_add(params)
+      this.history_add(params)
     },
     from_user_name_valid(params) {
       if (this.development_p) {

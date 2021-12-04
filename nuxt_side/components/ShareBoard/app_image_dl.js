@@ -32,7 +32,7 @@ export const app_image_dl = {
 
     image_dl_run() {
       window.location.href = this.base.image_dl_preview_url({disposition: "attachment"})
-      this.base.shared_al_add_simple("画像ダウンロード")
+      this.base.shared_history_add_simple("画像ダウンロード")
     },
   },
 

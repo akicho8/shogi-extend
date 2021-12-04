@@ -32,13 +32,13 @@
 
 <script>
 import { support_child } from "./support_child.js"
-import { ActionLogJumpPreviewModalButtons } from "./ActionLogJumpPreviewModalButtons.js"
+import { HistoryJumpPreviewModalButtons } from "./HistoryJumpPreviewModalButtons.js"
 
 export default {
-  name: "ActionLogJumpPreviewModal",
+  name: "HistoryJumpPreviewModal",
   mixins: [
     support_child,
-    ActionLogJumpPreviewModalButtons,
+    HistoryJumpPreviewModalButtons,
   ],
   props: {
     action_log: { type: Object, required: true, },
@@ -68,7 +68,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.ActionLogJumpPreviewModal
+.HistoryJumpPreviewModal
   +modal_width(512px)
 
   .modal-card-body
@@ -77,7 +77,7 @@ export default {
       margin-bottom: 0
 
 .STAGE-development
-  .ActionLogJumpPreviewModal
+  .HistoryJumpPreviewModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body
