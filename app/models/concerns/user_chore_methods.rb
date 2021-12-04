@@ -64,6 +64,24 @@ module UserChoreMethods
       }.to_t
     }.join
     body = info.to_t + body
+
     SystemMailer.notify(fixed: true, subject: "【プロフィール変更】#{name}", body: body).deliver_later
+  end
+
+  def info
+    {
+      "ID"                => id,
+      "名前"              => name,
+      "名前確定日時"      => name_input_at&.to_s(:distance),
+      "メールアドレス"    => email,
+      "プロバイダ"        => auth_infos.collect(&:provider).join(", "),
+      "Twitterアカウント" => twitter_key,
+      "ログイン回数"      => sign_in_count,
+      "最終ログイン日時"  => current_sign_in_at&.to_s(:distance),
+      "登録日時"          => created_at&.to_s(:distance),
+      "IP"                => current_sign_in_ip,
+      "タグ"              => permit_tag_list,
+      "自己紹介"          => description.truncate(64),
+    }
   end
 end
