@@ -89,7 +89,7 @@ module Api
             render json: { error_message: "すでに同じパラメータで投入しています" }
             return
           end
-          Rails.cache.write(key, true, expires_in: 1.hour)
+          Rails.cache.write(key, true, expires_in: 3.days)
         end
 
         # 将来的には KIF などはここですぐ返したらいいんでは？
