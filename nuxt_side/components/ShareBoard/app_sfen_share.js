@@ -11,12 +11,15 @@ export const app_sfen_share = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // あとで再送するかもしれないのでいったん送るパラメータを作って保持しておく
-    sfen_share_params_set(last_move_info) {
-      const lmi = last_move_info
+    sfen_share_params_set(e) {
+      const lmi = e.last_move_info
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
       this.__assert__(this.current_sfen, "this.current_sfen")
-      this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset_max, "lmi.next_turn_offset === this.current_sfen_turn_offset_max")
+      if (this.development_p) {
+        this.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
+        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset_max, "lmi.next_turn_offset === this.current_sfen_turn_offset_max")
+      }
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
@@ -28,7 +31,8 @@ export const app_sfen_share = {
           yomiage:             lmi.to_yomiage,          // "ななろくふ"
           effect_key:          lmi.effect_key,          // 効果音キー
         },
-        ...this.current_sfen_attrs, // turn が含まれる
+        sfen: this.current_sfen, // e.sfen でもよい
+        turn: lmi.next_turn_offset,
         clock_box_params: this.clock_box_share_params_build(), // 指し手と合わせて時計の情報も送る
       }
 
@@ -71,7 +75,6 @@ export const app_sfen_share = {
 
     // 指し手を受信
     sfen_share_broadcasted(params) {
-      // ここでの params は current_sfen_attrs を元にしているので 1 が入っている
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {

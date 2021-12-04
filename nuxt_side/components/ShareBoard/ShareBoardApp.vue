@@ -291,8 +291,8 @@ export default {
         this.clock_box.tap_on(e.last_move_info.player_location)
       }
 
-      this.sfen_share_params_set(e.last_move_info) // 再送用可能なパラメータ作成
-      this.sfen_share()                            // 指し手と時計状態の配信
+      this.sfen_share_params_set(e) // 再送可能なパラメータ作成
+      this.sfen_share()             // 指し手と時計状態の配信
 
       // 次の人の視点にする
       if (false) {
@@ -435,13 +435,13 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる
-      return {
-        sfen: this.current_sfen,
-        turn: this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
-        //- last_location_key: this.current_sfen_info.last_location.key,
-      }
-    },
+    // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる
+    //   return {
+    //     sfen: this.current_sfen,
+    //     turn: this.current_sfen_info.turn_offset_max, // これを入れない方が早い？
+    //     //- last_location_key: this.current_sfen_info.last_location.key,
+    //   }
+    // },
     current_sfen_info()            { return this.sfen_parse(this.current_sfen)                          },
     current_sfen_turn_offset_max() { return this.current_sfen_info.turn_offset_max                      },
     next_location()                { return this.current_sfen_info.next_location                        },
