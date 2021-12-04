@@ -5,16 +5,23 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
 
   USELESS_MAIL_ADDRESS_LIST = %w(au.com)
+  APP_NAME_APPEND = true
 
   private
 
   def subject_prefix
-    parts = []
-    parts << "[#{AppConfig[:app_name]}]"
-    unless Rails.env.production?
-      parts << "[#{Rails.env}]"
+    av = []
+    if APP_NAME_APPEND
+      av << "[#{AppConfig[:app_name]}]"
     end
-    parts.join + " "
+    unless Rails.env.production?
+      av << "[#{Rails.env}]"
+    end
+    s = av.join
+    if s.present?
+      s += " "
+    end
+    s
   end
 
   def app_name_prepend(subject)
