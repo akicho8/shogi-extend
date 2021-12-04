@@ -259,7 +259,7 @@ class Xsetting < ApplicationRecord
           original = [@before_value, value]
           diff = original.collect {|v| v.to_s.lines.to_a.collect(&:rstrip) } # 行は配列化
           if diff.first != diff.last
-            AlertLog.notify(subject: mail_subject(original), body: mail_body(diff), mail_notify: true)
+            AppLog.notify(subject: mail_subject(original), body: mail_body(diff), mail_notify: true)
           end
         end
       end

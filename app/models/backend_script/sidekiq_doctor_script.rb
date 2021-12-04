@@ -20,7 +20,7 @@ module BackendScript
     def script_body
       if submitted?
         SidekiqDoctorJob.perform_later(code: current_code)
-        AlertLog.order(created_at: :desc).take(10)
+        AppLog.order(created_at: :desc).take(10)
       end
     end
 

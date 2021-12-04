@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Alert log (alert_logs as AlertLog)
+# Alert log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
 # | name       | desc     | type         | opts        | refs | index |
@@ -12,9 +12,10 @@
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
 
-class CreateAlertLogs < ActiveRecord::Migration[5.2]
+class CreateAppLogs < ActiveRecord::Migration[6.0]
   def change
-    create_table :alert_logs, force: true do |t|
+    drop_table :alert_logs rescue nil
+    create_table :app_logs, force: true do |t|
       t.string :subject,      null: false
       t.string :body,         null: false, limit: 8192
       t.datetime :created_at, null: false

@@ -15,7 +15,7 @@ module AtomicScript
       end
 
       def script_body
-        page_scope(AlertLog)
+        page_scope(AppLog)
       end
     end
   end

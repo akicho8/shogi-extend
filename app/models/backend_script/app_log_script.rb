@@ -1,5 +1,5 @@
 module BackendScript
-  class AlertLogScript < ::BackendScript::Base
+  class AppLogScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "アラートログ"
 
@@ -17,7 +17,7 @@ module BackendScript
     end
 
     def script_body
-      s = AlertLog.order(:created_at, :id).reverse_order
+      s = AppLog.order(:created_at, :id).reverse_order
       if current_query
         s = s.where(["body like ?", "%#{current_query}%"])
       end
@@ -28,12 +28,12 @@ module BackendScript
       out << basic_paginate(s)
     end
 
-    def row_build(alert_log)
+    def row_build(app_log)
       {
-        "ID"   => alert_log.id, # script_link_to(alert_log.id, :id => "ar_search", :model => current_model.name,:record_id => alert_log.id),
-        "題名" => alert_log.subject,
-        "本文" => alert_log.body,
-        "日時" => alert_log.created_at.to_s,
+        "ID"   => app_log.id, # script_link_to(app_log.id, :id => "ar_search", :model => current_model.name,:record_id => app_log.id),
+        "題名" => app_log.subject,
+        "本文" => app_log.body,
+        "日時" => app_log.created_at.to_s,
       }
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_27_151200) do
+ActiveRecord::Schema.define(version: 2021_12_04_153100) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -460,7 +460,7 @@ ActiveRecord::Schema.define(version: 2021_11_27_151200) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "alert_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "app_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "subject", null: false
     t.string "body", limit: 8192, null: false
     t.datetime "created_at", null: false

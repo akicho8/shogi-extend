@@ -41,7 +41,7 @@ end
 # >> mysql -u root shogi_web_development -te 'alter table actb_skills convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table active_storage_attachments convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table active_storage_blobs convert to character set utf8mb4 collate utf8mb4_bin'
-# >> mysql -u root shogi_web_development -te 'alter table alert_logs convert to character set utf8mb4 collate utf8mb4_bin'
+# >> mysql -u root shogi_web_development -te 'alter table app_logs convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table ar_internal_metadata convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table auth_infos convert to character set utf8mb4 collate utf8mb4_bin'
 # >> mysql -u root shogi_web_development -te 'alter table colosseum_battles convert to character set utf8mb4 collate utf8mb4_bin'

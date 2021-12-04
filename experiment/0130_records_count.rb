@@ -33,7 +33,7 @@ tp ActiveRecord::Base.connection.tables.collect { |table| [table, ActiveRecord::
 # >> |              actb_settings | 11 |
 # >> | active_storage_attachments | 0  |
 # >> |       active_storage_blobs | 0  |
-# >> |                 alert_logs | 0  |
+# >> |                 app_logs | 0  |
 # >> |       ar_internal_metadata | 1  |
 # >> |       colosseum_auth_infos | 0  |
 # >> |          colosseum_battles | 0  |

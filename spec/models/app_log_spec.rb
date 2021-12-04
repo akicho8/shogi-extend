@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Alert log (alert_logs as AlertLog)
+# Alert log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
 # | name       | desc     | type         | opts        | refs | index |
@@ -14,10 +14,10 @@
 
 require "rails_helper"
 
-RSpec.describe AlertLog, type: :model do
-  let(:instance)       { FactoryBot.create(:alert_log)         }
+RSpec.describe AppLog, type: :model do
+  let(:instance)       { FactoryBot.create(:app_log)         }
   let(:user)           { FactoryBot.create(:user)              }
-  let(:default_attrs)  { FactoryBot.attributes_for(:alert_log) }
+  let(:default_attrs)  { FactoryBot.attributes_for(:app_log) }
 
   it "バリデーションが正しい" do
     instance.valid?
@@ -26,8 +26,8 @@ RSpec.describe AlertLog, type: :model do
 
   describe "作成系" do
     it "作成できる" do
-      alert_log = described_class.create(default_attrs)
-      alert_log.errors.to_hash.should == {}
+      app_log = described_class.create(default_attrs)
+      app_log.errors.to_hash.should == {}
     end
   end
 
@@ -49,23 +49,23 @@ RSpec.describe AlertLog, type: :model do
 
   describe "アプリ依存のインタフェース" do
     it "汎用" do
-      record = AlertLog.notify(subject: "xxx")
+      record = AppLog.notify(subject: "xxx")
       record.subject.should == "xxx"
     end
   end
 
   describe "メール通知対応" do
     it do
-      proc { AlertLog.notify(mail_notify: true) }.should change(ActionMailer::Base.deliveries, :size).by(1)
+      proc { AppLog.notify(mail_notify: true) }.should change(ActionMailer::Base.deliveries, :size).by(1)
     end
     it "toオプション" do
-      AlertLog.notify(to: "xxx@xxx", mail_notify: true)
+      AppLog.notify(to: "xxx@xxx", mail_notify: true)
       mail = ActionMailer::Base.deliveries.last
       mail.to.should == ["xxx@xxx"]
     end
   end
 
   it "Slack通知" do
-    AlertLog.notify(slack_notify: true)
+    AppLog.notify(slack_notify: true)
   end
 end

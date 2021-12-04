@@ -867,7 +867,7 @@
 
 # == Schema Information ==
 #
-# Alert log (alert_logs as AlertLog)
+# Alert log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
 # | name       | desc     | type         | opts        | refs | index |

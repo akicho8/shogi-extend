@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Alert log (alert_logs as AlertLog)
+# Alert log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
 # | name       | desc     | type         | opts        | refs | index |
@@ -12,10 +12,10 @@
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
 
-class AlertLog < ApplicationRecord
-  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)")'
-  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)", slack_notify: true)'
-  # rails r 'AlertLog.notify(subject: "(subject)", body: "(body)", slack_notify: true, mail_notify: true)'
+class AppLog < ApplicationRecord
+  # rails r 'AppLog.notify(subject: "(subject)", body: "(body)")'
+  # rails r 'AppLog.notify(subject: "(subject)", body: "(body)", slack_notify: true)'
+  # rails r 'AppLog.notify(subject: "(subject)", body: "(body)", slack_notify: true, mail_notify: true)'
   def self.notify(params)
     create!(params)
   end
