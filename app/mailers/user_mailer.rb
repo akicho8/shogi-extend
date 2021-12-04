@@ -13,7 +13,7 @@ class UserMailer < ApplicationMailer
     }
 
     body = []
-    body << attrs.to_t
+    body << attrs.to_t.to_t(truncate: 40)
     body << user.info.to_t
     body = body.join("\n")
     body = body_normalize(body)
