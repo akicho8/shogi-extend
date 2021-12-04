@@ -21,6 +21,7 @@
     v-if="present_p(base.admin_info.lemons)"
     :data="base.admin_info.lemons"
     :mobile-cards="false"
+    :scrollable="true"
     )
 
     b-table-column(v-slot="{row}" field="id" label="ID" numeric centered sortable :width="1")
@@ -52,10 +53,13 @@
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")
         | {{row.error_message}}
 
+    b-table-column(v-slot="{row}" label="表紙" cell-class="cover_text is-size-7 is_line_break_on")
+      | {{string_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
+
     b-table-column(v-slot="{row}" label="操作")
       .buttons.is-flex-wrap-nowrap.are-small.mb-0
         b-button.mb-0(@click="base.download_talk_handle" tag="a" :href="row.browser_path" type="is-primary" icon-left="download"    :download="row.filename_human" title="ダウンロード")
-        b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" title="ライブラリ登録")
+        b-button.mb-0(@click="base.banana_new_handle(row)" icon-left="upload" :type="{'is-light': row.banana}"  title="ライブラリ登録")
         b-button.mb-0(@click="base.retry_run_handle(row)"      type="is-info" icon-left="hammer" title="リトライ")
         b-button.mb-0(@click="sound_play_click()"                                         type="" tag="a" :href="row.browser_path" icon-left="eye-outline" target="_blank" title="ダウンロードリンクをダウンロードせずに開く")
         b-button.mb-0(@click="base.rails_attachment_show_handle(row)"                     type="is-light"   icon-left="download"                                           title="Rails側のコントローラ経由でダウンロードするテスト")
@@ -64,7 +68,8 @@
         b-button.mb-0(@click="base.other_window_open_if_pc_handle(row)"                 type="is-light"   icon-left="link"                                               title="モバイルならそのままでPCなら別ウィンドウで開く")
         b-button.mb-0(@click="base.media_info_show_handle(row)"                           type="is-light"   icon-left="information-variant"                                title="変換後のファイル情報を表示")
         b-button.mb-0(@click="base.json_show_handle(row)"                                 type="is-light"   icon-left="code-json"                                          title="JSON確認")
-        b-button.mb-0(@click="base.destroy_run_handle(row)"    type="is-danger" icon-left="trash-can-outline" title="削除" v-if="row.errored_at || development_p")
+        b-button.mb-0(@click="base.destroy_run_handle(row)"    type="is-danger" icon-left="trash-can-outline" title="削除" v-if="row.errored_at || true")
+        b-button.mb-0(@click="base.banana_show_handle(row)" icon-left="play" title="ライブラリを見る" v-if="row.banana")
 
 </template>
 
@@ -79,7 +84,8 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewAdmin
-  // margin-top: 0rem
   td
     vertical-align: middle
+  .cover_text
+    min-width: 8rem
 </style>

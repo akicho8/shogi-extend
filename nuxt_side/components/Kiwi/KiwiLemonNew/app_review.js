@@ -18,8 +18,9 @@ export const app_review = {
       this.sound_play_click()
 
       if (this.present_p(record.banana)) {
-        this.toast_warn("すでに登録しています")
+        this.talk("ライブラリ登録済みです。編集ページに移動しますか？")
         this.dialog_confirm({
+          title: "ライブラリ登録済みです",
           message: "編集ページに移動しますか？",
           confirmText: "移動する",
           onConfirm: () => {
@@ -30,10 +31,10 @@ export const app_review = {
       } else {
         this.talk("登録しますか？")
         this.dialog_confirm({
-          title: "動画ライブラリ登録",
+          title: "ライブラリに登録しますか？",
           message: `
           <div class="content">
-            <p>登録したらできること</p>
+            <p class="is-size-7">登録したらできること:</p>
             <ol class="mt-0">
               <li>専用ページの作成</li>
               <li>タイトルや説明の追加</li>
@@ -52,6 +53,12 @@ export const app_review = {
           },
         })
       }
+    },
+
+    banana_show_handle(record) {
+      this.sound_play_click()
+      this.__assert__(record.banana, "record.banana")
+      this.$router.push({name: 'video-watch-banana_key', params: {banana_key: record.banana.key}})
     },
 
     download_talk_handle() {
