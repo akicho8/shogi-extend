@@ -4,19 +4,14 @@ import _ from "lodash"
 export const app_review = {
   data() {
     return {
-      done_record: null,
+      done_record: null,        // 変換が完了した状態のレコード
     }
   },
   methods: {
     close_handle() {
       this.sound_play_click()
-      // this.body = ""
-
-      // this.response_hash   = null
-      // this.kiwi_info    = null
       this.lemon = null
       this.done_record = null
-      // this.lemon   = null
     },
 
     banana_new_handle(record) {
