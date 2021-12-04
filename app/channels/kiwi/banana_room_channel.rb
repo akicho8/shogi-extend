@@ -49,7 +49,9 @@ module Kiwi
     end
 
     def speak(data)
-      current_user.kiwi_banana_message_speak(current_banana, data["message_body"])
+      if current_user
+        current_user.kiwi_banana_message_speak(current_banana, data["message_body"])
+      end
     end
 
     private
