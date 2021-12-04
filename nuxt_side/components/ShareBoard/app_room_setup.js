@@ -176,8 +176,9 @@ export const app_room_setup = {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
-        this.receive_title(params)
       }
+      this.receive_title(params)
+      this.al_add({...params, label: "タイトル変更"})
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
     receive_title(params) {

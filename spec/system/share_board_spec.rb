@@ -115,6 +115,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         assert_text("(new_title)")             # alice側のタイトルが変更されている
+        assert_text("タイトル変更")            # 履歴にも追加された
       end
     end
   end
