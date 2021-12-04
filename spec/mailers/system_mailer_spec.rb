@@ -8,7 +8,7 @@ RSpec.describe SystemMailer, type: :mailer do
     it do
       assert { mail.from    == ["shogi.extend@gmail.com"]       }
       assert { mail.to      == ["shogi.extend@gmail.com"]       }
-      assert { mail.subject == "[SHOGI-EXTEND][test] (subject)" }
+      assert { mail.subject == "[test] (subject)" }
     end
   end
 end

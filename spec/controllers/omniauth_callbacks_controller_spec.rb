@@ -44,7 +44,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
 
     it "メール" do
       assert { ActionMailer::Base.deliveries.count == 1 }
-      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがgoogleで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
     end
   end
 
@@ -91,7 +91,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
 
     it "メール" do
       assert { ActionMailer::Base.deliveries.count == 1 }
-      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] aliceさんがtwitterで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
     end
   end
 
@@ -136,7 +136,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
 
     it "メール" do
       assert { ActionMailer::Base.deliveries.count == 1 }
-      assert { ActionMailer::Base.deliveries.last.subject == "[SHOGI-EXTEND][test] Yamada Taroさんがgithubで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
     end
   end
 end

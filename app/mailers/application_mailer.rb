@@ -5,7 +5,7 @@ class ApplicationMailer < ActionMailer::Base
   layout "mailer"
 
   USELESS_MAIL_ADDRESS_LIST = %w(au.com)
-  APP_NAME_APPEND = true
+  APP_NAME_APPEND = false
 
   private
 
