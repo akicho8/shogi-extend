@@ -3,6 +3,13 @@ class KiwiMailer < ApplicationMailer
   # KiwiMailer.lemon_notify(Kiwi::Lemon.last).deliver_later
   # http://localhost:3000/rails/mailers/kiwi/lemon_notify
   def lemon_notify(lemon)
+    subject = []
+    subject << "動画作成"
+    subject << "##{lemon.id}"
+    subject << "#{lemon.status_key}"
+    subject = subject.join(" ")
+    subject = [EmojiInfo.fetch("動画"), app_name_prepend(subject)].join
+
     body = []
     if lemon.browser_url
       if useless_mail_address?(lemon.user.email) || Rails.env.development? || Rails.env.test?
@@ -59,19 +66,25 @@ class KiwiMailer < ApplicationMailer
       end
     end
 
+    body = body.join("\n")
+    body = body_normalize(body)
+
     mail({
-        subject: "[動画作成][##{lemon.id}] #{lemon.recipe_info.name} #{lemon.status_key}",
-        to: "#{lemon.user.name} <#{lemon.user.email}>",
-        bcc: AppConfig[:admin_email],
-        body: body.join("\n") + "\n", # NOTE: 最後を改行にしないと添付ファイルが前行の最後のカラムから始まってしまう
+        :subject => subject,
+        :to      => "#{lemon.user.name} <#{lemon.user.email}>",
+        :bcc     => AppConfig[:admin_email],
+        :body    => body,
       })
   end
 
   # 動画の作者に通知
   # KiwiMailer.banana_owner_message(Kiwi::BananaMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/banana_owner_message
+  # http://localhost:3000/rails/mailers/kiwi/banana_owner_message
   def banana_owner_message(banana_message)
-    subject = "#{banana_message.user.name}さんが「#{banana_message.banana.title}」にコメントしました"
+    subject = []
+    subject << EmojiInfo.fetch("コメント")
+    subject << "#{banana_message.user.name}さんが「#{banana_message.banana.title}」にコメントしました"
+    subject = subject.join
 
     out = []
     out << banana_message.unescaped_body
@@ -87,14 +100,20 @@ class KiwiMailer < ApplicationMailer
 
     body = out.join("\n") + "\n"
 
-    mail(subject: subject, to: banana_message.banana.user.email, bcc: AppConfig[:admin_email], body: body)
+    user = banana_message.banana.user
+    to = "#{user.name} <#{user.email}>"
+
+    mail(subject: subject, body: body, to: to, bcc: AppConfig[:admin_email])
   end
 
   # 以前コメントした人に通知
   # KiwiMailer.banana_other_message(User.first, Kiwi::BananaMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/banana_other_message
+  # http://localhost:3000/rails/mailers/kiwi/banana_other_message
   def banana_other_message(user, banana_message)
-    subject = "以前コメントした「#{banana_message.banana.title}」に#{banana_message.user.name}さんがコメントしました"
+    subject = []
+    subject << EmojiInfo.fetch("コメント")
+    subject << "以前コメントした「#{banana_message.banana.title}」に#{banana_message.user.name}さんがコメントしました"
+    subject = subject.join
 
     out = []
     out << banana_message.unescaped_body
@@ -103,6 +122,9 @@ class KiwiMailer < ApplicationMailer
 
     body = out.join("\n")
 
-    mail(subject: subject, to: user.email, bcc: AppConfig[:admin_email], body: body)
+    user = banana_message.banana.user
+    to = "#{user.name} <#{user.email}>"
+
+    mail(subject: subject, body: body, to: user.email, bcc: AppConfig[:admin_email])
   end
 end

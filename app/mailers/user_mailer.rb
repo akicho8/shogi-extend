@@ -4,25 +4,34 @@ class UserMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/user/user_created
   def user_created(user)
     attrs = {
-      :id    => user.id,
-      :name  => user.name,
-      :email => user.email,
+      :id             => user.id,
+      :name           => user.name,
+      :email          => user.email,
+      :provider_names => user.provider_names,
+      :twitter_url    => user.twitter_url,
+      :avatar_url     => user.avatar_url,
     }
 
-    attrs[:provider_names] = user.provider_names
-    attrs[:twitter_url] = user.twitter_url
-    attrs[:avatar_url] = user.avatar_url
+    body = []
+    body << attrs.to_t
+    body << user.info.to_t
+    body = body.join("\n")
+    body = body_normalize(body)
 
-    out = []
-    out << attrs.collect { |key, val| "#{key}: #{val}" }
-    body = out.join("\n")
+    subject = []
+    subject << "#{user.name}さんが#{user.provider_names.join(" or ")}で登録されました"
+    subject = subject.join
+    subject = app_name_prepend(subject)
 
-    mail(subject: subject_decorate("#{user.name}さんが#{user.provider_names.join(" or ")}で登録されました"), body: body)
+    params = { subject: subject, body: body, fixed: true }
+    params = params_normalize_if_fixed(params)
+
+    mail(params)
   end
 
   # 問題の作者に通知
   # UserMailer.question_owner_message(Actb::QuestionMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/question_owner_message
+  # http://localhost:3000/rails/mailers/actb/question_owner_message
   def question_owner_message(message)
     subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
 
@@ -63,38 +72,41 @@ class UserMailer < ApplicationMailer
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
-    subject_suffix = ""
-
-    if Rails.env.development?
-      if record.attachment_mode == "with_zip"
-        subject_suffix = "(添付あり)"
-      end
-    end
-
-    subject = "【将棋ウォーズ棋譜検索】#{record.target_user.key}さんの棋譜取得完了 #{subject_suffix}".squish
+    subject = []
+    subject << EmojiInfo.fetch("棋譜ZIP")
+    subject << "[将棋ウォーズ棋譜検索]"
+    subject << "#{record.target_user.key}さんの棋譜取得完了"
+    subject = subject.join(" ")
 
     diff_count = other_options[:diff_count] || 0
 
-    out = []
-    out << "追加: #{diff_count} 件"
-    out << "全体: #{record.zip_dl_scope.count} 件"
-    out << ""
+    body = []
+    body << "追加: #{diff_count} 件"
+    body << "全体: #{record.zip_dl_scope.count} 件"
+    body << ""
 
-    out << "#{record.target_user.key}さんの棋譜"
-    out << UrlProxy.full_url_for(path: "/swars/search", query: {query: record.target_user_key})
+    body << "▼#{record.target_user.key}さんの棋譜"
+    body << UrlProxy.full_url_for(path: "/swars/search", query: {query: record.target_user_key})
+    body << ""
 
-    out << ""
-    out << "--"
-    out << "SHOGI-EXTEND"
-    out << url_for(:root)
+    if record.attachment_mode == "nothing" || Rails.env.development?
+      body << "※棋譜を添付するには「ZIPファイルの添付」を有効にしてください"
+      body << ""
+    end
+
+    body << "--"
+    body << "SHOGI-EXTEND"
+    body << url_for(:root)
+
     if Rails.env.development?
-      out << record.to_t
+      body << record.to_t
       if other_options.present?
-        out << other_options.to_t
+        body << other_options.to_t
       end
     end
 
-    body = out.join("\n")
+    body = body.join("\n")
+    body = body_normalize(body)
 
     user = record.user
 
@@ -110,5 +122,4 @@ class UserMailer < ApplicationMailer
 
     mail(subject: subject, to: to, bcc: AppConfig[:admin_email], body: body)
   end
-
 end

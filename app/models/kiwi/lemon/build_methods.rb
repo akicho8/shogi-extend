@@ -193,10 +193,10 @@ module Kiwi
         if Rails.env.development?
           after_commit do
             if previous_changes[:process_begin_at]
-              track("開始")
+              debug_track("開始")
             end
             if previous_changes[:process_end_at]
-              track("完了")
+              debug_track("完了")
             end
           end
         end
@@ -205,7 +205,7 @@ module Kiwi
 
         # 登録のタイミングで(変換ジョブがなければ)変換ジョブを放つ
         # after_create_commit do
-        #   track("登録")
+        #   debug_track("登録")
         #   background_job_kick_if_period
         #   everyone_broadcast
         # end
@@ -346,7 +346,7 @@ module Kiwi
 
       # rails r 'p Kiwi::Lemon.first.report_subject'
       def report_subject
-        "[動画作成#{status_key}][##{id}] #{user.name} (#{user.kiwi_lemons.count.next}回目)"
+        "動画作成 #{status_key} ##{id} #{user.name} #{user.kiwi_lemons.count.next}回目"
       end
 
       # rails r 'puts Kiwi::Lemon.first.report_text'
@@ -387,6 +387,10 @@ module Kiwi
         ].compact - ["平手"]
       end
 
+      def create_notify
+        start_notify
+      end
+
       private
 
       # for ActionMailer
@@ -394,8 +398,10 @@ module Kiwi
         all_params.fetch(:media_builder_params).fetch(:recipe_key)
       end
 
-      def track(name, body = nil)
-        SlackAgent.notify(subject: "動画作成 #{name} #{status_key}", body: [id, user.name, body].compact)
+      def debug_track(name, body = nil)
+        subject = "動画作成 #{name} #{status_key}"
+        body = [id, user.name, body].compact.join(" ")
+        SlackAgent.notify(subject: subject, body: body)
       end
 
       # 生成ファイルにリンクする

@@ -21,46 +21,9 @@ class SystemMailer < ApplicationMailer
 
   # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
   def notify(params = {})
-    subject = [params[:emoji], subject_decorate(params[:subject])].join
+    subject = [params[:emoji], app_name_prepend(params[:subject])].join
     params = params.merge(subject: subject)
-    params = params_normalize(params)
+    params = params_normalize_if_fixed(params)
     mail(params)
-  end
-
-  private
-
-  # 表などが崩れないようにするための固定幅表示
-  concerning :FixedFormatMethods do
-    included do
-      CSS_FONTS = %(Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace)
-    end
-
-    private
-
-    def params_normalize(params)
-      params = {
-        fixed: false,
-      }.merge(params)
-
-      [:subject, :body].each do |e|
-        params[e] = params[e].to_s
-      end
-
-      if params[:fixed]
-        body = gmail_problem_workaround(params[:body])
-        params.update(content_type: "text/html", body: pre_tag(body))
-      end
-
-      params
-    end
-
-    def pre_tag(text)
-      %(<pre style='white-space: pre; font-family: #{CSS_FONTS}'>#{text}</pre>)
-    end
-
-    # GMailで改行が2重になる対策
-    def gmail_problem_workaround(text)
-      text.gsub("\n", "<br>")
-    end
   end
 end

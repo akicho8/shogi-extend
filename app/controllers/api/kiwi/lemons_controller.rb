@@ -106,6 +106,7 @@ module Api
         end
 
         lemon = current_user.kiwi_lemons.create!(recordable: free_battle, all_params: params.to_unsafe_h[:all_params])
+        lemon.create_notify
         current_user.kiwi_my_lemons_singlecast
         ::Kiwi::Lemon.everyone_broadcast
         ::Kiwi::Lemon.zombie_kill                   # ゾンビを成仏させる
