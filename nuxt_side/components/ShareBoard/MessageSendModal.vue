@@ -2,8 +2,8 @@
 .modal-card
   .modal-card-head
     .modal-card-title.is-flex.is-align-items-center
-      template(v-if="base.message_scope_info.title_icon")
-        XemojiWrap.be_quiet_icon(:str="base.message_scope_info.title_icon")
+      template(v-if="base.message_scope_info.title_emoji")
+        XemojiWrap.be_quiet_icon(:str="base.message_scope_info.title_emoji")
       template(v-else)
         | チャット
     b-button.test_button(type="is-small" @click="test_handle" v-if="development_p") 追加
