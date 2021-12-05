@@ -30,7 +30,7 @@
           | 最大<b>直近1ヶ月</b>分を深夜に取得し、終わったら指定のメールアドレスに通知します。
         p
           | その際に棋譜データも必要であればZIPファイルの添付を有効にしてください。
-          | ZIPファイルには文字コード UTF-8 と Shift_JIS の両方を含むので読めないときは Shift_JIS の方を試してみてください。
+          | ZIPファイルには文字コード UTF-8 と Shift_JIS の両方を含むので読めないときは Shift_JIS の方を試してください。
 
       b-field.mt-6(label="通知先メールアドレス" label-position="on-border")
         b-input(v-model.trim="to_email" required :disabled="!g_current_user")
