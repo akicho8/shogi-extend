@@ -1,13 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
-  before do
-    swars_battle_setup
-  end
-
-  let :record do
-    Swars::Battle.first
-  end
+RSpec.describe "棋譜用紙", type: :system do
+  include SwarsSupport
 
   it "棋譜用紙" do
     visit2 "/swars/battles/devuser2-Yamada_Taro-20200101_123402/formal-sheet"

@@ -87,7 +87,7 @@ module Wkbk
         user.wkbk_books.create!(title: "bb", tag_list: "t2", folder_key: "public")
         assert { Book.general_search(query: "a").size === 1 }
         assert { Book.general_search(query: "a", tag: "t1").size === 1 }
-        assert { Book.general_search(query: "_", tag: "t1").size === 0 }
+        assert { Book.general_search(query: "x", tag: "t1").size === 0 }
       end
 
       it "カタカナをひらがなで検索できる" do

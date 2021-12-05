@@ -34,7 +34,7 @@ module SlackAgent
     v = params[:emoji].presence || ":空白:"
     body << EmojiInfo.lookup(v) || v
 
-    body << Rails.cache.increment(:slack_counter)
+    body << (Rails.cache.increment(:slack_counter) || 0)
     body << "w#{wait}"
     body << timestamp
     if v = params[:subject].presence

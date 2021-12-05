@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "BiDi問題", type: :system do
-  before do
-    swars_battle_setup
-  end
+  include SwarsSupport
 
   it "works" do
     visit2 "/swars/search"
