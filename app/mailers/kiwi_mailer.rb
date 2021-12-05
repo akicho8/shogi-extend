@@ -8,7 +8,7 @@ class KiwiMailer < ApplicationMailer
     subject << "##{lemon.id}"
     subject << "#{lemon.status_key}"
     subject = subject.join(" ")
-    subject = [EmojiInfo.fetch("動画"), app_name_prepend(subject)].join
+    subject = [EmojiInfo.fetch(":動画:"), app_name_prepend(subject)].join
 
     body = []
     if lemon.browser_url
@@ -82,7 +82,7 @@ class KiwiMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/kiwi/banana_owner_message
   def banana_owner_message(banana_message)
     subject = []
-    subject << EmojiInfo.fetch("コメント")
+    subject << EmojiInfo.fetch(":コメント:")
     subject << "#{banana_message.user.name}さんが「#{banana_message.banana.title}」にコメントしました"
     subject = subject.join
 
@@ -111,7 +111,7 @@ class KiwiMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/kiwi/banana_other_message
   def banana_other_message(user, banana_message)
     subject = []
-    subject << EmojiInfo.fetch("コメント")
+    subject << EmojiInfo.fetch(":コメント:")
     subject << "以前コメントした「#{banana_message.banana.title}」に#{banana_message.user.name}さんがコメントしました"
     subject = subject.join
 

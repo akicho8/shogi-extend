@@ -27,18 +27,18 @@ module ShareBoard
     end
 
     def sfen_share(data)
-      track(data, "指手送信", sfen_share_track_body(data))
+      track(data, "指手送信", sfen_share_track_body(data), ":着手:")
       broadcast(:sfen_share_broadcasted, data)
     end
 
     def received_ok(data)
-      track(data, "指手受信", "OK > #{data['to_user_name']}")
+      track(data, "指手受信", "OK > #{data['to_user_name']}", ":OK:")
       broadcast(:received_ok_broadcasted, data)
     end
 
     def sfen_share_not_reach(data)
       x_retry_count = data['x_retry_count']
-      track(data, "指手不達", "#{x_retry_count}回目")
+      track(data, "指手不達", "#{x_retry_count}回目", ":指手不達:")
       raise SfenNotReachError, "指手不達(#{x_retry_count}回目) : #{data}"
     end
 
@@ -62,33 +62,40 @@ module ShareBoard
     def clock_box_share(data)
       if data["behaviour"].present?
         values = data["cc_params"].fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
-        track(data, "対局時計", "#{data["behaviour"]} (#{values.join(" ")}) #{data["room_code_except_url"]}")
+        message = "#{data["behaviour"]} (#{values.join(" ")}) #{data["room_code_except_url"]}"
+        track(data, "対局時計", message, ":対局時計:")
       end
       broadcast(:clock_box_share_broadcasted, data)
     end
 
     def member_info_share(data)
-      track(data, "生存通知", "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})")
+      message = "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})"
+      track(data, "生存通知", message)
       broadcast(:member_info_share_broadcasted, data)
     end
 
     def order_switch_share(data)
-      track(data, "順番設定", "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布")
-      broadcast(:order_switch_share_broadcasted, data)
+      message = "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布"
+      track(data, "順番設定", message, ":順番設定:")
+      broadcast(:order_switch_share_broadcasted, data, )
     end
 
     def ordered_members_share(data)
       user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" → ")
-      track(data, "順番設定", "オーダー配布 #{user_names} (#{data["avatar_king_key"]} #{data["shout_mode_key"]})")
+      message = "オーダー配布 #{user_names} (#{data["avatar_king_key"]} #{data["shout_mode_key"]})"
+      track(data, "順番設定", message, ":順番設定:")
       broadcast(:ordered_members_share_broadcasted, data)
     end
 
     def message_share(data)
-      action = "チャット"
-      if data["message_scope_key"] == "is_message_scope_private"
+      if data["message_scope_key"] == "is_message_scope_public"
+        action = "チャット"
+        emoji = ":公開チャット:"
+      else
         action = "観戦チャ"
+        emoji = ":観戦チャット:"
       end
-      track(data, action, data["message"])
+      track(data, action, data["message"], emoji)
       broadcast(:message_share_broadcasted, data)
     end
 
@@ -133,13 +140,28 @@ module ShareBoard
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
 
-    def track(data, action, body)
-      key = "共有将棋盤 [#{room_code}] #{action}"
+    def track(data, action, message, emoji = nil)
+      subject = []
+      subject << "共有将棋盤"
+      subject << "[#{room_code}]"
+      subject << action
+      subject = subject.join(" ")
+
+      body = []
+      body << ":#{data["ua_icon_key"]}:"
+      body << ac_event_str(data)
+      body << data["from_user_name"]
+      body << data["active_level"].to_s + ":"
+      if v = message.presence
+        body << v
+      end
+      body = body.join(" ").squish
+
+      SlackAgent.notify(subject: subject, body: body, emoji: emoji)
+
       if Rails.env.development? && false
         SlackAgent.notify(subject: key, body: data)
       end
-
-      SlackAgent.notify(subject: key, body: %(:#{data["ua_icon_key"]}: #{ac_event_str(data)} #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
     end
 
     def subscribed_track(action)

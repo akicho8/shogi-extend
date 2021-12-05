@@ -48,8 +48,6 @@ module Api
           return
         end
         xnotice = Xnotice.add("予約しました(#{no}件待ち)", type: "is-success", method: :dialog)
-        n = ::Swars::CrawlReservation.active_only.count
-        slack_notify(subject: "棋譜取得の予約(#{n})", body: record.to_t)
         render json: { xnotice: xnotice }
       end
 

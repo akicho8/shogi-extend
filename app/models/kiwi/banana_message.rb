@@ -49,7 +49,17 @@ module Kiwi
         end
       end
 
-      SlackAgent.notify(subject: "動画コメント", body: [body, banana.page_url].join("\n"))
+      create_notify
+    end
+
+    # rails r 'p Kiwi::BananaMessage.last.create_notify'
+    def create_notify
+      s = []
+      s << user.name
+      s << body
+      s << banana.page_url
+      s = s.join(" ").squish
+      SlackAgent.notify(emoji: ":コメント:", subject: "動画コメント", body: s)
     end
 
     # 関係者

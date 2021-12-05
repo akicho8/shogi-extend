@@ -31,9 +31,9 @@ module Api
 
     def adapter_notify(error = nil)
       if error
-        emoji = "🔴"
+        emoji = ":成功:"
       else
-        emoji = "🟢"
+        emoji = ":失敗:"
       end
 
       subject = []

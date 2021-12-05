@@ -73,7 +73,7 @@ class UserMailer < ApplicationMailer
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify
   def battle_fetch_notify(record, other_options = {})
     subject = []
-    subject << EmojiInfo.fetch("棋譜ZIP")
+    subject << EmojiInfo.fetch(":棋譜ZIP:")
     subject << "[将棋ウォーズ棋譜検索]"
     subject << "#{record.target_user.key}さんの棋譜取得完了"
     subject = subject.join(" ")

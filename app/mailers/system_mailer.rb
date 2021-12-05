@@ -19,9 +19,15 @@ class SystemMailer < ApplicationMailer
     end
   end
 
-  # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t).deliver_later'
+  # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t, emoji: ":OK:").deliver_later'
   def notify(params = {})
-    subject = [params[:emoji], app_name_prepend(params[:subject])].join
+    subject = []
+    if v = params[:emoji]
+      subject << EmojiInfo.lookup(v) || v
+    end
+    subject << app_name_prepend(params[:subject])
+    subject = subject.join
+
     params = params.merge(subject: subject)
     params = params_normalize_if_fixed(params)
     mail(params)

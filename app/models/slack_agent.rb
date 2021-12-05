@@ -13,24 +13,6 @@ module SlackAgent
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
   mattr_accessor(:backtrace_lines_max) { 4 }
 
-  # rails r "SlackAgent.notify_exception(Exception.new)"
-  # rails r "SlackAgent.notify_exception((1/0 rescue $!))"
-  def notify_exception(error, params = {})
-    Rails.logger.info(error)
-    out = []
-    if error.message
-      out << error.message
-    end
-    if error.backtrace
-      out += error.backtrace.take(backtrace_lines_max)
-    end
-    if params.present?
-      out << params.pretty_inspect
-    end
-    body = out.compact.join("\n")
-    notify(key: error.class.name, body: body)
-  end
-
   # rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
   def notify(params = {})
     if ENV["SETUP"]
@@ -48,11 +30,15 @@ module SlackAgent
     wait = excessive_measure.wait_value_for_job
 
     body = []
+
+    v = params[:emoji].presence || ":空白:"
+    body << EmojiInfo.lookup(v) || v
+
     body << Rails.cache.increment(:slack_counter)
     body << "w#{wait}"
     body << timestamp
     if v = params[:subject].presence
-      body << v
+      body << "【#{v}】"
     end
     if v = params[:body].presence
       body << v
@@ -69,6 +55,24 @@ module SlackAgent
     end
 
     SlackAgentNotifyJob.set(wait: wait).perform_later(api_params)
+  end
+
+  # rails r "SlackAgent.notify_exception(Exception.new)"
+  # rails r 'SlackAgent.notify_exception((1/0 rescue $!))'
+  def notify_exception(error, params = {})
+    Rails.logger.info(error)
+    body = []
+    if error.message
+      body << error.message
+    end
+    if error.backtrace
+      body += error.backtrace.take(backtrace_lines_max)
+    end
+    if params.present?
+      body << params.pretty_inspect
+    end
+    body = body.compact.join("\n")
+    notify(emoji: ":SOS:", subject: error.class.name, body: body)
   end
 
   private

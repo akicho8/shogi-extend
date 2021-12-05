@@ -33,7 +33,9 @@ module Swars
 
     belongs_to :user, class_name: "::User"
 
-    scope :active_only, -> { where(processed_at: nil) }
+    scope :active_only, -> { where(processed_at: nil) } # 未処理のものたち
+
+    after_create_commit :create_notify
 
     before_validation on: :create do
       if user
@@ -116,6 +118,22 @@ module Swars
       # parts << body_encodes
       str = parts.flatten.compact.join("-") + ".zip"
       str
+    end
+
+    # rails r "Swars::CrawlReservation.last.create_notify"
+    def create_notify
+      body = []
+      s = user.swars_crawl_reservations
+      count = s.where(target_user_key: target_user.key).count
+      total = s.count
+      body << "#{user.name}さんが #{target_user.key.inspect} の#{count}回目の予約"
+      body << "全体で#{total}回目"
+      if attachment_mode == "with_zip"
+        body << "ZIP"
+      end
+      body << "→ #{user.email}"
+      body = body.join(" ")
+      SlackAgent.notify(emoji: ":目覚まし時計:", subject: "棋譜取得予約", body: body)
     end
 
     private
