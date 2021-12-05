@@ -113,6 +113,10 @@ if true
       `open #{save_page}`
     end
 
+    def side_menu_open
+      find(".sidebar_toggle_navbar_item").click
+    end
+
     # text が含まれる要素をクリック
     # click_on では link か button でなければ発見できないため、テキストに @click している個所を探しづらい
     def click_text_match(text)

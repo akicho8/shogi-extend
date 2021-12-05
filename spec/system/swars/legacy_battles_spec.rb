@@ -1,9 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
-  before do
-    swars_battle_setup
-  end
+  include SwarsSupport
 
   let :record do
     Swars::Battle.first
@@ -16,21 +14,6 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   end
 
   describe "index" do
-    it "トップ" do
-      visit2 "/swars/search"
-      assert_text "将棋ウォーズ棋譜検索"
-      expect(page).to have_field "query"
-      doc_image
-    end
-
-    it "通常検索" do
-      visit2 "/swars/search"
-      fill_in "query", with: "devuser1"
-      find(".search_form_submit_button").click
-      assert_text "相手"
-      doc_image
-    end
-
     # xit "アプリ起動できるブックマーク可能なページに飛ぶ" do
     #   visit2 "/swars/search?query=devuser1"
     #   find(".usage_modal_open_handle").click

@@ -8,18 +8,22 @@ export const app_search = {
   methods: {
     // 送信ボタンを押した
     search_click_handle() {
-      this.debug_alert(`click: ${this.query}`)
-      if (!this.query) {
-        this.toast_ok("ウォーズIDを入力してから検索してください")
-        return
-      }
-      this.interactive_search({query: this.query})
+      this.debug_alert("click")
+      this.search_with_valid_handle()
     },
 
     // Enterキーを叩いた
     search_enter_handle() {
       this.debug_alert("enter")
-      this.search_click_handle()
+      this.search_with_valid_handle()
+    },
+
+    search_with_valid_handle() {
+      if (this.blank_p(this.query)) {
+        this.toast_warn("なんかしら入力してから検索してください")
+        return
+      }
+      this.interactive_search({query: this.query})
     },
 
     // 候補から選択した or 選択が外れた(このときはnullがくる)

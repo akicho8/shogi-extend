@@ -18,7 +18,7 @@
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
-      b-navbar-item.px_5_if_tablet(@click="sidebar_toggle")
+      b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="sidebar_toggle")
         b-icon(icon="menu")
 
   MainSection
@@ -41,7 +41,7 @@
               ref="main_search_form"
               )
             p.control
-              b-button.search_form_submit_button(@click="search_click_handle" icon-left="magnify" size="is-medium" :loading="$fetchState.pending && false" :disabled="!query")
+              b-button.search_click_handle(@click="search_click_handle" icon-left="magnify" size="is-medium")
 
           .columns.is-multiline.mt-4(v-if="board_show_p")
             template(v-for="e in config.records")

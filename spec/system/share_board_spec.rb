@@ -1517,10 +1517,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     first(".apply_button").click  # 実行する
   end
 
-  def side_menu_open
-    find(".sidebar_toggle_navbar_item").click
-  end
-
   def assert_turn(turn)
     assert_text("current_turn:#{turn}", wait: 10)
   end

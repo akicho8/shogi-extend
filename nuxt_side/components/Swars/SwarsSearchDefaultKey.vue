@@ -15,13 +15,13 @@ client-only
           .has-text-centered
             p {{new_key}}さんを初期値に設定しますか？
           .buttons.is-centered.mt-3
-            b-button(@click="set_handle") 設定する
+            b-button.set_handle(@click="set_handle") 設定する
 
         template(v-if="old_key")
           .has-text-centered
             p 初期値({{old_key}}さん)を消去しますか？
           .buttons.is-centered.mt-3
-            b-button(@click="unset_handle") 消去する
+            b-button.unset_handle(@click="unset_handle") 消去する
 </template>
 
 <script>
