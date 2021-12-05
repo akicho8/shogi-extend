@@ -80,19 +80,48 @@ module Wkbk
     end
 
     describe "general_search" do
-      it "works" do
+      it "クエリとタグ検索が正しい" do
         Wkbk::Book.destroy_all
         user = User.create!
-        book = user.wkbk_books.create!(title: "a", tag_list: "b", folder_key: "public")
-        book = user.wkbk_books.create!(title: "c", tag_list: "d", folder_key: "public")
+        user.wkbk_books.create!(title: "aa", tag_list: "t1", folder_key: "public")
+        user.wkbk_books.create!(title: "bb", tag_list: "t2", folder_key: "public")
         assert { Book.general_search(query: "a").size === 1 }
-        assert { Book.general_search(query: "a", tag: "b").size === 1 }
+        assert { Book.general_search(query: "a", tag: "t1").size === 1 }
+        assert { Book.general_search(query: "_", tag: "t1").size === 0 }
       end
-      it "アヒルを「あ」で検索" do
+
+      it "カタカナをひらがなで検索できる" do
         Wkbk::Book.destroy_all
         user = User.create!
         book = user.wkbk_books.create!(title: "アヒル", folder_key: "public")
         assert { Book.general_search(query: "あ").size === 1 }
+      end
+
+      describe "公開設定でスコープできる" do
+        before do
+          Wkbk::Book.destroy_all
+          @user = User.create!
+          @user.wkbk_books.create!(folder_key: "public")
+          @user.wkbk_books.create!(folder_key: "limited")
+          @user.wkbk_books.create!(folder_key: "private")
+        end
+
+        def test1(search_preset_key)
+          Book.general_search(search_preset_key: search_preset_key, current_user: @user).collect(&:folder_key)
+        end
+
+        it "works" do
+          assert { test1("公開")     == ["public"]  }
+          assert { test1("限定公開") == ["limited"] }
+          assert { test1("非公開")   == ["private"] }
+        end
+      end
+
+      it "queryとtagとsearch_preset_keyがある(joinとorが複合するときcompatibleエラーになりやすい)" do
+        Wkbk::Book.destroy_all
+        user = User.create!
+        user.wkbk_books.create!(title: "(title)", tag_list: "(tag)", folder_key: "public")
+        assert { Book.general_search(query: "(title)", tag: "(tag)", search_preset_key: "公開", current_user: user).size == 1 }
       end
     end
 

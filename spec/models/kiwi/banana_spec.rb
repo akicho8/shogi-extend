@@ -99,6 +99,9 @@ module Kiwi
       assert { Banana.general_search(tag: "a").present? }
       assert { Banana.general_search(tag: "c").blank? }
 
+      # queryとtagとsearch_preset_keyでjoinの問題が起きない超重要
+      assert { Banana.general_search(current_user: user1, query: "アヒル", tag: "a", search_preset_key: "非公開").present? }
+
       # public なので非公開スコープでは表示しない
       assert { Banana.general_search(current_user: user1, search_preset_key: "非公開").blank? }
       # private なので非公開で表示する

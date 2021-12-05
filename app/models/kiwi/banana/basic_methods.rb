@@ -55,6 +55,7 @@ module Kiwi
             ].uniq.collect { |e| "%#{e}%" }
             s = where(arel_table[:title].matches_any(v))
             s = s.or(where(arel_table[:description].matches_any(v)))
+            s = s.or(where(User.arel_table[:name].matches_any(v)))
           end
         }
 
