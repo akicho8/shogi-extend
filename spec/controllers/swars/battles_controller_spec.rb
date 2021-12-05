@@ -34,9 +34,7 @@
 require "rails_helper"
 
 RSpec.describe Swars::BattlesController, type: :controller do
-  before do
-    swars_battle_setup
-  end
+  include SwarsSupport
 
   let :record do
     Swars::Battle.first

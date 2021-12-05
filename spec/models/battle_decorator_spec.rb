@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe BattleDecorator, type: :model do
   describe "swars" do
+    include SwarsSupport
+
     before do
-      swars_battle_setup
       @battle = Swars::Battle.first
       @decorator = @battle.battle_decorator(view_context: Object.new)
     end

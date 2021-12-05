@@ -68,11 +68,6 @@ RSpec.configure do |config|
   # config.include ActiveJob::TestHelper
 
   # テストの中で使う便利メソッド
-
-  config.include Module.new {
-    def swars_battle_setup
-      Swars.setup
-      Swars::Battle.user_import(user_key: "devuser1")
-    end
-  }
+  # config.include Module.new {
+  # }
 end

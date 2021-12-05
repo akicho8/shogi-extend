@@ -6,7 +6,7 @@ RSpec.describe "BiDi問題", type: :system do
   end
 
   it "works" do
-    visit "/swars/search"
+    visit2 "/swars/search"
     fill_in "query", with: "\u{202A}devuser1\u{202C}"
     find(".search_form_submit_button").click
     assert_text "相手"

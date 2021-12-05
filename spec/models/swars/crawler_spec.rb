@@ -2,8 +2,9 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Crawler, type: :model do
+    include SwarsSupport
+
     before do
-      swars_battle_setup
       Swars::User.find_each { |e| e.search_logs.create! }
     end
 
