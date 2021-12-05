@@ -45,19 +45,29 @@ module SlackAgent
       raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
-    text = "#{timestamp}【#{params[:subject]}】#{params[:body]}"
-
-    slack_counter = Rails.cache.increment(:slack_counter)
     wait = excessive_measure.wait_value_for_job
-    text = "#{slack_counter} W#{wait} #{text}"
+
+    body = []
+    body << Rails.cache.increment(:slack_counter)
+    body << "w#{wait}"
+    body << timestamp
+    if v = params[:subject].presence
+      body << v
+    end
+    if v = params[:body].presence
+      body << v
+    end
+    body = body.join(" ")
 
     api_params = {
       :channel => params[:channel] || default_channel,
-      :text    => text,
+      :text    => body,
     }
+
     if Rails.env.test?
       return api_params
     end
+
     SlackAgentNotifyJob.set(wait: wait).perform_later(api_params)
   end
 
