@@ -35,7 +35,9 @@ module SlackAgent
     body << EmojiInfo.lookup(v) || v
 
     body << (Rails.cache.increment(:slack_counter) || 0)
+    body << " "
     body << "w#{wait}"
+    body << " "
     body << timestamp
     if v = params[:subject].presence
       body << "【#{v}】"
@@ -43,7 +45,7 @@ module SlackAgent
     if v = params[:body].presence
       body << v
     end
-    body = body.join(" ")
+    body = body.join
 
     api_params = {
       :channel => params[:channel] || default_channel,
