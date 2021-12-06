@@ -43,7 +43,7 @@
             p.control
               b-button.search_click_handle(@click="search_click_handle" icon-left="magnify" size="is-medium")
 
-          .columns.is-multiline.mt-4(v-if="board_show_p")
+          .columns.is-multiline.mt-4.is_board_display(v-if="board_show_p")
             template(v-for="e in config.records")
               // https://bulma.io/documentation/columns/responsiveness/
               // widescreen 1/5 (is-one-fifth-widescreen)
@@ -68,9 +68,7 @@
           //- v-if="$route.query.query || config.records.length >= 1"
           template(v-if="display_key === 'table'")
             SwarsBattleIndexTable(:base="base")
-  client-only
-    DebugPre(v-if="development_p") {{config}}
-    DebugPre(v-if="development_p") {{$store.user}}
+      SwarsBattleIndexDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>

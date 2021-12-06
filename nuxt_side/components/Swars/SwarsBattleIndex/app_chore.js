@@ -8,12 +8,15 @@ export const app_chore = {
       this.kif_clipboard_copy({kc_path: row.show_path})
     },
 
-    bookmark_desc() {
+    home_bookmark_handle() {
       this.sidebar_p = false
       this.sound_play_click()
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
-        message: `検索初期値の設定の他には<b>検索直後</b>のURLを<b>ホーム画面に追加</b>かブックマークしてもウォーズIDの入力の手間を省けます`,
+        message: `
+検索初期値の設定の他には<b>検索直後</b>のURLを<b>ホーム画面に追加</b>か
+ブックマークしてもウォーズIDの入力の手間を省けます
+`,
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',

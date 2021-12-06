@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
+RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true do
   include SwarsSupport
 
-  let :record do
-    Swars::Battle.first
-  end
+  # let :record do
+  #   Swars::Battle.first
+  # end
 
   it "入っているデータの確認" do
     assert { Swars::Battle.count == 3 }
@@ -21,7 +21,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
   end
 
-  describe "検索" do
+  describe "クエリ検索" do
     it "引数なしで来たときの画面" do
       visit2 "/swars/search"
       assert_text "将棋ウォーズ棋譜検索"
@@ -45,28 +45,173 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
     end
   end
 
-  describe "検索初期値の設定" do
-    it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
+  describe "ACTION" do
+    it "プレイヤー情報" do
       visit2 "/swars/search", query: "Yamada_Taro"
-      default_swars_id_set
+      side_menu_open
+      find(".swars_users_key_handle").click
+      assert { current_path == "/swars/users/Yamada_Taro/" }
+    end
+  end
 
-      visit2 "/swars/search"
-      assert_result_exist
+  describe "表示形式" do
+    describe "テーブルカラムのトグル" do
+      it "最初に検索したとき日付のカラムがある" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        table_in { assert_text("2020-01-01") }
+      end
+
+      it "日時のカラムを非表示にする" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".display_key_set_table_handle .dropdown").click
+        menu_item_sub_menu_click("日時")
+        table_in { assert_no_text("2020-01-01") }
+      end
     end
 
-    it "検索初期値を解除したので引数なしで来たときは検索できない" do
-      visit2 "/swars/search", query: "Yamada_Taro"
-      assert_query "Yamada_Taro"
-      default_swars_id_set   # 検索初期値に Yamada_Taro を設定
+    describe "切り替え" do
+      it "初期値はテーブルになっている" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        assert_var_eq(:display_key, "table")
+      end
 
-      visit2 "/swars/search" # 再度検索ページに飛ぶと Yamada_Taro で検索している
-      assert_query "Yamada_Taro"
-      assert_result_exist
+      it "表示形式を切り替える" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
 
-      default_swars_id_unset # 検索初期値の Yamada_Taro を解除
-      visit2 "/swars/search"
-      assert_query ""
-      assert_result_blank    # 何も検索されていない
+        find(".display_key_set_critical_handle").click
+        assert_var_eq(:display_key, "critical")
+        assert_selector(".is_board_display")
+
+        find(".display_key_set_outbreak_handle").click
+        assert_var_eq(:display_key, "outbreak")
+        assert_selector(".is_board_display")
+
+        find(".display_key_set_last_handle").click
+        assert_var_eq(:display_key, "last")
+        assert_selector(".is_board_display")
+
+        find(".display_key_set_table_handle").click
+        assert_var_eq(:display_key, "table")
+        assert_selector(".SwarsBattleIndexTable")
+      end
+    end
+  end
+
+  describe "表示オプション" do
+    describe "表示件数" do
+      it "初期値は10になっている" do
+        visit2 "/swars/search"
+        assert_var_eq(:per, 10)
+        assert_var_eq(:records_length, 0)
+      end
+
+      it "サイドバーから変更できる" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".per_change_menu_item").click
+        find(".is_per1").click
+        assert_var_eq(:per, 1)
+        assert_var_eq(:records_length, 1)
+      end
+    end
+
+    describe "フィルタ" do
+      it "サイドバーから変更できる" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".filter_set_menu_item").click
+        find(".is_filter_judge_win").click
+        assert_var_eq(:records_length, 0)
+      end
+    end
+
+    describe "対戦相手で絞る" do
+      it "サイドバーから変更できる" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".vs_input_modal_handle").click
+        within(".VsInputModal") do
+          find("input").set("devuser1")
+          find(".apply_handle").click
+        end
+        assert_no_selector(".VsInputModal")
+        assert_var_eq(:records_length, 1)
+      end
+    end
+  end
+
+  describe "便利な使い方あれこれ" do
+    describe "検索初期値の設定" do
+      it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        default_swars_id_set
+
+        visit2 "/swars/search"
+        assert_result_exist
+      end
+
+      it "検索初期値を解除したので引数なしで来たときは検索できない" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        assert_query "Yamada_Taro"
+        default_swars_id_set   # 検索初期値に Yamada_Taro を設定
+
+        visit2 "/swars/search" # 再度検索ページに飛ぶと Yamada_Taro で検索している
+        assert_query "Yamada_Taro"
+        assert_result_exist
+
+        default_swars_id_unset # 検索初期値の Yamada_Taro を解除
+        visit2 "/swars/search"
+        assert_query ""
+        assert_result_blank    # 何も検索されていない
+      end
+    end
+
+    describe "ホーム画面に追加" do
+      it "works" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".home_bookmark_handle").click
+        assert_selector(".dialog.modal.is-active")
+        text_click("わかった")
+      end
+    end
+
+    describe "外部APPショートカット" do
+      before do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".external_app_menu_item").click
+      end
+
+      it "ぴよ将棋" do
+        find(".is_external_app_piyo_shogi").click
+        assert { current_path == "/swars/users/Yamada_Taro/direct-open/piyo_shogi/" }
+      end
+
+      it "KENTO" do
+        find(".is_external_app_kento").click
+        assert { current_path == "/swars/users/Yamada_Taro/direct-open/kento/" }
+      end
+    end
+
+    describe "KENTO_API" do
+      it "works" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".swars_users_key_kento_api_menu_item").click
+
+        # 移動後
+        assert { current_path == "/swars/users/Yamada_Taro/kento-api" } # 別ページに移動した
+        assert_text("Yamada_Taroさん専用の KENTO API 設定手順")         # タイトルが正しい
+        find(".clipboard_copy_handle").click                            # 「URLをコピー」をクリック
+        find(".jump_to_kento_setting_handle").click                     # 「KENTO側で設定」の「移動」をクリック
+        assert { windows.count == 2 }                                   # 別タブが開かれたため2つになった
+        assert { current_url.include?("localhost") }                    # URLは変わっていない
+        switch_to_window(windows.last)                                  # タブを切り替える
+        assert { current_url.include?("kento-shogi.com") }              # KENTOに移動している
+      end
     end
   end
 
@@ -95,5 +240,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system do
   def assert_query(query)
     value = find("#query").value
     assert { value == query }
+  end
+
+  def assert_var_eq(var, val)
+    assert_text("[#{var}=#{val}]")
+  end
+
+  def table_in
+    within(".SwarsBattleIndexTable") { yield }
   end
 end

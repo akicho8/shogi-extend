@@ -9,6 +9,10 @@ export class ExternalAppInfo extends ApplicationMemoryRecord {
   }
 
   get apple_touch_icon() {
-    return "apple-touch-icon-#{key}.png"
+    return `apple-touch-icon-${this.key}.png`
+  }
+
+  get dom_class() {
+    return `is_external_app_${this.key}`
   }
 }

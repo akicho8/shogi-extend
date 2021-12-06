@@ -10,12 +10,12 @@ client-only
       .container
         b-field.block(label="1. URLをコピー")
           .control
-            b-button(icon-left="clipboard-plus-outline" @click="clipboard_copy_handle")
+            b-button.clipboard_copy_handle(icon-left="clipboard-plus-outline" @click="clipboard_copy_handle")
           b-input(type="text" :value="kento_api_url" expanded readonly)
 
         b-field.block(label="2. KENTO側で設定")
           .control
-            b-button(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="sound_play_click()") 移動
+            b-button.jump_to_kento_setting_handle(tag="a" href="https://www.kento-shogi.com/setting" target="_blank" icon-right="open-in-new" @click="sound_play_click()") 移動
 
         .image.box.mt-5
           img(src="~/assets/kento_settings_api.png")
