@@ -30,10 +30,9 @@ module SlackAgent
     wait = excessive_measure.wait_value_for_job
 
     body = []
-
     v = params[:emoji].presence || ":空白:"
     body << EmojiInfo.lookup(v) || v
-
+    body << " "
     body << (Rails.cache.increment(:slack_counter) || 0)
     body << " "
     body << "w#{wait}"
