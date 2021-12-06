@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 38b04dfcc667afff6b6d387607d15ca4255b5a00
+  revision: bbd7f657ed08aad78edf591b34e480e04be63cb8
   specs:
     bioshogi (0.0.1)
       actionview
@@ -569,4 +569,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.2.31
+   2.2.32
