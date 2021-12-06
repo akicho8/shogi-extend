@@ -28,6 +28,7 @@ module Wkbk
 
       # アバターあってもなくても作る
       # cap staging rails:runner CODE='Wkbk::Book.find_each(&:avatar_create_by_title_force)'
+      # cap production rails:runner CODE='Wkbk::Book.find_by(key: "xxxxxxxx").avatar_create_by_title_force'
       def avatar_create_by_title_force
         blob = CardGenerator.to_blob(body: title)
         io = StringIO.new(blob)
