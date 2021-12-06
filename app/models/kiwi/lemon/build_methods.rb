@@ -334,8 +334,29 @@ module Kiwi
 
       # rails r 'Kiwi::Lemon.first.start_notify'
       def start_notify
-        SystemMailer.notify(fixed: true, subject: report_subject, body: report_text).deliver_later
-        SlackAgent.notify(subject: report_subject, body: browser_url)
+        subject = []
+        subject << "動画作成"
+        subject << "##{id}"
+        subject << user.name
+        subject << "#{user.kiwi_lemons.count.next}回目"
+        subject << status_key
+        subject = subject.join(" ")
+
+        SystemMailer.notify(fixed: true, emoji: ":動画:", subject: subject, body: mail_body).deliver_later
+
+        subject = []
+        subject << "動画作成"
+        subject << "##{id}"
+        subject = subject.join(" ")
+
+        body = []
+        body << user.name
+        body << "#{user.kiwi_lemons.count.next}回目"
+        body << status_key
+        body << browser_url
+        body = body.compact.join(" ")
+
+        SlackAgent.notify(emoji: ":動画:", subject: subject, body: body)
       end
 
       # rails r 'Kiwi::Lemon.first.end_notify'
@@ -344,13 +365,8 @@ module Kiwi
         KiwiMailer.lemon_notify(self).deliver_later
       end
 
-      # rails r 'p Kiwi::Lemon.first.report_subject'
-      def report_subject
-        "動画作成 #{status_key} ##{id} #{user.name} #{user.kiwi_lemons.count.next}回目"
-      end
-
-      # rails r 'puts Kiwi::Lemon.first.report_text'
-      def report_text
+      # rails r 'puts Kiwi::Lemon.first.mail_body'
+      def mail_body
         {
           "変換パラメータ" => all_params[:media_builder_params].to_t,
           "棋譜URL"        => UrlProxy.full_url_for(recordable.share_board_path),
