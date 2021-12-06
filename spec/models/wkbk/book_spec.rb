@@ -79,49 +79,52 @@ module Wkbk
       book.as_json(::Wkbk::Book.json_struct_for_edit)
     end
 
-    describe "general_search" do
-      it "クエリとタグ検索が正しい" do
-        Wkbk::Book.destroy_all
-        user = User.create!
-        user.wkbk_books.create!(title: "aa", tag_list: "t1", folder_key: "public")
-        user.wkbk_books.create!(title: "bb", tag_list: "t2", folder_key: "public")
-        assert { Book.general_search(query: "a").size === 1 }
-        assert { Book.general_search(query: "a", tag: "t1").size === 1 }
-        assert { Book.general_search(query: "x", tag: "t1").size === 0 }
+    describe "検索" do
+      before do
+        Book.destroy_all
+        @user = User.create!(name: "(alice)")
+        @book = @user.wkbk_books.create!(title: "(ア)", description: "(description)", tag_list: ["a", "b"], folder_key: "public")
+        @user.wkbk_access_logs.create!(book: @book)
+      end
+
+      it "ユーザー名で検索できる" do
+        assert { Book.general_search(query: "(alice)").present? }
+      end
+
+      it "説明を検索できる" do
+        assert { Book.general_search(query: "(description)").present? }
+        assert { Book.general_search(query: "unknown").blank? }
       end
 
       it "カタカナをひらがなで検索できる" do
-        Wkbk::Book.destroy_all
-        user = User.create!
-        book = user.wkbk_books.create!(title: "アヒル", folder_key: "public")
-        assert { Book.general_search(query: "あ").size === 1 }
+        assert { Book.general_search(query: "あ").present? }
+        assert { Book.general_search(query: "ん").blank? }
       end
 
-      describe "公開設定でスコープできる" do
-        before do
-          Wkbk::Book.destroy_all
-          @user = User.create!
-          @user.wkbk_books.create!(folder_key: "public")
-          @user.wkbk_books.create!(folder_key: "limited")
-          @user.wkbk_books.create!(folder_key: "private")
-        end
-
-        def test1(search_preset_key)
-          Book.general_search(search_preset_key: search_preset_key, current_user: @user).collect(&:folder_key)
-        end
-
-        it "works" do
-          assert { test1("公開")     == ["public"]  }
-          assert { test1("限定公開") == ["limited"] }
-          assert { test1("非公開")   == ["private"] }
-        end
+      it "タグ検索できる" do
+        assert { Book.general_search(tag: "a").present?   }
+        assert { Book.general_search(tag: "b").present?   }
+        assert { Book.general_search(tag: "a,b").present? }
+        assert { Book.general_search(tag: "c").blank?     }
       end
 
-      it "queryとtagとsearch_preset_keyがある(joinとorが複合するときcompatibleエラーになりやすい)" do
-        Wkbk::Book.destroy_all
-        user = User.create!
-        user.wkbk_books.create!(title: "(title)", tag_list: "(tag)", folder_key: "public")
-        assert { Book.general_search(query: "(title)", tag: "(tag)", search_preset_key: "公開", current_user: user).size == 1 }
+      it "公開設定" do
+        assert { Book.general_search(current_user: @user, search_preset_key: "公開").present? }
+        assert { Book.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
+        assert { Book.general_search(current_user: @user, search_preset_key: "非公開").blank? }
+      end
+
+      it "戦法" do
+        assert { Book.general_search(search_preset_key: "居飛車").blank? }
+        assert { Book.general_search(search_preset_key: "右玉").blank? }
+      end
+
+      it "join問題が起きない" do
+        assert { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
+      end
+
+      it "履歴" do
+        assert { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
       end
     end
 

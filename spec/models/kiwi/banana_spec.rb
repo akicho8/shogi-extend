@@ -87,28 +87,54 @@ module Kiwi
       assert { lemon1.og_image_path == lemon1.browser_path }
     end
 
-    it "検索" do
-      Banana.destroy_all
-      user1 = User.create!
-      free_battle1 = user1.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
-      lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
-      banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "アヒル", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
-      assert { Banana.general_search(query: "あひる").present? }
-      assert { Banana.general_search(query: "(description)").present? }
-      assert { Banana.general_search(query: "unknown").blank? }
-      assert { Banana.general_search(tag: "a").present? }
-      assert { Banana.general_search(tag: "c").blank? }
+    describe "検索" do
+      before do
+        @user = User.create!(name: "(alice)")
+        free_battle1 = @user.free_battles.create!(kifu_body: mp4_params1[:body], use_key: "kiwi_lemon")
+        lemon1 = @user.kiwi_lemons.create!(recordable: free_battle1, all_params: mp4_params1[:all_params])
+        @banana = @user.kiwi_bananas.create!(lemon: lemon1, title: "(ア)", description: "(description)", folder_key: "public", tag_list: ["a", "b"])
+        @user.kiwi_access_logs.create!(banana: @banana)
+      end
 
-      # queryとtagとsearch_preset_keyでjoinの問題が起きない超重要
-      assert { Banana.general_search(current_user: user1, query: "アヒル", tag: "a", search_preset_key: "公開").present? }
+      it "ユーザー名で検索できる" do
+        assert { Banana.general_search(query: "(alice)").present? }
+      end
 
-      # public なので非公開スコープでは表示しない
-      assert { Banana.general_search(current_user: user1, search_preset_key: "非公開").blank? }
-      # private なので非公開で表示する
-      banana1.update!(folder_key: "private")
-      assert { Banana.general_search(current_user: user1, search_preset_key: "非公開").present? }
-      # private でも自分用の動画はすべてに表示してたけどやめた
-      assert { Banana.general_search(current_user: user1, search_preset_key: "新着").blank? }
+      it "説明を検索できる" do
+        assert { Banana.general_search(query: "(description)").present? }
+        assert { Banana.general_search(query: "unknown").blank? }
+      end
+
+      it "カタカナをひらがなで検索できる" do
+        assert { Banana.general_search(query: "あ").present? }
+        assert { Banana.general_search(query: "ん").blank? }
+      end
+
+      it "タグ検索できる" do
+        assert { Banana.general_search(tag: "a").present?   }
+        assert { Banana.general_search(tag: "b").present?   }
+        assert { Banana.general_search(tag: "a,b").present? }
+        assert { Banana.general_search(tag: "c").blank?     }
+      end
+
+      it "公開設定" do
+        assert { Banana.general_search(current_user: @user, search_preset_key: "公開").present? }
+        assert { Banana.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
+        assert { Banana.general_search(current_user: @user, search_preset_key: "非公開").blank? }
+      end
+
+      it "戦法" do
+        assert { Banana.general_search(search_preset_key: "居飛車").blank? }
+        assert { Banana.general_search(search_preset_key: "右玉").blank? }
+      end
+
+      it "join問題が起きない" do
+        assert { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
+      end
+
+      it "履歴" do
+        assert { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
+      end
     end
 
     describe "削除" do

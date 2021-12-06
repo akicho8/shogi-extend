@@ -95,7 +95,7 @@ module Kiwi
               s = select(:banana_id, "MAX(created_at) as last_access_at").group(:banana_id)
               s = s.order("last_access_at desc").limit(max)
               ids = s.collect(&:banana_id)
-              Banana.where(id: ids).order([Arel.sql("FIELD(#{Banana.primary_key}, ?)"), ids])
+              Banana.where(id: ids).order([Arel.sql("FIELD(#{Banana.table_name}.#{Banana.primary_key}, ?)"), ids])
             end
           end
           has_many :kiwi_access_bananas, through: :kiwi_access_logs, source: :banana, class_name: "Kiwi::Banana"   # 過去に見た履歴動画

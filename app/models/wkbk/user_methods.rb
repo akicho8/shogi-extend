@@ -59,7 +59,7 @@ module Wkbk
               s = select(:book_id, "MAX(created_at) as last_access_at").group(:book_id)
               s = s.order("last_access_at desc").limit(max)
               ids = s.collect(&:book_id)
-              Book.where(id: ids).order([Arel.sql("FIELD(#{Book.primary_key}, ?)"), ids])
+              Book.where(id: ids).order([Arel.sql("FIELD(#{Book.table_name}.#{Book.primary_key}, ?)"), ids])
             end
           end
           has_many :wkbk_access_books, through: :wkbk_access_logs, source: :book, class_name: "Wkbk::Book"   # 過去に見た履歴動画
