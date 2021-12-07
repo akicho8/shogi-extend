@@ -8,7 +8,7 @@
         .label_text 棋譜
         b-button.mb-0.ml-1.any_source_trim_handle(@click="base.any_source_trim_handle" size="is-small") トリム
         b-button.mb-0.ml-1.any_source_edit_handle(@click="base.any_source_edit_handle" size="is-small") 編集
-      b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="4" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。KENTOや将棋DB2のURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
+      b-input(type="textarea" ref="body" v-model.trim="base.body" expanded rows="4" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。棋譜をパラメータに含むURL。KENTOや将棋DB2のURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
 
     p.mt-0(v-if="false")
       b-button(@click="base.any_source_edit_handle" type="is-white" size="is-small" icon-left="open-in-new")
