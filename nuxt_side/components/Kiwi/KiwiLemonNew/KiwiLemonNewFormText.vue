@@ -17,8 +17,8 @@
         b-icon(icon="open-in-new" size="is-small")
         | 共有将棋盤で確認
 
-  b-field.field_block(label="表紙")
-    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711/02/28")
+  b-field.field_block(label="表紙" message="センタリングして表示します。最大5行ぐらいにしてください。空なら表紙は省きます")
+    b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711-02-28")
 
   ////////////////////////////////////////////////////////////////////////////////
 
