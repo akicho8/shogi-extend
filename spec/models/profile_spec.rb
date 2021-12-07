@@ -23,14 +23,26 @@ require "rails_helper"
 RSpec.describe Profile, type: :model do
   include ActbSupport
 
-  it do
+  it "delegateしているのでuserから使える" do
     assert { user1.description }
     assert { user1.twitter_key }
   end
+
+  describe "Twitterアカウント" do
+    it "空だった" do
+      user1.profile.update!(twitter_key: "")
+      assert { user1.profile.twitter_key == "" }
+    end
+
+    describe "Twitterアカウントが何のことかわかってない人対策" do
+      it "URLを入力された" do
+        user1.profile.update!(twitter_key: "https//example.com/foo")
+        assert { user1.profile.twitter_key == "foo" }
+      end
+      it "リプする形式で入力された" do
+        user1.profile.update!(twitter_key: "@foo")
+        assert { user1.profile.twitter_key == "foo" }
+      end
+    end
+  end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .
-# >> 
-# >> Finished in 0.84416 seconds (files took 2.08 seconds to load)
-# >> 1 example, 0 failures
-# >> 

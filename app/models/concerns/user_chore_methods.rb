@@ -75,7 +75,7 @@ module UserChoreMethods
       "名前確定日時"      => name_input_at&.to_s(:distance),
       "メールアドレス"    => email,
       "プロバイダ"        => auth_infos.collect(&:provider).join(", "),
-      "Twitterアカウント" => twitter_key,
+      "Twitter URL"       => twitter_url,
       "ログイン回数"      => sign_in_count,
       "最終ログイン日時"  => current_sign_in_at&.to_s(:distance),
       "登録日時"          => created_at&.to_s(:distance),
