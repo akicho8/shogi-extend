@@ -39,7 +39,9 @@ module ShareBoard
     def sfen_share_not_reach(data)
       x_retry_count = data['x_retry_count']
       track(data, "指手不達", "#{x_retry_count}回目", ":指手不達:")
-      raise SfenNotReachError, "指手不達(#{x_retry_count}回目) : #{data}"
+      if Rails.env.development?
+        raise SfenNotReachError, "指手不達(#{x_retry_count}回目) : #{data}"
+      end
     end
 
     def title_share(data)
