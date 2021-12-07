@@ -82,7 +82,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it "ツイッターアカウント" do
-      assert { record.twitter_key == "(nickname_is_twitter_account)" }
+      assert { record.twitter_key == "nickname_is_twitter_account" }
     end
 
     it "どっかにリダイレクトする" do
