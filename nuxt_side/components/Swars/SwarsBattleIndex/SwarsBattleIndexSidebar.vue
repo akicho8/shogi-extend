@@ -59,7 +59,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{name: 'swars-direct-download', query: base.current_route_query}"
             :disabled="menu_item_disabled")
 
-          b-menu-item.is_active_unset(
+          b-menu-item.is_active_unset.swars_users_key_download_all_handle(
             label="古い棋譜を補完"
             @click.native="base.config.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"

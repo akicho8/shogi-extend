@@ -37,14 +37,14 @@
 
       b-field.mt-5
         .control
-          b-switch(v-model="attachment_mode" true-value="with_zip" false-value="nothing" :disabled="!g_current_user")
+          b-switch.attachment_mode_switch_handle(v-model="attachment_mode" true-value="with_zip" false-value="nothing" :disabled="!g_current_user")
             | ZIPファイルの添付
 
       b-field.mt-5
         .control
           .buttons
-            b-button(@click="post_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
-            b-button(@click="crawler_run_handle_handle" v-if="development_p") さばく
+            b-button.post_handle(@click="post_handle" :disabled="!g_current_user" :loading="loading_p" icon-left="clock") 棋譜取得の予約
+            b-button.crawler_run_handle_handle(@click="crawler_run_handle_handle" v-if="development_p") さばく
 
   DebugPre(v-if="development_p") {{$data}}
 </template>

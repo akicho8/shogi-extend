@@ -66,6 +66,18 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         side_menu_open
         find(".display_key_set_table_handle .dropdown").click
         menu_item_sub_menu_click("日時")
+
+        table_in { assert_no_text("2020-01-01") }
+      end
+
+      it "保存している" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".display_key_set_table_handle .dropdown").click
+        menu_item_sub_menu_click("日時")
+
+        visit2 "/swars/search", query: "Yamada_Taro"
+        assert_list_present
         table_in { assert_no_text("2020-01-01") }
       end
     end
@@ -112,6 +124,21 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         side_menu_open
         find(".per_change_menu_item").click
         find(".is_per1").click
+        assert_var_eq(:per, 1)
+        assert_var_eq(:records_length, 1)
+
+        visit2 "/swars/search", query: "Yamada_Taro"
+        assert_var_eq(:per, 1)
+        assert_var_eq(:records_length, 1)
+      end
+
+      it "保存している" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".per_change_menu_item").click
+        find(".is_per1").click
+
+        visit2 "/swars/search", query: "Yamada_Taro"
         assert_var_eq(:per, 1)
         assert_var_eq(:records_length, 1)
       end
@@ -164,6 +191,34 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".download_handle").click                      # 「ダウンロード」
 
         assert { current_path == "/swars/search" }          # 検索に戻った
+      end
+    end
+
+    describe "古い棋譜を補完" do
+      it "ログインしていない場合はSNS経由ログインモーダル発動" do
+        visit2 "/swars/users/Yamada_Taro/download-all"
+        assert_selector(".NuxtLoginContainer")
+      end
+
+      it "正しく予約できる" do
+        login_by :sysop
+
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をタップ
+        assert { current_path == "/swars/users/Yamada_Taro/download-all" }
+
+                                                           # ページ遷移後
+        find(".crawler_run_handle_handle").click           # 「さばく」
+        find(".attachment_mode_switch_handle").click       # 「ZIPファイルの添付」
+        find(".post_handle").click                         # 「棋譜取得の予約」
+
+                                                           # モーダル発動
+        assert_text("予約しました(0件待ち)")
+        find(".dialog.modal.is-active button").click       # 「OK」をクリック
+
+        find(".crawler_run_handle_handle").click           # 「さばく」
+        assert_text("取得処理実行完了(1→0)")
       end
     end
   end
