@@ -1,5 +1,5 @@
 <template lang="pug">
-.card.SnsLoginContainer
+.card.NuxtLoginContainer
   .card-content
     .is-flex.is-justify-content-center.is-flex-direction-column
       template(v-for="e in SocialMediaInfo.values")
@@ -24,7 +24,7 @@ class SocialMediaInfo extends ApplicationMemoryRecord {
 }
 
 export default {
-  name: "SnsLoginContainer",
+  name: "NuxtLoginContainer",
   methods: {
     click_handle(e) {
       this.sound_play_click()
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SnsLoginContainer
+.NuxtLoginContainer
   .button:not(:first-child)
     margin-top: 0.9rem
 </style>

@@ -26,7 +26,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       visit2 "/swars/search"
       assert_text "将棋ウォーズ棋譜検索"
       assert_query ""
-      assert_result_blank
+      assert_list_blank
     end
 
     it "検索フォームに入力して検索する" do
@@ -35,13 +35,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       fill_in "query", with: "Yamada_Taro"
       assert_query "Yamada_Taro"
       find(".search_click_handle").click
-      assert_result_exist
+      assert_list_present
     end
 
     it "引数に指定して検索する" do
       visit2 "/swars/search", query: "Yamada_Taro"
       assert_query "Yamada_Taro"
-      assert_result_exist
+      assert_list_present
     end
   end
 
@@ -142,6 +142,32 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
   end
 
+  describe "一括取得" do
+    describe "ダウンロード" do
+      it "ログインしていない場合はSNS経由ログインモーダル発動" do
+        visit2 "/swars/direct-download"
+        assert_selector(".NuxtLoginContainer")
+      end
+
+      it "正しくダウンロードできる" do
+        login_by :sysop
+
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".swars_direct_download_handle").click         # 「ダウンロード」をタップ
+        assert { current_path == "/swars/direct-download" } # 遷移した
+
+                                                            # ページ遷移後
+        find(".swars_zip_dl_logs_destroy_all").click        # 「クリア」
+        find(".oldest_log_create_handle").click             # 「古い1件をDLしたことにする」
+        find(".zdsk_continue").click                        # 「前回の続きから」
+        find(".download_handle").click                      # 「ダウンロード」
+
+        assert { current_path == "/swars/search" }          # 検索に戻った
+      end
+    end
+  end
+
   describe "便利な使い方あれこれ" do
     describe "検索初期値の設定" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
@@ -149,7 +175,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         default_swars_id_set
 
         visit2 "/swars/search"
-        assert_result_exist
+        assert_list_present
       end
 
       it "検索初期値を解除したので引数なしで来たときは検索できない" do
@@ -159,12 +185,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         visit2 "/swars/search" # 再度検索ページに飛ぶと Yamada_Taro で検索している
         assert_query "Yamada_Taro"
-        assert_result_exist
+        assert_list_present
 
         default_swars_id_unset # 検索初期値の Yamada_Taro を解除
         visit2 "/swars/search"
         assert_query ""
-        assert_result_blank    # 何も検索されていない
+        assert_list_blank    # 何も検索されていない
       end
     end
 
@@ -227,11 +253,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     find(".unset_handle").click
   end
 
-  def assert_result_blank
+  def assert_list_blank
     assert_no_text("ぴよ将棋")
   end
 
-  def assert_result_exist
+  def assert_list_present
     assert_text "1-3 / 3"
     assert_text "Yamada_Taro 四段"
     assert_text("ぴよ将棋")

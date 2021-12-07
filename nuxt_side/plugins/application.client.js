@@ -1,4 +1,4 @@
-import SnsLoginContainer from "@/components/SnsLoginContainer.vue"
+import NuxtLoginContainer from "@/components/NuxtLoginContainer.vue"
 
 export const vue_application = {
   methods: {
@@ -25,7 +25,7 @@ export const vue_application = {
         customClass: "my-modal-background-background-color-dark",
         width: "20rem",
         parent: this,
-        component: SnsLoginContainer,
+        component: NuxtLoginContainer,
         animation: "",
         onCancel: () => this.sound_play_click(),
       })

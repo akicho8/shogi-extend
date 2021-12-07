@@ -52,7 +52,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           //-   template(v-for="e in ZipDlInfo.values")
           //-     b-menu-item.is_active_unset(@click="zip_dl_handle(e)" :label="e.name")
 
-          b-menu-item.is_active_unset(
+          b-menu-item.is_active_unset.swars_direct_download_handle(
             label="ダウンロード"
             @click.native="base.config.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"

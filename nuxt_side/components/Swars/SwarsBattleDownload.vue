@@ -31,7 +31,7 @@
 
       b-field(label="範囲" custom-class="is-small" :message="current_zip_dl_scope_info.message")
         template(v-for="e in config.scope_info")
-          b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" @input="zip_dl_scope_key_change_handle")
+          b-radio-button(size="is-small" v-model="zip_dl_scope_key" :native-value="e.key" :class="e.key" @input="zip_dl_scope_key_change_handle")
             | {{e.name}}
             template(v-if="e.count >= 1 || true")
               b-tag.has-text-weight-bold.ml-1(rounded type="is-primary is-light") {{e.count}}
@@ -62,9 +62,9 @@
       hr
 
       .buttons
-        b-button(@click="download_handle" :loading="loading_p" icon-left="download") ダウンロード
-        b-button(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
-        b-button(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
+        b-button.download_handle(@click="download_handle" :loading="loading_p" icon-left="download") ダウンロード
+        b-button.swars_zip_dl_logs_destroy_all(@click="swars_zip_dl_logs_destroy_all" v-if="development_p") クリア
+        b-button.oldest_log_create_handle(@click="oldest_log_create_handle" v-if="development_p") 古い1件をDLしたことにする
 
   DebugPre(v-if="development_p") {{$data}}
 </template>
