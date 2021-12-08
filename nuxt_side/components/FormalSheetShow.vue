@@ -7,19 +7,20 @@
         line(x1="0" y1="100%" x2="100%" y2="0" stroke="black" stroke-width="0.5")
 
   .position_fixed.is_top_left.is_screen_only
-    b-icon.back_button.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
+    b-icon.back_handle.is-clickable(icon="chevron-left" size="is-medium" @click.native="back_handle")
 
   .position_fixed.is_top_right.is_screen_only
-    b-button(icon-left="printer" size="is-medium" type="is-primary" @click="printer_handle")
+    b-button.printer_handle(icon-left="printer" size="is-medium" type="is-primary" @click="printer_handle")
 
   .position_fixed.is_bottom_left.is_screen_only
-    b-field.mt-6(label="フォント" custom-class="is-small")
-      b-radio-button(v-model="font_key" native-value="mincho" size="is-small") 明朝
-      b-radio-button(v-model="font_key" native-value="gothic" size="is-small") ゴシック
+    b-field.mt-6.font_field(label="フォント" custom-class="is-small")
+      b-radio-button.is_font_key_mincho(v-model="font_key" native-value="mincho" size="is-small") 明朝
+      b-radio-button.is_font_key_gothic(v-model="font_key" native-value="gothic" size="is-small") ゴシック
     b-field.mt-4(label="文字サイズ(%)" custom-class="is-small")
       b-numberinput(size="is-small" controls-position="compact" v-model="font_size" :min="0" :max="200" :step="1" exponential @click.native="sound_play_click()")
   .position_fixed.is_bottom_right.is_screen_only
-    b-icon.is-clickable(icon="information-outline" size="is-medium" type="is-primary" @click.native="information_dialog_show")
+    a.usage_dialog_show_handle(@click="usage_dialog_show_handle")
+      b-icon(icon="information-outline" size="is-medium" type="is-primary")
 
   .section
 
@@ -209,23 +210,37 @@ export default {
       this.back_to()
     },
 
-    information_dialog_show() {
+    usage_dialog_show_handle() {
       this.sound_play_click()
-      this.dialog_ok(`
-         <div class="content">
-           <ol>
-             <li class="mt-4">各項目は変更できます</li>
-             <li class="mt-4">PDFにするには印刷時の送信先を<b>PDFに保存</b>に設定してください</li>
-             <li class="mt-4">
-               ブラウザの設定でフォントの最小サイズを制限していると罫線がずれる場合があります
-               <div class="mt-3">ブラウザごとの解除方法</div>
-               <ul class="mt-3">
-                 <li class="mt-3">Google Chrome:「環境設定」→「デザイン」→「フォントをカスタマイズ」→<b>最小フォントサイズ</b>を極小にする</li>
-                 <li class="mt-3">Safari:「環境設定」→「詳細」→<b>これより小さいフォントサイズを使わない</b>のチェックを外す</li>
-               </ul>
-             </li>
-           </ol>
-         </div>`, {talk: false})
+
+      this.dialog_alert({
+        title: "使い方や注意点",
+        message: `
+        <div class="content">
+          <ol class="mt-0">
+            <li>
+              各項目は編集できます<br>
+              必要に応じて書き加えてください
+            </li>
+            <li class="mt-4">
+              印刷時の送信先を<b>PDFに保存</b>に設定してください<br>
+              紙に印刷するのではなく、いったんPDF化をおすすめします
+            </li>
+            <li class="mt-4">
+              ブラウザの設定でフォントの最小サイズを制限していると罫線がずれる場合があります
+              <div class="mt-3">ブラウザごとの解除方法</div>
+              <ul class="mt-3">
+                <li class="mt-3">Google Chrome:<br>
+                  「環境設定」→「デザイン」→「フォントをカスタマイズ」→<b>最小フォントサイズ</b>を極小にする
+                </li>
+                <li class="mt-3">Safari:<br>
+                  「環境設定」→「詳細」→<b>これより小さいフォントサイズを使わない</b>のチェックを外す
+                </li>
+              </ul>
+            </li>
+          </ol>
+        </div>`
+      })
     },
 
     printer_handle() {
@@ -303,7 +318,7 @@ export default {
   .b-radio
     min-width: 5rem
 
-  .back_button
+  .back_handle
     position: fixed
     top: 32px
     left: 32px

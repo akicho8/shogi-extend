@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "プレイヤー情報", type: :system do
-  include SwarsSupport
+RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
+  include SwarsSystemSupport
 
   it "最初に開いたときのタブは日付になっている" do
     visit2 "/swars/users/Yamada_Taro"
@@ -39,7 +39,7 @@ RSpec.describe "プレイヤー情報", type: :system do
   end
 
   def assert_current_tab_at(index)
-    assert_selector ".tabs .is-active a[tabindex='#{index}']"
+    assert_selector ".tabs li:nth-of-type(#{index.next}).is-active"
   end
 
   def tab_click_by_index(index)

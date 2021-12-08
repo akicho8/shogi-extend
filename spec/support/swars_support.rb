@@ -4,11 +4,11 @@ module SwarsSupport
   included do
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
-    before do
-      swars_battle_setup
+    before(:context) do
+      Swars::Battle.destroy_all
     end
 
-    def swars_battle_setup
+    before do
       Swars.setup
       Swars::Battle.user_import(user_key: "devuser1")
     end
