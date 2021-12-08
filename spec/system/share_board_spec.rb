@@ -1396,6 +1396,24 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "順番設定の下のわかりにくいオプションの説明" do
+    it "works" do
+      visit_app(room_code: :my_room, force_user_name: "alice")
+      side_menu_open
+      menu_item_click("順番設定")               # 「順番設定」モーダルを開く
+      find(".main_switch").click                # 右上の有効スイッチをクリック
+
+      find(".avatar_king_hint_handle").click    # 「アバター」のラベルをクリック
+      assert_text("玉として表示します")
+
+      find(".shout_hint_handle").click          # 「シャウト」のラベルをクリック
+      assert_text("駒が無駄に叫びます")
+
+      find(".hand_every_n_hint_handle").click   # 「N手毎交代」のラベルをクリック
+      assert_text("1人10手毎交代のようなルール")
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end

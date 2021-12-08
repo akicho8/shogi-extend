@@ -66,13 +66,23 @@
       .mt-3
         .columns.is-mobile
           .column
-            b-field(label="アバター" custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
+            b-field(custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
+              template(#label)
+                a.label_with_hint.avatar_king_hint_handle(@click.stop="avatar_king_hint_handle")
+                  | アバター
+                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
+
               b-field.is-marginless
                 template(v-for="e in base.AvatarKingInfo.values")
                   b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="new_avatar_king_key_change_handle")
                     | {{e.name}}
           .column
-            b-field(label="シャウト" custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
+            b-field(custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
+              template(#label)
+                a.label_with_hint.shout_hint_handle(@click.stop="shout_hint_handle")
+                  | シャウト
+                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
+
               b-field.is-marginless
                 template(v-for="e in base.ShoutModeInfo.values")
                   b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
@@ -80,6 +90,10 @@
 
           .column
             b-field(label="N手毎交代" custom-class="is-small" message="")
+              template(#label)
+                a.label_with_hint.hand_every_n_hint_handle(@click.stop="hand_every_n_hint_handle")
+                  | N手毎交代
+                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
               b-numberinput(size="is-small" controls-position="compact" v-model="base.new_hand_every_n" :min="1" :max="10" :exponential="true" @input="sound_play_click()")
 
         .columns.is-mobile(v-if="development_p && false")
@@ -304,6 +318,45 @@ export default {
         message: message,
       })
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    avatar_king_hint_handle() {
+      this.sound_stop_all()
+      this.sound_play_click()
+
+      let message = []
+      message.push("自分のアバターを玉として表示します。")
+      message.push("複数人いる場合はリーダーのアバターを使います。")
+      message.push("対局中でも順番設定で無効にできます。")
+      message.push("ログインしているとプロフィール編集から自由に変更できます。")
+      message = message.join("")
+      this.toast_ok(message, {duration: 1000 * 10})
+    },
+
+    shout_hint_handle() {
+      this.sound_stop_all()
+      this.sound_play_click()
+
+      let message = []
+      message.push("駒を動かされたり取られたりしたとき駒が無駄に叫びます。")
+      message.push("まったくおすすめしません。")
+      message.push("対局中でも順番設定で無効にできます。")
+      message = message.join("")
+      this.toast_ok(message, {duration: 1000 * 7})
+    },
+
+    hand_every_n_hint_handle() {
+      this.sound_stop_all()
+      this.sound_play_click()
+
+      let message = []
+      message.push("リレー将棋で1人10手毎交代のようなルールにできます。")
+      message.push("ただそれは物理的に移動がせわしなくなるのを心配したテレビ用ルールと考えられるため")
+      message.push("オンラインなら1手毎交代がおすすめです。")
+      message = message.join("")
+      this.toast_ok(message, {duration: 1000 * 10})
+    },
   },
   computed: {
   },
@@ -326,6 +379,9 @@ export default {
 
   .enable_toggle_handle
     min-width: 4rem
+
+  .label_with_hint
+    color: inherit
 
 .STAGE-development
   .OrderSettingModal
