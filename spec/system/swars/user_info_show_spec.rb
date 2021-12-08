@@ -1,40 +1,52 @@
 require "rails_helper"
 
-RSpec.describe "新プレイヤー情報", type: :system do
-  before do
-    Swars.setup
-    Swars::Battle.create!
+RSpec.describe "プレイヤー情報", type: :system do
+  include SwarsSupport
+
+  it "最初に開いたときのタブは日付になっている" do
+    visit2 "/swars/users/Yamada_Taro"
+    assert_current_tab_at 0
   end
 
-  xit "遷移" do
-    visit "/w?query=user1"
-    find(".player_info_show_button").click
-    assert_text "10分"
-    doc_image
+  it "引数でデフォルトのタブを変更できる" do
+    visit2 "/swars/users/Yamada_Taro", tab_index: 1
+    assert_current_tab_at 1
   end
 
-  describe "中身" do
-    before do
-      visit "/w?query=user1&user_info_show=1&tab_index=0"
-    end
-    xit "日付" do
-      assert_text "勝率"
-      doc_image
-    end
-    xit "段級" do
-      find(".tabs li:nth-of-type(2)").click
-      assert_text "遭遇率"
-      doc_image
-    end
-    xit "戦法" do
-      find(".tabs li:nth-of-type(3)").click
-      assert_text "使用率"
-      doc_image
-    end
-    xit "対抗" do
-      find(".tabs li:nth-of-type(4)").click
-      assert_text "遭遇率"
-      doc_image
-    end
+  it "タブを変更する" do
+    visit2 "/swars/users/Yamada_Taro"
+
+    tab_click_by_name("日付")
+    within(".boxes") { assert_text "2020-01-01" }
+
+    tab_click_by_name("段級")
+    within(".boxes") { assert_text "三段" }
+
+    tab_click_by_name("戦法")
+    within(".boxes") { assert_text "対振り持久戦" }
+
+    tab_click_by_name("対攻")
+    within(".boxes") { assert_text "" }
+
+    tab_click_by_name("囲い")
+    within(".boxes") { assert_text "舟囲い" }
+
+    tab_click_by_name("対囲")
+    within(".boxes") { assert_text "高美濃囲い" }
+
+    tab_click_by_name("他")
+    within(".boxes") { assert_text "将棋ウォーズの運営を支える力" }
+  end
+
+  def assert_current_tab_at(index)
+    assert_selector ".tabs .is-active a[tabindex='#{index}']"
+  end
+
+  def tab_click_by_index(index)
+    find(".tabs li:nth-of-type(#{index.next})").click
+  end
+
+  def tab_click_by_name(name)
+    find(:xpath, "//*[text()='#{name}']").click
   end
 end
