@@ -25,6 +25,8 @@ export const HandleNameNgWordList = [
   "sex",
   "「",
   "」",
+  "xvideo",
+  "pornhub",
 
   // 汎用罵詈雑言系
   "馬鹿",
