@@ -25,36 +25,35 @@ b-table.SwarsBattleIndexTable(
 
   SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.config.total === 0")
 
-  b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="!!base.visible_hash.id" sortable numeric v-if="base.ColumnInfo.lookup('id')")
+  b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="column_show_p('id')" sortable numeric)
     a(@click="show_handle(row)") \#{{row.id}}
 
   template(v-for="(membership_label, i) in membership_labels")
     b-table-column(v-slot="{row}" :label="membership_label")
       SwarsBattleIndexMembership(:base="base" :membership="row.memberships[i]" key="`records/${row.id}/${i}`")
 
-  b-table-column(v-slot="{row}" field="final_key" :label="base.ColumnInfo.fetch('final_info').name" :visible="!!base.visible_hash.final_info" sortable)
-    span(:class="row.final_info.class")
-      | {{row.final_info.name}}
+  b-table-column(v-slot="{row}" field="final_key" :label="base.ColumnInfo.fetch('final_key').name" :visible="column_show_p('final_key')" sortable)
+    span(:class="row.final_info.class") {{row.final_info.name}}
 
-  b-table-column(v-slot="{row}" field="turn_max" :label="base.ColumnInfo.fetch('turn_max').name" :visible="!!base.visible_hash.turn_max" sortable numeric)
+  b-table-column(v-slot="{row}" field="turn_max" :label="base.ColumnInfo.fetch('turn_max').name" :visible="column_show_p('turn_max')" sortable numeric)
     | {{row.turn_max}}
 
-  b-table-column(v-slot="{row}" field="critical_turn" :label="base.ColumnInfo.fetch('critical_turn').name" :visible="!!base.visible_hash.critical_turn" sortable numeric)
+  b-table-column(v-slot="{row}" field="critical_turn" :label="base.ColumnInfo.fetch('critical_turn').name" :visible="column_show_p('critical_turn')" sortable numeric)
     | {{row.critical_turn}}
 
-  b-table-column(v-slot="{row}" field="outbreak_turn" :label="base.ColumnInfo.fetch('outbreak_turn').name" :visible="!!base.visible_hash.outbreak_turn" sortable numeric)
+  b-table-column(v-slot="{row}" field="outbreak_turn" :label="base.ColumnInfo.fetch('outbreak_turn').name" :visible="column_show_p('outbreak_turn')" sortable numeric)
     | {{row.outbreak_turn}}
 
-  b-table-column(v-slot="{row}" field="grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="!!base.visible_hash.grade_diff" sortable numeric)
+  b-table-column(v-slot="{row}" field="grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="column_show_p('grade_diff')" sortable numeric)
     | {{row.grade_diff}}
 
-  b-table-column(v-slot="{row}" field="rule_key" :label="base.ColumnInfo.fetch('rule_info').name" :visible="!!base.visible_hash.rule_info" sortable)
+  b-table-column(v-slot="{row}" field="rule_key" :label="base.ColumnInfo.fetch('rule_key').name" :visible="column_show_p('rule_key')" sortable)
     | {{row.rule_info.name}}
 
-  b-table-column(v-slot="{row}" field="preset_key" :label="base.ColumnInfo.fetch('preset_info').name" :visible="!!base.visible_hash.preset_info" sortable)
+  b-table-column(v-slot="{row}" field="preset_key" :label="base.ColumnInfo.fetch('preset_key').name" :visible="column_show_p('preset_key')" sortable)
     | {{row.preset_info.name}}
 
-  b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="!!base.visible_hash.battled_at" sortable)
+  b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="column_show_p('battled_at')" sortable)
     | {{row_time_format(row.battled_at)}}
 
   b-table-column(v-slot="{row}")
@@ -73,28 +72,33 @@ import { Location      } from "shogi-player/components/models/location.js"
 export default {
   name: "SwarsBattleIndexSidebar",
   mixins: [support_child],
+  methods: {
+    column_show_p(key) {
+      return this.base.ColumnInfo.fetch(key).show_p(this.base) && this.base.visible_hash[key]
+    },
+  },
   computed: {
     current_viewpoint_location() { return Location.fetch(this.base.config.viewpoint) },
 
     membership_labels() {
-      let retv = null
+      let av = null
       if (this.base.config.viewpoint) {
-        retv = [
+        av = [
           this.current_viewpoint_location.name,
           this.current_viewpoint_location.flip.name,
         ]
       } else if (this.base.config.current_swars_user_key) {
-        retv = [
+        av = [
           "自分",
           "相手",
         ]
       } else {
-        retv = [
+        av = [
           "勝ち",
           "負け",
         ]
       }
-      return retv
+      return av
     }
   },
 }
