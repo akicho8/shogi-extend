@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Battle, type: :model do
+  RSpec.describe Battle, type: :model, swars_spec: true do
     let(:current_user) { ::User.create!                  }
     let(:user1)        { User.create!(user_key: "alice") }
     let(:user2)        { User.create!(user_key: "bob")   }

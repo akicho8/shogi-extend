@@ -33,7 +33,7 @@
 
 require "rails_helper"
 
-RSpec.describe Swars::BattlesController, type: :controller do
+RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   include SwarsSupport
 
   let :record do

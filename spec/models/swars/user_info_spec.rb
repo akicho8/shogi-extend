@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Battle, type: :model do
+  RSpec.describe Battle, type: :model, swars_spec: true do
     before do
       @IBISHA = "+2726FU"
       @FURIBI = "+2878HI"

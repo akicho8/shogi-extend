@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Crawler, type: :model do
+  RSpec.describe Crawler, type: :model, swars_spec: true do
     include SwarsSupport
 
     before do

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "棋譜用紙", type: :system do
+RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "必要な情報を表示している" do

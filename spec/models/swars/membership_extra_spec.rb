@@ -16,7 +16,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe MembershipExtra, type: :model do
+  RSpec.describe MembershipExtra, type: :model, swars_spec: true do
     before do
       Swars.setup
     end

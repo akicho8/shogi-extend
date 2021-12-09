@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe RuleInfo, type: :model do
+  RSpec.describe RuleInfo, type: :model, swars_spec: true do
     it "fetch" do
       assert { RuleInfo.fetch("ten_min") }
       assert { RuleInfo.fetch("3分") }

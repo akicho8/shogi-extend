@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Agent, type: :model do
+  RSpec.describe Agent, type: :model, swars_spec: true do
     describe "index" do
       let :result do
         Agent::Index.fetch(gtype: "", user_key: "devuser1", page_index: 0)

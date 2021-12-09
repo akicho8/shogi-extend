@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe MembershipMedalInfo, type: :model do
+  RSpec.describe MembershipMedalInfo, type: :model, swars_spec: true do
     before do
       Swars.setup
     end

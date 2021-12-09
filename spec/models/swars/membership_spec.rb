@@ -34,7 +34,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Membership, type: :model do
+  RSpec.describe Membership, type: :model, swars_spec: true do
     before do
       Swars.setup
     end

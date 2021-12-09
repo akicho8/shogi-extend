@@ -23,7 +23,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe CrawlReservation, type: :model do
+  RSpec.describe CrawlReservation, type: :model, swars_spec: true do
     let :login_user do
       ::User.create!
     end

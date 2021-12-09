@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Api::SwarsHistogramsController, type: :controller do
+RSpec.describe Api::SwarsHistogramsController, type: :controller, swars_spec: true do
   def test1(key)
     get :show, params: {key: :attack}
     value = JSON.parse(response.body, symbolize_names: true)

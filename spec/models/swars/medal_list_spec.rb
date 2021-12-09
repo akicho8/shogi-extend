@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe type: :model do
+  RSpec.describe type: :model, swars_spec: true do
     before do
       Swars.setup
     end

@@ -34,7 +34,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Battle, type: :model do
+  RSpec.describe Battle, type: :model, swars_spec: true do
     let :record do
       Battle.create!
     end
