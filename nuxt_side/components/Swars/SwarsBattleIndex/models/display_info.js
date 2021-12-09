@@ -1,9 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class DisplayInfo extends ApplicationMemoryRecord {
-  // static field_label = "デバッグ"
-  // static field_message = ""
-
   static get define() {
     return [
       { key: "table",    name: "テーブル", board_show_p: false, type: "is-primary", message: null, },

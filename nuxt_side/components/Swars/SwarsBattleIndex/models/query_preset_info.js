@@ -6,7 +6,7 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "query_preset_judge_win",  name: "勝ち",            query: "judge:win",                 },
-      { key: "query_preset_judge_lose", name: "負け",            query: "judge:lose",                },
+      { key: null,                      name: "負け",            query: "judge:lose",                },
       { key: null,                      name: "150手以上で勝ち", query: "turn_max:>=150 judge:win",  },
       { key: null,                      name: "150手以上で負け", query: "turn_max:>=150 judge:lose", },
       { key: null,                      name: "50手以下で勝ち",  query: "turn_max:<=50 judge:win",   },

@@ -58,8 +58,8 @@ b-table.SwarsBattleIndexTable(
 
   b-table-column(v-slot="{row}")
     .buttons.are-small
-      PiyoShogiButton(type="button" :href="base.piyo_shogi_app_with_params_url(row)" @click="sound_play_click()")
-      KentoButton(tag="a" :href="base.kento_app_with_params_url(row)" @click="sound_play_click()")
+      PiyoShogiButton(type="button" :href="base.piyo_shogi_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('piyo_shogi')")
+      KentoButton(tag="a" :href="base.kento_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('kento')")
       KifCopyButton(@click="base.kifu_copy_handle(row)")
       DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}" @click.native="sound_play_click()") 詳細
 
