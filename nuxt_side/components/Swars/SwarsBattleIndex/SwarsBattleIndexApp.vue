@@ -135,6 +135,8 @@ export default {
     //   this.$router.push({name: "swars-search", query: {query: "user1"}})
     // }
 
+    // this.ls_setup() ← ここで実行しないといけないのでは？
+    
     let query = {...this.$route.query}
     if (!query.query) {
       query.query = MyLocalStorage.get("swars_search_default_key")
@@ -149,16 +151,12 @@ export default {
     return this.$axios.$get("/w.json", {params: query}).then(config => {
       this.config = config
 
-      // if (this.display_key == null) {
-      //   this.display_key  = this.config.display_key // 何の局面の表示をするか？
-      // }
-
       // なかから nuxt-link したとき $fetch が呼ばれるが、
       // this.query は前の状態なので更新する
       this.query = this.config.query
       // this.query = this.$route.query.query
 
-      this.ls_setup() // config から visible_hash や display_key を設定
+      // this.ls_setup() // config から visible_hash や display_key を設定
 
       this.xnotice_run_all(this.config)
     })
