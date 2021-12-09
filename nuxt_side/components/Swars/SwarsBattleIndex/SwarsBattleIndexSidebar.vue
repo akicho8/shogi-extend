@@ -36,14 +36,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             template(slot="label" slot-scope="props")
               | フィルタ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            SwarsBattleIndexFilterMenuItem.is_filter_judge_win(:base="base" label="勝ち"            q="judge:win")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="負け"            q="judge:lose")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="150手以上で勝ち" q="turn_max:>=150 judge:win")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="150手以上で負け" q="turn_max:>=150 judge:lose")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="50手以下で勝ち"  q="turn_max:<=50 judge:win")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="50手以下で負け"  q="turn_max:<=50 judge:lose")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="vs 十段"         q="vs-grade:十段")
-            SwarsBattleIndexFilterMenuItem(:base="base" label="なし"            q="")
+            SwarsBattleIndexMenuItemSelect.is_filter_judge_win(:base="base" label="勝ち"            q="judge:win")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="負け"            q="judge:lose")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="150手以上で勝ち" q="turn_max:>=150 judge:win")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="150手以上で負け" q="turn_max:>=150 judge:lose")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="50手以下で勝ち"  q="turn_max:<=50 judge:win")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="50手以下で負け"  q="turn_max:<=50 judge:lose")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="vs 十段"         q="vs-grade:十段")
+            SwarsBattleIndexMenuItemSelect(:base="base" label="なし"            q="")
 
           b-menu-item.is_active_unset.vs_input_modal_handle(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 

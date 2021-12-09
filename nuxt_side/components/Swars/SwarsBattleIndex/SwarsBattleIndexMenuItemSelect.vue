@@ -1,5 +1,5 @@
 <template lang="pug">
-b-menu-item.is_active_unset.SwarsBattleIndexFilterMenuItem(
+b-menu-item.is_active_unset.SwarsBattleIndexMenuItemSelect(
   v-bind="$attrs"
   v-on="$listeners"
   tag="nuxt-link"
@@ -14,7 +14,7 @@ b-menu-item.is_active_unset.SwarsBattleIndexFilterMenuItem(
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "SwarsBattleIndexFilterMenuItem",
+  name: "SwarsBattleIndexMenuItemSelect",
   mixins: [support_child],
   props: {
     q: { type: String, required: true },
@@ -36,5 +36,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsBattleIndexFilterMenuItem
+.SwarsBattleIndexMenuItemSelect
 </style>
