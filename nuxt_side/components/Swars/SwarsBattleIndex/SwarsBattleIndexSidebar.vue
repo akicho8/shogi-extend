@@ -16,7 +16,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
               b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play_click()")
                 b-icon(icon="dots-vertical" slot="trigger")
                 template(v-for="e in base.ColumnInfo.values")
-                  b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.show_p(base)")
+                  b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.available_p(base)")
                     span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
                       | {{e.name}}
 
