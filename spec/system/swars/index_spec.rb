@@ -183,7 +183,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
         find(".filter_set_menu_item").click
-        find(".is_filter_judge_win").click # 「勝ち」
+        find(".query_preset_judge_win").click # 「勝ち」
         assert_var_eq(:records_length, 0)
       end
     end

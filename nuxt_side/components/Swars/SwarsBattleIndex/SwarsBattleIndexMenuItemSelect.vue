@@ -17,7 +17,7 @@ export default {
   name: "SwarsBattleIndexMenuItemSelect",
   mixins: [support_child],
   props: {
-    q: { type: String, required: true },
+    query_preset_info: { type: Object, required: true },
   },
   methods: {
   },
@@ -29,7 +29,7 @@ export default {
       return (this.$route.query.query || "") === this.new_query
     },
     new_query() {
-      return [this.base.config.current_swars_user_key, this.q].join(" ")
+      return [this.base.config.current_swars_user_key, this.query_preset_info.query].join(" ")
     },
   },
 }

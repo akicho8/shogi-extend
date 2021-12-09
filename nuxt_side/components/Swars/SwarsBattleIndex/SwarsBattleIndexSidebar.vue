@@ -34,16 +34,10 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
           b-menu-item.is_active_unset.filter_set_menu_item(@click="sound_play_click()" :disabled="menu_item_disabled")
             template(slot="label" slot-scope="props")
-              | フィルタ
+              | {{base.QueryPresetInfo.field_label}}
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            SwarsBattleIndexMenuItemSelect.is_filter_judge_win(:base="base" label="勝ち"            q="judge:win")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="負け"            q="judge:lose")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="150手以上で勝ち" q="turn_max:>=150 judge:win")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="150手以上で負け" q="turn_max:>=150 judge:lose")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="50手以下で勝ち"  q="turn_max:<=50 judge:win")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="50手以下で負け"  q="turn_max:<=50 judge:lose")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="vs 十段"         q="vs-grade:十段")
-            SwarsBattleIndexMenuItemSelect(:base="base" label="なし"            q="")
+            template(v-for="e in base.QueryPresetInfo.values")
+              SwarsBattleIndexMenuItemSelect(:base="base" :class="e.key" :label="e.name" :query_preset_info="e")
 
           b-menu-item.is_active_unset.vs_input_modal_handle(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 
