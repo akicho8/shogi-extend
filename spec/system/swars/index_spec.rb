@@ -15,7 +15,6 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "クエリ検索" do
     it "検索フォームに入力して検索する" do
       visit2 "/swars/search"
-      assert_query ""
       fill_in "query", with: "Yamada_Taro"
       assert_query "Yamada_Taro"
       find(".search_click_handle").click
@@ -60,7 +59,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       first(".PiyoShogiButton").click
       switch_to_window(windows.last) # 別にタブで開いているのでタブを切り替える
       assert_text("ぴよ将棋w")
-      assert_text("後手:Yamada_Taro 四段 将棋ウォーズ(10分)")
+      assert_text("後手:Yamada_Taro 四段")
       assert_text("先手:devuser3 三段")
       assert { current_url == "https://www.studiok-i.net/ps/?num=34&sente_name=devuser3%20%E4%B8%89%E6%AE%B5&gote_name=Yamada_Taro%20%E5%9B%9B%E6%AE%B5&game_name=%E5%B0%86%E6%A3%8B%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA(10%E5%88%86)&sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%205g5f%208c8d%207g7f%208d8e%208h7g%206a5b%202h5h%207a6b%207i6h%205a4b%206h5g%204b3b%205i4h%201c1d%201g1f%206c6d%205f5e%206b6c%205g5f%203a4b%204h3h%204c4d%203h2h%204b4c%203i3h%207c7d%209g9f%209c9d%209i9g%203c3d%204g4f%202b3c%205h9h%208e8f%208g8f%208b8d%206i5h%203b2b%209f9e%209d9e%209g9e%20P*9d%209e9d%209a9d%20P*9e%207d7e%207f7e%203c2d%205h4g%204a3b%209e9d%205c5d%20L*8e%205d5e%205f5e%20P*7f%207g9i%208d8e%208f8e%202d3c%204f4e%20L*8f%205e4d%204c4d%209i4d%208f8i%2B%20S*4a%20S*4c%204a3b%2B%204c3b%209d9c%2B%203c4d%204e4d%20L*4e%204d4c%2B%204e4g%2B%204c3b%202b3b%203h4g%207f7g%2B%209c8c%20B*6e%209h9b%2B%206e4g%2B%20L*4h%20P*4f%204h4g%204f4g%2B%20P*4h%20S*5h%204i3i%20L*3h%203i3h%204g3h%202h3h%20S*1g%20B*5d%20G*4c%205d4c%2B%203b4c%20L*4f%20N*4d%202i1g%20B*5g%20S*5e%20G*5d%20R*4a%204c3c%205e4d" }
     end
