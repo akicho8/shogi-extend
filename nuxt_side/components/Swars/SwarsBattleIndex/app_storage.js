@@ -1,26 +1,24 @@
-import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
+import { params_controller } from "@/components/params_controller.js"
+import { ParamInfo } from "./models/param_info.js"
 
 export const app_storage = {
-  mixins: [
-    ls_support_mixin,
-  ],
+  mixins: [params_controller],
+
   data() {
     return {
-      visible_hash: null, //  { xxx: true, yyy: false } 形式
-      display_key: null,  // 何の局面の表示をするか？
-      remember_vs_user_keys: null,    // 対戦相手の補完リスト
+      ...ParamInfo.null_value_data_hash,
     }
   },
   computed: {
     ls_storage_key() {
       return "swars/battles/index"
     },
-    ls_default() {
-      return {
-        visible_hash: this.as_visible_hash(this.config.table_columns_hash),
-        display_key:  this.config.display_key,
-        remember_vs_user_keys: [],
-      }
-    },
+    // ls_default() {
+    //   return {
+    //     ...this.pc_ls_default,
+    //     // display_key:  this.config.display_key,
+    //     // remember_vs_user_keys: [],
+    //   }
+    // },
   },
 }

@@ -34,7 +34,6 @@ module BattleControllerSharedMethods
       {
         :query              => current_query || "",
         :display_key        => params[:display_key].presence || "table",
-        :table_columns_hash => table_columns_hash,
         :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
       }.merge(page_info(current_records), sort_info)
     end
@@ -95,19 +94,6 @@ module BattleControllerSharedMethods
       end
 
       s
-    end
-
-    def table_columns_hash
-      v = table_column_list.inject({}) do |a, e|
-        visible = e[:visible]   # nil の場合もある
-        if visible_only_keys
-          visible = visible_only_keys.include?(e[:key].to_s)
-        end
-        if Rails.env.development? || Rails.env.test?
-          visible = true
-        end
-        a.merge(e[:key] => e.merge(visible: visible))
-      end
     end
   end
 

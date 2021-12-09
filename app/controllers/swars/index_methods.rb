@@ -382,26 +382,6 @@ module Swars
       "battled_at"
     end
 
-    let :table_column_list do
-      list = []
-      if Rails.env.development? || Rails.env.test?
-        list << { key: :id,             label: "ID",   visible: true, }
-      end
-      list << { key: :attack_tag_list,  label: "戦型", visible: true,  }
-      list << { key: :defense_tag_list, label: "囲い", visible: true,  }
-      list << { key: :final_info,       label: "結果", visible: false, }
-      list << { key: :turn_max,         label: "手数", visible: false, }
-      list << { key: :critical_turn,    label: "開戦", visible: false, }
-      list << { key: :outbreak_turn,    label: "中盤", visible: false, }
-      if AppConfig[:columns_detail_show]
-        list << { key: :grade_diff,       label: "力差", visible: false, }
-      end
-      list << { key: :rule_info,        label: "種類", visible: false, }
-      list << { key: :preset_info,      label: "手合", visible: false, }
-      list << { key: :battled_at,       label: "日時", visible: true,  }
-      list
-    end
-
     private
 
     def primary_key_like?

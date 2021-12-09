@@ -43,7 +43,7 @@
             p.control
               b-button.search_click_handle(@click="search_click_handle" icon-left="magnify" size="is-medium")
 
-          .columns.is-multiline.mt-4.is_board_display(v-if="board_show_p")
+          .columns.is-multiline.mt-4.is_board_display(v-if="display_info.board_show_p")
             template(v-for="e in config.records")
               // https://bulma.io/documentation/columns/responsiveness/
               // widescreen 1/5 (is-one-fifth-widescreen)
@@ -86,6 +86,9 @@ import { app_vs_input     } from "./app_vs_input.js"
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
+
+import { ParamInfo   } from "./models/param_info.js"
+import { DisplayInfo } from "./models/display_info.js"
 
 export default {
   name: "SwarsBattleIndexApp",
@@ -189,7 +192,10 @@ export default {
     base()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },
     ZipDlInfo()       { return ZipDlInfo       },
-    board_show_p()    { return ["critical", "outbreak", "last"].includes(this.display_key) },
+    ParamInfo()       { return ParamInfo },
+
+    DisplayInfo()     { return DisplayInfo                         },
+    display_info()    { return DisplayInfo.fetch(this.display_key) },
   },
 }
 </script>

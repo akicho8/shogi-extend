@@ -12,11 +12,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           b-menu-item.is_active_unset.display_key_set_table_handle(@click.stop="base.display_key_set('table')")
             template(slot="label")
               span(:class="{'has-text-weight-bold': base.display_key === 'table'}") テーブル
+              //- b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
               b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play_click()")
                 b-icon(icon="dots-vertical" slot="trigger")
-                template(v-for="(e, key) in base.config.table_columns_hash")
-                  b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="key")
-                    span(:class="{'has-text-grey': !base.visible_hash[key], 'has-text-weight-bold': base.visible_hash[key]}") {{e.label}}
+                template(v-for="e in base.ColumnInfo.values")
+                  b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key")
+                    span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
+                      | {{e.name}}
+
           b-menu-item.is_active_unset.display_key_set_critical_handle(label="開戦" @click.stop="base.display_key_set('critical')" :class="{'has-text-weight-bold': base.display_key === 'critical'}")
           b-menu-item.is_active_unset.display_key_set_outbreak_handle(label="中盤" @click.stop="base.display_key_set('outbreak')" :class="{'has-text-weight-bold': base.display_key === 'outbreak'}")
           b-menu-item.is_active_unset.display_key_set_last_handle(label="終局" @click.stop="base.display_key_set('last')"     :class="{'has-text-weight-bold': base.display_key === 'last'}")
