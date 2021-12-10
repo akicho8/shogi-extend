@@ -2,7 +2,6 @@ AppConfig.deep_merge!({
     :app_name                            =>  "SHOGI-EXTEND",
 
     :swars_tag_search_function           =>  true,  # タグ検索
-    :columns_detail_show                 =>  true,  # 「開戦」の手数を表示する？
 
     :zip_dl_max_default                  =>  50,    # 一括ダウンロードするときの件数(初期値)
     :zip_dl_max_of_max                   =>  50,    # 一括ダウンロードするときの件数(最大)

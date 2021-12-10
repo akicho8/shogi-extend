@@ -150,8 +150,6 @@ Rails.application.configure do
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
         :swars_tag_search_function     => false,
-        :columns_detail_show           => false,
-
         :available_providers           => [:twitter, :google, :github],
         :nanasi_login                  => false,
         :email_pw_login                => true,
