@@ -34,19 +34,12 @@ export const app_urls = {
     },
 
     url_params_clean(url_params) {
-      const params = {...url_params}
+      const params = this.pc_url_params_clean(url_params)
       if (this.blank_p(params.room_code)) {
         delete params.room_code
       }
-      this.ParamInfo.values.forEach(e => {
-        const v = params[e.key]
-        if (this.blank_p(v) || v === e.default_for(this)) {
-          delete params[e.key]
-        }
-      })
       return params
     },
-
   },
   computed: {
     current_url_params() {

@@ -71,11 +71,6 @@ export const app_search = {
       })
     },
 
-    // 1ページあたりの件数の変更
-    per_change_handle(per) {
-      this.page_change_or_sort_handle({per})
-    },
-
     // ここだけ特別で this.query で上書きしている
     // なぜならフィルターは query に埋め込まないといけないから
     filter_research(query) {
@@ -94,7 +89,7 @@ export const app_search = {
     },
   },
   computed: {
-    QueryPresetInfo() { return QueryPresetInfo },
+    QueryPresetInfo() { return QueryPresetInfo                  },
 
     current_route_query() {
       return {

@@ -1,5 +1,24 @@
 <template lang="pug">
 .columns.is-multiline.SwarsBattleIndexDebugPanels.is-centered
+  .column.is-4
+    .panel
+      .panel-heading
+        | Methods
+      a.panel-block(@click="base.pc_data_reset") localStorageで管理する変数の初期化
+      a.panel-block(@click="base.ls_reset") localStorageのキー削除
+  .column.is-4
+    .panel
+      .panel-heading
+        | 保持する変数値
+      .panel-block
+        pre {{pretty_inspect(base.pc_attributes)}}
+  .column.is-4
+    .panel
+      .panel-heading
+        | 保持する変数の初期値
+      .panel-block
+        pre {{pretty_inspect(base.ls_default)}}
+
   .column.is-6
     .panel
       .panel-heading
@@ -9,8 +28,8 @@
   .column.is-6
     .panel
       .panel-heading
-        | system_test
-      .panel-block
+        | system_test_variables
+      .panel-block.system_test_variables
         pre
           | [display_key={{base.display_key}}]
           | [per={{base.config.per}}]

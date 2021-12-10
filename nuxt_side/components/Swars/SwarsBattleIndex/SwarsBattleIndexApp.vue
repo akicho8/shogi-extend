@@ -79,6 +79,7 @@ import { app_chore       } from "./app_chore.js"
 import { app_columns     } from "./app_columns.js"
 import { app_core        } from "./app_core.js"
 import { app_search      } from "./app_search.js"
+import { app_per         } from "./app_per.js"
 import { app_sidebar     } from "./app_sidebar.js"
 import { app_storage     } from "./app_storage.js"
 import { app_vs_input     } from "./app_vs_input.js"
@@ -96,6 +97,7 @@ export default {
     support_parent,
     app_core,
     app_search,
+    app_per,
     app_columns,
     app_sidebar,
     app_chore,
@@ -131,24 +133,35 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    // if (!this.$route.query.query) {
-    //   this.$router.push({name: "swars-search", query: {query: "user1"}})
+    this.__trace__("SwarsBattleIndexApp", "fetch begin")
+
+    let params = {...this.$route.query}
+
+    if (this.blank_p(params.query)) {
+      params.query = MyLocalStorage.get("swars_search_default_key")
+    }
+
+    // if (this.blank_p(params.per)) {
+    //   if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
+    //     params.per = this.per_info.per
+    //   }
     // }
 
-    // this.ls_setup() ← ここで実行しないといけないのでは？
+    if (this.blank_p(params.per)) {
+      // if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
+      params.per = this.per_info.per
+      // }
+    }
     
-    let query = {...this.$route.query}
-    if (!query.query) {
-      query.query = MyLocalStorage.get("swars_search_default_key")
-    }
+    params = this.pc_url_params_clean(params)
 
-    if (query.query) {
-      this.ga_click("ウォーズ検索●")
-    } else {
-      this.ga_click("ウォーズ検索")
-    }
+    this.ga_process(params)
 
-    return this.$axios.$get("/w.json", {params: query}).then(config => {
+    // Number(params.per || 1)
+
+    return this.$axios.$get("/w.json", {params: params}).then(config => {
+      this.__trace__("SwarsBattleIndexApp", "fetch then")
+
       this.config = config
 
       // なかから nuxt-link したとき $fetch が呼ばれるが、
@@ -182,6 +195,14 @@ export default {
       if (this.display_key != key) {
         this.sound_play_click()
         this.display_key = key
+      }
+    },
+
+    ga_process(params) {
+      if (params.query) {
+        this.ga_click("ウォーズ検索 検索実行")
+      } else {
+        this.ga_click("ウォーズ検索 未入力")
       }
     },
   },

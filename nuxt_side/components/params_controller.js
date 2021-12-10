@@ -75,7 +75,9 @@ export const params_controller = {
     },
     pc_data_reset_handle() {
       this.sound_play_click()
-      this.sidebar_p = false
+      if ("sidebar_p" in this) {
+        this.sidebar_p = false
+      }
       this.pc_data_reset()
     },
     pc_data_reset() {
@@ -99,6 +101,18 @@ export const params_controller = {
           }
         }
       })
+    },
+
+    // paramsの値が空か初期値と一致すれば削除する
+    pc_url_params_clean(params) {
+      const hv = {...params}
+      this.ParamInfo.values.forEach(e => {
+        const v = hv[e.key]
+        if (this.blank_p(v) || v === e.default_for(this)) {
+          delete hv[e.key]
+        }
+      })
+      return hv
     },
   },
   computed: {

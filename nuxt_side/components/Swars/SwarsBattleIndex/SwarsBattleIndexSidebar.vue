@@ -27,17 +27,28 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
         b-menu-list(label="表示オプション")
           b-menu-item.is_active_unset.per_change_menu_item(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
-              | 表示件数
+              | {{base.PerInfo.field_label}}
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            template(v-for="per in base.config.per_page_list")
-              b-menu-item.is_active_unset(:label="`${per}`" @click.stop="base.per_change_handle(per)" :class="[{'has-text-weight-bold': per === base.config.per}, `is_per${per}`]")
+            template(v-for="e in base.PerInfo.values")
+              b-menu-item.is_active_unset(
+                v-if="e.available_p(base)"
+                :label="e.name"
+                @click.stop="base.per_set_handle(e)"
+                :class="[{'has-text-weight-bold': base.per_info.per === e.per}, e.key]"
+                )
 
           b-menu-item.is_active_unset.filter_set_menu_item(@click="sound_play_click()" :disabled="menu_item_disabled")
             template(slot="label" slot-scope="props")
               | {{base.QueryPresetInfo.field_label}}
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.QueryPresetInfo.values")
-              SwarsBattleIndexMenuItemSelect(:base="base" :class="e.key" :label="e.name" :query_preset_info="e")
+              SwarsBattleIndexMenuItemSelect(
+                v-if="e.available_p(base)"
+                :base="base"
+                :class="e.key"
+                :label="e.name"
+                :query_preset_info="e"
+                )
 
           b-menu-item.is_active_unset.vs_input_modal_handle(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 
