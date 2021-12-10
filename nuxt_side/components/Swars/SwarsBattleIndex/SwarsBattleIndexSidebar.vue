@@ -83,7 +83,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
           b-menu-item.is_active_unset.external_app_menu_item(:disabled="menu_item_disabled" @click="sound_play_click()")
             template(slot="label" slot-scope="props")
-              | 外部APP ｼｮｰﾄｶｯﾄ
+              | 外部アプリですぐ開く
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.ExternalAppInfo.values")
               b-menu-item.is_active_unset(@click="base.external_app_handle(e)" :label="e.name" :class="e.dom_class")

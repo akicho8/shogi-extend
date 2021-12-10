@@ -30,7 +30,7 @@
         td
           b-tag(type="is-primary") BACKSPACE
       tr
-        th ｷｰﾎﾞｰﾄﾞｼｮｰﾄｶｯﾄ
+        th この画面を開く
         td
           b-tag(type="is-primary") ?
 </template>

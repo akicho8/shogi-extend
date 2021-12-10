@@ -95,12 +95,6 @@ module Swars
         :zip_dl_max_default     => AppConfig[:zip_dl_max_default],
       }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
-          :per_page_list             => [
-            *(Rails.env.development? ? [0, 1] : []),
-            Kaminari.config.default_per_page,
-            *AppConfig[:per_page_list],
-            Kaminari.config.max_per_page,
-          ],
         })
     end
 
