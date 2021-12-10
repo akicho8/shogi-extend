@@ -113,7 +113,7 @@ if true
       `open #{save_page}`
     end
 
-    def side_menu_open
+    def hamburger_click
       find(".sidebar_toggle_navbar_item").click
     end
 

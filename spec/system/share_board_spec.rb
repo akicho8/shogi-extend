@@ -46,7 +46,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
       begin
         visit "/share-board"                                      # 再来
-        side_menu_open
+        hamburger_click
         menu_item_click("部屋に入る")                    # 「部屋に入る」を自分でクリックする
         first(".new_room_code input").set("my_room")              # 合言葉を入力する
         value = first(".new_user_name input").value
@@ -192,11 +192,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         action_assert(0, "alice", "順番 ON")               # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
@@ -244,7 +244,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         room_setup("my_room", "carol")                     # carolは観戦目的で同じ部屋に入る
       end
       a_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
@@ -493,7 +493,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         sp_controller_click("previous")
         assert_turn(1)
 
-        side_menu_open
+        hamburger_click
         menu_item_click("局面の転送")           # モーダルを開く
         first(".sync_button").click                       # 反映する
       end
@@ -533,14 +533,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         # debugger
-        # side_menu_open
+        # hamburger_click
         # menu_item_click("設定")               # モーダルを開く
         # first(".sync_button").click           # 反映する
         # find(".is_ctrl_mode_visible").click   # 表示したままにする
         sp_controller_click("previous")           # 1手戻す
         assert_turn(0)                     # 0手目に戻せてる
 
-        side_menu_open
+        hamburger_click
         menu_item_click("局面の転送")       # モーダルを開く
         first(".sync_button").click               # 反映する
 
@@ -661,7 +661,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_turn(1)                             # bob側も1手進んでいる
       end
       a_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
         find(".apply_button").click                       # 「この局面まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
@@ -688,7 +688,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_move("33", "34", "☖3四歩")                # bobが指す
       end
       a_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
         find(".apply_button").click                       # 「この局面まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
@@ -748,14 +748,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "使い方" do
     it "モーダルで開く" do
       visit "/share-board"
-      side_menu_open
+      hamburger_click
       menu_item_click("使い方")
       find(".close_handle").click
     end
 
     it "モーダルからパーマリンクで飛ぶ" do
       visit "/share-board"
-      side_menu_open
+      hamburger_click
       menu_item_click("使い方")
       find(".permalink").click       # 固定URLを別タブで開く
       switch_to_window(windows.last) # 別タブに移動する
@@ -858,7 +858,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice")
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")               # 「順番設定」モーダルを開く
         find(".main_switch").click                # 右上の有効スイッチをクリック
         find(".shuffle_handle").click             # シャッフルする
@@ -873,7 +873,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
 
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
@@ -902,7 +902,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
             :shakashaka_count          => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
           })
 
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
@@ -926,7 +926,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
 
-        side_menu_open
+        hamburger_click
         menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
@@ -954,7 +954,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     def test1(selector)
       visit_app(room_code: :my_room, force_user_name: "alice")
 
-      side_menu_open
+      hamburger_click
       menu_item_click("設定")               # モーダルを開く
       find(selector).click
       find(".close_handle").click           # 閉じる
@@ -988,11 +988,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(force_user_name: "bob", xmatch_auth_key: "handle_name_required")
       end
       a_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("自動マッチング")                # モーダルを開く
       end
       b_block do
-        side_menu_open
+        hamburger_click
         menu_item_click("自動マッチング")                # モーダルを開く
       end
       a_block do
@@ -1020,7 +1020,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")
 
-        side_menu_open
+        hamburger_click
         menu_item_click("自動マッチング")          # モーダルを開く
         find(".rule_self_05_00_00_5").click         # 自分vs自分
 
@@ -1034,7 +1034,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(force_user_name: "alice", xmatch_wait_max: @xmatch_wait_max, xmatch_auth_key: "handle_name_required")
 
-        side_menu_open
+        hamburger_click
         menu_item_click("自動マッチング")          # モーダルを開く
         find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
@@ -1144,7 +1144,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         visit_app
-        side_menu_open
+        hamburger_click
         menu_item_click("ハンドルネーム変更")
         test1("", "ハンドルネームを入力してください")
         test1("名無し", "ハンドルネームを入力してください")
@@ -1165,7 +1165,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "KI2棋譜コピー" do
     it "works" do
       visit_app
-      side_menu_open
+      hamburger_click
       menu_item_sub_menu_click("棋譜コピー")
       menu_item_click("KI2")
       assert_text("コピーしました")
@@ -1188,7 +1188,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "編集モードで配置を変更しても駒箱が消えない" do
     it "works" do
       visit_app
-      side_menu_open
+      hamburger_click
       menu_item_click("局面編集")
       find(".EditToolBlock .dropdown:nth-of-type(2)").click # 左から2つ目の dropdown をクリック
       menu_item_sub_menu_click("駒箱に駒を一式生成")
@@ -1267,7 +1267,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "ツイート画像の視点設定" do
       a_block do
         visit_app
-        side_menu_open
+        hamburger_click
         menu_item_click("ツイート画像の視点設定")                 # 開く
         assert_selector(".AbstractViewpointKeySelectModal")       # モーダルが開いている
         find(".AbstractViewpointKeySelectModal .white").click     # 「常に☖」を選択
@@ -1282,7 +1282,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         visit_app
-        side_menu_open
+        hamburger_click
         menu_item_click("画像ダウンロード")         # 開く
         assert_selector(".ImageDlModal")            # モーダルが開いている
 
@@ -1399,7 +1399,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "順番設定の下のわかりにくいオプションの説明" do
     it "works" do
       visit_app(room_code: :my_room, force_user_name: "alice")
-      side_menu_open
+      hamburger_click
       menu_item_click("順番設定")               # 「順番設定」モーダルを開く
       find(".main_switch").click                # 右上の有効スイッチをクリック
 
@@ -1420,7 +1420,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def room_setup(room_code, user_name)
     visit_app
-    side_menu_open
+    hamburger_click
     menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".new_room_code input").set(room_code) # 合言葉を入力する
@@ -1530,7 +1530,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def room_recreate_apply
-    side_menu_open
+    hamburger_click
     menu_item_click("再起動")     # モーダルを開く
     first(".apply_button").click  # 実行する
   end
@@ -1549,7 +1549,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def clock_open
-    side_menu_open
+    hamburger_click
     menu_item_click("対局時計") # 「対局時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
     find(".main_switch").click  # 設置する
@@ -1558,7 +1558,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # 退室
   def room_leave
-    side_menu_open
+    hamburger_click
     menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
@@ -1566,7 +1566,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # 手合割選択
   def preset_select(preset_key)
-    side_menu_open
+    hamburger_click
     menu_item_click("手合割")
     find(".BoardPresetSelectModal .board_preset_key").select(preset_key)
     find(".apply_button").click
@@ -1577,7 +1577,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def order_modal_main_switch_click(stat)
-    side_menu_open
+    hamburger_click
     menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
@@ -1610,7 +1610,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
-    side_menu_open
+    hamburger_click
     menu_item_click("自動マッチング")          # モーダルを開く
     find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
   end
