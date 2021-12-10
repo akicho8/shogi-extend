@@ -43,31 +43,8 @@
             p.control
               b-button.search_click_handle(@click="search_click_handle" icon-left="magnify" size="is-medium")
 
-          .columns.is-multiline.mt-4.is_board_display(v-if="display_info.board_show_p")
-            template(v-for="e in config.records")
-              // https://bulma.io/documentation/columns/responsiveness/
-              // widescreen 1/5 (is-one-fifth-widescreen)
-              // desktop    1/4 (is-one-quarter-desktop)
-              // table      1/4 (is-one-quarter-tablet)
-              .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="show_handle(e)")
-                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[1]")
-                CustomShogiPlayer(
-                  :sp_player_info="e.player_info"
-                  sp_layout="is_vertical"
-                  sp_run_mode="view_mode"
-                  :sp_turn="sp_start_turn(e)"
-                  :sp_body="e.sfen_body"
-                  :sp_sound_enabled="false"
-                  sp_summary="is_summary_off"
-                  :sp_op_disabled="true"
-                  :sp_viewpoint="e.memberships[0].location.key"
-                )
-                // :sp_hidden_if_piece_stand_blank="display_key === 'critical'"
-                //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
-
-          //- v-if="$route.query.query || config.records.length >= 1"
-          template(v-if="display_key === 'list'")
-            SwarsBattleIndexTable(:base="base")
+          SwarsBattleIndexBoard(:base="base" v-if="layout_info.key === 'is_layout_board'")
+          SwarsBattleIndexTable(:base="base" v-if="layout_info.key === 'is_layout_table'")
       SwarsBattleIndexDebugPanels(:base="base" v-if="development_p")
 </template>
 
@@ -90,6 +67,7 @@ import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
 import { DisplayInfo } from "./models/display_info.js"
+import { LayoutInfo } from "./models/layout_info.js"
 
 export default {
   name: "SwarsBattleIndexApp",
@@ -143,7 +121,7 @@ export default {
       params.per = this.per_info.per
       // }
     }
-    
+
     params = this.pc_url_params_clean(params)
 
     this.ga_process(params)
@@ -183,11 +161,22 @@ export default {
     },
 
     display_key_set(info) {
-      if (this.display_key != info.key) {
-        this.sound_play_click()
-        this.talk(info.name)
-        this.display_key = info.key
-      }
+      // if (this.display_key != info.key) {
+      this.sound_play_click()
+      this.talk(info.name)
+      this.display_key = info.key
+      // }
+      // if (this.layout_key !== "is_layout_board") {
+      this.layout_key = "is_layout_board"
+      // }
+    },
+
+    layout_key_set(info) {
+      // if (this.layout_key != info.key) {
+      this.sound_play_click()
+      this.talk(info.name)
+      this.layout_key = info.key
+      // }
     },
 
     ga_process(params) {
@@ -207,6 +196,9 @@ export default {
 
     DisplayInfo()     { return DisplayInfo                         },
     display_info()    { return DisplayInfo.fetch(this.display_key) },
+
+    LayoutInfo()     { return LayoutInfo                         },
+    layout_info()    { return LayoutInfo.fetch(this.layout_key) },
   },
 }
 </script>

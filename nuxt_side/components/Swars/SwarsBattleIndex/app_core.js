@@ -11,16 +11,12 @@ export const app_core = {
   methods: {
     show_handle(row) {
       this.sound_play_click()
-      this.$router.push({
-        name: "swars-battles-key",
-        params: {
-          key: row.key
-        },
-        query: {
-          scene: this.display_key,
-          viewpoint: row.memberships[0].location.key,
-        },
-      })
+      const params = {}
+      params.viewpoint = row.memberships[0].location.key
+      if (this.layout_info.key === "is_layout_board") {
+        params.scene = this.display_info.key
+      }
+      this.$router.push({name: "swars-battles-key", params: { key: row.key }, query: params})
     },
 
     // 開始局面

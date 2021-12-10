@@ -26,7 +26,7 @@ b-table.SwarsBattleIndexTable(
   SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.config.total === 0")
 
   b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="column_visible_p('id')" sortable numeric)
-    a(@click="show_handle(row)") \#{{row.id}}
+    a(@click="base.show_handle(row)") \#{{row.id}}
 
   template(v-for="(membership_label, i) in membership_labels")
     b-table-column(v-slot="{row}" :label="membership_label")
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="sass">
-SwarsBattleIndexTable
+.SwarsBattleIndexTable
   .menu-label:not(:first-child)
     margin-top: 2em
 </style>

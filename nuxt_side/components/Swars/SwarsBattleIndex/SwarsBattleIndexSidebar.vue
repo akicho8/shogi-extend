@@ -8,21 +8,27 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
         b-menu-list(label="Action")
           b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.config.current_swars_user_key}}" @click.native="sound_play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
 
-        b-menu-list(label="表示形式")
-          template(v-for="e in base.DisplayInfo.values")
+        b-menu-list(label="レイアウト")
+          template(v-for="e in base.LayoutInfo.values")
             b-menu-item.is_active_unset(
-              @click.stop="base.display_key_set(e)"
-              :class="e.div_class"
+              @click.stop="base.layout_key_set(e)"
+              :class="e.key"
               )
               template(slot="label")
-                span(:class="{'has-text-weight-bold': base.display_info.key === e.key}") {{e.name}}
-                template(v-if="e.key === 'list'")
+                span(:class="{'has-text-weight-bold': base.layout_info.key === e.key}") {{e.name}}
+                template(v-if="e.key === 'is_layout_table'")
                   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play_click()")
                     b-icon(icon="dots-vertical" slot="trigger")
                     template(v-for="e in base.ColumnInfo.values")
                       b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.available_p(base)")
                         span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
                           | {{e.name}}
+
+        b-menu-list(label="盤面の局面")
+          template(v-for="e in base.DisplayInfo.values")
+            b-menu-item.is_active_unset(@click.stop="base.display_key_set(e)" :class="e.div_class")
+              template(slot="label")
+                span(:class="{'has-text-weight-bold': base.display_info.key === e.key}") {{e.name}}
 
         b-menu-list(label="表示オプション")
           b-menu-item.is_active_unset.per_change_menu_item(@click="sound_play_click()")

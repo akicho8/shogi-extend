@@ -42,7 +42,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "囲い名で絞る" do
         visit2 "/swars/search", query: "Yamada_Taro tag:舟囲い"
-        assert_var_eq(:records_length, 4)
+        assert_var_eq(:records_length, 3)
 
         visit2 "/swars/search", query: "Yamada_Taro tag:高美濃囲い"
         assert_var_eq(:records_length, 0)
@@ -101,7 +101,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "日時のカラムを非表示にする" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
-        find(".is_display_list .dropdown").click
+        
+        find(".is_layout_table .dropdown").click
         menu_item_sub_menu_click("日時")
 
         table_in { assert_no_text("2020-01-01") }
@@ -110,7 +111,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "保存している" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
-        find(".is_display_list .dropdown").click
+        find(".is_layout_table .dropdown").click
         menu_item_sub_menu_click("日時")
 
         visit2 "/swars/search", query: "Yamada_Taro"
@@ -120,30 +121,23 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     describe "切り替え" do
-      it "初期値はテーブルになっている" do
+      it "初期値は一覧になっている" do
         visit2 "/swars/search", query: "Yamada_Taro"
-        assert_var_eq(:display_key, "table")
+        assert_selector(".SwarsBattleIndexTable")        
       end
 
-      it "表示形式を切り替える" do
+      it "一覧から盤面に切り替える" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
+        find(".is_layout_board").click
+        assert_selector(".SwarsBattleIndexBoard")
+      end
 
-        find(".is_display_critical").click
-        assert_var_eq(:display_key, "critical")
-        assert_selector(".is_board_display")
-
-        find(".is_display_outbreak").click
-        assert_var_eq(:display_key, "outbreak")
-        assert_selector(".is_board_display")
-
-        find(".is_display_last").click
+      it "盤面の局面を切り替える" do
+        visit2 "/swars/search", query: "Yamada_Taro"
+        side_menu_open
+        find(".is_layout_board").click
         assert_var_eq(:display_key, "last")
-        assert_selector(".is_board_display")
-
-        find(".is_display_list").click
-        assert_var_eq(:display_key, "table")
-        assert_selector(".SwarsBattleIndexTable")
       end
     end
   end
