@@ -131,7 +131,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         hamburger_click
         find(".is_layout_board").click
         assert_selector(".SwarsBattleIndexBoard")
-        assert_var_eq(:scene_key, "critical")
+        assert_var_eq(:scene_key, "critical") # 盤面の局面の初期値
       end
 
       it "盤面を開戦から終局に変更する" do
@@ -139,7 +139,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         hamburger_click
         find(".is_layout_board").click
         find(".is_scene_last").click
-        assert_var_eq(:scene_key, "critical")
+        assert_var_eq(:scene_key, "last")
       end
     end
   end

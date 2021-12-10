@@ -66,7 +66,7 @@ import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
-import { DisplayInfo } from "./models/display_info.js"
+import { SceneInfo } from "./models/scene_info.js"
 import { LayoutInfo } from "./models/layout_info.js"
 
 export default {
@@ -138,7 +138,7 @@ export default {
       this.query = this.config.query
       // this.query = this.$route.query.query
 
-      // this.ls_setup() // config から visible_hash や display_key を設定
+      // this.ls_setup() // config から visible_hash や scene_key を設定
 
       this.xnotice_run_all(this.config)
     })
@@ -160,11 +160,11 @@ export default {
       }
     },
 
-    display_key_set(info) {
-      // if (this.display_key != info.key) {
+    scene_key_set(info) {
+      // if (this.scene_key != info.key) {
       this.sound_play_click()
       this.talk(info.name)
-      this.display_key = info.key
+      this.scene_key = info.key
       // }
       // if (this.layout_key !== "is_layout_board") {
       this.layout_key = "is_layout_board"
@@ -194,8 +194,8 @@ export default {
     ZipDlInfo()       { return ZipDlInfo       },
     ParamInfo()       { return ParamInfo },
 
-    DisplayInfo()     { return DisplayInfo                         },
-    display_info()    { return DisplayInfo.fetch(this.display_key) },
+    SceneInfo()     { return SceneInfo                         },
+    scene_info()    { return SceneInfo.fetch(this.scene_key) },
 
     LayoutInfo()     { return LayoutInfo                         },
     layout_info()    { return LayoutInfo.fetch(this.layout_key) },

@@ -16,7 +16,7 @@ export const app_storage = {
     // ls_default() {
     //   return {
     //     ...this.pc_ls_default,
-    //     // display_key:  this.config.display_key,
+    //     // scene_key:  this.config.scene_key,
     //     // remember_vs_user_keys: [],
     //   }
     // },

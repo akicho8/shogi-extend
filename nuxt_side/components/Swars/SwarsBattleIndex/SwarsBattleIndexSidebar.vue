@@ -25,10 +25,10 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                           | {{e.name}}
 
         b-menu-list(label="盤面の局面")
-          template(v-for="e in base.DisplayInfo.values")
-            b-menu-item.is_active_unset(@click.stop="base.display_key_set(e)" :class="e.div_class")
+          template(v-for="e in base.SceneInfo.values")
+            b-menu-item.is_active_unset(@click.stop="base.scene_key_set(e)" :class="e.div_class")
               template(slot="label")
-                span(:class="{'has-text-weight-bold': base.display_info.key === e.key}") {{e.name}}
+                span(:class="{'has-text-weight-bold': base.scene_info.key === e.key}") {{e.name}}
 
         b-menu-list(label="表示オプション")
           b-menu-item.is_active_unset.per_change_menu_item(@click="sound_play_click()")

@@ -236,11 +236,11 @@ export default {
 
       // Indexのコードと同じだけど共通化はするな
       let v = null
-      if (this.scene === "critical") {
+      if (this.scene_key === "critical") {
         v = record.critical_turn
-      } else if (this.scene === "outbreak") {
+      } else if (this.scene_key === "outbreak") {
         v = record.outbreak_turn
-      } else if (this.scene === "last") {
+      } else if (this.scene_key === "last") {
         v = record.turn_max
       }
       return v || record.display_turn
@@ -282,8 +282,8 @@ export default {
       }
     },
 
-    scene() {
-      return this.$route.query.scene
+    scene_key() {
+      return this.$route.query.scene_key
     },
 
     default_viewpoint() {

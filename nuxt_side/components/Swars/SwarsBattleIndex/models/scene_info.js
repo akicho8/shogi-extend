@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class DisplayInfo extends ApplicationMemoryRecord {
+export class SceneInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "critical", name: "開戦", board_show_p: true,  type: "is-primary", message: null, },
@@ -10,6 +10,6 @@ export class DisplayInfo extends ApplicationMemoryRecord {
   }
 
   get div_class() {
-    return `is_display_${this.key}`
+    return `is_scene_${this.key}`
   }
 }

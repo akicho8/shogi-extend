@@ -14,7 +14,7 @@ export const app_core = {
       const params = {}
       params.viewpoint = row.memberships[0].location.key
       if (this.layout_info.key === "is_layout_board") {
-        params.scene = this.display_info.key
+        params.scene_key = this.scene_info.key
       }
       this.$router.push({name: "swars-battles-key", params: { key: row.key }, query: params})
     },
@@ -23,11 +23,11 @@ export const app_core = {
     // force_turn start_turn critical_turn の順に見る
     sp_start_turn(record) {
       let v = null
-      if (this.display_key === "critical") {
+      if (this.scene_key === "critical") {
         v = record.critical_turn
-      } else if (this.display_key === "outbreak") {
+      } else if (this.scene_key === "outbreak") {
         v = record.outbreak_turn
-      } else if (this.display_key === "last") {
+      } else if (this.scene_key === "last") {
         v = record.turn_max
       }
       return v || record.display_turn
