@@ -9,9 +9,9 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
     .mt-4
       b-menu
         b-menu-list(label="対局")
-          b-menu-item.is_active_unset(icon="home-account" label="部屋に入る" @click="base.room_setup_modal_handle")
-          b-menu-item.is_active_unset(icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(icon="alarm" label="対局時計"   @click="base.cc_modal_handle")
+          b-menu-item.is_active_unset.important(icon="home-account" label="部屋に入る" @click="base.room_setup_modal_handle")
+          b-menu-item.is_active_unset.important(icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset.important(icon="alarm" label="対局時計"   @click="base.cc_modal_handle")
 
         b-menu-list(label="局面操作と共有")
           b-menu-item.is_active_unset(icon="page-first" label="初期配置に戻す"              @click="base.board_init_modal_handle")
@@ -105,4 +105,8 @@ export default {
     .icon
       color: $primary
       margin-right: 0.5rem
+
+  .important
+    font-size: $size-5
+    font-weight: bold
 </style>
