@@ -13,7 +13,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset.important(icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
           b-menu-item.is_active_unset.important(icon="alarm" label="対局時計"   @click="base.cc_modal_handle")
 
-        b-menu-list(label="局面操作と共有")
+        b-menu-list(label="局面操作")
           b-menu-item.is_active_unset(icon="page-first" label="初期配置に戻す"              @click="base.board_init_modal_handle")
           b-menu-item.is_active_unset(icon="undo" label="1手戻す"                     @click="base.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"                  @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")

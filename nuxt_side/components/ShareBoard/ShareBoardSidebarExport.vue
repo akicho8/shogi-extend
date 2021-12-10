@@ -1,6 +1,6 @@
 <template lang="pug">
 .ShareBoardSidebarExport
-  b-menu-list(label="各種棋譜変換")
+  b-menu-list(label="EXPORT")
     b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_dl_modal_handle")
     b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
 
