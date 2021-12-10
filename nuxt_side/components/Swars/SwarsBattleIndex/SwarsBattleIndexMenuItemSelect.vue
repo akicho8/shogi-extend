@@ -6,7 +6,7 @@ b-menu-item.is_active_unset.SwarsBattleIndexMenuItemSelect(
   active-class=""
   :to="to"
   :class="{'has-text-weight-bold': active_p}"
-  @click.native="sound_play_click()"
+  @click.native="click_handle"
   )
 </template>
 
@@ -20,10 +20,14 @@ export default {
     query_preset_info: { type: Object, required: true },
   },
   methods: {
+    click_handle() {
+      this.sound_play_click()
+      this.talk(this.query_preset_info.name)
+    },
   },
   computed: {
     to() {
-      return {name: "swars-search", query: {query: this.new_query}}
+      return { name: "swars-search", query: {query: this.new_query} }
     },
     active_p() {
       return (this.$route.query.query || "") === this.new_query

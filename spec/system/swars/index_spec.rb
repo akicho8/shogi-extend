@@ -101,7 +101,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "日時のカラムを非表示にする" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
-        find(".display_key_set_table_handle .dropdown").click
+        find(".is_display_list .dropdown").click
         menu_item_sub_menu_click("日時")
 
         table_in { assert_no_text("2020-01-01") }
@@ -110,7 +110,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "保存している" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
-        find(".display_key_set_table_handle .dropdown").click
+        find(".is_display_list .dropdown").click
         menu_item_sub_menu_click("日時")
 
         visit2 "/swars/search", query: "Yamada_Taro"
@@ -129,19 +129,19 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
 
-        find(".display_key_set_critical_handle").click
+        find(".is_display_critical").click
         assert_var_eq(:display_key, "critical")
         assert_selector(".is_board_display")
 
-        find(".display_key_set_outbreak_handle").click
+        find(".is_display_outbreak").click
         assert_var_eq(:display_key, "outbreak")
         assert_selector(".is_board_display")
 
-        find(".display_key_set_last_handle").click
+        find(".is_display_last").click
         assert_var_eq(:display_key, "last")
         assert_selector(".is_board_display")
 
-        find(".display_key_set_table_handle").click
+        find(".is_display_list").click
         assert_var_eq(:display_key, "table")
         assert_selector(".SwarsBattleIndexTable")
       end

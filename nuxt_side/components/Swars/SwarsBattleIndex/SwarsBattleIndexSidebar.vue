@@ -9,20 +9,20 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.config.current_swars_user_key}}" @click.native="sound_play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
 
         b-menu-list(label="表示形式")
-          b-menu-item.is_active_unset.display_key_set_table_handle(@click.stop="base.display_key_set('table')")
-            template(slot="label")
-              span(:class="{'has-text-weight-bold': base.display_key === 'table'}") テーブル
-              //- b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-              b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play_click()")
-                b-icon(icon="dots-vertical" slot="trigger")
-                template(v-for="e in base.ColumnInfo.values")
-                  b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.available_p(base)")
-                    span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
-                      | {{e.name}}
-
-          b-menu-item.is_active_unset.display_key_set_critical_handle(label="開戦" @click.stop="base.display_key_set('critical')" :class="{'has-text-weight-bold': base.display_key === 'critical'}")
-          b-menu-item.is_active_unset.display_key_set_outbreak_handle(label="中盤" @click.stop="base.display_key_set('outbreak')" :class="{'has-text-weight-bold': base.display_key === 'outbreak'}")
-          b-menu-item.is_active_unset.display_key_set_last_handle(label="終局" @click.stop="base.display_key_set('last')"     :class="{'has-text-weight-bold': base.display_key === 'last'}")
+          template(v-for="e in base.DisplayInfo.values")
+            b-menu-item.is_active_unset(
+              @click.stop="base.display_key_set(e)"
+              :class="e.div_class"
+              )
+              template(slot="label")
+                span(:class="{'has-text-weight-bold': base.display_info.key === e.key}") {{e.name}}
+                template(v-if="e.key === 'list'")
+                  b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && sound_play_click()")
+                    b-icon(icon="dots-vertical" slot="trigger")
+                    template(v-for="e in base.ColumnInfo.values")
+                      b-dropdown-item.px-4(@click.native.stop="base.cb_toggle_handle(e)" :key="e.key" v-if="e.available_p(base)")
+                        span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
+                          | {{e.name}}
 
         b-menu-list(label="表示オプション")
           b-menu-item.is_active_unset.per_change_menu_item(@click="sound_play_click()")
@@ -104,14 +104,6 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 b-dropdown-item Action
                 b-dropdown-item Action
                 b-dropdown-item Action
-
-        b-menu-list(label="DEBUG" v-if="development_p")
-          b-menu-item.is_active_unset(label="棋譜の不整合"     @click="$router.push({query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}})")
-          b-menu-item.is_active_unset(label="棋譜の再取得"     @click="$router.push({query: {query: 'Yamada_Taro', destroy_all: true, force: true}})")
-          b-menu-item.is_active_unset(label="棋譜の普通に取得" @click="$router.push({query: {query: 'Yamada_Taro'}})")
-          b-menu-item.is_active_unset(label="☗を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'black'}})")
-          b-menu-item.is_active_unset(label="☖を左に表示"     @click="$router.push({query: {query: 'Yamada_Taro', viewpoint: 'white'}})")
-          b-menu-item.is_active_unset(label="全レコード表示"   @click="$router.push({query: {query: '', all: 'true', per: 50, debug: 'true'}})")
 </template>
 
 <script>

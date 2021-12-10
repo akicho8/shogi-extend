@@ -66,7 +66,7 @@
                 //- SwarsBattleShowUserLink.is_line_break_on.is-size-7(:membership="e.memberships[0]")
 
           //- v-if="$route.query.query || config.records.length >= 1"
-          template(v-if="display_key === 'table'")
+          template(v-if="display_key === 'list'")
             SwarsBattleIndexTable(:base="base")
       SwarsBattleIndexDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -182,18 +182,19 @@ export default {
       }
     },
 
-    display_key_set(key) {
-      if (this.display_key != key) {
+    display_key_set(info) {
+      if (this.display_key != info.key) {
         this.sound_play_click()
-        this.display_key = key
+        this.talk(info.name)
+        this.display_key = info.key
       }
     },
 
     ga_process(params) {
       if (params.query) {
-        this.ga_click("ウォーズ検索 検索実行")
+        this.ga_click("将棋ウォーズ棋譜検索 検索実行")
       } else {
-        this.ga_click("ウォーズ検索 未入力")
+        this.ga_click("将棋ウォーズ棋譜検索 未入力")
       }
     },
   },
