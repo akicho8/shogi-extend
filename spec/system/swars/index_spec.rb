@@ -150,7 +150,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_var_eq(:records_length, 0)
       end
 
-      it "サイドバーから変更できる" do
+      it "サイドバーから変更する" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
         find(".per_change_menu_item").click
@@ -172,7 +172,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     describe "フィルタ" do
-      it "サイドバーから変更できる" do
+      it "サイドバーから変更する" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
         find(".filter_set_menu_item").click
@@ -182,7 +182,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     describe "対戦相手で絞る" do
-      it "サイドバーから変更できる" do
+      it "サイドバーから変更する" do
         visit2 "/swars/search", query: "Yamada_Taro"
         side_menu_open
         find(".vs_input_modal_handle").click
@@ -203,7 +203,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_selector(".NuxtLoginContainer")
       end
 
-      it "正しくダウンロードできる" do
+      it "正しくダウンロードする" do
         login_by :sysop
 
         visit2 "/swars/search", query: "Yamada_Taro"
@@ -227,7 +227,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_selector(".NuxtLoginContainer")
       end
 
-      it "正しく予約できる" do
+      it "正しく予約する" do
         login_by :sysop
 
         visit2 "/swars/search", query: "Yamada_Taro"

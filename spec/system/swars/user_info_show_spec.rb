@@ -8,7 +8,7 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     assert_current_tab_at 0
   end
 
-  it "引数でデフォルトのタブを変更できる" do
+  it "引数でデフォルトのタブを変更する" do
     visit2 "/swars/users/Yamada_Taro", tab_index: 1
     assert_current_tab_at 1
   end

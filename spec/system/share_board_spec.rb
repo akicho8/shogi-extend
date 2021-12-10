@@ -39,7 +39,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  # このテストは ordered_members が nil のまま共有されるのをスキップできるのを保証するので消してはいけない
+  # このテストは ordered_members が nil のまま共有されるのをスキップするのを保証するので消してはいけない
   it "一度入力したハンドルネームは記憶" do
     a_block do
       room_setup("my_room", "alice")
@@ -355,7 +355,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    it "Enterで送信できる" do
+    it "Enterで送信する" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice", autoexec: "message_modal_handle")
         message1 = SecureRandom.hex
