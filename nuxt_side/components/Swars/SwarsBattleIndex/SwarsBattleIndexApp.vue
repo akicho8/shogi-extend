@@ -107,7 +107,6 @@ export default {
 
   data() {
     return {
-      dl_menu_item_expanded_p: false, // ダウンロードメニューの開閉状態
       config: {},
     }
   },
@@ -115,14 +114,6 @@ export default {
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",
-
-    // ダウンロードメニューを開いたときだけしゃべる
-    dl_menu_item_expanded_p(v) {
-      if (v) {
-        this.sound_stop_all()
-        this.toast_ok("Windowsアプリで棋譜が読めないときは Shift_JIS のほうを試してみてください")
-      }
-    },
   },
 
   mounted() {

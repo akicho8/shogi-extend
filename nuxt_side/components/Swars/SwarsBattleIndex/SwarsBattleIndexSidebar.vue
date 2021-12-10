@@ -53,13 +53,6 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           b-menu-item.is_active_unset.vs_input_modal_handle(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 
         b-menu-list(label="一括取得")
-          //- b-menu-item.is_active_unset(:disabled="menu_item_disabled" :expanded.sync="dl_menu_item_expanded_p" @click="sound_play_click()")
-          //-   template(slot="label" slot-scope="props")
-          //-     | 直近{{base.config.zip_dl_max_default}}件 ﾀﾞｳﾝﾛｰﾄﾞ
-          //-     b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-          //-   template(v-for="e in ZipDlInfo.values")
-          //-     b-menu-item.is_active_unset(@click="zip_dl_handle(e)" :label="e.name")
-
           b-menu-item.is_active_unset.swars_direct_download_handle(
             label="ダウンロード"
             @click.native="base.config.current_swars_user_key && sound_play_click()"
@@ -82,7 +75,11 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{name: 'swars-users-key-default-key', params: {key: base.config.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
-          b-menu-item.is_active_unset.home_bookmark_handle(label="ホーム画面に追加" @click="base.home_bookmark_handle" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.home_bookmark_handle(
+            label="ホーム画面に追加"
+            @click="base.home_bookmark_handle"
+            :disabled="menu_item_disabled"
+            )
 
           b-menu-item.is_active_unset.external_app_menu_item(:disabled="menu_item_disabled" @click="sound_play_click()")
             template(slot="label" slot-scope="props")
