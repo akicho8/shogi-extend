@@ -16,13 +16,24 @@ export class ParamBase extends ApplicationMemoryRecord {
 
   // default_for(this)
   default_for(context) {
+    let v = null
     Gs.__assert__(this.default !== undefined || this.defaults !== undefined, `${this.key} の default と defaults が未定義`)
     if (this.defaults) {
       Gs.__assert__(context.$config.STAGE, "context.$config.STAGE")
-      return this.defaults[context.$config.STAGE] || this.defaults["production"]
+      v = this.defaults[context.$config.STAGE] || this.defaults["production"]
     } else {
       Gs.__assert__(this.default !== undefined, `${this.key} の default が未定義`)
-      return this.default
+      v = this.default
     }
+
+    // Hash の場合そのまま返してしまうと初期値が更新されてしまう
+    // だから clone する必要がある
+    if (this.type === "hash") {
+      if (typeof v === "object") {
+        v = {...v}
+      }
+    }
+
+    return v
   }
 }

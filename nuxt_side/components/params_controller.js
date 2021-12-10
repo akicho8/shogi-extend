@@ -82,8 +82,10 @@ export const params_controller = {
     },
     pc_data_reset() {
       this.ParamInfo.values.forEach(e => {
-        if (e.default_for(this) != null) {
-          this.$data[e.key] = e.default_for(this)
+        const v = e.default_for(this)
+        if (v != null) {
+          this.clog(`this.$data["${e.key}"] = ${JSON.stringify(v)} (from default)`)
+          this.$data[e.key] = v
         }
       })
     },
