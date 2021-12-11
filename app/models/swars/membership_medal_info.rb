@@ -83,7 +83,7 @@ module Swars
       },
       {
         key: "長考マン",
-        message: -> m { "考えすぎて負けた。ちなみに一番長かったのは#{m.think_max_s}" },
+        message: -> m { "考えすぎて負けた。ちなみにいちばん長かったのは#{m.think_max_s}" },
         medal_params: "🤯",
         if_cond: -> m {
           (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose"
