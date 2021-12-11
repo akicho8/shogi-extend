@@ -9,19 +9,25 @@ client-only
     MainSection
       .container
         b-notification(:closable="false")
-          | 検索初期値を設定するとウォーズIDを入力する手間が省けます。主にぴよ将棋から来ている方におすすめです
+          | 設定するとウォーズIDを入力する手間が省けます。主にぴよ将棋から来ている方におすすめです
 
-        template(v-if="!old_key || (old_key != new_key)")
+        template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
-            p {{new_key}}さんを初期値に設定しますか？
+            | {{old_key}} を消して {{new_key}} を設定しますか？
+          .buttons.is-centered.mt-3
+            b-button.set_handle(@click="set_handle") 設定する
+
+        template(v-if="blank_p(old_key) && present_p(new_key)")
+          .has-text-centered
+            | {{new_key}} を設定しますか？
           .buttons.is-centered.mt-3
             b-button.set_handle(@click="set_handle") 設定する
 
         template(v-if="old_key")
           .has-text-centered
-            p 初期値({{old_key}}さん)を消去しますか？
+            | いま設定している {{old_key}} を消しますか？
           .buttons.is-centered.mt-3
-            b-button.unset_handle(@click="unset_handle") 消去する
+            b-button.unset_handle(@click="unset_handle") 消す
 </template>
 
 <script>
@@ -43,12 +49,14 @@ export default {
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("設定しました")
+      this.$router.push({name: "swars-search"})
     },
     unset_handle() {
       this.sound_play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
-      this.toast_ok("消去しました")
+      this.toast_ok("消しました")
+      this.$router.push({name: "swars-search"})
     },
     back_handle() {
       this.sound_play_click()
@@ -56,6 +64,8 @@ export default {
     },
   },
   computed: {
+    page_title() { return "ウォーズIDを記憶"     },
+    new_key()    { return this.$route.params.key },
     meta() {
       return {
         title: this.page_title,
@@ -63,12 +73,6 @@ export default {
         og_image_key: "swars-search",
         og_description: "",
       }
-    },
-    page_title() {
-      return "検索初期値の設定"
-    },
-    new_key() {
-      return this.$route.params.key
     },
   },
 }

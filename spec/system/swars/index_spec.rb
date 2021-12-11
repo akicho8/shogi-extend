@@ -253,7 +253,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   describe "一歩進んだ使い方" do
-    describe "検索初期値の設定" do
+    describe "ウォーズIDを記憶" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
         visit2 "/swars/search", query: "Yamada_Taro"
         default_swars_id_set
@@ -327,13 +327,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def default_swars_id_set
     hamburger_click
-    menu_item_click("検索初期値の設定")
+    menu_item_click("ウォーズIDを記憶")
     find(".set_handle").click
   end
 
   def default_swars_id_unset
     hamburger_click
-    menu_item_click("検索初期値の設定")
+    menu_item_click("ウォーズIDを記憶")
     find(".unset_handle").click
   end
 
