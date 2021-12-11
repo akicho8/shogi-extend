@@ -9,16 +9,14 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
       { key: null,                      name: "大金星",          query: "力差:>=2 勝敗:勝ち",            available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "金星",            query: "力差:==1 勝敗:勝ち",            available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "vs 上手",         query: "力差:>=1",                      available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "勝ち 150手以上",  query: "手数:>=150 勝敗:勝ち",          available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "勝ち 60手以下",   query: "手数:<=60 勝敗:勝ち",           available_env: { development: true, staging: true, production: true, }, },
       { key: "query_preset_judge_win",  name: "勝ち",            query: "勝敗:勝ち",                     available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "あっさり勝ち",    query: "手数:<=70 勝敗:勝ち",           available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "大黒星",          query: "力差:<=-2 勝敗:負け",           available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "黒星",            query: "力差:==-1 勝敗:負け",           available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "vs 下手",         query: "力差:<=-1",                     available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "負け 150手以上",  query: "手数:>=150 勝敗:負け",          available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "負け 60手以下",   query: "手数:<=60 勝敗:負け",           available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "負け",            query: "勝敗:負け",                     available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "あっさり負け",    query: "手数:<=70 勝敗:負け",           available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "切れ負け",        query: "勝敗:負け 結末:時間切れ",       available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "切断逃亡",        query: "勝敗:負け 結末:切断 手数:>=14", available_env: { development: true, staging: true, production: true, }, },
@@ -27,10 +25,7 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
       { key: null,                      name: "持久戦",          query: "中盤:>=50",                     available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "長手数",          query: "手数:>=150",                    available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "短手数",          query: "手数:<=60",                     available_env: { development: true, staging: true, production: true, }, },
-
-      { key: null,                      name: "右玉",            query: `or-tag:${this.migi_list}`,      available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "対右玉",          query: `vs-or-tag:${this.migi_list}`,   available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "短手数",          query: "手数:<=70",                     available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "居飛車",          query: `tag:居飛車`,                    available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "振り飛車",        query: `tag:振り飛車`,                  available_env: { development: true, staging: true, production: true, }, },
@@ -40,6 +35,9 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
 
       { key: null,                      name: "相居飛車",        query: `tag:居飛車 vs-tag:居飛車`,      available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "相振り",          query: `tag:振り飛車 vs-tag:振り飛車`,  available_env: { development: true, staging: true, production: true, }, },
+
+      { key: null,                      name: "右玉",            query: `or-tag:${this.migi_list}`,      available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "対右玉",          query: `vs-or-tag:${this.migi_list}`,   available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "指導対局",        query: "vs-grade:十段",                 available_env: { development: true, staging: true, production: true, }, },
 
