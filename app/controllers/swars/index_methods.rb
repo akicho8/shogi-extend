@@ -88,11 +88,10 @@ module Swars
 
     def js_index_options
       {
-        :xnotice       => @xnotice,
+        :xnotice                => @xnotice,
         :import_enable_p        => import_enable?,
         :current_swars_user_key => current_swars_user ? current_swars_user.key : nil,
         :viewpoint              => current_viewpoint,
-        :zip_dl_max_default     => AppConfig[:zip_dl_max_default],
       }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
         })
