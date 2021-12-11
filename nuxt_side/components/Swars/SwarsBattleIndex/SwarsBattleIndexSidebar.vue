@@ -24,13 +24,13 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                         span(:class="{'has-text-grey': !base.visible_hash[e.key], 'has-text-weight-bold': base.visible_hash[e.key]}")
                           | {{e.name}}
 
-        b-menu-list(label="盤面の局面")
+        b-menu-list(label="局面")
           template(v-for="e in base.SceneInfo.values")
             b-menu-item.is_active_unset(@click.stop="base.scene_key_set(e)" :class="e.div_class")
               template(slot="label")
                 span(:class="{'has-text-weight-bold': base.scene_info.key === e.key}") {{e.name}}
 
-        b-menu-list(label="表示オプション")
+        b-menu-list(label="オプション")
           b-menu-item.is_active_unset.per_change_menu_item(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | {{base.PerInfo.field_label}}
@@ -56,9 +56,9 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 :query_preset_info="e"
                 )
 
-          b-menu-item.is_active_unset.vs_user_modal_handle(@click="base.vs_user_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.vs_user_modal_handle(@click="base.vs_user_modal_handle" label="相手で絞る" :disabled="menu_item_disabled")
 
-        b-menu-list(label="一括取得")
+        b-menu-list(label="まとめて取得")
           b-menu-item.is_active_unset.swars_direct_download_handle(
             label="ダウンロード"
             @click.native="base.config.current_swars_user_key && sound_play_click()"
@@ -73,7 +73,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :to="{name: 'swars-users-key-download-all', params: {key: base.config.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
-        b-menu-list(label="便利な使い方あれこれ")
+        b-menu-list(label="一歩進んだ使い方")
           b-menu-item.is_active_unset(
             label="検索初期値の設定"
             @click.native="base.config.current_swars_user_key && sound_play_click()"
@@ -87,19 +87,19 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled"
             )
 
+          b-menu-item.is_active_unset.swars_users_key_kento_api_menu_item(
+            label="KENTOから連携"
+            @click.native="base.config.current_swars_user_key && sound_play_click()"
+            tag="nuxt-link"
+            :to="{name: 'swars-users-key-kento-api', params: {key: base.config.current_swars_user_key}}"
+            :disabled="menu_item_disabled")
+
           b-menu-item.is_active_unset.external_app_menu_item(:disabled="menu_item_disabled" @click="sound_play_click()")
             template(slot="label" slot-scope="props")
               | 外部アプリですぐ開く
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.ExternalAppInfo.values")
               b-menu-item.is_active_unset(@click="base.external_app_handle(e)" :label="e.name" :class="e.dom_class")
-
-          b-menu-item.is_active_unset.swars_users_key_kento_api_menu_item(
-            label="KENTO API"
-            @click.native="base.config.current_swars_user_key && sound_play_click()"
-            tag="nuxt-link"
-            :to="{name: 'swars-users-key-kento-api', params: {key: base.config.current_swars_user_key}}"
-            :disabled="menu_item_disabled")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item.is_active_unset

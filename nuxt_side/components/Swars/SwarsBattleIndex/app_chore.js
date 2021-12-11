@@ -73,7 +73,7 @@ export const app_chore = {
     //   this.sidebar_p = false
     //   this.sound_play_click()
     //   this.$buefy.dialog.prompt({
-    //     title: "対戦相手で絞る",
+    //     title: "相手で絞る",
     //     confirmText: "実行",
     //     cancelText: "キャンセル",
     //     inputAttrs: { type: "text", value: "", required: false, placeholder: "対戦相手のウォーズIDを入力" },

@@ -35,7 +35,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_list_present
       end
 
-      it "対戦相手で絞る" do
+      it "相手で絞る" do
         visit2 "/swars/search", query: "Yamada_Taro vs:devuser2"
         assert_var_eq(:records_length, 1)
       end
@@ -183,7 +183,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
     end
 
-    describe "対戦相手で絞る" do
+    describe "相手で絞る" do
       it "サイドバーから変更する" do
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
@@ -198,7 +198,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
   end
 
-  describe "一括取得" do
+  describe "まとめて取得" do
     describe "ダウンロード" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
         visit2 "/swars/direct-download"
@@ -252,7 +252,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
   end
 
-  describe "便利な使い方あれこれ" do
+  describe "一歩進んだ使い方" do
     describe "検索初期値の設定" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
         visit2 "/swars/search", query: "Yamada_Taro"

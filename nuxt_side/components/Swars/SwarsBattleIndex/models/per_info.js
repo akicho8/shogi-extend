@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class PerInfo extends ApplicationMemoryRecord {
-  static field_label = "表示件数"
+  static field_label = "件数"
 
   static get define() {
     return [

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 対戦相手で絞る
+      | 相手で絞る
   .modal-card-body
     b-field
       b-input(
