@@ -9,25 +9,25 @@ client-only
     MainSection
       .container
         b-notification(:closable="false")
-          | 設定するとウォーズIDを入力する手間が省けます。主にぴよ将棋から来ている方におすすめです
+          | ウォーズIDを覚えると検索覧に毎回入力しなくてよくなります。主にぴよ将棋から来ている方におすすめです。
 
         template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
-            | {{old_key}} を消して {{new_key}} を設定しますか？
+            | {{old_key}} を消して {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
-            b-button.set_handle(@click="set_handle") 設定する
+            b-button.set_handle(@click="set_handle") 覚える
 
         template(v-if="blank_p(old_key) && present_p(new_key)")
           .has-text-centered
-            | {{new_key}} を設定しますか？
+            | {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
-            b-button.set_handle(@click="set_handle") 設定する
+            b-button.set_handle(@click="set_handle") 覚える
 
         template(v-if="old_key")
           .has-text-centered
-            | いま設定している {{old_key}} を消しますか？
+            | いま覚えている {{old_key}} を忘れますか？
           .buttons.is-centered.mt-3
-            b-button.unset_handle(@click="unset_handle") 消す
+            b-button.unset_handle(@click="unset_handle") 忘れる
 </template>
 
 <script>
@@ -48,14 +48,14 @@ export default {
       this.sound_play_click()
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
-      this.toast_ok("設定しました")
+      this.toast_ok("覚えました")
       this.$router.push({name: "swars-search"})
     },
     unset_handle() {
       this.sound_play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
-      this.toast_ok("消しました")
+      this.toast_ok("忘れました")
       this.$router.push({name: "swars-search"})
     },
     back_handle() {
@@ -64,7 +64,7 @@ export default {
     },
   },
   computed: {
-    page_title() { return "ウォーズIDを記憶"     },
+    page_title() { return "ウォーズIDを覚える"     },
     new_key()    { return this.$route.params.key },
     meta() {
       return {
