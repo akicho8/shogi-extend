@@ -6,6 +6,18 @@ class JudgeInfo
     { key: :draw, name: "引き分け", ox_mark: "─", css_class: "has-text-weight-normal", },
   ]
 
+  class << self
+    def lookup(v)
+      super || invert_table[v]
+    end
+
+    private
+
+    def invert_table
+      @invert_table ||= inject({}) {|a, e| a.merge(e.name => e, e.ox_mark => e) }
+    end
+  end
+
   def swars_memberships
     Swars::Membership.where(judge_key: key)
   end

@@ -283,8 +283,20 @@ module Swars
           s = s.rule_eq(v)
         end
 
+        if e = query_info.lookup_op(:critical_turn) || query_info.lookup_op(:"開戦")
+          s = s.where(current_model.arel_table[:critical_turn].public_send(e[:operator], e[:value]))
+        end
+
+        if e = query_info.lookup_op(:outbreak_turn) || query_info.lookup_op(:"中盤")
+          s = s.where(current_model.arel_table[:outbreak_turn].public_send(e[:operator], e[:value]))
+        end
+
         if e = query_info.lookup_op(:turn_max) || query_info.lookup_op(:"手数")
           s = s.where(current_model.arel_table[:turn_max].public_send(e[:operator], e[:value]))
+        end
+
+        if v = query_info.lookup_one(:"final") || query_info.lookup_one(:"最後") || query_info.lookup_one(:"結末")
+          s = s.where(current_model.arel_table[:final_key].eq(FinalInfo.fetch(v).key))
         end
 
         if current_swars_user
@@ -300,7 +312,8 @@ module Swars
           end
           if v = query_info.lookup_one(:"judge") || query_info.lookup_one(:"勝敗")
             m = my_sampled_memberships
-            m = m.where(judge_key: v)
+            p JudgeInfo.fetch(v)
+            m = m.where(judge_key: JudgeInfo.fetch(v).key)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
@@ -370,7 +383,7 @@ module Swars
       m = m.joins(:battle)
 
       # FIXME: プレイヤー情報と条件を合わせるためハードコーディング
-      m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+      # m = m.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       m = m.merge(Swars::Battle.newest_order)  # 直近のものから取得
 
       # FIXME: ↓これいらなくね？

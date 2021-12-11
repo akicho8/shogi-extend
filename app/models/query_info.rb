@@ -99,7 +99,7 @@ class QueryInfo
     if v = @options[:available_keys]
       Regexp.union(v)
     else
-      /[\w\-]+/
+      /\p{Graph}+/
     end
   end
 end

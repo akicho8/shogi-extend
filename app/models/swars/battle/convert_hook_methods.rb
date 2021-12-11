@@ -95,7 +95,7 @@ module Swars
           s << "T#{used}"
         end
 
-        s << "%#{final_info.last_action_key}"
+        s << "%#{final_info.csa_last_action_key}"
         s.join("\n") + "\n"
       end
 

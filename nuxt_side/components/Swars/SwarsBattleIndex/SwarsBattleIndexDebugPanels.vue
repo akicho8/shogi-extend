@@ -39,6 +39,7 @@
         | system_test_variables
       .panel-block.system_test_variables
         pre
+          | [layout_key={{base.layout_key}}]
           | [scene_key={{base.scene_key}}]
           | [per={{base.config.per}}]
           | [records_length={{base.config.records ? base.config.records.length : ''}}]
