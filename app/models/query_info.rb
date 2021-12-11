@@ -55,7 +55,7 @@ class QueryInfo
     end
   end
 
-  def lookup_one_op(key)
+  def lookup_op(key)
     if v = lookup_one(key)
       if v.kind_of?(Hash)
         v
