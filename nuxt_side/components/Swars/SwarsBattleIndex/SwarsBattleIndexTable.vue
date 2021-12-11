@@ -61,20 +61,32 @@ b-table.SwarsBattleIndexTable(
 
   b-table-column(v-slot="{row}" :visible="operation_any_column_visible_p")
     .buttons.are-small
+      PiyoShogiButton(
+        v-if="column_visible_p('piyo_shogi')"
+        type="button"
+        :href="base.piyo_shogi_app_with_params_url(row)"
+        @click="sound_play_click()"
+        )
 
-      PiyoShogiButton(type="button" :href="base.piyo_shogi_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('piyo_shogi')")
+      KentoButton(
+        v-if="column_visible_p('kento')"
+        tag="a"
+        :href="base.kento_app_with_params_url(row)"
+        @click="sound_play_click()"
+        )
 
-      KentoButton(tag="a" :href="base.kento_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('kento')")
-
-      KifCopyButton(@click="base.kifu_copy_handle(row)" v-if="column_visible_p('kif_copy')")
+      KifCopyButton(
+        v-if="column_visible_p('kif_copy')"
+        @click="base.kifu_copy_handle(row)"
+        )
 
       ShowButton(
+        v-if="column_visible_p('show')"
         tag="nuxt-link"
         :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}"
         @click.native="sound_play_click()"
-        v-if="column_visible_p('show')")
+        )
         | 詳細
-
 </template>
 
 <script>
