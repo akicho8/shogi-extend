@@ -7,6 +7,9 @@
       a.panel-block(@click="base.pc_data_reset") localStorageで管理する変数の初期化
       a.panel-block(@click="base.ls_reset") localStorageのキー削除
       a.panel-block(@click="base.column_all_show") 全列表示
+      a.panel-block(@click="base.tiresome_alert_check") ウォーズIDを覚えるダイアログ発動チェック
+      a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを覚えるダイアログ発動
+
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得
@@ -43,6 +46,7 @@
           | [scene_key={{base.scene_key}}]
           | [per={{base.config.per}}]
           | [records_length={{base.config.records ? base.config.records.length : ''}}]
+          | [tiresome_count={{base.tiresome_count}}]
 
   //- .column.is-6(v-if="base.clock_box")
   //-   ClockBoxInspector(:clock_box="base.clock_box")

@@ -3,10 +3,7 @@
   b-loading(:active="$fetchState.pending")
 
   DebugBox(v-if="development_p")
-    p current_route_query: {{current_route_query}}
-    p $route.query: {{$route.query}}
-    p g_current_user: {{g_current_user && g_current_user.id}}
-    p visible_hash: {{visible_hash}}
+    p mounted_then_query_present_p: {{mounted_then_query_present_p}}
 
   SwarsBattleIndexSidebar(:base="base")
 
@@ -56,6 +53,7 @@ import { app_chore       } from "./app_chore.js"
 import { app_columns     } from "./app_columns.js"
 import { app_link_to        } from "./app_link_to.js"
 import { app_search      } from "./app_search.js"
+import { app_tiresome      } from "./app_tiresome.js"
 import { app_per         } from "./app_per.js"
 import { app_sidebar     } from "./app_sidebar.js"
 import { app_storage     } from "./app_storage.js"
@@ -75,6 +73,7 @@ export default {
     support_parent,
     app_link_to,
     app_search,
+    app_tiresome,
     app_per,
     app_columns,
     app_sidebar,
@@ -141,6 +140,8 @@ export default {
       // this.ls_setup() // config から visible_hash や scene_key を設定
 
       this.xnotice_run_all(this.config)
+      
+      this.tiresome_alert_check()
     })
   },
 

@@ -48,6 +48,17 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_var_eq(:records_length, 0)
       end
     end
+
+    describe "検索クエリを自力入力しすぎ警告" do
+      it "works" do
+        visit2 "/swars/search"
+        fill_in "query", with: "Yamada_Taro"
+        4.times { find(".search_click_handle").click }
+        assert_text "ウォーズIDを毎回入力する必要はありません"
+        find(".dialog.modal.is-active button").click       # 「わかった」をクリック
+        assert_no_selector ".modal"
+      end
+    end
   end
 
   describe "一覧要素の一番上の対局の各操作ボタンをタップする" do
@@ -77,7 +88,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     it "詳細" do
-      first(".DetailButton").click
+      first(".ShowButton").click
       assert { current_path == "/swars/battles/devuser3-Yamada_Taro-20200101_123403/" }
     end
   end
@@ -101,7 +112,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "日時のカラムを非表示にする" do
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        
+
         find(".is_layout_table .dropdown").click
         menu_item_sub_menu_click("日時")
 
@@ -123,7 +134,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "切り替え" do
       it "初期値は一覧になっている" do
         visit2 "/swars/search", query: "Yamada_Taro"
-        assert_selector(".SwarsBattleIndexTable")        
+        assert_selector(".SwarsBattleIndexTable")
       end
 
       it "一覧から盤面に切り替える" do
@@ -187,12 +198,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "サイドバーから変更する" do
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        find(".vs_input_modal_handle").click
-        within(".VsInputModal") do
+        find(".vs_user_modal_handle").click
+        within(".VsUserModal") do
           find("input").set("devuser1")
           find(".apply_handle").click
         end
-        assert_no_selector(".VsInputModal")
+        assert_no_selector(".VsUserModal")
         assert_var_eq(:records_length, 1)
       end
     end
@@ -253,7 +264,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   describe "一歩進んだ使い方" do
-    describe "ウォーズIDを記憶" do
+    describe "ウォーズIDを覚える" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
         visit2 "/swars/search", query: "Yamada_Taro"
         default_swars_id_set
@@ -327,13 +338,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def default_swars_id_set
     hamburger_click
-    menu_item_click("ウォーズIDを記憶")
+    menu_item_click("ウォーズIDを覚える")
     find(".set_handle").click
   end
 
   def default_swars_id_unset
     hamburger_click
-    menu_item_click("ウォーズIDを記憶")
+    menu_item_click("ウォーズIDを覚える")
     find(".unset_handle").click
   end
 
