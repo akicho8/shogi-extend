@@ -27,9 +27,11 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="column_visible_p('id')" sortable numeric)
     a(@click="base.show_handle(row)") \#{{row.id}}
 
-  template(v-for="(membership_label, i) in membership_labels")
-    b-table-column(v-slot="{row}" :label="membership_label")
-      SwarsBattleIndexMembership(:base="base" :membership="row.memberships[i]" key="`records/${row.id}/${i}`")
+  b-table-column(v-slot="{row}" label="自分" :visible="column_visible_p('membership_left')")
+    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
+
+  b-table-column(v-slot="{row}" label="相手" :visible="column_visible_p('membership_right')")
+    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
 
   b-table-column(v-slot="{row}" field="final_key" :label="base.ColumnInfo.fetch('final_key').name" :visible="column_visible_p('final_key')" sortable)
     span(:class="row.final_info.class") {{row.final_info.name}}
@@ -86,29 +88,6 @@ export default {
     },
   },
   computed: {
-    current_viewpoint_location() { return Location.fetch(this.base.config.viewpoint) },
-
-    membership_labels() {
-      let av = null
-      if (this.base.config.viewpoint) {
-        av = [
-          this.current_viewpoint_location.name,
-          this.current_viewpoint_location.flip.name,
-        ]
-      } else if (this.base.config.current_swars_user_key) {
-        av = [
-          "自分",
-          "相手",
-        ]
-      } else {
-        av = [
-          "勝ち",
-          "負け",
-        ]
-      }
-      return av
-    },
-
     operation_any_column_visible_p() {
       const ary = this.base.ColumnInfo.values.filter(e => e.operation_p)
       return ary.some(e => this.column_visible_p(e.key))
