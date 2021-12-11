@@ -6,6 +6,7 @@
         | Methods
       a.panel-block(@click="base.pc_data_reset") localStorageで管理する変数の初期化
       a.panel-block(@click="base.ls_reset") localStorageのキー削除
+      a.panel-block(@click="base.column_all_show") 全列表示
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得

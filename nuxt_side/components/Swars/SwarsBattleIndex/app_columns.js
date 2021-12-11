@@ -9,6 +9,9 @@ export const app_columns = {
         this.talk(info.name)
       }
     },
+    column_all_show() {
+      this.ColumnInfo.values.forEach(e => this.$set(this.visible_hash, e.key, true))
+    },
   },
   computed: {
     ColumnInfo() { return ColumnInfo },
