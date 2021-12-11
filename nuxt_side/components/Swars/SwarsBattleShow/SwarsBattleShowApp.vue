@@ -79,6 +79,8 @@ import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
 import { app_sidebar     } from "./app_sidebar.js"
 
+import { SceneInfo } from "../models/scene_info.js"
+
 export default {
   name: "SwarsBattleShowApp",
   mixins: [
@@ -233,17 +235,10 @@ export default {
       if (turn != null) {
         return Number(turn)
       }
-
-      // Indexのコードと同じだけど共通化はするな
-      let v = null
-      if (this.scene_key === "critical") {
-        v = record.critical_turn
-      } else if (this.scene_key === "outbreak") {
-        v = record.outbreak_turn
-      } else if (this.scene_key === "last") {
-        v = record.turn_max
+      if (this.scene_info) {
+        return this.scene_info.sp_turn_for(record)
       }
-      return v || record.display_turn
+      return record.display_turn
     },
 
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
@@ -269,6 +264,10 @@ export default {
   computed: {
     base() { return this },
 
+    SceneInfo()  { return SceneInfo                             },
+    scene_info() { return this.SceneInfo.lookup(this.scene_key) },
+    scene_key()  { return this.$route.query.scene_key           },
+
     meta() {
       // ページ遷移で来たとき head は fetch より前にいきなり呼ばれているためガードが必要
       if (!this.record) {
@@ -280,10 +279,6 @@ export default {
         og_image: this.og_image,
         description: this.record.description,
       }
-    },
-
-    scene_key() {
-      return this.$route.query.scene_key
     },
 
     default_viewpoint() {

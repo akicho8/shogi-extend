@@ -41,9 +41,9 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
 
       { key: null,                      name: "指導対局",        query: "vs-grade:十段",                 available_env: { development: true, staging: true, production: true, }, },
 
-      { key: null,                      name: "10分",            query: "rule:10分",                     available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "3分",             query: "rule:3分",                      available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "10秒",            query: "rule:10秒",                     available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "10分",            query: "種類:10分",                     available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "3分",             query: "種類:3分",                      available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "10秒",            query: "種類:10秒",                     available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "すべて",          query: "",                              available_env: { development: true, staging: true, production: true, }, },
     ]

@@ -279,7 +279,7 @@ module Swars
           s = s.where(key: v)
         end
 
-        if v = query_info.lookup_one(:rule)
+        if v = query_info.lookup_one(:rule) || query_info.lookup_one(:"種類")
           s = s.rule_eq(v)
         end
 
