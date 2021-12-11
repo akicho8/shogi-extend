@@ -6,8 +6,10 @@ b-table.SwarsBattleIndexTable(
   :current-page = "base.config.page"
   :per-page     = "base.config.per"
 
-  :show-header  = "base.config.total >= 1 || true"
-  :paginated    = "base.config.total >= 1 || true"
+  show-header
+  paginated
+  scrollable
+
   :hoverable="false"
 
   backend-pagination
