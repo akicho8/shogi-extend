@@ -1,16 +1,16 @@
 import _ from "lodash"
-import VsInputModal from "./VsInputModal.vue"
+import VsUserModal from "./VsUserModal.vue"
 
-const VS_INPUT_REMEMBER_MAX = 30
+const VS_USER_REMEMBER_MAX = 30
 
-export const app_vs_input = {
+export const app_vs_user = {
   methods: {
     // 対戦相手ID入力するモーダルを開く
-    vs_input_modal_handle() {
+    vs_user_modal_handle() {
       this.sidebar_p = false
       this.sound_play_click()
       this.modal_card_open({
-        component: VsInputModal,
+        component: VsUserModal,
         props: { base: this.base },
       })
     },
@@ -31,7 +31,7 @@ export const app_vs_input = {
     vs_user_keys_remember(str) {
       const keywords = this.str_to_keywords(str)
       if (keywords.length >= 1) {
-        this.remember_vs_user_keys = _.take(_.uniq([...keywords, ...this.remember_vs_user_keys]), VS_INPUT_REMEMBER_MAX)
+        this.remember_vs_user_keys = _.take(_.uniq([...keywords, ...this.remember_vs_user_keys]), VS_USER_REMEMBER_MAX)
       }
     },
   },

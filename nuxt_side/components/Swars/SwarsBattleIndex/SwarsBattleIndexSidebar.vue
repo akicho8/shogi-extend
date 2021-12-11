@@ -56,7 +56,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 :query_preset_info="e"
                 )
 
-          b-menu-item.is_active_unset.vs_input_modal_handle(@click="base.vs_input_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.vs_user_modal_handle(@click="base.vs_user_modal_handle" label="対戦相手で絞る" :disabled="menu_item_disabled")
 
         b-menu-list(label="一括取得")
           b-menu-item.is_active_unset.swars_direct_download_handle(

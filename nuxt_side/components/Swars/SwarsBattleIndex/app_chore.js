@@ -69,7 +69,7 @@ export const app_chore = {
       })
     },
 
-    // vs_input_modal_handle() {
+    // vs_user_modal_handle() {
     //   this.sidebar_p = false
     //   this.sound_play_click()
     //   this.$buefy.dialog.prompt({

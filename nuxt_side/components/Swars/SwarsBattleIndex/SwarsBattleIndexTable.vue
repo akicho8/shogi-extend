@@ -1,7 +1,6 @@
 <template lang="pug">
 b-table.SwarsBattleIndexTable(
   v-if="$route.query.query || present_p(base.config.records)"
-  ref="table"
 
   :total        = "base.config.total"
   :current-page = "base.config.page"
@@ -56,12 +55,21 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="column_visible_p('battled_at')" sortable)
     | {{row_time_format(row.battled_at)}}
 
-  b-table-column(v-slot="{row}")
+  b-table-column(v-slot="{row}" :visible="operation_any_column_visible_p")
     .buttons.are-small
+
       PiyoShogiButton(type="button" :href="base.piyo_shogi_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('piyo_shogi')")
+
       KentoButton(tag="a" :href="base.kento_app_with_params_url(row)" @click="sound_play_click()" v-if="column_visible_p('kento')")
-      KifCopyButton(@click="base.kifu_copy_handle(row)")
-      DetailButton(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}" @click.native="sound_play_click()") 詳細
+
+      KifCopyButton(@click="base.kifu_copy_handle(row)" v-if="column_visible_p('kif_copy')")
+
+      ShowButton(
+        tag="nuxt-link"
+        :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}"
+        @click.native="sound_play_click()"
+        v-if="column_visible_p('show')")
+        | 詳細
 
 </template>
 
@@ -99,7 +107,12 @@ export default {
         ]
       }
       return av
-    }
+    },
+
+    operation_any_column_visible_p() {
+      const ary = this.base.ColumnInfo.values.filter(e => e.operation_p)
+      return ary.some(e => this.column_visible_p(e.key))
+    },
   },
 }
 </script>

@@ -26,7 +26,7 @@ import { support_child } from "./support_child.js"
 import _ from "lodash"
 
 export default {
-  name: "VsInputModal",
+  name: "VsUserModal",
   mixins: [
     support_child,
   ],
@@ -69,7 +69,7 @@ export default {
 </script>
 
 <style lang="sass">
-.VsInputModal
+.VsUserModal
   +modal_width(30rem)
   .modal-card-body
     padding: 1.0rem

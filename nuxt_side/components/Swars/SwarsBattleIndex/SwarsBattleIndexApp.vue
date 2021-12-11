@@ -54,33 +54,33 @@ import _ from "lodash"
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
 import { app_columns     } from "./app_columns.js"
-import { app_core        } from "./app_core.js"
+import { app_link_to        } from "./app_link_to.js"
 import { app_search      } from "./app_search.js"
 import { app_per         } from "./app_per.js"
 import { app_sidebar     } from "./app_sidebar.js"
 import { app_storage     } from "./app_storage.js"
-import { app_vs_input     } from "./app_vs_input.js"
+import { app_vs_user     } from "./app_vs_user.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
-import { SceneInfo } from "./models/scene_info.js"
+import { SceneInfo } from "../models/scene_info.js"
 import { LayoutInfo } from "./models/layout_info.js"
 
 export default {
   name: "SwarsBattleIndexApp",
   mixins: [
     support_parent,
-    app_core,
+    app_link_to,
     app_search,
     app_per,
     app_columns,
     app_sidebar,
     app_chore,
     app_storage,
-    app_vs_input,
+    app_vs_user,
   ],
 
   data() {
