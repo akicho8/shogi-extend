@@ -14,8 +14,8 @@ export const app_chore = {
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
         message: `
-検索初期値の設定の他には<b>検索直後</b>のURLを<b>ホーム画面に追加</b>か
-ブックマークしてもウォーズIDの入力の手間を省けます
+<b>検索直後</b>のURLを<b>ホーム画面に追加</b>か
+<b>ブックマーク</b>してもウォーズIDの入力の手間を省けます。<br>
 `,
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
