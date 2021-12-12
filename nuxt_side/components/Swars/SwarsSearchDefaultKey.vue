@@ -13,7 +13,7 @@ client-only
 
         template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
-            | {{old_key}} を消して {{new_key}} を覚えますか？
+            | {{old_key}} を忘れて {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
             b-button.set_handle(@click="set_handle") 覚える
 
@@ -25,7 +25,7 @@ client-only
 
         template(v-if="old_key")
           .has-text-centered
-            | いま覚えている {{old_key}} を忘れますか？
+            | {{old_key}} を忘れますか？
           .buttons.is-centered.mt-3
             b-button.unset_handle(@click="unset_handle") 忘れる
 </template>
