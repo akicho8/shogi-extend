@@ -1,6 +1,4 @@
-const TIRESOME_ALERT_TRIGGER = [4, 8, 16, 32, 64, 128]
-
-import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
+const TIRESOME_ALERT_TRIGGER = [8, 16, 32, 64, 128]
 
 export const app_tiresome = {
   data() {
@@ -22,18 +20,11 @@ export const app_tiresome = {
       } else {
         if (this.config.current_swars_user_key) {
           // 生きているウォーズIDをあとから入力した
-          if (this.swars_search_default_key_exist_p()) {
+          if (this.swars_search_default_key_get()) {
             // すでにウォーズIDを覚えている
           } else {
             // ウォーズIDを覚えていない
-            // let c = this.user_key_counts[wid] || 0
-            // this.$set(this.user_key_counts, wid, c + 1)
-            // this.user_key_counts = this.count_hash_reverse_sort_by_count_and_take(this.user_key_counts, 3)
-            // this.debug_alert(this.user_key_counts[wid])
-            this.tiresome_count += 1
-            if (this.tiresome_alert_trigger_hash[this.tiresome_count]) {
-              this.tiresome_alert_handle()
-            }
+            this.tiresome_count_increment()
           }
         } else {
           // あとから何か入力したがウォーズIDはわからなかった
@@ -41,9 +32,18 @@ export const app_tiresome = {
       }
     },
 
-    // ウォーズIDを覚えているか？
-    swars_search_default_key_exist_p() {
-      return MyLocalStorage.get("swars_search_default_key")
+    tiresome_count_increment() {
+      // ウォーズIDを覚えていない
+      // let c = this.user_key_counts[wid] || 0
+      // this.$set(this.user_key_counts, wid, c + 1)
+      // this.user_key_counts = this.count_hash_reverse_sort_by_count_and_take(this.user_key_counts, 3)
+      // this.debug_alert(this.user_key_counts[wid])
+      // if (this.tiresome_key === "none" || this.tiresome_key === "no") {
+      this.tiresome_count += 1
+      if (this.tiresome_alert_trigger_hash[this.tiresome_count]) {
+        this.tiresome_alert_handle()
+      }
+      // }
     },
 
     tiresome_alert_handle() {
@@ -54,12 +54,21 @@ export const app_tiresome = {
         this.talk("ウォーズIDを毎回入力する必要はありません。右上メニューからウォーズIDを覚えるで入力の手間が省けます")
       })
 
-      this.dialog_alert({
+      this.dialog_confirm({
         hasIcon: true,
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
-        message: `右上メニューから<b>ウォーズIDを覚える</b>で入力の手間が省けます`,
-        confirmText: "わかった",
+        message: `<b>右上メニュー</b>から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
+        confirmText: "やってみる",
+        cancelText: "面倒なままで良い",
+        onConfirm: () => {
+          this.sound_play_click()
+          this.tiresome_key = "yes"
+        },
+        onConfirm: () => {
+          this.sound_play_click()
+          this.tiresome_key = "no"
+        },
       })
     },
   },

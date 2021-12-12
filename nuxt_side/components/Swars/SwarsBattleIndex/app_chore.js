@@ -68,23 +68,5 @@ export const app_chore = {
         })
       })
     },
-
-    // vs_user_modal_handle() {
-    //   this.sidebar_p = false
-    //   this.sound_play_click()
-    //   this.$buefy.dialog.prompt({
-    //     title: "相手で絞る",
-    //     confirmText: "実行",
-    //     cancelText: "キャンセル",
-    //     inputAttrs: { type: "text", value: "", required: false, placeholder: "対戦相手のウォーズIDを入力" },
-    //     onCancel: () => this.sound_play_click(),
-    //     onConfirm: value => {
-    //       this.sound_play_click()
-    //       value = _.trim(value)
-    //       const new_query = [this.config.current_swars_user_key, `vs:${value}`].join(" ")
-    //       this.$router.push({name: "swars-search", query: {query: new_query}})
-    //     },
-    //   })
-    // },
   },
 }

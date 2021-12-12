@@ -50,6 +50,7 @@ import _ from "lodash"
 
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
+import { app_default_key       } from "./app_default_key.js"
 import { app_columns     } from "./app_columns.js"
 import { app_link_to        } from "./app_link_to.js"
 import { app_search      } from "./app_search.js"
@@ -60,7 +61,6 @@ import { app_storage     } from "./app_storage.js"
 import { app_vs_user     } from "./app_vs_user.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
-import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
@@ -78,6 +78,7 @@ export default {
     app_columns,
     app_sidebar,
     app_chore,
+    app_default_key,
     app_storage,
     app_vs_user,
   ],
@@ -106,7 +107,7 @@ export default {
     let params = {...this.$route.query}
 
     if (this.blank_p(params.query)) {
-      params.query = MyLocalStorage.get("swars_search_default_key")
+      params.query = this.swars_search_default_key_get()
     }
 
     // if (this.blank_p(params.per)) {
