@@ -24,6 +24,7 @@ export const app_vs_user = {
         str = null
       }
       const new_query = _.compact([this.config.current_swars_user_key, str]).join(" ")
+      this.remote_notify({subject: "相手で絞る", body: new_query})
       this.$router.push({name: "swars-search", query: {query: new_query}})
     },
 

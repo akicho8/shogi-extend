@@ -173,6 +173,7 @@ export default {
       // if (this.layout_key !== "is_layout_board") {
       this.layout_key = "is_layout_board"
       // }
+      this.remote_notify({subject: "局面", body: info.name})
     },
 
     layout_key_set(info) {
@@ -180,6 +181,7 @@ export default {
       this.sound_play_click()
       this.talk(info.name)
       this.layout_key = info.key
+      this.remote_notify({subject: "レイアウト", body: info.name})
       // }
     },
 

@@ -10,6 +10,7 @@
       a.panel-block(@click="base.tiresome_alert_check") ウォーズIDを覚えるダイアログ発動チェック
       a.panel-block(@click="base.tiresome_count_increment") 自力入力した回数++
       a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを覚えるダイアログ発動
+      a.panel-block(@click="remote_notify") remote_notify
 
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得

@@ -49,6 +49,7 @@ export default {
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("覚えました")
+      this.logging()
       // this.$router.push({name: "swars-search"})
     },
     unset_handle() {
@@ -56,11 +57,16 @@ export default {
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("忘れました")
+      this.logging()
       // this.$router.push({name: "swars-search"})
     },
     back_handle() {
       this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
+    },
+    logging() {
+      const value = MyLocalStorage.get("swars_search_default_key") || "(忘れる)"
+      this.remote_notify({subject: "ウォーズIDを覚える", body: value})
     },
   },
   computed: {

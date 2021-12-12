@@ -54,20 +54,24 @@ export const app_tiresome = {
         this.talk("ウォーズIDを毎回入力する必要はありません。右上メニューからウォーズIDを覚えるで入力の手間が省けます")
       })
 
+      const subject = "ウォーズIDを覚える誘導モーダル発動"
       this.dialog_confirm({
+        canCancel: ["button"],
         hasIcon: true,
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
         message: `<b>右上メニュー</b>から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
-        cancelText: "面倒なままでいい",
         confirmText: "やってみる",
-        onCancel: () => {
-          this.sound_play_click()
-          this.tiresome_key = "no"
-        },
+        cancelText: "面倒なままでいい",
         onConfirm: () => {
           this.sound_play_click()
           this.tiresome_key = "yes"
+          this.remote_notify({subject: subject, body: "やってみる"})
+        },
+        onCancel: () => {
+          this.sound_play_click()
+          this.tiresome_key = "no"
+          this.remote_notify({subject: subject, body: "面倒なままでいい"})
         },
       })
     },

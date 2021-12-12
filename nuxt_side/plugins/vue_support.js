@@ -312,6 +312,12 @@ export const vue_support = {
       this.debug_alert(e.keyCode)
       return e.keyCode === 13
     },
+
+    remote_notify(params = {}) {
+      return this.$axios.$post("/api/remote_notify.json", params, {progress: false}).then(e => {
+        this.__assert__(e.message == "OK", 'e.message == "OK"')
+      })
+    },
   },
 
   directives: {

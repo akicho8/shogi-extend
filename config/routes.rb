@@ -113,6 +113,8 @@ Rails.application.routes.draw do
     match "echo(.:format)",  to: "etc#echo",  via: :all, format: nil
     match "sleep(.:format)", to: "etc#sleep", via: :all, format: nil
 
+    post "remote_notify(.:format)", to: "etc#remote_notify"
+
     get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
     get "tsl_user_newest(.:format)",   to: "etc#tsl_user_newest"
     get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"

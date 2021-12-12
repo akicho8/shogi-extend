@@ -63,6 +63,22 @@ module Api
       }
     end
 
+    # http://localhost:3000/api/remote_notify.json
+    def remote_notify
+      pure_attrs = params.to_unsafe_h.to_options
+      if true
+        subject = []
+        if current_user
+          subject << "#{current_user.id} #{current_user.name}"
+        end
+        subject << pure_attrs[:subject]
+        subject = subject.compact.join("|")
+        pure_attrs[:subject] = subject
+      end
+      SlackAgent.notify(pure_attrs)
+      render json: { :message => "OK" }
+    end
+
     # 三段リーグのユーザー配列
     # http://localhost:3000/api/tsl_user_all
     def tsl_user_all
