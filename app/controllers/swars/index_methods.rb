@@ -160,7 +160,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
-            @xnotice.add("#{current_swars_user_key}さんは存在しません", type: "is-warning")
+            @xnotice.add("#{current_swars_user_key}さんは存在しません。大文字と小文字を間違えていませんか？", type: "is-warning")
           end
 
           if hit_count.nonzero?
