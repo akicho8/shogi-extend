@@ -54,7 +54,7 @@ export const app_tiresome = {
         this.talk("ウォーズIDを毎回入力する必要はありません。右上メニューからウォーズIDを覚えるで入力の手間が省けます")
       })
 
-      const subject = "ウォーズIDを覚える誘導モーダル発動"
+      const subject = "ウォーズIDを覚える案内発動"
       this.dialog_confirm({
         canCancel: ["button"],
         hasIcon: true,

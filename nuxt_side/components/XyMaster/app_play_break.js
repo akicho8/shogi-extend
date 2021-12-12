@@ -7,8 +7,13 @@ export const app_play_break = {
     time_over_p_check() {
       if (this.time_over_p) {
         this.stop_handle()
-        this.toast_ok("時間切れ")
+        this.time_over_alert()
       }
+    },
+
+    time_over_alert() {
+      this.toast_ok("時間切れ")
+      this.remote_notify({subject: "符号の鬼", body: "時間切れ"})
     },
 
     too_many_mistake_check() {
@@ -20,6 +25,7 @@ export const app_play_break = {
 
     too_many_mistake_alert() {
       this.toast_ok("ミスが多すぎるので終了")
+      this.remote_notify({subject: "符号の鬼", body: "ミスが多すぎるので終了"})
     },
   },
 

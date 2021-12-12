@@ -65,17 +65,17 @@ module Api
 
     # http://localhost:3000/api/remote_notify.json
     def remote_notify
-      pure_attrs = params.to_unsafe_h.to_options
+      hv = params.to_unsafe_h.to_options
       if true
         subject = []
         if current_user
           subject << "#{current_user.id} #{current_user.name}"
         end
-        subject << pure_attrs[:subject]
-        subject = subject.compact.join("|")
-        pure_attrs[:subject] = subject
+        subject << hv[:subject]
+        subject = subject.compact.join(" | ")
+        hv[:subject] = subject
       end
-      SlackAgent.notify(pure_attrs)
+      SlackAgent.notify(hv)
       render json: { :message => "OK" }
     end
 

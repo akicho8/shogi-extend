@@ -314,9 +314,7 @@ export const vue_support = {
     },
 
     remote_notify(params = {}) {
-      return this.$axios.$post("/api/remote_notify.json", params, {progress: false}).then(e => {
-        this.__assert__(e.message == "OK", 'e.message == "OK"')
-      })
+      return this.$axios.$post("/api/remote_notify.json", params, {progress: false})
     },
   },
 
