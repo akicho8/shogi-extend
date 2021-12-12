@@ -49,14 +49,14 @@ export default {
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("覚えました")
-      this.$router.push({name: "swars-search"})
+      // this.$router.push({name: "swars-search"})
     },
     unset_handle() {
       this.sound_play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.toast_ok("忘れました")
-      this.$router.push({name: "swars-search"})
+      // this.$router.push({name: "swars-search"})
     },
     back_handle() {
       this.sound_play_click()
