@@ -48,6 +48,8 @@
           | [per={{base.config.per}}]
           | [records_length={{base.config.records ? base.config.records.length : ''}}]
           | [tiresome_count={{base.tiresome_count}}]
+          | [tiresome_key={{base.tiresome_key}}]
+          | [complement_user_keys={{base.complement_user_keys.join("|")}}]
 
   //- .column.is-6(v-if="base.clock_box")
   //-   ClockBoxInspector(:clock_box="base.clock_box")

@@ -59,6 +59,8 @@ export const params_controller = {
             v = Math.trunc(Number(v))
           } else if (e.type === "float") {
             v = Number(v)
+          } else if (e.type === "array") {
+            v = this.str_to_words(v)
           } else {
             // string
           }

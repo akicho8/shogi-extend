@@ -444,30 +444,39 @@ export const Gs = {
     return list
   },
 
-  // str_to_keywords("　,　a　,b,") // => ["a", "b"]
-  // str_to_keywords(",")           // => []
-  // str_to_keywords("")            // => []
-  str_to_keywords(str) {
-    str = str ?? ""
-    str = str.replace(/\p{blank}+/g, " ") // 全角スペース → 半角スペース
-    str = str.replace(/[\s,]+/g, " ")     // セパレータを半角スペースで統一
-    str = _.trim(str)                     // 左右のスペースを除去
-    if (str.length >= 1) {
-      return _.uniq(str.split(/\s+/))
-    } else {
-      return []
+  str_squish(str) {
+    str = (str || "").toString()
+    str = str.replace(/[\s\u3000]+/g, " ")
+    str = str.trim()
+    return str
+  },
+
+  // str_to_tags("a,b,a") // => ["a", "b"]
+  str_to_tags(str) {
+    return _.uniq(this.str_to_words(str))
+  },
+
+  // str_to_tags("a,b,a") // => ["a", "b", "a"]
+  str_to_words(str) {
+    str = (str || "").toString()
+    str = str.replace(/,/g, " ")
+    str = this.str_squish(str)
+    let av = []
+    if (this.present_p(str)) {
+      av = str.split(/\s+/)
     }
+    return av
   },
 
   // keywords_str_toggle("a b", "c")   //=> "a b c"
   // keywords_str_toggle("a b c", "c") //=> "a b"
   keywords_str_toggle(keywords_str, str) {
-    let keywords = this.str_to_keywords(keywords_str)
-    if (keywords.includes(str)) {
-      _.pull(keywords, str)
+    let av = this.str_to_tags(keywords_str)
+    if (av.includes(str)) {
+      _.pull(av, str)
     } else {
-      keywords.push(str)
+      av.push(str)
     }
-    return keywords.join(" ")
+    return av.join(" ")
   },
 }

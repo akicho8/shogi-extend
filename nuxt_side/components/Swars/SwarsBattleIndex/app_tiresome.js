@@ -59,15 +59,15 @@ export const app_tiresome = {
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
         message: `<b>右上メニュー</b>から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
+        cancelText: "面倒なままでいい",
         confirmText: "やってみる",
-        cancelText: "面倒なままで良い",
-        onConfirm: () => {
+        onCancel: () => {
           this.sound_play_click()
-          this.tiresome_key = "yes"
+          this.tiresome_key = "no"
         },
         onConfirm: () => {
           this.sound_play_click()
-          this.tiresome_key = "no"
+          this.tiresome_key = "yes"
         },
       })
     },

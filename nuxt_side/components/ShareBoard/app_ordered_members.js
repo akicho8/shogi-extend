@@ -37,7 +37,7 @@ export const app_ordered_members = {
     // ordered_member_names= なら空で設定
     os_setup_by_url_params() {
       if ("ordered_member_names" in this.$route.query) {
-        const names = this.str_to_keywords(this.$route.query.ordered_member_names)
+        const names = this.str_to_words(this.$route.query.ordered_member_names)
         this.os_setup_by_names(names)
       }
     },

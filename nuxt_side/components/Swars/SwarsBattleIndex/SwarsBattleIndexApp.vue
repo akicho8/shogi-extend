@@ -27,7 +27,7 @@
               max-height="50vh"
               size="is-medium"
               v-model.trim="query"
-              :data="search_form_complete_list"
+              :data="search_input_complement_list"
               type="search"
               placeholder="ウォーズIDを入力"
               open-on-focus
@@ -54,6 +54,7 @@ import { app_default_key       } from "./app_default_key.js"
 import { app_columns     } from "./app_columns.js"
 import { app_link_to        } from "./app_link_to.js"
 import { app_search      } from "./app_search.js"
+import { app_complement_user_keys      } from "./app_complement_user_keys.js"
 import { app_tiresome      } from "./app_tiresome.js"
 import { app_per         } from "./app_per.js"
 import { app_sidebar     } from "./app_sidebar.js"
@@ -73,6 +74,7 @@ export default {
     support_parent,
     app_link_to,
     app_search,
+    app_complement_user_keys,
     app_tiresome,
     app_per,
     app_columns,
@@ -132,16 +134,16 @@ export default {
       this.__trace__("SwarsBattleIndexApp", "fetch then")
 
       this.config = config
+      this.rails_session_side_copy_to_user_keys_if_blank()
 
       // なかから nuxt-link したとき $fetch が呼ばれるが、
       // this.query は前の状態なので更新する
       this.query = this.config.query
+      this.user_keys_update_by_query()
       // this.query = this.$route.query.query
 
-      // this.ls_setup() // config から visible_hash や scene_key を設定
-
       this.xnotice_run_all(this.config)
-      
+
       this.tiresome_alert_check()
     })
   },

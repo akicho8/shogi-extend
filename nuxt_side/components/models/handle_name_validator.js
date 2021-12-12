@@ -37,7 +37,7 @@ export const HandleNameValidator = {
     }
   },
   valid(s) {
-    s = s.replace(/[\s\u3000]+/g, "") // 空白を取る
+    s = s.replace(/[\s\u3000]+/g, "") // 空白を取る (Chrome と Firefox は \s が全角スペースにマッチする)
     s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
     s = Gs.hankaku_format(s)          // 半角化
     let error = false

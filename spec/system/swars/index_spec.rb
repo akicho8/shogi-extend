@@ -49,13 +49,38 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
     end
 
+    describe "入力補完" do
+      def test1(query, complement_user_keys)
+        search_by(query)
+        assert_var_eq(:complement_user_keys, complement_user_keys)
+      end
+
+      it "順番が正しい" do
+        visit2 "/swars/search", complement_user_keys: "b a" # 初期値を設定しておくと
+        assert_var_eq(:complement_user_keys, "b|a")         # Rails側からのコピーをかわせる
+
+        test1 :devuser1, "devuser1|b|a"                     # devuser1が直近に登場
+        test1 :devuser1, "devuser1|b|a"                     # devuser1はすでに入っているので変化なし
+        test1 :devuser2, "devuser2|devuser1|b"              # devuser2が先頭に入ったが最大3件なのでaが溢れた
+        test1 :devuser3, "devuser3|devuser2|devuser1"       # devuser3が先頭に入ったが最大3件なのでbが溢れた
+        test1 :devuser0, "devuser3|devuser2|devuser1"       # devuser0は存在しないので変化なし
+      end
+      
+      it "クエリ全体を取り込む" do
+        visit2 "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
+        assert_var_eq(:complement_user_keys, "xxx")                           # Rails側からのコピーをかわせる
+        search_by "　devuser1　tag:a,b　手数:>=1　"                           # 入力が汚なくても
+        assert_var_eq(:complement_user_keys, "devuser1 tag:a,b 手数:>=1|xxx") # squishして取り込んでいる
+      end
+    end
+
     describe "検索クエリを自力入力しすぎ警告" do
       it "works" do
         visit2 "/swars/search"
         fill_in "query", with: "Yamada_Taro"
-        4.times { find(".search_click_handle").click }
+        8.times { find(".search_click_handle").click }
         assert_text "ウォーズIDを毎回入力する必要はありません"
-        find(".dialog.modal.is-active button").click       # 「わかった」をクリック
+        find(".dialog.modal.is-active button.is-info").click # 「わかった」をクリック
         assert_no_selector ".modal"
       end
     end
@@ -172,7 +197,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_var_eq(:records_length, 1)
       end
 
-      xit "保存している(実装後に有効にする)" do
+      it "保存している" do
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
         find(".per_change_menu_item").click
@@ -371,6 +396,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def table_in
     within(".SwarsBattleIndexTable") { yield }
+  end
+
+  def search_by(query)
+    fill_in "query", with: query
+    find(".search_click_handle").click
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

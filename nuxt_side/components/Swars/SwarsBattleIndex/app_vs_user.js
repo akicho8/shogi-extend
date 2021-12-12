@@ -1,7 +1,7 @@
 import _ from "lodash"
 import VsUserModal from "./VsUserModal.vue"
 
-const VS_USER_REMEMBER_MAX = 30
+const VS_USERS_ARRAY_SIZE_MAX = 30
 
 export const app_vs_user = {
   methods: {
@@ -16,10 +16,10 @@ export const app_vs_user = {
     },
 
     // 入力値 str を正規化して再検索
-    vs_filter_run_handle(str) {
-      const keywords = this.str_to_keywords(str)
-      if (keywords.length >= 1) {
-        str = "vs:" + keywords.join(",")
+    vs_user_research_handle(str) {
+      const av = this.str_to_tags(str)
+      if (this.present_p(av)) {
+        str = "vs:" + av.join(",")
       } else {
         str = null
       }
@@ -29,9 +29,12 @@ export const app_vs_user = {
 
     // 入力値 str を正規化して補完リストとして localStorage に入れておく
     vs_user_keys_remember(str) {
-      const keywords = this.str_to_keywords(str)
-      if (keywords.length >= 1) {
-        this.remember_vs_user_keys = _.take(_.uniq([...keywords, ...this.remember_vs_user_keys]), VS_USER_REMEMBER_MAX)
+      let av = this.str_to_tags(str)
+      if (this.present_p(av)) {
+        av = [...av, ...this.remember_vs_user_keys]
+        av = _.uniq(av)
+        av = _.take(av, VS_USERS_ARRAY_SIZE_MAX)
+        this.remember_vs_user_keys = av
       }
     },
   },

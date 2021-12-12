@@ -99,12 +99,5 @@ export const app_search = {
         ...this.$route.query,
       }
     },
-    search_form_complete_list() {
-      if (this.config.remember_swars_user_keys) {
-        return this.config.remember_swars_user_keys.filter((option) => {
-          return option.toString().toLowerCase().indexOf((this.query || "").toLowerCase()) >= 0
-        })
-      }
-    },
   },
 }

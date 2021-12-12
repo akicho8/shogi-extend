@@ -13,7 +13,7 @@
         )
     b-taglist(v-if="present_p(base.remember_vs_user_keys)")
       template(v-for="str in base.remember_vs_user_keys")
-        b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': vs_user_keys.includes(str)}")
+        b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': input_list.includes(str)}")
           | {{str}}
 
   .modal-card-foot
@@ -56,14 +56,12 @@ export default {
     apply_handle() {
       this.sound_play_click()
       this.base.vs_user_keys_remember(this.input_body)
-      this.base.vs_filter_run_handle(this.input_body)
+      this.base.vs_user_research_handle(this.input_body)
       this.$emit("close")
     },
   },
   computed: {
-    vs_user_keys() {
-      return this.str_to_keywords(this.input_body)
-    },
+    input_list() { return this.str_to_tags(this.input_body) },
   },
 }
 </script>
