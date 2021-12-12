@@ -126,12 +126,11 @@ module Swars
       s = user.swars_crawl_reservations
       count = s.where(target_user_key: target_user.key).count
       total = s.count
-      body << "#{user.name}さんが #{target_user.key.inspect} の#{count}回目の予約"
-      body << "全体で#{total}回目"
+      body << "#{user.name} #{user.email} さんが全体#{total}回目個別#{count}回目の予約で対象は #{target_user.key.inspect}"
+      body << ""
       if attachment_mode == "with_zip"
-        body << "ZIP"
+        body << "(要ZIP添付)"
       end
-      body << "→ #{user.email}"
       body = body.join(" ")
       SlackAgent.notify(emoji: ":目覚まし時計:", subject: "棋譜取得予約", body: body)
     end
