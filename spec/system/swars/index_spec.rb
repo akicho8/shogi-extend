@@ -65,7 +65,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         test1 :devuser3, "devuser3|devuser2|devuser1"       # devuser3が先頭に入ったが最大3件なのでbが溢れた
         test1 :devuser0, "devuser3|devuser2|devuser1"       # devuser0は存在しないので変化なし
       end
-      
+
       it "クエリ全体を取り込む" do
         visit2 "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "xxx")                           # Rails側からのコピーをかわせる
@@ -255,7 +255,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".zdsk_continue").click                        # 「前回の続きから」
         find(".download_handle").click                      # 「ダウンロード」
 
-        assert { current_path == "/swars/search" }          # 検索に戻った
+        assert_text "将棋ウォーズ棋譜検索"                  # 検索に戻った
       end
     end
 
