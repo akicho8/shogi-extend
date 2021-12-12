@@ -81,7 +81,7 @@ import { app_chart       } from "./app_chart.js"
 import { app_debug       } from "./app_debug.js"
 import { app_help        } from "./app_help.js"
 import { app_keyboard    } from "./app_keyboard.js"
-import { app_main        } from "./app_main.js"
+import { app_play_break        } from "./app_play_break.js"
 import { app_ranking     } from "./app_ranking.js"
 import { app_sidebar     } from "./app_sidebar.js"
 import { app_storage     } from "./app_storage.js"
@@ -107,7 +107,7 @@ export default {
     app_debug,
     app_help,
     app_keyboard,
-    app_main,
+    app_play_break,
     app_ranking,
     app_sidebar,
     app_storage,
@@ -180,10 +180,7 @@ export default {
     },
 
     spent_sec() {
-      if (this.time_over_p) {
-        this.stop_handle()
-        this.toast_ok("時間切れ")
-      }
+      this.time_over_p_check()
     },
   },
 
@@ -349,6 +346,7 @@ export default {
       } else {
         this.x_count++
         this.sound_play("x")
+        this.too_many_mistake_check()
         if (this.NEXT_IF_X === "true") {
           this.place_next_set()
         }
@@ -458,6 +456,7 @@ export default {
         this.sfen_set()
       })
     },
+
   },
 
   computed: {

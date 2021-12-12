@@ -11,6 +11,7 @@
       a.panel-block(@click="base.var_init") 保存可能な変数のリセット
       a.panel-block(@click="base.sfen_set") sfen_set
       a.panel-block(@click="base.sfen_clear") sfen_clear
+      a.panel-block(@click="base.too_many_mistake_alert") ミスが多すぎる警告
   .column.is-3
     .panel
       .panel-heading

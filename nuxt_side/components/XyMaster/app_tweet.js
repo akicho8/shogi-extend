@@ -44,10 +44,6 @@ export const app_tweet = {
       return this.latest_rule.o_count_max
     },
 
-    time_over_p() {
-      return this.spent_sec >= this.rule_info.time_limit
-    },
-
     tweet_url() {
       return this.tweet_url_build_from_text(this.tweet_body)
     },
