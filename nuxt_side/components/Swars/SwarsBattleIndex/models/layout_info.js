@@ -7,8 +7,4 @@ export class LayoutInfo extends ApplicationMemoryRecord {
       { key: "is_layout_board", name: "盤面", },
     ]
   }
-
-  // get div_class() {
-  //   return `is_layout_${this.key}`
-  // }
 }
