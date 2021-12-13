@@ -31,10 +31,10 @@ b-table.SwarsBattleIndexTable(
     a(@click="base.show_handle(row)") \#{{row.id}}
 
   b-table-column(v-slot="{row}" label="自分" :visible="base.column_visible_p('membership_left')")
-    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]")
+    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[0]" :with_user_key="base.column_visible_p('user_key_left')")
 
   b-table-column(v-slot="{row}" label="相手" :visible="base.column_visible_p('membership_right')")
-    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]")
+    SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]" :with_user_key="base.column_visible_p('user_key_right')")
 
   b-table-column(v-slot="{row}" field="judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" :sortable="false")
     | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}

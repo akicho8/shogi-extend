@@ -89,11 +89,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".search_click_handle").click
         assert_var_eq(:tiresome_previous_user_key, "Yamada_Taro")
         assert_var_eq(:tiresome_count, 1)
-        
+
         # +4回で計5回になり発動する
         4.times { find(".search_click_handle").click }
         assert_text "ウォーズIDを毎回入力する必要はありません"
-        
+
         find(".dialog.modal.is-active button.is-info").click # 「わかった」をクリック
         assert_no_selector ".modal"
       end

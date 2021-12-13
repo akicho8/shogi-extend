@@ -2,7 +2,7 @@
 .SwarsBattleIndexMembership(:class="{'has_medal': has_medal}")
   .icon_with_name
     MembershipMedal(:params="membership.medal_params" v-if="has_medal && membership.medal_params")
-    SwarsBattleShowUserLink(:membership="membership" :with_user_key="base.column_visible_p('user_key')")
+    SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key")
   b-taglist(v-if="base.column_visible_p('attack_tag_list') || base.column_visible_p('defense_tag_list')")
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
       template(v-if="base.column_visible_p(key)")
@@ -18,7 +18,8 @@ export default {
   name: "SwarsBattleIndexMembership",
   mixins: [support_child],
   props: {
-    membership: { type: Object, required: true },
+    membership:    { type: Object,  required: true },
+    with_user_key: { type: Boolean, required: true },
   },
   methods: {
     new_query(name) {
