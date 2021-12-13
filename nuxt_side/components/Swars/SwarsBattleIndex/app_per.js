@@ -6,13 +6,8 @@ export const app_per = {
     per_set_handle(info) {
       this.per_key = info.key
       this.talk(info.per)
-
-      const params = {}
-      // if (info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
-      params.per = info.per
-      // }
-
-      this.page_change_or_sort_handle(params)
+      this.remote_notify({subject: "件数", body: info.per})
+      this.page_change_or_sort_handle({per: info.per})
     },
   },
   computed: {
