@@ -20,21 +20,10 @@ module BattleControllerSharedMethods
       ["meta_info"]
     end
 
-    def current_placeholder
-      ""
-    end
-
-    let :visible_only_keys do
-      if v = params[:visible_only_keys]
-        v.scan(/\w+/).to_set
-      end
-    end
-
     def js_index_options
       {
-        :query              => current_query || "",
-        :display_key        => params[:display_key].presence || "table",
-        :records            => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
+        :query   => current_query || "",
+        :records => js_current_records,                  # JS側から最初のリクエストをしない場合は js_current_records を渡す
       }.merge(page_info(current_records), sort_info)
     end
 
@@ -51,18 +40,8 @@ module BattleControllerSharedMethods
       params[:query].presence
     end
 
-    let :current_queries do
-      if current_query
-        current_query.scan(/\P{Space}+/)
-      end
-    end
-
     let :query_info do
       QueryInfo.parse(current_query)
-    end
-
-    let :query_hash do
-      query_info.attributes
     end
 
     let :current_scope do

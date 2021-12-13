@@ -63,18 +63,19 @@ module Swars
     end
 
     def js_memberships(battle, memberships)
-      memberships.collect do |battle|
-        attrs = {
-          :user         => { key: battle.user.key },
-          :medal_params => battle.medal_params(params),
-          :grade_info   => { name: battle.grade.name, priority: battle.grade.priority },
-          :location     => { key: battle.location.key, pentagon_mark: battle.location.pentagon_mark },
-          :judge        => { key: battle.judge_key, name: battle.judge_info.name },
+      memberships.collect do |e|
+        hv = {
+          :user         => { key: e.user.key },
+          :medal_params => e.medal_params(params),
+          :grade_info   => { name: e.grade.name, priority: e.grade.priority },
+          :location     => { key: e.location.key, pentagon_mark: e.location.pentagon_mark },
+          # :judge        => { key: e.judge_key, name: e.judge_info.name },
+          :judge_key    => e.judge_key,
         }
         [:attack, :defense].each do |key|
-          attrs["#{key}_tag_list"] = battle.tag_names_for(key)
+          hv["#{key}_tag_list"] = e.tag_names_for(key)
         end
-        attrs
+        hv
       end
     end
   end

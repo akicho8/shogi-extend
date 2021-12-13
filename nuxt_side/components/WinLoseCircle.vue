@@ -99,9 +99,9 @@ export default {
   },
 
   methods: {
-    click_handle(key) {
+    click_handle(judge_key) {
       if (this.click_func) {
-        this.click_func(key)
+        this.click_func(judge_key)
       }
     }
   },

@@ -4,24 +4,32 @@ nuxt-link.SwarsBattleShowUserLink(
   @click.native.stop="sound_play_click()"
   :class="css_class"
   )
-  span(:class="`has-text-${membership.location.key}`" v-if="with_mark") ☗
-  span {{membership.user.key}} {{membership.grade_info.name}}
-  span.mx-1(v-if="membership.judge.name !== '負け' && with_judge") ({{membership.judge.name}})
+  span(:class="`has-text-${membership.location.key}`" v-if="with_location") ☗
+  span.mr-1(v-if="with_user_key") {{membership.user.key}}
+  span.ml-1 {{membership.grade_info.name}}
+  span.mx-1(v-if="with_judge && membership.judge_key !== 'lose'") ({{judge_info.name}})
 </template>
 
 <script>
+import { JudgeInfo } from "../models/judge_info.js"
+
 export default {
   props: {
-    membership: { required: true },
-    with_mark:  { default: false },
-    with_judge: { default: false },
+    membership:    { required: true },
+    with_user_key: { default: true  },
+    with_location:     { default: false },
+    with_judge:    { default: false },
   },
   computed: {
+    JudgeInfo()  { return JudgeInfo },
+    judge_info() { return this.JudgeInfo.fetch(this.membership.judge_key) },
+
     css_class() {
-      if (this.membership.judge) {
-        return `is-${this.membership.judge.key}`
+      if (this.membership.judge_key) {
+        return `is-${this.membership.judge_key}`
       }
     },
+
   },
 }
 </script>

@@ -159,8 +159,8 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     row_class(row, index) {
-      if (row.judge) {
-        return `is-${row.judge.key}` // is- で始めると mobile-cards になったとき消されなくなる
+      if (row.judge_key) {
+        return `is-${row.judge_key}` // is- で始めると mobile-cards になったとき消されなくなる
       }
     },
 

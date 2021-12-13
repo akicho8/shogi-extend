@@ -10,9 +10,9 @@ export const app_search = {
       return {name: "swars-search", query: {query: query}}
     },
 
-    win_lose_click_handle(judge) {
+    win_lose_click_handle(judge_key) {
       this.sound_play_click()
-      this.$router.push({name: "swars-search", query: {query: `${this.info.user.key} judge:${judge}`}})
+      this.$router.push({name: "swars-search", query: {query: `${this.info.user.key} judge:${judge_key}`}})
     },
 
     name_click_handle() {

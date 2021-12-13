@@ -3,24 +3,35 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class ColumnInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "id",               name: "ID",       visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "attack_tag_list",  name: "戦型",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "defense_tag_list", name: "囲い",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "membership_left",  name: "自分",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "membership_right", name: "相手",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "final_key",        name: "結末",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "turn_max",         name: "手数",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "critical_turn",    name: "開戦",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "outbreak_turn",    name: "中盤",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "grade_diff",       name: "力差",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "rule_key",         name: "種類",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "preset_key",       name: "手合",     visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "battled_at",       name: "日時",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "piyo_shogi",       name: "ぴよ将棋", visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
-      { key: "kento",            name: "KENTO",    visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
-      { key: "kif_copy",         name: "コピー",   visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
-      { key: "show",             name: "詳細",     visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "id",               name: "ID",               visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "medal",            name: "アイコン",         visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "user_key",         name: "名前",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "membership_left",  name: "自分",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "membership_right", name: "相手",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "attack_tag_list",  name: "戦型",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "defense_tag_list", name: "囲い",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "judge_key",        name: "勝敗",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "final_key",        name: "結末",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "turn_max",         name: "手数",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "critical_turn",    name: "開戦",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "outbreak_turn",    name: "中盤",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "grade_diff",       name: "力差",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "rule_key",         name: "種類",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "preset_key",       name: "手合",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "battled_at",       name: "日時",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+
+      { key: "piyo_shogi",       name: "ぴよ将棋",         visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "kento",            name: "KENTO",            visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "kif_copy",         name: "コピー",           visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "show",             name: "詳細",             visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+
+      { key: "mobile_card",      name: "スマホなら縦並び", visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "tablet_header",    name: "表のヘッダー",     visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
     ]
+  }
+
+  static get operation_records() {
+    return this.values.filter(e => e.operation_p)
   }
 
   available_p(context) {
