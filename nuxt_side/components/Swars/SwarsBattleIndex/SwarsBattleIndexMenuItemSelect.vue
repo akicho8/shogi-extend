@@ -34,7 +34,7 @@ export default {
       return (this.$route.query.query || "") === this.new_query
     },
     new_query() {
-      return [this.base.config.current_swars_user_key, this.query_preset_info.query].join(" ")
+      return [this.base.xi.current_swars_user_key, this.query_preset_info.query].join(" ")
     },
   },
 }

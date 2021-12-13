@@ -18,7 +18,7 @@ export const app_tiresome = {
       if (this.mounted_then_query_present_p) {
         // ブックーマークから来たのでスキップ
       } else {
-        if (this.config.current_swars_user_key) {
+        if (this.xi.current_swars_user_key) {
           // 生きているウォーズIDをあとから入力した
           if (this.swars_search_default_key_get()) {
             // すでにウォーズIDを覚えている

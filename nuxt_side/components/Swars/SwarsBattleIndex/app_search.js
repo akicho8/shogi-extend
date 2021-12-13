@@ -76,11 +76,11 @@ export const app_search = {
     filter_research(query) {
       alert("未使用")
 
-      if (!this.config.current_swars_user_key) {
+      if (!this.xi.current_swars_user_key) {
         this.toast_warn("先に誰かで検索してください")
         return
       }
-      const new_query = _.trim(`${this.config.current_swars_user_key} ${query}`)
+      const new_query = _.trim(`${this.xi.current_swars_user_key} ${query}`)
 
       // ここで設定しておくと検索前に変更される。けどなくてもい。意味あるかな？
       this.query = new_query
@@ -94,8 +94,8 @@ export const app_search = {
     current_route_query() {
       return {
         query:       this.query,
-        sort_column: this.config.sort_column,
-        sort_order:  this.config.sort_order,
+        sort_column: this.xi.sort_column,
+        sort_order:  this.xi.sort_order,
         ...this.$route.query,
       }
     },

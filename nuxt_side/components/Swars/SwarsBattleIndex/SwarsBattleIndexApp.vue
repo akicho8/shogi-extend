@@ -87,7 +87,7 @@ export default {
 
   data() {
     return {
-      config: {},
+      xi: {},
     }
   },
 
@@ -130,19 +130,19 @@ export default {
 
     // Number(params.per || 1)
 
-    return this.$axios.$get("/w.json", {params: params}).then(config => {
+    return this.$axios.$get("/w.json", {params: params}).then(xi => {
       this.__trace__("SwarsBattleIndexApp", "fetch then")
 
-      this.config = config
+      this.xi = xi
       this.rails_session_side_copy_to_user_keys_if_blank()
 
       // なかから nuxt-link したとき $fetch が呼ばれるが、
       // this.query は前の状態なので更新する
-      this.query = this.config.query
+      this.query = this.xi.query
       this.user_keys_update_by_query()
       // this.query = this.$route.query.query
 
-      this.xnotice_run_all(this.config)
+      this.xnotice_run_all(this.xi)
 
       this.tiresome_alert_check()
     })
@@ -151,7 +151,7 @@ export default {
   methods: {
     reset_handle() {
       // this.query = ""
-      // this.config.records = []
+      // this.xi.records = []
     },
 
     ////////////////////////////////////////////////////////////////////////////////

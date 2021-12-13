@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsBattleIndexBoard.columns.is-multiline.mt-4
-  template(v-for="e in base.config.records")
+  template(v-for="e in base.xi.records")
     .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="base.show_handle(e)")
       CustomShogiPlayer(
         :sp_player_info="e.player_info"

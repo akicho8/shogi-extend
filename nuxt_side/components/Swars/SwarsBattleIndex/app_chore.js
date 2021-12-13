@@ -26,13 +26,13 @@ export const app_chore = {
     },
 
     external_app_handle(info) {
-      if (this.config.current_swars_user_key) {
+      if (this.xi.current_swars_user_key) {
         this.sound_play_click()
         MyLocalStorage.set("external_app_setup", true)
         this.$router.push({
           name: 'swars-users-key-direct-open-external_app_key',
           params: {
-            key: this.config.current_swars_user_key,
+            key: this.xi.current_swars_user_key,
             external_app_key: info.key,
           },
         })
@@ -51,8 +51,8 @@ export const app_chore = {
         zip_dl_format_key: e.format_key,
         body_encode:    e.body_encode,
         // zip_dl_scope_key:  "latest",
-        sort_column: this.$route.query.sort_column || this.config.sort_column,
-        sort_order:  this.$route.query.sort_order || this.config.sort_order,
+        sort_column: this.$route.query.sort_column || this.xi.sort_column,
+        sort_order:  this.$route.query.sort_order || this.xi.sort_order,
       }
 
       const usp = new URLSearchParams()

@@ -1,10 +1,10 @@
 <template lang="pug">
 b-table.SwarsBattleIndexTable(
-  v-if="$route.query.query || present_p(base.config.records)"
+  v-if="$route.query.query || present_p(base.xi.records)"
 
-  :total        = "base.config.total"
-  :current-page = "base.config.page"
-  :per-page     = "base.config.per"
+  :total        = "base.xi.total"
+  :current-page = "base.xi.page"
+  :per-page     = "base.xi.per"
 
   :show-header="base.column_visible_p('tablet_header')"
   paginated
@@ -15,17 +15,17 @@ b-table.SwarsBattleIndexTable(
 
   backend-pagination
   pagination-simple
-  :data="base.config.records"
+  :data="base.xi.records"
   @page-change="(page) => base.page_change_or_sort_handle({page})"
 
   backend-sorting
-  :default-sort-direction="base.config.sort_order_default"
-  :default-sort="[base.config.sort_column, base.config.sort_order]"
+  :default-sort-direction="base.xi.sort_order_default"
+  :default-sort="[base.xi.sort_column, base.xi.sort_order]"
   @sort="(sort_column, sort_order) => base.page_change_or_sort_handle({sort_column, sort_order})"
   :row-class="base.row_class"
   )
 
-  SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.config.total === 0")
+  SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.xi.total === 0")
 
   b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="base.column_visible_p('id')" sortable numeric)
     a(@click="base.show_handle(row)") \#{{row.id}}

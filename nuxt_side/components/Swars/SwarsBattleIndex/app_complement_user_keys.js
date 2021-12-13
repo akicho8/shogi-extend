@@ -7,17 +7,17 @@ export const app_complement_user_keys = {
     // TODO: この処理は数ヶ月後、Rails 側の remember_swars_user_keys を作る部分と合わせて捨てる
     rails_session_side_copy_to_user_keys_if_blank() {
       if (this.blank_p(this.complement_user_keys)) {
-        const old = this.config.remember_swars_user_keys
+        const old = this.xi.remember_swars_user_keys
         if (this.present_p(old)) {
           this.complement_user_keys = [...old]
         }
       }
     },
 
-    // $fetch 直後に this.config.current_swars_user_key が有効なら履歴に取り込む
-    // this.config.current_swars_user_key の
+    // $fetch 直後に this.xi.current_swars_user_key が有効なら履歴に取り込む
+    // this.xi.current_swars_user_key の
     user_keys_update_by_query() {
-      if (this.blank_p(this.config.current_swars_user_key)) {
+      if (this.blank_p(this.xi.current_swars_user_key)) {
         // 指定のウォーズIDは存在しません状態なのでクエリがあったとしても履歴に取り込んではいけない
         return
       }

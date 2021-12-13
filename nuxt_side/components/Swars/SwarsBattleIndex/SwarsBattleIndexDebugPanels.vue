@@ -47,8 +47,8 @@
         pre
           | [layout_key={{base.layout_key}}]
           | [scene_key={{base.scene_key}}]
-          | [per={{base.config.per}}]
-          | [records_length={{base.config.records ? base.config.records.length : ''}}]
+          | [per={{base.xi.per}}]
+          | [records_length={{base.xi.records ? base.xi.records.length : ''}}]
           | [tiresome_count={{base.tiresome_count}}]
           | [tiresome_key={{base.tiresome_key}}]
           | [complement_user_keys={{base.complement_user_keys.join("|")}}]

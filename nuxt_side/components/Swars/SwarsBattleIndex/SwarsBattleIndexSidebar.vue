@@ -1,12 +1,12 @@
 <template lang="pug">
-b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-model="base.sidebar_p" v-if="base.config")
+b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-model="base.sidebar_p" v-if="base.xi")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.config.current_swars_user_key}}" @click.native="sound_play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.xi.current_swars_user_key}}" @click.native="sound_play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
 
         b-menu-list(label="レイアウト")
           template(v-for="e in base.LayoutInfo.values")
@@ -61,25 +61,25 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
         b-menu-list(label="まとめて取得")
           b-menu-item.is_active_unset.swars_direct_download_handle(
             label="ダウンロード"
-            @click.native="base.config.current_swars_user_key && sound_play_click()"
+            @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
             :to="{name: 'swars-direct-download', query: base.current_route_query}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.swars_users_key_download_all_handle(
             label="古い棋譜を補完"
-            @click.native="base.config.current_swars_user_key && sound_play_click()"
+            @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-download-all', params: {key: base.config.current_swars_user_key}}"
+            :to="{name: 'swars-users-key-download-all', params: {key: base.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
         b-menu-list(label="一歩進んだ使い方")
           b-menu-item.is_active_unset(
             label="ウォーズIDを覚える"
             :class="{'has-text-weight-bold': base.swars_search_default_key_blank_if_mounted}"
-            @click.native="base.config.current_swars_user_key && sound_play_click()"
+            @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-default-key', params: {key: base.config.current_swars_user_key}}"
+            :to="{name: 'swars-users-key-default-key', params: {key: base.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.home_bookmark_handle(
@@ -90,9 +90,9 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
           b-menu-item.is_active_unset.swars_users_key_kento_api_menu_item(
             label="KENTOから連携"
-            @click.native="base.config.current_swars_user_key && sound_play_click()"
+            @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-users-key-kento-api', params: {key: base.config.current_swars_user_key}}"
+            :to="{name: 'swars-users-key-kento-api', params: {key: base.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
 
           b-menu-item.is_active_unset.external_app_menu_item(:disabled="menu_item_disabled" @click="sound_play_click()")
@@ -121,7 +121,7 @@ export default {
   mixins: [support_child],
   computed: {
     menu_item_disabled() {
-      return !this.base.config.current_swars_user_key
+      return !this.base.xi.current_swars_user_key
     },
   },
 }
