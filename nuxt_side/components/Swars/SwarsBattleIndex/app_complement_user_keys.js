@@ -38,6 +38,7 @@ export const app_complement_user_keys = {
     complement_user_keys_prepend_info() { return this.ComplementUserKeysPrependInfo.fetch(this.complement_user_keys_prepend_key) },
 
     // b-autocomplete の data に渡す値
+
     search_input_complement_list() {
       if (this.complement_user_keys) {
         return this.complement_user_keys.filter(option => {

@@ -50,7 +50,8 @@
           | [per={{base.xi.per}}]
           | [records_length={{base.xi.records ? base.xi.records.length : ''}}]
           | [tiresome_count={{base.tiresome_count}}]
-          | [tiresome_key={{base.tiresome_key}}]
+          | [tiresome_previous_user_key={{base.tiresome_previous_user_key}}]
+          | [tiresome_modal_selected={{base.tiresome_modal_selected}}]
           | [complement_user_keys={{base.complement_user_keys.join("|")}}]
 </template>
 

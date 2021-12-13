@@ -1,4 +1,4 @@
-const TIRESOME_ALERT_TRIGGER = [8, 16, 32, 64, 128]
+const TIRESOME_ALERT_TRIGGER = [5, 10, 20, 40, 80]
 
 export const app_tiresome = {
   data() {
@@ -24,6 +24,13 @@ export const app_tiresome = {
             // すでにウォーズIDを覚えている
           } else {
             // ウォーズIDを覚えていない
+
+            // 前回入力した値と異なるならそこからカウンタを開始する
+            if (this.tiresome_previous_user_key != this.xi.current_swars_user_key) {
+              this.tiresome_previous_user_key = this.xi.current_swars_user_key
+              this.tiresome_count = 0
+            }
+
             this.tiresome_count_increment()
           }
         } else {
@@ -38,7 +45,7 @@ export const app_tiresome = {
       // this.$set(this.user_key_counts, wid, c + 1)
       // this.user_key_counts = this.count_hash_reverse_sort_by_count_and_take(this.user_key_counts, 3)
       // this.debug_alert(this.user_key_counts[wid])
-      // if (this.tiresome_key === "none" || this.tiresome_key === "no") {
+      // if (this.tiresome_modal_selected === "none" || this.tiresome_modal_selected === "no") {
       this.tiresome_count += 1
       if (this.tiresome_alert_trigger_hash[this.tiresome_count]) {
         this.tiresome_alert_handle()
@@ -65,12 +72,12 @@ export const app_tiresome = {
         cancelText: "面倒なままでいい",
         onConfirm: () => {
           this.sound_play_click()
-          this.tiresome_key = "yes"
+          this.tiresome_modal_selected = "yes"
           this.remote_notify({subject: subject, body: "やってみる"})
         },
         onCancel: () => {
           this.sound_play_click()
-          this.tiresome_key = "no"
+          this.tiresome_modal_selected = "no"
           this.remote_notify({subject: subject, body: "面倒なままでいい"})
         },
       })
