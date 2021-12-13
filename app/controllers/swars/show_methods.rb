@@ -66,11 +66,10 @@ module Swars
       memberships.collect do |e|
         hv = {
           :user         => { key: e.user.key },
-          :medal_params => e.medal_params(params),
-          :grade_info   => { name: e.grade.name, priority: e.grade.priority },
-          :location     => { key: e.location.key, pentagon_mark: e.location.pentagon_mark },
-          # :judge        => { key: e.judge_key, name: e.judge_info.name },
+          :grade_info   => { name: e.grade.name },
+          :location_key => e.location_key,
           :judge_key    => e.judge_key,
+          :medal_params => e.medal_params(params),
         }
         [:attack, :defense].each do |key|
           hv["#{key}_tag_list"] = e.tag_names_for(key)

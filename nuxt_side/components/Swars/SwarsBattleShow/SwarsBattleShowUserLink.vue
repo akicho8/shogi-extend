@@ -4,7 +4,7 @@ nuxt-link.SwarsBattleShowUserLink(
   @click.native.stop="sound_play_click()"
   :class="css_class"
   )
-  span(:class="`has-text-${membership.location.key}`" v-if="with_location") ☗
+  span(:class="`has-text-${membership.location_key}`" v-if="with_location") ☗
   span.mr-1(v-if="with_user_key") {{membership.user.key}}
   span.ml-1 {{membership.grade_info.name}}
   span.mx-1(v-if="with_judge && membership.judge_key !== 'lose'") ({{judge_info.name}})

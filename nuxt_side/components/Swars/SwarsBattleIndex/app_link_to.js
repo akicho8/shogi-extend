@@ -7,7 +7,7 @@ export const app_link_to = {
     show_handle(row) {
       this.sound_play_click()
       const params = {}
-      params.viewpoint = row.memberships[0].location.key
+      params.viewpoint = row.memberships[0].location_key
       if (this.layout_info.key === "is_layout_board") {
         params.scene_key = this.scene_info.key
       }

@@ -87,7 +87,7 @@ b-table.SwarsBattleIndexTable(
       ShowButton(
         v-if="base.column_visible_p('show')"
         tag="nuxt-link"
-        :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location.key}}"
+        :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location_key}}"
         @click.native="sound_play_click()"
         )
         | 詳細
@@ -95,7 +95,6 @@ b-table.SwarsBattleIndexTable(
 
 <script>
 import { support_child } from "./support_child.js"
-import { Location      } from "shogi-player/components/models/location.js"
 
 export default {
   name: "SwarsBattleIndexSidebar",

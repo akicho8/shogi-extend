@@ -373,7 +373,7 @@ export default {
       return this.record.memberships.reduce((a, m) => {
         return {
           ...a,
-          [m.location.key]: `${m.user.key} ${m.grade_info.name}`,
+          [m.location_key]: `${m.user.key} ${m.grade_info.name}`,
         }
       }, {})
     },

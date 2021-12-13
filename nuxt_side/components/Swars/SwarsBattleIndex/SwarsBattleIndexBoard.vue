@@ -11,7 +11,7 @@
         :sp_sound_enabled="false"
         :sp_summary="'is_summary_off'"
         :sp_op_disabled="true"
-        :sp_viewpoint="e.memberships[0].location.key"
+        :sp_viewpoint="e.memberships[0].location_key"
       )
 </template>
 
