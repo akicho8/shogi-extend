@@ -68,12 +68,12 @@ export const app_tiresome = {
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
         message: `右上の≡から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
-        confirmText: "やってみるわ",
+        confirmText: "やってみる",
         cancelText: "何言ってるかわからない",
         onConfirm: () => {
           this.sound_play_click()
           this.tiresome_modal_selected = "yes"
-          this.remote_notify({subject: subject, body: "やってみるわ"})
+          this.remote_notify({subject: subject, body: "やってみる"})
         },
         onCancel: () => {
           this.sound_play_click()
