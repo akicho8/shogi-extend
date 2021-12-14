@@ -69,16 +69,16 @@ export const app_tiresome = {
         title: "ウォーズIDを毎回入力する必要はありません",
         message: `右上の≡から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
         confirmText: "やってみる",
-        cancelText: "何言ってるかわからない",
+        cancelText: "何言ってるかわかんない",
         onConfirm: () => {
-          this.sound_play_click()
+          this.sound_play("o")
           this.tiresome_modal_selected = "yes"
           this.remote_notify({subject: subject, body: "やってみる"})
         },
         onCancel: () => {
-          this.sound_play_click()
+          this.sound_play("x")
           this.tiresome_modal_selected = "no"
-          this.remote_notify({subject: subject, body: "何言ってるかわからない"})
+          this.remote_notify({subject: subject, body: "何言ってるかわかんない"})
         },
       })
     },
