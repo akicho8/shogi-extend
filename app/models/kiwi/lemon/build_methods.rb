@@ -294,7 +294,7 @@ module Kiwi
         {}.tap do |e|
           e["ID"]   = id
           e["所有"] = user.name
-          e["回数"] = "#{user.kiwi_lemons.count.next}回目"
+          e["投入"] = "計#{user.kiwi_lemons.count}回"
           e["状況"] = status_key
           e["投入"] = created_at&.to_s(:ymdhms)
           e["開始"] = process_begin_at&.to_s(:ymdhms)
@@ -338,7 +338,7 @@ module Kiwi
         subject << "動画作成"
         subject << "##{id}"
         subject << user.name
-        subject << "#{user.kiwi_lemons.count.next}回目"
+        subject << "計#{user.kiwi_lemons.count}回"
         subject << status_key
         subject = subject.join(" ")
 
@@ -351,7 +351,7 @@ module Kiwi
 
         body = []
         body << user.name
-        body << "#{user.kiwi_lemons.count.next}回目"
+        body << "計#{user.kiwi_lemons.count}回"
         body << status_key
         body << browser_url
         body = body.compact.join(" ")
