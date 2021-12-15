@@ -27,7 +27,7 @@
           div
             p.heading 順序
             p.title.is-size-6-mobile
-              | {{Dictionary.fetch(current_params.sort_column).name}}{{Dictionary.fetch(current_params.sort_order).name}}
+              | {{current_params.sort_column}} {{current_params.sort_order}}
 
       b-field(label="範囲" custom-class="is-small" :message="current_zip_dl_scope_info.message")
         template(v-for="e in config.scope_info")
@@ -72,7 +72,7 @@
 <script>
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { isMobile } from "@/components/models/is_mobile.js"
-import { Dictionary } from "@/components/models/dictionary.js"
+// import { Dictionary } from "@/components/models/dictionary.js"
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
@@ -253,7 +253,6 @@ export default {
     BodyEncodeInfo()     { return BodyEncodeInfo                                                 },
     ZipDlStructureInfo() { return ZipDlStructureInfo                                             },
     ZipDlMaxInfo()       { return ZipDlMaxInfo                                                   },
-    Dictionary()         { return Dictionary                                                     },
 
     current_params()                { return this.$route.query                                   },
     current_zip_dl_scope_info()     { return this.config.scope_info[this.zip_dl_scope_key]       },
