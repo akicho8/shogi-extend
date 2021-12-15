@@ -1,5 +1,6 @@
 export const HandleNameNgWordList = [
   // 手動
+  "shogi.*extend",
   "[な名][な無]し|nanash?i|無名|匿名|NONAME",
   "テスト|test|てすと",
   "名前|ハンドルネーム",

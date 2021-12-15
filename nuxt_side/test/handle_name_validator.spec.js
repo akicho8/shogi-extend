@@ -48,6 +48,8 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("雑　魚")).toEqual(false)
     expect(HandleNameValidator.valid("雑 魚")).toEqual(false)
     expect(HandleNameValidator.valid("戦aaa犯")).toEqual(false)
+    expect(HandleNameValidator.valid("shogi-extend")).toEqual(false)
+    expect(HandleNameValidator.valid("SHOGIEXTEND")).toEqual(false)
   })
 
   test('prefixが含まれる', () => {
