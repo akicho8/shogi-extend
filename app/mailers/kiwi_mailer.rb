@@ -11,11 +11,21 @@ class KiwiMailer < ApplicationMailer
     subject = [EmojiInfo.fetch(":動画:"), app_name_prepend(subject)].join
 
     body = []
+
     if lemon.browser_url
       if useless_mail_address?(lemon.user.email) || Rails.env.development? || Rails.env.test?
         body << "※ #{lemon.user.email} の管理元があれなのでファイルを添付できませんでした。ちゃんとしたメールアドレスへの変更をおすすめします。"
         body << ""
       end
+    end
+
+    if s = lemon.all_params[:media_builder_params][:cover_text].presence
+      body << "▼表紙"
+      body << s.strip
+      body << ""
+    end
+
+    if lemon.browser_url
       if useless_mail_address?(lemon.user.email)
         body << "▼生成ファイル"
       else
@@ -38,11 +48,6 @@ class KiwiMailer < ApplicationMailer
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
     body << ""
-    if s = lemon.all_params[:media_builder_params][:cover_text].presence
-      body << "▼表紙"
-      body << s
-      body << ""
-    end
     body << "▼元の棋譜"
     body << lemon.recordable.kifu_body
     body << ""
