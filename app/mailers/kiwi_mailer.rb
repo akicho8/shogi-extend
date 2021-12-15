@@ -7,6 +7,9 @@ class KiwiMailer < ApplicationMailer
     subject << "動画作成"
     subject << "##{lemon.id}"
     subject << "#{lemon.status_key}"
+    if s = lemon.all_params[:media_builder_params][:cover_text].presence
+      subject << s.squish
+    end
     subject = subject.join(" ")
     subject = [EmojiInfo.fetch(":動画:"), app_name_prepend(subject)].join
 
@@ -17,12 +20,6 @@ class KiwiMailer < ApplicationMailer
         body << "※ #{lemon.user.email} の管理元があれなのでファイルを添付できませんでした。ちゃんとしたメールアドレスへの変更をおすすめします。"
         body << ""
       end
-    end
-
-    if s = lemon.all_params[:media_builder_params][:cover_text].presence
-      body << "▼表紙"
-      body << s.strip
-      body << ""
     end
 
     if lemon.browser_url
@@ -37,20 +34,29 @@ class KiwiMailer < ApplicationMailer
       body << UrlProxy.full_url_for("/video/new")
       body << ""
     end
-    if Rails.env.development? || Rails.env.test?
-      body << "▼棋譜の確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
-      body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
+
+    if s = lemon.all_params[:media_builder_params][:cover_text].presence
+      body << "▼表紙"
+      body << s.strip
       body << ""
     end
+
+    body << "▼元の棋譜"
+    body << lemon.recordable.kifu_body
+    body << ""
+
+    # body << "▼棋譜確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
+    body << "▼共有将棋盤で棋譜確認"
+    body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
+    body << ""
+
     body << "▼その他"
     body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
     body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
     body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
     body << ""
-    body << "▼元の棋譜"
-    body << lemon.recordable.kifu_body
-    body << ""
+
     body << "--"
     body << "動画作成"
     body << UrlProxy.full_url_for("/video/new")
