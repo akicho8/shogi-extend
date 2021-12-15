@@ -353,8 +353,9 @@ module Kiwi
         body << user.name
         body << "計#{user.kiwi_lemons.count}回"
         body << status_key
+        body << all_params.fetch(:media_builder_params).fetch(:cover_text).to_s.squish
         body << browser_url
-        body = body.compact.join(" ")
+        body = body.reject(&:blank?).join(" ")
 
         SlackAgent.notify(emoji: ":動画:", subject: subject, body: body)
       end
