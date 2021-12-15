@@ -27,9 +27,11 @@ class KiwiMailer < ApplicationMailer
       body << UrlProxy.full_url_for("/video/new")
       body << ""
     end
-    body << "▼棋譜の確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
-    body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
-    body << ""
+    if Rails.env.development? || Rails.env.test?
+      body << "▼棋譜の確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
+      body << "#{UrlProxy.full_url_for(lemon.recordable.share_board_path)}"
+      body << ""
+    end
     body << "▼その他"
     body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
     body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
