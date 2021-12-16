@@ -58,7 +58,7 @@ export const app_tiresome = {
 
       this.delay_block(1, () => {
         this.sound_stop_all()
-        this.talk("ウォーズIDを毎回入力する必要はありません。右上のメニューからウォーズIDを覚えるで入力の手間が省けます")
+        this.talk("ウォーズIDを毎回入力する必要はありません。右上のメニューからウォーズIDを覚えるで入力の手間が省けます。ぴよ将棋から来ている方にはとくにおすすめです")
       })
 
       const subject = "ウォーズIDを覚える案内発動"
@@ -67,9 +67,9 @@ export const app_tiresome = {
         hasIcon: true,
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
-        message: `右上の≡から<b>ウォーズIDを覚える</b>で入力の手間が省けます<br>`,
+        message: `右上の≡から<b>ウォーズIDを覚える</b>で入力の手間が省けます。ぴよ将棋から来ている方にはとくにおすすめです。`,
         confirmText: "やってみる",
-        cancelText: "何言ってるかわかんない",
+        cancelText: "めんどくさいままでいい",
         onConfirm: () => {
           this.sound_play("o")
           this.tiresome_modal_selected = "yes"
@@ -78,7 +78,7 @@ export const app_tiresome = {
         onCancel: () => {
           this.sound_play("x")
           this.tiresome_modal_selected = "no"
-          this.remote_notify({subject: subject, body: "何言ってるかわかんない"})
+          this.remote_notify({subject: subject, body: "めんどくさいままでいい"})
         },
       })
     },
