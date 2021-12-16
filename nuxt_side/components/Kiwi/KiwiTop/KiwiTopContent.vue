@@ -13,7 +13,7 @@
       .card-image
         template(v-if="e.lemon.thumbnail_browser_path")
           .image.is-16by9
-            img(:src="e.lemon.thumbnail_browser_path")
+            img(:src="e.lemon_thumbnail_browser_path_with_pos")
         template(v-else-if="e.lemon.content_type && e.lemon.content_type.startsWith('image')")
           .image.is-16by9
             img(:src="e.lemon.browser_path")

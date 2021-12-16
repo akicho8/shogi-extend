@@ -45,4 +45,13 @@ export class Banana extends Model {
   get folder_info() {
     return FolderInfo.fetch(this.folder_key)
   }
+
+  get lemon_thumbnail_browser_path_with_pos() {
+    const path = this.lemon.thumbnail_browser_path
+    if (path) {
+      const params = new URLSearchParams()
+      params.set("thumbnail_pos", this.thumbnail_pos)
+      return [path, params].join("?")
+    }
+  }
 }

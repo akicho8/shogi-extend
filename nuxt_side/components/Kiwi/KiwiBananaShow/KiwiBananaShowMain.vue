@@ -18,7 +18,7 @@
         template(v-if="content_type.startsWith('video')")
           .image
             // video.is-block(:src="base.banana.lemon.browser_path" controls :autoplay="true" :loop="false" ref="main_video")
-            video.is-block(:src="base.banana.lemon.browser_path" :poster="base.banana.lemon.thumbnail_browser_path" controls :autoplay="true" :loop="false" ref="main_video")
+            video.is-block(:src="base.banana.lemon.browser_path" :poster="base.banana.lemon_thumbnail_browser_path_with_pos" controls :autoplay="true" :loop="false" ref="main_video")
         template(v-else-if="content_type.startsWith('image')")
           .image
             img(:src="base.banana.lemon.browser_path")

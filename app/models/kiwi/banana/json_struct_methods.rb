@@ -12,6 +12,7 @@ module Kiwi
               :updated_at,
               :access_logs_count,
               :banana_messages_count,
+              :thumbnail_pos,
             ],
             methods: [
               :folder_key,
@@ -94,6 +95,7 @@ module Kiwi
               :updated_at,
               :access_logs_count,
               :banana_messages_count,
+              :thumbnail_pos,
             ],
             methods: [
               :folder_key,
