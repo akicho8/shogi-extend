@@ -1,5 +1,5 @@
 # EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'ExceptionNotifier.notify_exception(StandardError.new)'
-# EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'ExceptionNotifier.notify_exception(StandardError.new, notifiers: [:email])'
+# EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'ExceptionNotifier.notify_exception(StandardError.new, notifiers: [:email], data: {a:1})'
 
 if Rails.env.production? || Rails.env.staging? || ENV["EXCEPTION_NOTIFICATION_ENABLE"].to_s == "1" # || Rails.env.development?
   Rails.application.config.middleware.use(ExceptionNotification::Rack, {
