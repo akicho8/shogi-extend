@@ -17,7 +17,9 @@
         b-icon(icon="open-in-new" size="is-small")
         | 共有将棋盤で確認
 
-  b-field.field_block(label="表紙" message="センタリング表示する。横全角20文字縦5行ぐらい。空なら表紙は省く")
+  b-field.field_block(label="表紙")
+    template(#message)
+      | 全角で最大<b>横24文字×10行</b>。自動的には折り返さないので適宜改行を入れること。センタリング表示する。空なら表紙は省く
     b-input(type="textarea" v-model.trim="base.cover_text" expanded rows="4" placeholder="御城将棋\n☗六代大橋宗銀 vs ☖伊藤印達\n1711-02-28")
 
   ////////////////////////////////////////////////////////////////////////////////
