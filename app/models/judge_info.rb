@@ -8,6 +8,9 @@ class JudgeInfo
 
   class << self
     def lookup(v)
+      if v.respond_to?(:downcase)
+        v = v.downcase
+      end
       super || invert_table[v]
     end
 

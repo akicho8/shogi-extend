@@ -11,4 +11,11 @@ RSpec.describe JudgeInfo do
     assert { JudgeInfo["勝ち"] == win }
     assert { JudgeInfo["○"]   == win }
   end
+
+  it "winをWinと入力する人がいる対策" do
+    win = JudgeInfo.fetch(:win)
+    assert { JudgeInfo[:Win]  == win }
+    assert { JudgeInfo["Win"]  == win }
+    assert { JudgeInfo["WIN"]  == win }
+  end
 end
