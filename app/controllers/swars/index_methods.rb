@@ -300,7 +300,7 @@ module Swars
 
         if current_swars_user
           selected = false
-          if t = query_info.lookup_one(:"date") # 日付
+          if t = query_info.lookup_one(:"date") || query_info.lookup_one(:"日時") || query_info.lookup_one(:"日付")
             t = DateRange.parse(t)
 
             m = my_sampled_memberships
@@ -352,7 +352,7 @@ module Swars
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"vs") # 相手
+          if v = query_info.lookup(:"vs") || query_info.lookup(:"相手")
             users = Swars::User.where(user_key: v)
             m = current_swars_user.op_memberships.where(user: users)
             s = s.where(id: m.pluck(:battle_id))
