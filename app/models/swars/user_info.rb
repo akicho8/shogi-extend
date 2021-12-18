@@ -163,7 +163,10 @@ module Swars
     end
 
     def sample_max
-      @sample_max ||= [(params[:sample_max].presence || default_params[:sample_max]).to_i, max_of_max].min
+      @sample_max ||= -> {
+        v = params[:sample_max].presence || default_params[:sample_max]
+        [v.to_i, max_of_max].min
+      }.call
     end
 
     def every_grade_list
