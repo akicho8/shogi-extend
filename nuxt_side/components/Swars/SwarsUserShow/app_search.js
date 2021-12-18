@@ -3,7 +3,6 @@ export const app_search = {
     search_path(queries) {
       const query = [
         this.info.user.key,
-        `sample:${this.info.sample_max}`, // 直近N件の制約追加 (ない方がよさそうな気がするけどプレイヤー情報と条件を合わせる)
         ...queries,
       ].join(" ")
 
