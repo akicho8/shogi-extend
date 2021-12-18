@@ -54,6 +54,12 @@ export const app_ordered_members = {
 
     // 順番設定モーダル起動
     os_modal_handle() {
+      if (this.blank_p(this.base.ac_room)) {
+        this.sound_play_click()
+        this.toast_warn("まず部屋を立てよう")
+        return
+      }
+
       this.sidebar_p = false
       this.sound_play_click()
       this.__assert__(this.$os_modal_instance == null, "this.$os_modal_instance == null")

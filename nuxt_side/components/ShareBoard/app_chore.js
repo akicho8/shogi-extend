@@ -93,6 +93,12 @@ export const app_chore = {
         })
       }
     },
+
+    bold_if(cond) {
+      if (cond) {
+        return "has-text-weight-bold"
+      }
+    },
   },
 
   computed: {

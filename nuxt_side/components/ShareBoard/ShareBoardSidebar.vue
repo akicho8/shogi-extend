@@ -9,14 +9,14 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
     .mt-4
       b-menu
         b-menu-list(label="対局")
-          b-menu-item.is_active_unset.important(icon="home-account" label="部屋に入る" @click="base.room_setup_modal_handle")
-          b-menu-item.is_active_unset.important(icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle" :disabled="blank_p(base.ac_room)")
-          b-menu-item.is_active_unset.important(icon="alarm" label="対局時計"   @click="base.cc_modal_handle")
+          b-menu-item.is_active_unset.important(:class="base.bold_if(!base.ac_room)"                          icon="home-account"        label="部屋に入る" @click="base.room_setup_modal_handle")
+          b-menu-item.is_active_unset.important(:class="base.bold_if(base.ac_room && !base.order_enable_p)"   icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle")
+          b-menu-item.is_active_unset.important(:class="base.bold_if(base.order_enable_p && !base.clock_box)" icon="alarm"               label="対局時計"   @click="base.cc_modal_handle")
 
         b-menu-list(label="局面操作")
-          b-menu-item.is_active_unset(icon="page-first" label="初期配置に戻す"              @click="base.board_init_modal_handle")
-          b-menu-item.is_active_unset(icon="undo" label="1手戻す"                     @click="base.force_sync_turn_previous_modal_handle")
-          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"                  @click="base.force_sync_modal_handle"    :disabled="blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")
+          b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す" @click="base.board_init_modal_handle")
+          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"     @click="base.force_sync_modal_handle" :disabled="blank_p(base.ac_room)")
 
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="base.board_preset_select_modal_handle")
@@ -108,5 +108,4 @@ export default {
 
   .important
     font-size: $size-5
-    font-weight: bold
 </style>
