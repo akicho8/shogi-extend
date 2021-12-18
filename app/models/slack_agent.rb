@@ -7,8 +7,7 @@ module SlackAgent
   # が、実感として約10回/秒が頻発すると TooManyRequestsError になる
   # 対策として最初は1回/秒にしていたけど共有将棋盤を利用時に待ち状態が途切れずに18分待つジョブも生まれた
   # (もちろんその間に TooManyRequestsError にはならなかった)
-  # なので少し早めて6回/秒としてみる
-  API_RUN_PER_SECOND = 6
+  API_REQUEST_COUNT_MAX_PER_SECOND = 4
 
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
   mattr_accessor(:backtrace_lines_max) { 4 }
@@ -83,6 +82,6 @@ module SlackAgent
   end
 
   def excessive_measure
-    @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_RUN_PER_SECOND)
+    @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_REQUEST_COUNT_MAX_PER_SECOND)
   end
 end
