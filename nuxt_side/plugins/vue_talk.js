@@ -1,8 +1,13 @@
+// HOWLER.js
+// https://github.com/goldfire/howler.js#documentation
+
 const TALK_VOLUME = 0.5
 const TALK_RATE   = 1.5
 
 import { Howl, Howler } from "howler"
 
+// 30秒間非アクティブになると、Web Audio AudioContext を自動的に一時停止して処理とエネルギー使用量を削減する
+// デフォルト: true
 Howler.autoSuspend = false
 
 export const vue_talk = {
