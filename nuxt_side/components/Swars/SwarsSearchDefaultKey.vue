@@ -9,7 +9,9 @@ client-only
     MainSection
       .container
         b-notification(:closable="false")
-          | ウォーズIDを覚えると検索覧に毎回入力しなくてよくなります。主にぴよ将棋から来ている方におすすめです。
+          | ウォーズIDを記憶すると検索覧に毎回入力しなくてよくなります。
+          | ぴよ将棋から来ている方におすすめです。
+          | あとから解除もできます。
 
         template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
@@ -48,29 +50,25 @@ export default {
       this.sound_play_click()
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
+      this.remote_notify({emoji: ":得:", subject: `ウォーズID記憶設定 ${this.new_key}`, body: "覚えました"})
       this.toast_ok("覚えました")
-      this.logging()
       // this.$router.push({name: "swars-search"})
     },
     unset_handle() {
       this.sound_play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
+      this.remote_notify({subject: `ウォーズID記憶消去 ${this.new_key}`, body: "忘れました"})
       this.toast_ok("忘れました")
-      this.logging()
       // this.$router.push({name: "swars-search"})
     },
     back_handle() {
       this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
-    logging() {
-      const value = MyLocalStorage.get("swars_search_default_key") || "(忘れる)"
-      this.remote_notify({subject: "ウォーズIDを覚える", body: value})
-    },
   },
   computed: {
-    page_title() { return "ウォーズIDを覚える"     },
+    page_title() { return "ウォーズIDを記憶する"     },
     new_key()    { return this.$route.params.key },
     meta() {
       return {

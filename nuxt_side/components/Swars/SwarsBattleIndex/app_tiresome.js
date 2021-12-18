@@ -1,4 +1,4 @@
-const TIRESOME_ALERT_TRIGGER = [5, 10, 20, 40, 80]
+const TIRESOME_ALERT_TRIGGER = [10, 20, 40, 80, 160]
 
 export const app_tiresome = {
   data() {
@@ -58,27 +58,27 @@ export const app_tiresome = {
 
       this.delay_block(1, () => {
         this.sound_stop_all()
-        this.talk("ウォーズIDを毎回入力する必要はありません。右上のメニューからウォーズIDを覚えるで入力の手間が省けます。ぴよ将棋から来ている方にはとくにおすすめです")
+        this.talk("ウォーズIDを毎回入力する必要はありません。右上のメニューからウォーズIDを記憶するで入力の手間が省けます。ぴよ将棋から来ている方におすすめです。あとから解除もできます。")
       })
 
-      const subject = "ウォーズIDを覚える案内発動"
+      const subject = `ウォーズID記憶案内 ${this.xi.current_swars_user_key}`
       this.dialog_confirm({
         canCancel: ["button"],
         hasIcon: true,
         type: "is-info",
         title: "ウォーズIDを毎回入力する必要はありません",
-        message: `右上の≡から<b>ウォーズIDを覚える</b>で入力の手間が省けます。ぴよ将棋から来ている方にはとくにおすすめです。`,
+        message: `右上の≡から<b>ウォーズIDを記憶する</b>で入力の手間が省けます。ぴよ将棋から来ている方におすすめです。あとから解除もできます。`,
         confirmText: "やってみる",
         cancelText: "めんどくさいままでいい",
         onConfirm: () => {
           this.sound_play("o")
           this.tiresome_modal_selected = "yes"
-          this.remote_notify({subject: subject, body: "やってみる"})
+          this.remote_notify({emoji: ":CHECK:", subject: subject, body: `やってみる`})
         },
         onCancel: () => {
           this.sound_play("x")
           this.tiresome_modal_selected = "no"
-          this.remote_notify({subject: subject, body: "めんどくさいままでいい"})
+          this.remote_notify({emoji: ":X:", subject: subject, body: `めんどくさいままでいい`})
         },
       })
     },

@@ -75,7 +75,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
         b-menu-list(label="一歩進んだ使い方")
           b-menu-item.is_active_unset(
-            label="ウォーズIDを覚える"
+            label="ウォーズIDを記憶する"
             :class="{'has-text-weight-bold': base.swars_search_default_key_blank_if_mounted}"
             @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
