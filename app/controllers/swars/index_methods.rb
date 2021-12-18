@@ -301,12 +301,12 @@ module Swars
         if current_swars_user
           selected = false
           if t = query_info.lookup_one(:"date") # 日付
-            t = t.to_time.midnight
+            t = DateRange.parse(t)
 
             m = my_sampled_memberships
             s = s.where(id: m.pluck(:battle_id))
 
-            s = s.where(battled_at: t...t.tomorrow)
+            s = s.where(battled_at: t)
             selected = true
           end
           if v = query_info.lookup_one(:"judge") || query_info.lookup_one(:"勝敗")
