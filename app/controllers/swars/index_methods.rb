@@ -311,7 +311,6 @@ module Swars
           end
           if v = query_info.lookup_one(:"judge") || query_info.lookup_one(:"勝敗")
             m = my_sampled_memberships
-            p JudgeInfo.fetch(v)
             m = m.where(judge_key: JudgeInfo.fetch(v).key)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
