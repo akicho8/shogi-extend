@@ -191,6 +191,3 @@ gem "sidekiq"
 gem "redis-namespace"
 
 gem "puma_worker_killer"
-
-# DateRange
-gem "chronic"

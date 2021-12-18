@@ -499,7 +499,6 @@ DEPENDENCIES
   capistrano-rbenv
   capistrano-yarn
   capybara (>= 3.26)
-  chronic
   codecov
   coffee-rails (~> 5.0.0)
   color
