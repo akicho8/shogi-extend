@@ -69,7 +69,7 @@ export const app_tiresome = {
         title: "ウォーズIDを毎回入力する必要はありません",
         message: `右上の≡から<b>ウォーズIDを記憶する</b>で入力の手間が省けます。ぴよ将棋から来ている方におすすめです。あとから解除もできます。`,
         confirmText: "やってみる",
-        cancelText: "めんどくさいままでいい",
+        cancelText: "不便な方がいい",
         onConfirm: () => {
           this.sound_play("o")
           this.tiresome_modal_selected = "yes"
@@ -78,7 +78,7 @@ export const app_tiresome = {
         onCancel: () => {
           this.sound_play("x")
           this.tiresome_modal_selected = "no"
-          this.remote_notify({emoji: ":X:", subject: subject, body: `めんどくさいままでいい`})
+          this.remote_notify({emoji: ":X:", subject: subject, body: `不便な方がいい`})
         },
       })
     },
