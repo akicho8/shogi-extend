@@ -285,10 +285,15 @@ export default {
       return this.$route.query.viewpoint || "black"
     },
 
+    color_theme_key() {
+      return this.$route.query.color_theme_key || "is_color_theme_wars_red"
+    },
+
     og_image() {
       const params = new URLSearchParams()
       params.set("turn", this.new_turn)
       params.set("viewpoint", this.new_viewpoint)
+      params.set("color_theme_key", this.color_theme_key)
       return `${this.record.show_path}.png?${params}`
     },
 
