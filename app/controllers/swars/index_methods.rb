@@ -68,7 +68,9 @@ module Swars
         if params[:try_fetch] == "true"
           import_process2
         end
-        SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
+        if Rails.env.development?
+          SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
+        end
         render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
         return
       end
