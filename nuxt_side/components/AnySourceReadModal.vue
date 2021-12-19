@@ -4,7 +4,7 @@
     .modal-card-title
       | 棋譜の読み込み
   .modal-card-body
-    b-input(type="textarea" v-model.trim="any_source" ref="any_source" rows="6" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。共有将棋盤・ぴよ将棋・KENTO・将棋DB2のように棋譜をパラメータに含むURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
+    b-input(type="textarea" v-model.trim="any_source" ref="any_source" rows="6" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。共有将棋盤・ぴよ将棋・KENTO・将棋DB2のURL。棋譜自体を引数に含むURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
   .modal-card-foot
     b-button(@click="cancel_handle") キャンセル
     b-button(@click="submit_handle" :type="submit_button_type") 読み込む
