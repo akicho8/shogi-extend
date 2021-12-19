@@ -170,6 +170,13 @@ if true
     def current_query
       Rack::Utils.parse_query(URI(current_url).query)
     end
+
+    # これだと引けないものも引ける
+    # ただ wait などは指定できない
+    # なので assert_selector で止めてから doc.at("...") などとすればいい
+    def doc
+      Kaminari::HTML(html)
+    end
   end
 
   RSpec.configure do |config|

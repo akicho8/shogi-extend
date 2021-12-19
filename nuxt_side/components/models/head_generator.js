@@ -16,9 +16,10 @@
 import _ from "lodash"
 
 export class HeadGenerator {
-  constructor($config = {}, meta = {}) {
-    this.$config = $config
-    this.meta = meta
+  constructor(context) {
+    this.context = context
+    this.$config = context.$config
+    this.meta = context.meta
     this.h = {}
   }
 
@@ -42,6 +43,16 @@ export class HeadGenerator {
 
     if (this.meta.link) {
       this.h.link = this.meta.link
+    }
+
+    if (true) {
+      // http://localhost:4000/?apple-mobile-web-app-capable=xxx
+      // view-source:http://localhost:4000/?apple-mobile-web-app-capable=xxx
+      const key = "apple-mobile-web-app-capable"
+      const v = this.context.$route.query[key]
+      if (v) {
+        this.set_name(key, v)
+      }
     }
 
     return this.h
@@ -83,6 +94,7 @@ export class HeadGenerator {
     }
   }
 
+  // <meta property="(key)" content="(value)" /> 形式用
   set(key, val) {
     if (_.isArray(val)) {
       val = _.compact(val).join(" - ")
@@ -93,5 +105,10 @@ export class HeadGenerator {
     } else {
       this.h.meta.push({hid: key, property: key, content: val})
     }
+  }
+
+  // <meta name="(key)" content="(value)" /> 形式用
+  set_name(key, val) {
+    this.h.meta.push({hid: key, name: key, content: val})
   }
 }

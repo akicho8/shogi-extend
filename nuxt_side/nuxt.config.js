@@ -139,8 +139,8 @@ const config = {
       //   https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html
       //   https://medium.com/@firt/dont-use-ios-web-app-meta-tag-irresponsibly-in-your-progressive-web-apps-85d70f4438cb
       //
-      // { name: "apple-mobile-web-app-capable",          content: "yes"               },
-      // { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { hid: "apple-mobile-web-app-capable", name: "apple-mobile-web-app-capable", content: "no" }, // ←初期値。上書きするとき name の指定がないと name が消える
+      // { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" }, // ← とっくに無効
 
       ////////////////////////////////////////////////////////////////////////////////
       { hid: "og:site_name",   property: "og:site_name",   content: process.env.APP_NAME },
