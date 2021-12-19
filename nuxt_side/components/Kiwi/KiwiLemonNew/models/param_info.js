@@ -13,7 +13,7 @@ export class ParamInfo extends ParamBase {
       { key: "piece_font_weight_key", type: "string",  name: "駒書体の太さ",        default: "is_piece_font_weight_auto",            permanent: true,  relation: "PieceFontWeightInfo", desc: "",           },
       { key: "viewpoint_key",         type: "string",  name: "視点",                default: "black",                                permanent: false, relation: "ViewpointInfo",       desc: "",           },
       { key: "color_theme_key",       type: "string",  name: "配色",                default: "is_color_theme_groovy_board_texture1", permanent: true,  relation: "ColorThemeInfo",      desc: "",           },
-      { key: "audio_theme_key",       type: "string",  name: "BGM",                 default: "is_audio_theme_ds3479",                permanent: true,  relation: "AudioThemeInfo",      desc: "",           },
+      { key: "audio_theme_key",       type: "string",  name: "BGM",                 default: "is_audio_theme_shw_akatsuki_japan",    permanent: true,  relation: "AudioThemeInfo",      desc: "",           },
       { key: "factory_method_key",    type: "string",  name: "生成ツール",          default: "is_factory_method_ffmpeg",             permanent: true,  relation: "FactoryMethodInfo",   desc: "",           },
       { key: "cover_text",            type: "string",  name: "表紙文言",            default: "",                                     permanent: true,  relation: null,                  desc: "",           },
       { key: "video_crf",             type: "integer", name: "映像品質レベル",      default: 23,                                     permanent: true,  relation: null,                  desc: "",           },
