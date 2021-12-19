@@ -19,9 +19,9 @@
               a Like
               a Reply
               | · 3 hrs
-          span.is-size-7.has-text-grey-light.is_line_break_off
+          span.is-size-7.has-text-grey-light.is_line_break_off.mr-1(v-if="false")
             | \#{{banana_message.position}}
-          span.is-size-7.has-text-grey-light.is_line_break_off.ml-1
+          span.is-size-7.has-text-grey-light.is_line_break_off
             | {{diff_time_format(banana_message.created_at)}}
           span.is-hidden
             | {{banana_message.id}}
@@ -36,6 +36,13 @@
           a.level-item
             span.icon.is-small
               i.fas.fa-heart
+
+  .box.mt-6.has-background-white-bis.is-shadowless.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(v-if="!base.g_current_user")
+    .has-text-grey-light
+      | ログインするとコメントできます
+    b-button.has-text-weight-bold.mt-2(@click="nuxt_login_modal_handle" type="is-primary" size="is-small")
+      | ログイン
+
   .media.MessageInput(v-if="base.g_current_user")
     KiwiBananaShowAvatarLinkTo(:base="base" :user="base.g_current_user")
     .media-content

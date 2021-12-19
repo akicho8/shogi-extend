@@ -1,5 +1,5 @@
 <template lang="pug">
-component(:is="component" class="NavbarItemLogin has-text-weight-bold" v-if="!g_current_user" @click="click_handle")
+component(:is="component" class="NavbarItemLogin has-text-weight-bold" v-if="!g_current_user" @click="nuxt_login_modal_handle")
   | ログイン
 </template>
 
@@ -7,12 +7,6 @@ component(:is="component" class="NavbarItemLogin has-text-weight-bold" v-if="!g_
 export default {
   props: {
     component: { type: String, default: "b-navbar-item", },
-  },
-  methods: {
-    click_handle() {
-      this.sound_play_click()
-      this.nuxt_login_modal_open()
-    },
   },
 }
 </script>
