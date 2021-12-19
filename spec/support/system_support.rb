@@ -175,7 +175,7 @@ if true
     # ただ wait などは指定できない
     # なので assert_selector で止めてから doc.at("...") などとすればいい
     def doc
-      Kaminari::HTML(html)
+      Nokogiri::HTML(html)
     end
   end
 
