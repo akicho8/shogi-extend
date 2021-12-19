@@ -58,7 +58,8 @@ class KifuExtractor
       :extract_body_if_swars_url,
       :extract_body_if_kiousen_url,
       :extract_body_if_kento_url,
-      :extract_body_if_shogidb2_url,
+      :extract_body_if_shogidb2_url_params,
+      :extract_body_if_shogidb2_show_html_embed_json,
       :extract_body_if_url_params,
       :extract_body_if_other_url,
     ].each do |e|
@@ -103,7 +104,7 @@ class KifuExtractor
     end
   end
 
-  def extract_body_if_shogidb2_url
+  def extract_body_if_shogidb2_url_params
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
         sfen = nil
@@ -116,6 +117,20 @@ class KifuExtractor
         end
         if sfen.present?
           @body = ["position", "sfen", sfen].join(" ")
+        end
+      end
+    end
+  end
+
+  # バトル show のHTMLに埋め込まれている JSON っぽいものを取り出す
+  # rails r 'puts KifuExtractor.extract("https://shogidb2.com/games/0e0f7f6518bca14e5b784015963d5f38795c86a7")'
+  def extract_body_if_shogidb2_show_html_embed_json
+    if uri = extracted_uri
+      if uri.host.end_with?("shogidb2.com")
+        str = http_get_body(extracted_url)
+        if md = str.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+          json_params = JSON.parse(md["json_str"], symbolize_names: true)
+          @body = Shogidb2Parser.parse(json_params)
         end
       end
     end
