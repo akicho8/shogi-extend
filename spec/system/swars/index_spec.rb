@@ -78,20 +78,20 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "works" do
         visit2 "/swars/search"
 
-        # devuser1 で4回
+        # devuser1 で9回
         fill_in "query", with: "devuser1"
-        4.times { find(".search_click_handle").click }
+        9.times { find(".search_click_handle").click }
         assert_var_eq(:tiresome_previous_user_key, "devuser1")
-        assert_var_eq(:tiresome_count, 4)
+        assert_var_eq(:tiresome_count, 9)
 
-        # Yamada_Taro で1回で計5回になるがカウンタをリセットするので発動しない
+        # Yamada_Taro で1回で計10回になるがカウンタをリセットするので発動しない
         fill_in "query", with: "Yamada_Taro"
         find(".search_click_handle").click
         assert_var_eq(:tiresome_previous_user_key, "Yamada_Taro")
         assert_var_eq(:tiresome_count, 1)
 
-        # +4回で計5回になり発動する
-        4.times { find(".search_click_handle").click }
+        # +9回で計10回になり発動する
+        9.times { find(".search_click_handle").click }
         assert_text "ウォーズIDを毎回入力する必要はありません"
 
         find(".dialog.modal.is-active button.is-info").click # 「わかった」をクリック
@@ -306,7 +306,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   describe "一歩進んだ使い方" do
-    describe "ウォーズIDを覚える" do
+    describe "ウォーズIDを記憶する" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
         visit2 "/swars/search", query: "Yamada_Taro"
         default_swars_id_set
@@ -380,13 +380,13 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def default_swars_id_set
     hamburger_click
-    menu_item_click("ウォーズIDを覚える")
+    menu_item_click("ウォーズIDを記憶する")
     find(".set_handle").click
   end
 
   def default_swars_id_unset
     hamburger_click
-    menu_item_click("ウォーズIDを覚える")
+    menu_item_click("ウォーズIDを記憶する")
     find(".unset_handle").click
   end
 
