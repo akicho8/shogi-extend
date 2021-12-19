@@ -245,6 +245,17 @@ export default {
 
     printer_handle() {
       this.sound_play_click()
+
+      if (true) {
+        let body = []
+        body.push(this.new_info.tournament_name)
+        body.push(this.new_info.player_name_for_black)
+        body.push("vs")
+        body.push(this.new_info.player_name_for_white)
+        body = body.join(" ")
+        this.remote_notify({emoji: ":プリンタ:", subject: "棋譜用紙印刷実行", body: body})
+      }
+
       window.print()
     },
 
