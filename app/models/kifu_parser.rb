@@ -80,8 +80,7 @@ class KifuParser
 
   def to_format_options
     {
-      :compact                => true,
-      :no_embed_if_time_blank => true,
+      :compact => true,
     }
   end
 
