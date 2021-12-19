@@ -14,6 +14,7 @@ export const app_room_recreate = {
   methods: {
     // 再起動モーダル起動
     room_recreate_modal_handle() {
+      if (this.if_room_is_empty()) { return }
       this.sidebar_p = false
       this.sound_play_click()
       this.modal_card_open({

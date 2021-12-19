@@ -216,6 +216,15 @@ export const app_room_setup = {
     ac_events_hash_inc(key) {
       this.ac_events_hash[key] = (this.ac_events_hash[key] || 0) + 1
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+    if_room_is_empty() {
+      if (this.blank_p(this.ac_room)) {
+        this.sound_play_click()
+        this.toast_warn("まず部屋を立てよう")
+        return true
+      }
+    },
   },
   computed: {
     // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)

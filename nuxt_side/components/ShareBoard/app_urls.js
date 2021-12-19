@@ -4,12 +4,18 @@ export const app_urls = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
     room_code_only_url_copy_handle() {
-      this.sidebar_p = false
-      this.sound_play_click()
-      if (!this.room_code) {
+      if (this.if_room_is_empty()) { return }
+
+      this.__assert__(this.present_p(this.room_code), "this.present_p(this.room_code)")
+      if (this.blank_p(this.room_code)) {
+        // ここは通らないはず
+        this.sound_play_click()
         this.toast_warn("まだ合言葉を設定してません")
         return
       }
+
+      this.sidebar_p = false
+      this.sound_play_click()
       this.clipboard_copy({text: this.room_code_only_url, success_message: "部屋のリンクをコピーしました"})
     },
 
