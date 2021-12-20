@@ -1,6 +1,6 @@
 module Swars
   class Battle
-    concern :ConvertHookMethods do
+    concern :AssembleMethods do
       included do
         serialize :csa_seq
         attr_accessor :kifu_body_for_test
@@ -85,8 +85,8 @@ module Swars
             # 【超重要】
             # ・将棋ウォーズの不具合で時間がマイナスになることがある
             # ・もともとはこれを容認していた
-            # ・しかしKIFの時間のところに負の値を書くことになる
-            # ・するとKENTOで使っているKIFパースライブラリで、ハイフンを受け付けずに転ける
+            # ・しかしKIFの時間に負の値を書くことになる
+            # ・するとKENTOで使っているKIF読み取りライブラリが転ける
             if used.negative?
               used = 0
             end
@@ -101,8 +101,8 @@ module Swars
 
       def fast_parser_options
         {
-          validate_enable: false,
-          candidate_enable: false,
+          :validate_enable  => false,
+          :candidate_enable => false,
         }
       end
 
