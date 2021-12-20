@@ -15,4 +15,4 @@ obj.wait_value_for_job # => 1
 obj.reset
 obj.wait_value_for_job # => 0
 
-SlackAgent.notify(body: "ok")   # => #<SlackAgentNotifyJob:0x00007fe2992a4d50 @arguments=[{:channel=>"#shogi-extend-development", :text=>"2 W0 09:57:28.285【】ok"}], @job_id="a4b67090-7fdd-4247-9f9c-e72f08357cb5", @queue_name="default", @priority=nil, @executions=0, @exception_executions={}, @timezone="Tokyo", @scheduled_at=1638665848.358565, @provider_job_id="bcb7a2c96b89ea6cd179eef3">
+SlackAgent.notify(body: "ok")   # => #<SlackAgentNotifyJob:0x00007fc106f8ada8 @arguments=[{:channel=>"#shogi-extend-development", :text=>"▫ 19986 w0 20:02:55.767ok"}], @job_id="64b4bd7c-aebb-4622-9b22-eb03b922b59c", @queue_name="default", @priority=nil, @executions=0, @exception_executions={}, @timezone="Tokyo", @scheduled_at=1639998175.913493, @provider_job_id="35a1b8b820cc86dea1cf6759">
