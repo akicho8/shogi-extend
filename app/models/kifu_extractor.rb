@@ -93,6 +93,20 @@ class KifuExtractor
     end
   end
 
+  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/swars/battles/htrns-kinakom0chi-20211217_190002/")'
+  def extract_body_if_swars_battles_self_url
+    if url_type?
+      if uri = extracted_uri
+        if md = uri.path.match(%r{/swars/battles/(?<battle_key>[\w-]+)})
+          key = md["battle_key"]
+          Swars::Battle.single_battle_import(key: key)
+          if battle = Swars::Battle.find_by(key: key)
+            @body = battle.kifu_body
+          end
+        end
+      end
+    end
+  end
   # 棋王戦
   # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html
   def extract_body_if_kiousen_url
