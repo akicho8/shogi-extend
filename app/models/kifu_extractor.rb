@@ -55,11 +55,12 @@ class KifuExtractor
     [
       :extract_body_if_tactic,
       :extract_body_if_preset,
-      :extract_body_if_swars_url,
+      :extract_body_if_swars_games_url,
+      :extract_body_if_swars_battles_self_url,
       :extract_body_if_kiousen_url,
       :extract_body_if_kento_url,
-      :extract_body_if_shogidb2_url_params,
-      :extract_body_if_shogidb2_show_html_embed_json,
+      :extract_body_if_shogidb2_games_embed_json,
+      :extract_body_if_shogidb2_board_url_params,
       :extract_body_if_url_params,
       :extract_body_if_other_url,
     ].each do |e|
@@ -82,7 +83,7 @@ class KifuExtractor
     end
   end
 
-  def extract_body_if_swars_url
+  def extract_body_if_swars_games_url
     if url_type?
       if key = Swars::Battle.battle_key_extract(@source)
         Swars::Battle.single_battle_import(key: key)
@@ -107,6 +108,7 @@ class KifuExtractor
       end
     end
   end
+
   # 棋王戦
   # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html
   def extract_body_if_kiousen_url
@@ -118,7 +120,8 @@ class KifuExtractor
     end
   end
 
-  def extract_body_if_shogidb2_url_params
+  # rails r 'puts KifuExtractor.extract("https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM")'
+  def extract_body_if_shogidb2_board_url_params
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
         sfen = nil
@@ -126,8 +129,8 @@ class KifuExtractor
           sfen = Rack::Utils.unescape(uri.fragment)
         end
         if uri.query
-          hash = Rack::Utils.parse_query(uri.query)
-          sfen = hash["sfen"]
+          hv = Rack::Utils.parse_query(uri.query)
+          sfen = hv["sfen"]
         end
         if sfen.present?
           @body = ["position", "sfen", sfen].join(" ")
@@ -138,13 +141,18 @@ class KifuExtractor
 
   # バトル show のHTMLに埋め込まれている JSON っぽいものを取り出す
   # rails r 'puts KifuExtractor.extract("https://shogidb2.com/games/0e0f7f6518bca14e5b784015963d5f38795c86a7")'
-  def extract_body_if_shogidb2_show_html_embed_json
+  #
+  # 局面を動かすとこのURLの後ろに #xxx で SFEN が入る
+  # これをもともとは読み取っていたが利用者が欲しいのは fragment ではなく元の棋譜と思われるため fragment は無視する
+  def extract_body_if_shogidb2_games_embed_json
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
-        str = http_get_body(extracted_url)
-        if md = str.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
-          json_params = JSON.parse(md["json_str"], symbolize_names: true)
-          @body = Shogidb2Parser.parse(json_params)
+        if uri.path.start_with?("/games/")
+          str = http_get_body(extracted_url)
+          if md = str.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+            json_params = JSON.parse(md["json_str"], symbolize_names: true)
+            @body = Shogidb2Parser.parse(json_params)
+          end
         end
       end
     end

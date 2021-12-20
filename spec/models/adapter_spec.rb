@@ -27,7 +27,8 @@ RSpec.describe "なんでも棋譜変換", type: :model do
   end
 
   it "shogidb2" do
-    assert { FreeBattle.create!(kifu_body: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202").to_xxx(:kif).include?("まで0手で先手の勝ち") }
+    assert { FreeBattle.create!(kifu_body: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221").to_xxx(:kif).include?("まで95手で先手の勝ち") }
+    assert { FreeBattle.create!(kifu_body: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202").to_xxx(:kif).include?("まで95手で先手の勝ち") }
     assert { FreeBattle.create!(kifu_body: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM").to_xxx(:kif).include?("まで0手で先手の勝ち") }
   end
 
@@ -51,9 +52,29 @@ RSpec.describe "なんでも棋譜変換", type: :model do
     assert { body.include?("まで115手で上手の勝ち") }
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> .........
 # >> 
-# >> Finished in 6.14 seconds (files took 4.42 seconds to load)
+# >> Top 9 slowest examples (6.54 seconds, 74.3% of total time):
+# >>   なんでも棋譜変換 表記ゆれのある手入力
+# >>     1.33 seconds -:8
+# >>   なんでも棋譜変換 将棋ウォーズ
+# >>     1.08 seconds -:24
+# >>   なんでも棋譜変換 shogidb2
+# >>     0.98198 seconds -:29
+# >>   なんでも棋譜変換 戦法
+# >>     0.90711 seconds -:16
+# >>   なんでも棋譜変換 棋王戦 HTML
+# >>     0.85698 seconds -:38
+# >>   なんでも棋譜変換 棋王戦 URL
+# >>     0.82463 seconds -:42
+# >>   なんでも棋譜変換 KENTO URL
+# >>     0.34949 seconds -:51
+# >>   なんでも棋譜変換 反則
+# >>     0.11215 seconds -:12
+# >>   なんでも棋譜変換 駒落ち
+# >>     0.10534 seconds -:20
+# >> 
+# >> Finished in 8.81 seconds (files took 9.46 seconds to load)
 # >> 9 examples, 0 failures
 # >> 
