@@ -29,7 +29,7 @@ class WebAgent
   # <meta charset="EUC-JP" />
   def fetch(url)
     s = raw_fetch(url)
-    if s.match?(/Shift_JIS|EUC-JP/i)
+    if !s.match?(/UTF.?8/i) || s.match?(/Shift_JIS|EUC-JP/i)
       s = s.toutf8
     end
     s

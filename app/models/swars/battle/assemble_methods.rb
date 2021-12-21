@@ -79,20 +79,19 @@ module Swars
           i = i.modulo(life.size)
           used = life[i] - t
           life[i] = t
-          s << "#{op}"
 
           if true
             # 【超重要】
             # ・将棋ウォーズの不具合で時間がマイナスになることがある
             # ・もともとはこれを容認していた
             # ・しかしKIFの時間に負の値を書くことになる
-            # ・するとKENTOで使っているKIF読み取りライブラリが転ける
+            # ・するとKENTOが転ける
             if used.negative?
               used = 0
             end
           end
 
-          s << "T#{used}"
+          s << "#{op},T#{used}"
         end
 
         s << "%#{final_info.csa_last_action_key}"

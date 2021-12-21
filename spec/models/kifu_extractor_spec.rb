@@ -7,8 +7,8 @@ RSpec.describe KifuExtractor, type: :model do
 
   it "将棋ウォーズ" do
     if $0 == "-"
-      test1("https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1") # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU\nT0\n-8384FU\nT1\n+7776FU\nT2\n-8485FU\nT1\n+8877KA\nT1\n-6152KI\nT1\n+2858HI\nT2\n-7162GI\nT9\n+7968GI\nT1\n-5142OU\nT0\n+6857GI\nT1\n-4232OU\nT2\n+5948OU\nT1\n-1314FU\nT7\n+1716FU\nT1\n-6364FU\nT1\n+5655FU\nT1\n-6263GI\nT3\n+5756GI\nT1\n-3142GI\nT1\n+4838OU\nT1\n-4344FU\nT2\n+3828OU\nT1\n-4243GI\nT1\n+3938GI\nT2\n-7374FU\nT0\n+9796FU\nT2\n-9394FU\nT2\n+9997KY\nT1\n-3334FU\nT7\n+4746FU\nT2\n-2233KA\nT5\n+5898HI\nT2\n-8586FU\nT7\n+8786FU\nT2\n-8284HI\nT2\n+..."
-      test1("https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1") # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU\nT0\n-8384FU\nT1\n+7776FU\nT2\n-8485FU\nT1\n+8877KA\nT1\n-6152KI\nT1\n+2858HI\nT2\n-7162GI\nT9\n+7968GI\nT1\n-5142OU\nT0\n+6857GI\nT1\n-4232OU\nT2\n+5948OU\nT1\n-1314FU\nT7\n+1716FU\nT1\n-6364FU\nT1\n+5655FU\nT1\n-6263GI\nT3\n+5756GI\nT1\n-3142GI\nT1\n+4838OU\nT1\n-4344FU\nT2\n+3828OU\nT1\n-4243GI\nT1\n+3938GI\nT2\n-7374FU\nT0\n+9796FU\nT2\n-9394FU\nT2\n+9997KY\nT1\n-3334FU\nT7\n+4746FU\nT2\n-2233KA\nT5\n+5898HI\nT2\n-8586FU\nT7\n+8786FU\nT2\n-8284HI\nT2\n+..."
+      test1("https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1") # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU,T0\n-8384FU,T1\n+7776FU,T2\n-8485FU,T1\n+8877KA,T1\n-6152KI,T1\n+2858HI,T2\n-7162GI,T9\n+7968GI,T1\n-5142OU,T0\n+6857GI,T1\n-4232OU,T2\n+5948OU,T1\n-1314FU,T7\n+1716FU,T1\n-6364FU,T1\n+5655FU,T1\n-6263GI,T3\n+5756GI,T1\n-3142GI,T1\n+4838OU,T1\n-4344FU,T2\n+3828OU,T1\n-4243GI,T1\n+3938GI,T2\n-7374FU,T0\n+9796FU,T2\n-9394FU,T2\n+9997KY,T1\n-3334FU,T7\n+4746FU,T2\n-2233KA,T5\n+5898HI,T2\n-8586FU,T7\n+8786FU,T2\n-8284HI,T2\n+..."
+      test1("https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1") # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU,T0\n-8384FU,T1\n+7776FU,T2\n-8485FU,T1\n+8877KA,T1\n-6152KI,T1\n+2858HI,T2\n-7162GI,T9\n+7968GI,T1\n-5142OU,T0\n+6857GI,T1\n-4232OU,T2\n+5948OU,T1\n-1314FU,T7\n+1716FU,T1\n-6364FU,T1\n+5655FU,T1\n-6263GI,T3\n+5756GI,T1\n-3142GI,T1\n+4838OU,T1\n-4344FU,T2\n+3828OU,T1\n-4243GI,T1\n+3938GI,T2\n-7374FU,T0\n+9796FU,T2\n-9394FU,T2\n+9997KY,T1\n-3334FU,T7\n+4746FU,T2\n-2233KA,T5\n+5898HI,T2\n-8586FU,T7\n+8786FU,T2\n-8284HI,T2\n+..."
     end
 
     assert { test1("https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1").match?(/SiroChannel 四段/) }
@@ -30,21 +30,28 @@ RSpec.describe KifuExtractor, type: :model do
   it "自サイト" do
     if $0 == "-"
       test1("https://www.shogi-extend.com/share-board?body=position.sfen.4k4%2F9%2F4p4%2F9%2F9%2F9%2F4P4%2F9%2F4K4.b.P.1.moves.5g5f.5c5d.P%2a5e&turn=3&abstract_viewpoint=black&color_theme_key=is_color_theme_groovy_board_texture1") # => "position sfen 4k4/9/4p4/9/9/9/4P4/9/4K4 b P 1 moves 5g5f 5c5d P*5e"
-      test1("https://www.shogi-extend.com/swars/battles/Kato_Hifumi-SiroChannel-20200927_180900/?viewpoint=white&turn=9") # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU\nT0\n-8384FU\nT1\n+7776FU\nT2\n-8485FU\nT1\n+8877KA\nT1\n-6152KI\nT1\n+2858HI\nT2\n-7162GI\nT9\n+7968GI\nT1\n-5142OU\nT0\n+6857GI\nT1\n-4232OU\nT2\n+5948OU\nT1\n-1314FU\nT7\n+1716FU\nT1\n-6364FU\nT1\n+5655FU\nT1\n-6263GI\nT3\n+5756GI\nT1\n-3142GI\nT1\n+4838OU\nT1\n-4344FU\nT2\n+3828OU\nT1\n-4243GI\nT1\n+3938GI\nT2\n-7374FU\nT0\n+9796FU\nT2\n-9394FU\nT2\n+9997KY\nT1\n-3334FU\nT7\n+4746FU\nT2\n-2233KA\nT5\n+5898HI\nT2\n-8586FU\nT7\n+8786FU\nT2\n-8284HI\nT2\n+..."
+      test1("https://www.shogi-extend.com/swars/battles/Kato_Hifumi-SiroChannel-20200927_180900/?viewpoint=white&turn=9")                                                                                                              # => "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU,T0\n-8384FU,T1\n+7776FU,T2\n-8485FU,T1\n+8877KA,T1\n-6152KI,T1\n+2858HI,T2\n-7162GI,T9\n+7968GI,T1\n-5142OU,T0\n+6857GI,T1\n-4232OU,T2\n+5948OU,T1\n-1314FU,T7\n+1716FU,T1\n-6364FU,T1\n+5655FU,T1\n-6263GI,T3\n+5756GI,T1\n-3142GI,T1\n+4838OU,T1\n-4344FU,T2\n+3828OU,T1\n-4243GI,T1\n+3938GI,T2\n-7374FU,T0\n+9796FU,T2\n-9394FU,T2\n+9997KY,T1\n-3334FU,T7\n+4746FU,T2\n-2233KA,T5\n+5898HI,T2\n-8586FU,T7\n+8786FU,T2\n-8284HI,T2\n+..."
     end
 
     assert { test1("https://www.shogi-extend.com/share-board?body=position.sfen.4k4%2F9%2F4p4%2F9%2F9%2F9%2F4P4%2F9%2F4K4.b.P.1.moves.5g5f.5c5d.P%2a5e&turn=3&abstract_viewpoint=black&color_theme_key=is_color_theme_groovy_board_texture1") == "position sfen 4k4/9/4p4/9/9/9/4P4/9/4K4 b P 1 moves 5g5f 5c5d P*5e" }
-    assert { test1("https://www.shogi-extend.com/swars/battles/Kato_Hifumi-SiroChannel-20200927_180900/?viewpoint=white&turn=9") == "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU\nT0\n-8384FU\nT1\n+7776FU\nT2\n-8485FU\nT1\n+8877KA\nT1\n-6152KI\nT1\n+2858HI\nT2\n-7162GI\nT9\n+7968GI\nT1\n-5142OU\nT0\n+6857GI\nT1\n-4232OU\nT2\n+5948OU\nT1\n-1314FU\nT7\n+1716FU\nT1\n-6364FU\nT1\n+5655FU\nT1\n-6263GI\nT3\n+5756GI\nT1\n-3142GI\nT1\n+4838OU\nT1\n-4344FU\nT2\n+3828OU\nT1\n-4243GI\nT1\n+3938GI\nT2\n-7374FU\nT0\n+9796FU\nT2\n-9394FU\nT2\n+9997KY\nT1\n-3334FU\nT7\n+4746FU\nT2\n-2233KA\nT5\n+5898HI\nT2\n-8586FU\nT7\n+8786FU\nT2\n-8284HI\nT2\n+..." }
+    assert { test1("https://www.shogi-extend.com/swars/battles/Kato_Hifumi-SiroChannel-20200927_180900/?viewpoint=white&turn=9")                                                                                                              == "N+Kato_Hifumi 三段\nN-SiroChannel 四段\n$START_TIME:2020/09/27 18:09:00\n$EVENT:将棋ウォーズ(10分切れ負け)\n$TIME_LIMIT:00:10+00\n+\n+5756FU,T0\n-8384FU,T1\n+7776FU,T2\n-8485FU,T1\n+8877KA,T1\n-6152KI,T1\n+2858HI,T2\n-7162GI,T9\n+7968GI,T1\n-5142OU,T0\n+6857GI,T1\n-4232OU,T2\n+5948OU,T1\n-1314FU,T7\n+1716FU,T1\n-6364FU,T1\n+5655FU,T1\n-6263GI,T3\n+5756GI,T1\n-3142GI,T1\n+4838OU,T1\n-4344FU,T2\n+3828OU,T1\n-4243GI,T1\n+3938GI,T2\n-7374FU,T0\n+9796FU,T2\n-9394FU,T2\n+9997KY,T1\n-3334FU,T7\n+4746FU,T2\n-2233KA,T5\n+5898HI,T2\n-8586FU,T7\n+8786FU,T2\n-8284HI,T2\n+..." }
   end
 
   it "棋王戦" do
     if $0 == "-"
-      test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html") # => "# --- Kifu for Windows (Pro) V6.65.47 棋譜ファイル ---\r\n対局ID：10156\r\n記録ID：5e2559475d617f00041e7a4a\r\n開始日時：2020/02/01 09:00\r\n終了日時：2020/02/01 17:04\r\n表題：棋王戦\r\n棋戦：第４５期棋王戦五番勝負　第１局\r\n戦型：矢倉\r\n持ち時間：各４時間\r\n消費時間：95▲171△207\r\n場所：石川・北國新聞会館\r\n備考：昼休前48手目14分\\n\r\n振り駒：5,0,渡\r\n先手消費時間加算：0\r\n後手消費時間加算：0\r\n昼食休憩：12:00〜13:00\r\n昼休前消費時間：48手14分\r\n手合割：平手　　\r\n先手：渡辺明棋王\r\n後手：本田奎五段\r\n先手省略名：渡辺明\r\n手数----指手---------消費時間--\r\n*渡辺明棋王に本田奎五段が挑戦する第45期棋王戦五番勝負が２月１日（土）石川県金沢市「北國新聞会館」で開幕する。自己記録更新の８連覇を目指す棋界の第一人者に、史上初となる棋戦初参加にしてタイトル挑戦を決めた期待の超新星が挑む五番勝負。両者は本局が初手合いとなる。対局は９時開始。持ち..."
-      test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif") # => "# --- Kifu for Windows (Pro) V6.65.47 棋譜ファイル ---\r\n対局ID：10156\r\n記録ID：5e2559475d617f00041e7a4a\r\n開始日時：2020/02/01 09:00\r\n終了日時：2020/02/01 17:04\r\n表題：棋王戦\r\n棋戦：第４５期棋王戦五番勝負　第１局\r\n戦型：矢倉\r\n持ち時間：各４時間\r\n消費時間：95▲171△207\r\n場所：石川・北國新聞会館\r\n備考：昼休前48手目14分\\n\r\n振り駒：5,0,渡\r\n先手消費時間加算：0\r\n後手消費時間加算：0\r\n昼食休憩：12:00〜13:00\r\n昼休前消費時間：48手14分\r\n手合割：平手　　\r\n先手：渡辺明棋王\r\n後手：本田奎五段\r\n先手省略名：渡辺明\r\n手数----指手---------消費時間--\r\n*渡辺明棋王に本田奎五段が挑戦する第45期棋王戦五番勝負が２月１日（土）石川県金沢市「北國新聞会館」で開幕する。自己記録更新の８連覇を目指す棋界の第一人者に、史上初となる棋戦初参加にしてタイトル挑戦を決めた期待の超新星が挑む五番勝負。両者は本局が初手合いとなる。対局は９時開始。持ち..."
+      test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html") # => "# --- Kifu for Windows (Pro) V6.65.47 棋譜ファイル ---\n対局ID：10156\n記録ID：5e2559475d617f00041e7a4a\n開始日時：2020/02/01 09:00\n終了日時：2020/02/01 17:04\n表題：棋王戦\n棋戦：第４５期棋王戦五番勝負　第１局\n戦型：矢倉\n持ち時間：各４時間\n消費時間：95▲171△207\n場所：石川・北國新聞会館\n備考：昼休前48手目14分\n振り駒：5,0,渡\n先手消費時間加算：0\n後手消費時間加算：0\n昼食休憩：12:00〜13:00\n昼休前消費時間：48手14分\n手合割：平手\n先手：渡辺明棋王\n後手：本田奎五段\n先手省略名：渡辺明\n手数----指手---------消費時間--\n   1 ７六歩(77)   ( 0:00/00:00:00)\n   2 ８四歩(83)   ( 0:00/00:00:00)\n   3 ６八銀(79)   ( 1:00/00:01:00)\n   4 ３四歩(33)   ( 0:00/00:00:00)\n   5 ７七銀(68)   ( 0:00/00:01:00)\n   6 ６二..."
+      test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif") # => "# --- Kifu for Windows (Pro) V6.65.47 棋譜ファイル ---\n対局ID：10156\n記録ID：5e2559475d617f00041e7a4a\n開始日時：2020/02/01 09:00\n終了日時：2020/02/01 17:04\n表題：棋王戦\n棋戦：第４５期棋王戦五番勝負　第１局\n戦型：矢倉\n持ち時間：各４時間\n消費時間：95▲171△207\n場所：石川・北國新聞会館\n備考：昼休前48手目14分\n振り駒：5,0,渡\n先手消費時間加算：0\n後手消費時間加算：0\n昼食休憩：12:00〜13:00\n昼休前消費時間：48手14分\n手合割：平手\n先手：渡辺明棋王\n後手：本田奎五段\n先手省略名：渡辺明\n手数----指手---------消費時間--\n   1 ７六歩(77)   ( 0:00/00:00:00)\n   2 ８四歩(83)   ( 0:00/00:00:00)\n   3 ６八銀(79)   ( 1:00/00:01:00)\n   4 ３四歩(33)   ( 0:00/00:00:00)\n   5 ７七銀(68)   ( 0:00/00:01:00)\n   6 ６二..."
     end
 
     assert { test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html").match?(/Kifu for Windows/) }
     assert { test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif").match?(/Kifu for Windows/) }
+  end
+
+  it "KIFへの直リン" do
+    if $0 == "-"
+      test1("https://www.shogi-extend.com/foo.kif") # => "先手：foo 27級\r\n後手：ispt 3級\r\n開始日時：2017/11/04 22:08:10\r\n棋戦：将棋ウォーズ(3分切れ負け)\r\n持ち時間：00:03+00\r\n先手の囲い：金矢倉, 串カツ囲い\r\n後手の囲い：中住まい\r\n先手の戦型：角換わり\r\n後手の戦型：嬉野流\r\n手合割：平手\r\n手数----指手---------消費時間--\r\n   1 ６八銀(79)   (00:01/00:00:01)\r\n   2 ３四歩(33)   (00:00/00:00:00)\r\n   3 ５六歩(57)   (00:01/00:00:02)\r\n   4 ３二金(41)   (00:03/00:00:03)\r\n   5 ５七銀(68)   (00:01/00:00:03)\r\n   6 １四歩(13)   (00:01/00:00:04)\r\n   7 １六歩(17)   (00:02/00:00:05)\r\n   8 ８四歩(83)   (00:01/00:00:05)\r\n   9 ７九角(88)   (00:01/00:00:06)\r\n  10 ８五歩(84)   (00:01/00:00:06)\r\n  11 ７八金(..."
+    end
+    assert { test1("https://www.shogi-extend.com/foo.kif") == "先手：foo 27級\r\n後手：ispt 3級\r\n開始日時：2017/11/04 22:08:10\r\n棋戦：将棋ウォーズ(3分切れ負け)\r\n持ち時間：00:03+00\r\n先手の囲い：金矢倉, 串カツ囲い\r\n後手の囲い：中住まい\r\n先手の戦型：角換わり\r\n後手の戦型：嬉野流\r\n手合割：平手\r\n手数----指手---------消費時間--\r\n   1 ６八銀(79)   (00:01/00:00:01)\r\n   2 ３四歩(33)   (00:00/00:00:00)\r\n   3 ５六歩(57)   (00:01/00:00:02)\r\n   4 ３二金(41)   (00:03/00:00:03)\r\n   5 ５七銀(68)   (00:01/00:00:03)\r\n   6 １四歩(13)   (00:01/00:00:04)\r\n   7 １六歩(17)   (00:02/00:00:05)\r\n   8 ８四歩(83)   (00:01/00:00:05)\r\n   9 ７九角(88)   (00:01/00:00:06)\r\n  10 ８五歩(84)   (00:01/00:00:06)\r\n  11 ７八金(..." }
   end
 
   it "URL引数" do
@@ -85,25 +92,49 @@ RSpec.describe KifuExtractor, type: :model do
 
   it "lishogi" do
     if $0 == "-"
-      test1("https://lishogi.org/ZY2Tyy2dUdLl")   # => "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..."
-      test1("https://lishogi.org/ZY2Tyy2d/sente") # => "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..."
-      test1("https://lishogi.org/ZY2Tyy2d/gote")  # => "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..."
-      test1("https://lishogi.org/ZY2Tyy2d")       # => "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..."
+      test1("https://lishogi.org/151jxej8")       # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
+      test1("https://lishogi.org/151jxej8/sente") # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
+      test1("https://lishogi.org/151jxej8/gote")  # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
     end
 
-    assert { test1("https://lishogi.org/ZY2Tyy2dUdLl")   == "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..." }
-    assert { test1("https://lishogi.org/ZY2Tyy2d/sente") == "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..." }
-    assert { test1("https://lishogi.org/ZY2Tyy2d/gote")  == "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..." }
-    assert { test1("https://lishogi.org/ZY2Tyy2d")       == "開始日時：2021/12/06 04:37:40\n終了日時：2021/12/21 04:11:52\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/ZY2Tyy2d\n手合割：平手\n先手：dopamine57\n後手：Megeton\n手数----指手---------消費時間--\n   1   ２六歩(27)\n   2   ３四歩(33)\n   3   ２五歩(26)\n   4   ３三角(22)\n   5   ７六歩(77)\n   6   ３二銀(31)\n   7   ３三角成(88)\n   8   同　銀(32)\n   9   ８八銀(79)\n  10   ３二金(41)\n  11   ７七銀(88)\n  12   ６二銀(71)\n  13   ７八金(69)\n  14   ６四歩(63)\n  15   ３八銀(39)\n  16   ６三銀(62)\n  17   ６八玉(59)\n  18   ８四歩(83)\n  19   ２七銀(38)\n  20   ５二金(61)\n  21   ２六銀(27)\n  22   ７四歩(73)\n  23   １五銀(..." }
+    assert { test1("https://lishogi.org/151jxej8")       == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
+    assert { test1("https://lishogi.org/151jxej8/sente") == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
+    assert { test1("https://lishogi.org/151jxej8/gote")  == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> .
-# >>
-# >> Top 1 slowest examples (7.49 seconds, 79.2% of total time):
-# >>   KifuExtractor works
-# >>     7.49 seconds -:8
-# >>
-# >> Finished in 9.45 seconds (files took 5.44 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# >> ..F.....
+# >> 
+# >> Failures:
+# >> 
+# >>   1) KifuExtractor 自サイト
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:37:in `block (2 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+# >> 
+# >> Top 8 slowest examples (7.2 seconds, 79.0% of total time):
+# >>   KifuExtractor lishogi
+# >>     3.03 seconds -:93
+# >>   KifuExtractor 将棋ウォーズ
+# >>     1.66 seconds -:8
+# >>   KifuExtractor shogidb2
+# >>     1.24 seconds -:81
+# >>   KifuExtractor 棋王戦
+# >>     0.46951 seconds -:40
+# >>   KifuExtractor KIFへの直リン
+# >>     0.38817 seconds -:50
+# >>   KifuExtractor 自サイト
+# >>     0.27683 seconds -:30
+# >>   KifuExtractor URL引数
+# >>     0.1026 seconds -:57
+# >>   KifuExtractor KENTO
+# >>     0.03249 seconds -:18
+# >> 
+# >> Finished in 9.11 seconds (files took 6.64 seconds to load)
+# >> 8 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:30 # KifuExtractor 自サイト
+# >> 

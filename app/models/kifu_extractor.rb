@@ -1,3 +1,10 @@
+# テキストから棋譜を抽出する
+#
+#  KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d") # => "開始日時：2021/12/06 04:37:40..."
+#
+#  与えられたテキスト自体が棋譜の場合はそれを返さないので注意
+#  KifuExtractor.extract("76歩") # => nil
+#
 class KifuExtractor
   class << self
     def extract(*args)
@@ -13,12 +20,12 @@ class KifuExtractor
       url_check_head_lines: 4,
     }.merge(options)
 
-    @source = source.to_s
+    @source = source.to_s.strip
   end
 
   # 抽出した本体が読み込めて最後の局面まで行けるなら「SFENではなく」本体を返す
   def extract
-    extract_body
+    extract_try_all
     if @body
       Bioshogi::Parser.parse(@body, {
           :skill_monitor_enable           => false,
@@ -35,20 +42,20 @@ class KifuExtractor
 
   private
 
-  def extract_body
+  def extract_try_all
     @body = nil
     [
-      :extract_body_if_tactic,
-      :extract_body_if_preset,
-      :extract_body_if_lishogi,
-      :extract_body_if_swars_games_url,
-      :extract_body_if_swars_battles_self_url,
-      :extract_body_if_kiousen_url,
-      :extract_body_if_kento_url,
-      :extract_body_if_shogidb2_games_embed_json,
-      :extract_body_if_shogidb2_board_url_params,
-      :extract_body_if_url_params,
-      :extract_body_if_other_url,
+      :extract_try_if_tactic,
+      :extract_try_if_preset,
+      :extract_try_if_lishogi,
+      :extract_try_if_swars_games_url,
+      :extract_try_if_swars_battles_self_url,
+      :extract_try_if_kiousen_url,
+      :extract_try_if_kento_url,
+      :extract_try_if_shogidb2_show,
+      :extract_try_if_shogidb2_board,
+      :extract_try_if_url_params,
+      :extract_try_if_other_url,
     ].each do |e|
       send(e)
       if @body
@@ -57,19 +64,25 @@ class KifuExtractor
     end
   end
 
-  def extract_body_if_tactic
-    if e = Bioshogi::TacticInfo.flat_lookup(@source.strip)
+  # 戦法・囲い・手筋などの名前
+  # rails r 'puts KifuExtractor.extract("嬉野流")'
+  def extract_try_if_tactic
+    if e = Bioshogi::TacticInfo.flat_lookup(@source)
       @body = e.sample_kif_file.read
     end
   end
 
-  def extract_body_if_preset
-    if e = Bioshogi::PresetInfo.lookup(@source.strip)
+  # 手合割
+  # rails r 'puts KifuExtractor.extract("二枚落ち")'
+  def extract_try_if_preset
+    if e = Bioshogi::PresetInfo.lookup(@source)
       @body = e.to_position_sfen
     end
   end
 
-  def extract_body_if_swars_games_url
+  # 将棋ウォーズ本家対局URL
+  # rails r 'puts KifuExtractor.extract("https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900")'
+  def extract_try_if_swars_games_url
     if url_type?
       if key = Swars::Battle.battle_key_extract(@source)
         Swars::Battle.single_battle_import(key: key)
@@ -80,8 +93,9 @@ class KifuExtractor
     end
   end
 
+  # 将棋ウォーズ棋譜検索対局ページURL
   # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/swars/battles/htrns-kinakom0chi-20211217_190002/")'
-  def extract_body_if_swars_battles_self_url
+  def extract_try_if_swars_battles_self_url
     if url_type?
       if uri = extracted_uri
         if md = uri.path.match(%r{/swars/battles/(?<battle_key>[\w-]+)})
@@ -97,12 +111,17 @@ class KifuExtractor
 
   # 棋王戦
   # rails r 'puts KifuExtractor.extract("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html")'
-  def extract_body_if_kiousen_url
+  # rails r 'puts KifuExtractor.extract("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif")'
+  def extract_try_if_kiousen_url
     if uri = extracted_uri
       if uri.host.end_with?("live.shogi.or.jp")
         uri.path = uri.path.sub(/html\z/, "kif")
         url = uri.to_s
-        @body = WebAgent.fetch(url)
+        v = WebAgent.fetch(url)                  # 元が Shift_JIS なので内部で toutf8 している
+        v = v.gsub(/\\n/, "")                    # '\n' の "文字" が入っているので削除
+        v = Bioshogi::Parser.source_normalize(v) # 右端の全角スペースなどを削除
+        v = v.remove(/^\*.*\R/)                  # 観戦記者の膨大なコメントを削除
+        @body = v
       end
     end
   end
@@ -112,7 +131,7 @@ class KifuExtractor
   # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/sente")'
   # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/gote")'
   # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d")'
-  def extract_body_if_lishogi
+  def extract_try_if_lishogi
     if uri = extracted_uri
       if uri.host.end_with?("lishogi.org")
         # NOTE: user_agent が "Faraday v1" や通常のであれば kif を埋めない
@@ -125,8 +144,9 @@ class KifuExtractor
     end
   end
 
+  # 将棋DB2 変化
   # rails r 'puts KifuExtractor.extract("https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM")'
-  def extract_body_if_shogidb2_board_url_params
+  def extract_try_if_shogidb2_board
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
         sfen = nil
@@ -149,11 +169,11 @@ class KifuExtractor
   #
   # 局面を動かすとこのURLの後ろに #xxx で SFEN が入る
   # これをもともとは読み取っていたが利用者が欲しいのは fragment ではなく元の棋譜と思われるため fragment は無視する
-  def extract_body_if_shogidb2_games_embed_json
+  def extract_try_if_shogidb2_show
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
         if uri.path.start_with?("/games/")
-          if md = raw_html.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+          if md = raw_content.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
             json_params = JSON.parse(md["json_str"], symbolize_names: true)
             @body = Shogidb2Parser.parse(json_params)
           end
@@ -162,7 +182,11 @@ class KifuExtractor
     end
   end
 
-  def extract_body_if_kento_url
+  # KENTO
+  # rails r 'puts KifuExtractor.extract("https://www.kento-shogi.com/?moves=7g7f.3c3d.8h2b%2B#3")'
+  # rails r 'puts KifuExtractor.extract("https://www.kento-shogi.com/?branch=N%2A7e.7d7e.B%2A7d.8c9c.G%2A9b.9a9b.7d9b%2B.9c9b.6c7b.R%2A8b.G%2A8c.9b9a.7b8b.7c8b.R%2A9b&branchFrom=0&initpos=ln7%2F2g6%2F1ks%2BR5%2Fpppp5%2F9%2F9%2F%2Bp%2Bp%2Bp6%2F2%2Bp6%2FK1%2Bp6%20b%20NGB9p3l2n3s2gbr%201#6")'
+  # rails r 'puts KifuExtractor.extract("https://share.kento-shogi.com/?branch=N%2A7e.7d7e.B%2A7d.8c9c.G%2A9b.9a9b.7d9b%2B.9c9b.6c7b.R%2A8b.G%2A8c.9b9a.7b8b.7c8b.R%2A9b&branchFrom=0&initpos=ln7%2F2g6%2F1ks%2BR5%2Fpppp5%2F9%2F9%2F%2Bp%2Bp%2Bp6%2F2%2Bp6%2FK1%2Bp6%20b%20NGB9p3l2n3s2gbr%201#6")'
+  def extract_try_if_kento_url
     if uri = extracted_uri
       if uri.host.end_with?("kento-shogi.com")
         @body = KentoParamsParser.parse(uri.to_s).to_sfen
@@ -173,7 +197,7 @@ class KifuExtractor
   # https://example.com/?body=68S
   # https://example.com/?sfen=68S
   # https://example.com/#68S
-  def extract_body_if_url_params
+  def extract_try_if_url_params
     if uri = extracted_uri
       if uri.query || uri.fragment
         hash = {}
@@ -198,16 +222,16 @@ class KifuExtractor
     end
   end
 
-  # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif
-  def extract_body_if_other_url
-    if v = raw_html
-      v = v.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
+  # KIFへの直リン
+  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/foo.kif")'
+  def extract_try_if_other_url
+    if v = raw_content
       @body = v
     end
   end
 
   def url_type?
-    @source.strip.lines.count <= @options[:url_check_head_lines] && @source.match?(%{^https?://})
+    @source.lines.count <= @options[:url_check_head_lines] && @source.match?(%{^https?://})
   end
 
   def extracted_url
@@ -222,9 +246,9 @@ class KifuExtractor
     end
   end
 
-  def raw_html
+  def raw_content
     if url = extracted_url
-      @raw_html ||= WebAgent.fetch(url)
+      @raw_content ||= WebAgent.fetch(url)
     end
   end
 end
