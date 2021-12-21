@@ -231,7 +231,10 @@ class KifuExtractor
   end
 
   def url_type?
-    @source.lines.count <= @options[:url_check_head_lines] && @source.match?(%{^https?://})
+    if @source.lines.count <= @options[:url_check_head_lines]
+      # KIFのヘッダーに含まれるURLを無視させるため行頭から http が始まっているか？の条件が重要
+      @source.match?(/^http/)
+    end
   end
 
   def extracted_url
