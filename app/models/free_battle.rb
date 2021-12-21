@@ -275,4 +275,78 @@ class FreeBattle < ApplicationRecord
       a
     end
   end
+
+  concerning :AdapterMethods do
+    class_methods do
+      # 成功
+      #   rails r 'tp FreeBattle.adapter_post(input_text: "68銀")'
+      #   rails r 'tp FreeBattle.adapter_post(input_text: "")'
+      # 失敗
+      #   rails r 'FreeBattle.adapter_post(input_text: "58金") rescue (p $!.message)'
+      def adapter_post(params)
+        begin
+          record = FreeBattle.create!(kifu_body: params[:input_text], use_key: "adapter")
+          attrs = record.as_json({
+              methods: [
+                :all_kifs,
+                :display_turn,
+                :piyo_shogi_base_params,
+              ],
+            })
+        rescue Bioshogi::BioshogiError => error
+          adapter_notify(params, record, error)
+          raise error
+        end
+        adapter_notify(params, record)
+        { record: attrs }
+      end
+
+      private
+
+      def adapter_notify(params, record, error = nil)
+        emoji = ":成功:"
+
+        unless error
+          emoji = ":失敗:"
+        end
+
+        turn_max = nil
+        if record
+          turn_max = record.turn_max
+          if turn_max.zero?
+            emoji = ":失敗:"
+          end
+        end
+
+        subject = []
+        subject << "なんでも棋譜変換"
+        if params[:current_user]
+          subject << params[:current_user].name
+        end
+        if turn_max
+          subject << "手数#{turn_max}"
+        end
+        if error
+          subject << error.class.name
+        end
+        subject = subject.join(" ")
+
+        body = []
+        if params[:current_user]
+          body << params[:current_user].info.to_t.strip
+          body << ""
+        end
+        if error
+          body << "▼エラー"
+          body << error.message.strip
+          body << ""
+        end
+        body << "▼棋譜"
+        body << params[:input_text].strip
+        body = body.join("\n")
+
+        SystemMailer.notify(fixed: true, subject: subject, body: body, emoji: emoji).deliver_later
+      end
+    end
+  end
 end

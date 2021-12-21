@@ -124,4 +124,12 @@ RSpec.describe FreeBattle, type: :model do
       assert { test1(:kiwi_lemon) == 3 } # 二歩を許可
     end
   end
+
+  describe "AdapterMethods" do
+    it "works" do
+      assert { FreeBattle.adapter_post(input_text: "68銀") }
+      assert { FreeBattle.adapter_post(input_text: "")     }
+      assert { FreeBattle.adapter_post(input_text: "58金") rescue $!.class == Bioshogi::AmbiguousFormatError }
+    end
+  end
 end
