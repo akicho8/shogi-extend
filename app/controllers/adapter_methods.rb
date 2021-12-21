@@ -1,3 +1,5 @@
+# これはもう使ってない？
+
 module AdapterMethods
   extend ActiveSupport::Concern
 
