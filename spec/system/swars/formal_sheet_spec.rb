@@ -33,7 +33,8 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
   it "文字サイズの変更" do
     visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
     find(".b-numberinput .control.minus").click
-    assert { find(".b-numberinput .control input").value == "99" }
+    value = find(".b-numberinput .control input").value
+    assert { value == "99" }
   end
 
   it "使い方" do
