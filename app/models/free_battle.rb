@@ -166,10 +166,6 @@ class FreeBattle < ApplicationRecord
     parts.join
   end
 
-  # def http_get_body_as_utf8(url)
-  #   KifuExtractor.http_get_body_as_utf8(url)
-  # end
-
   def fast_parser_options
     if use_info.key == :share_board || use_info.key == :kiwi_lemon
       # めちゃくちゃな操作でもエラーにしない
