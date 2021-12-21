@@ -1,18 +1,5 @@
 class KifuExtractor
   class << self
-    def http_get_body(url)
-      connection = Faraday.new do |builder|
-        builder.response :follow_redirects # リダイレクト先をおっかける
-        builder.adapter :net_http
-      end
-
-      response = connection.get(url)
-      s = response.body
-
-      s = s.toutf8
-      s = s.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
-    end
-
     def extract(*args)
       new(*args).extract
     end
@@ -20,8 +7,6 @@ class KifuExtractor
 
   attr_accessor :source
   attr_accessor :body
-
-  delegate :http_get_body, to: "self.class"
 
   def initialize(source, options = {})
     @options = {
@@ -55,6 +40,7 @@ class KifuExtractor
     [
       :extract_body_if_tactic,
       :extract_body_if_preset,
+      :extract_body_if_lishogi,
       :extract_body_if_swars_games_url,
       :extract_body_if_swars_battles_self_url,
       :extract_body_if_kiousen_url,
@@ -110,12 +96,31 @@ class KifuExtractor
   end
 
   # 棋王戦
-  # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html
+  # rails r 'puts KifuExtractor.extract("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html")'
   def extract_body_if_kiousen_url
     if uri = extracted_uri
       if uri.host.end_with?("live.shogi.or.jp")
         uri.path = uri.path.sub(/html\z/, "kif")
-        @body = http_get_body(uri.to_s)
+        url = uri.to_s
+        @body = WebAgent.fetch(url)
+      end
+    end
+  end
+
+  # lishogi
+  # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2dUdLl")'
+  # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/sente")'
+  # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/gote")'
+  # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d")'
+  def extract_body_if_lishogi
+    if uri = extracted_uri
+      if uri.host.end_with?("lishogi.org")
+        # NOTE: user_agent が "Faraday v1" や通常のであれば kif を埋めない
+        # wget や googlebot であれば kif が埋まっている
+        doc = WebAgent.document(extracted_url, user_agent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+        if e = doc.at("div[class='kif']")
+          @body = e.text
+        end
       end
     end
   end
@@ -148,8 +153,7 @@ class KifuExtractor
     if uri = extracted_uri
       if uri.host.end_with?("shogidb2.com")
         if uri.path.start_with?("/games/")
-          str = http_get_body(extracted_url)
-          if md = str.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+          if md = raw_html.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
             json_params = JSON.parse(md["json_str"], symbolize_names: true)
             @body = Shogidb2Parser.parse(json_params)
           end
@@ -196,8 +200,9 @@ class KifuExtractor
 
   # http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif
   def extract_body_if_other_url
-    if url = extracted_url
-      @body = http_get_body(url)
+    if v = raw_html
+      v = v.gsub(/\\n/, "") # 棋王戦のKIFには備考に改行コードではない '\n' という文字が入っていることがある
+      @body = v
     end
   end
 
@@ -214,6 +219,12 @@ class KifuExtractor
   def extracted_uri
     if extracted_url
       @uri ||= URI(extracted_url)
+    end
+  end
+
+  def raw_html
+    if url = extracted_url
+      @raw_html ||= WebAgent.fetch(url)
     end
   end
 end
