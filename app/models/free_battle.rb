@@ -302,7 +302,7 @@ class FreeBattle < ApplicationRecord
       def adapter_notify(params, record, error = nil)
         emoji = ":成功:"
 
-        unless error
+        if error
           emoji = ":失敗:"
         end
 
