@@ -5,7 +5,7 @@ require "slack-notifier"
 
 class App
   def run
-    client.post(text: "#{icon_emoji} #{name} #{command} #{oneline}")
+    # client.post(text: "#{icon_emoji} #{name} #{command} #{oneline}")
   end
 
   private
