@@ -17,20 +17,79 @@ class Shogidb2Parser
   end
 
   def parse
-    [header, body].join("\n\n") + "\n"
+    av = [*header]
+    if v = body.presence
+      av << v
+    end
+    if v = footer.presence
+      av << v
+    end
+    av.join("\n") + "\n"
   end
 
   private
 
   def header
-    @params.collect { |key, value|
-      if key.match?(/\A\W/)     # 日本語なら？
-        "#{key}：#{value}"
+    av = []
+    av << "V2.2"
+
+    {
+      "N+" => @params[:player1],
+      "N-" => @params[:player2],
+    }.each do |k, v|
+      if v.present?
+        av << "#{k}#{v}"
       end
-    }.compact.join("\n")
+    end
+
+    {
+      "$EVENT"      => @params[:tournament],
+      "$SITE"       => @params[:place],
+      "$START_TIME" => time_format(@params[:start_at]),
+      "$END_TIME"   => time_format(@params[:end_at]),
+    }.each do |k, v|
+      if v.present?
+        av << "#{k}:#{v}"
+      end
+    end
+
+    if v = @params[:handicap]
+      av << Bioshogi::PresetInfo.fetch(v).to_board.to_csa.strip
+    end
+
+    if v = @params[:moves].first
+      v = v[:csa]
+      if v
+        av << v[0]              # + or -
+      end
+    end
+
+    av
   end
 
   def body
-    @params[:moves].collect { |e| e[:move] }.join(" ")
+    @params[:moves].collect { |e|
+      if v = e[:csa]
+        unless v.start_with?("%")
+          v
+        end
+      end
+    }.compact.join(",")
+  end
+
+  def footer
+    if v = @params[:moves].last
+      if v = v[:csa]
+        if v.start_with?("%")
+          v
+        end
+      end
+    end
+  end
+
+  def time_format(str)
+    if str
+      str.to_time.strftime("%Y/%m/%d %H:%M:%S")
+    end
   end
 end
