@@ -37,7 +37,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 
         b-menu-list(label="ANOTHER")
-          b-menu-item.is_active_unset(label="対応フォーマットの確認" tag="nuxt-link" :to="{name: 'adapter-description'}" @click.native="sound_play_click()")
+          b-menu-item.is_active_unset(label="対応形式確認" tag="nuxt-link" :to="{name: 'adapter-format'}" @click.native="sound_play_click()")
 </template>
 
 <script>

@@ -451,6 +451,12 @@ export const Gs = {
     return str
   },
 
+  str_strip(str) {
+    str = (str || "").toString()
+    str = str.trim()
+    return str
+  },
+
   // str_to_tags("a,b,a") // => ["a", "b"]
   str_to_tags(str) {
     return _.uniq(this.str_to_words(str))

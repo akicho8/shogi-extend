@@ -16,7 +16,7 @@
   MainSection
     .container
       .columns.is-centered
-        .column.MainColumn
+        .column
           b-field(:type="input_text_field_type")
             b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。共有将棋盤・ぴよ将棋・KENTO・lishogi・将棋DB2・将棋ウォーズのURL。棋譜自体を引数に含むURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
 
@@ -36,13 +36,6 @@
         .column
           pre.box.has-background-white-ter
             | {{record.all_kifs.kif}}
-
-      .columns(v-if="development_p")
-        .column
-          .box
-            .buttons.are-small
-              template(v-for="row in test_kifu_body_list")
-                .button(@click="input_test_handle(row.input_text)") {{row.name}}
 
   DebugPre(v-if="development_p")
     | {{record}}
@@ -328,11 +321,6 @@ export default {
       }
     },
 
-    append_message() {
-      const tag = `<a href="https://twitter.com/sgkinakomochi" target="_blank">@sgkinakomochi</a>`
-      return `<div class="mt-2">正しいのに読み込めないときは ${tag} までご一報ください</div>`
-    },
-
     //////////////////////////////////////////////////////////////////////////////// piyo_shogi / kento
 
     // piyo_shogi, kento, share_board で表示する局面(手数)
@@ -362,22 +350,6 @@ export default {
         })
       }
     },
-
-    //////////////////////////////////////////////////////////////////////////////// test
-
-    test_kifu_body_list() {
-      return [
-        { name: "正常",       input_text: "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金",                                                                                                                                                                                                                                                                                    },
-        { name: "反則1",      input_text: "12玉",                                                                                                                                                                                                                                                                                                                           },
-        { name: "反則2",      input_text: "V2,P1 *,+0093KA,T1",                                                                                                                                                                                                                                                                                                                           },
-        { name: "shogidb2 A", input_text: "https://shogidb2.com/games/018d3d1ee6594c34c677260002621417c8f75221#lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202",                                                                                                                                                                    },
-        { name: "shogidb2 B", input_text: "https://shogidb2.com/board?sfen=lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F2P6%2FPP1PPPPPP%2F1B5R1%2FLNSGKGSNL%20w%20-%202&moves=-3334FU%2B2726FU-8384FU%2B2625FU-8485FU%2B5958OU-4132KI%2B6978KI-8586FU%2B8786FU-8286HI%2B2524FU-2324FU%2B2824HI-8684HI%2B0087FU-0023FU%2B2428HI-2233KA%2B5868OU-7172GI%2B9796FU-3142GI%2B8833UM", },
-        { name: "ウォーズ1",  input_text: "https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1", },
-        { name: "ウォーズ2",  input_text: "https://kif-pona.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1",  },
-        { name: "棋王戦HTML", input_text: "http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.html", },
-        { name: "棋王戦KIF",  input_text: "http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif",  },
-      ]
-    },
   },
 }
 
@@ -388,9 +360,4 @@ export default {
   .MainSection.section
     +tablet
       padding: 2rem
-
-  .MainColumn
-    // +tablet
-    //   max-width: 40rem
-
 </style>

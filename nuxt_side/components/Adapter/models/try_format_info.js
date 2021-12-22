@@ -72,7 +72,7 @@ const FID_29F7F1E2AEACD6AB83035EFEDAA7977F = `
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class AdapterTestInfo extends ApplicationMemoryRecord {
+export class TryFormatInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       {
