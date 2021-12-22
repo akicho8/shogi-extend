@@ -31,11 +31,11 @@ details
 //////// 固定フォント
 
 // http://neos21.hatenablog.com/entry/2017/10/22/080000
-.fixed_font
+.is_font_fixed
   font-family: Osaka-mono, "Osaka-等幅", "ＭＳ ゴシック", "Courier New", Consolas, monospace !important
 
 pre
-  @extend .fixed_font
+  @extend .is_font_fixed
 
   &.pre-wrap
     white-space: pre-wrap         // 折り返す
@@ -50,7 +50,7 @@ pre
 //////// エラーメッセージ内のPRE相当
 
 .error_message_pre
-  @extend .fixed_font
+  @extend .is_font_fixed
   white-space: pre-wrap
   line-height: 110%
 

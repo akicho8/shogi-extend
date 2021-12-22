@@ -15,7 +15,8 @@
               .is-size-7
                 b-tag.mr-1(type="is-danger" v-if="!e.success" rounded size="is-small") 反則
                 | {{e.name}}
-              .source_body.box.is-shadowless.mt-1.mb-0.has-background-white-ter.is-size-7
+              .source_body.box.is-shadowless.mt-1.mb-0.has-background-white-ter.is-size-7.is_font_fixed
+
                 | {{str_strip(e.body)}}
               b-button.mt-1(
                 expanded

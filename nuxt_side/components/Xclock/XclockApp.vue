@@ -42,15 +42,15 @@
             .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
               .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
                 .time_label 残り時間
-                .time_value.fixed_font.is_line_break_off
+                .time_value.is_font_fixed.is_line_break_off
                   | {{e.to_time_format}}
               .field(v-if="e.initial_read_sec >= 1")
                 .time_label 秒読み
-                .time_value.fixed_font.is_line_break_off
+                .time_value.is_font_fixed.is_line_break_off
                   | {{e.read_sec}}
               .field(v-if="e.initial_extra_sec >= 1")
                 .time_label 猶予
-                .time_value.fixed_font.is_line_break_off
+                .time_value.is_font_fixed.is_line_break_off
                   | {{e.extra_sec}}
 
   //////////////////////////////////////////////////////////////////////////////// form

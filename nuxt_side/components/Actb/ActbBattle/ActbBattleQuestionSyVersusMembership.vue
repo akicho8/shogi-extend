@@ -11,7 +11,7 @@
         | {{membership.user.rating}}
       //- | {{membership.position}}
       //- | {{membership.location.name}}
-    .time_format.has-text-centered.fixed_font.ml-3.has-background-white-ter
+    .time_format.has-text-centered.is_font_fixed.ml-3.has-background-white-ter
       | {{base.clock_box.single_clocks[membership.position].to_time_format}}
 </template>
 
