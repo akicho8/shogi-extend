@@ -337,8 +337,17 @@ class FreeBattle < ApplicationRecord
           body << error.message.strip
           body << ""
         end
-        body << "▼棋譜"
+
+        body << "▼棋譜(入力)"
         body << params[:input_text].strip
+        body << ""
+
+        if record
+          body << "▼棋譜(変換後)"
+          body << record.to_xxx(:kif)
+          body << ""
+        end
+
         body = body.join("\n")
 
         SystemMailer.notify(fixed: true, subject: subject, body: body, emoji: emoji).deliver_later
