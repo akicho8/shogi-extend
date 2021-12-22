@@ -47,7 +47,7 @@
                 :sp_board_cell_left_click_user_handle="sp_board_cell_left_click_user_handle"
               )
 
-            .time_container.is_font_fixed.is-size-3
+            .time_container.is-family-monospace.is-size-3
               | {{time_format}}
 
           .tweet_box_container.mt-4(v-if="mode === 'is_mode_goal'")
