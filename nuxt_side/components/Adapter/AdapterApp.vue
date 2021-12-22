@@ -30,7 +30,7 @@
               .buttons.is-centered
                 PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
                 KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-                KifCopyButton(@click="kifu_copy_handle(FormatTypeInfo.fetch('kif'))")
+                KifCopyButton(@click="clipboard_open_handle")
 
       .columns(v-if="record")
         .column
@@ -158,6 +158,10 @@ export default {
         })
       })
     },
+    clipboard_open_handle() {
+      this.kifu_copy_handle(FormatTypeInfo.fetch('kif'))
+    },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     kifu_copy_handle(e) {
