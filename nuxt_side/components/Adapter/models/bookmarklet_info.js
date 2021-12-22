@@ -25,19 +25,19 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        name: "棋譜コピー",
-        description: "放り込んでから棋譜をクリップボードに渡す",
-        func(context) {
-          return `window.open(\`${context.adapter_url}?body=\${location.href}&app_to=clipboard\`, '_blank')`
-        },
-      },
-      {
         name: "共有将棋盤",
         description: "放り込んでから共有将棋盤に渡す",
         func(context) {
           return `window.open(\`${context.adapter_url}?body=\${location.href}&app_to=share_board\`, '_blank')`
         },
       },
+      // {
+      //   name: "棋譜コピー",
+      //   description: "放り込んでから棋譜をクリップボードに渡す",
+      //   func(context) {
+      //     return `window.open(\`${context.adapter_url}?body=\${location.href}&app_to=clipboard\`, '_blank')`
+      //   },
+      // },
     ]
   }
 }
