@@ -7,40 +7,46 @@
 
   MainSection
     .container.is-fluid
+      //- .title.is-4 ブックマークレットの例
+      b-message(:closable="false")
+        | 下の例から欲しい機能のボタンをお気に入りにドラッグし適宜調整してください
+
       template(v-for="e in BookmarkletInfo.values")
         .block
           p
+            | {{e.title}}
+          p.has-text-grey.is-size-7(v-if="e.description")
             | {{e.description}}
           pre.mt-2
             | {{bookmark_url_for(e)}}
-          a.button.is-small.mt-2(:href="bookmark_url_for(e)")
+          a.button.mt-2(:href="bookmark_url_for(e)")
             | {{e.name}}
 
-      b-notification(:closable="false")
-        //- .title.is-6.mb-3 引数
+      b-notification.mt-6(:closable="false")
         .content
-          h6 引数
+          h4 引数
           dl
             .dtd
               dt body
               dd
-                | テキストエリアに貼り付ける入力値。<br>
-                | ブックマークレットの場合は基本 <code>location.href</code> を渡す。
+                | 入力値。現在のURLとして <code>location.href</code> を渡しとけばいい。
+                | 選択テキストは <code>getSelection().toString()</code> で取れる。
             .dtd
-              dt app_to
+              dt open
               dd
-                | 読み取り後に渡すアプリ
+                | 読み取り後に開くアプリ
                 ul.mt-1
-                  li <code>piyo_shogi</code> ぴよ将棋
-                  li <code>kento</code> KENTO
-                  li <code>share_board</code> 共有将棋盤
+                  li <code>piyo_shogi</code>
+                  li <code>kento</code>
+                  li <code>share_board</code>
+                  li <code>video_new</code>
             .dtd
-              dt tab
+              dt open_target
               dd
-                | ぴよ将棋やKENTOを新しいタブで開くかどうかを強制指定
+                | ぴよ将棋やKENTOの開き方
                 ul.mt-1
-                  li <code>new</code> 新しいタブで開く(PCの初期値)
-                  li <code>self</code> 新しいタブで開かない(スマホの初期値)
+                  li <code>_blank</code> 新しいタブ(PC初期値)
+                  li <code>_self</code> 既存タブ(スマホ初期値)
 </template>
 
 <script>
@@ -87,8 +93,6 @@ export default {
 
   .notification
     padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
-    p:not(:first-child)
-      margin-top: 0rem
 
   .content
     .dtd

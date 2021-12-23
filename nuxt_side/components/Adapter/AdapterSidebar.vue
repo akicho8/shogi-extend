@@ -7,7 +7,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
       b-menu
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(@click="base.share_board_open_handle" label="共有将棋盤に転送")
-          b-menu-item.is_active_unset(@click="base.movie_factory_handle" label="動画作成")
+          b-menu-item.is_active_unset(@click="base.video_new_open_handle" label="動画作成")
           b-menu-item.is_active_unset(@click="base.style_editor_open_handle" label="スタイルエディタに転送")
 
         b-menu-list(label="Export")
@@ -36,7 +36,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
             template(v-for="e in base.FormatTypeInfo.values")
               b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
 
-        b-menu-list(label="OTHER")
+        b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="ブックマークレット" tag="nuxt-link" :to="{name: 'adapter-bookmarklet'}" @click.native="sound_play_click()")
           b-menu-item.is_active_unset(label="対応形式確認" tag="nuxt-link" :to="{name: 'adapter-format'}" @click.native="sound_play_click()")
 </template>

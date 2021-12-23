@@ -175,7 +175,7 @@ export default {
     },
 
     // 「動画作成」
-    movie_factory_handle() {
+    video_new_open_handle() {
       this.record_fetch(() => {
         this.$router.push({
           name: 'video-new',
@@ -292,7 +292,7 @@ export default {
         this.change_counter += 1
 
         if (AUTO_APP_TO) {
-          let v = this.$route.query.app_to
+          let v = this.$route.query.app_to || this.$route.query.open
           if (v) {
             v = _.snakeCase(v)
             const app_to = this[`${v}_open_handle`] // piyo_shogi_open_handle, kento_open_handle, share_board_open_handle
@@ -362,10 +362,7 @@ export default {
     },
 
     target_default_from_params() {
-      return {
-        "new": "_blank",
-        "self": "_self",
-      }[this.$route.query.tab]
+      return this.$route.query.open_target
     },
   },
 }
