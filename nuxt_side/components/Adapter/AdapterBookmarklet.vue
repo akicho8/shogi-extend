@@ -42,6 +42,7 @@ export default {
       return {
         title: ["ブックマークレット", "なんでも棋譜変換"],
         description: "なんでも棋譜変換にコピペして外部アプリを起動するような処理を自動化する方法の紹介",
+        og_image_key: "adapter",
       }
     },
   },

@@ -66,6 +66,7 @@ export default {
       return {
         title: ["対応形式確認", "なんでも棋譜変換"],
         description: "なんでも棋譜変換に放り込める形式のテスト",
+        og_image_key: "adapter",
       }
     },
   },
