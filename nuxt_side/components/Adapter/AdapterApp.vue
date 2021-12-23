@@ -74,23 +74,7 @@ export default {
   },
   mounted() {
     this.ga_click("なんでも棋譜変換")
-
-    if (this.$route.query.body) {
-      this.input_text = this.$route.query.body
-      this.change_counter += 1
-
-      if (AUTO_APP_TO) {
-        let v = this.$route.query.app_to
-        if (v) {
-          v = _.snakeCase(v)
-          const app_to = this[`${v}_open_handle`] // piyo_shogi_open_handle, kento_open_handle, share_board_open_handle
-          app_to()
-        } else {
-          this.validate_handle()
-        }
-      }
-    }
-
+    this.app_runner()
     this.input_text_focus()
   },
   watch: {
@@ -124,7 +108,8 @@ export default {
       }
     },
     app_open(url) {
-      this.url_open(url, this.target_default)
+      const target = this.target_default_from_params || this.target_default
+      this.url_open(url, target)
     },
 
     //////////////////////////////////////////////////////////////////////////////// open_handle 4種
@@ -299,6 +284,27 @@ export default {
     error_show() {
       this.bs_error_message_dialog(this)
     },
+
+    app_runner() {
+      const body = this.$route.query.body
+      if (this.present_p(body)) {
+        this.input_text = body
+        this.change_counter += 1
+
+        if (AUTO_APP_TO) {
+          let v = this.$route.query.app_to
+          if (v) {
+            v = _.snakeCase(v)
+            const app_to = this[`${v}_open_handle`] // piyo_shogi_open_handle, kento_open_handle, share_board_open_handle
+            if (app_to) {
+              app_to()
+            }
+          } else {
+            this.validate_handle()
+          }
+        }
+      }
+    },
   },
 
   computed: {
@@ -353,6 +359,13 @@ export default {
           viewpoint: this.record.viewpoint,
         })
       }
+    },
+
+    target_default_from_params() {
+      return {
+        "new": "_blank",
+        "self": "_self",
+      }[this.$route.query.tab]
     },
   },
 }

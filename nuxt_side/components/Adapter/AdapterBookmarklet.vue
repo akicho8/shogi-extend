@@ -17,11 +17,30 @@
             | {{e.name}}
 
       b-notification(:closable="false")
-        .title.is-6.mb-3 引数
-        p
-          <b>body</b>: 入力テキスト
-        p
-          <b>app_to</b>: 読み取り後に渡すアプリ
+        //- .title.is-6.mb-3 引数
+        .content
+          h6 引数
+          dl
+            .dtd
+              dt body
+              dd
+                | テキストエリアに貼り付ける入力値。<br>
+                | ブックマークレットの場合は基本 <code>location.href</code> を渡す。
+            .dtd
+              dt app_to
+              dd
+                | 読み取り後に渡すアプリ
+                ul.mt-1
+                  li <code>piyo_shogi</code> ぴよ将棋
+                  li <code>kento</code> KENTO
+                  li <code>share_board</code> 共有将棋盤
+            .dtd
+              dt tab
+              dd
+                | ぴよ将棋やKENTOを新しいタブで開くかどうかを強制指定
+                ul.mt-1
+                  li <code>new</code> 新しいタブで開く(PCの初期値)
+                  li <code>self</code> 新しいタブで開かない(スマホの初期値)
 </template>
 
 <script>
@@ -70,4 +89,14 @@ export default {
     padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
     p:not(:first-child)
       margin-top: 0rem
+
+  .content
+    .dtd
+      margin-top: 0.5rem
+      dt
+        font-weight: bold
+      dd
+        margin-top: 0.25rem
+    code
+      background-color: unset
 </style>
