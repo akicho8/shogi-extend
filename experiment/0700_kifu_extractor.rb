@@ -17,3 +17,65 @@ require File.expand_path('../../config/environment', __FILE__)
 
 # KifuExtractor.extract("https://lishogi.org/")
 # puts FreeBattle.adapter_post(input_text: "https://lishogi.org/")
+
+# puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/sente")
+# puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2dUdLl")
+puts KifuExtractor.extract("https://lishogi.org/wbvpq4cR")
+
+# puts KifuExtractor.extract("https://lishogi.org/151jxej8juO1")
+# puts KifuExtractor.extract("https://lishogi.org/151jxej8")
+# puts WebAgent.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
+# puts WebAgent.raw_fetch("https://lishogi.org/game/export/151jxej8juO1?csa=1&clocks=0")
+
+# >> N+Megeton
+# >> N-qinoa-ninngenn
+# >> $EVENT:Rated Minishogi game
+# >> $SITE:https://lishogi.org/wbvpq4cR
+# >> $START_TIME:2021/12/17 09:45:44
+# >> $END_TIME:2021/12/17 09:49:44
+# >> $TIME_LIMIT:00:10+10
+# >> P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+# >> P2 * -HI *  *  *  *  * -KA * 
+# >> P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+# >> P4 *  *  *  *  *  *  *  *  * 
+# >> P5 *  *  *  *  *  *  *  *  * 
+# >> P6 *  *  *  *  *  *  *  *  * 
+# >> P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+# >> P8 * +KA *  *  *  *  * +HI * 
+# >> P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+# >> +
+# >> +3544GI
+# >> -3142GI
+# >> +4443GI
+# >> -4243GI
+# >> +2543KA
+# >> -0024GI
+# >> +1514HI
+# >> -4114KA
+# >> +0042GI
+# >> -5131HI
+# >> +4231NG
+# >> -2131KI
+# >> +0034HI
+# >> -0033GI
+# >> +3424HI
+# >> -3324GI
+# >> +4352KA
+# >> -0022HI
+# >> +5234KA
+# >> -2433GI
+# >> +3443KA
+# >> -1423KA
+# >> +0034GI
+# >> -3334GI
+# >> +4334KA
+# >> -2334KA
+# >> +4534KI
+# >> -2225RY
+# >> +0035GI
+# >> -0033GI
+# >> +3433KI
+# >> -2535RY
+# >> +0045GI
+# >> -0044GI
+# >> %TSUMI
