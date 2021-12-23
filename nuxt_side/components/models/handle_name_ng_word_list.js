@@ -20,6 +20,7 @@ export const HandleNameNgWordList = [
   "雑魚",
   "無駄",
   "時間",
+  "麻痺",
   "。",
   "、",
   ",",
