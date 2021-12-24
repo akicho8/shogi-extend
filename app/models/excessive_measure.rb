@@ -43,6 +43,7 @@ class ExcessiveMeasure
     @params = {
       :key            => SecureRandom.hex, # Rails.cache の key
       :run_per_second => 1,                # 1秒間当たりに実行できる回数
+      :expires_in     => 60,               # 何秒間空いたらリセットするか？
     }.merge(params)
 
     if block_given?
@@ -62,12 +63,24 @@ class ExcessiveMeasure
   #   excessive_measure = ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: 2)
   #   SlackAgentNotifyJob.set(wait: excessive_measure.wait_value_for_job).perform_later(params)
   def wait_value_for_job
-    value = Rails.cache.read(key)
-    wait = (value || 0).to_f
+    hv = Rails.cache.read(key) || {}
+    wait = hv[:next_wait] || 0
     next_wait = wait + 1.fdiv(run_per_second)
-    expires_in = next_wait.ceil
-    Rails.cache.write(key, next_wait, expires_in: expires_in)
-    Rails.logger.info { "[ExcessiveMeasure][#{key}][#{run_per_second}] #{value.inspect} #{wait} #{next_wait} #{expires_in} #{wait.truncate}" }
+
+    now = Time.current
+    if v = hv[:previous_time]
+      previous_time = Time.zone.iso8601(v)
+    else
+      previous_time = now
+    end
+    spend = now - previous_time
+    if spend >= expires_in_max
+      next_wait = 0
+    end
+
+    hv = { next_wait: next_wait, previous_time: now.iso8601 }
+    Rails.cache.write(key, hv, expires_in: expires_in)
+    Rails.logger.info { "[ExcessiveMeasure][#{key}][#{run_per_second}] #{hv.inspect} #{wait} #{next_wait} #{wait.truncate}" }
     wait.truncate
   end
 
@@ -89,5 +102,9 @@ class ExcessiveMeasure
 
   def run_per_second
     @params[:run_per_second]
+  end
+
+  def expires_in
+    @params[:expires_in]
   end
 end
