@@ -63,24 +63,14 @@ class ExcessiveMeasure
   #   excessive_measure = ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: 2)
   #   SlackAgentNotifyJob.set(wait: excessive_measure.wait_value_for_job).perform_later(params)
   def wait_value_for_job
-    hv = Rails.cache.read(key) || {}
-    wait = hv[:next_wait] || 0
+    value = Rails.cache.read(key)
+    wait = (value || 0).to_f
     next_wait = wait + 1.fdiv(run_per_second)
-
-    now = Time.current
-    if v = hv[:previous_time]
-      previous_time = Time.zone.iso8601(v)
-    else
-      previous_time = now
+    if next_wait > expires_in
+      next_wait = expires_in
     end
-    spend = now - previous_time
-    if spend >= expires_in_max
-      next_wait = 0
-    end
-
-    hv = { next_wait: next_wait, previous_time: now.iso8601 }
-    Rails.cache.write(key, hv, expires_in: expires_in)
-    Rails.logger.info { "[ExcessiveMeasure][#{key}][#{run_per_second}] #{hv.inspect} #{wait} #{next_wait} #{wait.truncate}" }
+    Rails.cache.write(key, next_wait, expires_in: expires_in)
+    Rails.logger.info { "[ExcessiveMeasure][#{key}][#{run_per_second}] #{value.inspect} #{wait} #{next_wait} #{wait.truncate}" }
     wait.truncate
   end
 

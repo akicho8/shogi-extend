@@ -5,7 +5,7 @@ require File.expand_path('../../config/environment', __FILE__)
 obj = ExcessiveMeasure.new(key: "foo", run_per_second: 2, expires_in: 2)
 obj.reset
 4.times.collect { obj.wait_value_for_job } # => [0, 0, 1, 1]
-4.times.collect { obj.wait_value_for_job } # => [2, 2, 3, 3]
+4.times.collect { obj.wait_value_for_job } # => [2, 2, 2, 2]
 sleep(4)
 4.times.collect { obj.wait_value_for_job } # => [0, 0, 1, 1]
 
@@ -15,4 +15,4 @@ obj.wait_value_for_job # => 1
 obj.reset
 obj.wait_value_for_job # => 0
 
-SlackAgent.notify(body: "ok")   # => #<SlackAgentNotifyJob:0x00007fd654d93c80 @arguments=[{:channel=>"#shogi-extend-development", :text=>"▫ 27241 w0 14:47:27.031ok"}], @job_id="7c624ab5-a653-4773-a926-a567be331920", @queue_name="default", @priority=nil, @executions=0, @exception_executions={}, @timezone="Tokyo", @scheduled_at=1640324847.032952, @provider_job_id="c1ad8d04bc72adfafce452ba">
+SlackAgent.notify(body: "ok")   # => #<SlackAgentNotifyJob:0x00007fa5bb1822a8 @arguments=[{:channel=>"#shogi-extend-development", :text=>"▫ 27246 w0 14:57:18.886ok"}], @job_id="52829a66-e01a-475c-b3e6-45a6047a83f7", @queue_name="default", @priority=nil, @executions=0, @exception_executions={}, @timezone="Tokyo", @scheduled_at=1640325438.9503071, @provider_job_id="ead3f42c6bbdb94bd3f28dce">
