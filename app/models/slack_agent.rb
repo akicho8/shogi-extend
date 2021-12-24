@@ -7,7 +7,7 @@ module SlackAgent
   # が、実感として約10回/秒が頻発すると TooManyRequestsError になる
   # 対策として最初は1回/秒にしていたけど共有将棋盤を利用時に待ち状態が途切れずに18分待つジョブも生まれた
   # (もちろんその間に TooManyRequestsError にはならなかった)
-  API_REQUEST_COUNT_MAX_PER_SECOND = 5
+  API_REQUEST_COUNT_MAX_PER_SECOND = 3
 
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
   mattr_accessor(:backtrace_lines_max) { 4 }
