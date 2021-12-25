@@ -94,16 +94,16 @@ RSpec.describe KifuExtractor, type: :model do
 
   it "lishogi" do
     if $0 == "-"
-      test1("https://lishogi.org/151jxej8")       # => "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..."
-      test1("https://lishogi.org/151jxej8/sente") # => "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..."
-      test1("https://lishogi.org/151jxej8/gote")  # => "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..."
-      test1("https://lishogi.org/151jxej8juO1")   # => "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..."
+      test1("https://lishogi.org/151jxej8")       # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
+      test1("https://lishogi.org/151jxej8/sente") # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
+      test1("https://lishogi.org/151jxej8/gote")  # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
+      test1("https://lishogi.org/151jxej8juO1")   # => "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..."
     end
 
-    assert { test1("https://lishogi.org/151jxej8")       == "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..." }
-    assert { test1("https://lishogi.org/151jxej8/sente") == "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..." }
-    assert { test1("https://lishogi.org/151jxej8/gote")  == "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..." }
-    assert { test1("https://lishogi.org/151jxej8juO1")   == "N+Megeton\nN-dns0z\n$EVENT:Rated Correspondence game\n$SITE:https://lishogi.org/151jxej8\n$START_TIME:2021/12/06 04:36:00\n$END_TIME:2021/12/14 09:58:47\nP1-KY-KE-GI-KI-OU-KI-GI-KE-KY\nP2 * -HI *  *  *  *  * -KA * \nP3-FU-FU-FU-FU-FU-FU-FU-FU-FU\nP4 *  *  *  *  *  *  *  *  * \nP5 *  *  *  *  *  *  *  *  * \nP6 *  *  *  *  *  *  *  *  * \nP7+FU+FU+FU+FU+FU+FU+FU+FU+FU\nP8 * +KA *  *  *  *  * +HI * \nP9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n+\n+7776FU\n-3334FU\n+6766FU\n-8232HI\n+7968GI\n-7172GI\n+3948GI\n-5162OU\n+4746FU\n-6271OU\n+4847GI\n-..." }
+    assert { test1("https://lishogi.org/151jxej8")       == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
+    assert { test1("https://lishogi.org/151jxej8/sente") == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
+    assert { test1("https://lishogi.org/151jxej8/gote")  == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
+    assert { test1("https://lishogi.org/151jxej8juO1")   == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
@@ -113,57 +113,29 @@ end
 # >>   KENTO
 # >>   自サイト
 # >>   棋王戦
-# >>   KIFへの直リン (FAILED - 1)
-# >>   KIFへの直リン (PENDING: Temporarily skipped with xit)
+# >>   KIFへの直リン
 # >>   URL引数
 # >>   shogidb2
-# >>   lishogi (FAILED - 2)
+# >>   lishogi
 # >> 
-# >> Pending: (Failures listed here are expected and do not affect your suite's status)
-# >> 
-# >>   1) KifuExtractor KIFへの直リン
-# >>      # Temporarily skipped with xit
-# >>      # -:60
-# >> 
-# >> Failures:
-# >> 
-# >>   1) KifuExtractor KIFへの直リン
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:55:in `block (2 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
-# >>   2) KifuExtractor lishogi
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:112:in `block (2 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
-# >> Top 9 slowest examples (11.68 seconds, 83.5% of total time):
+# >> Top 8 slowest examples (6.75 seconds, 78.3% of total time):
 # >>   KifuExtractor lishogi
-# >>     5.14 seconds -:105
-# >>   KifuExtractor shogidb2
-# >>     2.58 seconds -:93
-# >>   KifuExtractor 棋王戦
-# >>     1.28 seconds -:40
-# >>   KifuExtractor KIFへの直リン
-# >>     1.23 seconds -:50
+# >>     3.5 seconds -:95
 # >>   KifuExtractor 将棋ウォーズ
-# >>     1.06 seconds -:8
-# >>   KifuExtractor 自サイト
-# >>     0.27755 seconds -:30
-# >>   KifuExtractor URL引数
-# >>     0.07718 seconds -:69
-# >>   KifuExtractor KENTO
-# >>     0.02692 seconds -:18
+# >>     1.07 seconds -:8
+# >>   KifuExtractor 棋王戦
+# >>     0.72241 seconds -:40
 # >>   KifuExtractor KIFへの直リン
-# >>     0.00001 seconds -:60
+# >>     0.57094 seconds -:50
+# >>   KifuExtractor shogidb2
+# >>     0.55994 seconds -:83
+# >>   KifuExtractor 自サイト
+# >>     0.23048 seconds -:30
+# >>   KifuExtractor URL引数
+# >>     0.07871 seconds -:59
+# >>   KifuExtractor KENTO
+# >>     0.02501 seconds -:18
 # >> 
-# >> Finished in 13.99 seconds (files took 6.64 seconds to load)
-# >> 9 examples, 2 failures, 1 pending
-# >> 
-# >> Failed examples:
-# >> 
-# >> rspec -:50 # KifuExtractor KIFへの直リン
-# >> rspec -:105 # KifuExtractor lishogi
+# >> Finished in 8.62 seconds (files took 3.57 seconds to load)
+# >> 8 examples, 0 failures
 # >> 
