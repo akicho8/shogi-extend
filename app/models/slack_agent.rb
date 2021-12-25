@@ -84,4 +84,8 @@ module SlackAgent
   def excessive_measure
     @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_REQUEST_COUNT_MAX_PER_SECOND)
   end
+
+  # キーの削除
+  # rails r "SlackAgent.excessive_measure_reset"
+  delegate :reset, to: :excessive_measure, prefix: true
 end
