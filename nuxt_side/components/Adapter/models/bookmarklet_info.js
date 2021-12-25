@@ -7,7 +7,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
     return [
       {
         name: "棋譜変換",
-        title: "選択テキストかURLをなんでも棋譜変換に放り込む",
+        title: "選択範囲か現在のURLをなんでも棋譜変換に放り込む",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}\`, '_blank')`
         },
@@ -29,7 +29,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       {
         name: "棋譜コピー",
         title: "放り込んでから棋譜をクリップボードにコピー",
-        description: "ブラウザが嫌がらせで自動化を邪魔してくるのでだいたい動かない",
+        description: "ブラウザが嫌がらせで自動化を阻止してくるのでだいたい動かない",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=clipboard\`, '_blank')`
         },

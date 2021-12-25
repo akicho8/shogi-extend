@@ -9,18 +9,18 @@
     .container.is-fluid
       //- .title.is-4 ブックマークレットの例
       b-message(:closable="false")
-        | 下の例から欲しい機能のボタンをお気に入りにドラッグし適宜調整してください
+        | 下の例から欲しい機能のリンクをブックマークバーにドラッグするとかして適宜調整してください
 
       template(v-for="e in BookmarkletInfo.values")
         .block
+          a.bookmark_url.is-size-5(:href="bookmark_url_for(e)")
+            | {{e.name}}
           p
             | {{e.title}}
           p.has-text-grey.is-size-7(v-if="e.description")
             | {{e.description}}
           pre.mt-2
             | {{bookmark_url_for(e)}}
-          a.button.mt-2(:href="bookmark_url_for(e)")
-            | {{e.name}}
 
       b-notification.mt-6(:closable="false")
         .content
@@ -30,7 +30,7 @@
               dt body
               dd
                 | 入力値。現在のURLとして <code>location.href</code> を渡しとけばいい。
-                | 選択テキストは <code>getSelection().toString()</code> で取れる。
+                | 選択範囲は <code>getSelection().toString()</code> で取れる。
             .dtd
               dt open
               dd
@@ -100,7 +100,9 @@ export default {
       dt
         font-weight: bold
       dd
+        font-size: $size-7
         margin-top: 0.25rem
+        word-break: break-all
     code
       background-color: unset
 </style>
