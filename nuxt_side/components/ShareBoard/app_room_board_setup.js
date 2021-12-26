@@ -44,7 +44,7 @@ export const app_room_board_setup = {
         // C だけに送るのはもともとの setup_info_send でやっていること
         // this.clock_box_share() を単独で呼ぶのではなく setup_info_send に含めて時計の情報も送ればよい
         // リクエストがまとまるためコードも簡潔になる
-        if (true) {
+        if (false) {
           this.clog("参加者は対局時計があることも知らないので教えてあげる")
           this.clock_box_share("不具合再現")
         }
@@ -63,7 +63,7 @@ export const app_room_board_setup = {
         xtitle:  this.current_xtitle,    // タイトル
         xsfen:   this.current_xsfen,     // 棋譜と現在の局面(手数)
         xorder:  this.current_xorder,    // 順番設定
-        // xclock:  this.current_xclock,    // 対局時計
+        xclock:  this.current_xclock,    // 対局時計
         ////////////////////////////////////////////////////////////////////////////////
       }) // --> app/channels/share_board/room_channel.rb
     },
@@ -82,7 +82,7 @@ export const app_room_board_setup = {
             this.receive_xtitle(params.xtitle)
             this.receive_xsfen(params.xsfen)
             this.receive_xorder(params.xorder)
-            // this.receive_xclock(params.xclock)
+            this.receive_xclock(params.xclock)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

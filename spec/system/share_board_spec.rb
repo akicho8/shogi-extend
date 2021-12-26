@@ -1414,7 +1414,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "Aが対局時計操作中にCが入室したときBはCだけに時計情報を送るのでAの対局時計がBの内容に戻らない" do
+  describe "Aが対局時計操作中にCが入室したときBはCだけに時計情報を送るのでAの対局時計がBの内容で更新されない" do
     it "works" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice")
