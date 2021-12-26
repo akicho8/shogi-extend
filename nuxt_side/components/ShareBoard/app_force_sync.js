@@ -147,7 +147,7 @@ export const app_force_sync = {
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
-      this.receive_sfen(params) // これで current_location が更新される
+      this.receive_xsfen(params) // これで current_location が更新される
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }

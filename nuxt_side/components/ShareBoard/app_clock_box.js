@@ -196,36 +196,29 @@ export const app_clock_box = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有するためのパラメータを作る
-    clock_box_share_params_build(behaviour = null) {
-      const params = {}
-      params.cc_params = this.cc_params
+    current_xclock_with_behaviour(behaviour = null) {
+      const params = {...this.current_xclock}
       if (behaviour) {
         params.behaviour = behaviour
-        params.room_code_except_url = this.room_code_except_url
-      } else {
-        // 静かに同期するとき
-      }
-      if (this.clock_box) {
-        params.clock_box_attributes = this.clock_box.attributes
+        params.room_code_except_url = this.room_code_except_url // これは何に使う？
       }
       return params
     },
     // 時計の状態をすべて共有する
-    clock_box_share(behaviour = null) {
-      this.ac_room_perform("clock_box_share", this.clock_box_share_params_build(behaviour)) // --> app/channels/share_board/room_channel.rb
+    clock_box_share(behaviour) {
+      this.__assert__(this.present_p(behaviour), "this.present_p(behaviour)")
+      const params = this.current_xclock_with_behaviour(behaviour)
+      this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
     clock_box_share_broadcasted(params) {
+      this.tl_add("時計受信", `${params.from_user_name} -> ${this.user_name}`, params)
+
       this.tl_alert("時計同期")
       if (this.received_from_self(params)) {
       } else {
-        if (params.clock_box_attributes) {
-          this.cc_create_unless_exist()                           // 時計がなければ作って
-          this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
-          this.cc_params = {...params.cc_params}                  // モーダルのパラメータを同じにする
-        } else {
-          this.cc_destroy()     // 時計を捨てたことを同期
-        }
+        this.receive_xclock(params)
       }
+      // FIXME: params.behaviour は必ずある
       if (params.behaviour) {
         this.cc_action_log_store(params)         // 履歴追加
         this.cc_location_change_and_call(params) // ニワトリ
@@ -245,6 +238,17 @@ export const app_clock_box = {
             }
           }})
         }
+      }
+    },
+    receive_xclock(params) {
+      this.__assert__(this.present_p(params), "this.present_p(params)")
+      this.tl_add("時計", `${this.user_name} は ${params.from_user_name} の時計情報を受信して反映した`, params)
+      if (params.clock_box_attributes) {
+        this.cc_create_unless_exist()                           // 時計がなければ作って
+        this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
+        this.cc_params = {...params.cc_params}                  // モーダルのパラメータを同じにする
+      } else {
+        this.cc_destroy()                                       // 時計を捨てたことを同期
       }
     },
 
@@ -316,6 +320,16 @@ export const app_clock_box = {
   },
   computed: {
     CcRuleInfo() { return CcRuleInfo },
+
+    // 共有する時計情報
+    current_xclock() {
+      const params = {}
+      params.cc_params = this.cc_params
+      if (this.clock_box) {
+        params.clock_box_attributes = this.clock_box.attributes
+      }
+      return params
+    },
 
     // 順番設定を有効にしてないのに時計を開始しようとしている？
     clock_start_even_though_order_is_not_enabled_p() {

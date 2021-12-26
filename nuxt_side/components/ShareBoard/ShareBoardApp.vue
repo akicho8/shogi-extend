@@ -448,7 +448,8 @@ export default {
     current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) },
     base_location()                { return this.current_sfen_info.location_by_offset(0)                },
 
-    current_sfen_and_turn() { return { sfen: this.current_sfen, turn: this.current_turn } },
+    current_xsfen()                { return { sfen: this.current_sfen, turn: this.current_turn } },
+    current_xtitle()               { return { title: this.current_title } },
 
     component_style() {
       return {

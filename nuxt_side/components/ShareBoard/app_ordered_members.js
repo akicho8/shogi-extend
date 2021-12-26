@@ -269,7 +269,8 @@ export const app_ordered_members = {
     },
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
-    receive_om_vars(params) {
+    receive_xorder(params) {
+      this.__assert__(this.present_p(params), "this.present_p(params)")
       this.__assert__("order_enable_p" in params, '"order_enable_p" in params')
       this.__assert__("ordered_members" in params, '"ordered_members" in params')
 
@@ -360,7 +361,7 @@ export const app_ordered_members = {
     shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
 
     // あとから接続した人に伝える内容
-    order_params_for_later_member() {
+    current_xorder() {
       return {
         order_enable_p:  this.order_enable_p,
         ordered_members: this.ordered_members,
