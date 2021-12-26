@@ -19,6 +19,10 @@ class ApplicationRecord < ActiveRecord::Base
       s = s.strip
     end
 
+    def strip_tags(s)
+      ActionController::Base.helpers.strip_tags(s)
+    end
+
     # HTMLタグのうち script のみをエスケープする
     def script_tag_escape(s)
       Loofah.fragment(s).scrub!(:escape).to_s
@@ -64,6 +68,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   delegate *[
     :hankaku_format,
+    :strip_tags,
     :script_tag_escape,
     :double_blank_lines_to_one_line,
     :secure_random_urlsafe_base64_token,

@@ -7,17 +7,16 @@
 
   MainSection
     .container.is-fluid
-      //- .title.is-4 ブックマークレットの例
       b-message(:closable="false")
-        | 下の例から欲しい機能のリンクをブックマークバーにドラッグするとかして適宜調整してください
+        | 下から必要なリンクをブックマークバーにドラッグしてください
 
       template(v-for="e in BookmarkletInfo.values")
         .block
-          a.bookmark_url.is-size-5(:href="bookmark_url_for(e)")
+          a.bookmark_url(:href="bookmark_url_for(e)")
             | {{e.name}}
           p
             | {{e.title}}
-          p.has-text-grey.is-size-7(v-if="e.description")
+          p.has-text-grey(v-if="e.description")
             | {{e.description}}
           pre.mt-2
             | {{bookmark_url_for(e)}}

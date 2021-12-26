@@ -28,8 +28,8 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       },
       {
         name: "棋譜コピー",
-        title: "放り込んでから棋譜をクリップボードにコピー",
-        description: "ブラウザが嫌がらせで自動化を阻止してくるのでだいたい動かない",
+        title: "放り込んでから棋譜をクリップボードにコピーする",
+        description: "ブラウザが自動化を阻止してくるのでだいたい動きません",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=clipboard\`, '_blank')`
         },

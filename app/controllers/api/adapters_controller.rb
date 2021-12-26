@@ -2,7 +2,9 @@ module Api
   class AdaptersController < ::Api::ApplicationController
     # curl -d _method=post http://localhost:3000/api/adapter/record_create.json
     def record_create
-      render json: FreeBattle.adapter_post(params.merge(current_user: current_user))
+      v = FreeBattle.adapter_post(params.merge(current_user: current_user))
+      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, v])
+      render json: v
     end
 
     # curl http://localhost:3000/api/adapter/formal_sheet.json?key=xxx

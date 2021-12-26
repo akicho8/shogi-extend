@@ -12,6 +12,9 @@ class KifuExtractor
     end
   end
 
+  BASIC_EXTENTIONS = [:kif, :kifu, :ki2, :ki2u, :csa, :sfen, :bod]
+  OTHER_EXTENTIONS = [:text, :content, :contents, :body]
+
   attr_accessor :source
   attr_accessor :body
 
@@ -23,32 +26,7 @@ class KifuExtractor
     @source = source.to_s.strip
   end
 
-  # 抽出した本体が読み込めて最後の局面まで行けるなら「SFENではなく」本体を返す
   def extract
-    extract_try_all
-    if !@validate_skip && @body
-      begin
-        validate!
-      rescue Bioshogi::BioshogiError => error
-        SlackAgent.notify_exception(error)
-        @body = nil
-      end
-    end
-    @body
-  end
-
-  private
-
-  def validate!
-    Bioshogi::Parser.parse(@body, {
-        :skill_monitor_enable           => false,
-        :skill_monitor_technique_enable => false,
-        :candidate_enable               => false,
-        :validate_enable                => false, # 二歩を許可するため
-      }).mediator_run_once
-  end
-
-  def extract_try_all
     @body = nil
     [
       :extract_try_if_tactic,
@@ -60,7 +38,9 @@ class KifuExtractor
       :extract_try_if_kento_url,
       :extract_try_if_shogidb2_show,
       :extract_try_if_shogidb2_board,
+      :extract_try_if_direct_file_url,
       :extract_try_if_url_params,
+      :extract_try_if_direct_file_url_in_html,
       :extract_try_if_other_url,
     ].each do |e|
       send(e)
@@ -68,7 +48,10 @@ class KifuExtractor
         break
       end
     end
+    @body
   end
+
+  private
 
   # 戦法・囲い・手筋などの名前
   # rails r 'puts KifuExtractor.extract("嬉野流")'
@@ -192,7 +175,6 @@ class KifuExtractor
                 if Bioshogi::Parser::CsaParser.accept?(v)
                   v = v.strip # 無駄な改行があるので取る
                   @body = v
-                  @validate_skip = true
                 end
               end
             else
@@ -206,7 +188,6 @@ class KifuExtractor
                   v = v.toutf8  # Shift_JIS になっているため
                   v = v.strip   # 無駄な改行があるので取る
                   @body = v
-                  @validate_skip = true
                 end
               end
             end
@@ -279,13 +260,15 @@ class KifuExtractor
         if uri.fragment
           hash.update("__fragment__" => Rack::Utils.unescape(uri.fragment))
         end
-        ["kif", "ki2", "csa", "sfen", "bod", "body", "kifu", "text", "content", "__fragment__"].each do |e|
-          if v = hash[e]
+        [*BASIC_EXTENTIONS, *OTHER_EXTENTIONS, "__fragment__"].each do |e|
+          if v = hash[e.to_s]
             v = DotSfen.unescape(v.to_s)
             if v.present?
               if Bioshogi::Parser.accepted_class(v)
-                @body = v
-                break
+                if valid?(v)
+                  @body = v
+                  break
+                end
               end
             end
           end
@@ -294,11 +277,47 @@ class KifuExtractor
     end
   end
 
-  # KIFへの直リン
-  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/foo.kif")'
+  # 拡張子まで指定されていたら信じるしかなかろう
+  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/example_shift_jis.kif")'
+  def extract_try_if_direct_file_url
+    if url = extracted_url
+      if kif_url?(url)
+        if v = raw_content
+          @body = v.toutf8
+        end
+      end
+    end
+  end
+
+  # HTMLのなかにある kif へのリンクを探す
+  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/kif_included.html")'
+  def extract_try_if_direct_file_url_in_html
+    if v = raw_content
+      urls = extract_urls_from(v)
+      if url = urls.find { |e| kif_url?(e) }
+        if v = WebAgent.fetch(url)
+          @body = v.toutf8
+        end
+      end
+    end
+  end
+
+  # 間違えて入力された得体の知れないURLは巨大なHTMLになっていることが多いため
+  # タグを取ったり文字コードを安全にしたりして死なないようにする
+  # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/")'
+  # rails r 'puts KifuExtractor.extract("https://lishogi.org/")'
   def extract_try_if_other_url
     if v = raw_content
-      @body = v
+      v = v.toutf8
+      v = ApplicationRecord.strip_tags(v)
+      v = v.strip
+      if v.present?
+        if Bioshogi::Parser.accepted_class(v)
+          if valid?(v)
+            @body = v
+          end
+        end
+      end
     end
   end
 
@@ -311,7 +330,7 @@ class KifuExtractor
 
   def extracted_url
     if url_type?
-      @extracted_url ||= URI.extract(@source, ["http", "https"]).first
+      @extracted_url ||= extract_urls_from(@source).first
     end
   end
 
@@ -325,5 +344,29 @@ class KifuExtractor
     if url = extracted_url
       @raw_content ||= WebAgent.fetch(url)
     end
+  end
+
+  def extract_urls_from(str)
+    URI.extract(str, ["http", "https"])
+  end
+
+  def valid?(str)
+    begin
+      info = Bioshogi::Parser.parse(str, {
+          :skill_monitor_enable           => false,
+          :skill_monitor_technique_enable => false,
+          :candidate_enable               => false,
+          :validate_enable                => false, # 二歩を許可するため
+        })
+      info.mediator_run_once
+      true
+    rescue Bioshogi::BioshogiError => error
+      SlackAgent.notify_exception(error)
+      false
+    end
+  end
+
+  def kif_url?(url)
+    URI(url).path.match?(/\.(#{BASIC_EXTENTIONS.join("|")})\z/io)
   end
 end

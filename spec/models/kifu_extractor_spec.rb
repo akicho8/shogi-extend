@@ -105,6 +105,20 @@ RSpec.describe KifuExtractor, type: :model do
     assert { test1("https://lishogi.org/151jxej8/gote")  == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
     assert { test1("https://lishogi.org/151jxej8juO1")   == "開始日時：2021/12/06 04:36:00\n終了日時：2021/12/14 09:58:47\n棋戦：Rated Correspondence game\n場所：https://lishogi.org/151jxej8\n手合割：平手\n先手：Megeton\n後手：dns0z\n手数----指手---------消費時間--\n   1   ７六歩(77)\n   2   ３四歩(33)\n   3   ６六歩(67)\n   4   ３二飛(82)\n   5   ６八銀(79)\n   6   ７二銀(71)\n   7   ４八銀(39)\n   8   ６二玉(51)\n   9   ４六歩(47)\n  10   ７一玉(62)\n  11   ４七銀(48)\n  12   ５二金(41)\n  13   ５六歩(57)\n  14   ６四歩(63)\n  15   ６七銀(68)\n  16   ７四歩(73)\n  17   ７八金(69)\n  18   ７三桂(81)\n  19   ７七桂(89)\n  20   ４二銀(31)\n  21   ６九玉(59)\n  22   ５四歩(53)\n  23   ２六歩(27)\n  ..." }
   end
+
+  it "HTMLのなかにある kif へのリンクを探す" do
+    if $0 == "-"
+      test1("https://www.shogi-extend.com/kif_included.html") # => "ページが見つからないか権限がありません"
+    end
+    assert { test1("https://www.shogi-extend.com/kif_included.html") == "先手の囲い：居玉\r\n後手の囲い：居玉\r\n先手の備考：居飛車, 対振り, 対抗型, 相居玉\r\n後手の備考：振り飛車, 対抗型, 相居玉\r\n手合割：平手\r\n手数----指手---------消費時間--\r\n   1 ２六歩(27)   (00:00/00:00:00)\r\n*▲備考：居飛車\r\n   2 ３四歩(33)   (00:00/00:00:00)\r\n   3 ２五歩(26)   (00:00/00:00:00)\r\n   4 ３三角(22)   (00:00/00:00:00)\r\n   5 ４八銀(39)   (00:00/00:00:00)\r\n   6 ５四歩(53)   (00:00/00:00:00)\r\n   7 ３六歩(37)   (00:00/00:00:00)\r\n   8 ５二飛(82)   (00:00/00:00:00)\r\n*△備考：振り飛車\r\n   9 ５六歩(57)   (00:00/00:00:00)\r\n  10 ５五歩(54)   (00:00/00:00:00)\r\n  11 ５五歩(56)   (00:00/00:00:00)\r\n  12 ５五角(33)   (00:00/00..." }
+  end
+  
+  it "間違えても巨大なHTMLは返さない" do
+    if $0 == "-"
+      test1("https://www.shogi-extend.com/") # => "SHOGI-EXTEND\n  \n  \n    SHOGI-EXTENDログイン将棋ウォーズ棋譜検索他のアプリで検討したいときにどうぞぴよ将棋や KENTO で検討できるその他のソフトにはコピーして張り付け (CTRL+V)プレイヤー戦力分析機能付き符号の鬼符号マスター養成所100問正解するまでの時間を競う1分半切ったら卒業棋書を読むのが楽になるかもしれない動画作成NEW!棋譜を動画にしたいときにどうぞmp4, gif, png, zip 等に変換「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している動画ライブラリNEW!動画作成のあとで登録するとここで見れるしょぼいので YouTube やニコニコ動画に上げた方がいいかもしれない共有将棋盤リレー将棋・詰将棋作成・仲間内での対戦にどうぞ秘密の部屋を立てて仲間内で対戦 (時計設置可)課題局面や詰将棋の作成・公開・共有SNS等にURLを貼って指し継ぐ通信将棋対人戦気軽に対局したいときにどうぞプレイ人数 2〜8人いまんところログイン不要これは共有将棋盤の「自動マッチング」へのショートカットなんでも棋譜変換棋譜が読み込めないときに放り込もう変則..."
+    end
+    assert { test1("https://www.shogi-extend.com/").exclude?("<body>") }
+  end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
@@ -117,25 +131,43 @@ end
 # >>   URL引数
 # >>   shogidb2
 # >>   lishogi
+# >>   HTMLのなかにある kif へのリンクを探す (FAILED - 1)
+# >>   間違えても巨大なHTMLは返さない
 # >> 
-# >> Top 8 slowest examples (6.75 seconds, 78.3% of total time):
+# >> Failures:
+# >> 
+# >>   1) KifuExtractor HTMLのなかにある kif へのリンクを探す
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      # -:113:in `block (2 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+# >> 
+# >> Top 10 slowest examples (10.74 seconds, 85.4% of total time):
 # >>   KifuExtractor lishogi
-# >>     3.5 seconds -:95
+# >>     7.54 seconds -:95
 # >>   KifuExtractor 将棋ウォーズ
-# >>     1.07 seconds -:8
-# >>   KifuExtractor 棋王戦
-# >>     0.72241 seconds -:40
+# >>     0.92768 seconds -:8
 # >>   KifuExtractor KIFへの直リン
-# >>     0.57094 seconds -:50
+# >>     0.53007 seconds -:50
+# >>   KifuExtractor 棋王戦
+# >>     0.4302 seconds -:40
 # >>   KifuExtractor shogidb2
-# >>     0.55994 seconds -:83
+# >>     0.36779 seconds -:83
+# >>   KifuExtractor HTMLのなかにある kif へのリンクを探す
+# >>     0.34943 seconds -:109
+# >>   KifuExtractor 間違えても巨大なHTMLは返さない
+# >>     0.28122 seconds -:116
 # >>   KifuExtractor 自サイト
-# >>     0.23048 seconds -:30
+# >>     0.227 seconds -:30
 # >>   KifuExtractor URL引数
-# >>     0.07871 seconds -:59
+# >>     0.08101 seconds -:59
 # >>   KifuExtractor KENTO
-# >>     0.02501 seconds -:18
+# >>     0.00625 seconds -:18
 # >> 
-# >> Finished in 8.62 seconds (files took 3.57 seconds to load)
-# >> 8 examples, 0 failures
+# >> Finished in 12.57 seconds (files took 3.64 seconds to load)
+# >> 10 examples, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:109 # KifuExtractor HTMLのなかにある kif へのリンクを探す
 # >> 
