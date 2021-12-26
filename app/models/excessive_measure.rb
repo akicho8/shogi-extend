@@ -43,7 +43,7 @@ class ExcessiveMeasure
     @params = {
       :key            => SecureRandom.hex, # Rails.cache の key
       :run_per_second => 1,                # 1秒間当たりに実行できる回数
-      :expires_in     => 10,               # 何秒間空いたらリセットするか？
+      :expires_in     => 60,               # 何秒間空いたらリセットするか？
     }.merge(params)
 
     if block_given?
