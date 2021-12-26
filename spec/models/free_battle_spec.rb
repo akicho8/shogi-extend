@@ -45,7 +45,7 @@ RSpec.describe FreeBattle, type: :model do
 
   describe "simple_versus_desc" do
     it do
-      free_battle = FreeBattle.same_body_fetch(body: "")
+      free_battle = FreeBattle.same_body_fetch(body: "手合割：平手")
       assert { free_battle.simple_versus_desc == nil }
     end
     it do
@@ -128,7 +128,7 @@ RSpec.describe FreeBattle, type: :model do
   describe "AdapterMethods" do
     it "works" do
       assert { FreeBattle.adapter_post(input_text: "68銀") }
-      assert { FreeBattle.adapter_post(input_text: "")     }
+      assert { FreeBattle.adapter_post(input_text: "") rescue $!.class == Bioshogi::FileFormatError }
       assert { FreeBattle.adapter_post(input_text: "58金") rescue $!.class == Bioshogi::AmbiguousFormatError }
     end
   end

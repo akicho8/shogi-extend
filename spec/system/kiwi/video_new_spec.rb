@@ -25,6 +25,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
 
   describe "トリム" do
     it "空の場合" do
+      find(".body_field textarea").set("手合割：平手")
       find(".any_source_trim_handle").click      # 「トリム」ボタンを押す
       assert_text("0手目から")
       modal_apply        # 「0手目から」を押す
