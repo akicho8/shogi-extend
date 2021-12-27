@@ -163,7 +163,7 @@ export default {
     },
 
     // 「棋譜用紙」
-    kifu_paper_handle() {
+    print_open_handle() {
       this.record_fetch(() => {
         this.$router.push({
           name: "adapter-key-formal-sheet",
