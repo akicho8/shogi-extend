@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-const BODY_VALUE = "getSelection().toString() || location.href"
+const BODY_VALUE = "encodeURIComponent(getSelection().toString() || location.href)"
 
 export class BookmarkletInfo extends ApplicationMemoryRecord {
   static get define() {
