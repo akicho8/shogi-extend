@@ -29,6 +29,10 @@ export class AudioCreatorInfo extends ApplicationMemoryRecord {
       { key: "山口 壮",                  home_site_url: "https://dova-s.jp/_contents/author/profile093.html",       },
       { key: "謝謝P/魔界Symphony",       home_site_url: "http://www.makai-symphony.com/",                           },
       { key: "龍崎一",                   home_site_url: "https://www.losstime-life.com/",                           },
+      { key: "こおろぎ",                 home_site_url: "http://kohrogi.com/?page_id=4446",                         },
+      { key: "鷹尾まさき",               home_site_url: "http://takao-masaki.com/",                                 },
+      { key: "Kyaai",                    home_site_url: "https://www.kyaaimusic.com/",                              },
+      { key: "Phalene",                  home_site_url: "https://dova-s.jp/_contents/author/profile265.html",       },
     ]
   }
 }
