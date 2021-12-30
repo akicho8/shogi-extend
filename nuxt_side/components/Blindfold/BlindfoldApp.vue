@@ -88,7 +88,7 @@ export default {
     ], () => {
       this.$router.replace({query: this.current_url_params}).catch(e => {})
     })
-    this.sp_body = this.$route.query.body || "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
+    this.sp_body = this.dot_sfen_unescape(this.$route.query.body || "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1")
   },
   methods: {
     async play_handle() {
@@ -175,7 +175,7 @@ export default {
 
     current_url_params() {
       return {
-        body: this.sp_body,
+        body: this.dot_sfen_escape(this.sp_body),
       }
     },
     current_url() {
