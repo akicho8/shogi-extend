@@ -8,8 +8,9 @@ client-only
         .mt-4
           b-menu
             b-menu-list(label="Action")
-              b-menu-item.is_active_unset(label="局面編集" @click="mode_toggle_handle")
-              b-menu-item.is_active_unset(label="ツイート" @click="tweet_handle" v-if="scene === 'play_mode'")
+              b-menu-item.is_active_unset(label="棋譜の読み込み" @click="any_source_read_handle")
+              b-menu-item.is_active_unset(label="局面編集"       @click="mode_toggle_handle")
+              b-menu-item.is_active_unset(label="ツイート"       @click="tweet_handle" v-if="scene === 'play_mode'")
         .box.mt-5
           .title.is-5 設定
           b-field(custom-class="is-small" label="再生速度")
@@ -41,6 +42,7 @@ client-only
           .MainColumn.column(v-if="scene === 'edit_mode'")
             CustomShogiPlayer.is_mobile_vertical_good_style(
               :sp_body="sp_body"
+              :sp_turn="0"
               :sp_sound_enabled="true"
               sp_run_mode="edit_mode"
               sp_summary="is_summary_off"
@@ -55,6 +57,7 @@ client-only
 <script>
 import _ from "lodash"
 
+import AnySourceReadModal from "@/components/AnySourceReadModal.vue"
 import { support_parent } from "./support_parent.js"
 import { app_storage } from "./app_storage.js"
 
@@ -137,6 +140,27 @@ export default {
       } else {
         this.scene = "play_mode"
       }
+    },
+
+    any_source_read_handle() {
+      this.sidebar_p = false
+      this.sound_play_click()
+      const modal_instance = this.modal_card_open({
+        component: AnySourceReadModal,
+        events: {
+          "update:any_source": any_source => {
+            this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
+              this.bs_error_message_dialog(e)
+              if (e.body) {
+                this.sound_play_click()
+                this.toast_ok("棋譜を読み込みました")
+                this.sp_body = e.body
+                modal_instance.close()
+              }
+            })
+          },
+        },
+      })
     },
   },
 
