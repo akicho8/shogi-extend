@@ -52,6 +52,7 @@ client-only
           .MainColumn.column(:class="main_column_class")
             CustomShogiPlayer.is_mobile_vertical_good_style(
               ref="main_sp"
+              :class="sp_class"
               :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
               :sp_run_mode="sp_run_mode"
               :sp_turn="current_turn"
@@ -460,6 +461,11 @@ export default {
     main_column_class() {
       const av = []
       av.push(`is_sb_${this.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
+      return av
+    },
+
+    sp_class() {
+      const av = []
       if (this.current_turn_self_p) {
         av.push("current_turn_self_p")
       }
@@ -560,13 +566,8 @@ export default {
         color: $black !important
 
     &.current_turn_self_p
-      .MainBoardTexture
-        animation: sp_bg_animation 1s linear 0s infinite alternate
-        @keyframes sp_bg_animation
-          0%
-            background-color: hsla(0,0%,0%,0.2)
-          100%
-            background-color: hsla(256,28%,35%%,1.0)
+      --sp_board_color: hsla(38,69%,64%,1.0)
+      // --sp_board_color: hsla(35,76%,71%,1.0)
 
     // .PieceTexture
     //   .PieceTextureSelf
