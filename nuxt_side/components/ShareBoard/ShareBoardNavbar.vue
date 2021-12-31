@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.ShareBoardNavbar(:spaced="false" :type="base.edit_mode_p ? 'is-dark' : 'is-primary'")
+MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
   template(slot="brand")
     b-navbar-item(@click.native="base.exit_handle")
       b-icon(icon="home")
@@ -47,6 +47,21 @@ import { support_child } from "./support_child.js"
 export default {
   name: "ShareBoardNavbar",
   mixins: [support_child],
+  computed: {
+    component_attrs() {
+      return {
+        spaced: false,
+        type: this.component_type,
+        transparent: false,
+      }
+    },
+    component_type() {
+      if (this.base.edit_mode_p) {
+        return 'is-dark'
+      }
+      return 'is-primary'
+    },
+  },
 }
 </script>
 
