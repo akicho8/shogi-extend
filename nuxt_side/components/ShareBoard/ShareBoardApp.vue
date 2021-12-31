@@ -458,9 +458,12 @@ export default {
     },
 
     main_column_class() {
-      return [
-        `is_sb_${this.sp_run_mode}`, // is_sb_play_mode, is_sb_edit_mode
-      ]
+      const av = []
+      av.push(`is_sb_${this.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
+      if (this.current_turn_self_p) {
+        av.push("current_turn_self_p")
+      }
+      return av
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -555,6 +558,15 @@ export default {
       &.read_sec_10, &.extra_sec_10
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
+
+    &.current_turn_self_p
+      .MainBoardTexture
+        animation: sp_bg_animation 1s linear 0s infinite alternate
+        @keyframes sp_bg_animation
+          0%
+            background-color: hsla(0,0%,0%,0.2)
+          100%
+            background-color: hsla(256,28%,35%%,1.0)
 
     // .PieceTexture
     //   .PieceTextureSelf

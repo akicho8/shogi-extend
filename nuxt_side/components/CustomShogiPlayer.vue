@@ -24,7 +24,10 @@ export default {
   },
   computed: {
     component_params() {
-      return {...this.default_params, ...this.$attrs}
+      return {
+        ...this.default_params,
+        ...this.$attrs,
+      }
     },
     default_params() {
       return {
