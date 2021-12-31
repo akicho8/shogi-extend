@@ -103,6 +103,11 @@ class FreeBattle < ApplicationRecord
           self.kifu_body = Bioshogi::Parser.source_normalize(kifu_body).gsub(/^\*.*\R/, "")
         end
         parser_exec
+
+        # コメントとして active_record_value_too_long を入れると確認できる
+        if kifu_body.include?("active_record_value_too_long")
+          raise ActiveRecord::ValueTooLong, "(active_record_value_too_long)"
+        end
       end
     end
   end

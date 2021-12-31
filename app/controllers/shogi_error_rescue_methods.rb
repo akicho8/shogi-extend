@@ -10,6 +10,32 @@ module ShogiErrorRescueMethods
         if params[:bioshogi_error2]
           Bioshogi::Parser.parse("11玉").to_kif
         end
+        if params[:active_record_value_too_long]
+          raise ActiveRecord::ValueTooLong, "(active_record_value_too_long)"
+        end
+      end
+    end
+
+    # 確認方法
+    # http://localhost:4000/adapter?body=68S+active_record_value_too_long
+    rescue_from "ActiveRecord::ValueTooLong" do |error|
+      body = [error.message, params].join("\n")
+      SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
+      ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
+      message = []
+      message << "棋譜データがでかすぎです。"
+      message << "KIF形式であればSFEN形式に変換してみてください。"
+      message << "かなり小さくなるのでエラーを回避できるでしょう。"
+      message << "「動画作成」のところなら「トリム」で0から最終手までを選択すればただのSFEN変換になります。"
+      message << error.message
+      message = message.join
+      case
+      when request.format.json?
+        render json: { bs_error: { message: message } }, status: 200
+      when request.format.png?
+        send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
+      else
+        render plain: message
       end
     end
 
