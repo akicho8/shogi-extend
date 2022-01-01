@@ -1,6 +1,6 @@
 <template lang="pug">
 client-only
-  .ShareBoardApp(:style="component_style" :class="{'debug_mode_p': debug_mode_p}")
+  .ShareBoardApp(:style="component_style" :class="component_class")
     | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
@@ -18,6 +18,7 @@ client-only
       p ordered_members: {{ordered_members}}
 
       template(v-if="clock_box")
+        p rest: {{clock_box.current.rest}}
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
         p running_p: {{clock_box.running_p}}
@@ -487,6 +488,16 @@ export default {
         }
       }
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    component_class() {
+      const hv = {}
+      hv.debug_mode_p        = this.debug_mode_p
+      hv.order_enable_p      = this.order_enable_p
+      hv.current_turn_self_p = this.current_turn_self_p
+      return hv
+    },
   },
 }
 </script>
@@ -565,9 +576,14 @@ export default {
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
 
-    &.current_turn_self_p
+  // 自分が手番のときは盤の色を変更する
+  &.current_turn_self_p
+    .CustomShogiPlayer
       --sp_board_color: hsla(38,69%,64%,1.0)
       // --sp_board_color: hsla(35,76%,71%,1.0)
+
+  // &.order_enable_p
+  //   background-color: hsla(0, 0%, 0%, 0.2)
 
     // .PieceTexture
     //   .PieceTextureSelf

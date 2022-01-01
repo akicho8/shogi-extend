@@ -49,17 +49,29 @@ export default {
   mixins: [support_child],
   computed: {
     component_attrs() {
-      return {
-        spaced: false,
-        type: this.component_type,
-        transparent: false,
-      }
-    },
-    component_type() {
+      const hv = {}
+      hv.spaced = false
       if (this.base.edit_mode_p) {
-        return 'is-dark'
+        hv.type = "is-dark"
+      } else {
+        if (this.base.order_enable_p) {
+          // hv.transparent = true
+          // hv.type = ""
+        } else {
+        }
+        hv.type = "is-primary"
+        if (this.base.clock_box) {
+          if (this.base.clock_box.working_p) {
+            const rest = this.base.clock_box.current.rest
+            if (rest <= 10) {
+              hv.type = "is-danger"
+            } else if (rest <= 20) {
+              hv.type = "is-warning"
+            }
+          }
+        }
       }
-      return 'is-primary'
+      return hv
     },
   },
 }
