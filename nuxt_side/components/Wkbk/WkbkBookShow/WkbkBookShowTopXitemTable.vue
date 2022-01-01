@@ -94,7 +94,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
           | 非公開
           b-icon.ml-1(:icon="FolderInfo.fetch('private').icon" size="is-small")
         template(v-else)
-          | {{row.article.title}}
+          | {{row.article.title || "(no title)"}}
           b-icon.ml-1(:icon="FolderInfo.fetch(row.article.folder_key).icon" size="is-small" v-if="row.article.folder_key != 'public'")
 
       b-table-column(v-slot="{row}" custom-key="newest_answer_log.answer_kind_key" field="newest_answer_log.answer_kind_key" label="解" centered sortable)

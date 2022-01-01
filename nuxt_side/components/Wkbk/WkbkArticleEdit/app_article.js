@@ -45,7 +45,7 @@ export const app_article = {
         }
       }
 
-      if (!this.article.title) {
+      if (!this.article.title && false) {
         this.toast_warn("なんかしらのタイトルを捻り出してください")
         return true
       }

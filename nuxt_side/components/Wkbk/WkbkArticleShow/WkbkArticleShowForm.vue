@@ -5,7 +5,7 @@ MainSection.WkbkArticleShowForm
       .column
         b-field(label="タイトル")
           .control
-            | {{base.article.title}}
+            | {{base.article.title || "(no title)"}}
           //- b-input(v-model.trim="base.article.title" required)
 
         b-field(label="解説")

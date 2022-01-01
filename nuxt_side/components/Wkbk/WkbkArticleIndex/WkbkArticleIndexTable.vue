@@ -34,7 +34,7 @@
 
     b-table-column(v-slot="{row}" custom-key="title" field="title" :label="base.ArticleIndexColumnInfo.fetch('title').name" sortable :visible="true" cell-class="is_line_break_on")
       nuxt-link(:to="{name: 'rack-articles-article_key', params: {article_key: row.key}}" @click.native="sound_play_click()")
-        | {{row.title}}
+        | {{row.title || "(no title)"}}
 
     //- b-table-column(v-slot="{row}" custom-key="user_id" field="user.name" :label="base.ArticleIndexColumnInfo.fetch('user_id').name" sortable :visible="base.scope === 'everyone'")
     //-   WkbkUserName(:user="row.user")

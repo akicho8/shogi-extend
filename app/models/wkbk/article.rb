@@ -65,12 +65,12 @@ module Wkbk
 
     before_validation do
       if Rails.env.development? || Rails.env.test?
-        self.title ||= SecureRandom.hex
+        # self.title ||= SecureRandom.hex
         self.init_sfen ||= "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
       end
 
       if Rails.env.test?
-        self.title ||= "(title#{self.class.count.next})"
+        # self.title ||= "(title#{self.class.count.next})"
       end
 
       self.viewpoint ||= "black"
@@ -91,7 +91,7 @@ module Wkbk
     end
 
     with_options presence: true do
-      validates :title
+      # validates :title
       validates :init_sfen
       validates :viewpoint
     end
