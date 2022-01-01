@@ -48,6 +48,10 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
         b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.book_tweet_handle" v-if="development_p")
           b-icon(icon="twitter" type="is-white")
 
+      template(v-if="base.is_running_p")
+        b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.yomiage_answer_toggle_handle" v-if="base.show_behaviour_info.key === 'show_behaviour_blind'")
+          b-icon(icon="eye" type="is-white")
+
       //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_start" v-if="!base.current_xitem")
       //-   | RESTART
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-.WkbkBookShowOxButtons.buttons.mb-0.has-addons.is-centered
+.WkbkBookShowOxButtons.buttons.mb-0.has-addons.is-centered.are-large
   template(v-for="e in safe_reverse(base.AnswerKindInfo.values)")
     b-button.mb-0.is-outlined(:icon-left="e.icon" @click="base.next_handle(e)" type="is-primary")
 </template>

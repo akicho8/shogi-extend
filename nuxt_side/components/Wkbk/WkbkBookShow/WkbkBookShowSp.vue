@@ -10,14 +10,12 @@ MainSection.WkbkBookShowSp
             span.ml-1(v-if="base.current_article.direction_message")
               | {{base.current_article.direction_message}}
 
-          .blind_container(v-if="base.show_behaviour_info.key === 'show_behaviour_blind'")
-            .buttons.is-centered.are-medium
+          .yomiage_container(v-if="base.show_behaviour_info.key === 'show_behaviour_blind'")
+            .buttons.is-centered.are-medium.is-flex-direction-column.are-large
               template(v-if="base.yomiage_now")
                 b-button(@click="base.yomiage_stop_handle" icon-left="stop")
               template(v-else)
                 b-button(@click="base.yomiage_play_handle" icon-left="play")
-            .buttons.is-centered.are-medium.yomiage_answer_toggle_handle
-              b-button(@click="base.yomiage_answer_toggle_handle" icon-left="eye")
 
           CustomShogiPlayer(
             v-if="base.show_behaviour_info.key === 'show_behaviour_board'"
@@ -127,13 +125,10 @@ export default {
       padding-top: unset
       padding-bottom: unset
 
-  .blind_container
+  .yomiage_container
     margin: 4rem
     .button
       min-width: 6rem
-
-  .yomiage_answer_toggle_handle
-    margin-top: 3rem
 
   .box
     margin: 1rem

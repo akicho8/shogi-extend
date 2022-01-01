@@ -1,13 +1,17 @@
 export const app_yomiage = {
   data() {
     return {
-      yomiage_cache: {},
-      yomiage_now: false,
-      yomiage_speed: null, // localStorage から復帰設定
-      yomiage_answer: "hidden",
+      yomiage_cache: {},    // sfen をキーに読み上げ内容をキャッシュする
+      yomiage_now: false,   // 読み上げ中なら true
+      yomiage_speed: null,  // localStorage から復帰設定。初期値 1.0 (localStorage)
+      yomiage_answer: null, // hidden:答えを隠す, visible:答え表示
     }
   },
   methods: {
+    yomiage_reset() {
+      this.yomiage_answer = "hidden"
+    },
+
     async yomiage_play_handle() {
       this.sound_play_click()
       const sfen = this.sfen_flop(this.current_article.init_sfen)
