@@ -42,7 +42,7 @@ class KiwiMailer < ApplicationMailer
     end
 
     body << "▼元の棋譜"
-    body << lemon.recordable.kifu_body
+    body << lemon.recordable.kifu_body.strip
     body << ""
 
     # body << "▼棋譜確認または再度動画を作成するにはここ↓の右上メニューから「動画変換」をタップする"
