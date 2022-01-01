@@ -3,7 +3,8 @@ import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { ArticleTitleDisplayInfo } from "../models/article_title_display_info.js"
 import { CorrectBehaviorInfo     } from "../models/correct_behavior_info.js"
 import { ViewpointFlipInfo       } from "../models/viewpoint_flip_info.js"
-import { SoldierHflipInfo        } from "../models/soldier_flop_info.js"
+import { SoldierFlopInfo        } from "../models/soldier_flop_info.js"
+import { ShowBehaviourInfo } from "../models/show_behaviour_info.js"
 
 export const app_storage = {
   mixins: [
@@ -15,6 +16,7 @@ export const app_storage = {
       correct_behavior_key:      null,
       viewpoint_flip_key:        null,
       soldier_flop_key:         null,
+      show_behaviour_key:        null,
     }
   },
   beforeMount() {
@@ -29,7 +31,9 @@ export const app_storage = {
         article_title_display_key: this.ArticleTitleDisplayInfo.values[0].key,
         correct_behavior_key:      this.CorrectBehaviorInfo.values[0].key,
         viewpoint_flip_key:        this.ViewpointFlipInfo.values[0].key,
-        soldier_flop_key:          this.SoldierHflipInfo.values[0].key,
+        soldier_flop_key:          this.SoldierFlopInfo.values[0].key,
+        show_behaviour_key:        this.ShowBehaviourInfo.values[0].key,
+        yomiage_speed:             1.0,
       }
     },
     ArticleTitleDisplayInfo()    { return ArticleTitleDisplayInfo                                       },
@@ -38,7 +42,9 @@ export const app_storage = {
     correct_behavior_info()      { return CorrectBehaviorInfo.fetch(this.correct_behavior_key)          },
     ViewpointFlipInfo()          { return ViewpointFlipInfo                                             },
     viewpoint_flip_info()        { return ViewpointFlipInfo.fetch(this.viewpoint_flip_key)              },
-    SoldierHflipInfo()           { return SoldierHflipInfo                                              },
-    soldier_flop_info()          { return SoldierHflipInfo.fetch(this.soldier_flop_key)                },
+    SoldierFlopInfo()           { return SoldierFlopInfo                                              },
+    soldier_flop_info()          { return SoldierFlopInfo.fetch(this.soldier_flop_key)                },
+    ShowBehaviourInfo()           { return ShowBehaviourInfo                                              },
+    show_behaviour_info()         { return ShowBehaviourInfo.fetch(this.show_behaviour_key)                },
   },
 }

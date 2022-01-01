@@ -33,8 +33,13 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
           template(v-for="e in base.ViewpointFlipInfo.values")
             b-radio-button(size="is-small" v-model="base.viewpoint_flip_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
         b-field(custom-class="is-small" label="盤上の駒の左右反転")
-          template(v-for="e in base.SoldierHflipInfo.values")
+          template(v-for="e in base.SoldierFlopInfo.values")
             b-radio-button(size="is-small" v-model="base.soldier_flop_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
+        b-field(custom-class="is-small" :label="base.ShowBehaviourInfo.field_label")
+          template(v-for="e in base.ShowBehaviourInfo.values")
+            b-radio-button(size="is-small" v-model="base.show_behaviour_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
+        b-field(custom-class="is-small" label="読み上げ速度")
+          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_speed" :min="0.5" :max="1.5" :step="0.001")
 </template>
 
 <script>
@@ -63,4 +68,13 @@ export default {
       outline: none
   .menu-label:not(:first-child)
     margin-top: 2em
+
+  .field:not(:first-child)
+    margin-top: 2rem
+
+  .b-slider
+    .b-slider-thumb-wrapper.has-indicator
+      .b-slider-thumb
+        padding: 10px 6px
+        font-size: 10px
 </style>

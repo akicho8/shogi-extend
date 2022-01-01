@@ -45,6 +45,7 @@ import { support_parent } from "./support_parent.js"
 
 import { app_xitems            } from "./app_xitems.js"
 import { app_article           } from "./app_article.js"
+import { app_yomiage           } from "./app_yomiage.js"
 import { app_mode              } from "./app_mode.js"
 import { app_support           } from "./app_support.js"
 import { app_tweet_recent      } from "./app_tweet_recent.js"
@@ -65,6 +66,7 @@ export default {
     support_parent,
     app_xitems,
     app_article,
+    app_yomiage,
     app_mode,
     app_support,
     app_tweet_recent,

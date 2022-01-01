@@ -9,7 +9,18 @@ MainSection.WkbkBookShowSp
               | {{base.current_article.title}}
             span.ml-1(v-if="base.current_article.direction_message")
               | {{base.current_article.direction_message}}
+
+          .blind_container(v-if="base.show_behaviour_info.key === 'show_behaviour_blind'")
+            .buttons.is-centered.are-medium
+              template(v-if="base.yomiage_now")
+                b-button(@click="base.yomiage_stop_handle" icon-left="stop")
+              template(v-else)
+                b-button(@click="base.yomiage_play_handle" icon-left="play")
+            .buttons.is-centered.are-medium.yomiage_answer_toggle_handle
+              b-button(@click="base.yomiage_answer_toggle_handle" icon-left="eye")
+
           CustomShogiPlayer(
+            v-if="base.show_behaviour_info.key === 'show_behaviour_board'"
             sp_mobile_vertical="is_mobile_vertical_on"
             :sp_body="base.sfen_flop(base.current_article.init_sfen)"
             :sp_viewpoint="base.current_sp_viewpoint"
@@ -31,7 +42,7 @@ MainSection.WkbkBookShowSp
 
           WkbkBookShowOxButtons.mt-4(:base="base")
 
-      .column.RightColumn(:key="base.current_article.key" v-if="base.current_article.moves_answers.length >= 1")
+      .column.RightColumn(:key="base.current_article.key" v-if="base.answer_column_show")
         b-tabs.mb-0(
           v-model="base.answer_tab_index"
           position="is-centered"
@@ -115,6 +126,14 @@ export default {
       max-width: 68vmin
       padding-top: unset
       padding-bottom: unset
+
+  .blind_container
+    margin: 4rem
+    .button
+      min-width: 6rem
+
+  .yomiage_answer_toggle_handle
+    margin-top: 3rem
 
   .box
     margin: 1rem

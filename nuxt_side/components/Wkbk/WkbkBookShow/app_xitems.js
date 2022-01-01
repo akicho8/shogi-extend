@@ -49,6 +49,7 @@ export const app_xitems = {
     next_process(sign = 1) {
       this.current_index += sign
       this.answer_tab_index = 0
+      this.yomiage_answer = "hidden"
       this.description_open_p = this.mobile_p()
       if (this.current_xitem) {
         this.journal_next_init()
