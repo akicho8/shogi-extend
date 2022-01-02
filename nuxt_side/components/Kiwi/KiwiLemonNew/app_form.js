@@ -98,6 +98,8 @@ export const app_form = {
 
       this.sound_play_click()
 
+      if (this.nuxt_login_required()) { return }
+
       if (this.bs_error) {
         this.error_show()
         return
