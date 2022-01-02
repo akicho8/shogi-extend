@@ -125,7 +125,8 @@ export default {
   mounted() {
     // this.clog("book", this.book)
     // this.ga_click("インスタント将棋問題集")
-    if (this.nuxt_login_required()) { return }
+
+    // if (this.nuxt_login_required()) { return }
   },
 
   computed: {
