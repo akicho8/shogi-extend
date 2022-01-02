@@ -23,7 +23,7 @@
     :mobile-cards="false"
     )
     b-table-column(v-slot="{row}" label="番号" numeric centered :width="1")
-      span(:class="{'has-text-weight-bold': row.user.id === g_current_user.id}") {{row.id}}
+      span(:class="{'has-text-weight-bold': g_current_user && (row.user.id === g_current_user.id)}") {{row.id}}
     b-table-column(v-slot="{row}" field="status_key" label="状況" centered header-class="table_status_column")
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
