@@ -27,6 +27,7 @@ export const vue_application = {
         parent: this,
         component: NuxtLoginContainer,
         animation: "",
+        // canCancel: [],
         onCancel: () => this.sound_play_click(),
       })
     },
