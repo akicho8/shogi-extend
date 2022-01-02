@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 817b96d8e080a7b8e28758bc0f6a4025be952099
+  revision: 6d0dbaf48802709be0961402a2c4d4e29c6cbc0a
   specs:
     bioshogi (0.0.1)
       actionview
@@ -476,7 +476,7 @@ GEM
     woothee (1.11.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.2)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby

@@ -2,6 +2,10 @@
 client-only
   .WkbkBookShowApp
     DebugBox(v-if="development_p")
+      p yomiage_now: {{yomiage_now}}
+      p yomiage_index: {{yomiage_index}}
+      p yomiage_delay_timer: {{yomiage_delay_timer}}
+
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")

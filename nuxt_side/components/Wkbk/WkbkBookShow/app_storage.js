@@ -34,6 +34,7 @@ export const app_storage = {
         soldier_flop_key:          this.SoldierFlopInfo.values[0].key,
         show_behaviour_key:        this.ShowBehaviourInfo.values[0].key,
         yomiage_speed:             1.0,
+        yomiage_interval:          2.0,
       }
     },
     ArticleTitleDisplayInfo()    { return ArticleTitleDisplayInfo                                       },

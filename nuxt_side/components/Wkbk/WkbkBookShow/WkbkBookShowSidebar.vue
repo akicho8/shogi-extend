@@ -39,7 +39,9 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
           template(v-for="e in base.ShowBehaviourInfo.values")
             b-radio-button(size="is-small" v-model="base.show_behaviour_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
         b-field(custom-class="is-small" label="読み上げ速度")
-          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_speed" :min="0.5" :max="1.5" :step="0.001")
+          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_speed" :min="0.5" :max="1.5" :step="0.05")
+        b-field(custom-class="is-small" label="読み上げ間隔")
+          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_interval" :min="0" :max="8.0" :step="0.05")
 </template>
 
 <script>

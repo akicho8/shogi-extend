@@ -17,6 +17,7 @@ export const app_mode = {
         this.sound_play_click()
         this.mode_set("standby")
         this.re_ox_stop()
+        this.yomiage_stop()
       }
     },
 
