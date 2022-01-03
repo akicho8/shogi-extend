@@ -1,14 +1,16 @@
+const YOMIAGE_MOCK = false
+
 export const app_yomiage = {
   data() {
     return {
-      yomiage_cache: {},      // sfen をキーに読み上げ内容をキャッシュする
-      yomiage_now: false,     // 読み上げ中なら true
-      yomiage_index: 0,       //
-      yomiage_speed: null,    // 読み上げ速度。localStorage から復帰設定。初期値 1.0 (localStorage)
-      yomiage_interval: null, // 読み上げ間隔。localStorage から復帰設定。初期値 1.0 (localStorage)
-      yomiage_answer: null,   // hidden:答えを隠す, visible:答え表示
-      yomiage_list: null,     //
-      yomiage_delay_timer: null,
+      yomiage_cache: {},         // sfen をキーに読み上げデータ(yomiage_list)をキャッシュする
+      yomiage_now: false,        // 読み上げ中なら true (主にボタンに反映)
+      yomiage_index: 0,          // 読み上げ位置
+      yomiage_speed: null,       // 読み上げ速度 (localStorage)
+      yomiage_interval: null,    // 読み上げ間隔 (localStorage)
+      yomiage_answer: null,      // hidden:答えを隠す, visible:答え表示
+      yomiage_list: null,        // 読み上げデータ
+      yomiage_delay_timer: null, // 読み上げ中に待っているときの setTimeout の戻値
     }
   },
 
@@ -17,6 +19,7 @@ export const app_yomiage = {
   },
 
   methods: {
+    // ボタンから呼ぶ
     async yomiage_play_handle() {
       this.sound_play_click()
       const sfen = this.sfen_flop(this.current_article.init_sfen)
@@ -25,22 +28,21 @@ export const app_yomiage = {
           this.bs_error_message_dialog(e)
           if (e.yomiage_list) {
             this.yomiage_cache[sfen] = e.yomiage_list
-            // if (true) {
-            //   this.yomiage_cache[sfen] = [
-            //     { command: "talk",     message: "1", },
-            //     { command: "interval", sleep: 2,     },
-            //     { command: "talk",     message: "2", },
-            //     { command: "interval", sleep: 2,     },
-            //     { command: "talk",     message: "3", },
-            //   ]
-            // }
+            if (YOMIAGE_MOCK) {
+              this.yomiage_cache[sfen] = [
+                { command: "talk",     message: "1", },
+                { command: "interval", sleep: 2,     },
+                { command: "talk",     message: "2", },
+                { command: "interval", sleep: 2,     },
+                { command: "talk",     message: "3", },
+              ]
+            }
           }
         })
       }
       this.yomiage_list = this.yomiage_cache[sfen]
       if (this.present_p(this.yomiage_list)) {
         this.yomiage_start()
-        // this.talk(yomiage_body, {rate: this.yomiage_speed, onend: () => this.yomiage_now = false})
       }
     },
 
@@ -80,11 +82,13 @@ export const app_yomiage = {
       }
     },
 
+    // 次の小節へ移動
     yomiage_next() {
       this.yomiage_index += 1
       this.yomiage_chain()
     },
 
+    // ボタンから呼ぶ
     yomiage_stop_handle() {
       this.sound_stop_all()
       this.sound_play_click()
@@ -96,6 +100,7 @@ export const app_yomiage = {
       this.yomiage_now = false
     },
 
+    // 待ち状態キャンセル
     yomiage_delay_stop() {
       if (this.yomiage_delay_timer) {
         this.delay_stop(this.yomiage_delay_timer)
@@ -125,6 +130,9 @@ export const app_yomiage = {
     },
   },
   computed: {
+    yomiage_end_p()   { return this.blank_p(this.yomiage_list[this.yomiage_index]) },
+    yomiage_current() { return this.yomiage_list[this.yomiage_index]               },
+
     yomiage_slider_attrs() {
       return {
         indicator: true,
@@ -132,8 +140,5 @@ export const app_yomiage = {
         size: "is-small",
       }
     },
-
-    yomiage_end_p()   { return this.blank_p(this.yomiage_list[this.yomiage_index]) },
-    yomiage_current() { return this.yomiage_list[this.yomiage_index] },
   },
 }
