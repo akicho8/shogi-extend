@@ -284,7 +284,9 @@ module Wkbk
           public_send("#{attr}=", source_article.public_send(attr))
         end
 
-        self.title = "#{source_article.title}のコピー"
+        if source_article.title.present?
+          self.title = "#{source_article.title}のコピー"
+        end
 
         source_article.moves_answers.each do |e|
           moves_answers.build(moves_str: e.moves_str)
