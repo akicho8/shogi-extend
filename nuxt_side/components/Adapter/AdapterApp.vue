@@ -18,7 +18,7 @@
       .columns.is-centered
         .column
           b-field(:type="input_text_field_type")
-            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" placeholder="KIF KI2 CSA SFEN BOD の本体かURL。共有将棋盤・ぴよ将棋・KENTO・lishogi・将棋DB2・将棋ウォーズのURL。棋譜自体を引数に含むURL。棋譜URLをコンテンツに含むサイトURL。戦法名・囲い名などを入力してください")
+            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" :placeholder="SHARED_STRING.kifu_body_placeholder")
 
           b-field.mt-5
             .control

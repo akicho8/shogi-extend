@@ -8,6 +8,7 @@ import { vue_browser_and_form } from "./vue_browser_and_form.js"
 import { vue_piyo_shogi       } from "./vue_piyo_shogi.js"
 import { vue_head             } from "./vue_head.js"
 import { vue_talk             } from "./vue_talk.js"
+import { vue_shared_string    } from "./vue_shared_string.js"
 
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 
@@ -19,6 +20,7 @@ Vue.mixin({
     vue_piyo_shogi,
     vue_head,
     vue_talk,
+    vue_shared_string,
   ],
   methods: {
     ...mapMutations("user", [
