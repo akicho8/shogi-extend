@@ -49,6 +49,7 @@ import { support_parent } from "./support_parent.js"
 
 import { app_xitems            } from "./app_xitems.js"
 import { app_article           } from "./app_article.js"
+import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
 import { app_yomiage           } from "./app_yomiage.js"
 import { app_mode              } from "./app_mode.js"
 import { app_support           } from "./app_support.js"
@@ -70,6 +71,7 @@ export default {
     support_parent,
     app_xitems,
     app_article,
+    app_kifu_copy_buttons,
     app_yomiage,
     app_mode,
     app_support,

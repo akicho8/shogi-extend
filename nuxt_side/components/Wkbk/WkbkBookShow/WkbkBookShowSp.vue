@@ -63,6 +63,10 @@ MainSection.WkbkBookShowSp
                   sp_slider="is_slider_off"
                   sp_controller="is_controller_on"
                   )
+                .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
+                  PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")
+                  KentoButton.mb-0(tag="a" :href="base.answers_kento_app_with_params_url(e)" target="_blank")
+                  KifCopyButton.mb-0(@click="base.answers_kifu_copy_handle(e)") コピー
 
         template(v-if="base.current_article.description")
           .is-flex.is-justify-content-center.my-4(v-if="!base.description_open_p")
