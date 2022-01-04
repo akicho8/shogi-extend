@@ -35,6 +35,7 @@ export const vue_clipboard = {
       }
 
       this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
+        this.bs_error_message_dialog(e)
         if (e.body) {
           if (!this.simple_clipboard_copy(e.body)) {
             if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {

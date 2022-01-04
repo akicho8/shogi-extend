@@ -70,14 +70,17 @@ export default {
           "update:any_source": any_source => {
             this.sound_play_click()
             this.$axios.$post("/api/general/any_source_to.json", { any_source: any_source, to_format: "sfen" }).then(e => {
-              modal_instance.close()
-              if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
-                this.toast_ok("反映しました")
-                this.fixed_sfen_set(e.body)
-              } else {
-                // moves があるので局面を確定してもらう
-                const sp_turn = this.turn_guess(any_source) // URLから現在の手数を推測
-                this.fixed_sfen_confirm_handle({default_sp_body: e.body, sp_turn: sp_turn})
+              this.bs_error_message_dialog(e)
+              if (e.body) {
+                modal_instance.close()
+                if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
+                  this.toast_ok("反映しました")
+                  this.fixed_sfen_set(e.body)
+                } else {
+                  // moves があるので局面を確定してもらう
+                  const sp_turn = this.turn_guess(any_source) // URLから現在の手数を推測
+                  this.fixed_sfen_confirm_handle({default_sp_body: e.body, sp_turn: sp_turn})
+                }
               }
             })
           },

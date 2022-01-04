@@ -18,22 +18,25 @@ export const app_placement = {
           "update:any_source": any_source => {
             this.sound_play_click()
             this.$axios.$post("/api/general/any_source_to.json", { any_source: any_source, to_format: "sfen" }).then(e => {
-              modal_instance.close()
-              if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
-                // moves がないので確定
-                this.toast_ok("反映しました")
-                this.base_sfen_set(e.body)
-                // this.sp_viewpoint = "black"
-              } else {
-                // moves があるので局面を確定してもらう
-                let default_sp_turn = this.turn_guess(any_source)
-                if (default_sp_turn == null) {
-                  default_sp_turn = e.turn_max
+              this.bs_error_message_dialog(e)
+              if (e.body) {
+                modal_instance.close()
+                if (this.sfen_parse(e.body).moves.length === 0) { // 元BODのSFEN
+                  // moves がないので確定
+                  this.toast_ok("反映しました")
+                  this.base_sfen_set(e.body)
+                  // this.sp_viewpoint = "black"
+                } else {
+                  // moves があるので局面を確定してもらう
+                  let default_sp_turn = this.turn_guess(any_source)
+                  if (default_sp_turn == null) {
+                    default_sp_turn = e.turn_max
+                  }
+                  this.sfen_trim_modal_handle({
+                    default_sp_body: e.body,           // KIFやURLから変換後の綺麗なSFEN
+                    default_sp_turn: default_sp_turn,  // 可能であればKENTOのURL推測した手数または最大手数
+                  })
                 }
-                this.sfen_trim_modal_handle({
-                  default_sp_body: e.body,           // KIFやURLから変換後の綺麗なSFEN
-                  default_sp_turn: default_sp_turn,  // 可能であればKENTOのURL推測した手数または最大手数
-                })
               }
             })
           },
