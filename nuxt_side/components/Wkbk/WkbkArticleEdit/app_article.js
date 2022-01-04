@@ -40,7 +40,7 @@ export const app_article = {
 
       if (this.WkbkConfig.value_of("moves_answers_empty_validate_p")) {
         if (this.article.moves_answers.length === 0) {
-          this.toast_warn("正解が未登録です")
+          this.toast_warn("正解を登録してください")
           return true
         }
       }
