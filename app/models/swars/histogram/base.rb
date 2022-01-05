@@ -2,8 +2,8 @@ module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
     class Base
-      DEFAULT_LIMIT     = 10000
-      DEFAULT_LIMIT_MAX = 10000
+      DEFAULT_LIMIT     = 20000
+      DEFAULT_LIMIT_MAX = 20000
       CHART_BAR_MAX     = 20
 
       attr_accessor :params
