@@ -58,7 +58,7 @@ export default {
       if (this.development_p) {
         return [0, 1, 2, 1000, 5000]
       }
-      return [100, 1000, 10000, 20000]
+      return [100, 1000, 10000]
     },
   },
 }
