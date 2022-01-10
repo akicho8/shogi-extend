@@ -122,9 +122,13 @@ class KifuExtractor
     if uri = extracted_uri
       if uri.host.end_with?("mainichi.jp")
         if v = raw_content
+          # url:"//cdn.mainichi.jp/vol1/shougi/kif/ousho202201090101_utf8.kif" にマッチ
           if md = v.match(%r{(?<url>//.*\.kif)\b})
             url = "https:" + md[:url]
-            @body = WebAgent.raw_fetch(url).toutf8
+            s = WebAgent.raw_fetch(url)
+            s = s.toutf8              # 不正な文字が含まれる UTF-8 のため改めて UTF-8 にする
+            s = s.gsub(/\s*\R/, "\n") # 改行も \r\n になっているため \n にする
+            @body = s
           end
         end
       end
