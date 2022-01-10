@@ -35,6 +35,7 @@ class KifuExtractor
       :extract_try_if_swars_games_url,
       :extract_try_if_swars_battles_self_url,
       :extract_try_if_kiousen_url,
+      :extract_try_if_oushosen_url,
       :extract_try_if_kento_url,
       :extract_try_if_shogidb2_show,
       :extract_try_if_shogidb2_board,
@@ -111,6 +112,21 @@ class KifuExtractor
         v = Bioshogi::Parser.source_normalize(v) # 右端の全角スペースなどを削除
         v = v.remove(/^\*.*\R/)                  # 観戦記者の膨大なコメントを削除
         @body = v
+      end
+    end
+  end
+
+  # 棋王戦
+  # rails r 'puts KifuExtractor.extract("https://mainichi.jp/oshosen-kifu/220109.html")'
+  def extract_try_if_oushosen_url
+    if uri = extracted_uri
+      if uri.host.end_with?("mainichi.jp")
+        if v = raw_content
+          if md = v.match(%r{(?<url>//.*\.kif)\b})
+            url = "https:" + md[:url]
+            @body = WebAgent.raw_fetch(url).toutf8
+          end
+        end
       end
     end
   end

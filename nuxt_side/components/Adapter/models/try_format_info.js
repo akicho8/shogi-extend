@@ -210,6 +210,13 @@ export class TryFormatInfo extends ApplicationMemoryRecord {
       },
 
       {
+        name: "王将戦",
+        items: [
+          { name: "公式サイト",  success: true,  body: "https://mainichi.jp/oshosen-kifu/220109.html", },
+        ],
+      },
+
+      {
         name: "ファイル",
         items: [
           { name: "UTF-8",      success: true,  body: "http://www.shogi-extend.com/example_utf_8.kif",     },

@@ -47,6 +47,14 @@ RSpec.describe KifuExtractor, type: :model do
     assert { test1("http://live.shogi.or.jp/kiou/kifu/45/kiou202002010101.kif").match?(/Kifu for Windows/) }
   end
 
+  it "王将戦" do
+    if $0 == "-"
+      test1("https://mainichi.jp/oshosen-kifu/220109.html") # =>
+    end
+
+    assert { test1("https://mainichi.jp/oshosen-kifu/220109.html").match?(/棋戦：第71期ALSOK杯王将戦七番勝負第１局/) }
+  end
+
   it "KIFへの直リン" do
     if $0 == "-"
       test1("https://www.shogi-extend.com/example_utf_8.kif") # => "先手の囲い：居玉\n後手の囲い：居玉\n先手の備考：居飛車, 対振り, 対抗型, 相居玉\n後手の備考：振り飛車, 対抗型, 相居玉\n手合割：平手\n手数----指手---------消費時間--\n   1 ２六歩(27)   (00:00/00:00:00)\n*▲備考：居飛車\n   2 ３四歩(33)   (00:00/00:00:00)\n   3 ２五歩(26)   (00:00/00:00:00)\n   4 ３三角(22)   (00:00/00:00:00)\n   5 ４八銀(39)   (00:00/00:00:00)\n   6 ５四歩(53)   (00:00/00:00:00)\n   7 ３六歩(37)   (00:00/00:00:00)\n   8 ５二飛(82)   (00:00/00:00:00)\n*△備考：振り飛車\n   9 ５六歩(57)   (00:00/00:00:00)\n  10 ５五歩(54)   (00:00/00:00:00)\n  11 ５五歩(56)   (00:00/00:00:00)\n  12 ５五角(33)   (00:00/00:00:00)\n  13 ２六飛(28..."
@@ -112,7 +120,7 @@ RSpec.describe KifuExtractor, type: :model do
     end
     assert { test1("https://www.shogi-extend.com/kif_included.html") == "先手の囲い：居玉\r\n後手の囲い：居玉\r\n先手の備考：居飛車, 対振り, 対抗型, 相居玉\r\n後手の備考：振り飛車, 対抗型, 相居玉\r\n手合割：平手\r\n手数----指手---------消費時間--\r\n   1 ２六歩(27)   (00:00/00:00:00)\r\n*▲備考：居飛車\r\n   2 ３四歩(33)   (00:00/00:00:00)\r\n   3 ２五歩(26)   (00:00/00:00:00)\r\n   4 ３三角(22)   (00:00/00:00:00)\r\n   5 ４八銀(39)   (00:00/00:00:00)\r\n   6 ５四歩(53)   (00:00/00:00:00)\r\n   7 ３六歩(37)   (00:00/00:00:00)\r\n   8 ５二飛(82)   (00:00/00:00:00)\r\n*△備考：振り飛車\r\n   9 ５六歩(57)   (00:00/00:00:00)\r\n  10 ５五歩(54)   (00:00/00:00:00)\r\n  11 ５五歩(56)   (00:00/00:00:00)\r\n  12 ５五角(33)   (00:00/00..." }
   end
-  
+
   it "間違えても巨大なHTMLは返さない" do
     if $0 == "-"
       test1("https://www.shogi-extend.com/") # => "SHOGI-EXTEND\n  \n  \n    SHOGI-EXTENDログイン将棋ウォーズ棋譜検索他のアプリで検討したいときにどうぞぴよ将棋や KENTO で検討できるその他のソフトにはコピーして張り付け (CTRL+V)プレイヤー戦力分析機能付き符号の鬼符号マスター養成所100問正解するまでの時間を競う1分半切ったら卒業棋書を読むのが楽になるかもしれない動画作成NEW!棋譜を動画にしたいときにどうぞmp4, gif, png, zip 等に変換「なんでも棋譜変換」とかぶってるけどこっちは時間のかかる変換に特化している動画ライブラリNEW!動画作成のあとで登録するとここで見れるしょぼいので YouTube やニコニコ動画に上げた方がいいかもしれない共有将棋盤リレー将棋・詰将棋作成・仲間内での対戦にどうぞ秘密の部屋を立てて仲間内で対戦 (時計設置可)課題局面や詰将棋の作成・公開・共有SNS等にURLを貼って指し継ぐ通信将棋対人戦気軽に対局したいときにどうぞプレイ人数 2〜8人いまんところログイン不要これは共有将棋盤の「自動マッチング」へのショートカットなんでも棋譜変換棋譜が読み込めないときに放り込もう変則..."
@@ -121,7 +129,7 @@ RSpec.describe KifuExtractor, type: :model do
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> KifuExtractor
 # >>   将棋ウォーズ
 # >>   KENTO
@@ -133,15 +141,15 @@ end
 # >>   lishogi
 # >>   HTMLのなかにある kif へのリンクを探す (FAILED - 1)
 # >>   間違えても巨大なHTMLは返さない
-# >> 
+# >>
 # >> Failures:
-# >> 
+# >>
 # >>   1) KifuExtractor HTMLのなかにある kif へのリンクを探す
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      # -:113:in `block (2 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
 # >>      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-# >> 
+# >>
 # >> Top 10 slowest examples (10.74 seconds, 85.4% of total time):
 # >>   KifuExtractor lishogi
 # >>     7.54 seconds -:95
@@ -163,11 +171,11 @@ end
 # >>     0.08101 seconds -:59
 # >>   KifuExtractor KENTO
 # >>     0.00625 seconds -:18
-# >> 
+# >>
 # >> Finished in 12.57 seconds (files took 3.64 seconds to load)
 # >> 10 examples, 1 failure
-# >> 
+# >>
 # >> Failed examples:
-# >> 
+# >>
 # >> rspec -:109 # KifuExtractor HTMLのなかにある kif へのリンクを探す
-# >> 
+# >>
