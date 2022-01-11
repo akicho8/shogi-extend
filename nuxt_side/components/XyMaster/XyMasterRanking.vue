@@ -85,8 +85,4 @@ export default {
         .xemoji
           height: 1.25em
           width: unset
-
-    .entry_name_td
-      img.xemoji
-        vertical-align: text-bottom
 </style>
