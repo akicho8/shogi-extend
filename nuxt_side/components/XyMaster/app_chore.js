@@ -18,7 +18,7 @@ export const app_chore = {
         if (this.mode === "is_mode_run") {
           if (this.tapped_place) {
             if (this.xy_equal_p(this.tapped_place, place)) {
-              return "has-background-primary"
+              return "is_tapped_cell"
             }
           }
         }
