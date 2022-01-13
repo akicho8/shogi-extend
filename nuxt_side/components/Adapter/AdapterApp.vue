@@ -24,6 +24,7 @@
             .control
               .buttons.is-centered
                 b-button(@click="validate_handle") 検証
+                b-button(@click="share_board_open_handle") 盤面
 
           b-field.mt-5
             .control
