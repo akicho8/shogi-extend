@@ -175,6 +175,7 @@ export class TryFormatInfo extends ApplicationMemoryRecord {
           { name: "対局(後手側)",                                             success: true,  body: "https://lishogi.org/151jxej8/gote",  },
           { name: "対局キーとプレイヤーを表わすキーが連結している場合がある", success: true,  body: "https://lishogi.org/151jxej8juO1",   },
           { name: "KIF export url",                                           success: true,  body: "https://lishogi.org/game/export/151jxej8?csa=0&clocks=0", },
+          { name: "盤面入力",                                                 success: true,  body: "https://lishogi.org/editor/ln5nl/2kp3R1/2l4p1/p1pg1+BP1p/9/PPP1PP3/1SN5P/1KG1G2+r1/L8_w_G2Pb3sn4p_1",       },
           { name: "5五将棋のCSAエクスポートは盤の初期配置が違うため失敗",     success: false, body: "https://lishogi.org/wbvpq4cR",       },
         ],
       },

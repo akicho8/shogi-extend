@@ -1,3 +1,10 @@
+# desc "棋譜変換のテスト(KIFU_EXTRACTOR_OUTPUT=1 で expected を生成)"
+RSpec::Core::RakeTask.new("spec:kifu_extractor") do |t|
+  t.pattern = "spec/models/kifu_extractor_spec.rb"
+  t.rspec_opts = "-f d"
+  # t.rspec_opts = "-f d -t kifu_extractor"
+end
+
 namespace :my do
   desc "モンタージュ画像の生成"
   task :create_montage do
