@@ -1,8 +1,10 @@
-# desc "棋譜変換のテスト(KIFU_EXTRACTOR_OUTPUT=1 で expected を生成)"
-RSpec::Core::RakeTask.new("spec:kifu_extractor") do |t|
-  t.pattern = "spec/models/kifu_extractor_spec.rb"
-  t.rspec_opts = "-f d"
-  # t.rspec_opts = "-f d -t kifu_extractor"
+if defined?(RSpec)
+  # desc "棋譜変換のテスト(KIFU_EXTRACTOR_OUTPUT=1 で expected を生成)"
+  RSpec::Core::RakeTask.new("spec:kifu_extractor") do |t|
+    t.pattern = "spec/models/kifu_extractor_spec.rb"
+    t.rspec_opts = "-f d"
+    # t.rspec_opts = "-f d -t kifu_extractor"
+  end
 end
 
 namespace :my do
