@@ -3,9 +3,10 @@
 module KifuExtractor
   class CaseShogidb2Board < Extractor
     def resolve
-      if uri = extracted_uri
-        if uri.host.end_with?("shogidb2.com")
+      if url = extracted_url
+        if url.include?("shogidb2.com/board")
           sfen = nil
+          uri = extracted_uri
           if uri.fragment
             sfen = Rack::Utils.unescape(uri.fragment)
           end

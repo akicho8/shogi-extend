@@ -3,8 +3,8 @@
 module KifuExtractor
   class CaseOushosenUrl < Extractor
     def resolve
-      if uri = extracted_uri
-        if uri.host.end_with?("mainichi.jp")
+      if url = extracted_url
+        if url.include?("mainichi.jp/oshosen")
           if v = fetched_content
             # url:"//cdn.mainichi.jp/vol1/shougi/kif/ousho202201090101_utf8.kif" にマッチ
             if md = v.match(%r{(?<url>//.*\.kif)\b})

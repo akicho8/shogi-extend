@@ -1,6 +1,7 @@
 module KifuExtractor
   class Item
     BASIC_EXTENTIONS = [:kif, :kifu, :ki2, :ki2u, :csa, :sfen, :bod]
+    BASIC_EXTENTIONS_REGEXP = /\.(?:#{BASIC_EXTENTIONS.join("|")})\b/io
 
     attr_accessor :source
 
@@ -53,14 +54,17 @@ module KifuExtractor
       @all_extract_urls ||= URI.extract(@source, ["http", "https"])
     end
 
+    # URI.extract(@source, ["http", "https"]) では逆に正しくマッチできないので置き換えてはいけない
+    # 例えば "url: 'http://example.com/xxx.kif'," には "http://example.com/xxx.kif'," がマッチしてしまう
+    # だからか URI.extract は公式で非推奨になっている
     def all_extract_kif_urls
-      @all_extract_kif_urls ||= all_extract_urls.find_all { |e| kif_url?(e) }
+      @all_extract_urls ||= @source.scan(%r{https?://.*?#{BASIC_EXTENTIONS_REGEXP}})
     end
 
     def kif_url?(url)
       uri = URI(url)
       if uri.path
-        uri.path.match?(/\.(#{BASIC_EXTENTIONS.join("|")})\z/io)
+        uri.path.match?(/#{BASIC_EXTENTIONS_REGEXP}\z/io)
       end
     end
   end

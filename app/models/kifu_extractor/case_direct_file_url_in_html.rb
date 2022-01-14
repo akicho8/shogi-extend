@@ -7,9 +7,7 @@ module KifuExtractor
       if v = fetched_content
         item = Item.new(v)
         if url = item.all_extract_kif_urls.first
-          if v = WebAgent.fetch(url)
-            @body = v.toutf8
-          end
+          @body = human_very_dirty_kif_fetch_and_clean(url)
         end
       end
     end

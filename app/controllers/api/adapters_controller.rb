@@ -3,7 +3,6 @@ module Api
     # curl -d _method=post http://localhost:3000/api/adapter/record_create.json
     def record_create
       v = FreeBattle.adapter_post(params.merge(current_user: current_user))
-      Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, v])
       render json: v
     end
 

@@ -31,4 +31,20 @@ export const SpUtils = {
 
     return url.toString()
   },
+
+  query_to_turn(query, max) {
+    if ("turn" in query) {
+      const turn = query.turn
+      if (turn.match(/\d/)) {
+        let rv = null
+        const n = Number(turn)
+        if (n < 0) {
+          rv = max + 1 + n
+        } else {
+          rv = n
+        }
+        return rv
+      }
+    }
+  },
 }

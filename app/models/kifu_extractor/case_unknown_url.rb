@@ -3,7 +3,7 @@
 # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/")'
 # rails r 'puts KifuExtractor.extract("https://lishogi.org/")'
 module KifuExtractor
-  class CaseOtherUrl < Extractor
+  class CaseUnknownUrl < Extractor
     def resolve
       if v = fetched_content
         v = v.toutf8

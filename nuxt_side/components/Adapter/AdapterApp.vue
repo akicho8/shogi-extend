@@ -24,7 +24,7 @@
             .control
               .buttons.is-centered
                 b-button(@click="validate_handle") 検証
-                b-button(@click="share_board_open_handle") 盤面
+                b-button(@click="share_board_open_handle()") 盤面
 
           b-field.mt-5
             .control
@@ -121,19 +121,29 @@ export default {
       this.record_fetch(() => this.app_open(this.kento_app_with_params_url))
     },
     share_board_open_handle() {
+      this.share_board_open_handle_by(null)
+    },
+    share_board_first_open_handle() {
+      this.share_board_open_handle_by(0)
+    },
+    share_board_last_open_handle() {
+      this.share_board_open_handle_by(null)
+    },
+    share_board_open_handle_by(force_turn) {
       this.record_fetch(() => {
         // https://router.vuejs.org/guide/essentials/navigation.html#programmatic-navigation
         this.$router.push({
           name: "share-board",
           query: {
             body: this.record.all_kifs.sfen,
-            turn: this.fixed_turn,
+            turn: force_turn ?? this.fixed_turn,
             abstract_viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",
           },
         })
       })
     },
+
     style_editor_open_handle() {
       this.record_fetch(() => {
         this.$router.push({
@@ -337,7 +347,17 @@ export default {
     // piyo_shogi, kento, share_board で表示する局面(手数)
     // 中盤開始局面にする場合は this.record.display_turn を渡す
     fixed_turn() {
-      return this.record.turn_max // 最終局面
+      let max = 0
+      if (this.record) {
+        max = this.record.turn_max
+      }
+
+      const turn = this.query_to_turn(this.$route.query, max)
+      if (turn != null) {
+        return turn
+      }
+
+      return max
     },
 
     piyo_shogi_app_with_params_url() {

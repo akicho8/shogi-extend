@@ -28,7 +28,7 @@
             .dtd
               dt body
               dd
-                | 入力値。現在のURLとして <code>location.href</code> を渡しとけばいい。
+                | 入力値。これだけ必須。現在のURLとして <code>location.href</code> を渡しとけばいい。
                 | 選択範囲は <code>getSelection().toString()</code> で取れる。
             .dtd
               dt open
@@ -46,6 +46,17 @@
                 ul.mt-1
                   li <code>_blank</code> 新しいタブ(PC初期値)
                   li <code>_self</code> 既存タブ(スマホ初期値)
+            .dtd
+              dt turn
+              dd
+                | アプリを開くときの手数
+                ul.mt-1
+                  li <code>数字</code> その手数の局面(マイナスなら後ろから数える)
+                  li <code>0</code> 最初の局面
+                  li <code>1</code> 1手指した直後の局面
+                  li <code>-1</code> 最後の局面
+                  li <code>-2</code> 最後から一つ前の局面
+                  li <code>数字以外</code> 最後の局面(初期値)
 </template>
 
 <script>

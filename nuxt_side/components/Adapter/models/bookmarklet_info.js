@@ -42,6 +42,13 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
         },
       },
       {
+        name: "なんでも共有将棋盤(詰将棋用)",
+        title: "放り込んでから初期配置の局面で共有将棋盤を開く",
+        func(context) {
+          return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=share_board&turn=0\`, '_blank')`
+        },
+      },
+      {
         name: "なんでも動画作成",
         title: "放り込んでから動画作成を開く",
         func(context) {

@@ -4,7 +4,7 @@
 # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d/gote")'
 # rails r 'puts KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d")'
 module KifuExtractor
-  class CaseLishogiBattle < Extractor
+  class CaseLishogiBattleUrl < Extractor
     def resolve
       if uri = extracted_uri
         if uri.host.end_with?("lishogi.org") && !uri.path.start_with?("/editor/")

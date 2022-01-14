@@ -6,7 +6,8 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset(@click="base.share_board_open_handle" label="共有将棋盤に転送")
+          b-menu-item.is_active_unset(@click="base.share_board_first_open_handle" :label="`共有将棋盤 #${0}`")
+          b-menu-item.is_active_unset(@click="base.share_board_last_open_handle"  :label="`共有将棋盤 #${base.fixed_turn}`" v-if="base.fixed_turn > 0")
           b-menu-item.is_active_unset(@click="base.video_new_open_handle" label="動画作成")
           b-menu-item.is_active_unset(@click="base.style_editor_open_handle" label="スタイルエディタに転送")
 
