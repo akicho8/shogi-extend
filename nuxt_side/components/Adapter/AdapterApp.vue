@@ -24,7 +24,13 @@
             .control
               .buttons.is-centered
                 b-button(@click="validate_handle") 検証
-                b-button(@click="share_board_open_handle()") 盤面
+                //- b-button(@click="share_board_open_handle") 盤面
+
+          b-field.mt-5
+            .control
+              .buttons.is-centered.are-small
+                b-button(@click="share_board_first_open_handle") 最初
+                b-button(@click="share_board_last_open_handle") 最後
 
           b-field.mt-5
             .control
