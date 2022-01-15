@@ -416,6 +416,11 @@ export default {
       this.sound_play("x")
       this.toast_ok("それは相手の駒です")
     },
+
+    // 持駒を元に戻す(デバッグ用)
+    sp_state_reset() {
+      this.$refs.main_sp.sp_object().state_reset()
+    },
   },
 
   computed: {

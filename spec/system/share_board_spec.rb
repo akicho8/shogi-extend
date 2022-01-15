@@ -142,7 +142,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
         find(".play_button").click                 # 開始
         find(".dialog.modal .button.is-warning").click # 「無視して開始する」
-        first(".close_handle_for_capybara").click  # 閉じる (ヘッダーに置いている)
+        modal_close_handle  # 閉じる (ヘッダーに置いている)
       end
       b_block do
         assert_white_read_sec(@INITIAL_SEC)    # bob側は秒読みが満タン
@@ -200,12 +200,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         action_assert(0, "alice", "順番 ON")               # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
-        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        modal_close_handle          # 閉じる (ヘッダーに置いている)
       end
       b_block do
         action_assert(0, "alice", "順番 ON")
         assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
-        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        modal_close_handle          # 閉じる (ヘッダーに置いている)
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
         assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
@@ -248,8 +248,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
-        first(".apply_button").click                       # 適用クリック
-        first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
+        apply_button                       # 適用クリック
+        modal_close_handle          # 閉じる (ヘッダーに置いている)
       end
       c_block do
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
@@ -521,7 +521,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
         find(".play_button").click                # 開始
         find(".dialog.modal .button.is-warning").click # 「無視して開始する」
-        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている)
+        modal_close_handle                          # 閉じる (ヘッダーに置いている)
       end
       a_block do
         assert_move("77", "76", "☗7六歩")        # 初手を指す
@@ -862,7 +862,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         menu_item_click("順番設定")               # 「順番設定」モーダルを開く
         find(".main_switch").click                # 右上の有効スイッチをクリック
         find(".shuffle_handle").click             # シャッフルする
-        first(".close_handle_for_capybara").click # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
+        modal_close_handle                         # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
         click_text_match("更新せずに閉じる")      # 無視して閉じる
       end
     end
@@ -1223,7 +1223,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         action_log_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
-        first(".apply_button").click # この局面まで戻る実行
+        apply_button # この局面まで戻る実行
         assert_turn(1)        # 1手目に戻った
       end
       b_block do
@@ -1445,6 +1445,31 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     assert_text "棋譜を読み込んで共有しました"
   end
 
+  describe "駒を持ち上げた状態で順番設定が変更になり手番が切り替わると駒を元に戻す" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
+      end
+      b_block do
+        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+      end
+      a_block do
+        place_click("77")           # alice は77の駒を持つ
+        lifted_from("77")           # 77の駒を持っていることを保証する
+      end
+      b_block do
+        hamburger_click
+        menu_item_click("順番設定") # 「順番設定」モーダルを開く(すでに有効になっている)
+        find(".swap_handle").click  # 先後入替
+        apply_button                # 適用
+        modal_close_handle          # 閉じる
+      end
+      a_block do
+        no_lifted_from("77")        # alice は77の駒を持っていたはずだが手番が変わったため駒を元に戻した
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1508,7 +1533,21 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # place_click("76") は find(".place_7_6").click 相当
   def place_click(place)
-    find([".place", place.chars].join("_")).click #
+    find(place_class(place)).click
+  end
+
+  def place_class(place)
+    [".place", place.chars].join("_")
+  end
+
+  # place の位置の駒を持ち上げ中か？
+  def lifted_from(place)
+    assert_selector "#{place_class(place)}.lifted_from_p"
+  end
+
+  # place の位置の駒を持ち上げてない
+  def no_lifted_from(place)
+    assert_no_selector "#{place_class(place)}.lifted_from_p"
   end
 
   # OK or 観戦 トグルボタンのクリック
@@ -1563,7 +1602,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   def room_recreate_apply
     hamburger_click
     menu_item_click("再起動")     # モーダルを開く
-    first(".apply_button").click  # 実行する
+    apply_button  # 実行する
   end
 
   def assert_turn(turn)
@@ -1612,6 +1651,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
+    modal_close_handle                                  # 閉じる (ヘッダーに置いている)
+  end
+
+  def apply_button
+    first(".apply_button").click
+  end
+
+  def modal_close_handle
     first(".close_handle_for_capybara").click          # 閉じる (ヘッダーに置いている)
   end
 

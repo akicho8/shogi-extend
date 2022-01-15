@@ -37,6 +37,7 @@
       a.panel-block(:href="base.json_debug_url") JSON確認
       a.panel-block(@click="base.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="base.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
+      a.panel-block(@click="base.sp_state_reset") 持ち上げた駒を元に戻す
 
   .column.is-2
     .panel
