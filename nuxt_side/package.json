@@ -23,7 +23,7 @@
     "chartjs-plugin-datalabels": "1.0.0",
     "fabric": "^4.2.0",
     "howler": "^2.2.3",
-    "js-memory-record": "^0.0.18",
+    "js-memory-record": "^0.0.19",
     "lzma": "^2.3.2",
     "nuxt": "^2.14.7",
     "nuxt-buefy": "^0.4.10",

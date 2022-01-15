@@ -7431,15 +7431,6 @@ js-beautify@^1.6.12:
     mkdirp "~1.0.3"
     nopt "^4.0.3"
 
-js-memory-record@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.18.tgz#ae40d33c73065df5fdddd40220c7d0cfb2bcb115"
-  integrity sha512-cwvV2B6651GNWO1Z9I9PmXZmo/LDJ1h3XiFldVwb0fOX4VSbWa3bL9twngr7m3ejXG963T9brsetYwxsv88LVA==
-  dependencies:
-    babel-runtime latest
-    core-js latest
-    lodash latest
-
 js-memory-record@^0.0.19:
   version "0.0.19"
   resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.19.tgz#826a8737051baf533cd3cc269fc75fd45e2f97cb"
