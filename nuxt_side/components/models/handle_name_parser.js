@@ -1,6 +1,9 @@
 import _ from "lodash"
 
 export class HandleNameParser {
+  static DELETE_SUFFIX = "!！."
+  static DELETE_CHAR   = "。"
+
   // call_name("SOS団")             → "SOS団"
   // call_name("ありす")            → "ありすさん"
   // call_name("ありす123(居飛車)") → "ありすさん"
@@ -19,12 +22,12 @@ export class HandleNameParser {
 
   get call_name() {
     let s = _.trim(this.source)
-    s = s.replace(/(.+)[@＠].*/, "$1")  // "alice@xxx"      → "alice"
-    s = s.replace(/(.+?)[!！]+$/, "$1") // "alice!"         → "alice"
-    s = s.replace(/[。]/g, "")          // "name。"         → "name"
-    s = s.replace(/(.+)\(.*\)$/, "$1")  // "name123(xxx)"   → "name123"
-    s = s.replace(/(.+)（.*）$/, "$1")  // "name123（xxx）" → "name123"
-    s = s.replace(/(\D+)\d+$/, "$1")    // "name123"        → "name"
+    s = s.replace(/(.+)[@＠].*/, "$1")                                            // "alice@xxx"       → "alice"
+    s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX}]+$`), "$1") // "alice!"          → "alice"
+    s = s.replace(new RegExp(`[${this.constructor.DELETE_CHAR}]`, "g"), "")     // "alice。"         → "alice"
+    s = s.replace(/(.+)\(.*\)$/, "$1")                                            // "alice123(xxx)"   → "alice123"
+    s = s.replace(/(.+)（.*）$/, "$1")                                            // "alice123（xxx）" → "alice123"
+    s = s.replace(/(\D+)\d+$/, "$1")                                              // "alice123"        → "alice"
     if (s.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人)[!！]?$/)) {
       return s
     }
