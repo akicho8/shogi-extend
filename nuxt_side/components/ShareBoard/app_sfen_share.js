@@ -125,7 +125,7 @@ export const app_sfen_share = {
               onend: () => {
                 if (params.next_user_name) {
                   if (this.next_notify_p) {
-                    this.toast_ok(`次は${this.user_call_name(params.next_user_name)}の手番です`)
+                    this.toast_ok(`次は、${this.user_call_name(params.next_user_name)}の手番です`)
                   }
                 }
               },

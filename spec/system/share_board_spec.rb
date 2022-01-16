@@ -219,7 +219,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_text("(通知効果音)")                        # bobさんだけに牛が知らせている
       end
       a_block do
-        assert_text("次はbobさんの手番です")
+        assert_text("次は、bobさんの手番です")
         assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
         assert_member_list(1, "is_turn_standby", "alice")  # 1人目(alice)に丸がついていない
         assert_member_list(2, "is_turn_active", "bob")     # 2人目(bob)は指せるので丸がついている
@@ -227,7 +227,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       b_block do
         assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
         assert_no_text("(通知効果音)")                     # aliceさんの手番なので出ない
-        assert_text("次はaliceさんの手番です")
+        assert_text("次は、aliceさんの手番です")
       end
     end
   end
