@@ -369,9 +369,9 @@ module Kiwi
       # rails r 'puts Kiwi::Lemon.first.mail_body'
       def mail_body
         {
+          "ブラウザURL"    => browser_url,
           "変換パラメータ" => all_params[:media_builder_params].to_t,
           "棋譜URL"        => UrlProxy.full_url_for(recordable.share_board_path),
-          "ブラウザURL"    => browser_url,
           "状態"           => info.to_t,
           "全体の状況"     => self.class.info.to_t,
           "ユーザー"       => user.info.to_t,
