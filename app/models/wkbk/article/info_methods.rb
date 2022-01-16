@@ -37,12 +37,12 @@ module Wkbk
         Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
       end
 
-      def share_board_path
-        "/share-board?#{share_board_params.to_query}"
+      def share_board_path(params = {})
+        "/share-board?#{share_board_params.merge(params).to_query}"
       end
 
       def share_board_url
-        UrlProxy.full_url_for(share_board_path)
+        UrlProxy.full_url_for(share_board_path(title: title))
       end
 
       def share_board_params

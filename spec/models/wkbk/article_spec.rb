@@ -156,11 +156,11 @@ module Wkbk
     end
 
     it "mail_body" do
-      assert { article.mail_body }
+      assert { article1.mail_body }
     end
 
     it "mail_subject" do
-      assert { article.mail_subject }
+      assert { article1.mail_subject }
     end
 
     # it "公開フォルダに移動させたタイミングで投稿通知" do
