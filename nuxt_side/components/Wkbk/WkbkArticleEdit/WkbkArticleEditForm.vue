@@ -4,7 +4,7 @@ MainSection.WkbkArticleEditForm
     .columns
       .column
         b-field(label="タイトル" label-position="on-border")
-          b-input(v-model.trim="base.article.title" required :maxlength="100" placeholder="空でもかまいません")
+          b-input(v-model.trim="base.article.title" :maxlength="100" placeholder="空でもかまいません")
 
         b-field(label="解説" label-position="on-border")
           b-input(v-model.trim="base.article.description" type="textarea" :maxlength="5000" placeholder="解答者に向けて問題の解答の解説をしましょう")
