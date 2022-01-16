@@ -36,6 +36,7 @@ module Wkbk
   class Book < ApplicationRecord
     include FolderMethods
     include InfoMethods
+    include NotifyMethods
     include AvatarMethods
     include JsonStructMethods
     include MockMethods
@@ -149,7 +150,8 @@ module Wkbk
     end
 
     def page_url(options = {})
-      UrlProxy.full_url_for("/rack/books/#{key}")
+      path = ["/rack/books/#{key}", options.to_query].find_all(&:present?).join("?")
+      UrlProxy.full_url_for(path)
     end
 
     # jsから来たパラメーターでまとめて更新する
@@ -185,14 +187,6 @@ module Wkbk
       end
 
       notify
-    end
-
-    def notify
-      str = created_at == updated_at ? "作成" : "更新"
-      SlackAgent.notify(subject: "問題集#{str}", body: [title, page_url].join(" "))
-      subject = "#{user.name}さんが問題集「#{title}」を#{str}"
-      body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      SystemMailer.notify(subject: subject, body: body).deliver_later
     end
 
     # articles の並び替え

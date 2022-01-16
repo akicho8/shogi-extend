@@ -34,6 +34,7 @@ module Wkbk
     include FolderMethods
     include ImportExportMethods
     include InfoMethods
+    include NotifyMethods
     include JsonStructMethods
 
     belongs_to :user, class_name: "::User"                                                      # 作者
@@ -154,17 +155,17 @@ module Wkbk
 
       ActiveRecord::Base.transaction do
         attrs = article.slice(*[
-                                :folder_key,
-                                :init_sfen,
-                                :viewpoint,
-                                :title,
-                                :description,
-                                :direction_message,
-                                :difficulty,
-                                :mate_skip,
-                                :tag_list,
-                                :lineage_key,
-                              ])
+            :folder_key,
+            :init_sfen,
+            :viewpoint,
+            :title,
+            :description,
+            :direction_message,
+            :difficulty,
+            :mate_skip,
+            :tag_list,
+            :lineage_key,
+          ])
 
         assign_attributes(attrs)
         save!
@@ -196,18 +197,10 @@ module Wkbk
       notify
     end
 
-    def notify
-      str = created_at == updated_at ? "作成" : "更新"
-      SlackAgent.notify(subject: "問題#{str}", body: [title, page_url].join(" "))
-      subject = "#{user.name}さんが問題「#{title}」を#{str}"
-      body = info.collect { |k, v| "#{k}: #{v}\n" }.join
-      SystemMailer.notify(subject: subject, body: body).deliver_later
-    end
-
     def book_keys=(v)
       if Rails.env.development?
         if new_record?
-            warn "article をDBに保存していないタイミングでは bookships も保存できていない"
+          warn "article をDBに保存していないタイミングでは bookships も保存できていない"
         end
       end
       self.books = Book.where(key: v) # persisted? なら INSERT が走る

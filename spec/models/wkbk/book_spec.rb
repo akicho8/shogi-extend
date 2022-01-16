@@ -132,10 +132,8 @@ module Wkbk
       it "works" do
         user = User.create!
         book = user.wkbk_books.create!
-        perform_enqueued_jobs { book.notify }
-        mail = ActionMailer::Base.deliveries.last
-        assert { mail.to   == ["shogi.extend@gmail.com"] }
-        assert { mail.subject.match?(/問題集.*作成/) }
+        assert { book.mail_body }
+        assert { book.mail_subject }
       end
     end
   end

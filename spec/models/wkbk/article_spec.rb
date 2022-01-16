@@ -152,7 +152,15 @@ module Wkbk
     end
 
     it "share_board_url" do
-      assert { article1.share_board_url == "http://localhost:3000/share-board?abstract_viewpoint=black&body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=#{article1.title}&turn=0" }
+      assert { article1.share_board_url == "http://localhost:4000/share-board?abstract_viewpoint=black&body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=#{article1.title}&turn=0" }
+    end
+
+    it "mail_body" do
+      assert { article.mail_body }
+    end
+
+    it "mail_subject" do
+      assert { article.mail_subject }
     end
 
     # it "公開フォルダに移動させたタイミングで投稿通知" do

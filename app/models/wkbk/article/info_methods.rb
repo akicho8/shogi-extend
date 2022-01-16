@@ -3,38 +3,46 @@ module Wkbk
     concern :InfoMethods do
       def info
         {
-          "問題ID"         => id,
-          "問題KEY"        => key,
-          "問題タイトル"   => title,
-          "問題投稿者"     => user.name,
-          "問題公開設定"   => folder.name,
-          "*問題URL"       => page_url,
-          "問題種類"       => lineage.name,
-          "問題難易度"     => difficulty,
-          "問題メッセージ" => direction_message,
-          "問題タグ"       => tag_list.join(", "),
-          "問題説明"       => description.presence.to_s.squish,
+          "ID"         => id,
+          "KEY"        => key,
+          "タイトル"   => title,
+          "投稿者"     => user.name,
+          "公開設定"   => folder.name,
+          "URL"        => page_url,
+          "種類"       => lineage.name,
+          "難易度"     => difficulty,
+          "メッセージ" => direction_message,
+          "タグ"       => tag_list.join(", "),
+          "説明"       => description.presence.to_s.squish,
         }
       end
 
+      # ZIPにするとき用
       def to_kif
+        header = info.collect { |k, v| "問題#{k}：#{v}\n" }.join
+
         str = Transform.to_kif_from(main_sfen)
         str = str.gsub(/^.*の備考.*\n/, "")
         str = str.gsub(/^まで.*\n/, "")
 
-        info.collect { |k, v| "#{k}：#{v}\n" }.join + str
+        header + str
       end
 
       def page_url(options = {})
-        UrlProxy.full_url_for("/rack/articles/#{key}")
+        path = ["/rack/articles/#{key}", options.to_query].find_all(&:present?).join("?")
+        UrlProxy.full_url_for(path)
       end
 
       def share_board_png_url
         Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, format: "png", **share_board_params}])
       end
 
+      def share_board_path
+        "/share-board?#{share_board_params.to_query}"
+      end
+
       def share_board_url
-        Rails.application.routes.url_helpers.url_for([:share_board, {only_path: false, title: title, **share_board_params}])
+        UrlProxy.full_url_for(share_board_path)
       end
 
       def share_board_params
