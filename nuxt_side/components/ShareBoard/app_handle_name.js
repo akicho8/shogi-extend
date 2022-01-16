@@ -8,6 +8,17 @@ export const app_handle_name = {
     handle_name_modal_handle() {
       this.sidebar_p = false
       this.sound_play_click()
+
+      if (this.order_enable_p) {
+        this.dialog_alert({
+          title: "順番設定後は変更できません",
+          message: "順番設定をいったん解除してください",
+          type: "is-danger",
+          confirmText: "わかった",
+        })
+        return
+      }
+
       this.handle_name_modal_core()
     },
     handle_name_modal_core(params = {}) {

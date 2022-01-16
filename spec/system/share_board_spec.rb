@@ -1470,6 +1470,17 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "順番設定後はハンドルネームを変更させない" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
+        hamburger_click
+        menu_item_click("ハンドルネーム変更")
+        assert_text "順番設定後は変更できません"
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
