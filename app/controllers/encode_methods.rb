@@ -2,7 +2,19 @@ module EncodeMethods
   extend ActiveSupport::Concern
 
   def current_body_encode
-    Encoding.find(params[:body_encode].presence || "UTF-8").to_s
+    v = params[:body_encode].presence
+    if v == "auto"
+      v = current_body_encode_default
+    end
+    Encoding.find(v || "UTF-8").to_s
+  end
+
+  def current_body_encode_default
+    if request.user_agent.to_s.match(/Windows/i)
+      "Shift_JIS"
+    else
+      "UTF-8"
+    end
   end
 
   private
