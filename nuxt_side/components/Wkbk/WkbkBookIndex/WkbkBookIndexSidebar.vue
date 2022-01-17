@@ -1,7 +1,7 @@
 <template lang="pug">
 b-sidebar.WkbkBookIndexSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
   .is-flex.is-justify-content-start.is-align-items-center.ml-4.mt-4
-    b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
+    b-button.px-5.sidebar_close_handle(@click="base.sidebar_toggle" icon-left="menu")
   WkbkBookIndexSidebarBody(:base="base")
 </template>
 

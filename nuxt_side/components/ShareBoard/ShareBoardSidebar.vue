@@ -2,7 +2,7 @@
 b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
-      b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
+      b-button.px-5.sidebar_close_handle(@click="base.sidebar_toggle" icon-left="menu")
       template(v-if="blank_p(base.ac_room) || !base.self_is_member_p")
         NavbarItemLogin(component="a")
         NavbarItemProfileLink(component="a" :click_fn="base.profile_click_handle")

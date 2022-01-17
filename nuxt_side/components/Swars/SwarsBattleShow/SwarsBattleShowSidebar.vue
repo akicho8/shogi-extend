@@ -2,7 +2,7 @@
 b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight right v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
-      b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
+      b-button.px-5.sidebar_close_handle(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
         b-menu-list(label="Action")
@@ -34,7 +34,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
             template(slot="label" slot-scope="props")
               span.ml-1 ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
-            b-menu-item.is_active_unset(label="KIF"             @click="base.sidebar_close" :href="dl_url_for('kif')")
+            b-menu-item.is_active_unset(label="KIF"             @click="base.sidebar_close" :href="dl_url_for('kif', {body_encode: 'UTF-8'})")
             b-menu-item.is_active_unset(label="KIF (Shift_JIS)" @click="base.sidebar_close" :href="dl_url_for('kif', {body_encode: 'Shift_JIS'})")
             b-menu-item.is_active_unset(label="KI2"             @click="base.sidebar_close" :href="dl_url_for('ki2')")
             b-menu-item.is_active_unset(label="CSA"             @click="base.sidebar_close" :href="dl_url_for('csa')")

@@ -8,6 +8,24 @@ export const app_chore = {
       this.kif_clipboard_copy({kc_path: row.show_path})
     },
 
+    kifu_save_url(row, params = {}) {
+      params = {
+        disposition: "attachment",
+        ...params,
+      }
+      const base_url = this.$config.MY_SITE_URL + row.show_path + "." + "kif"
+      const url = new URL(base_url)
+      _.each(params, (val, key) => {
+        url.searchParams.set(key, val)
+      })
+      return url.toString()
+    },
+
+    kifu_save_handle(row) {
+      this.sound_play_click()
+      this.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+    },
+
     home_bookmark_handle() {
       this.sidebar_p = false
       this.sound_play_click()

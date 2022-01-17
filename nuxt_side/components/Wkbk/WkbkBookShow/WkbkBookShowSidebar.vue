@@ -2,7 +2,7 @@
 b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="sidebar_p" v-if="base.book")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
-      b-button.px-5(@click="base.sidebar_toggle" icon-left="menu")
+      b-button.px-5.sidebar_close_handle(@click="base.sidebar_toggle" icon-left="menu")
     .mt-4
       b-menu
         b-menu-list(label="Action" v-if="base.is_running_p")

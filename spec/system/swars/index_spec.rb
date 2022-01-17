@@ -152,7 +152,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
 
-        find(".is_layout_table .dropdown").click
+        column_toggle_menu_open
         menu_item_sub_menu_click("日時")
 
         table_in { assert_no_text("2020-01-01") }
@@ -161,7 +161,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "保存している" do
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        find(".is_layout_table .dropdown").click
+        column_toggle_menu_open
         menu_item_sub_menu_click("日時")
 
         visit2 "/swars/search", query: "Yamada_Taro"
@@ -261,11 +261,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
         find(".swars_direct_download_handle").click         # 「ダウンロード」をタップ
-        
+
         # assert { current_path == "/swars/direct-download" } # 遷移した (テストが不安定)
         switch_to_window(windows.last)                      # 自力で切り替える
 
-                                                            # ページ遷移後
+        # ページ遷移後
         find(".swars_zip_dl_logs_destroy_all").click        # 「クリア」
         find(".oldest_log_create_handle").click             # 「古い1件をDLしたことにする」
         find(".zdsk_continue").click                        # 「前回の続きから」
@@ -290,12 +290,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をタップ
         assert { current_path == "/swars/users/Yamada_Taro/download-all" }
 
-                                                           # ページ遷移後
+        # ページ遷移後
         find(".crawler_run_handle_handle").click           # 「さばく」
         find(".attachment_mode_switch_handle").click       # 「ZIPファイルの添付」
         find(".post_handle").click                         # 「棋譜取得の予約」
 
-                                                           # モーダル発動
+        # モーダル発動
         assert_text("予約しました(0件待ち)")
         find(".dialog.modal.is-active button").click       # 「OK」をクリック
 
@@ -378,6 +378,18 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
   end
 
+  describe "棋譜のファイル保存" do
+    it "works" do
+      visit2 "/swars/search", query: "Yamada_Taro"
+      hamburger_click
+      column_toggle_menu_open
+      menu_item_sub_menu_click("保存 (UTF-8)")
+      find(".sidebar_close_handle").click
+      table_in { first(".kif_save_as_utf8").click }
+      assert_text "たぶんダウンロードしました"
+    end
+  end
+
   def default_swars_id_set
     hamburger_click
     menu_item_click("ウォーズIDを記憶する")
@@ -418,6 +430,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   def search_by(query)
     fill_in "query", with: query
     find(".search_click_handle").click
+  end
+
+  def column_toggle_menu_open
+    find(".is_layout_table .dropdown").click
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
