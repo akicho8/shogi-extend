@@ -28,7 +28,7 @@ module Wkbk
       # rails r 'puts Wkbk::Article.first.mail_body'
       def mail_body
         {
-          "ブラウザURL"  => page_url,
+          "ブラウザURL"  => page_url(force: true),
           "共有将棋盤"   => share_board_url,
           "所属問題集"   => mail_belongs_books.to_t,
           "属性"         => info.to_t,
