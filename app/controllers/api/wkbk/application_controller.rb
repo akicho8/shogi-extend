@@ -18,18 +18,22 @@ module Api
       # | 非公開   | ×   | ×     | public_only | current_user == record.user |
       # |----------+------+--------+-------------+-----------------------------|
       def show_can!(record)
-        # 管理者であれば force=true で非公開の問題を参照できる
-        # http://localhost:4000/rack/books/4?force=true
-        if params[:force] == "true"
-          if current_user
-            if current_user.permit_tag_list.include?("staff")
-              return
-            end
-          end
+        if force_access?
+          return
         end
 
         unless record.show_can(current_user)
           raise WkbkPermissionError
+        end
+      end
+
+      # 管理者であれば force=true で非公開の問題を参照できる
+      # http://localhost:4000/rack/books/4?force=true
+      def force_access?
+        if params[:force] == "true"
+          if current_user
+            current_user.permit_tag_list.include?("staff")
+          end
         end
       end
 
