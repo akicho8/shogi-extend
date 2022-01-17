@@ -21,7 +21,7 @@ module Wkbk
         av << "##{id}"
         av << title
         av << user.name
-        av << "#{user.wkbk_books.count}つ目"
+        av << "計#{user.wkbk_books.count}回"
         av << status_name
         av.join(" ")
       end
