@@ -1,0 +1,2430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja" dir="ltr">
+<head>
+
+
+<script>
+  (function () {
+    if (document.querySelector == undefined) {
+      return;
+    }
+    var agent = navigator.userAgent, isTablet, isSMP, isAndroid, isAndroidMobile, isAndroidTablet, isIPad, isIphone, isWindowsPhone;
+    isAndroid = agent.match(/Android/i) != null;
+    isAndroidMobile = agent.match(/Android.*Mobile/i) != null;
+    isAndroidTablet = !isAndroidMobile && isAndroid;
+    isIPad = agent.match(/iPad/i) != null;
+    isIphone = agent.match(/iPhone/i) != null;
+    isWindowsPhone = agent.match(/Windows Phone/i) != null;
+    isTablet = isIPad || isAndroidTablet;
+    isSMP = isIphone || isAndroidMobile || isWindowsPhone;
+    var m, h;
+    h = document.querySelector('head');
+    m = document.createElement('meta');
+    m.name = 'viewport';
+    if (isTablet || isSMP) {
+      m.content = 'width=1054, user-scalable=no';
+      document.documentElement.classList.add("tablet")
+    }
+    h.appendChild(m);
+  })();
+</script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).init={ajax:{deny_list:["bam-cell.nr-data.net"]}};(window.NREUM||(NREUM={})).loader_config={licenseKey:"e4d723c5c7",applicationID:"35132794"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n,r){return function(){return s.recordSupportability("API/"+e+"/called"),o(t+e,[u.now()].concat(c(arguments)),n?null:this,r),n?void 0:this}}var o=t("handle"),a=t(10),c=t(11),f=t("ee").get("tracer"),u=t("loader"),s=t(4),d=NREUM;"undefined"==typeof window.newrelic&&(newrelic=d);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",v=l+"ixn-";a(p,function(t,e){d[e]=i(l,e,!0,"api")}),d.addPageAction=i(l,"addPageAction",!0),d.setCurrentRouteName=i(l,"routeName",!0),e.exports=newrelic,d.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(v+"tracer",[u.now(),t,n],r),function(){if(f.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw f.emit("fn-err",[arguments,this,t],n),t}finally{f.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(v,e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),s.recordSupportability("API/noticeError/called"),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){var r=!1;try{var i=Object.defineProperty({},"passive",{get:function(){r=!0}});window.addEventListener("testPassive",null,i),window.removeEventListener("testPassive",null,i)}catch(o){}e.exports=function(t){return r?{passive:!0,capture:!!t}:!!t}},{}],4:[function(t,e,n){function r(t,e){var n=[a,t,{name:t},e];return o("storeMetric",n,null,"api"),n}function i(t,e){var n=[c,t,{name:t},e];return o("storeEventMetrics",n,null,"api"),n}var o=t("handle"),a="sm",c="cm";e.exports={constants:{SUPPORTABILITY_METRIC:a,CUSTOM_METRIC:c},recordSupportability:r,recordCustom:i}},{}],5:[function(t,e,n){function r(){return c.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,c=t(12);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],6:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],7:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?p("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&p("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();if(n.length>0){var r=n[n.length-1];if(f&&f<r.startTime)return;p("lcp",[r])}}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||p("cls",[t])})}function a(t){if(t instanceof g&&!y){var e=Math.round(t.timeStamp),n={type:t.type};e<=l.now()?n.fid=l.now()-e:e>l.offset&&e<=Date.now()?(e-=l.offset,n.fid=l.now()-e):e=l.now(),y=!0,p("timing",["fi",e,n])}}function c(t){"hidden"===t&&(f=l.now(),p("pageHide",[f]))}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var f,u,s,d,p=t("handle"),l=t("loader"),v=t(9),m=t(3),g=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){u=new PerformanceObserver(r);try{u.observe({entryTypes:["paint"]})}catch(h){}s=new PerformanceObserver(i);try{s.observe({entryTypes:["largest-contentful-paint"]})}catch(h){}d=new PerformanceObserver(o);try{d.observe({type:"layout-shift",buffered:!0})}catch(h){}}if("addEventListener"in document){var y=!1,w=["click","keydown","mousedown","pointerdown","touchstart"];w.forEach(function(t){document.addEventListener(t,a,m(!1))})}v(c)}},{}],8:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var c=navigator.userAgent,f=c.match(a);f&&c.indexOf("Chrome")===-1&&c.indexOf("Chromium")===-1&&(i="Safari",o=f[1])}e.exports={agent:i,version:o,match:r}},{}],9:[function(t,e,n){function r(t){function e(){t(c&&document[c]?document[c]:document[o]?"hidden":"visible")}"addEventListener"in document&&a&&document.addEventListener(a,e,i(!1))}var i=t(3);e.exports=r;var o,a,c;"undefined"!=typeof document.hidden?(o="hidden",a="visibilitychange",c="visibilityState"):"undefined"!=typeof document.msHidden?(o="msHidden",a="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(o="webkitHidden",a="webkitvisibilitychange",c="webkitVisibilityState")},{}],10:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],11:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],12:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,f,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var c=e(i),f=m(n),u=f.length,s=0;s<u;s++)f[s].apply(c,r);var p=d[w[n]];return p&&p.push([b,n,r,c]),c}}function o(t,e){y[t]=m(t).concat(e)}function v(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:v,emit:n,get:g,listeners:m,context:e,buffer:h,abort:c,aborted:!1};return b}function o(t){return u(t,f,a)}function a(){return new r}function c(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var f="nr@context",u=t("gos"),s=t(10),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!T++){var t=P.info=NREUM.info,e=g.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();f(O,function(e,n){t[e]||(t[e]=n)});var n=a();c("mark",["onload",n+P.offset],null,"api"),c("timing",["load",n]);var r=g.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=v+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===g.readyState&&o()}function o(){c("mark",["domContent",a()+P.offset],null,"api")}var a=t(5),c=t("handle"),f=t(10),u=t("ee"),s=t(8),d=t(6),p=t(2),l=t(3),v=p.getConfiguration("ssl")===!1?"http":"https",m=window,g=m.document,h="addEventListener",y="attachEvent",w=m.XMLHttpRequest,b=w&&w.prototype,E=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:w,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,O={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1212.min.js"},M=w&&b&&b[h]&&!/CriOS/.test(navigator.userAgent),P=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:M,userAgent:s,disabled:E};if(!E){t(1),t(7),g[h]?(g[h]("DOMContentLoaded",o,l(!1)),m[h]("load",r,l(!1))):(g[y]("onreadystatechange",i),m[y]("onload",r)),c("mark",["firstbyte",a.getLastTimestamp()],null,"api");var T=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,f,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,f],s],t)}c(n+"start",[o,a,f],s,u);try{return p=e.apply(a,o)}catch(v){throw c(n+"err",[o,a,v],s,u),v}finally{c(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var c,f,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)f=e[u],c=t[f],a(c)||(t[f]=n(c,s?f+r:r,i,f,o))}function c(n,r,o,a){if(!v||e){var c=v;v=!0;try{t.emit(n,r,o,e,a)}catch(f){i([f,n,r,o],t)}v=c}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function c(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function f(t,e,n){var r=t[e];t[e]=c(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(11),p="nr@original",l=Object.prototype.hasOwnProperty,v=!1;e.exports=r,e.exports.wrapFunction=c,e.exports.wrapInPlace=f,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta http-equiv="Content-Language" content="ja" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<title>【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段― スポニチ Sponichi Annex 芸能</title>
+<meta name="description" content="【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段"/>
+<meta name="keywords" content="スポーツ,芸能,野球,サッカー,格闘技,グラビア,ニュース,写真"/>
+<meta name="copyright" content="Copyright (C) SPORTS NIPPON NEWSPAPERS" />
+
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="スポニチ Sponichi Annex" />
+<meta property="og:title" content="【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段 - スポニチ Sponichi Annex 芸能" />
+<meta property="og:description" content="◆指し手" />
+<meta property="og:url" content="https://www.sponichi.co.jp/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html">
+
+<meta property="og:image" content="https://www.sponichi.co.jp/assets/images/@1x/sponichi_sns001.png" />
+
+<meta name="twitter:title" content="【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段 - スポニチ Sponichi Annex 芸能" />
+<meta name="twitter:description" content="◆指し手" />
+
+
+<link rel="stylesheet" type="text/css" media="screen, projection, tv" href="/assets/css/import.css" />
+
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/jquery.ui.datepicker-ja.min.js"></script>
+<script type="text/javascript" src="/js/common/tab.js?v=1.1"></script>
+<script src="/js/swiper/swiper.jquery.min.js"></script>
+<script type="text/javascript" src="/js/parts.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="/assets/js/gdpr.js"></script>
+<script type="text/javascript" src="/assets/js/date.js"></script>
+<script type="text/javascript" src="/assets/js/sns_botton.js"></script>
+
+
+
+<link rel="amphtml" href="https://www.sponichi.co.jp/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html?amp=1" />
+<meta name="item-id" content="20220118c00041S01002000c">
+<meta name="title" content="【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段"/>
+
+<meta name="can-recommend" content="false"/>
+
+<meta name="category" content="entertainment"/>
+<meta name="epoch-publish-date" content="1645110000"/>
+
+<meta name="lgenre_1" content="芸能"/>
+<meta name="lgenre_2" content="芸能"/>
+<meta name="lgenre_3" content="棋譜速報"/>
+
+<!-- Start DataLayer -->
+<script>
+var dataLayer = dataLayer || [];
+dataLayer.push({ 
+  "articleDate": "2022-01-18 14:37:00",
+  "pageCategory": "芸能",
+  "pageSubCategory": "芸能",
+  "imageFile": "写真なし"
+});
+</script>
+<!-- End DataLayer -->
+
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5LFQDRM');</script>
+<!-- End Google Tag Manager -->
+
+
+          <link rel="preload" href="https://securepubads.g.doubleclick.net/tag/js/gpt.js" as="script" />
+<link rel="preload" href="https://c.amazon-adsystem.com/aax2/apstag.js" as="script" />
+<link rel="preload" href="https://ads.rubiconproject.com/prebid/20630_SPONICHI_Desktop.js" as="script" />
+<link rel="preconnect" href="https://securepubads.g.doubleclick.net">
+<link rel="preconnect" href="https://c.amazon-adsystem.com">
+<script async src="https://ads.rubiconproject.com/prebid/20630_SPONICHI_Desktop.js"></script>
+<script async='async' src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
+<script type='text/javascript'>
+  !function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function(){q("f",arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
+</script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+
+  var pbjs = pbjs || {};
+  pbjs.que = pbjs.que || [];
+
+  var failSafeTimeout = 3500;
+
+  var apstag_pubID = "3889";
+  var apstag_bidTimeout = 2000;
+</script>
+<script>
+      googletag.cmd.push(function() {
+        googletag.defineSlot('/36797461/annex_pc/Entertainment/S_Banner', [[970, 250], [728, 90], [1, 1]], 'div-gpt-ad-1550051020757-0').addService(googletag.pubads()).setCollapseEmptyDiv(true,true);
+        googletag.defineSlot('/36797461/annex_pc/Entertainment/Top_Rect', [[300, 600], [300, 250]], 'div-gpt-ad-1555033871117-0').addService(googletag.pubads());
+        googletag.defineSlot('/36797461/annex_pc/Entertainment/Mid_Rect', [300, 250], 'div-gpt-ad-1550051058345-0').addService(googletag.pubads());
+        googletag.defineSlot('/36797461/annex_pc/Entertainment/right', [[300, 250], [336, 280]], 'div-gpt-ad-1574917805842-0').addService(googletag.pubads());
+        googletag.defineSlot('/36797461/annex_pc/Entertainment/left', [[300, 250], [336, 280]], 'div-gpt-ad-1574917709902-0').addService(googletag.pubads());
+    googletag.pubads().disableInitialLoad();
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+
+  apstag.init({
+    pubID: apstag_pubID,
+    adServer: 'googletag',
+    bidTimeout: apstag_bidTimeout
+  });
+
+  var apstagSlots = [{
+          slotID: 'div-gpt-ad-1555033871117-0',
+          slotName: '/36797461/annex_pc/Entertainment/Top_Rect',
+          sizes: [[300, 600], [300, 250]]
+        },
+        {
+          slotID: 'div-gpt-ad-1550051058345-0',
+          slotName: '/36797461/annex_pc/Entertainment/Mid_Rect',
+          sizes: [[300, 250]]
+        },
+        {
+          slotID: 'div-gpt-ad-1550051105756-0',
+          slotName: '/36797461/annex_pc/Entertainment/Foot_Rect',
+          sizes: [[300, 250]]
+  }]
+
+  function fetchHeaderBids() {
+    var bidders = ['a9', 'prebid'];
+
+    var requestManager = {
+      adserverRequestSent: false
+    };
+
+    bidders.forEach(function(bidder) {
+      requestManager[bidder] = false;
+    })
+
+    function allBiddersBack() {
+      var allBiddersBack = bidders
+        .map(function(bidder) {return requestManager[bidder]; })
+        .filter(function(bool) {return bool;})
+        .length === bidders.length;
+      return allBiddersBack;
+    }
+
+    function headerBidderBack(bidder) {
+      if (requestManager.adserverRequestSent === true) {
+        return;
+      }
+      if (bidder === 'a9') {
+        googletag.cmd.push(function() {
+          apstag.setDisplayBids();
+        });
+      } else if (bidder === 'prebid') {
+        // DO NOTHING
+      }
+
+      requestManager[bidder] = true;
+
+      if (allBiddersBack()) {
+        sendAdserverRequest();
+      }
+    }
+
+    function sendAdserverRequest() {
+      if (requestManager.adserverRequestSent === true) {
+        return;
+      }
+      requestManager.adserverRequestSent = true;
+      googletag.cmd.push(function() {
+        googletag.pubads().refresh();
+      });
+    }
+
+    function requestBids() {
+      apstag.fetchBids({
+        slots: apstagSlots
+      }, function(bids) {
+        headerBidderBack('a9');
+      });
+
+      googletag.cmd.push(function() {
+        pbjs.que.push(function() {
+          pbjs.rp.requestBids({
+            callback: function (bidResponses) {
+              headerBidderBack('prebid');
+            }
+          });
+        });
+      });
+    }
+
+    requestBids();
+
+    window.setTimeout(function() {
+        sendAdserverRequest();
+    }, failSafeTimeout);
+  }
+
+  fetchHeaderBids();
+</script>
+<!--==================================================
+This script loads ad-serving JS library for communicating with ad server and rendering
+its response. You may place it in your <header> or you may place it once per section. If it exists more than once on your page, it will only be loaded once.
+===================================================-->
+<script type="text/javascript">
+(function(b){function f(){var d=this;d.stack={};d.displayAd=function(){};d.requestAds=function(a){var c=b[b.a];if(0===(a||{}).sectionId||(a||{}).sectionId)try{c.requestAds.call(c,a)}catch(e){d.stack[a.sectionId+(a.instance?"_"+a.instance:"")]=a}};d.setGlobalCustomParams=function(a){var c=b[b.a];try{c.setGlobalCustomParams.call(c,a)}catch(e){d.globalCustomParams=a||{}}}}function g(b){var a=e.createElement("script"),c=e.getElementsByTagName("script")[0];a.type="text/javascript";a.src=b;a.async=!0;-1!==
+navigator.userAgent.indexOf("Opera")?setTimeout(function(){c.parentNode.insertBefore(a,c)},0):c.parentNode.insertBefore(a,c)}var e=b.document;try{b.__putPixel(200100)}catch(k){}b.a="__ASL__";var h=("https:"===e.location.protocol?"https:":"http:")+"//img.ak.impact-ad.jp/fh/showad_9e1f505e.js";if("undefined"===typeof b.__ASL_LIB_LOADED){g(h);try{b.__putPixel(200200)}catch(l){}}b.__ASL_LIB_LOADED=1;b["TagProvider"]=b["TagProvider"]||new f})(window);
+</script>
+      
+
+<style>
+.toast-message a {
+    text-decoration: underline;
+}
+</style>
+
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage":{
+    "@type": "WebPage",
+    "@id": "https://www.sponichi.co.jp/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html"
+  },
+  "headline": "【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段",
+  "description": "【佐々木慎七段】　【高崎一生七段】
+(１)▲２六歩[17]　(２)△３四歩[45]
+(３)▲７六歩[12]　(４)△４四歩[29]
+(５)▲４八銀[27]　(６)△９四歩[41]
+(７)▲９六歩[11]　(８)△３… - スポーツニッポン新聞社の公式サイト（www.sponichi.co.jp）。",
+  "image": "https://www.sponichi.co.jp/assets/images/@1x/sponichi_sns001.png",
+  "author": {
+    "@type": "Organization",
+    "name": "スポニチ Sponichi Annex"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "スポニチ Annex",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.sponichi.co.jp/assets/images/@1x/logo_header.png",
+      "width": 169,
+      "height": 44
+    }
+  },
+  "datePublished":"2022-01-18T08:00:00+09:00",
+  "dateModified": "2022-01-18T14:37:03+09:00"
+}
+</script>
+
+</head>
+
+
+      <body class="compact">
+  
+
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5LFQDRM"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+    <!-- ▼▼HEADER▼▼ -->
+<div class="document-wrapper" id="documentWrapper">
+    <header class="has-secondary " data-component="global-header" data-js-component="GlobalHeader">
+                    <!-- header pc20210405 -->
+<div class="top-bar">
+  <div class="left">
+    <span class="btn-hamburger"><i></i></span><a class="logo" href="/"></a><span class="date"></span>
+  </div>
+  <div class="right">
+    <a class="subscription" href="https://sponichi.jp/printed-matter/new-reading/" target="_blank">新聞購読とバックナンバーの申込み</a>
+    <a href="https://park.sjnk.co.jp/campaign/ad_202111_welcome/?utm_source=sponichi&utm_medium=collabo&utm_campaign=zenpre&utm_content=collabo" target="_blank" style="margin-right: 5px;"><img src="/assets/images/square/pc_register_btn_new_v4.jpg"></a>
+
+    <div class="sns">
+      <a class="tw" target="_blank"></a><a class="fb" target="_blank"></a><a class="line" target="_blank"></a>
+    </div>
+    <div id="wrapper-search">
+      <form action="https://www.sponichi.co.jp/search">
+        <input id="searchBox" name="kw" type="text" value="" class="field" id="hdSearchTxt" />
+        <button for="searchbox" type="submit" value="" /><i></i>検索</button>
+      </form>
+    </div>
+  </div>
+</div>
+        
+        
+  <div id="body-ad">
+<div id="ad-area">
+<p>
+<!-- /36797461/annex_pc/Entertainment/S_Banner -->
+<div id='div-gpt-ad-1550051020757-0'>
+<script>
+googletag.cmd.push(function() {
+googletag.display("div-gpt-ad-1550051020757-0");
+});
+</script>
+</div>
+</p>
+</div>
+</div>
+
+<script type='text/javascript' src='//static.criteo.net/js/ld/publishertag.js'></script>
+<div id='crt-1079406' style='width:728px; height:90px; margin:12px auto 0;'></div>
+<script type='text/javascript'>
+   Criteo.DisplayAcceptableAdIfAdblocked(
+       {'zoneid' : 1079406,
+        'containerid' : 'crt-1079406'
+    });
+</script>
+<script src="//cdn.gmossp-sp.jp/ads/loader.js?space_id=g930280" charset="utf-8" language="JavaScript"></script>
+<script language='javascript'>
+    gmossp_forsp.ad('g930280');
+</script>
+
+
+                    <nav class="primary">
+    <a href="/">トップ</a>
+    <a href="/all/kijilist/">新着</a>
+    <a href="/baseball/">野球</a>
+    <a href="/baseball/tokusyu/mlb/">MLB</a>
+    <a href="/soccer/">サッカー</a>
+    <a href="/sports/tokusyu/golf/">ゴルフ</a>
+    <a href="/battle/">格闘技</a>
+    <a href="/sports/">スポーツ</a>
+    <a href="/olympic/">五輪</a>
+    <a href="/entertainment/">芸能</a>
+    <a href="/society/">社会</a>   
+    <a href="/gamble/tokusyu/keiba/">競馬</a>
+    <a href="/gamble/tokusyu/kouei/">公営競技</a>
+    <a href="/ranking/">ランキング</a>
+    <a href="/tokusyu/">特集</a>
+    <!--<a href="/yomimono/">コラム</a>-->   
+    <a href="/osaka/">大阪</a>
+</nav>
+        
+        <script>
+    var path = location.pathname;
+    if (path === undefined) {
+        path = '/';
+    }
+
+    var target = {};
+
+    if (path == '/') {
+        $('nav.primary a[href="/"]').addClass('active');
+    } else if (path.indexOf('/car/') === 0) {
+        $('nav.primary a[href="/sports/"]').addClass('active');
+    } else {
+
+        $($('nav.primary a').get().reverse()).each(function () {
+            var href = $(this).attr('href');
+            
+            if (href == '/') {
+                return true;
+            }
+
+            // プロフィールページの場合はURLからではなくpersonオブジェクトからカテゴリ取得
+            
+            if (path.indexOf(href) === 0) {
+                target[href] = $(this);
+            }
+        });
+console.log(target);
+        if (Object.keys(target).length > 0) {
+            var tmp = Object.keys(target).sort(function(a, b) { return b.length - a.length; });
+            var longestKey = tmp[0];
+            target[longestKey].addClass('active');
+        }
+    }
+
+/*
+    $($('nav.primary a').get().reverse()).each(function () {
+        var href = $(this).attr('href');
+
+        // プロフィールページの場合はURLからではなくpersonオブジェクトからカテゴリ取得
+        
+        if (path.indexOf(href) === 0) {
+            $(this).addClass('active');
+            return false;
+        }
+    });
+*/
+
+
+</script>
+
+
+        
+                <nav class="secondary">
+	<div>
+		<a href="/entertainment/tokusyu/kisya/">記者コラム</a>
+		<a href="/entertainment/topic/">芸能情報</a>
+		<a href="/entertainment/tokusyu/netsuai/">熱愛</a>
+		<a href="/entertainment/tokusyu/hakyoku/">破局</a>
+		<a href="/entertainment/tokusyu/kekon/">結婚</a>
+		<a href="/entertainment/tokusyu/sodo/">騒動</a>
+		<a href="/entertainment/tokusyu/johnnys/">ジャニーズ</a>
+		<a href="/entertainment/tokusyu/nogizaka/">乃木坂46</a>
+		<a href="/entertainment/tokusyu/akb48/">AKB48</a>
+		<a href="/entertainment/tokusyu/drama/">ドラマ</a>
+		<a href="/entertainment/tokusyu/kouhaku/">紅白歌合戦</a>
+		<a href="/entertainment/yomimono/takarazuka/">宝塚歌劇</a>
+		<a href="/entertainment/tokusyu/muchuron/">夢中論</a>
+		<a href="/entertainment/yomimono/mangadojo/">マンガ道場</a>
+	</div>
+	<div class="hidden">
+		<a href="/entertainment/tokusyu/anime/">アニメ研究部</a>
+		<a href="/entertainment/tokusyu/pachinko/">パチンコ</a>
+		<a href="/entertainment/tokusyu/keyakizaka/">櫻坂46</a>
+		<a href="/entertainment/tokusyu/hinatazaka/">日向坂46</a>
+	</div><span class="btn-more close">その他</span>
+</nav>
+                
+    </header>
+    <!-- BODY-AREA [START] -->
+    <main>
+        
+  <div data-component="article-nav" data-block="main">
+    <nav class="breadcrumbs" data-block="article"><a href="/">トップ</a><span>&gt;</span><a href="/entertainment/">芸能</a><span>&gt;</span><a href="/entertainment/news/2022/01/18/">2022年1月18日</a> 
+    </nav>
+        <nav class="pagination" data-block="side"><span></span><a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01003000c.html">次のニュース</a></nav>
+    </div>
+
+        <div data-block="main">
+            
+
+<div data-block="article">
+  <article data-component="basic-article">
+  
+    <!--記事 -->
+          <header data-component="article-header">
+    <h1 class="heading">
+            <!-- 記事見出し --><!-- google_ad_section_start(name=s1) -->【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段<!-- google_ad_section_end(name=s1) --><!-- 記事見出しここまで -->
+    </h1>
+    <div class="row">
+      <p data-component="date-format">
+        [ 2022年1月18日 14:37 ]
+      </p>
+      <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="sns">
+        <div class="fb-like" data-href="" data-width="110px" data-layout="button_count" data-action="like" data-size="large" data-show-faces="false" data-share="false"></div>
+	<a class="fb" target="_blank"></a>
+	<a class="tw" target="_blank"></a>
+</div>
+    </div>
+  </header>
+    <p data-component="article-summary">                        
+    第72期ALSOK杯王将戦一次予選        （    2022年1月18日    &nbsp;&nbsp;    東京・将棋会館    ）  </p>
+  
+  <div data-component="article-body"><figure class="float-left">
+      
+      <!-- 芸能（kijiphoto_entertainment） -->
+<!-- <div style="min-height:200px;">
+</div> -->    </figure><p><!-- google_ad_section_start(name=s1) -->
+      <!-- 前文 -->
+      ◆指し手      <!-- 前文リンク -->
+      
+      <!-- 関連SSI(本文中) -->
+          </p>
+    <p>
+      <!-- 本文 --> 【佐々木慎七段】　【高崎一生七段】<br />
+(１)▲２六歩[17]　(２)△３四歩[45]<br />
+(３)▲７六歩[12]　(４)△４四歩[29]<br />
+(５)▲４八銀[27]　(６)△９四歩[41]<br />
+(７)▲９六歩[11]　(８)△３二銀[37]<br />
+(９)▲５六歩[71]　(10)△４三銀[90]<br />
+(11)▲５八金右[83]　(12)△５四歩[119]<br />
+(13)▲６八玉[38]　(14)△３二金[86]<br />
+(15)▲２五歩[32]　(16)△８四歩[70]<br />
+(17)▲７八銀[147]　(18)△８五歩[154]<br />
+(19)▲７七銀[69]　(20)△６二銀[663]<br />
+(21)▲７八玉[15]　(22)△４一玉[37]<br />
+(23)▲７九角[15]　(24)△７四歩[53]<br />
+(25)▲３六歩[46]　(26)△４五歩[825]<br />
+(27)▲４六歩[150]　(28)△５五歩[1725]<br />
+(29)▲４七銀[1146]　(30)△５六歩[2112]<br />
+(31)▲４五歩[221]　(32)△７五歩[265]<br />
+(33)▲同歩[139]　(34)△７三銀[114]<br />
+(35)▲５六銀[665]　(36)△６四銀[241]<br />
+(37)▲２四歩[252]　(38)△同歩[51]<br />
+(39)▲２三歩[37]　(40)△同金[560]<br />
+(41)▲２五歩[1481]　(42)△８六歩[145]<br />
+(43)▲同歩[13]　(44)△８八歩[63]<br />
+(45)▲同角[27]　(46)△２五歩[323]<br />
+(47)▲６六歩[36]　(48)△８七歩[512]<br />
+(49)▲同玉[679]　(50)△８五歩[29]<br />
+(51)▲同歩[27]　(52)△７五銀[33]<br />
+(53)▲７六歩[47]　(54)△８六歩[38]<br />
+(55)▲同銀[177]　(56)△同銀[44]<br />
+<br />
+※持ち時間は各３時間、[]内は考慮時間(秒)。 
+      <!-- google_ad_section_end(name=s1) -->
+    </p>
+
+                        <div id="news-more" class="compact-cover" data-show-compact-only><span data-component="button-show-more" data-js-component="CompactSwitch">続きを表示</span></div>
+            <script>
+                $('#news-more').on('click', function() {
+                    $('body').removeClass('compact');
+                })
+            </script>
+              </div>
+
+  
+  
+  
+  
+  
+    
+    
+
+    <!-- この記事のフォト -->
+                  
+
+            <!-- バナーリンク PC -->
+<div data-hide-at-compact="data-hide-at-compact" style="margin-top: -1．5em;">
+	<a href="/gamble/auto/chariloto/">
+<img src="/gamble/auto/images/charilotobanner005_pc.jpg"></a>
+</div>
+    
+    
+        <div class="mb40 mt40" data-block="cols2">
+<!-- /36797461/annex_pc/Entertainment/left -->
+<div id='div-gpt-ad-1574917709902-0' style='width: 336px; height: 280px;'>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1574917709902-0'); });
+  </script>
+</div>
+
+  <!-- /36797461/annex_pc/Entertainment/right -->
+<div id='div-gpt-ad-1574917805842-0' style='width: 336px; height: 280px;'>
+  <script>
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1574917805842-0'); });
+  </script>
+</div>
+</div>
+    
+        <section class="mb40" data-hide-at-compact="data-hide-at-compact">
+      <div id="logly-lift-4284234"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284234";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+    </section>
+    
+    
+        <div data-block="cols2" data-hide-at-compact>
+                    <section>
+                <h2 data-component="section-header"><a class="arrow" href="/entertainment/tokusyu/bikyaku/">「美脚」特集記事</a></h2>
+                <ul class="large-first" data-component="basic-list">
+                                                                        <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/16/kiji/20220116s00041000206000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/16/jpeg/20220116s00041000203000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">市川紗椰　ブーツ＆ミニのニットワンピ姿披露にファン「美脚」「衣…</p>
+                                        <p data-component="date-format">［ 2022年1月16日 09:36 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000213000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2021/12/22/jpeg/20211222s00041000188000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">菜々緒　黒ビキニで美脚披露に「想像を絶するほどの美ボディ」「お…</p>
+                                        <p data-component="date-format">［ 2022年1月12日 12:15 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000184000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/12/jpeg/20220112s00041000176000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">指原莉乃　ホットパンツ姿でスーパー美脚披露　ファン絶賛「このス…</p>
+                                        <p data-component="date-format">［ 2022年1月12日 11:06 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/08/kiji/20220109s00041000171000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/08/jpeg/20220109s00041000167000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">松井珠理奈　美脚を大胆露出で悩殺！赤のスリットドレス姿3連続投稿…</p>
+                                        <p data-component="date-format">［ 2022年1月9日 01:36 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment last-li" >
+                                <a href="/entertainment/news/2022/01/08/kiji/20220108s00041000517000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/08/jpeg/20220108s00041000514000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">鷲見玲奈　スタイル抜群！ラグビーウエア姿に「見惚れてノックオン…</p>
+                                        <p data-component="date-format">［ 2022年1月8日 18:10 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                            </ul>
+                <div data-component="link-more"><a href="/entertainment/tokusyu/bikyaku/">「美脚」特集記事をもっと見る</a></div>
+            </section>
+                    <section>
+                <h2 data-component="section-header"><a class="arrow" href="/entertainment/tokusyu/kekon/">「結婚特集」特集記事</a></h2>
+                <ul class="large-first" data-component="basic-list">
+                                                                        <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/13/kiji/20220113s00041000004000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/12/jpeg/20220112s00041000186000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">鷲見玲奈アナが結婚　「濃い顔のイケメン」30代パイロットと“最強開…</p>
+                                        <p data-component="date-format">［ 2022年1月13日 05:30 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/13/kiji/20220113s00041000002000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/12/jpeg/20220112s00041000252000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">桜井ユキ&黒羽麻璃央 共演者婚　交際約8カ月でゴールイン!</p>
+                                        <p data-component="date-format">［ 2022年1月13日 05:30 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000214000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/12/jpeg/20220112s00041000252000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">黒羽麻璃央と桜井ユキが結婚を発表　「リコハイ！！」で共演「しっ…</p>
+                                        <p data-component="date-format">［ 2022年1月12日 13:00 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment " >
+                                <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000185000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/12/jpeg/20220112s00041000186000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">フリーの鷲見玲奈アナが結婚発表　お相手は一般男性「明るく朗らか…</p>
+                                        <p data-component="date-format">［ 2022年1月12日 10:46 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                                                                <li data-component="list-item" class="cateEntertainment last-li" >
+                                <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000026000c.html">
+                                    <figure>
+                                                                                    <img class="after_load object-fit0" src="https://www.sponichi.co.jp//entertainment/news/2022/01/11/jpeg/20220111s00041000346000p_thum.jpg">
+                                                                            </figure>
+                                    <div class="text">
+                                        <p class="title">鈴木拡樹　女優・西川可奈子と最強の開運日に結婚　2・5次元作品で…</p>
+                                        <p data-component="date-format">［ 2022年1月12日 05:30 ］</p>
+                                    </div>
+                                </a>
+                            </li>
+                                                            </ul>
+                <div data-component="link-more"><a href="/entertainment/tokusyu/kekon/">「結婚特集」特集記事をもっと見る</a></div>
+            </section>
+            </div>
+
+
+    
+    <script src="//www.sponichi.co.jp/adds/pc/shopping/sannex_space.js" charset="utf-8" type="text/javascript"></script>
+<script src="//www.sponichi.co.jp/adds/pc/shopping/sannex_space_error.js" charset="utf-8" type="text/javascript"></script>
+<style type="text/css">
+<!--
+a.snad {
+    color:#0000FF;
+    font-weight:bold;
+    text-decoration:none;
+}
+a:hover.snad {
+    color:#FF0000;
+}
+-->
+</style>
+
+     <section>
+<!-- 注目アイテムの置換用 -->
+
+
+         <div id="space_shopping_2018">
+         <div>
+
+         <!-- バナーの表示を実行します。バナー表示位置より下に記述してください。 -->
+         <script language="javascript"><!--
+         triggerBanner("shopping_2018");
+         // --></script>
+
+
+     </section>
+
+    
+            <div class="mt40 mb40" data-component="article-carousel" data-js-component="ArticleCarousel">
+      <div class="btn-prev"><i></i></div>
+      <div class="btn-next"><i></i></div>
+      <div class="carousel-wrapper">
+                            <a href="/entertainment/tokusyu/bikyaku/">
+            <figure><img src="/entertainment/images/tokusyu/bikyakuV2.jpg"/></figure>
+            <p>
+                              大胆美脚披露！                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/kekon/">
+            <figure><img src="/entertainment/images/tokusyu/kekon.jpg"/></figure>
+            <p>
+                              結婚特集                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/arashi/">
+            <figure><img src="/entertainment/images/tokusyu/arashi2019.jpg"/></figure>
+            <p>
+                              嵐                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/katorishingo/">
+            <figure><img src="/entertainment/images/tokusyu/katorishingo.jpg"/></figure>
+            <p>
+                              香取慎吾                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/sumireina/">
+            <figure><img src="/entertainment/images/tokusyu/sumireina.jpg"/></figure>
+            <p>
+                              鷲見玲奈                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/johnnys/">
+            <figure><img src="/entertainment/images/tokusyu/johnnys.jpg"/></figure>
+            <p>
+                              ジャニーズ特集                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/sodo/">
+            <figure><img src="/entertainment/images/tokusyu/sodo02.jpg"/></figure>
+            <p>
+                              騒動特集                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/fujii_s/">
+            <figure><img src="/entertainment/images/tokusyu/fujii_s.jpg"/></figure>
+            <p>
+                              藤井聡太                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/aragakiyui/">
+            <figure><img src="/entertainment/images/tokusyu/aragakiyui.jpg"/></figure>
+            <p>
+                              新垣結衣                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/drama/">
+            <figure><img src="/entertainment/images/tokusyu/drama.jpg"/></figure>
+            <p>
+                              ドラマ                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/furin/">
+            <figure><img src="/entertainment/images/tokusyu/furin.jpg"/></figure>
+            <p>
+                              芸能人の不倫特集                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/miuraharuma/">
+            <figure><img src="/entertainment/images/tokusyu/miuraharuma.jpg"/></figure>
+            <p>
+                              三浦春馬                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/takeuchiyuko/">
+            <figure><img src="/entertainment/images/tokusyu/takeuchiyuko.jpg"/></figure>
+            <p>
+                              竹内結子                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/kandasayaka/">
+            <figure><img src="/entertainment/images/tokusyu/kandasayaka.jpg"/></figure>
+            <p>
+                              神田沙也加                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/shiraishimai/">
+            <figure><img src="/entertainment/images/tokusyu/shiraisimai.jpg"/></figure>
+            <p>
+                              白石麻衣                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/drag/">
+            <figure><img src="/entertainment/images/tokusyu/drag.jpg"/></figure>
+            <p>
+                              芸能界にはびこる薬物問題                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/nogizaka/">
+            <figure><img src="/entertainment/images/tokusyu/nogizakaV2.jpg"/></figure>
+            <p>
+                              乃木坂46                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/keyakizaka/">
+            <figure><img src="/entertainment/images/tokusyu/sakurazakaV2.jpg"/></figure>
+            <p>
+                              櫻坂46                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/akb48/">
+            <figure><img src="/entertainment/images/tokusyu/akbV2.jpg"/></figure>
+            <p>
+                              AKB48                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/newmap/">
+            <figure><img src="/entertainment/images/tokusyu/newmap.jpg"/></figure>
+            <p>
+                              「新しい地図」<br />
+稲垣＆草なぎ＆香取の歩み                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/kisya/">
+            <figure><img src="/entertainment/images/tokusyu/entertainment.jpg"/></figure>
+            <p>
+                              スポニチ記者が見た！<br />
+芸能記者コラム                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/photoalbum/">
+            <figure><img src="/entertainment/images/tokusyu/photoalbum.jpg"/></figure>
+            <p>
+                              写真集発売！                          </p>
+          </a>
+                            <a href="/entertainment/tokusyu/takarazuka/">
+            <figure><img src="/entertainment/images/tokusyu/takarazukaV2.jpg"/></figure>
+            <p>
+                              宝塚歌劇団                          </p>
+          </a>
+                            <a href="/society/tokusyu/shogi/">
+            <figure><img src="/entertainment/images/tokusyu/shogi.jpg"/></figure>
+            <p>
+                              将棋                          </p>
+          </a>
+              </div>
+    </div>
+    
+    
+    <section class="mb40">
+      <h2 data-component="section-header"><div class="arrow">2022年1月18日のニュース</div></h2>
+      <ul class="border-top" data-component="basic-list">
+            <div class="mb40" data-component="more-list" data-js-component="MoreList" data-add-count="999" data-initial-count="20">
+        <ul class="border-top" data-component="basic-list">
+                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/007.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:37 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01003000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/009.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　高田明浩四段VS中田功八段</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:37 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                    <script src="//cdn.gmossp-sp.jp/ads/loader.js?space_id=g907120" charset="utf-8" language="JavaScript"></script>
+<script language='javascript'>
+    gmossp_forsp.ad('g907120');
+</script>                                                                                                                                                            <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01005000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/010.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　窪田義行七段VS佐藤慎一五段</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:37 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000342000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000338000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">松坂桃李　妻・戸田恵梨香とハマっていること「全然うまくいかなくて…これは悔しいと」</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:36 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01004000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/007.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　島本亮五段VS星野良生五段</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:32 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01006000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/005.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　中村修九段VS千田翔太七段</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:32 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000339000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000338000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">松坂桃李　戸田恵梨香との結婚を機にやめたこと「違うところに思考も向いたりするから」</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:31 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000336000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000334000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">坂上忍　“やらないよりやった方が”「まん防」めぐる吉村知事発言に「『やってられないよ』って声が」</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:24 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                    <div id="_popIn_infeed_for_pc_2"></div>
+<script type="text/javascript">
+    (function() {
+        var pa = document.createElement('script'); pa.type = 'text/javascript'; pa.charset = "utf-8"; pa.async = true;
+        pa.src = window.location.protocol + "//api.popin.cc/searchbox/sponichi.js";
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(pa, s);
+    })(); 
+</script>                                                                                                                                                            <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000340000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/07/jpeg/20220107s00041000170000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">自宅待機のシソンヌ・じろう　岡部大から大量差し入れ　ねぎ、ジュース…東北愛満載の品に「涙出た」の声</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:11 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000325000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000330000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">アタック25　BSJapanextで復活　3・27から　司会は谷原章介「これ以上の喜びはありません」</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:04 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000244000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000231000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">「鎌倉殿の13人」初回　配信も好調　UB数23万　NHKプラス最多視聴数を記録　見られ方の多様化進む</p>
+                            <p data-component="date-format">［ 2022年1月18日 14:00 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000232000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000231000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">「鎌倉殿の13人」初回　総合視聴率は25・8％　「青天」から微減も録画は好調　大河初回最高を更新</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:55 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000322000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000310000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">柄本時生のおごり癖　もし親友・賀来賢人の誕生日会あれば「『みなさんありがとう賀来のために』って」</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:46 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000316000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000315000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">大島由香里アナ　“おひとりさま”行動に抵抗なし　月島で“ひとりもんじゃ”に…TKO木下「強いな」</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:42 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000319000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000311000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">鈴木ちなみ　牛丼チェーン店での丼ランチに「親近感湧く」「意外」の声続々　本人はアツアツ豚汁に目を白黒</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:38 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000314000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000310000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">柄本時生　父・明からメールで届く「バカ」の真意　笑った母・角替さんの説教「マリオとゼルダから何を」</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:24 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01001000c.html">
+                        <figure> 
+                                                            
+    
+<img src="/entertainment/images/thumbnail/003.jpg" >
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　千田翔太七段VS中村修九段</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:17 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000308000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000289000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">三浦翔平　“料理男子”の一面「妻がちょっと休みたいとか、自分の1人の時はパパっとあるもので」</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:10 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000306000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000302000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">浜辺美波　ドクターホワイト“同学年”高橋文哉との2ショットに「最高のコンビ」の声</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:01 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220111s00041000394000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220111s00041000384000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【明日19日のカムカムエヴリバディ】第55話　竹村夫妻に話せぬまま…悩むるい、錠一郎から驚きの発言が</p>
+                            <p data-component="date-format">［ 2022年1月18日 13:00 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000297000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000296000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">千原ジュニア「映画よりドラマティック」　休日に「一人でよく行っていた」場所</p>
+                            <p data-component="date-format">［ 2022年1月18日 12:49 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000292000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000272000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">西村知美　長女が日記に「ママなんて消えてしまえ」　家族会議開いて知った本音…親として「反省した」</p>
+                            <p data-component="date-format">［ 2022年1月18日 12:25 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000290000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000289000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">三浦翔平　「最悪、お腹を殴ってもらう」極端すぎる食生活　博多大吉「くれぐれもマネはしないで」</p>
+                            <p data-component="date-format">［ 2022年1月18日 12:22 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000281000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000279000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">仲村トオルと鷲尾いさ子の長女・美緒　ドリンク手に笑顔も　緊張のバラエティー初出演「全身から汗が」</p>
+                            <p data-component="date-format">［ 2022年1月18日 12:12 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000284000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000282000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">ミルクボーイ駒場に起きた異変「あれを買おうかな」　購入を検討する意外なものとは</p>
+                            <p data-component="date-format">［ 2022年1月18日 12:09 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000277000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000276000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">冨永愛　“ジム初め”公開　スタイル際立つウェア姿に「いつ見ても惚れ惚れ」「カッコいい」の声</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:50 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000263000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000258000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">シソンヌ長谷川「僕は座って、絵を描いてるときに話しかけて」　意外な交友関係に有吉弘行「すげえ」</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:49 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000274000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000272000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">西村知美「大丈夫？って」　マッチ、トシちゃん、キョンキョンが…アイドル時代の「忘れられない」思い出</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:40 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000271000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000267000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">第2子出産控える森麻季アナ　3歳息子が描いた「最強、最高のお守り」公開に「泣ける」「素敵な御守り」</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:39 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000264000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000240000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">ピスタチオ小澤「ここで付き合ったら…」　妻から交際前に猛アタックされるも「一度フッた」まさかの理由</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:37 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000278000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2021/12/25/jpeg/20211225s00041000275000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">河内家菊水丸　極秘手術していた　クレカ履歴盗み見被害で「漏れ伝わる前に」公表　「憤慨しています」</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:35 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000270000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000266000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">ミルクボーイ内海「何を格好つけとんねん！」　最近多い初詣の「風潮」に強烈ダメ出し</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:22 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000261000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000259000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">マツコ　自炊できない自宅のキッチン事情「あいつ、なんか信用できないんだよね」</p>
+                            <p data-component="date-format">［ 2022年1月18日 11:13 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000254000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000240000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">ピスタチオ小澤　月収6万円「マジでやばい」も…余裕ある暮らしのなぜ　さんま「どっかで甘えてる」</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:59 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000253000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000252000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">榊原郁恵「まさか出ていくとは」　夫・渡辺徹“大好物”めぐり家出の過去「俺は好きなんだ！って」</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:45 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000251000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000250000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">朝ドラ「カムカム」　ジョーとトミーのセッション対決　ネット喝采「見応えあった」「良きライバル」</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:41 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000249000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000246000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">香取慎吾「落ちるかな」　ヴィトンのスニーカーに起きた悲劇　フォロワーは「なんてこった」「イイ味が…」</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:40 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000187000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000186000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">菅田将暉主演「ミステリと言う勿れ」第2話12・7％と好調維持</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:22 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220117s00041000366000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220117s00041000367000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">浜辺美波主演「ドクターホワイト」初回11・4％の2桁発進</p>
+                            <p data-component="date-format">［ 2022年1月18日 10:19 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000235000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000233000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">第1子妊娠中の時東ぁみ「私もお腹の赤ちゃんも元気」も…長期入院「自然と流れる涙に病んでること自覚」</p>
+                            <p data-component="date-format">［ 2022年1月18日 09:55 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000228000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000225000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">本田翼　新年初投稿で久々の近影公開　「沼ってる」もの告白には「かわいすぎる」「天使」の声</p>
+                            <p data-component="date-format">［ 2022年1月18日 09:34 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000224000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000223000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">山本未來　キュートなかぶりもので12歳息子の誕生日祝福　捨て身で遊び「こんな母いやですか？」</p>
+                            <p data-component="date-format">［ 2022年1月18日 09:14 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000217000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000213000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">神田うの　2年ぶりの初釜参加　10歳愛娘とおそろい着物コーデに「言葉が出ないくらい美しい」</p>
+                            <p data-component="date-format">［ 2022年1月18日 08:55 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000209000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000207000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">熊田曜子　すっかりハマったポールダンス　娘たちも初体験「どんどん上達…親子でやろうかな」</p>
+                            <p data-component="date-format">［ 2022年1月18日 08:49 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000206000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000204000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">今井絵理子氏　「永田町の姐さん」三原じゅん子氏との2ショットに「目力半端ない」「強そうな二人」の声</p>
+                            <p data-component="date-format">［ 2022年1月18日 08:16 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000191000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000190000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">「カムカムエヴリバディ」佐々木希　演出側は色っぽさを抑制</p>
+                            <p data-component="date-format">［ 2022年1月18日 08:15 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000196000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000192000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">梅宮アンナ　愛犬との別れを報告　よく病院へ行ったけど「どんな時も、食いしん坊だった」</p>
+                            <p data-component="date-format">［ 2022年1月18日 08:05 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220117s00041000558000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/17/jpeg/20220117s00041000559000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">元日向坂46・井口眞緒が結婚　一般男性と「お付き合いの期間は短くスピード結婚」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:31 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000144000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/baseball/news/2022/01/18/jpeg/20220118s00001173103000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">水島さん訃報に王さん「恩人」　連載41年パ・リーグ隆盛の道しるべになった「あぶさん」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000070000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000085000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">水島さん訃報に「ドカベン」里中投手モデル里中満智子氏「誰もが主人公になれると教えてくれた」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000093000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000084000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">複数の草野球チーム持ち「リアル」を追求　水島新司さんが貫いた野球愛</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000082000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/baseball/news/2022/01/18/jpeg/20220118s00001000096000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">水島さんにノムさん助言も　現実モチーフに魅力あるキャラ生んだ</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000105000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000076000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">知名度上げてもらった…「球道くん」中西氏、水島新司さんに感謝</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000119000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000118000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">実写版「ドカベン」でデビュー　永島敏行は感謝「ありがとうございました」　野球部主将・長島役</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000077000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000089000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">ドカベンの大ファン爆笑問題・太田光、忘れない“あなたは芸能界の岩鬼です”</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000099000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000074000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">神奈川県大和市「ドカベンスタジアム」　97年“ヒーロー”山田と里中の銅像建立</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000112000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000062000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">「ドカベン」明訓高校モデル・新潟明訓の元監督「ドカベン」球場実現願う</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000078000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000114000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">「ドカベン」効果でチャンピオンがチャンピオンに　創刊から9年で部数10倍</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220117s00041000569000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000013000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">声優初挑戦の堤真一「もう二度とやりたくないくらい難しかった」　アニメ映画「鹿の王　ユナと約束の旅」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220117s00041000571000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000014000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">氷川きよし「乗り越えてまた輝いていく、そんな思いに」　久しぶりの演歌　2月1日リリース「群青の弦」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000154000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000153000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【1・24ミス日本決定　ファイナリスト（4）】山本紗也さん　若き経営者は日本文化で人と人をつなぐ</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000158000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000155000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【1・24ミス日本決定　ファイナリスト（5）】相馬あすかさん　フランス語と自分に磨きをかけて</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000159000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000156000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【1・24ミス日本決定　ファイナリスト（6）】横山莉奈さん　医師目指しつつ昆虫食フルコースにも挑戦</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000160000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000157000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">【1・24ミス日本決定　ファイナリスト（7）】佐藤梨紗子さん　栄養学勉強　食の大切さをアピール</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:30 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220117s00041000563000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000010000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">松潤　“姉”松嶋菜々子からの助言に「大きなお世話ですよ！」　主演ドラマ「となりのチカラ」制作発表</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:00 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment " >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000007000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000005000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">映美くらら　チカラの源は宝塚「辞めて17年くらい経ってファンに戻っている」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:00 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                                                        <li data-component="list-item" class="cateEntertainment last-li" >
+                    <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000016000c.html">
+                        <figure> 
+                                                            <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000015000p_thum.jpg" loading="lazy">
+                                                    </figure>
+                        <div class="text">
+                            <p class="title">風吹ジュン　25年ぶりの松潤に「大人になった」</p>
+                            <p data-component="date-format">［ 2022年1月18日 05:00 ］&nbsp;芸能</p>
+                        </div>
+                    </a>
+                </li>
+
+                                                                                                                                </ul><span class="btn-more"><span>もっと見る</span></span>
+    </div>
+      </ul>
+    </section>
+
+    
+    <section class="mt50">
+      <div id="logly-lift-4284237"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284237";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+    </section>
+  </article>
+
+</div>
+
+
+        <!-- CONTENT-SUB [START] -->
+            <aside data-block="side">
+            
+    <div class="mb30" data-component="ad-basic">
+<!-- /36797461/annex_pc/Entertainment/Top_Rect -->
+<div id='div-gpt-ad-1555033871117-0'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1555033871117-0'); });
+</script>
+</div>
+
+<script type="text/javascript" src="//static.criteo.net/js/ld/publishertag.js"></script>
+<div id="1079405" style="width:300px;height:600px;"></div>
+<script type="text/javascript">
+Criteo.DisplayAcceptableAdIfAdblocked({
+    "zoneid": 1079405,
+    "containerid": "1079405"});
+</script>
+</div>
+
+              <div>
+              <h2 data-component="heading-side1">人気ランキング（芸能）</h2>
+              <div data-component="ranking-tab" data-js-component="BasicTab">
+                <nav class="tab-btns"><span class="active">最新</span><span>一週間</span><span>おすすめ</span>
+                </nav>
+                <ul class="active tab-contents">
+                              <li>
+            <a href="/entertainment/news/2022/01/17/kiji/20220117s00041000381000c.html">
+            
+                <span class="index">1</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000326000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000326000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">藤竜也　「趣味は妻」80歳の結婚生活　手つなぎで外出、寝る前…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/17/kiji/20220117s00041000354000c.html">
+            
+                <span class="index">2</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000326000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000326000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">藤竜也　「本当はならぬ恋」人気女優だった芦川いづみさんとの…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/17/kiji/20220117s00041000191000c.html">
+            
+                <span class="index">3</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000189000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000189000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">菅野美穂　夫・堺雅人との日常明かす　「一口ちょうだい」に対…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/17/kiji/20220117s00041000554000c.html">
+            
+                <span class="index">4</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000552000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000552000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">「ドランクドラゴン」鈴木拓　銀座でまさかの駐車料金に嘆き節…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/17/kiji/20220117s00041000183000c.html">
+            
+                <span class="index">5</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000182000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/17/jpeg/20220117s00041000182000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">優香　夫・青木崇高への不満「ちょっと嫌なんですよね」　苦笑…</p>
+                                    </div>
+            </a>
+        </li>
+                            </ul>
+                <ul class="tab-contents">
+                              <li>
+            <a href="/entertainment/news/2022/01/09/kiji/20220109s00041000225000c.html">
+            
+                <span class="index">1</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/09/jpeg/20220109s00041000224000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/09/jpeg/20220109s00041000224000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">加藤浩次　昨年末に手術していた　12月27日の「スッキリ」終了…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/10/kiji/20220110s00041000331000c.html">
+            
+                <span class="index">2</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/10/jpeg/20220110s00041000350000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/10/jpeg/20220110s00041000350000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">中居正広「すごい人になっちゃうのかな」「もう気軽におしゃべ…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/09/kiji/20220109c00041S01001000c.html">
+            
+                <span class="index">3</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/10/jpeg/20220110b00041003001000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/10/jpeg/20220110b00041003001000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">勝者この一手「▲４五桂」【棋譜速報】第71期ALSOK杯王将戦七番…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/12/kiji/20220112s00041000498000c.html">
+            
+                <span class="index">4</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/12/jpeg/20220112s00041000495000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/12/jpeg/20220112s00041000495000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">安藤美姫　8歳愛娘と2ショット公開にネット驚き「双子のよう」…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2022/01/14/kiji/20220114s00041000532000c.html">
+            
+                <span class="index">5</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2022/01/12/jpeg/20220112s00041000235000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2022/01/12/jpeg/20220112s00041000235000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">松本潤　嵐活動休止の真相語る　大野智が「仕事を辞めたい」、…</p>
+                                    </div>
+            </a>
+        </li>
+                            </ul>
+                <ul class="tab-contents">
+                              <li>
+            <a href="/entertainment/news/2020/08/17/kiji/20200816s00041000445000c.html">
+            
+                <span class="index">1</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2020/08/17/jpeg/20200816s00041000485000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2020/08/17/jpeg/20200816s00041000485000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">広瀬アリスとバスケ界のプリンス・田中大貴が破局　ゴールイン…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2021/12/15/kiji/20211215s00041000337000c.html">
+            
+                <span class="index">2</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2021/11/30/jpeg/20211130s00041000564000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2021/11/30/jpeg/20211130s00041000564000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">ホリエモン、宮迫経営の焼肉店に再忠告「『撤退すると死ぬ』っ…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2021/12/17/kiji/20211217s00041000325000c.html">
+            
+                <span class="index">3</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2021/12/17/jpeg/20211217s00041000327000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2021/12/17/jpeg/20211217s00041000327000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">「鎌倉殿の13人」爆笑会見　小栗旬が激怒？「オレの大河で何や…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2021/09/30/kiji/20210930s00041000647000c.html">
+            
+                <span class="index">4</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2021/09/29/jpeg/20210929s00041000240000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2021/09/29/jpeg/20210929s00041000240000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">芸能界引退の夏目三久アナ　今後何して暮らす？の質問に返答「…</p>
+                                    </div>
+            </a>
+        </li>
+                    <li>
+            <a href="/entertainment/news/2021/12/18/kiji/20211218s00041000436000c.html">
+            
+                <span class="index">5</span>
+                
+                <figure>
+                                            <img class="after_load" src="https://www.sponichi.co.jp/entertainment/news/2021/12/18/jpeg/20211218s00041000441000p_thum.jpg" data-src="https://www.sponichi.co.jp/entertainment/news/2021/12/18/jpeg/20211218s00041000441000p_thum.jpg" border="0">
+                                    </figure>
+
+                
+                <div class="text">
+                                        <p class="title">マツコ「優雅な生活だな！」　有吉から聞いた妻・夏目三久さん…</p>
+                                    </div>
+            </a>
+        </li>
+                            </ul>
+              </div>
+              <div data-component="link-more"><a href="/entertainment/ranking/">ランキングをもっと見る</a></div>            </div>
+
+
+  <div class="mb30" data-component="ad-basic">
+<!-- /36797461/annex_pc/Entertainment/Mid_Rect -->
+<div id='div-gpt-ad-1550051058345-0' style='height:250px; width:300px;'>
+<script>
+googletag.cmd.push(function() {
+googletag.display("div-gpt-ad-1550051058345-0");
+});
+</script>
+</div>
+</div>
+      <div>
+        <h2 data-component="heading-side2">新着ニュース</h2>
+        <ul class="border-top" data-component="basic-list">
+                                                <li data-component="list-item">
+                        <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html">
+                            <figure>
+                                                                    
+    
+<img src="/entertainment/images/thumbnail/005.jpg" >
+                                                            </figure>
+                            <div class="text">
+                                <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　佐々木慎七段VS高崎一生七段</p>
+                                <p data-component="date-format">［ 1月18日 14:37 ］&nbsp;芸能</p>
+                            </div>
+                        </a>
+                    </li>
+                                                                <li data-component="list-item">
+                        <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01003000c.html">
+                            <figure>
+                                                                    
+    
+<img src="/entertainment/images/thumbnail/005.jpg" >
+                                                            </figure>
+                            <div class="text">
+                                <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　高田明浩四段VS中田功八段</p>
+                                <p data-component="date-format">［ 1月18日 14:37 ］&nbsp;芸能</p>
+                            </div>
+                        </a>
+                    </li>
+                                                                <li data-component="list-item">
+                        <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01005000c.html">
+                            <figure>
+                                                                    
+    
+<img src="/entertainment/images/thumbnail/005.jpg" >
+                                                            </figure>
+                            <div class="text">
+                                <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　窪田義行七段VS佐藤慎一五段</p>
+                                <p data-component="date-format">［ 1月18日 14:37 ］&nbsp;芸能</p>
+                            </div>
+                        </a>
+                    </li>
+                                                                <li data-component="list-item">
+                        <a href="/entertainment/news/2022/01/18/kiji/20220118s00041000342000c.html">
+                            <figure>
+                                                                    <img class="after_load object-fit0" src="/entertainment/news/2022/01/18/jpeg/20220118s00041000338000p_thum.jpg">
+                                                            </figure>
+                            <div class="text">
+                                <p class="title">松坂桃李　妻・戸田恵梨香とハマっていること「全然うまくいかなくて…これは悔しいと」</p>
+                                <p data-component="date-format">［ 1月18日 14:36 ］&nbsp;芸能</p>
+                            </div>
+                        </a>
+                    </li>
+                                                                <li data-component="list-item">
+                        <a href="/entertainment/news/2022/01/18/kiji/20220118c00041S01004000c.html">
+                            <figure>
+                                                                    
+    
+<img src="/entertainment/images/thumbnail/008.jpg" >
+                                                            </figure>
+                            <div class="text">
+                                <p class="title">【棋譜速報】第72期ALSOK杯王将戦一次予選　島本亮五段VS星野良生五段</p>
+                                <p data-component="date-format">［ 1月18日 14:32 ］&nbsp;芸能</p>
+                            </div>
+                        </a>
+                    </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
+        <div data-component="link-more"><a href="/entertainment/news/2022/01/18">新着ニュースをもっと見る</a></div>
+    </div>
+
+
+<div class="mb30">
+<div style="width:298px;height:230px;border:1px #CCCCCC solid;margin-top:7px;">
+
+<img src="/shopping/images/title_a.gif" width="298" height="32" alt="【楽天】オススメアイテム" style="margin-bottom:2px;" />
+
+<!-- Rakuten Widget FROM HERE -->
+<script type="text/javascript">
+rakuten_design="slide";
+rakuten_affiliateId="0c081886.a272f9bd.0c0818ae.b4edbbae";
+rakuten_items="ranking";
+rakuten_genreId="0";
+rakuten_size="298x170";
+rakuten_target="_blank";
+rakuten_theme="gray";
+rakuten_border="off";
+rakuten_auto_mode="on";
+rakuten_genre_title="off";
+rakuten_recommend="on";
+rakuten_service_flag="ichiba";
+rakuten_noScrollButton="off"
+rakuten_disableLogo="off";
+rakuten_no_logo="off";
+rakuten_ver="20100708";
+rakuten_pointbackId="_RTmtlk20010122";
+</script>
+<script type="text/javascript" src="//xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js"></script>
+<!-- Rakuten Widget TO HERE -->
+
+<a href="//hb.afl.rakuten.co.jp/hsc/0f997d34.97753221.0bf7ec77.64ba6304/" target="_blank"><img src="//hbb.afl.rakuten.co.jp/hsb/0f997d34.97753221.0bf7ec77.64ba6304/" border="0" style="margin-top:2px;" alt="" /></a>
+
+</div>
+</div>
+
+<script src="//cdn.gmossp-sp.jp/ads/loader.js?space_id=g907681" charset="utf-8" language="JavaScript"></script>
+<script language='javascript'>
+    gmossp_forsp.ad('g907681');
+</script>
+<div style="margin-bottom : 30px">
+</div>
+            <div class="mb30">
+              <h2 data-component="heading-side3">クイックアクセス</h2>
+              <ul data-component="link-list">
+                <li><a href="/entertainment/topic/">芸能情報</a></li>
+              </ul>
+              <nav class="mt10 small" data-component="tags">
+                <a href="/entertainment/tokusyu/kekon">結婚</a>
+                <a href="/entertainment/tokusyu/netsuai">熱愛</a>
+                <a href="/entertainment/tokusyu/hakyoku">破局</a>
+                <a href="/entertainment/tokusyu/tanjyo">誕生</a>
+                <a href="/entertainment/tokusyu/sodo">騒動</a>
+                <a href="/entertainment/tokusyu/sainan">災難</a>
+                <a href="/entertainment/tokusyu/kouhaku">紅白歌合戦</a>
+                <a href="/entertainment/tokusyu/johnnys">ジャニーズ</a>
+                <a href="/entertainment/tokusyu/akb48">AKB48</a></nav>
+            </div>
+
+            <div class="mb30">
+              <h2 data-component="heading-side3">特集</h2>
+              <ul data-component="link-list">
+                <li><a href="/entertainment/yomimono/kikimimi/">ききみみ　音楽ハンター</a></li>
+                <li><a href="/entertainment/music/anokoro/">365日　あの頃ヒット曲ランキング</a></li>
+                <li><a href="/entertainment/tokusyu/takarazuka/">宝塚歌劇</a></li>
+              </ul>
+              <nav class="mt10 small" data-component="tags">
+                <a href="/entertainment/yomimono/takarazuka/">インタビュー</a>
+                <a href="/entertainment/tokusyu/takarazuka/">ニュース</a></nav>
+            </div>
+
+            <div class="mb30">
+              <h2 data-component="heading-side3">アニメ研究部</h2>
+              <ul data-component="link-list">
+                <li><a href="/entertainment/tokusyu/anime/">ニュース</a></li>
+              </ul>
+              <nav class="mt10 small" data-component="tags">
+                <a href="/entertainment/yomimono/interview/yuukitakada/">高田憂希</a>
+                <a href="/entertainment/yomimono/interview/garnidelia/">GARNiDELiA</a>
+                <a href="/entertainment/yomimono/interview/koichiyamadera/">山寺宏一</a>
+                <a href="/entertainment/yomimono/interview/minamishinoda/">篠田みなみ</a>
+                <a href="/entertainment/yomimono/interview/godzilla-anime/">GOZILLA　怪獣惑星</a>
+                <a href="/entertainment/yomimono/interview/lunaharuna/">春奈るな</a>
+                <a href="/entertainment/yomimono/interview/suzukomimori/">三森すずこ</a>
+                <a href="/entertainment/yomimono/interview/yukosanpei/">三瓶由布子</a>
+                <a href="/entertainment/yomimono/interview/yoshikazuyasuhiko/">安彦良和総監督</a>
+                <a href="/entertainment/yomimono/interview/asaka/">亜咲花</a>
+                <a href="/entertainment/yomimono/interview/onsenmusume/">温泉むすめ</a>
+                <a href="/entertainment/yomimono/interview/sumireuesaka/">上坂すみれ</a>
+                <a href="/entertainment/yomimono/interview/nanamizuki/">水樹奈々</a>
+                <a href="/entertainment/yomimono/interview/maayauchida/">内田真礼</a>
+                <a href="/entertainment/yomimono/interview/syoyaishige/">石毛翔弥</a>
+                <a href="/entertainment/yomimono/interview/juntaterashima/">寺島惇太</a>
+                <a href="/entertainment/yomimono/interview/harukafukuhara/">福原遥</a>
+                <a href="/entertainment/yomimono/interview/mikakokomatsu/">小松未可子</a>
+                <a href="/entertainment/yomimono/interview/akikoyajima/">矢島晶子</a>
+                <a href="/entertainment/yomimono/interview/minamitakayama/">高山みなみ</a>
+              </nav>
+            </div>
+
+            <div class="mb30">
+              <h2 data-component="heading-side3">コラム</h2>
+              <ul data-component="link-list">
+                <li><a href="/entertainment/tokusyu/satom/">佐藤雅昭の芸能　楽書き帳</a></li>
+                <li><a href="/entertainment/tokusyu/maki/">牧元一の孤人焦点</a></li>
+                <li><a href="/entertainment/tokusyu/kasahara/">笠原然朗の舌先三寸</a></li>
+                <li><a href="/entertainment/yomimono/naniwashimpo/">竹中功のナニワ新報</a></li>
+                <li><a href="/entertainment/yomimono/mbs2021/">MBS２年目アナ「およげ！かわちくん」「山崎キョーカ中」</a></li>
+                <li><a href="/entertainment/yomimono/aland/">民放リレーコラム「アナランド」</a></li>
+                <li><a href="/entertainment/yomimono/yutakayoshida/">吉田裕のコラムすんのか～い</a></li>
+                <li><a href="/entertainment/yomimono/kikusuimaru/">菊水丸店主　珍宝堂</a></li>
+                <li><a href="/entertainment/tokusyu/kisya/">記者コラム</a></li>
+              </ul>
+            </div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- annex_pc_entertainment_foot -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-4610619947078412"
+     data-ad-slot="6715450612"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<div class="mb30">
+<h2 data-component="heading-side1">スペシャルコンテンツ</h2>
+<!-- スペシャルコンテンツ1枠目-->
+<div id="logly-lift-4284228"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284228";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+
+<!-- スペシャルコンテンツ2枠目-->
+<div id="logly-lift-4284229"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284229";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+
+<!-- スペシャルコンテンツ3枠目-->
+<div id="logly-lift-4284230"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284230";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+
+<!-- スペシャルコンテンツ4枠目-->
+<div id="logly-lift-4284231"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284231";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+
+<!-- スペシャルコンテンツ5枠目-->
+<div id="logly-lift-4284232"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284232";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+
+<!-- スペシャルコンテンツ6枠目-->
+<div id="logly-lift-4284233"></div>
+<script charset="UTF-8">
+  (function(){
+    var _lgy_lw = document.createElement("script");
+    _lgy_lw.type = "text/javascript";
+    _lgy_lw.charset = "UTF-8";
+    _lgy_lw.async = true;
+    _lgy_lw.src= (("https:" == document.location.protocol) ? "https://" : "http://")+"l.logly.co.jp/lift_widget.js?adspot_id=4284233";
+    var _lgy_lw_0 = document.getElementsByTagName("script")[0];
+    _lgy_lw_0.parentNode.insertBefore(_lgy_lw, _lgy_lw_0);
+  })();
+</script>
+</div>
+<script type="text/javascript" language="JavaScript">
+yads_ad_ds = '30671_12053';
+</script>
+<script type="text/javascript" language="JavaScript" src="//yads.c.yimg.jp/js/yads.js"></script>
+  
+            </aside>
+        </div>
+    </main>
+    
+    
+
+    
+            <!-- footer pc20200702 -->
+ <div id="footer">
+  <footer data-component="global-footer">
+    <div>
+      <figure></figure>
+      <nav>
+        <a href="/common/about/">このサイトについて</a><span>|</span>
+        <a href="https://sponichi.jp/privacy/" target="_blank">個人情報について</a><span>|</span>
+        <a href="https://sponichi.jp/legalnotice/" target="_blank">免責事項</a><span>|</span>
+        <a href="/common/inquire/">ご意見</a><span>|</span>
+        <a href="https://sponichi.jp/company/" target="_blank">会社案内</a>
+      </nav>
+    </div>
+    
+    <div>
+      <p>Copyright &copy; SPORTS NIPPON NEWSPAPERS. All Rights Reserved.</p>
+      <p style="margin-top: .6em; font-size: .8em; ">Sponichi Annexに掲載の記事・写真・カット等の転載を禁じます。すべての著作権はスポーツニッポン新聞社と情報提供者に帰属します。</p>
+    </div>
+  </footer>
+
+</div>
+    
+    </div>
+    <span data-component="to-top" data-js-component="ToTop"><i></i></span>
+
+            <!-- side menu pc20211122 -->
+<div class="hidden" data-component="drawer-nav" data-js-component="DrawerNav">
+      <div class="bg"></div>
+      <nav><span class="btn-close"></span>
+        <div class="inner">
+          <ul class="main">
+		<li class="heading">スポニチ編集局で働いてみませんか</li>
+			<li><a href="https://sponichi.jp/recruit/part-time-tokyo/" target="_blank">募集詳細はこちら</a></li>
+		<li class="heading">スポニチNEW</li>
+			<li><a href="/company/new/#ohtani">「ALL OF SHOHEI 2021」～大谷翔平写真集　12月15日発売</a></li>
+			<li><a href="/company/new/#urawa2021">「写真で振り返る浦和レッズ2021」～ありがとう阿部勇樹　12月14日発売</a></li>
+			<li><a href="/company/new/#arc">アーカイブス2021年12月号は「AKB48――会いに行けるアイドル」</a></li>
+			<li><a href="/company/new/#hinatazaka">「日向坂46新聞2021年秋号」発売中</a></li>
+			<li><a href="/company/new/#tokyo2020">「TOKYO物語 2020オリ・パラ報道写真集」発売中</a></li>
+			<li><a href="/company/new/#hanyu_20210609">羽生結弦写真集2020～21「YUZU'LL BE BACK Ⅲ」発売中</a></li>
+                        <li><a href="https://www.e-printservice.net/content_detail/spopri" target="_blank">コンビニでスポニチの予想が買えるスポニチプリントサービス開始</a></li>
+
+			<li><a href="/company/new/book.html">元読売巨人軍・城之内邦雄氏ら「我が道」発売中</a></li>
+			<li><a href="/company/new/">その他･･･</a></li>
+		<li class="heading">コンテンツ</li>
+			<li><a href="/shimen/ichimen/">今日の東京版一面</a></li>
+			<li><a href="/shimen/ichimen/#osaka">今日の大阪版一面</a></li>
+			<li><a href="/osaka/">大阪</a></li>
+			<li><a href="/ranking/">ランキング</a></li>
+			<li><a href="/all/gazolist/">フォト（写真一覧）</a></li>
+			<li><a href="/yomimono/">コラム</a></li>
+			<li><a href="/sports/tokusyu/column/">編集・専門委員のコラム</a></li>
+			<li><a href="/tokusyu/">特集</a></li>
+			<li><a href="/schedule/">日程・結果</a></li>
+			<li><a href="/common/sns/">SNSアカウント一覧</a></li>
+		<li class="heading">記事カテゴリー</li>
+			<li><a href="/baseball/">野球</a></li>
+			<li><a href="/soccer/">サッカー</a></li>
+			<li><a href="/entertainment/">芸能</a></li>
+			<li><a href="/sports/">スポーツ</a></li>
+			<li><a href="/society/">社会</a></li>
+			<li><a href="/battle/">格闘技</a></li>
+			<li><a href="/gamble/">ギャンブル</a></li>
+			<li><a href="/olympic/">五輪</a></li>
+			<li><a href="/car/">クルマ</a></li>
+		<li class="heading">スポニチ</li>
+			<li><a href="https://sponichi.jp/project/event/" target="_blank">スポニチのイベント</a></li>
+			<li><a href="https://sponichi.net/sponichi-plus/tabloid/sponichi_jr/" target="_blank">スポニチジュニア</a></li>
+			<li><a href="http://lp.smartcoach.jp/sponichiacademy/" target="_blank">スポニチアカデミー</a></li>
+			<li><a href="https://mainichi.jp/" target="_blank">毎日新聞</a></li>
+          </ul>
+          <ul class="images">
+		<li><a href="/company/new/#c"><img src="/images/content_main/ad/ebooks_idol300_120d.jpg" /></a></li>
+		<li><a href="https://sponichi.net/sponichi-plus/" target="_blank"><img src="/images/content_main/ad/sponichiplus20190301.jpg" /></a></li>
+		<li><a href="https://nie.jp/month/contest_newspaper/2019/" target="_blank"><img src="/images/content_sub/ad/contest_newspaper2019.gif" /></a></li>
+		<li><a href="http://www.s-gc.net" target="_blank"><img src="/images/content_main/ad/sgc.jpg" /></a></li>
+		<li><a href="https://www.shinbun.me" target="_blank"><img src="/images/content_sub/ad/shinbunme20190405.jpg" /></a></li>
+		<li><a href="http://np-labo.com" target="_blank"><img src="/images/content_main/ad/np-labo_20180528.png" /></a></li>
+		<li><a href="https://kyujin.sponichi.co.jp" target="_blank"><img src="/images/content_main/ad/sponichi_kyujin20180129.gif" /></a></li>
+		<li><a href="https://www.sponichicreates.jp" target="_blank"><img src="/images/content_main/ad/sponichicreates_ad.jpg" /></a></li>
+		<li><a href="http://www.sponichipartner.co.jp" target="_blank"><img src="/images/content_main/ad/sponichipartner.png" /></a></li>
+          </ul>
+
+          <ul class="sub">
+		<li><a href="https://sponichi.jp/advertisement/ad-guide/" target="_blank">広告掲載資料</a></li>
+		<li><a href="https://sponichi.jp/printed-matter/new-reading/" target="_blank">新聞購読の申込み</a></li>
+		<li><a href="https://sponichi.jp/printed-matter/back-number/" target="_blank">特集号・バックナンバー購入</a></li>
+		<li><a href="https://sponichi.jp/printed-matter/pictures/" target="_blank">掲載写真お分けします</a></li>
+		<li><a href="https://sponichi.jp/printed-matter/useage/" target="_blank">紙面、掲載写真の２次使用のご案内</a></li>
+		<li><a href="/common/about/">このサイトについて</a></li>
+		<li><a href="https://sponichi.jp/privacy/" target="_blank">個人情報について</a></li>
+		<li><a href="https://sponichi.jp/legalnotice/" target="_blank">免責事項</a></li>
+		<li><a href="/common/inquire/">ご意見</a></li>
+		<li><a href="https://sponichi.jp/" target="_blank">会社案内</a></li>
+		<li><a href="https://sponichi.jp/recruit/regular-recruitment/" target="_blank">2022年度定期採用</a></li>
+		<li><a href="https://sponichi.jp/recruit/part-time-tokyo/" target="_blank">アルバイト募集・東京</a></li>
+		<li><a href="https://sponichi.jp/recruit/part-osaka/" target="_blank">アルバイト募集・大阪</a></li>
+		<li><a href="https://sponichi.jp/recruit/part-time-fukuoka/" target="_blank">アルバイト募集・福岡</a></li>
+          </ul>
+
+          <div class="footer">
+            <p>Copyright &copy; SPORTS NIPPON NEWSPAPERS. All Right Reserved.</p>
+            <p>Sponichi Annexに掲載の記事・写真・カット等の転載を禁じます。すべての著作権はスポーツニッポン新聞社と情報提供者に帰属します。</p>
+          </div>
+
+        </div>
+      </nav>
+    </div>
+    
+    <script src="/assets/libs/flickity.pkgd.min.js"></script>
+    <script src="/assets/libs/packery.pkgd.min.js"></script>
+    <script src="/assets/libs/smooth-scrollbar.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script type="text/javascript" src="/assets/libs/object-fit-images/dist/ofi.min.js"></script>
+    <script>
+      objectFitImages();
+    </script>
+
+    
+        <!--webpush.html-->
+    
+    
+    
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"e4d723c5c7","applicationID":"35132794","transactionName":"YwAEYkRWWEUDUhddVlpKM0RfGF9YBlQbGklcFQ==","queueTime":0,"applicationTime":199,"atts":"T0cHFAxMS0s=","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+</html>

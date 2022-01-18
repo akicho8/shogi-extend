@@ -20,9 +20,11 @@ module KifuExtractor
     CaseOushosenUrl,
     CaseDirectFileUrl,
     CaseUrlParams,
+    CaseSponichiUrl,
     CaseTactic,
     CasePreset,
     CaseDirectFileUrlInHtml,
+    CaseSponichiContent,
     CaseUnknownUrl,
   ]
 
