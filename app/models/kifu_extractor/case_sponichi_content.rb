@@ -5,7 +5,11 @@ module KifuExtractor
     include CaseSponichiMethods
 
     def resolve
-      sponichi_scan(item)
+      s = item.source
+      s = s.remove(/\p{blank}/)
+      if s.match?(/^\(.+?\)[▲△].+?\[.+?\]/)
+        sponichi_scan(item)
+      end
     end
   end
 end
