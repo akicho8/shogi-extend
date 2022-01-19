@@ -22,7 +22,7 @@
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
       KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
-      KifCopyButton(@click="kifu_copy_handle('kif')") コピー
+      KifCopyButton(@click="kifu_copy_handle") コピー
       b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
 
   .modal-card-foot

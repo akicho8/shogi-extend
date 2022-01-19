@@ -209,9 +209,6 @@ export default {
       })
     },
 
-    // b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存 (UTF-8)
-    // b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
-
     // 「KIFダウンロード」
     kifu_dl_handle_of(e) {
       this.record_fetch(() => location.href = this.kifu_dl_url_of(e))

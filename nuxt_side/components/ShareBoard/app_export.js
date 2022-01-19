@@ -10,6 +10,7 @@ export const app_export = {
 
     // 指定の棋譜をコピー
     kifu_copy_handle(e) {
+      this.__assert__("format_key" in e, '"format_key" in e')
       this.sidebar_p = false
       this.sound_play_click()
       this.general_kifu_copy(this.current_sfen, {to_format: e.format_key, turn: this.current_turn})
@@ -20,6 +21,7 @@ export const app_export = {
 
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
+      this.__assert__("format_key" in e, '"format_key" in e')
       return this.permalink_for({
         format: e.format_key,
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
@@ -36,6 +38,7 @@ export const app_export = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
+      this.__assert__("format_key" in e, '"format_key" in e')
       return this.permalink_for({
         format: e.format_key,
         body_encode: e.body_encode,

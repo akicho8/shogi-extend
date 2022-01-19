@@ -93,7 +93,7 @@ client-only
               .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
                 PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
                 KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
-                KifCopyButton(@click="kifu_copy_handle('kif')") コピー
+                KifCopyButton(@click="kifu_copy_handle(FormatTypeInfo.fetch('kif_utf8'))") コピー
 
               .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
                 b-button(@click="base.any_source_read_handle") 棋譜の読み込み
