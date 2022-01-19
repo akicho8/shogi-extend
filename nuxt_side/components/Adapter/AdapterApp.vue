@@ -28,16 +28,22 @@
 
           b-field.mt-5
             .control
+              .buttons.is-centered
+                PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+                KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+                KifCopyButton(@click="clipboard_open_handle")
+
+          b-field.mt-5
+            .control
               .buttons.is-centered.are-small
                 b-button(@click="share_board_first_open_handle") 最初
                 b-button(@click="share_board_last_open_handle") 最後
 
           b-field.mt-5
             .control
-              .buttons.is-centered
-                PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-                KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-                KifCopyButton(@click="clipboard_open_handle")
+              .buttons.is-centered.are-small
+                b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))"     tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存
+                b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
 
       .columns(v-if="record")
         .column
@@ -161,7 +167,7 @@ export default {
       })
     },
     clipboard_open_handle() {
-      this.kifu_copy_handle(FormatTypeInfo.fetch('kif'))
+      this.kifu_copy_handle(FormatTypeInfo.fetch('kif_utf8'))
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -203,22 +209,25 @@ export default {
       })
     },
 
+    // b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存 (UTF-8)
+    // b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
+
     // 「KIFダウンロード」
-    kifu_download_handle(e) {
-      this.record_fetch(() => location.href = this.kifu_download_url(e))
+    kifu_dl_handle_of(e) {
+      this.record_fetch(() => location.href = this.kifu_dl_url_of(e))
     },
 
     // 「表示」
-    kifu_show_handle(e) {
+    kifu_show_handle_of(e) {
       this.record_fetch(() => {
-        const url = this.kifu_show_url(e)
+        const url = this.kifu_show_url_of(e)
         this.window_popup(url)
       })
     },
 
     // helper
 
-    kifu_show_url(e, other_params = {}) {
+    kifu_show_url_of(e, other_params = {}) {
       if (this.record) {
         const params = {...other_params}
         if (e.format_key === "png") {
@@ -239,8 +248,8 @@ export default {
       }
     },
 
-    kifu_download_url(e) {
-      return this.kifu_show_url(e, {attachment: "true", body_encode: e.body_encode})
+    kifu_dl_url_of(e) {
+      return this.kifu_show_url_of(e, {disposition: "attachment", body_encode: e.body_encode})
     },
 
     // private

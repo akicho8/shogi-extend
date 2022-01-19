@@ -20,7 +20,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.FormatTypeInfo.values")
               template(v-if="e.show")
-                b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle(e)" :href="base.kifu_show_url(e)")
+                b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_show_handle_of(e)" :href="base.kifu_show_url_of(e)")
 
           b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
@@ -35,7 +35,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_
               | ダウンロード
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in base.FormatTypeInfo.values")
-              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_download_handle(e)" :href="base.kifu_download_url(e)")
+              b-menu-item.is_active_unset(:label="e.name" @click.prevent="base.kifu_dl_handle_of(e)" :href="base.kifu_dl_url_of(e)")
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="ブックマークレット" tag="nuxt-link" :to="{name: 'adapter-bookmarklet'}" @click.native="sound_play_click()")
