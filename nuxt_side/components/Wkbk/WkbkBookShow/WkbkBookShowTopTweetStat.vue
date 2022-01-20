@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkBookShowTopTweetStat
   nav.panel.is-twitter.mb-0
-    p.panel-heading
+    .panel-heading
       | 総合成績
     .panel-block.panel_body.is-justify-content-center
       | {{base.st_summary}}

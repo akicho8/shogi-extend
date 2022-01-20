@@ -1,6 +1,6 @@
 <template lang="pug">
 nav.panel.mb-0.WkbkBookShowTopXitemTable
-  p.panel-heading
+  .panel-heading
     | 問題リスト
   .panel-block.op_buttons
     //- b-button.is-fullwidth(@click="base.op_select_x_handle")
