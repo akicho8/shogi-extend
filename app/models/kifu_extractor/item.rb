@@ -6,7 +6,7 @@ module KifuExtractor
     attr_accessor :source
 
     def initialize(source, options = {})
-      @source = source.to_s.strip
+      @source = source.to_s.toutf8.strip # source が Shift_JIS だった場合に strip できないため toutf8 が必要
       @options = {
         url_check_head_lines: 4,
       }.merge(options)
@@ -42,8 +42,8 @@ module KifuExtractor
       end
     end
 
-    def fetched_content
-      @fetched_content ||= yield_self do
+    def url_fetched_content
+      @url_fetched_content ||= yield_self do
         if url = extracted_url
           WebAgent.fetch(url)
         end

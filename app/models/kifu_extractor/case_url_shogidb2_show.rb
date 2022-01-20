@@ -5,11 +5,11 @@
 # これをもともとは読み取っていたが利用者が欲しいのは fragment ではなく元の棋譜と思われるため fragment は無視する
 #
 module KifuExtractor
-  class CaseShogidb2Show < Extractor
+  class CaseUrlShogidb2Show < Extractor
     def resolve
       if url = extracted_url
         if url.include?("shogidb2.com/games/")
-          if md = fetched_content.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+          if md = url_fetched_content.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
             json_params = JSON.parse(md["json_str"], symbolize_names: true)
             @body = Shogidb2Parser.parse(json_params)
           end

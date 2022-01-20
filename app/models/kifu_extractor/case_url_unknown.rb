@@ -3,9 +3,9 @@
 # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/")'
 # rails r 'puts KifuExtractor.extract("https://lishogi.org/")'
 module KifuExtractor
-  class CaseUnknownUrl < Extractor
+  class CaseUrlUnknown < Extractor
     def resolve
-      if v = fetched_content
+      if v = url_fetched_content
         v = v.toutf8
         v = ApplicationRecord.strip_tags(v)
         v = v.strip

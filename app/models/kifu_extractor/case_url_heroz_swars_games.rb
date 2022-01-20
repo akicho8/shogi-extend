@@ -1,7 +1,7 @@
 # 将棋ウォーズ本家対局URL
 # rails r 'puts KifuExtractor.extract("https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900")'
 module KifuExtractor
-  class CaseSwarsGamesUrl < Extractor
+  class CaseUrlHerozSwarsGames < Extractor
     def resolve
       if url_type?
         if key = Swars::Battle.battle_key_extract(item.source)

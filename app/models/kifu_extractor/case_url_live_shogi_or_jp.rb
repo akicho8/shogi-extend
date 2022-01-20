@@ -7,7 +7,7 @@
 # 叡王戦 http://live.shogi.or.jp/eiou/kifu/6/eiou202109130101.html
 #
 module KifuExtractor
-  class CaseLiveShogiOrJp < Extractor
+  class CaseUrlLiveShogiOrJp < Extractor
     def resolve
       if url = extracted_url
         if url.include?("live.shogi.or.jp")

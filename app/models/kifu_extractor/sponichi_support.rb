@@ -1,5 +1,6 @@
 module KifuExtractor
-  module CaseSponichiMethods
+  module SponichiSupport
+    # 入力されたテキストにそのまま適用するとKIFのコメント内の符号を拾ってしまうので注意
     def sponichi_scan(item)
       s = item.source.toutf8
       s = ApplicationRecord.strip_tags(s)

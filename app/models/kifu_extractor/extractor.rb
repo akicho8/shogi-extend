@@ -5,7 +5,7 @@ module KifuExtractor
       :extracted_url,
       :extracted_uri,
       :extracted_kif_url,
-      :fetched_content,
+      :url_fetched_content,
     ], to: :item
 
     attr_accessor :body
