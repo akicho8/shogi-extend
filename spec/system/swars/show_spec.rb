@@ -32,8 +32,8 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       it "KIF" do
         visit2 "/swars/battles/#{@key}"
         hamburger_click
-        menu_item_sub_menu_click("表示")
-        menu_item_click("KIF")
+        find(".menu_item_show").click
+        find(".menu_item_show .kif_utf8").click
         switch_to_window_last
         assert_text "手数----指手---------消費時間--"
       end
@@ -42,8 +42,8 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       it "KIF" do
         visit2 "/swars/battles/#{@key}"
         hamburger_click
-        menu_item_sub_menu_click("コピー")
-        menu_item_click("KIF")
+        find(".menu_item_copy").click
+        find(".menu_item_copy .kif_utf8").click
         assert_text "コピーしました"
       end
     end
@@ -51,8 +51,8 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       it "KIF" do
         visit2 "/swars/battles/#{@key}"
         hamburger_click
-        menu_item_sub_menu_click("ダウンロード")
-        menu_item_click("KIF")
+        find(".menu_item_dl").click
+        find(".menu_item_dl .kif_utf8").click
         assert_text "たぶんダウンロードしました"
       end
     end
