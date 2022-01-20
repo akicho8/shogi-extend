@@ -14,6 +14,8 @@
 # |------------+----------+-------------+-------------+------+-------|
 
 module Wkbk
+  # rails r 'Wkbk::Sequence.setup'
+  # rails r 'tp Wkbk::Sequence'
   class Sequence < ApplicationRecord
     include MemoryRecordBind::Basic
 
