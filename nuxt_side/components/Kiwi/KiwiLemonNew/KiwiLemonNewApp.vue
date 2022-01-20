@@ -20,7 +20,7 @@ client-only
           b-icon(icon="table-cog")
         NavbarItemLogin
         NavbarItemProfileLink
-        NavbarItemMenu(@click="base.sidebar_toggle")
+        NavbarItemSidebarOpen(@click="base.sidebar_toggle")
 
     MainSection.when_mobile_footer_scroll_problem_workaround
       .container

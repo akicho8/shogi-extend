@@ -2,7 +2,7 @@
 b-sidebar.KiwiBananaShowSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
-      b-button.px-5.sidebar_close_handle(@click="base.sidebar_toggle" icon-left="menu")
+      NavbarItemSidebarClose(@click="base.sidebar_toggle")
     .mt-4
       .box
         | とくに入れるもんなし

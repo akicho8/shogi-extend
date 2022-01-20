@@ -25,7 +25,7 @@ MainNavbar.WkbkArticleIndexNavbar(:spaced="false" wrapper-class="container is-fl
     NavbarItemLogin
     NavbarItemProfileLink
 
-    NavbarItemMenu.is-hidden-desktop(@click="base.sidebar_toggle")
+    NavbarItemSidebarOpen.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
 
 <script>

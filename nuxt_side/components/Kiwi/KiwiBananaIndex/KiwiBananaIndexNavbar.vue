@@ -14,7 +14,7 @@ MainNavbar.KiwiBananaIndexNavbar(:spaced="false" wrapper-class="container is-flu
     NavbarItemLogin
     NavbarItemProfileLink
 
-    NavbarItemMenu(@click="base.sidebar_toggle" v-if="false")
+    NavbarItemSidebarOpen(@click="base.sidebar_toggle" v-if="false")
 </template>
 
 <script>

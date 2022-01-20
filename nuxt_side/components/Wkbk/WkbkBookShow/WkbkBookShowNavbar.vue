@@ -54,7 +54,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
       //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_start" v-if="!base.current_xitem")
       //-   | RESTART
 
-      NavbarItemMenu(@click="base.sidebar_toggle")
+      NavbarItemSidebarOpen(@click="base.sidebar_toggle")
 </template>
 
 <script>

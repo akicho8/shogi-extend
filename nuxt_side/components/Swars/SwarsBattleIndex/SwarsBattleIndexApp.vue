@@ -15,7 +15,7 @@
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
-      NavbarItemMenu(@click="sidebar_toggle")
+      NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
     .container.is-fluid

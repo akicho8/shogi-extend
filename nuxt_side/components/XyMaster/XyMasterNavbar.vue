@@ -6,7 +6,7 @@ MainNavbar.XyMasterNavbar(v-if="base.is_mode_idol")
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
-    NavbarItemMenu(@click="base.sidebar_toggle")
+    NavbarItemSidebarOpen(@click="base.sidebar_toggle")
 </template>
 
 <script>

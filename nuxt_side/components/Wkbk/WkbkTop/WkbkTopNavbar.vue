@@ -22,7 +22,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
     NavbarItemLogin
     NavbarItemProfileLink
 
-    NavbarItemMenu(@click="base.sidebar_toggle" v-if="false")
+    NavbarItemSidebarOpen(@click="base.sidebar_toggle" v-if="false")
 </template>
 
 <script>

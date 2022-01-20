@@ -1,5 +1,5 @@
 <template lang="pug">
-b-navbar-item.NavbarItemMenu.px_5_if_tablet.sidebar_toggle_navbar_item(
+b-navbar-item.NavbarItemSidebarOpen.px_5_if_tablet.sidebar_toggle_navbar_item(
   v-bind="$attrs"
   v-on="$listeners"
   )
@@ -8,6 +8,6 @@ b-navbar-item.NavbarItemMenu.px_5_if_tablet.sidebar_toggle_navbar_item(
 
 <script>
 export default {
-  name: "NavbarItemMenu",
+  name: "NavbarItemSidebarOpen",
 }
 </script>

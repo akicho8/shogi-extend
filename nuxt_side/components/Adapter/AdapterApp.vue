@@ -10,7 +10,7 @@
       NavbarItemHome
       b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
     template(slot="end")
-      NavbarItemMenu(@click="sidebar_toggle")
+      NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
     .container
