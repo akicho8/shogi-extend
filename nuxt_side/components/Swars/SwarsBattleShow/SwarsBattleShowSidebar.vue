@@ -20,7 +20,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.show")
-                b-menu-item.is_active_unset(:label="e.name" @click="base.sidebar_close" :target="target_default" :href="show_url_for(e.key)")
+                b-menu-item.is_active_unset(:label="e.name" @click="base.sidebar_close" :target="target_default" :href="show_url_for(e.format_key)")
 
           b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
@@ -28,7 +28,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
               b-icon.is-pulled-right(:icon="props.expanded ? 'menu-up' : 'menu-down'")
             template(v-for="e in FormatTypeInfo.values")
               template(v-if="e.clipboard")
-                b-menu-item.is_active_unset(:label="e.name" @click="swars_clipboard_copy_handle(e.key)")
+                b-menu-item.is_active_unset(:label="e.name" @click="swars_clipboard_copy_handle(e.format_key)")
 
           b-menu-item.is_active_unset(@click="sound_play_click()")
             template(slot="label" slot-scope="props")
