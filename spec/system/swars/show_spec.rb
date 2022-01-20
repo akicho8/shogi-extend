@@ -34,7 +34,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
         hamburger_click
         menu_item_sub_menu_click("表示")
         menu_item_click("KIF")
-        switch_to_window(windows.last)
+        switch_to_window_last
         assert_text "手数----指手---------消費時間--"
       end
     end
