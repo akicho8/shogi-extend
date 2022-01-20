@@ -61,12 +61,20 @@ module Kiwi
 
         def background_job_inactive_message
           if background_job_disabled?
-            "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは夜中の間だけで変換作業を試みます。終わったらメールするんで気長にお待ちください。"
+            background_job_inactive_message_build("夜中")
           else
             unless background_job_kick_active?
-              "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、しばらくは#{::Kiwi::Lemon.background_job_range_to_s}の間だけで動画変換を試みます。終わったらメールするんで気長にお待ちください。"
+              background_job_inactive_message_build(::Kiwi::Lemon.background_job_range_to_s)
             end
           end
+        end
+
+        def background_job_inactive_message_build(s)
+          [
+            "サーバーのリソース不足で失敗しがちなのと、処理が重すぎて他のサービスが不安定になったりするので、",
+            "しばらくは#{s}の間だけで変換作業を試みます。",
+            "終わったらメールするんで気長にお待ちください。",
+          ].join
         end
 
         # rails r 'Kiwi::Lemon.background_job_for_cron'

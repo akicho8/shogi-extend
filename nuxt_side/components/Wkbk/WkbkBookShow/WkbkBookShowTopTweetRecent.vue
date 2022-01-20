@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkBookShowTopTweetRecent
   nav.panel.is-twitter.mb-0
-    p.panel-heading
+    .panel-heading
       | 直近成績
     .panel-block.panel_body.is-justify-content-center
       template(v-if="base.re_summary")

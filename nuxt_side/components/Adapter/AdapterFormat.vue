@@ -36,7 +36,7 @@
               //-       @click.native="sound_play_click()") TEST
               //-
               //- nav.panel
-              //-   p.panel-heading
+              //-   .panel-heading
               //-     b-tag.mr-1(type="is-danger" v-if="!e.success" rounded) 反則
               //-     | {{e.name}}
               //-   .panel-block
