@@ -177,6 +177,12 @@ if true
     def doc
       Nokogiri::HTML(html)
     end
+
+    # 最後に開いたタブに移動する
+    # .kif を開いたときなどはこれを実行しないと切り替わらない
+    def switch_to_window_last
+      switch_to_window(windows.last)
+    end
   end
 
   RSpec.configure do |config|

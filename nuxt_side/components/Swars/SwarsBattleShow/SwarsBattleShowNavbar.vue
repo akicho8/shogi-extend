@@ -8,7 +8,7 @@ MainNavbar.SwarsBattleShowNavbar
   template(slot="end")
     b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.tweet_handle")
       b-icon(icon="twitter")
-    b-navbar-item.px_5_if_tablet(@click="base.sidebar_toggle")
+    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
       b-icon(icon="menu")
 </template>
 
