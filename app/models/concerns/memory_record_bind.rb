@@ -11,7 +11,8 @@
 #     include MemoryRecordBind::Basic
 #   end
 #
-#   Rule.setup
+#   rails r 'Rule.setup'
+#   rails r 'tp Rule'
 #
 module MemoryRecordBind
   concern :Base do
@@ -84,16 +85,16 @@ module MemoryRecordBind
   end
 
   concern :Basic do
-    included do
-      include Base
+    include Base
 
+    included do
       acts_as_list top_of_list: 0, touch_on_update: false
       default_scope { order(:position) }
     end
 
     class_methods do
       def setup(*)
-        self.class.acts_as_list_no_update do
+        self.acts_as_list_no_update do
           super
         end
       end
