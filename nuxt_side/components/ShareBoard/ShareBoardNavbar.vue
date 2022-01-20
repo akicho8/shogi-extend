@@ -37,8 +37,7 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
           | 編集完了
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
-    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="base.play_mode_p")
-      b-icon(icon="menu")
+    NavbarItemMenu(@click="base.sidebar_toggle" v-if="base.play_mode_p")
 </template>
 
 <script>

@@ -15,8 +15,7 @@
     template(slot="end")
       NavbarItemLogin
       NavbarItemProfileLink
-      b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="sidebar_toggle")
-        b-icon(icon="menu")
+      NavbarItemMenu(@click="sidebar_toggle")
 
   MainSection
     .container.is-fluid

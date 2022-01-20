@@ -4,8 +4,7 @@ MainNavbar.StopwatchNavbar
     NavbarItemHome
     b-navbar-item.has-text-weight-bold(@click="base.book_title_input_dialog") {{base.book_title}}
   template(slot="end")
-    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
-      b-icon(icon="menu")
+    NavbarItemMenu(@click="base.sidebar_toggle")
 </template>
 
 <script>

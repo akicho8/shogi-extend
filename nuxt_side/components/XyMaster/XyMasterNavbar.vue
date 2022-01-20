@@ -6,8 +6,7 @@ MainNavbar.XyMasterNavbar(v-if="base.is_mode_idol")
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
-    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle")
-      b-icon(icon="menu")
+    NavbarItemMenu(@click="base.sidebar_toggle")
 </template>
 
 <script>

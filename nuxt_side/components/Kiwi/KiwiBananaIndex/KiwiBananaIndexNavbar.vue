@@ -14,8 +14,7 @@ MainNavbar.KiwiBananaIndexNavbar(:spaced="false" wrapper-class="container is-flu
     NavbarItemLogin
     NavbarItemProfileLink
 
-    b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="base.sidebar_toggle" v-if="false")
-      b-icon(icon="menu")
+    NavbarItemMenu(@click="base.sidebar_toggle" v-if="false")
 </template>
 
 <script>

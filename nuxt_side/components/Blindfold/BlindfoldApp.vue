@@ -26,8 +26,7 @@ client-only
 
         b-navbar-item.has-text-weight-bold(@click="mode_toggle_handle" v-if="scene === 'edit_mode'")
           | 編集完了
-        b-navbar-item.px_5_if_tablet.sidebar_toggle_navbar_item(@click="sidebar_toggle" v-if="scene === 'play_mode'")
-          b-icon(icon="menu")
+        NavbarItemMenu(@click="sidebar_toggle" v-if="scene === 'play_mode'")
 
     MainSection.is_mobile_padding_zero
       .container
