@@ -22,7 +22,6 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
           | {{base.book.title}}
 
     template(slot="start")
-      //- WkbkSidebarToggle(@click="base.sidebar_toggle")
       template(v-if="base.is_running_p && false")
         b-navbar-item(tag="div" v-if="base.current_xitem")
           | {{base.current_xitem.title}}
@@ -55,7 +54,7 @@ MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container 
       //- b-navbar-item.has-text-weight-bold.px-4(@click="base.play_start" v-if="!base.current_xitem")
       //-   | RESTART
 
-      WkbkSidebarToggle(@click="base.sidebar_toggle")
+      NavbarItemMenu(@click="base.sidebar_toggle")
 </template>
 
 <script>

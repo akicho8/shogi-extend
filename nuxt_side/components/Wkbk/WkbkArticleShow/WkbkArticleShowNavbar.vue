@@ -10,7 +10,7 @@ MainNavbar.WkbkArticleShowNavbar(:spaced="false")
     template(slot="end")
       b-navbar-item.px_5_if_tablet(tag="nuxt-link" :to="{name: 'rack-articles-article_key-edit', params: {article_key: base.article.key}}" v-if="base.owner_p")
         b-icon(icon="pencil")
-      WkbkSidebarToggle(@click="base.sidebar_toggle")
+      NavbarItemMenu(@click="base.sidebar_toggle")
 </template>
 
 <script>

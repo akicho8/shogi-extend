@@ -14,7 +14,7 @@ MainNavbar.WkbkBookIndexNavbar(:spaced="false" wrapper-class="container is-fluid
     NavbarItemLogin
     NavbarItemProfileLink
 
-    WkbkSidebarToggle.is-hidden-desktop(@click="base.sidebar_toggle")
+    NavbarItemMenu.is-hidden-desktop(@click="base.sidebar_toggle")
 </template>
 
 <script>

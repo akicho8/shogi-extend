@@ -37,8 +37,7 @@
     template(slot="end" v-if="mode === 'is_mode_run'")
       b-navbar-item.has-text-weight-bold.px-4(@click="next_button")
         | NEXT
-      b-navbar-item(@click="sidebar_toggle")
-        b-icon(icon="menu")
+      NavbarItemMenu(@click="sidebar_toggle")
 
   b-navbar(type="is-dark" fixed-bottom v-if="development_p")
     template(slot="start")

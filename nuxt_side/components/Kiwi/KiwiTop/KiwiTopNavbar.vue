@@ -20,7 +20,7 @@ MainNavbar.KiwiTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
     NavbarItemLogin
     NavbarItemProfileLink
 
-    KiwiSidebarToggle(:base="base" @click="base.sidebar_toggle" v-if="false")
+    NavbarItemMenu(@click="base.sidebar_toggle" v-if="false")
 
     //- b-navbar-item.has-text-weight-bold.px_5_if_tablet(tag="nuxt-link" :to="{name: 'video'}" @click.native="sound_play_click()")
     //-   b-icon(icon="cog")

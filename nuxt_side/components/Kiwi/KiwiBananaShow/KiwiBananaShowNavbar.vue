@@ -16,7 +16,7 @@ MainNavbar.KiwiBananaShowNavbar(:spaced="false" centered wrapper-class="containe
       b-icon(icon="twitter")
     NavbarItemLogin
     NavbarItemProfileLink
-    KiwiSidebarToggle(@click="base.sidebar_toggle"  v-if="false")
+    NavbarItemMenu(@click="base.sidebar_toggle" v-if="false")
 </template>
 
 <script>

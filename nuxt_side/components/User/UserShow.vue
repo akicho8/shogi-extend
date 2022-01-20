@@ -21,8 +21,7 @@
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'users-id', params: {id: $route.params.id}}")
           | {{page_title}}
       template(slot="end" v-if="g_current_user && g_current_user.id === record.id")
-        b-navbar-item.px_5_if_tablet(@click="sidebar_toggle")
-          b-icon(icon="menu")
+        NavbarItemMenu(@click="sidebar_toggle")
     MainSection
       .container
         .columns.is-centered
