@@ -23,28 +23,16 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
 
       .box.mt-5
         .title.is-5 設定
-        b-field(custom-class="is-small" label="問題タイトル表示")
-          template(v-for="e in base.ArticleTitleDisplayInfo.values")
-            b-radio-button(size="is-small" v-model="base.article_title_display_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" :label="base.MovesMatchInfo.field_label")
-          template(v-for="e in base.MovesMatchInfo.values")
-            b-radio-button(size="is-small" v-model="base.moves_match_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" label="駒操作で正解したときの挙動")
-          template(v-for="e in base.CorrectBehaviorInfo.values")
-            b-radio-button(size="is-small" v-model="base.correct_behavior_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" label="視点の反転")
-          template(v-for="e in base.ViewpointFlipInfo.values")
-            b-radio-button(size="is-small" v-model="base.viewpoint_flip_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" label="盤上の駒の左右反転")
-          template(v-for="e in base.SoldierFlopInfo.values")
-            b-radio-button(size="is-small" v-model="base.soldier_flop_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" :label="base.ShowBehaviourInfo.field_label")
-          template(v-for="e in base.ShowBehaviourInfo.values")
-            b-radio-button(size="is-small" v-model="base.show_behaviour_key" :native-value="e.key" @input="sound_play_click()") {{e.name}}
-        b-field(custom-class="is-small" label="読み上げ速度")
-          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_speed" :min="0.5" :max="1.5" :step="0.05")
-        b-field(custom-class="is-small" label="読み上げ間隔")
-          b-slider(v-bind="base.yomiage_slider_attrs" v-model="base.yomiage_interval" :min="0" :max="8.0" :step="0.05")
+
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ArticleTitleDisplayInfo" var_name="article_title_display_key")
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="MovesMatchInfo"          var_name="moves_match_key"          )
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="CorrectBehaviorInfo"     var_name="correct_behavior_key"     )
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ViewpointFlipInfo"       var_name="viewpoint_flip_key"       )
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="SoldierFlopInfo"         var_name="soldier_flop_key"         )
+        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ShowBehaviourInfo"       var_name="show_behaviour_key"       )
+
+        SimpleSlider(:base="base" custom-class="is-small" label="読み上げ速度" var_name="yomiage_speed"    :min="0.5" :max="1.5" :step="0.05")
+        SimpleSlider(:base="base" custom-class="is-small" label="読み上げ間隔" var_name="yomiage_interval" :min="0.0" :max="8.0" :step="0.05")
 </template>
 
 <script>
@@ -76,10 +64,4 @@ export default {
 
   .field:not(:first-child)
     margin-top: 2rem
-
-  .b-slider
-    .b-slider-thumb-wrapper.has-indicator
-      .b-slider-thumb
-        padding: 10px 6px
-        font-size: 10px
 </style>

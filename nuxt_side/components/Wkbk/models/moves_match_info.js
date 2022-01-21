@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class MovesMatchInfo extends ApplicationMemoryRecord {
-  static field_label = "正解と比較する範囲"
+  static field_label = "○○が一致したら正解とする"
 
   static get define() {
     return [
