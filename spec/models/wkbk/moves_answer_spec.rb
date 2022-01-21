@@ -96,6 +96,12 @@ module Wkbk
       article.moves_answers.destroy_all
       assert { article.reload.turn_max == 0 } # 最大手数が0になる
     end
+
+    it "moves" do
+      article = user1.wkbk_articles.create!(init_sfen: "position startpos")
+      moves_answer = article.moves_answers.create!(moves: %w(7g7f 8c8d))
+      assert { moves_answer.moves == ["7g7f", "8c8d"] }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}

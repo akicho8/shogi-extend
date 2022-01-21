@@ -70,13 +70,24 @@ export const app_xitems = {
       if (this.soldier_flop_info.key === "flip_on") {
         moves = MoveHash.line_flop(moves.join(" ")).split(/\s+/)
       }
-      if (this.current_article.moves_valid_p(moves)) {
+
+      let success = null
+      if (this.moves_match_info.key === "all") {
+        success = this.current_article.moves_valid_p(moves)
+      } else {
+        success = this.current_article.moves_first_valid_p(moves)
+      }
+
+      if (success) {
+        // 正解
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
         } else {
           this.toast_ok("正解")
           this.sound_play("o")
         }
+      } else {
+        // 不正解
       }
     },
 

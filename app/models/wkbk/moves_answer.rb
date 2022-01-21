@@ -75,5 +75,13 @@ module Wkbk
     def sfen
       "#{article.init_sfen} moves #{moves_str}"
     end
+
+    def moves
+      moves_str.to_s.split
+    end
+
+    def moves=(av)
+      self.moves_str = av.join(" ")
+    end
   end
 end

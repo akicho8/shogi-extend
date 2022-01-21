@@ -38,7 +38,7 @@ export const app_answer = {
         return
       }
 
-      this.article.moves_answers.push({moves_str: moves.join(" ")})
+      this.article.moves_answers.push({moves: moves})
       this.$nextTick(() => this.answer_tab_index = this.article.moves_answers.length - 1)
 
       this.toast_ok(`${this.article.moves_answers.length}つ目の正解を追加しました`, {onend: () => {

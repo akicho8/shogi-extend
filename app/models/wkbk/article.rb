@@ -187,7 +187,15 @@ module Wkbk
               moves_answer = moves_answers.build
             end
 
-            moves_answer.moves_str = e[:moves_str]
+            if v = e[:moves]
+              moves_answer.moves = v
+            end
+
+            if v = e[:moves_str]
+              moves_answer.moves_str = v
+            end
+
+            # moves_answer.moves_str = e[:moves_str]
             # moves_answer.end_sfen = e[:end_sfen]
             moves_answer.save!
           end

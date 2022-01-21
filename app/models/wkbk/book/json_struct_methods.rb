@@ -190,8 +190,11 @@ module Wkbk
               moves_answers: {
                 only: [
                   :id,
-                  :moves_str,
+                  # :moves_str,
                   :moves_human_str,
+                ],
+                methods: [
+                  :moves,
                 ],
               },
             },

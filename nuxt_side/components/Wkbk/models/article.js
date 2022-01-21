@@ -33,17 +33,22 @@ export class Article extends ModelBase {
   ////////////////////////////////////////////////////////////////////////////////
 
   init_sfen_with(moves_answer) {
-    return [this.init_sfen, "moves", moves_answer.moves_str].join(" ")
+    return [this.init_sfen, "moves", ...moves_answer.moves].join(" ")
   }
 
-  // sfenは正解か？
+  // sfenは正解か？ (未使用)
   sfen_valid_p(sfen) {
     return this.answer_sfen_list.includes(sfen)
   }
 
   // movesは正解か？
   moves_valid_p(moves) {
-    return this.moves_answers.some(e => e.moves_str === moves.join(" "))
+    return this.moves_answers.some(e => e.moves.join(" ") === moves.join(" "))
+  }
+
+  // movesの初手は正解か？
+  moves_first_valid_p(moves) {
+    return this.moves_answers.some(e => e.moves[0] === moves[0])
   }
 
   // すべての解答の中から最大手数を得る
