@@ -70,6 +70,10 @@ export const app_sfen_share = {
         }
         this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
         this.sfen_share_callback_set()
+      } else {
+        // 自分しかいないため即履歴とする
+        // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
+        this.al_add(this.sfen_share_params)
       }
     },
 

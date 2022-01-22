@@ -160,16 +160,11 @@ export const app_sp = {
     // 将棋盤の下のコントローラーを表示しない条件
     // 対局時計が設置されていて STOP または PAUSE 状態のとき
     controller_disabled_p() {
-      // if (this.development_p) {
-      //   return false
-      // }
-
       if (this.ctrl_mode_info.key === "is_ctrl_mode_hidden") {
         if (this.clock_box) {
           return this.clock_box.working_p
         }
       }
     },
-
   },
 }

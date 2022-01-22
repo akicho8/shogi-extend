@@ -1,8 +1,17 @@
 <template lang="pug">
 .ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
-  img.avatar_img.flex_item(:src="info.from_avatar_path" v-if="info.from_avatar_path")
-  XemojiWrap.user_guardian.flex_item.is-flex(v-if="base.guardian_display_key === 'is_guardian_display_on' && info.from_avatar_path == null" :str="user_guardian")
-  XemojiWrap.user_name.flex_item(:str="info.from_user_name")
+  // すべて名前が入力されていないとだめ
+  template(v-if="info.from_user_name")
+    // 自分プロフィール画像があるなら優先して表示する
+    template(v-if="info.from_avatar_path")
+      img.avatar_img.flex_item(:src="info.from_avatar_path")
+
+    // 自分プロフィール画像がないかつ守護獣モードなら守護獣表示
+    template(v-if="info.from_avatar_path == null && base.guardian_display_key === 'is_guardian_display_on'")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="user_guardian")
+
+    // 名前
+    XemojiWrap.user_name.flex_item(:str="info.from_user_name")
   slot
 </template>
 

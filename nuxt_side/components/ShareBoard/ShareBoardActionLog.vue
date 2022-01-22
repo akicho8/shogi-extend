@@ -20,9 +20,7 @@ import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal.vue"
 
 export default {
   name: "ShareBoardActionLog",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   mounted() {
     if (this.development_p) {
       for (let i = 0; i < 3; i++) {
