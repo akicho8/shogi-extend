@@ -53,8 +53,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
       .style_container.box.mt-5
         .title.is-5 スタイル設定
-        b-field(custom-class="is-small" label="盤の大きさ")
-          b-slider(v-bind="slider_attrs" v-model="base.board_width" :min="0" :max="100" :step="1.0")
+        SimpleSlider(:base="base" label="盤の大きさ" var_name="board_width" :min="0" :max="100" :step="1.0")
 </template>
 
 <script>
@@ -63,15 +62,6 @@ import { support_child } from "./support_child.js"
 export default {
   name: "ShareBoardSidebar",
   mixins: [support_child],
-  computed: {
-    slider_attrs() {
-      return {
-        indicator: true,
-        tooltip: false,
-        size: "is-small",
-      }
-    },
-  },
 }
 </script>
 
@@ -84,12 +74,6 @@ export default {
 
   .menu-label
     margin-top: 2em
-
-  .b-slider
-    .b-slider-thumb-wrapper.has-indicator
-      .b-slider-thumb
-        padding: 8px 4px
-        font-size: 10px
 
   .style_container
     +mobile
