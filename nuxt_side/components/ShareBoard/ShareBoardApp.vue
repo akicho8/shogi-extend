@@ -50,67 +50,9 @@ client-only
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
         .columns.is-centered
-          .MainColumn.column(:class="main_column_class")
-            CustomShogiPlayer.is_mobile_vertical_good_style(
-              ref="main_sp"
-              :class="sp_class"
-              :sp_layer="development_p ? 'is_layer_off' : 'is_layer_off'"
-              :sp_run_mode="sp_run_mode"
-              :sp_turn="current_turn"
-              :sp_body="current_sfen"
-              :sp_sound_enabled="true"
-              :sp_viewpoint.sync="sp_viewpoint"
-              :sp_player_info="sp_player_info"
-              :sp_human_side="sp_human_side"
-              :sp_controller="controller_disabled_p ? 'is_controller_off' : 'is_controller_on'"
-              :sp_slider="controller_disabled_p ? 'is_slider_off' : 'is_slider_on'"
-
-              sp_debug_mode="is_debug_mode_off"
-              sp_summary="is_summary_off"
-
-              :sp_play_mode_legal_move_only="sp_internal_rule_strict_p"
-              :sp_play_mode_legal_jump_only="false"
-              :sp_play_mode_only_own_piece_to_move="sp_internal_rule_strict_p"
-              :sp_play_mode_can_not_kill_same_team_soldier="sp_internal_rule_strict_p"
-
-              :sp_move_cancel="sp_move_cancel_info.key"
-
-              @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
-              @update:edit_mode_snapshot_sfen="edit_mode_snapshot_sfen_set"
-              @update:mediator_snapshot_sfen="mediator_snapshot_sfen_set"
-              @update:turn_offset="v => current_turn = v"
-              @update:turn_offset_max="v => turn_offset_max = v"
-              @operation_invalid1="operation_invalid1_handle"
-              @operation_invalid2="operation_invalid2_handle"
-              @one_way:sp_turn_user_changed="sp_turn_user_changed"
-            )
-
-            .footer_buttons(v-if="edit_mode_p")
-              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-                b-button(@click="king_formation_auto_set(true)") 詰将棋検討用玉配置
-                b-button(@click="king_formation_auto_set(false)") 玉回収
-
-              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-                PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-                KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
-                KifCopyButton(@click="kifu_copy_handle(FormatTypeInfo.fetch('kif_utf8'))") コピー
-
-              .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-                b-button(@click="base.any_source_read_handle") 棋譜の読み込み
-
-            .buttons.is-centered.mt-4(v-if="true")
-              //- b-tooltip(label="ツイート")
-              //- TweetButton(size="" :body="tweet_body" :type="advanced_p ? 'is-twitter' : ''" v-if="play_mode_p")
-              b-button.has-text-weight-bold(:type="advanced_p ? 'is-twitter' : ''" v-if="tweet_button_show_p" icon-left="twitter" @click="tweet_modal_handle") ツイート
-
-              //- b-button.has-text-weight-bold(type="is-primary" @click="play_mode_handle" v-if="edit_mode_p") 編集完了
-
-            .room_code.is-clickable(@click="room_setup_modal_handle" v-if="false")
-              | {{room_code}}
-
+          ShareBoardSp(:base="base" ref="ShareBoardSp")
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog" v-if="ac_room")
           ShareBoardMemberList(:base="base" v-if="ac_room")
-
         ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
 </template>
 
@@ -139,6 +81,7 @@ import { app_handle_name          } from "./app_handle_name.js"
 import { app_member_info_modal    } from "./app_member_info_modal.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
+import { app_sp                   } from "./app_sp.js"
 import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
 import { app_room_leave           } from "./app_room_leave.js"
@@ -188,6 +131,7 @@ export default {
     app_member_info_modal,
     app_urls,
     app_edit_mode,
+    app_sp,
     app_room_setup,
     app_devise,
     app_room_leave,
@@ -417,10 +361,6 @@ export default {
       this.toast_ok("それは相手の駒です")
     },
 
-    // 持駒を元に戻す(デバッグ用)
-    sp_state_reset() {
-      this.$refs.main_sp.sp_object().state_reset()
-    },
   },
 
   computed: {
