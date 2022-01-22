@@ -137,3 +137,12 @@
 
    http://localhost:4000/share-board?room_code=a&force_user_name=bob&ordered_member_names=alice,bob,carol&autoexec=message_modal_handle
 
+** メンバーステイタス確認
+
+*** 接続切れ
+
+   http://localhost:4000/share-board?room_code=my_room&member_is_disconnect=true
+
+*** よそ見中
+
+   http://localhost:4000/share-board?room_code=my_room&member_is_window_blur=true

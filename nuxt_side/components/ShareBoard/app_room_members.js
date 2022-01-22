@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
-const ALIVE_NOTIFY_INTERVAL = 60       // N秒ごとに存在を通知する
+const ALIVE_NOTIFY_INTERVAL = 60      // N秒ごとに存在を通知する
 const ALIVE_SEC             = 60 + 8  // N秒未満なら活発とみなして青くする
 const KILL_SEC              = 60 + 30 // 通知がN秒前より古いユーザーは破棄
 
@@ -148,8 +148,12 @@ export const app_room_members = {
     member_alive_p(e) {
       return this.member_elapsed_sec(e) < ALIVE_SEC
     },
+
     // 寝ているか？
     member_is_disconnect(e) {
+      if (this.$route.query.member_is_disconnect === "true") {
+        return true
+      }
       return !this.member_alive_p(e)
     },
 

@@ -2,13 +2,18 @@
 .ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
   // すべて名前が入力されていないとだめ
   template(v-if="info.from_user_name")
-    // 自分プロフィール画像があるなら優先して表示する
-    template(v-if="info.from_avatar_path")
-      img.avatar_img.flex_item(:src="info.from_avatar_path")
+    // replace_icon が最優先
+    template(v-if="replace_icon")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
 
-    // 自分プロフィール画像がないかつ守護獣モードなら守護獣表示
-    template(v-if="info.from_avatar_path == null && base.guardian_display_key === 'is_guardian_display_on'")
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="user_guardian")
+    template(v-else)
+      // 自分プロフィール画像があるなら優先して表示する
+      template(v-if="info.from_avatar_path")
+        img.avatar_img.flex_item(:src="info.from_avatar_path")
+
+      // 自分プロフィール画像がないかつ守護獣モードなら守護獣表示
+      template(v-if="info.from_avatar_path == null && base.guardian_display_key === 'is_guardian_display_on'")
+        XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian")
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
@@ -23,10 +28,11 @@ export default {
   name: "ShareBoardAvatarLine",
   mixins: [support_child],
   props: {
-    info: { type: Object, required: true },
+    info:         { type: Object, required: true },
+    replace_icon: { type: String, required: false },
   },
   computed: {
-    user_guardian() { return this.base.guardian_from_str(this.info.from_user_name) },
+    default_guardian() { return this.base.guardian_from_str(this.info.from_user_name) },
   },
 }
 </script>

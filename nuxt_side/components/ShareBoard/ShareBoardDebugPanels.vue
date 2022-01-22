@@ -43,6 +43,9 @@
       .panel-heading
         | ShogiPlayer
       a.panel-block(@click="base.sp_state_reset") 持ち上げた駒を元に戻す
+      a.panel-block(@click="base.sp_viewpoint = 'black'") ☗視点
+      a.panel-block(@click="base.sp_viewpoint = 'white'") ☖視点
+      .panel-block 現在の視点 {{base.sp_viewpoint}}
 
   .column.is-2
     .panel

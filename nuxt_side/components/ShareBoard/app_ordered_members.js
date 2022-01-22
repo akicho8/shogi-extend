@@ -336,7 +336,14 @@ export const app_ordered_members = {
     member_is_turn_standby(e) { return this.order_lookup(e) && this.current_turn_user_name !== e.from_user_name }, // 手番待ちの人
     member_is_watching(e)     { return this.order_enable_p && !this.order_lookup(e)                               }, // 観戦
     member_is_self(e)         { return this.connection_id === e.from_connection_id                              }, // 自分
-    member_is_window_blur(e)  { return !e.window_active_p                                                       }, // Windowが非アクティブ状態か？
+
+    // Windowが非アクティブ状態か？
+    member_is_window_blur(e)  {
+      if (this.$route.query.member_is_window_blur === "true") {
+        return true
+      }
+      return !e.window_active_p
+    },
 
     member_status_label(e) {
       if (this.member_is_turn_active(e)) {
