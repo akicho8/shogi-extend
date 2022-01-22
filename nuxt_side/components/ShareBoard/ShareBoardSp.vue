@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardSp.MainColumn.column(:class="base.main_column_class")
+.ShareBoardSp.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer.is_mobile_vertical_good_style(v-bind="sp_bind" v-on="sp_hook")
 
   .footer_buttons(v-if="base.edit_mode_p")
@@ -24,6 +24,12 @@ export default {
   name: "ShareBoardSp",
   mixins: [support_child],
   computed: {
+    main_column_class() {
+      const av = []
+      av.push(`is_sb_${this.base.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
+      return av
+    },
+
     sp_bind() {
       const hv = {}
       hv.ref                                         = "main_sp"
@@ -86,4 +92,47 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
+
+.ShareBoardSp
+  .footer_buttons
+    .button
+      margin-bottom: 0
+
+  ////////////////////////////////////////////////////////////////////////////////
+  +tablet
+    padding-top: unset
+    padding-bottom: unset
+    &.is_sb_play_mode
+      max-width: calc(var(--board_width) * 1.0vmin)
+    &.is_sb_edit_mode
+      max-width: calc(var(--board_width) * 1.0vmin * 0.75)
+
+  .CustomShogiPlayer
+    .MembershipLocationPlayerInfo
+      &.read_sec_60, &.extra_sec_60
+        background-color: change_color($green, $saturation: 50%, $lightness: 80%) !important
+        color: $black !important
+      &.read_sec_20, &.extra_sec_20
+        background-color: change_color($yellow, $saturation: 50%, $lightness: 80%) !important
+        color: $black !important
+      &.read_sec_10, &.extra_sec_10
+        background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
+        color: $black !important
+
+  // 自分が手番のときは盤の色を変更する
+  &.current_turn_self_p
+    .CustomShogiPlayer
+      --sp_board_color: hsla(38,69%,64%,1.0)
+      // --sp_board_color: hsla(35,76%,71%,1.0)
+
+  // &.order_enable_p
+  //   background-color: hsla(0, 0%, 0%, 0.2)
+
+    // .PieceTexture
+    //   .PieceTextureSelf
+    //     &.location_black
+    //     &.promoted_false
+    //     &.piece_name
+    //     &.piece_K
+    //       background-image: url("/icon.png")
 </style>
