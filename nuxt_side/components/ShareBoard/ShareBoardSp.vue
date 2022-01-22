@@ -1,6 +1,10 @@
 <template lang="pug">
 .ShareBoardSp.MainColumn.column(:class="main_column_class")
-  CustomShogiPlayer.is_mobile_vertical_good_style(v-bind="sp_bind" v-on="sp_hook")
+  CustomShogiPlayer.is_mobile_vertical_good_style(
+    v-bind="sp_bind"
+    v-on="sp_hook"
+    :sp_viewpoint.sync="base.sp_viewpoint"
+  )
 
   .footer_buttons(v-if="base.edit_mode_p")
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
@@ -29,7 +33,6 @@ export default {
       av.push(`is_sb_${this.base.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
       return av
     },
-
     sp_bind() {
       const hv = {}
       hv.ref                                         = "main_sp"
@@ -38,7 +41,6 @@ export default {
       hv.sp_turn                                     = this.base.current_turn
       hv.sp_body                                     = this.base.current_sfen
       hv.sp_sound_enabled                            = true
-      hv["sp_viewpoint.sync"]                        = this.base.sp_viewpoint
       hv.sp_player_info                              = this.base.sp_player_info
       hv.sp_human_side                               = this.base.sp_human_side
       hv.sp_debug_mode                               = "is_debug_mode_off"
