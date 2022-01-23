@@ -5,7 +5,7 @@
       | {{member_info.from_user_name}}
   .modal-card-body
     .table-container
-      table.table.is-fullwidth
+      table.table.is-fullwidth.is-narrow
         tbody
           template(v-for="row in table_rows")
             tr(v-if="row.enabled || development_p")
