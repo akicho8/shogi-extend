@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class DebugModeInfo extends ApplicationMemoryRecord {
-  static field_label = "デバッグ"
+  static field_label = "デバッグモード"
   static field_message = ""
 
   static get define() {
