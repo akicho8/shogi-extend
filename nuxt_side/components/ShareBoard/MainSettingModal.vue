@@ -8,6 +8,11 @@
       template(v-for="m in MainSettingInfo.values")
         .column.is-half-tablet
           SimpleRadioButtons(:base="base" :model_name="base.ParamInfo.fetch(m.key).relation" :var_name="m.key")
+    .columns.is-centered
+      .column
+        .notification.is-warning.is-light.is-size-7
+          | <b>*</b> がついているものはブラウザに保存する
+
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>

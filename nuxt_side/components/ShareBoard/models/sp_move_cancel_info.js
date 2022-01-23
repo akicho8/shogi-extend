@@ -1,8 +1,8 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class SpMoveCancelInfo extends ApplicationMemoryRecord {
-  static field_label = "持ち上げた駒のキャンセル方法"
-  static field_message = "右クリックやESCキーでもキャンセル可。この設定はブラウザに保存する"
+  static field_label = "持ち上げた駒のキャンセル方法*"
+  static field_message = "右クリックやESCキーでもキャンセル可"
 
   static get define() {
     return [
