@@ -16,8 +16,8 @@
                 template(v-else)
                   | {{row.value}}
                 span.mx-1(v-if="row.desc" v-text="row.desc" :class="row.desc_class")
-    .box(v-if="development_p && false")
-      | {{member_info}}
+    pre(v-if="base.debug_mode_p")
+      | {{pretty_inspect(member_info)}}
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
