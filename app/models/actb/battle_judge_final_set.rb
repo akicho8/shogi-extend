@@ -61,7 +61,7 @@ module Actb
 
     # [勝ちユーザー, 負けユーザー] の順にする
     def memberships
-      @memberships ||= -> {
+      @memberships ||= yield_self do
         if target_user
           m1 = battle.memberships.find_by!(user: target_user)
           m2 = (battle.memberships - [m1]).first
@@ -77,18 +77,18 @@ module Actb
         else
           battle.memberships
         end
-      }.call
+      end
     end
 
     # 勝敗があるときだけ [勝ち, 負け] の順にする
     def judges
-      @judges ||= -> {
+      @judges ||= yield_self do
         if judge.win_or_lose?
           [Judge.fetch(:win), Judge.fetch(:lose)]
         else
           [judge, judge]
         end
-      }.call
+      end
     end
 
     def target_user

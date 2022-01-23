@@ -114,7 +114,7 @@ module Api
       # end
 
       def current_bananas
-        @current_bananas ||= -> {
+        @current_bananas ||= yield_self do
           # s = current_banana_scope_info.query_func[current_user]
           if current_user
             s = current_user.kiwi_bananas
@@ -125,7 +125,7 @@ module Api
             s = s.tagged_with(v)
           end
           s = page_scope(s)       # page_methods.rb
-        }.call
+        end
       end
 
       # PageMethods override

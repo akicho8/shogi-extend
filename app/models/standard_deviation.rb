@@ -16,12 +16,12 @@ class StandardDeviation
 
   # 標準偏差
   def sd
-    @sd ||= -> {
+    @sd ||= yield_self do
       v = collection.collect { |v| (v - avg)**2 }
       v = v.sum
       v = v.fdiv(collection.size)
       Math.sqrt(v)
-    }.call
+    end
   end
 
   # 平均

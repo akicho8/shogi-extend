@@ -139,7 +139,7 @@ class MediaBuilder
   end
 
   def build_options
-    @build_options ||= -> {
+    @build_options ||= yield_self do
       opts = params.deep_symbolize_keys # dup を兼ねている
       opts = opts.slice(*self.class.formatter_all_option_keys) # unique_key の揺らぎ防止
 
@@ -159,7 +159,7 @@ class MediaBuilder
       end
 
       opts = opts.merge(recipe_info.override_options)
-    }.call
+    end
   end
 
   def turn
@@ -229,7 +229,7 @@ class MediaBuilder
   end
 
   # def ffprobe_direct
-  #   # @ffprobe_direct ||= -> {
+  #   # @ffprobe_direct ||= yield_self do
   #   if recipe_info.media_p
   #     if real_path.exist?
   #       JSON.parse(`ffprobe -v warning -print_format json -show_streams -hide_banner #{real_path}`)

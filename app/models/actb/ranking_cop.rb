@@ -43,7 +43,7 @@ module Actb
     end
 
     def top_users
-      @top_users ||= -> {
+      @top_users ||= yield_self do
         s = current_scope
 
         # 順序が重要
@@ -59,7 +59,7 @@ module Actb
           s = s.take(v.to_i)
         end
         s
-      }.call
+      end
     end
 
     # 自分より上に何人いるかで自分の順位がわかる

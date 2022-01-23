@@ -117,7 +117,7 @@ module Api
       private
 
       def current_articles
-        @current_articles ||= -> {
+        @current_articles ||= yield_self do
           # s = current_article_scope_info.query_func[current_user]
           if current_user
             s = current_user.wkbk_articles
@@ -128,7 +128,7 @@ module Api
             s = s.tagged_with(v)
           end
           s = page_scope(s)       # page_methods.rb
-        }.call
+        end
       end
 
       def current_article_scope_info

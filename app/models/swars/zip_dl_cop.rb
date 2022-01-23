@@ -164,11 +164,11 @@ module Swars
 
       # 直近のダウンロード棋譜総数
       def dli_recent_count
-        @dli_recent_count ||= -> {
+        @dli_recent_count ||= yield_self do
           s = current_user.swars_zip_dl_logs
           s = s.where(ZipDlLog.arel_table[:created_at].gteq(dli_recent_period.ago))
           s.sum(:dl_count)
-        }.call
+        end
       end
 
       # 直近のダウンロード数が多すぎるときのエラーメッセージ

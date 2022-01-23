@@ -8,12 +8,12 @@ module UserAvatarMethods
   class_methods do
     def image_files(name)
       @image_files ||= {}
-      @image_files[name] ||= -> {
+      @image_files[name] ||= yield_self do
         root_dir = Rails.root.join("app/assets/images")
         root_dir.join(name.to_s).glob("0*.png").collect do |e|
           e.relative_path_from(root_dir)
         end
-      }.call
+      end
     end
   end
 

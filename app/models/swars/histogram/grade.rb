@@ -37,7 +37,7 @@ module Swars
       end
 
       def records
-        @records ||= -> {
+        @records ||= yield_self do
           sdc = StandardDeviation.new(counts_hash.values)
           counts_hash.each.collect do |grade, count|
             {
@@ -46,7 +46,7 @@ module Swars
               :ratio => sdc.appear_ratio(count),
             }
           end
-        }.call
+        end
       end
 
       def custom_chart_params

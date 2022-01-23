@@ -32,7 +32,7 @@ class Talk
   cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
 
   def normalized_text
-    @normalized_text ||= -> {
+    @normalized_text ||= yield_self do
       s = source_text
       if pictorial_chars_delete_enable
         s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
@@ -53,7 +53,7 @@ class Talk
       end
 
       s
-    }.call
+    end
   end
 
   private

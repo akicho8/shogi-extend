@@ -4,7 +4,7 @@ module Swars
     # これまで8分使ったとしてルールが10分だとすれば2分放置したことがわかる
     # ただし10秒ルールは除く
     def leave_alone_seconds
-      @leave_alone_seconds ||= -> {
+      @leave_alone_seconds ||= yield_self do
         if battle.final_info.key == :TIMEOUT
           if judge_info.key == :lose
             if battle.rule_info.related_time_p
@@ -12,12 +12,12 @@ module Swars
             end
           end
         end
-      }.call
+      end
     end
 
     # 使った秒数のリスト
     def sec_list
-      @sec_list ||= -> {
+      @sec_list ||= yield_self do
         list = battle.raw_sec_list(location)
 
         # 時間切れまでの放置時間があれば追加する
@@ -26,7 +26,7 @@ module Swars
         end
 
         list
-      }.call
+      end
     end
 
     # [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}]

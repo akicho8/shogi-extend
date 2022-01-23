@@ -313,14 +313,14 @@ module Swars
       end
 
       def swgod_level1_used?
-        @swgod_level1_used ||= -> {
+        @swgod_level1_used ||= yield_self do
           if battle.fast_parsed_info.move_infos.size >= swgod_move_getq
             list = sec_list.last(swgod_last_n)
             if list.size >= swgod_hand_times
               list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }
             end
           end
-        }.call
+        end
       end
 
       def swgod_10min_winner_used?

@@ -76,11 +76,11 @@ module CardGenerator
     end
 
     def canvas
-      @canvas ||= -> {
+      @canvas ||= yield_self do
         Magick::Image.new(*image_rect) do |e|
           e.background_color = background_color.html
         end
-      }.call
+      end
     end
 
     def info
@@ -120,23 +120,23 @@ module CardGenerator
     end
 
     def body
-      @body ||= -> {
+      @body ||= yield_self do
         if v = params[:body]
           v
         else
           "インスタント将棋問題集"
         end
-      }.call
+      end
     end
 
     def font_size
-      @font_size ||= -> {
+      @font_size ||= yield_self do
         if v = params[:font_size]
           v
         else
           (params[:width] - params[:padding_lr]) / body.toeuc.bytesize.fdiv(2).ceil
         end
-      }.call
+      end
     end
 
     # def base_s
@@ -148,7 +148,7 @@ module CardGenerator
     end
 
     # def index
-    #   @index ||= -> {
+    #   @index ||= yield_self do
     #     if v = params[:index]
     #       v.modulo(variation)
     #     else

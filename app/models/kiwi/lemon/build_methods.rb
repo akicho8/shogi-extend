@@ -221,13 +221,13 @@ module Kiwi
 
       # cap staging rails:runner CODE='Kiwi::Lemon.last.media_builder.not_exist_then_build'
       def media_builder
-        @media_builder ||= -> {
+        @media_builder ||= yield_self do
           MediaBuilder.new(recordable, all_params[:media_builder_params], {
               progress_callback: method(:progress_callback),
               # disk_cache_enable: !Rails.env.development?,
               unique_key: recordable.key, # キーを固定する。動画で内容が一致することはまれかつ、ファイルを共有すると古いものを削除できないため
             })
-        }.call
+        end
       end
 
       # cap staging rails:runner CODE='Kiwi::Lemon.last.main_process'

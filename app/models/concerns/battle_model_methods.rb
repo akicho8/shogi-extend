@@ -286,7 +286,7 @@ module BattleModelMethods
     # # }
     # #
     # def sfen_attrs
-    #   @sfen_attrs ||= -> {
+    #   @sfen_attrs ||= yield_self do
     #     mediator = heavy_parsed_info.mediator
     #
     #     args = {}
@@ -308,7 +308,7 @@ module BattleModelMethods
     # end
     #
     # def kento_app_embed_url
-    #   @kento_app_embed_url ||= -> {
+    #   @kento_app_embed_url ||= yield_self do
     #     mediator = heavy_parsed_info.mediator
     #
     #     args = {}

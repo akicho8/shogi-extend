@@ -9,12 +9,12 @@ module Wkbk
       class_methods do
         def fallback_image_files(key)
           @fallback_image_files ||= {}
-          @fallback_image_files[key] ||= -> {
+          @fallback_image_files[key] ||= yield_self do
             root_dir = Rails.root.join("app/assets/images")
             root_dir.join(key.to_s).glob("0*.png").collect do |e|
               e.relative_path_from(root_dir)
             end
-          }.call
+          end
         end
       end
 

@@ -122,7 +122,7 @@ module Api
       end
 
       def current_books
-        @current_books ||= -> {
+        @current_books ||= yield_self do
           # s = current_book_scope_info.query_func[current_user]
           if current_user
             s = current_user.wkbk_books
@@ -133,7 +133,7 @@ module Api
             s = s.tagged_with(v)
           end
           s = page_scope(s)       # page_methods.rb
-        }.call
+        end
       end
 
       def current_book_scope_info

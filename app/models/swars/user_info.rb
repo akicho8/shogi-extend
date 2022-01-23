@@ -163,10 +163,10 @@ module Swars
     end
 
     def sample_max
-      @sample_max ||= -> {
+      @sample_max ||= yield_self do
         v = params[:sample_max].presence || default_params[:sample_max]
         [v.to_i, max_of_max].min
-      }.call
+      end
     end
 
     def every_grade_list
@@ -212,10 +212,10 @@ module Swars
     # all_tag_names_hash["居飛車"]         # => 1
     # all_tag_names_hash["存在しない戦法"] # => 0
     def all_tag_names_hash
-      @all_tag_names_hash ||= -> {
+      @all_tag_names_hash ||= yield_self do
         counts = ids_scope.all_tag_counts(at_least: at_least_value)
         counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-      }.call
+      end
     end
 
     # 棋神
@@ -232,7 +232,7 @@ module Swars
     #       AND ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
     #
     def ai_use_battle_count_lv1
-      @ai_use_battle_count_lv1 ||= -> {
+      @ai_use_battle_count_lv1 ||= yield_self do
         # A
         s = win_scope                                                                           # 勝っている
         s = s.joins(:battle, :grade)
@@ -275,11 +275,11 @@ module Swars
         # s = s.merge(c4)
 
         s.count
-      }.call
+      end
     end
 
     # def ai_use_battle_count_lv2
-    #   @ai_use_battle_count_lv2 ||= -> {
+    #   @ai_use_battle_count_lv2 ||= yield_self do
     #     s = win_scope
     #     s = s.joins(:battle)
     #     s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))

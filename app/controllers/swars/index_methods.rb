@@ -267,7 +267,7 @@ module Swars
 
     # FIXME: モデルに移動
     def current_scope
-      @current_scope ||= -> {
+      @current_scope ||= yield_self do
         s = current_model.all
 
         if v = query_info.lookup(:ids)
@@ -366,7 +366,7 @@ module Swars
         s = s.includes(win_user: nil, memberships: {user: nil, grade: nil, taggings: :tag})
 
         s
-      }.call
+      end
     end
 
     def my_sampled_memberships
@@ -397,13 +397,13 @@ module Swars
     end
 
     def current_index_scope
-      @current_index_scope ||= -> {
+      @current_index_scope ||= yield_self do
         s = current_scope
         unless primary_key_like?
           s = s.none
         end
         s
-      }.call
+      end
     end
 
     # primary_record_key に対応するレコード

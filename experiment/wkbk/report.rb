@@ -24,11 +24,11 @@ class App
 
   # たくさん解いた問題集順の問題集リスト
   def books
-    @books ||= -> {
+    @books ||= yield_self do
       counts = current_scope.group(:book_id).order(count_all: :desc).count # => {120=>3, 119=>2}
       ids = counts.keys
       Wkbk::Book.where(id: ids).order([Arel.sql("FIELD(id, ?)"), ids])
-    }.call
+    end
   end
 
   def book_report(book)

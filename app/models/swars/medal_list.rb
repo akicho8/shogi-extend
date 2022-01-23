@@ -98,13 +98,13 @@ module Swars
     # win_and_all_tag_names_hash["居飛車"]         # => 1
     # win_and_all_tag_names_hash["存在しない戦法"] # => 0
     def win_and_all_tag_names_hash
-      @win_and_all_tag_names_hash ||= -> {
+      @win_and_all_tag_names_hash ||= yield_self do
         s = win_scope
         s = s.joins(:battle)
         s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
         counts = s.all_tag_counts(at_least: at_least_value)
         counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
-      }.call
+      end
     end
 
     def win_and_all_tag_names
@@ -134,7 +134,7 @@ module Swars
     # # lose_and_all_tag_names_hash["居飛車"]         # => 1
     # # lose_and_all_tag_names_hash["存在しない戦法"] # => 0
     # def lose_and_all_tag_names_hash
-    #   @lose_and_all_tag_names_hash ||= -> {
+    #   @lose_and_all_tag_names_hash ||= yield_self do
     #     counts = lose_scope.all_tag_counts(at_least: at_least_value)
     #     counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
     #   }.call
@@ -152,7 +152,7 @@ module Swars
     ################################################################################ 相手に指定のタグを使われて自分が負けた
 
     def defeated_tag_counts
-      @defeated_tag_counts ||= -> {
+      @defeated_tag_counts ||= yield_self do
         s = user.op_memberships   # 相手が
         s = condition_add(s)
         s = s.where(judge_key: "win") # 勝った = 自分が負けた
@@ -163,7 +163,7 @@ module Swars
 
         tags = s.all_tag_counts(at_least: at_least_value) # 全タグ
         tags.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count.fdiv(denominator)) } # 分母は負かされ数
-      }.call
+      end
     end
 
     ################################################################################ 居玉勝ちマン
@@ -305,7 +305,7 @@ module Swars
 
     # 開幕千日手数
     def start_draw_ratio
-      @start_draw_ratio ||= -> {
+      @start_draw_ratio ||= yield_self do
         if new_scope_count.positive?
           s = new_scope
           s = s.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI"))
@@ -313,19 +313,19 @@ module Swars
           c = s.count
           c.fdiv(new_scope_count)
         end
-      }.call
+      end
     end
 
     # 引き分け率
     def draw_ratio
-      @draw_ratio ||= -> {
+      @draw_ratio ||= yield_self do
         if new_scope_count.positive?
           s = new_scope
           s = s.where(Swars::Battle.arel_table[:final_key].eq("DRAW_SENNICHI"))
           c = s.count
           c.fdiv(new_scope_count)
         end
-      }.call
+      end
     end
 
     # 引き分けを含むため current_scope は使わずに作り直す
@@ -361,43 +361,43 @@ module Swars
 
     # 勝率
     def win_ratio
-      @win_ratio ||= -> {
+      @win_ratio ||= yield_self do
         w = judge_counts["win"]
         l = judge_counts["lose"]
         d = w + l
         if d.positive?
           w.fdiv(d)
         end
-      }.call
+      end
     end
 
     # final_key の方法で負けた率 (分母: 負け数)
     # ただし最低14手は指していること
     def lose_ratio_of(final_key)
       @lose_ratio_of ||= {}
-      @lose_ratio_of[final_key] ||= -> {
+      @lose_ratio_of[final_key] ||= yield_self do
         if lose_count.positive?
           s = lose_scope.joins(:battle).where(Swars::Battle.arel_table[:final_key].eq(final_key))
           s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
           c = s.count
           c.fdiv(lose_count)
         end
-      }.call
+      end
     end
 
     # 居飛車率
     def ibisha_ratio
-      @ibisha_ratio ||= -> {
+      @ibisha_ratio ||= yield_self do
         d = all_tag_names_hash["居飛車"] + all_tag_names_hash["振り飛車"]
         if d.positive?
           all_tag_names_hash["居飛車"].fdiv(d)
         end
-      }.call
+      end
     end
 
     # 19手以下で投了または詰まされて負けた率 (分母: 負け数)
     def hayai_toryo
-      @hayai_toryo ||= -> {
+      @hayai_toryo ||= yield_self do
         if lose_count.positive?
           s = lose_scope
           s = s.joins(:battle)
@@ -408,7 +408,7 @@ module Swars
         else
           0
         end
-      }.call
+      end
     end
   end
 end

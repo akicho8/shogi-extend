@@ -33,7 +33,7 @@ module Swars
       private
 
       def records
-        @records ||= -> {
+        @records ||= yield_self do
           sdc = StandardDeviation.new(counts_hash.values)
           counts_hash.sort_by { |name, count| -count }.collect do |name, count|
             {
@@ -42,7 +42,7 @@ module Swars
               :ratio => sdc.appear_ratio(count),
             }
           end
-        }.call
+        end
       end
 
       def tactic_key
@@ -70,7 +70,7 @@ module Swars
       end
 
       def counts_hash
-        @counts_hash ||= -> {
+        @counts_hash ||= yield_self do
           s = Swars::Membership.where(id: target_ids)
           tags = s.tag_counts_on("#{tactic_key}_tags")
           counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
@@ -90,7 +90,7 @@ module Swars
           end
 
           counts_hash
-        }.call
+        end
       end
 
       def chart_bar_max

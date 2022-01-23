@@ -360,7 +360,7 @@ module Api
 
     # FIXME: なんか書き方が汚ならしい
     def candidate_rows
-      @candidate_rows ||= -> {
+      @candidate_rows ||= yield_self do
         if @candidate_records.present?
           Bioshogi::Brain.human_format(@candidate_records.take(5)).collect { |e|
             e.collect { |key, val|
@@ -371,7 +371,7 @@ module Api
             }.compact.to_h
           }
         end
-      }.call
+      end
     end
 
     def evaluator_params
