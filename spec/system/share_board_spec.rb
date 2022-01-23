@@ -964,12 +964,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
 
     it "移動元をタップ" do
-      test1(".is_move_cancel_hard")
+      test1(".is_move_cancel_reality")
       assert_no_move("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
     end
 
     it "他のセルをタップ" do
-      test1(".is_move_cancel_easy")         # 「他のセルをタップ」選択
+      test1(".is_move_cancel_standard")         # 「他のセルをタップ」選択
       assert_move("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
     end
   end
