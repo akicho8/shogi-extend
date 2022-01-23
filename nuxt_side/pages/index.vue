@@ -2,7 +2,7 @@
 .AppEntryInfo.has-background-white-bis
   MainNavbar(:spaced="true")
     template(slot="brand")
-      b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click")
+      b-navbar-item(tag="nuxt-link" :to="{name: 'index'}" @click.native="title_click_handle")
         h1.has-text-weight-bold SHOGI-EXTEND
     template(slot="end")
       b-navbar-item.has-text-weight-bold(:href="$config.MY_SITE_URL" v-if="development_p")
@@ -94,7 +94,7 @@ export default {
     })
   },
   methods: {
-    title_click() {
+    title_click_handle() {
       this.sound_play_click()
       this.toast_ok("SHOGI-EXTEND は将棋の便利ツールを提供するサイトです")
     },
