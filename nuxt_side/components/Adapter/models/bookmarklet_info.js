@@ -8,6 +8,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       {
         name: "なんでも棋譜変換",
         title: "選択範囲か現在のURLをなんでも棋譜変換に放り込む",
+        description: "ぴよ将棋やKENTOには後から起動できるのでとりあえずこれを登録しておくのがおすすめ",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}\`, '_blank')`
         },
@@ -15,6 +16,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       {
         name: "なんでもぴよ将棋",
         title: "放り込んでからぴよ将棋で開く",
+        description: "ぴよ将棋しか使わない人専用",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=piyo_shogi&open_target=_self\`, '_blank')`
         },
@@ -22,6 +24,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       {
         name: "なんでもKENTO",
         title: "放り込んでからKENTOで開く",
+        description: "KENTOしか使わない人専用",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=kento&open_target=_self\`, '_blank')`
         },
@@ -35,8 +38,9 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        name: "なんでも共有将棋盤",
+        name: "なんでも共有将棋盤(継盤用)",
         title: "放り込んでから共有将棋盤で開く",
+        description: "評価値は見ちゃいけないとき用",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}&open=share_board\`, '_blank')`
         },

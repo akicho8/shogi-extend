@@ -7,16 +7,17 @@
 
   MainSection
     .container.is-fluid
-      b-message(:closable="false")
+      .notification.is-success.is-light
         | 下から必要なリンクをブックマークバーにドラッグしてください
 
       template(v-for="e in BookmarkletInfo.values")
         .block
-          a.bookmark_url(:href="bookmark_url_for(e)")
+          a.bookmark_url.is-size-5(:href="bookmark_url_for(e)")
+            b-icon(icon="link")
             | {{e.name}}
           p
             | {{e.title}}
-          p.has-text-grey(v-if="e.description")
+          p(v-if="e.description")
             | {{e.description}}
           pre.mt-2
             | {{bookmark_url_for(e)}}
@@ -49,7 +50,8 @@
             .dtd
               dt turn
               dd
-                | アプリを開くときの手数
+                | アプリを開くときの手数(局面)<br>
+                | 読み込む棋譜が詰将棋とわかっているときに <code>turn=0</code> を渡したら最初の局面で開く
                 ul.mt-1
                   li <code>数字</code> その手数の局面(マイナスなら後ろから数える)
                   li <code>0</code> 最初の局面
@@ -99,10 +101,10 @@ export default {
     padding: 0.5rem
     white-space: pre-wrap
     word-break: break-all
-    font-size: $size-7
 
-  .notification
-    padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
+  .bookmark_url
+    .icon
+      vertical-align: text-top
 
   .content
     .dtd
@@ -110,7 +112,6 @@ export default {
       dt
         font-weight: bold
       dd
-        font-size: $size-7
         margin-top: 0.25rem
         word-break: break-all
     code
