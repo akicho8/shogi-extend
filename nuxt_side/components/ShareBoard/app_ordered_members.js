@@ -390,7 +390,7 @@ export const app_ordered_members = {
           user_name: e,
         }))
       }
-      return this.name_uniqued_member_infos.map((e, i) => {
+      return this.name_uniq_member_infos.map((e, i) => {
         return {
           enabled_p: true,
           order_index: i,
@@ -441,7 +441,7 @@ export const app_ordered_members = {
     one_vs_one_p()   { return this.order_enable_p && (this.ordered_members || []).length === 2 }, // 1vs1で対戦している？
     many_vs_many_p() { return this.order_enable_p && (this.ordered_members || []).length >= 3  }, // 3人以上で対戦している？
 
-    watching_member_count() { return this.name_uniqued_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
+    watching_member_count() { return this.name_uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
 
     // private
     ordered_members_blank_p()   { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？

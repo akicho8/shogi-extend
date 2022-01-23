@@ -164,7 +164,8 @@ export const app_room_members = {
     },
   },
   computed: {
-    name_uniqued_member_infos() {
+    // 名前をユニークにした member_infos
+    name_uniq_member_infos() {
       return _.uniqBy(this.member_infos, "from_user_name")
     },
 
