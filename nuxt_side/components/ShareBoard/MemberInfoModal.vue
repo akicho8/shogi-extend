@@ -81,7 +81,10 @@ export default {
         {
           enabled: true,
           label: "入室日時",
-          value: `${this.seconds_ago(this.member_info.room_joined_at)}`,
+          value: [
+            this.dayjs_format(this.member_info.room_joined_at, "hh:mm:ss"),
+            `(${this.seconds_ago(this.member_info.room_joined_at)})`,
+          ].join(" "),
         },
         {
           enabled: true,
