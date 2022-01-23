@@ -1,13 +1,13 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class SpMoveCancelInfo extends ApplicationMemoryRecord {
-  static field_label = "持ち上げた駒のキャンセル方法*"
+  static field_label = "どこをタップしたら持った駒を離す？*"
   static field_message = "右クリックやESCキーでもキャンセル可"
 
   static get define() {
     return [
-      { key: "is_move_cancel_hard", name: "移動元をタップ",   type: "is-primary", message: null, },
-      { key: "is_move_cancel_easy", name: "他のセルをタップ", type: "is-primary", message: null, },
+      { key: "is_move_cancel_standard", name: "移動先以外", type: "is-primary", message: null, },
+      { key: "is_move_cancel_reality",  name: "移動元",     type: "is-primary", message: null, },
     ]
   }
 }
