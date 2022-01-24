@@ -1,5 +1,5 @@
-import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import { Howl, Howler } from "howler"
+import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
 
 export const vue_sound = {
@@ -7,14 +7,13 @@ export const vue_sound = {
     sound_play(key, options = {}) {
       if (key) {
         const e = SoundPresetInfo.fetch(key)
-        const params = {
+        options = {
           src: e.source,
           volume: e.volume,
-          autoplay: true,
           ...options,
         }
         // https://github.com/goldfire/howler.js#documentation
-        return new Howl(params)
+        return this.howl_auto_play(options)
       }
     },
 
@@ -24,6 +23,22 @@ export const vue_sound = {
 
     sound_play_click(options = {}) {
       this.sound_play("click", options)
+    },
+
+    sound_stop_all() {
+      if (process.client) {
+        Howler.stop()
+      }
+    },
+
+    howl_auto_play(options) {
+      options = {
+        autoplay: true,
+        html5: true, // Safariで鳴らなくなるのが直ったとの報告あり https://github.com/goldfire/howler.js/issues/1407
+        ...options,
+      }
+      // https://github.com/goldfire/howler.js#documentation
+      return new Howl(options)
     },
   },
 }

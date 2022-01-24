@@ -1,20 +1,16 @@
 // HOWLER.js
 // https://github.com/goldfire/howler.js#documentation
 
-const TALK_VOLUME = 0.5
-const TALK_RATE   = 1.5
-
-import { Howl, Howler } from "howler"
-
-// 30秒間非アクティブになると、Web Audio AudioContext を自動的に一時停止して処理とエネルギー使用量を削減する
-// デフォルト: true
-Howler.autoSuspend = false
+const HOWL_TALK_OPTIONS_DEFAULT = {
+  volume: 0.5,
+  rate: 1.5,
+}
 
 export const vue_talk = {
   methods: {
     // しゃべる
     // ・tab_is_active_p() のときだけ条件を入れてはいけない
-    // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
+    // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなるため
     talk(source_text, options = {}) {
       if (process.client) {
         if (source_text != null) {
@@ -24,42 +20,30 @@ export const vue_talk = {
               alert("options.onend がありますがタブがアクティブでないため実行されていません")
             }
           } else {
-            // if (this.tab_is_active_p() && source_text) {
             const params = {
               source_text: source_text,
             }
-            // return this.$axios.request({method: "get", url: "/api/talk", params: params}).then(({data}) => this.mp3_talk(data, options))
-            // return this.$axios.get("/api/talk", {params: params}).then(({data}) => this.mp3_talk(data, options))
             return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
               if (e.browser_path == null) {
                 return Promise.reject("browser_path is blank")
-              } else {
-                this.mp3_talk(e, options)
               }
+              this.talk_sound_play(e, options)
             })
           }
         }
       }
     },
 
-    sound_stop_all() {
-      if (process.client) {
-        Howler.stop()
-      }
-    },
-
     // private
 
-    mp3_talk(data, options = {}) {
+    talk_sound_play(e, options = {}) {
       // https://github.com/goldfire/howler.js#documentation
       options = {
-        src: data.browser_path,
-        autoplay: true,
-        volume: TALK_VOLUME,
-        rate: TALK_RATE,
+        src: e.browser_path,
+        ...HOWL_TALK_OPTIONS_DEFAULT,
         ...options,
       }
-      new Howl(options)
+      return this.howl_auto_play(options)
     },
   },
 }
