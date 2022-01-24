@@ -1481,6 +1481,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "Howlの再生モードを変更できる" do
+    it "works" do
+      visit_app
+      assert_var("g_howl_play_mode_key", "web_audio_api") # 初期値
+      hamburger_click
+      menu_item_click("設定")                             # モーダルを開く
+      find(".html5_audio").click
+      find(".close_handle").click                         # 閉じる
+      assert_var("g_howl_play_mode_key", "html5_audio")   # 変更後
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1738,5 +1750,9 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     find(".MessageSendModal .dropdown .#{message_scope_key}").click  # スコープ選択
     find(".MessageSendModal input").set(message)                     # メッセージ入力
     find(".MessageSendModal .send_handle").click                     # 送信
+  end
+  
+  def assert_var(key, value)
+    assert_text "#{key}:#{value}"
   end
 end

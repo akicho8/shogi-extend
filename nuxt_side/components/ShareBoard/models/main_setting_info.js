@@ -3,7 +3,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class MainSettingInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "howl_html5_key",       },
+      { key: "howl_play_mode_key",       },
       { key: "sp_move_cancel_key",   },
       { key: "ctrl_mode_key",        },
       { key: "quick_sync_key",       },

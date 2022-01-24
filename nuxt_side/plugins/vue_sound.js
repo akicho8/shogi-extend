@@ -37,7 +37,7 @@ export const vue_sound = {
 
         // Safariで鳴らなくなるのが直ったとの報告あり
         // https://github.com/goldfire/howler.js/issues/1407
-        html5: this.howl_html5_option_enabled_p,
+        html5: this.howl_play_mode_option_enabled_p,
 
         ...options,
       }
@@ -48,8 +48,8 @@ export const vue_sound = {
     },
   },
   computed: {
-    howl_html5_option_enabled_p() {
-      return this.g_howl_html5_key === "is_howl_html5_on"
+    howl_play_mode_option_enabled_p() {
+      return this.g_howl_play_mode_key === "html5_audio"
     },
   },
 }

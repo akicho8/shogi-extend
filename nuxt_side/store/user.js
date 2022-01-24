@@ -3,7 +3,7 @@
 export const state = () => ({
   g_current_user: null,
   g_user_counter: 0,
-  g_howl_html5_key: false,
+  g_howl_play_mode_key: "web_audio_api",
 })
 
 export const getters = {
@@ -32,8 +32,8 @@ export const mutations = {
   m_g_user_counter_add(state, payload) {
     state.g_user_counter += payload
   },
-  m_g_howl_html5_add(state, payload) {
-    state.g_howl_html5_key = payload
+  m_g_howl_play_mode_set(state, payload) {
+    state.g_howl_play_mode_key = payload
   },
 }
 
@@ -45,6 +45,7 @@ export const actions = {
       commit("m_auth_user_set", e)
     })
   },
+
   // this.$store.dispatch("auth_user_logout")
   async a_auth_user_logout({commit}) {
     // curl -d _method=delete http://localhost:3000/api/session/auth_user_logout.json
@@ -53,8 +54,8 @@ export const actions = {
       // FIXME: 結果を表示したいけどどうやって xnotice_run_all を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
     })
   },
-  // this.$store.dispatch("auth_user_logout")
-  a_g_howl_html5_add(context, payload) {
-    return context.commit("m_g_howl_html5_add", payload)
+
+  a_g_howl_play_mode_set(context, payload) {
+    return context.commit("m_g_howl_play_mode_set", payload)
   },
 }

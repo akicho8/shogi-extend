@@ -6,7 +6,7 @@ import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
 import { SpMoveCancelInfo   } from "./models/sp_move_cancel_info.js"
 import { SpInternalRuleInfo } from "./models/sp_internal_rule_info.js"
 import { DebugModeInfo      } from "./models/debug_mode_info.js"
-import { HowlHtml5Info      } from "./models/howl_html5_info.js"
+import { HowlPlayModeInfo      } from "./models/howl_play_mode_info.js"
 
 export const app_main_setting = {
   methods: {
@@ -27,9 +27,9 @@ export const app_main_setting = {
     unwatch()
   },
   watch: {
-    howl_html5_key(value) {
-      // this.$store.commit("m_g_howl_html5_add", value)
-      this.a_g_howl_html5_add(value)
+    howl_play_mode_key(value) {
+      // this.$store.commit("m_g_howl_play_mode_set", value)
+      this.a_g_howl_play_mode_set(value)
     },
   },
   computed: {
@@ -53,7 +53,7 @@ export const app_main_setting = {
     debug_mode_info()           { return this.DebugModeInfo.fetch(this.debug_mode_key)                },
     debug_mode_p()              { return this.debug_mode_info.key === "is_debug_mode_on"              },
 
-    HowlHtml5Info()             { return HowlHtml5Info                                                },
-    howl_html5_info()           { return this.HowlHtml5Info.fetch(this.howl_html5_key)                },
+    HowlPlayModeInfo()             { return HowlPlayModeInfo                                                },
+    howl_play_mode_info()           { return this.HowlPlayModeInfo.fetch(this.howl_play_mode_key)                },
   },
 }
