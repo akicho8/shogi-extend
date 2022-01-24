@@ -1,5 +1,3 @@
-import NuxtLoginContainer from "@/components/NuxtLoginContainer.vue"
-
 export const vue_application = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -16,25 +14,6 @@ export const vue_application = {
     // document.visibilityState は visible か hidden を返す
     tab_is_hidden_p() {
       return document.visibilityState === "hidden"
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    nuxt_login_modal_open() {
-      this.$buefy.modal.open({
-        customClass: "my-modal-background-background-color-dark",
-        width: "20rem",
-        parent: this,
-        component: NuxtLoginContainer,
-        animation: "",
-        // canCancel: [],
-        onCancel: () => this.sound_play_click(),
-      })
-    },
-
-    nuxt_login_modal_handle() {
-      this.sound_play_click()
-      this.nuxt_login_modal_open()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
