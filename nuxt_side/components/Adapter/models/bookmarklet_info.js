@@ -8,7 +8,7 @@ export class BookmarkletInfo extends ApplicationMemoryRecord {
       {
         name: "なんでも棋譜変換",
         title: "選択範囲か現在のURLをなんでも棋譜変換に放り込む",
-        description: "ぴよ将棋やKENTOには後から起動できるのでとりあえずこれを登録しておくのがおすすめ",
+        description: "ぴよ将棋やKENTOは後から起動できるのでとりあえずこれを登録しておくのがおすすめ",
         func(context) {
           return `open(\`${context.adapter_url}?body=\${${BODY_VALUE}}\`, '_blank')`
         },
