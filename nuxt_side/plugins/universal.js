@@ -25,12 +25,15 @@ Vue.mixin({
     vue_shared_string,
   ],
   methods: {
+    // 正直なぜこんな面倒なことを繰り返さないといけないのかわかっていない
     ...mapMutations("user", [
       "m_auth_user_logout",
+      "m_g_howl_html5_add",
     ]),
     ...mapActions('user', [
       "a_auth_user_fetch",
       "a_auth_user_logout",
+      "a_g_howl_html5_add",
     ]),
     // ...mapMutations("swars", [
     //   "m_remember_swars_user_keys_set",
@@ -39,6 +42,7 @@ Vue.mixin({
   computed: {
     ...mapState("user", [
       "g_current_user",
+      "g_howl_html5_key",
     ]),
     ...mapGetters("user", [
       "staff_p",

@@ -34,11 +34,22 @@ export const vue_sound = {
     howl_auto_play(options) {
       options = {
         autoplay: true,
-        html5: true, // Safariで鳴らなくなるのが直ったとの報告あり https://github.com/goldfire/howler.js/issues/1407
+
+        // Safariで鳴らなくなるのが直ったとの報告あり
+        // https://github.com/goldfire/howler.js/issues/1407
+        html5: this.howl_html5_option_enabled_p,
+
         ...options,
       }
+      console.log(options)
+
       // https://github.com/goldfire/howler.js#documentation
       return new Howl(options)
+    },
+  },
+  computed: {
+    howl_html5_option_enabled_p() {
+      return this.g_howl_html5_key === "is_howl_html5_on"
     },
   },
 }

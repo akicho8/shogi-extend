@@ -3,6 +3,7 @@
 export const state = () => ({
   g_current_user: null,
   g_user_counter: 0,
+  g_howl_html5_key: false,
 })
 
 export const getters = {
@@ -31,6 +32,9 @@ export const mutations = {
   m_g_user_counter_add(state, payload) {
     state.g_user_counter += payload
   },
+  m_g_howl_html5_add(state, payload) {
+    state.g_howl_html5_key = payload
+  },
 }
 
 export const actions = {
@@ -48,5 +52,9 @@ export const actions = {
       commit("m_auth_user_logout")
       // FIXME: 結果を表示したいけどどうやって xnotice_run_all を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
     })
+  },
+  // this.$store.dispatch("auth_user_logout")
+  a_g_howl_html5_add(context, payload) {
+    return context.commit("m_g_howl_html5_add", payload)
   },
 }
