@@ -18,7 +18,7 @@ export default {
   props: {
     src:              { type: String,  required: false, default: null, },
     volume:           { type: Number,  required: false, default:  0.0, },
-    play_duration:    { type: Number,  required: false, default: 17.5, },
+    play_duration:    { type: Number,  required: false, default: 27.5, },
     fadeout_duration: { type: Number,  required: false, default:  2.5, },
   },
   data() {
