@@ -33,6 +33,9 @@ describe('HandleNameValidator', () => {
     expect(HandleNameValidator.valid("test")).toEqual(false)
     expect(HandleNameValidator.valid("テスト")).toEqual(false)
     expect(HandleNameValidator.valid("てすと")).toEqual(false)
+
+    expect(HandleNameValidator.valid("ハンドルネーム")).toEqual(false)
+    expect(HandleNameValidator.valid("ニックネーム")).toEqual(false)
   })
 
   test('全部数字は禁止', () => {

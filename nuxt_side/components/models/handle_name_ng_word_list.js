@@ -3,7 +3,7 @@ export const HandleNameNgWordList = [
   "shogi.*extend",
   "[な名][な無]し|nanash?i|無名|匿名|NONAME",
   "テスト|test|てすと",
-  "名前|ハンドルネーム",
+  "名前|ハンドルネーム|ニックネーム",
   "^あ+$",
   "^a+$",
   "^\\d+$",
