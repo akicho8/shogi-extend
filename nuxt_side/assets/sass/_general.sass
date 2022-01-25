@@ -77,7 +77,15 @@ a.no-decoration
 ////////// 横スクロール
 
 .is_scroll_x
-  overflow-x: auto
+  +is_scroll_x
+
+.is_scroll_y
+  +is_scroll_y
+
+// .buttons の中身を折り返さないようにして横スクロールUIにする
+.is_buttons_scroll
+  flex-wrap: nowrap
+  @extend .is_scroll_x
 
 ////////// truncate
 

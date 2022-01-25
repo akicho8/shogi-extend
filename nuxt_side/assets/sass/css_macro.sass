@@ -7,6 +7,14 @@
   white-space: normal
   word-break: break-all
 
+=is_scroll_x
+  overflow-x: scroll
+  overscroll-behavior-y: none
+
+=is_scroll_y
+  overflow-y: scroll
+  overscroll-behavior-y: none
+
 =icon_rorate_if_button_hover($button_class)
   transition: transform 0.5s 0.3s ease-in-out
   @at-root .#{$button_class}:hover

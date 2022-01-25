@@ -52,8 +52,8 @@ client-only
       .container.is-fluid
         .columns.is-centered
           ShareBoardSp(:base="base" ref="ShareBoardSp")
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
           ShareBoardMemberList(:base="base")
+          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
         ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
 </template>
 

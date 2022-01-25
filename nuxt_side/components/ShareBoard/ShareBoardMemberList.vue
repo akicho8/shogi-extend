@@ -1,7 +1,8 @@
 <template lang="pug">
-.ShareBoardMemberList.column
+.ShareBoardMemberList.column(:class="{'content_blank_p': blank_p(member_infos)}")
+  .is-hidden-tablet.is-size-7.has-text-weight-bold メンバー
   .scroll_block(ref="scroll_block")
-    template(v-for="(e, i) in member_infos")
+    template(v-for="e in member_infos")
       ShareBoardAvatarLine.member_one_line.is-clickable(
         :base="base"
         :info="e"
@@ -15,7 +16,7 @@
         .flex_item.left_tag_or_icon(v-if="base.order_lookup(e)")
           b-tag(rounded) {{base.order_display_index(e)}}
 
-        // 反応がない
+        // 反応がない場合
         b-icon.flex_item(v-if="base.member_is_disconnect(e)" icon="lan-disconnect" type="is-danger" size="is-small")
 
         .flex_item.has-text-grey-dark.is-size-7(v-if="base.member_is_self(e)") ← 自分
@@ -82,7 +83,7 @@ export default {
 
 .ShareBoardMemberList.column
   .scroll_block
-    overflow: auto
+    overflow-x: auto
     padding: 0
 
     .time_format
@@ -118,10 +119,16 @@ export default {
     max-width: 8rem
     .scroll_block
       +overlay
+      +is_scroll_y
   +desktop
     max-width: 12rem
   +widescreen
     max-width: 16rem
+
+.ShareBoardMemberList.column
+  &.content_blank_p
+    +mobile
+      display: none
 
 .ShareBoardApp.debug_mode_p
   .ShareBoardMemberList

@@ -1,6 +1,6 @@
 <template lang="pug">
 .ShareBoardMessageLog(v-if="base.message_logs.length >= 1 || true")
-  .scroll_block
+  .scroll_block.is_scroll_y
     template(v-for="(e, i) in base.message_logs")
       template(v-if="base.message_share_received_p(e)")
         ShareBoardAvatarLine(:base="base" :info="e" :key="`${e.from_connection_id}_${i}`")
@@ -32,26 +32,12 @@ export default {
 
   .scroll_block
     @extend %overlay
-
-    overflow-y: auto
-
-    // border-radius: 3px
-    // background-color: $white-ter
     padding: 0
-
     .ShareBoardAvatarLine
       padding: 0.2rem 0
       .message_body
         flex-shrink: 1
         line-height: 1.1
-
-    // .message_log
-    //   line-height: 1.5
-    //   padding: 0.1rem 0.5rem
-    //
-    //   display: flex
-    //   justify-content: flex-start
-    //   align-items: center
 
 .STAGE-development
   .ShareBoardMessageLog

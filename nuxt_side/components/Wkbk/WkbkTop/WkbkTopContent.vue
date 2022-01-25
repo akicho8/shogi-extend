@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkTopContent.columns.is-multiline.is-variable.is-0-mobile.is-1-tablet.is-2-desktop.is-3-widescreen
   .column.is-12
-    .buttons.are-small
+    .buttons.are-small.is_buttons_scroll
       template(v-for="e in base.SearchPresetInfo.values")
         b-button(v-if="e.showable_p(g_current_user)" @click="base.search_preset_handle(e)" :type="{'is-primary': base.search_preset_info.key === e.key}")
           | {{e.name}}
