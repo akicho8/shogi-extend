@@ -73,7 +73,10 @@ export const app_sfen_share = {
       } else {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
-        this.al_add(this.sfen_share_params)
+        this.al_add({
+          ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
+          ...this.sfen_share_params,
+        })
       }
     },
 
