@@ -301,7 +301,7 @@ class AppEntryInfo
     },
     {
       display_p: true,
-      experiment_p: false,
+      experiment_p: true,
       nuxt_link_to: {path: "/blindfold"},
       title: "目隠し詰将棋",
       attention_label: "UPDATE!!",
