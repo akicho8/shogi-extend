@@ -85,10 +85,10 @@ export const app_edit_mode = {
                 modal_instance.close()
 
                 // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-                this.delay_block(0.1, () => this.shared_al_add({label: "棋譜読込後(本筋)"}))
+                this.delay_block(0.5, () => this.shared_al_add({label: "棋譜読込後(本筋)"}))
 
                 if (this.ac_room) {
-                  this.delay_block(0.2, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました。変化した棋譜を本筋に戻す場合は履歴の「棋譜読込後(本筋)」をタップしてください`))
+                  this.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました。変化した棋譜を本筋に戻す場合は履歴の「棋譜読込後(本筋)」をタップしてください`))
                 }
               }
             })
