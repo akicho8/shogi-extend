@@ -45,7 +45,7 @@ module Tsl
       User.first
     end
 
-    it do
+    it "works" do
       assert { record.valid? }
     end
   end

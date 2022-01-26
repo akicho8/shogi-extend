@@ -11,7 +11,7 @@ module Actb
         question1.clip_marks_count
       end
 
-      it do
+      it "works" do
         assert { test1 == 1 }
         assert { test1 == 0 }
       end

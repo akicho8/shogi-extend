@@ -44,15 +44,15 @@ RSpec.describe FreeBattle, type: :model do
   end
 
   describe "simple_versus_desc" do
-    it do
+    it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "手合割：平手")
       assert { free_battle.simple_versus_desc == nil }
     end
-    it do
+    it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "68銀")
       assert { free_battle.simple_versus_desc == "☗嬉野流 vs ☖その他" }
     end
-    it do
+    it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
       assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
     end
@@ -71,7 +71,7 @@ RSpec.describe FreeBattle, type: :model do
 
   describe "Twitterカード" do
     describe "to_twitter_card_params" do
-      it do
+      it "works" do
         params = record.to_twitter_card_params
         assert { params[:title]       == "5手目"                            }
         assert { params[:url]         == nil                                }
@@ -92,21 +92,21 @@ RSpec.describe FreeBattle, type: :model do
   end
 
   describe "コメントが含まれるKIFはカラムから溢れるため除去する" do
-    it do
+    it "works" do
       record = FreeBattle.create!(kifu_body: "*A\n**B\n1 ５六歩(57)\n")
       assert { record.kifu_body == "1 ５六歩(57)\n" }
     end
   end
 
   describe "ぴよ将棋？の日付フォーマット読み取り" do
-    it do
+    it "works" do
       record = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
       assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
     end
   end
 
   describe "駒落ち判定" do
-    it do
+    it "works" do
       record = FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
       assert { record.preset_info.key == :"角落ち" }
     end

@@ -91,20 +91,20 @@ module Wkbk
     end
 
     describe "入力補正" do
-      it do
+      it "works" do
         article1.update!(description: " ａ１　　\n　　ｚ\n ")
         assert { article1.description == "a1\nz" }
       end
     end
 
     describe "属性" do
-      it do
+      it "works" do
         assert { article1.lineage.name }
       end
     end
 
     # describe "所在" do
-    #   it do
+    #   it "works" do
     #     article1.update!(source_about_key: "unknown") # => true
     #     assert { article1.source_about_key == "unknown"   }
     #     assert { article1.source_about.name == "作者不詳" }
@@ -195,7 +195,7 @@ module Wkbk
     end
 
     describe "form_values_default_assign" do
-      it do
+      it "works" do
         @user = User.create!
 
         source_article = @user.wkbk_articles.create!(title: "xxx", init_sfen: "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1")

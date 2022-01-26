@@ -37,7 +37,7 @@ module Tsl
       Membership.first
     end
 
-    it do
+    it "works" do
       assert { record.valid? }
     end
   end

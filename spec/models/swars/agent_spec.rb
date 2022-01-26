@@ -15,13 +15,13 @@ module Swars
         ]
       end
 
-      it do
+      it "works" do
         assert { result == ret_value }
       end
     end
 
     describe "run_remote" do
-      it do
+      it "works" do
         # Agent::Index.new(run_remote: true).fetch(gtype: "", user_key: "kinakom0chi", page_index: 0)
       end
     end
@@ -31,7 +31,7 @@ module Swars
         Agent::Record.fetch(key: "devuser1-devuser2-20200101_123456")
       end
 
-      it do
+      it "works" do
         assert { result[:key] == "devuser1-devuser2-20200101_123456" }
         assert { result[:battled_at] == "20200101_123456" }
         assert { result[:rule_key] == "" }

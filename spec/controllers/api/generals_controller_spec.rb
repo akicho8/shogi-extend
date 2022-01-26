@@ -16,13 +16,13 @@ RSpec.describe Api::GeneralsController, type: :controller do
     end
 
     describe "KI2はcandidate_enableが有効が必須" do
-      it do
+      it "works" do
         assert { test1(:post, :ki2)[:body].include?("▲６八銀") }
       end
     end
 
     describe "その他のフォーマット" do
-      it do
+      it "works" do
         assert { test1(:post, :csa)[:body].include?("+7968GI") }
         assert { test1(:post, :kif)[:body].include?("嬉野流") }
       end

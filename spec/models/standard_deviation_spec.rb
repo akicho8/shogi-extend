@@ -5,7 +5,7 @@ RSpec.describe StandardDeviation do
     StandardDeviation.new([1, 2, 3])
   end
 
-  it do
+  it "works" do
     assert { sdc.sd                 == 0.816496580927726  }
     assert { sdc.avg                == 2.0                }
     assert { sdc.sum                == 6                  }

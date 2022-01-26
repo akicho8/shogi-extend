@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DiffCop, type: :model do
-  it do
+  it "works" do
     text_old = <<~EOT
     aaa
     ccc

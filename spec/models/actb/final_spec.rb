@@ -19,7 +19,7 @@ module Actb
   RSpec.describe Final, type: :model do
     include ActbSupport
 
-    it do
+    it "works" do
       Actb::Final.all.collect(&:key) # => ["f_give_up", "f_disconnect", "f_success", "f_pending"]
       assert { Final.all.count >= 1 }
     end

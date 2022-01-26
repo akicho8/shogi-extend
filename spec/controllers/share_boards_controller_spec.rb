@@ -26,7 +26,7 @@ RSpec.describe ShareBoardsController, type: :controller do
       get :show, params: { body: "position startpos moves 5i5e", format: format }
       assert { response.status == status }
     end
-    it do
+    it "works" do
       test("png", 200)
       test("kif", 200)
     end
@@ -36,7 +36,7 @@ RSpec.describe ShareBoardsController, type: :controller do
     def test(format)
       get :show, params: { body: "position startpos moves P*5e", format: format }
     end
-    it do
+    it "works" do
       test("png")
       assert { response.status == 422 }
     end

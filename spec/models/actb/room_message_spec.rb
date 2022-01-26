@@ -25,7 +25,7 @@ module Actb
     include ActbSupport
 
     # /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-rails-4.0.0/lib/rspec/rails/matchers/action_cable.rb
-    it do
+    it "works" do
       expect {
         room1.messages.create!(user: user1, body: "(body)")
       }.to have_broadcasted_to("actb/room_channel/#{room1.id}")

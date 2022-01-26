@@ -9,14 +9,14 @@ module ShareBoard
     end
 
     describe "接続" do
-      it do
+      it "works" do
         subscribe
         assert { subscription.confirmed? }
       end
     end
 
     describe "切断" do
-      it do
+      it "works" do
         subscribe
         assert { subscription.confirmed? }
         unsubscribe
@@ -38,7 +38,7 @@ module ShareBoard
       before do
         subscribe
       end
-      it do
+      it "works" do
         data = data_factory("xmatch_rule_key" => "rule_1vs1_05_00_00_5_pRvsB")
         expect {
           subscription.rule_select(data)
@@ -50,7 +50,7 @@ module ShareBoard
       before do
         subscribe
       end
-      it do
+      it "works" do
         data = data_factory
         expect {
           subscription.rule_unselect(data)

@@ -10,7 +10,7 @@ RSpec.describe Emox::SchoolChannel, type: :channel do
   end
 
   # describe "接続失敗" do
-  #   it do
+  #   it "works" do
   #     stub_connection current_user: nil
   #     subscribe
   #     p subscription.confirmed?

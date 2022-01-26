@@ -47,7 +47,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "リレーション" do
-    it do
+    it "works" do
       user = User.create!
       assert { user.free_battles.to_a }
       user.destroy!

@@ -19,7 +19,7 @@ module Emox
   RSpec.describe Final, type: :model do
     include EmoxSupportMethods
 
-    it do
+    it "works" do
       Emox::Final.all.collect(&:key) # => ["f_give_up", "f_disconnect", "f_timeout", "f_success", "f_draw", "f_pending"]
       assert { Final.all.count >= 1 }
     end

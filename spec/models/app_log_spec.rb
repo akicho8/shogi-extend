@@ -55,7 +55,7 @@ RSpec.describe AppLog, type: :model do
   end
 
   describe "メール通知対応" do
-    it do
+    it "works" do
       proc { AppLog.notify(mail_notify: true) }.should change(ActionMailer::Base.deliveries, :size).by(1)
     end
     it "toオプション" do

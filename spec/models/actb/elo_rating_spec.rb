@@ -11,7 +11,7 @@ module Actb
       error.message
     end
 
-    it do
+    it "works" do
       assert { test(1, 1500, 1899) == 29.08 }
       assert { test(1, 1500, 1900) == 29.09 }
       assert { test(1, 1500, 1901) == 29.11 }

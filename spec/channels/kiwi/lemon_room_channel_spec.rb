@@ -9,14 +9,14 @@ module Kiwi
     end
 
     describe "接続" do
-      it do
+      it "works" do
         subscribe
         assert { subscription.confirmed? }
       end
     end
 
     describe "切断" do
-      it do
+      it "works" do
         subscribe
         assert { subscription.confirmed? }
         unsubscribe
@@ -32,7 +32,7 @@ module Kiwi
       before do
         subscribe
       end
-      it do
+      it "works" do
         data = data_factory({})
         subscription.setup_request(data)
         # 次の3つが呼ばれるけどテストの書き方わからん

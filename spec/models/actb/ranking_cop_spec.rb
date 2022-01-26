@@ -10,7 +10,7 @@ module Actb
       user
     end
 
-    it do
+    it "works" do
       user1 = test1(15)
       user2 = test1(14)
       user3 = test1(13)

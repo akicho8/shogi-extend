@@ -36,7 +36,7 @@ module Swars
       battle.users.first
     end
 
-    it do
+    it "works" do
       record = login_user.swars_crawl_reservations.create!({
           :attachment_mode => "with_zip",
           :target_user_key => battle_user.key,

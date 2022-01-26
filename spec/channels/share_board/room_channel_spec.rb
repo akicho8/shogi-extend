@@ -10,14 +10,14 @@ module ShareBoard
     end
 
     describe "接続" do
-      it do
+      it "works" do
         subscribe(room_code: room_code)
         assert { subscription.confirmed? }
       end
     end
 
     describe "切断" do
-      it do
+      it "works" do
         subscribe(room_code: room_code)
         assert { subscription.confirmed? }
         unsubscribe
@@ -40,7 +40,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("sfen" => "(sfen)", "turn_offset" => 0, message: "(message)")
         expect {
           subscription.force_sync(data)
@@ -52,7 +52,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory({
             "sfen"              => "(sfen)",
             "turn_offset"       => 1,
@@ -76,7 +76,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
         expect {
           subscription.received_ok(data)
@@ -88,7 +88,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("x_retry_count" => 1)
         expect {
           subscription.sfen_share_not_reach(data)
@@ -100,7 +100,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("title" => "(title)")
         expect {
           subscription.title_share(data)
@@ -112,7 +112,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory
         expect {
           subscription.setup_info_request(data)
@@ -124,7 +124,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory
         expect {
           subscription.setup_info_send(data)
@@ -136,7 +136,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory
         expect {
           subscription.clock_box_share(data)
@@ -148,7 +148,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory
         expect {
           subscription.member_info_share(data)
@@ -160,7 +160,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("order_enable_p" => true)
         expect {
           subscription.order_switch_share(data)
@@ -172,7 +172,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory({
             "ordered_members" => [
               { "user_name" => "alice", },
@@ -189,7 +189,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("message" => "(message)", "message_scope_key" => "is_message_scope_private")
         expect {
           subscription.message_share(data)
@@ -201,7 +201,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("subject" => "(subject)", "body" => "body")
         subscription.ac_log(data)
       end
@@ -211,7 +211,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("key_has_nil" => nil)
         expect {
           subscription.fake_error(data)
@@ -223,7 +223,7 @@ module ShareBoard
       before do
         subscribe(room_code: room_code)
       end
-      it do
+      it "works" do
         data = data_factory("label" => "(label)", message: "(message)")
         expect {
           subscription.shared_al_add(data)

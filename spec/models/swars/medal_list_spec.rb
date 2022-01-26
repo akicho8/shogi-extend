@@ -15,7 +15,7 @@ module Swars
         Battle.create! { |e| e.memberships.build(user: user) }
       end
 
-      it do
+      it "works" do
         assert { user.user_info.medal_list.all_tag_ratio_for("新嬉野流")           == 1.0 }
         assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
       end
@@ -28,13 +28,13 @@ module Swars
         user.user_info.medal_list.defeated_tag_counts
       end
 
-      it do
+      it "works" do
         assert { test == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
       end
     end
 
     describe "レコードが0件" do
-      it do
+      it "works" do
         assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
       end
     end
@@ -44,7 +44,7 @@ module Swars
         Battle.create! { |e| e.memberships.build(user: user) }
       end
 
-      it do
+      it "works" do
         assert { user.user_info.medal_list.to_a }
       end
     end
@@ -59,7 +59,7 @@ module Swars
         end
       end
 
-      it do
+      it "works" do
         assert { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
         assert { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
       end
@@ -72,7 +72,7 @@ module Swars
         end
       end
 
-      it do
+      it "works" do
         assert { user.user_info.medal_list.deviation_avg < 50.0 }
       end
     end
@@ -87,7 +87,7 @@ module Swars
         user.user_info.medal_list.win_lose_streak_max_hash
       end
 
-      it do
+      it "works" do
         assert { test == {"win" => 0, "lose" => 0 } }
         assert { test("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
       end
@@ -108,7 +108,7 @@ module Swars
         test("九段", "lose")
       end
 
-      it do
+      it "works" do
         assert { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.75},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.25}] }
       end
     end

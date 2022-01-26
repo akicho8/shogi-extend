@@ -24,7 +24,7 @@ module Tsl
       League.first
     end
 
-    it do
+    it "works" do
       assert { record.valid? }
     end
   end

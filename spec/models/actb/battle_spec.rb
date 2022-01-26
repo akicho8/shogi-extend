@@ -41,7 +41,7 @@ module Actb
         question1
       end
 
-      it do
+      it "works" do
         assert { battle1.best_questions.size >= 1 }
       end
     end

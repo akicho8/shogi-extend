@@ -58,7 +58,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       subscribe(battle_id: current_battle.id)
     end
 
-    it do
+    it "works" do
       subscription.speak(message_body: "(message)")
       assert { user1.actb_room_messages.count == 1 }
     end
@@ -69,7 +69,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       subscribe(battle_id: current_battle.id)
     end
 
-    it do
+    it "works" do
       data = { membership_id: membership1.id, question_index: 0, question_id: question.id, ox_mark_key: "correct" }
       expect {
         subscription.kotae_sentaku(data)
@@ -84,7 +84,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       subscribe(battle_id: current_battle.id)
     end
 
-    it do
+    it "works" do
       data = {
         membership_id: membership1.id,
         question_index: 1,
@@ -101,7 +101,7 @@ RSpec.describe Actb::BattleChannel, type: :channel do
       subscribe(battle_id: current_battle.id)
     end
 
-    it do
+    it "works" do
       data = {
         membership_id: membership1.id,
         share_sfen: "position startpos",

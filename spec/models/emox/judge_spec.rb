@@ -19,7 +19,7 @@ module Emox
   RSpec.describe Judge, type: :model do
     include EmoxSupportMethods
 
-    it do
+    it "works" do
       Emox::Judge.all.collect(&:key) # => ["win", "lose", "draw", "pending"]
       assert { Judge.all.count >= 1 }
     end

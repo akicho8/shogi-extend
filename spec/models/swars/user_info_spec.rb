@@ -298,7 +298,7 @@ module Swars
         @black.user_info.disconnect_count
       end
 
-      it do
+      it "works" do
         assert { test1(13) == nil }
         assert { test1(14) == 1 }
         assert { test1(14) == 2 }
@@ -321,7 +321,7 @@ module Swars
         ]
       end
 
-      it do
+      it "works" do
         assert { test1(13) == [nil, nil] }
         assert { test1(14) == [[{name: "10分", value: 1}], 600] }
         assert { test1(15) == [[{name: "10分", value: 2}], 600] }
@@ -345,7 +345,7 @@ module Swars
         ]
       end
 
-      it do
+      it "works" do
         assert { test1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
         assert { test1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
         assert { test1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
@@ -367,7 +367,7 @@ module Swars
         @black.user_info.migigyoku_levels.collect { |e| e[:value] }
       end
 
-      it do
+      it "works" do
         assert { test1 == [1, 0] }
         assert { test1 == [2, 0] }
 
@@ -387,7 +387,7 @@ module Swars
         @black.user_info.avg_of_avg_battles_count_per_day
       end
 
-      it do
+      it "works" do
         assert { Timecop.freeze("2000-01-01") { test1 } == 1.0 }
         assert { Timecop.freeze("2000-01-01") { test1 } == 2.0 }
         assert { Timecop.freeze("2000-01-02") { test1 } == 1.5 }
@@ -406,7 +406,7 @@ module Swars
         @black.user_info.battle_count_per_hour_records.find_all { |e| e[:value].positive? }
       end
 
-      it do
+      it "works" do
         assert { Timecop.freeze("2000-01-01 00:00") { test1 } == [{name: "0", value: 1}] }
         assert { Timecop.freeze("2000-01-01 00:59") { test1 } == [{name: "0", value: 2}] }
         assert { Timecop.freeze("2000-01-01 01:00") { test1 } == [{name: "0", value: 2}, {name: "1", value: 1}] }
@@ -423,7 +423,7 @@ module Swars
         battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
       end
 
-      it do
+      it "works" do
         assert { test1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
       end
     end

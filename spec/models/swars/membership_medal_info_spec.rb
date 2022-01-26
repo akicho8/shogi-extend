@@ -29,7 +29,7 @@ module Swars
         test(tactic_keys, :lose)[:white]
       end
 
-      it do
+      it "works" do
         assert { b("角不成")   == "角不成マン"   }
         assert { b("飛車不成") == "飛車不成マン" }
         assert { b("背水の陣") == "背水マン"     }
@@ -48,7 +48,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         assert { test1(13) != [:切断マン, "悔しかったので切断した"] }
         assert { test1(14) == [:切断マン, "悔しかったので切断した"] }
       end
@@ -65,7 +65,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message == [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"]
       end
 
-      it do
+      it "works" do
         assert { !test1(13) }
         assert { test1(14) }
         assert { test1(15) }
@@ -83,7 +83,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message.first
       end
 
-      it do
+      it "works" do
         assert { test1 == :"相手退席待ちマン" }
       end
     end
@@ -99,7 +99,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         test1                   # => [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
         assert { test1 == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"] }
       end
@@ -118,7 +118,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         assert { test(2.5, :lose) == [:長考マン, "考えすぎて負けた。ちなみにいちばん長かったのは2分30秒"] }
         assert { test(3.0, :win)  == [:大長考マン, "対局放棄と受け取られかねない3分の長考をした"] }
         assert { test(3.0, :lose) == [:大長考負けマン, "対局放棄と受け取られかねない3分の長考をしたあげく負けた"] }
@@ -136,7 +136,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         result = [:"無気力マン", "無気力対局"]
         assert { test1(19, :TORYO)     == result }
         assert { test1(20, :TORYO)     != result }
@@ -158,7 +158,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         test(4*4)                 # => [:ただの千日手, "千日手"]
         test(3*4)                 # => [:開幕千日手, "最初から千日手にした"]
         assert { test(4*4) == [:ただの千日手, "千日手"]             }
@@ -177,7 +177,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         test1                   # => [:切れ負けマン, "時間切れで負けた"]
         assert { test1 == [:切れ負けマン, "時間切れで負けた"] }
       end
@@ -194,7 +194,7 @@ module Swars
         @black.memberships.first.first_matched_medal_key_and_message
       end
 
-      it do
+      it "works" do
         test(20)                # => [:運営支えマン, "将棋ウォーズの運営を支える力がある"]
         assert { test(20) == [:運営支えマン, "将棋ウォーズの運営を支える力がある"] }
       end

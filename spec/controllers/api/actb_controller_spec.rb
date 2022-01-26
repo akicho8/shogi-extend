@@ -15,7 +15,7 @@ RSpec.describe Api::ActbController, type: :controller do
   #     @current_user.reload
   #     assert { @current_user.name_input_at }
   #   end
-  #   it do
+  #   it "works" do
   #     @current_user.update!(name_input_at: nil)
   #
   #     put :update, params: { remote_action: "user_profile_update", name: "(user_name1)", profile_description: "a" * (512 + 1) }

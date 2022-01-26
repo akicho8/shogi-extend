@@ -50,7 +50,7 @@ module Actb
     include ActbSupport
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
-    it do
+    it "works" do
       assert { question1.valid? }
     end
 
@@ -89,20 +89,20 @@ module Actb
     end
 
     describe "入力補正" do
-      it do
+      it "works" do
         question1.update!(description: " ａ　　\n　　ｚ\n ")
         assert { question1.description == "a\nz" }
       end
     end
 
     describe "属性" do
-      it do
+      it "works" do
         assert { question1.lineage.name }
       end
     end
 
     describe "所在" do
-      it do
+      it "works" do
         question1.update!(source_about_key: "unknown") # => true
         assert { question1.source_about_key == "unknown"   }
         assert { question1.source_about.name == "作者不詳" }

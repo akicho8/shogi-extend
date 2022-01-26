@@ -23,7 +23,7 @@ module Actb
   RSpec.describe Folder, type: :model do
     include ActbSupport
 
-    it do
+    it "works" do
       question1
       assert { user1.actb_active_box.questions.count >= 1 }
     end

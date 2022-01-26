@@ -85,7 +85,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切断マン")
       end
 
-      it do
+      it "works" do
         assert { test1(13) == false }
         assert { test1(14) == true  }
       end
@@ -98,7 +98,7 @@ module Swars
         end
       end
 
-      it do
+      it "works" do
         assert { user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"居玉勝ちマン") }
       end
     end
@@ -114,7 +114,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切れ負けマン")
       end
 
-      it do
+      it "works" do
         assert { test1(13) == false }
         assert { test1(14) == true  }
       end
@@ -130,7 +130,7 @@ module Swars
         end
       end
 
-      it do
+      it "works" do
         assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
       end
     end
@@ -183,7 +183,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key)
       end
 
-      it do
+      it "works" do
         assert { test(2.5).include?(:"長考マン")   }
         assert { test(2.5).exclude?(:"大長考マン") }
         assert { test(3.0).include?(:"大長考マン") }
@@ -201,7 +201,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key)
       end
 
-      it do
+      it "works" do
         test(16).include?(:"ただの千日手")
         test(12).include?(:"開幕千日手")
       end
@@ -218,7 +218,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key)
       end
 
-      it do
+      it "works" do
         assert { test(20).include?(:"運営支えマン") }
       end
     end
@@ -233,7 +233,7 @@ module Swars
         user.user_info.medal_list.matched_medal_infos.collect(&:key)
       end
 
-      it do
+      it "works" do
         assert { test(["win"] * 4).exclude?(:"5連勝") }
 
         assert { test(["win"]).include?(:"5連勝")  }
@@ -259,7 +259,7 @@ module Swars
         @black.user_info.medal_list.matched_medal_infos.collect(&:key)
       end
 
-      it do
+      it "works" do
         result = [:"居飛車党", :"無気力マン"]
         assert { test1(19, :TORYO) == result }
         assert { test1(19, :CHECKMATE) == result }

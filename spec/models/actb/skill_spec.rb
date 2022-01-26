@@ -25,7 +25,7 @@ module Actb
       [user1.skill.key, user1.skill_point.to_i]
     end
 
-    it do
+    it "works" do
       # 上昇
       assert { test1("C-",  98, 1)   == ["C-", 99] }
       assert { test1("C-",  98, 2)   == ["C",   0] }

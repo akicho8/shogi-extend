@@ -7,7 +7,7 @@ RSpec.describe UserMailer, type: :mailer do
   include ActbSupport
 
   describe "user_created" do
-    it do
+    it "works" do
       assert { UserMailer.user_created(user1) }
     end
   end

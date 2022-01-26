@@ -49,7 +49,7 @@ module Swars
         let :value do
           record.to_twitter_card_params
         end
-        it do
+        it "works" do
           assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
           assert { value[:url]         == nil                                                        }
           assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5&viewpoint=black" }
@@ -139,7 +139,7 @@ module Swars
       let :record do
         Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
       end
-      it do
+      it "works" do
         assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車"] }
         assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
