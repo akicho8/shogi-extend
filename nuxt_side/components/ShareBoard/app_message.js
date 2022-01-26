@@ -23,7 +23,14 @@ export const app_message = {
     ////////////////////////////////////////////////////////////////////////////////
 
     message_share(params) {
-      this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
+      if (this.ac_room) {
+        this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
+      } else {
+        this.message_share_broadcasted({
+          ...this.ac_room_perform_default_params(),
+          ...params,
+        })
+      }
     },
 
     message_share_broadcasted(params) {
@@ -32,7 +39,7 @@ export const app_message = {
       if (this.message_share_received_p(params)) {
         this.$buefy.toast.open({
           container: ".MainBoard",
-          message: `${params.from_user_name}: ${params.message}`,
+          message: `${this.presence(params.from_user_name) ?? '？'}: ${params.message}`,
           position: "is-top",
           type: params.message_scope_key === "is_message_scope_private" ? "is-success" : "is-white",
           queue: false,
