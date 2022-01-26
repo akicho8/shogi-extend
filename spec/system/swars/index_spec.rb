@@ -76,7 +76,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "検索クエリを自力入力しすぎ警告" do
       it "works" do
-        visit2 "/swars/search"
+        visit "/swars/search" # visit2 では __debug_box_skip__ がつくのでダメ
 
         # devuser1 で9回
         fill_in "query", with: "devuser1"
@@ -92,7 +92,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         # +9回で計10回になり発動する
         9.times { find(".search_click_handle").click }
-        assert_text "ウォーズIDを毎回入力する必要はありません"
+        assert_text "使い方のヒント"
 
         find(".dialog.modal.is-active button.is-info").click # 「わかった」をクリック
         assert_no_selector ".modal"
