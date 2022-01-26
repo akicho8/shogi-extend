@@ -15,27 +15,34 @@ export const app_tiresome = {
   methods: {
     tiresome_alert_check() {
       this.__trace__("app_tiresome", "tiresome_alert_check")
+
+      if (this.url_prams_without_query_exist_p) {
+        // ページ移動やソート条件を変えたりしているだけなのでスキップ
+        return
+      }
+
       if (this.mounted_then_query_present_p) {
         // ブックーマークから来たのでスキップ
-      } else {
-        if (this.xi.current_swars_user_key) {
-          // 生きているウォーズIDをあとから入力した
-          if (this.swars_search_default_key_get()) {
-            // すでにウォーズIDを覚えている
-          } else {
-            // ウォーズIDを覚えていない
+        return
+      }
 
-            // 前回入力した値と異なるならそこからカウンタを開始する
-            if (this.tiresome_previous_user_key != this.xi.current_swars_user_key) {
-              this.tiresome_previous_user_key = this.xi.current_swars_user_key
-              this.tiresome_count = 0
-            }
-
-            this.tiresome_count_increment()
-          }
+      if (this.xi.current_swars_user_key) {
+        // 生きているウォーズIDをあとから入力した
+        if (this.swars_search_default_key_get()) {
+          // すでにウォーズIDを覚えている
         } else {
-          // あとから何か入力したがウォーズIDはわからなかった
+          // ウォーズIDを覚えていない
+
+          // 前回入力した値と異なるならそこからカウンタを開始する
+          if (this.tiresome_previous_user_key != this.xi.current_swars_user_key) {
+            this.tiresome_previous_user_key = this.xi.current_swars_user_key
+            this.tiresome_count = 0
+          }
+
+          this.tiresome_count_increment()
         }
+      } else {
+        // あとから何か入力したがウォーズIDはわからなかった
       }
     },
 
@@ -56,18 +63,18 @@ export const app_tiresome = {
     tiresome_alert_handle() {
       this.sound_play_click()
 
-      this.delay_block(1, () => {
-        this.sound_stop_all()
-        this.talk("ウォーズIDを毎回入力する必要はありません。右上のメニューからウォーズIDを記憶するで入力の手間が省けます。ぴよ将棋から来ている方におすすめです。あとから解除もできます。")
-      })
+      // this.delay_block(1, () => {
+      //   this.sound_stop_all()
+      //   this.talk("ウォーズIDを毎回入力する必要はありません")
+      // })
 
       const subject = `ウォーズID記憶案内 ${this.xi.current_swars_user_key}`
       this.dialog_confirm({
         canCancel: ["button"],
         hasIcon: true,
         type: "is-info",
-        title: "ウォーズIDを毎回入力する必要はありません",
-        message: `右上の≡から<b>ウォーズIDを記憶する</b>で入力の手間が省けます。ぴよ将棋から来ている方におすすめです。あとから解除もできます。`,
+        title: "使い方のヒント",
+        message: `同じウォーズIDを何度も入力する必要はありません。右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けます。ぴよ将棋から来ている方には得におすすめです。あとから解除できます`,
         confirmText: "やってみる",
         cancelText: "不便な方がいい",
         onConfirm: () => {
@@ -87,6 +94,13 @@ export const app_tiresome = {
   computed: {
     tiresome_alert_trigger_hash() {
       return TIRESOME_ALERT_TRIGGER.reduce((a, e) => ({...a, [e]: true}), {})
+    },
+
+    // query=xxx を除くパラメータがあるか？
+    url_prams_without_query_exist_p() {
+      const t = {...this.$route.query}
+      delete t.query
+      return this.present_p(t)
     },
   },
 }
