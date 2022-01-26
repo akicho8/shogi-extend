@@ -286,7 +286,7 @@ export default {
     },
 
     color_theme_key() {
-      return this.$route.query.color_theme_key || "is_color_theme_wars_red"
+      return this.$route.query.color_theme_key || "is_color_theme_paper_simple"
     },
 
     og_image() {
