@@ -236,12 +236,13 @@ module Swars
       it do
         assert { test(["win"] * 4).exclude?(:"5連勝") }
 
-        assert { test(["win"]).include?(:"5連勝") }
-        assert { test(["win"]).include?(:"5連勝") }
-        assert { test(["win"]).include?(:"5連勝") }
-        assert { test(["win"]).include?(:"5連勝") }
-        assert { test(["win"]).include?(:"5連勝") }
+        assert { test(["win"]).include?(:"5連勝")  }
+        assert { test(["win"]).include?(:"6連勝")  }
+        assert { test(["win"]).include?(:"7連勝")  }
+        assert { test(["win"]).include?(:"8連勝")  }
+        assert { test(["win"]).include?(:"9連勝")  }
         assert { test(["win"]).include?(:"10連勝") }
+        assert { test(["win"]).include?(:"11連勝") }
 
         assert { test(["lose"] * 5).include?(:"波が激しいマン") }
       end
