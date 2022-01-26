@@ -35,8 +35,8 @@
           b-field.mt-5
             .control
               .buttons.is-centered.are-small
-                b-button(@click="share_board_first_open_handle") 最初
-                b-button(@click="share_board_last_open_handle") 最後
+                b-button(@click="share_board_first_open_handle") 詰将棋
+                b-button(@click="share_board_last_open_handle") 終了図
 
           b-field.mt-5
             .control
