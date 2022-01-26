@@ -41,8 +41,6 @@ export const vue_sound = {
 
         ...options,
       }
-      console.log(options)
-
       // https://github.com/goldfire/howler.js#documentation
       return new Howl(options)
     },
