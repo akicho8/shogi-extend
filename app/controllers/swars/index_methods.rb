@@ -98,9 +98,11 @@ module Swars
     end
 
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
-    let :primary_record_key do
-      if query = params[:query].presence
-        Battle.battle_key_extract(query)
+    def primary_record_key
+      @primary_record_key ||= yield_self do
+        if query = params[:query].presence
+          Battle.battle_key_extract(query)
+        end
       end
     end
 
@@ -148,7 +150,7 @@ module Swars
         end
 
         if success
-          unlet(:current_swars_user)
+          remove_instance_variable(:@current_swars_user)
 
           hit_count = 0
           if current_swars_user
@@ -192,8 +194,8 @@ module Swars
       end
     end
 
-    let :import_page_max do
-      (params[:page_max].presence || 1).to_i
+    def import_page_max
+      @import_page_max ||= (params[:page_max].presence || 1).to_i
     end
 
     def swars_tag_search_path(e)
@@ -202,35 +204,37 @@ module Swars
       end
     end
 
-    let :current_swars_user do
-      User.find_by(user_key: current_swars_user_key)
+    def current_swars_user
+      @current_swars_user ||= User.find_by(user_key: current_swars_user_key)
     end
 
-    let :current_musers do
-      query_info.lookup(:muser)
+    def current_musers
+      @current_musers ||= query_info.lookup(:muser)
     end
 
-    let :current_ms_tags do
-      query_info.lookup(:ms_tag)
+    def current_ms_tags
+      @current_ms_tags ||= query_info.lookup(:ms_tag)
     end
 
     # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
     # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
     # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1"
-    let :current_swars_user_key do
-      v = nil
-      v ||= extract_type1
-      v ||= extract_type2
-      v ||= extract_type3
+    def current_swars_user_key
+      @current_swars_user_key ||= yield_self do
+        v = nil
+        v ||= extract_type1
+        v ||= extract_type2
+        v ||= extract_type3
 
-      # # url = query_info.urls.first
-      # # v ||= nil
-      # # v ||= Battle.user_key_extract_from_battle_url(url) # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
-      # # v ||= extract_type1              # https://shogiwars.heroz.jp/users/foo                      --> foo
-      #
-      # unless primary_record_key
-      #   extract_type1 || query_info.values.first
-      # end
+        # # url = query_info.urls.first
+        # # v ||= nil
+        # # v ||= Battle.user_key_extract_from_battle_url(url) # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
+        # # v ||= extract_type1              # https://shogiwars.heroz.jp/users/foo                      --> foo
+        #
+        # unless primary_record_key
+        #   extract_type1 || query_info.values.first
+        # end
+      end
     end
 
     # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
@@ -407,9 +411,11 @@ module Swars
     end
 
     # primary_record_key に対応するレコード
-    let :primary_record do
-      if primary_record_key
-        Swars::Battle.find_by(key: primary_record_key)
+    def primary_record
+      @primary_record ||= yield_self do
+        if primary_record_key
+          Swars::Battle.find_by(key: primary_record_key)
+        end
       end
     end
 

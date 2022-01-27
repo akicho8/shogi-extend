@@ -15,11 +15,11 @@ module CurrentUserMethods
     end
   end
 
-  let :sysop? do
+  def sysop?
     current_user && current_user.sysop?
   end
 
-  let :staff? do
+  def staff?
     current_user && current_user.staff?
   end
 
@@ -41,55 +41,57 @@ module CurrentUserMethods
 
   # いろんなものからログインユーザーを作っている
   # cookies.signed[:user_id] は ActionCable の読み出し用なのでここに入れない方がいいかもしれない
-  let :current_user do
-    id = nil
-    user = nil
+  def current_user
+    @current_user ||= yield_self do
+      id = nil
+      user = nil
 
-    # id ||= User.sysop.id
-    # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "sysop")])
-
-    if Rails.env.development? || Rails.env.test?
       # id ||= User.sysop.id
-      id ||= params[:_user_id]
-      if v = params[:_login_by_key]
-        if v = User.find_by(key: v)
-          id ||= v.id
-        end
-      end
-    end
+      # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "sysop")])
 
-    id ||= session[:user_id]
-    id ||= cookies.signed[:user_id]
-    if id
-      user ||= User.find_by(id: id)
-    end
-    user ||= current_xuser    # from devise
-
-    if user
-      if request.format.html? && request.get?
-        # rails r "p User.first.cache_key"
-        Rails.cache.fetch("#{user.cache_key}/update_tracked_fields!", expires_in: 1.hour) do
-          user.user_agent = request.user_agent.to_s
-          user.update_tracked_fields!(request)
-          true
-        end
-      end
-
-      # _user_id パラメータが来ればそれ以降もログインした状態にさせる
       if Rails.env.development? || Rails.env.test?
-        if params[:_user_id].present? || params[:_login_by_key].present?
-          current_user_set(user)
+        # id ||= User.sysop.id
+        id ||= params[:_user_id]
+        if v = params[:_login_by_key]
+          if v = User.find_by(key: v)
+            id ||= v.id
+          end
         end
       end
-    end
 
-    unless user
-      # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
-      # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
-      current_user_clear
-    end
+      id ||= session[:user_id]
+      id ||= cookies.signed[:user_id]
+      if id
+        user ||= User.find_by(id: id)
+      end
+      user ||= current_xuser    # from devise
 
-    user
+      if user
+        if request.format.html? && request.get?
+          # rails r "p User.first.cache_key"
+          Rails.cache.fetch("#{user.cache_key}/update_tracked_fields!", expires_in: 1.hour) do
+            user.user_agent = request.user_agent.to_s
+            user.update_tracked_fields!(request)
+            true
+          end
+        end
+
+        # _user_id パラメータが来ればそれ以降もログインした状態にさせる
+        if Rails.env.development? || Rails.env.test?
+          if params[:_user_id].present? || params[:_login_by_key].present?
+            current_user_set(user)
+          end
+        end
+      end
+
+      unless user
+        # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
+        # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
+        current_user_clear
+      end
+
+      user
+    end
   end
 
   def current_user_set(user)

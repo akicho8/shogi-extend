@@ -44,25 +44,27 @@ class FreeBattlesController < ApplicationController
     @current_index_scope ||= current_scope
   end
 
-  let :current_record do
-    record = nil
+  def current_record
+    @current_record ||= yield_self do
+      record = nil
 
-    if id = params[:id]
-      if Rails.env.production? || Rails.env.staging?
-      else
-        record ||= current_model.find_by(id: id)
+      if id = params[:id]
+        if Rails.env.production? || Rails.env.staging?
+        else
+          record ||= current_model.find_by(id: id)
+        end
+        record ||= current_model.find_by!(key: id)
       end
-      record ||= current_model.find_by!(key: id)
-    end
 
-    record ||= current_model.new
+      record ||= current_model.new
 
-    record.tap do |e|
-      # 初期値設定
-      if current_edit_mode == :adapter
-        e.use_key ||= UseInfo.fetch(:adapter).key
-      else
-        e.use_key ||= UseInfo.fetch(:basic).key
+      record.tap do |e|
+        # 初期値設定
+        if current_edit_mode == :adapter
+          e.use_key ||= UseInfo.fetch(:adapter).key
+        else
+          e.use_key ||= UseInfo.fetch(:basic).key
+        end
       end
     end
   end

@@ -31,41 +31,43 @@ module ModulableCrud
     #   [:foo, :bar]
     #   self.class.parent_name.underscore
     #
-    let :ns_prefix do
+    def ns_prefix
     end
 
     # override according to the situation
-    let :current_model do
-      controller_path.classify.constantize
+    def current_model
+      @current_model ||= controller_path.classify.constantize
     end
 
-    let :current_scope do
-      current_model.all
+    def current_scope
+      @current_scope ||= current_model.all
     end
 
-    let :current_single_key do
-      current_model.model_name.singular.to_sym
+    def current_single_key
+      @current_single_key ||= current_model.model_name.singular.to_sym
     end
 
-    let :current_param_key do
-      current_model.model_name.param_key
+    def current_param_key
+      @current_param_key ||= current_model.model_name.param_key
     end
 
-    let :respond_to_destroy? do
+    def respond_to_destroy?
       respond_to?(:destroy)
     end
 
-    let :respond_to_confirm? do
+    def respond_to_confirm?
       self.class.ancestors.include?(ConfirmMethods)
     end
 
     # override according to the situation
-    let :current_record do
-      # current_scope.find_or_initialize_by(id: params[:id]) は危険
-      if params[:id]
-        current_scope.find(params[:id])
-      else
-        current_scope.new
+    def current_record
+      @current_record ||= yield_self do
+        # current_scope.find_or_initialize_by(id: params[:id]) は危険
+        if params[:id]
+          current_scope.find(params[:id])
+        else
+          current_scope.new
+        end
       end
     end
 
@@ -89,16 +91,16 @@ module ModulableCrud
       helper_method :js_current_records
     end
 
-    let :current_plural_key do
-      current_model.model_name.plural.to_sym
+    def current_plural_key
+      @current_plural_key ||= current_model.model_name.plural.to_sym
     end
 
-    let :current_records do
-      current_scope.page(params[:page])
+    def current_records
+      @current_records ||= current_scope.page(params[:page])
     end
 
-    let :js_current_records do
-      current_records.collect { |e| js_record_for(e) }
+    def js_current_records
+      @js_current_records ||= current_records.collect { |e| js_record_for(e) }
     end
 
     def js_record_for(e)
@@ -123,7 +125,7 @@ module ModulableCrud
       helper_method :page_header_show_title
     end
 
-    let :page_header_show_title do
+    def page_header_show_title
       "詳細: ##{current_record.to_param}"
     end
 

@@ -9,11 +9,13 @@ module BattleControllerSharedMethods
   include PageMethods
 
   concerning :IndexMethods do
-    let :current_records do
-      s = current_index_scope
-      s = s.select(current_model.column_names - exclude_column_names)
-      s = sort_scope(s)
-      s = page_scope(s)
+    def current_records
+      @current_records ||= yield_self do
+        s = current_index_scope
+        s = s.select(current_model.column_names - exclude_column_names)
+        s = sort_scope(s)
+        s = page_scope(s)
+      end
     end
 
     def exclude_column_names
@@ -36,27 +38,29 @@ module BattleControllerSharedMethods
   end
 
   concerning :QueryMethods do
-    let :current_query do
+    def current_query
       params[:query].presence
     end
 
-    let :query_info do
-      QueryInfo.parse(current_query)
+    def query_info
+      @query_info ||= QueryInfo.parse(current_query)
     end
 
-    let :current_scope do
-      s = current_model.all
-      s = tag_scope_add(s)
+    def current_scope
+      @current_scope ||= yield_self do
+        s = current_model.all
+        s = tag_scope_add(s)
 
-      if v = query_info.lookup_one(:date)
-        v = v.to_time.midnight
-        s = s.where(battled_at: v...v.tomorrow)
-      end
+        if v = query_info.lookup_one(:date)
+          v = v.to_time.midnight
+          s = s.where(battled_at: v...v.tomorrow)
+        end
 
-      if v = query_info.lookup(:ids)
-        s = s.where(id: v)
+        if v = query_info.lookup(:ids)
+          s = s.where(id: v)
+        end
+        s
       end
-      s
     end
 
     def tag_scope_add(s)
@@ -183,8 +187,8 @@ module BattleControllerSharedMethods
       record.update_columns(accessed_at: Time.current)
     end
 
-    let :decorator do
-      current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
+    def decorator
+      @decorator ||= current_record.battle_decorator(params.to_unsafe_h.to_options.merge(view_context: view_context))
     end
 
     def js_record_for(e)
@@ -215,8 +219,8 @@ module BattleControllerSharedMethods
   end
 
   concerning :EditMethods do
-    let :current_edit_mode do
-      (params[:edit_mode].presence || :basic).to_sym
+    def current_edit_mode
+      @current_edit_mode ||= (params[:edit_mode].presence || :basic).to_sym
     end
   end
 end

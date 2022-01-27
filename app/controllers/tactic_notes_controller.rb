@@ -132,18 +132,20 @@ class TacticNotesController < ApplicationController
 
   end
 
-  let :sample_kifu_body do
-    Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
-      file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
-      heavy_parsed_info = Bioshogi::Parser.file_parse(file)
-      Bioshogi::KifuFormatInfo.inject({}) do |a, e|
-        a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}", compact: true))
+  def sample_kifu_body
+    @sample_kifu_body ||= yield_self do
+      Rails.cache.fetch("#{__method__}_#{current_record.key}", :expires_in => 1.week) do
+        file = Gem.find_files("../experiment/#{current_record.tactic_info.name}/#{current_record.key}.*").first
+        heavy_parsed_info = Bioshogi::Parser.file_parse(file)
+        Bioshogi::KifuFormatInfo.inject({}) do |a, e|
+          a.merge(e.key => heavy_parsed_info.public_send("to_#{e.key}", compact: true))
+        end
       end
     end
   end
 
-  let :sfen_body do
-    Bioshogi::Parser.file_parse(current_record.sample_kif_file, candidate_enable: false, validate_enable: false).to_sfen
+  def sfen_body
+    @sfen_body ||= Bioshogi::Parser.file_parse(current_record.sample_kif_file, candidate_enable: false, validate_enable: false).to_sfen
   end
 
   def current_record

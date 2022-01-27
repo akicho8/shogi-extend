@@ -6,15 +6,19 @@ module BattleControllerBaseMethods
     helper_method :current_viewpoint
   end
 
-  let :current_turn do
-    if v = params[:turn].presence
-      v.to_i
+  def current_turn
+    @current_turn ||= yield_self do
+      if v = params[:turn].presence
+        v.to_i
+      end
     end
   end
 
-  let :current_viewpoint do
-    if v = params[:viewpoint].presence
-      v.to_sym
+  def current_viewpoint
+    @current_viewpoint ||= yield_self do
+      if v = params[:viewpoint].presence
+        v.to_sym
+      end
     end
   end
 end

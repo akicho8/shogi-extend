@@ -2,15 +2,17 @@ module Swars
   concern :ShowMethods do
     private
 
-    let :current_record do
-      if v = params[:id].presence
-        if request.from_crawler?
+    def current_record
+      @current_record ||= yield_self do
+        if v = params[:id].presence
+          if request.from_crawler?
+          else
+            current_model.single_battle_import(key: v)
+          end
+          current_scope.find_by!(key: v)
         else
-          current_model.single_battle_import(key: v)
+          current_scope.new
         end
-        current_scope.find_by!(key: v)
-      else
-        current_scope.new
       end
     end
 
