@@ -80,7 +80,7 @@ export default {
     height: 100%
     .scroll_block
       @extend %overlay
-      overflow-x: hidden
+      +is_scroll_x
 
       padding: 0
 

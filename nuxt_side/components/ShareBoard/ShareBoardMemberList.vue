@@ -83,7 +83,7 @@ export default {
 
 .ShareBoardMemberList.column
   .scroll_block
-    overflow-x: auto
+    +is_scroll_x
     padding: 0
 
     .time_format
