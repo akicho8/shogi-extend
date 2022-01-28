@@ -2,13 +2,13 @@ export const app_room_leave = {
   methods: {
     room_entry_call(params) {
       this.al_add({...params, label: "入室"})
-      this.sound_play_random(["dog1", "dog2", "dog3"])
+      this.sound_play("room_entry")
       this.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
     },
 
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
-      this.sound_play("door_close")
+      this.sound_play("room_leave")
       this.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
     },
 
