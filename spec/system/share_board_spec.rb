@@ -1438,7 +1438,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     menu_item_click("棋譜の読み込み")
     find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
     find(".AnySourceReadModal .submit_handle").click
-    assert_text "棋譜を読み込みました"
 
     action_assert(0, "alice", "局面転送 #1")
     action_assert(1, "alice", "棋譜読込後(本筋)")
