@@ -423,6 +423,19 @@ module Swars
       "battled_at"
     end
 
+    def sort_scope(s)
+      if sort_column && sort_order
+        case sort_column
+        when "grade_diff"
+          order = my_sampled_memberships.order(sort_column => sort_order)
+          s = s.joins(:memberships).merge(order)
+        else
+          s = super(s)
+        end
+      end
+      s
+    end
+
     private
 
     def primary_key_like?
