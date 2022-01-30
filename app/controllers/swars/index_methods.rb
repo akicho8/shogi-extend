@@ -270,6 +270,7 @@ module Swars
     end
 
     # FIXME: モデルに移動
+    # FIXME: わけわからんことなってるので作り直そう
     def current_scope
       @current_scope ||= yield_self do
         s = current_model.all
@@ -282,29 +283,29 @@ module Swars
           s = s.where(key: v)
         end
 
-        if v = query_info.lookup_one(:rule) || query_info.lookup_one(:"種類")
+        if v = query_info.lookup_one(:rule) || query_info.lookup_one("種類")
           s = s.rule_eq(v)
         end
 
-        if e = query_info.lookup_op(:critical_turn) || query_info.lookup_op(:"開戦")
+        if e = query_info.lookup_op(:critical_turn) || query_info.lookup_op("開戦")
           s = s.where(current_model.arel_table[:critical_turn].public_send(e[:operator], e[:value]))
         end
 
-        if e = query_info.lookup_op(:outbreak_turn) || query_info.lookup_op(:"中盤")
+        if e = query_info.lookup_op(:outbreak_turn) || query_info.lookup_op("中盤")
           s = s.where(current_model.arel_table[:outbreak_turn].public_send(e[:operator], e[:value]))
         end
 
-        if e = query_info.lookup_op(:turn_max) || query_info.lookup_op(:"手数")
+        if e = query_info.lookup_op(:turn_max) || query_info.lookup_op("手数")
           s = s.where(current_model.arel_table[:turn_max].public_send(e[:operator], e[:value]))
         end
 
-        if v = query_info.lookup_one(:"final") || query_info.lookup_one(:"最後") || query_info.lookup_one(:"結末")
+        if v = query_info.lookup_one(:final) || query_info.lookup_one("最後") || query_info.lookup_one("結末")
           s = s.where(current_model.arel_table[:final_key].eq(FinalInfo.fetch(v).key))
         end
 
         if current_swars_user
           selected = false
-          if t = query_info.lookup_one(:"date") || query_info.lookup_one(:"日時") || query_info.lookup_one(:"日付")
+          if t = query_info.lookup_one("date") || query_info.lookup_one("日時") || query_info.lookup_one("日付")
             t = DateRange.parse(t)
 
             m = my_sampled_memberships
@@ -313,50 +314,50 @@ module Swars
             s = s.where(battled_at: t)
             selected = true
           end
-          if v = query_info.lookup_one(:"judge") || query_info.lookup_one(:"勝敗")
+          if v = query_info.lookup_one("judge") || query_info.lookup_one("勝敗")
             m = my_sampled_memberships
             m = m.where(judge_key: JudgeInfo.fetch(v).key)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"tag") # 自分 戦法(AND)
+          if v = query_info.lookup("tag") # 自分 戦法(AND)
             m = my_sampled_memberships
             m = m.tagged_with(v)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"or-tag") # 自分 戦法(OR)
+          if v = query_info.lookup("or-tag") # 自分 戦法(OR)
             m = my_sampled_memberships
             m = m.tagged_with(v, any: true)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"vs-tag") # 相手 対抗
+          if v = query_info.lookup("vs-tag") # 相手 対抗
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.tagged_with(v)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"vs-or-tag") # 相手 対抗
+          if v = query_info.lookup("vs-or-tag") # 相手 対抗
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.tagged_with(v, any: true)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup_one(:"vs-grade") # 段級
+          if v = query_info.lookup_one("vs-grade") # 段級
             grade = Grade.fetch(v)
             m = sampled_memberships(current_swars_user.op_memberships)
             m = m.where(grade: grade)
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if e = query_info.lookup_op(:"vs-grade-diff") || query_info.lookup_op(:"力差")
+          if e = query_info.lookup_op("vs-grade-diff") || query_info.lookup_op("力差")
             m = my_sampled_memberships
             m = m.where(Membership.arel_table[:grade_diff].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
             selected = true
           end
-          if v = query_info.lookup(:"vs") || query_info.lookup(:"相手")
+          if v = query_info.lookup("vs") || query_info.lookup("相手")
             users = Swars::User.where(user_key: v)
             m = current_swars_user.op_memberships.where(user: users)
             s = s.where(id: m.pluck(:battle_id))
@@ -390,7 +391,7 @@ module Swars
 
       # FIXME: ↓これいらなくね？
       if true
-        if v = query_info.lookup_one(:"sample")
+        if v = query_info.lookup_one("sample")
           m = m.limit(v)          # N件抽出
         else
           # 指定しなくてもすでにuserで絞っているので爆発しない
