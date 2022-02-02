@@ -125,7 +125,13 @@ export const app_sp = {
     // 玉の自動配置
     sp_king_formation_auto_set_on_off(v) {
       return this.sp_call(e => e.mediator.king_formation_auto_set_on_off(v))
-    }
+    },
+
+    // スマホから戻ったときに音が鳴るようにする
+    sp_sound_resume_all() {
+      return this.sp_call(e => e.sp_sound_resume_all())
+    },
+
   },
   computed: {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },
