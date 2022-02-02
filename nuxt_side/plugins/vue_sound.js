@@ -31,6 +31,15 @@ export const vue_sound = {
       }
     },
 
+    // スマホで音が出なくなる問題は unload() で修復できる
+    // ただしユーザーに操作させないと反応しない
+    // https://github.com/goldfire/howler.js/issues/1526
+    // https://github.com/goldfire/howler.js/issues/1525
+    sound_resume_all() {
+      this.debug_alert("Howler.unload()")
+      Howler.unload()
+    },
+
     howl_auto_play(options) {
       options = {
         autoplay: true,

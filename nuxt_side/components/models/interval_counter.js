@@ -23,7 +23,6 @@ export class IntervalCounter extends IntervalRunner {
   constructor(callback, params = {}) {
     super(callback, params) // TODO: 引数をそのまま渡す方法は？
     this.counter_reset()
-
   }
 
   counter_reset() {

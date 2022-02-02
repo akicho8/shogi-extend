@@ -5,6 +5,33 @@
   .column.is-2
     .panel
       .panel-heading
+        | 音不具合検証用
+      a.panel-block(@click="base.sound_resume_modal_handle") sound_resume_modal_handle
+      a.panel-block(@click="base.sound_resume_modal_close") sound_resume_modal_close
+      a.panel-block(@click="base.sound_bug_start") がや開始
+      a.panel-block(@click="base.sound_bug_stop") がや停止
+      a.panel-block(@click="Howler.mute(true)") mute(true)
+      a.panel-block(@click="Howler.mute(false)") mute(false)
+      a.panel-block(@click="Howler.volume(0)") volume(0)
+      a.panel-block(@click="Howler.volume(1.0)") volume(1.0)
+      a.panel-block(@click="Howler.stop()") stop()
+      a.panel-block(@click="Howler.unload()") unload()
+      a.panel-block(@click="Howler.autoUnlock = true") autoUnlock = true
+      a.panel-block(@click="Howler.autoSuspend = true") autoSuspend = true
+      a.panel-block(@click="Howler.autoSuspend = false") autoSuspend = false
+      a.panel-block(v-if="base.sb_counter") カウンタ {{base.sb_counter.counter}}
+      a.panel-block Howler.volume() → {{Howler.volume()}}
+      a.panel-block Howler.usingWebAudio → {{Howler.usingWebAudio}}
+      a.panel-block Howler.noAudio → {{Howler.noAudio}}
+      a.panel-block Howler.autoUnlock → {{Howler.autoUnlock}}
+      a.panel-block Howler.html5PoolSize → {{Howler.html5PoolSize}}
+      a.panel-block Howler.autoSuspend → {{Howler.autoSuspend}}
+      a.panel-block Howler.ctx → {{pretty_inspect(Howler.ctx)}}
+      a.panel-block Howler.masterGain → {{pretty_inspect(Howler.masterGain)}}
+
+  .column.is-2
+    .panel
+      .panel-heading
         | system_test
       a.panel-block(@click="base.setup_info_request") [入室時の情報要求]
 
@@ -143,6 +170,8 @@
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 
+import { Howl, Howler } from "howler"
+
 export default {
   name: "ShareBoardDebugPanels",
   mixins: [support_child],
@@ -157,6 +186,10 @@ export default {
     func3() {
       this.debug_alert("click2")
     },
+  },
+
+  computed: {
+    Howler() { return Howler },
   },
 
 }

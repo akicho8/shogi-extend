@@ -22,10 +22,6 @@ export const app_main_setting = {
       })
     },
   },
-  created() {
-    const unwatch = this.$watch(() => [this.foo, this.bar], () => this.share_update(), {deep: true})
-    unwatch()
-  },
   watch: {
     howl_play_mode_key(value) {
       // this.$store.commit("m_g_howl_play_mode_set", value)

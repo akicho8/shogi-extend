@@ -94,8 +94,10 @@ import { app_ping                 } from "./app_ping.js"
 import { app_tweet                } from "./app_tweet.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
+import { app_sound_bug               } from "./app_sound_bug.js"
 import { app_message              } from "./app_message.js"
 import { app_main_setting         } from "./app_main_setting.js"
+import { app_sound_resume         } from "./app_sound_resume.js"
 import { app_help                 } from "./app_help.js"
 import { app_sidebar              } from "./app_sidebar.js"
 import { app_user_name            } from "./app_user_name.js"
@@ -144,8 +146,10 @@ export default {
     app_tweet,
     app_image_dl,
     app_update,
+    app_sound_bug,
     app_message,
     app_main_setting,
+    app_sound_resume,
     app_help,
     app_sidebar,
     app_user_name,

@@ -7,6 +7,22 @@ export const app_chore = {
   methods: {
     // Windowアクティブチェック
     window_active_change_user_hook(focus_p) {
+      // if (focus_p) {
+      //   this.debug_alert(`sleep 5`)
+      //   this.delay_block(5, () => {
+      //     this.debug_alert(`Howler.unload()`)
+      //     Howler.unload()
+      //   })
+      // } else {
+      //   Howler.autoUnlock = true
+      // }
+
+      if (focus_p) {
+        if (this.mobile_p()) {
+          this.sound_resume_modal_handle()
+        }
+      }
+
       this.debug_alert(`画面:${focus_p}`)
       this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
       this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
