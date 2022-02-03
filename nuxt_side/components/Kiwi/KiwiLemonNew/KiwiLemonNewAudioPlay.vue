@@ -10,7 +10,7 @@ b-button(
 
 <script>
 import { support_child } from "./support_child.js"
-import { Howl, Howler } from 'howler'
+// import { Howl, Howler } from 'howler'
 
 export default {
   name: "KiwiLemonNewAudioPlay",

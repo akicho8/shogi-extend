@@ -9,6 +9,9 @@ ShogiPlayer.CustomShogiPlayer(
 <script>
 import ShogiPlayer from "shogi-player/components/ShogiPlayer.vue"
 
+// :sp_sound_howl="Howl"
+// import { Howl, Howler } from "howler"
+
 export default {
   name: "CustomShogiPlayer",
   inheritAttrs: false, // すべて $attrs に入れるため
@@ -23,6 +26,8 @@ export default {
     },
   },
   computed: {
+    // Howl() { return Howl },
+
     component_params() {
       return {
         ...this.default_params,

@@ -1,3 +1,8 @@
+// window.Howler と window.Howl を定義する
+// 他のところで個別に import してはいけない(重要)
+import { Howl, Howler } from "howler"
+
+//
 import Vue from "vue"
 
 import { vue_application       } from "./application.client.js"

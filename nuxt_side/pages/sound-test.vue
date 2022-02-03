@@ -36,7 +36,7 @@
 
 <script>
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
-import { Howler } from "howler"
+// import { Howler } from "howler"
 
 export default {
   name: "sound-test",
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     SoundPresetInfo() { return SoundPresetInfo },
-    Howler()      { return Howler      },
+     Howler() { return Howler      },
   },
 }
 </script>

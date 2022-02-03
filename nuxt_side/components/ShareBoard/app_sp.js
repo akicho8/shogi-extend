@@ -128,10 +128,14 @@ export const app_sp = {
     },
 
     // スマホから戻ったときに音が鳴るようにする
-    sp_sound_resume_all() {
-      return this.sp_call(e => e.sp_sound_resume_all())
-    },
+    // sp_sound_resume_all() {
+    //   return this.sp_call(e => e.sp_sound_resume_all())
+    // },
 
+    sp_Howler() {
+      return this.sp_call(e => e.sp_Howler())
+    },
+    
   },
   computed: {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },

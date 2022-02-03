@@ -2,24 +2,24 @@
 .columns.is-multiline.ShareBoardDebugPanels.is-centered
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
-  .column.is-2
+  .column.is-4
     .panel
       .panel-heading
         | 音不具合検証用
-      a.panel-block(@click="base.sound_resume_modal_handle") sound_resume_modal_handle
-      a.panel-block(@click="base.sound_resume_modal_close") sound_resume_modal_close
-      a.panel-block(@click="base.sound_bug_start") がや開始
-      a.panel-block(@click="base.sound_bug_stop") がや停止
+      a.panel-block(@click="base.sound_resume_modal_handle") 画面タップ催促表示確認
+      a.panel-block(@click="base.sound_resume_modal_close") 画面タップ催促閉じる
+      a.panel-block(@click="base.sound_bug_start") ガヤ開始
+      a.panel-block(@click="base.sound_bug_stop") ガヤ停止
+      a.panel-block(v-if="base.sb_counter") ガヤ回数 {{base.sb_counter.counter}}
       a.panel-block(@click="Howler.mute(true)") mute(true)
       a.panel-block(@click="Howler.mute(false)") mute(false)
       a.panel-block(@click="Howler.volume(0)") volume(0)
       a.panel-block(@click="Howler.volume(1.0)") volume(1.0)
       a.panel-block(@click="Howler.stop()") stop()
-      a.panel-block(@click="Howler.unload()") unload()
+      a.panel-block(@click="Howler.unload()") unload() 重要
       a.panel-block(@click="Howler.autoUnlock = true") autoUnlock = true
       a.panel-block(@click="Howler.autoSuspend = true") autoSuspend = true
       a.panel-block(@click="Howler.autoSuspend = false") autoSuspend = false
-      a.panel-block(v-if="base.sb_counter") カウンタ {{base.sb_counter.counter}}
       a.panel-block Howler.volume() → {{Howler.volume()}}
       a.panel-block Howler.usingWebAudio → {{Howler.usingWebAudio}}
       a.panel-block Howler.noAudio → {{Howler.noAudio}}
@@ -27,7 +27,19 @@
       a.panel-block Howler.html5PoolSize → {{Howler.html5PoolSize}}
       a.panel-block Howler.autoSuspend → {{Howler.autoSuspend}}
       a.panel-block Howler.ctx → {{pretty_inspect(Howler.ctx)}}
-      a.panel-block Howler.masterGain → {{pretty_inspect(Howler.masterGain)}}
+      a.panel-block Howler.masterGain → {{Howler.masterGain}}
+      a.panel-block Howler._howls.length → {{Howler._howls.length}}
+
+      template(v-if="base.sp_Howler()")
+        //- a.panel-block base.sp_Howler().volume() → {{base.sp_Howler().volume()}}
+        //- a.panel-block base.sp_Howler().usingWebAudio → {{base.sp_Howler().usingWebAudio}}
+        //- a.panel-block base.sp_Howler().noAudio → {{base.sp_Howler().noAudio}}
+        //- a.panel-block base.sp_Howler().autoUnlock → {{base.sp_Howler().autoUnlock}}
+        //- a.panel-block base.sp_Howler().html5PoolSize → {{base.sp_Howler().html5PoolSize}}
+        //- a.panel-block base.sp_Howler().autoSuspend → {{base.sp_Howler().autoSuspend}}
+        //- a.panel-block base.sp_Howler().masterGain → {{base.sp_Howler().masterGain}}
+        //- a.panel-block base.sp_Howler().ctx → {{pretty_inspect(base.sp_Howler().ctx)}}
+        a.panel-block sp_Howler()._howls.length → {{base.sp_Howler()._howls.length}}
 
   .column.is-2
     .panel
@@ -70,6 +82,7 @@
       .panel-heading
         | ShogiPlayer
       a.panel-block(@click="base.sp_state_reset") 持ち上げた駒を元に戻す
+      //- a.panel-block(@click="base.sp_sound_resume_all") Howler.unload()
       a.panel-block(@click="base.sp_viewpoint = 'black'") ☗視点
       a.panel-block(@click="base.sp_viewpoint = 'white'") ☖視点
       .panel-block 現在の視点 {{base.sp_viewpoint}}
@@ -170,7 +183,7 @@
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 
-import { Howl, Howler } from "howler"
+// import { Howl, Howler } from "howler"
 
 export default {
   name: "ShareBoardDebugPanels",
