@@ -27,7 +27,7 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="base.tweet_modal_handle" v-if="base.tweet_button_show_p")
       b-icon(icon="twitter" type="is-white")
 
-    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="base.message_modal_handle")
+    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="base.message_modal_handle" v-if="base.ac_room")
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="chat-processing")
 
