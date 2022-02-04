@@ -331,8 +331,7 @@ export default {
     .ShareBoardActionLog
       order: 3
   +mobile
-    .ShareBoardActionLog
+    .ShareBoardActionLog.column, .ShareBoardMemberList.column
       margin-top: 1rem
-    .ShareBoardMemberList
-      margin-top: 1rem
+      padding: 0 0.5rem
 </style>

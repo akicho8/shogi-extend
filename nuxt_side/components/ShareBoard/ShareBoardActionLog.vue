@@ -64,16 +64,16 @@ export default {
 @import "./support.sass"
 
 .ShareBoardActionLog.column
-  padding: 0
   position: relative
+  +mobile
+    height: 16rem
   +tablet
+    padding: 0
     max-width: 8rem
   +desktop
     max-width: 12rem
   +widescreen
     max-width: 16rem
-  +mobile
-    height: 16rem
 
   .scroll_block_container
     position: relative
