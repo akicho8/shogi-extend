@@ -14,8 +14,7 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
 
   template(slot="end")
     b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.tl_modal_handle" v-if="base.debug_mode_p")
-      | ログ
-      b-tag.has-text-weight-bold.ml-2(rounded)
+      b-tag.has-text-weight-bold(rounded)
         .has-text-primary
           | {{base.track_logs.length}}
 
