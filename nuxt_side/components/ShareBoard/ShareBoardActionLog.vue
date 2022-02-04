@@ -3,7 +3,7 @@
   .is-hidden-tablet.is-size-7.has-text-weight-bold
     | 操作履歴
     span.has-text-grey-light.has-text-weight-normal.mx-1
-      | タップで戻れるよ
+      | タップで戻れる
   .scroll_block_container
     .scroll_block.is_scroll_y(ref="scroll_block")
       template(v-for="(e, i) in filtered_action_logs")
