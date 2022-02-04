@@ -122,11 +122,18 @@ const config = {
     meta: [
       // https://ja.nuxtjs.org/faq/duplicated-meta-tags/
       { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+
+      // iOS で input の focus 時にズームインしてしまうのを viewport で解決する
+      // https://zenn.dev/rhirayamaaan/articles/f0209ad6574ed4
+      // { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+      { name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0" },
+      // { name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" },
+
       { hid: "description", name: "description", content: SITE_DESC },
       { name: "action-cable-url", content: (process.env.NODE_ENV === "development" ? process.env.MY_SITE_URL : "") + "/maincable" },
 
       // 「ホーム画面に追加」したあとアプリのような画面にする設定
+
       //
       //  ・画面は広くなる
       //  ・が、iOS では localStorage がWEBと繋がっていない問題があったりなかったりする
