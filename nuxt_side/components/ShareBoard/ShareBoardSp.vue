@@ -53,6 +53,11 @@ export default {
       hv.sp_layer                                    = this.sp_layer
       hv.sp_controller                               = this.sp_controller
       hv.sp_slider                                   = this.sp_slider
+
+      if (false) {
+        hv.sp_bg_variant                             = "is_bg_variant_b"
+      }
+
       return hv
     },
     sp_layer() {
