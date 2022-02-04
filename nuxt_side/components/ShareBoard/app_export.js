@@ -5,7 +5,7 @@ export const app_export = {
     // 現在のURLをコピー
     current_url_copy_handle() {
       this.sound_play_click()
-      this.clipboard_copy({text: this.current_url})
+      this.clipboard_copy({text: this.current_url, success_message: "現在のURLをコピーしました"})
     },
 
     // 指定の棋譜をコピー

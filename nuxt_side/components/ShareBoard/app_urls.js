@@ -23,7 +23,7 @@ export const app_urls = {
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
       this.sound_play_click()
-      this.clipboard_copy({text: this.room_code_except_url})
+      this.clipboard_copy({text: this.room_code_except_url, success_message: "棋譜を再現するリンクをコピーしました"})
     },
 
     other_app_click_handle(app_name) {
