@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 const ALIVE_NOTIFY_INTERVAL = 30      // N秒ごとに存在を通知する
-const ALIVE_SEC             = 30 + 10 // N秒未満なら活発とみなして青くする
+const ALIVE_SEC             = 30 + 5  // N秒未満なら活発とみなす
 const KILL_SEC              = 30 + 30 // 通知がN秒前より古いユーザーは破棄
 
 const FAKE_P = false
