@@ -1,11 +1,20 @@
 export const app_room_leave = {
   methods: {
+    // 入室時のエフェクト
     room_entry_call(params) {
+      const members_blank_p = this.blank_p(this.member_infos)
       this.al_add({...params, label: "入室"})
       this.sound_play("room_entry")
-      this.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
+      this.delay_block(0.75, () => {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`, {onend: () => {
+          if (members_blank_p) {  // 0.1秒後には member_infos に自分が加わっているため members_blank_p で判定すること
+            this.toast_ok("部屋のリンクをタップして仲間に伝えよう")
+          }
+        }})
+      })
     },
 
+    // 退室時のエフェクト
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
       this.sound_play("room_leave")

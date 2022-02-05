@@ -1492,6 +1492,15 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "入室したとき他に誰もいなかったら部屋のリンクのタップを促す" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")
+        assert_text "部屋のリンクをタップして仲間に伝えよう"
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1750,7 +1759,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     find(".MessageSendModal input").set(message)                     # メッセージ入力
     find(".MessageSendModal .send_handle").click                     # 送信
   end
-  
+
   def assert_var(key, value)
     assert_text "#{key}:#{value}"
   end
