@@ -12,7 +12,7 @@ export const ActionLogJumpPreviewModalButtons = {
     },
     room_code_except_url_copy_handle() {
       this.sound_play_click()
-      this.clipboard_copy({text: this.base.permalink_from_params(this.current_url_params), success_message: "棋譜を再現するリンクをコピーしました"})
+      this.clipboard_copy({text: this.base.permalink_from_params(this.current_url_params), success_message: "共有将棋盤で棋譜を再現するリンクをコピーしました"})
       this.base.shared_al_add_simple("棋譜リンクコピー")
     },
   },

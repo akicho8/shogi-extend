@@ -11,8 +11,8 @@ export const app_handle_name = {
 
       if (this.order_enable_p) {
         this.dialog_alert({
-          title: "順番設定後は変更できません",
-          message: "順番設定をいったん解除してください",
+          title: "警告",
+          message: `順番設定をいったん解除してください`,
           type: "is-danger",
           confirmText: "わかった",
         })
