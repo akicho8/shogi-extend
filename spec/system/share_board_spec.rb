@@ -1480,7 +1480,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "Howlの再生モードを変更できる" do
+  xdescribe "Howlの再生モードを変更できる" do
     it "works" do
       visit_app
       assert_var("g_howl_play_mode_key", "web_audio_api") # 初期値
