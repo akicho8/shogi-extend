@@ -107,6 +107,12 @@ export const app_sp = {
       this.toast_ok("それは相手の駒です")
     },
 
+    // 二歩をした
+    operation_double_pawn_handle() {
+      this.sound_play("x")
+      this.toast_ok("それは二歩です")
+    },
+
     // ShogiPlayer コンポーネント自体を実行したいとき用
     sp_call(func) {
       return func(this.$refs.ShareBoardSp.$refs.main_sp.sp_object())
@@ -135,7 +141,7 @@ export const app_sp = {
     sp_Howler() {
       return this.sp_call(e => e.sp_Howler())
     },
-    
+
   },
   computed: {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },

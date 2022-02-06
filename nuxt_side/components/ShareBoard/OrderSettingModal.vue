@@ -69,23 +69,36 @@
             b-field(custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
               template(#label)
                 a.label_with_hint.avatar_king_hint_handle(@click.stop="avatar_king_hint_handle")
-                  | アバター
+                  | {{base.AvatarKingInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
               b-field.is-marginless
                 template(v-for="e in base.AvatarKingInfo.values")
                   b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="new_avatar_king_key_change_handle")
                     | {{e.name}}
-          .column
+
+          .column(v-if="base.debug_mode_p")
             b-field(custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
               template(#label)
                 a.label_with_hint.shout_hint_handle(@click.stop="shout_hint_handle")
-                  | シャウト
+                  | {{base.ShoutModeInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
               b-field.is-marginless
                 template(v-for="e in base.ShoutModeInfo.values")
                   b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
+                    | {{e.name}}
+
+          .column(v-if="base.debug_mode_p")
+            b-field(custom-class="is-small" :message="base.TwoPawnModeInfo.fetch(base.new_two_pawn_mode_key).message || base.TwoPawnModeInfo.message")
+              template(#label)
+                a.label_with_hint.two_pawn_hint_handle(@click.stop="two_pawn_hint_handle")
+                  | {{base.TwoPawnModeInfo.field_label}}
+                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
+
+              b-field.is-marginless
+                template(v-for="e in base.TwoPawnModeInfo.values")
+                  b-radio-button(v-model="base.new_two_pawn_mode_key" :native-value="e.key" size="is-small" @input="new_two_pawn_mode_key_change_handle")
                     | {{e.name}}
 
           .column
@@ -263,6 +276,11 @@ export default {
       this.base.os_change.append("シャウト")
     },
 
+    new_two_pawn_mode_key_change_handle() {
+      this.sound_play_click()
+      this.base.os_change.append("二歩")
+    },
+
     new_hand_every_n_change_handle() {
       this.sound_play_click()
       this.base.os_change.append("N手毎交代")
@@ -314,6 +332,7 @@ export default {
         move_guard_key: this.base.new_move_guard_key,
         avatar_king_key: this.base.new_avatar_king_key,
         shout_mode_key: this.base.new_shout_mode_key,
+        two_pawn_mode_key: this.base.new_two_pawn_mode_key,
         hand_every_n: this.base.new_hand_every_n,
         message: message,
       })
@@ -342,6 +361,17 @@ export default {
       message.push("駒を動かされたり取られたりしたとき駒が無駄に叫びます。")
       message.push("まったくおすすめしません。")
       message.push("対局中でも順番設定で無効にできます。")
+      message = message.join("")
+      this.toast_ok(message, {duration: 1000 * 7})
+    },
+
+    two_pawn_hint_handle() {
+      this.sound_stop_all()
+      this.sound_play_click()
+
+      let message = []
+      message.push("禁止すると二歩と駒ワープをできなくします。")
+      message.push("王手放置はできます。")
       message = message.join("")
       this.toast_ok(message, {duration: 1000 * 7})
     },

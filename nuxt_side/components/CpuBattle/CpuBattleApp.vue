@@ -223,6 +223,7 @@ export default {
       return {
         sp_play_mode_legal_move_only:                false, // play_mode で合法手のみに絞る
         sp_play_mode_legal_jump_only:                false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
+        sp_play_mode_legal_pawn_drop:                false, // play_mode で二歩できる
         sp_play_mode_auto_promote:                   false, // play_mode で死に駒になるときは自動的に成る
         sp_play_mode_not_put_if_death_soldier:       false, // play_mode で死に駒になるときは置けないようにする
         sp_play_mode_only_own_piece_to_move:         false, // play_mode では自分手番とき自分の駒しか動かせないようにする

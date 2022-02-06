@@ -1,7 +1,8 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class AvatarKingInfo extends ApplicationMemoryRecord {
-  static get message() { return null }
+  static field_label = "アバター"
+  static message = null
 
   static get define() {
     return [

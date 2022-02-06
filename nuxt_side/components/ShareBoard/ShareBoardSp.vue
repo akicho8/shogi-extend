@@ -46,7 +46,8 @@ export default {
       hv.sp_debug_mode                               = "is_debug_mode_off"
       hv.sp_summary                                  = "is_summary_off"
       hv.sp_play_mode_legal_move_only                = this.base.sp_internal_rule_strict_p
-      hv.sp_play_mode_legal_jump_only                = false
+      hv.sp_play_mode_legal_jump_only                = this.base.two_pawn_mode_disallow // 角ワープ true:できない false:できる
+      hv.sp_play_mode_legal_pawn_drop                = this.base.two_pawn_mode_disallow // 二歩     true:できない false:できる
       hv.sp_play_mode_only_own_piece_to_move         = this.base.sp_internal_rule_strict_p
       hv.sp_play_mode_can_not_kill_same_team_soldier = this.base.sp_internal_rule_strict_p
       hv.sp_move_cancel                              = this.base.sp_move_cancel_info.key
@@ -90,6 +91,7 @@ export default {
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
       hv["operation_invalid1"]                        = this.base.operation_invalid1_handle
       hv["operation_invalid2"]                        = this.base.operation_invalid2_handle
+      hv["operation_double_pawn"]                     = this.base.operation_double_pawn_handle
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
       return hv
     },
