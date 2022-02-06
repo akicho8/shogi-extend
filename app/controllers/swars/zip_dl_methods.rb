@@ -47,11 +47,13 @@ module Swars
     end
 
     def zip_dl_cop
-      @zip_dl_cop ||= Swars::ZipDlCop.new(params.to_unsafe_h.merge({
-            :current_user        => current_user,
-            :current_index_scope => current_index_scope, # params[:query] を元に作っている
-            :swars_user          => current_swars_user,  # 対象ユーザー
-          }))
+      @zip_dl_cop ||= yield_self do
+        Swars::ZipDlCop.new(params.to_unsafe_h.merge({
+              :current_user        => current_user,
+              :current_index_scope => sort_scope(current_index_scope),
+              :swars_user          => current_swars_user,  # 対象ユーザー
+            }))
+      end
     end
   end
 end

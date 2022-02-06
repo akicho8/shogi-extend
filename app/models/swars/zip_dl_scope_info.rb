@@ -22,7 +22,7 @@ module Swars
           s = current_index_scope
           if v = continue_begin_at
             s = s.where(Battle.arel_table[:battled_at].gteq(v))
-            s = s.order(battled_at: :asc)
+            s = s.reorder(battled_at: :asc)
             s = s.limit(zip_dl_max)
           else
             s = s.none
@@ -41,7 +41,7 @@ module Swars
           s = current_index_scope
           t = Time.current.midnight
           s = s.where(battled_at: t...t.tomorrow)
-          s = s.order(battled_at: :asc)
+          s = s.reorder(battled_at: :asc)
           s = s.limit(zip_dl_max)
         },
       },
@@ -55,7 +55,7 @@ module Swars
         },
         scope: proc {
           s = current_index_scope
-          s = sort_scope(s)
+          # s = sort_scope(s)
           s = s.limit(zip_dl_max)
         },
       },
