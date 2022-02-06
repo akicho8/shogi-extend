@@ -46,8 +46,8 @@ export default {
       hv.sp_debug_mode                               = "is_debug_mode_off"
       hv.sp_summary                                  = "is_summary_off"
       hv.sp_play_mode_legal_move_only                = this.base.sp_internal_rule_strict_p
-      hv.sp_play_mode_legal_jump_only                = this.base.is_shout2_mode_on // 角ワープ true:できない false:できる
-      hv.sp_play_mode_legal_pawn_drop                = this.base.is_shout2_mode_on // 二歩     true:できない false:できる
+      hv.sp_play_mode_legal_jump_only                = this.base.two_pawn_mode_disallow // 角ワープ true:できない false:できる
+      hv.sp_play_mode_legal_pawn_drop                = this.base.two_pawn_mode_disallow // 二歩     true:できない false:できる
       hv.sp_play_mode_only_own_piece_to_move         = this.base.sp_internal_rule_strict_p
       hv.sp_play_mode_can_not_kill_same_team_soldier = this.base.sp_internal_rule_strict_p
       hv.sp_move_cancel                              = this.base.sp_move_cancel_info.key

@@ -2,7 +2,7 @@ import OrderSettingModal from "./OrderSettingModal.vue"
 import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
-import { Shout2ModeInfo } from "@/components/models/shout2_mode_info.js"
+import { TwoPawnModeInfo } from "@/components/models/two_pawn_mode_info.js"
 import _ from "lodash"
 const FAKE_P = false
 const HAND_EVERY_N_ENABLED = true // N手毎を有効にするか？
@@ -22,7 +22,7 @@ export const app_ordered_members = {
       new_move_guard_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
-      new_shout2_mode_key: null, // 叫びモード
+      new_two_pawn_mode_key: null, // 叫びモード
       new_hand_every_n: null, // N手毎交代
 
       os_change: null, // OsChange のインスタンス
@@ -105,7 +105,7 @@ export const app_ordered_members = {
       this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
-      this.new_shout2_mode_key = this.shout2_mode_key
+      this.new_two_pawn_mode_key = this.two_pawn_mode_key
       this.new_hand_every_n = this.hand_every_n
       this.os_change = new OsChange()
     },
@@ -287,7 +287,7 @@ export const app_ordered_members = {
       this.move_guard_key  = params.move_guard_key
       this.avatar_king_key = params.avatar_king_key
       this.shout_mode_key  = params.shout_mode_key
-      this.shout2_mode_key  = params.shout2_mode_key
+      this.two_pawn_mode_key  = params.two_pawn_mode_key
       this.hand_every_n    = params.hand_every_n
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
@@ -372,9 +372,9 @@ export const app_ordered_members = {
     shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
     is_shout_mode_on() { return this.shout_mode_info.key === "is_shout_mode_on" },
 
-    Shout2ModeInfo()    { return Shout2ModeInfo                                 },
-    shout2_mode_info()  { return this.Shout2ModeInfo.fetch(this.shout2_mode_key) },
-    is_shout2_mode_on() { return this.shout2_mode_info.key === "is_shout2_mode_on" },
+    TwoPawnModeInfo()    { return TwoPawnModeInfo                                 },
+    two_pawn_mode_info()  { return this.TwoPawnModeInfo.fetch(this.two_pawn_mode_key) },
+    two_pawn_mode_disallow() { return this.two_pawn_mode_info.key === "two_pawn_mode_disallow" },
 
     // あとから接続した人に伝える内容
     current_xorder() {
@@ -384,7 +384,7 @@ export const app_ordered_members = {
         move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
         shout_mode_key:  this.shout_mode_key,
-        shout2_mode_key: this.shout2_mode_key,
+        two_pawn_mode_key: this.two_pawn_mode_key,
         hand_every_n:    this.hand_every_n,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
