@@ -162,7 +162,7 @@ export const app_sfen_share = {
     fast_sound_effect_func(params) {
       this.vibrate(10)
 
-      if (this.shout_mode_info.key === "is_shout_mode_on") {
+      if (this.is_shout_mode_on) {
         const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
         this.sound_play_random(info.sound_key)
 
