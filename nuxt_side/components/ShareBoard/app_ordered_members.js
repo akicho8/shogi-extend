@@ -2,6 +2,7 @@ import OrderSettingModal from "./OrderSettingModal.vue"
 import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
+import { EveryNInfo } from "@/components/models/every_n_info.js"
 import { TwoPawnModeInfo } from "@/components/models/two_pawn_mode_info.js"
 import _ from "lodash"
 const FAKE_P = false
@@ -375,6 +376,8 @@ export const app_ordered_members = {
     TwoPawnModeInfo()    { return TwoPawnModeInfo                                 },
     two_pawn_mode_info()  { return this.TwoPawnModeInfo.fetch(this.two_pawn_mode_key) },
     two_pawn_mode_disallow() { return this.two_pawn_mode_info.key === "two_pawn_mode_disallow" },
+
+    EveryNInfo()   { return EveryNInfo                                 },
 
     // あとから接続した人に伝える内容
     current_xorder() {

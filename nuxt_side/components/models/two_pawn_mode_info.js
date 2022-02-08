@@ -3,6 +3,10 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class TwoPawnModeInfo extends ApplicationMemoryRecord {
   static field_label = "二歩"
   static message = null
+  static hint_messages = [
+    "禁止すると二歩と駒ワープをできなくします。",
+    "ただし王手放置はできます。",
+  ]
 
   static get define() {
     return [

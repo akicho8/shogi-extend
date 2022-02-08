@@ -68,7 +68,7 @@
           .column
             b-field(custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
               template(#label)
-                a.label_with_hint.avatar_king_hint_handle(@click.stop="avatar_king_hint_handle")
+                a.label_with_hint.avatar_king_hint_handle(@click.stop="hint_handle(base.AvatarKingInfo)")
                   | {{base.AvatarKingInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
@@ -80,7 +80,7 @@
           .column(v-if="base.debug_mode_p")
             b-field(custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
               template(#label)
-                a.label_with_hint.shout_hint_handle(@click.stop="shout_hint_handle")
+                a.label_with_hint.shout_hint_handle(@click.stop="hint_handle(base.ShoutModeInfo)")
                   | {{base.ShoutModeInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
@@ -92,7 +92,7 @@
           .column(v-if="base.debug_mode_p")
             b-field(custom-class="is-small" :message="base.TwoPawnModeInfo.fetch(base.new_two_pawn_mode_key).message || base.TwoPawnModeInfo.message")
               template(#label)
-                a.label_with_hint.two_pawn_hint_handle(@click.stop="two_pawn_hint_handle")
+                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.TwoPawnModeInfo)")
                   | {{base.TwoPawnModeInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
@@ -102,10 +102,10 @@
                     | {{e.name}}
 
           .column
-            b-field(label="N手毎交代" custom-class="is-small" message="")
+            b-field(custom-class="is-small" message="")
               template(#label)
-                a.label_with_hint.hand_every_n_hint_handle(@click.stop="hand_every_n_hint_handle")
-                  | N手毎交代
+                a.label_with_hint.hand_every_n_hint_handle(@click.stop="hint_handle(base.EveryNInfo)")
+                  | {{base.EveryNInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
               b-numberinput(size="is-small" controls-position="compact" v-model="base.new_hand_every_n" :min="1" :max="10" :exponential="true" @input="sound_play_click()")
 
@@ -340,52 +340,10 @@ export default {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    avatar_king_hint_handle() {
+    hint_handle(model) {
       this.sound_stop_all()
       this.sound_play_click()
-
-      let message = []
-      message.push("自分のアバターを玉として表示します。")
-      message.push("複数人いる場合はリーダーのアバターを使います。")
-      message.push("対局中でも順番設定で無効にできます。")
-      message.push("ログインしているとプロフィール編集から自由に変更できます。")
-      message = message.join("")
-      this.toast_ok(message, {duration: 1000 * 10})
-    },
-
-    shout_hint_handle() {
-      this.sound_stop_all()
-      this.sound_play_click()
-
-      let message = []
-      message.push("駒を動かされたり取られたりしたとき駒が無駄に叫びます。")
-      message.push("まったくおすすめしません。")
-      message.push("対局中でも順番設定で無効にできます。")
-      message = message.join("")
-      this.toast_ok(message, {duration: 1000 * 7})
-    },
-
-    two_pawn_hint_handle() {
-      this.sound_stop_all()
-      this.sound_play_click()
-
-      let message = []
-      message.push("禁止すると二歩と駒ワープをできなくします。")
-      message.push("王手放置はできます。")
-      message = message.join("")
-      this.toast_ok(message, {duration: 1000 * 7})
-    },
-
-    hand_every_n_hint_handle() {
-      this.sound_stop_all()
-      this.sound_play_click()
-
-      let message = []
-      message.push("リレー将棋で1人10手毎交代のようなルールにできます。")
-      message.push("ただそれは物理的に移動がせわしなくなるのを心配したテレビ用ルールと考えられるため")
-      message.push("オンラインなら1手毎交代がおすすめです。")
-      message = message.join("")
-      this.toast_ok(message, {duration: 1000 * 10})
+      this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
     },
   },
   computed: {
