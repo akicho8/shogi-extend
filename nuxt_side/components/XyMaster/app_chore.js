@@ -1,7 +1,11 @@
+const IOS15_ALERT = false
+
 export const app_chore = {
   mounted() {
-    if (this.ios15_p) {
-      this.ios15_dialog_alert()
+    if (IOS15_ALERT) {
+      if (this.ios15_p) {
+        this.ios15_dialog_alert()
+      }
     }
   },
 
