@@ -1496,12 +1496,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         room_setup("my_room", "alice")
-        assert_text "aliceさんが入室しました"
+        assert_member_exist("alice")
         assert_text "部屋のリンクを仲間に伝えよう"
       end
       b_block do
         room_setup("my_room", "bob")
-        assert_text "bobさんが入室しました"
+        assert_member_exist("bob")
         assert_no_text "部屋のリンクを仲間に伝えよう"
       end
     end
