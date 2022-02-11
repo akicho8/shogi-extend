@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module ShareBoard
-  RSpec.describe LobbyChannel, type: :channel do
+  RSpec.describe LobbyChannel, type: :channel, share_board_spec: true do
     let(:user1) { User.create! }
 
     before do

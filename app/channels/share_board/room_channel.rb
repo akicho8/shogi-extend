@@ -32,7 +32,9 @@ module ShareBoard
     end
 
     def received_ok(data)
-      track(data, "指手受信", "OK > #{data['to_user_name']}", ":OK:")
+      if data["debug_mode_p"]
+        track(data, "指手受信", "OK > #{data['to_user_name']}", ":OK:")
+      end
       broadcast(:received_ok_broadcasted, data)
     end
 
@@ -69,8 +71,10 @@ module ShareBoard
     end
 
     def member_info_share(data)
-      message = "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})"
-      track(data, "生存通知", message)
+      if data["debug_mode_p"]
+        message = "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})"
+        track(data, "生存通知", message)
+      end
       broadcast(:member_info_share_broadcasted, data)
     end
 

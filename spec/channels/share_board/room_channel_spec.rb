@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module ShareBoard
-  RSpec.describe RoomChannel, type: :channel do
+  RSpec.describe RoomChannel, type: :channel, share_board_spec: true do
     let(:user1)     { User.create!     }
     let(:room_code) { SecureRandom.hex }
 
@@ -33,6 +33,7 @@ module ShareBoard
         "active_level"   => 1,
         "ac_events_hash" => {},
         "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
+        "debug_mode_p"   => true,
       }.merge(params)
     end
 

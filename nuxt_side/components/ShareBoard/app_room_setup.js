@@ -147,8 +147,9 @@ export const app_room_setup = {
         from_user_name:     this.user_name,         // 送信者名
         performed_at:       this.time_current_ms(), // 実行日時(ms)
         active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
-        ua_icon_key:            this.ua_icon_key,           // 端末の種類を表すアイコン文字列
+        ua_icon_key:        this.ua_icon_key,       // 端末の種類を表すアイコン文字列
         ac_events_hash:     this.ac_events_hash,    // イベント数(デバッグ用)
+        debug_mode_p:       this.debug_mode_p,
       }
       if (this.g_current_user) {
         params.from_avatar_path = this.g_current_user.avatar_path
@@ -195,7 +196,9 @@ export const app_room_setup = {
       this.current_sfen = params.sfen
       this.current_turn = params.turn
 
-      this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
+      if (this.debug_mode_p) {
+        this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
