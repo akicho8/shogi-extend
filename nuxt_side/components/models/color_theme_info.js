@@ -16,7 +16,7 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
       { key: "is_color_theme_groovy_board_texture4",  name: "木目D (薄)",         },
       { key: "is_color_theme_groovy_board_texture5",  name: "木目E (薄)",         },
       { key: "is_color_theme_groovy_board_texture6",  name: "木目F (薄)",         },
-      { key: "is_color_theme_emoji_pattern_mito",     name: "月ノ美兎",           },
+      { key: "is_color_theme_emoji_pattern_mito",     name: "○ノ○兎",           },
       { key: "is_color_theme_emoji_pattern_skelton",  name: "ドクロ",             },
       { key: "is_color_theme_emoji_pattern_heart",    name: "セクシー",           },
       { key: "is_color_theme_emoji_pattern_eva0",     name: "零号機",             },
