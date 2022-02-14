@@ -183,6 +183,20 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
+      nuxt_link_to: {path: "/vs-clock"},
+      title: "対局時計",
+      attention_label: nil,
+      og_image_key: "vs-clock",
+      description: "大会などで時計が足りないときにどうぞ",
+      features: [
+        "一般的なネット対局のプリセットを用意",
+        "将棋倶楽部24の猶予時間に対応",
+        "フィッシャールール対応",
+      ],
+    },
+    {
+      display_p: true,
+      experiment_p: false,
       nuxt_link_to: {path: "/cpu-battle"},
       title: "CPU対戦",
       og_image_key: "cpu-battle",
@@ -194,20 +208,6 @@ class AppEntryInfo
         # "コンピュータ将棋が初めて生まれたときぐらいのアリゴリズムで動いている",
         # # "CPUは矢倉・右四間飛車・嬉野流・アヒル戦法・振り飛車・英春流かまいたち戦法を指せます",
         # "将棋に特化したプログラムであって別にAIではない",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: false,
-      nuxt_link_to: {path: "/vs-clock"},
-      title: "対局時計",
-      attention_label: nil,
-      og_image_key: "vs-clock",
-      description: "大会などで時計が足りないときにどうぞ",
-      features: [
-        "一般的なネット対局のプリセットを用意",
-        "将棋倶楽部24の猶予時間に対応",
-        "フィッシャールール対応",
       ],
     },
     {
