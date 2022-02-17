@@ -21,7 +21,7 @@
                 .card-image
                   figure.image
                     //- b-image.is-marginless(:src="`/ogp/${e.og_image_key}.png`")
-                    img(:src="`/ogp/${e.og_image_key}.png`")
+                    img(:src="`/ogp/${e.og_image_key}.png`" loading="lazy")
                 .card-content
                   .content
                     .title.is-5.mt-2
