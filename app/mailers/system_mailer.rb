@@ -20,6 +20,7 @@ class SystemMailer < ApplicationMailer
   end
 
   # rails r 'p SystemMailer.notify(subject: "(subject)", body: ENV.to_h.to_t, emoji: ":OK:").deliver_later'
+  # rails r 'p SystemMailer.notify(subject: "(subject)", body: Time.current.to_s).deliver_now'
   def notify(params = {})
     subject = []
     if v = params[:emoji]
