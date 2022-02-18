@@ -24,8 +24,11 @@ export const app_chore = {
       }
 
       this.debug_alert(`画面:${focus_p}`)
-      this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
-      this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
+
+      if (this.debug_mode_p) {
+        this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
+        this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
+      }
 
       // インターバル実行の再スタートで即座にメンバー情報を反映する
       this.member_info_bc_restart()
