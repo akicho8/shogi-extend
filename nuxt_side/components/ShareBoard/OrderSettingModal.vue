@@ -3,9 +3,13 @@
   .modal-card-head
     .modal-card-title
       | 順番設定
-      span.mx-1(v-if="base.order_enable_p && base.new_ordered_members_odd_p")
-        b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
-          b-icon(icon="alert" type="is-warning" size="is-small")
+
+      template(v-if="base.order_enable_p")
+        span.ml-1.has-text-grey.has-text-weight-normal
+          | 参加者{{base.new_ordered_members.length}}人
+        span.ml-1(v-if="base.new_ordered_members_odd_p")
+          b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
+            b-icon(icon="alert" type="is-warning" size="is-small")
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
