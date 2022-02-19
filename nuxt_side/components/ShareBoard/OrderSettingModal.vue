@@ -101,7 +101,7 @@
                   b-radio-button(v-model="base.new_two_pawn_mode_key" :native-value="e.key" size="is-small" @input="new_two_pawn_mode_key_change_handle")
                     | {{e.name}}
 
-          .column
+          .column(v-if="base.debug_mode_p")
             b-field(custom-class="is-small" message="")
               template(#label)
                 a.label_with_hint.hand_every_n_hint_handle(@click.stop="hint_handle(base.EveryNInfo)")
