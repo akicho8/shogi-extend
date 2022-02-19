@@ -1,8 +1,8 @@
+const ACTION_LOG_MAX     = 200   // 履歴の最大長
+const ACTION_LOG_PUSH_TO = "top" // 追加位置
+
 import _ from "lodash"
 import dayjs from "dayjs"
-
-const ACTION_LOG_MAX = 100
-const ACTION_LOG_PUSH_TO = "top"
 
 export const app_action_log = {
   data() {
