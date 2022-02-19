@@ -4,7 +4,9 @@
   .modal-card-head
     .modal-card-title
       | 対局時計
-      span.mx-1.has-text-grey(v-if="instance") {{instance.human_status}}
+
+      span.mx-1.has-text-grey.has-text-weight-normal(v-if="instance")
+        | {{instance.human_status}}
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
