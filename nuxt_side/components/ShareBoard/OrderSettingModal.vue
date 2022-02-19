@@ -44,12 +44,15 @@
           span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.current_turn)}")
             | {{row.user_name}}
 
-        b-table-column(v-slot="{row}" field="enabled_p"   label="参加" centered)
+        b-table-column(v-if="false" v-slot="{row}" field="enabled_p" label="参加" centered)
           b-button.enable_toggle_handle(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
             template(v-if="row.enabled_p")
               | OK
             template(v-else)
               | 観戦
+
+        b-table-column(v-slot="{row}" field="enabled_p" label="参加" centered)
+          b-switch.enable_toggle_handle(:value="row.enabled_p" @input="(value) => enable_toggle_handle(row, value)")
 
         b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1" centered cell-class="px-1")
           template(v-if="row.enabled_p || true")
@@ -296,9 +299,9 @@ export default {
     },
 
     // 参加 or 不参加ボタン
-    enable_toggle_handle(row) {
+    enable_toggle_handle(row, value) {
       this.sound_play_click()
-      row.enabled_p = !row.enabled_p
+      row.enabled_p = value
       this.order_index_update()
       this.base.os_change.append("参加")
     },
@@ -366,7 +369,7 @@ export default {
       margin-top: 0.75rem
 
   .enable_toggle_handle
-    min-width: 4rem
+    margin: unset // 右にラベルがある想定で margin-right があるため取る
 
   .label_with_hint
     color: inherit
