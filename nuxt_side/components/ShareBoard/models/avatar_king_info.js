@@ -5,9 +5,8 @@ export class AvatarKingInfo extends ApplicationMemoryRecord {
   static message = null
   static hint_messages = [
     "自分のアバターを玉として表示します。",
-    "複数人いる場合はリーダーのアバターを使います。",
-    "対局中でも順番設定で無効にできます。",
-    "ログインしているとプロフィール編集から自由に変更できます。",
+    "複数人いる場合は最初に指す人のアバターを使います。",
+    "ログインしているとプロフィールで編集できます。",
   ]
 
   static get define() {
