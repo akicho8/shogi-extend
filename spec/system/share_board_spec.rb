@@ -1507,6 +1507,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "順番設定後に時計設置を促す" do
+    it "works" do
+      a_block do
+        room_setup("my_room", "alice")
+        hamburger_click
+        menu_item_click("順番設定") # 「順番設定」モーダルを開く
+        find(".main_switch").click  # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+        apply_button                # 適用クリック
+        assert_text "次は時計を設置してください"
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
