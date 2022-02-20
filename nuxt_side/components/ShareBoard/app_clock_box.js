@@ -317,6 +317,20 @@ export const app_clock_box = {
         ...params,
       })
     },
+
+    // 順番設定で更新を押したあとで呼ぶ
+    cc_next_message() {
+      if (this.clock_box) {
+        if (this.clock_box.current_status === "pause") {
+          this.toast_ok("次は時計を再開してください")
+        }
+        if (this.clock_box.current_status === "stop") {
+          this.toast_ok("次は時計を設定してください")
+        }
+      } else {
+        this.toast_ok("次は時計を設置してください")
+      }
+    },
   },
   computed: {
     CcRuleInfo() { return CcRuleInfo },

@@ -315,6 +315,7 @@ export default {
       this.sound_play_click()
       this.form_params_share("更新")
       this.base.os_change.clear()
+      this.delay_block(3.0, () => this.base.cc_next_message())
     },
 
     ////////////////////////////////////////////////////////////////////////////////
