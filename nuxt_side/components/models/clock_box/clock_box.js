@@ -1,3 +1,9 @@
+const HUMAN_STATUS_LABELS = {
+  running: "動作中",
+  pause:   "一時停止中",
+  stop:    "停止中",
+}
+
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
 
@@ -219,15 +225,19 @@ export class ClockBox {
   }
 
   get human_status() {
+    return HUMAN_STATUS_LABELS[this.current_status]
+  }
+
+  get current_status() {
     let v = null
     if (this.running_p) {
       if (this.timer) {
-        v = "動作中"
+        v = "running"
       } else {
-        v = "一時停止中"
+        v = "pause"
       }
     } else {
-      v = "停止中"
+      v = "stop"
     }
     return v
   }
