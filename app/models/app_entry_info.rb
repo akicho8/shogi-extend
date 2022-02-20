@@ -17,20 +17,6 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/xy"},
-      title: "符号の鬼",
-      attention_label: nil,
-      og_image_key: "xy",
-      description: "符号マスター養成所",
-      features: [
-        "100問正解するまでの時間を競う",
-        "棋書を読むのが楽になるかもしれない",
-        "1分切ったら人間卒業",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: false,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
       attention_label: nil,
@@ -45,6 +31,20 @@ class AppEntryInfo
         # "棋譜や視点の情報はすべてURLに含まれている",
         # "そのため分岐しても前の状態に影響を与えない",
         # "部屋を立てるとリアルタイムに盤面を共有する",
+      ],
+    },
+    {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/xy"},
+      title: "符号の鬼",
+      attention_label: nil,
+      og_image_key: "xy",
+      description: "符号マスター養成所",
+      features: [
+        "100問正解するまでの時間を競う",
+        "棋書を読むのが楽になるかもしれない",
+        "1分切ったら人間卒業",
       ],
     },
     {
