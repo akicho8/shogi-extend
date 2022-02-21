@@ -90,14 +90,7 @@ export default {
   methods: {
     main_switch_handle(v) {
       this.sound_play_click()
-      if (v) {
-        this.base.cc_create()
-        this.base.cc_params_apply() // すぐにパラメータを反映する
-        this.base.clock_box_share("設置")
-      } else {
-        this.base.cc_destroy()
-        this.base.clock_box_share("破棄")
-      }
+      this.base.cc_main_switch_set(v)
     },
     close_handle() {
       this.sound_play_click()

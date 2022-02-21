@@ -50,11 +50,23 @@ export const app_clock_box = {
       })
     },
 
+    cc_main_switch_set(v) {
+      if (v) {
+        this.cc_create()
+        this.cc_params_apply() // ONにしたらすぐにパラメータを反映する
+        this.clock_box_share("設置")
+      } else {
+        this.cc_destroy()
+        this.clock_box_share("破棄")
+      }
+    },
+
     cc_create_unless_exist() {
       if (!this.clock_box) {
         this.cc_create()
       }
     },
+
     cc_create() {
       this.cc_destroy()
       this.clock_box = new ClockBox({
