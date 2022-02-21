@@ -203,10 +203,10 @@ export const app_xmatch = {
     },
     xmatch_setup3_clock(params) {
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
-      this.cc_params = {...xmatch_rule_info.cc_params} // チェスクロック時間設定
-      this.cc_create()                                 // チェスクロック起動 (先後は current_location.code で決める)
-      this.cc_params_apply()                           // チェスクロックに時間設定を適用
-      this.clock_box.play_handle()                     // PLAY押す
+      this.cc_params = xmatch_rule_info.cc_params        // チェスクロック時間設定
+      this.cc_create()                                   // チェスクロック起動 (先後は current_location.code で決める)
+      this.cc_params_apply()                             // チェスクロックに時間設定を適用
+      this.clock_box.play_handle()                       // PLAY押す
     },
     xmatch_setup4_join(params) {
       // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる

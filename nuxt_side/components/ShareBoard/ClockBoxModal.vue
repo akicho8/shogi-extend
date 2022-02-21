@@ -16,29 +16,32 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
+    pre
+      | {{base.cc_params}}
+
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで設置しよう
     template(v-if="instance")
       template(v-if="instance.running_p")
-        .level.is-mobile
-          .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
-            div
-              p.heading 持ち時間
-              p.title.is-5 {{base.cc_params.initial_main_min}}分
-          .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
-            div
-              p.heading 秒読み
-              p.title.is-5 {{base.cc_params.initial_read_sec}}秒
-          .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
-            div
-              p.heading 猶予
-              p.title.is-5 {{base.cc_params.initial_extra_sec}}秒
-          .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
-            div
-              p.heading 1手毎加算
-              p.title.is-5 {{base.cc_params.every_plus}}秒
-        hr
+        //- .level.is-mobile
+        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
+        //-     div
+        //-       p.heading 持ち時間
+        //-       p.title.is-5 {{base.cc_params.initial_main_min}}分
+        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
+        //-     div
+        //-       p.heading 秒読み
+        //-       p.title.is-5 {{base.cc_params.initial_read_sec}}秒
+        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
+        //-     div
+        //-       p.heading 猶予
+        //-       p.title.is-5 {{base.cc_params.initial_extra_sec}}秒
+        //-   .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
+        //-     div
+        //-       p.heading 1手毎加算
+        //-       p.title.is-5 {{base.cc_params.every_plus}}秒
+        //- hr
         .level.is-mobile
           template(v-for="(e, i) in instance.single_clocks")
             .level-item.has-text-centered.has-text-weight-bold.is-flex-direction-column
@@ -51,15 +54,18 @@
                 span.mx-1.is-size-4(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
               // ↓縦並び
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
+
       .fields_container(v-if="!instance.running_p")
-        b-field(horizontal label="持ち時間(分)" custom-class="is-small")
-          b-numberinput.initial_main_min(expanded controls-position="compact" v-model="base.cc_params.initial_main_min"  :min="0" :max="60*6" :exponential="true")
-        b-field(horizontal label="秒読み" custom-class="is-small")
-          b-numberinput.initial_read_sec(expanded controls-position="compact" v-model="base.cc_params.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
-        b-field(horizontal label="猶予(秒)" custom-class="is-small")
-          b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="base.cc_params.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
-        b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
-          b-numberinput.every_plus(expanded controls-position="compact" v-model="base.cc_params.every_plus"        :min="0" :max="60*60" :exponential="true")
+        template(v-for="(e, i) in base.cc_params")
+          b-field(horizontal label="持ち時間(分)" custom-class="is-small")
+            b-numberinput.initial_main_min(expanded controls-position="compact"  v-model="e.initial_main_min"  :min="0" :max="60*6"  :exponential="true")
+          b-field(horizontal label="秒読み" custom-class="is-small")
+            b-numberinput.initial_read_sec(expanded controls-position="compact"  v-model="e.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
+          b-field(horizontal label="猶予(秒)" custom-class="is-small")
+            b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
+          b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
+            b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
+
   .modal-card-foot
     b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")

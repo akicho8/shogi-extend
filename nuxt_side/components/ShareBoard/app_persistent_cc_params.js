@@ -1,38 +1,62 @@
+// 時計のパラメータを永続化
+
+import _ from "lodash"
+
+const COMPATIBILITY_WITH_OLD_VERSION = true // 古い仕様を考慮してハッシュからハッシュの配列に変換する
+
 export const app_persistent_cc_params = {
   methods: {
+    // localStorage から現在のパラメータにコピー
     cc_params_load() {
-      this.tl_add("CC初期値", `LOAD: ${JSON.stringify(this.cc_params_values(this.persistent_cc_params))}`)
-      this.cc_params = {...this.persistent_cc_params}
+      // this.persistent_cc_params = {}
+      this.cc_params_update_to_array_of_hash()
+      this.cc_params = _.cloneDeep(this.persistent_cc_params)
+      this.cc_params_debug("LOAD", this.cc_params)
     },
 
+    // 現在のパラメータを localStorage 保存
     cc_params_save() {
-      this.tl_add("CC初期値", `SAVE: ${JSON.stringify(this.cc_params_values(this.cc_params))}`)
-      this.persistent_cc_params = {...this.cc_params}
+      this.persistent_cc_params = _.cloneDeep(this.cc_params)
+      this.cc_params_debug("SAVE", this.persistent_cc_params)
     },
 
+    // 初期値(localStorage) をリセット
     cc_params_reset() {
-      this.tl_add("CC初期値", `RESET: ${JSON.stringify(this.cc_params_values(this.default_persistent_cc_params))}`)
-      this.persistent_cc_params = {...this.default_persistent_cc_params}
+      this.persistent_cc_params = _.cloneDeep(this.default_persistent_cc_params)
+      this.cc_params_debug("RESET", this.persistent_cc_params)
+    },
+
+    // 以前は一つのハッシュだったので配列でなければハッシュの配列に変更する
+    cc_params_update_to_array_of_hash() {
+      if (COMPATIBILITY_WITH_OLD_VERSION) {
+        if (!_.isArray(this.persistent_cc_params)) {
+          this.persistent_cc_params = _.cloneDeep([this.persistent_cc_params])
+        }
+      }
     },
 
     // private
 
-    cc_params_values(params) {
-      return this.cc_params_keys.map(e => params[e])
+    cc_params_debug(label, params) {
+      this.__assert__(_.isArray(params), "_.isArray(params)")
+      const values = params.map(params => this.cc_params_keys.map(e => params[e]))
+      this.tl_add("CC初期値", `${label}: ${this.short_inspect(values)}`)
     },
   },
   computed: {
     cc_params_keys() {
-      return Object.keys(this.default_persistent_cc_params)
+      return Object.keys(this.default_persistent_cc_params[0])
     },
 
     default_persistent_cc_params() {
-      return {
-        initial_main_min:   0, // 持ち時間(分)
-        initial_read_sec:  30, // 秒読み
-        initial_extra_sec: 30, // 猶予(秒)
-        every_plus:         0, // 1手毎加算
-      }
+      return [
+        {
+          initial_main_min:   0, // 持ち時間(分)
+          initial_read_sec:  30, // 秒読み
+          initial_extra_sec: 30, // 猶予(秒)
+          every_plus:         0, // 1手毎加算
+        }
+      ]
     },
   },
 }

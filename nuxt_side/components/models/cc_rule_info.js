@@ -1,4 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
+import _ from "lodash"
 
 export class CcRuleInfo extends ApplicationMemoryRecord {
   static get define() {
@@ -14,5 +15,9 @@ export class CcRuleInfo extends ApplicationMemoryRecord {
       // { name: "24 長考",   cc_params_one: { initial_main_min: 30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0, }, },
       { name: "ABEMA ﾌｨｯｼｬｰﾙｰﾙ",  cc_params_one: { initial_main_min: 5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5, }, },
     ]
+  }
+
+  get cc_params() {
+    return _.cloneDeep([this.cc_params_one])
   }
 }

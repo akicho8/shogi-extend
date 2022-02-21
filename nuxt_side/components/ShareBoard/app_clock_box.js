@@ -3,6 +3,8 @@ import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"
 
+import _ from "lodash"
+
 import ClockBoxModal  from "./ClockBoxModal.vue"
 
 const BYOYOMI_TALK_PITCH = 1.65          // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
@@ -22,7 +24,7 @@ export const app_clock_box = {
     this.cc_setup_by_url_params()
 
     if (this.development_p && false) {
-      this.cc_params = { initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }
+      this.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }]
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
@@ -45,7 +47,7 @@ export const app_clock_box = {
         const argv = this.$route.query[`clock_box_${key}`]
         if (this.present_p(argv)) {
           const value = parseInt(argv)
-          this.$set(this.cc_params, key, value)
+          this.$set(this.cc_params[0], key, value)
         }
       })
     },
@@ -143,18 +145,25 @@ export const app_clock_box = {
     // cc_params を clock_box に適用する
     // このタイミングで cc_params を localStorage に保存する
     cc_params_apply() {
-      const params = {
-        initial_main_sec:  this.cc_params.initial_main_min * 60,
-        initial_read_sec:  this.cc_params.initial_read_sec,
-        initial_extra_sec: this.cc_params.initial_extra_sec,
-        every_plus:        this.cc_params.every_plus,
-      }
-      this.clock_box.rule_set_all(params)
+      this.__assert__(this.cc_params.length >= 1, "this.cc_params.length >= 1")
+      const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
+      this.clock_box.rule_set_all_by_ary(ary)
       this.cc_params_save()
     },
 
+    // 共有将棋盤では扱いやすいように持ち時間は分にしている
+    // 一方、時計は秒で管理しているため秒単位に変換する
+    cc_params_one_to_clock_box_params(params) {
+      return {
+        initial_main_sec:  params.initial_main_min * 60,
+        initial_read_sec:  params.initial_read_sec,
+        initial_extra_sec: params.initial_extra_sec,
+        every_plus:        params.every_plus,
+      }
+    },
+
     cc_params_set_by_cc_rule_key(cc_rule_key) {
-      this.cc_params = {...CcRuleInfo.fetch(cc_rule_key).cc_params}
+      this.cc_params = CcRuleInfo.fetch(cc_rule_key).cc_params
     },
 
     // shogi-player に渡す時間のHTMLを作る
@@ -258,7 +267,7 @@ export const app_clock_box = {
       if (params.clock_box_attributes) {
         this.cc_create_unless_exist()                           // 時計がなければ作って
         this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
-        this.cc_params = {...params.cc_params}                  // モーダルのパラメータを同じにする
+        this.cc_params = _.cloneDeep(params.cc_params)          // モーダルのパラメータを同じにする
       } else {
         this.cc_destroy()                                       // 時計を捨てたことを同期
       }
