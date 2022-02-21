@@ -122,7 +122,7 @@ export default {
       this.base.cc_pause_handle()
       this.base.clock_box_share("一時停止")
       if (this.base.ac_room && this.base.order_enable_p) {
-        this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。手番に関係なく誰でも駒を動かせるようになります", {duration: 1000 * 10}))
+        this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。誰でも駒を動かせるようになります", {duration: 1000 * 10}))
       }
     },
     stop_handle() {
