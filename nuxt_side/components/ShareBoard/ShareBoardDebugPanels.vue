@@ -123,6 +123,12 @@
         | ls_attributes
       .panel-block
         pre {{JSON.stringify(base.ls_attributes, null, 4)}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | current_xclock
+      .panel-block
+        pre {{JSON.stringify(base.current_xclock, null, 4)}}
   .column.is-4
     .panel
       .panel-heading

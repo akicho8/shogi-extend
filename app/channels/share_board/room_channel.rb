@@ -81,7 +81,7 @@ module ShareBoard
     def order_switch_share(data)
       message = "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布"
       track(data, "順番設定", message, ":順番設定:")
-      broadcast(:order_switch_share_broadcasted, data, )
+      broadcast(:order_switch_share_broadcasted, data)
     end
 
     def ordered_members_share(data)
