@@ -34,15 +34,8 @@ export const app_persistent_cc_params = {
         }
       }
     },
-
-    // private
-
-    cc_params_debug(label, params) {
-      this.__assert__(_.isArray(params), "_.isArray(params)")
-      const values = params.map(params => this.cc_params_keys.map(e => params[e]))
-      this.tl_add("CC初期値", `${label}: ${this.short_inspect(values)}`)
-    },
   },
+
   computed: {
     cc_params_keys() {
       return Object.keys(this.default_persistent_cc_params[0])

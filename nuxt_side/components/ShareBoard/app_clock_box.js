@@ -63,6 +63,18 @@ export const app_clock_box = {
       }
     },
 
+    // true:時計を個別設定する false:共通
+    cc_unique_mode_set(value) {
+      const one = this.cc_params[0]
+      let av = null
+      if (value) {
+        av = [_.cloneDeep(one), _.cloneDeep(one)] // _.cloneDeep([one, one]) では uniq.size == 1 になるので注意
+      } else {
+        av = [_.cloneDeep(one)]
+      }
+      this.cc_params = av
+    },
+
     cc_create_unless_exist() {
       if (!this.clock_box) {
         this.cc_create()
@@ -354,9 +366,23 @@ export const app_clock_box = {
       }
       this.toast_ok(message)
     },
+
+    cc_params_inspect(params) {
+      this.__assert__(_.isArray(params), "_.isArray(params)")
+      const values = params.map(params => this.cc_params_keys.map(e => params[e]))
+      return this.short_inspect(values)
+    },
+
+    cc_params_debug(label, params) {
+      this.tl_add("CC初期値", `${label}: ${this.cc_params_inspect(params)}`)
+    },
   },
+
   computed: {
     CcRuleInfo() { return CcRuleInfo },
+
+    cc_unique_p() { return this.cc_params.length == 2 },
+    cc_common_p() { return this.cc_params.length == 1 },
 
     // 共有する時計情報
     current_xclock() {

@@ -16,32 +16,33 @@
 
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body
-    pre
-      | {{base.cc_params}}
+    //- pre
+    //-   | {{base.cc_params}}
 
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで設置しよう
     template(v-if="instance")
       template(v-if="instance.running_p")
-        //- .level.is-mobile
-        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
-        //-     div
-        //-       p.heading 持ち時間
-        //-       p.title.is-5 {{base.cc_params.initial_main_min}}分
-        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
-        //-     div
-        //-       p.heading 秒読み
-        //-       p.title.is-5 {{base.cc_params.initial_read_sec}}秒
-        //-   .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
-        //-     div
-        //-       p.heading 猶予
-        //-       p.title.is-5 {{base.cc_params.initial_extra_sec}}秒
-        //-   .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
-        //-     div
-        //-       p.heading 1手毎加算
-        //-       p.title.is-5 {{base.cc_params.every_plus}}秒
-        //- hr
+        template(v-if="false")
+          .level.is-mobile
+            .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
+              div
+                p.heading 持ち時間
+                p.title.is-5 {{base.cc_params.initial_main_min}}分
+            .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
+              div
+                p.heading 秒読み
+                p.title.is-5 {{base.cc_params.initial_read_sec}}秒
+            .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
+              div
+                p.heading 猶予
+                p.title.is-5 {{base.cc_params.initial_extra_sec}}秒
+            .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
+              div
+                p.heading 1手毎加算
+                p.title.is-5 {{base.cc_params.every_plus}}秒
+          hr
         .level.is-mobile
           template(v-for="(e, i) in instance.single_clocks")
             .level-item.has-text-centered.has-text-weight-bold.is-flex-direction-column
@@ -55,22 +56,27 @@
               // ↓縦並び
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
 
-      .fields_container(v-if="!instance.running_p")
+      .forms_block(v-if="!instance.running_p")
         template(v-for="(e, i) in base.cc_params")
-          b-field(horizontal label="持ち時間(分)" custom-class="is-small")
-            b-numberinput.initial_main_min(expanded controls-position="compact"  v-model="e.initial_main_min"  :min="0" :max="60*6"  :exponential="true")
-          b-field(horizontal label="秒読み" custom-class="is-small")
-            b-numberinput.initial_read_sec(expanded controls-position="compact"  v-model="e.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
-          b-field(horizontal label="猶予(秒)" custom-class="is-small")
-            b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
-          b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
-            b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
+          .cc_form_block
+            .location_mark(v-if="base.cc_unique_p")
+              | {{Location.fetch(i).name}}
+            b-field(horizontal label="持ち時間(分)" custom-class="is-small")
+              b-numberinput.initial_main_min(expanded controls-position="compact"  v-model="e.initial_main_min"  :min="0" :max="60*6"  :exponential="true")
+            b-field(horizontal label="秒読み" custom-class="is-small")
+              b-numberinput.initial_read_sec(expanded controls-position="compact"  v-model="e.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
+            b-field(horizontal label="猶予(秒)" custom-class="is-small")
+              b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
+            b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
+              b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
+
+        b-switch.cc_unique_mode_set_handle.mt-5(:value="base.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
 
   .modal-card-foot
     b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown.mx-2(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
-        b-button(slot="trigger" icon-left="menu-up") プリセット
+        b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
       .buttons
@@ -85,8 +91,11 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
 const AUTO_CLOSE_IF_START_RESUME = false // START と RESUME 実行後にモーダルを閉じるか？
+
+import { support_child } from "./support_child.js"
+import { Location } from "shogi-player/components/models/location.js"
+import _ from "lodash"
 
 export default {
   name: "ClockBoxModal",
@@ -161,8 +170,13 @@ export default {
         this.toast_ok(`読み込みました`, {toast_only: true})
       }
     },
+    cc_unique_mode_set_handle(value) {
+      this.sound_play_click()
+      this.base.cc_unique_mode_set(value)
+    },
   },
   computed: {
+    Location()  { return Location },
     instance() { return this.base.clock_box },
     clock_box_p: {
       get()  { return !!this.instance },
@@ -177,17 +191,24 @@ export default {
 
 .STAGE-development
   .ClockBoxModal
-    .modal-card-body, .field
+    .modal-card-body, .field, .location_mark
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ClockBoxModal
-  +modal_width(32rem)
+  +modal_width(24rem)
 
   .modal-card-body
-    padding: 2rem
+    padding: 1.5rem
+
+  .modal-card-foot
+    .button
+      min-width: 6rem
+      font-weight: bold
+      &.preset_dropdown_button
+        min-width: unset        // プリセット選択は常に目立たないようにする
 
   .field:not(:last-child)
-    margin-bottom: 1.1rem
+    margin-bottom: 0.75rem
 
   .active_bar
     margin-top: 1rem
@@ -204,15 +225,19 @@ export default {
           100%
             opacity: 0.0
 
-  // b-sidebar の左の文言のY軸を中央にする
-  .fields_container
+  .forms_block
+    .cc_form_block:not(:first-child)
+      .location_mark
+        margin-top: 1.5rem
+
     +tablet
-      .field
-        align-items: center
-        .field-label.is-small
-          padding-top: 0
-          margin-right: 1rem
-          .label
-            white-space: nowrap
-            width: 6rem
+      .cc_form_block
+        .field
+          align-items: center
+          .field-label.is-small
+            padding-top: 0
+            margin-right: 1rem
+            .label
+              white-space: nowrap
+              width: 6rem
 </style>
