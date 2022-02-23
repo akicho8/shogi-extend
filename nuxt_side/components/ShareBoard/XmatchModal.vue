@@ -14,7 +14,7 @@
       .columns.is-mobile.is-multiline.is-variable.is-2-tablet.is-1-mobile
         template(v-for="e in base.XmatchRuleInfo.values")
           .column.is-one-third(v-if="e.stage_only.includes($config.STAGE)")
-            a.box(@click="rule_click_handle(e)" :class="e.key")
+            a.box(@click="rule_click_handle($event, e)" :class="[e.key, {is_entry_active: entry_count(e) >= 1}]")
               .name {{e.name}}
               .rule_desc {{e.rule_desc}}
               b-tag.mt-2(rounded type="is-primary is-light" v-if="rest_count(e) >= 1")
@@ -66,7 +66,7 @@ export default {
     },
 
     // ルール選択
-    rule_click_handle(e) {
+    rule_click_handle(event, e) {
       this.sound_play_click()
 
       // 要はハンドルネームがないのが問題なのでログインしているかどうかではなく
@@ -80,7 +80,7 @@ export default {
         if (this.base.xmatch_auth_info.key === "handle_name_required") {
           if (!HandleNameValidator.valid(this.base.user_name)) {
             this.toast_warn("ログインするかハンドルネームを入力してください")
-            this.base.handle_name_modal_core({success_callback: () => this.rule_click_core(e) })
+            this.base.handle_name_modal_core({success_callback: () => this.rule_click_core(e) }) // 入力後にクリックしている
             return
           }
         }

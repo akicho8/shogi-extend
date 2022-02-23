@@ -1045,23 +1045,22 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
     it "ログイン必須モード" do
       a_block do
-        logout                                        # ログアウト状態にする
-        visit_app(xmatch_auth_key: "login_required") # 来る
-        xmatch_select_1vs1                            # 1vs1のルールを選択
-        assert_selector(".NuxtLoginContainer")         # 「ログインしてください」が発動
+        logout                                                 # ログアウト状態にする
+        visit_app(xmatch_auth_key: "login_required")           # 来る
+        xmatch_select_1vs1                                     # 1vs1のルールを選択
+        assert_selector(".NuxtLoginContainer")                 # 「ログインしてください」が発動
       end
     end
 
     it "ハンドルネーム必須モード" do
       a_block do
         logout                                                 # ログアウト状態にする
-        visit_app(xmatch_auth_key: "handle_name_required")    # 来る
+        visit_app(xmatch_auth_key: "handle_name_required")     # 来る
         xmatch_select_1vs1                                     # 1vs1のルールを選択
         assert_selector(".HandleNameModal")                    # ハンドルネームを入力するように言われる
         find(".HandleNameModal input").set("alice")            # 入力して
-        find(".save_handle").click                             # 保存
-        find(".rule_1vs1_05_00_00_5_pRvsB").click              # あらためて飛vs角を選択
-        assert_text("aliceさんが飛1vs1角にエントリーしました") # エントリーできた
+        find(".save_handle").click                             # 保存 (success_callback で 1vs1 を選択している)
+        assert_selector(".is_entry_active")                    # エントリーできた
       end
     end
   end
@@ -1580,7 +1579,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     result = clock_box_values   # 必ず変数に入れないと power_assert が死ぬ
     assert { result == expected }
   end
-  
+
   def assert_clock_active_black
     assert_selector(".is_black .is_sclock_active")
     assert_selector(".is_white .is_sclock_inactive")
@@ -1768,7 +1767,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
     hamburger_click
-    menu_item_click("自動マッチング")          # モーダルを開く
+    menu_item_click("自動マッチング")           # モーダルを開く
     find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
   end
 
