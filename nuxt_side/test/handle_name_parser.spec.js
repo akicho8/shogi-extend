@@ -22,7 +22,8 @@ describe('HandleNameParser', () => {
     expect(HandleNameParser.call_name("aliceちゃん")).toEqual("aliceちゃん") // 最後が "ん" の影響でスルーされているだけ
   })
 
-  test('chan', () => {
+  test('chan/kun', () => {
     expect(HandleNameParser.call_name("alicechan")).toEqual("alicechan")
+    expect(HandleNameParser.call_name("alicekun")).toEqual("alicekun")
   })
 })
