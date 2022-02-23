@@ -157,6 +157,7 @@ export const app_clock_box = {
     // cc_params を clock_box に適用する
     // このタイミングで cc_params を localStorage に保存する
     cc_params_apply() {
+      this.__assert__(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
       this.__assert__(this.cc_params.length >= 1, "this.cc_params.length >= 1")
       const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
       this.clock_box.rule_set_all_by_ary(ary)
