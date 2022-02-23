@@ -1542,6 +1542,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "対局時計にプリセット適用" do
+    it "works" do
+      visit_app
+      clock_open
+      Capybara.within(".preset_dropdown") do
+        find(".preset_dropdown_button").click       # プリセットを開く
+        find(".dropdown-item:nth-of-type(1)").click # 一番上の「ウォーズ10分」を適用
+      end
+      clock_box_values_eq [10, 0, 0, 0]             # 設定されている
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end

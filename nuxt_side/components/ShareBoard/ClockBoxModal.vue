@@ -75,7 +75,7 @@
   .modal-card-foot
     b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown.mx-2(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
+      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
@@ -163,7 +163,7 @@ export default {
       this.toast_ok("反映しました")
     },
     cc_params_set_handle(e) {
-      this.base.cc_params = {...e.cc_params}
+      this.base.cc_params = e.cc_params   // cloneDeep したものを渡している
       if (false) {
         this.toast_ok(`${e.name}のプリセットを読み込みました`)
       } else {
