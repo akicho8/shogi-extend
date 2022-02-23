@@ -8,7 +8,12 @@ export const app_persistent_cc_params = {
   methods: {
     // localStorage から現在のパラメータにコピー
     cc_params_load() {
-      // this.persistent_cc_params = {}
+      // this.persistent_cc_params = {
+      //   "initial_main_min": 7,
+      //   "initial_read_sec": 0,
+      //   "initial_extra_sec": 0,
+      //   "every_plus": 0,
+      // }
       this.cc_params_update_to_array_of_hash()
       this.cc_params = _.cloneDeep(this.persistent_cc_params)
       this.cc_params_debug("LOAD", this.cc_params)
