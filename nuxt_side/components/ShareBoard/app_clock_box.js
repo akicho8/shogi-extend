@@ -273,9 +273,10 @@ export const app_clock_box = {
         }
       }
     },
+    // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
     receive_xclock(params) {
       this.__assert__(this.present_p(params), "this.present_p(params)")
-      this.tl_add("時計", `${this.user_name} は ${params.from_user_name} の時計情報を受信して反映した`, params)
+      this.tl_add("時計", `${this.user_name} は時計情報を受信して反映した`, params)
       if (params.clock_box_attributes) {
         this.cc_create_unless_exist()                           // 時計がなければ作って
         this.clock_box.attributes = params.clock_box_attributes // 内部状態を同じにする
