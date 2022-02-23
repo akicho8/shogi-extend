@@ -57,7 +57,8 @@ export const app_room_board_setup = {
       this.__assert__(params.to_user_name != null, "params.to_user_name != null")
 
       this.clog(`${params.to_user_name} に送る`)
-      this.ac_room_perform("setup_info_send", {
+
+      params = {
         ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
         xtitle:  this.current_xtitle,    // タイトル
@@ -65,7 +66,8 @@ export const app_room_board_setup = {
         xorder:  this.current_xorder,    // 順番設定
         xclock:  this.current_xclock,    // 対局時計
         ////////////////////////////////////////////////////////////////////////////////
-      }) // --> app/channels/share_board/room_channel.rb
+      }
+      this.ac_room_perform("setup_info_send", params) // --> app/channels/share_board/room_channel.rb
     },
     setup_info_send_broadcasted(params) {
       if (this.received_from_self(params)) {

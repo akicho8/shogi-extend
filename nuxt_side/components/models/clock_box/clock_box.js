@@ -180,6 +180,10 @@ export class ClockBox {
     this.single_clocks.forEach(e => e.rule_set_one(o))
   }
 
+  rule_set_all_by_ary(ary) {
+    this.single_clocks.forEach((e, i) => e.rule_set_one(ary[i]))
+  }
+
   get current() {
     return this.single_clocks[this.current_location.code]
   }

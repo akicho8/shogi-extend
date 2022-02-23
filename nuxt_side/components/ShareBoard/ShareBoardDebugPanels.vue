@@ -123,6 +123,12 @@
         | ls_attributes
       .panel-block
         pre {{JSON.stringify(base.ls_attributes, null, 4)}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | current_xclock
+      .panel-block
+        pre {{JSON.stringify(base.current_xclock, null, 4)}}
   .column.is-4
     .panel
       .panel-heading
@@ -156,6 +162,7 @@
       .panel-block clock_box:{{!!base.clock_box}}
       .panel-block current_title:{{base.current_title}}
       .panel-block g_howl_play_mode_key:{{g_howl_play_mode_key}}
+      .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
 
   .column.is-6.is-clipped
     .panel

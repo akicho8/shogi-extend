@@ -63,8 +63,8 @@ module ShareBoard
 
     def clock_box_share(data)
       if data["behaviour"].present?
-        values = data["cc_params"].fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
-        message = "#{data["behaviour"]} (#{values.join(" ")}) #{data["room_code_except_url"]}"
+        values = data["cc_params"].collect { |e| e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus") }
+        message = "#{data["behaviour"]} #{values}"
         track(data, "対局時計", message, ":対局時計:")
       end
       broadcast(:clock_box_share_broadcasted, data)
@@ -81,7 +81,7 @@ module ShareBoard
     def order_switch_share(data)
       message = "順番#{data["order_enable_p"] ? "ON" : "OFF"}を配布"
       track(data, "順番設定", message, ":順番設定:")
-      broadcast(:order_switch_share_broadcasted, data, )
+      broadcast(:order_switch_share_broadcasted, data)
     end
 
     def ordered_members_share(data)

@@ -736,12 +736,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       visit "/share-board"
 
       clock_open
-      clock_box_set(*@CLOCK_VALUES)                 # aliceが時計を設定する
-      find(".play_button").click                    # 開始 (このタイミングで初期値として保存する)
+      clock_box_set(*@CLOCK_VALUES)     # aliceが時計を設定する
+      find(".play_button").click        # 開始 (このタイミングで初期値として保存する)
 
-      visit(current_path)                           # リロード
+      visit(current_path)               # リロード
       clock_open
-      assert { clock_box_values === @CLOCK_VALUES } # 時計の初期値が復帰している
+      clock_box_values_eq @CLOCK_VALUES # 時計の初期値が復帰している
     end
   end
 
@@ -1520,6 +1520,29 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "対局時計個別設定" do
+    it "片方を変更したとき片方は連動しない" do
+      a_block do
+        room_setup("my_room", "alice")
+        clock_open
+        clock_box_set(1, 2, 3, 4)                     # aliceが時計を設定する
+        find(".cc_unique_mode_set_handle").click      # 個別設定を押す
+        cc_in(2) do
+          clock_box_values_eq [1, 2, 3, 4]            # ▲側が△にコピーされている
+          clock_box_set(5, 6, 7, 8)                   # △側を更新する
+        end
+        cc_in(1) do
+          clock_box_values_eq [1, 2, 3, 4]            # ▲側は変更されていない (内容は同じだが別のメモリを指している)
+        end
+        # find(".play_button").click                    # 開始
+      end
+      b_block do
+        room_setup("my_room", "bob")
+        assert_text "cc_params:[[1,2,3,4],[5,6,7,8]]" # 個別設定がbobにも伝わっている
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1553,6 +1576,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     ].collect(&:to_i)
   end
 
+  def clock_box_values_eq(expected)
+    result = clock_box_values   # 必ず変数に入れないと power_assert が死ぬ
+    assert { result == expected }
+  end
+  
   def assert_clock_active_black
     assert_selector(".is_black .is_sclock_active")
     assert_selector(".is_white .is_sclock_inactive")
@@ -1733,7 +1761,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def assert_order_setting_members(names)
-    assert { all(".OrderSettingModal .user_name").collect(&:text) === names }
+    result = all(".OrderSettingModal .user_name").collect(&:text)
+    assert { result == names }
   end
 
   # なんでもいいから1vs1のルールを選択する
@@ -1781,5 +1810,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def assert_var(key, value)
     assert_text "#{key}:#{value}"
+  end
+
+  def cc_at(n)
+    ".cc_form_block:nth-child(#{n})"
+  end
+
+  def cc_form_block_eq(n, values)
+    result = Capybara.within(cc_at(n)) { clock_box_values }
+    assert { result == values }
+  end
+
+  def cc_in(n, &block)
+    Capybara.within(cc_at(n), &block)
   end
 end

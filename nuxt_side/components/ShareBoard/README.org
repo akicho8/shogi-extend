@@ -146,3 +146,7 @@
 *** よそ見中
 
    http://localhost:4000/share-board?room_code=my_room&member_is_window_blur=true
+
+** 対局時計をONにして起動する(あと持ち時間0)
+
+   http://localhost:4000/share-board?autoexec=cc_create,cc_modal_handle&clock_box_initial_main_min=0
