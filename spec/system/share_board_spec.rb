@@ -47,7 +47,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       begin
         visit "/share-board"                                      # 再来
         hamburger_click
-        menu_item_click("部屋に入る")                    # 「部屋に入る」を自分でクリックする
+        room_setup_modal_handle                    # 「部屋に入る」を自分でクリックする
         first(".new_room_code input").set("my_room")              # 合言葉を入力する
         value = first(".new_user_name input").value
         assert { value == "alice" }                               # 以前入力したニックネームが復元されている
@@ -193,11 +193,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       b_block do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
         hamburger_click
-        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く (まだ無効の状態)
+        os_modal_handle                        # 「順番設定」モーダルを開く (まだ無効の状態)
       end
       a_block do
         hamburger_click
-        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+        os_modal_handle                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         action_assert(0, "alice", "順番 ON")               # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
         modal_close_handle          # 閉じる (ヘッダーに置いている)
@@ -245,7 +245,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         hamburger_click
-        menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+        os_modal_handle                        # 「順番設定」モーダルを開く
         find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
         apply_button                       # 適用クリック
@@ -859,7 +859,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice")
         hamburger_click
-        menu_item_click("順番設定")               # 「順番設定」モーダルを開く
+        os_modal_handle               # 「順番設定」モーダルを開く
         find(".main_switch").click                # 右上の有効スイッチをクリック
         find(".shuffle_handle").click             # シャッフルする
         modal_close_handle                         # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
@@ -874,7 +874,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
 
         hamburger_click
-        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+        os_modal_handle                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
 
@@ -903,7 +903,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
           })
 
         hamburger_click
-        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+        os_modal_handle                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
 
@@ -927,7 +927,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
 
         hamburger_click
-        menu_item_click("順番設定")                       # 「順番設定」モーダルを開く(すでに有効になっている)
+        os_modal_handle                       # 「順番設定」モーダルを開く(すでに有効になっている)
 
         assert_order_setting_members ["1", "2", "3", "4"]
 
@@ -1399,7 +1399,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       visit_app(room_code: :my_room, force_user_name: "alice")
       hamburger_click
-      menu_item_click("順番設定")               # 「順番設定」モーダルを開く
+      os_modal_handle               # 「順番設定」モーダルを開く
       find(".main_switch").click                # 右上の有効スイッチをクリック
 
       find(".avatar_king_hint_handle").click    # 「アバター」のラベルをクリック
@@ -1457,7 +1457,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       b_block do
         hamburger_click
-        menu_item_click("順番設定") # 「順番設定」モーダルを開く(すでに有効になっている)
+        os_modal_handle # 「順番設定」モーダルを開く(すでに有効になっている)
         find(".swap_handle").click  # 先後入替
         apply_button                # 適用
         modal_close_handle          # 閉じる
@@ -1511,7 +1511,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         room_setup("my_room", "alice")
         hamburger_click
-        menu_item_click("順番設定") # 「順番設定」モーダルを開く
+        os_modal_handle # 「順番設定」モーダルを開く
         find(".main_switch").click  # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
         apply_button                # 適用クリック
         assert_text "次は時計を設置してください"
@@ -1561,7 +1561,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   def room_setup(room_code, user_name)
     visit_app
     hamburger_click
-    menu_item_click("部屋に入る")        # 「部屋に入る」を自分でクリックする
+    room_setup_modal_handle        # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".new_room_code input").set(room_code) # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
@@ -1709,7 +1709,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def clock_open
     hamburger_click
-    menu_item_click("対局時計") # 「対局時計」モーダルを開く
+    cc_modal_handle             # 「対局時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
     find(".main_switch").click  # 設置する
     assert_clock_on             # 時計が設置された
@@ -1718,7 +1718,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # 退室
   def room_leave
     hamburger_click
-    menu_item_click("部屋に入る")  # 「部屋に入る」を自分でクリックする
+    room_setup_modal_handle  # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
   end
@@ -1737,7 +1737,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def order_modal_main_switch_click(stat)
     hamburger_click
-    menu_item_click("順番設定")                        # 「順番設定」モーダルを開く
+    os_modal_handle                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
     modal_close_handle                                  # 閉じる (ヘッダーに置いている)
@@ -1834,5 +1834,17 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def cc_in(n, &block)
     Capybara.within(cc_at(n), &block)
+  end
+
+  def room_setup_modal_handle
+    find(".room_setup_modal_handle").click
+  end
+
+  def os_modal_handle
+    find(".os_modal_handle").click
+  end
+
+  def cc_modal_handle
+    find(".cc_modal_handle").click
   end
 end
