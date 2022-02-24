@@ -18,17 +18,17 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset.important(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_handle")
             template(#label)
               | 部屋に入る
-              b-icon.next_blink(icon="hand-pointing-left" v-if="mi1_hand_p")
+              b-icon.hand_blink(icon="hand-pointing-left" v-if="mi1_hand_p")
 
           b-menu-item.is_active_unset.important(:class="base.bold_if(mi2_bold_p)" icon="numeric-2-circle-outline" @click="base.os_modal_handle")
             template(#label)
               | 順番設定
-              b-icon.next_blink(icon="hand-pointing-left" v-if="mi2_hand_p")
+              b-icon.hand_blink(icon="hand-pointing-left" v-if="mi2_hand_p")
 
           b-menu-item.is_active_unset.important(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_handle")
             template(#label)
               | 対局時計
-              b-icon.next_blink(icon="hand-pointing-left" v-if="mi3_hand_p")
+              b-icon.hand_blink(icon="hand-pointing-left" v-if="mi3_hand_p")
 
         b-menu-list(label="局面操作")
           b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")
@@ -118,13 +118,13 @@ export default {
   .important
     font-size: $size-5
 
-  .next_blink
+  .hand_blink
     margin-left: 0.5rem
     display: inline
     font-weight: bold
     color: $primary
-    animation: next_blink 0.5s ease-in-out 0s infinite alternate
-    @keyframes next_blink
+    animation: hand_blink 0.5s ease-in-out 0s infinite alternate
+    @keyframes hand_blink
       0%
         opacity: 0.0
       100%
