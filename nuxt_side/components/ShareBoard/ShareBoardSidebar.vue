@@ -71,6 +71,10 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
       .box.mt-5.is-hidden-mobile
         .title.is-5 スタイル設定
         SimpleSlider(:base="base" label="盤の大きさ" var_name="board_width" :min="0" :max="100" :step="1.0")
+
+      .box.mt-5.is-hidden-desktop
+        b-field(label="音が出なくなったとき用")
+          b-button(@click="base.sound_resume_all_with_click") 音復活
 </template>
 
 <script>
