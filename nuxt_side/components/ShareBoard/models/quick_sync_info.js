@@ -6,8 +6,8 @@ export class QuickSyncInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_quick_sync_on",  name: "自動", type: "is-primary", message: "とにかく自動的に同期する(推奨)",     },
-      { key: "is_quick_sync_off", name: "手動", type: "is-danger",  message: "なるべく手動で同期する(以前の難しい方法)", },
+      { key: "is_quick_sync_on",  name: "自動", type: "is-primary", sidebar_function_show: false, message: "とにかく自動的に同期する(推奨)",     },
+      { key: "is_quick_sync_off", name: "手動", type: "is-danger",  sidebar_function_show: true,  message: "なるべく手動で同期する(以前の難しい方法)", },
     ]
   }
 }

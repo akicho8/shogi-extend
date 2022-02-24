@@ -8,15 +8,32 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
         NavbarItemProfileLink(component="a" :click_fn="base.profile_click_handle")
     .mt-4
       b-menu
-        b-menu-list(label="対局")
-          b-menu-item.is_active_unset.important(:class="base.bold_if(!base.ac_room)"                          icon="home-account"        label="部屋に入る" @click="base.room_setup_modal_handle")
-          b-menu-item.is_active_unset.important(:class="base.bold_if(base.ac_room && !base.order_enable_p)"   icon="sort-bool-ascending" label="順番設定"   @click="base.os_modal_handle")
-          b-menu-item.is_active_unset.important(:class="base.bold_if(base.order_enable_p && !base.clock_box)" icon="alarm"               label="対局時計"   @click="base.cc_modal_handle")
+        // 元のアイコン
+        // 1. home-account
+        // 2. sort-bool-ascending
+        // 3. alarm
+
+        b-menu-list(label="対局手順")
+
+          b-menu-item.is_active_unset.important(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_handle")
+            template(#label)
+              | 部屋に入る
+              b-icon.next_blink(icon="hand-pointing-left" v-if="mi1_hand_p")
+
+          b-menu-item.is_active_unset.important(:class="base.bold_if(mi2_bold_p)" icon="numeric-2-circle-outline" @click="base.os_modal_handle")
+            template(#label)
+              | 順番設定
+              b-icon.next_blink(icon="hand-pointing-left" v-if="mi2_hand_p")
+
+          b-menu-item.is_active_unset.important(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_handle")
+            template(#label)
+              | 対局時計
+              b-icon.next_blink(icon="hand-pointing-left" v-if="mi3_hand_p")
 
         b-menu-list(label="局面操作")
           b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す" @click="base.board_init_modal_handle")
-          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"     @click="base.force_sync_modal_handle")
+          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"     @click="base.force_sync_modal_handle" v-if="base.quick_sync_info.sidebar_function_show || base.debug_mode_p")
 
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="base.board_preset_select_modal_handle")
@@ -62,6 +79,14 @@ import { support_child } from "./support_child.js"
 export default {
   name: "ShareBoardSidebar",
   mixins: [support_child],
+  computed: {
+    mi1_bold_p() { return this.base.ac_room                                },
+    mi1_hand_p() { return !this.base.ac_room                               },
+    mi2_bold_p() { return this.base.ac_room && this.base.order_enable_p    },
+    mi2_hand_p() { return this.base.ac_room && !this.base.order_enable_p   },
+    mi3_bold_p() { return this.base.order_enable_p && this.base.clock_box  },
+    mi3_hand_p() { return this.base.order_enable_p && !this.base.clock_box },
+  },
 }
 </script>
 
@@ -92,4 +117,16 @@ export default {
 
   .important
     font-size: $size-5
+
+  .next_blink
+    margin-left: 0.5rem
+    display: inline
+    font-weight: bold
+    color: $primary
+    animation: next_blink 0.5s ease-in-out 0s infinite alternate
+    @keyframes next_blink
+      0%
+        opacity: 0.0
+      100%
+        opacity: 1.0
 </style>
