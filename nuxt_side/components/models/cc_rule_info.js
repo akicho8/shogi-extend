@@ -13,7 +13,7 @@ export class CcRuleInfo extends ApplicationMemoryRecord {
       { name: "24 早指2",  cc_params_one: { initial_main_min: 0,  initial_read_sec:30, initial_extra_sec: 60, every_plus:0, }, },
       // { name: "24 15分",   cc_params_one: { initial_main_min: 15, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0, }, },
       // { name: "24 長考",   cc_params_one: { initial_main_min: 30, initial_read_sec:60, initial_extra_sec: 0,  every_plus:0, }, },
-      { name: "ABEMA ﾌｨｯｼｬｰﾙｰﾙ",  cc_params_one: { initial_main_min: 5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5, }, },
+      { name: "フィッシャー",  cc_params_one: { initial_main_min: 5,  initial_read_sec:0,  initial_extra_sec: 0,  every_plus:5, }, },
     ]
   }
 
