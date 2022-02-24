@@ -68,7 +68,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
 
-      .style_container.box.mt-5
+      .box.mt-5.is-hidden-mobile
         .title.is-5 スタイル設定
         SimpleSlider(:base="base" label="盤の大きさ" var_name="board_width" :min="0" :max="100" :step="1.0")
 </template>
@@ -99,10 +99,6 @@ export default {
 
   .menu-label
     margin-top: 2em
-
-  .style_container
-    +mobile
-      display: none
 
   .user_account
     img
