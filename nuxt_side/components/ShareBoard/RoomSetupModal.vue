@@ -38,7 +38,7 @@
             b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(base.ac_room)")
       template(v-else)
         b-field(:label="label_wrap('合言葉')" label-position="on-border" key="room_code_field_locked_true")
-          b-input.new_room_code(v-model.trim="new_room_code" :disabled="present_p(base.ac_room)")
+          b-input.new_room_code(v-model.trim="new_room_code" :disabled="present_p(base.ac_room)" ref="new_room_code")
 
       //- message="順番設定後に変更すると再度順番設定が必要になります"
       b-field(:label="label_wrap('ハンドルネーム')" label-position="on-border")
@@ -72,6 +72,9 @@ export default {
   created() {
     this.room_code_field_lock()
   },
+  mounted() {
+    this.desktop_focus_to(this.$refs.new_room_code)
+  },
   methods: {
     leave_handle() {
       this.sound_play_click()
@@ -96,7 +99,7 @@ export default {
       this.new_room_code = _.trim(this.new_room_code)
       this.new_user_name = _.trim(this.new_user_name)
 
-      if (!this.new_room_code) {
+      if (this.blank_p(this.new_room_code)) {
         this.toast_ng("合言葉を入力してください")
         return
       }
