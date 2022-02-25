@@ -74,7 +74,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled")
 
         b-menu-list(label="一歩進んだ使い方")
-          b-menu-item.is_active_unset(
+          b-menu-item.is_active_unset.swars_default_user_key_set_handle(
             :class="{'has-text-weight-bold': base.mounted_then_swars_search_default_key_present_p}"
             @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
