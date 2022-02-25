@@ -75,12 +75,14 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
         b-menu-list(label="一歩進んだ使い方")
           b-menu-item.is_active_unset(
-            label="ウォーズIDを記憶する"
-            :class="{'has-text-weight-bold': base.swars_search_default_key_blank_if_mounted}"
+            :class="{'has-text-weight-bold': base.mounted_then_swars_search_default_key_present_p}"
             @click.native="base.xi.current_swars_user_key && sound_play_click()"
             tag="nuxt-link"
             :to="{name: 'swars-users-key-default-key', params: {key: base.xi.current_swars_user_key}}"
             :disabled="menu_item_disabled")
+            template(#label)
+              | ウォーズIDを記憶する
+              b-icon.is_hand_blink(size="is-small" icon="hand-pointing-left" v-if="!menu_item_disabled && !base.mounted_then_swars_search_default_key_present_p")
 
           b-menu-item.is_active_unset.home_bookmark_handle(
             label="ホーム画面に追加"
