@@ -9,9 +9,11 @@ client-only
     MainSection
       .container
         b-notification(:closable="false")
-          | ウォーズIDを記憶すると検索覧に毎回入力しなくてよくなります。
-          | ぴよ将棋から来ている方におすすめです。
-          | あとから解除もできます。
+          .content
+            ul.mt-0
+              li 記憶すると毎回入力しなくてよくなる
+              li ぴよ将棋から来ている方におすすめ
+              li あとから解除できる
 
         template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
@@ -33,6 +35,8 @@ client-only
 </template>
 
 <script>
+const AFTER_REDIRECT = true
+
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 
 export default {
@@ -52,7 +56,9 @@ export default {
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.remote_notify({emoji: ":得:", subject: `ウォーズID記憶設定 ${this.new_key}`, body: "覚えました"})
       this.toast_ok("覚えました")
-      // this.$router.push({name: "swars-search"})
+      if (AFTER_REDIRECT) {
+        this.$router.push({name: "swars-search"})
+      }
     },
     unset_handle() {
       this.sound_play_click()
@@ -60,7 +66,9 @@ export default {
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.remote_notify({subject: `ウォーズID記憶消去 ${this.new_key}`, body: "忘れました"})
       this.toast_ok("忘れました")
-      // this.$router.push({name: "swars-search"})
+      if (AFTER_REDIRECT) {
+        this.$router.push({name: "swars-search"})
+      }
     },
     back_handle() {
       this.sound_play_click()
@@ -86,7 +94,7 @@ export default {
 .SwarsSearchDefaultKey
   .MainSection.section
     .container
-      max-width: 40rem
+      max-width: 28rem
     .notification
       padding-right: 1.25rem // notification はクローズボタンを考慮して右のpaddingが広くなっているため左と同じにする
 </style>
