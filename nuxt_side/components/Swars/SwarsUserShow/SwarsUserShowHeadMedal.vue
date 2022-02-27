@@ -24,14 +24,21 @@ export default {
   justify-content: center
   align-items: center
 
+  overflow-x: hidden
+  overscroll-behavior-x: none
+
   .one_element
+    flex-shrink: 0              // 縮小して消えるのを防ぐ
+
     margin: auto 0.1rem
     .raw
-      position: relative
-      bottom: -0.2rem     // 絵文字は大きいので若干下げる
+      // position: relative
+      // bottom: -0.2rem     // 絵文字は大きいので若干下げる
       .xemoji
-        height: 1.0em
-    .icon
-      position: relative
-      bottom: -0.1rem
+        // デフォルト 1em
+        // height: 1em
+        // width: 1em
+    // .icon
+    //   position: relative
+    //   bottom: -0.1rem
 </style>
