@@ -11,9 +11,9 @@ export class CcRuleInfo extends ApplicationMemoryRecord {
 
   static default_cc_params = [
     {
-      initial_main_min:   0,
-      initial_read_sec:  30,
-      initial_extra_sec: 30,
+      initial_main_min:  15,
+      initial_read_sec:  60,
+      initial_extra_sec:  0,
       every_plus:         0,
     }
   ]
