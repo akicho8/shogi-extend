@@ -1,8 +1,8 @@
 // 時計のパラメータを永続化
 
-import _ from "lodash"
-
 const COMPATIBILITY_WITH_OLD_VERSION = true // 古い仕様を考慮してハッシュからハッシュの配列に変換する
+
+import _ from "lodash"
 
 export const app_persistent_cc_params = {
   methods: {
@@ -27,7 +27,7 @@ export const app_persistent_cc_params = {
 
     // 初期値(localStorage) をリセット
     cc_params_reset() {
-      this.persistent_cc_params = _.cloneDeep(this.default_persistent_cc_params)
+      this.persistent_cc_params = _.cloneDeep(this.CcRuleInfo.default_cc_params)
       this.cc_params_debug("RESET", this.persistent_cc_params)
     },
 
@@ -38,23 +38,6 @@ export const app_persistent_cc_params = {
           this.persistent_cc_params = _.cloneDeep([this.persistent_cc_params])
         }
       }
-    },
-  },
-
-  computed: {
-    cc_params_keys() {
-      return Object.keys(this.default_persistent_cc_params[0])
-    },
-
-    default_persistent_cc_params() {
-      return [
-        {
-          initial_main_min:   0, // 持ち時間(分)
-          initial_read_sec:  30, // 秒読み
-          initial_extra_sec: 30, // 猶予(秒)
-          every_plus:         0, // 1手毎加算
-        }
-      ]
     },
   },
 }

@@ -1,3 +1,5 @@
+const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
+
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
@@ -6,8 +8,6 @@ import { Location       } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 import ClockBoxModal  from "./ClockBoxModal.vue"
-
-const BYOYOMI_TALK_PITCH = 1.65          // 秒読みは次の発声を予測できるのもあって普通よりも速く読ませる
 
 export const app_clock_box = {
   data() {
@@ -371,7 +371,7 @@ export const app_clock_box = {
 
     cc_params_inspect(params) {
       this.__assert__(_.isArray(params), "_.isArray(params)")
-      const values = params.map(params => this.cc_params_keys.map(e => params[e]))
+      const values = params.map(params => this.CcRuleInfo.cc_params_keys.map(e => params[e]))
       return this.short_inspect(values)
     },
 
@@ -381,7 +381,7 @@ export const app_clock_box = {
   },
 
   computed: {
-    CcRuleInfo() { return CcRuleInfo },
+    CcRuleInfo()     { return CcRuleInfo                },
 
     cc_unique_p() { return this.cc_params.length == 2 },
     cc_common_p() { return this.cc_params.length == 1 },
