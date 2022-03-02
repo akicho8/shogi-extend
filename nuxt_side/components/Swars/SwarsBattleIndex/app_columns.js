@@ -5,10 +5,12 @@ export const app_columns = {
   methods: {
     // 指定のカラムをトグル
     column_toggle_handle(info) {
-      this.sound_play_click()
       this.$set(this.visible_hash, info.key, !this.visible_hash[info.key])
       if (this.visible_hash[info.key]) {
+        this.sound_play_toggle(true)
         this.talk(info.name)
+      } else {
+        this.sound_play_toggle(false)
       }
     },
 

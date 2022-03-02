@@ -25,6 +25,16 @@ export const vue_sound = {
       this.sound_play("click", options)
     },
 
+    sound_play_toggle(enabled, options = {}) {
+      let key = null
+      if (enabled) {
+        key = "toggle_on"
+      } else {
+        key = "toggle_off"
+      }
+      this.sound_play(key, options)
+    },
+
     sound_stop_all() {
       if (process.client) {
         Howler.stop()
