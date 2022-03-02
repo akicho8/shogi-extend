@@ -39,6 +39,7 @@
     li: ExternalLink(beep href="https://assetstore.unity.com/packages/audio/sound-fx/universal-sound-fx-17256") UNIVERSAL SOUND FX
     li: ExternalLink(beep href="https://soundeffect-lab.info/") 効果音ラボ
     li: ExternalLink(beep href="https://otologic.jp") OtoLogic
+    li: ExternalLink(beep href="https://snd.dev/") SND: Crafted UI sound assets for UX developers
 
   .section_title 実戦詰将棋『一期一会』問題集
   ul

@@ -8,7 +8,12 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "start",                                source: require("@/static/sound_effect/oto_logic/Quiz-Question03-1.mp3"),                                        volume: 0.15, },
       { key: "lose",                                 source: require("@/static/sound_effect/oto_logic/Onmtp-Ding05-1.mp3"),                                           volume: 0.30, },
       { key: "win",                                  source: require("@/static/sound_effect/soundeffect_lab/kansei.mp3"),                                             volume: 0.20, },
-      { key: "click",                                source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),       volume: 0.40, },
+
+      // { key: "click",                                source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Double_Quick_Smooth_stereo.wav"),       volume: 0.40, },
+      { key: "click",                                source: require("@/assets/SND01_sine/tap_03.wav"),       volume: 0.40, },
+      { key: "toggle_on",                            source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.40, },
+      { key: "toggle_off",                           source: require("@/assets/SND01_sine/toggle_off.wav"),       volume: 0.40, },
+
       // { key: "click2",                               source: require("@/assets/UniversalSoundFX/IMPACTS/Wood/IMPACT_Wood_Plank_On_Wood_Pile_06_Short_mono.wav"),      volume: 0.40, },
       // { key: "click3",                               source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Single_Saw_stereo.wav"),                volume: 0.40, },
       // { key: "click4",                               source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Sci-Fi/UI_SCI-FI_Compute_02_Wet_stereo.wav"),         volume: 0.40, },
