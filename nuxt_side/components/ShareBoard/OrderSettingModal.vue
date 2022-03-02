@@ -149,10 +149,11 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     main_switch_handle(v) {
-      this.sound_play_click()
+      this.sound_play_toggle(v)
       this.base.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 一番最初に有効にしたときは1度更新を押した状態にする
+      // 余計な世話になっているかもしれないので状況を見て無効にするかもしれない
       if (v) {
         if (this.base.ordered_members == null) {
           this.form_params_share("")
@@ -304,7 +305,7 @@ export default {
 
     // 参加 or 不参加ボタン
     enable_toggle_handle(row, value) {
-      this.sound_play_click()
+      this.sound_play_toggle(value)
       row.enabled_p = value
       this.order_index_update()
       this.base.os_change.append("参加")

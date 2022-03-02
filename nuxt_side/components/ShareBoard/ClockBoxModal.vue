@@ -104,7 +104,7 @@ export default {
   ],
   methods: {
     main_switch_handle(v) {
-      this.sound_play_click()
+      this.sound_play_toggle(v)
       this.base.cc_main_switch_set(v)
     },
     close_handle() {
@@ -171,7 +171,7 @@ export default {
       }
     },
     cc_unique_mode_set_handle(value) {
-      this.sound_play_click()
+      this.sound_play_toggle(value)
       this.base.cc_unique_mode_set(value)
     },
   },
