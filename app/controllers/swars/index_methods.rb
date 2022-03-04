@@ -300,7 +300,7 @@ module Swars
       if sort_column && sort_order
         case sort_column
         when "grade_diff"
-          order = my_sampled_memberships.order(sort_column => sort_order)
+          order = current_swars_user.memberships.order(sort_column => sort_order)
           s = s.joins(:memberships).merge(order)
         else
           s = super(s)
