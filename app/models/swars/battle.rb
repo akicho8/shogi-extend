@@ -40,5 +40,6 @@ module Swars
     include BasicMethods
     include HelperMethods
     include BugfixMethods
+    include SearchMethods
   end
 end
