@@ -106,6 +106,11 @@ export default {
     main_switch_handle(v) {
       this.sound_play_toggle(v)
       this.base.cc_main_switch_set(v)
+      if (v) {
+        this.delay_block(1, () => {
+          this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 5})
+        })
+      }
     },
     close_handle() {
       this.sound_play_click()
