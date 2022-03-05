@@ -50,10 +50,13 @@ export const app_sound_resume = {
     },
 
     sound_resume_all_with_click() {
-      // this.sp_sound_resume_all() // Howler.unload() の実行 (shogi-player 側) なんでこれもいる？？？
       this.sound_resume_all()    // Howler.unload() の実行
       this.sound_play_click()    // Howler.unload() が正しく作動すればここで音が出る
-      // this.delay_block(0.5, () => this.talk("もどりました"))
+    },
+
+    sound_resume_all_with_rooster() {
+      this.sound_resume_all()
+      this.sound_play("rooster")
     },
   },
 }

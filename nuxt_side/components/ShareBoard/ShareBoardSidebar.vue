@@ -74,7 +74,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
       .box.mt-5.is-hidden-desktop
         b-field(label="音が出なくなったとき用")
-          b-button(@click="base.sound_resume_all_with_click") 音復活
+          b-button(@click="base.sound_resume_all_with_rooster") 音復活
 </template>
 
 <script>
