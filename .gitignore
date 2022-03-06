@@ -31,3 +31,4 @@ yarn-debug.log*
 /.basic_auth*
 /kifu_data*
 /db/*.gz
+/*.kif
