@@ -36,7 +36,7 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" label="相手" :visible="base.column_visible_p('membership_right')")
     SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]" :with_user_key="base.column_visible_p('user_key_right')")
 
-  b-table-column(v-slot="{row}" field="judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" :sortable="false")
+  b-table-column(v-slot="{row}" field="judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable)
     | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
 
   b-table-column(v-slot="{row}" field="location_key" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)

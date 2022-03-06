@@ -1,5 +1,6 @@
 import { ColumnInfo } from "./models/column_info.js"
 import { JudgeInfo } from "../models/judge_info.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export const app_columns = {
   methods: {
@@ -29,6 +30,7 @@ export const app_columns = {
   computed: {
     ColumnInfo() { return ColumnInfo },
     JudgeInfo() { return JudgeInfo  },
+    Location() { return Location  },
 
     // 操作の列を表示する？
     operation_any_column_visible_p() {
