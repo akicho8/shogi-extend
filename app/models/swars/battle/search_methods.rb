@@ -84,6 +84,13 @@ module Swars
               selected = true
             end
 
+            if v = c.query_info.lookup_one("location") || c.query_info.lookup_one("先後")
+              m = my_sampled_memberships2
+              m = m.where(location_key: Bioshogi::Location.fetch(v).key)
+              s = s.where(id: m.pluck(:battle_id))
+              selected = true
+            end
+
             if v = c.query_info.lookup("tag") # 自分 戦法(AND)
               m = my_sampled_memberships2
               m = m.tagged_with(v)

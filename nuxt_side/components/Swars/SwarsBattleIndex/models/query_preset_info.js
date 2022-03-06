@@ -41,6 +41,13 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
 
       { key: null,                      name: "指導対局",         query: "vs-grade:十段",                 available_env: { development: true, staging: true, production: true, }, },
 
+      { key: null,                      name: "☗のみ",           query: "先後:black",                    available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "☗で勝ち",         query: "先後:black 勝敗:勝ち",          available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "☗で負け",         query: "先後:black 勝敗:負け",          available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "☖のみ",           query: "先後:white",                    available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "☖で勝ち",         query: "先後:white 勝敗:勝ち",          available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "☖で負け",         query: "先後:white 勝敗:負け",          available_env: { development: true, staging: true, production: true, }, },
+
       { key: null,                      name: "10分",             query: "種類:10分",                     available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "3分",              query: "種類:3分",                      available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "10秒",             query: "種類:10秒",                     available_env: { development: true, staging: true, production: true, }, },
