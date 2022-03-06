@@ -40,6 +40,21 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     Swars::Battle.first
   end
 
+  describe "membershipのカラムで並び替え" do
+    it "judge_key" do
+      get :index, params: {query: "devuser1", sort_column: "judge_key", sort_order: "asc" }
+      assert { response.status == 200 }
+    end
+    it "location_key" do
+      get :index, params: {query: "devuser1", sort_column: "location_key", sort_order: "asc" }
+      assert { response.status == 200 }
+    end
+    it "judge_key" do
+      get :index, params: {query: "devuser1", sort_column: "judge_key", sort_order: "asc" }
+      assert { response.status == 200 }
+    end
+  end
+
   describe "詳細検索" do
     it "vs" do
       get :index, params: {query: "Yamada_Taro vs:devuser1"}

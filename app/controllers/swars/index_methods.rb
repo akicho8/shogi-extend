@@ -299,7 +299,7 @@ module Swars
     def sort_scope(s)
       if sort_column && sort_order
         case sort_column
-        when "grade_diff", "location_key"
+        when "grade_diff", "location_key", "judge_key"
           order = current_swars_user.memberships.order(sort_column => sort_order)
           s = s.joins(:memberships).merge(order)
         else
