@@ -39,6 +39,12 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" :sortable="false")
     | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
 
+  b-table-column(v-slot="{row}" field="location_key" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
+    template(v-if="row.preset_info.handicap_shift === 0")
+      | {{base.Location.fetch(row.memberships[0].location_key).name}}
+    template(v-else)
+      | {{base.Location.fetch(row.memberships[0].location_key).handicap_long_name}}
+
   b-table-column(v-slot="{row}" field="final_key" :label="base.ColumnInfo.fetch('final_key').name" :visible="base.column_visible_p('final_key')" sortable)
     span(:class="row.final_info.class") {{row.final_info.name}}
 
