@@ -135,7 +135,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       it { test1("Shift_JIS") }
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
-        get :index, params: {query: "Yamada_Taro tag:対振り持久戦", sort_column: "grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
+        get :index, params: {query: "Yamada_Taro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
         json = JSON.parse(response.body, symbolize_names: true)
         assert { json[:form_params_default] }
       end
