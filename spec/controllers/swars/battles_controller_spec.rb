@@ -42,15 +42,15 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
   describe "membershipのカラムで並び替え" do
     it "judge_key" do
-      get :index, params: {query: "devuser1", sort_column: "judge_key", sort_order: "asc" }
+      get :index, params: {query: "devuser1", sort_column: "membership.judge_key", sort_order: "asc" }
       assert { response.status == 200 }
     end
     it "location_key" do
-      get :index, params: {query: "devuser1", sort_column: "location_key", sort_order: "asc" }
+      get :index, params: {query: "devuser1", sort_column: "membership.location_key", sort_order: "asc" }
       assert { response.status == 200 }
     end
-    it "judge_key" do
-      get :index, params: {query: "devuser1", sort_column: "judge_key", sort_order: "asc" }
+    it "grade_diff" do
+      get :index, params: {query: "devuser1", sort_column: "membership.grade_diff", sort_order: "asc" }
       assert { response.status == 200 }
     end
   end

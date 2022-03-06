@@ -36,10 +36,10 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" label="相手" :visible="base.column_visible_p('membership_right')")
     SwarsBattleIndexMembership(:base="base" :membership="row.memberships[1]" :with_user_key="base.column_visible_p('user_key_right')")
 
-  b-table-column(v-slot="{row}" field="judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable)
+  b-table-column(v-slot="{row}" field="membership.judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable)
     | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
 
-  b-table-column(v-slot="{row}" field="location_key" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="membership.location_key" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
     template(v-if="row.preset_info.handicap_shift === 0")
       | {{base.Location.fetch(row.memberships[0].location_key).name}}
     template(v-else)
@@ -57,7 +57,7 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="outbreak_turn" :label="base.ColumnInfo.fetch('outbreak_turn').name" :visible="base.column_visible_p('outbreak_turn')" sortable numeric)
     | {{row.outbreak_turn}}
 
-  b-table-column(v-slot="{row}" field="grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="base.column_visible_p('grade_diff')" sortable numeric)
+  b-table-column(v-slot="{row}" field="membership.grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="base.column_visible_p('grade_diff')" sortable numeric)
     | {{row.grade_diff}}
 
   b-table-column(v-slot="{row}" field="rule_key" :label="base.ColumnInfo.fetch('rule_key').name" :visible="base.column_visible_p('rule_key')" sortable)

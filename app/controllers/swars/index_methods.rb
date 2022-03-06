@@ -298,11 +298,18 @@ module Swars
 
     def sort_scope(s)
       if sort_column && sort_order
-        case sort_column
-        when "grade_diff", "location_key", "judge_key"
-          order = current_swars_user.memberships.order(sort_column => sort_order)
-          s = s.joins(:memberships).merge(order)
+        table, column = sort_column.split(".", 2)
+        if column
+          if table == "membership"
+            # Membership が対象の並び替え
+            # column は grade_diff, location_key, judge_key のどれかになる
+            o = current_swars_user.memberships.order(column => sort_order)
+            s = s.joins(:memberships).merge(o)
+          else
+            raise ArgumentError, sort_column.inspect
+          end
         else
+          # Battle のカラムに対するとソート
           s = super(s)
         end
       end
