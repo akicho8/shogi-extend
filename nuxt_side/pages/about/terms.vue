@@ -7,12 +7,8 @@
 
   MainSection
     .container
-      .content
-        ul.mt-0
-          li 重いからって連打してはいけない
-          li ぴよ将棋アプリから将棋ウォーズ棋譜検索に来れるからといってぴよ将棋と混同してはいけない
-          li 「KENTO」と混同してはいけない
-          li SHOGI-EXTENDの仕様についてHEROZに問い合わせてはいけない
+      p
+        | 重いからって連打しちゃだめ
 </template>
 
 <script>
