@@ -359,7 +359,7 @@
         p
           | プログラム側での判定は一切していない
 
-    article
+    article(v-if="false")
       h2 観戦者が二歩の指摘をしてもいい？
       .article_body
         p
