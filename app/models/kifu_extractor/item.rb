@@ -68,7 +68,7 @@ module KifuExtractor
     # 例えば "url: 'http://example.com/xxx.kif'," には "http://example.com/xxx.kif'," がマッチしてしまう
     # だからか URI.extract は公式で非推奨になっている
     def all_extract_kif_urls
-      @all_extract_urls ||= @source.scan(%r{https?://.*?#{BASIC_EXTENTIONS_REGEXP}})
+      @all_extract_kif_urls ||= @source.scan(%r{https?://.*?#{BASIC_EXTENTIONS_REGEXP}})
     end
 
     def kif_url?(url)
