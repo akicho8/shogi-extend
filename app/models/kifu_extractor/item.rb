@@ -29,7 +29,11 @@ module KifuExtractor
     def extracted_uri
       @extracted_uri ||= yield_self do
         if extracted_url
-          URI(extracted_url)
+          if uri = URI(extracted_url)
+            if uri.host # 不正な url では host が nil になる場合がある
+              uri
+            end
+          end
         end
       end
     end
@@ -50,8 +54,14 @@ module KifuExtractor
       end
     end
 
+    # URI.extract で抽出したものの中には不正なURL(例えば "http:/http://example.com" )
+    # も含まれているためさらに URI(url).host があるかどうかまで確認する必要がある
     def all_extract_urls
-      @all_extract_urls ||= URI.extract(@source, ["http", "https"])
+      @all_extract_urls ||= yield_self do
+        URI.extract(@source, ["http", "https"]).find_all do |e|
+          URI(e).host
+        end
+      end
     end
 
     # URI.extract(@source, ["http", "https"]) では逆に正しくマッチできないので置き換えてはいけない
@@ -63,8 +73,10 @@ module KifuExtractor
 
     def kif_url?(url)
       uri = URI(url)
-      if uri.path
-        uri.path.match?(/#{BASIC_EXTENTIONS_REGEXP}\z/io)
+      if uri.host
+        if uri.path
+          uri.path.match?(/#{BASIC_EXTENTIONS_REGEXP}\z/io)
+        end
       end
     end
   end

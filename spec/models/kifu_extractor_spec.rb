@@ -41,4 +41,8 @@ RSpec.describe KifuExtractor, type: :model, kifu_extractor: true do
     assert { test1("https://example.com/?text=76%E6%AD%A9")    == "76歩" }
     assert { test1("https://example.com/#76%E6%AD%A9")         == "76歩" }
   end
+
+  it "URIではパースできるがhostがnilになる不正なURLの場合でも落ちない" do
+    assert { test1("http:/http://example.com/") == nil }
+  end
 end
