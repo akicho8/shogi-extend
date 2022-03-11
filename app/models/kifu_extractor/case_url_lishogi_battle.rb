@@ -15,7 +15,7 @@ module KifuExtractor
             #
             # NOTE: user_agent が "Faraday v1" や通常のであれば kif を埋めない
             # wget や googlebot であれば kif が埋まっている
-            doc = WebAgent.document(extracted_url, user_agent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+            doc = WebAgent.document(extracted_uri.to_s, user_agent: "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
             if e = doc.at("div[class='kif']")
               @body = e.text
             end

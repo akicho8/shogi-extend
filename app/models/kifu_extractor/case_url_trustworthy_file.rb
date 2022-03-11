@@ -3,8 +3,8 @@
 module KifuExtractor
   class CaseUrlTrustworthyFile < Extractor
     def resolve
-      if url = extracted_kif_url
-        if v = url_fetched_content
+      if uri = extracted_kif_uri
+        if v = uri_fetched_content
           @body = v.toutf8
         end
       end

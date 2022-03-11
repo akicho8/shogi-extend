@@ -35,8 +35,8 @@ class WebAgent
     s
   end
 
-  def raw_fetch(url)
-    response = connection.get(url)
+  def raw_fetch(url_or_uri)
+    response = connection.get(url_or_uri.to_s)
     response.body
   end
 

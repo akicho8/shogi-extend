@@ -7,9 +7,9 @@
 module KifuExtractor
   class CaseUrlShogidb2Show < Extractor
     def resolve
-      if url = extracted_url
-        if url.include?("shogidb2.com/games/")
-          if md = url_fetched_content.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
+      if uri = extracted_uri
+        if uri.to_s.include?("shogidb2.com/games/")
+          if md = uri_fetched_content.match(/(var|const|let)\s*data\s*=\s*(?<json_str>\{.*\})/)
             json_params = JSON.parse(md["json_str"], symbolize_names: true)
             @body = Shogidb2Parser.parse(json_params)
           end

@@ -18,62 +18,49 @@ module KifuExtractor
       end
     end
 
-    def extracted_url
-      @extracted_url ||= yield_self do
-        if url_type?
-          all_extract_urls.first
-        end
-      end
-    end
-
     def extracted_uri
       @extracted_uri ||= yield_self do
-        if extracted_url
-          if uri = URI(extracted_url)
-            if uri.host # 不正な url では host が nil になる場合がある
-              uri
-            end
-          end
+        if url_type?
+          all_extract_uris.first
         end
       end
     end
 
-    def extracted_kif_url
-      if v = extracted_url
-        if kif_url?(v)
+    def extracted_kif_uri
+      if v = extracted_uri
+        if kif_uri?(v)
           v
         end
       end
     end
 
-    def url_fetched_content
-      @url_fetched_content ||= yield_self do
-        if url = extracted_url
-          WebAgent.fetch(url)
+    def uri_fetched_content
+      @uri_fetched_content ||= yield_self do
+        if uri = extracted_uri
+          WebAgent.fetch(uri)
         end
       end
     end
 
     # URI.extract で抽出したものの中には不正なURL(例えば "http:/http://example.com" )
     # も含まれているためさらに URI(url).host があるかどうかまで確認する必要がある
-    def all_extract_urls
-      @all_extract_urls ||= yield_self do
-        URI.extract(@source, ["http", "https"]).find_all do |e|
-          URI(e).host
-        end
+    def all_extract_uris
+      @all_extract_uris ||= yield_self do
+        av = URI.extract(@source, ["http", "https"])
+        av = av.collect { |e| URI(e) }
+        av.find_all(&:host)
       end
     end
 
     # URI.extract(@source, ["http", "https"]) では逆に正しくマッチできないので置き換えてはいけない
     # 例えば "url: 'http://example.com/xxx.kif'," には "http://example.com/xxx.kif'," がマッチしてしまう
     # だからか URI.extract は公式で非推奨になっている
-    def all_extract_kif_urls
-      @all_extract_kif_urls ||= @source.scan(%r{https?://.*?#{BASIC_EXTENTIONS_REGEXP}})
+    def all_extract_kif_uris
+      @all_extract_kif_uris ||= @source.scan(%r{https?://.*?#{BASIC_EXTENTIONS_REGEXP}})
     end
 
-    def kif_url?(url)
-      uri = URI(url)
-      if uri.host
+    def kif_uri?(uri)
+      if uri.host # すでにチェックしているので取ってもいいが単体で使うかもしれないので入れておく
         if uri.path
           uri.path.match?(/#{BASIC_EXTENTIONS_REGEXP}\z/io)
         end
