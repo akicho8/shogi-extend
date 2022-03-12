@@ -40,6 +40,13 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     Swars::Battle.first
   end
 
+  describe "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
+    it "works" do
+      get :index, params: {query: "__unknown__", sort_column: "membership.judge_key", sort_order: "asc" }
+      assert { response.status == 200 }
+    end
+  end
+
   describe "membershipのカラムで並び替え" do
     it "judge_key" do
       get :index, params: {query: "devuser1", sort_column: "membership.judge_key", sort_order: "asc" }

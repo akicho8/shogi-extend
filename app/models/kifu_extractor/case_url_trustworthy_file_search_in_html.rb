@@ -4,10 +4,10 @@
 module KifuExtractor
   class CaseUrlTrustworthyFileSearchInHtml < Extractor
     def resolve
-      if v = url_fetched_content
+      if v = uri_fetched_content
         item = Item.new(v)
-        if url = item.all_extract_kif_urls.first
-          @body = human_very_dirty_kif_fetch_and_clean(url)
+        if uri = item.all_extract_kif_uris.first
+          @body = human_very_dirty_kif_fetch_and_clean(uri)
         end
       end
     end

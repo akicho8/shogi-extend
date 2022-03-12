@@ -3,9 +3,8 @@
 module KifuExtractor
   class CaseUrlLishogiEditor < Extractor
     def resolve
-      if url = extracted_url
-        if url.include?("lishogi.org/editor")
-          uri = extracted_uri
+      if uri = extracted_uri
+        if uri.to_s.include?("lishogi.org/editor")
           # uri.path # => "/editor/ln5nl/2kp3R1/2l4p1/p1pg1+BP1p/9/PPP1PP3/1SN5P/1KG1G2+r1/L8_w_G2Pb3sn4p_1"
           if md = uri.path.match(%{editor/(?<dirty_sfen>.*)})
             s = md[:dirty_sfen]      # => "ln5nl/2kp3R1/2l4p1/p1pg1+BP1p/9/PPP1PP3/1SN5P/1KG1G2+r1/L8_w_G2Pb3sn4p_1"

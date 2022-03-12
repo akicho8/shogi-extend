@@ -9,9 +9,9 @@
 module KifuExtractor
   class CaseUrlLiveShogiOrJp < Extractor
     def resolve
-      if url = extracted_url
-        if url.include?("live.shogi.or.jp")
-          url = url.sub(/html/, "kif")
+      if uri = extracted_uri
+        if uri.host.include?("live.shogi.or.jp")
+          url = uri.to_s.sub(/html/, "kif")
           @body = human_very_dirty_kif_fetch_and_clean(url)
         end
       end

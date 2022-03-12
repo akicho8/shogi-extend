@@ -1,4 +1,6 @@
 class WebAgent
+  DEFAULT_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+
   class << self
     def document(url, params = {})
       new(params).document(url)
@@ -35,8 +37,8 @@ class WebAgent
     s
   end
 
-  def raw_fetch(url)
-    response = connection.get(url)
+  def raw_fetch(url_or_uri)
+    response = connection.get(url_or_uri.to_s)
     response.body
   end
 
@@ -46,11 +48,7 @@ class WebAgent
     Faraday.new do |builder|
       builder.response :follow_redirects # リダイレクト先をおっかける
       builder.adapter :net_http          # これいるんか？
-      builder.headers[:user_agent] = @params[:user_agent] || goole_chrome_browser_latest_user_agent
+      builder.headers[:user_agent] = @params[:user_agent] || DEFAULT_USER_AGENT
     end
-  end
-
-  def goole_chrome_browser_latest_user_agent
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
   end
 end

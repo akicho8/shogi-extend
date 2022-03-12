@@ -5,7 +5,7 @@
 module KifuExtractor
   class CaseUrlUnknown < Extractor
     def resolve
-      if v = url_fetched_content
+      if v = uri_fetched_content
         v = v.toutf8
         v = ApplicationRecord.strip_tags(v)
         v = v.strip

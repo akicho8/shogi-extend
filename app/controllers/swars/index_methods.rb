@@ -303,8 +303,10 @@ module Swars
           if table == "membership"
             # Membership が対象の並び替え
             # column は grade_diff, location_key, judge_key のどれかになる
-            o = current_swars_user.memberships.order(column => sort_order)
-            s = s.joins(:memberships).merge(o)
+            if current_swars_user
+              o = current_swars_user.memberships.order(column => sort_order)
+              s = s.joins(:memberships).merge(o)
+            end
           else
             raise ArgumentError, sort_column.inspect
           end

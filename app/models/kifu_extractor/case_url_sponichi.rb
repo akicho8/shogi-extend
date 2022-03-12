@@ -5,9 +5,9 @@ module KifuExtractor
     include SponichiSupport
 
     def resolve
-      if url = extracted_url
-        if url.include?("sponichi.co.jp")
-          if v = url_fetched_content
+      if uri = extracted_uri
+        if uri.host.include?("sponichi.co.jp")
+          if v = uri_fetched_content
             sponichi_scan(Item.new(v))
           end
         end
