@@ -33,7 +33,7 @@ module Swars
 
       # 調査対象段級位のレコード
       def grade_records
-        Swars::Grade.where(key: grade_keys).reorder("")
+        Swars::Grade.unscope(:order).where(key: grade_keys).
       end
 
       def records
