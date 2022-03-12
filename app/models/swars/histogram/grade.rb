@@ -1,6 +1,13 @@
 module Swars
   module Histogram
     class Grade < Base
+      def to_h
+        super.merge({
+            :rule_key => params[:rule_key].presence || "all",
+            :tag      => params[:tag],
+          })
+      end
+
       private
 
       def histogram_name
@@ -10,7 +17,27 @@ module Swars
       # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
       # で 15ms なので 20000 ぐらいまで一瞬
       def target_ids
-        @target_ids ||= Swars::Membership.where(grade: grade_records).order(id: :desc).limit(current_max).pluck(:id)
+        @target_ids ||= yield_self do
+          s = Swars::Membership.all
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
+          if e = RuleInfo.lookup(params[:rule_key].presence)
+            s = s.rule_eq(e)
+          end
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&tag=新嬉野流
+          # http://localhost:3000/api/swars_histogram.json?key=grade&tag=嬉野流
+          if v = params[:tag].to_s.split(/[,\s]+/).presence
+            s = s.tagged_with(v)
+          end
+
+          s = s.where(grade: grade_records) # 9級から九段に絞る
+          s = s.limit(current_max)
+          s = s.order(id: :desc)
+
+          s.pluck(:id)
+        end
       end
 
       def counts_hash
@@ -33,7 +60,7 @@ module Swars
 
       # 調査対象段級位のレコード
       def grade_records
-        Swars::Grade.unscope(:order).where(key: grade_keys).
+        Swars::Grade.where(key: grade_keys).unscope(:order)
       end
 
       def records
@@ -44,6 +71,7 @@ module Swars
               :grade => grade.as_json(only: [:id, :key, :priority]),
               :count => count,
               :ratio => sdc.appear_ratio(count),
+              :deviation_score => sdc.deviation_score(count),
             }
           end
         end

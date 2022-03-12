@@ -40,6 +40,7 @@ module Swars
               :name  => name,
               :count => count,
               :ratio => sdc.appear_ratio(count),
+              :deviation_score => sdc.deviation_score(count),
             }
           end
         end
