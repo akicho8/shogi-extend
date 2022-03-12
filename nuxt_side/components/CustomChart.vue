@@ -80,7 +80,7 @@ const CHART_CONFIG_DEFAULT = {
           // },
         },
         gridLines: {
-          display: true,
+          display: false,       // 横線
           // zeroLineWidth: 0,
         },
       }],
