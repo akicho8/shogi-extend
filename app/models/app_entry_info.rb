@@ -131,13 +131,13 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/swars/histograms/attack"},
-      title: "将棋ウォーズ戦法分布",
+      nuxt_link_to: {path: "/swars/histograms/grade"},
+      title: "将棋ウォーズ棋力分布",
       og_image_key: "swars-histograms-attack",
-      description: "人気戦法を知りたいときにどうぞ",
+      description: "偏差値とか見たいときにどうぞ",
       features: [
         "変動するように最近のだけ出してる",
-        "囲いや段級位の分布もある",
+        "戦法や囲いの分布もある",
         "人気戦法の対策をすれば勝ちやすいかも？",
       ],
     },

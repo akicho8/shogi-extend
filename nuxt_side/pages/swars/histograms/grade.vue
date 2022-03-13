@@ -24,7 +24,8 @@ client-only
             //- https://buefy.org/documentation/field#combining-addons-and-groups
             b-field.field_block(label="戦法" custom-class="is-small")
               b-select(v-model="xtag" @input="xtag_input_handle" expanded)
-                option(v-for="e in xi.xtag_select_names" :value="e" v-text="e")
+                option(:value="null")
+                option(v-for="e in xi.xtag_select_names" :value="e") {{e}}
           .column.is-12
             b-field.submit_field
               .control
@@ -78,12 +79,13 @@ export default {
   // },
   fetchOnServer: false,
   fetch() {
-    this.rule_key = this.rule_key || this.$route.query.rule_key || "all"
-    this.xtag = this.xtag || this.$route.query.xtag
+    this.rule_key = this.rule_key ?? this.$route.query.rule_key ?? "all"
+    this.xtag = this.xtag ?? this.$route.query.xtag
 
     const params = {
       ...this.$route.query,
       rule_key: this.rule_key,
+      xtag: this.xtag,
       key: "grade",
     }
     // console.log(params)
