@@ -45,6 +45,8 @@ module Swars
 
     acts_as_list top_of_list: 0, scope: :battle
 
+    scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
+
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?

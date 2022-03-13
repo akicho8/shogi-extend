@@ -2,8 +2,8 @@ module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
     class Base
-      DEFAULT_LIMIT     = 10000
-      DEFAULT_LIMIT_MAX = 10000
+      DEFAULT_LIMIT     = 20000
+      DEFAULT_LIMIT_MAX = 20000
       CHART_BAR_MAX     = 20
 
       attr_accessor :params
@@ -13,7 +13,7 @@ module Swars
       end
 
       def as_json(*)
-        Rails.cache.fetch(cache_key, expires_in: Rails.env.production? ? 1.days : 0) do
+        Rails.cache.fetch(cache_key.join("/"), expires_in: Rails.env.production? ? 1.days : 0) do
           to_h
         end
       end
@@ -27,6 +27,7 @@ module Swars
           :sample_count        => target_ids.size,
           :records             => records,
           :custom_chart_params => custom_chart_params,
+          :cache_key           => cache_key.join("/"),
         }
       end
 
@@ -40,6 +41,7 @@ module Swars
               :name  => name,
               :count => count,
               :ratio => sdc.appear_ratio(count),
+              :deviation_score => sdc.deviation_score(count),
             }
           end
         end
@@ -62,7 +64,7 @@ module Swars
       end
 
       def cache_key
-        [self.class.name, tactic_key, current_max].join("/")
+        [self.class.name, tactic_key, current_max]
       end
 
       def target_ids

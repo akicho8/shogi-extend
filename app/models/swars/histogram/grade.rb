@@ -1,6 +1,27 @@
+# 将棋ウォーズ棋力分布
+#
+# experiment/swars/棋力ヒストグラム.rb
+# app/models/swars/histogram/grade.rb
+# nuxt_side/pages/swars/histograms/grade.vue
+#
+# API
+# http://localhost:3000/api/swars_histogram.json?key=grade
+# http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+#
+# WEB
+# http://localhost:4000/swars/histograms/grade?max=10000
+
 module Swars
   module Histogram
     class Grade < Base
+      def to_h
+        super.merge({
+            :rule_key  => params[:rule_key].presence,
+            :xtag      => params[:xtag].presence,
+            :xtag_select_names => xtag_select_names,
+          })
+      end
+
       private
 
       def histogram_name
@@ -10,7 +31,27 @@ module Swars
       # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
       # で 15ms なので 20000 ぐらいまで一瞬
       def target_ids
-        @target_ids ||= Swars::Membership.where(grade: grade_records).order(id: :desc).limit(current_max).pluck(:id)
+        @target_ids ||= yield_self do
+          s = Swars::Membership.all
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
+          if e = RuleInfo.lookup(params[:rule_key].presence)
+            s = s.rule_eq(e)
+          end
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
+          if v = params[:xtag].to_s.split(/[,\s]+/).presence
+            s = s.tagged_with(v)
+          end
+
+          s = s.where(grade: grade_records) # 9級から九段に絞る
+          s = s.limit(current_max)
+          s = s.order(id: :desc)
+
+          s.pluck(:id)
+        end
       end
 
       def counts_hash
@@ -18,12 +59,8 @@ module Swars
         @counts_hash ||= Swars::Membership.where(id: target_ids).group(:grade).count
       end
 
-      def current_max
-        (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT_MAX)
-      end
-
       def cache_key
-        [self.class.name, current_max].join("/")
+        [self.class.name, current_max, *params.values_at(:rule_key, :xtag)]
       end
 
       # 調査対象段級位
@@ -33,7 +70,7 @@ module Swars
 
       # 調査対象段級位のレコード
       def grade_records
-        Swars::Grade.where(key: grade_keys).reorder("")
+        Swars::Grade.where(key: grade_keys).unscope(:order)
       end
 
       def records
@@ -44,6 +81,7 @@ module Swars
               :grade => grade.as_json(only: [:id, :key, :priority]),
               :count => count,
               :ratio => sdc.appear_ratio(count),
+              :deviation_score => sdc.deviation_score(count),
             }
           end
         end
@@ -64,6 +102,10 @@ module Swars
           scales_yAxes_ticks: {
           },
         }
+      end
+
+      def xtag_select_names
+        Bioshogi::TacticInfo.all_elements.collect(&:name)
       end
     end
   end
