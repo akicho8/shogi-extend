@@ -3,6 +3,7 @@ client-only
   .swars-histograms-grade
     DebugBox.is-hidden-mobile(v-if="development_p")
       p rule_key: {{rule_key}}
+      p xtag: {{xtag}}
 
     FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
@@ -16,9 +17,14 @@ client-only
     MainSection(v-if="xi")
       .container
         SwarsHistogramNavigation(:config="xi")
-        .columns.is-centered.is-multiline.is-variable.is-0-mobile.is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd.form_block
+        .columns.is-centered.is-multiline.form_block
           .column
-            SimpleRadioButtons.field_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key")
+            SimpleRadioButtons.field_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key" expanded)
+          .column
+            //- https://buefy.org/documentation/field#combining-addons-and-groups
+            b-field.field_block(label="戦法" custom-class="is-small")
+              b-select(v-model="xtag" @input="xtag_input_handle" expanded)
+                option(v-for="e in xi.xtag_select_names" :value="e" v-text="e")
           .column.is-12
             b-field.submit_field
               .control
@@ -53,6 +59,7 @@ export default {
     return {
       xi: null,
       rule_key: null,
+      xtag: null,
     }
   },
   // watch: {
@@ -72,6 +79,7 @@ export default {
   fetchOnServer: false,
   fetch() {
     this.rule_key = this.rule_key || this.$route.query.rule_key || "all"
+    this.xtag = this.xtag || this.$route.query.xtag
 
     const params = {
       ...this.$route.query,
@@ -137,6 +145,8 @@ export default {
       // this.$fetch()
       this.router_push({})
     },
+    xtag_input_handle() {
+    },
   },
 
   // watchQuery: ["max", "rule_key"],
@@ -155,7 +165,7 @@ export default {
   // },
   mounted() {
     // this.ga_click(`段級分布`)
-    this.ga_click(`データ分布`)
+    this.ga_click("将棋ウォーズ棋力分布")
   },
   // created() {
   //   const unwatch = this.$watch(() => [this.foo, this.bar], () => this.share_update(), {deep: true})
@@ -175,6 +185,7 @@ export default {
     url_params() {
       return {
         rule_key: this.rule_key,
+        xtag: this.xtag,
       }
     },
   },
@@ -185,4 +196,11 @@ export default {
 .swars-histograms-grade
   .MainSection
     padding-top: 1.7rem
+
+.STAGE-development
+  .swars-histograms-grade
+    .columns
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

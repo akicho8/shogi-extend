@@ -3,8 +3,9 @@ module Swars
     class Grade < Base
       def to_h
         super.merge({
-            :rule_key => params[:rule_key].presence || "all",
-            :tag      => params[:tag],
+            :rule_key  => params[:rule_key].presence,
+            :xtag      => params[:xtag].presence,
+            :xtag_select_names => xtag_select_names,
           })
       end
 
@@ -26,9 +27,9 @@ module Swars
             s = s.rule_eq(e)
           end
 
-          # http://localhost:3000/api/swars_histogram.json?key=grade&tag=新嬉野流
-          # http://localhost:3000/api/swars_histogram.json?key=grade&tag=嬉野流
-          if v = params[:tag].to_s.split(/[,\s]+/).presence
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
+          if v = params[:xtag].to_s.split(/[,\s]+/).presence
             s = s.tagged_with(v)
           end
 
@@ -45,12 +46,8 @@ module Swars
         @counts_hash ||= Swars::Membership.where(id: target_ids).group(:grade).count
       end
 
-      def current_max
-        (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT_MAX)
-      end
-
       def cache_key
-        [self.class.name, current_max].join("/")
+        [self.class.name, current_max, *params.values_at(:rule_key, :xtag)]
       end
 
       # 調査対象段級位
@@ -92,6 +89,10 @@ module Swars
           scales_yAxes_ticks: {
           },
         }
+      end
+
+      def xtag_select_names
+        Bioshogi::TacticInfo.all_elements.collect(&:name)
       end
     end
   end

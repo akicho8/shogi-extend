@@ -5,10 +5,10 @@ export class RuleSelectInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "ten_min",   name: "10分", },
-      { key: "three_min", name: "3分",  },
-      { key: "ten_sec",   name: "10秒", },
-      { key: "all",       name: "(all)", },
+      { key: "all",       name: "すべて", },
+      { key: "ten_min",   name: "10分",   },
+      { key: "three_min", name: "3分",    },
+      { key: "ten_sec",   name: "10秒",   },
     ]
   }
 }
