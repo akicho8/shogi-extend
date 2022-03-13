@@ -1,3 +1,16 @@
+# 将棋ウォーズ棋力分布
+#
+# experiment/swars/棋力ヒストグラム.rb
+# app/models/swars/histogram/grade.rb
+# nuxt_side/pages/swars/histograms/grade.vue
+#
+# API
+# http://localhost:3000/api/swars_histogram.json?key=grade
+# http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+#
+# WEB
+# http://localhost:4000/swars/histograms/grade?max=10000
+
 module Swars
   module Histogram
     class Grade < Base
