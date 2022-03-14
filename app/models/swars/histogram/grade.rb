@@ -107,6 +107,21 @@ module Swars
       def xtag_select_names
         Bioshogi::TacticInfo.all_elements.collect(&:name)
       end
+
+      def default_limit
+        20000
+      end
+
+      def default_limit_max
+        50000
+      end
+
+      def max_list
+        # if Rails.env.development?
+        #   return [0, 1, 2, 1000, 5000, 20000]
+        # end
+        [1000, 10000, 20000]
+      end
     end
   end
 end

@@ -5,9 +5,10 @@
       template(v-for="item in items")
         template(v-if="!development_p && item.development_only")
         template(v-else)
+          //- :to="{...item.to, query: {max: current_max}}"
           b-button(
             tag="nuxt-link"
-            :to="{...item.to, query: {max: current_max}}"
+            :to="{...item.to, query: {}}"
             :class="{'is-active': item.to.params.key === $route.params.key}"
             @click.native="sound_play_click()")
             | {{item.title}}
@@ -22,7 +23,7 @@
           div
             .head.is-size-7 サンプル数直近
             .title.is-size-6.has-text-weight-normal
-              template(v-for="max in max_list")
+              template(v-for="max in config.max_list")
                 nuxt-link.px-1(
                   :to="{name: $route.name, params: $route.params, query: {...$route.query, max: max}}"
                   :class="{'has-text-weight-bold': current_max === max}"
@@ -49,16 +50,7 @@ export default {
   },
   computed: {
     current_max() {
-      return Number(this.$route.query.max || this.max_defaut)
-    },
-    max_defaut() {
-      return 20000
-    },
-    max_list() {
-      if (this.development_p) {
-        return [0, 1, 2, 1000, 5000]
-      }
-      return [100, 1000, 10000, 20000]
+      return Number(this.$route.query.max || this.config.default_limit)
     },
   },
 }

@@ -2,8 +2,6 @@ module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
     class Base
-      DEFAULT_LIMIT     = 20000
-      DEFAULT_LIMIT_MAX = 20000
       CHART_BAR_MAX     = 20
 
       attr_accessor :params
@@ -28,6 +26,9 @@ module Swars
           :records             => records,
           :custom_chart_params => custom_chart_params,
           :cache_key           => cache_key.join("/"),
+          :default_limit       => default_limit,
+          :default_limit_max   => default_limit_max,
+          :max_list            => max_list,
         }
       end
 
@@ -60,7 +61,7 @@ module Swars
       end
 
       def current_max
-        (params[:max].presence || DEFAULT_LIMIT).to_i.clamp(0, DEFAULT_LIMIT_MAX)
+        (params[:max].presence || default_limit).to_i.clamp(0, default_limit_max)
       end
 
       def cache_key
@@ -115,6 +116,21 @@ module Swars
           scales_yAxes_ticks: {
           },
         }
+      end
+
+      def default_limit
+        10000
+      end
+
+      def default_limit_max
+        default_limit
+      end
+
+      def max_list
+        if Rails.env.development?
+          return [0, 1, 2, 1000, 5000, default_limit]
+        end
+        [100, 1000, 10000]
       end
     end
   end

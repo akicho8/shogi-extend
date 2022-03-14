@@ -4,6 +4,7 @@ client-only
     DebugBox.is-hidden-mobile(v-if="development_p")
       p rule_key: {{rule_key}}
       p xtag: {{xtag}}
+      p query: {{$route.query}}
 
     FetchStateErrorMessage(:fetchState="$fetchState")
     b-loading(:active="$fetchState.pending")
@@ -20,7 +21,7 @@ client-only
         .columns.is-centered.is-multiline.form_block
           .column
             SimpleRadioButtons.field_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key" expanded)
-          .column
+          .column(v-if="development_p")
             //- https://buefy.org/documentation/field#combining-addons-and-groups
             b-field.field_block(label="戦法" custom-class="is-small")
               b-select(v-model="xtag" @input="xtag_input_handle" expanded)
@@ -44,7 +45,7 @@ client-only
               b-table-column(v-slot="{row}" field="grade.priority"  label="棋力" sortable) {{row.grade.key}}
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
-              b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable) {{number_round(row.deviation_score)}}
+              b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{number_round(row.deviation_score)}}
 
     DebugPrint(v-if="development_p")
     DebugPre(v-if="development_p && xi")
@@ -144,7 +145,7 @@ export default {
       this.$fetch()
     },
     submit_handle() {
-      // this.$fetch()
+      this.sound_play_click()
       this.router_push({})
     },
     xtag_input_handle() {
@@ -188,6 +189,7 @@ export default {
       return {
         rule_key: this.rule_key,
         xtag: this.xtag,
+        max: this.$route.query.max,
       }
     },
   },
