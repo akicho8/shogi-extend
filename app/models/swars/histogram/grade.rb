@@ -81,7 +81,7 @@ module Swars
               :grade => grade.as_json(only: [:id, :key, :priority]),
               :count => count,
               :ratio => sdc.appear_ratio(count),
-              :deviation_score => sdc.deviation_score(count),
+              # :deviation_score => sdc.deviation_score(count),
             }
           end
         end
