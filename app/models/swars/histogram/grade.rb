@@ -34,16 +34,18 @@ module Swars
         @target_ids ||= yield_self do
           s = Swars::Membership.all
 
-          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
-          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
-          if e = RuleInfo.lookup(params[:rule_key].presence)
-            s = s.rule_eq(e)
-          end
+          if Rails.env.development?
+            # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
+            # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
+            if e = RuleInfo.lookup(params[:rule_key].presence)
+              s = s.rule_eq(e)
+            end
 
-          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
-          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
-          if v = params[:xtag].to_s.split(/[,\s]+/).presence
-            s = s.tagged_with(v)
+            # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+            # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
+            if v = params[:xtag].to_s.split(/[,\s]+/).presence
+              s = s.tagged_with(v)
+            end
           end
 
           s = s.where(grade: grade_records) # 9級から九段に絞る
