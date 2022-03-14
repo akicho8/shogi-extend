@@ -19,7 +19,7 @@ client-only
       .container
         SwarsHistogramNavigation(:config="xi")
         .columns.is-centered.is-multiline.form_block
-          .column
+          .column(v-if="development_p")
             SimpleRadioButtons.field_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key" expanded)
           .column(v-if="development_p")
             //- https://buefy.org/documentation/field#combining-addons-and-groups
@@ -82,6 +82,13 @@ export default {
   fetch() {
     this.rule_key = this.rule_key ?? this.$route.query.rule_key ?? "all"
     this.xtag = this.xtag ?? this.$route.query.xtag
+
+    // if (this.present_p(this.rule_key)) {
+    //   if (this.rule_key != "all") {
+    //     this.rule_key = "all"
+    //     this.toast_warn("データベースが固まるのでルール別の集計はできません")
+    //   }
+    // }
 
     const params = {
       ...this.$route.query,
