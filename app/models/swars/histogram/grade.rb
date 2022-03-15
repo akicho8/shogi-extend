@@ -32,33 +32,42 @@ module Swars
       # で 15ms なので 20000 ぐらいまで一瞬
       def target_ids
         @target_ids ||= yield_self do
+          # membership.battle からルールを絞る時点で固まるため最初にIDで絞る
           s = Swars::Membership.all
-
-          if Rails.env.development?
-            # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
-            # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
-            if e = RuleInfo.lookup(params[:rule_key].presence)
-              s = s.rule_eq(e)
-            end
-
-            # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
-            # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
-            if v = params[:xtag].to_s.split(/[,\s]+/).presence
-              s = s.tagged_with(v)
-            end
-          end
-
-          s = s.where(grade: grade_records) # 9級から九段に絞る
-          s = s.limit(current_max)
           s = s.order(id: :desc)
-
-          s.pluck(:id)
+          s = s.limit(current_max)
+          s.ids
+          # s = Swars::Membership.where(id: s.ids)
+          # s.pluck(:id)
         end
       end
 
       def counts_hash
         # target_idsを副SQLにすると動かない。limitがあるとダメっぽい。なんで？
-        @counts_hash ||= Swars::Membership.where(id: target_ids).group(:grade).count
+        @counts_hash ||= yield_self do
+          s = Swars::Membership.all
+          s = s.where(id: target_ids)
+
+          # 9級から九段に絞る
+          # http://localhost:3000/api/swars_histogram.json?key=grade&grade_filter=true
+          if params[:grade_filter].to_s == "true"
+            s = s.where(grade: current_grades.unscope(:order))
+          end
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
+          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
+          if e = RuleInfo.lookup(params[:rule_key].presence)
+            s = s.rule_eq(e)
+          end
+
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
+          if v = params[:xtag].to_s.split(/[,\s]+/).presence
+            s = s.tagged_with(v)
+          end
+
+          s.group(:grade_id).count
+        end
       end
 
       def cache_key
@@ -66,19 +75,20 @@ module Swars
       end
 
       # 調査対象段級位
-      def grade_keys
-        Swars::GradeInfo.find_all(&:visualize).collect(&:key)
+      def grade_infos
+        Swars::GradeInfo.find_all(&:visualize)
       end
 
       # 調査対象段級位のレコード
-      def grade_records
-        Swars::Grade.where(key: grade_keys).unscope(:order)
+      def current_grades
+        Swars::Grade.where(key: grade_infos.collect(&:key))
       end
 
       def records
         @records ||= yield_self do
           sdc = StandardDeviation.new(counts_hash.values)
-          counts_hash.each.collect do |grade, count|
+          current_grades.collect do |grade|
+            count = counts_hash.fetch(grade.id, 0)
             {
               :grade => grade.as_json(only: [:id, :key, :priority]),
               :count => count,
