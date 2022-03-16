@@ -142,6 +142,10 @@ export const Gs = {
     return value
   },
 
+  bool_p(value) {
+    return typeof value === "boolean"
+  },
+
   ////////////////////////////////////////////////////////////////////////////////
 
   // 片方を1に正規化した比率
