@@ -70,6 +70,7 @@ const CHART_CONFIG_DEFAULT = {
         },
       }],
       yAxes: [{
+        // display: false,
         ticks: {
           // suggestedMax: 15,
           // beginAtZero: true,
@@ -171,6 +172,10 @@ export default {
 
       if (this.params.scales_yAxes_ticks) {
         this._chart_config.options.scales.yAxes[0].ticks = this.params.scales_yAxes_ticks
+      }
+
+      if ("scales_yAxes_display" in this.params) {
+        this._chart_config.options.scales.yAxes[0].display = this.params.scales_yAxes_display
       }
     },
   },
