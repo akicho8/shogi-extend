@@ -9,7 +9,6 @@ b-field(:label="real_model.field_label" :message="current.message || real_model.
       :native-value="e.key"
       :type="e.type"
       v-on="$listeners"
-      expanded
       )
       | {{e.name}}
 </template>
