@@ -170,8 +170,11 @@ export default {
       this.chart_setup(CHART_CONFIG_DEFAULT)
       this._chart_config.data = this.params.data
 
-      if (this.params.scales_yAxes_ticks) {
-        this._chart_config.options.scales.yAxes[0].ticks = this.params.scales_yAxes_ticks
+      {
+        const v = this.params.scales_yAxes_ticks
+        if (v) {
+          this._chart_config.options.scales.yAxes[0].ticks = v
+        }
       }
 
       if ("scales_yAxes_display" in this.params) {
