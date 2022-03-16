@@ -19,6 +19,7 @@ module Swars
             :rule_key  => params[:rule_key].presence,
             :xtag      => params[:xtag].presence,
             :xtag_select_names => xtag_select_names,
+            :real_total_count => records.sum { |e| e[:count] },
           })
       end
 
@@ -111,8 +112,8 @@ module Swars
               },
             ],
           },
-          scales_yAxes_ticks: {
-          },
+          scales_yAxes_ticks: nil,
+          scales_yAxes_display: false,
         }
       end
 

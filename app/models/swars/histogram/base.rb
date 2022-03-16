@@ -113,8 +113,7 @@ module Swars
               },
             ],
           },
-          scales_yAxes_ticks: {
-          },
+          scales_yAxes_ticks: nil,
         }
       end
 

@@ -177,8 +177,11 @@ export default {
         }
       }
 
-      if ("scales_yAxes_display" in this.params) {
-        this._chart_config.options.scales.yAxes[0].display = this.params.scales_yAxes_display
+      {
+        const v = this.params.scales_yAxes_display
+        if (this.bool_p(v)) {
+          this._chart_config.options.scales.yAxes[0].display = v
+        }
       }
     },
   },

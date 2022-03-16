@@ -18,23 +18,35 @@ client-only
     MainSection(v-if="xi")
       .container
         SwarsHistogramNavigation(:config="xi")
-        .columns.is-centered.is-multiline.form_block
-          .column(v-if="development_p")
-            SimpleRadioButtons.field_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key" expanded)
-          .column(v-if="development_p")
+        //- .is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
+        .columns.is-multiline.is-variable.is-0-mobile
+          .column(v-if="development_p || true")
+            SimpleRadioButtons.xfield_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key")
+          .column(v-if="development_p || true")
             //- https://buefy.org/documentation/field#combining-addons-and-groups
-            b-field.field_block(label="戦法" custom-class="is-small")
-              b-select(v-model="xtag" @input="xtag_input_handle" expanded)
+            b-field.xfield_block(label="戦法" custom-class="is-small")
+              b-select(v-model="xtag" @input="xtag_input_handle")
                 option(:value="null")
                 option(v-for="e in xi.xtag_select_names" :value="e") {{e}}
-          .column.is-12
-            b-field.submit_field
-              .control
-                b-button.has-text-weight-bold.banana_save_handle(@click="submit_handle" type="is-primary") 集計
+        .columns.is-vcentered.is-multiline.xform_block
+          .column
+            //- b-field.submit_field2
+            b-field.xfield_block(custom-class="is-small")
+              b-button.has-text-weight-bold(@click="submit_handle" type="is-primary") 集計
+          .column
+            nav.level.is-mobile
+              .level-item.has-text-centered
+                div
+                  .heading 直近の実サンプル数
+                  .title {{xi.sample_count}}
+              .level-item.has-text-centered
+                div
+                  .heading 絞り込み後の件数
+                  .title {{xi.real_total_count}}
 
-        .columns.is-unselectable
-          .column.is-6.mt-3
-            CustomChart(:params="xi.custom_chart_params")
+        .columns
+          .column.is-6
+            CustomChart.is-unselectable(:params="xi.custom_chart_params")
         .columns
           .column
             b-table(
