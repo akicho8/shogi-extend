@@ -24,7 +24,7 @@ client-only
             SimpleRadioButtons.xfield_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key")
           .column(v-if="development_p || true")
             //- https://buefy.org/documentation/field#combining-addons-and-groups
-            b-field.xfield_block(label="戦法" custom-class="is-small")
+            b-field.xfield_block(label="戦法等" custom-class="is-small")
               b-select(v-model="xtag" @input="xtag_input_handle")
                 option(:value="null") 指定なし
                 option(v-for="e in xi.xtag_select_names" :value="e") {{e}}
@@ -176,9 +176,7 @@ export default {
     },
     xtag_input_handle(v) {
       this.sound_play_click()
-      if (v) {
-        this.talk(v)
-      }
+      this.talk(v || "指定なし")
     },
   },
 
