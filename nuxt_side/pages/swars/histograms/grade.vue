@@ -26,7 +26,7 @@ client-only
             //- https://buefy.org/documentation/field#combining-addons-and-groups
             b-field.xfield_block(label="戦法" custom-class="is-small")
               b-select(v-model="xtag" @input="xtag_input_handle")
-                option(:value="null") すべて
+                option(:value="null") 指定なし
                 option(v-for="e in xi.xtag_select_names" :value="e") {{e}}
         .columns.is-vcentered.is-multiline.xform_block
           .column
@@ -142,6 +142,13 @@ export default {
 
     return this.$axios.$get("/api/swars_histogram.json", {params}).then(xi => {
       this.xi = xi
+
+      if (this.present_p(this.$route.query) && this.development_p) {
+        if (this.xi.real_total_count === 0) {
+          this.toast_warn("なんも見つかりませんでした")
+        }
+      }
+
       // this.rule_key = xi.rule_key
       // this.rails_session_side_copy_to_user_keys_if_blank()
       //
@@ -167,7 +174,11 @@ export default {
       this.sound_play_click()
       this.router_push({})
     },
-    xtag_input_handle() {
+    xtag_input_handle(v) {
+      this.sound_play_click()
+      if (v) {
+        this.talk(v)
+      }
     },
   },
 
