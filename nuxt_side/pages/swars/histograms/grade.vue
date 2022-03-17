@@ -44,8 +44,8 @@ client-only
                   .heading 絞り込み後の件数
                   .title {{xi.real_total_count}}
 
-        .columns
-          .column.is-6
+        .columns.is-centered
+          .column.is-7
             CustomChart.is-unselectable(:params="xi.custom_chart_params")
         .columns
           .column
