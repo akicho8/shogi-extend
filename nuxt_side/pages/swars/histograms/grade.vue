@@ -26,7 +26,7 @@ client-only
             //- https://buefy.org/documentation/field#combining-addons-and-groups
             b-field.xfield_block(label="戦法等" custom-class="is-small")
               b-select(v-model="xtag" @input="xtag_input_handle")
-                option(:value="null") 指定なし
+                option(value="") 指定なし
                 option(v-for="e in xi.xtag_select_names" :value="e") {{e}}
         .columns.is-vcentered.is-multiline.xform_block
           .column
