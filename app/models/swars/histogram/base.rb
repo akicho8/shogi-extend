@@ -11,7 +11,7 @@ module Swars
       end
 
       def as_json(*)
-        Rails.cache.fetch(cache_key.join("/"), expires_in: Rails.env.production? ? 1.days : 0) do
+        Rails.cache.fetch(cache_key.join("/"), expires_in: Rails.env.production? ? cache_expires_in : 0) do
           to_h
         end
       end
@@ -145,6 +145,10 @@ module Swars
 
       def current_user
         params[:current_user]
+      end
+
+      def cache_expires_in
+        2.hour
       end
     end
   end
