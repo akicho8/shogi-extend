@@ -143,6 +143,16 @@ export default {
     return this.$axios.$get("/api/swars_histogram.json", {params}).then(xi => {
       this.xi = xi
 
+      if (this.present_p(this.$route.query) || this.development_p) {
+        const body = [
+          ...Object.values(this.$route.query),
+          this.xi.sample_count,
+          this.xi.real_total_count,
+          location.href,
+        ].join(" ")
+        this.remote_notify({emoji: ":CHART:", subject: "棋力分布", body: body})
+      }
+
       if (this.present_p(this.$route.query) && this.development_p) {
         if (this.xi.real_total_count === 0) {
           this.toast_warn("なんも見つかりませんでした")

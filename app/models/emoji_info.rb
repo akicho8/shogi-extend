@@ -1,5 +1,3 @@
-# 
-
 class EmojiInfo
   include ApplicationMemoryRecord
   memory_record [
@@ -24,6 +22,7 @@ class EmojiInfo
     { key: ":失敗:",         raw: "🔴", },
     { key: ":得:",           raw: "🉐", },
     { key: ":プリンタ:",     raw: "🖨", },
+    { key: ":CHART:",        raw: "📊", },
   ]
 
   def to_s
