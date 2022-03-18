@@ -8,7 +8,7 @@ module Api
     # http://localhost:3000/api/swars_histogram.json?key=note
     def show
       key = params[:key] || :attack
-      render json: "swars/histogram/#{key}".classify.constantize.new(params)
+      render json: "swars/histogram/#{key}".classify.constantize.new(params.merge(current_user: current_user))
     end
   end
 end

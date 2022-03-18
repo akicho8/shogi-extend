@@ -61,7 +61,18 @@ module Swars
       end
 
       def current_max
-        (params[:max].presence || default_limit).to_i.clamp(0, default_limit_max)
+        @current_max ||= yield_self do
+          v = (params[:max].presence || default_limit).to_i
+          if current_user && current_user.staff?
+            # 制限なし
+          else
+            # キャッシュが死なないように max_list の項目だけ許可する
+            unless max_list.include?(v)
+              v = default_limit
+            end
+          end
+          v
+        end
       end
 
       def cache_key
@@ -129,7 +140,11 @@ module Swars
         if Rails.env.development?
           return [0, 1, 2, 1000, 5000, default_limit]
         end
-        [100, 1000, 10000]
+        [1000, 5000, 10000]
+      end
+
+      def current_user
+        params[:current_user]
       end
     end
   end
