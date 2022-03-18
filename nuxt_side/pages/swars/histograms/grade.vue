@@ -93,7 +93,7 @@ export default {
   fetchOnServer: false,
   fetch() {
     this.rule_key = this.rule_key ?? this.$route.query.rule_key ?? "all"
-    this.xtag = this.xtag ?? this.$route.query.xtag
+    this.xtag = this.xtag ?? this.$route.query.xtag ?? ""
 
     // if (this.present_p(this.rule_key)) {
     //   if (this.rule_key != "all") {
