@@ -14,12 +14,19 @@
 module Swars
   module Histogram
     class Grade < Base
+      # キャッシュ後なのでここでマージするとキャッシュしない
+      def as_json(*)
+        super.merge({
+            :xtag_select_names => xtag_select_names,
+          })
+      end
+
+      # すべてキャッシュ対象
       def to_h
         super.merge({
-            :rule_key  => params[:rule_key].presence,
-            :xtag      => params[:xtag].presence,
-            :xtag_select_names => xtag_select_names,
-            :real_total_count => records.sum { |e| e[:count] },
+            :rule_key          => params[:rule_key].presence,
+            :xtag              => params[:xtag].presence,
+            :real_total_count  => records.sum { |e| e[:count] },
           })
       end
 
