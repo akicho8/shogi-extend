@@ -76,31 +76,10 @@ export default {
       xtag: null,
     }
   },
-  // watch: {
-  //   "$route.query": "$fetch",
-  // },
-  // watch: {
-  //   // "$route.query": "$fetch",
-  //   // rule_key() {
-  //   //   this.$router.push({query: {rule_key: this.rule_key}}, () => {
-  //   //     this.clog("query に変化があったので watch 経由で $fetch が呼ばれる")
-  //   //   }, () => {
-  //   //     this.clog("query に変化がないので watch 経由で $fetch が呼ばれない。ので自分で呼ぶ")
-  //   //     this.$fetch()
-  //   //   })
-  //   // },
-  // },
   fetchOnServer: false,
   fetch() {
     this.rule_key = this.rule_key ?? this.$route.query.rule_key ?? "all"
     this.xtag = this.xtag ?? this.$route.query.xtag ?? ""
-
-    // if (this.present_p(this.rule_key)) {
-    //   if (this.rule_key != "all") {
-    //     this.rule_key = "all"
-    //     this.toast_warn("データベースが固まるのでルール別の集計はできません")
-    //   }
-    // }
 
     const params = {
       ...this.$route.query,
@@ -108,37 +87,6 @@ export default {
       xtag: this.xtag,
       key: "grade",
     }
-    // console.log(params)
-
-    // console.log(`rule_key: ${this.rule_key}`)
-    // console.log(new_params)
-
-    // if (this.blank_p(params.query)) {
-    //   params.query = this.swars_search_default_key_get()
-    // }
-
-    // if (this.blank_p(params.per)) {
-    //   if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
-    //     params.per = this.per_info.per
-    //   }
-    // }
-
-    // if (this.blank_p(params.per)) {
-    //   // if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
-    //   params.per = this.per_info.per
-    //   // }
-    // }
-
-    // params = this.pc_url_params_clean(params)
-    // this.ga_process(params)
-
-    // Number(params.per || 1)
-
-  //   const xi = await $axios.$get("/api/swars_histogram.json", {params: new_params})
-  //   return {
-  //     xi: xi,
-  //     rule_key: xi.rule_key,
-  //   }
 
     return this.$axios.$get("/api/swars_histogram.json", {params}).then(xi => {
       this.xi = xi
@@ -158,19 +106,6 @@ export default {
           this.toast_warn("なんも見つかりませんでした")
         }
       }
-
-      // this.rule_key = xi.rule_key
-      // this.rails_session_side_copy_to_user_keys_if_blank()
-      //
-      // // なかから nuxt-link したとき $fetch が呼ばれるが、
-      // // this.query は前の状態なので更新する
-      // this.query = this.xi.query
-      // this.user_keys_update_by_query()
-      // // this.query = this.$route.query.query
-      //
-      // this.xnotice_run_all(this.xi)
-      //
-      // this.tiresome_alert_check()
     })
   },
   methods: {
@@ -190,28 +125,9 @@ export default {
     },
   },
 
-  // watchQuery: ["max", "rule_key"],
-  // async asyncData({$axios, params, query}) {
-  //   // http://localhost:3000/api/swars_histogram.json
-  //   let new_params = {
-  //     ...params,
-  //     ...query,
-  //     key: "grade",
-  //   }
-  //   const xi = await $axios.$get("/api/swars_histogram.json", {params: new_params})
-  //   return {
-  //     xi: xi,
-  //     rule_key: xi.rule_key,
-  //   }
-  // },
   mounted() {
-    // this.ga_click(`段級分布`)
     this.ga_click("将棋ウォーズ棋力分布")
   },
-  // created() {
-  //   const unwatch = this.$watch(() => [this.foo, this.bar], () => this.share_update(), {deep: true})
-  //   unwatch()
-  // },
   computed: {
     meta() {
       return {
