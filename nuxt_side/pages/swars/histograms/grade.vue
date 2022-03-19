@@ -43,7 +43,6 @@ client-only
                 div
                   .heading 絞り込み後の件数
                   .title {{xi.real_total_count}}
-
         .columns.is-centered
           .column.is-7
             CustomChart.is-unselectable(:params="xi.custom_chart_params")
@@ -58,6 +57,13 @@ client-only
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="対局" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{number_round(row.deviation_score)}}
+        .columns.is-vcentered.is-multiline.xform_block
+          .column
+            nav.level.is-mobile
+              .level-item.has-text-centered
+                div
+                  .heading 実行時間(秒)
+                  .title {{number_floor(xi.processed_sec, 3)}}
 
     DebugPrint(v-if="development_p")
     DebugPre(v-if="development_p && xi")
