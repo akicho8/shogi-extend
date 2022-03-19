@@ -1,3 +1,5 @@
+require "active_support/core_ext/benchmark"
+
 module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
@@ -12,7 +14,7 @@ module Swars
 
       def as_json(*)
         Rails.cache.fetch(cache_key.join("/"), expires_in: Rails.env.production? ? cache_expires_in : 0) do
-          to_h
+          to_h_with_processed_sec
         end
       end
 
@@ -23,16 +25,22 @@ module Swars
           :current_max         => current_max,
           :updated_at          => Time.current,
           :sample_count        => target_ids.size,
-          :records             => records,
-          :custom_chart_params => custom_chart_params,
           :cache_key           => cache_key.join("/"),
           :default_limit       => default_limit,
           :default_limit_max   => default_limit_max,
           :max_list            => max_list,
+          :records             => records,
+          :custom_chart_params => custom_chart_params,
         }
       end
 
       private
+
+      def to_h_with_processed_sec
+        hash = {}
+        processed_sec = Benchmark.realtime { hash = to_h }
+        hash.reverse_merge(processed_sec: processed_sec)
+      end
 
       def records
         @records ||= yield_self do
