@@ -60,9 +60,10 @@ client-only
 <script>
 import _ from "lodash"
 
+import { Location                 } from "shogi-player/components/models/location.js"
+
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
 import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
-import { Location                 } from "shogi-player/components/models/location.js"
 
 import { support_parent           } from "./support_parent.js"
 
@@ -94,7 +95,7 @@ import { app_ping                 } from "./app_ping.js"
 import { app_tweet                } from "./app_tweet.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
-import { app_sound_bug               } from "./app_sound_bug.js"
+import { app_sound_bug            } from "./app_sound_bug.js"
 import { app_message              } from "./app_message.js"
 import { app_main_setting         } from "./app_main_setting.js"
 import { app_sound_resume         } from "./app_sound_resume.js"
@@ -185,7 +186,7 @@ export default {
       turn_offset_max: null,                            // 最後の手数
 
       record:          this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
-      edit_mode_sfen:  null,             // 編集モードでの棋譜
+      edit_mode_sfen:  null,               // 編集モードでの棋譜
     }
   },
   beforeMount() {
@@ -257,10 +258,9 @@ export default {
       this.sidebar_p = false
       this.sound_play_click()
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
-      this.current_turn  = this.config.record.initial_turn     // 現在の手数
+      this.current_turn = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")
     },
-
 
   },
 
@@ -280,14 +280,16 @@ export default {
 
     current_xtitle() { return { title: this.current_title } },
 
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
     component_style() {
       return {
         "--board_width": this.board_width,
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-
+    // いちばん外側に設定するタグのclassでグローバル的なものを指定する
     component_class() {
       const hv = {}
       hv.debug_mode_p        = this.debug_mode_p
