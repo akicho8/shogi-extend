@@ -646,7 +646,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "初期配置に戻す" do
-    it "works" do
+    it "正しく同期する" do
       a_block do
         room_setup("my_room", "alice")                    # alice先輩が部屋を作る
       end
@@ -669,6 +669,23 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       b_block do
         assert_turn(0)                             # bob側も0手に戻っている
+      end
+    end
+
+    it "ダイアログの中でさらに同期する局面を調整する" do
+      a_block do
+        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+        assert_move("77", "76", "☗7六歩")                # aliceが指す
+        assert_turn(1)                                    # 1手進んでいる
+        hamburger_click
+        menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
+        Capybara.within(".TurnChangeModal") do
+          assert_text("局面 #0")                          # 初期配置に戻すため初期値は0手目になっているが
+          find(".button.next").click                      # 「>」で
+          assert_text("局面 #1")                          # 1手目に進める
+        end
+        find(".apply_button").click                       # 「この局面まで戻る」
+        assert_turn(1)                                    # 0手目ではなく1手目に戻っている
       end
     end
   end

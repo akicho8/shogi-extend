@@ -17,7 +17,7 @@
         :sp_sound_enabled="true"
         :sp_body="sfen"
         :sp_turn="turn"
-        @update:turn="v => new_turn = v"
+        @update:turn_offset="v => new_turn = v"
       )
 
   .modal-card-foot
