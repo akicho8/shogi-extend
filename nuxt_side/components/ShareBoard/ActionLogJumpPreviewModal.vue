@@ -17,7 +17,7 @@
         :sp_sound_enabled="true"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
-        @update:turn="v => new_turn = v"
+        @update:turn_offset="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")

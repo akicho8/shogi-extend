@@ -672,7 +672,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
 
-    it "ダイアログの中でさらに同期する局面を調整する" do
+    it "初期配置に戻すダイアログの中で局面を調整する" do
       a_block do
         room_setup("my_room", "alice")                    # alice先輩が部屋を作る
         assert_move("77", "76", "☗7六歩")                # aliceが指す
@@ -691,7 +691,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "1手戻す" do
-    it "works" do
+    it "正しく同期する" do
       a_block do
         room_setup("my_room", "alice")                    # alice先輩が部屋を作る
       end
@@ -1265,6 +1265,23 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
         find(".room_code_except_url_copy_handle").click # 「リンク」
         assert_text("棋譜リンクコピー")
+      end
+    end
+
+    it "操作履歴モーダル内で局面を調整する" do
+      a_block do
+        visit_app
+        assert_move("77", "76", "☗7六歩")
+        assert_move("33", "34", "☖3四歩")
+        assert_turn(2)                                    # 現在2手目
+        action_log_row_of(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
+        Capybara.within(".ActionLogJumpPreviewModal") do
+          assert_text("局面 #2")                          # 当然2手目になっている
+          find(".button.previous").click                  # 「<」で1手目に進めると
+          assert_text("局面 #1")                          # 1手目になっている
+        end
+        find(".apply_button").click                       # 「この局面まで戻る」
+        assert_turn(1)                                    # 1手目に変更されている
       end
     end
   end
