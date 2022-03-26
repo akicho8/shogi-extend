@@ -44,7 +44,7 @@
             )
           .has-text-centered.mt-3(v-if="mode === 'standby'")
             .mx-1.is-size-7.has-text-grey CPUの成績
-            .mx-1.is-size-6.has-text-weight-bold {{judge_group.lose || 0}}勝{{judge_group.win || 0}}敗
+            .mx-1.is-size-5.has-text-weight-bold {{judge_group.lose || 0}}勝 {{judge_group.win || 0}}敗
 
         .column.is-one-third
           .box(v-if="mode === 'standby'")
