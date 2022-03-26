@@ -977,16 +977,16 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       find(".close_handle").click           # 閉じる
 
       place_click("77")                     # 77を持って
-      place_click("87")                     # 87をタップ
+      place_click("87")                     # 87をクリック
     end
 
-    it "移動元をタップ" do
+    it "移動元をクリック" do
       test1(".is_move_cancel_reality")
       assert_no_move("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
     end
 
-    it "他のセルをタップ" do
-      test1(".is_move_cancel_standard")         # 「他のセルをタップ」選択
+    it "他のセルをクリック" do
+      test1(".is_move_cancel_standard")         # 「他のセルをクリック」選択
       assert_move("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
     end
   end
@@ -1525,7 +1525,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "入室したとき他に誰もいなかったら部屋のリンクのタップを促す" do
+  describe "入室したとき他に誰もいなかったら部屋のリンクのクリックを促す" do
     it "works" do
       a_block do
         room_setup("my_room", "alice")

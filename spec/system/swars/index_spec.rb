@@ -100,7 +100,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
   end
 
-  describe "一覧要素の一番上の対局の各操作ボタンをタップする" do
+  describe "一覧要素の一番上の対局の各操作ボタンをクリックする" do
     before do
       visit2 "/swars/search", query: "Yamada_Taro"
     end
@@ -260,7 +260,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        find(".swars_direct_download_handle").click         # 「ダウンロード」をタップ
+        find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
 
         # assert { current_path == "/swars/direct-download" } # 遷移した (テストが不安定)
         switch_to_window_last                      # 自力で切り替える
@@ -287,7 +287,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をタップ
+        find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をクリック
         assert { current_path == "/swars/users/Yamada_Taro/download-all" }
 
         # ページ遷移後
