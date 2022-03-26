@@ -663,7 +663,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         hamburger_click
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
-        find(".apply_button").click                       # 「この局面まで戻る」
+        find(".apply_button").click                       # 「N手目まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn(0)                             # 0手に戻っている
       end
@@ -684,7 +684,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
           find(".button.next").click                      # 「>」で
           assert_text("局面 #1")                          # 1手目に進める
         end
-        find(".apply_button").click                       # 「この局面まで戻る」
+        find(".apply_button").click                       # 「N手目まで戻る」
         assert_turn(1)                                    # 0手目ではなく1手目に戻っている
       end
     end
@@ -707,7 +707,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         hamburger_click
         menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
-        find(".apply_button").click                       # 「この局面まで戻る」
+        find(".apply_button").click                       # 「N手目まで戻る」
         # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
         assert_turn(1)                             # 1手目に戻っている
       end
@@ -1239,7 +1239,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         action_log_row_of(1).click   # 初手(76歩)の行をクリックしてモーダル起動
-        apply_button # この局面まで戻る実行
+        apply_button # N手目まで戻る実行
         assert_turn(1)        # 1手目に戻った
       end
       b_block do
@@ -1280,7 +1280,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
           find(".button.previous").click                  # 「<」で1手目に進めると
           assert_text("局面 #1")                          # 1手目になっている
         end
-        find(".apply_button").click                       # 「この局面まで戻る」
+        find(".apply_button").click                       # 「N手目まで戻る」
         assert_turn(1)                                    # 1手目に変更されている
       end
     end
