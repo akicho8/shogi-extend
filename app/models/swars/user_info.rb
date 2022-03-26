@@ -301,10 +301,6 @@ module Swars
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
 
         ################################################################################
-
-        { name: "駒の使用率",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
-
-        ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
         # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
         { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
@@ -328,6 +324,10 @@ module Swars
         { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
         { name: "平均考慮",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
+
+        ################################################################################
+
+        { name: "駒の使用率",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
 
         ################################################################################
         { name: "対戦相手との段級差(平均)",           type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
