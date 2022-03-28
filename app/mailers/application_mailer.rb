@@ -4,7 +4,13 @@ class ApplicationMailer < ActionMailer::Base
 
   layout "mailer"
 
-  USELESS_MAIL_ADDRESS_LIST = %w(au.com ezweb.ne.jp)
+  # まともにファイルが添付できないドメイン
+  USELESS_MAIL_ADDRESS_LIST = [
+    "au.com",
+    "ezweb.ne.jp",
+    "docomo.ne.jp",
+  ]
+
   APP_NAME_APPEND = false
 
   private
