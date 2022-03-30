@@ -31,7 +31,7 @@ module KifShowMethods
     end
 
     if current_body_encode == "Shift_JIS"
-      text_body = text_body.encode(current_body_encode)
+      text_body = text_body.encode(current_body_encode, invalid: :replace, replace: "(#{current_body_encode}に変換できない文字)")
     end
 
     # if boolean_for(params[:plain])
