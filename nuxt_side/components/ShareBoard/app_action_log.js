@@ -1,5 +1,9 @@
-const ACTION_LOG_MAX     = 200   // 履歴の最大長
-const ACTION_LOG_PUSH_TO = "top" // 追加位置
+// 履歴
+// タップ局面変更
+
+const ACTION_LOG_MAX        = 200   // 履歴の最大長
+const ACTION_LOG_PUSH_TO    = "top" // 追加位置
+const SAME_SFEN_THEN_RETURN = false // 同じ局面なら何もしない？
 
 import _ from "lodash"
 import dayjs from "dayjs"
@@ -97,15 +101,15 @@ export const app_action_log = {
     },
 
     action_log_jump(e) {
-      if (false) {
+      this.__assert__('sfen' in e, "'sfen' in e")
+      this.__assert__('turn' in e, "'turn' in e")
+
+      if (SAME_SFEN_THEN_RETURN) {
         if (this.current_sfen === e.sfen && this.current_turn === e.turn) {
           this.toast_ok("同じ局面です")
           return
         }
       }
-
-      this.__assert__('sfen' in e, "'sfen' in e")
-      this.__assert__('turn' in e, "'turn' in e")
 
       this.current_sfen = e.sfen
       this.current_turn = e.turn
