@@ -15,30 +15,29 @@ class Talk
     end
   end
 
-  cattr_accessor :replace_table do
-    {
-      "手番" => "てばん",
-    }
+  # 基本はAPI側に任せたいがどうしても看過できない読み間違いはここで吸収する
+  REPLACE_TABLE = {
+    "手番" => "てばん",       # 「てつがい」と読んでしまうため
+  }
+
+  DEFAULT_POLLY_PARAMS = {
+    :output_format => "mp3",
+    :sample_rate   => "16000",
+    :text_type     => "text",
   end
 
-  cattr_accessor :default_polly_params do
-    {
-      :output_format => "mp3",
-      :sample_rate   => "16000",
-      :text_type     => "text",
-    }
-  end
-
-  cattr_accessor(:pictorial_chars_delete_enable) { true } # 特殊文字の除去 (除去しないとAWS側の変換が特殊文字の直前で停止してしまう)
+  # 特殊文字を除去するか？
+  # 除去しないとAWS側の変換が特殊文字の直前で停止してしまう
+  PICTORIAL_CHARS_DELETE_ENABLE = true
 
   def normalized_text
     @normalized_text ||= yield_self do
       s = source_text
-      if pictorial_chars_delete_enable
+      if PICTORIAL_CHARS_DELETE_ENABLE
         s = s.encode("EUC-JP", "UTF-8", invalid: :replace, undef: :replace, replace: "").encode("UTF-8")
       end
-      if replace_table
-        s = s.gsub(/#{replace_table.keys.join("|")}/o, replace_table)
+      if REPLACE_TABLE
+        s = s.gsub(/#{REPLACE_TABLE.keys.join("|")}/o, REPLACE_TABLE)
       end
       s = s.sub(/\p{Space}+\z/, "")                     # "テストw　" → "テストw"
       s = s.sub(/[wｗ]+\z/) { |s| "わら" * s.size }
@@ -101,7 +100,7 @@ class Talk
   end
 
   def polly_params
-    default_polly_params.merge({voice_id: voice_id}, params[:polly_params])
+    DEFAULT_POLLY_PARAMS.merge({voice_id: voice_id}, params[:polly_params])
   end
 
   def voice_id
