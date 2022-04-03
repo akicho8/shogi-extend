@@ -7,18 +7,27 @@
   )
 
   .footer_buttons(v-if="base.edit_mode_p")
+
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       b-button(@click="base.king_formation_auto_set(true)") 詰将棋検討用玉配置
       b-button(@click="base.king_formation_auto_set(false)") 玉回収
+
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       PiyoShogiButton(:href="base.piyo_shogi_app_with_params_url")
       KentoButton(tag="a" :href="base.kento_app_with_params_url" target="_blank")
       KifCopyButton(@click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))") コピー
+
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       b-button(@click="base.any_source_read_handle") 棋譜の読み込み
 
   .buttons.is-centered.mt-4
-    b-button.has-text-weight-bold(:type="base.advanced_p ? 'is-twitter' : ''" v-if="base.tweet_button_show_p" icon-left="twitter" @click="base.tweet_modal_handle") ツイート
+    b-button.has-text-weight-bold(
+      v-if="base.tweet_button_show_p"
+      :type="tweet_button_type"
+      icon-left="twitter"
+      @click="base.tweet_modal_handle"
+      )
+      | ツイート
 </template>
 
 <script>
@@ -28,11 +37,14 @@ export default {
   name: "ShareBoardSp",
   mixins: [support_child],
   computed: {
+    // .column に指定するクラス
     main_column_class() {
       const av = []
       av.push(`is_sb_${this.base.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
       return av
     },
+
+    // CustomShogiPlayer に全部渡す
     sp_bind() {
       const hv = {}
       hv.ref                                         = "main_sp"
@@ -61,6 +73,8 @@ export default {
 
       return hv
     },
+
+    // 開発時だけレイヤーON
     sp_layer() {
       if (this.development_p) {
         return "is_layer_on"
@@ -68,6 +82,8 @@ export default {
         return "is_layer_off"
       }
     },
+
+    // 対局中にコントローラーは隠す
     sp_controller() {
       if (this.base.controller_disabled_p) {
         return "is_controller_off"
@@ -75,6 +91,8 @@ export default {
         return "is_controller_on"
       }
     },
+
+    // 対局中はスライダーも隠す
     sp_slider() {
       if (this.base.controller_disabled_p) {
         return "is_slider_off"
@@ -82,6 +100,8 @@ export default {
         return "is_slider_on"
       }
     },
+
+    // 動作を受け取るやつら
     sp_hook() {
       const hv = {}
       hv["update:play_mode_advanced_full_moves_sfen"] = this.base.play_mode_advanced_full_moves_sfen_set
@@ -94,6 +114,12 @@ export default {
       hv["operation_double_pawn"]                     = this.base.operation_double_pawn_handle
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
       return hv
+    },
+
+    tweet_button_type() {
+      if (this.base.advanced_p) {
+        return "is-twitter"
+      }
     },
   },
 }
@@ -134,14 +160,4 @@ export default {
     .ShareBoardSp
       .CustomShogiPlayer
         --sp_board_color: hsla(38,69%,64%,1.0)
-        // --sp_board_color: hsla(35,76%,71%,1.0)
-  &.order_enable_p
-    //   background-color: hsla(0, 0%, 0%, 0.2)
-    // .PieceTexture
-    //   .PieceTextureSelf
-    //     &.location_black
-    //     &.promoted_false
-    //     &.piece_name
-    //     &.piece_K
-    //       background-image: url("/icon.png")
 </style>
