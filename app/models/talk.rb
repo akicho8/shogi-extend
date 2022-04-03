@@ -24,7 +24,7 @@ class Talk
     :output_format => "mp3",
     :sample_rate   => "16000",
     :text_type     => "text",
-  end
+  }
 
   # 特殊文字を除去するか？
   # 除去しないとAWS側の変換が特殊文字の直前で停止してしまう
