@@ -1,5 +1,5 @@
-import _ from "lodash"
-import dayjs from "dayjs"
+// チャット発言送信
+
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "./models/message_scope_info.js"
 
@@ -22,6 +22,7 @@ export const app_message = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 送信
     message_share(params) {
       if (this.ac_room) {
         this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
@@ -33,6 +34,7 @@ export const app_message = {
       }
     },
 
+    // 受信
     message_share_broadcasted(params) {
       this.ml_add(params) // あとで表示するため対象でなくても受信はしておく
 
@@ -52,9 +54,9 @@ export const app_message = {
     message_share_received_p(e) {
       let exec = true
       if (e.message_scope_key === "is_message_scope_private") { // 観戦者宛のとき
-        if (!this.received_from_self(e)) {       // 自分が送信者ではなく
-          if (this.self_is_member_p) {           // 自分が対局者の場合は
-            exec = false                         // 受信しない
+        if (!this.received_from_self(e)) { // 自分が送信者ではなく
+          if (this.self_is_member_p) {     // 自分が対局者の場合は
+            exec = false                   // 受信しない
           }
         }
       }
