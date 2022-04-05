@@ -1,8 +1,10 @@
+// チャットの発言履歴
+
 import _ from "lodash"
 import dayjs from "dayjs"
 
-const MESSAGE_LOG_MAX = 100
-const MESSAGE_LOG_PUSH_TO = "bottom"
+const MESSAGE_LOG_MAX     = 100        // メッセージ履歴件数
+const MESSAGE_LOG_PUSH_TO = "bottom"   // pushする方向
 
 export const app_message_logs = {
   data() {
@@ -11,6 +13,7 @@ export const app_message_logs = {
     }
   },
   methods: {
+    // 発言の追加
     ml_add(params) {
       if (MESSAGE_LOG_PUSH_TO === "top") {
         this.message_logs.unshift(params)
@@ -21,6 +24,8 @@ export const app_message_logs = {
         this.ml_scroll_to_bottom()
       }
     },
+
+    // デバッグ用
     ml_add_test() {
       this.ml_add({
         from_user_name: "alice",
@@ -29,6 +34,8 @@ export const app_message_logs = {
         performed_at: this.time_current_ms(),
       })
     },
+
+    // 一番下までスクロール
     ml_scroll_to_bottom() {
       const elem = document.querySelector(".ShareBoardMessageLog .scroll_block")
       if (elem) {
