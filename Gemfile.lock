@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 70bfa632fe164ec6634a453d1c69da5036b0cd33
+  revision: 7b87aafe08f685e96a32dacc2e39717ae7fe2c3d
   specs:
     bioshogi (0.0.1)
       actionview
@@ -147,7 +147,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     color (1.8)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
     database_cleaner (2.0.1)
@@ -234,7 +234,7 @@ GEM
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.14.0)
+    loofah (2.16.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
