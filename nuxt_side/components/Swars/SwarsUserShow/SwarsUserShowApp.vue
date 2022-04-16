@@ -1,40 +1,56 @@
 <template lang="pug">
 .SwarsUserShowApp
-  b-loading(:active="$fetchState.pending")
-  //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
-  .MainContainer(v-if="!$fetchState.pending && !$fetchState.error" :key="info.onetime_key")
-    PageCloseButton(@click="back_handle" position="is_absolute")
-    SwarsUserShowDropdownMenu(:base="base")
-    SwarsUserShowHead(:base="base")
-    b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sound_play_click()")
-      b-tab-item(label="日付")
-      b-tab-item(label="段級")
-      b-tab-item(label="戦法")
-      b-tab-item(label="対攻")
-      b-tab-item(label="囲い")
-      b-tab-item(label="対囲")
-      b-tab-item(label="他")
-    SwarsUserShowTabContent0Day(:base="base")
-    SwarsUserShowTabContent1Grade(:base="base")
-    SwarsUserShowTabContent2MyAttack(:base="base")
-    SwarsUserShowTabContent3VsAttack(:base="base")
-    SwarsUserShowTabContent4MyDefense(:base="base")
-    SwarsUserShowTabContent5VsDefense(:base="base")
-    SwarsUserShowTabContent6Etc(:base="base")
+  client-only
+    DebugBox(v-if="development_p")
+      p tab_index: {{pretty_inspect(tab_index)}}
+      p rule: {{pretty_inspect(rule)}}
+      p sample_max: {{pretty_inspect(sample_max)}}
+      p xmode: {{pretty_inspect(xmode)}}
+      p query.tab_index: {{pretty_inspect($route.query.tab_index)}}
+      p query.rule: {{pretty_inspect($route.query.rule)}}
+      p query.sample_max: {{pretty_inspect($route.query.sample_max)}}
+      p query.xmode: {{pretty_inspect($route.query.xmode)}}
 
-  DebugPre(v-if="development_p") {{info}}
+    b-loading(:active="$fetchState.pending")
+    //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
+    .MainContainer(v-if="!$fetchState.pending && !$fetchState.error" :key="info.onetime_key")
+      PageCloseButton(@click="back_handle" position="is_absolute")
+      SwarsUserShowDropdownMenu(:base="base")
+      SwarsUserShowHead(:base="base")
+      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="sound_play_click()")
+        b-tab-item(label="日付")
+        b-tab-item(label="段級")
+        b-tab-item(label="戦法")
+        b-tab-item(label="対攻")
+        b-tab-item(label="囲い")
+        b-tab-item(label="対囲")
+        b-tab-item(label="他")
+      SwarsUserShowTabContent0Day(:base="base")
+      SwarsUserShowTabContent1Grade(:base="base")
+      SwarsUserShowTabContent2MyAttack(:base="base")
+      SwarsUserShowTabContent3VsAttack(:base="base")
+      SwarsUserShowTabContent4MyDefense(:base="base")
+      SwarsUserShowTabContent5VsDefense(:base="base")
+      SwarsUserShowTabContent6Etc(:base="base")
+
+    DebugPre(v-if="development_p") {{$route.query.info}}
 </template>
 
 <script>
-import { support_parent } from "./support_parent.js"
-import { app_storage    } from "./app_storage.js"
-import { app_search     } from "./app_search.js"
-import { app_support    } from "./app_support.js"
-import { RuleSelectInfo  } from "./rule_select_info.js"
+import { support_parent   } from "./support_parent.js"
+import { app_storage      } from "./app_storage.js"
+import { app_search       } from "./app_search.js"
+import { app_support      } from "./app_support.js"
+
+import { RuleSelectInfo   } from "./models/rule_select_info.js"
+import { SampleMaxInfo    } from "./models/sample_max_info.js"
+import { XmodeSelectInfo } from "./models/xmode_select_info.js"
+import { ParamInfo        } from "./models/param_info.js"
+
+import _ from "lodash"
 
 export default {
   name: "SwarsUserShowApp",
-
   mixins: [
     support_parent,
     app_storage,
@@ -49,40 +65,21 @@ export default {
   },
 
   watch: {
-    // tab_index を除外するため
-    "$route.query.rule": "$fetch",
-    "$route.query.sample_max": "$fetch",
-    "$route.query.query":      "$fetch",
-    "$route.query.try_fetch":  "$fetch",
-
-    tab_index(v) {
-      if (this.info) {
-        this.update_handle({})
-      }
+    // tab_index だけは update_handle に渡さないので変更に合わせてURLを書き換える
+    tab_index() {
+      this.url_replace()
     },
   },
 
   // http://localhost:4000/swars/users/devuser1
   // http://localhost:3000/w.json?query=devuser1&format_type=user
   // http://localhost:3000/w.json?query=foo&format_type=user
-  //
   // fetch({error}) とすると $fetchState がつくられなくなる謎の罠あり
+  fetchOnServer: false,
   fetch() {
-    const params = {
-      ...this.$route.query,
-      query: this.$route.params.key,
-      format_type: "user",
-    }
-    return this.$axios.$get("/w.json", {params}).then(e => { // FIXME: /api/users.json にする
+    return this.$axios.$get("/w.json", {params: this.api_params}).then(e => {
       this.info = e
-
-      // 1. 以前の tab_index を設定する
-      this.ls_setup()
-
-      // 2. 次にリンクの指定があるときは tab_index を上書きする(順序重要)
-      if ("tab_index" in this.$route.query) {
-        this.tab_index = parseInt(this.$route.query.tab_index)
-      }
+      this.url_replace() // URLを書き換えてからではなくfetchしたあとでURLを置換する
     })
   },
 
@@ -91,25 +88,30 @@ export default {
   },
 
   methods: {
-    update_handle(options = {}) {
-      // https://github.com/vuejs/vue-router/issues/2872
+    // URLを書き換えたことに反応させるのではなく
+    // 単に内部変数を書き換えて明示的に fetch する
+    update_handle(params = {}) {
+      _.each(params, (value, key) => this.$data[key] = value)
+      this.$fetch()
+    },
+
+    // URLを書き換えるだけ
+    // 絶対に watch してはいけない
+    url_replace() {
       this.$router.replace({
         name: "swars-users-key",
-        params: { key: this.info.user.key },
-        query: {
-          tab_index: this.tab_index,
-          sample_max: this.$route.query.sample_max,
-          rule: this.$route.query.rule,
-          ...options,
-        },
+        params: this.$route.params,
+        query: this.url_params,
       }).catch(err => {})
     },
 
+    // 検索に戻る
     back_handle() {
       this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
 
+    // 日付のスタイル
     battled_on_to_css_class(row) {
       if (row.day_type) {
         return `has-text-${row.day_type}`
@@ -118,9 +120,28 @@ export default {
   },
 
   computed: {
-    base() { return this },
-    RuleSelectInfo() { return RuleSelectInfo },
-    current_rule() { return this.$route.query.rule },
+    base()             { return this             },
+    ParamInfo()        { return ParamInfo        },
+    RuleSelectInfo()   { return RuleSelectInfo   },
+    SampleMaxInfo()    { return SampleMaxInfo    },
+    XmodeSelectInfo() { return XmodeSelectInfo },
+
+    url_params() {
+      return this.hash_compact_if_null({
+        tab_index:  this.tab_index,
+        rule:       this.rule,
+        sample_max: this.sample_max,
+        xmode:     this.xmode,
+      })
+    },
+
+    api_params() {
+      return {
+        ...this.url_params,
+        query: this.$route.params.key,
+        format_type: "user",
+      }
+    },
   },
 }
 </script>

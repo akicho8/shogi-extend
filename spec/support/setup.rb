@@ -11,6 +11,7 @@ RSpec.configure do |config|
     Emox::Rule.setup
 
     Swars::Grade.setup
+    Swars::Xmode.setup
   end
 
   config.before(:context) do

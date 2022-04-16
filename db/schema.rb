@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_04_153100) do
+ActiveRecord::Schema.define(version: 2022_04_16_082500) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1042,6 +1042,7 @@ ActiveRecord::Schema.define(version: 2021_12_04_153100) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "xmode_id", default: 1, null: false, comment: "対局モード"
     t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
@@ -1053,6 +1054,7 @@ ActiveRecord::Schema.define(version: 2021_12_04_153100) do
     t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
+    t.index ["xmode_id"], name: "index_swars_battles_on_xmode_id"
   end
 
   create_table "swars_crawl_reservations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -1132,6 +1134,15 @@ ActiveRecord::Schema.define(version: 2021_12_04_153100) do
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
     t.index ["user_key"], name: "index_swars_users_on_user_key", unique: true
+  end
+
+  create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_swars_xmodes_on_key", unique: true
+    t.index ["position"], name: "index_swars_xmodes_on_position"
   end
 
   create_table "swars_zip_dl_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

@@ -167,6 +167,9 @@ module Swars
 
         info[:rule_key] = game_hash["gtype"]
 
+        # xmode 通常/友対
+        info[:xmode_dirty_code] = game_hash["opponent_type"]
+
         # 手合割
         info[:preset_dirty_code] = game_hash["handicap"]
 
@@ -227,5 +230,10 @@ if $0 == __FILE__
   # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "",   user_key: "kinakom0chi", page_index: 0)
   # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "sb", user_key: "kinakom0chi", page_index: 0)
   # tp Swars::Agent::Index.fetch(run_remote: true, gtype: "s1", user_key: "kinakom0chi", page_index: 0)
-  p Swars::Agent::Record.fetch(run_remote: true, key: "patrick0169-Shogochandrsu-20210612_060155")[:csa_seq]
+  # p Swars::Agent::Record.fetch(run_remote: true, key: "patrick0169-Shogochandrsu-20210612_060155")[:csa_seq]
+  p Swars::Agent::Record.fetch(run_remote: true, key: "kinakom0chi-masauta-20220411_211436")[:xmode_dirty_code]
+  p Swars::Agent::Record.fetch(run_remote: true, key: "kinakom0chi-dondonh3-20220401_222404")[:xmode_dirty_code]
+  p Swars::Agent::Record.fetch(run_remote: true, key: "kinakom0chi-mosangun-20220402_214610")[:xmode_dirty_code]
+  p Swars::Agent::Record.fetch(run_remote: true, key: "kinakom0chi-yukky1119-20220402_210314")[:xmode_dirty_code]
+  p Swars::Agent::Record.fetch(run_remote: true, key: "chrono_-Ito_Shingo-20220112_000134")[:xmode_dirty_code]
 end

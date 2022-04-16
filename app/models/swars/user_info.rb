@@ -82,6 +82,8 @@ module Swars
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
         hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
+        hash[:rule] = params[:rule] || ""
+        hash[:xmode] = params[:xmode] || ""
 
         hash[:user] = { key: user.key }
 
@@ -205,6 +207,9 @@ module Swars
       s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
       if v = params[:rule].presence
         s = s.merge(Swars::Battle.rule_eq(v))
+      end
+      if v = params[:xmode].presence
+        s = s.merge(Swars::Battle.xmode_eq(v))
       end
       s
     end

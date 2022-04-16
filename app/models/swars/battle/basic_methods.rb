@@ -22,6 +22,9 @@ module Swars
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
         scope :rule_eq, -> v { where(rule_key: RuleInfo.fetch(v).key) } # ルール "10分" や "ten_min" どちらでもOK
 
+        belongs_to :xmode
+        scope :xmode_eq, -> v { where(xmode: Xmode.fetch(v)) } # 種類
+
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?
             # Bioshogi::Parser.parse(Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
@@ -49,6 +52,8 @@ module Swars
           self.csa_seq ||= []
 
           self.rule_key ||= :ten_min
+
+          self.xmode ||= Xmode.fetch("通常")
 
           # "" から ten_min への変換
           if rule_key
@@ -78,6 +83,7 @@ module Swars
           validates :battled_at
           validates :rule_key
           validates :final_key
+          validates :xmode_id
         end
 
         with_options allow_blank: true do

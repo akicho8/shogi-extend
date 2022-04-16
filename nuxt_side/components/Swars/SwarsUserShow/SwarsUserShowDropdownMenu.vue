@@ -20,24 +20,24 @@ DotsMenuButton.SwarsUserShowDropdownMenu
     b-icon(icon="arrow-up-bold" size="is-small")
     span 最大1件
 
-  b-dropdown-item(@click="base.update_handle({sample_max: 100})")
-    b-icon(icon="arrow-up-bold" size="is-small")
-    span 最大100件
-
-  b-dropdown-item(@click="base.update_handle({sample_max: 200})")
-    b-icon(icon="arrow-up-bold" size="is-small")
-    span 最大200件
+  template(v-for="e in base.SampleMaxInfo.values")
+    b-dropdown-item(@click="base.update_handle({sample_max: e.value})" :class="{'is-active': base.sample_max === e.value}")
+      b-icon(icon="arrow-up-bold" size="is-small")
+      span {{e.name}}
 
   b-dropdown-item(separator)
 
   template(v-for="e in base.RuleSelectInfo.values")
-    b-dropdown-item(@click="base.update_handle({rule: e.name})" :class="{'is-active': base.current_rule === e.name}")
-      b-icon(icon="filter-variant" size="is-small")
+    b-dropdown-item(@click="base.update_handle({rule: e.key})" :class="{'is-active': base.rule === e.key}")
+      b-icon(icon="clock-outline" size="is-small")
       span {{e.name}}
 
-  b-dropdown-item(@click="base.update_handle({rule: ''})")
-    b-icon(icon="filter-variant" size="is-small")
-    span すべてのルール
+  b-dropdown-item(separator)
+
+  template(v-for="e in base.XmodeSelectInfo.values")
+    b-dropdown-item(@click="base.update_handle({xmode: e.key})" :class="{'is-active': base.xmode === e.key}")
+      b-icon(icon="account" size="is-small")
+      span {{e.name}}
 
   b-dropdown-item(separator)
 

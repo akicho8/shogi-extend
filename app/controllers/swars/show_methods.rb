@@ -24,6 +24,7 @@ module Swars
       a[:final_info]  = { name: e.final_info.name, :class => e.final_info.has_text_color,        }
       a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap_shift }
       a[:rule_info]   = { name: e.rule_info.name                                                 }
+      a[:xmode_info] = { key: e.xmode.key, name: e.xmode.name }
 
       # memberships
 
