@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Grade (swars_grades as Swars::Grade)
+# Xmode (swars_xmodes as Swars::Xmode)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | priority   | 優先度   | integer(4)  | NOT NULL    |      | B     |
+# | position   | 順序     | integer(4)  |             |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
@@ -19,23 +19,18 @@ module Swars
   RSpec.describe Xmode, type: :model, swars_spec: true do
     it "name" do
       assert { Xmode.fetch("通常").name == "通常" }
-      assert { Xmode.fetch("友対").name == "友対" }
+      assert { Xmode.fetch("友達").name == "友達" }
     end
 
-    # it "relation" do
-    #   grade = Xmode.fetch("十段")
-    #   user1 = User.create!(user_key: "user1", grade: Xmode.fetch("十段"))
-    #   user2 = User.create!(user_key: "user2", grade: Xmode.fetch("初段"))
-    #   battle = Battle.create_with_members!([user1, user2])
-    #   assert { grade.memberships.collect(&:user_id) == [user1.id] }
-    #   assert { grade.battles == [battle] }
-    #   assert { Battle.where.not(id: grade.battles).count == 0 } # 十段を除外する例
-    # end
+    it "relation" do
+      xmode = Xmode.fetch("友達")
+      user1 = User.create!(user_key: "user1")
+      user2 = User.create!(user_key: "user2")
+      battle = Battle.create_with_members!([user1, user2], xmode: xmode)
+      assert { battle.xmode == xmode }
+
+      assert { xmode.battles == [battle] }
+      assert { xmode.memberships == battle.memberships }
+    end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ...
-# >> 
-# >> Finished in 1.24 seconds (files took 4.61 seconds to load)
-# >> 3 examples, 0 failures
-# >> 
