@@ -82,6 +82,8 @@ module Swars
         hash[:onetime_key] = SecureRandom.hex # vue.js の :key に使うため
 
         hash[:sample_max] = sample_max      # サンプル数(棋譜一覧で再検索するときに "sample:n" として渡す)
+        hash[:rule] = params[:rule] || ""
+        hash[:grade2] = params[:grade2] || ""
 
         hash[:user] = { key: user.key }
 
