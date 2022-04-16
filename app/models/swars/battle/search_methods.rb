@@ -46,8 +46,8 @@ module Swars
             s = s.rule_eq(v)
           end
 
-          if v = c.query_info.lookup_one(:grade2) || c.query_info.lookup_one("様式") || c.query_info.lookup_one("モード")
-            s = s.grade2_eq(v)
+          if v = c.query_info.lookup_one(:xmode) || c.query_info.lookup_one("様式") || c.query_info.lookup_one("モード")
+            s = s.xmode_eq(v)
           end
 
           if e = c.query_info.lookup_op(:critical_turn) || c.query_info.lookup_op("開戦")

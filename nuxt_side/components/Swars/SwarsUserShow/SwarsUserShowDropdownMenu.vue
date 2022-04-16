@@ -34,8 +34,8 @@ DotsMenuButton.SwarsUserShowDropdownMenu
 
   b-dropdown-item(separator)
 
-  template(v-for="e in base.Grade2SelectInfo.values")
-    b-dropdown-item(@click="base.update_handle({grade2: e.key})" :class="{'is-active': base.grade2 === e.key}")
+  template(v-for="e in base.XmodeSelectInfo.values")
+    b-dropdown-item(@click="base.update_handle({xmode: e.key})" :class="{'is-active': base.xmode === e.key}")
       b-icon(icon="account" size="is-small")
       span {{e.name}}
 

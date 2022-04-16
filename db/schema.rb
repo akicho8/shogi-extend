@@ -1042,12 +1042,12 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "grade2_id", default: 3, null: false, comment: "対局モード"
+    t.bigint "xmode_id", default: 3, null: false, comment: "対局モード"
     t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
     t.index ["final_key"], name: "index_swars_battles_on_final_key"
-    t.index ["grade2_id"], name: "index_swars_battles_on_grade2_id"
+    t.index ["xmode_id"], name: "index_swars_battles_on_xmode_id"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
     t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
@@ -1069,13 +1069,13 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
   end
 
-  create_table "swars_grade2s", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+  create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_swars_grade2s_on_key", unique: true
-    t.index ["position"], name: "index_swars_grade2s_on_position"
+    t.index ["key"], name: "index_swars_xmodes_on_key", unique: true
+    t.index ["position"], name: "index_swars_xmodes_on_position"
   end
 
   create_table "swars_grades", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

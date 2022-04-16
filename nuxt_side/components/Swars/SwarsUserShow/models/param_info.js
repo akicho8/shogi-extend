@@ -7,7 +7,7 @@ export class ParamInfo extends ParamBase {
       { key: "tab_index",  type: "integer", name: "タブ",                   defaults: { development: null, production: 0,                         }, permanent: true,  relation: null,                            desc: null, },
       { key: "sample_max", type: "integer", name: "件数",                   defaults: { development: null, production: 50,                        }, permanent: true,  relation: null,                            desc: null, },
       { key: "rule",       type: "string",  name: "持ち時間",               defaults: { development: null, production: "",                        }, permanent: true,  relation: null,                            desc: null, },
-      { key: "grade2",     type: "string",  name: "モード",                 defaults: { development: null, production: "",                        }, permanent: true,  relation: null,                            desc: null, },
+      { key: "xmode",     type: "string",  name: "モード",                 defaults: { development: null, production: "",                        }, permanent: true,  relation: null,                            desc: null, },
 
       // { key: "tiresome_modal_selected",          type: "string",  name: "誘導モーダル選択値",     defaults: { development: null, production: "none",                    }, permanent: true,  relation: null,                            desc: null, },
       // { key: "layout_key",                       type: "string",  name: "レイアウト",             defaults: { development: null, production: "is_layout_table",         }, permanent: true,  relation: "LayoutInfo",                    desc: null, },

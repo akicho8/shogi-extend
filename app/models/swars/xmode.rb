@@ -14,7 +14,7 @@
 # |------------+----------+-------------+-------------+------+-------|
 
 module Swars
-  class Grade2 < ApplicationRecord
+  class Xmode < ApplicationRecord
     include MemoryRecordBind::Base
 
     acts_as_list top_of_list: 0

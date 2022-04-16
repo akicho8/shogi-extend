@@ -16,16 +16,16 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Grade2, type: :model, swars_spec: true do
+  RSpec.describe Xmode, type: :model, swars_spec: true do
     it "name" do
-      assert { Grade2.fetch("通常").name == "通常" }
-      assert { Grade2.fetch("友対").name == "友対" }
+      assert { Xmode.fetch("通常").name == "通常" }
+      assert { Xmode.fetch("友対").name == "友対" }
     end
 
     # it "relation" do
-    #   grade = Grade2.fetch("十段")
-    #   user1 = User.create!(user_key: "user1", grade: Grade2.fetch("十段"))
-    #   user2 = User.create!(user_key: "user2", grade: Grade2.fetch("初段"))
+    #   grade = Xmode.fetch("十段")
+    #   user1 = User.create!(user_key: "user1", grade: Xmode.fetch("十段"))
+    #   user2 = User.create!(user_key: "user2", grade: Xmode.fetch("初段"))
     #   battle = Battle.create_with_members!([user1, user2])
     #   assert { grade.memberships.collect(&:user_id) == [user1.id] }
     #   assert { grade.battles == [battle] }

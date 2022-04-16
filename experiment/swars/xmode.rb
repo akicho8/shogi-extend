@@ -2,8 +2,8 @@
 require File.expand_path('../../../config/environment', __FILE__)
 ApplicationRecord.connection.execute("SET foreign_key_checks = 0")
 
-Swars::Grade2.destroy_all
-Swars::Grade2.setup
+Swars::Xmode.destroy_all
+Swars::Xmode.setup
 
 Swars::Battle.destroy_all
 Swars::User.destroy_all
@@ -22,7 +22,7 @@ user2 = Swars::User.create!
   end
 end
 
-Swars::Battle.update_all(:grade2_id => Swars::Grade2.fetch("指導").id)
+Swars::Battle.update_all(:xmode_id => Swars::Xmode.fetch("指導").id)
 
 tp Swars::Battle
 tp Swars::User
@@ -34,12 +34,12 @@ tp Swars::Membership
 # >> |---|
 # >> | 1 |
 # >> |---|
-# >>   Swars::Grade2 Load (0.3ms)  SELECT `swars_grade2s`.* FROM `swars_grade2s` WHERE `swars_grade2s`.`key` = '指導' LIMIT 1
+# >>   Swars::Xmode Load (0.3ms)  SELECT `swars_xmodes`.* FROM `swars_xmodes` WHERE `swars_xmodes`.`key` = '指導' LIMIT 1
 # >>   ↳ app/models/concerns/memory_record_bind.rb:53:in `fetch'
-# >>   Swars::Battle Update All (0.8ms)  UPDATE `swars_battles` SET `swars_battles`.`grade2_id` = 22
+# >>   Swars::Battle Update All (0.8ms)  UPDATE `swars_battles` SET `swars_battles`.`xmode_id` = 22
 # >>   Swars::Battle Load (0.4ms)  SELECT `swars_battles`.* FROM `swars_battles`
 # >> |----+---------+---------------------------+----------+--------------------------------------------------------------------------------------------+-----------+-------------+----------+-----------+---------------------------+------------+--------------------------------------------------------------------------------------------------------------+----------------------------------+------------+---------------+---------------+------------+---------------------------+---------------------------+-----------+------------------+-----------------+--------------------+---------------+----------------|
-# >> | id | key     | battled_at                | rule_key | csa_seq                                                                                    | final_key | win_user_id | turn_max | meta_info | accessed_at               | preset_key | sfen_body                                                                                                    | sfen_hash                        | start_turn | critical_turn | outbreak_turn | image_turn | created_at                | updated_at                | grade2_id | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list | other_tag_list |
+# >> | id | key     | battled_at                | rule_key | csa_seq                                                                                    | final_key | win_user_id | turn_max | meta_info | accessed_at               | preset_key | sfen_body                                                                                                    | sfen_hash                        | start_turn | critical_turn | outbreak_turn | image_turn | created_at                | updated_at                | xmode_id | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list | other_tag_list |
 # >> |----+---------+---------------------------+----------+--------------------------------------------------------------------------------------------+-----------+-------------+----------+-----------+---------------------------+------------+--------------------------------------------------------------------------------------------------------------+----------------------------------+------------+---------------+---------------+------------+---------------------------+---------------------------+-----------+------------------+-----------------+--------------------+---------------+----------------|
 # >> | 55 | battle1 | 2022-04-16 10:20:14 +0900 | ten_min  | [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]] | TORYO     |          49 |        5 | {}        | 2022-04-16 10:20:14 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h 8b3b 5g5f 3c3d 6h5g | 7b7e2206a9d4cdf21d06bc390228ced8 |            |               |               |            | 2022-04-16 10:20:15 +0900 | 2022-04-16 10:20:15 +0900 |        22 |                  |                 |                    |               |                |
 # >> | 56 | battle2 | 2022-04-16 10:20:15 +0900 | ten_min  | [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]] | TORYO     |          50 |        5 | {}        | 2022-04-16 10:20:15 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7i6h 8b3b 5g5f 3c3d 6h5g | 7b7e2206a9d4cdf21d06bc390228ced8 |            |               |               |            | 2022-04-16 10:20:15 +0900 | 2022-04-16 10:20:15 +0900 |        22 |                  |                 |                    |               |                |

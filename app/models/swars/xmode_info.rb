@@ -1,5 +1,5 @@
 module Swars
-  class Grade2Info
+  class XmodeInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: "通常", },

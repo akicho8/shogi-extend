@@ -13,7 +13,7 @@ module Swars
         # Static
         # ActiveRecord
         Grade,
-        Grade2,
+        Xmode,
       ].each do |e|
         e.setup(options)
       end
@@ -25,7 +25,7 @@ module Swars
         Membership,
         MembershipExtra,
         Grade,
-        Grade2,
+        Xmode,
         User,
       ]
     end

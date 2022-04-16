@@ -261,7 +261,7 @@ module Swars
               :rule_key   => info[:rule_key],
               :csa_seq    => info[:csa_seq],
               :preset_key => DirtyPresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info.key,
-              :grade2     => DirtyGrade2Info.fetch("__magic_code__#{info[:grade2_dirty_code]}").grade2,
+              :xmode     => DirtyXmodeInfo.fetch("__magic_code__#{info[:xmode_dirty_code]}").xmode,
             })
 
           if md = info[:__final_key].match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)

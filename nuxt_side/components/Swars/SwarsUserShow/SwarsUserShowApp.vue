@@ -5,11 +5,11 @@
       p tab_index: {{pretty_inspect(tab_index)}}
       p rule: {{pretty_inspect(rule)}}
       p sample_max: {{pretty_inspect(sample_max)}}
-      p grade2: {{pretty_inspect(grade2)}}
+      p xmode: {{pretty_inspect(xmode)}}
       p query.tab_index: {{pretty_inspect($route.query.tab_index)}}
       p query.rule: {{pretty_inspect($route.query.rule)}}
       p query.sample_max: {{pretty_inspect($route.query.sample_max)}}
-      p query.grade2: {{pretty_inspect($route.query.grade2)}}
+      p query.xmode: {{pretty_inspect($route.query.xmode)}}
 
     b-loading(:active="$fetchState.pending")
     //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
@@ -44,7 +44,7 @@ import { app_support      } from "./app_support.js"
 
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
-import { Grade2SelectInfo } from "./models/grade2_select_info.js"
+import { XmodeSelectInfo } from "./models/xmode_select_info.js"
 import { ParamInfo        } from "./models/param_info.js"
 
 import _ from "lodash"
@@ -124,14 +124,14 @@ export default {
     ParamInfo()        { return ParamInfo        },
     RuleSelectInfo()   { return RuleSelectInfo   },
     SampleMaxInfo()    { return SampleMaxInfo    },
-    Grade2SelectInfo() { return Grade2SelectInfo },
+    XmodeSelectInfo() { return XmodeSelectInfo },
 
     url_params() {
       return this.hash_compact_if_null({
         tab_index:  this.tab_index,
         rule:       this.rule,
         sample_max: this.sample_max,
-        grade2:     this.grade2,
+        xmode:     this.xmode,
       })
     },
 

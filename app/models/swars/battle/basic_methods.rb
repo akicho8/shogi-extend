@@ -22,8 +22,8 @@ module Swars
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
         scope :rule_eq, -> v { where(rule_key: RuleInfo.fetch(v).key) } # ルール "10分" や "ten_min" どちらでもOK
 
-        belongs_to :grade2
-        scope :grade2_eq, -> v { where(grade2: Grade2.fetch(v)) } # 種類
+        belongs_to :xmode
+        scope :xmode_eq, -> v { where(xmode: Xmode.fetch(v)) } # 種類
 
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?
@@ -53,7 +53,7 @@ module Swars
 
           self.rule_key ||= :ten_min
 
-          self.grade2 ||= Grade2.fetch("通常")
+          self.xmode ||= Xmode.fetch("通常")
 
           # "" から ten_min への変換
           if rule_key
@@ -83,7 +83,7 @@ module Swars
           validates :battled_at
           validates :rule_key
           validates :final_key
-          validates :grade2_id
+          validates :xmode_id
         end
 
         with_options allow_blank: true do
