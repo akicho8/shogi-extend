@@ -42,8 +42,12 @@ module Swars
             s = s.where(key: v)
           end
 
-          if v = c.query_info.lookup_one(:rule) || c.query_info.lookup_one("種類")
+          if v = c.query_info.lookup_one(:rule) || c.query_info.lookup_one("持ち時間") || c.query_info.lookup_one("種類")
             s = s.rule_eq(v)
+          end
+
+          if v = c.query_info.lookup_one(:grade2) || c.query_info.lookup_one("様式") || c.query_info.lookup_one("モード")
+            s = s.grade2_eq(v)
           end
 
           if e = c.query_info.lookup_op(:critical_turn) || c.query_info.lookup_op("開戦")

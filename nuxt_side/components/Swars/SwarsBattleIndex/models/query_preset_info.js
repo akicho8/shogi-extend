@@ -39,7 +39,7 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
       { key: null,                      name: "右玉",             query: `or-tag:${this.migi_list}`,      available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "対右玉",           query: `vs-or-tag:${this.migi_list}`,   available_env: { development: true, staging: true, production: true, }, },
 
-      { key: null,                      name: "指導対局",         query: "vs-grade:十段",                 available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "対十段",           query: "vs-grade:十段",                 available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "☗のみ",           query: "先後:black",                    available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "☗で勝ち",         query: "先後:black 勝敗:勝ち",          available_env: { development: true, staging: true, production: true, }, },
@@ -48,9 +48,13 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
       { key: null,                      name: "☖で勝ち",         query: "先後:white 勝敗:勝ち",          available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "☖で負け",         query: "先後:white 勝敗:負け",          available_env: { development: true, staging: true, production: true, }, },
 
-      { key: null,                      name: "10分",             query: "種類:10分",                     available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "3分",              query: "種類:3分",                      available_env: { development: true, staging: true, production: true, }, },
-      { key: null,                      name: "10秒",             query: "種類:10秒",                     available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "10分",             query: "持ち時間:10分",                 available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "3分",              query: "持ち時間:3分",                  available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "10秒",             query: "持ち時間:10秒",                 available_env: { development: true, staging: true, production: true, }, },
+
+      { key: null,                      name: "通常対局",         query: "モード:通常",                   available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "友達対局",         query: "モード:友達",                   available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "指導対局",         query: "モード:指導",                   available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "すべて",           query: "",                              available_env: { development: true, staging: true, production: true, }, },
     ]

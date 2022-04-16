@@ -206,6 +206,9 @@ module Swars
       if v = params[:rule].presence
         s = s.merge(Swars::Battle.rule_eq(v))
       end
+      if v = params[:grade2].presence
+        s = s.merge(Swars::Battle.grade2_eq(v))
+      end
       s
     end
 

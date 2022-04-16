@@ -37,7 +37,18 @@ DotsMenuButton.SwarsUserShowDropdownMenu
 
   b-dropdown-item(@click="base.update_handle({rule: ''})")
     b-icon(icon="filter-variant" size="is-small")
-    span すべてのルール
+    span すべての持ち時間
+
+  b-dropdown-item(separator)
+
+  template(v-for="e in base.Grade2SelectInfo.values")
+    b-dropdown-item(@click="base.update_handle({grade2: e.name})" :class="{'is-active': base.current_grade2 === e.name}")
+      b-icon(icon="account" size="is-small")
+      span {{e.name}}
+
+  b-dropdown-item(@click="base.update_handle({grade2: ''})")
+    b-icon(icon="account" size="is-small")
+    span すべてのモード
 
   b-dropdown-item(separator)
 
