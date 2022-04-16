@@ -16,9 +16,7 @@
           WinLoseCircle(:info="row" size="is-small" :narrowed="true")
         .column.is-paddingless.tactic_name_with_count_blocks(v-if="present_p(row.all_tags)")
           template(v-for="tag in row.all_tags")
-            nuxt-link.tag_wrapper.has-text-weight-bold.is-size-6(
-              :to="{name: 'swars-search', query: {query: `${base.info.user.key} tag:${tag.name}`}}"
-              )
+            nuxt-link.tag_wrapper.has-text-weight-bold.is-size-6(:to="search_path({tag: tag.name})")
               | {{tag.name}}
               b-tag(rounded size="is-small").py-0.ml-1.is-marginless {{tag.count}}
 </template>

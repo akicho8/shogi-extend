@@ -120,18 +120,18 @@ export default {
   },
 
   computed: {
-    base()             { return this             },
-    ParamInfo()        { return ParamInfo        },
-    RuleSelectInfo()   { return RuleSelectInfo   },
-    SampleMaxInfo()    { return SampleMaxInfo    },
-    XmodeSelectInfo() { return XmodeSelectInfo },
+    base()            { return this             },
+    ParamInfo()       { return ParamInfo        },
+    RuleSelectInfo()  { return RuleSelectInfo   },
+    SampleMaxInfo()   { return SampleMaxInfo    },
+    XmodeSelectInfo() { return XmodeSelectInfo  },
 
     url_params() {
       return this.hash_compact_if_null({
         tab_index:  this.tab_index,
         rule:       this.rule,
         sample_max: this.sample_max,
-        xmode:     this.xmode,
+        xmode:      this.xmode,
       })
     },
 
