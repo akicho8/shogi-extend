@@ -93,7 +93,7 @@ module Swars
         hash[:judge_counts] = judge_counts
 
         # 直近勝敗リスト
-        hash[:judge_keys] = current_scope_base.limit(current_ox_max).pluck(:judge_key).reverse
+        hash[:judge_keys] = current_scope.limit(current_ox_max).pluck(:judge_key).reverse # limitは上書きできる
 
         hash[:medal_list] = medal_list.to_a
 
@@ -123,8 +123,8 @@ module Swars
     end
 
     def current_scope
-      s = current_scope_base
-      s = s.limit(sample_max)
+      s = user.memberships
+      s = win_lose_only_condition_add(s)
     end
 
     # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
@@ -173,8 +173,7 @@ module Swars
 
     def every_grade_list
       s = user.op_memberships
-      s = condition_add(s)
-      s = s.limit(sample_max)
+      s = win_lose_only_condition_add(s)
       denominator = s.count
 
       s = Swars::Membership.where(id: s.ids) # 再スコープ化
@@ -201,9 +200,14 @@ module Swars
       ary # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}}]
     end
 
+    def win_lose_only_condition_add(s)
+      s = condition_add(s)
+      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+    end
+
+    # 必須の条件
     def condition_add(s)
       s = s.joins(:battle)
-      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
       s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
       if v = params[:rule].presence
         s = s.merge(Swars::Battle.rule_eq(v))
@@ -211,6 +215,7 @@ module Swars
       if v = params[:xmode].presence
         s = s.merge(Swars::Battle.xmode_eq(v))
       end
+      s = s.limit(sample_max)
       s
     end
 
@@ -756,12 +761,6 @@ module Swars
       [(params[:ox_max].presence || default_params[:ox_max]).to_i, 100].min
     end
 
-    def current_scope_base
-      s = user.memberships
-      s = condition_add(s)
-      # s = s.none
-    end
-
     # memberships が配列になっているとき用
     def judge_counts_of(memberships)
       group = memberships.group_by(&:judge_key)
@@ -837,8 +836,7 @@ module Swars
 
     def list_build(memberships, options = {})
       s = memberships
-      s = condition_add(s)
-      s = s.limit(sample_max)
+      s = win_lose_only_condition_add(s)
       denominator = s.count
 
       # tag_counts_on をシンプルなSQLで実行させると若干速くなるが、それのためではなく

@@ -4,7 +4,24 @@ module Swars
 
     attr_accessor :user_info
 
-    delegate :user, :ids_scope, :real_count, :params, :at_least_value, :judge_counts, :sample_max, :current_scope, :condition_add, :all_tag_names_hash, :ai_use_battle_count_lv1, :win_scope, :win_count, :lose_scope, :lose_count, :turn_max_gteq, to: :user_info
+    delegate *[
+      :user,
+      :ids_scope,
+      :real_count,
+      :params,
+      :at_least_value,
+      :judge_counts,
+      :sample_max,
+      :current_scope,
+      :condition_add,
+      :all_tag_names_hash,
+      :ai_use_battle_count_lv1,
+      :win_scope,
+      :win_count,
+      :lose_scope,
+      :lose_count,
+      :turn_max_gteq,
+    ], to: :user_info
 
     def initialize(user_info)
       @user_info = user_info
@@ -156,7 +173,6 @@ module Swars
         s = user.op_memberships   # 相手が
         s = condition_add(s)
         s = s.where(judge_key: "win") # 勝った = 自分が負けた
-        s = s.limit(sample_max)
 
         denominator = s.count
         s = Swars::Membership.where(id: s.ids) # 再スコープ化
@@ -329,11 +345,10 @@ module Swars
     end
 
     # 引き分けを含むため current_scope は使わずに作り直す
+    # ただし必須の条件は入れる
     def new_scope
       s = user.memberships
-      s = s.joins(:battle)
-      s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
-      s = s.limit(sample_max)
+      s = condition_add(s)
     end
 
     def new_scope_count
