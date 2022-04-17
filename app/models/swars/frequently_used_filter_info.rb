@@ -8,7 +8,7 @@ module Swars
       { name: "200手以上",                params: { query: "turn_max_gteq:200",                    }, },
       { name: "50手未満",                 params: { query: "turn_max_lt:50",                       }, },
       { name: "駒落ち",                   params: { query: "tag:駒落ち",                           }, },
-      { name: "指導対局",                 params: { query: "tag:指導対局",                         }, },
+      { name: "指導対局",                 params: { query: "モード:指導",                          }, },
       { name: "駒柱",                     params: { query: "tag:駒柱",                             }, },
       { name: "鬼殺し",                   params: { query: "tag:鬼殺し",                           }, },
       { name: "端棒銀 vs 振り飛車",       params: { query: "tag:端棒銀 tag:振り飛車",              }, },

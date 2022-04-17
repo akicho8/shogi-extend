@@ -11,7 +11,8 @@ module Swars
 
           s = all
           s = s.not_accessed_scope(params[:expires_in])  # アクセスされないまましばらく経過したもの
-          s = s.guidance_battle_rejected_scope           # 指導対局を除外
+          s = s.clearn_reject_scope1
+          s = s.clearn_reject_scope2
           s = s.user_rejected_scope(params[:skip_users]) # 特定ユーザーは除外
           s
         }
@@ -21,10 +22,8 @@ module Swars
           where(arel_table[:accessed_at].lteq(expires_in.seconds.ago))
         }
 
-        # 指導対局を除外したもの
-        scope :guidance_battle_rejected_scope, -> {
-          where.not(id: Grade.fetch("十段").battles)
-        }
+        scope :clearn_reject_scope1, -> { where.not(xmode: Xmode.fetch("指導"))       } # 指導対局を除外
+        scope :clearn_reject_scope2, -> { where.not(id: Grade.fetch("十段").battles)  } # 十段の対局を除外
 
         # 指定ユーザーのバトルを除外したもの
         scope :user_rejected_scope, proc { |user_keys|

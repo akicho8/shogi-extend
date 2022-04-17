@@ -47,7 +47,7 @@ module Swars
         type = []
 
         type << rule_info.long_name
-        if memberships.any? { |e| e.grade.grade_info.key == :"十段" }
+        if xmode == Xmode.fetch("指導")
           type << "指導対局"
         end
         if preset_info.handicap
@@ -123,10 +123,12 @@ module Swars
         end
 
         if AppConfig[:swars_tag_search_function]
-          memberships.each do |e|
-            if e.grade.grade_info.key == :"十段"
-              e.note_tag_list.add "指導対局"
-              note_tag_list.add "指導対局"
+          if false
+            memberships.each do |e|
+              if e.grade.grade_info.key == :"十段"
+                e.note_tag_list.add "指導対局"
+                note_tag_list.add "指導対局"
+              end
             end
           end
 

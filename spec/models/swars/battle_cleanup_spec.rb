@@ -2,11 +2,11 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
-    def test1(users)
+    def test1(users, attributes = {})
       users = users.collect do |user_key, grade_key|
         User.create!(user_key: user_key, grade: Grade.fetch(grade_key))
       end
-      Battle.create_with_members!(users)
+      Battle.create_with_members!(users, attributes)
     end
 
     def cleanup(options = {})
@@ -25,6 +25,11 @@ module Swars
 
     it "十段の棋譜は削除しない" do
       test1("user1" => "十段", "user2" => "2級")
+      assert { cleanup.count == 0 }
+    end
+
+    it "指導対局は削除しない" do
+      test1({"user1" => "1級", "user2" => "2級"}, xmode: Xmode.fetch("指導"))
       assert { cleanup.count == 0 }
     end
 
@@ -50,7 +55,7 @@ module Swars
 end
 # >> Run options: exclude {:slow_spec=>true}
 # >> .....
-# >> 
+# >>
 # >> Finished in 2.34 seconds (files took 3.29 seconds to load)
 # >> 5 examples, 0 failures
-# >> 
+# >>
