@@ -2,9 +2,9 @@ module Swars
   class DirtyXmodeInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "__magic_code__0", xmode_key: "通常", },
-      { key: "__magic_code__1", xmode_key: "友達", },
-      { key: "__magic_code__2", xmode_key: "指導", },
+      { key: "magic_number_is_0", xmode_key: "通常", },
+      { key: "magic_number_is_1", xmode_key: "友達", },
+      { key: "magic_number_is_2", xmode_key: "指導", },
     ]
 
     def xmode

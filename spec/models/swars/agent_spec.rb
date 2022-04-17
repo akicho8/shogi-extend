@@ -35,7 +35,7 @@ module Swars
         assert { result[:key] == "devuser1-devuser2-20200101_123456" }
         assert { result[:battled_at] == "20200101_123456" }
         assert { result[:rule_key] == "" }
-        assert { result[:preset_dirty_code] == 0 }
+        assert { result[:preset_magic_number] == 0 }
         assert { result[:__final_key] == "SENTE_WIN_TORYO" }
         assert { result[:user_infos] == [{user_key: "devuser1", grade_key: "三段"}, {user_key: "devuser2", grade_key: "四段"}] }
         assert { result[:csa_seq].first == ["+5756FU", 600] }

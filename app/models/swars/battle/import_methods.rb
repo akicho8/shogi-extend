@@ -260,8 +260,8 @@ module Swars
               :key        => info[:key],
               :rule_key   => info[:rule_key],
               :csa_seq    => info[:csa_seq],
-              :preset_key => DirtyPresetInfo.fetch("__handicap_embed__#{info[:preset_dirty_code]}").real_preset_info.key,
-              :xmode     => DirtyXmodeInfo.fetch("__magic_code__#{info[:xmode_dirty_code]}").xmode,
+              :preset_key => DirtyPresetInfo.fetch("magic_number_is_#{info[:preset_magic_number]}").real_preset_info.key,
+              :xmode     => DirtyXmodeInfo.fetch("magic_number_is_#{info[:xmode_magic_number]}").xmode,
             })
 
           if md = info[:__final_key].match(/\A(?<prefix>\w+)_WIN_(?<final_key>\w+)/)
