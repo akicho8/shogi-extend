@@ -1,5 +1,5 @@
 module Swars
-  class DirtyXmodeInfo
+  class XmodeMagicNumberInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: "magic_number_is_0", xmode_key: "通常", },
