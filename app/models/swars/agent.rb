@@ -15,15 +15,15 @@ module Swars
       end
     end
 
-    class OfficialFormatChanged < BaseError
+    class SwarsFormatIncompatible < BaseError
       def initialize(*)
-        super("ERROR", "将棋ウォーズ本家のデータ構造が変わってしまいました")
+        super("非常事態", "将棋ウォーズ本家のデータ構造が変わってしまいました")
       end
     end
 
-    class ServerNoResponseError < BaseError
+    class SwarsConnectionFailed < BaseError
       def initialize(title = nil, message = nil)
-        super("ERROR", "混み合っています<br>しばらくしてからアクセスしてください")
+        super("混雑中", "混み合っています<br>しばらくしてからアクセスしてみてください")
       end
     end
 
@@ -82,7 +82,7 @@ module Swars
             end
           rescue Faraday::ConnectionFailed => error
             SystemMailer.notify_exception(error)
-            raise ServerNoResponseError
+            raise SwarsConnectionFailed
           end
         end
       end
@@ -106,8 +106,8 @@ module Swars
       end
 
       def html_fetch(name, url)
-        if params[:agent_erro2]
-          raise ServerNoResponseError
+        if params[:SwarsConnectionFailed]
+          raise SwarsConnectionFailed
         end
         if run_remote?
           self.class.html_fetch(url)
@@ -175,10 +175,10 @@ module Swars
 
         html = html_fetch("show", url)
         md = html.match(/data-react-props="(.*?)"/)
-        md or raise OfficialFormatChanged
-        if params[:agent_erro1]
-          raise OfficialFormatChanged
-        end
+        md or raise SwarsFormatIncompatible
+        # if params[:SwarsFormatIncompatible]
+        #   raise SwarsFormatIncompatible
+        # end
         props = JSON.parse(CGI.unescapeHTML(md.captures.first))
         if params[:show_props]
           pp props

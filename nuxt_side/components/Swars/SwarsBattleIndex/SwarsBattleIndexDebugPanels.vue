@@ -14,8 +14,8 @@
       a.panel-block(@click="remote_notify") remote_notify
 
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', agent_erro1: true, force: true}}") agent_erro1 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', agent_erro2: true, force: true}}") agent_erro2 発動
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsFormatIncompatible: true, force: true}}") SwarsFormatIncompatible 発動
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsConnectionFailed: true, force: true}}") SwarsConnectionFailed 発動
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', viewpoint: 'black'}}") ☗を左に表示

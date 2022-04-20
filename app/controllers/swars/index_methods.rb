@@ -127,13 +127,13 @@ module Swars
 
         errors = []
         import_params = {
-          :user_key           => current_swars_user_key,
-          :page_max           => import_page_max,
-          :force              => params[:force],
-          :error_capture_fake => params[:error_capture_fake],
-          :error_capture      => -> error { errors << error },
-          :agent_erro1        => params[:agent_erro1],
-          :agent_erro2        => params[:agent_erro2],
+          :user_key                => current_swars_user_key,
+          :page_max                => import_page_max,
+          :force                   => params[:force],
+          :error_capture_fake      => params[:error_capture_fake],
+          :error_capture           => -> error { errors << error },
+          :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
+          :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
         }
 
         if Rails.env.development? || Rails.env.test?

@@ -129,6 +129,10 @@ module Swars
             :error_capture_fake => false, # trueならわざと例外
           }.merge(params)
 
+          if params[:SwarsFormatIncompatible]
+            raise Agent::SwarsFormatIncompatible
+          end
+
           keys = []
           (params[:page_max] || 1).times do |i|
             page_keys = []

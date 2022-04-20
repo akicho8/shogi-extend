@@ -41,6 +41,26 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     Swars::Battle.first
   end
 
+  describe "ERROR" do
+    def test1(params)
+      get :index, params: { query: "devuser1", force: true, format: :json, **params }
+      json = JSON.parse(response.body, symbolize_names: true)
+      assert { json[:xnotice][:infos][0][:message] }
+    end
+
+    it "棋譜の不整合" do
+      test1(error_capture_fake: true)
+    end
+
+    it "本家の構造が変わった" do
+      test1(SwarsFormatIncompatible: true)
+    end
+
+    it "本家に一時的にアクセスできない" do
+      test1(SwarsConnectionFailed: true)
+    end
+  end
+
   describe "並び替え" do
     describe "battle.*" do
       it "works" do
