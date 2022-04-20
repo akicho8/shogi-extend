@@ -41,25 +41,36 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     Swars::Battle.first
   end
 
-  describe "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
-    it "works" do
-      get :index, params: {query: "__unknown__", sort_column: "membership.judge_key", sort_order: "asc" }
-      assert { response.status == 200 }
+  describe "並び替え" do
+    describe "battle.*" do
+      it "works" do
+        get :index, params: {query: "devuser1", sort_column: "xmode_id"  }
+        assert { response.status == 200 }
+      end
     end
-  end
 
-  describe "membershipのカラムで並び替え" do
-    it "judge_key" do
-      get :index, params: {query: "devuser1", sort_column: "membership.judge_key", sort_order: "asc" }
-      assert { response.status == 200 }
-    end
-    it "location_key" do
-      get :index, params: {query: "devuser1", sort_column: "membership.location_key", sort_order: "asc" }
-      assert { response.status == 200 }
-    end
-    it "grade_diff" do
-      get :index, params: {query: "devuser1", sort_column: "membership.grade_diff", sort_order: "asc" }
-      assert { response.status == 200 }
+    describe "membership.*" do
+      it "judge_key" do
+        get :index, params: {query: "devuser1", sort_column: "membership.judge_key", sort_order: "asc" }
+        assert { response.status == 200 }
+      end
+
+      it "location_key" do
+        get :index, params: {query: "devuser1", sort_column: "membership.location_key", sort_order: "asc" }
+        assert { response.status == 200 }
+      end
+
+      it "grade_diff" do
+        get :index, params: {query: "devuser1", sort_column: "membership.grade_diff", sort_order: "asc" }
+        assert { response.status == 200 }
+      end
+
+      describe "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
+        it "works" do
+          get :index, params: {query: "__unknown__", sort_column: "membership.judge_key", sort_order: "asc" }
+          assert { response.status == 200 }
+        end
+      end
     end
   end
 
