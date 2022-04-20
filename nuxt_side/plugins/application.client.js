@@ -192,7 +192,10 @@ export const vue_application = {
       return this.$buefy.dialog.alert({
         animation: "",
         confirmText: "OK",
-        onConfirm: () => this.sound_play_click(),
+        onConfirm: () => {
+          this.sound_stop_all()
+          this.sound_play_click()
+        },
         ...params,
       })
     },
