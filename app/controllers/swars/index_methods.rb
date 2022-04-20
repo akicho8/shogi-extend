@@ -132,6 +132,8 @@ module Swars
           :force              => params[:force],
           :error_capture_fake => params[:error_capture_fake],
           :error_capture      => -> error { errors << error },
+          :agent_erro1        => params[:agent_erro1],
+          :agent_erro2        => params[:agent_erro2],
         }
 
         if Rails.env.development? || Rails.env.test?

@@ -13,6 +13,8 @@
       a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを記憶するダイアログ発動
       a.panel-block(@click="remote_notify") remote_notify
 
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', agent_erro1: true, force: true}}") agent_erro1
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', agent_erro2: true, force: true}}") agent_erro2
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得

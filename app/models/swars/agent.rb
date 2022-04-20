@@ -6,9 +6,24 @@ end
 
 module Swars
   module Agent
-    class OfficialFormatChanged < StandardError
-      def initialize(message = nil)
-        super(message || "将棋ウォーズの構造が変わったので取り込めません")
+    class BaseError < StandardError
+      attr_accessor :title
+
+      def initialize(title = "(TITLE)", message = "(MESSAGE)")
+        @title = title
+        super(message)
+      end
+    end
+
+    class OfficialFormatChanged < BaseError
+      def initialize(*)
+        super("ERROR", "将棋ウォーズ本家のデータ構造が変わってしまいました")
+      end
+    end
+
+    class ServerNoResponseError < BaseError
+      def initialize(title = nil, message = nil)
+        super("ERROR", "混み合っています<br>しばらくしてからアクセスしてください")
       end
     end
 
@@ -58,16 +73,19 @@ module Swars
         end
 
         def html_fetch(url)
-          case AGENT_TYPE
-          when :faraday
-            agent.get(url).body
-          when :curl
-            `#{curl_command(url)}`
+          begin
+            case AGENT_TYPE
+            when :faraday
+              agent.get(url).body
+            when :curl
+              `#{curl_command(url)}`
+            end
+          rescue Faraday::ConnectionFailed => error
+            SystemMailer.notify_exception(error)
+            raise ServerNoResponseError
           end
         end
       end
-
-      delegate :html_fetch, to: "self.class"
 
       attr_accessor :params
 
@@ -86,6 +104,17 @@ module Swars
       def mock_html(name)
         Pathname(File.dirname(__FILE__)).join("mock_html/#{name}.html").read
       end
+
+      def html_fetch(name, url)
+        if params[:agent_erro2]
+          raise ServerNoResponseError
+        end
+        if run_remote?
+          self.class.html_fetch(url)
+        else
+          mock_html(name)
+        end
+      end
     end
 
     class Index < Base
@@ -101,13 +130,7 @@ module Swars
 
       def fetch
         url = url_build
-
-        if run_remote?
-          html = html_fetch(url)
-        else
-          html = mock_html("index")
-        end
-
+        html = html_fetch("index", url)
         html.scan(/game_id=([\w-]+)/).flatten
       end
 
@@ -150,14 +173,12 @@ module Swars
           tp "record: #{info[:url]}"
         end
 
-        if run_remote?
-          html = html_fetch(url)
-        else
-          html = mock_html("show")
-        end
-
+        html = html_fetch("show", url)
         md = html.match(/data-react-props="(.*?)"/)
         md or raise OfficialFormatChanged
+        if params[:agent_erro1]
+          raise OfficialFormatChanged
+        end
         props = JSON.parse(CGI.unescapeHTML(md.captures.first))
         if params[:show_props]
           pp props
