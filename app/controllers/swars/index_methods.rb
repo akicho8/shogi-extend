@@ -1,8 +1,13 @@
 module Swars
   concern :IndexMethods do
     included do
-      rescue_from "Swars::Agent::OfficialFormatChanged" do |exception|
-        render json: { status: :error, type: :danger, message: exception.message }
+      rescue_from "Swars::Agent::BaseError" do |exception|
+        if false
+          render json: { status: :error, type: :danger, message: exception.message }
+        else
+          @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+          render json: js_index_options.as_json
+        end
       end
     end
 
