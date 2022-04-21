@@ -59,6 +59,10 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     it "本家に一時的にアクセスできない" do
       test1(SwarsConnectionFailed: true)
     end
+
+    it "本家で404" do
+      test1(SwarsIs404: true)
+    end
   end
 
   describe "並び替え" do

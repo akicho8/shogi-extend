@@ -27,8 +27,14 @@ module Swars
       end
     end
 
+    class SwarsIs404 < BaseError
+      def initialize(title = nil, message = nil)
+        super("404", "2")
+      end
+    end
+
     class Base
-      AGENT_TYPE = :faraday     # faraday or curl
+      # AGENT_TYPE = :faraday     # faraday or curl
 
       BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
@@ -50,38 +56,42 @@ module Swars
           end
         end
 
-        # 2020-05-30
-        # --insecure をつけないと動作しない
-        # https://qiita.com/shimpeiws/items/10e2b150c6ff41d69013
-        def curl_command(url)
-          [
-            "curl",
-            "-H 'authority: shogiwars.heroz.jp'",
-            "-H 'pragma: no-cache'",
-            "-H 'cache-control: no-cache'",
-            "-H 'upgrade-insecure-requests: 1'",
-            "-H 'user-agent: #{USER_AGENT}'",
-            "-H 'accept: text/html'",
-            "-H 'accept-encoding: gzip, deflate, br'",
-            "-H 'accept-language: ja'",
-            "-H 'cookie: #{Rails.application.credentials.swars_agent_cookie}'",
-            "--silent",
-            "--compressed",
-            "--insecure",
-            "'#{BASE_URL}#{url}'",
-          ].join(" ")
-        end
+        # # 2020-05-30
+        # # --insecure をつけないと動作しない
+        # # https://qiita.com/shimpeiws/items/10e2b150c6ff41d69013
+        # def curl_command(url)
+        #   [
+        #     "curl",
+        #     "-H 'authority: shogiwars.heroz.jp'",
+        #     "-H 'pragma: no-cache'",
+        #     "-H 'cache-control: no-cache'",
+        #     "-H 'upgrade-insecure-requests: 1'",
+        #     "-H 'user-agent: #{USER_AGENT}'",
+        #     "-H 'accept: text/html'",
+        #     "-H 'accept-encoding: gzip, deflate, br'",
+        #     "-H 'accept-language: ja'",
+        #     "-H 'cookie: #{Rails.application.credentials.swars_agent_cookie}'",
+        #     "--silent",
+        #     "--compressed",
+        #     "--insecure",
+        #     "'#{BASE_URL}#{url}'",
+        #   ].join(" ")
+        # end
 
         def html_fetch(url)
           begin
-            case AGENT_TYPE
-            when :faraday
-              agent.get(url).body
-            when :curl
-              `#{curl_command(url)}`
+            # case AGENT_TYPE
+            # when :faraday
+            resp = agent.get(url)
+            unless resp.success?
+              raise SwarsIs404
             end
+            resp.body
+            # when :curl
+            #   `#{curl_command(url)}`
+            # end
           rescue Faraday::ConnectionFailed => error
-            SystemMailer.notify_exception(error)
+            # SystemMailer.notify_exception(error)
             raise SwarsConnectionFailed
           end
         end
@@ -108,6 +118,9 @@ module Swars
       def html_fetch(name, url)
         if params[:SwarsConnectionFailed]
           raise SwarsConnectionFailed
+        end
+        if params[:SwarsIs404]
+          raise SwarsIs404
         end
         if run_remote?
           self.class.html_fetch(url)

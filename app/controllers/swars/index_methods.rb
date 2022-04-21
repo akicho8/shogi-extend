@@ -1,6 +1,10 @@
 module Swars
   concern :IndexMethods do
     included do
+      before_action do
+        @xnotice = Xnotice.new
+      end
+
       rescue_from "Swars::Agent::BaseError" do |exception|
         if false
           render json: { status: :error, type: :danger, message: exception.message }
@@ -12,8 +16,6 @@ module Swars
     end
 
     def index
-      @xnotice = Xnotice.new
-
       [
         :redirect_if_old_path,
         :kento_json_render,
@@ -120,8 +122,6 @@ module Swars
     end
 
     def import_process
-      @xnotice = Xnotice.new
-
       if import_enable?
         remember_swars_user_keys_update
 
@@ -134,6 +134,7 @@ module Swars
           :error_capture           => -> error { errors << error },
           :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
           :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
+          :SwarsIs404   => params[:SwarsIs404],
         }
 
         if Rails.env.development? || Rails.env.test?
