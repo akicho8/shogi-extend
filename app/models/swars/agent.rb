@@ -7,29 +7,35 @@ end
 module Swars
   module Agent
     class BaseError < StandardError
-      attr_accessor :title
+      attr_accessor :status
 
-      def initialize(title = "(TITLE)", message = "(MESSAGE)")
-        @title = title
+      def initialize(status = 500, message = "(MESSAGE)")
+        @status = status
         super(message)
       end
     end
 
     class SwarsFormatIncompatible < BaseError
       def initialize(*)
-        super("非常事態", "将棋ウォーズ本家のデータ構造が変わってしまいました")
+        super(400, "将棋ウォーズ本家のデータ構造が変わってしまいました")
       end
     end
 
     class SwarsConnectionFailed < BaseError
-      def initialize(title = nil, message = nil)
-        super("混雑中", "混み合っています<br>しばらくしてからアクセスしてみてください")
+      def initialize(status = nil, message = nil)
+        super(408, "混み合っています<br>しばらくしてからアクセスしてみてください")
       end
     end
 
-    class SwarsIs404 < BaseError
-      def initialize(title = nil, message = nil)
-        super("404", "指定のURLが見つかりません")
+    class SwarsUserNotFound < BaseError
+      def initialize(status = nil, message = nil)
+        super(404, "ウォーズIDが存在しません<br>大文字と小文字を間違えていませんか？")
+      end
+    end
+
+    class SwarsBattleNotFound < BaseError
+      def initialize(status = nil, message = nil)
+        super(404, "指定の対局が存在しません<br>URLを間違えていませんか？")
       end
     end
 
@@ -83,10 +89,9 @@ module Swars
             # case AGENT_TYPE
             # when :faraday
             resp = agent.get(url)
-            unless resp.success?
-              raise SwarsIs404
+            if resp.success?
+              resp.body
             end
-            resp.body
             # when :curl
             #   `#{curl_command(url)}`
             # end
@@ -119,9 +124,6 @@ module Swars
         if params[:SwarsConnectionFailed]
           raise SwarsConnectionFailed
         end
-        if params[:SwarsIs404]
-          raise SwarsIs404
-        end
         if run_remote?
           self.class.html_fetch(url)
         else
@@ -144,6 +146,9 @@ module Swars
       def fetch
         url = url_build
         html = html_fetch("index", url)
+        if !html || params[:SwarsUserNotFound]
+          raise SwarsUserNotFound
+        end
         html.scan(/game_id=([\w-]+)/).flatten
       end
 
@@ -187,6 +192,9 @@ module Swars
         end
 
         html = html_fetch("show", url)
+        if !html || params[:SwarsBattleNotFound]
+          raise SwarsBattleNotFound
+        end
         md = html.match(/data-react-props="(.*?)"/)
         md or raise SwarsFormatIncompatible
         # if params[:SwarsFormatIncompatible]

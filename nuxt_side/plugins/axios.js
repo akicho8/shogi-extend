@@ -21,10 +21,14 @@ export default function ({ $axios, error: nuxtError }) {
   $axios.onError(error => {
     if (process.env.NODE_ENV === "development") {
       console.log(JSON.stringify(error, null, 2))
+      console.log(JSON.stringify(error.response, null, 2))
     }
+
+    // json: {} 内容が error.response.data に入っている
+
     nuxtError({
       statusCode: error.response.status,
-      message: error.message,
+      message: error.response.data.message ?? error.message,
     })
     // これを返すと $get が false を返して処理が継続してしまい、めちゃくちゃになる
     // return Promise.resolve(false)

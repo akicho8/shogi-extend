@@ -44,12 +44,16 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "ERROR" do
     def test1(params)
       get :index, params: { query: "devuser1", force: true, format: :json, **params }
-      json = JSON.parse(response.body, symbolize_names: true)
-      assert { json[:xnotice][:infos][0][:message] }
+      assert { response.status != 200 }
+      # json = JSON.parse(response.body, symbolize_names: true)
+      # assert { json[:xnotice][:infos][0][:message] }
     end
 
     it "棋譜の不整合" do
-      test1(error_capture_fake: true)
+      get :index, params: { query: "devuser1", force: true, format: :json, error_capture_fake: true }
+      assert { response.status == 200 }
+      json = JSON.parse(response.body, symbolize_names: true)
+      assert { json[:xnotice][:infos][0][:message] }
     end
 
     it "本家の構造が変わった" do
@@ -60,8 +64,8 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       test1(SwarsConnectionFailed: true)
     end
 
-    it "本家で404" do
-      test1(SwarsIs404: true)
+    it "本家でユーザーが存在しない" do
+      test1(SwarsUserNotFound: true)
     end
   end
 
@@ -229,6 +233,13 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
         assert { response.header["Content-Disposition"].include?("attachment") }
       end
+    end
+
+    it "本家で対局が見つからない" do
+      get :show, params: { id: "xxx", format: :json, SwarsBattleNotFound: true }
+      assert { response.status != 200 }
+      # json = JSON.parse(response.body, symbolize_names: true)
+      # assert { json[:xnotice][:infos][0][:message] }
     end
   end
 end

@@ -7,7 +7,7 @@ module Swars
         if v = params[:id].presence
           if request.from_crawler?
           else
-            current_model.single_battle_import(key: v)
+            current_model.single_battle_import(key: v, SwarsBattleNotFound: params[:SwarsBattleNotFound])
           end
           current_scope.find_by!(key: v)
         else

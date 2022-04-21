@@ -9,8 +9,9 @@ client-only
     .section.px-4.py-4
       .container
         .box.has-text-centered
-          p {{status_code_with_message}}
-          p(v-if="error.message" v-html="error.message")
+          template(v-if="message")
+            p(v-html="message")
+
           b-button.mt-4(type="is-primary is-outlined" @click="nuxt_login_modal_handle" v-if="!g_current_user && error_status_code === 403")
             | ログイン
           b-button.mt-4(type="is-primary is-outlined" @click="reload_handle" v-if="error_status_code === 500")
@@ -56,7 +57,7 @@ export default {
   computed: {
     meta() {
       return {
-        title: this.status_code_with_message,
+        title: this.message_default,
         short_title: true,
       }
     },
@@ -65,7 +66,11 @@ export default {
       return this.error?.statusCode
     },
 
-    status_code_with_message() {
+    message() {
+      return this.error?.message || message_default
+    },
+
+    message_default() {
       if (this.error) {
         if (this.error.statusCode) {
           if (this.error.statusCode === 404) {

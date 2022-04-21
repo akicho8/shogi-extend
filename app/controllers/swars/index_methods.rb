@@ -5,14 +5,44 @@ module Swars
         @xnotice = Xnotice.new
       end
 
+      # rescue_from "Swars::Agent::SwarsBattleNotFound" do |exception|
+      #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+      #   render json: js_index_options.as_json, status: 404
+      # end
+
+      # rescue_from "Swars::Agent::BaseError" do |exception|
+      #   render json: { status: :error, type: :danger, message: exception.message }
+      #   # else
+      #   #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+      #   #   render json: { :xnotice => @xnotice }.as_json
+      #   # end
+      # end
+
+      # rescue_from "Swars::Agent::BaseError" do |exception|
+      #   if false
+      #     render json: { status: :error, type: :danger, message: exception.message }
+      #   else
+      #     @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+      #     render json: { :xnotice => @xnotice }.as_json
+      #   end
+      # end
+      #
+      # rescue_from "Swars::Agent::SwarsBattleNotFound" do |exception|
+      #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+      #   render json: js_index_options.as_json, status: 404
+      # end
+
       rescue_from "Swars::Agent::BaseError" do |exception|
-        if false
-          render json: { status: :error, type: :danger, message: exception.message }
-        else
-          @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-          render json: js_index_options.as_json
-        end
+        # @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+        # render json: { :xnotice => @xnotice }.as_json
+
+        # @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
+        # render json: { status: :error, type: :danger, message: exception.message }, status: 500
+        SlackAgent.notify_exception(exception)
+        render json: { message: exception.message }, status: exception.status
+        # render json: js_index_options.as_json, status: 404
       end
+
     end
 
     def index
@@ -134,7 +164,8 @@ module Swars
           :error_capture           => -> error { errors << error },
           :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
           :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
-          :SwarsIs404   => params[:SwarsIs404],
+          :SwarsUserNotFound       => params[:SwarsUserNotFound],
+          :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
         }
 
         if Rails.env.development? || Rails.env.test?
@@ -170,6 +201,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
+            # FIXME: ここにはもうこない？
             @xnotice.add("#{current_swars_user_key}さんは存在しません。大文字と小文字を間違えていませんか？", type: "is-warning")
           end
 
