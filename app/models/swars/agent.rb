@@ -29,7 +29,7 @@ module Swars
 
     class SwarsIs404 < BaseError
       def initialize(title = nil, message = nil)
-        super("404", "2")
+        super("404", "指定のURLが見つかりません")
       end
     end
 
