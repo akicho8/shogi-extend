@@ -158,9 +158,14 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     row_class(row, index) {
+      const list = []
       if (row.judge_key) {
-        return `is-${row.judge_key}` // is- で始めると mobile-cards になったとき消されなくなる
+        list.push(`is-${row.judge_key}`) // is- で始めると mobile-cards になったとき消されなくなる
       }
+      if (row.xmode_info) {
+        list.push(`is-xmode-${row.xmode_info.key}`)
+      }
+      return list.join(" ")
     },
 
     scene_key_set(info) {
@@ -225,6 +230,17 @@ export default {
       margin-top: 1rem
     td
       vertical-align: middle
+
+    .is-xmode-通常
+      // background-color: $success-light
+      // background-color: $white-ter
+      // background-color: $primary-light
+    .is-xmode-友達
+      // background-color: $primary-light
+      // background-color: $primary-light
+      background-color: $white-ter
+    .is-xmode-指導
+      background-color: $primary-light
 
   // 小さな盤面をたくさん表示
   .CustomShogiPlayer
