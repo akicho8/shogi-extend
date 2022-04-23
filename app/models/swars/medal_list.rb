@@ -14,6 +14,7 @@ module Swars
       :sample_max,
       :current_scope,
       :condition_add,
+      :all_tag_names_hash_or_zero,
       :all_tag_names_hash,
       :ai_use_battle_count_lv1,
       :win_scope,
@@ -21,6 +22,7 @@ module Swars
       :lose_scope,
       :lose_count,
       :turn_max_gteq,
+      :xmode_counts,
     ], to: :user_info
 
     def initialize(user_info)
@@ -85,7 +87,7 @@ module Swars
     # 率
     def all_tag_ratio_for(key)
       if real_count.positive?
-        all_tag_names_hash[key].fdiv(real_count)
+        all_tag_names_hash_or_zero(key).fdiv(real_count)
       else
         0
       end
@@ -406,9 +408,9 @@ module Swars
     # 居飛車率
     def ibisha_ratio
       @ibisha_ratio ||= yield_self do
-        d = all_tag_names_hash["居飛車"] + all_tag_names_hash["振り飛車"]
+        d = all_tag_names_hash_or_zero("居飛車") + all_tag_names_hash_or_zero("振り飛車")
         if d.positive?
-          all_tag_names_hash["居飛車"].fdiv(d)
+          all_tag_names_hash_or_zero("居飛車").fdiv(d)
         end
       end
     end
@@ -425,19 +427,6 @@ module Swars
           c.fdiv(lose_count)
         else
           0
-        end
-      end
-    end
-
-    # 対局モードの個数
-    # {"通常"=>1, "友達"=>0, "指導"=>0}
-    def xmode_counts
-      @xmode_counts ||= yield_self do
-        s = Swars::Battle.where(id: new_scope.pluck(:battle_id))
-        s = s.group(:xmode_id)
-        c = s.count
-        Swars::Xmode.all.inject({}) do |a, e|
-          a.merge(e.key => c[e.id] || 0)
         end
       end
     end

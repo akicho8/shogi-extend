@@ -42,6 +42,8 @@ module Swars
         assert { b("棒銀", "早石田").include?("オールラウンダー")           }
         assert { b("ロケット").include?("ロケットマン")                     }
         assert { b("遠見の角").include?("遠見の角マン")                     }
+        assert { b("屋敷流二枚銀").include?("屋敷マン")                     }
+        assert { b("屋敷流二枚銀棒銀型").include?("屋敷マン")               }
         assert { b("嬉野流").include?("嬉野マン")                           }
         assert { w("パックマン戦法").include?("パックマン野郎")             }
         assert { b("耀龍四間飛車").include?("耀龍マン")                     }

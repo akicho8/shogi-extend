@@ -219,12 +219,18 @@ module Swars
       s
     end
 
+    # all_tag_names_hash_or_zero("居飛車")         # => 1
+    # all_tag_names_hash_or_zero("存在しない戦法") # => 0
+    def all_tag_names_hash_or_zero(key)
+      all_tag_names_hash[key] || 0
+    end
+
     # all_tag_names_hash["居飛車"]         # => 1
-    # all_tag_names_hash["存在しない戦法"] # => 0
+    # all_tag_names_hash["存在しない戦法"] # => nil
     def all_tag_names_hash
       @all_tag_names_hash ||= yield_self do
         counts = ids_scope.all_tag_counts(at_least: at_least_value)
-        counts.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count) }
+        counts.inject({}) { |a, e| a.merge(e.name => e.count) }
       end
     end
 
@@ -308,7 +314,35 @@ module Swars
 
     def etc_list
       list = [
+        ################################################################################
+        { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
+        { name: "角不成",                              type1: "simple", type2: "numeric_with_unit", unit: "回", body: kakuhunari_count,              },
+        { name: "飛車不成",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: hisyahunari_count,              },
+
+        ################################################################################
+
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
+
+        ################################################################################
+
+        { name: "対局モード",                          type1: "pie",    type2: nil,                             body: xmode_info_records,           pie_type: "is_many_values" },
+
+        ################################################################################
+        { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_many_values" },
+        { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
+        { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
+
+        ################################################################################
+
+        { name: "投了せずに放置した頻度",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
+        { name: "投了せずに放置した時間の最長",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
+
+        ################################################################################
+
+        { name: "1日の平均対局数",                     type1: "simple", type2: "numeric_with_unit", unit: "局", body: avg_of_avg_battles_count_per_day,              },
+        { name: "対局時間帯",                          type1: "bar",    type2: nil,                             body: battle_count_per_hour_records,  bar_type: "is_default", },
+
+        ################################################################################
 
         ################################################################################
         { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
@@ -318,17 +352,9 @@ module Swars
 
         ################################################################################
         { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
-        { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
-        { name: "投了せずに放置した頻度",              type1: "pie",    type2: nil,                             body: count_of_timeout_think_last,   pie_type: "is_many_values" },
-        { name: "投了せずに放置した時間の最長",        type1: "simple", type2: "second",                        body: max_of_timeout_think_last,     },
         { name: "投了までの心の準備",                  type1: "pie",    type2: nil,                             body: count_of_toryo_think_last,   pie_type: "is_many_values" },
         { name: "投了までの心の準備(平均)",            type1: "simple", type2: "second",                        body: avg_of_toryo_think_last,     },
         { name: "投了までの心の準備(最長)",            type1: "simple", type2: "second",                        body: max_of_toryo_think_last,     },
-
-        ################################################################################
-        { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_many_values" },
-        { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
-        { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
 
         ################################################################################
         { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
@@ -341,11 +367,6 @@ module Swars
 
         ################################################################################
         { name: "対戦相手との段級差(平均)",           type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
-
-        ################################################################################
-
-        { name: "1日の平均対局数",                     type1: "simple", type2: "numeric_with_unit", unit: "局", body: avg_of_avg_battles_count_per_day,              },
-        { name: "対局時間帯",                          type1: "bar",    type2: nil,                             body: battle_count_per_hour_records,  bar_type: "is_default", },
 
         ################################################################################
 
@@ -413,7 +434,15 @@ module Swars
 
     def formation_info_records
       ["居飛車", "振り飛車"].collect do |e|
-        { name: e, value: all_tag_names_hash[e] }
+        { name: e, value: all_tag_names_hash_or_zero(e) }
+      end
+    end
+
+    def xmode_info_records
+      if (xmode_counts["友達"] + xmode_counts["指導"]) > 0
+        XmodeInfo.collect do |e|
+          { name: e.name, value: xmode_counts[e.key.to_s] }
+        end
       end
     end
 
@@ -613,6 +642,16 @@ module Swars
 
     ################################################################################
 
+    def kakuhunari_count
+      all_tag_names_hash["角不成"]
+    end
+
+    def hisyahunari_count
+      all_tag_names_hash["飛車不成"]
+    end
+
+    ################################################################################
+
     # SELECT AVG(swars_battles.turn_max) FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.id IN (92, 93, 96, 97, 100, 101, 103, 105, 107, 110) AND swars_memberships.judge_key = 'lose' AND swars_battles.final_key = 'TORYO'
     def avg_of_toryo_turn_max
       s = lose_scope
@@ -655,7 +694,7 @@ module Swars
     ################################################################################
 
     def migigyoku_levels
-      total = migigyoku_family.sum { |e| all_tag_names_hash[e] }
+      total = migigyoku_family.sum { |e| all_tag_names_hash_or_zero(e) }
       if total.positive?
         [
           { name: "右玉",   value: total              },
@@ -665,10 +704,10 @@ module Swars
     end
 
     def migigyoku_kinds
-      list = migigyoku_family.find_all { |e| all_tag_names_hash[e].positive? }
+      list = migigyoku_family.find_all { |e| all_tag_names_hash_or_zero(e).positive? }
       if list.present?
         list.collect { |e|
-          { name: e, value: all_tag_names_hash[e] }
+          { name: e, value: all_tag_names_hash_or_zero(e) }
         }.sort_by { |e| -e[:value] }
       end
     end
@@ -753,6 +792,21 @@ module Swars
       end
 
       list
+    end
+
+    # 対局モードの個数
+    # {"通常"=>1, "友達"=>0, "指導"=>0}
+    def xmode_counts
+      @xmode_counts ||= yield_self do
+        s = user.memberships
+        s = condition_add(s)
+        s = Swars::Battle.where(id: s.pluck(:battle_id))
+        s = s.group(:xmode_id)
+        c = s.count
+        Swars::Xmode.all.inject({}) do |a, e|
+          a.merge(e.key => c[e.id] || 0)
+        end
+      end
     end
 
     private
@@ -875,6 +929,5 @@ module Swars
         :danger
       end
     end
-
   end
 end

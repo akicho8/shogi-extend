@@ -427,5 +427,23 @@ module Swars
         assert { test1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
       end
     end
+
+    describe "不成シリーズ" do
+      def test1(tactic_key)
+        black = User.create!
+        Battle.create!(tactic_key: tactic_key) do |e|
+          e.memberships.build(user: black)
+        end
+        black
+      end
+
+      it "角不成" do
+        assert { test1("角不成").user_info.kakuhunari_count >= 1 }
+      end
+
+      it "飛車不成" do
+        assert { test1("飛車不成").user_info.hisyahunari_count >= 1 }
+      end
+    end
   end
 end
