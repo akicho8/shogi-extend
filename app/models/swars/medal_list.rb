@@ -74,6 +74,9 @@ module Swars
     end
 
     def matched_medal_infos
+      # if Rails.env.development?
+      #   return MedalInfo
+      # end
       MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:debug] }
     end
 
@@ -422,6 +425,19 @@ module Swars
           c.fdiv(lose_count)
         else
           0
+        end
+      end
+    end
+
+    # 対局モードの個数
+    # {"通常"=>1, "友達"=>0, "指導"=>0}
+    def xmode_counts
+      @xmode_counts ||= yield_self do
+        s = Swars::Battle.where(id: new_scope.pluck(:battle_id))
+        s = s.group(:xmode_id)
+        c = s.count
+        Swars::Xmode.all.inject({}) do |a, e|
+          a.merge(e.key => c[e.id] || 0)
         end
       end
     end

@@ -269,5 +269,22 @@ module Swars
       end
     end
 
+    describe "対局モード" do
+      def test1(xmode)
+        xmode = Xmode.fetch(xmode)
+        @black = User.create!
+        @white = User.create!
+        Battle.create_with_members!([@black, @white], xmode: xmode)
+        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+      end
+
+      it "友対マン" do
+        assert { test1("友達").include?(:"友対マン") }
+      end
+
+      it "指導受けマン" do
+        assert { test1("指導").include?(:"指導受けマン") }
+      end
+    end
   end
 end

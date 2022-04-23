@@ -60,6 +60,8 @@ module Swars
       { key: "無気力マン",         medal_params: { message: "無気力な対局をした",                           method: "raw",  name: "🦥",                type: nil, },          if_cond: proc { (r = hayai_toryo) && r > 0 } },
       { key: "開幕千日手",         medal_params: { message: "開幕千日手をした",                             method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
       { key: "ただの千日手",       medal_params: { message: "千日手があった",                               method: "raw",  name: "🍌",                type: nil },           if_cond: proc { (r = draw_ratio) && r > 0 } },
+      { key: "友対マン",           medal_params: { message: "友対をした",                                   method: "raw",  name: "👬",                 type: nil, },          if_cond: proc { xmode_counts["友達"] > 0 },},
+      { key: "指導受けマン",       medal_params: { message: "指導対局を受けた",                             method: "raw",  name: "🔥",                type: nil, },          if_cond: proc { xmode_counts["指導"] > 0 },},
       { key: "運営支えマン",       medal_params: { message: "将棋ウォーズの運営を支える力がある",           method: "raw",  name: "🧙‍♂️",                type: nil },           if_cond: proc { ai_use_battle_count_lv1 >= 1 } },
     ]
   end

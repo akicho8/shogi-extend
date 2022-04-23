@@ -139,6 +139,7 @@ export default {
       return {
         ...this.url_params,
         query: this.$route.params.key,
+        debug: this.$route.query.debug,
         format_type: "user",
       }
     },
