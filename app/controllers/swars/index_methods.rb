@@ -177,6 +177,7 @@ module Swars
           if params[:swars_user_destroy_all]
             DbCop.foreign_key_checks_disable
             User.destroy_all
+            Battle.destroy_all
             remove_instance_variable(:@current_swars_user)
           end
         end
