@@ -45,12 +45,10 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     def test1(params)
       get :index, params: { query: "devuser1", force: true, format: :json, **params }
       assert { response.status != 200 }
-      # json = JSON.parse(response.body, symbolize_names: true)
-      # assert { json[:xnotice][:infos][0][:message] }
     end
 
-    it "棋譜の不整合" do
-      get :index, params: { query: "devuser1", force: true, format: :json, error_capture_fake: true }
+    def test2(params)
+      get :index, params: { force: true, format: :json, **params }
       assert { response.status == 200 }
       json = JSON.parse(response.body, symbolize_names: true)
       assert { json[:xnotice][:infos][0][:message] }
@@ -64,8 +62,12 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       test1(SwarsConnectionFailed: true)
     end
 
+    it "棋譜の不整合" do
+      test2(query: "devuser1", error_capture_fake: true)
+    end
+
     it "本家でユーザーが存在しない" do
-      test1(SwarsUserNotFound: true)
+      test2(query: "__unknown__", SwarsUserNotFound: true, swars_user_destroy_all: true)
     end
   end
 

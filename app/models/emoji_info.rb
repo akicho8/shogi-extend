@@ -1,3 +1,5 @@
+# https://jp.piliapp.com/twitter-symbols/
+
 class EmojiInfo
   include ApplicationMemoryRecord
   memory_record [
@@ -23,6 +25,7 @@ class EmojiInfo
     { key: ":得:",           raw: "🉐", },
     { key: ":プリンタ:",     raw: "🖨", },
     { key: ":CHART:",        raw: "📊", },
+    { key: ":NOT_FOUND:",    raw: "❓", },
   ]
 
   def to_s

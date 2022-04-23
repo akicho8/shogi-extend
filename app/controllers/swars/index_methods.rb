@@ -174,6 +174,11 @@ module Swars
               Battle.where(id: current_swars_user.battle_ids).destroy_all # user.battles.destroy_all だと memberships の片方が残る
             end
           end
+          if params[:swars_user_destroy_all]
+            DbCop.foreign_key_checks_disable
+            User.destroy_all
+            remove_instance_variable(:@current_swars_user)
+          end
         end
 
         before_count = 0
@@ -201,7 +206,7 @@ module Swars
             end
             current_swars_user.search_logs.create!
           else
-            # FIXME: ここにはもうこない？
+            SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: current_swars_user_key.inspect)
             @xnotice.add("#{current_swars_user_key}さんは存在しません。大文字と小文字を間違えていませんか？", type: "is-warning")
           end
 

@@ -146,8 +146,18 @@ module Swars
       def fetch
         url = url_build
         html = html_fetch("index", url)
-        if !html || params[:SwarsUserNotFound]
-          raise SwarsUserNotFound
+        if false
+          # ウォーズIDのスペルミスは頻繁に起きる
+          # そのとき例外を出すとエラーページまで飛んでしまう
+          # そのためユーザーはスペルミスを修正することができない
+          if !html || params[:SwarsUserNotFound]
+            raise SwarsUserNotFound
+          end
+        else
+          if params[:SwarsUserNotFound]
+            html = ""
+          end
+          html ||= ""
         end
         html.scan(/game_id=([\w-]+)/).flatten
       end
