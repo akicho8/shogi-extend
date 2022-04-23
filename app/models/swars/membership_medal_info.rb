@@ -36,7 +36,7 @@ module Swars
       {
         key: "絶対投了しないマン",
         message: -> m { "悔しかったので時間切れになるまで#{m.think_last_s}放置した" },
-        medal_params: "🧟",
+        medal_params: "🪳",
         if_cond: -> m {
           m.battle.final_info.key == :TIMEOUT &&
           m.judge_key == "lose" &&
@@ -48,7 +48,7 @@ module Swars
         # 「絶対投了しないマン」より後に判定すること
         key: "相手退席待ちマン",
         message: -> m { "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗" },
-        medal_params: "🚷",
+        medal_params: "🧟",
         if_cond: -> m {
           m.judge_key == "lose" &&
           m.battle.turn_max >= 14 &&
@@ -140,7 +140,7 @@ module Swars
       {
         key: "入玉勝ちマン",
         message: "入玉で勝った",
-        medal_params: "🪳",
+        medal_params: "🏈",
         if_cond: -> m {
           m.tag_names_for(:note).include?("入玉") &&
           m.judge_key == "win" &&
