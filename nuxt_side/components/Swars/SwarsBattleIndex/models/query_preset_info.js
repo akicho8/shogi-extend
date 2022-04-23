@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { MigigyokuInfo } from "@/components/models/migigyoku_info.js"
 
 export class QueryPresetInfo extends ApplicationMemoryRecord {
-  static field_label = "プリセット"
+  static field_label = "検索条件追加の例"
 
   static get define() {
     return [
@@ -55,6 +55,9 @@ export class QueryPresetInfo extends ApplicationMemoryRecord {
       { key: null,                      name: "通常対局",         query: "モード:通常",                   available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "友達対局",         query: "モード:友達",                   available_env: { development: true, staging: true, production: true, }, },
       { key: null,                      name: "指導対局",         query: "モード:指導",                   available_env: { development: true, staging: true, production: true, }, },
+
+      { key: null,                      name: "平手",             query: "手合割:平手",                   available_env: { development: true, staging: true, production: true, }, },
+      { key: null,                      name: "駒落ち",           query: "-手合割:平手",                  available_env: { development: true, staging: true, production: true, }, },
 
       { key: null,                      name: "すべて",           query: "",                              available_env: { development: true, staging: true, production: true, }, },
     ]

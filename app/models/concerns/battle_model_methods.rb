@@ -12,6 +12,9 @@ module BattleModelMethods
 
     serialize :meta_info
 
+    scope :preset_eq, -> v { where(preset_key: Bioshogi::PresetInfo.fetch(v).key) }
+    scope :preset_not_eq, -> v { where.not(preset_key: Bioshogi::PresetInfo.fetch(v).key) }
+
     before_validation do
       self.meta_info ||= {}
       self.turn_max ||= 0

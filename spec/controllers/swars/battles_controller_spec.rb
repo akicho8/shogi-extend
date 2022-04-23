@@ -129,6 +129,20 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       assert { controller.current_scope.count == 1 }
       assert { response.status == 200 }
     end
+
+    describe "手合割" do
+      it "平手" do
+        get :index, params: {query: "devuser1 手合割:平手"}
+        assert { controller.current_scope.count == 1 }
+        assert { response.status == 200 }
+      end
+
+      it "駒落ち" do
+        get :index, params: {query: "devuser1 -手合割:平手"}
+        assert { controller.current_scope.count == 0 }
+        assert { response.status == 200 }
+      end
+    end
   end
 
   describe "index" do

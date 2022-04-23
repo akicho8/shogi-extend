@@ -46,6 +46,14 @@ module Swars
             s = s.rule_eq(v)
           end
 
+          if v = c.query_info.lookup_one(:preset) || c.query_info.lookup_one("手合割") || c.query_info.lookup_one("手合")
+            s = s.preset_eq(v)
+          end
+
+          if v = c.query_info.lookup_one(:"-preset") || c.query_info.lookup_one("-手合割") || c.query_info.lookup_one("-手合")
+            s = s.preset_not_eq(v)
+          end
+
           if v = c.query_info.lookup_one(:xmode) || c.query_info.lookup_one("様式") || c.query_info.lookup_one("モード")
             s = s.xmode_eq(v)
           end
