@@ -71,12 +71,19 @@ export const app_tiresome = {
       const subject = `ウォーズID記憶案内 ${this.xi.current_swars_user_key}`
       this.dialog_confirm({
         canCancel: ["button"],
-        hasIcon: true,
+        // hasIcon: true,
         type: "is-info",
-        title: "使い方のヒント",
-        message: `同じウォーズIDを何度も入力する必要はありません。右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けます。ぴよ将棋から来ている方には得におすすめです。あとから解除できます`,
+        title: "😐 ウォーズIDを記憶させよう",
+        message: `
+          <div class="content">
+            <ul class="mt-0">
+              <li>ウォーズIDを毎回入力する必要はありません</li>
+              <li>右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で次から入力の手間が省けます</li>
+              <li>ぴよ将棋から来ている方には得におすすめです</li>
+            </ul>
+          </div>`,
         confirmText: "やってみる",
-        cancelText: "不便な方がいい",
+        cancelText: "不便なまま生きる",
         onConfirm: () => {
           this.sound_play("o")
           this.tiresome_modal_selected = "yes"
@@ -85,7 +92,7 @@ export const app_tiresome = {
         onCancel: () => {
           this.sound_play("x")
           this.tiresome_modal_selected = "no"
-          this.remote_notify({emoji: ":X:", subject: subject, body: `不便な方がいい`})
+          this.remote_notify({emoji: ":X:", subject: subject, body: `不便なまま生きる`})
         },
       })
     },
