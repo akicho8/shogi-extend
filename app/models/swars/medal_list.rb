@@ -352,7 +352,7 @@ module Swars
     end
 
     def new_scope_count
-      @new_scope ||= new_scope.count
+      @new_scope_count ||= new_scope.count
     end
 
     ################################################################################
