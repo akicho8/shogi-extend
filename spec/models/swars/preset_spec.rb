@@ -24,6 +24,7 @@ module Swars
 
     it "scope" do
       assert { Battle.preset_eq("平手") }
+      assert { Battle.preset_not_eq("平手") }
     end
   end
 end

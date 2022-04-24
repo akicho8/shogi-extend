@@ -104,6 +104,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
   end
 
+  # TODO テストは search_spec.rb で書く
   describe "詳細検索" do
     it "vs" do
       get :index, params: {query: "Yamada_Taro vs:devuser1"}
@@ -140,7 +141,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       end
 
       it "駒落ち" do
-        get :index, params: {query: "devuser1 -手合割:平手"}
+        get :index, params: {query: "devuser1 手合割:-平手"}
         assert { controller.current_scope.count == 0 }
         assert { response.status == 200 }
       end

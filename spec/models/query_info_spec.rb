@@ -21,6 +21,11 @@ RSpec.describe QueryInfo do
     assert { QueryInfo.parse("鍵1:値1").lookup("鍵1") ==  ["値1"] }
   end
 
+  it "値が-や!で始まっていても(いまのところは)特別に何かはしない" do
+    assert { QueryInfo.parse("手合割:-平手").lookup("手合割") ==  ["-平手"] }
+    assert { QueryInfo.parse("手合割:!平手").lookup("手合割") ==  ["!平手"] }
+  end
+
   it "1つ目だけの値を返す" do
     assert { QueryInfo.parse("foo:a,b").lookup_one("foo") == "a" }
   end
@@ -47,7 +52,7 @@ RSpec.describe QueryInfo do
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> .........
-# >> 
+# >>
 # >> Top 9 slowest examples (0.10919 seconds, 5.7% of total time):
 # >>   QueryInfo キーから値を取れる
 # >>     0.09349 seconds -:4
@@ -67,7 +72,7 @@ end
 # >>     0.00105 seconds -:24
 # >>   QueryInfo URLだけは特別扱いで切り出す
 # >>     0.00101 seconds -:28
-# >> 
+# >>
 # >> Finished in 1.9 seconds (files took 3.59 seconds to load)
 # >> 9 examples, 0 failures
-# >> 
+# >>

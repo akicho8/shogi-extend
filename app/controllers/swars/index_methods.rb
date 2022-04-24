@@ -316,7 +316,7 @@ module Swars
     end
 
     def current_scope
-      @current_scope ||= current_model.search(self)
+      @current_scope ||= current_model.search(params.merge(query_info: query_info, current_swars_user: current_swars_user, primary_record_key: primary_record_key))
     end
 
     def current_index_scope
