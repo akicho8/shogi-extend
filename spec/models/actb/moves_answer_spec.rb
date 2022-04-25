@@ -24,7 +24,7 @@ module Actb
 
     MATE_HAND = "G*5b"          # 52金打
 
-    def test1(lineage_key)
+    def case1(lineage_key)
       question = user1.actb_questions.new
       question.lineage_key = lineage_key
       question.init_sfen = "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1" # 52金打ちで詰みの詰将棋
@@ -33,20 +33,20 @@ module Actb
     end
 
     it "works" do
-      moves_answer = test1("詰将棋").moves_answers.create!(moves_str: MATE_HAND) # 頭金で詰み
+      moves_answer = case1("詰将棋").moves_answers.create!(moves_str: MATE_HAND) # 頭金で詰み
       assert { moves_answer.question.turn_max == 1 }                          # 最大手数が親の方に埋められている
     end
 
     describe "特殊なバリデーション" do
       it "validate1_leagal_hands" do
-        moves_answer = test1("詰将棋").moves_answers.create(moves_str: "G*5a") # 52金打ちではなく玉の上に金を打った
+        moves_answer = case1("詰将棋").moves_answers.create(moves_str: "G*5a") # 52金打ちではなく玉の上に金を打った
         moves_answer.errors.full_messages # => ["駒の上に打とうとしています"]
         assert { moves_answer.errors.present? }
       end
 
       it "validate2_uniq_with_parent" do
-        test1("詰将棋").moves_answers.create!(moves_str: MATE_HAND)
-        moves_answer = test1("詰将棋").moves_answers.create(moves_str: MATE_HAND)
+        case1("詰将棋").moves_answers.create!(moves_str: MATE_HAND)
+        moves_answer = case1("詰将棋").moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["配置と正解手順の組み合わせが既出の問題(113)と重複しています"]
         assert { moves_answer.errors.present? }
       end
@@ -74,13 +74,13 @@ module Actb
       end
 
       it "validate5_all_piece_not_exists" do
-        moves_answer = test1("玉方持駒限定詰将棋").moves_answers.create(moves_str: MATE_HAND)
+        moves_answer = case1("玉方持駒限定詰将棋").moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？"]
         assert { moves_answer.errors.present? }
       end
 
       it "validate6_mate" do
-        moves_answer = test1("詰将棋").moves_answers.create(moves_str: "G*5e") # 52金打ちではなく55金打ちとした
+        moves_answer = case1("詰将棋").moves_answers.create(moves_str: "G*5e") # 52金打ちではなく55金打ちとした
         moves_answer.errors.full_messages # => ["局面が難しすぎます。無駄合いの場合は「最後は無駄合い」に ON にしといてください。詰みチェックしなくなります"]
         assert { moves_answer.errors.present? }
       end

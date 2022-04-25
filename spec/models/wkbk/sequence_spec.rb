@@ -21,7 +21,7 @@ module Wkbk
 
     describe "並び替え" do
       describe "タイトルを" do
-        def test1(titles, sequence_key)
+        def case1(titles, sequence_key)
           user = User.create!
           book = user.wkbk_books.create!(sequence_key: sequence_key)
           titles.each do |e|
@@ -33,18 +33,18 @@ module Wkbk
         end
         describe "文字列として" do
           it "昇順" do
-            assert { test1(%w(1 10 2), :article_title_asc)  === %w(1 10 2) }
+            assert { case1(%w(1 10 2), :article_title_asc)  === %w(1 10 2) }
           end
           it "降順" do
-            assert { test1(%w(1 10 2), :article_title_desc) === %w(2 10 1) }
+            assert { case1(%w(1 10 2), :article_title_desc) === %w(2 10 1) }
           end
         end
         describe "数値として" do
           it "昇順" do
-            assert { test1(%w(1 10 2), :article_title_number_asc)  === %w(1 2 10) }
+            assert { case1(%w(1 10 2), :article_title_number_asc)  === %w(1 2 10) }
           end
           it "降順" do
-            assert { test1(%w(1 10 2), :article_title_number_desc) === %w(10 2 1) }
+            assert { case1(%w(1 10 2), :article_title_number_desc) === %w(10 2 1) }
           end
         end
       end

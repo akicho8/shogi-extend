@@ -9,33 +9,33 @@ RSpec.describe MediaBuilder, type: :model do
   end
 
   describe "xxx_formatter_options" do
-    def test1(params)
+    def case1(params)
       obj = MediaBuilder.new(FreeBattle.create!, params)
       obj.build_options
     end
     it "works" do
-      assert { test1({})                 == {width: 1200, height:  630} }
-      assert { test1("width" => "")      == {width: 1200, height:  630} }
-      assert { test1("width" => "800")   == {width:  800, height:  630} }
-      assert { test1("height" => "9999") == {width: 1200, height: 4096} }
-      assert { test1("other" => "12.34") == {width: 1200, height:  630} }
-      assert { test1("other" => "true")  == {width: 1200, height:  630} }
+      assert { case1({})                 == {width: 1200, height:  630} }
+      assert { case1("width" => "")      == {width: 1200, height:  630} }
+      assert { case1("width" => "800")   == {width:  800, height:  630} }
+      assert { case1("height" => "9999") == {width: 1200, height: 4096} }
+      assert { case1("other" => "12.34") == {width: 1200, height:  630} }
+      assert { case1("other" => "true")  == {width: 1200, height:  630} }
     end
   end
 
   describe "turn" do
-    def test1(params)
+    def case1(params)
       obj = MediaBuilder.new(FreeBattle.create!, params)
       obj.turn
     end
     it "works" do
-      assert { test1("turn" =>  0)   == 0 }
-      assert { test1("turn" => "0")  == 0 }
-      assert { test1("turn" => "1")  == 1 }
-      assert { test1("turn" => -1)   == 5 }
-      assert { test1("turn" => -2)   == 4 }
-      assert { test1("turn" => "-1") == 5 }
-      assert { test1("turn" => "99") == 5 }
+      assert { case1("turn" =>  0)   == 0 }
+      assert { case1("turn" => "0")  == 0 }
+      assert { case1("turn" => "1")  == 1 }
+      assert { case1("turn" => -1)   == 5 }
+      assert { case1("turn" => -2)   == 4 }
+      assert { case1("turn" => "-1") == 5 }
+      assert { case1("turn" => "99") == 5 }
     end
   end
 

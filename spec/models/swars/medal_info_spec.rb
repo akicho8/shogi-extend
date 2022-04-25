@@ -77,7 +77,7 @@ module Swars
     end
 
     describe "切断マン" do
-      def test1(n)
+      def case1(n)
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
@@ -88,8 +88,8 @@ module Swars
       end
 
       it "works" do
-        assert { test1(13) == false }
-        assert { test1(14) == true  }
+        assert { case1(13) == false }
+        assert { case1(14) == true  }
       end
     end
 
@@ -106,7 +106,7 @@ module Swars
     end
 
     describe "切れ負けマン" do
-      def test1(n)
+      def case1(n)
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
@@ -117,8 +117,8 @@ module Swars
       end
 
       it "works" do
-        assert { test1(13) == false }
-        assert { test1(14) == true  }
+        assert { case1(13) == false }
+        assert { case1(14) == true  }
       end
     end
 
@@ -138,7 +138,7 @@ module Swars
     end
 
     describe "相手退席待ちマン" do
-      def test1
+      def case1
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
@@ -149,12 +149,12 @@ module Swars
       end
 
       it "works" do
-        assert { test1.include?(:"相手退席待ちマン") }
+        assert { case1.include?(:"相手退席待ちマン") }
       end
     end
 
     describe "絶対投了しないマン" do
-      def test1(n)
+      def case1(n)
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
@@ -165,9 +165,9 @@ module Swars
       end
 
       it "works" do
-        assert { !test1(13) }
-        assert { test1(14) }
-        assert { test1(15) }
+        assert { !case1(13) }
+        assert { case1(14) }
+        assert { case1(15) }
       end
     end
 
@@ -251,7 +251,7 @@ module Swars
     end
 
     describe "無気力マン" do
-      def test1(n, final_key)
+      def case1(n, final_key)
         @black = User.create!
         @white = User.create!
         Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
@@ -263,16 +263,16 @@ module Swars
 
       it "works" do
         result = [:"居飛車党", :"無気力マン"]
-        assert { test1(19, :TORYO) == result }
-        assert { test1(19, :CHECKMATE) == result }
-        assert { test1(20, :CHECKMATE) != result }
-        assert { test1(19, :TIMEOUT) != result }
-        assert { test1(20, :TIMEOUT) != result }
+        assert { case1(19, :TORYO) == result }
+        assert { case1(19, :CHECKMATE) == result }
+        assert { case1(20, :CHECKMATE) != result }
+        assert { case1(19, :TIMEOUT) != result }
+        assert { case1(20, :TIMEOUT) != result }
       end
     end
 
     describe "対局モード" do
-      def test1(xmode)
+      def case1(xmode)
         xmode = Xmode.fetch(xmode)
         @black = User.create!
         @white = User.create!
@@ -281,11 +281,11 @@ module Swars
       end
 
       it "友対マン" do
-        assert { test1("友達").include?(:"友対マン") }
+        assert { case1("友達").include?(:"友対マン") }
       end
 
       it "指導受けマン" do
-        assert { test1("指導").include?(:"指導受けマン") }
+        assert { case1("指導").include?(:"指導受けマン") }
       end
     end
   end

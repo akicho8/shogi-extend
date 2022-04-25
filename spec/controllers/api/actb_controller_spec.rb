@@ -26,7 +26,7 @@ RSpec.describe Api::ActbController, type: :controller do
   # end
 
   describe "マッチング開始通知にロビーにいる人が気づいて挑戦を受け入れた" do
-    def test1
+    def case1
       params = {
         session_lock_token: SecureRandom.hex,
         rule_key: :marathon_rule,
@@ -40,12 +40,12 @@ RSpec.describe Api::ActbController, type: :controller do
     end
 
     it "相手がもういない" do
-      assert { test1 == "opponent_missing" }
+      assert { case1 == "opponent_missing" }
     end
 
     it "マッチングした" do
       Actb::Rule[:marathon_rule].matching_users_add(user1)
-      assert { test1 == "success" }
+      assert { case1 == "success" }
     end
   end
 

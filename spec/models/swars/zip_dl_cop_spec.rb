@@ -16,17 +16,17 @@ module Swars
     }
 
     describe "継続ダウンロード" do
-      def test1(seconds)
+      def case1(seconds)
         Timecop.freeze(Time.current + seconds) do
           Battle.create_with_members!([user1, user2])
         end
       end
 
       it "works" do
-        test1(0)  #0 1回目
-        test1(1)  #1 2回目
-        test1(2)  #2 2回目
-        test1(3)  #3 3回目
+        case1(0)  #0 1回目
+        case1(1)  #1 2回目
+        case1(2)  #2 2回目
+        case1(3)  #3 3回目
 
         zip_dl_cop = ZipDlCop.new({
             **base_params,

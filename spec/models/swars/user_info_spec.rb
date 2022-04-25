@@ -53,7 +53,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(csa_seq)
+      def case1(csa_seq)
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
@@ -61,9 +61,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1([[@IBISHA, 1]]) == [1, 0] }
-        assert { test1([[@FURIBI, 1]]) == [1, 1] }
-        assert { test1([[@FURIBI, 1]]) == [1, 2] }
+        assert { case1([[@IBISHA, 1]]) == [1, 0] }
+        assert { case1([[@FURIBI, 1]]) == [1, 1] }
+        assert { case1([[@FURIBI, 1]]) == [1, 2] }
       end
     end
 
@@ -72,7 +72,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(judge_key, n)
+      def case1(judge_key, n)
         Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
@@ -80,10 +80,10 @@ module Swars
       end
 
       it "works" do
-        assert { test1(:win,  10) == [10,  0] }
-        assert { test1(:win,  90) == [50,  0] }
-        assert { test1(:lose, 10) == [50, 10] }
-        assert { test1(:lose, 40) == [50, 25] }
+        assert { case1(:win,  10) == [10,  0] }
+        assert { case1(:win,  90) == [50,  0] }
+        assert { case1(:lose, 10) == [50, 10] }
+        assert { case1(:lose, 40) == [50, 25] }
       end
     end
 
@@ -92,7 +92,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n, final_key, judge_key)
+      def case1(n, final_key, judge_key)
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
@@ -100,9 +100,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(2, :TORYO, :lose)      == 2 }
-        assert { test1(8, :TORYO, :lose)      == 5 }
-        assert { test1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
+        assert { case1(2, :TORYO, :lose)      == 2 }
+        assert { case1(8, :TORYO, :lose)      == 5 }
+        assert { case1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
       end
     end
 
@@ -111,7 +111,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n)
+      def case1(n)
         Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black)
         end
@@ -119,8 +119,8 @@ module Swars
       end
 
       it "works" do
-        assert { test1(10) == 10 }
-        assert { test1(90) == 50 }
+        assert { case1(10) == 10 }
+        assert { case1(90) == 50 }
       end
     end
 
@@ -129,7 +129,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1
+      def case1
         Battle.create!(csa_seq: csa_seq_generate5) do |e|
           e.memberships.build(user: @black)
         end
@@ -140,7 +140,7 @@ module Swars
       end
 
       it "works" do
-        assert { test1 ==  [200, 150.0] }
+        assert { case1 ==  [200, 150.0] }
       end
     end
 
@@ -150,7 +150,7 @@ module Swars
         @white = User.create!
       end
 
-      def test1(black_grade_key, white_grade_key)
+      def case1(black_grade_key, white_grade_key)
         @black.update!(grade_key: black_grade_key)
         @white.update!(grade_key: white_grade_key)
         Battle.create! do |e|
@@ -161,8 +161,8 @@ module Swars
       end
 
       it "works" do
-        assert { test1("二段", "三段") == 1.0 }
-        assert { test1("二段", "四段") == 1.5 }
+        assert { case1("二段", "三段") == 1.0 }
+        assert { case1("二段", "四段") == 1.5 }
       end
     end
 
@@ -171,7 +171,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(final_key, judge_key)
+      def case1(final_key, judge_key)
         Battle.create!(final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
@@ -182,10 +182,10 @@ module Swars
       end
 
       it "works" do
-        assert { test1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
-        assert { test1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
-        assert { test1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
-        assert { test1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
+        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { case1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { case1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
       end
     end
 
@@ -194,7 +194,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(final_key)
+      def case1(final_key)
         Battle.create!(csa_seq: csa_seq_generate5, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
@@ -202,45 +202,45 @@ module Swars
       end
 
       it "works" do
-        assert { test1("DISCONNECT") == nil  } # CHECKMATE専用
-        assert { test1("CHECKMATE") == 150.0 }
-        assert { test1("CHECKMATE") == 150.0 } # 平均なので変化してない
+        assert { case1("DISCONNECT") == nil  } # CHECKMATE専用
+        assert { case1("CHECKMATE") == 150.0 }
+        assert { case1("CHECKMATE") == 150.0 } # 平均なので変化してない
       end
     end
 
     describe "将棋ウォーズの運営を支える力 kishin_info_records" do
-      def test1(rule_key, n)
+      def case1(rule_key, n)
         Battle.create!(csa_seq: csa_seq_generate4(n), rule_key: rule_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
         @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
-      def test2(grade_key)
+      def case2(grade_key)
         @black = User.create!(grade_key: grade_key)
-        assert { test1(:three_min, 11) == nil }
+        assert { case1(:three_min, 11) == nil }
       end
 
       it "3分 五段以上" do
         @black = User.create!(grade_key: "五段")
-        assert { test1(:three_min, 10) == nil    }
-        assert { test1(:three_min, 11) == [1, 1] }
-        assert { test1(:three_min, 11) == [2, 1] }
+        assert { case1(:three_min, 10) == nil    }
+        assert { case1(:three_min, 11) == [1, 1] }
+        assert { case1(:three_min, 11) == [2, 1] }
       end
 
       it "10分 1級 判定あり" do
         @black = User.create!(grade_key: "1級")
-        assert { test1(:ten_min, 11) == [1, 0] }
+        assert { case1(:ten_min, 11) == [1, 0] }
       end
 
       it "10秒 1級 判定あり" do
         @black = User.create!(grade_key: "1級")
-        assert { test1(:ten_sec, 11) == [1, 0] }
+        assert { case1(:ten_sec, 11) == [1, 0] }
       end
 
       describe "3分の判定スルー" do
-        it { test2("十段") }
-        it { test2("四段") }
+        it { case2("十段") }
+        it { case2("四段") }
       end
     end
 
@@ -249,7 +249,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n)
+      def case1(n)
         Battle.create!(csa_seq: csa_seq_generate4(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
@@ -257,9 +257,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(10) == nil    }
-        assert { test1(11) == [1, 1] }
-        assert { test1(12) == [2, 1] }
+        assert { case1(10) == nil    }
+        assert { case1(11) == [1, 1] }
+        assert { case1(12) == [2, 1] }
       end
     end
 
@@ -268,7 +268,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(sec)
+      def case1(sec)
         Battle.create!(csa_seq: csa_seq_generate2(3, sec), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
         end
@@ -280,9 +280,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(400) == [[{name: "6分", value: 1}], 400] }
-        assert { test1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
-        assert { test1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
+        assert { case1(400) == [[{name: "6分", value: 1}], 400] }
+        assert { case1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
+        assert { case1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
       end
     end
 
@@ -291,7 +291,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n)
+      def case1(n)
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
@@ -299,9 +299,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(13) == nil }
-        assert { test1(14) == 1 }
-        assert { test1(14) == 2 }
+        assert { case1(13) == nil }
+        assert { case1(14) == 1 }
+        assert { case1(14) == 2 }
       end
     end
 
@@ -310,7 +310,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n)
+      def case1(n)
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
@@ -322,9 +322,9 @@ module Swars
       end
 
       it "works" do
-        assert { test1(13) == [nil, nil] }
-        assert { test1(14) == [[{name: "10分", value: 1}], 600] }
-        assert { test1(15) == [[{name: "10分", value: 2}], 600] }
+        assert { case1(13) == [nil, nil] }
+        assert { case1(14) == [[{name: "10分", value: 1}], 600] }
+        assert { case1(15) == [[{name: "10分", value: 2}], 600] }
       end
     end
 
@@ -333,7 +333,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1(n, sec)
+      def case1(n, sec)
         Battle.create!(csa_seq: csa_seq_generate2(n, sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
@@ -346,12 +346,12 @@ module Swars
       end
 
       it "works" do
-        assert { test1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
-        assert { test1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
-        assert { test1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
-        assert { test1(15, 59) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}], 59, 22.25] }
-        assert { test1(15, 60) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 1}], 60, 29.8] }
-        assert { test1(15, 61) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 2}], 61, 35.0] }
+        assert { case1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
+        assert { case1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
+        assert { case1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
+        assert { case1(15, 59) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}], 59, 22.25] }
+        assert { case1(15, 60) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 1}], 60, 29.8] }
+        assert { case1(15, 61) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 2}], 61, 35.0] }
       end
     end
 
@@ -360,7 +360,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1
+      def case1
         Battle.create!(tactic_key: "糸谷流右玉") do |e|
           e.memberships.build(user: @black)
         end
@@ -368,8 +368,8 @@ module Swars
       end
 
       it "works" do
-        assert { test1 == [1, 0] }
-        assert { test1 == [2, 0] }
+        assert { case1 == [1, 0] }
+        assert { case1 == [2, 0] }
 
         assert { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
@@ -380,7 +380,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1
+      def case1
         Battle.create! do |e|
           e.memberships.build(user: @black)
         end
@@ -388,9 +388,9 @@ module Swars
       end
 
       it "works" do
-        assert { Timecop.freeze("2000-01-01") { test1 } == 1.0 }
-        assert { Timecop.freeze("2000-01-01") { test1 } == 2.0 }
-        assert { Timecop.freeze("2000-01-02") { test1 } == 1.5 }
+        assert { Timecop.freeze("2000-01-01") { case1 } == 1.0 }
+        assert { Timecop.freeze("2000-01-01") { case1 } == 2.0 }
+        assert { Timecop.freeze("2000-01-02") { case1 } == 1.5 }
       end
     end
 
@@ -399,7 +399,7 @@ module Swars
         @black = User.create!
       end
 
-      def test1
+      def case1
         Battle.create! do |e|
           e.memberships.build(user: @black)
         end
@@ -407,9 +407,9 @@ module Swars
       end
 
       it "works" do
-        assert { Timecop.freeze("2000-01-01 00:00") { test1 } == [{name: "0", value: 1}] }
-        assert { Timecop.freeze("2000-01-01 00:59") { test1 } == [{name: "0", value: 2}] }
-        assert { Timecop.freeze("2000-01-01 01:00") { test1 } == [{name: "0", value: 2}, {name: "1", value: 1}] }
+        assert { Timecop.freeze("2000-01-01 00:00") { case1 } == [{name: "0", value: 1}] }
+        assert { Timecop.freeze("2000-01-01 00:59") { case1 } == [{name: "0", value: 2}] }
+        assert { Timecop.freeze("2000-01-01 01:00") { case1 } == [{name: "0", value: 2}, {name: "1", value: 1}] }
       end
     end
 
@@ -418,18 +418,18 @@ module Swars
         @black = User.create!
       end
 
-      def test1
+      def case1
         battle = Battle.create!(csa_seq: csa_seq_generate1(3))
         battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
       end
 
       it "works" do
-        assert { test1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
+        assert { case1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
       end
     end
 
     describe "不成シリーズ" do
-      def test1(tactic_key)
+      def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
@@ -438,11 +438,11 @@ module Swars
       end
 
       it "角不成" do
-        assert { test1("角不成").user_info.kakuhunari_count >= 1 }
+        assert { case1("角不成").user_info.kakuhunari_count >= 1 }
       end
 
       it "飛車不成" do
-        assert { test1("飛車不成").user_info.hisyahunari_count >= 1 }
+        assert { case1("飛車不成").user_info.hisyahunari_count >= 1 }
       end
     end
   end

@@ -42,12 +42,12 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   end
 
   describe "ERROR" do
-    def test1(params)
+    def case1(params)
       get :index, params: { query: "devuser1", force: true, format: :json, **params }
       assert { response.status != 200 }
     end
 
-    def test2(params)
+    def case2(params)
       get :index, params: { force: true, format: :json, **params }
       assert { response.status == 200 }
       json = JSON.parse(response.body, symbolize_names: true)
@@ -55,19 +55,19 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "本家の構造が変わった" do
-      test1(SwarsFormatIncompatible: true)
+      case1(SwarsFormatIncompatible: true)
     end
 
     it "本家に一時的にアクセスできない" do
-      test1(SwarsConnectionFailed: true)
+      case1(SwarsConnectionFailed: true)
     end
 
     it "棋譜の不整合" do
-      test2(query: "devuser1", error_capture_fake: true)
+      case2(query: "devuser1", error_capture_fake: true)
     end
 
     it "本家でユーザーが存在しない" do
-      test2(query: "__unknown__", SwarsUserNotFound: true, swars_user_destroy_all: true)
+      case2(query: "__unknown__", SwarsUserNotFound: true, swars_user_destroy_all: true)
     end
   end
 
@@ -179,7 +179,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         user_login
       end
 
-      def test1(body_encode)
+      def case1(body_encode)
         get :index, params: { query: "devuser1", format: "zip", body_encode: body_encode}
         assert { response.status == 200 }
         assert { controller.current_scope.count == 1 }
@@ -195,8 +195,8 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         end
       end
 
-      it { test1("UTF-8")     }
-      it { test1("Shift_JIS") }
+      it { case1("UTF-8")     }
+      it { case1("Shift_JIS") }
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
         get :index, params: {query: "Yamada_Taro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }

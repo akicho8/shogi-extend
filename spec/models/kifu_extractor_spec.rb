@@ -27,22 +27,22 @@ RSpec.describe KifuExtractor, type: :model, kifu_extractor: true do
     end
   end
 
-  def test1(text)
+  def case1(text)
     KifuExtractor.extract(text)
   end
 
   it "URL引数" do
-    assert { test1("https://example.com/?body=76%E6%AD%A9")    == "76歩" }
-    assert { test1("https://example.com/?sfen=76%E6%AD%A9")    == "76歩" }
-    assert { test1("https://example.com/?csa=76%E6%AD%A9")     == "76歩" }
-    assert { test1("https://example.com/?kif=76%E6%AD%A9")     == "76歩" }
-    assert { test1("https://example.com/?ki2=76%E6%AD%A9")     == "76歩" }
-    assert { test1("https://example.com/?content=76%E6%AD%A9") == "76歩" }
-    assert { test1("https://example.com/?text=76%E6%AD%A9")    == "76歩" }
-    assert { test1("https://example.com/#76%E6%AD%A9")         == "76歩" }
+    assert { case1("https://example.com/?body=76%E6%AD%A9")    == "76歩" }
+    assert { case1("https://example.com/?sfen=76%E6%AD%A9")    == "76歩" }
+    assert { case1("https://example.com/?csa=76%E6%AD%A9")     == "76歩" }
+    assert { case1("https://example.com/?kif=76%E6%AD%A9")     == "76歩" }
+    assert { case1("https://example.com/?ki2=76%E6%AD%A9")     == "76歩" }
+    assert { case1("https://example.com/?content=76%E6%AD%A9") == "76歩" }
+    assert { case1("https://example.com/?text=76%E6%AD%A9")    == "76歩" }
+    assert { case1("https://example.com/#76%E6%AD%A9")         == "76歩" }
   end
 
   it "URIではパースできるがhostがnilになる不正なURLの場合でも落ちない" do
-    assert { test1("http:/http://example.com/") == nil }
+    assert { case1("http:/http://example.com/") == nil }
   end
 end

@@ -5,20 +5,20 @@ module Actb
     include ActbSupport
 
     describe "評価" do
-      def test1(vote_key)
+      def case1(vote_key)
         user1.vote_handle(question_id: question1.id, vote_key: vote_key)
         question1.reload
         [question1.good_marks_count, question1.bad_marks_count]
       end
 
       it "片方を押すと片方は解除する" do
-        assert { test1(:good) == [1, 0] }
-        assert { test1(:good) == [0, 0] }
-        assert { test1(:good) == [1, 0] }
-        assert { test1(:bad)  == [0, 1] }
-        assert { test1(:bad)  == [0, 0] }
-        assert { test1(:bad)  == [0, 1] }
-        assert { test1(:good) == [1, 0] }
+        assert { case1(:good) == [1, 0] }
+        assert { case1(:good) == [0, 0] }
+        assert { case1(:good) == [1, 0] }
+        assert { case1(:bad)  == [0, 1] }
+        assert { case1(:bad)  == [0, 0] }
+        assert { case1(:bad)  == [0, 1] }
+        assert { case1(:good) == [1, 0] }
       end
 
       it "json" do
@@ -28,15 +28,15 @@ module Actb
     end
 
     describe "高評価率" do
-      def test1(vote_key)
+      def case1(vote_key)
         user1.vote_handle(question_id: question1.id, vote_key: vote_key)
         question1.reload
         question1.good_rate.to_f
       end
 
       it "高評価率" do
-        assert { test1(:good) == 1.0 }
-        assert { test1(:bad)  == 0.0 }
+        assert { case1(:good) == 1.0 }
+        assert { case1(:bad)  == 0.0 }
       end
     end
   end

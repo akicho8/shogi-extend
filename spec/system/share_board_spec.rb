@@ -415,7 +415,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "局面再送" do
-    def test1
+    def case1
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_DELAY: @RETRY_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
       end
@@ -430,7 +430,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "同期成功" do
       @SEND_SUCCESS_DELAY  = 0 # 最速で応答する
       @RETRY_DELAY = 1 # 1秒後に応答確認
-      test1
+      case1
       a_block do
         assert_no_text("同期失敗")             # 同期OKになっているので「同期失敗」ダイアログは出ない
       end
@@ -438,7 +438,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "再送ダイアログ表示" do
       @SEND_SUCCESS_DELAY  = -1 # 応答しない
       @RETRY_DELAY = 0  # しかも0秒後に応答確認
-      test1
+      case1
       a_block do
         assert_text("同期失敗 1回目")
         assert_text("次の手番のbobさんの反応がないので再送しますか？")
@@ -457,7 +457,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "再送ダイアログ表示キャンセル" do
       @RETRY_DELAY = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
       @SEND_SUCCESS_DELAY  = 3 # しかし3秒後に成功したのでダイアログを消される
-      test1
+      case1
       a_block do
         assert_text("同期失敗")
         sleep(@SEND_SUCCESS_DELAY) # ダイアログを消される
@@ -838,7 +838,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "時計開始時に視点の自動設定" do
-    def test1(preset_key)
+    def case1(preset_key)
       a_block do
         room_setup("my_room", "alice") # aliceが部屋を作る
       end
@@ -852,7 +852,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
     it "平手" do
-      test1("平手")
+      case1("平手")
       a_block do
         assert_viewpoint(:black) # bob が▲なので盤が反転していない
       end
@@ -861,7 +861,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
     it "駒落ち" do
-      test1("八枚落ち")
+      case1("八枚落ち")
       a_block do
         assert_viewpoint(:white) # bob が△なので盤が反転している
       end
@@ -908,7 +908,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "順番設定の振り駒" do
-    def test1(shakashaka_count, piece_names, message)
+    def case1(shakashaka_count, piece_names, message)
       a_block do
         visit_app({
             :room_code                 => :my_room,
@@ -931,10 +931,10 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
 
     it "歩5枚" do
-      test1("2", "歩歩歩歩歩", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
+      case1("2", "歩歩歩歩歩", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
     end
     it "と金5枚" do
-      test1("3", "ととととと", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
+      case1("3", "ととととと", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
     end
   end
 
@@ -956,19 +956,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "N手毎交代" do
-    def test1(hand_every_n, order)
+    def case1(hand_every_n, order)
       visit_app(hand_every_n: hand_every_n, room_code: :my_room, force_user_name: "a", ordered_member_names: "a,b,c", handle_name_validate_skip: "true")
       assert_text("順序:#{order}")
     end
     it "works" do
-      test1(1, "abcabcabcab")
-      test1(2, "ababcacabcb")
-      test1(3, "abababcacac")
+      case1(1, "abcabcabcab")
+      case1(2, "ababcacabcb")
+      case1(3, "abababcacac")
     end
   end
 
   describe "持ち上げ駒キャンセル方法" do
-    def test1(selector)
+    def case1(selector)
       visit_app(room_code: :my_room, force_user_name: "alice")
 
       hamburger_click
@@ -981,12 +981,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
 
     it "移動元をクリック" do
-      test1(".is_move_cancel_reality")
+      case1(".is_move_cancel_reality")
       assert_no_move("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
     end
 
     it "他のセルをクリック" do
-      test1(".is_move_cancel_standard")         # 「他のセルをクリック」選択
+      case1(".is_move_cancel_standard")         # 「他のセルをクリック」選択
       assert_move("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
     end
   end
@@ -1089,7 +1089,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       @CC_AUTO_TIME_LIMIT_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
     end
 
-    def test1(force_user_name)
+    def case1(force_user_name)
       visit_app({
           "room_code"                => "my_room",
           "force_user_name"          => force_user_name,
@@ -1102,8 +1102,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
 
     it "当事者側(自分は即座に起動してBC)" do
-      a_block { test1("alice") }
-      b_block { test1("bob")   }
+      a_block { case1("alice") }
+      b_block { case1("bob")   }
       a_block { clock_start    }
       a_block do
         sleep(@initial_read_sec)
@@ -1119,8 +1119,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "他者側(予約するがBCの方が速いのでキャンセルされる)" do
       @CC_TIME_LIMIT_BC_DELAY   = 2
       @CC_AUTO_TIME_LIMIT_DELAY = 4
-      a_block { test1("alice") }
-      b_block { test1("bob")   }
+      a_block { case1("alice") }
+      b_block { case1("bob")   }
       a_block { clock_start    }
       b_block do
         sleep(@initial_read_sec)
@@ -1136,8 +1136,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "他者側(予約待ち0なので他者側で即発動)" do
       @CC_TIME_LIMIT_BC_DELAY   = 5
       @CC_AUTO_TIME_LIMIT_DELAY = 0
-      a_block { test1("alice") }
-      b_block { test1("bob")   }
+      a_block { case1("alice") }
+      b_block { case1("bob")   }
       a_block { clock_start    }
       b_block do
         sleep(@initial_read_sec)
@@ -1151,7 +1151,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "ハンドルネームバリデーション" do
-    def test1(name, message)
+    def case1(name, message)
       find(".HandleNameModal input").set(name)         # 不正な名前を入力する
       find(".save_handle").click                       # 保存
       assert_text(message)                             # エラー出る
@@ -1162,9 +1162,9 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app
         hamburger_click
         menu_item_click("ハンドルネーム変更")
-        test1("", "ハンドルネームを入力してください")
-        test1("名無し", "ハンドルネームを入力してください")
-        test1(".", "ハンドルネームを入力してください")
+        case1("", "ハンドルネームを入力してください")
+        case1("名無し", "ハンドルネームを入力してください")
+        case1(".", "ハンドルネームを入力してください")
       end
     end
   end
@@ -1334,7 +1334,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "手番でないのに動かそうとしたときの反応" do
-    def test1
+    def case1
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
       end
@@ -1346,21 +1346,21 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
     end
     it "時計OFF順番設定ONでは検討をしていると思われる" do
-      test1
+      case1
       b_block do
         place_click("77")
         assert_text("(今はaliceさんの手番です。検討する場合は順番設定を解除してください)")
       end
     end
     it "時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした" do
-      test1
+      case1
       c_block do
         place_click("77")
         assert_text("(今はaliceさんの手番です。あなたは観戦者なので操作できません。検討する場合は順番設定を解除してください)")
       end
     end
     it "時計ON順番設定ONは対局中と思われる" do
-      test1
+      case1
       b_block do
         clock_start
         place_click("77")

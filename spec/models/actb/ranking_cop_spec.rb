@@ -4,16 +4,16 @@ module Actb
   RSpec.describe RankingCop, type: :model do
     include ActbSupport
 
-    def test1(rating)
+    def case1(rating)
       user = User.create!(name: "(#{rating})")
       user.actb_season_xrecord.update!(rating: rating, battle_count: 1)
       user
     end
 
     it "works" do
-      user1 = test1(15)
-      user2 = test1(14)
-      user3 = test1(13)
+      user1 = case1(15)
+      user2 = case1(14)
+      user3 = case1(13)
 
       ranking_cop = Actb::RankingCop.new(ranking_key: :rating, current_user: user3, max: 1)
       retv = ranking_cop.as_json

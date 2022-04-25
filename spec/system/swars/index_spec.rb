@@ -50,7 +50,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     end
 
     describe "入力補完" do
-      def test1(query, complement_user_keys)
+      def case1(query, complement_user_keys)
         search_by(query)
         assert_var_eq(:complement_user_keys, complement_user_keys)
       end
@@ -59,11 +59,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", complement_user_keys: "b a" # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "b|a")         # Rails側からのコピーをかわせる
 
-        test1 :devuser1, "devuser1|b|a"                     # devuser1が直近に登場
-        test1 :devuser1, "devuser1|b|a"                     # devuser1はすでに入っているので変化なし
-        test1 :devuser2, "devuser2|devuser1|b"              # devuser2が先頭に入ったが最大3件なのでaが溢れた
-        test1 :devuser3, "devuser3|devuser2|devuser1"       # devuser3が先頭に入ったが最大3件なのでbが溢れた
-        test1 :devuser0, "devuser3|devuser2|devuser1"       # devuser0は存在しないので変化なし
+        case1 :devuser1, "devuser1|b|a"                     # devuser1が直近に登場
+        case1 :devuser1, "devuser1|b|a"                     # devuser1はすでに入っているので変化なし
+        case1 :devuser2, "devuser2|devuser1|b"              # devuser2が先頭に入ったが最大3件なのでaが溢れた
+        case1 :devuser3, "devuser3|devuser2|devuser1"       # devuser3が先頭に入ったが最大3件なのでbが溢れた
+        case1 :devuser0, "devuser3|devuser2|devuser1"       # devuser0は存在しないので変化なし
       end
 
       it "クエリ全体を取り込む" do
