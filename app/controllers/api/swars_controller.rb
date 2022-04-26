@@ -66,12 +66,19 @@ module Api
       end
     end
 
+    concerning :CustomSearchMethods do
+      # curl http://localhost:3000/api/swars/custom_search_setup
+      def custom_search_setup
+        render json: { custom_search_setup_value: 1 }
+      end
+    end
+
     # concerning :SwarsUserKeyDirectDownloadMethods do
     #   # GET http://localhost:3000/api/swars/download_config_fetch?query=Yamada_Taro
     #   def download_config_fetch
     #     render json: zip_dl_cop.to_config
     #   end
-    # 
+    #
     #   def zip_dl_cop
     #     @zip_dl_cop ||= Swars::ZipDlCop.new(params.to_unsafe_h.merge({
     #           :current_user => current_user,
