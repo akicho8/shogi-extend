@@ -12,4 +12,10 @@ export class ChoiceLoopInfo extends ApplicationMemoryRecord {
       { key: "指導", name: "指導",   type: "is-primary", message: null, },
     ]
   }
+
+  get to_query_part() {
+    if (this.key != "none") {
+      return `対局モード:${this.key}`
+    }
+  }
 }

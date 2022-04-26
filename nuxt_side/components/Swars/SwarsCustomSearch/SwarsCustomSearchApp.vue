@@ -12,7 +12,7 @@
       b-navbar-item(@click="base.back_handle")
         b-icon(icon="chevron-left")
         //- b-navbar-item(tag="nuxt-link" :to="{}" @click.native="reset_handle")
-      b-navbar-item.has-text-weight-bold 詳細検索
+      b-navbar-item.has-text-weight-bold カスタム検索
     //- template(slot="end")
     //-   NavbarItemLogin
     //-   NavbarItemProfileLink
@@ -20,8 +20,20 @@
 
   MainSection
     .container.is-fluid
-      .columns
+      .columns.form_block
         .column
+          b-field.field_block.new_query_field(label="")
+            //- p.control
+            //-   span.button.is-static.is-fullwidth
+            //-     | {{new_query}}
+            b-input(v-model.trim="new_query" disabled expanded size="is-medium")
+            p.control
+              b-button(@click="search_click_handle" type="is-primary" size="is-medium")
+                | 検索
+
+          b-field.field_block(label="ウォーズID")
+            b-input(v-model.trim="user_key" required placeholder="itoshinTV")
+
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceLoopInfo" var_name="loop_key")
 
           //- b-field
@@ -93,9 +105,13 @@ export default {
   },
 
   methods: {
+    search_click_handle() {
+      this.sound_play_click()
+      this.$router.push({name: "swars-search", query: {query: this.new_query}})
+    },
     back_handle() {
       this.sound_play_click()
-      this.back_to({name: "swars-search", query: {query: this.$route.query.uesr_key}})
+      this.back_to({name: "swars-search", query: {query: this.user_key}})
     },
   },
 
@@ -103,6 +119,17 @@ export default {
     base() { return this },
     ChoiceLoopInfo()  { return ChoiceLoopInfo                      },
     choice_loop_info() { return ChoiceLoopInfo.fetch(this.loop_key) },
+
+    new_query() {
+      let av = []
+
+      av.push(this.user_key)
+      av.push(this.choice_loop_info.to_query_part)
+
+      let str = av.join(" ")
+      str = this.str_squish(str)
+      return str
+    },
   },
 }
 </script>
@@ -117,31 +144,9 @@ export default {
     +mobile
       padding: 0
 
-  .b-table
-    margin-top: 0rem
-    // margin-bottom: 2rem
-    +mobile
-      margin-top: 1rem
-    td
-      vertical-align: middle
-
-    .is-xmode-通常
-      // background-color: $success-light
-      // background-color: $white-ter
-      // background-color: $primary-light
-    .is-xmode-友達
-      // background-color: $primary-light
-      // background-color: $primary-light
-      background-color: $white-ter
-    .is-xmode-指導
-      background-color: $primary-light
-
-  // 小さな盤面をたくさん表示
-  .CustomShogiPlayer
-    --sp_piece_count_font_size: 8px
-    --sp_stand_piece_w: 20px
-    --sp_stand_piece_h: 25px
-    --sp_piece_count_gap_bottom: 64%
+  .new_query_field
+    &:hover
+      background-color: unset
 
 .STAGE-development
   .SwarsCustomSearchApp
