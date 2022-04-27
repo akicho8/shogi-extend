@@ -61,6 +61,8 @@ export const params_controller = {
             v = Number(v)
           } else if (e.type === "array") {
             v = this.str_to_words(v)
+          } else if (e.type === "boolean") {
+            v = this.str_to_boolean(v)
           } else {
             // string
           }
