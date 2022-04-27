@@ -38,16 +38,28 @@
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceJudgeInfo" var_name="judge_key")
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceFinalInfo" var_name="final_key")
 
+          b-field.field_block(label="開戦")
+            b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
+            b-numberinput(controls-position="compact" expanded v-model="critical_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!critical_turn_enabled")
+            b-select(v-model="critical_turn_compare" @input="sound_play_click()" :disabled="!critical_turn_enabled")
+              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+
+          b-field.field_block(label="中盤")
+            b-switch(v-model="outbreak_turn_enabled" @input="sound_play_toggle")
+            b-numberinput(controls-position="compact" expanded v-model="outbreak_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
+            b-select(v-model="outbreak_turn_compare" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
+              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+
           b-field.field_block(label="手数")
             b-switch(v-model="turn_max_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :exponential="true" @click.native="sound_play_click()")
-            b-select(v-model="turn_max_compare" @input="sound_play_click()")
+            b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!turn_max_enabled")
+            b-select(v-model="turn_max_compare" @input="sound_play_click()" :disabled="!turn_max_enabled")
               option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
 
           b-field.field_block(label="力差")
             b-switch(v-model="grade_diff_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="grade_diff" :min="0" :exponential="true" @click.native="sound_play_click()")
-            b-select(v-model="grade_diff_compare" @input="sound_play_click()")
+            b-numberinput(controls-position="compact" expanded v-model="grade_diff" :min="-9" :max="9" :exponential="true" @input="sound_play_click()" :disabled="!grade_diff_enabled")
+            b-select(v-model="grade_diff_compare" @input="sound_play_click()" :disabled="!grade_diff_enabled")
               option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
 
           //- b-field
@@ -145,6 +157,8 @@ export default {
     choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
     CompareInfo()            { return CompareInfo                                },
+    critical_turn_compare_info()  { return CompareInfo.fetch(this.critical_turn_compare)        },
+    outbreak_turn_compare_info()  { return CompareInfo.fetch(this.outbreak_turn_compare)        },
     turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_compare)        },
     grade_diff_compare_info()  { return CompareInfo.fetch(this.grade_diff_compare)        },
 
@@ -156,6 +170,12 @@ export default {
       av.push(this.choice_judge_info.to_query_part)
       av.push(this.choice_final_info.to_query_part)
 
+      if (this.critical_turn_enabled) {
+        av.push(`開戦:${this.critical_turn_compare_info.value}${this.critical_turn}`)
+      }
+      if (this.outbreak_turn_enabled) {
+        av.push(`中盤:${this.outbreak_turn_compare_info.value}${this.outbreak_turn}`)
+      }
       if (this.turn_max_enabled) {
         av.push(`手数:${this.turn_max_compare_info.value}${this.turn_max}`)
       }
