@@ -41,7 +41,13 @@
           b-field.field_block(label="手数")
             b-switch(v-model="turn_max_enabled" @input="sound_play_toggle")
             b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :exponential="true" @click.native="sound_play_click()")
-            b-select(v-model="turn_max_op" @input="sound_play_click()")
+            b-select(v-model="turn_max_compare" @input="sound_play_click()")
+              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+
+          b-field.field_block(label="力差")
+            b-switch(v-model="grade_diff_enabled" @input="sound_play_toggle")
+            b-numberinput(controls-position="compact" expanded v-model="grade_diff" :min="0" :exponential="true" @click.native="sound_play_click()")
+            b-select(v-model="grade_diff_compare" @input="sound_play_click()")
               option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
 
           //- b-field
@@ -102,7 +108,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    this.ga_click("詳細検索")
+    this.ga_click("カスタム検索")
 
     let params = {
       ...this.$route.query,
@@ -139,7 +145,8 @@ export default {
     choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
     CompareInfo()            { return CompareInfo                                },
-    turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_op)        },
+    turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_compare)        },
+    grade_diff_compare_info()  { return CompareInfo.fetch(this.grade_diff_compare)        },
 
     new_query() {
       let av = []
@@ -151,6 +158,10 @@ export default {
 
       if (this.turn_max_enabled) {
         av.push(`手数:${this.turn_max_compare_info.value}${this.turn_max}`)
+      }
+
+      if (this.grade_diff_enabled) {
+        av.push(`力差:${this.grade_diff_compare_info.value}${this.grade_diff}`)
       }
 
       let str = av.join(" ")

@@ -7,9 +7,14 @@ export class ParamInfo extends ParamBase {
       { key: "xmode_key",        type: "string",  name: "対局モード",   defaults: { development: null, production: "none",   }, permanent: true, relation: "ChoiceXmodeInfo", desc: null, },
       { key: "final_key",        type: "string",  name: "結果",         defaults: { development: null, production: "すべて", }, permanent: true, relation: "ChoiceFinalInfo", desc: null, },
       { key: "judge_key",        type: "string",  name: "勝敗",         defaults: { development: null, production: "none",   }, permanent: true, relation: "ChoiceJudgeInfo", desc: null, },
+
       { key: "turn_max",         type: "integer", name: "手数",         defaults: { development: null, production: -1,       }, permanent: true,  relation: null,             desc: null, },
       { key: "turn_max_enabled", type: "boolean", name: "手数有効",     defaults: { development: null, production: false,    }, permanent: true,  relation: null,             desc: null, },
-      { key: "turn_max_op",      type: "string",  name: "手数演算子",   defaults: { development: null, production: "gteq",   }, permanent: true,  relation: null,             desc: null, },
+      { key: "turn_max_compare", type: "string",  name: "手数演算子",   defaults: { development: null, production: "gteq",   }, permanent: true,  relation: null,             desc: null, },
+
+      { key: "grade_diff",         type: "integer", name: "力差",         defaults: { development: null, production: -1,       }, permanent: true,  relation: null,             desc: null, },
+      { key: "grade_diff_enabled", type: "boolean", name: "力差有効",     defaults: { development: null, production: false,    }, permanent: true,  relation: null,             desc: null, },
+      { key: "grade_diff_compare", type: "string",  name: "力差演算子",   defaults: { development: null, production: "gteq",   }, permanent: true,  relation: null,             desc: null, },
 
       // { key: "tiresome_previous_user_key",       type: "string",  name: "前回入力の対象ユーザー", defaults: { development: null, production: "",                        }, permanent: true,  relation: null,                            desc: null, },
       // { key: "turn_max",                   type: "integer", name: "自力入力回数",           defaults: { development: null, production: 0,                         }, permanent: true,  relation: null,                            desc: null, },
