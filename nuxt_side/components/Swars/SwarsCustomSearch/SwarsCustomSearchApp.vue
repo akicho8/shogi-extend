@@ -34,7 +34,13 @@
           b-field.field_block(label="ウォーズID")
             b-input(v-model.trim="user_key" required placeholder="itoshinTV")
 
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceLoopInfo" var_name="loop_key")
+          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceXmodeInfo" var_name="xmode_key")
+
+          b-field.field_block(label="手数")
+            b-switch(v-model="turn_max_enabled")
+            b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :exponential="true" @click.native="sound_play_click()")
+            b-select(v-model="turn_max_op" @input="sound_play_click()")
+              option(v-for="e in OpInfo.values" :value="e.key") {{e.name}}
 
           //- b-field
           //-   b-autocomplete#query(
@@ -70,7 +76,8 @@ import { app_chore       } from "./app_chore.js"
 import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
-import { ChoiceLoopInfo            } from "./models/choice_loop_info.js"
+import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
+import { OpInfo   } from "./models/op_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
 
@@ -117,14 +124,22 @@ export default {
 
   computed: {
     base() { return this },
-    ChoiceLoopInfo()  { return ChoiceLoopInfo                      },
-    choice_loop_info() { return ChoiceLoopInfo.fetch(this.loop_key) },
+
+    ChoiceXmodeInfo()   { return ChoiceXmodeInfo                       },
+    choice_xmode_info() { return ChoiceXmodeInfo.fetch(this.xmode_key) },
+
+    OpInfo()            { return OpInfo                                },
+    turn_max_op_info()  { return OpInfo.fetch(this.turn_max_op)        },
 
     new_query() {
       let av = []
 
       av.push(this.user_key)
-      av.push(this.choice_loop_info.to_query_part)
+      av.push(this.choice_xmode_info.to_query_part)
+
+      if (this.turn_max_enabled) {
+        av.push(`手数:${this.turn_max_op_info.value}${this.turn_max}`)
+      }
 
       let str = av.join(" ")
       str = this.str_squish(str)

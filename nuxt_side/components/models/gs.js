@@ -489,4 +489,9 @@ export const Gs = {
     }
     return av.join(" ")
   },
+  
+  str_to_boolean(str) {
+    str = (str ?? "").toString().trim()
+    return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
+  },
 }

@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class ChoiceLoopInfo extends ApplicationMemoryRecord {
+export class ChoiceXmodeInfo extends ApplicationMemoryRecord {
   static field_label = "対局モード"
   static field_message = null
 

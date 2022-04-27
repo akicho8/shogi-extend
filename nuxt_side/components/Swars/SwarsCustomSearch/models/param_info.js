@@ -3,10 +3,14 @@ import { ParamBase } from '@/components/models/param_base.js'
 export class ParamInfo extends ParamBase {
   static get define() {
     return [
-      { key: "loop_key", type: "string",  name: "対局モード", defaults: { development: null, production: "none", }, permanent: true, relation: "ChoiceLoopInfo", desc: null, },
-      { key: "user_key", type: "string",  name: "ウォーズID", defaults: { development: null, production: "",     }, permanent: true, relation: null,              desc: null, },
+      { key: "xmode_key",        type: "string",  name: "対局モード",   defaults: { development: null, production: "none", }, permanent: true, relation: "ChoiceXmodeInfo", desc: null, },
+      { key: "user_key",         type: "string",  name: "ウォーズID",   defaults: { development: null, production: "",     }, permanent: true, relation: null,              desc: null, },
+      { key: "turn_max",         type: "integer", name: "手数",         defaults: { development: null, production: -1,     }, permanent: true,  relation: null,             desc: null, },
+      { key: "turn_max_enabled", type: "boolean", name: "手数有効",     defaults: { development: null, production: false,  }, permanent: true,  relation: null,             desc: null, },
+      { key: "turn_max_op",      type: "string",  name: "手数演算子",   defaults: { development: null, production: "gteq", }, permanent: true,  relation: null,             desc: null, },
+
       // { key: "tiresome_previous_user_key",       type: "string",  name: "前回入力の対象ユーザー", defaults: { development: null, production: "",                        }, permanent: true,  relation: null,                            desc: null, },
-      // { key: "tiresome_count",                   type: "integer", name: "自力入力回数",           defaults: { development: null, production: 0,                         }, permanent: true,  relation: null,                            desc: null, },
+      // { key: "turn_max",                   type: "integer", name: "自力入力回数",           defaults: { development: null, production: 0,                         }, permanent: true,  relation: null,                            desc: null, },
       // { key: "tiresome_modal_selected",          type: "string",  name: "誘導モーダル選択値",     defaults: { development: null, production: "none",                    }, permanent: true,  relation: null,                            desc: null, },
       // { key: "remember_vs_user_keys",            type: "array",   name: "対戦相手",               defaults: { development: null, production: [],                        }, permanent: true,  relation: null,                            desc: null, },
       // { key: "complement_user_keys",             type: "array",   name: "入力履歴",               defaults: { development: null, production: [],                        }, permanent: true,  relation: null,                            desc: null, },
