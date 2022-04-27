@@ -35,12 +35,14 @@
             b-input(v-model.trim="user_key" required placeholder="itoshinTV")
 
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceXmodeInfo" var_name="xmode_key")
+          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceJudgeInfo" var_name="judge_key")
+          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceFinalInfo" var_name="final_key")
 
           b-field.field_block(label="手数")
-            b-switch(v-model="turn_max_enabled")
+            b-switch(v-model="turn_max_enabled" @input="sound_play_toggle")
             b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :exponential="true" @click.native="sound_play_click()")
             b-select(v-model="turn_max_op" @input="sound_play_click()")
-              option(v-for="e in OpInfo.values" :value="e.key") {{e.name}}
+              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
 
           //- b-field
           //-   b-autocomplete#query(
@@ -77,7 +79,9 @@ import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
 import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
-import { OpInfo   } from "./models/op_info.js"
+import { ChoiceJudgeInfo } from "./models/choice_judge_info.js"
+import { ChoiceFinalInfo } from "./models/choice_final_info.js"
+import { CompareInfo   } from "./models/compare_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
 
@@ -128,17 +132,25 @@ export default {
     ChoiceXmodeInfo()   { return ChoiceXmodeInfo                       },
     choice_xmode_info() { return ChoiceXmodeInfo.fetch(this.xmode_key) },
 
-    OpInfo()            { return OpInfo                                },
-    turn_max_op_info()  { return OpInfo.fetch(this.turn_max_op)        },
+    ChoiceFinalInfo()   { return ChoiceFinalInfo                       },
+    choice_final_info() { return ChoiceFinalInfo.fetch(this.final_key) },
+
+    ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
+    choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
+
+    CompareInfo()            { return CompareInfo                                },
+    turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_op)        },
 
     new_query() {
       let av = []
 
       av.push(this.user_key)
       av.push(this.choice_xmode_info.to_query_part)
+      av.push(this.choice_judge_info.to_query_part)
+      av.push(this.choice_final_info.to_query_part)
 
       if (this.turn_max_enabled) {
-        av.push(`手数:${this.turn_max_op_info.value}${this.turn_max}`)
+        av.push(`手数:${this.turn_max_compare_info.value}${this.turn_max}`)
       }
 
       let str = av.join(" ")

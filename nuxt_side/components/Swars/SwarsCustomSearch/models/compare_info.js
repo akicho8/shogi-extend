@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class OpInfo extends ApplicationMemoryRecord {
+export class CompareInfo extends ApplicationMemoryRecord {
   static field_label = ""
   static field_message = null
 
