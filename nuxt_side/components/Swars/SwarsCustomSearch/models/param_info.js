@@ -6,7 +6,14 @@ export class ParamInfo extends ParamBase {
       { key: "user_key",                            type: "string",  name: "ウォーズID",   defaults: { development: null, production: "",       }, permanent: true, relation: null,              desc: null, },
       { key: "xmode_key",                           type: "string",  name: "対局モード",   defaults: { development: null, production: "none",   }, permanent: true, relation: "ChoiceXmodeInfo", desc: null, },
       { key: "final_key",                           type: "string",  name: "結果",         defaults: { development: null, production: "すべて", }, permanent: true, relation: "ChoiceFinalInfo", desc: null, },
+      { key: "preset_key",                          type: "string",  name: "結果",         defaults: { development: null, production: "すべて", }, permanent: true, relation: "ChoicePresetInfo", desc: null, },
+      { key: "rule_key",                            type: "string",  name: "結果",         defaults: { development: null, production: "すべて", }, permanent: true, relation: "ChoiceRuleInfo", desc: null, },
       { key: "judge_key",                           type: "string",  name: "勝敗",         defaults: { development: null, production: "none",   }, permanent: true, relation: "ChoiceJudgeInfo", desc: null, },
+
+      { key: "tag_values",                          type: "array",  name: "タグ",         defaults: { development: null, production: [],       }, permanent: true,  relation: null, desc: null, },
+      { key: "vs_tag_values",                       type: "array",  name: "タグ",         defaults: { development: null, production: [],       }, permanent: true,  relation: null, desc: null, },
+      { key: "or_tag_values",                       type: "array",  name: "タグ",         defaults: { development: null, production: [],       }, permanent: true,  relation: null, desc: null, },
+      { key: "vs_or_tag_values",                    type: "array",  name: "タグ",         defaults: { development: null, production: [],       }, permanent: true,  relation: null, desc: null, },
 
       { key: "critical_turn_enabled",               type: "boolean", name: "開戦有効",     defaults: { development: null, production: false,    }, permanent: true,  relation: null,             desc: null, },
       { key: "critical_turn",                       type: "integer", name: "開戦",         defaults: { development: null, production: 30,       }, permanent: true,  relation: null,             desc: null, },

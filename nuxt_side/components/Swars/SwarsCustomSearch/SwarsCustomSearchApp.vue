@@ -37,6 +37,38 @@
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceXmodeInfo" var_name="xmode_key")
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceJudgeInfo" var_name="judge_key")
           SimpleRadioButtons.field_block(:base="base" model_name="ChoiceFinalInfo" var_name="final_key")
+          SimpleRadioButtons.field_block(:base="base" model_name="ChoicePresetInfo" var_name="preset_key")
+          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceRuleInfo" var_name="rule_key")
+
+          b-field.field_block(label="タグ" v-if="xi")
+            //- b-select(v-model="tag_values" @input="sound_play_click()")
+            //-   option(v-for="e in xi.tactic_infos.defense.values" :value="e") {{e}}
+            b-taginput(
+              v-model="tag_values"
+              :data="filteredTags"
+              autocomplete
+              open-on-focus
+              allow-new
+              icon="label"
+              placeholder="Add a tag"
+              @typing="getFilteredTags"
+              )
+              //- :allow-new="true"
+              //- field="user.first_name"
+
+            //- b-autocomplete#query(
+            //-   max-height="50vh"
+            //-   v-model.trim="tag_values"
+            //-   :data="search_input_complement_list"
+            //-   type="search"
+            //-   placeholder="囲い"
+            //-   open-on-focus
+            //-   clearable
+            //-   expanded
+            //-   ref="main_search_form"
+            //-   )
+            //-   //- @select="search_select_handle"
+            //-   //- @keydown.native.enter="search_enter_handle"
 
           b-field.field_block(label="開戦")
             b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
@@ -99,6 +131,8 @@ import { app_storage     } from "./app_storage.js"
 import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
 import { ChoiceJudgeInfo } from "./models/choice_judge_info.js"
 import { ChoiceFinalInfo } from "./models/choice_final_info.js"
+import { ChoicePresetInfo } from "./models/choice_preset_info.js"
+import { ChoiceRuleInfo } from "./models/choice_rule_info.js"
 import { CompareInfo   } from "./models/compare_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
@@ -114,7 +148,8 @@ export default {
 
   data() {
     return {
-      xi: {},
+      xi: null,
+      filteredTags: [],
     }
   },
 
@@ -142,6 +177,12 @@ export default {
       this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.user_key}})
     },
+
+    getFilteredTags(text) {
+      this.filteredTags = this.xi.tactic_infos.defense.values.filter(e => {
+        return e.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
+      })
+    },
   },
 
   computed: {
@@ -152,6 +193,12 @@ export default {
 
     ChoiceFinalInfo()   { return ChoiceFinalInfo                       },
     choice_final_info() { return ChoiceFinalInfo.fetch(this.final_key) },
+
+    ChoicePresetInfo()   { return ChoicePresetInfo                       },
+    choice_preset_info() { return ChoicePresetInfo.fetch(this.preset_key) },
+
+    ChoiceRuleInfo()   { return ChoiceRuleInfo                       },
+    choice_rule_info() { return ChoiceRuleInfo.fetch(this.rule_key) },
 
     ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
     choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
@@ -169,6 +216,8 @@ export default {
       av.push(this.choice_xmode_info.to_query_part)
       av.push(this.choice_judge_info.to_query_part)
       av.push(this.choice_final_info.to_query_part)
+      av.push(this.choice_preset_info.to_query_part)
+      av.push(this.choice_rule_info.to_query_part)
 
       if (this.critical_turn_enabled) {
         av.push(`開戦:${this.critical_turn_compare_info.value}${this.critical_turn}`)
@@ -202,7 +251,13 @@ export default {
     +mobile
       padding: 0
 
+  .field_block
+    &:hover
+      background-color: $primary-light
+
   .new_query_field
+    // padding-top: 0
+    // padding-top: 0.8rem 0 1.2rem
     &:hover
       background-color: unset
 

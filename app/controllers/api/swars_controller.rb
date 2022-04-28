@@ -69,7 +69,16 @@ module Api
     concerning :CustomSearchMethods do
       # curl http://localhost:3000/api/swars/custom_search_setup
       def custom_search_setup
-        render json: { custom_search_setup_value: 1 }
+        json = {}
+        json[:tactic_infos] = Bioshogi::TacticInfo.inject({}) do |a, e|
+          a.merge(e.key => {
+              :key    => e.key,
+              :name   => e.name,
+              :values => e.model.collect(&:name),
+            })
+        end
+        json[:grade_infos] = Swars::GradeInfo.as_json
+        render json: json
       end
     end
 
