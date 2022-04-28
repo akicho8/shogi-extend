@@ -6,5 +6,9 @@ module Swars
       { key: "友達", },
       { key: "指導", },
     ]
+
+    def long_name
+      "#{key}対局"
+    end
   end
 end

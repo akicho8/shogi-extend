@@ -1,6 +1,6 @@
 <template lang="pug">
 .SwarsCustomSearchApp
-  b-loading(:active="$fetchState.pending")
+  //- b-loading(:active="$fetchState.pending")
 
   DebugBox(v-if="development_p")
     //- p mounted_then_query_present_p: {{mounted_then_query_present_p}}
@@ -34,41 +34,50 @@
           b-field.field_block(label="ウォーズID")
             b-input(v-model.trim="user_key" required placeholder="itoshinTV")
 
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceXmodeInfo" var_name="xmode_key")
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceJudgeInfo" var_name="judge_key")
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceFinalInfo" var_name="final_key")
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoicePresetInfo" var_name="preset_key")
-          SimpleRadioButtons.field_block(:base="base" model_name="ChoiceRuleInfo" var_name="rule_key")
+          SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="結末"       :records="xi.final_infos"  var_name="final_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="勝敗"       :records="xi.judge_infos"  var_name="judge_keys")
+          SwarsCustomSearchCheckbox(:base="base" label1="先後"       :records="xi.location_infos"  var_name="location_keys" last_only_if_full)
 
-          b-field.field_block(label="タグ" v-if="xi")
-            //- b-select(v-model="tag_values" @input="sound_play_click()")
-            //-   option(v-for="e in xi.tactic_infos.defense.values" :value="e") {{e}}
-            b-taginput(
-              v-model="tag_values"
-              :data="filteredTags"
-              autocomplete
-              open-on-focus
-              allow-new
-              icon="label"
-              placeholder="Add a tag"
-              @typing="getFilteredTags"
-              )
-              //- :allow-new="true"
-              //- field="user.first_name"
+          //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceXmodeInfo" var_name="xmode_key")
+          //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceJudgeInfo" var_name="judge_key")
+          //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceFinalInfo" var_name="final_key")
+          //- SimpleRadioButtons.field_block(:base="base" model_name="ChoicePresetInfo" var_name="preset_key")
+          //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceRuleInfo" var_name="rule_key")
 
-            //- b-autocomplete#query(
-            //-   max-height="50vh"
-            //-   v-model.trim="tag_values"
-            //-   :data="search_input_complement_list"
-            //-   type="search"
-            //-   placeholder="囲い"
-            //-   open-on-focus
-            //-   clearable
-            //-   expanded
-            //-   ref="main_search_form"
-            //-   )
-            //-   //- @select="search_select_handle"
-            //-   //- @keydown.native.enter="search_enter_handle"
+          SwarsCustomSearchTagInput(:base="base" label1="自分側 AND タグ" label2="自分側ですべて含む" var_name="and_tag_values"    )
+          SwarsCustomSearchTagInput(:base="base" label1="自分側 OR タグ"  label2="自分側でどれか含む" var_name="or_tag_values"     )
+          SwarsCustomSearchTagInput(:base="base" label1="相手側 AND タグ" label2="相手側ですべて含む" var_name="vs_and_tag_values" )
+          SwarsCustomSearchTagInput(:base="base" label1="相手側 OR タグ"  label2="相手側でどれか含む" var_name="vs_or_tag_values"  )
+
+          //- // ネイティブなselectは選択中の項目が選択された状態で開くため使いやすい
+          //- template(v-if="development_p")
+          //-   b-field.field_block(label="相手の棋力" v-if="xi")
+          //-     b-select(v-model="grade_keys" multiple @input="sound_play_click()")
+          //-       option(v-for="e in xi.grade_infos" :value="e.key") {{e.short_name}}
+          //-
+          //-     //- // https://buefy.org/documentation/dropdown/
+          //-     //- b-dropdown.dropdown_menu(position="is-bottom-left" hoverable)
+          //-     //-   b-icon.has-text-grey-light.is_clickable(slot="trigger" icon="dots-vertical")
+          //-     //-     b-dropdown-item(@click="func1_handle") クリックに反応
+          //-     //-     b-dropdown-item(separator)
+          //-     //-       b-dropdown-item(:href="xx_url") Aタグとして飛ぶ
+          //-     //-       b-dropdown-item アイコンつき
+          //-     //-       b-icon(icon="arrow-up-bold" size="is-small")
+          //-     //-         | 最大200件
+          //-
+          //- //- 使いづらい
+          //- template(v-if="development_p")
+          //-   b-field.field_block(label="相手の棋力" v-if="xi")
+          //-     .control
+          //-       b-dropdown(v-model="grade_keys" @active-change="e => e && sound_play_click()")
+          //-         template(#trigger)
+          //-           b-button(label="foo" icon-right="menu-down")
+          //-         template(v-for="e in xi.grade_infos")
+          //-           b-dropdown-item(:value="e" @click="sound_play_click()") {{e}}
 
           b-field.field_block(label="開戦")
             b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
@@ -128,7 +137,7 @@ import { app_chore       } from "./app_chore.js"
 import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
-import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
+// import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
 import { ChoiceJudgeInfo } from "./models/choice_judge_info.js"
 import { ChoiceFinalInfo } from "./models/choice_final_info.js"
 import { ChoicePresetInfo } from "./models/choice_preset_info.js"
@@ -146,27 +155,36 @@ export default {
     app_storage,
   ],
 
+  props: {
+    xi: { type: Object,  required: true, },
+  },
+
   data() {
     return {
-      xi: null,
-      filteredTags: [],
+      // xi: null,
+      filtered_tags: null,
     }
   },
 
-  fetchOnServer: false,
-  fetch() {
-    this.ga_click("カスタム検索")
-
-    let params = {
-      ...this.$route.query,
-    }
-
-    params = this.pc_url_params_clean(params)
-
-    return this.$axios.$get("/api/swars/custom_search_setup.json", {params}).then(xi => {
-      this.xi = xi
-    })
+  created() {
+    this.filtered_tags_rebuild("")
   },
+
+  // fetchOnServer: false,
+  // fetch() {
+  //   this.ga_click("カスタム検索")
+  //
+  //   let params = {
+  //     ...this.$route.query,
+  //   }
+  //
+  //   params = this.pc_url_params_clean(params)
+  //
+  //   return this.$axios.$get("/api/swars/custom_search_setup.json", {params}).then(xi => {
+  //     this.xi = xi
+  //     this.filtered_tags_rebuild("")  //
+  //   })
+  // },
 
   methods: {
     search_click_handle() {
@@ -178,30 +196,43 @@ export default {
       this.back_to({name: "swars-search", query: {query: this.user_key}})
     },
 
-    getFilteredTags(text) {
-      this.filteredTags = this.xi.tactic_infos.defense.values.filter(e => {
-        return e.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
+    filtered_tags_rebuild(text) {
+      const av = []
+      _.each(this.xi.tactic_infos, (element, _) => {
+        const values = element.values.filter(e => e.toLowerCase().indexOf(text.toLowerCase()) >= 0)
+        if (values.length >= 1) {
+          av.push({name: `── ${element.name} ──`, values: values})
+        }
       })
+      this.filtered_tags = av
     },
+
+    array_to_query(key, values) {
+      let v = this.presence(values)
+      if (v) {
+        return [key, ":", v.join(",")].join("")
+      }
+    },
+
   },
 
   computed: {
     base() { return this },
 
-    ChoiceXmodeInfo()   { return ChoiceXmodeInfo                       },
-    choice_xmode_info() { return ChoiceXmodeInfo.fetch(this.xmode_key) },
+    // ChoiceXmodeInfo()   { return ChoiceXmodeInfo                       },
+    // choice_xmode_info() { return ChoiceXmodeInfo.fetch(this.xmode_key) },
 
-    ChoiceFinalInfo()   { return ChoiceFinalInfo                       },
-    choice_final_info() { return ChoiceFinalInfo.fetch(this.final_key) },
+    // ChoiceFinalInfo()   { return ChoiceFinalInfo                       },
+    // choice_final_info() { return ChoiceFinalInfo.fetch(this.final_key) },
+    //
+    // ChoicePresetInfo()   { return ChoicePresetInfo                       },
+    // choice_preset_info() { return ChoicePresetInfo.fetch(this.preset_key) },
+    //
+    // ChoiceRuleInfo()   { return ChoiceRuleInfo                       },
+    // choice_rule_info() { return ChoiceRuleInfo.fetch(this.rule_key) },
 
-    ChoicePresetInfo()   { return ChoicePresetInfo                       },
-    choice_preset_info() { return ChoicePresetInfo.fetch(this.preset_key) },
-
-    ChoiceRuleInfo()   { return ChoiceRuleInfo                       },
-    choice_rule_info() { return ChoiceRuleInfo.fetch(this.rule_key) },
-
-    ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
-    choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
+    // ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
+    // choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
     CompareInfo()            { return CompareInfo                                },
     critical_turn_compare_info()  { return CompareInfo.fetch(this.critical_turn_compare)        },
@@ -213,11 +244,22 @@ export default {
       let av = []
 
       av.push(this.user_key)
-      av.push(this.choice_xmode_info.to_query_part)
-      av.push(this.choice_judge_info.to_query_part)
-      av.push(this.choice_final_info.to_query_part)
-      av.push(this.choice_preset_info.to_query_part)
-      av.push(this.choice_rule_info.to_query_part)
+      av.push(this.array_to_query("相手の棋力", this.grade_keys))
+      av.push(this.array_to_query("対局モード", this.xmode_keys))
+      av.push(this.array_to_query("持ち時間", this.rule_keys))
+      av.push(this.array_to_query("結末", this.final_keys))
+      av.push(this.array_to_query("手合割", this.preset_keys))
+      av.push(this.array_to_query("勝敗", this.judge_keys))
+
+      // av.push(this.choice_judge_info.to_query_part)
+      // av.push(this.choice_final_info.to_query_part)
+      // av.push(this.choice_preset_info.to_query_part)
+      // av.push(this.choice_rule_info.to_query_part)
+
+      av.push(this.array_to_query("tag", this.and_tag_values))
+      av.push(this.array_to_query("vs-tag", this.vs_and_tag_values))
+      av.push(this.array_to_query("or-tag", this.or_tag_values))
+      av.push(this.array_to_query("vs-or-tag", this.vs_or_tag_values))
 
       if (this.critical_turn_enabled) {
         av.push(`開戦:${this.critical_turn_compare_info.value}${this.critical_turn}`)
@@ -237,6 +279,16 @@ export default {
       str = this.str_squish(str)
       return str
     },
+
+    taginput_attrs() {
+      return {
+        "expanded": false,
+        "type": "is-primary",
+        "v-on:on-paste-separators": [',', ' '],
+        "v-on:confirm-keys": "[',', 'Tab', 'Enter']",
+      }
+    },
+
   },
 }
 </script>
@@ -256,6 +308,10 @@ export default {
       background-color: $primary-light
 
   .new_query_field
+    position: sticky
+    top: 0px
+    z-index: 10
+    background-color: $white
     // padding-top: 0
     // padding-top: 0.8rem 0 1.2rem
     &:hover

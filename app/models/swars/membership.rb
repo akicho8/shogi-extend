@@ -47,6 +47,38 @@ module Swars
 
     scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
 
+    begin
+      scope :judge_eq,     -> v { where(    judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
+      scope :judge_not_eq, -> v { where.not(judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
+      scope :judge_ex, proc  { |v; s, g|
+        s = all
+        g = xquery_parse(v)
+        if g[true]
+          s = s.judge_eq(g[true])
+        end
+        if g[false]
+          s = s.judge_not_eq(g[false])
+        end
+        s
+      }
+    end
+
+    begin
+      scope :location_eq,     -> v { where(    location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
+      scope :location_not_eq, -> v { where.not(location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
+      scope :location_ex, proc  { |v; s, g|
+        s = all
+        g = xquery_parse(v)
+        if g[true]
+          s = s.location_eq(g[true])
+        end
+        if g[false]
+          s = s.location_not_eq(g[false])
+        end
+        s
+      }
+    end
+
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?

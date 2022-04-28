@@ -45,95 +45,78 @@ module Swars
             s = s.where(key: v)
           end
 
-          if v = query_info.lookup_one(:rule) || query_info.lookup_one("持ち時間") || query_info.lookup_one("種類")
-            s = s.rule_eq(v)
-          end
-
-          # "Kouru_Abe 手合割:平手"
-          # "Kouru_Abe 手合割:!平手"
-          # "Kouru_Abe 手合割:-平手"
-          # "Kouru_Abe 手合割:飛車落ち,角落ち"
-          #
-          # assert { case1("平手")              == ["平手"]               }
-          # assert { case1("!平手")             == ["角落ち", "飛車落ち"] }
-          # assert { case1("-平手")             == ["角落ち", "飛車落ち"] }
-          # assert { case1("角落ち")            == ["角落ち"]             }
-          # assert { case1("角落ち,飛車落ち")   == ["角落ち", "飛車落ち"] }
-          # assert { case1("-角落ち,-飛車落ち") == ["平手"] }
-          if v = query_info.lookup(:preset) || query_info.lookup("手合割") || query_info.lookup("手合")
-            g = v.collect { |e|
-              e.match(/(?<not>[!-])?(?<value>.*)/)
-            }.compact.group_by { |e|
-              !e[:not]
-            }.transform_values { |e|
-              e.collect { |e| e[:value] }
-            }
-            if v = g[true]
-              s = s.preset_eq(v)
+          begin
+            if v = query_info.lookup(:xmode) || query_info.lookup("モード") || query_info.lookup("対局モード")
+              s = s.xmode_ex(v)
             end
-            if v = g[false]
-              s = s.preset_not_eq(v)
+
+            if v = query_info.lookup(:rule) || query_info.lookup("持ち時間") || query_info.lookup("種類")
+              s = s.rule_ex(v)
+            end
+
+            if v = query_info.lookup(:final) || query_info.lookup("結末") || query_info.lookup("最後")
+              s = s.final_ex(v)
+            end
+
+            if v = query_info.lookup(:preset) || query_info.lookup("手合割") || query_info.lookup("手合")
+              s = s.preset_ex(v)
             end
           end
 
-          if v = query_info.lookup_one(:xmode) || query_info.lookup_one("様式") || query_info.lookup_one("モード")
-            s = s.xmode_eq(v)
-          end
+          begin
+            if e = query_info.lookup_op(:critical_turn) || query_info.lookup_op("開戦")
+              s = s.where(arel_table[:critical_turn].public_send(e[:operator], e[:value]))
+            end
 
-          if e = query_info.lookup_op(:critical_turn) || query_info.lookup_op("開戦")
-            s = s.where(arel_table[:critical_turn].public_send(e[:operator], e[:value]))
-          end
+            if e = query_info.lookup_op(:outbreak_turn) || query_info.lookup_op("中盤")
+              s = s.where(arel_table[:outbreak_turn].public_send(e[:operator], e[:value]))
+            end
 
-          if e = query_info.lookup_op(:outbreak_turn) || query_info.lookup_op("中盤")
-            s = s.where(arel_table[:outbreak_turn].public_send(e[:operator], e[:value]))
-          end
-
-          if e = query_info.lookup_op(:turn_max) || query_info.lookup_op("手数")
-            s = s.where(arel_table[:turn_max].public_send(e[:operator], e[:value]))
-          end
-
-          if v = query_info.lookup_one(:final) || query_info.lookup_one("最後") || query_info.lookup_one("結末")
-            s = s.where(arel_table[:final_key].eq(FinalInfo.fetch(v).key))
+            if e = query_info.lookup_op(:turn_max) || query_info.lookup_op("手数")
+              s = s.where(arel_table[:turn_max].public_send(e[:operator], e[:value]))
+            end
           end
 
           if current_swars_user
             selected = false
 
-            my_sampled_memberships2 = current_swars_user.memberships
+            my_memberships = current_swars_user.memberships
+
+            begin
+              if v = query_info.lookup("judge") || query_info.lookup("勝敗")
+                m = my_memberships
+                m = m.judge_ex(v)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
+
+              if v = query_info.lookup("location") || query_info.lookup("先後")
+                m = my_memberships
+                m = m.location_ex(v)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
+            end
 
             if t = query_info.lookup_one("date") || query_info.lookup_one("日時") || query_info.lookup_one("日付")
               t = DateRange.parse(t)
 
-              m = my_sampled_memberships2
+              m = my_memberships
               s = s.where(id: m.pluck(:battle_id))
 
               s = s.where(battled_at: t)
               selected = true
             end
 
-            if v = query_info.lookup_one("judge") || query_info.lookup_one("勝敗")
-              m = my_sampled_memberships2
-              m = m.where(judge_key: JudgeInfo.fetch(v).key)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
-            end
-
-            if v = query_info.lookup_one("location") || query_info.lookup_one("先後")
-              m = my_sampled_memberships2
-              m = m.where(location_key: Bioshogi::Location.fetch(v).key)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
-            end
-
             if v = query_info.lookup("tag") # 自分 戦法(AND)
-              m = my_sampled_memberships2
+              m = my_memberships
               m = m.tagged_with(v)
               s = s.where(id: m.pluck(:battle_id))
               selected = true
             end
 
             if v = query_info.lookup("or-tag") # 自分 戦法(OR)
-              m = my_sampled_memberships2
+              m = my_memberships
               m = m.tagged_with(v, any: true)
               s = s.where(id: m.pluck(:battle_id))
               selected = true
@@ -153,16 +136,16 @@ module Swars
               selected = true
             end
 
-            if v = query_info.lookup_one("vs-grade") # 段級
-              grade = Grade.fetch(v)
+            if v = query_info.lookup("vs-grade") || query_info.lookup("棋力") || query_info.lookup("相手の棋力")
+              v = v.collect { |e| Grade.fetch(GradeInfo.fetch(e).key) }
               m = sampled_memberships(query_info, current_swars_user.op_memberships)
-              m = m.where(grade: grade)
+              m = m.where(grade: v)
               s = s.where(id: m.pluck(:battle_id))
               selected = true
             end
 
             if e = query_info.lookup_op("vs-grade-diff") || query_info.lookup_op("力差")
-              m = my_sampled_memberships2
+              m = my_memberships
               m = m.where(Membership.arel_table[:grade_diff].public_send(e[:operator], e[:value]))
               s = s.where(id: m.pluck(:battle_id))
               selected = true
