@@ -151,6 +151,20 @@ module Swars
               selected = true
             end
 
+            if e = query_info.lookup_op("最大思考")
+              m = my_memberships
+              m = m.where(Membership.arel_table[:think_max].public_send(e[:operator], e[:value]))
+              s = s.where(id: m.pluck(:battle_id))
+              selected = true
+            end
+
+            if e = query_info.lookup_op("平均思考")
+              m = my_memberships
+              m = m.where(Membership.arel_table[:think_all_avg].public_send(e[:operator], e[:value]))
+              s = s.where(id: m.pluck(:battle_id))
+              selected = true
+            end
+
             if v = query_info.lookup("vs") || query_info.lookup("相手")
               users = Swars::User.where(user_key: v)
               m = current_swars_user.op_memberships.where(user: users)

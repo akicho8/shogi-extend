@@ -32,6 +32,14 @@ export class ParamInfo extends ParamBase {
       { key: "turn_max",              type: "integer", name: "手数",           defaults: { development: null, production: 100,    }, permanent: true, relation: null, desc: null, },
       { key: "turn_max_compare",      type: "string",  name: "手数演算子",     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, desc: null, },
 
+      { key: "think_max_enabled",     type: "boolean", name: "最大思考有効",       defaults: { development: null, production: false,  }, permanent: true, relation: null, desc: null, },
+      { key: "think_max",             type: "integer", name: "最大思考",           defaults: { development: null, production: 100,    }, permanent: true, relation: null, desc: null, },
+      { key: "think_max_compare",     type: "string",  name: "最大思考演算子",     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, desc: null, },
+
+      { key: "think_avg_enabled",     type: "boolean", name: "平均思考有効",       defaults: { development: null, production: false,  }, permanent: true, relation: null, desc: null, },
+      { key: "think_avg",             type: "integer", name: "平均思考",           defaults: { development: null, production: 100,    }, permanent: true, relation: null, desc: null, },
+      { key: "think_avg_compare",     type: "string",  name: "平均思考演算子",     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, desc: null, },
+
       { key: "grade_diff_enabled",    type: "boolean", name: "力差有効",       defaults: { development: null, production: false,  }, permanent: true, relation: null, desc: null, },
       { key: "grade_diff",            type: "integer", name: "力差",           defaults: { development: null, production: 1,      }, permanent: true, relation: null, desc: null, },
       { key: "grade_diff_compare",    type: "string",  name: "力差演算子",     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, desc: null, },

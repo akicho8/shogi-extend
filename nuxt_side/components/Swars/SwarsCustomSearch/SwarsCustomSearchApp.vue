@@ -40,6 +40,10 @@
           SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
           SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
           SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
+
+          SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="think_max_enabled"      xxx_value_var="think_max"      xxx_compare_var="think_max_compare" :min="0" :max="60*10" :message="scs_time_format(think_max)")
+          SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="think_avg_enabled"      xxx_value_var="think_avg"      xxx_compare_var="think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(think_avg)")
+
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
 
@@ -93,11 +97,15 @@ export default {
       }
     },
 
-    foobar(key, enabled, compare, turn) {
+    compare_query_build(key, enabled, compare, value) {
       if (enabled) {
-        return `${key}:${compare.value}${turn}`
+        return `${key}:${compare.value}${value}`
       }
-    }
+    },
+
+    scs_time_format(seconds) {
+      return this.time_format_human_hms(seconds)
+    },
   },
 
   computed: {
@@ -118,12 +126,14 @@ export default {
     // ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
     // choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
-    LogicalInfo()              { return LogicalInfo                                 },
+    LogicalInfo()                { return LogicalInfo                                 },
     CompareInfo()                { return CompareInfo                                   },
     critical_turn_compare_info() { return CompareInfo.fetch(this.critical_turn_compare) },
     outbreak_turn_compare_info() { return CompareInfo.fetch(this.outbreak_turn_compare) },
     turn_max_compare_info()      { return CompareInfo.fetch(this.turn_max_compare)      },
     grade_diff_compare_info()    { return CompareInfo.fetch(this.grade_diff_compare)    },
+    think_max_compare_info()     { return CompareInfo.fetch(this.think_max_compare)      },
+    think_avg_compare_info()     { return CompareInfo.fetch(this.think_avg_compare)      },
 
     new_query() {
       let av = []
@@ -138,12 +148,18 @@ export default {
       av.push(this.array_to_query("棋力", this.grade_keys))
       av.push(this.array_to_query("先後", this.location_keys))
       av.push(this.array_to_query("vs", this.vs_user_keys))
-      av.push(this.array_to_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key, this.my_tag_values))
+
+      av.push(this.array_to_query(        this.LogicalInfo.fetch(this.my_tag_values_op).search_key, this.my_tag_values))
       av.push(this.array_to_query("vs-" + this.LogicalInfo.fetch(this.vs_tag_values_op).search_key, this.vs_tag_values))
-      av.push(this.foobar("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
-      av.push(this.foobar("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
-      av.push(this.foobar("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
-      av.push(this.foobar("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
+
+      av.push(this.compare_query_build("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
+      av.push(this.compare_query_build("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
+      av.push(this.compare_query_build("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
+      av.push(this.compare_query_build("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
+
+      av.push(this.compare_query_build("最大思考", this.think_max_enabled, this.think_max_compare_info, this.think_max))
+      av.push(this.compare_query_build("平均思考", this.think_avg_enabled, this.think_avg_compare_info, this.think_avg))
+
       let str = av.join(" ")
       str = this.str_squish(str)
       return str
@@ -185,7 +201,7 @@ export default {
     top: 0px
     z-index: 10
     background-color: $white
-    padding: 1.2rem 0
+    padding: 1.2rem inherit
     &:hover
       background-color: unset
 
