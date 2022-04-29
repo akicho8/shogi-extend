@@ -144,7 +144,7 @@ module Swars
               selected = true
             end
 
-            if e = query_info.lookup_op("vs-grade-diff") || query_info.lookup_op("力差")
+            if e = query_info.lookup_op("vs-grade-diff") || query_info.lookup_op("力差") || query_info.lookup_op("棋力差")
               m = my_memberships
               m = m.where(Membership.arel_table[:grade_diff].public_send(e[:operator], e[:value]))
               s = s.where(id: m.pluck(:battle_id))
