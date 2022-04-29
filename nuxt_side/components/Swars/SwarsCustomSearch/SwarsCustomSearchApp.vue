@@ -23,7 +23,7 @@
           b-field.field_block(label="自分のウォーズID")
             b-input(v-model.trim="user_key" placeholder="itoshinTV")
 
-          SwarsCustomSearchInputTag2(:base="base")
+          SwarsCustomSearchInputVsUserKeys(:base="base")
 
           SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
           SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
