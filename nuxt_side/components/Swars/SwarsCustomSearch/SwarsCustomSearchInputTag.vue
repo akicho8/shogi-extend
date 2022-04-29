@@ -16,7 +16,7 @@ b-field.field_block.SwarsCustomSearchInputTag
     allow-new
     icon="label"
     placeholder="Add a tag"
-    @typing="filtered_tags_rebuild"
+    @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"
     max-height="50vh"
@@ -48,10 +48,10 @@ export default {
     }
   },
   created() {
-    this.filtered_tags_rebuild("") // open-on-focus で open するために最初に作っておく
+    this.typing_handle("") // open-on-focus で open するために最初に作っておく
   },
   methods: {
-    filtered_tags_rebuild(text) {
+    typing_handle(text) {
       text = this.normalize_for_autocomplete(text)
       const av = []
       _.each(this.base.xi.tactic_infos, (e, _) => {

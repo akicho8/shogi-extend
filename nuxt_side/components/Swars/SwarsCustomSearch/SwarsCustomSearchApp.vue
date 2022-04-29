@@ -48,7 +48,6 @@ import _ from "lodash"
 
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
-import { app_vs_user       } from "./app_vs_user.js"
 import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
@@ -62,7 +61,6 @@ export default {
   mixins: [
     support_parent,
     app_search,
-    app_vs_user,
     app_chore,
     app_storage,
   ],
@@ -129,6 +127,7 @@ export default {
 
     new_query() {
       let av = []
+      // フォームと順番を合わせること
       av.push(this.user_key)
       av.push(this.array_to_query("相手の棋力", this.grade_keys))
       av.push(this.array_to_query("対局モード", this.xmode_keys))

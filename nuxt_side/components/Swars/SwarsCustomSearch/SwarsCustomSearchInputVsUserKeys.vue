@@ -6,12 +6,12 @@ b-field.field_block.SwarsCustomSearchInputVsUserKeys
       | 入力後にEnterで確定してください
   b-taginput(
     v-model="base.vs_user_keys"
-    :data="filtered_tags"
+    :data="filtered_keys"
     autocomplete
     open-on-focus
     allow-new
     placeholder=""
-    @typing="filtered_names_rebuild"
+    @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"
     max-height="50vh"
@@ -23,10 +23,10 @@ b-field.field_block.SwarsCustomSearchInputVsUserKeys
 </template>
 
 <script>
+const VS_USERS_ARRAY_SIZE_MAX = 20
+
 import _ from "lodash"
 import { support_child } from "./support_child.js"
-
-const VS_USERS_ARRAY_SIZE_MAX = 20
 
 export default {
   name: "SwarsCustomSearchInputVsUserKeys",
@@ -35,27 +35,31 @@ export default {
   ],
   data() {
     return {
-      filtered_tags: null, // 干渉しないようにコンポーネントローカルにすること
+      filtered_keys: null, // 干渉しないようにコンポーネントローカルにすること
     }
   },
   created() {
-    this.filtered_names_rebuild("") // open-on-focus で open するために最初に作っておく
+    this.typing_handle("") // open-on-focus で open するために最初に作っておく
   },
   methods: {
-    filtered_names_rebuild(text) {
+    typing_handle(text) {
       text = this.normalize_for_autocomplete(text)
-      this.filtered_tags = this.base.remember_vs_user_keys.filter(e => this.normalize_for_autocomplete(e).indexOf(text) >= 0)
+      this.filtered_keys = this.base.remember_vs_user_keys.filter(e => {
+        // 1. vs_user_keys にまだ含まれていないものかつ (すでに入力した名前を補完に出さないようにするため)
+        // 2. マッチするものに絞る
+        return !this.base.vs_user_keys.includes(e) && this.normalize_for_autocomplete(e).indexOf(text) >= 0
+      })
     },
-    add_handle(name) {
-      this.remember_update(name)
+    add_handle(key) {
+      this.remember_update(key)
       this.sound_play_toggle(true)
-      this.talk(name)
+      this.talk(key)
     },
-    remove_handle(name) {
+    remove_handle(key) {
       this.sound_play_toggle(false)
     },
-    remember_update(str) {
-      let av = this.str_to_tags(str)
+    remember_update(key) {
+      let av = this.str_to_tags(key)
       if (this.present_p(av)) {
         av = [...av, ...this.base.remember_vs_user_keys]
         av = _.uniq(av)
@@ -63,8 +67,6 @@ export default {
         this.base.remember_vs_user_keys = av
       }
     },
-  },
-  computed: {
   },
 }
 </script>
