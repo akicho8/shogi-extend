@@ -82,29 +82,34 @@
           //-         template(v-for="e in xi.grade_infos")
           //-           b-dropdown-item(:value="e" @click="sound_play_click()") {{e}}
 
-          b-field.field_block(label="開戦")
-            b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="critical_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!critical_turn_enabled")
-            b-select(v-model="critical_turn_compare" @input="sound_play_click()" :disabled="!critical_turn_enabled")
-              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+          SwarsCustomSearchTagInput2(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+          SwarsCustomSearchTagInput2(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
+          SwarsCustomSearchTagInput2(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
+          SwarsCustomSearchTagInput2(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
 
-          b-field.field_block(label="中盤")
-            b-switch(v-model="outbreak_turn_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="outbreak_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
-            b-select(v-model="outbreak_turn_compare" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
-              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
-
-          b-field.field_block(label="手数")
-            b-switch(v-model="turn_max_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!turn_max_enabled")
-            b-select(v-model="turn_max_compare" @input="sound_play_click()" :disabled="!turn_max_enabled")
-              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
-
-          b-field.field_block(label="力差")
-            b-switch(v-model="grade_diff_enabled" @input="sound_play_toggle")
-            b-numberinput(controls-position="compact" expanded v-model="grade_diff" :min="-9" :max="9" :exponential="true" @input="sound_play_click()" :disabled="!grade_diff_enabled")
-            b-select(v-model="grade_diff_compare" @input="sound_play_click()" :disabled="!grade_diff_enabled")
-              option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+          //- b-field.field_block(label="開戦")
+          //-   b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
+          //-   b-numberinput(controls-position="compact" expanded v-model="critical_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!critical_turn_enabled")
+          //-   b-select(v-model="critical_turn_compare" @input="sound_play_click()" :disabled="!critical_turn_enabled")
+          //-     option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+          //-
+          //- b-field.field_block(label="中盤")
+          //-   b-switch(v-model="outbreak_turn_enabled" @input="sound_play_toggle")
+          //-   b-numberinput(controls-position="compact" expanded v-model="outbreak_turn" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
+          //-   b-select(v-model="outbreak_turn_compare" @input="sound_play_click()" :disabled="!outbreak_turn_enabled")
+          //-     option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+          //-
+          //- b-field.field_block(label="手数")
+          //-   b-switch(v-model="turn_max_enabled" @input="sound_play_toggle")
+          //-   b-numberinput(controls-position="compact" expanded v-model="turn_max" :min="0" :max="200" :exponential="true" @input="sound_play_click()" :disabled="!turn_max_enabled")
+          //-   b-select(v-model="turn_max_compare" @input="sound_play_click()" :disabled="!turn_max_enabled")
+          //-     option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
+          //-
+          //- b-field.field_block(label="力差")
+          //-   b-switch(v-model="grade_diff_enabled" @input="sound_play_toggle")
+          //-   b-numberinput(controls-position="compact" expanded v-model="grade_diff" :min="-9" :max="9" :exponential="true" @input="sound_play_click()" :disabled="!grade_diff_enabled")
+          //-   b-select(v-model="grade_diff_compare" @input="sound_play_click()" :disabled="!grade_diff_enabled")
+          //-     option(v-for="e in CompareInfo.values" :value="e.key") {{e.name}}
 
           //- b-field
           //-   b-autocomplete#query(
@@ -141,12 +146,12 @@ import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
 // import { ChoiceXmodeInfo } from "./models/choice_xmode_info.js"
-import { ChoiceJudgeInfo } from "./models/choice_judge_info.js"
-import { ChoiceFinalInfo } from "./models/choice_final_info.js"
-import { ChoicePresetInfo } from "./models/choice_preset_info.js"
-import { ChoiceRuleInfo } from "./models/choice_rule_info.js"
+// import { ChoiceJudgeInfo } from "./models/choice_judge_info.js"
+// import { ChoiceFinalInfo } from "./models/choice_final_info.js"
+// import { ChoicePresetInfo } from "./models/choice_preset_info.js"
+// import { ChoiceRuleInfo } from "./models/choice_rule_info.js"
 import { CompareInfo   } from "./models/compare_info.js"
-import { LogicalopInfo   } from "./models/logicalop_info.js"
+import { LogicalInfo   } from "./models/logical_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
 
@@ -166,12 +171,7 @@ export default {
   data() {
     return {
       // xi: null,
-      filtered_tags: null,
     }
-  },
-
-  created() {
-    this.filtered_tags_rebuild("")
   },
 
   // fetchOnServer: false,
@@ -200,17 +200,6 @@ export default {
       this.back_to({name: "swars-search", query: {query: this.user_key}})
     },
 
-    filtered_tags_rebuild(text) {
-      const av = []
-      _.each(this.xi.tactic_infos, (element, _) => {
-        const values = element.values.filter(e => e.toLowerCase().indexOf(text.toLowerCase()) >= 0)
-        if (values.length >= 1) {
-          av.push({name: `── ${element.name} ──`, values: values})
-        }
-      })
-      this.filtered_tags = av
-    },
-
     array_to_query(key, values) {
       let v = this.presence(values)
       if (v) {
@@ -218,6 +207,11 @@ export default {
       }
     },
 
+    foobar(key, enabled, compare, turn) {
+      if (enabled) {
+        return `${key}:${compare.value}${turn}`
+      }
+    }
   },
 
   computed: {
@@ -238,16 +232,15 @@ export default {
     // ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
     // choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
-    CompareInfo()            { return CompareInfo                                },
-    critical_turn_compare_info()  { return CompareInfo.fetch(this.critical_turn_compare)        },
-    outbreak_turn_compare_info()  { return CompareInfo.fetch(this.outbreak_turn_compare)        },
-    turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_compare)        },
-    grade_diff_compare_info()  { return CompareInfo.fetch(this.grade_diff_compare)        },
-    LogicalopInfo()            { return LogicalopInfo                                },
+    LogicalInfo()              { return LogicalInfo                                 },
+    CompareInfo()                { return CompareInfo                                   },
+    critical_turn_compare_info() { return CompareInfo.fetch(this.critical_turn_compare) },
+    outbreak_turn_compare_info() { return CompareInfo.fetch(this.outbreak_turn_compare) },
+    turn_max_compare_info()      { return CompareInfo.fetch(this.turn_max_compare)      },
+    grade_diff_compare_info()    { return CompareInfo.fetch(this.grade_diff_compare)    },
 
     new_query() {
       let av = []
-
       av.push(this.user_key)
       av.push(this.array_to_query("相手の棋力", this.grade_keys))
       av.push(this.array_to_query("対局モード", this.xmode_keys))
@@ -255,45 +248,30 @@ export default {
       av.push(this.array_to_query("結末", this.final_keys))
       av.push(this.array_to_query("手合割", this.preset_keys))
       av.push(this.array_to_query("勝敗", this.judge_keys))
-
-      // av.push(this.choice_judge_info.to_query_part)
-      // av.push(this.choice_final_info.to_query_part)
-      // av.push(this.choice_preset_info.to_query_part)
-      // av.push(this.choice_rule_info.to_query_part)
-
-      av.push(this.array_to_query("tag", this.my_tag_values))
-      av.push(this.array_to_query("vs-tag", this.vs_my_tag_values))
-      av.push(this.array_to_query("or-tag", this.or_tag_values))
-      av.push(this.array_to_query("vs-or-tag", this.vs_or_tag_values))
-
-      if (this.critical_turn_enabled) {
-        av.push(`開戦:${this.critical_turn_compare_info.value}${this.critical_turn}`)
-      }
-      if (this.outbreak_turn_enabled) {
-        av.push(`中盤:${this.outbreak_turn_compare_info.value}${this.outbreak_turn}`)
-      }
-      if (this.turn_max_enabled) {
-        av.push(`手数:${this.turn_max_compare_info.value}${this.turn_max}`)
-      }
-
-      if (this.grade_diff_enabled) {
-        av.push(`力差:${this.grade_diff_compare_info.value}${this.grade_diff}`)
-      }
-
+      av.push(this.array_to_query("棋力", this.grade_keys))
+      av.push(this.array_to_query("先後", this.location_keys))
+      av.push(this.array_to_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key, this.my_tag_values))
+      av.push(this.array_to_query("vs-" + this.LogicalInfo.fetch(this.vs_tag_values_op).search_key, this.vs_tag_values))
+      av.push(this.foobar("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
+      av.push(this.foobar("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
+      av.push(this.foobar("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
+      av.push(this.foobar("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
       let str = av.join(" ")
       str = this.str_squish(str)
       return str
     },
 
-    taginput_attrs() {
-      return {
-        "expanded": false,
-        "type": "is-primary",
-        "v-on:on-paste-separators": [',', ' '],
-        "v-on:confirm-keys": "[',', 'Tab', 'Enter']",
+    grade_diff_message() {
+      let v = null
+      if (this.grade_diff > 0) {
+        v = `より${this.grade_diff}段分強い`
+      } else if (this.grade_diff < 0) {
+        v = `より${-this.grade_diff}段分弱い`
+      } else {
+        v = "と同じ棋力"
       }
+      return `相手が自分${v} (${this.grade_diff_compare_info.name})`
     },
-
   },
 }
 </script>
@@ -317,13 +295,14 @@ export default {
     top: 0px
     z-index: 10
     background-color: $white
-    // padding-top: 0
-    // padding-top: 0.8rem 0 1.2rem
+    padding: 1.2rem 0
     &:hover
       background-color: unset
 
 .STAGE-development
   .SwarsCustomSearchApp
     .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .field_block
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

@@ -1,10 +1,10 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class LogicalopInfo extends ApplicationMemoryRecord {
+export class LogicalInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "and", name: "すべて", },
-      { key: "or",  name: "どれか", },
+      { key: "and", name: "すべて", search_key: "tag",    },
+      { key: "or",  name: "どれか", search_key: "or-tag", },
     ]
   }
 
