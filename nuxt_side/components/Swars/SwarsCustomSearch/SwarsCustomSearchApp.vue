@@ -2,6 +2,7 @@
 .SwarsCustomSearchApp
   DebugBox(v-if="development_p")
     p user_key: {{user_key}}
+    p vs_user_keys: {{vs_user_keys}}
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
@@ -19,8 +20,10 @@
               b-button(@click="search_click_handle" type="is-primary" size="is-medium")
                 | 検索
 
-          b-field.field_block(label="ウォーズID")
-            b-input(v-model.trim="user_key" required placeholder="itoshinTV")
+          b-field.field_block(label="自分のウォーズID")
+            b-input(v-model.trim="user_key" placeholder="itoshinTV")
+
+          SwarsCustomSearchInputTag2(:base="base")
 
           SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
           SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
@@ -45,6 +48,7 @@ import _ from "lodash"
 
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
+import { app_vs_user       } from "./app_vs_user.js"
 import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
 
@@ -58,6 +62,7 @@ export default {
   mixins: [
     support_parent,
     app_search,
+    app_vs_user,
     app_chore,
     app_storage,
   ],
@@ -75,6 +80,7 @@ export default {
     },
     search_click_handle() {
       this.sound_play_click()
+      this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
     back_handle() {
@@ -132,6 +138,7 @@ export default {
       av.push(this.array_to_query("勝敗", this.judge_keys))
       av.push(this.array_to_query("棋力", this.grade_keys))
       av.push(this.array_to_query("先後", this.location_keys))
+      av.push(this.array_to_query("vs", this.vs_user_keys))
       av.push(this.array_to_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key, this.my_tag_values))
       av.push(this.array_to_query("vs-" + this.LogicalInfo.fetch(this.vs_tag_values_op).search_key, this.vs_tag_values))
       av.push(this.foobar("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))

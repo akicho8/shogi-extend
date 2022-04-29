@@ -1,7 +1,7 @@
 <template lang="pug">
 b-field.field_block.SwarsCustomSearchInputTag
   template(#label)
-    | {{label}}
+    | {{label}}({{current_tags.length}})
     span.mx-1(class="has-text-grey has-text-weight-normal is-italic is-size-7")
       span.logical_block.mx-1
         template(v-for="e in base.LogicalInfo.values")
@@ -9,7 +9,7 @@ b-field.field_block.SwarsCustomSearchInputTag
             | {{e.name}}
       | を含む
   b-taginput(
-    v-model="base.$data[tags_var]"
+    v-model="current_tags"
     :data="filtered_tags"
     autocomplete
     open-on-focus
@@ -23,6 +23,7 @@ b-field.field_block.SwarsCustomSearchInputTag
     group-field="name"
     group-options="values"
     expanded
+    attached
     :on-paste-separators="[',', ' ']"
     )
 </template>
@@ -68,15 +69,19 @@ export default {
         this.talk(e.yomiage)
       }
     },
-    add_handle(e) {
+    add_handle(tag) {
       this.sound_play_toggle(true)
-      this.talk(e)
+      this.talk(tag)
     },
-    remove_handle(e) {
+    remove_handle(tag) {
       this.sound_play_toggle(false)
     },
   },
   computed: {
+    current_tags: {
+      set(v) { this.base.$data[this.tags_var] = v    },
+      get()  { return this.base.$data[this.tags_var] },
+    },
     current_op: {
       set(v) { this.base.$data[this.op_var] = v    },
       get()  { return this.base.$data[this.op_var] },

@@ -3,7 +3,9 @@ import { ParamBase } from '@/components/models/param_base.js'
 export class ParamInfo extends ParamBase {
   static get define() {
     return [
-      { key: "user_key",              type: "string",  name: "ウォーズID",     defaults: { development: null, production: "",     }, permanent: true, relation: null, desc: null, },
+      { key: "user_key",              type: "string",  name: "ウォーズID",      defaults: { development: null, production: "",     }, permanent: true, relation: null, desc: null, },
+      { key: "vs_user_keys",          type: "string",  name: "相手ウォーズIDs", defaults: { development: null, production: [],     }, permanent: true, relation: null, desc: null, },
+      { key: "remember_vs_user_keys", type: "string",  name: "相手ウォーズIDs", defaults: { development: null, production: [],     }, permanent: true, relation: null, desc: null, },
 
       { key: "xmode_keys",            type: "string",  name: "対局モード",     defaults: { development: null, production: [],     }, permanent: true, relation: null, desc: null, },
       { key: "rule_keys",             type: "string",  name: "持ち時間",       defaults: { development: null, production: [],     }, permanent: true, relation: null, desc: null, },

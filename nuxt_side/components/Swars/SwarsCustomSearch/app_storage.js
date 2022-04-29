@@ -3,7 +3,6 @@ import { ParamInfo } from "./models/param_info.js"
 
 export const app_storage = {
   mixins: [params_controller],
-
   data() {
     return {
       ...ParamInfo.null_value_data_hash,
@@ -11,9 +10,5 @@ export const app_storage = {
   },
   computed: {
     ParamInfo() { return ParamInfo },
-
-    // ls_storage_key() {
-    //   return "swars/battles/index"
-    // },
   },
 }
