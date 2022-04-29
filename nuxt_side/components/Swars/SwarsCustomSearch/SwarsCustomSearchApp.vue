@@ -48,10 +48,13 @@
           //- SimpleRadioButtons.field_block(:base="base" model_name="ChoicePresetInfo" var_name="preset_key")
           //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceRuleInfo" var_name="rule_key")
 
-          SwarsCustomSearchTagInput(:base="base" label1="自分側 AND タグ" label2="自分側ですべて含む" var_name="and_tag_values"    )
-          SwarsCustomSearchTagInput(:base="base" label1="自分側 OR タグ"  label2="自分側でどれか含む" var_name="or_tag_values"     )
-          SwarsCustomSearchTagInput(:base="base" label1="相手側 AND タグ" label2="相手側ですべて含む" var_name="vs_and_tag_values" )
-          SwarsCustomSearchTagInput(:base="base" label1="相手側 OR タグ"  label2="相手側でどれか含む" var_name="vs_or_tag_values"  )
+          SwarsCustomSearchTagInput(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
+          SwarsCustomSearchTagInput(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
+
+          //- SwarsCustomSearchTagInput(:base="base" label1="自分側 AND タグ" label2="自分側ですべて含む" var_name="my_tag_values"    )
+          //- SwarsCustomSearchTagInput(:base="base" label1="自分側 OR タグ"  label2="自分側でどれか含む" var_name="or_tag_values"     )
+          //- SwarsCustomSearchTagInput(:base="base" label1="相手側 AND タグ" label2="相手側ですべて含む" var_name="vs_my_tag_values" )
+          //- SwarsCustomSearchTagInput(:base="base" label1="相手側 OR タグ"  label2="相手側でどれか含む" var_name="vs_or_tag_values"  )
 
           //- // ネイティブなselectは選択中の項目が選択された状態で開くため使いやすい
           //- template(v-if="development_p")
@@ -143,6 +146,7 @@ import { ChoiceFinalInfo } from "./models/choice_final_info.js"
 import { ChoicePresetInfo } from "./models/choice_preset_info.js"
 import { ChoiceRuleInfo } from "./models/choice_rule_info.js"
 import { CompareInfo   } from "./models/compare_info.js"
+import { LogicalopInfo   } from "./models/logicalop_info.js"
 
 import { ParamInfo   } from "./models/param_info.js"
 
@@ -239,6 +243,7 @@ export default {
     outbreak_turn_compare_info()  { return CompareInfo.fetch(this.outbreak_turn_compare)        },
     turn_max_compare_info()  { return CompareInfo.fetch(this.turn_max_compare)        },
     grade_diff_compare_info()  { return CompareInfo.fetch(this.grade_diff_compare)        },
+    LogicalopInfo()            { return LogicalopInfo                                },
 
     new_query() {
       let av = []
@@ -256,8 +261,8 @@ export default {
       // av.push(this.choice_preset_info.to_query_part)
       // av.push(this.choice_rule_info.to_query_part)
 
-      av.push(this.array_to_query("tag", this.and_tag_values))
-      av.push(this.array_to_query("vs-tag", this.vs_and_tag_values))
+      av.push(this.array_to_query("tag", this.my_tag_values))
+      av.push(this.array_to_query("vs-tag", this.vs_my_tag_values))
       av.push(this.array_to_query("or-tag", this.or_tag_values))
       av.push(this.array_to_query("vs-or-tag", this.vs_or_tag_values))
 

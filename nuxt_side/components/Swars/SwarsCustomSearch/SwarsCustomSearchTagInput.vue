@@ -1,10 +1,15 @@
 <template lang="pug">
 b-field.field_block.SwarsCustomSearchTagInput(v-if="base.xi")
   template(#label)
-    | {{label1}}
-    span.ml-1(class="has-text-grey has-text-weight-normal is-italic is-size-7") {{label2}}
+    | {{label}}
+    span.mx-1(class="has-text-grey has-text-weight-normal is-italic is-size-7")
+      span.logicalop_block.mx-1
+        template(v-for="e in base.LogicalopInfo.values")
+          a(@click="op_click_handle(e)" :class="e.css_class(current_op)")
+            | {{e.name}}
+      | 含む
   b-taginput(
-    v-model="base.$data[var_name]"
+    v-model="base.$data[tags_var]"
     :data="base.filtered_tags"
     autocomplete
     open-on-focus
@@ -19,7 +24,6 @@ b-field.field_block.SwarsCustomSearchTagInput(v-if="base.xi")
     :on-paste-separators="[',', ' ']"
     :confirm-keys="[',', 'Tab', 'Enter']"
     )
-    //- type="is-primary"
 </template>
 
 <script>
@@ -31,17 +35,30 @@ export default {
     support_child,
   ],
   props: {
-    var_name: { type: String, required: true, },
-    label1:   { type: String, required: true, },
-    label2:   { type: String, required: true, },
+    label:    { type: String, required: true, },
+    tags_var: { type: String, required: true, },
+    op_var:   { type: String, required: true, },
   },
   methods: {
+    op_click_handle(e) {
+      if (this.current_op !== e.key) {
+        this.current_op = e.key
+        this.sound_play_click()
+      }
+    },
   },
   computed: {
+    current_op: {
+      set(v) { this.base.$data[this.op_var] = v    },
+      get()  { return this.base.$data[this.op_var] },
+    },
   },
 }
 </script>
 
 <style lang="sass">
 .SwarsCustomSearchTagInput
+  .logicalop_block
+    a:not(:first-child)
+      margin-left: 0.25em
 </style>
