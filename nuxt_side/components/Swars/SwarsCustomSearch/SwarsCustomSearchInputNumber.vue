@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchTagInput2(:label="label")
+b-field.field_block.SwarsCustomSearchInputNumber(:label="label")
   template(#label)
     | {{label}}
     template(v-if="present_p(message)")
@@ -26,7 +26,7 @@ import _ from "lodash"
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "SwarsCustomSearchTagInput2",
+  name: "SwarsCustomSearchInputNumber",
   mixins: [
     support_child,
   ],
@@ -38,41 +38,6 @@ export default {
     xxx_compare_var: { type: String, required: true,                },
     min:             { type: Number, required: false, default: 0,   },
     max:             { type: Number, required: false, default: 200, },
-  },
-  data() {
-    return {
-      // filtered_tags: null, // 干渉しないようにコンポーネントローカルにすること
-    }
-  },
-  created() {
-    // this.filtered_tags_rebuild("") // open-on-focus で open するために最初に作っておく
-  },
-  methods: {
-    // filtered_tags_rebuild(text) {
-    //   text = this.normalize_for_autocomplete(text)
-    //   const av = []
-    //   _.each(this.base.xi.tactic_infos, (e, _) => {
-    //     const values = e.values.filter(e => this.normalize_for_autocomplete(e).indexOf(text) >= 0)
-    //     if (values.length >= 1) {
-    //       av.push({name: `── ${e.name} ──`, values: values})
-    //     }
-    //   })
-    //   this.filtered_tags = av
-    // },
-    // op_click_handle(e) {
-    //   if (this.current_op !== e.key) {
-    //     this.current_op = e.key
-    //     this.sound_play_click()
-    //     this.talk(e.yomiage)
-    //   }
-    // },
-    // add_handle(e) {
-    //   this.sound_play_toggle(true)
-    //   this.talk(e)
-    // },
-    // remove_handle(e) {
-    //   this.sound_play_toggle(false)
-    // },
   },
   computed: {
     xxx_compare: {
@@ -92,7 +57,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsCustomSearchTagInput2
+.SwarsCustomSearchInputNumber
   .logical_block
     a:not(:first-child)
       margin-left: 0.25em

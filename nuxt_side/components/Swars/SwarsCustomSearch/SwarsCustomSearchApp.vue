@@ -48,13 +48,13 @@
           //- SimpleRadioButtons.field_block(:base="base" model_name="ChoicePresetInfo" var_name="preset_key")
           //- SimpleRadioButtons.field_block(:base="base" model_name="ChoiceRuleInfo" var_name="rule_key")
 
-          SwarsCustomSearchTagInput(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
-          SwarsCustomSearchTagInput(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
+          SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
+          SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
 
-          //- SwarsCustomSearchTagInput(:base="base" label1="自分側 AND タグ" label2="自分側ですべて含む" var_name="my_tag_values"    )
-          //- SwarsCustomSearchTagInput(:base="base" label1="自分側 OR タグ"  label2="自分側でどれか含む" var_name="or_tag_values"     )
-          //- SwarsCustomSearchTagInput(:base="base" label1="相手側 AND タグ" label2="相手側ですべて含む" var_name="vs_my_tag_values" )
-          //- SwarsCustomSearchTagInput(:base="base" label1="相手側 OR タグ"  label2="相手側でどれか含む" var_name="vs_or_tag_values"  )
+          //- SwarsCustomSearchInputTag(:base="base" label1="自分側 AND タグ" label2="自分側ですべて含む" var_name="my_tag_values"    )
+          //- SwarsCustomSearchInputTag(:base="base" label1="自分側 OR タグ"  label2="自分側でどれか含む" var_name="or_tag_values"     )
+          //- SwarsCustomSearchInputTag(:base="base" label1="相手側 AND タグ" label2="相手側ですべて含む" var_name="vs_my_tag_values" )
+          //- SwarsCustomSearchInputTag(:base="base" label1="相手側 OR タグ"  label2="相手側でどれか含む" var_name="vs_or_tag_values"  )
 
           //- // ネイティブなselectは選択中の項目が選択された状態で開くため使いやすい
           //- template(v-if="development_p")
@@ -82,10 +82,10 @@
           //-         template(v-for="e in xi.grade_infos")
           //-           b-dropdown-item(:value="e" @click="sound_play_click()") {{e}}
 
-          SwarsCustomSearchTagInput2(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
-          SwarsCustomSearchTagInput2(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
-          SwarsCustomSearchTagInput2(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
-          SwarsCustomSearchTagInput2(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
+          SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+          SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
+          SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
+          SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
 
           //- b-field.field_block(label="開戦")
           //-   b-switch(v-model="critical_turn_enabled" @input="sound_play_toggle")
@@ -262,15 +262,17 @@ export default {
     },
 
     grade_diff_message() {
-      let v = null
-      if (this.grade_diff > 0) {
-        v = `より${this.grade_diff}段分強い`
-      } else if (this.grade_diff < 0) {
-        v = `より${-this.grade_diff}段分弱い`
+      let v = this.grade_diff
+      let x = Math.abs(v)
+      let s = ""
+      if (v > 0) {
+        s = `相手は自分より${this.grade_diff}強い`
+      } else if (v < 0) {
+        s = `相手は自分より${-this.grade_diff}弱い`
       } else {
-        v = "と同じ棋力"
+        s = "相手は自分と同じ力"
       }
-      return `相手が自分${v} (${this.grade_diff_compare_info.name})`
+      return s
     },
   },
 }

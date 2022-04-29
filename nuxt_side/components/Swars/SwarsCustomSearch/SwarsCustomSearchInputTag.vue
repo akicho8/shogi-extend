@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchTagInput
+b-field.field_block.SwarsCustomSearchInputTag
   template(#label)
     | {{label}}
     span.mx-1(class="has-text-grey has-text-weight-normal is-italic is-size-7")
@@ -32,7 +32,7 @@ import _ from "lodash"
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "SwarsCustomSearchTagInput",
+  name: "SwarsCustomSearchInputTag",
   mixins: [
     support_child,
   ],
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsCustomSearchTagInput
+.SwarsCustomSearchInputTag
   .logical_block
     a:not(:first-child)
       margin-left: 0.25em
