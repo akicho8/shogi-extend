@@ -232,7 +232,7 @@ module Swars
         d = list.size
         c = list.sum
         if d.positive?
-          self.obt_think_avg = c.div(d)
+          self.obt_think_avg = c.div(d) # 中盤以降の指し手の平均
         end
 
         a = list                                   # => [2, 3, 3, 2, 1, 2]
@@ -240,7 +240,7 @@ module Swars
         x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
         v = x.compact.max                          # => 3
         if v
-          self.obt_auto_max = v
+          self.obt_auto_max = v # 中盤以降で 1 or 2 秒が続く回数の最大
         end
 
         # if Rails.env.development?

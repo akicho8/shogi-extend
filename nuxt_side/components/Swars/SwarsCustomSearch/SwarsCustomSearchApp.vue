@@ -41,8 +41,8 @@
           SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
           SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
 
-          SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="think_max_enabled"      xxx_value_var="think_max"      xxx_compare_var="think_max_compare" :min="0" :max="60*10" :message="scs_time_format(think_max)")
-          SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="think_avg_enabled"      xxx_value_var="think_avg"      xxx_compare_var="think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(think_avg)")
+          SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
+          SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -132,8 +132,8 @@ export default {
     outbreak_turn_compare_info() { return CompareInfo.fetch(this.outbreak_turn_compare) },
     turn_max_compare_info()      { return CompareInfo.fetch(this.turn_max_compare)      },
     grade_diff_compare_info()    { return CompareInfo.fetch(this.grade_diff_compare)    },
-    think_max_compare_info()     { return CompareInfo.fetch(this.think_max_compare)      },
-    think_avg_compare_info()     { return CompareInfo.fetch(this.think_avg_compare)      },
+    my_think_max_compare_info()     { return CompareInfo.fetch(this.my_think_max_compare)      },
+    my_think_avg_compare_info()     { return CompareInfo.fetch(this.my_think_avg_compare)      },
 
     new_query() {
       let av = []
@@ -147,7 +147,7 @@ export default {
       av.push(this.array_to_query("勝敗", this.judge_keys))
       av.push(this.array_to_query("棋力", this.grade_keys))
       av.push(this.array_to_query("先後", this.location_keys))
-      av.push(this.array_to_query("vs", this.vs_user_keys))
+      av.push(this.array_to_query("相手", this.vs_user_keys))
 
       av.push(this.array_to_query(        this.LogicalInfo.fetch(this.my_tag_values_op).search_key, this.my_tag_values))
       av.push(this.array_to_query("vs-" + this.LogicalInfo.fetch(this.vs_tag_values_op).search_key, this.vs_tag_values))
@@ -157,8 +157,8 @@ export default {
       av.push(this.compare_query_build("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
       av.push(this.compare_query_build("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
 
-      av.push(this.compare_query_build("最大思考", this.think_max_enabled, this.think_max_compare_info, this.think_max))
-      av.push(this.compare_query_build("平均思考", this.think_avg_enabled, this.think_avg_compare_info, this.think_avg))
+      av.push(this.compare_query_build("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
+      av.push(this.compare_query_build("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
 
       let str = av.join(" ")
       str = this.str_squish(str)
