@@ -105,6 +105,7 @@ export default {
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
+
     back_handle() {
       this.sound_play_click()
       this.back_to({name: "swars-search", query: {query: this.user_key}})

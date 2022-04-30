@@ -8,6 +8,7 @@ b-sidebar.is-unselectable.SwarsCustomSearchSidebar(fullheight right overlay v-mo
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(@click="base.form_reset_handle" label="オプション類を外す")
           b-menu-item.is_active_unset(@click="base.all_reset_handle" label="完全リセット")
+          b-menu-item.is_active_unset(@click="base.parmalink_handle" label="パーマリンク化")
 </template>
 
 <script>
