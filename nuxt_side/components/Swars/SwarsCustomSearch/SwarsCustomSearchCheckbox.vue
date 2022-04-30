@@ -1,7 +1,9 @@
 <template lang="pug">
-b-field.field_block.is_scroll_x.SwarsCustomSearchCheckbox(:label="label1")
+b-field.field_block.is_scroll_x.SwarsCustomSearchCheckbox(custom-class="is-small" :label="label1")
   template(v-for="e in records")
     b-checkbox-button(
+      size="is-small"
+      expanded
       v-model="base.$data[var_name]"
       :native-value="e.key"
       @input="av => checked_handle(av, e)"

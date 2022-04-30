@@ -18,37 +18,53 @@
 
   MainSection
     .container.is-fluid
-      .columns.form_block
-        .column
+      .columns.form_block.is-variable.is-0
+        .column.is-12
           b-field.field_block.new_query_field(label="")
-            b-input(v-model.trim="new_query" disabled expanded size="is-medium")
+            b-input(v-model.trim="new_query" disabled expanded)
             p.control
-              b-button(@click="search_click_handle" type="is-primary" size="is-medium")
+              b-button(@click="search_click_handle" type="is-primary")
                 | 検索
-
-          b-field.field_block(label="自分のウォーズID")
-            b-input(v-model.trim="user_key" placeholder="itoshinTV")
-
-          SwarsCustomSearchInputVsUserKeys(:base="base")
-
-          SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="結末"       :records="xi.final_infos"  var_name="final_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="勝敗"       :records="xi.judge_infos"  var_name="judge_keys")
-          SwarsCustomSearchCheckbox(:base="base" label1="先後"       :records="xi.location_infos"  var_name="location_keys" last_only_if_full)
-
-          SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
-          SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
-
-          SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
-          SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
-          SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
-          SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
-
-          SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
-          SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
+          .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              b-field.field_block(custom-class="is-small")
+                template(#label)
+                  | 自分のウォーズID
+                  span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
+                    | 必須
+                b-input(size="is-small" v-model.trim="user_key" placeholder="itoshinTV")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputVsUserKeys(:base="base")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="先後"       :records="xi.location_infos"  var_name="location_keys" last_only_if_full)
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="結末"       :records="xi.final_infos"  var_name="final_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchCheckbox(:base="base" label1="勝敗"       :records="xi.judge_infos"  var_name="judge_keys")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+              SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -189,12 +205,16 @@ export default {
 <style lang="sass">
 .SwarsCustomSearchApp
   .MainSection.section
+    +mobile
+      padding: 0rem 0.75rem
     +tablet
-      padding: 1.75rem 0rem
+      padding: 1.0rem 0rem
 
   .container
     +mobile
       padding: 0
+
+  +bulma_columns_vertical_minus_margin_clear
 
   .field_block
     &:hover
@@ -212,8 +232,9 @@ export default {
 
 .STAGE-development
   .SwarsCustomSearchApp
-    .column
-      border: 1px dashed change_color($primary, $alpha: 0.5)
-    .field_block
-      border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .column
+    //   border: 1px dashed change_color($primary, $alpha: 0.5)
+    //   background-color: change_color($danger, $alpha: 0.1)
+    // .field_block
+    //   border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

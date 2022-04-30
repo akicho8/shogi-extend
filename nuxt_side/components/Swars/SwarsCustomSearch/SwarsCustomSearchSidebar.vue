@@ -6,8 +6,8 @@ b-sidebar.is-unselectable.SwarsCustomSearchSidebar(fullheight right overlay v-mo
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset(@click="base.form_reset_handle1" label="簡易リセット")
-          b-menu-item.is_active_unset(@click="base.form_reset_handle2" label="完全リセット")
+          b-menu-item.is_active_unset(@click="base.form_reset_handle" label="オプション類を外す")
+          b-menu-item.is_active_unset(@click="base.all_reset_handle" label="完全リセット")
 </template>
 
 <script>

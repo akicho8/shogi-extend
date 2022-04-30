@@ -1,10 +1,11 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputVsUserKeys
+b-field.field_block.SwarsCustomSearchInputVsUserKeys(custom-class="is-small")
   template(#label)
     | 対戦相手({{base.vs_user_keys.length}})
     span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
-      | 入力後にEnterで確定してください
+      | Enterで確定する
   b-taginput(
+    size="is-small"
     v-model="base.vs_user_keys"
     :data="filtered_keys"
     autocomplete

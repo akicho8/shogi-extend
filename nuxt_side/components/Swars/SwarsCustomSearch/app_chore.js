@@ -3,20 +3,23 @@ import _ from "lodash"
 export const app_chore = {
   methods: {
     title_click_handle() {
-      this.form_reset_handle1()
+      if (this.development_p) {
+        this.form_reset_handle()
+      }
     },
 
-    // 「ウォーズID」以外のリセット
-    form_reset_handle1() {
+    // オプション類を外す
+    form_reset_handle() {
       this.sound_play_click()
       this.pc_data_reset_resetable_only()
       this.sidebar_p = false
     },
 
-    // 全リセット
-    form_reset_handle2() {
+    // 完全リセット
+    all_reset_handle() {
       this.sound_play_click()
       this.pc_data_reset()
+      this.$router.replace({}) // "?user_key=Yamada_Taro" を外す
       this.sidebar_p = false
     },
   },

@@ -1,14 +1,15 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputNumber(:label="label")
+b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small" :label="label")
   template(#label)
     | {{label}}
     template(v-if="present_p(message)")
       span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
         | {{message}}
   b-field(grouped)
-    b-switch(v-model="xxx_enabled" @input="sound_play_toggle")
+    b-switch(size="is-small" v-model="xxx_enabled" @input="sound_play_toggle")
     template(v-if="true")
-      b-numberinput(
+      b-numberinput.ml-2(
+        size="is-small"
         exponential
         controls-position="compact"
         v-model="xxx_value"
@@ -16,8 +17,9 @@ b-field.field_block.SwarsCustomSearchInputNumber(:label="label")
         :max="max"
         @input="sound_play_click()"
         :disabled="!xxx_enabled"
+        expanded
         )
-      b-select(v-model="xxx_compare" @input="sound_play_click()" :disabled="!xxx_enabled")
+      b-select(size="is-small" v-model="xxx_compare" @input="sound_play_click()" :disabled="!xxx_enabled")
         option(v-for="e in base.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputTag
+b-field.field_block.SwarsCustomSearchInputTag(custom-class="is-small")
   template(#label)
     | {{label}}({{current_tags.length}})
     span.mx-1(class="has-text-grey has-text-weight-normal is-italic is-size-7")
@@ -9,6 +9,7 @@ b-field.field_block.SwarsCustomSearchInputTag
             | {{e.name}}
       | を含む
   b-taginput(
+    size="is-small"
     v-model="current_tags"
     :data="filtered_tags"
     autocomplete
