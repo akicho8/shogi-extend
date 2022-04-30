@@ -29,7 +29,7 @@
             .column.is-6-tablet.is-4-desktop.is-3-widescreen
               b-field.field_block(custom-class="is-small")
                 template(#label)
-                  | 自分のウォーズID
+                  | 対象のウォーズID
                   span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
                     | 必須
                 b-input(size="is-small" v-model.trim="user_key" placeholder="itoshinTV")

@@ -3,7 +3,7 @@ import { ParamBase } from '@/components/models/param_base.js'
 export class ParamInfo extends ParamBase {
   static get define() {
     return [
-      { key: "user_key",              type: "string",  name: "自分のウォーズID",         defaults: { development: null, production: "",     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "user_key",              type: "string",  name: "対象のウォーズID",         defaults: { development: null, production: "",     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
       { key: "vs_user_keys",          type: "array",   name: "相手のウォーズIDs",        defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "remember_vs_user_keys", type: "array",   name: "相手のウォーズID入力履歴", defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: false, resetable: true,  desc: null, },
 
