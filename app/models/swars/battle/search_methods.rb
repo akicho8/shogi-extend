@@ -179,7 +179,7 @@ module Swars
               selected = true
             end
 
-            if e = query_info.lookup_op("中盤以降連続早指し回数最大")
+            if e = query_info.lookup_op("中盤以降最大連続即指し回数")
               m = my_memberships
               m = m.where(Membership.arel_table[:obt_auto_max].public_send(e[:operator], e[:value]))
               s = s.where(id: m.pluck(:battle_id))

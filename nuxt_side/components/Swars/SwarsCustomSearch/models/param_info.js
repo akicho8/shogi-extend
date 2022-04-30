@@ -48,9 +48,9 @@ export class ParamInfo extends ParamBase {
       { key: "my_mid_think_avg",          type: "integer", name: "中盤以降平均思考",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
       { key: "my_mid_think_avg_compare",  type: "string",  name: "中盤以降平均思考演算子",           defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
-      { key: "my_mid_machine_gun_enabled",  type: "boolean", name: "中盤以降連続早指し回数最大有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
-      { key: "my_mid_machine_gun",          type: "integer", name: "中盤以降連続早指し回数最大",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
-      { key: "my_mid_machine_gun_compare",  type: "string",  name: "中盤以降連続早指し回数最大演算子",           defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_mid_machine_gun_enabled",  type: "boolean", name: "中盤以降最大連続即指し回数有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "my_mid_machine_gun",          type: "integer", name: "中盤以降最大連続即指し回数",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_mid_machine_gun_compare",  type: "string",  name: "中盤以降最大連続即指し回数演算子",           defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
       { key: "grade_diff_enabled",    type: "boolean", name: "力差有効",                 defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "grade_diff",            type: "integer", name: "力差",                     defaults: { development: null, production: 1,      }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
