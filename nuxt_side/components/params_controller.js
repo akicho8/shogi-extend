@@ -77,15 +77,31 @@ export const params_controller = {
         }
       })
     },
-    pc_data_reset_handle() {
+    pc_data_reset_handle(options = {}) {
       this.sound_play_click()
       if ("sidebar_p" in this) {
         this.sidebar_p = false
       }
-      this.pc_data_reset()
+      this.pc_data_reset(options)
     },
-    pc_data_reset() {
-      this.ParamInfo.values.forEach(e => {
+
+    pc_data_reset(options = {}) {
+      options = {
+        only: null,
+        except: null,
+        ...options,
+      }
+      let records = this.ParamInfo.values
+      if (options.only) {
+        records = records.filter(e => options.only.includes(e.key))
+      } else if (options.except) {
+        records = records.filter(e => !options.except.includes(e.key))
+      }
+      this.pc_data_reset_records(records)
+    },
+
+    pc_data_reset_records(records) {
+      records.forEach(e => {
         const v = e.default_for(this)
         if (v != null) {
           this.clog(`this.$data["${e.key}"] = ${JSON.stringify(v)} (from default)`)
@@ -93,6 +109,13 @@ export const params_controller = {
         }
       })
     },
+
+    // resetable: true の指定があるものだけリセットする
+    pc_data_reset_resetable_only() {
+      const records = this.ParamInfo.values.filter(e => e.resetable)
+      this.pc_data_reset_records(records)
+    },
+
     // 無効な値なら初期値に戻す
     // これをしないと localStorage に保存してある過去の値で復帰しようとしてアプリが起動しなくなる
     pc_restore_default_value_if_invalid_value() {

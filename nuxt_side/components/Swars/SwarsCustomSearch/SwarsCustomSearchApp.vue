@@ -4,11 +4,17 @@
     p user_key: {{user_key}}
     p vs_user_keys: {{vs_user_keys}}
 
+  SwarsCustomSearchSidebar(:base="base")
+
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
       b-navbar-item(@click="base.back_handle")
         b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(@click="title_click_handle") カスタム検索
+    template(slot="end")
+      //- NavbarItemLogin
+      //- NavbarItemProfileLink
+      NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
     .container.is-fluid
@@ -54,6 +60,7 @@ import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
 import { app_search      } from "./app_search.js"
 import { app_storage     } from "./app_storage.js"
+import { app_sidebar     } from "./app_sidebar.js"
 
 import { CompareInfo   } from "./models/compare_info.js"
 import { LogicalInfo   } from "./models/logical_info.js"
@@ -67,6 +74,7 @@ export default {
     app_search,
     app_chore,
     app_storage,
+    app_sidebar,
   ],
   props: {
     xi: { type: Object,  required: true, },
@@ -76,10 +84,6 @@ export default {
     }
   },
   methods: {
-    title_click_handle() {
-      this.ls_reset()
-      this.pc_data_reset()
-    },
     search_click_handle() {
       this.sound_play_click()
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
@@ -198,10 +202,11 @@ export default {
 
   .new_query_field
     position: sticky
-    top: 0px
-    z-index: 10
+    top: 0
+    z-index: 10 /* 適当 */
     background-color: $white
-    padding: 1.2rem inherit
+    padding-top: 1.2rem
+    padding-bottom: 1.2rem
     &:hover
       background-color: unset
 
