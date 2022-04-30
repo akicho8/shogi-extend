@@ -40,7 +40,7 @@
       h2 棋譜コピーではなくファイル保存したい
       .article_body
         ul.mt-2
-          li 「右上メニュー」→「一覧の<i class="mdi mdi-dots-vertical mdi-18px" />」→「保存」
+          li 「右上メニュー」→「一覧の<i :class="dot_vertical" />」→「保存」
     article
       h2 UTF-8 とか Shift_JIS とかって何？
       .article_body
@@ -103,6 +103,21 @@
         ul.mt-2
           li 「詳細」→「右上メニュー」→「棋譜用紙 (PDF)」
     article
+      h2 棋譜を元に詰将棋を作りたい
+      .article_body
+        ul.mt-2
+          li 「詳細」→「右上メニュー」→「共有将棋盤に転送」
+    article
+      h2 相手の名前を隠したい
+      .article_body
+        ul.mt-2
+          li 「右上メニュー」→「一覧の<i :class="dot_vertical" />」→「相手の名前」
+    article
+      h2 どちらが勝ったの？
+      .article_body
+        ul.mt-2
+          li 名前の濃い方
+    article
       h2 棋譜を動画にしたい
       .article_body
         ul.mt-2
@@ -112,11 +127,6 @@
       .article_body
         ul.mt-2
           li 「詳細」→「右上メニュー」→「問題作成」
-    article
-      h2 棋譜を元に詰将棋を作りたい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「共有将棋盤に転送」
     article
       h2 ここに載ってない
       .article_body
@@ -135,8 +145,10 @@ export default {
   ],
   data() {
     return {
-      tab_index: 0,
     }
+  },
+  computed: {
+    dot_vertical() { return "mdi mdi-dots-vertical mdi-18px" },
   },
 }
 </script>
