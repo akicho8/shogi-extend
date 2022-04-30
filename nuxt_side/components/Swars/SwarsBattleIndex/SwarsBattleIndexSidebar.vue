@@ -13,7 +13,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="カスタム検索"
             @click.native="sound_play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-custom-search', query: {user_key: base.xi.current_swars_user_key}}"
+            :to="{name: 'swars-custom-search', query: hash_compact_if_null({user_key: base.xi.current_swars_user_key})}"
             )
 
         b-menu-list(label="レイアウト")
