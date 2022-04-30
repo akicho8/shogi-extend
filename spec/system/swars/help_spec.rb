@@ -1,19 +1,19 @@
 require "rails_helper"
 
-RSpec.describe "使い方", type: :system, swars_spec: true do
+RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "モーダルで開く" do
     visit "/swars/search"
     hamburger_click
-    menu_item_click("使い方")
+    menu_item_click("よくある質問 (FAQ)")
     find(".close_handle").click
   end
 
   it "モーダルからパーマリンクで飛ぶ" do
     visit "/swars/search"
     hamburger_click
-    menu_item_click("使い方")
+    menu_item_click("よくある質問 (FAQ)")
     find(".permalink").click       # 固定URLを別タブで開く
     switch_to_window_last # 別タブに移動する
     assert { current_path == "/swars/search/help" }
@@ -21,6 +21,6 @@ RSpec.describe "使い方", type: :system, swars_spec: true do
 
   it "ほぼ静的ページ" do
     visit "/swars/search/help"
-    assert_text("使い方")
+    assert_text("よくある質問 (FAQ)")
   end
 end
