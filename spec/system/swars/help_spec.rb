@@ -16,11 +16,11 @@ RSpec.describe "使い方", type: :system, swars_spec: true do
     menu_item_click("使い方")
     find(".permalink").click       # 固定URLを別タブで開く
     switch_to_window_last # 別タブに移動する
-    assert { current_path == "/swars/help" }
+    assert { current_path == "/swars/search/help" }
   end
 
   it "ほぼ静的ページ" do
-    visit "/swars/help"
+    visit "/swars/search/help"
     assert_text("使い方")
   end
 end

@@ -13,7 +13,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             label="カスタム検索"
             @click.native="sound_play_click()"
             tag="nuxt-link"
-            :to="{name: 'swars-custom-search', query: hash_compact_if_null({user_key: base.xi.current_swars_user_key})}"
+            :to="{name: 'swars-search-custom', query: hash_compact_if_null({user_key: base.xi.current_swars_user_key})}"
             )
 
         b-menu-list(label="レイアウト")
@@ -115,7 +115,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
               b-menu-item.is_active_unset(@click="base.external_app_handle(e)" :label="e.name" :class="e.dom_class")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="使い方" @click="base.general_help_modal_handle")
+          b-menu-item.is_active_unset(label="よくある質問 (FAQ)" @click="base.general_help_modal_handle")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item.is_active_unset

@@ -2,9 +2,9 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 使い方
+      | よくある質問 (FAQ)
     b-tooltip(position="is-left" label="パーマリンク")
-      a.permalink(href="/swars/help" target="_blank")
+      a.permalink(href="/swars/search/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
     SwarsBattleIndexHelpBody

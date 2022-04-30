@@ -1,10 +1,10 @@
 <template lang="pug">
-ShareBoardHelp
+SwarsBattleIndexHelp
 </template>
 
 <script>
 export default {
-  name: "swars-help",
+  name: "swars-search-help",
   computed: {
     meta() {
       return {

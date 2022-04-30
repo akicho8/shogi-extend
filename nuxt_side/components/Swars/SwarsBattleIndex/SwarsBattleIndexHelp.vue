@@ -2,9 +2,9 @@
 .SwarsBattleIndexHelp
   MainNavbar
     template(slot="brand")
-      NavbarItemHome(icon="chevron-left" :to="{name: 'share-board'}")
+      NavbarItemHome(icon="chevron-left" :to="{name: 'swars-search'}")
       b-navbar-item.has-text-weight-bold(tag="div")
-        | 共有将棋盤の使い方
+        | よくある質問 (FAQ)
   MainSection
     .container
       .columns.is-centered.is-gapless
