@@ -15,7 +15,7 @@ module Swars
       { key:  "1級", visualize: true,  select_option: true,  },
       { key:  "2級", visualize: true,  select_option: true,  },
       { key:  "3級", visualize: true,  select_option: true,  },
-      { key:  "4級", visualize: true,  select_option: true,  },
+      { key:  "4級", visualize: true,  select_option: false, },
       { key:  "5級", visualize: true,  select_option: false, },
       { key:  "6級", visualize: true,  select_option: false, },
       { key:  "7級", visualize: true,  select_option: false, },
