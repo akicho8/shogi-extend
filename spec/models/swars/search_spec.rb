@@ -6,6 +6,38 @@ module Swars
       Swars.setup
     end
 
+    describe "カスタム検索からくるパラメータすべて" do
+      def case1(key, value1, value2, options = {})
+        black = User.create!
+        white = User.create!(key: options[:white_key])
+        battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq])
+        assert {  Battle.search(current_swars_user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
+        assert { !Battle.search(current_swars_user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
+      end
+
+      it "works" do
+        case1("持ち時間", "10分", "3分")
+        case1("勝敗", "勝ち", "負け")
+        case1("結末", "投了", "切断")
+        case1("先後", "▲", "△")
+        case1("相手の棋力", "30級", "29級")
+        case1("力差", ">=0", ">=1")
+        case1("対局モード", "通常", "友達")
+        case1("手合割", "平手", "角落ち")
+        case1("tag", "居飛車", "振り飛車")
+        case1("vs-tag", "振り飛車", "居飛車")
+        case1("手数", ">=1", "==0", csa_seq: outbreak_csa)
+        case1("中盤", ">=1", "==0", csa_seq: outbreak_csa)
+        case1("開戦", ">=1", "==0", csa_seq: outbreak_csa)
+        case1("最大思考", ">=1", "==0")
+        case1("平均思考", ">=1", "==0")
+        case1("最終思考", ">=1", "==0")
+        case1("中盤以降平均思考", ">=1", "==0", csa_seq: csa_seq_generate4(10))
+        case1("中盤以降最大連続即指し回数", ">=1", "==0", csa_seq: csa_seq_generate4(10))
+        case1("相手", "white_man", "unknown_man", white_key: "white_man")
+      end
+    end
+
     describe "手合割" do
       def case1(value)
         black = User.create!
@@ -31,16 +63,3 @@ module Swars
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
-# >> {:type=>:model, :swars_spec=>true}
-# >>   手合割
-# >>     works
-# >> 
-# >> Top 1 slowest examples (3.47 seconds, 66.0% of total time):
-# >>   {:type=>:model, :swars_spec=>true} 手合割 works
-# >>     3.47 seconds -:23
-# >> 
-# >> Finished in 5.26 seconds (files took 4.01 seconds to load)
-# >> 1 example, 0 failures
-# >> 
