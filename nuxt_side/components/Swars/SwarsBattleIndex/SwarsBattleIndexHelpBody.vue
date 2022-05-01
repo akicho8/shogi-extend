@@ -18,7 +18,7 @@
       ul
         li 1ヶ月以上前の棋譜は取り込めない
     article
-      h2 歯抜けにならないようにするには？
+      h2 歯抜けにならないようにしたい
       ul
         li 同じルールで連続11回対局する前に棋譜検索する
     article
@@ -30,99 +30,118 @@
       ul
         li そのまま検索覧に放り込む
     article
-      h2 まとめてダウンロードするには？
+      h2 まとめてダウンロードしたい
       ul
         li MENU→ダウンロード
     article
-      h2 前回の続きからダウンロードするには？
+      h2 前回の続きからダウンロードしたい
       ul
         li MENU→ダウンロード→前回の続きから
     article
       h2 指定ウォーズIDの棋譜がすべて欲しい
       ul
         li MENU→古い棋譜を補完→ZIPファイルの添付
-    article
-      h2 棋譜コピーではなくファイルが欲しい
-      ul
-        li MENU→一覧<i :class="dot_vertical" />→保存
-    article
-      h2 UTF-8 とか Shift_JIS とかって何？
-      ul
-        li Windows を使っている場合は Shift_JIS
+
+    template(v-if="true")
+      article
+        h2 毎回棋譜コピーしてファイルに保存にするのが面倒
+        ul
+          li MENU→一覧<i :class="dot_vertical" />→保存
+      article
+        h2 UTF-8 とか Shift_JIS とかって何？
+        ul
+          li Windows なら Shift_JIS
+      article
+        h2 掲示板に棋譜を貼りたい
+        ul
+          li 詳細→MENU→コピー→KI2
+      article
+        h2 一時的にKIFファイルが欲しい
+        ul
+          li 詳細→MENU→ダウンロード→KIF
+      article
+        h2 KIFデータへの直リンクが欲しい
+        ul
+          li 詳細→MENU→表示→KIF
+      article
+        h2 指定局面の画像が欲しい
+        ul
+          li 詳細→指定局面にする→MENU→ダウンロード→PNG
+      article
+        h2 指定局面をツイートしてOGP画像を出したい
+        ul
+          li 詳細→指定局面にする→右上のツイートリンク
+      article
+        h2 ぴよ将棋に送るURLが欲しい
+        ul
+          li 詳細→MENU→短めの直リンコピー→ぴよ将棋
+      article
+        h2 将棋ウォーズ本家で棋譜再生したい
+        ul
+          li 詳細→MENU→本家
+      article
+        h2 棋譜を棋譜用紙にしたい
+        ul
+          li 詳細→MENU→棋譜用紙→PDFに印刷
+      article
+        h2 棋譜を印刷したい
+        ul
+          li 詳細→MENU→棋譜用紙→PDFに印刷→PDFを紙に印刷
+      article
+        h2 会心譜を印刷して飾りたいがプリンタを持っていない
+        ul
+          li 詳細→MENU→棋譜用紙→PDFに印刷→ネットプリント→コンビニ
+      article
+        h2 棋譜を元に詰将棋を作りたい
+        ul
+          li 詳細→MENU→共有将棋盤に転送
+
+    template(v-if="true")
+      article
+        h2 名前の前にあるアイコンの意味は？
+        ul
+          li そのアイコンをタップする
+      article
+        h2 ゴキブリなんとかしろ
+        ul
+          li 普通に対局していれば出ないようにしたので安心してください
+
+    template(v-if="true")
+      article
+        h2 SNSにスクショを投稿するとき相手の名前を隠すのが面倒
+        ul
+          li MENU→一覧<i :class="dot_vertical" />→相手の名前
+      article
+        h2 相手より自分の名前を隠したい
+        ul
+          li MENU→一覧<i :class="dot_vertical" />→自分の名前
 
     article
       h2 毎回ウォーズIDを入力するのが面倒
       ul
         li MENU→ウォーズIDを記録する
 
-    article
-      h2 名前の前にあるアイコンの意味は？
-      ul
-        li そのアイコンをタップする
-    article
-      h2 ゴキブリなんとかしろ
-      ul
-        li 普通に対局していれば出ないようにしたので安心してください
-
-    article
-      h2 検討のため負けた棋譜だけ欲しい
-      ul
-        li MENU→カスタム検索
-    article
-      h2 10分切れ負けの棋譜だけ欲しい
-      ul
-        li MENU→カスタム検索
-    article
-      h2 対戦相手で絞り込みたい
-      ul
-        li MENU→カスタム検索
-    article
-      h2 横断検索したい
-      ul
-        li 一般には公開してないけど検索条件を言ってくれれば可能な範囲で棋譜を用意します
-    article
-      h2 1手毎の消費時間を視覚的に確認したい
-      ul
-        li 詳細
-
-    article
-      h2 掲示板に棋譜を貼りたいのでKI2形式が欲しい
-      ul
-        li 詳細→MENU→EXPORT各種
-
-    article
-      h2 指定局面の画像が欲しい
-      ul
-        li 詳細→指定局面にする→MENU→ダウンロード→PNG
-    article
-      h2 指定局面をツイートしてOGP画像を出したい
-      ul
-        li 詳細→指定局面にする→右上のツイートリンク
-    article
-      h2 棋譜をPDF形式の棋譜用紙にしたい
-      ul
-        li 詳細→MENU→棋譜用紙→PDFに印刷
-    article
-      h2 棋譜を印刷したい
-      ul
-        li 詳細→MENU→棋譜用紙→PDFに印刷→それを本当に印刷
-    article
-      h2 会心譜を印刷して飾りたいがプリンタを持っていない
-      ul
-        li 詳細→MENU→棋譜用紙→PDFに印刷→ネットプリント→コンビニ
-    article
-      h2 棋譜を元に詰将棋を作りたい
-      ul
-        li 詳細→MENU→共有将棋盤に転送
-    article
-      h2 SNSにスクショを投稿するので相手の名前を隠したい
-      ul
-        li MENU→一覧<i :class="dot_vertical" />→相手の名前
-
-    article
-      h2 ミニマリスト化
-      ul
-        li MENU→一覧<i :class="dot_vertical" />→すべてOFFにした上でもっとも使うものだけONにする
+    template(v-if="true")
+      article
+        h2 検討のため負けた棋譜だけ欲しい
+        ul
+          li MENU→カスタム検索
+      article
+        h2 10分切れ負けの棋譜だけ欲しい
+        ul
+          li MENU→カスタム検索
+      article
+        h2 対戦相手で絞り込みたい
+        ul
+          li MENU→カスタム検索
+      article
+        h2 横断検索したい
+        ul
+          li 一般には公開してないけど検索条件を言ってくれれば可能な範囲で棋譜を用意します
+      article
+        h2 1手毎の消費時間を視覚的に確認したい
+        ul
+          li 詳細
 
     article
       h2 どっちが勝ったの？
@@ -142,6 +161,12 @@
       h2 棋譜を問題にしたい
       ul
         li 詳細→MENU→問題作成
+
+    article
+      h2 ミニマリスト化
+      ul
+        li MENU→一覧<i :class="dot_vertical" />→すべてOFFにした上でもっとも使うものだけONにする
+
     article
       h2 ここに載ってない
       ul
