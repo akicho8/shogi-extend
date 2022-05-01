@@ -47,6 +47,7 @@ module Swars
 
               battle = Battle.new
               battle.preset_key = params[:preset_key]
+              battle.preset = Preset.fetch(params[:preset_key])
               battle.csa_seq = params[:turn_max].times.collect { cycle.next }
               battle.memberships.build(user: user1, judge_key: :win,  location_key: :black)
               battle.memberships.build(user: user2, judge_key: :lose, location_key: :white)
@@ -260,11 +261,14 @@ module Swars
             end
           end
 
+          preset_key = PresetMagicNumberInfo.fetch("magic_number_is_#{info[:preset_magic_number]}").preset_info.key
+
           battle = Battle.new({
               :key        => info[:key],
               :rule_key   => info[:rule_key],
               :csa_seq    => info[:csa_seq],
-              :preset_key => PresetMagicNumberInfo.fetch("magic_number_is_#{info[:preset_magic_number]}").preset_info.key,
+              :preset_key => preset_key,
+              :preset     => Preset.fetch(preset_key),
               :xmode      => XmodeMagicNumberInfo.fetch("magic_number_is_#{info[:xmode_magic_number]}").xmode,
             })
 
@@ -286,7 +290,7 @@ module Swars
                 :user         => User.find_by!(user_key: e[:user_key]),
                 :grade        => Grade.fetch(e[:grade_key]),
                 :judge_key    => judge_key,
-                :location_key => Bioshogi::Location.fetch(i).key,
+                :location_key => LocationInfo.fetch(i).key,
               })
 
             # membership.build_membership_extra(used_piece_counts: {[:foo, true] => 1})

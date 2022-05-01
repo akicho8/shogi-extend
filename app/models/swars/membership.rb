@@ -48,8 +48,8 @@ module Swars
     scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
 
     begin
-      scope :judge_eq,     -> v { where(    judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
-      scope :judge_not_eq, -> v { where.not(judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
+      scope :judge_eq,     -> v { where(    judge_key: JudgeInfo.keys_from(v)) }
+      scope :judge_not_eq, -> v { where.not(judge_key: JudgeInfo.keys_from(v)) }
       scope :judge_ex, proc  { |v; s, g|
         s = all
         g = xquery_parse(v)
@@ -64,8 +64,9 @@ module Swars
     end
 
     begin
-      scope :location_eq,     -> v { where(    location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
-      scope :location_not_eq, -> v { where.not(location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
+      belongs_to :location
+      scope :location_eq,     -> v { where(    location_key: LocationInfo.keys_from(v)) }
+      scope :location_not_eq, -> v { where.not(location_key: LocationInfo.keys_from(v)) }
       scope :location_ex, proc  { |v; s, g|
         s = all
         g = xquery_parse(v)
@@ -86,12 +87,12 @@ module Swars
 
         m = (battle.memberships - [self]).first
         if m
-          self.location_key ||= m.location&.flip&.key
+          self.location_key ||= m.location_info&.flip&.key
           self.judge_key ||= m.judge_info&.flip&.key
         end
 
         if index = battle.memberships.find_index { |e| e == self }
-          self.location_key ||= Bioshogi::Location[index].key
+          self.location_key ||= LocationInfo[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
       end
@@ -144,7 +145,7 @@ module Swars
 
     with_options allow_blank: true do
       validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
+      validates :location_key, inclusion: LocationInfo.keys.collect(&:to_s)
 
       if Rails.env.development? || Rails.env.test?
         with_options uniqueness: { scope: :battle_id, case_sensitive: true } do
@@ -159,8 +160,13 @@ module Swars
       "#{user.key} #{grade.name}"
     end
 
-    def location
-      Bioshogi::Location[location_key]
+    def location_key=(v)
+      super
+      self.location = Location.lookup(v)
+    end
+
+    def location_info
+      LocationInfo[location_key]
     end
 
     def judge_info

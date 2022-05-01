@@ -15,7 +15,7 @@
 
 module Swars
   class Xmode < ApplicationRecord
-    include MemoryRecordBind::Base
+    include MemoryRecordBind::Basic
 
     acts_as_list top_of_list: 0
 

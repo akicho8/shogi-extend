@@ -36,6 +36,7 @@ require "open-uri"
 
 class FreeBattle < ApplicationRecord
   include BattleModelMethods
+  include PresetMethods
   include ShareBoardMethods
 
   class << self
@@ -187,6 +188,7 @@ class FreeBattle < ApplicationRecord
   # ウォーズはあらかじめわかっているのでこの処理はいれない
   def preset_key_set(info)
     self.preset_key = info.preset_info.key
+    self.preset = Preset.fetch(info.preset_info.key)
   end
 
   def parser_exec_after(info)
@@ -222,7 +224,7 @@ class FreeBattle < ApplicationRecord
           }
           if hash.values.any?(&:present?)
             hash.collect { |location_key, e|
-              [Bioshogi::Location.fetch(location_key).pentagon_mark, (e.presence || ["その他"]).join(" ")].join
+              [LocationInfo.fetch(location_key).pentagon_mark, (e.presence || ["その他"]).join(" ")].join
             }.join(" vs ")
           end
         end
@@ -257,10 +259,10 @@ class FreeBattle < ApplicationRecord
     end
 
     def time_chart_datasets
-      Bioshogi::Location.collect do |location|
+      LocationInfo.collect do |location_info|
         {
-          label: location.name,
-          data: time_chart_xy_list(location),
+          label: location_info.name,
+          data: time_chart_xy_list(location_info),
         }
       end
     end
@@ -271,7 +273,7 @@ class FreeBattle < ApplicationRecord
       decorator = mini_battle_decorator
       a = {}
       a[:game_name] = decorator.normalized_full_tournament_name
-      names = Bioshogi::Location.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
+      names = LocationInfo.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
       a.update([:sente_name, :gote_name].zip(names).to_h)
       a
     end

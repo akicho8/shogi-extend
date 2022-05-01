@@ -15,7 +15,7 @@ module Swars
     ]
 
     def preset_info
-      Bioshogi::PresetInfo.fetch(normalized_key)
+      PresetInfo.fetch(normalized_key)
     end
   end
 end

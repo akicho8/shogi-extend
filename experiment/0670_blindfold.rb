@@ -6,7 +6,7 @@ free_battle.simple_versus_desc  # => "▲嬉野流 vs △その他"
 
 # tp free_battle.tag_names_for(:attack) # => []
 # free_battle.meta_info                 # => {:black=>{:defense=>[], :attack=>[:嬉野流], :technique=>[], :note=>[:居飛車, :相居飛車, :居玉, :相居玉]}, :white=>{:defense=>[], :attack=>[], :technique=>[], :note=>[:居飛車, :相居飛車, :居玉, :相居玉]}}
-# # Bioshogi::Location.each do |e|
+# # LocationInfo.each do |e|
 # #   e.call_names                  # => ["先手", "下手"], ["後手", "上手"]
 # # end
 #
@@ -24,7 +24,7 @@ free_battle.simple_versus_desc  # => "▲嬉野流 vs △その他"
 #   name ||= hash[:attack].last
 #   name ||= hash[:defense].last
 #   name ||= "その他"
-#   [Bioshogi::Location.fetch(location_key).mark, name].join
+#   [LocationInfo.fetch(location_key).mark, name].join
 # }.join(" vs ")
 # description                     # => "▲嬉野流 vs △その他"
 

@@ -2,7 +2,7 @@
 # - SwarsCustomSearchApp.vue 用
 
 module Swars
-  class PresetInfo
+  class SwPresetInfo
     include ApplicationMemoryRecord
     memory_record [
       { key: "平手",     },

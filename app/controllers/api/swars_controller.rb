@@ -83,7 +83,7 @@ module Api
           { :key => e.name }
         end
 
-        json[:preset_infos] = Swars::PresetInfo.collect do |e|
+        json[:preset_infos] = Swars::SwPresetInfo.collect do |e|
           { :key => e.key }
         end
 
@@ -95,7 +95,7 @@ module Api
           { :key => e.name }
         end
 
-        json[:location_infos] = Bioshogi::Location.collect do |e|
+        json[:location_infos] = LocationInfo.collect do |e|
           {
             :key     => e.name,
             :name    => "#{e.pentagon_mark} #{e.equality_name}",

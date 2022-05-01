@@ -13,7 +13,6 @@ module Swars
 
       included do
         belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
-        belongs_to :xmode
 
         has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
 
@@ -23,8 +22,9 @@ module Swars
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
 
         begin
-          scope :rule_eq,     -> v { where(    rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
-          scope :rule_not_eq, -> v { where.not(rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
+          belongs_to :rule
+          scope :rule_eq,     -> v { where(    rule_key: RuleInfo.keys_from(v)) }
+          scope :rule_not_eq, -> v { where.not(rule_key: RuleInfo.keys_from(v)) }
           scope :rule_ex,     proc { |v; s, g|
             s = all
             g = xquery_parse(v)
@@ -39,8 +39,9 @@ module Swars
         end
 
         begin
-          scope :final_eq,     -> v { where(    final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
-          scope :final_not_eq, -> v { where.not(final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
+          belongs_to :final
+          scope :final_eq,     -> v { where(    final_key: FinalInfo.keys_from(v)) }
+          scope :final_not_eq, -> v { where.not(final_key: FinalInfo.keys_from(v)) }
           scope :final_ex,     proc { |v; s, g|
             s = all
             g = xquery_parse(v)
@@ -55,8 +56,9 @@ module Swars
         end
 
         begin
-          scope :xmode_eq,     -> v { where(    xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
-          scope :xmode_not_eq, -> v { where.not(xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
+          belongs_to :xmode
+          scope :xmode_eq,     -> v { where(    xmode: Xmode.array_from(v)) }
+          scope :xmode_not_eq, -> v { where.not(xmode: Xmode.array_from(v)) }
           scope :xmode_ex,     proc { |v; s, g|
             s = all
             g = xquery_parse(v)
@@ -70,6 +72,12 @@ module Swars
           }
         end
 
+        before_validation do
+          self.xmode_id ||= Xmode.fetch("通常").id
+          self.rule_id  ||= Rule.fetch("10分").id
+          self.final_id ||= Final.fetch("投了").id
+        end
+
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?
             # Bioshogi::Parser.parse(Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
@@ -77,7 +85,7 @@ module Swars
               self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
             end
 
-            (Bioshogi::Location.count - memberships.size).times do
+            (LocationInfo.count - memberships.size).times do
               memberships.build
             end
 
@@ -97,8 +105,6 @@ module Swars
           self.csa_seq ||= []
 
           self.rule_key ||= :ten_min
-
-          self.xmode ||= Xmode.fetch("通常")
 
           # "" から ten_min への変換
           if rule_key
@@ -129,6 +135,8 @@ module Swars
           validates :rule_key
           validates :final_key
           validates :xmode_id
+          validates :rule_id
+          validates :final_id
         end
 
         with_options allow_blank: true do
@@ -166,7 +174,7 @@ module Swars
 
       def player_info
         memberships.inject({}) { |a, e|
-          a.merge(e.location.key => {
+          a.merge(e.location_info.key => {
               :name  => e.user.key,
               :class => e.judge_info.css_class,
             })
@@ -205,8 +213,8 @@ module Swars
           }
         end
 
-        def time_chart_sec_list_of(location)
-          memberships[location.code].sec_list
+        def time_chart_sec_list_of(location_info)
+          memberships[location_info.code].sec_list
         end
       end
 

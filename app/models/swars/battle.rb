@@ -35,12 +35,13 @@
 module Swars
   class Battle < ApplicationRecord
     include BattleModelMethods
+    include PresetMethods
     include ImportMethods
     include CleanupMethods
     include AssembleMethods
     include BasicMethods
     include HelperMethods
-    include BugfixMethods
+    include MigrateMethods
     include SearchMethods
   end
 end

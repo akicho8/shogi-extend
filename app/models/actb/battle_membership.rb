@@ -97,7 +97,7 @@ module Actb
 
     # rails r "p Actb::Battle.first.memberships.first.location_key"
     def location_key
-      Bioshogi::Location.fetch(position).key
+      LocationInfo.fetch(position).key
     end
   end
 end

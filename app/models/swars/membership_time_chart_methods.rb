@@ -8,7 +8,7 @@ module Swars
         if battle.final_info.key == :TIMEOUT
           if judge_info.key == :lose
             if battle.rule_info.related_time_p
-              battle.rule_info.life_time - battle.raw_sec_list(location).sum # sec_list を使うと無限ループするので注意。補正してない raw_sec_list を使うこと
+              battle.rule_info.life_time - battle.raw_sec_list(location_info).sum # sec_list を使うと無限ループするので注意。補正してない raw_sec_list を使うこと
             end
           end
         end
@@ -18,7 +18,7 @@ module Swars
     # 使った秒数のリスト
     def sec_list
       @sec_list ||= yield_self do
-        list = battle.raw_sec_list(location)
+        list = battle.raw_sec_list(location_info)
 
         # 時間切れまでの放置時間があれば追加する
         if v = leave_alone_seconds
@@ -31,7 +31,7 @@ module Swars
 
     # [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}]
     def time_chart_xy_list
-      @time_chart_xy_list ||= battle.time_chart_xy_list(location)
+      @time_chart_xy_list ||= battle.time_chart_xy_list(location_info)
     end
   end
 end
