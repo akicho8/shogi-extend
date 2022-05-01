@@ -26,9 +26,13 @@
 # | created_at    | 作成日時         | datetime    | NOT NULL            |                   |       |
 # | updated_at    | 更新日時         | datetime    | NOT NULL            |                   |       |
 # | xmode_id      | Xmode            | integer(8)  | DEFAULT(1) NOT NULL |                   | L     |
+# | rule_id       | Rule             | integer(8)  |                     |                   | M     |
+# | final_id      | Final            | integer(8)  |                     |                   | N     |
+# | preset_id     | Preset           | integer(8)  |                     | => Preset#id      | O     |
 # |---------------+------------------+-------------+---------------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 

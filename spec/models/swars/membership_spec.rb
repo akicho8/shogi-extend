@@ -24,9 +24,11 @@
 # | think_max      | Think max      | integer(4)  |             |                   |            |
 # | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
 # | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
+# | location_id    | Location       | integer(8)  |             | => Location#id    | K          |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
 #--------------------------------------------------------------------------------

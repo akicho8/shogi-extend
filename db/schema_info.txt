@@ -27,9 +27,13 @@
 # | created_at    | 作成日時         | datetime    | NOT NULL            |                   |       |
 # | updated_at    | 更新日時         | datetime    | NOT NULL            |                   |       |
 # | xmode_id      | Xmode            | integer(8)  | DEFAULT(1) NOT NULL |                   | L     |
+# | rule_id       | Rule             | integer(8)  |                     |                   | M     |
+# | final_id      | Final            | integer(8)  |                     |                   | N     |
+# | preset_id     | Preset           | integer(8)  |                     | => Preset#id      | O     |
 # |---------------+------------------+-------------+---------------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
@@ -518,6 +522,20 @@
 
 # == Schema Information ==
 #
+# Location (locations as Location)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
 # |----------------+----------------+-------------+-------------+-------------------+------------|
@@ -541,9 +559,11 @@
 # | think_max      | Think max      | integer(4)  |             |                   |            |
 # | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
 # | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
+# | location_id    | Location       | integer(8)  |             | => Location#id    | K          |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
 #--------------------------------------------------------------------------------
@@ -579,6 +599,20 @@
 # == Schema Information ==
 #
 # Xmode (swars_xmodes as Swars::Xmode)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Rule (swars_rules as Swars::Rule)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -653,6 +687,20 @@
 
 # == Schema Information ==
 #
+# Final (swars_finals as Swars::Final)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # App log (app_logs as AppLog)
 #
 # |------------+----------+--------------+-------------+------+-------|
@@ -663,6 +711,20 @@
 # | body       | 内容     | string(8192) | NOT NULL    |      |       |
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Preset (presets as Preset)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -897,32 +959,34 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | name          | desc          | type        | opts        | refs       | index |
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK |            |       |
-# | key           | キー          | string(255) | NOT NULL    |            | A!    |
-# | title         | タイトル      | string(255) |             |            |       |
-# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |            |       |
-# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |            |       |
-# | turn_max      | 手数          | integer(4)  | NOT NULL    |            | B     |
-# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |            |       |
-# | battled_at    | Battled at    | datetime    | NOT NULL    |            | C     |
-# | use_key       | Use key       | string(255) | NOT NULL    |            | D     |
-# | accessed_at   | 参照日時      | datetime    | NOT NULL    |            | E     |
-# | user_id       | User          | integer(8)  |             | => User#id | F     |
-# | preset_key    | Preset key    | string(255) | NOT NULL    |            | G     |
-# | description   | 説明          | text(65535) | NOT NULL    |            |       |
-# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |            |       |
-# | start_turn    | 開始局面      | integer(4)  |             |            | H     |
-# | critical_turn | 開戦          | integer(4)  |             |            | I     |
-# | outbreak_turn | Outbreak turn | integer(4)  |             |            | J     |
-# | image_turn    | OGP画像の局面 | integer(4)  |             |            |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL    |            |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL    |            |       |
-# |---------------+---------------+-------------+-------------+------------+-------|
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | name          | desc          | type        | opts        | refs         | index |
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK |              |       |
+# | key           | キー          | string(255) | NOT NULL    |              | A!    |
+# | title         | タイトル      | string(255) |             |              |       |
+# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |              |       |
+# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |              |       |
+# | turn_max      | 手数          | integer(4)  | NOT NULL    |              | B     |
+# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |              |       |
+# | battled_at    | Battled at    | datetime    | NOT NULL    |              | C     |
+# | use_key       | Use key       | string(255) | NOT NULL    |              | D     |
+# | accessed_at   | 参照日時      | datetime    | NOT NULL    |              | E     |
+# | user_id       | User          | integer(8)  |             | => User#id   | F     |
+# | preset_key    | Preset key    | string(255) | NOT NULL    |              | G     |
+# | description   | 説明          | text(65535) | NOT NULL    |              |       |
+# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |              |       |
+# | start_turn    | 開始局面      | integer(4)  |             |              | H     |
+# | critical_turn | 開戦          | integer(4)  |             |              | I     |
+# | outbreak_turn | Outbreak turn | integer(4)  |             |              | J     |
+# | image_turn    | OGP画像の局面 | integer(4)  |             |              |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL    |              |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL    |              |       |
+# | preset_id     | Preset        | integer(8)  |             | => Preset#id | K     |
+# |---------------+---------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
