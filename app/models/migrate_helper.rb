@@ -22,5 +22,9 @@ module MigrateHelper
       tp location
       Swars::Membership.where(location_id: nil).where(location_key: location.key).update_all(location_id: location.id)
     end
+    Judge.find_each do |judge|
+      tp judge
+      Swars::Membership.where(judge_id: nil).where(judge_key: judge.key).update_all(judge_id: judge.id)
+    end
   end
 end

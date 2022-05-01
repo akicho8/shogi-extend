@@ -13,6 +13,7 @@ module Swars
       [
         Location,
         Preset,
+        Judge,
 
         # Static
         # ActiveRecord
@@ -27,6 +28,10 @@ module Swars
 
     def models
       [
+        Location,
+        Preset,
+        Judge,
+        User,
         Battle,
         Membership,
         MembershipExtra,
@@ -34,9 +39,6 @@ module Swars
         Xmode,
         Rule,
         Final,
-        Location,
-        Preset,
-        User,
       ]
     end
 

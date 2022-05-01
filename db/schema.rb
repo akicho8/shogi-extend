@@ -938,6 +938,15 @@ ActiveRecord::Schema.define(version: 2022_05_01_150000) do
     t.index ["user_id"], name: "index_free_battles_on_user_id"
   end
 
+  create_table "judges", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_judges_on_key", unique: true
+    t.index ["position"], name: "index_judges_on_position"
+  end
+
   create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", comment: "参照者"
     t.bigint "banana_id", null: false, comment: "動画"
@@ -1140,11 +1149,13 @@ ActiveRecord::Schema.define(version: 2022_05_01_150000) do
     t.integer "obt_think_avg", comment: "開戦後の指し手の平均秒数"
     t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
     t.bigint "location_id", comment: "位置"
+    t.bigint "judge_id", comment: "勝敗"
     t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
+    t.index ["judge_id"], name: "index_swars_memberships_on_judge_id"
     t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
     t.index ["location_id"], name: "index_swars_memberships_on_location_id"
     t.index ["location_key"], name: "index_swars_memberships_on_location_key"
