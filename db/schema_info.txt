@@ -260,6 +260,20 @@
 
 # == Schema Information ==
 #
+# Judge (judges as Judge)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # Membership (tsl_memberships as Tsl::Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|
@@ -560,9 +574,11 @@
 # | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
 # | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
 # | location_id    | Location       | integer(8)  |             | => Location#id    | K          |
+# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | L          |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
@@ -865,13 +881,14 @@
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
 # | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | judge_id   | Judge    | integer(8) | NOT NULL    | => Judge#id  | D     |
 # | position   | 順序     | integer(4) | NOT NULL    |              | E     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1227,13 +1244,14 @@
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
 # | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | judge_id   | Judge    | integer(8) | NOT NULL    | => Judge#id  | D     |
 # | position   | 順序     | integer(4) | NOT NULL    |              | E     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1290,7 +1308,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 # | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
 # | user_id             | User                | integer(8) | NOT NULL    | => ::User#id | A!    |
-# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | judge_id            | Judge               | integer(8) | NOT NULL    | => Judge#id  | B     |
 # | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
 # | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
 # | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
@@ -1313,6 +1331,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1522,7 +1541,7 @@
 # | name                | desc                | type       | opts        | refs         | index |
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 # | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
-# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | judge_id            | Judge               | integer(8) | NOT NULL    | => Judge#id  | B     |
 # | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
 # | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
 # | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
@@ -1549,6 +1568,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 

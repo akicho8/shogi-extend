@@ -9,13 +9,14 @@
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
 # | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | judge_id   | Judge    | integer(8) | NOT NULL    | => Judge#id  | D     |
 # | position   | 順序     | integer(4) | NOT NULL    |              | E     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
