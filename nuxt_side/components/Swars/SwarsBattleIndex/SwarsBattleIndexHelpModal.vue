@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | よくある質問 (FAQ)
+      | よくある質問 (FAQ)・使い方
     b-tooltip(position="is-left" label="パーマリンク")
       a.permalink(href="/swars/search/help" target="_blank")
         b-icon(icon="link")

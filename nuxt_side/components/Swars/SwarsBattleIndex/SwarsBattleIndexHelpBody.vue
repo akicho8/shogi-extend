@@ -1,154 +1,171 @@
 <template lang="pug">
 .SwarsBattleIndexHelpBody
-  .content
+  .content(v-decorate)
     article
       h2 将棋ウォーズ棋譜検索はぴよ将棋か？
-      .article_body
-        ul.mt-2
-          li ぴよ将棋ではない
+      ul
+        li ぴよ将棋ではない
     article
       h2 将棋ウォーズ棋譜検索はKENTOか？
-      .article_body
-        ul.mt-2
-          li KENTOではない
+      ul
+        li KENTOではない
     article
       h2 歯抜けになる
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「古い棋譜を補完」
+      ul
+        li MENU→古い棋譜を補完
+    article
+      h2 「古い棋譜を補完」やったけど1ヶ月以上前の棋譜が出てこない
+      ul
+        li 1ヶ月以上前の棋譜は取り込めない
     article
       h2 歯抜けにならないようにするには？
-      .article_body
-        ul.mt-2
-          li 同じルールで連続11回対局する前に棋譜検索する
+      ul
+        li 同じルールで連続11回対局する前に棋譜検索する
+    article
+      h2 対局を終えた直後に検索しても出てこないときがある
+      ul
+        li 最長3分待ってから検索する
+    article
+      h2 ウォーズIDはわからんがウォーズの対局URLだけはわかっている
+      ul
+        li そのまま検索覧に放り込む
     article
       h2 まとめてダウンロードするには？
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「ダウンロード」
+      ul
+        li MENU→ダウンロード
     article
-      h2 前の続きからダウンロードするには？
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「ダウンロード」→「前回の続きから」
+      h2 前回の続きからダウンロードするには？
+      ul
+        li MENU→ダウンロード→前回の続きから
     article
       h2 指定ウォーズIDの棋譜がすべて欲しい
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「古い棋譜を補完」→「ZIPファイルの添付」
+      ul
+        li MENU→古い棋譜を補完→ZIPファイルの添付
     article
-      h2 棋譜コピーではなくファイル保存したい
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「一覧の<i :class="dot_vertical" />」→「保存」
+      h2 棋譜コピーではなくファイルが欲しい
+      ul
+        li MENU→一覧<i :class="dot_vertical" />→保存
     article
       h2 UTF-8 とか Shift_JIS とかって何？
-      .article_body
-        ul.mt-2
-          li Windows を使っている場合は Shift_JIS
-    article
-      h2 名前の前にあるアイコンの意味は？
-      .article_body
-        ul.mt-2
-          li そのアイコンをタップする
-    article
-      h2 ゴキブリなんとかしろ
-      .article_body
-        ul.mt-2
-          li 普通に対局していれば出ないようにしたので安心してください
+      ul
+        li Windows を使っている場合は Shift_JIS
+
     article
       h2 毎回ウォーズIDを入力するのが面倒
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「ウォーズIDを記録する」
+      ul
+        li MENU→ウォーズIDを記録する
+
+    article
+      h2 名前の前にあるアイコンの意味は？
+      ul
+        li そのアイコンをタップする
+    article
+      h2 ゴキブリなんとかしろ
+      ul
+        li 普通に対局していれば出ないようにしたので安心してください
+
+    article
+      h2 検討のため負けた棋譜だけ欲しい
+      ul
+        li MENU→カスタム検索
+    article
+      h2 10分切れ負けの棋譜だけ欲しい
+      ul
+        li MENU→カスタム検索
     article
       h2 対戦相手で絞り込みたい
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「カスタム検索」
+      ul
+        li MENU→カスタム検索
     article
       h2 横断検索したい
-      .article_body
-        ul.mt-2
-          li DBが死ぬので一般には公開してない
-          li が、検索条件を伝えてくれれば手動で棋譜を用意することはできる
+      ul
+        li 一般には公開してないけど検索条件を言ってくれれば可能な範囲で棋譜を用意します
     article
-      h2 消費時間を視覚的に確認したい
-      .article_body
-        ul.mt-2
-          li 「詳細」
+      h2 1手毎の消費時間を視覚的に確認したい
+      ul
+        li 詳細
+
     article
-      h2 掲示板に棋譜を貼りたいのでKI2が欲しい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→EXPORT各種
+      h2 掲示板に棋譜を貼りたいのでKI2形式が欲しい
+      ul
+        li 詳細→MENU→EXPORT各種
+
     article
-      h2 指定の局面の画像が欲しい
-      .article_body
-        ul.mt-2
-          li 「詳細」→指定の局面にする→「右上メニュー」→「ダウンロード」→「PNG」
+      h2 指定局面の画像が欲しい
+      ul
+        li 詳細→指定局面にする→MENU→ダウンロード→PNG
     article
-      h2 指定の局面をツイートしてOGP画像を出したい
-      .article_body
-        ul.mt-2
-          li 「詳細」→指定の局面にする→右上のツイートリンク
+      h2 指定局面をツイートしてOGP画像を出したい
+      ul
+        li 詳細→指定局面にする→右上のツイートリンク
     article
-      h2 棋譜を棋譜用紙にしたい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「棋譜用紙 (PDF)」
+      h2 棋譜をPDF形式の棋譜用紙にしたい
+      ul
+        li 詳細→MENU→棋譜用紙→PDFに印刷
     article
       h2 棋譜を印刷したい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「棋譜用紙 (PDF)」
+      ul
+        li 詳細→MENU→棋譜用紙→PDFに印刷→それを本当に印刷
+    article
+      h2 会心譜を印刷して飾りたいがプリンタを持っていない
+      ul
+        li 詳細→MENU→棋譜用紙→PDFに印刷→ネットプリント→コンビニ
     article
       h2 棋譜を元に詰将棋を作りたい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「共有将棋盤に転送」
+      ul
+        li 詳細→MENU→共有将棋盤に転送
     article
-      h2 相手の名前を隠したい
-      .article_body
-        ul.mt-2
-          li 「右上メニュー」→「一覧の<i :class="dot_vertical" />」→「相手の名前」
+      h2 SNSにスクショを投稿するので相手の名前を隠したい
+      ul
+        li MENU→一覧<i :class="dot_vertical" />→相手の名前
+
     article
-      h2 どちらが勝ったの？
-      .article_body
-        ul.mt-2
-          li 名前の濃い方
+      h2 ミニマリスト化
+      ul
+        li MENU→一覧<i :class="dot_vertical" />→すべてOFFにした上でもっとも使うものだけONにする
+
+    article
+      h2 どっちが勝ったの？
+      ul
+        li 名前の濃い方
+
+    article
+      h2 戦法とかの判定でたらめじゃん
+      ul
+        li SNSでより詳細に愚痴る
+
     article
       h2 棋譜を動画にしたい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「動画作成」
+      ul
+        li 詳細→MENU→動画作成
     article
       h2 棋譜を問題にしたい
-      .article_body
-        ul.mt-2
-          li 「詳細」→「右上メニュー」→「問題作成」
+      ul
+        li 詳細→MENU→問題作成
     article
       h2 ここに載ってない
-      .article_body
-        p
+      ul
+        li
           | →
           a.mx-1(href="https://twitter.com/sgkinakomochi") @sgkinakomochi
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
-
 export default {
   name: "SwarsBattleIndexHelpBody",
-  mixins: [
-    support_child,
-  ],
-  data() {
-    return {
-    }
-  },
   computed: {
     dot_vertical() { return "mdi mdi-dots-vertical mdi-18px" },
+  },
+  // https://jp.vuejs.org/v2/guide/custom-directive.html
+  directives: {
+    decorate: {
+      inserted(el, binding, vnode) {
+        let s = el.innerHTML
+        const arrow = "➡"
+        s = s.replace(/→/g, `&nbsp;&nbsp;${arrow}&nbsp;&nbsp;`)
+        el.innerHTML = s
+      },
+    },
   },
 }
 </script>
@@ -156,15 +173,15 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .SwarsBattleIndexHelpBody
-  padding: 1.5rem
+  padding: 2rem
   article
     &:not(:first-child)
-      margin-top: 2.5rem
+      margin-top: 2rem
     h2
-      font-size: $size-5
+      font-size: $size-7
       font-weight: bold
-    .article_body
-      margin-left: 1rem
-      th
-        white-space: nowrap
+      // &::before
+      //   content: "🔵 "
+    ul
+      list-style: none
 </style>
