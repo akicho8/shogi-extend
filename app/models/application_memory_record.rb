@@ -2,7 +2,8 @@ module ApplicationMemoryRecord
   extend ActiveSupport::Concern
 
   included do
-    unless self < MemoryRecord
+    if self < MemoryRecord
+    else
       include MemoryRecord
     end
   end
@@ -15,10 +16,6 @@ module ApplicationMemoryRecord
     def array_from(values)
       Array(values).collect { |e| fetch(e) }
     end
-  end
-
-  def name
-    key.to_s
   end
 
   def db_record!
