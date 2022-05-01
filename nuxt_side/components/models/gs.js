@@ -10,6 +10,19 @@ import Extsprintf from 'extsprintf'
 
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
+const KANJI_TO_HANKAKU_NUMBER_TABLE = {
+  "〇": "0",
+  "一": "1",
+  "二": "2",
+  "三": "3",
+  "四": "4",
+  "五": "5",
+  "六": "6",
+  "七": "7",
+  "八": "8",
+  "九": "9",
+}
+
 // vue_support.js の methods に追加する
 export const Gs = {
   __trace__(scope, method) {
@@ -111,6 +124,16 @@ export const Gs = {
 
   hankaku_format(str) {
     return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+  },
+
+  // kanji_hankaku_format("(三二)") => "(32)"
+  kanji_hankaku_format(str) {
+    return str.replace(/[〇一二三四五六七八九]/g, s => KANJI_TO_HANKAKU_NUMBER_TABLE[s])
+  },
+
+  // Gs.normalize_for_autocomplete("Ａ四") => "a4"
+  normalize_for_autocomplete(str) {
+    return this.kanji_hankaku_format(this.hankaku_format(str ?? "")).toLowerCase()
   },
 
   short_inspect(value) { return JSON.stringify(value) },
@@ -488,5 +511,10 @@ export const Gs = {
       av.push(str)
     }
     return av.join(" ")
+  },
+
+  str_to_boolean(str) {
+    str = (str ?? "").toString().trim()
+    return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
   },
 }

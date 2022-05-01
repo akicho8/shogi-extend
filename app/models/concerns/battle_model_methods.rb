@@ -12,8 +12,21 @@ module BattleModelMethods
 
     serialize :meta_info
 
-    scope :preset_eq,     -> v { where(    preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
-    scope :preset_not_eq, -> v { where.not(preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
+    begin
+      scope :preset_eq,     -> v { where(    preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
+      scope :preset_not_eq, -> v { where.not(preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
+      scope :preset_ex, proc  { |v; s, g| # NOTE: ruby 2.6.5 では -> (v; s, g) と書けないため proc にしている
+        s = all
+        g = xquery_parse(v)
+        if g[true]
+          s = s.preset_eq(g[true])
+        end
+        if g[false]
+          s = s.preset_not_eq(g[false])
+        end
+        s
+      }
+    end
 
     before_validation do
       self.meta_info ||= {}

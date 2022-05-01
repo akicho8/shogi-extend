@@ -50,7 +50,9 @@ module MemoryRecordBind
         #   end
         # end
 
-        find_by!(key: key)
+        info = pure_class.fetch(key)
+
+        find_by!(key: info.key)
       rescue ActiveRecord::RecordNotFound => error
         if Rails.env.test? || Rails.env.development?
           raise ArgumentError, "#{name}.fetch(#{key.inspect})\nkeys: #{pluck(:key).inspect}"
@@ -68,7 +70,10 @@ module MemoryRecordBind
         if key.kind_of? self
           return key
         end
-        find_by(key: key)
+
+        if info = pure_class.lookup(key)
+          find_by(key: info.key)
+        end
       end
 
       def [](key)

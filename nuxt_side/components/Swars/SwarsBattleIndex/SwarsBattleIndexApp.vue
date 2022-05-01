@@ -49,6 +49,7 @@ import _ from "lodash"
 
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
+import { app_help       } from "./app_help.js"
 import { app_default_key       } from "./app_default_key.js"
 import { app_columns     } from "./app_columns.js"
 import { app_link_to        } from "./app_link_to.js"
@@ -79,6 +80,7 @@ export default {
     app_columns,
     app_sidebar,
     app_chore,
+    app_help,
     app_default_key,
     app_storage,
     app_vs_user,

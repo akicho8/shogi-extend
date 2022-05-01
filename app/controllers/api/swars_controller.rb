@@ -66,12 +66,61 @@ module Api
       end
     end
 
+    concerning :CustomSearchMethods do
+      # curl http://localhost:3000/api/swars/custom_search_setup
+      def custom_search_setup
+        json = {}
+
+        json[:xmode_infos] = Swars::XmodeInfo.collect do |e|
+          { :key => e.key, :yomiage => e.long_name }
+        end
+
+        json[:rule_infos] = Swars::RuleInfo.collect do |e|
+          { :key => e.name, :yomiage => e.long_name }
+        end
+
+        json[:final_infos] = Swars::FinalInfo.collect do |e|
+          { :key => e.name }
+        end
+
+        json[:preset_infos] = Swars::PresetInfo.collect do |e|
+          { :key => e.key }
+        end
+
+        json[:grade_infos] = Swars::GradeInfo.find_all(&:select_option).reverse.collect do |e|
+          { :key => e.key, :name => e.short_name, yomiage: e.name }
+        end
+
+        json[:judge_infos] = JudgeInfo.collect do |e|
+          { :key => e.name }
+        end
+
+        json[:location_infos] = Bioshogi::Location.collect do |e|
+          {
+            :key     => e.name,
+            :name    => "#{e.pentagon_mark} #{e.equality_name}",
+            :yomiage => "#{e.equality_name}または#{e.handicap_name}",
+          }
+        end
+
+        json[:tactic_infos] = Bioshogi::TacticInfo.inject({}) do |a, e|
+          a.merge(e.key => {
+              :key    => e.key,
+              :name   => e.name,
+              :values => e.model.collect(&:name),
+            })
+        end
+
+        render json: json
+      end
+    end
+
     # concerning :SwarsUserKeyDirectDownloadMethods do
     #   # GET http://localhost:3000/api/swars/download_config_fetch?query=Yamada_Taro
     #   def download_config_fetch
     #     render json: zip_dl_cop.to_config
     #   end
-    # 
+    #
     #   def zip_dl_cop
     #     @zip_dl_cop ||= Swars::ZipDlCop.new(params.to_unsafe_h.merge({
     #           :current_user => current_user,

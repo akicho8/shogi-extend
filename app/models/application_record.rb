@@ -64,6 +64,23 @@ class ApplicationRecord < ActiveRecord::Base
       end
       md["content_type"]
     end
+
+    # r = plus_minus_query_parse(["a", "-b", "c", "-d"])
+    # r[true]  # => ["a", "c"]
+    # r[false] # => ["b", "d"]
+    #
+    # r = plus_minus_query_parse("a")
+    # r[true]  # => ["a"]
+    # r[false] # => nil
+    def xquery_parse(v)
+      Array(v).collect { |e|
+        e.match(/(?<not>[!-])?(?<value>.*)/)
+      }.compact.group_by { |e|
+        !e[:not]
+      }.transform_values { |e|
+        e.collect { |e| e[:value] }
+      }
+    end
   end
 
   delegate *[

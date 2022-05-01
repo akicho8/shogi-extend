@@ -13,6 +13,7 @@ module Swars
 
       included do
         belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
+        belongs_to :xmode
 
         has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
 
@@ -20,10 +21,54 @@ module Swars
 
         scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
-        scope :rule_eq, -> v { where(rule_key: RuleInfo.fetch(v).key) } # ルール "10分" や "ten_min" どちらでもOK
 
-        belongs_to :xmode
-        scope :xmode_eq, -> v { where(xmode: Xmode.fetch(v)) } # 種類
+        begin
+          scope :rule_eq,     -> v { where(    rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
+          scope :rule_not_eq, -> v { where.not(rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
+          scope :rule_ex,     proc { |v; s, g|
+            s = all
+            g = xquery_parse(v)
+            if g[true]
+              s = s.rule_eq(g[true])
+            end
+            if g[false]
+              s = s.rule_not_eq(g[false])
+            end
+            s
+          }
+        end
+
+        begin
+          scope :final_eq,     -> v { where(    final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
+          scope :final_not_eq, -> v { where.not(final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
+          scope :final_ex,     proc { |v; s, g|
+            s = all
+            g = xquery_parse(v)
+            if g[true]
+              s = s.final_eq(g[true])
+            end
+            if g[false]
+              s = s.final_not_eq(g[false])
+            end
+            s
+          }
+        end
+
+        begin
+          scope :xmode_eq,     -> v { where(    xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
+          scope :xmode_not_eq, -> v { where.not(xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
+          scope :xmode_ex,     proc { |v; s, g|
+            s = all
+            g = xquery_parse(v)
+            if g[true]
+              s = s.xmode_eq(g[true])
+            end
+            if g[false]
+              s = s.xmode_not_eq(g[false])
+            end
+            s
+          }
+        end
 
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?

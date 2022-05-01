@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { MigigyokuInfo } from "@/components/models/migigyoku_info.js"
 
 export class QueryPresetInfo extends ApplicationMemoryRecord {
-  static field_label = "検索条件追加の例"
+  static field_label = "検索プリセット"
 
   static get define() {
     return [
