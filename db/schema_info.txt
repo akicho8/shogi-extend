@@ -27,9 +27,9 @@
 # | created_at    | 作成日時         | datetime    | NOT NULL            |                   |       |
 # | updated_at    | 更新日時         | datetime    | NOT NULL            |                   |       |
 # | xmode_id      | Xmode            | integer(8)  | DEFAULT(1) NOT NULL |                   | L     |
-# | rule_id       | Rule             | integer(8)  |                     |                   | M     |
-# | final_id      | Final            | integer(8)  |                     |                   | N     |
-# | preset_id     | Preset           | integer(8)  |                     | => Preset#id      | O     |
+# | preset_id     | Preset           | integer(8)  |                     | => Preset#id      | M     |
+# | rule_id       | Rule             | integer(8)  |                     |                   | N     |
+# | final_id      | Final            | integer(8)  |                     |                   | O     |
 # |---------------+------------------+-------------+---------------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -573,8 +573,8 @@
 # | think_max      | Think max      | integer(4)  |             |                   |            |
 # | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
 # | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
-# | location_id    | Location       | integer(8)  |             | => Location#id    | K          |
-# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | L          |
+# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | K          |
+# | location_id    | Location       | integer(8)  |             | => Location#id    | L          |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------

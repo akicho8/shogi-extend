@@ -24,8 +24,8 @@
 # | think_max      | Think max      | integer(4)  |             |                   |            |
 # | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
 # | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
-# | location_id    | Location       | integer(8)  |             | => Location#id    | K          |
-# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | L          |
+# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | K          |
+# | location_id    | Location       | integer(8)  |             | => Location#id    | L          |
 # |----------------+----------------+-------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
