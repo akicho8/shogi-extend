@@ -36,8 +36,8 @@ module Swars
         case1("最大思考", ">=1", "==0")
         case1("平均思考", ">=1", "==0")
         case1("最終思考", ">=1", "==0")
-        case1("中盤以降平均思考", ">=1", "==0", csa_seq: csa_seq_generate4(10))
-        case1("中盤以降最大連続即指し回数", ">=1", "==0", csa_seq: csa_seq_generate4(10))
+        case1("中盤以降の平均思考", ">=1", "==0", csa_seq: csa_seq_generate4(10))
+        case1("中盤以降の最大連続即指し回数", ">=1", "==0", csa_seq: csa_seq_generate4(10))
         case1("相手", "white_man", "unknown_man", white_key: "white_man")
       end
     end
