@@ -1,24 +1,56 @@
 <template lang="pug">
 .SwarsBattleIndexHelpBody
   .content(v-decorate)
-    article
-      h2 将棋ウォーズ棋譜検索はぴよ将棋か？
-      ul
-        li ぴよ将棋ではない
-    article
-      h2 将棋ウォーズ棋譜検索はKENTOか？
-      ul
-        li KENTOではない
+    template(v-if="true")
+      article
+        h2 将棋ウォーズ棋譜検索はぴよ将棋か？
+        ul
+          li ぴよ将棋ではない
+      article
+        h2 将棋ウォーズ棋譜検索はKENTOか？
+        ul
+          li KENTOではない
+
+    template(v-if="true")
+      article
+        h2 名前の前にあるアイコンの意味は？
+        ul
+          li そのアイコンをタップする
+      article
+        h2 自分のウォーズIDがわからない
+        ul
+          li 将棋ウォーズアプリのトップの下
+      article
+        h2 初めて使ったんだが10件程度しか出てこないぞ
+        ul
+          li MENU→古い棋譜を補完
+      article
+        h2 棋力別の勝率とかどこで見れる？
+        ul
+          li 名前タップ
+      article
+        h2 プレイヤー情報って直近50件だけ？
+        ul
+          li MENU→件数
+      article
+        h2 対戦相手の情報が知りたい
+        ul
+          li 対戦相手の名前をタップ
+      article
+        h2 対戦相手の情報が少ない
+        ul
+          li 対戦相手を検索する
+
     article
       h2 歯抜けになる
       ul
         li MENU→古い棋譜を補完
     article
-      h2 「古い棋譜を補完」やったけど1ヶ月以上前の棋譜が出てこない
+      h2 「古い棋譜を補完」をしてみたけど1ヶ月以上前の棋譜が出てこない
       ul
         li 1ヶ月以上前の棋譜は取り込めない
     article
-      h2 歯抜けにならないようにしたい
+      h2 歯抜けにならないようにするには？
       ul
         li 同じルールで連続11回対局する前に棋譜検索する
     article
@@ -26,7 +58,7 @@
       ul
         li 最長3分待ってから検索する
     article
-      h2 ウォーズIDはわからんがウォーズの対局URLだけはわかっている
+      h2 ウォーズIDとやらはわからんがウォーズの対局URLだけはわかっている
       ul
         li そのまま検索覧に放り込む
     article
@@ -44,11 +76,11 @@
 
     template(v-if="true")
       article
-        h2 毎回棋譜コピーしてファイルに保存にするのが面倒
+        h2 毎回棋譜コピーしてファイル保存するのが面倒
         ul
           li MENU→一覧<i :class="dot_vertical" />→保存
       article
-        h2 UTF-8 とか Shift_JIS とかって何？
+        h2 UTF-8 や Shift_JIS とかって何？
         ul
           li Windows なら Shift_JIS
       article
@@ -68,7 +100,7 @@
         ul
           li 詳細→指定局面にする→MENU→ダウンロード→PNG
       article
-        h2 指定局面をツイートしてOGP画像を出したい
+        h2 指定局面をツイートして自動的に画像を出したい
         ul
           li 詳細→指定局面にする→右上のツイートリンク
       article
@@ -90,21 +122,11 @@
       article
         h2 会心譜を印刷して飾りたいがプリンタを持っていない
         ul
-          li 詳細→MENU→棋譜用紙→PDFに印刷→ネットプリント→コンビニ
+          li ネットプリント→コンビニ
       article
         h2 棋譜を元に詰将棋を作りたい
         ul
-          li 詳細→MENU→共有将棋盤に転送
-
-    template(v-if="true")
-      article
-        h2 名前の前にあるアイコンの意味は？
-        ul
-          li そのアイコンをタップする
-      article
-        h2 ゴキブリなんとかしろ
-        ul
-          li 普通に対局していれば出ないようにしたので安心してください
+          li 詳細→MENU→共有将棋盤に転送→MENU→局面編集
 
     template(v-if="true")
       article
@@ -166,6 +188,12 @@
       h2 ミニマリスト化
       ul
         li MENU→一覧<i :class="dot_vertical" />→すべてOFFにした上でもっとも使うものだけONにする
+
+    template(v-if="true")
+      article
+        h2 ゴキブリなんとかしろ
+        ul
+          li 普通に対局していれば出ないようにしたので安心してください
 
     article
       h2 ここに載ってない
