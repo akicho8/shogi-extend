@@ -53,7 +53,7 @@ module Swars
 
           memo = {}
           rows = []
-          errors = []
+          errors = Hash.new(0)
           t = Time.current
           memo["前"] = count
           cleanup_scope(params).find_in_batches(batch_size: 1000) do |g|
@@ -68,11 +68,14 @@ module Swars
             end
             g.each do |e|
               begin
+                if params[:fake_error]
+                  raise ActiveRecord::Deadlocked, "(fake_error)"
+                end
                 e.destroy!
                 row["成功"] += 1
               rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => invalid
                 row["失敗"] += 1
-                errors << invalid
+                errors["#{invalid.message} (#{invalid.class.name})"] += 1
               end
               sleep(params[:sleep])
             end
