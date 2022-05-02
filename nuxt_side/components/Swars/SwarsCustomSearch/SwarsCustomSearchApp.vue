@@ -21,10 +21,13 @@
       .columns.form_block.is-variable.is-0
         .column.is-12
           b-field.field_block.new_query_field(label="")
-            b-input(v-model.trim="new_query" disabled expanded)
-            p.control
-              b-button(@click="search_click_handle" type="is-primary")
-                | 検索
+            b-field(grouped)
+              b-input.new_query_input(v-model.trim="new_query" readonly expanded autocomplete="off")
+              //- b-input.new_query_input.is-hidden-touch(v-model.trim="new_query" readonly expanded autocomplete="off")
+              //- b-input.new_query_input.is-hidden-desktop(v-model.trim="new_query" type="textarea" readonly expanded autocomplete="off" rows="3")
+              p.control
+                b-button(@click="search_click_handle" type="is-primary")
+                  | 検索
           .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
             .column.is-6-tablet.is-4-desktop.is-3-widescreen
               b-field.field_block(custom-class="is-small")
@@ -209,7 +212,8 @@ export default {
 
   .field_block
     &:hover
-      background-color: $primary-light
+      +desktop
+        background-color: $primary-light
 
   .new_query_field
     position: sticky
@@ -220,6 +224,12 @@ export default {
     padding-bottom: 1.2rem
     &:hover
       background-color: unset
+    input, textarea
+      border: 0
+      background-color: $primary-light
+    input, textarea, button
+      +touch
+        font-size: $size-7
 
 .STAGE-development
   .SwarsCustomSearchApp
