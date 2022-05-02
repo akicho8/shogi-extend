@@ -78,16 +78,16 @@
 <script>
 import _ from "lodash"
 
-import { support_parent  } from "./support_parent.js"
-import { app_chore       } from "./app_chore.js"
-import { app_search      } from "./app_search.js"
-import { app_storage     } from "./app_storage.js"
-import { app_sidebar     } from "./app_sidebar.js"
+import { support_parent } from "./support_parent.js"
+import { app_chore      } from "./app_chore.js"
+import { app_search     } from "./app_search.js"
+import { app_storage    } from "./app_storage.js"
+import { app_sidebar    } from "./app_sidebar.js"
 
-import { CompareInfo   } from "./models/compare_info.js"
-import { LogicalInfo   } from "./models/logical_info.js"
+import { CompareInfo    } from "./models/compare_info.js"
+import { LogicalInfo    } from "./models/logical_info.js"
 
-import { ParamInfo   } from "./models/param_info.js"
+import { ParamInfo      } from "./models/param_info.js"
 
 export default {
   name: "SwarsCustomSearchApp",
@@ -112,41 +112,24 @@ export default {
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
 
-    array_to_query(key, values) {
+    // xxx:1,2 形式
+    values_as_query(key, values) {
       let v = this.presence(values)
       if (v) {
         return [key, ":", v.join(",")].join("")
       }
     },
 
-    compare_query_build(key, enabled, compare, value) {
+    // xxx:>=1 形式
+    compare_value_as_query(key, enabled, compare, value) {
       if (enabled) {
         return `${key}:${compare.value}${value}`
       }
-    },
-
-    scs_time_format(seconds) {
-      return this.time_format_human_hms(seconds)
     },
   },
 
   computed: {
     base() { return this },
-
-    // ChoiceXmodeInfo()   { return ChoiceXmodeInfo                       },
-    // choice_xmode_info() { return ChoiceXmodeInfo.fetch(this.xmode_key) },
-
-    // ChoiceFinalInfo()   { return ChoiceFinalInfo                       },
-    // choice_final_info() { return ChoiceFinalInfo.fetch(this.final_key) },
-    //
-    // ChoicePresetInfo()   { return ChoicePresetInfo                       },
-    // choice_preset_info() { return ChoicePresetInfo.fetch(this.preset_key) },
-    //
-    // ChoiceRuleInfo()   { return ChoiceRuleInfo                       },
-    // choice_rule_info() { return ChoiceRuleInfo.fetch(this.rule_key) },
-
-    // ChoiceJudgeInfo()   { return ChoiceJudgeInfo                       },
-    // choice_judge_info() { return ChoiceJudgeInfo.fetch(this.judge_key) },
 
     LogicalInfo()                     { return LogicalInfo                                        },
     CompareInfo()                     { return CompareInfo                                        },
@@ -165,25 +148,25 @@ export default {
 
       // フォームと順番を合わせること
       av.push(this.user_key)
-      av.push(this.array_to_query("持ち時間", this.rule_keys))
-      av.push(this.array_to_query("勝敗", this.judge_keys))
-      av.push(this.array_to_query("結末", this.final_keys))
-      av.push(this.array_to_query("先後", this.location_keys))
-      av.push(this.array_to_query("相手の棋力", this.grade_keys))
-      av.push(this.compare_query_build("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
-      av.push(this.array_to_query("対局モード", this.xmode_keys))
-      av.push(this.array_to_query("手合割", this.preset_keys))
-      av.push(this.array_to_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
-      av.push(this.array_to_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
-      av.push(this.compare_query_build("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
-      av.push(this.compare_query_build("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
-      av.push(this.compare_query_build("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
-      av.push(this.compare_query_build("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
-      av.push(this.compare_query_build("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
-      av.push(this.compare_query_build("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
-      av.push(this.compare_query_build("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
-      av.push(this.compare_query_build("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
-      av.push(this.array_to_query("対戦相手", this.vs_user_keys))
+      av.push(this.values_as_query("持ち時間", this.rule_keys))
+      av.push(this.values_as_query("勝敗", this.judge_keys))
+      av.push(this.values_as_query("結末", this.final_keys))
+      av.push(this.values_as_query("先後", this.location_keys))
+      av.push(this.values_as_query("相手の棋力", this.grade_keys))
+      av.push(this.compare_value_as_query("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
+      av.push(this.values_as_query("対局モード", this.xmode_keys))
+      av.push(this.values_as_query("手合割", this.preset_keys))
+      av.push(this.values_as_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
+      av.push(this.values_as_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
+      av.push(this.compare_value_as_query("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
+      av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
+      av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
+      av.push(this.compare_value_as_query("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
+      av.push(this.compare_value_as_query("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
+      av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
+      av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
+      av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
+      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
 
       let str = av.join(" ")
       str = this.str_squish(str)
@@ -208,6 +191,7 @@ export default {
 </script>
 
 <style lang="sass">
+@import "./support.sass"
 .SwarsCustomSearchApp
   +bulma_columns_vertical_minus_margin_clear
 

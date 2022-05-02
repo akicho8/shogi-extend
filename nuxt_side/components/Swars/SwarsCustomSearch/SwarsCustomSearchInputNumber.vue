@@ -59,6 +59,7 @@ export default {
 </script>
 
 <style lang="sass">
+@import "./support.sass"
 .SwarsCustomSearchInputNumber
   .logical_block
     a:not(:first-child)
