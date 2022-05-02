@@ -7,7 +7,6 @@ b-field.field_block.SwarsCustomSearchInputTag(custom-class="is-small")
         template(v-for="e in base.LogicalInfo.values")
           a(@click="op_click_handle(e)" :class="e.css_class(current_op)")
             | {{e.name}}
-      | を含む
   b-taginput(
     size="is-small"
     v-model="current_tags"

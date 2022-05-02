@@ -3,8 +3,9 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class LogicalInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "and", name: "すべて", search_key: "tag",    },
-      { key: "or",  name: "どれか", search_key: "or-tag", },
+      { key: "and", name: "すべて",   search_key: "tag",         yomiage: "すべて含む",     },
+      { key: "or",  name: "どれか",   search_key: "any-tag",     yomiage: "どれか含む",     },
+      { key: "not", name: "含まない", search_key: "exclude-tag", yomiage: "どれも含まない", },
     ]
   }
 
@@ -14,7 +15,11 @@ export class LogicalInfo extends ApplicationMemoryRecord {
     }
   }
 
-  get yomiage() {
-    return `${this.name}を含む`
+  search_key_for(versus_p) {
+    let vs = ""
+    if (versus_p) {
+      vs = "vs-"
+    }
+    return `${vs}${this.search_key}`
   }
 }

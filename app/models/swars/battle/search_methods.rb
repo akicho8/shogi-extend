@@ -108,32 +108,50 @@ module Swars
               selected = true
             end
 
-            if v = query_info.lookup("tag") # 自分 戦法(AND)
-              m = my_memberships
-              m = m.tagged_with(v)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
+            begin
+              if v = query_info.lookup("tag") # 自分 戦法(AND)
+                m = my_memberships
+                m = m.tagged_with(v)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
+
+              if v = query_info.lookup("or-tag") || query_info.lookup("any-tag")
+                m = my_memberships
+                m = m.tagged_with(v, any: true)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
+
+              if v = query_info.lookup("-tag") || query_info.lookup("exclude-tag")
+                m = my_memberships
+                m = m.tagged_with(v, exclude: true)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
             end
 
-            if v = query_info.lookup("or-tag") # 自分 戦法(OR)
-              m = my_memberships
-              m = m.tagged_with(v, any: true)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
-            end
+            begin
+              if v = query_info.lookup("vs-tag") # 相手 対抗
+                m = sampled_memberships(query_info, current_swars_user.op_memberships)
+                m = m.tagged_with(v)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
 
-            if v = query_info.lookup("vs-tag") # 相手 対抗
-              m = sampled_memberships(query_info, current_swars_user.op_memberships)
-              m = m.tagged_with(v)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
-            end
+              if v = query_info.lookup("vs-or-tag") || query_info.lookup("vs-any-tag")
+                m = sampled_memberships(query_info, current_swars_user.op_memberships)
+                m = m.tagged_with(v, any: true)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
 
-            if v = query_info.lookup("vs-or-tag") # 相手 対抗
-              m = sampled_memberships(query_info, current_swars_user.op_memberships)
-              m = m.tagged_with(v, any: true)
-              s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              if v = query_info.lookup("-vs-tag") || query_info.lookup("vs-exclude-tag")
+                m = sampled_memberships(query_info, current_swars_user.op_memberships)
+                m = m.tagged_with(v, exclude: true)
+                s = s.where(id: m.pluck(:battle_id))
+                selected = true
+              end
             end
 
             if v = query_info.lookup("vs-grade") || query_info.lookup("棋力") || query_info.lookup("相手の棋力")
