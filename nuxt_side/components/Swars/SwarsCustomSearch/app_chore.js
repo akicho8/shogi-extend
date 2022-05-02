@@ -37,6 +37,10 @@ export const app_chore = {
       this.toast_ok("URLを永続化しました")
       this.sidebar_p = false
     },
+
+    scs_time_format(seconds) {
+      return this.time_format_human_hms(seconds)
+    },
   },
 
   computed: {

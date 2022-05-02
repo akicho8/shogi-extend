@@ -137,7 +137,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       visit2 "/swars/search", query: "Yamada_Taro"
       hamburger_click
       find(".swars_users_key_handle").click
-      assert { current_path == "/swars/users/Yamada_Taro/" }
+      assert_current_path "/swars/users/Yamada_Taro/", ignore_query: true
     end
   end
 

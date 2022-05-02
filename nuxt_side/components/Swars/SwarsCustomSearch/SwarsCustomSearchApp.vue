@@ -80,6 +80,7 @@ import _ from "lodash"
 
 import { support_parent } from "./support_parent.js"
 import { app_chore      } from "./app_chore.js"
+import { app_support    } from "./app_support.js"
 import { app_search     } from "./app_search.js"
 import { app_storage    } from "./app_storage.js"
 import { app_sidebar    } from "./app_sidebar.js"
@@ -95,6 +96,7 @@ export default {
     support_parent,
     app_search,
     app_chore,
+    app_support,
     app_storage,
     app_sidebar,
   ],
