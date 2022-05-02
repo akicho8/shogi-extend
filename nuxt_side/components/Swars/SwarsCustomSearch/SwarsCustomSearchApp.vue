@@ -8,7 +8,7 @@
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
-      b-navbar-item(@click="base.back_handle")
+      b-navbar-item(@click="base.back_click_handle")
         b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(@click="title_click_handle") カスタム検索
     template(slot="end")
@@ -65,9 +65,9 @@
               SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
             .column.is-6-tablet.is-4-desktop.is-3-widescreen
               SwarsCustomSearchInputNumber(:base="base" label="最終思考" xxx_enabled_var="my_think_last_enabled"      xxx_value_var="my_think_last"      xxx_compare_var="my_think_last_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_last)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_mid_think_avg)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p")
+            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
             .column.is-6-tablet.is-4-desktop.is-3-widescreen
               SwarsCustomSearchInputVsUserKeys(:base="base")
@@ -110,11 +110,6 @@ export default {
       this.sound_play_click()
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
-    },
-
-    back_handle() {
-      this.sound_play_click()
-      this.back_to({name: "swars-search", query: {query: this.user_key}})
     },
 
     array_to_query(key, values) {

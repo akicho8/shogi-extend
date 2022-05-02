@@ -2,6 +2,13 @@ import _ from "lodash"
 
 export const app_chore = {
   methods: {
+    // 戻る
+    back_click_handle() {
+      this.sound_play_click()
+      this.back_to({name: "swars-search", query: {query: this.user_key}})
+    },
+
+    // タイトルをクリックするとオプション類を外す
     title_click_handle() {
       this.form_reset_handle()
     },
@@ -33,6 +40,7 @@ export const app_chore = {
   },
 
   computed: {
+    // パーマリンク時に付与するパラメーターのハッシュ
     // permalink: true のものだけが対象
     // parmalink_query => {user_key: "xxx", vs_user_keys: "a,b", ...}
     parmalink_query() {
