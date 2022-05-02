@@ -40,6 +40,6 @@ RSpec.describe "ユーザー", type: :system do
   # it "名前がないときプロフィール設定に飛ばされる" do
   #   alice = create(:user, name: "")
   #   visit "http://localhost:3000/?_user_id=#{alice.id}"
-  #   assert { current_path == "/accounts/#{alice.id}/edit" }
+  #   assert_current_path "/accounts/#{alice.id}/edit", ignore_query: true
   # end
 end

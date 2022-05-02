@@ -128,7 +128,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     it "詳細" do
       first(".ShowButton").click
-      assert { current_path == "/swars/battles/devuser3-Yamada_Taro-20200101_123403/" }
+      assert_current_path "/swars/battles/devuser3-Yamada_Taro-20200101_123403/", ignore_query: true
     end
   end
 
@@ -261,8 +261,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
         find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
+        assert_current_path "/swars/direct-download", ignore_query: true
 
-        # assert { current_path == "/swars/direct-download" } # 遷移した (テストが不安定)
         switch_to_window_last                      # 自力で切り替える
 
         # ページ遷移後
@@ -288,7 +288,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
         find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をクリック
-        assert { current_path == "/swars/users/Yamada_Taro/download-all" }
+        assert_current_path "/swars/users/Yamada_Taro/download-all", ignore_query: true
 
         # ページ遷移後
         find(".crawler_run_handle_handle").click           # 「さばく」
@@ -350,12 +350,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
       it "ぴよ将棋" do
         find(".is_external_app_piyo_shogi").click
-        assert { current_path == "/swars/users/Yamada_Taro/direct-open/piyo_shogi/" }
+        assert_current_path "/swars/users/Yamada_Taro/direct-open/piyo_shogi/", ignore_query: true
       end
 
       it "KENTO" do
         find(".is_external_app_kento").click
-        assert { current_path == "/swars/users/Yamada_Taro/direct-open/kento/" }
+        assert_current_path "/swars/users/Yamada_Taro/direct-open/kento/", ignore_query: true
       end
     end
 
@@ -366,7 +366,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".swars_users_key_kento_api_menu_item").click
 
         # 移動後
-        assert { current_path == "/swars/users/Yamada_Taro/kento-api" } # 別ページに移動した
+        assert_current_path "/swars/users/Yamada_Taro/kento-api", ignore_query: true
         assert_text("Yamada_Taroさん専用の KENTO API 設定手順")         # タイトルが正しい
         find(".clipboard_copy_handle").click                            # 「URLをコピー」をクリック
         find(".jump_to_kento_setting_handle").click                     # 「KENTO側で設定」の「移動」をクリック

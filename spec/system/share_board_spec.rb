@@ -776,7 +776,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       menu_item_click("使い方")
       find(".permalink").click       # 固定URLを別タブで開く
       switch_to_window_last # 別タブに移動する
-      assert { current_path == "/share-board/help" }
+      assert_current_path "/share-board/help", ignore_query: true
     end
 
     it "ほぼ静的ページ" do

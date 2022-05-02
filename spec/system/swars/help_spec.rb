@@ -16,7 +16,7 @@ RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
     menu_item_click("よくある質問 (FAQ)")
     find(".permalink").click       # 固定URLを別タブで開く
     switch_to_window_last # 別タブに移動する
-    assert { current_path == "/swars/search/help" }
+    assert_current_path "/swars/search/help", ignore_query: true
   end
 
   it "ほぼ静的ページ" do
