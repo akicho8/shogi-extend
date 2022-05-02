@@ -161,7 +161,7 @@ export default {
     grade_diff_compare_info()         { return CompareInfo.fetch(this.grade_diff_compare)         },
     my_think_max_compare_info()       { return CompareInfo.fetch(this.my_think_max_compare)       },
     my_think_avg_compare_info()       { return CompareInfo.fetch(this.my_think_avg_compare)       },
-    my_think_last_compare_info()       { return CompareInfo.fetch(this.my_think_last_compare)       },
+    my_think_last_compare_info()      { return CompareInfo.fetch(this.my_think_last_compare)      },
     my_mid_think_avg_compare_info()   { return CompareInfo.fetch(this.my_mid_think_avg_compare)   },
     my_mid_machine_gun_compare_info() { return CompareInfo.fetch(this.my_mid_machine_gun_compare) },
 
