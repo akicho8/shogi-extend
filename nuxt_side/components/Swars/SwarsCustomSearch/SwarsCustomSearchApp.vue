@@ -134,6 +134,14 @@ export default {
         return `${key}:${compare.value}${value}`
       }
     },
+
+    // xxx:2022-01-01..2022-01-02 形式
+    date_range_as_query(key, range) {
+      if (this.presence(range)) {
+        const str = range.map(e => dayjs(e).format("YYYY-MM-DD")).join("..")
+        return `${key}:${str}`
+      }
+    },
   },
 
   computed: {
@@ -175,11 +183,7 @@ export default {
       av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
       av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
       av.push(this.values_as_query("対戦相手", this.vs_user_keys))
-
-      if (this.presence(this.battled_at_range)) {
-        const str = this.battled_at_range.map(e => dayjs(e).format("YYYY-MM-DD")).join("..")
-        av.push(`日付:${str}`)
-      }
+      av.push(this.date_range_as_query("日付", this.battled_at_range))
 
       let str = av.join(" ")
       str = this.str_squish(str)
