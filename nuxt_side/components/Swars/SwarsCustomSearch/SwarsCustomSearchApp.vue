@@ -27,50 +27,51 @@
                 b-button(@click="search_click_handle" type="is-primary")
                   | 検索
           .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            //- .column.is-6-tablet.is-4-desktop
+            .column.is-6-tablet.is-4-desktop
               b-field.field_block(custom-class="is-small")
                 template(#label)
                   | 対象のウォーズID
                   span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
                     | 必須
                 b-input(size="is-small" v-model.trim="user_key" placeholder="itoshinTV")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="勝敗"       :records="xi.judge_infos"  var_name="judge_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="結末"       :records="xi.final_infos"  var_name="final_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="先後"       :records="xi.location_infos"  var_name="location_keys" last_only_if_full)
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="最終思考" xxx_enabled_var="my_think_last_enabled"      xxx_value_var="my_think_last"      xxx_compare_var="my_think_last_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_last)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p || true")
+            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_mid_think_avg)")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen(v-if="staff_p || true")
+            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
-            .column.is-6-tablet.is-4-desktop.is-3-widescreen
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputVsUserKeys(:base="base")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
