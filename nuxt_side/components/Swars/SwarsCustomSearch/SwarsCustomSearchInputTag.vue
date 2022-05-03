@@ -8,7 +8,7 @@ b-field.field_block.SwarsCustomSearchInputTag(custom-class="is-small")
           a(@click="op_click_handle(e)" :class="e.css_class(current_op)")
             | {{e.name}}
   b-taginput(
-    size="is-small"
+    :size="base.input_element_size"
     v-model="current_tags"
     :data="filtered_tags"
     autocomplete

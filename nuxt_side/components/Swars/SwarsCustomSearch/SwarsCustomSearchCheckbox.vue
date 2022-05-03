@@ -2,7 +2,7 @@
 b-field.field_block.is_scroll_x.SwarsCustomSearchCheckbox(custom-class="is-small" :label="label1")
   template(v-for="e in records")
     b-checkbox-button(
-      size="is-small"
+      :size="base.input_element_size"
       expanded
       v-model="base.$data[var_name]"
       :native-value="e.key"

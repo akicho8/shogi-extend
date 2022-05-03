@@ -5,7 +5,7 @@ b-field.field_block.SwarsCustomSearchInputVsUserKeys(custom-class="is-small")
     span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
       | 改行で確定
   b-taginput(
-    size="is-small"
+    :size="base.input_element_size"
     v-model="base.vs_user_keys"
     :data="filtered_keys"
     autocomplete

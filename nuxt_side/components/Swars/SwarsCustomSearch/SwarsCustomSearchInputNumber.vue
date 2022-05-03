@@ -6,10 +6,10 @@ b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
       span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
         | {{message}}
   b-field(grouped)
-    b-switch(size="is-small" v-model="xxx_enabled" @input="switch_handle")
+    b-switch(v-model="xxx_enabled" @input="switch_handle" :size="base.input_element_size")
     template(v-if="true")
       b-numberinput.ml-2(
-        size="is-small"
+        :size="base.input_element_size"
         exponential
         controls-position="compact"
         v-model="xxx_value"
@@ -19,7 +19,7 @@ b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
         :disabled="!xxx_enabled"
         expanded
         )
-      b-select(size="is-small" v-model="xxx_compare" @input="sound_play_click()" :disabled="!xxx_enabled")
+      b-select(v-model="xxx_compare" @input="sound_play_click()" :disabled="!xxx_enabled" :size="base.input_element_size")
         option(v-for="e in base.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 

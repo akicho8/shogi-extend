@@ -14,7 +14,7 @@ b-field.field_block.SwarsCustomSearchInputDate(custom-class="is-small")
     range
     trap-focus
     :mobile-native="false"
-    size="is-small"
+    :size="base.input_element_size"
     position="is-top-right"
     )
 </template>

@@ -25,17 +25,16 @@
             b-field(grouped)
               b-input.new_query_input(v-model.trim="new_query" readonly expanded autocomplete="off")
               p.control
-                b-button(@click="search_click_handle" type="is-primary")
+                b-button.has-text-weight-bold(@click="search_click_handle" type="is-primary")
                   | 検索
           .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
-            //- .column.is-6-tablet.is-4-desktop
             .column.is-6-tablet.is-4-desktop
               b-field.field_block(custom-class="is-small")
                 template(#label)
                   | 対象のウォーズID
                   span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
                     | 必須
-                b-input(size="is-small" v-model.trim="user_key" placeholder="itoshinTV")
+                b-input(v-model.trim="user_key" placeholder="itoshinTV" :size="base.input_element_size")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
             .column.is-6-tablet.is-4-desktop
@@ -147,6 +146,8 @@ export default {
   computed: {
     base() { return this },
 
+    input_element_size() { return "" },
+
     LogicalInfo()                     { return LogicalInfo                                        },
     CompareInfo()                     { return CompareInfo                                        },
     critical_turn_compare_info()      { return CompareInfo.fetch(this.critical_turn_compare)      },
@@ -242,6 +243,11 @@ export default {
     input, textarea, button
       +touch
         font-size: $size-7
+
+  +mobile
+    .field_block
+      padding: 0.75rem 0 1rem
+      padding: 0.5rem 0
 
 .STAGE-development
   .SwarsCustomSearchApp
