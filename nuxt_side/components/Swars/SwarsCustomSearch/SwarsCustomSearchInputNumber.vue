@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small" :label="label")
+b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
   template(#label)
     | {{label}}
     template(v-if="present_p(message)")
