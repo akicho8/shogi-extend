@@ -3,7 +3,7 @@ b-field.field_block.SwarsCustomSearchInputVsUserKeys(custom-class="is-small")
   template(#label)
     | 対戦相手({{base.vs_user_keys.length}})
     span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
-      | Enterで確定する
+      | 改行で確定
   b-taginput(
     size="is-small"
     v-model="base.vs_user_keys"
