@@ -72,10 +72,10 @@
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_mid_think_avg)")
             .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputVsUserKeys(:base="base")
             .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
                SwarsCustomSearchInputDate(:base="base")
+            .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchInputVsUserKeys(:base="base")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -182,8 +182,8 @@ export default {
       av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
       av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
       av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
-      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
       av.push(this.date_range_as_query("日付", this.battled_at_range))
+      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
 
       let str = av.join(" ")
       str = this.str_squish(str)
