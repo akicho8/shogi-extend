@@ -357,8 +357,8 @@ module Swars
         { name: "投了までの心の準備(最長)",            type1: "simple", type2: "second",                        body: max_of_toryo_think_last,     },
 
         ################################################################################
-        { name: "最大長考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
-        { name: "平均考慮",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
+        { name: "最大思考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
+        { name: "平均思考",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
         { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
 
         ################################################################################

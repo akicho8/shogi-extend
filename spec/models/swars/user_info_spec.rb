@@ -124,7 +124,7 @@ module Swars
       end
     end
 
-    describe "最大長考 max_of_think_max 平均考慮 avg_of_think_all_avg" do
+    describe "最大思考 max_of_think_max 平均思考 avg_of_think_all_avg" do
       before do
         @black = User.create!
       end
