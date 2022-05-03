@@ -114,8 +114,9 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             template(v-for="e in base.ExternalAppInfo.values")
               b-menu-item.is_active_unset(@click="base.external_app_handle(e)" :label="e.name" :class="e.dom_class")
 
-        b-menu-list(label="その他")
-          b-menu-item.is_active_unset(label="よくある質問 (FAQ)" @click="base.general_help_modal_handle")
+        template(v-if="development_p")
+          b-menu-list(label="その他")
+            b-menu-item.is_active_unset(label="よくある質問 (FAQ)" @click="base.general_help_modal_handle")
 
         b-menu-list(label="test" v-if="development_p")
           b-menu-item.is_active_unset
