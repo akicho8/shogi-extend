@@ -6,7 +6,7 @@ b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
       span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
         | {{message}}
   b-field(grouped)
-    b-switch(size="is-small" v-model="xxx_enabled" @input="sound_play_toggle")
+    b-switch(size="is-small" v-model="xxx_enabled" @input="switch_handle")
     template(v-if="true")
       b-numberinput.ml-2(
         size="is-small"
@@ -40,6 +40,14 @@ export default {
     xxx_compare_var: { type: String, required: true,                },
     min:             { type: Number, required: false, default: 0,   },
     max:             { type: Number, required: false, default: 200, },
+  },
+  methods: {
+    switch_handle(v) {
+      this.sound_play_toggle(v)
+      if (v) {
+        this.talk(this.label)
+      }
+    },
   },
   computed: {
     xxx_compare: {
