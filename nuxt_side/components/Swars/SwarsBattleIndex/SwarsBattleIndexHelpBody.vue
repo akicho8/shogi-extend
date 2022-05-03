@@ -17,29 +17,32 @@
         ul
           li そのアイコンをタップする
       article
-        h2 自分のウォーズIDがわからない
-        ul
-          li 将棋ウォーズアプリのトップの下
-      article
         h2 初めて使ったんだが10件程度しか出てこないぞ
         ul
+          //- li 棋譜検索は直近1件の対局を毎回検討する人を対象としているのでそれでじゅうぶん
           li MENU→古い棋譜を補完
       article
         h2 棋力別の勝率とかどこで見れる？
         ul
           li 名前タップ
       article
-        h2 プレイヤー情報って直近50件だけ？
+        h2 プレイヤー情報って最大50件だけ？
         ul
           li MENU→件数
-      article
-        h2 対戦相手の情報が知りたい
-        ul
-          li 対戦相手の名前をタップ
-      article
-        h2 対戦相手の情報が少ない
-        ul
-          li 対戦相手を検索する
+
+      template(v-if="true")
+        article
+          h2 相手の情報を知りたい
+          ul
+            li 相手の名前をタップ
+        article
+          h2 相手の情報が少ない
+          ul
+            li 相手を検索する
+        article
+          h2 相手IDを検索覧に入力するのが面倒
+          ul
+            li 相手の名前をタップ→相手の名前をタップ
 
     article
       h2 歯抜けになる
@@ -58,7 +61,7 @@
       ul
         li 最長3分待ってから検索する
     article
-      h2 ウォーズIDとやらはわからんがウォーズの対局URLだけはわかっている
+      h2 ウォーズIDは知らんがウォーズの対局URLだけわかっている
       ul
         li そのまま検索覧に放り込む
     article
@@ -76,9 +79,17 @@
 
     template(v-if="true")
       article
+        h2 一覧でページ送りが面倒
+        ul
+          li MENU→件数
+      article
+        h2 終局図から目視で棋譜を探すには？
+        ul
+          li MENU→局面→終局→件数→200
+      article
         h2 毎回棋譜コピーしてファイル保存するのが面倒
         ul
-          li MENU→一覧<i :class="dot_vertical" />→保存
+          li MENU→一覧<i :class="dot_vertical_icon" />→保存
       article
         h2 UTF-8 や Shift_JIS とかって何？
         ul
@@ -118,13 +129,13 @@
       article
         h2 棋譜を印刷したい
         ul
-          li 詳細→MENU→棋譜用紙→PDFに印刷→PDFを紙に印刷
+          li 詳細→MENU→棋譜用紙→PDFに印刷→PDFを印刷
       article
         h2 会心譜を印刷して飾りたいがプリンタを持っていない
         ul
           li ネットプリント→コンビニ
       article
-        h2 棋譜を元に詰将棋を作りたい
+        h2 対局の検討を元に詰将棋を作りたい
         ul
           li 詳細→MENU→共有将棋盤に転送→MENU→局面編集
 
@@ -132,16 +143,21 @@
       article
         h2 SNSにスクショを投稿するとき相手の名前を隠すのが面倒
         ul
-          li MENU→一覧<i :class="dot_vertical" />→相手の名前
+          li MENU→一覧<i :class="dot_vertical_icon" />→相手の名前
       article
         h2 相手より自分の名前を隠したい
         ul
-          li MENU→一覧<i :class="dot_vertical" />→自分の名前
+          li MENU→一覧<i :class="dot_vertical_icon" />→自分の名前
 
-    article
-      h2 毎回ウォーズIDを入力するのが面倒
-      ul
-        li MENU→ウォーズIDを記録する
+    template(v-if="true")
+      article
+        h2 毎回ウォーズIDを入力するのが面倒
+        ul
+          li MENU→ウォーズIDを記録する
+      article
+        h2 直近の対局をぴよ将棋で検討したいだけなのに毎回将棋ウォーズ棋譜検索に行くのが面倒
+        ul
+          li MENU→外部アプリですぐ開く→ぴよ将棋
 
     template(v-if="true")
       article
@@ -153,7 +169,7 @@
         ul
           li MENU→カスタム検索
       article
-        h2 対戦相手で絞り込みたい
+        h2 相手で絞り込みたい
         ul
           li MENU→カスタム検索
       article
@@ -166,9 +182,19 @@
           li 詳細
 
     article
-      h2 どっちが勝ったの？
+      h2 どっちが勝った？
       ul
         li 名前の濃い方
+
+    article
+      h2 平手の指導対局から学びたい
+      ul
+        li <i :class="home_icon" />→将棋ウォーズ十段の成績→名前タップ→MENU→カスタム検索→平手
+
+    article
+      h2 特定IDをストーキングする
+      ul
+        li 特定IDで検索→ホーム画面に追加
 
     article
       h2 戦法とかの判定でたらめじゃん
@@ -184,10 +210,15 @@
       ul
         li 詳細→MENU→問題作成
 
+    //- article
+    //-   h2 自分のウォーズIDがわからない
+    //-   ul
+    //-     li 将棋ウォーズアプリのトップの下
+
     article
       h2 ミニマリスト化
       ul
-        li MENU→一覧<i :class="dot_vertical" />→すべてOFFにした上でもっとも使うものだけONにする
+        li MENU→一覧<i :class="dot_vertical_icon" />→すべてOFF→いちばん使うものだけON
 
     template(v-if="true")
       article
@@ -207,7 +238,9 @@
 export default {
   name: "SwarsBattleIndexHelpBody",
   computed: {
-    dot_vertical() { return "mdi mdi-dots-vertical mdi-18px" },
+    dot_vertical_icon() { return "mdi mdi-18px mdi-dots-vertical" },
+    // mdi-18px
+    home_icon()         { return "mdi mdi-home "         },
   },
   // https://jp.vuejs.org/v2/guide/custom-directive.html
   directives: {
@@ -229,7 +262,7 @@ export default {
   padding: 2rem
   article
     &:not(:first-child)
-      margin-top: 2rem
+      margin-top: 1.5rem
     h2
       font-size: $size-7
       font-weight: bold
@@ -237,4 +270,15 @@ export default {
       //   content: "🔵 "
     ul
       list-style: none
+
+  +mobile
+    padding: 1rem
+    font-size: $size-7
+    article
+      &:not(:first-child)
+        margin-top: 1rem
+      .mdi:before
+        font-size: $size-7
+    ul
+      margin-left: 1rem
 </style>
