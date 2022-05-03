@@ -98,14 +98,13 @@ module Swars
               end
             end
 
-            if t = query_info.lookup_one("date") || query_info.lookup_one("日時") || query_info.lookup_one("日付")
-              t = DateRange.parse(t)
-
-              m = my_memberships
-              s = s.where(id: m.pluck(:battle_id))
-
-              s = s.where(battled_at: t)
-              selected = true
+            if t = query_info.lookup_one("date") || query_info.lookup_one("日付")
+              if t = DateRange.parse(t)
+                m = my_memberships
+                s = s.where(id: m.pluck(:battle_id))
+                s = s.where(battled_at: t)
+                selected = true
+              end
             end
 
             begin

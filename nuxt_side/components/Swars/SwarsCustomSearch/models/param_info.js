@@ -15,6 +15,8 @@ export class ParamInfo extends ParamBase {
       { key: "grade_keys",                 type: "array",  name: "棋力",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "location_keys",              type: "array",  name: "先後",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
 
+      { key: "battled_at_range",           type: "array",   name: "日付",                               defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+
       { key: "my_tag_values",              type: "array",   name: "自分タグ",                           defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "my_tag_values_op",           type: "string",  name: "自分タグ演算子",                     defaults: { development: null, production: "and",  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "vs_tag_values",              type: "array",   name: "相手タグ",                           defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },

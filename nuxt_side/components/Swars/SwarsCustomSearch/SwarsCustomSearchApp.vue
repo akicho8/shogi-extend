@@ -1,8 +1,9 @@
 <template lang="pug">
 .SwarsCustomSearchApp
   DebugBox(v-if="development_p")
-    p user_key: {{user_key}}
-    p vs_user_keys: {{vs_user_keys}}
+    p battled_at_range: {{short_inspect(battled_at_range)}}
+    p user_key: {{short_inspect(user_key)}}
+    p vs_user_keys: {{short_inspect(vs_user_keys)}}
 
   SwarsCustomSearchSidebar(:base="base")
 
@@ -73,12 +74,15 @@
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputVsUserKeys(:base="base")
+            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
+               SwarsCustomSearchInputDate(:base="base")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
 
 <script>
 import _ from "lodash"
+import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
 import { app_chore      } from "./app_chore.js"
@@ -171,6 +175,11 @@ export default {
       av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
       av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
       av.push(this.values_as_query("対戦相手", this.vs_user_keys))
+
+      if (this.presence(this.battled_at_range)) {
+        const str = this.battled_at_range.map(e => dayjs(e).format("YYYY-MM-DD")).join("..")
+        av.push(`日付:${str}`)
+      }
 
       let str = av.join(" ")
       str = this.str_squish(str)

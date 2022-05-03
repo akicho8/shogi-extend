@@ -1,4 +1,5 @@
 import _ from "lodash"
+import dayjs from "dayjs"
 
 export const app_chore = {
   methods: {
@@ -54,6 +55,13 @@ export const app_chore = {
           let v = this.$data[e.key]
           if (this.present_p(v)) {
             if (Array.isArray(v)) {
+              v = v.map(e => {
+                if (_.isDate(e)) {
+                  return e.toISOString() // これをかまさないと英語を含む日付がパーマリンクURLに入ってしまう
+                } else {
+                  return e
+                }
+              })
               v = v.join(",")
             }
             query[e.key] = v
