@@ -23,8 +23,6 @@
           b-field.field_block.new_query_field(label="")
             b-field(grouped)
               b-input.new_query_input(v-model.trim="new_query" readonly expanded autocomplete="off")
-              //- b-input.new_query_input.is-hidden-touch(v-model.trim="new_query" readonly expanded autocomplete="off")
-              //- b-input.new_query_input.is-hidden-desktop(v-model.trim="new_query" type="textarea" readonly expanded autocomplete="off" rows="3")
               p.control
                 b-button(@click="search_click_handle" type="is-primary")
                   | 検索
