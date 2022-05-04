@@ -194,13 +194,16 @@ export default {
     grade_diff_message() {
       let v = this.grade_diff
       let x = Math.abs(v)
+      if (x === 1) {
+        x = "やや"
+      }
       let s = ""
       if (v > 0) {
-        s = `相手は自分より${this.grade_diff}強い`
+        s = `相手は自分より${x}強い`
       } else if (v < 0) {
-        s = `相手は自分より${-this.grade_diff}弱い`
+        s = `相手は自分より${x}弱い`
       } else {
-        s = "相手は自分と同じぐらい強い"
+        s = "相手は好敵手"
       }
       return s
     },
