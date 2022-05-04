@@ -17,7 +17,7 @@
         ul
           li そのアイコンをタップする
       article
-        h2 初めて使ったんだが10件程度しか出てこないぞ
+        h2 初めて使ったけど10件程度しか出てこんぞ
         ul
           li MENU→古い棋譜を補完
       article
@@ -48,13 +48,13 @@
             li 相手の名前をタップ→相手の名前をタップ
 
     article
-      h2 歯抜けになる
+      h2 歯抜けを直すには？
       ul
         li MENU→古い棋譜を補完
     article
-      h2 「古い棋譜を補完」をしてみたけど1ヶ月以上前の棋譜が出てこない
+      h2 「古い棋譜を補完」をしてみたけどもっとあるはず
       ul
-        li 1ヶ月以上前の棋譜は取り込めない
+        li 1ヶ月より前の棋譜は取り込めない
     article
       h2 歯抜けにならないようにするには？
       ul
@@ -64,7 +64,7 @@
       ul
         li 最長3分待ってから検索する
     article
-      h2 ウォーズの対局URLだけわかってる
+      h2 ウォーズの対局URLだけはわかっている
       ul
         li そのまま検索覧に放り込む
     article
@@ -88,17 +88,28 @@
 
     template(v-if="true")
       article
-        h2 棋譜を棋譜用紙にしたい
+        h2 棋譜の体裁を整えてPDFにしたい
         ul
-          li 詳細→MENU→棋譜用紙→PDFに印刷
+          li 詳細→MENU→棋譜用紙→編集→PDFに印刷
       article
         h2 棋譜を印刷したい
         ul
-          li 詳細→MENU→棋譜用紙→PDFに印刷→PDFを印刷
+          li そのPDFを印刷
       article
         h2 会心譜を印刷して飾りたいがプリンタを持っていない
         ul
           li ネットプリント→コンビニ
+
+    template(v-if="true")
+      article
+        h2 棋譜を動画にしてSNSに上げたい
+        ul
+          li 詳細→MENU→動画作成
+
+      article
+        h2 棋譜の検討結果を問題にして自分用の問題集を作りたい
+        ul
+          li 詳細→MENU→問題作成
 
     template(v-if="true")
       article
@@ -132,11 +143,11 @@
       article
         h2 指定局面の画像が欲しい
         ul
-          li 詳細→指定局面にする→MENU→ダウンロード→PNG
+          li 詳細→局面調整→MENU→ダウンロード→PNG
       article
         h2 指定局面をツイートして自動的に画像を出したい
         ul
-          li 詳細→指定局面にする→右上のツイートリンク
+          li 詳細→局面調整→右上のツイートリンク
       article
         h2 ぴよ将棋に送るURLが欲しい
         ul
@@ -162,21 +173,21 @@
 
     template(v-if="true")
       article
-        h2 検討のため負けた棋譜だけ欲しい
+        h2 勝った対局を見返して自己肯定感を高める
         ul
-          li MENU→カスタム検索
+          li MENU→カスタム検索→勝ち
       article
-        h2 10分切れ負けの棋譜だけ欲しい
+        h2 負けた対局を見返して検討する
         ul
-          li MENU→カスタム検索
+          li MENU→カスタム検索→負け
       article
         h2 相手で絞り込みたい
         ul
-          li MENU→カスタム検索
+          li MENU→カスタム検索→対戦相手
       article
         h2 横断検索したい
         ul
-          li 一般には公開してないけど検索条件を伝えてくれれば可能な範囲で棋譜を用意します
+          li 検索条件を伝えてくれれば可能な範囲で棋譜を用意します
       article
         h2 1手毎の消費時間を視覚的に確認したい
         ul
@@ -186,6 +197,16 @@
       h2 どっちが勝ち？
       ul
         li 名前の濃い方
+
+    article
+      h2 1ヶ月より前のは取り込めないというけど対局URLはわかっている
+      ul
+        li 対局URLさえわかっていれば(検索覧に放り込めば)取り込める
+
+    article
+      h2 数ヶ月前に検索で取り込んだ棋譜が消えた
+      ul
+        li 容量の関係でアクセスがない古いのは消している
 
     article
       h2 指導対局の平手戦から学びたい
@@ -198,6 +219,11 @@
         li <i :class="home_icon" />→将棋ウォーズイベント上位の成績
 
     article
+      h2 格上に勝った棋譜だけZIPでくれ
+      ul
+        li MENU→カスタム検索→力差1→勝ち→検索→MENU→ダウンロード
+
+    article
       h2 特定IDをストーキングする
       ul
         li 特定IDで検索→ホーム画面に追加
@@ -205,16 +231,7 @@
     article
       h2 戦法とかの判定でたらめじゃん
       ul
-        li SNSでより詳細に愚痴る
-
-    article
-      h2 棋譜を動画にしたい
-      ul
-        li 詳細→MENU→動画作成
-    article
-      h2 棋譜の検討結果を問題にして自分用の問題集を作りたい
-      ul
-        li 詳細→MENU→問題作成
+        li Twitterでより詳細に愚痴る
 
     //- article
     //-   h2 自分のウォーズIDがわからない
