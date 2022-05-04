@@ -218,7 +218,7 @@ export default {
 
   .MainSection.section
     +mobile
-      padding: 0rem 0.75rem
+      padding: 0rem 0.75rem 0.25rem // 入力フィールドが 0.5 なので 0.25 足して左右の余白と一致する (下の部分)
     +tablet
       padding: 1.0rem 0rem
 
