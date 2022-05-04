@@ -241,7 +241,7 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (1.0.1)
     matrix (0.4.2)
-    memory_record (0.0.18)
+    memory_record (0.0.19)
       activesupport
     method_source (1.0.0)
     mini_magick (4.11.0)
@@ -442,7 +442,7 @@ GEM
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
     systemu (2.6.5)
-    table_format (0.0.10)
+    table_format (0.0.11)
       activesupport
     temple (0.8.2)
     test-prof (1.0.7)
