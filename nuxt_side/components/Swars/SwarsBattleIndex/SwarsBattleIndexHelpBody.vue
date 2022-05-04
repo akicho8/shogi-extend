@@ -229,6 +229,11 @@
         li 特定IDで検索→ホーム画面に追加
 
     article
+      h2 将棋ウォーズ本家のマイページに飛びたい
+      ul
+        li プレイヤー情報→<i :class="dot_vertical_icon" />→ウォーズ本家
+
+    article
       h2 戦法とかの判定でたらめじゃん
       ul
         li Twitterでより詳細に愚痴る
