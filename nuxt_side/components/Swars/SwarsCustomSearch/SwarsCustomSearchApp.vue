@@ -215,7 +215,7 @@ export default {
 
   .MainSection.section
     +mobile
-      padding: 0rem 0.75rem
+      padding: 0.5rem 0.75rem
     +tablet
       padding: 1.0rem 0rem
 
@@ -240,13 +240,9 @@ export default {
     input, textarea
       border: 0
       background-color: $primary-light
-    input, textarea, button
-      +touch
-        font-size: $size-7
 
   +mobile
-    .field_block
-      padding: 0.75rem 0 1rem
+    .field_block, .new_query_field
       padding: 0.5rem 0
 
 .STAGE-development
