@@ -48,10 +48,6 @@
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
             .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
-            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
@@ -61,6 +57,10 @@
               SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+            .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
+            .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
             .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
                SwarsCustomSearchInputDate(:base="base")
             .column.is-6-tablet.is-4-desktop
@@ -171,13 +171,13 @@ export default {
       av.push(this.values_as_query("先後", this.location_keys))
       av.push(this.values_as_query("相手の棋力", this.grade_keys))
       av.push(this.compare_value_as_query("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
-      av.push(this.values_as_query("対局モード", this.xmode_keys))
-      av.push(this.values_as_query("手合割", this.preset_keys))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
       av.push(this.compare_value_as_query("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
       av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
       av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
+      av.push(this.values_as_query("対局モード", this.xmode_keys))
+      av.push(this.values_as_query("手合割", this.preset_keys))
       av.push(this.date_range_as_query("日付", this.battled_at_range))
       av.push(this.values_as_query("対戦相手", this.vs_user_keys))
       av.push(this.compare_value_as_query("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
