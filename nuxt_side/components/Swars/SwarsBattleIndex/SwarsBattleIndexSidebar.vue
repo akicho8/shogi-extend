@@ -9,7 +9,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
           b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.xi.current_swars_user_key}}" @click.native="sound_play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
 
           b-menu-item.swars_custom_search_handle(
-            v-if="development_p"
+            v-if="development_p || true"
             label="カスタム検索"
             @click.native="sound_play_click()"
             tag="nuxt-link"
@@ -51,7 +51,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 :class="[{'has-text-weight-bold': base.per_info.per === e.per}, e.key]"
                 )
 
-          template(v-if="development_p || true")
+          template(v-if="development_p")
             b-menu-item.is_active_unset.filter_set_menu_item(@click="sound_play_click()" :disabled="menu_item_disabled")
               template(slot="label" slot-scope="props")
                 | {{base.QueryPresetInfo.field_label}}
@@ -65,7 +65,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                   :query_preset_info="e"
                   )
 
-          template(v-if="development_p || true")
+          template(v-if="development_p")
             b-menu-item.is_active_unset.vs_user_modal_handle(@click="base.vs_user_modal_handle" label="相手で絞る" :disabled="menu_item_disabled")
 
         b-menu-list(label="まとめて取得")
