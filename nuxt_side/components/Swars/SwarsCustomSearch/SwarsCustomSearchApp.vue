@@ -61,6 +61,10 @@
               SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
+               SwarsCustomSearchInputDate(:base="base")
+            .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchInputVsUserKeys(:base="base")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
             .column.is-6-tablet.is-4-desktop
@@ -71,10 +75,6 @@
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_mid_think_avg)")
             .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
               SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
-            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-               SwarsCustomSearchInputDate(:base="base")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputVsUserKeys(:base="base")
 
       SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
 </template>
@@ -178,13 +178,13 @@ export default {
       av.push(this.compare_value_as_query("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
       av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
       av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
+      av.push(this.date_range_as_query("日付", this.battled_at_range))
+      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
       av.push(this.compare_value_as_query("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
       av.push(this.compare_value_as_query("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
       av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
       av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
       av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
-      av.push(this.date_range_as_query("日付", this.battled_at_range))
-      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
 
       let str = av.join(" ")
       str = this.str_squish(str)
