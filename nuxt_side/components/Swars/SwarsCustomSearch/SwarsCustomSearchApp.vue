@@ -215,7 +215,7 @@ export default {
 
   .MainSection.section
     +mobile
-      padding: 0.5rem 0.75rem
+      padding: 0rem 0.75rem
     +tablet
       padding: 1.0rem 0rem
 
@@ -242,8 +242,10 @@ export default {
       background-color: $primary-light
 
   +mobile
-    .field_block, .new_query_field
+    .field_block
       padding: 0.5rem 0
+    .new_query_field
+      padding: 0.75rem 0
 
 .STAGE-development
   .SwarsCustomSearchApp
