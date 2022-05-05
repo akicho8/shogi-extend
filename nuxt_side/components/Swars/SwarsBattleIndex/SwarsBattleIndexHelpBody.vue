@@ -115,7 +115,11 @@
       article
         h2 ページ送りが面倒
         ul
-          li MENU→件数
+          li MENU→件数→200
+      article
+        h2 一覧の表示が遅い
+        ul
+          li MENU→件数→10
       article
         h2 終局図から目視で棋譜を探すには？
         ul
@@ -197,6 +201,26 @@
       h2 どっちが勝ち？
       ul
         li 名前の濃い方
+
+    article
+      h2 囲いの名前が表示されない
+      ul
+        li MENU→一覧<i :class="dot_vertical_icon" />→囲い
+
+    article
+      h2 入力履歴を消したい
+      ul
+        li Chromeであればデベロッパーツール→Application→Local Storage→削除
+
+    template(v-if="true")
+      article
+        h2 M1 Mac を使っているとき「ぴよ将棋」を使いたいのにブラウザ版の「ぴよ将棋ｗ」に飛んでしまう
+        ul
+          li プロフィール→ぴよ将棋の種類→ぴよ将棋
+      article
+        h2 なんらかの理由でスマホでも常に「ぴよ将棋ｗ」を使いたい
+        ul
+          li プロフィール→ぴよ将棋の種類→ぴよ将棋ｗ
 
     article
       h2 1ヶ月より前のは取り込めないというけど対局URLはわかっている
