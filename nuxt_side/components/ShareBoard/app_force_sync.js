@@ -138,11 +138,13 @@ export const app_force_sync = {
       }
     },
 
-    force_sync(message = "") {
+    force_sync(message = "", options = {}) {
       const params = {
         message: message,
         sfen: this.current_sfen,
         turn: this.current_turn,
+        silent_notify: false,   // 読み上げないようにする
+        ...options,
       }
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -152,7 +154,15 @@ export const app_force_sync = {
         this.clock_box.location_to(this.current_location)
       }
       if (params.message) {
-        this.toast_ok(params.message)
+        if (this.received_from_self(params)) {
+        } else {
+        }
+        if (params.silent_notify) {
+          this.debug_alert("silent_notify")
+          this.toast_ok(params.message, {toast_only: true, duration: 1000})
+        } else {
+          this.toast_ok(params.message)
+        }
       }
       this.al_add({...params, label: `局面転送 #${params.turn}`})
     },
