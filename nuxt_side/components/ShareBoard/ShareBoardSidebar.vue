@@ -68,11 +68,12 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
 
-      .box.mt-5.is-hidden-mobile
-        .title.is-5 スタイル設定
-        SimpleSlider(:base="base" label="盤の大きさ" var_name="board_width" :min="0" :max="100" :step="1.0")
+      .box.mt-5
+        .title.is-6 スタイル設定
+        SimpleSlider(:base="base" label="盤の大きさ (スマホは除く)" var_name="board_width" :min="0" :max="100" :step="1.0")
+        SimpleRadioButtons(:base="base" model_name="MainThemeInfo" var_name="main_theme_key" custom-class="is-small")
 
-      .box.mt-5.is-hidden-desktop
+      .box.mt-5
         b-field(label="音が出なくなったとき用")
           b-button(@click="base.sound_resume_all_with_rooster") 音復活
 </template>
