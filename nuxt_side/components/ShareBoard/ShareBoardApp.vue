@@ -363,7 +363,7 @@ export default {
 //     --sb_board_color2: $sbc2-invert
 
 .ShareBoardApp
-  --sb_bg_color: ${sbc1}
+  --sb_bg_color: #{$sbc1}
   &.normal_mode_p
     // background-color: var(--sb_bg_color)
     background-color: $sbc1
