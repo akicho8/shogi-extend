@@ -305,19 +305,19 @@ const config = {
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: process.env.NODE_ENV === "production", // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
 
-    // // これは一体なんなんだ……？
-    // optimization: {
-    //   splitChunks: {
-    //     cacheGroups: {
-    //       styles: {
-    //         name: "styles",
-    //         test: /\.(scss|sass|css|vue)$/,
-    //         chunks: "all",
-    //         enforce: true,
-    //       },
-    //     },
-    //   },
-    // },
+    // これは一体なんなんだ……？
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          styles: {
+            name: "styles",
+            test: /\.(scss|sass|css|vue)$/,
+            chunks: "all",
+            enforce: true,
+          },
+        },
+      },
+    },
 
     // https://ja.nuxtjs.org/api/configuration-build/#transpile
     transpile: [
