@@ -41,5 +41,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsBattleIndexMenuItemSelect
+// .SwarsBattleIndexMenuItemSelect
 </style>

@@ -15,6 +15,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
-.WkbkBookIndexSidebar
+// @import "../support.sass"
+// .WkbkBookIndexSidebar
 </style>

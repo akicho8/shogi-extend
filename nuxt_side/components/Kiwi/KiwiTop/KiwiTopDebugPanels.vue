@@ -18,6 +18,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../all_support.sass"
-.KiwiTopDebugPanels
+// @import "../all_support.sass"
+// .KiwiTopDebugPanels
 </style>

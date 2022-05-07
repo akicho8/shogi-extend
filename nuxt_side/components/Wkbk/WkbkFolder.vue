@@ -21,6 +21,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.WkbkFolder
+// @import "./support.sass"
+// .WkbkFolder
 </style>

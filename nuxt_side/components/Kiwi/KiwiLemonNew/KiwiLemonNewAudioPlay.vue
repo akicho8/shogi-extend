@@ -110,5 +110,5 @@ export default {
 </script>
 
 <style lang="sass">
-.KiwiLemonNewAudioPlay
+// .KiwiLemonNewAudioPlay
 </style>

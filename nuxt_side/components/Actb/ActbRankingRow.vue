@@ -60,5 +60,5 @@ export default {
     margin-left: 1rem
     .user_name
       max-width: 12rem
-    .rating
+    // .rating
 </style>

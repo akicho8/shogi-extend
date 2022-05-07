@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserShowTabContent1Grade
+// .SwarsUserShowTabContent1Grade
 </style>

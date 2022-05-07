@@ -20,6 +20,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../all_support.sass"
-.GalleryTopPagination
+// @import "../all_support.sass"
+// .GalleryTopPagination
 </style>

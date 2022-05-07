@@ -12,5 +12,5 @@ export default {
 </script>
 
 <style lang="sass">
-.KiwiLemonNewFormOption
+// .KiwiLemonNewFormOption
 </style>

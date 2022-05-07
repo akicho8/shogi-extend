@@ -39,7 +39,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .ActbQuestionAuthor
-  .question_title
+  // .question_title
   .question_user
     //- ↓これを入れると overflow-x が効かなくなる
     //- position: relative

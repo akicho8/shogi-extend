@@ -69,7 +69,7 @@ export default {
       .name_with_rating
         .name
           .skill_key
-        .rating
+        // .rating
 
   .title
     margin-top: 2rem

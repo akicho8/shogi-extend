@@ -24,5 +24,5 @@ export default {
 </script>
 
 <style lang="sass">
-.three-stage-league-generation
+// .three-stage-league-generation
 </style>

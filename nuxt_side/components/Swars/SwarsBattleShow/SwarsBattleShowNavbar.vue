@@ -21,5 +21,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsBattleShowNavbar
+// .SwarsBattleShowNavbar
 </style>

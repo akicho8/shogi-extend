@@ -51,5 +51,5 @@ export default {
 </script>
 
 <style lang="sass">
-.KiwiLemonNewDebugPanels
+// .KiwiLemonNewDebugPanels
 </style>

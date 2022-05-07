@@ -36,6 +36,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../all_support.sass"
-.KiwiTopNavbar
+// @import "../all_support.sass"
+// .KiwiTopNavbar
 </style>

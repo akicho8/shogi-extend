@@ -22,8 +22,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
-.ActbLobbyDebug
-  .image
-    img
+// @import "support.sass"
+// .ActbLobbyDebug
+//   .image
+//     img
 </style>

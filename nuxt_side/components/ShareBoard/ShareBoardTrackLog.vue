@@ -61,8 +61,8 @@ export default {
   .detail-container
     padding: 0
 
-  .cell_created_at
-  .cell_section
+  // .cell_created_at
+  // .cell_section
   .cell_message
     width: 100%
     white-space: normal

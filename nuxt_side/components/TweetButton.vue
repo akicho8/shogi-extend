@@ -29,5 +29,5 @@ export default {
 </script>
 
 <style lang="sass">
-.TweetButton
+// .TweetButton
 </style>

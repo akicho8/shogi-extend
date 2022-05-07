@@ -55,5 +55,5 @@ export default {
 </script>
 
 <style lang="sass">
-.full_screen_api
+// .full_screen_api
 </style>

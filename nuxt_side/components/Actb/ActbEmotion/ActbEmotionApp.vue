@@ -86,6 +86,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
-.ActbEmotionApp
+// @import "../support.sass"
+// .ActbEmotionApp
 </style>

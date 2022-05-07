@@ -30,6 +30,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../all_support.sass"
-.GalleryTopDebugPanels
+// @import "../all_support.sass"
+// .GalleryTopDebugPanels
 </style>
