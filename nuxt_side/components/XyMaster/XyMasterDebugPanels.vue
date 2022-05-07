@@ -12,7 +12,7 @@
       a.panel-block(@click="base.sfen_set") sfen_set
       a.panel-block(@click="base.sfen_clear") sfen_clear
       a.panel-block(@click="base.time_over_alert") 時間切れ
-      a.panel-block(@click="base.too_many_mistake_alert") ミスが多すぎるので終了
+      a.panel-block(@click="base.too_many_miss_alert") ミスが多すぎるので終了
   .column.is-3
     .panel
       .panel-heading

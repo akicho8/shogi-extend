@@ -180,7 +180,7 @@ export default {
     },
 
     spent_sec() {
-      this.time_over_p_check()
+      this.time_over_check()
     },
   },
 
@@ -346,7 +346,7 @@ export default {
       } else {
         this.x_count++
         this.sound_play("x")
-        this.too_many_mistake_check()
+        this.too_many_miss_check()
         if (this.NEXT_IF_X === "true") {
           this.place_next_set()
         }

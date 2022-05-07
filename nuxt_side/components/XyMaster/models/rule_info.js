@@ -9,4 +9,14 @@ export class RuleInfo extends ApplicationMemoryRecord {
       { key: "rule100w",  name: "☖100問",    o_count_max: 100, viewpoint: "white", input_mode: "is_input_mode_kb",  time_limit: 60*3.5, play_break_miss_count: 50, },
     ]
   }
+
+  // 時間切れか？
+  time_over_p(spent_sec) {
+    return spent_sec >= this.time_limit
+  }
+
+  // ミスの許容を超えたか？
+  too_many_miss_p(x_count) {
+    return x_count >= this.play_break_miss_count
+  }
 }

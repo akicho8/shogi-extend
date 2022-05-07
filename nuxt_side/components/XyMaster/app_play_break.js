@@ -1,11 +1,7 @@
 export const app_play_break = {
-  data() {
-    return {
-    }
-  },
   methods: {
-    time_over_p_check() {
-      if (this.time_over_p) {
+    time_over_check() {
+      if (this.rule_info.time_over_p(this.spent_sec)) {
         this.stop_handle()
         this.time_over_alert()
       }
@@ -16,28 +12,16 @@ export const app_play_break = {
       this.remote_notify({subject: "符号の鬼", body: "時間切れ"})
     },
 
-    too_many_mistake_check() {
-      if (this.too_many_mistake_p) {
+    too_many_miss_check() {
+      if (this.rule_info.too_many_miss_p(this.x_count)) {
         this.stop_handle()
-        this.too_many_mistake_alert()
+        this.too_many_miss_alert()
       }
     },
 
-    too_many_mistake_alert() {
+    too_many_miss_alert() {
       this.toast_ok("ミスが多すぎるので終了")
       this.remote_notify({subject: "符号の鬼", body: "ミスが多すぎるので終了"})
-    },
-  },
-
-  computed: {
-    // 時間切れか？
-    time_over_p() {
-      return this.spent_sec >= this.rule_info.time_limit
-    },
-
-    // ミスの許容を超えたか？
-    too_many_mistake_p() {
-      return this.x_count >= this.rule_info.play_break_miss_count
     },
   },
 }
