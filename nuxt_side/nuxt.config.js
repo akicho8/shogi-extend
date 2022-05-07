@@ -226,8 +226,6 @@ const config = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // "@nuxt/postcss8",
-
     // https://github.com/nuxt-community/analytics-module
     [
       "@nuxtjs/google-analytics",
