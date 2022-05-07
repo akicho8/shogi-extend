@@ -29,7 +29,6 @@
     "nuxt": "^2.15.8",
     "nuxt-buefy": "^0.4.22",
     "pattern.css": "^1.0.0",
-    "postcss": "latest",
     "sass": "latest",
     "secure-ls": "^1.2.6",
     "shogi-player": "^0.0.319",
