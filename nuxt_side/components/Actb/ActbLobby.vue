@@ -66,10 +66,10 @@ export default {
           width: 40px
           height: 40px
 
-      .name_with_rating
-        .name
-          .skill_key
-        // .rating
+      // .name_with_rating
+      //   .name
+      //     .skill_key
+      //       .rating
 
   .title
     margin-top: 2rem

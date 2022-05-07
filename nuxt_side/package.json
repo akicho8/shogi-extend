@@ -23,6 +23,7 @@
     "chartjs-plugin-datalabels": "1.0.0",
     "core-js": "^3.15.1",
     "fabric": "^4.2.0",
+    "fibers": "^5.0.1",
     "howler": "^2.2.3",
     "js-memory-record": "^0.0.19",
     "lzma": "^2.3.2",
@@ -36,9 +37,9 @@
     "twemoji": "^13.1.0",
     "url-safe-base64": "^1.1.1",
     "vue": "^2.6.14",
-    "vuex": "^3.5.1",
     "vue-server-renderer": "^2.6.14",
     "vue-template-compiler": "^2.6.14",
+    "vuex": "^3.5.1",
     "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {
