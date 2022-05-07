@@ -201,8 +201,8 @@ export default {
 
 .STAGE-development
   .BlindfoldApp
-    // .CustomShogiPlayer
-    // .ShogiPlayerGround
+    .CustomShogiPlayer
+    .ShogiPlayerGround
     .ShogiPlayerWidth
       border: 1px dashed change_color($success, $alpha: 0.5)
 

@@ -25,5 +25,5 @@ export default {
 </script>
 
 <style lang="sass">
-// .SwarsBattleIndexBoard
+.SwarsBattleIndexBoard
 </style>

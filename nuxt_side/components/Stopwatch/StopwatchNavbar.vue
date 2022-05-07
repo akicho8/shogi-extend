@@ -17,6 +17,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "./support.sass"
-// .StopwatchNavbar
+@import "./support.sass"
+.StopwatchNavbar
 </style>

@@ -26,5 +26,5 @@ name: "FetchTest",
 </script>
 
 <style lang="sass">
-// .FetchTest
+.FetchTest
 </style>

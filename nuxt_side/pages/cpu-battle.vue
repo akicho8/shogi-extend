@@ -24,5 +24,5 @@ export default {
 </script>
 
 <style lang="sass">
-// .cpu-battle
+.cpu-battle
 </style>

@@ -27,6 +27,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../all_support.sass"
-// .KiwiBananaIndexNavbar
+@import "../all_support.sass"
+.KiwiBananaIndexNavbar
 </style>

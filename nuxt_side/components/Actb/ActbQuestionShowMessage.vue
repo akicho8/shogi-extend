@@ -99,6 +99,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "support.sass"
-// .ActbQuestionShowMessage
+@import "support.sass"
+.ActbQuestionShowMessage
 </style>

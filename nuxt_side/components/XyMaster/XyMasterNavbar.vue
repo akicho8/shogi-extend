@@ -19,6 +19,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "./support.sass"
-// .XyMasterNavbar
+@import "./support.sass"
+.XyMasterNavbar
 </style>

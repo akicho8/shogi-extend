@@ -38,6 +38,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "./support.sass"
-// .ShareBoardSidebarExport
+@import "./support.sass"
+.ShareBoardSidebarExport
 </style>

@@ -103,10 +103,10 @@ export default {
         padding: 0 0.4rem
 
     .ShareBoardAvatarLine
-      // &.is_window_blur
-      // &.is_disconnect
-      // &.is_self
-      // &.is_turn_standby
+      &.is_window_blur
+      &.is_disconnect
+      &.is_self
+      &.is_turn_standby
       &.is_turn_active
         font-weight: bold
         .left_tag_or_icon
@@ -132,9 +132,9 @@ export default {
     +mobile
       display: none
 
-// .ShareBoardApp.debug_mode_p
-//   .ShareBoardMemberList
-//     .scroll_block
-//       // border-radius: 3px
-//       // background-color: $white-ter
+.ShareBoardApp.debug_mode_p
+  .ShareBoardMemberList
+    .scroll_block
+      // border-radius: 3px
+      // background-color: $white-ter
 </style>

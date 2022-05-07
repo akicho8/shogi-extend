@@ -193,5 +193,5 @@ export default {
 </script>
 
 <style lang="sass">
-// .ThreeStageLeaguePlayerChart
+.ThreeStageLeaguePlayerChart
 </style>

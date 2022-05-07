@@ -58,6 +58,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../support.sass"
-// .ActbBuilderEdit
+@import "../support.sass"
+.ActbBuilderEdit
 </style>

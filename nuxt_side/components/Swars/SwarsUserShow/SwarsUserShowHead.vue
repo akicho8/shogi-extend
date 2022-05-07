@@ -62,7 +62,7 @@ export default {
         border-radius: 3px
       padding: 0 0.5rem
       font-weight: bold
-      // .rule_name
+      .rule_name
       .grade_name
         margin-left: 0.2rem
 

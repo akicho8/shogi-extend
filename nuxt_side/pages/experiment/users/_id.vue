@@ -77,5 +77,5 @@ export default {
 </script>
 
 <style lang="sass">
-// .experiment-users-id
+.experiment-users-id
 </style>

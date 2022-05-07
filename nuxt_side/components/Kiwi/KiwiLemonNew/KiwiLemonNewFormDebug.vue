@@ -19,5 +19,5 @@ export default {
 </script>
 
 <style lang="sass">
-// .KiwiLemonNewFormDebug
+.KiwiLemonNewFormDebug
 </style>

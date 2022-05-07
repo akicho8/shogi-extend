@@ -31,6 +31,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../support.sass"
-// .WkbkBookEditNavbar
+@import "../support.sass"
+.WkbkBookEditNavbar
 </style>

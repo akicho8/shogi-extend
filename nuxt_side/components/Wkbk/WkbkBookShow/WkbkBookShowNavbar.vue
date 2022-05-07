@@ -67,6 +67,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../support.sass"
-// .WkbkBookShowNavbar
+@import "../support.sass"
+.WkbkBookShowNavbar
 </style>

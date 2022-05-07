@@ -20,6 +20,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../support.sass"
-// .WkbkTopSearch
+@import "../support.sass"
+.WkbkTopSearch
 </style>

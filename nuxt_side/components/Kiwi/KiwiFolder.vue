@@ -21,6 +21,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "./all_support.sass"
-// .KiwiFolder
+@import "./all_support.sass"
+.KiwiFolder
 </style>

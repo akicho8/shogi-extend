@@ -15,6 +15,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../all_support.sass"
-// .KiwiBananaIndexSidebar
+@import "../all_support.sass"
+.KiwiBananaIndexSidebar
 </style>

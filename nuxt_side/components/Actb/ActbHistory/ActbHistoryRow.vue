@@ -95,6 +95,6 @@ export default {
     justify-content: space-between
     align-items: flex-start
 
-    // .question_title
-    // .bottom_block
+    .question_title
+    .bottom_block
 </style>

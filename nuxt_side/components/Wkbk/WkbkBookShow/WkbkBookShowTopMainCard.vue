@@ -53,8 +53,8 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-// .STAGE-development
-//   .WkbkBookShowTopMainCard
+.STAGE-development
+  .WkbkBookShowTopMainCard
 
 .WkbkBookShowTopMainCard
   .card-image

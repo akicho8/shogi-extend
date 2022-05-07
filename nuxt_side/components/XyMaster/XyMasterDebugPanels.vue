@@ -42,6 +42,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "./support.sass"
-// .XyMasterDebugPanels
+@import "./support.sass"
+.XyMasterDebugPanels
 </style>

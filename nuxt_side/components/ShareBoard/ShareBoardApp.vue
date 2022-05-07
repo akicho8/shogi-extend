@@ -312,10 +312,10 @@ export default {
 @import "./main_theme.sass"
 
 .ShareBoardApp.debug_mode_p
-  // .CustomShogiPlayer
-  // .ShogiPlayerGround
-  // .ShogiPlayerWidth
-  // .Membership
+  .CustomShogiPlayer
+  .ShogiPlayerGround
+  .ShogiPlayerWidth
+  .Membership
   .columns, .column
     border: 1px dashed change_color($success, $alpha: 0.5)
 
@@ -351,19 +351,19 @@ export default {
 //     --sb_bg_color:     $white
 //     --sb_board_color1: hsla(  0,  0%,   0%, 0.2)
 //     --sb_board_color2: hsla(  0, 69%,  64%, 1.0)
-//
+// 
 //   &.is_main_theme_b
 //     --sb_bg_color:     $sbc1
 //     --sb_board_color1: $primary
 //     --sb_board_color2: $sbc1-invert
-//
+// 
 //   &.is_main_theme_c
 //     --sb_bg_color:     change_color($sbc2, $lightness: 80%)
 //     --sb_board_color1: $sbc2
 //     --sb_board_color2: $sbc2-invert
 
 .ShareBoardApp
-  --sb_bg_color: $sbc1
+  --sb_bg_color: ${sbc1}
   &.normal_mode_p
     // background-color: var(--sb_bg_color)
     background-color: $sbc1

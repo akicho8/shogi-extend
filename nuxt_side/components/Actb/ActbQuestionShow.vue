@@ -293,7 +293,7 @@ export default {
       +tablet
         width: 512px
 
-  // .moves_human_str
+  .moves_human_str
 
   .vote_container
     justify-content: center
@@ -305,7 +305,7 @@ export default {
         &.clip
           margin-left: 2rem
 
-  // .append_tag_list_field
+  .append_tag_list_field
 
   .question_description
     white-space: pre-line

@@ -215,7 +215,7 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "support.sass"
-// @import "application.sass"
-// .EmoxApp
+@import "support.sass"
+@import "application.sass"
+.EmoxApp
 </style>

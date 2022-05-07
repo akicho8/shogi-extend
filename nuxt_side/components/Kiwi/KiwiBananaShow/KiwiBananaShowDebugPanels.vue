@@ -36,6 +36,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../all_support.sass"
-// .KiwiBananaShowDebugPanels
+@import "../all_support.sass"
+.KiwiBananaShowDebugPanels
 </style>

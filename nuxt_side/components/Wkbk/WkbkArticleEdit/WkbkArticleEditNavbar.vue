@@ -30,6 +30,6 @@ export default {
 </script>
 
 <style lang="sass">
-// @import "../support.sass"
-// .WkbkArticleEditNavbar
+@import "../support.sass"
+.WkbkArticleEditNavbar
 </style>
