@@ -289,6 +289,7 @@ export default {
     component_style() {
       return {
         "--board_width": this.board_width,
+        ...this.main_theme_info.to_style,
       }
     },
 
@@ -298,8 +299,9 @@ export default {
       hv.debug_mode_p        = this.debug_mode_p
       hv.order_enable_p      = this.order_enable_p
       hv.current_turn_self_p = this.current_turn_self_p
-      hv.main_theme_key      = this.main_theme_key
-      return hv
+      hv.edit_mode_p         = this.edit_mode_p
+      hv.normal_mode_p       = !this.edit_mode_p
+      return [hv, this.main_theme_key]
     },
   },
 }
@@ -307,6 +309,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
+@import "./main_theme.sass"
 
 .ShareBoardApp.debug_mode_p
   .CustomShogiPlayer
@@ -340,4 +343,28 @@ export default {
     .ShareBoardActionLog.column, .ShareBoardMemberList.column
       margin-top: 1rem
       padding: 0 0.5rem
+
+//////////////////////////////////////////////////////////////////////////////// __theme__
+
+// .ShareBoardApp
+//   &.is_main_theme_a
+//     --sb_bg_color:     $white
+//     --sb_board_color1: hsla(  0,  0%,   0%, 0.2)
+//     --sb_board_color2: hsla(  0, 69%,  64%, 1.0)
+// 
+//   &.is_main_theme_b
+//     --sb_bg_color:     $sbc1
+//     --sb_board_color1: $primary
+//     --sb_board_color2: $sbc1-invert
+// 
+//   &.is_main_theme_c
+//     --sb_bg_color:     change_color($sbc2, $lightness: 80%)
+//     --sb_board_color1: $sbc2
+//     --sb_board_color2: $sbc2-invert
+
+.ShareBoardApp
+  --sb_bg_color: ${sbc1}
+  &.normal_mode_p
+    // background-color: var(--sb_bg_color)
+    background-color: $sbc1
 </style>

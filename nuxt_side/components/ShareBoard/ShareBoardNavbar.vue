@@ -48,6 +48,10 @@ export default {
   computed: {
     component_attrs() {
       const hv = {}
+
+      // hv.transparent = true
+      hv.type = this.base.main_theme_info.navbar_default_color_type
+
       hv.spaced = false
       if (this.base.edit_mode_p) {
         hv.type = "is-dark"
@@ -57,7 +61,8 @@ export default {
           // hv.type = ""
         } else {
         }
-        hv.type = "is-primary"
+        // hv.type = "is-primary"
+        // hv.type = "is-primary"
         if (this.base.clock_box) {
           if (this.base.clock_box.working_p) {
             const rest = this.base.clock_box.current.rest
@@ -93,4 +98,15 @@ export default {
       &.message_icon
         top: -7px
         left: -3px
+
+//////////////////////////////////////////////////////////////////////////////// __theme__
+
+// .ShareBoardApp
+//   &.is_main_theme_b
+//     &.normal_mode_p
+//       .ShareBoardNavbar
+//         &.is-primary
+//           background-color: transparent
+//           .navbar-item, .navbar-link
+//             color: $grey
 </style>

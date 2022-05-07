@@ -154,10 +154,15 @@ export default {
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
 
+  //////////////////////////////////////////////////////////////////////////////// 配色
+
 .ShareBoardApp
-  // 自分が手番のときは盤の色を変更する
+  .ShareBoardSp
+    // 基本
+    --sp_board_color: var(--sb_board_color1)
+
+  // 手番
   &.current_turn_self_p
     .ShareBoardSp
-      .CustomShogiPlayer
-        --sp_board_color: hsla(38,69%,64%,1.0)
+      --sp_board_color: var(--sb_board_color2)
 </style>
