@@ -17,11 +17,11 @@
         ul
           li そのアイコンをタップする
       article
-        h2 初めて使ったけど10件程度しか出てこんぞ
+        h2 初めて使ったけど10件程度しか出てこない
         ul
           li MENU→古い棋譜を補完
       article
-        h2 ZIPでくれ
+        h2 ZIPで欲しい
         ul
           li MENU→ダウンロード
       article
@@ -29,7 +29,7 @@
         ul
           li 名前タップ
       article
-        h2 プレイヤー情報って最大50件だけ？
+        h2 プレイヤー情報は最大50件だけか？
         ul
           li <i :class="dot_vertical_icon" />→件数
 
@@ -68,7 +68,7 @@
       ul
         li そのまま検索覧に放り込む
     article
-      h2 前回の続きからZIPでくれ
+      h2 前回の続きからZIPで欲しい
       ul
         li MENU→ダウンロード→前回の続きから
     article
@@ -90,15 +90,19 @@
       article
         h2 棋譜の体裁を整えてPDFにしたい
         ul
-          li 詳細→MENU→棋譜用紙→編集→PDFに印刷
+          li 詳細→MENU→棋譜用紙→PDFに印刷
       article
         h2 棋譜を印刷したい
         ul
           li そのPDFを印刷
       article
-        h2 会心譜を印刷して飾りたいがプリンタを持っていない
+        h2 プリンタを持っていない
         ul
           li ネットプリント→コンビニ
+      article
+        h2 棋譜用紙の備考などを編集したい
+        ul
+          li そのまま編集できる
 
     template(v-if="true")
       article
@@ -129,7 +133,7 @@
         ul
           li MENU→一覧<i :class="dot_vertical_icon" />→保存
       article
-        h2 UTF-8 や Shift_JIS とかって何？
+        h2 UTF-8 や Shift_JIS の意味は？
         ul
           li Windows なら Shift_JIS
       article
@@ -141,7 +145,7 @@
         ul
           li 詳細→MENU→ダウンロード→KIF
       article
-        h2 KIFデータへの直リンが欲しい
+        h2 KIFデータへの直リンクが欲しい
         ul
           li 詳細→MENU→表示→KIF
       article
@@ -174,6 +178,10 @@
         h2 直近の対局をぴよ将棋で検討したいだけなのに検索するのが面倒
         ul
           li MENU→外部アプリですぐ開く→ぴよ将棋
+      article
+        h2 直近の対局をKENTOで検討したいだけなのに検索するのが面倒
+        ul
+          li MENU→外部アプリですぐ開く→KENTO
 
     template(v-if="true")
       article
@@ -181,7 +189,7 @@
         ul
           li MENU→カスタム検索→勝ち
       article
-        h2 負けた対局を見返してもやもやする
+        h2 負けた対局を見返して反省する
         ul
           li MENU→カスタム検索→負け
       article
@@ -243,7 +251,7 @@
         li <i :class="home_icon" />→将棋ウォーズイベント上位の成績
 
     article
-      h2 格上に勝った棋譜だけZIPでくれ
+      h2 格上に勝った棋譜だけZIPで欲しい
       ul
         li MENU→カスタム検索→力差1→勝ち→検索→MENU→ダウンロード
 
@@ -262,21 +270,16 @@
       ul
         li Twitterでより詳細に愚痴る
 
-    //- article
-    //-   h2 自分のウォーズIDがわからない
-    //-   ul
-    //-     li 将棋ウォーズアプリのトップの下
-
     article
-      h2 ミニマリスト化
+      h2 表示がごちゃごちゃして見にくい
       ul
         li MENU→一覧<i :class="dot_vertical_icon" />→すべてOFF→使うのだけON
 
-    template(v-if="true")
-      article
-        h2 ゴキブリなんとかしろ
-        ul
-          li 普通に対局していれば出ないようにしたので安心してください
+    //- template(v-if="true")
+    //-   article
+    //-     h2 ゴキブリなんとかしろ
+    //-     ul
+    //-       li 普通に対局していれば出ないようにしたので安心してください
 
     article
       h2 ここに載ってない
