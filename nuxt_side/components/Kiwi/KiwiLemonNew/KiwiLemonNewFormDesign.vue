@@ -14,5 +14,5 @@ export default {
 </script>
 
 <style lang="sass">
-.KiwiLemonNewFormDesign
+// .KiwiLemonNewFormDesign
 </style>

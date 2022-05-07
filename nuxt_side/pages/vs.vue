@@ -31,5 +31,5 @@ export default {
 </script>
 
 <style lang="sass">
-.page-vs
+// .page-vs
 </style>

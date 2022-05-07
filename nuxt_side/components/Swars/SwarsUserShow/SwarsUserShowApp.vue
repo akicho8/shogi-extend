@@ -170,7 +170,7 @@ export default {
         margin-top: 0.75rem
       padding: 0.75rem
 
-      .vs_mark
+      // .vs_mark
       .vs_name
         margin-left: 0.5rem
 

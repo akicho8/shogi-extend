@@ -24,6 +24,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.WkbkTagList
+// @import "./support.sass"
+// .WkbkTagList
 </style>

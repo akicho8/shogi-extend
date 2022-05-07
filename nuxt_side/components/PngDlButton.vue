@@ -17,5 +17,5 @@ export default {
 </script>
 
 <style lang="sass">
-.PngDlButton
+// .PngDlButton
 </style>

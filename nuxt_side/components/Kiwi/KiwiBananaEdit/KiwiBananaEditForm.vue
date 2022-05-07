@@ -104,9 +104,9 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../all_support.sass"
-.KiwiBananaEditForm
-  // +tablet
-  //   .image
-  //     max-width: 320px
+// @import "../all_support.sass"
+// .KiwiBananaEditForm
+//   // +tablet
+//   //   .image
+//   //     max-width: 320px
 </style>

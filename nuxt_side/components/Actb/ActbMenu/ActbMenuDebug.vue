@@ -40,6 +40,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "../support.sass"
-.ActbMenuDebug
+// @import "../support.sass"
+// .ActbMenuDebug
 </style>

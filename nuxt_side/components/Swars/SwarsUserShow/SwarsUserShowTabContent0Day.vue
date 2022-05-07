@@ -31,5 +31,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserShowTabContent0Day
+// .SwarsUserShowTabContent0Day
 </style>

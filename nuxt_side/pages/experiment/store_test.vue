@@ -68,5 +68,5 @@ export default {
 </script>
 
 <style lang="sass">
-.store_test
+// .store_test
 </style>

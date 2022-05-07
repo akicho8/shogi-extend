@@ -39,6 +39,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsCustomSearchInputDate
+// @import "./support.sass"
+// .SwarsCustomSearchInputDate
 </style>

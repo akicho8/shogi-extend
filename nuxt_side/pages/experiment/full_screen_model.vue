@@ -30,5 +30,5 @@ export default {
 </script>
 
 <style lang="sass">
-.full_screen
+// .full_screen
 </style>

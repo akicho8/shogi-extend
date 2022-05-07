@@ -58,7 +58,7 @@ export default {
   .is_type2-second, .is_type2-numeric_with_unit
     position: relative
     right: -1rem
-  .is_type2-raw
+  // .is_type2-raw
   .unit
     margin: 0 0.5rem
     color: $grey-light

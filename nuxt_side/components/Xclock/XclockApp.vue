@@ -287,6 +287,8 @@ export default {
 </script>
 
 <style lang="sass">
+@use "sass:math"
+
 @import "support.sass"
 @import "time_fields_default.sass"
 @import "time_fields_desktop.sass"
@@ -438,7 +440,7 @@ export default {
     opacity: 0.25
 
 =xray($level)
-  $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
+  $color: hsla(math.div(360, 8) * $level, 50%, 50%, 1.0)
   border: 2px solid $color
 
 .STAGE-development

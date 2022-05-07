@@ -453,7 +453,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
-@import "application.sass"
-.ActbApp
+// @import "support.sass"
+// @import "application.sass"
+// .ActbApp
 </style>

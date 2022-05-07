@@ -28,5 +28,5 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserShowTabContent4MyDefense
+// .SwarsUserShowTabContent4MyDefense
 </style>

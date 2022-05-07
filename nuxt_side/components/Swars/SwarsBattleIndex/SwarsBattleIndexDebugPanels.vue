@@ -69,6 +69,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsBattleIndexDebugPanels
+// @import "./support.sass"
+// .SwarsBattleIndexDebugPanels
 </style>
