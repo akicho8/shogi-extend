@@ -1508,7 +1508,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
         hamburger_click
         menu_item_click("ハンドルネーム変更")
-        assert_text "順番設定を解除してください"
+        assert_text "いったん順番設定を無効にしてください"
       end
     end
   end
