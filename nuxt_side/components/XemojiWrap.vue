@@ -15,5 +15,5 @@ export default {
 <style lang="sass">
 .STAGE-development
   .XemojiWrap
-    background-color: change_color($primary, $alpha: 0.1)
+    // background-color: change_color($primary, $alpha: 0.1)
 </style>

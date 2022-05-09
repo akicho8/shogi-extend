@@ -68,7 +68,7 @@ export default {
       hv.sp_slider                                   = this.sp_slider
 
       if (false) {
-        hv.sp_bg_variant                             = "is_bg_variant_b"
+        hv.sp_bg_variant                             = "is_bg_variant_a"
       }
 
       return hv
@@ -159,10 +159,10 @@ export default {
 .ShareBoardApp
   .ShareBoardSp
     // 基本
-    --sp_board_color: var(--sb_board_color1)
+    --sp_board_color: var(--sb_board_normal_color)
 
   // 手番
   &.current_turn_self_p
     .ShareBoardSp
-      --sp_board_color: var(--sb_board_color2)
+      --sp_board_color: var(--sb_board_active_color)
 </style>

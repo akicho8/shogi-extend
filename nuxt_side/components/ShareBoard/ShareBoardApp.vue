@@ -4,7 +4,7 @@ client-only
     | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
-      p main_theme_key: {{main_theme_key}}
+      p appearance_theme_key: {{appearance_theme_key}}
       p g_howl_play_mode_key: {{g_howl_play_mode_key}}
       p watching_member_count: {{watching_member_count}}
       p os_change: {{os_change}}
@@ -106,7 +106,7 @@ import { app_user_name            } from "./app_user_name.js"
 import { app_storage              } from "./app_storage.js"
 import { app_export               } from "./app_export.js"
 import { app_color_theme          } from "./app_color_theme.js"
-import { app_main_theme          } from "./app_main_theme.js"
+import { app_appearance_theme          } from "./app_appearance_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
@@ -159,7 +159,7 @@ export default {
     app_storage,
     app_export,
     app_color_theme,
-    app_main_theme,
+    app_appearance_theme,
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
@@ -289,7 +289,7 @@ export default {
     component_style() {
       return {
         "--board_width": this.board_width,
-        ...this.main_theme_info.to_style,
+        ...this.appearance_theme_info.to_style,
       }
     },
 
@@ -301,7 +301,7 @@ export default {
       hv.current_turn_self_p = this.current_turn_self_p
       hv.edit_mode_p         = this.edit_mode_p
       hv.normal_mode_p       = !this.edit_mode_p
-      return [hv, this.main_theme_key]
+      return [hv, this.appearance_theme_key]
     },
   },
 }
@@ -309,7 +309,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "./main_theme.sass"
+@import "./appearance_theme.sass"
 
 .ShareBoardApp.debug_mode_p
   .CustomShogiPlayer
@@ -320,6 +320,8 @@ export default {
     border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp
+  min-height: 100vh             // ダークモード風にするとHTMLタグの背景色が見えるため
+
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
@@ -344,27 +346,13 @@ export default {
       margin-top: 1rem
       padding: 0 0.5rem
 
+  // あきらかに共通のスタイル
+  .ShareBoardActionLog.column, .ShareBoardMemberList.column
+    color: var(--sb_side_color)
+
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
-// .ShareBoardApp
-//   &.is_main_theme_a
-//     --sb_bg_color:     $white
-//     --sb_board_color1: hsla(  0,  0%,   0%, 0.2)
-//     --sb_board_color2: hsla(  0, 69%,  64%, 1.0)
-// 
-//   &.is_main_theme_b
-//     --sb_bg_color:     $sbc1
-//     --sb_board_color1: $primary
-//     --sb_board_color2: $sbc1-invert
-// 
-//   &.is_main_theme_c
-//     --sb_bg_color:     change_color($sbc2, $lightness: 80%)
-//     --sb_board_color1: $sbc2
-//     --sb_board_color2: $sbc2-invert
-
 .ShareBoardApp
-  --sb_bg_color: ${sbc1}
   &.normal_mode_p
-    // background-color: var(--sb_bg_color)
-    background-color: $sbc1
+    background-color: var(--sb_bg_color)
 </style>

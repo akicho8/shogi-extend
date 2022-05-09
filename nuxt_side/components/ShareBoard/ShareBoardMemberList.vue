@@ -14,16 +14,15 @@
 
         // 順番設定しているときに表示する番号
         .flex_item.left_tag_or_icon(v-if="base.order_lookup(e)")
-          b-tag(rounded) {{base.order_display_index(e)}}
+          //- b-tag(rounded) {{base.order_display_index(e)}}
+          | ({{base.order_display_index(e)}})
 
         // 反応がない場合
         //- b-icon.flex_item(v-if="base.member_is_disconnect(e)" icon="lan-disconnect" type="is-danger" size="is-small")
 
-        .flex_item.has-text-grey-dark.is-size-7(v-if="base.member_is_window_blur(e)") よそ見中
-
-        .flex_item.has-text-grey-dark.is-size-7(v-if="base.member_is_disconnect(e)") 応答なし
-
-        .flex_item.has-text-grey-dark.is-size-7(v-if="base.member_is_self(e)") ← 自分
+        .flex_item.is-size-7(v-if="base.member_is_window_blur(e)") よそ見中
+        .flex_item.is-size-7(v-if="base.member_is_disconnect(e)") 応答なし
+        .flex_item.is-size-7(v-if="base.member_is_self(e)") ← 自分
 
         template(v-if="development_p")
           .flex_item {{time_format(e)}}
@@ -94,8 +93,8 @@ export default {
       line-height: 2.25
       padding: 0.2rem 0rem
       color: inherit
-      &:hover
-        background-color: $white-ter
+      // &:hover
+      //   background-color: $white-ter
 
     .left_tag_or_icon
       .tag

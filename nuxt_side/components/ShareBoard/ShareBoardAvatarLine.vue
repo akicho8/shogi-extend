@@ -64,7 +64,7 @@ export default {
         width: 24px
         height: 24px
     &.user_name
-      color: $primary
+      // color: $primary
 
 .ShareBoardApp.debug_mode_p
   .ShareBoardAvatarLine

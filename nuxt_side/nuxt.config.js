@@ -196,7 +196,7 @@ const config = {
   // 2. modules に "@nuxtjs/style-resources" を追加
   styleResources: {
     sass: [
-      "./assets/sass/styleResources.scss", // sass の項目に scss のファイルを与えないと読み込まれない罠
+      "./assets/sass/styleResources.sass", // sass の項目に scss のファイルを与えないと読み込まれない罠
     ],
     // scss: [
     //   // "~assets/vars/*.scss",
