@@ -10,17 +10,33 @@ export const app_handle_name = {
       this.sound_play_click()
 
       if (this.order_enable_p) {
-        this.dialog_alert({
-          title: "警告",
-          message: `順番設定を解除してください`,
-          type: "is-danger",
-          confirmText: "わかった",
-        })
+        this.handle_name_alert()
         return
       }
 
       this.handle_name_modal_core()
     },
+
+    // <div class="content">
+    //   <p>順番設定で現在のハンドルネームがすでに登録されているためいま変更してしまうと観戦者になってしまうかもしれません</p>
+    //   <ul>
+    //     <li>順番設定を解除する</li>
+    //     <li>「部屋に入る」をタップして退室して再度入室する</li>
+    //   </ul>
+    // </div>
+    handle_name_alert() {
+      this.dialog_alert({
+        title: "対局中の変更は危険",
+        message: `
+          <div class="content">
+            <p>いったん順番設定を無効にしてください</p>
+          </div>
+        `,
+        type: "is-danger",
+        confirmText: "わかった",
+      })
+    },
+
     handle_name_modal_core(params = {}) {
       this.modal_card_open({
         component: HandleNameModal,
