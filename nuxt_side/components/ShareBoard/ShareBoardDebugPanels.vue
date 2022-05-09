@@ -1,11 +1,11 @@
 <template lang="pug">
-.columns.is-multiline.ShareBoardDebugPanels.is-centered
+.columns.is-multiline.ShareBoardDebugPanels
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
   .column.is-4
     .panel
       .panel-heading
-        | 音不具合検証用
+        | 無音化不具合検証用
       a.panel-block(@click="base.sound_resume_modal_handle") 画面タップ催促表示確認
       a.panel-block(@click="base.sound_resume_modal_close") 画面タップ催促閉じる
       a.panel-block(@click="base.sound_bug_start") ガヤ開始
@@ -50,7 +50,7 @@
   .column.is-2
     .panel
       .panel-heading
-        | 時間切れメソッド
+        | 時間切れ
       a.panel-block(@click="base.cc_time_zero_callback") 最初のコールバック
       a.panel-block(@click="base.cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆BC
       a.panel-block(@click="base.cc_delayed_time_limit_modal") 他者は数秒後発動
@@ -64,6 +64,7 @@
       .panel-heading
         | その他
       a.panel-block(@click="base.handle_name_modal_handle") ハンドルネーム入力
+      a.panel-block(@click="base.handle_name_alert") 順番設定中のハンドルネーム入力
       a.panel-block(@click="base.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="base.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="base.member_info_bc_restart") 生存通知
@@ -73,7 +74,6 @@
       a.panel-block(@click="base.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="base.room_leave_call({from_user_name: 'alice'})") 退室コール
       a.panel-block(@click="base.exit_confirm_then()") 退室確認
-      a.panel-block(:href="base.json_debug_url") JSON確認
       a.panel-block(@click="base.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="base.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="base.cc_next_message") 順番設定後に時計設置を促す
@@ -81,9 +81,8 @@
   .column.is-2
     .panel
       .panel-heading
-        | ShogiPlayer
+        | 将棋盤
       a.panel-block(@click="base.sp_state_reset") 持ち上げた駒を元に戻す
-      //- a.panel-block(@click="base.sp_sound_resume_all") Howler.unload()
       a.panel-block(@click="base.sp_viewpoint = 'black'") ☗視点
       a.panel-block(@click="base.sp_viewpoint = 'white'") ☖視点
       .panel-block 現在の視点 {{base.sp_viewpoint}}
@@ -91,7 +90,7 @@
   .column.is-2
     .panel
       .panel-heading
-        | 時計パラメータ永続化
+        | 時計情報永続化
       a.panel-block(@click="base.cc_params_load") ロード
       a.panel-block(@click="base.cc_params_save") 保存
       a.panel-block(@click="base.cc_params_reset") リセット
@@ -107,16 +106,15 @@
     .panel
       .panel-heading
         | JSON
+      a.panel-block(:href="base.json_debug_url") JSON確認
       .panel-block
         pre {{JSON.stringify(base.record, null, 4)}}
   .column.is-3
     .panel.is_line_break_on
       .panel-heading
         | SFEN
-      .panel-block
-        | 操作 {{base.current_sfen}}
-      .panel-block
-        | 編集 {{base.edit_mode_sfen}}
+      .panel-block 操作 {{base.current_sfen}}
+      .panel-block 編集 {{base.edit_mode_sfen}}
   .column.is-3
     .panel
       .panel-heading
@@ -222,4 +220,6 @@ export default {
   .xemoji
     height: 4rem
     width: unset
+  .panel
+    background-color: $white
 </style>
