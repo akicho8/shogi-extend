@@ -5,15 +5,15 @@
 // | sb_board_normal_color | 将棋盤の色             |
 // | sb_board_active_color | 将棋盤の色(手番のとき) |
 // |-----------------------+------------------------|
-// appearance_theme_info.js
+// main_theme_info.js
 .ShareBoardApp
-  &.is_appearance_theme_a
+  &.is_main_theme_a
     #{--sb_bg_color}:           #{$white}
     #{--sb_board_normal_color}: hsla(  0,  0%,   0%, 0.2)
     #{--sb_board_active_color}: hsla( 38, 69%,  64%, 1.0)
     #{--sb_side_color}:         unset
 
-  &.is_appearance_theme_b
+  &.is_main_theme_b
     #{--sb_bg_color}:           #{change_color($black, $lightness: 30%)}
     #{--sb_board_normal_color}: #{$sbc_b}
     #{--sb_board_active_color}: #{$sbc_b}

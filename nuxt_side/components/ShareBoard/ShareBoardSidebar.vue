@@ -71,7 +71,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
       .box.mt-5
         .title.is-6 スタイル設定
         SimpleSlider.is-hidden-mobile(:base="base" label="盤の大きさ" var_name="board_width" :min="60" :max="100" :step="1.0")
-        SimpleRadioButtons(:base="base" model_name="AppearanceThemeInfo" var_name="appearance_theme_key" custom-class="is-small")
+        SimpleRadioButtons(:base="base" model_name="MainThemeInfo" var_name="main_theme_key" custom-class="is-small")
 
       .box.mt-5
         b-field(label="音が出なくなったとき用")
