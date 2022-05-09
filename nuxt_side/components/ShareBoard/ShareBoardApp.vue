@@ -320,6 +320,8 @@ export default {
     border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp
+  min-height: 100vh             // ダークモード風にするとHTMLタグの背景色が見えるため
+
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
