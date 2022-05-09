@@ -129,11 +129,19 @@ export default {
 @import "./support.sass"
 
 .ShareBoardSp
-  .footer_buttons
-    .button
-      margin-bottom: 0
+  +padding_lr(unset)
 
-  ////////////////////////////////////////////////////////////////////////////////
+  // 盤の左右の隙間
+  +tablet
+    +margin_lr(0.75rem)
+  +desktop
+    +margin_lr(1.00rem)
+  +widescreen
+    +margin_lr(1.25rem)
+  +fullhd
+    +margin_lr(1.50rem)
+
+  // タブレット以上では大きさは動的に変更できる
   +tablet
     padding-top: unset
     padding-bottom: unset
@@ -142,6 +150,15 @@ export default {
     &.is_sb_edit_mode
       max-width: calc(var(--board_width) * 1.0vmin * 0.75)
 
+  // 盤の下を上の隙間と同じぐらい空ける
+  .CustomShogiPlayer
+    .NavigateBlock
+      +tablet
+        margin-top: calc(1.5rem - 0.75rem)
+      +desktop
+        margin-top: calc(2.25rem - 0.75rem)
+
+  // 残り時間の色
   .CustomShogiPlayer
     .MembershipLocationPlayerInfo
       &.read_sec_60, &.extra_sec_60
@@ -154,14 +171,17 @@ export default {
         background-color: change_color($danger, $saturation: 50%, $lightness: 80%) !important
         color: $black !important
 
-  //////////////////////////////////////////////////////////////////////////////// 配色
+  .footer_buttons
+    .button
+      margin-bottom: 0
 
+//////////////////////////////////////////////////////////////////////////////// 配色
 .ShareBoardApp
   .ShareBoardSp
-    // 基本
+    // 盤の色(基本)
     --sp_board_color: var(--sb_board_normal_color)
 
-  // 手番
+  // 盤の色(手番のとき)
   &.current_turn_self_p
     .ShareBoardSp
       --sp_board_color: var(--sb_board_active_color)
