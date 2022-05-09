@@ -20,7 +20,7 @@
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       b-button(@click="base.any_source_read_handle") 棋譜の読み込み
 
-  .buttons.is-centered.mt-4
+  .buttons.is-centered.mt-4(v-if="development_p && false")
     b-button.has-text-weight-bold(
       v-if="base.tweet_button_show_p"
       :type="tweet_button_type"
