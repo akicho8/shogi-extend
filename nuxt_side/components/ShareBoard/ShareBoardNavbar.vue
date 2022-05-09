@@ -50,7 +50,7 @@ export default {
       const hv = {}
 
       // hv.transparent = true
-      hv.type = this.base.main_theme_info.navbar_type
+      hv.type = this.base.appearance_theme_info.navbar_type
 
       hv.spaced = false
       if (this.base.edit_mode_p) {
@@ -102,7 +102,7 @@ export default {
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
 // .ShareBoardApp
-//   &.is_main_theme_b
+//   &.is_appearance_theme_b
 //     &.normal_mode_p
 //       .ShareBoardNavbar
 //         &.is-primary
