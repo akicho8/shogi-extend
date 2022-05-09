@@ -8,13 +8,13 @@
     .scroll_block.is_scroll_y(ref="scroll_block")
       template(v-for="(e, i) in filtered_action_logs")
         ShareBoardAvatarLine.is-clickable(:base="base" :info="e" tag="a" :key="action_log_key(e)" @click="action_log_click_handle(e)")
-          b-tag.flex_item(type="is-warning is-light" v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
-          b-tag.flex_item(type="is-primary is-light" v-if="e.label") {{e.label}}
+          .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
+          .flex_item(v-if="e.label") {{e.label}}
           template(v-if="e.lmi")
             .flex_item {{e.lmi.next_turn_offset}}
             .flex_item {{e.lmi.kif_without_from}}
-          .flex_item.is-size-7.has-text-grey(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
-          .flex_item.is-size-7.time_format.has-text-grey-light(v-if="e.performed_at") {{time_format(e)}}
+          .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
+          .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{time_format(e)}}
 </template>
 
 <script>
@@ -89,15 +89,18 @@ export default {
         padding: 0.2rem 0rem
         color: inherit
 
-        &:hover
-          background-color: $white-ter
+        .tag
+          font-weight: bold
 
-        +desktop
-          .time_format
-            display: none
-          &:hover
-            .time_format
-              display: block
+        // &:hover
+        //   background-color: $white-ter
+
+        // +desktop
+        //   .time_format
+        //     display: none
+        //   &:hover
+        //     .time_format
+        //       display: block
 
 .ShareBoardApp.debug_mode_p
   .ShareBoardActionLog

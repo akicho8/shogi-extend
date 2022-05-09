@@ -346,6 +346,10 @@ export default {
       margin-top: 1rem
       padding: 0 0.5rem
 
+  // あきらかに共通のスタイル
+  .ShareBoardActionLog.column, .ShareBoardMemberList.column
+    color: var(--sb_side_color)
+
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
 .ShareBoardApp

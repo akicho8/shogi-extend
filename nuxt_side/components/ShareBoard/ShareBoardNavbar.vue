@@ -50,7 +50,7 @@ export default {
       const hv = {}
 
       // hv.transparent = true
-      hv.type = this.base.main_theme_info.navbar_default_color_type
+      hv.type = this.base.main_theme_info.navbar_type
 
       hv.spaced = false
       if (this.base.edit_mode_p) {
