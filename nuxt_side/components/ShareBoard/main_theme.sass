@@ -1,1 +1,15 @@
-// @import "../../assets/sass/styleResources.scss"
+.ShareBoardApp
+  &.is_main_theme_a
+    #{--sb_bg_color}:     #{$white}
+    #{--sb_board_color1}: hsla(  0,  0%,   0%, 0.2)
+    #{--sb_board_color2}: hsla( 38, 69%,  64%, 1.0)
+
+  &.is_main_theme_b
+    #{--sb_bg_color}:     #{change_color($sbc1, $lightness: 90%)}
+    #{--sb_board_color1}: #{$sbc1}
+    #{--sb_board_color2}: #{change_color($sbc1, $saturation: 20%)}
+
+  &.is_main_theme_c
+    #{--sb_bg_color}:     hsla(37.93,42.03%,40.59%,1)
+    #{--sb_board_color1}: #{$sbc2}
+    #{--sb_board_color2}: #{change_color($sbc2, $saturation: 80%)}

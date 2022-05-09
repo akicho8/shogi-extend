@@ -15,14 +15,13 @@ $google  : rgb(221, 75,  57);
 // ある程度決まっている色
 $piyo    : #f29601;
 $gold    : hsl(38, 80%, 60%);
-$orange: hsl(14,  100%, 53%);
 
 // 共有将棋盤用
 // $sbc1_board_color: hsl(37.11, 82.61%, 63.92%);
 
 // $sbc1   : $sbc1_board_color;
-$sbc1   : rgb(221, 75,  57);
-$sbc2   : hsl(37, 82%, 63%);
+$sbc1   : hsl(37.11, 82.61%, 63.92%);
+$sbc2   : hsl(36.23,75.36%,58.63%);
 
 $twitter-invert : findColorInvert($twitter);
 $github-invert  : findColorInvert($github);
@@ -51,8 +50,8 @@ $custom-colors: (
 );
 
 // 主用カラー
-// $primary: $blue;
-$primary: $twitter;
+$primary: $blue;
+// $primary: $twitter;
 
 //////////////////////////////////////// ../../node_modules/bulma/sass/components/modal.sass
 
