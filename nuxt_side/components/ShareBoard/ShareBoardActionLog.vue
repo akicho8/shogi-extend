@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardActionLog.column(:class="{'content_blank_p': blank_p(filtered_action_logs)}")
+.ShareBoardActionLog.BothSideColumn.column(:class="{'content_blank_p': blank_p(filtered_action_logs)}")
   .is-hidden-tablet.is-size-7.has-text-weight-bold
     | 操作履歴
     span.has-text-grey-light.has-text-weight-normal.mx-1

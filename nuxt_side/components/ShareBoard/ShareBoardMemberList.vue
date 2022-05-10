@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardMemberList.column(:class="{'content_blank_p': blank_p(member_infos)}")
+.ShareBoardMemberList.BothSideColumn.column(:class="{'content_blank_p': blank_p(member_infos)}")
   .is-hidden-tablet.is-size-7.has-text-weight-bold メンバー
   .scroll_block(ref="scroll_block")
     template(v-for="e in member_infos")

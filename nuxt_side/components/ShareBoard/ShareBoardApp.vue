@@ -312,28 +312,24 @@ export default {
 @import "./appearance_theme.sass"
 
 .ShareBoardApp.debug_mode_p
-  .CustomShogiPlayer
-  .ShogiPlayerGround
-  .ShogiPlayerWidth
-  .Membership
   .columns, .column
     border: 1px dashed change_color($success, $alpha: 0.5)
 
 .ShareBoardApp
-  min-height: 100vh             // ダークモード風にするとHTMLタグの背景色が見えるため
+  // ダークモード風にするとHTMLタグの背景色が見えるため
+  min-height: 100vh
 
   .MainSection.section
     +mobile
       padding: 0.75rem 0 0
-    +tablet-only
+    +tablet
       padding: 1.5rem
       .container
         padding: 0
     +desktop
       padding: 2.25rem
-      .container
-        padding: 0
 
+  // タブレット以上では盤は中央に来る
   +tablet
     .ShareBoardMemberList
       order: 1
@@ -342,17 +338,16 @@ export default {
     .ShareBoardActionLog
       order: 3
   +mobile
-    .ShareBoardActionLog.column, .ShareBoardMemberList.column
+    .BothSideColumn
       margin-top: 1rem
       padding: 0 0.5rem
-
-  // あきらかに共通のスタイル
-  .ShareBoardActionLog.column, .ShareBoardMemberList.column
-    color: var(--sb_side_color)
 
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
 .ShareBoardApp
   &.normal_mode_p
     background-color: var(--sb_bg_color)
+
+  .BothSideColumn
+    color: var(--sb_side_color)
 </style>
