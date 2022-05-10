@@ -1588,6 +1588,17 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
+  describe "今の指す人と次に指す人を持駒の下に表示する" do
+    it "works" do
+      a_block do
+        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob,carol")
+        assert_sp_player_names "alice", "bob" # 今:alice 次:bob
+        assert_move("77", "76", "☗7六歩")
+        assert_sp_player_names "carol", "bob" # 次:carol 今:bob
+      end
+    end
+  end
+
   def visit_app(*args)
     visit2("/share-board", *args)
   end
@@ -1684,11 +1695,27 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def assert_clock_on
-    assert_selector(".MembershipLocationPlayerInfo")
+    assert_selector(".MembershipLocationPlayerInfoTime")
   end
 
   def assert_clock_off
     assert_no_selector(".MembershipLocationPlayerInfoTime")
+  end
+
+  # 将棋盤内でプレイヤー名が表示されている
+  def assert_has_sp_player_name
+    assert_no_selector(".MembershipLocationPlayerInfoName")
+  end
+
+  # location_key 側のプレイヤー名は user_name になっていること
+  def assert_sp_player_name(location_key, user_name)
+    assert_selector(:xpath, "//*[contains(@class, 'Membership') and contains(@class, 'is_#{location_key}')]//*[text()='#{user_name}']")
+  end
+
+  # ▲△の順に指定のプレイヤー名を表示している
+  def assert_sp_player_names(black_name, white_name)
+    assert_sp_player_name :black, black_name
+    assert_sp_player_name :white, white_name
   end
 
   # メンバーリストの上からi番目の状態と名前
