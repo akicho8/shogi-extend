@@ -1,0 +1,34 @@
+.ShareBoardApp
+  .MainSection.section
+    +mobile
+      --sb_gap: 0.75rem
+    +tablet
+      --sb_gap: 0.75rem
+    +desktop
+      --sb_gap: 1.5rem
+    padding: var(--sb_gap)
+    +mobile
+      +padding_lr(0)
+    .ShareBoardSp
+      // 盤の下を上の隙間と同じぐらい空ける
+      .CustomShogiPlayer
+        .NavigateBlock
+          +tablet
+            margin-top: var(--sb_gap)
+
+  // モバイルでは縦並びになるので上のマージンを調整する
+  +mobile
+    .BothSideColumn
+      margin-top: 1rem
+      padding: 0 0.5rem
+
+  .ShareBoardSp
+    // 盤の左右の隙間
+    +tablet
+      +margin_lr(0.75rem)
+    +desktop
+      +margin_lr(1.00rem)
+    +widescreen
+      +margin_lr(1.25rem)
+    +fullhd
+      +margin_lr(1.50rem)

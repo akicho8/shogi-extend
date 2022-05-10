@@ -51,7 +51,7 @@ client-only
 
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
-        .columns.is-centered
+        .columns.is-centered.is-variable.is-0
           ShareBoardSp(:base="base" ref="ShareBoardSp")
           ShareBoardMemberList(:base="base")
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
@@ -310,44 +310,6 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 @import "./appearance_theme.sass"
-
-.ShareBoardApp.debug_mode_p
-  .columns, .column
-    border: 1px dashed change_color($success, $alpha: 0.5)
-
-.ShareBoardApp
-  // ダークモード風にするとHTMLタグの背景色が見えるため
-  min-height: 100vh
-
-  .MainSection.section
-    +mobile
-      padding: 0.75rem 0 0
-    +tablet
-      padding: 1.5rem
-      .container
-        padding: 0
-    +desktop
-      padding: 2.25rem
-
-  // タブレット以上では盤は中央に来る
-  +tablet
-    .ShareBoardMemberList
-      order: 1
-    .ShareBoardSp
-      order: 2
-    .ShareBoardActionLog
-      order: 3
-  +mobile
-    .BothSideColumn
-      margin-top: 1rem
-      padding: 0 0.5rem
-
-//////////////////////////////////////////////////////////////////////////////// __theme__
-
-.ShareBoardApp
-  &.normal_mode_p
-    background-color: var(--sb_bg_color)
-
-  .BothSideColumn
-    color: var(--sb_side_color)
+@import "./layout.sass"
+@import "./gap.sass"
 </style>

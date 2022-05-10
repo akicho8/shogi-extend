@@ -131,32 +131,13 @@ export default {
 .ShareBoardSp
   +padding_lr(unset)
 
-  // 盤の左右の隙間
-  +tablet
-    +margin_lr(0.75rem)
-  +desktop
-    +margin_lr(1.00rem)
-  +widescreen
-    +margin_lr(1.25rem)
-  +fullhd
-    +margin_lr(1.50rem)
-
   // タブレット以上では大きさは動的に変更できる
   +tablet
-    padding-top: unset
-    padding-bottom: unset
+    +padding_tb(unset)
     &.is_sb_play_mode
       max-width: calc(var(--board_width) * 1.0vmin)
     &.is_sb_edit_mode
       max-width: calc(var(--board_width) * 1.0vmin * 0.75)
-
-  // 盤の下を上の隙間と同じぐらい空ける
-  .CustomShogiPlayer
-    .NavigateBlock
-      +tablet
-        margin-top: calc(1.5rem - 0.75rem)
-      +desktop
-        margin-top: calc(2.25rem - 0.75rem)
 
   // 残り時間の色
   .CustomShogiPlayer

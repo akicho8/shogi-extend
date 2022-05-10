@@ -96,10 +96,10 @@ export default {
       // &:hover
       //   background-color: $white-ter
 
-    .left_tag_or_icon
-      .tag
-        background-color: unset
-        padding: 0 0.4rem
+    // .left_tag_or_icon
+    //   .tag
+    //     background-color: unset
+    //     padding: 0 0.4rem
 
     .ShareBoardAvatarLine
       &.is_window_blur
@@ -108,9 +108,9 @@ export default {
       &.is_turn_standby
       &.is_turn_active
         font-weight: bold
-        .left_tag_or_icon
-          .tag
-            border: 2px solid $primary
+        // .left_tag_or_icon
+        //   .tag
+        //     border: 2px solid $primary
 
 .ShareBoardMemberList.column
   // モバイルのときは最後に来る。高さ制限しない。すべてのメンバーを表示する
