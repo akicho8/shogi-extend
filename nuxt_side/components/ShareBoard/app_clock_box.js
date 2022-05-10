@@ -179,8 +179,22 @@ export const app_clock_box = {
       this.cc_params = CcRuleInfo.fetch(cc_rule_key).cc_params
     },
 
+    // shogi-player に渡す名前
+    sp_player_name_for(location) {
+      if (location.key === this.current_location.key) {
+        return this.current_turn_user_name
+      } else {
+        return this.next_turn_user_name
+      }
+    },
+
     // shogi-player に渡す時間のHTMLを作る
-    cc_player_info(e) {
+    cc_player_info(location) {
+      if (this.clock_box == null) {
+        return {}
+      }
+
+      const e = this.clock_box.single_clocks[location.code]
       let o = []
       if (e.initial_main_sec >= 1 || e.every_plus >= 1) {
         o.push(`<div class="second main_sec">${e.to_time_format}</div>`)
@@ -221,7 +235,6 @@ export const app_clock_box = {
         }
       }
       return {
-        name: "",
         time: values,
         class: container_class,
       }
@@ -406,16 +419,15 @@ export const app_clock_box = {
     //   white: { name: "後手", time: this.clock_box.single_clocks[1].to_time_format },
     // }
     sp_player_info() {
-      if (this.clock_box) {
-        return Location.values.reduce((a, e, i) => {
-          return {
-            ...a,
-            [e.key]: {
-              ...this.cc_player_info(this.clock_box.single_clocks[i]),
-            },
-          }
-        }, {})
-      }
+      return Location.values.reduce((a, e) => {
+        return {
+          ...a,
+          [e.key]: {
+            name: this.sp_player_name_for(e),
+            ...this.cc_player_info(e),
+          },
+        }
+      }, {})
     },
   },
 }

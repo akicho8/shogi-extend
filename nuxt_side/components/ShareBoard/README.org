@@ -150,3 +150,7 @@
 ** 対局時計をONにして起動する(あと持ち時間0)
 
    http://localhost:4000/share-board?autoexec=cc_create,cc_modal_handle&clock_box_initial_main_min=0
+
+** 順番設定済み + 対局時計ON
+
+   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob&autoexec=cc_create
