@@ -603,6 +603,11 @@
           li したがって切れ負け判定まで最大30秒かかる
 
     article
+      h2 盤の色を変更するには？
+      .article_body
+        p メニュー→テーマ
+
+    article
       h2 ここに載ってない
       .article_body
         p
