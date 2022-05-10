@@ -21,11 +21,11 @@ export const app_ping = {
     // --> ShareBoardMemberList.vue
     member_info_ping_handle(e) {
       this.sound_play_click()
-      if (this.ping_running_p()) {
+      if (this.ping_running_p) {
         this.toast_warn("応答待ち")
-      } else {
-        this.ping_command(e)
+        return
       }
+      this.ping_command(e)
     },
 
     //////////////////////////////////////////////////////////////////////////////// これだけあればいいけど失敗したかどうかわかりにくい
@@ -56,7 +56,7 @@ export const app_ping = {
     },
     pong_command_broadcasted(params) {
       if (params.to_connection_id === this.connection_id) {
-        if (SLOW_AND_PONG_IGNORED && !this.ping_running_p()) {
+        if (SLOW_AND_PONG_IGNORED && !this.ping_running_p) {
           return
         }
         this.ping_done()
@@ -72,11 +72,6 @@ export const app_ping = {
     },
 
     //////////////////////////////////////////////////////////////////////////////// 一定時間待って失敗したら(反応がなければ)通知
-
-    // PING実行中？
-    ping_running_p() {
-      return this.present_p(this.ping_runner_id)
-    },
 
     // PING実行と同時に呼んどく
     ping_callback_set(e) {
@@ -108,5 +103,10 @@ export const app_ping = {
   computed: {
     PING_OK_SEC() { return this.$route.query.PING_OK_SEC || PING_OK_SEC },
     PONG_DELAY()  { return this.$route.query.PONG_DELAY || PONG_DELAY   },
+
+    // PING実行中？
+    ping_running_p() {
+      return this.present_p(this.ping_runner_id)
+    },
   },
 }
