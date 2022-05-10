@@ -63,6 +63,15 @@ export default {
   //   --sp_lifted_origin_bg_color: hsla(0, 0%, 0%, 0.1)
   //   --sp_lifted_origin_opacity: 0.5
 
+  // shogi-player に取り込む
+  .Membership
+    &.is_turn_inactive
+      .MembershipLocationPlayerInfo
+        font-weight: normal
+    &.is_turn_active
+      .MembershipLocationPlayerInfo
+        font-weight: bold
+
   +mobile
     --sp_stand_piece_w:     40px // 駒台のセル(W)
     --sp_stand_piece_h:     40px // 駒台のセル(H)
