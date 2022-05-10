@@ -605,7 +605,7 @@
     article
       h2 盤の色を変更するには？
       .article_body
-        p メニュー→テーマ
+        p メニュー→配色
 
     article
       h2 ここに載ってない
