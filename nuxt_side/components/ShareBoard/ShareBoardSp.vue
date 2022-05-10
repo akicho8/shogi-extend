@@ -165,5 +165,5 @@ export default {
   // 盤の色(手番のとき)
   &.current_turn_self_p
     .ShareBoardSp
-      // --sp_board_color: var(--sb_board_active_color)
+      --sp_board_color: var(--sb_board_active_color)
 </style>

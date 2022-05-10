@@ -199,10 +199,10 @@
       .article_body
         p あなたの手番を知らせている
 
-    //- article
-    //-   h2 盤の色が橙色になったのは？
-    //-   .article_body
-    //-     p あなたの手番を知らせている
+    article
+      h2 盤の色が変わるのは？
+      .article_body
+        p あなたの手番を知らせている
 
     article
       h2 アバターありとは？
