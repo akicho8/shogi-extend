@@ -457,12 +457,16 @@ export const app_ordered_members = {
     watching_member_count() { return this.name_uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
 
     // private
-    ordered_members_blank_p()   { return this.blank_p(this.ordered_members)             }, // メンバーリストが空？
-    ordered_members_present_p() { return this.present_p(this.ordered_members)           }, // メンバーリストがある？
-    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 現在の局面のメンバーの名前
-    current_turn_self_p()       { return this.current_turn_user_name === this.user_name }, // 現在自分の手番か？
-    self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)  }, // 自分はメンバーに含まれているか？
-    self_is_watcher_p()         { return !this.self_is_member_p                         }, // 自分は観戦者か？
+    ordered_members_blank_p()   { return this.blank_p(this.ordered_members)              }, // メンバーリストが空？
+    ordered_members_present_p() { return this.present_p(this.ordered_members)            }, // メンバーリストがある？
+    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 今の局面のメンバーの名前
+    current_turn_self_p()       { return this.current_turn_user_name === this.user_name  }, // 今は自分の手番か？
+    next_turn_user_name()       { return this.user_name_by_turn(this.current_turn + 1)   }, // 次の局面のメンバーの名前
+    next_turn_self_p()          { return this.next_turn_user_name === this.user_name     }, // 次は自分の手番か？
+    previous_turn_user_name()   { return this.user_name_by_turn(this.current_turn - 1)   }, // 前の局面のメンバーの名前
+    previous_turn_self_p()      { return this.previous_turn_user_name === this.user_name }, // 前は自分の手番か？
+    self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
+    self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
 
     ordered_member_names_oneline() { return (this.ordered_members || []).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 

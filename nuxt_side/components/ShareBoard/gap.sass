@@ -1,14 +1,10 @@
 .ShareBoardApp
   .MainSection.section
-    +mobile
-      --sb_gap: 0.75rem
     +tablet
       --sb_gap: 0.75rem
+      padding: var(--sb_gap)
     +desktop
       --sb_gap: 1.5rem
-    padding: var(--sb_gap)
-    +mobile
-      +padding_lr(0)
     .ShareBoardSp
       // 盤の下を上の隙間と同じぐらい空ける
       .CustomShogiPlayer
