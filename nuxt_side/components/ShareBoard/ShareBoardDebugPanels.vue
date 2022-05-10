@@ -150,6 +150,24 @@
   .column.is-4
     .panel
       .panel-heading
+        | 順番情報(computed)
+      .panel-block 自分vs自分で対戦している？ {{base.self_vs_self_p}}
+      .panel-block 1vs1で対戦している？ {{base.one_vs_one_p}}
+      .panel-block 3人以上で対戦している？ {{base.many_vs_many_p}}
+      .panel-block 観戦者数 {{base.watching_member_count}}
+      .panel-block メンバーリストが空？ {{base.ordered_members_blank_p}}
+      .panel-block メンバーリストがある？ {{base.ordered_members_present_p}}
+      .panel-block 今の局面のメンバーの名前 {{base.current_turn_user_name}}
+      .panel-block 今は自分の手番か？ {{base.current_turn_self_p}}
+      .panel-block 次の局面のメンバーの名前 {{base.next_turn_user_name}}
+      .panel-block 次は自分の手番か？ {{base.next_turn_self_p}}
+      .panel-block 前の局面のメンバーの名前 {{base.previous_turn_user_name}}
+      .panel-block 前は自分の手番か？ {{base.previous_turn_self_p}}
+      .panel-block 自分はメンバーに含まれているか？ {{base.self_is_member_p}}
+      .panel-block 自分は観戦者か？ {{base.self_is_watcher_p}}
+  .column.is-4
+    .panel
+      .panel-heading
         | 状態(for system test)
       .panel-block(v-if="base.order_enable_p && base.ordered_members_present_p")
         | 順序:
