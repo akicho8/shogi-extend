@@ -1,0 +1,28 @@
+// |--------------------------+------|
+// | ShareBoardMemberList.vue | 左側 |
+// | ShareBoardActionLog.vue  | 右側 |
+// |--------------------------+------|
+.ShareBoardApp
+  .SideColumn
+    +tablet
+      max-width: 8rem
+    +desktop
+      max-width: 12rem
+    +widescreen
+      max-width: 16rem
+
+    &.is_content_blank
+      +mobile
+        display: none
+
+    .ShareBoardAvatarLine
+      line-height: 2.25
+      padding: 0.2rem 0rem
+      color: inherit
+
+    .SideColumnScroll
+      +is_scroll_x
+
+    .mini_title
+      font-size: $size-7
+      font-weight: bold

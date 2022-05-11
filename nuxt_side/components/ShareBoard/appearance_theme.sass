@@ -1,22 +1,26 @@
-// |-------------------------+------------------------------|
-// | 変数                    | 意味                         |
-// |-------------------------+------------------------------|
-// | --sb_bg_color           | 全体の背景色                 |
-// | --sb_board_normal_color | 将棋盤の色                   |
-// | --sb_board_active_color | 将棋盤の色(手番のとき)       |
-// | --sb_side_color         | 両サイドのカラムのテキスト色 |
-// |-------------------------+------------------------------|
+// |-------------------------+--------------------------|
+// | 変数                    | 意味                     |
+// |-------------------------+--------------------------|
+// | --sb_bg_color           | 全体の背景色             |
+// | --sb_board_normal_color | 将棋盤の色               |
+// | --sb_board_active_color | 将棋盤の色(手番のとき)   |
+// | --sb_side_fg_color      | 両サイドのカラムの文字色 |
+// | --sb_side_bg_color      | 両サイドのカラムの背景色 |
+// |-------------------------+--------------------------|
 // appearance_theme_info.js
 .ShareBoardApp
   &.is_appearance_theme_a
     #{--sb_bg_color}:           #{$white}
     #{--sb_board_normal_color}: hsla(  0,  0%,   0%, 0.2)
     #{--sb_board_active_color}: hsla( 38, 69%,  64%, 1.0)
-    #{--sb_side_color}:         unset
+    #{--sb_side_fg_color}:      unset
+    #{--sb_side_bg_color}:      unset
 
   // 黒と黄
   &.is_appearance_theme_b
     #{--sb_bg_color}:           #{change_color($black, $lightness: 30%)}
     #{--sb_board_normal_color}: #{$sbc_b}
     #{--sb_board_active_color}: hsla(170.18,27.09%,39.8%,1)
-    #{--sb_side_color}:         #{$grey-lighter}
+    #{--sb_side_fg_color}:      #{$grey-lighter}
+    // #{--sb_side_bg_color}:      #{change_color($black, $alpha: 0.2)}
+    #{--sb_side_bg_color}:      unset

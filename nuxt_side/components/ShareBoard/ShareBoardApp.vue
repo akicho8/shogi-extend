@@ -312,6 +312,6 @@ export default {
 @import "./appearance_theme.sass"
 @import "./layout.sass"
 @import "./gap.sass"
-@import "./BothSideColumn.sass"
+@import "./SideColumn.sass"
 
 </style>

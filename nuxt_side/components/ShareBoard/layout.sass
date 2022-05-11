@@ -27,5 +27,7 @@
   &.normal_mode_p
     background-color: var(--sb_bg_color)
 
-  .BothSideColumn
-    color: var(--sb_side_color)
+    .SideColumn
+      &.is_content_present
+        color:            var(--sb_side_fg_color)
+        background-color: var(--sb_side_bg_color)

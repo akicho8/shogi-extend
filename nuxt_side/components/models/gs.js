@@ -517,4 +517,17 @@ export const Gs = {
     str = (str ?? "").toString().trim()
     return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
   },
+
+  has_content_class(value, options = {}) {
+    options = {
+      present_class: "is_content_present",
+      blank_class: "is_content_blank",
+      ...options,
+    }
+    if (this.present_p(value)) {
+      return options.present_class
+    } else {
+      return options.blank_class
+    }
+  },
 }

@@ -96,7 +96,7 @@ export const app_action_log = {
     al_scroll_to_bottom() {
       const e = this.$refs.ShareBoardActionLog
       if (e) {
-        this.scroll_to_bottom(e.$refs.scroll_block)
+        this.scroll_to_bottom(e.$refs.SideColumnScroll)
       }
     },
 
