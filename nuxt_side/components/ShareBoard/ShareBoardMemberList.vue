@@ -3,8 +3,9 @@
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title
       | メンバー
-    template(v-for="info in member_infos")
-      ShareBoardMemberListOne(:base="base" :info="info")
+    .ShareBoardAvatarLines
+      template(v-for="info in member_infos")
+        ShareBoardMemberListOne(:base="base" :info="info")
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template lang="pug">
-ShareBoardAvatarLine.ShareBoardMemberListOne.member_one_line.is-clickable(
+ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
   :base="base"
   :info="info"
   :replace_icon="replace_icon(info)"

@@ -1721,14 +1721,10 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   # メンバーリストの上からi番目の状態と名前
   # 一気に調べるのではなく段階的に調べる
   def assert_member_list(i, klass, user_name)
-    Capybara.within(".ShareBoardMemberList") do
-      assert_selector(".member_one_line:nth-child(#{i})")             # まずi番目が存在する
-      assert_selector(".member_one_line:nth-child(#{i}).#{klass}")    # 次にi番目の種類
-    end
+    assert_selector(".ShareBoardMemberListOne:nth-child(#{i})")             # まずi番目が存在する
+    assert_selector(".ShareBoardMemberListOne:nth-child(#{i}).#{klass}")    # 次にi番目の種類
     # i 番目のメンバーは user_name である
-    Capybara.within(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]") do
-      assert_selector(:xpath, "//*[contains(@class, 'member_one_line')][#{i}]//*[text()='#{user_name}']")
-    end
+    assert_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberListOne')][#{i}]//*[text()='#{user_name}']")
   end
 
   # メンバーが存在する
@@ -1742,7 +1738,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def member_list_click(i)
-    find(".ShareBoardMemberList .member_one_line:nth-child(#{i})").click
+    find(".ShareBoardMemberListOne:nth-child(#{i})").click
   end
 
   def sp_controller_click(klass)
