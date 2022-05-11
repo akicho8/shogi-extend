@@ -69,11 +69,6 @@ export default {
     height: 16rem
   +tablet
     padding: 0
-    max-width: 8rem
-  +desktop
-    max-width: 12rem
-  +widescreen
-    max-width: 16rem
 
   .scroll_block_container
     position: relative

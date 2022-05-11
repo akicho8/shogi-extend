@@ -117,14 +117,9 @@ export default {
   // タブレット以上は高さ制限する。見切れる場合があるが十分な高さがあるので問題ない
   +tablet
     position: relative
-    max-width: 8rem
     .scroll_block
       +overlay
       +is_scroll_y
-  +desktop
-    max-width: 12rem
-  +widescreen
-    max-width: 16rem
 
 .ShareBoardMemberList.column
   &.content_blank_p
