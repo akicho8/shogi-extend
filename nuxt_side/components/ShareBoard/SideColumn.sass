@@ -14,6 +14,9 @@
     &.is_content_blank
       +mobile
         display: none
+      +tablet // PCではカラムを必ず入れておかないと盤がずれるのでその中の SideColumnScroll を消す
+        .SideColumnScroll
+          display: none
 
     .ShareBoardAvatarLine
       line-height: 2.25
