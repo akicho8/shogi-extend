@@ -6,11 +6,12 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
 
     b-navbar-item.has-text-weight-bold.title_edit_navbar_item(@click="base.title_edit_handle")
       span.current_title.is_truncate
-        | {{base.current_title || '？'}}
-        span.mx-1(v-if="base.play_mode_p && (base.current_turn >= 1 || development_p)")
-          | \#{{base.current_turn}}
-        span.mx-1(v-if="base.edit_mode_p")
-          | (編集モード)
+        template(v-if="base.edit_mode_p")
+          span 編集モード
+        template(v-else)
+          | {{base.current_title || '？'}}
+          span.mx-1(v-if="base.play_mode_p && (base.current_turn >= 1 || development_p)")
+            | \#{{base.current_turn}}
 
   template(slot="end")
     b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.tl_modal_handle" v-if="base.debug_mode_p")
