@@ -89,7 +89,7 @@ export default {
 
   &.is_mobile_vertical_good_style
     +mobile
-      --sp_stand_piece_w: 40px // 駒台のセル(W)
+      --sp_stand_piece_w: 40px // 駒台のセル(W) iPhoneXで玉を除く7個の駒が表示できる最大
       --sp_stand_piece_h: 40px // 駒台のセル(H)
       --sp_piece_count_gap_bottom: 58%
       --sp_piece_count_font_size: 8px

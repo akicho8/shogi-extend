@@ -127,6 +127,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
+@import "../../node_modules/shogi-player/components/stylesheets/helper.sass"
 
 .ShareBoardSp
   +padding_lr(unset)
@@ -155,6 +156,15 @@ export default {
   .footer_buttons
     .button
       margin-bottom: 0
+
+  // 名前で横幅を取ってしまうと持駒がはみでるので3文字までにする
+  .ShogiPlayerGround
+    +IS_VERTICAL
+      .MembershipLocationPlayerInfoName
+        +mobile
+          max-width: 3em
+          white-space: nowrap
+          overflow: hidden
 
 //////////////////////////////////////////////////////////////////////////////// 配色
 .ShareBoardApp

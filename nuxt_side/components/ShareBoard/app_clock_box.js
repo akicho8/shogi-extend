@@ -181,6 +181,7 @@ export const app_clock_box = {
 
     // shogi-player に渡す名前
     sp_player_name_for(location) {
+      // return "０１２３４５６７８９"
       if (location.key === this.current_location.key) {
         return this.current_turn_user_name
       } else {
