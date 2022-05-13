@@ -274,6 +274,13 @@ HelpContent.SwarsBattleIndexHelpBody
     ul
       li MENU→一覧<i :class="dot_vertical_icon" />→すべてOFF→使うのだけON
 
+  article
+    h2 将棋ウォーズ棋譜検索を使いたくない
+    ul
+      li 本家で棋譜を採れるので使う必要はない
+      li 昔はできなかったが2000年ぐらいからできるようになった
+      li ただしスマホでは操作が難しい
+
   //- template(v-if="true")
   //-   article
   //-     h2 ゴキブリなんとかしろ
