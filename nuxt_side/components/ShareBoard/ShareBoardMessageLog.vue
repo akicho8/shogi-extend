@@ -37,7 +37,7 @@ export default {
       padding: 0.2rem 0
       .message_body
         flex-shrink: 1
-        line-height: 1.1
+        // line-height: 1.1  // 発言が1行のとき名前と発言がずれるので設定しない方が良い
 
 .STAGE-development
   .ShareBoardMessageLog
