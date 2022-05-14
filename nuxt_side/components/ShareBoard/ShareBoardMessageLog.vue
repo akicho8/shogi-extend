@@ -38,6 +38,8 @@ export default {
       .message_body
         flex-shrink: 1
         // line-height: 1.1  // 発言が1行のとき名前と発言がずれるので設定しない方が良い
+      .user_name
+        color: $grey
 
 .STAGE-development
   .ShareBoardMessageLog
