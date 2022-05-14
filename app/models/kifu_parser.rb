@@ -19,7 +19,7 @@ class KifuParser
   end
 
   def to_csa(*args)
-    core.to_csa
+    core.to_csa(*args)
   end
 
   def to_sfen(*args)
