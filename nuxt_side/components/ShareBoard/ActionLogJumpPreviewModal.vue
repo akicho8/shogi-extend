@@ -25,6 +25,8 @@
       KifCopyButton(@click="kifu_copy_handle") コピー
       b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
 
+    pre(v-if="development_p") {{pretty_inspect(action_log)}}
+
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.apply_button(@click="apply_handle" type="is-primary") {{new_turn}}手目まで戻る

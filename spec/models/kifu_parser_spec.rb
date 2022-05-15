@@ -9,4 +9,19 @@ RSpec.describe KifuParser do
     obj.to_kif.include?("http://localhost:4000/swars/battles/Yamada_Taro")
     obj.to_kif.include?("嬉野流")
   end
+
+  describe "棋譜以外の追加情報" do
+    it "キーとヘッダの対応が正しい" do
+      obj = KifuParser.new(source: "position startpos", black: "(black)", white: "(white)", other: "(other)", title: "(title)")
+      obj.to_kif.include?("先手：(black)")
+      obj.to_kif.include?("後手：(white)")
+      obj.to_kif.include?("棋戦：(title)")
+      obj.to_kif.include?("観戦：(other)")
+    end
+
+    it "カンマがあると調整される" do
+      obj = KifuParser.new(source: "position startpos", black: "a,b,c")
+      obj.to_kif.include?("先手：a, b, c")
+    end
+  end
 end

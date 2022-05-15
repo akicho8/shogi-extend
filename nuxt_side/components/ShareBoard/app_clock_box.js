@@ -248,7 +248,7 @@ export const app_clock_box = {
       const params = {...this.current_xclock}
       if (behaviour) {
         params.behaviour = behaviour
-        params.room_code_except_url = this.room_code_except_url // これは何に使う？
+        params.room_code_except_url = this.room_code_except_url // 棋譜再現URLをログに出すため
       }
       return params
     },

@@ -23,12 +23,17 @@ module KifShowMethods
 
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
+  # http://localhost:3000/share-board.kif?black=alice&white=bob&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&image_viewpoint=black
+  # http://localhost:3000/share-board.kif?black=alice&white=bob&other=carol&title=title&body=position.startpos
   def kif_data_send
-    if request.format.bod?
-      text_body = KifuParser.new(source: current_record.kifu_body, to_format: "bod", turn: params[:turn]).to_xxx
-    else
-      text_body = current_record.to_xxx(params[:format])
-    end
+    # if request.format.bod?
+    #   text_body = KifuParser.new(params.merge(source: current_record.kifu_body, to_format: "bod")).to_xxx
+    # else
+    #   text_body = KifuParser.new(params.merge(source: : kifu_body).to_xxx(params[:format])
+    # end
+    text_body = KifuParser.new(params.merge(source: current_record.kifu_body)).to_xxx(params[:format])
+    #   text_body = current_record.to_xxx(params[:format])
+    # end
 
     # ユーザーの入力を元に UTF-8 → Shift_JIS 変換は危険
     # やたら例外がでるので必ず invalid: :replace が必要

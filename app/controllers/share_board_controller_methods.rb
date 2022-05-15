@@ -113,6 +113,7 @@ module ShareBoardControllerMethods
     # http://localhost:3000/share-board.ki2
     # http://localhost:3000/share-board.sfen
     # http://localhost:3000/share-board.csa
+    # params[:title] ||= current_title ← これを入れると「共有将棋盤」がかならず表示される
     kif_data_send
   end
 

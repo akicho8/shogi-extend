@@ -60,6 +60,9 @@ export const app_action_log = {
       params.from_user_name ??= this.user_name
       params.performed_at ??= this.time_current_ms()
 
+      // KIF に埋めたいものも合わせて保持しておく
+      params.player_names_with_title ??= this.player_names_with_title
+
       if (ACTION_LOG_PUSH_TO === "top") {
         this.action_logs.unshift(params)
         this.action_logs = _.take(this.action_logs, ACTION_LOG_MAX)
@@ -119,4 +122,5 @@ export const app_action_log = {
       }
     },
   },
+
 }
