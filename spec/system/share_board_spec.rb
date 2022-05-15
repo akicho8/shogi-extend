@@ -1624,6 +1624,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         hamburger_click
         menu_item_sub_menu_click("棋譜表示")
         menu_item_click("KIF")
+        switch_to_window_last
         assert_text "棋戦：(title)"
         assert_text "先手：alice"
         assert_text "後手：bob"

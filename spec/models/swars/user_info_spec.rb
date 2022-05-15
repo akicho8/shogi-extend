@@ -175,15 +175,14 @@ module Swars
         Battle.create!(final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
-        [
-          @black.user_info.judge_info_records(:win).collect  { |e| [e[:name], e[:value]] },
-          @black.user_info.judge_info_records(:lose).collect { |e| [e[:name], e[:value]] },
-        ]
+        [:win, :lose].collect do |key|
+          (@black.user_info.judge_info_records(key) || []).collect  { |e| [e[:name], e[:value]] }
+        end
       end
 
       it "works" do
-        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
-        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 0], ["時間切れ", 0], ["詰み", 0]]] }
+        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], []] }
+        assert { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], []] }
         assert { case1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
         assert { case1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
       end
