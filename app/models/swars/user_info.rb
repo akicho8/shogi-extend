@@ -405,36 +405,41 @@ module Swars
       end
       counts_hash = s.count # { TORYO: 3, CHECKMATE: 1 }
 
-      if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
-        counts_hash = counts_hash.symbolize_keys
-        h = {}
-        FinalInfo.each do |e|
-          if v = counts_hash[e.key]
-            h[e.key] = v
-          else
-            if e.chart_required
-              h[e.key] = 0
+      if counts_hash.present?
+        if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
+          counts_hash = counts_hash.symbolize_keys
+          h = {}
+          FinalInfo.each do |e|
+            if v = counts_hash[e.key]
+              h[e.key] = v
+            else
+              if e.chart_required
+                h[e.key] = 0
+              end
             end
           end
+        else
+          h = counts_hash
         end
-      else
-        h = counts_hash
-      end
 
-      h.collect do |key, value|
-        final_info = FinalInfo.fetch(key)
-        {
-          :key   => key,
-          # :name  => final_info.name2(judge_key),
-          :name  => final_info.name,
-          :value => value,
-        }
+        h.collect do |key, value|
+          final_info = FinalInfo.fetch(key)
+          {
+            :key   => key,
+            # :name  => final_info.name2(judge_key),
+            :name  => final_info.name,
+            :value => value,
+          }
+        end
       end
     end
 
     def formation_info_records
-      ["居飛車", "振り飛車"].collect do |e|
+      records = ["居飛車", "振り飛車"].collect do |e|
         { name: e, value: all_tag_names_hash_or_zero(e) }
+      end
+      if records.any? { |e| e[:value] > 0 }
+        records
       end
     end
 
@@ -676,9 +681,12 @@ module Swars
     ################################################################################
 
     def avg_win_lose_turn_max
-      [:win, :lose].collect do |key|
+      records = [:win, :lose].collect do |key|
         info = JudgeInfo.fetch(key)
         { name: info.name, value: avg_turn_max_for(key) || 0 }
+      end
+      if records.any? { |e| e[:value] > 0 }
+        records
       end
     end
 
