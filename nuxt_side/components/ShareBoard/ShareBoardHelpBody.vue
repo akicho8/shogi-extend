@@ -1,7 +1,7 @@
 <template lang="pug">
 HelpContent.ShareBoardHelpBody
   article
-    h2 対局するには？
+    h2 対局するには？ (三行で)
     ol
       li 部屋を立てる
       li 順番を設定する
