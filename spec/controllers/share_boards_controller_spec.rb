@@ -70,4 +70,10 @@ RSpec.describe ShareBoardsController, type: :controller do
     assert { response["Content-Disposition"].match?(/is_color_theme_groovy_board_texture1/) }
     assert { response.status == 200 }
   end
+
+  it "KIF等に変換するときに追加情報をヘッダに入れる" do
+    # http://localhost:3000/share-board.kif?black=alice&white=bob&other=carol&title=title&body=position.startpos
+    get :show, params: { black: "alice", format: "kif", body: "position startpos" }
+    assert { response.body.include?("先手：alice") }
+  end
 end

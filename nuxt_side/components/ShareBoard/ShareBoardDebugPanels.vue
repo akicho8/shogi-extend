@@ -127,6 +127,16 @@
         | current_xclock
       .panel-block
         pre {{JSON.stringify(base.current_xclock, null, 4)}}
+  .column.is-3
+    .panel
+      .panel-heading
+        | 棋譜追加情報
+      .panel-block.is-flex-direction-column
+        p player_names_from_member
+        pre {{JSON.stringify(base.player_names_from_member, null, 4)}}
+      .panel-block.is-flex-direction-column
+        p player_names_from_query
+        pre {{JSON.stringify(base.player_names_from_query, null, 4)}}
   .column.is-4
     .panel
       .panel-heading

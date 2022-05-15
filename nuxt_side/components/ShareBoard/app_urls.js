@@ -59,6 +59,7 @@ export const app_urls = {
         sp_run_mode:          this.sp_run_mode,
         sp_internal_rule_key: this.sp_internal_rule_key,
         color_theme_key:      this.color_theme_key,
+        ...this.player_names,
       }
       return this.url_params_clean(e)
     },
@@ -75,7 +76,7 @@ export const app_urls = {
         sfen: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
-        game_name: this.current_title,
+        ...this.player_names_for_piyo,
       })
     },
 

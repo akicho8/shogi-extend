@@ -11,11 +11,18 @@ class KifuParser
   end
 
   def to_kif(*args)
+    header_update
     extra_header_part + core.to_kif(*args)
   end
 
   def to_ki2(*args)
+    header_update
     extra_header_part + core.to_ki2(*args)
+  end
+
+  def to_bod(*args)
+    header_update
+    extra_header_part + core.to_bod(*args)
   end
 
   def to_csa(*args)
@@ -24,10 +31,6 @@ class KifuParser
 
   def to_sfen(*args)
     core.to_sfen(*args)
-  end
-
-  def to_bod(*args)
-    core.to_bod(*args)
   end
 
   def to_png(*args)
@@ -141,7 +144,7 @@ class KifuParser
     UrlProxy.full_url_for({
         path: "/share-board",
         query: {
-          body: @core.to_sfen,
+          body: core.to_sfen,
           abstract_viewpoint: :black,
         },
       })
@@ -155,6 +158,20 @@ class KifuParser
 
   def core
     @core ||= Bioshogi::Parser.parse(source, parser_options)
+  end
+
+  def header_update
+    if v = params[:title].presence
+      core.header["棋戦"] = v
+    end
+    core.mediator.players.each do |e|
+      if v = params[e.location.key].presence
+        core.header[e.call_name] = comma_included_str_normalize(v)
+      end
+    end
+    if v = params[:other].presence
+      core.header["観戦"] = comma_included_str_normalize(v)
+    end
   end
 
   def turn_max
@@ -199,5 +216,9 @@ class KifuParser
 
   def true_or_false(v)
     v.to_s.in?(["true", "1"])
+  end
+
+  def comma_included_str_normalize(str)
+    str.to_s.split(/\s*,\s*/).join(", ")
   end
 end
