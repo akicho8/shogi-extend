@@ -6,14 +6,19 @@ export const app_edit_mode = {
       this.dialog_confirm({
         title: "共有中の局面編集は危険",
         message: `
-          編集すると連続した指し手の棋譜ではなく編集後の局面を基点とした棋譜になってしまいます。
-          基本的に共有中の局面編集は変則的な駒落ちで対戦するときの初期配置設定だけに使ってください。
+          <div class="content">
+            <ul class="mt-0 ml-5">
+              <li>初期配置に戻すにはここではなく「初期配置に戻す」をタップする</li>
+              <li>編集すると編集後の局面を0手目とした棋譜になってしまう</li>
+              <li>基本的に共有中の局面編集は変則的な配置で対戦するときの初期配置設定だけに使う</li>
+            </ul>
+          </div>
         `,
         // <p class="is-size-7 has-text-grey">「待った」したいときは下のｺﾝﾄﾛｰﾗｰで少し前に戻って新しい手を指してください</p>
         confirmText: `理解した上で編集する`,
         focusOn: "cancel", // confirm or cancel
         type: "is-danger",
-        hasIcon: true,
+        hasIcon: false,
         onConfirm: () => {
           this.sound_play_click()
           this.shared_al_add({label: "局面編集前"})
