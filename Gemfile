@@ -153,7 +153,7 @@ gem "slack-ruby-client"
 # エラー通知
 gem "exception_notification"
 gem "slack-notifier"
-gem "psych", "~> 3.1"   # Psych::BadAlias: Unknown alias: default 対策
+# gem "psych", "~> 3.1"   # Psych::BadAlias: Unknown alias: default 対策
 
 # devise
 gem "devise"
