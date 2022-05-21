@@ -3,7 +3,7 @@
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title
       | 操作履歴
-      span.has-text-weight-normal.mx-1
+      span.mini_title_desc
         | タップで戻れる
     .ShareBoardAvatarLines
       template(v-for="(e, i) in filtered_action_logs")
