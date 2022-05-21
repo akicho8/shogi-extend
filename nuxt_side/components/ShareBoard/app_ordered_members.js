@@ -317,7 +317,7 @@ export const app_ordered_members = {
     order_lookup_from_name(name) {
       if (this.order_enable_p) {
         if (this.ordered_members) {
-          return this.user_names_hash[name]
+          return this.ordered_member_names_hash[name]
         }
       }
     },
@@ -471,15 +471,12 @@ export const app_ordered_members = {
     ordered_member_names_oneline() { return (this.ordered_members || []).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 
     // 名前からO(1)で ordered_members の要素を引くためのハッシュ
-    user_names_hash() {
+    ordered_member_names_hash() {
       if (this.order_enable_p) {
         if (this.ordered_members) {
           return this.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
         }
       }
-    },
-    user_names_hash2() {
-      return this.member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {})
     },
 
     // 変更したけど保存せずにモーダルを閉じようとしている？

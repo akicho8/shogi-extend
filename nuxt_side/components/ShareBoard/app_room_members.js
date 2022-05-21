@@ -176,5 +176,10 @@ export const app_room_members = {
         return this.member_infos[0].from_connection_id === this.connection_id
       }
     },
+
+    // 名前からO(1)で member_infos の要素を引くためのハッシュ
+    room_member_names_hash() {
+      return this.member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {})
+    },
   },
 }
