@@ -478,6 +478,9 @@ export const app_ordered_members = {
         }
       }
     },
+    user_names_hash2() {
+      return this.member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {})
+    },
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
     os_modal_close_if_not_save_p() {

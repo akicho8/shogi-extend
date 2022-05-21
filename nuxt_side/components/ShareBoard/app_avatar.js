@@ -49,10 +49,10 @@ export const app_avatar = {
     avatars_hash() {
       const hash = {}
       if (this.order_enable_p && this.ordered_members_present_p) {
-        for (const e of this.member_infos) {
-          const info = this.base.user_names_hash[e.from_user_name]
-          if (info) { // 対局メンバーなら
-            const location = this.current_sfen_info.location_by_offset(info.order_index)
+        for (const om of this.ordered_members) {
+          const e = this.base.user_names_hash2[om.user_name]
+          if (e) { // メンバー一覧に存在するなら
+            const location = this.current_sfen_info.location_by_offset(om.order_index)
             if (hash[location.key] == null) {
               let value = null
 
