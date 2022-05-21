@@ -78,11 +78,16 @@ export const app_chore = {
       })
     },
 
-    // ホームアイコンを押して退出
+    // ホームアイコンを押してトップに戻る
     exit_handle() {
-      this.exit_confirm_then(() => {
-        this.$router.push({name: "index"})
-      })
+      // 対局中であれば確認して退出するのみ
+      if (this.exit_warning_p) {
+        this.exit_confirm_then(() => this.room_destroy())
+        return
+      }
+
+      this.sound_play_click()
+      this.$router.push({name: "index"})
     },
 
     // 退出するときはとりあえずこれをかます
