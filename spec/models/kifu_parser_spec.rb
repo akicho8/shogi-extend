@@ -12,11 +12,12 @@ RSpec.describe KifuParser do
 
   describe "棋譜以外の追加情報" do
     it "キーとヘッダの対応が正しい" do
-      obj = KifuParser.new(source: "position startpos", black: "(black)", white: "(white)", other: "(other)", title: "(title)")
+      obj = KifuParser.new(source: "position startpos", black: "(black)", white: "(white)", other: "(other)", member: "(member)", title: "(title)")
       obj.to_kif.include?("先手：(black)")
       obj.to_kif.include?("後手：(white)")
       obj.to_kif.include?("棋戦：(title)")
       obj.to_kif.include?("観戦：(other)")
+      obj.to_kif.include?("面子：(member)")
     end
 
     it "カンマがあると調整される" do

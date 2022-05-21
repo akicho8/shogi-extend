@@ -172,6 +172,9 @@ class KifuParser
     if v = params[:other].presence
       core.header["観戦"] = comma_included_str_normalize(v)
     end
+    if v = params[:member].presence
+      core.header["面子"] = comma_included_str_normalize(v)
+    end
   end
 
   def turn_max

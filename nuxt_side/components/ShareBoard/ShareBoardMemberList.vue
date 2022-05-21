@@ -1,7 +1,7 @@
 <template lang="pug">
 .ShareBoardMemberList.SideColumn.column(:class="has_content_class(member_infos)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .mini_title
+    .mini_title.is-clickable.player_names_copy_handle(@click="base.player_names_copy_handle")
       | メンバー
     .ShareBoardAvatarLines
       template(v-for="info in member_infos")

@@ -106,6 +106,7 @@ import { app_sidebar              } from "./app_sidebar.js"
 import { app_user_name            } from "./app_user_name.js"
 import { app_storage              } from "./app_storage.js"
 import { app_export               } from "./app_export.js"
+import { app_player_names               } from "./app_player_names.js"
 import { app_color_theme          } from "./app_color_theme.js"
 import { app_appearance_theme          } from "./app_appearance_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
@@ -160,6 +161,7 @@ export default {
     app_user_name,
     app_storage,
     app_export,
+    app_player_names,
     app_color_theme,
     app_appearance_theme,
     app_sfen_share,

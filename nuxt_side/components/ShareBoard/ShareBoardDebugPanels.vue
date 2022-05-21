@@ -137,6 +137,9 @@
       .panel-block.is-flex-direction-column
         p player_names_from_query
         pre {{JSON.stringify(base.player_names_from_query, null, 4)}}
+      .panel-block.is-flex-direction-column
+        p player_names_with_title_as_human_text
+        pre {{base.player_names_with_title_as_human_text}}
   .column.is-4
     .panel
       .panel-heading

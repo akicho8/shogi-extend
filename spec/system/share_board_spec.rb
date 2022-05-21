@@ -1642,6 +1642,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         end
       end
     end
+
+    it "メンバーからコピーできる" do
+      visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", title: "(title)")
+      find(".player_names_copy_handle").click
+      assert_text "コピーしました"
+    end
   end
 
   def visit_app(*args)
