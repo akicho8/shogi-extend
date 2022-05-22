@@ -275,26 +275,26 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "順番設定のあと一時的に機能OFFにしたので通知されない" do
     it "works" do
       a_block do
-        room_setup("my_room", "alice")                     # aliceが部屋を作る
+        room_setup("my_room", "alice")    # aliceが部屋を作る
       end
       b_block do
-        room_setup("my_room", "bob")                       # bobも同じ部屋に入る
+        room_setup("my_room", "bob")      # bobも同じ部屋に入る
       end
       a_block do
-        order_modal_main_switch_click("有効")              # 順番設定ON
-        assert_move("77", "76", "☗7六歩")                 # aliceが指す
+        order_set_on                      # 順番設定ON
+        assert_move("77", "76", "☗7六歩") # aliceが指す
       end
       b_block do
-        assert_text("(通知効果音)")                        # aliceが指し終わったのでbobに通知
-        assert_move("33", "34", "☖3四歩")                 # bobが指す
+        assert_text("(通知効果音)")       # aliceが指し終わったのでbobに通知
+        assert_move("33", "34", "☖3四歩") # bobが指す
       end
       a_block do
-        assert_text("(通知効果音)")                        # bobがが指し終わったのでaliceに通知
-        order_modal_main_switch_click("無効")              # 順番設定OFF
-        assert_move("27", "26", "☗2六歩")                 # aliceが指す
+        assert_text("(通知効果音)")       # bobがが指し終わったのでaliceに通知
+        order_set_off                     # 順番設定OFF
+        assert_move("27", "26", "☗2六歩") # aliceが指す
       end
       b_block do
-        assert_no_text("(通知効果音)")                     # 順番設定OFFなので通知されない
+        assert_no_text("(通知効果音)")    # 順番設定OFFなので通知されない
       end
     end
   end
@@ -338,7 +338,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
       b_block do
         find(".MessageSendModal .close_handle").click  # メッセージモーダルを閉じる
-        order_modal_main_switch_click("無効")          # 順番設定を解除する
+        order_set_off          # 順番設定を解除する
       end
 
       # bobが順番設定を解除したことで
@@ -1840,14 +1840,18 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def order_set_on
-    order_modal_main_switch_click("有効")
+    order_modal_main_switch_click("ON")
   end
 
-  def order_modal_main_switch_click(stat)
+  def order_set_off
+    order_modal_main_switch_click("OFF")
+  end
+
+  def order_modal_main_switch_click(on_or_off)
     hamburger_click
     os_modal_handle                        # 「順番設定」モーダルを開く
     find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-    assert_text("さんが順番設定を#{stat}にしました")   # 有効にしたことが(ActionCable経由で)自分に伝わった
+    action_log_row_of(0).assert_text("順番 #{on_or_off}")
     modal_close_handle                                  # 閉じる (ヘッダーに置いている)
   end
 
