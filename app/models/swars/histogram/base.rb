@@ -10,6 +10,7 @@ module Swars
 
       def initialize(params)
         @params = params
+        @sample_count = 0
       end
 
       def as_json(*)
@@ -19,12 +20,14 @@ module Swars
       end
 
       def to_h
+        records_fetch
+
         {
           :key                 => SecureRandom.hex,
           :histogram_name      => histogram_name,
           :current_max         => current_max,
           :updated_at          => Time.current,
-          :sample_count        => target_ids.size,
+          :sample_count        => @sample_count,
           :cache_key           => cache_key.join("/"),
           :default_limit       => default_limit,
           :default_limit_max   => default_limit_max,
@@ -42,10 +45,15 @@ module Swars
         hash.reverse_merge(processed_sec: processed_sec)
       end
 
+      def records_fetch
+        records
+      end
+
       def records
         @records ||= yield_self do
-          sdc = StandardDeviation.new(counts_hash.values)
-          counts_hash.sort_by { |name, count| -count }.collect do |name, count|
+          aggregate_run
+          sdc = StandardDeviation.new(@counts_hash.values)
+          @counts_hash.sort_by { |name, count| -count }.collect do |name, count|
             {
               :name  => name,
               :count => count,
@@ -87,31 +95,29 @@ module Swars
         [self.class.name, tactic_key, current_max]
       end
 
-      def target_ids
-        @target_ids ||= Swars::Membership.order(id: :desc).limit(current_max).pluck(:id)
-      end
+      def aggregate_run
+        # FIXME: in_batches に置き換える
 
-      def counts_hash
-        @counts_hash ||= yield_self do
-          s = Swars::Membership.where(id: target_ids)
-          tags = s.tag_counts_on("#{tactic_key}_tags")
-          counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
+        target_ids = Swars::Membership.order(id: :desc).limit(current_max).pluck(:id)
 
-          # タグにない戦法も抽出する場合
-          if false
-            counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
-          end
+        @sample_count = target_ids.count
 
-          # いらんタグを消す場合
-          if false
-            if Rails.env.production? || Rails.env.staging? || Rails.env.test?
-              Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
-                counts_hash.delete(e.to_s)
-              end
+        s = Swars::Membership.where(id: target_ids)
+        tags = s.tag_counts_on("#{tactic_key}_tags")
+        @counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
+
+        # タグにない戦法も抽出する場合
+        if false
+          @counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => @counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
+        end
+
+        # いらんタグを消す場合
+        if false
+          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+            Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
+              @counts_hash.delete(e.to_s)
             end
           end
-
-          counts_hash
         end
       end
 

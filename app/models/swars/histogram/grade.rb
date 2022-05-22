@@ -14,6 +14,12 @@
 module Swars
   module Histogram
     class Grade < Base
+      if Rails.env.development?
+        BATCH_SIZE = 2
+      else
+        BATCH_SIZE = 2500
+      end
+
       # キャッシュ後なのでここでマージするとキャッシュしない
       def as_json(*)
         super.merge({
@@ -36,46 +42,47 @@ module Swars
         "棋力"
       end
 
-      # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
-      # で 15ms なので 20000 ぐらいまで一瞬
-      def target_ids
-        @target_ids ||= yield_self do
-          # membership.battle からルールを絞る時点で固まるため最初にIDで絞る
-          s = Swars::Membership.all
-          s = s.order(id: :desc)
-          s = s.limit(current_max)
-          s.ids
-          # s = Swars::Membership.where(id: s.ids)
-          # s.pluck(:id)
+      # # Swars::Membership.where(id: Swars::Membership.order(id: :desc).limit(5000).pluck(:id)).group(:grade_id).count
+      # # で 15ms なので 20000 ぐらいまで一瞬
+      # def target_ids
+      #   @target_ids ||= yield_self do
+      #     # membership.battle からルールを絞る時点で固まるため最初にIDで絞る
+      #     s = Swars::Membership.all
+      #     s = s.order(id: :desc)
+      #     s = s.limit(current_max)
+      #     s.ids
+      #     # s = Swars::Membership.where(id: s.ids)
+      #     # s.pluck(:id)
+      #   end
+      # end
+
+      def aggregate_run
+        @counts_hash = {}
+        @sample_count = 0
+
+        loop_index = 0
+        loop_max = current_max.fdiv(BATCH_SIZE).ceil
+
+        second = Benchmark.realtime do
+          Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc) do |s|
+            if loop_index >= loop_max
+              break
+            end
+            @sample_count += s.count
+            s = condition_add(s)
+            @counts_hash.update(s.group(:grade_id).count) { |_, c1, c2| c1 + c2 }
+            loop_index += 1
+          end
         end
-      end
 
-      def counts_hash
-        # target_idsを副SQLにすると動かない。limitがあるとダメっぽい。なんで？
-        @counts_hash ||= yield_self do
-          s = Swars::Membership.all
-          s = s.where(id: target_ids)
-
-          # 9級から九段に絞る
-          # http://localhost:3000/api/swars_histogram.json?key=grade&grade_filter=true
-          if params[:grade_filter].to_s == "true"
-            s = s.where(grade: current_grades.unscope(:order))
-          end
-
-          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
-          # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
-          if e = RuleInfo.lookup(params[:rule_key].presence)
-            s = s.rule_eq(e)
-          end
-
-          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
-          # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
-          if v = params[:xtag].to_s.split(/[,\s]+/).presence
-            s = s.tagged_with(v)
-          end
-
-          s.group(:grade_id).count
-        end
+        SlackAgent.notify(subject: "棋力分布実行速度", body: {
+            :ms           => "%.1f s" % second,
+            :current_max  => current_max,
+            :BATCH_SIZE   => BATCH_SIZE,
+            :loop_max     => loop_max,
+            :loop_index   => loop_index,
+            :sample_count => @sample_count,
+          })
       end
 
       def cache_key
@@ -94,14 +101,14 @@ module Swars
 
       def records
         @records ||= yield_self do
-          sdc = StandardDeviation.new(counts_hash.values)
+          aggregate_run
+          sdc = StandardDeviation.new(@counts_hash.values)
           current_grades.collect do |grade|
-            count = counts_hash.fetch(grade.id, 0)
+            count = @counts_hash.fetch(grade.id, 0)
             {
               :grade => grade.as_json(only: [:id, :key, :priority]),
               :count => count,
               :ratio => sdc.appear_ratio(count),
-              # :deviation_score => sdc.deviation_score(count),
             }
           end
         end
@@ -134,6 +141,28 @@ module Swars
 
       def max_list
         [5000, 10000, 20000]
+      end
+
+      def condition_add(s)
+        # 9級から九段に絞る
+        # http://localhost:3000/api/swars_histogram.json?key=grade&grade_filter=true
+        if params[:grade_filter].to_s == "true"
+          s = s.where(grade: current_grades.unscope(:order))
+        end
+
+        # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
+        # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
+        if e = RuleInfo.lookup(params[:rule_key].presence)
+          s = s.rule_eq(e)
+        end
+
+        # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
+        # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
+        if v = params[:xtag].to_s.split(/[,\s]+/).presence
+          s = s.tagged_with(v)
+        end
+
+        s
       end
     end
   end
