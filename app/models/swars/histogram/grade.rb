@@ -140,7 +140,7 @@ module Swars
       end
 
       def max_list
-        [5000, 10000, 20000]
+        [5000, 10000, 20000, 40000]
       end
 
       def condition_add(s)
