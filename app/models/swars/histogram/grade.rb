@@ -17,7 +17,7 @@ module Swars
       if Rails.env.development?
         BATCH_SIZE = 2
       else
-        BATCH_SIZE = 2500
+        BATCH_SIZE = 5000
       end
 
       # キャッシュ後なのでここでマージするとキャッシュしない
@@ -136,11 +136,11 @@ module Swars
       end
 
       def default_limit
-        20000
+        50000
       end
 
       def max_list
-        [5000, 10000, 20000]
+        [5000, 20000, 50000]
       end
 
       def condition_add(s)
