@@ -38,7 +38,7 @@ const sitemap = {
 
     // http://localhost:3000/api/kiwi/tops/sitemap
     res = await axios.get(`${process.env.API_URL}/api/kiwi/tops/sitemap`)
-    list = list.concat(res.data.books.map(({key}) => `/video/watch/${key}`))
+    list = list.concat(res.data.bananas.map(({key}) => `/video/watch/${key}`))
 
     // http://localhost:3000/api/wkbk/tops/sitemap
     res = await axios.get(`${process.env.API_URL}/api/wkbk/tops/sitemap`)
@@ -53,11 +53,12 @@ const sitemap = {
     res = await axios.get(`${process.env.API_URL}/api/tsl_user_all`)
     list = list.concat(res.data.map(({name}) => `/three-stage-league-players/${name}`))
 
+    // /swars/histograms/*
+    // grade は自動的に拾われているので指定する必要なし
     list.push("/swars/histograms/attack")
     list.push("/swars/histograms/defense")
     list.push("/swars/histograms/technique")
     list.push("/swars/histograms/note")
-    list.push("/swars/histograms/grade")
 
     return list
   },
