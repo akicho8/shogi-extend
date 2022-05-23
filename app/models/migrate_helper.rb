@@ -1,6 +1,9 @@
 module MigrateHelper
   extend self
 
+  # cap production deploy:upload FILES=app/models/migrate_helper.rb
+  # cap staging    deploy:upload FILES=app/models/migrate_helper.rb
+
   # rails r MigrateHelper.run1
   # rails r "tp Swars::Battle"
   # rails r "tp Swars::Membership"
@@ -26,5 +29,12 @@ module MigrateHelper
       tp judge
       Swars::Membership.where(judge_id: nil).where(judge_key: judge.key).update_all(judge_id: judge.id)
     end
+
+    p Swars::Battle.where(rule_id: nil).count
+    p Swars::Battle.where(final_id: nil).count
+    p Swars::Battle.where(preset_id: nil).count
+    p FreeBattle.where(preset_id: nil).count
+    p Swars::Membership.where(location_id: nil).count
+    p Swars::Membership.where(judge_id: nil).count
   end
 end
