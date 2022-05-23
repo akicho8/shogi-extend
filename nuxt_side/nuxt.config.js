@@ -57,6 +57,7 @@ const sitemap = {
     list.push("/swars/histograms/defense")
     list.push("/swars/histograms/technique")
     list.push("/swars/histograms/note")
+    list.push("/swars/histograms/grade")
 
     return list
   },
