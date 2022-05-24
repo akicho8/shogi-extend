@@ -13,7 +13,7 @@
 # app/controllers/swars/zip_dl_methods.rb
 #
 # Experiment
-# experiment/swars/zip_dl_cop.rb
+# playground/swars/zip_dl_cop.rb
 #
 # Test
 # spec/models/swars/zip_dl_cop_spec.rb
