@@ -42,7 +42,7 @@ module Swars
     include PresetMethods
     include ImportMethods
     include CleanupMethods
-    include AssembleMethods
+    include CoreMethods
     include BasicMethods
     include HelperMethods
     include MigrateMethods
