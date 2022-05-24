@@ -3,30 +3,28 @@
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | name           | desc           | type        | opts        | refs              | index      |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | id             | ID             | integer(8)  | NOT NULL PK |                   |            |
-# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |                   | A! B! C! D |
-# | user_id        | ユーザー       | integer(8)  | NOT NULL    | => User#id        | B! E       |
-# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! F       |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | G          |
-# | judge_key      | 結果           | string(255) | NOT NULL    |                   | H          |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! I       |
-# | position       | 順序           | integer(4)  |             |                   | J          |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   |            |
-# | created_at     | 作成日時       | datetime    | NOT NULL    |                   |            |
-# | updated_at     | 更新日時       | datetime    | NOT NULL    |                   |            |
-# | think_all_avg  | Think all avg  | integer(4)  |             |                   |            |
-# | think_end_avg  | Think end avg  | integer(4)  |             |                   |            |
-# | two_serial_max | Two serial max | integer(4)  |             |                   |            |
-# | think_last     | Think last     | integer(4)  |             |                   |            |
-# | think_max      | Think max      | integer(4)  |             |                   |            |
-# | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
-# | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
-# | judge_id       | Judge          | integer(8)  |             | => Judge#id       | K          |
-# | location_id    | Location       | integer(8)  |             | => Location#id    | L          |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | name           | desc           | type       | opts        | refs              | index      |
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | id             | ID             | integer(8) | NOT NULL PK |                   |            |
+# | battle_id      | 対局共通情報   | integer(8) | NOT NULL    |                   | A! B! C! D |
+# | user_id        | ユーザー       | integer(8) | NOT NULL    | => User#id        | A! E       |
+# | op_user_id     | Op user        | integer(8) |             | => Swars::User#id | C! F       |
+# | grade_id       | 棋力           | integer(8) | NOT NULL    |                   | G          |
+# | position       | 順序           | integer(4) |             |                   | H          |
+# | grade_diff     | Grade diff     | integer(4) | NOT NULL    |                   |            |
+# | created_at     | 作成日時       | datetime   | NOT NULL    |                   |            |
+# | updated_at     | 更新日時       | datetime   | NOT NULL    |                   |            |
+# | think_all_avg  | Think all avg  | integer(4) |             |                   |            |
+# | think_end_avg  | Think end avg  | integer(4) |             |                   |            |
+# | two_serial_max | Two serial max | integer(4) |             |                   |            |
+# | think_last     | Think last     | integer(4) |             |                   |            |
+# | think_max      | Think max      | integer(4) |             |                   |            |
+# | obt_think_avg  | Obt think avg  | integer(4) |             |                   |            |
+# | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
+# | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
+# | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# |----------------+----------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
 # Judge.has_many :swars_memberships

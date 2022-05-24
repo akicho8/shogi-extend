@@ -268,7 +268,7 @@ module Swars
               :rule_key   => info[:rule_key],
               :csa_seq    => info[:csa_seq],
               :preset_key => preset_key,
-              :preset     => Preset.fetch(preset_key),
+              # :preset     => Preset.fetch(preset_key),
               :xmode      => XmodeMagicNumberInfo.fetch("magic_number_is_#{info[:xmode_magic_number]}").xmode,
             })
 

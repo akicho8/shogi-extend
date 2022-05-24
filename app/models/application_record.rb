@@ -81,6 +81,99 @@ class ApplicationRecord < ActiveRecord::Base
         e.collect { |e| e[:value] }
       }
     end
+
+    # belongs_to :final
+    #
+    # before_validation do
+    #   self.final_id  ||= Final.fetch("投了").id
+    # end
+    #
+    # if Rails.env.development? || Rails.env.test?
+    #   with_options presence: true do
+    #     validates :final_key
+    #   end
+    #
+    #   with_options allow_blank: true do
+    #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
+    #   end
+    # end
+    #
+    # scope :final_eq,     -> v { where(    final: Final.array_from(v)) }
+    # scope :final_not_eq, -> v { where.not(final: Final.array_from(v)) }
+    # scope :final_ex,     proc { |v; s, g|
+    #   s = all
+    #   g = xquery_parse(v)
+    #   if g[true]
+    #     s = s.final_eq(g[true])
+    #   end
+    #   if g[false]
+    #     s = s.final_not_eq(g[false])
+    #   end
+    #   s
+    # }
+    #
+    # def final_key
+    #   self.final&.key
+    # end
+    #
+    # def final_key=(v)
+    #   self.final = Final[v]
+    # end
+    #
+    # def final_info
+    #   if final
+    #     final.pure_info
+    #   end
+    # end
+    #
+    def custom_belongs_to(key, options = {})
+      ar_model = options[:ar_model]
+      st_model = options[:st_model]
+      default = options[:default]
+
+      belongs_to key
+
+      if default
+        before_validation do
+          unless public_send("#{key}_id")
+            public_send("#{key}_id=", ar_model.fetch(default).id)
+          end
+        end
+      end
+
+      if Rails.env.development? || Rails.env.test?
+        with_options presence: true do
+          validates "#{key}_id".to_sym
+        end
+
+        with_options allow_blank: true do
+          validates "#{key}_key".to_sym, inclusion: st_model.keys.collect(&:to_s)
+        end
+      end
+
+      scope "#{key}_eq".to_sym,     -> v { where(key => ar_model.array_from(v)) }
+      scope "#{key}_not_eq".to_sym, -> v { where.not(key => ar_model.array_from(v)) }
+      scope "#{key}_ex".to_sym, proc { |v; s, g|
+        s = all
+        g = xquery_parse(v)
+        if g[true]
+          s = s.public_send("#{key}_eq", g[true])
+        end
+        if g[false]
+          s = s.public_send("#{key}_not_eq", g[false])
+        end
+        s
+      }
+
+      define_method("#{key}_key")  { public_send(key)&.key }
+      define_method("#{key}_key=") { |v| public_send("#{key}=", ar_model[v]) }
+
+      define_method("#{key}_info") do
+        if record = public_send(key)
+          record.pure_info
+        end
+      end
+    end
   end
 
   delegate *[

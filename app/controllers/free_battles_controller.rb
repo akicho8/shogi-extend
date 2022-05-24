@@ -17,16 +17,15 @@
 # | use_key       | Use key       | string(255) | NOT NULL    |              | D     |
 # | accessed_at   | 参照日時      | datetime    | NOT NULL    |              | E     |
 # | user_id       | User          | integer(8)  |             | => User#id   | F     |
-# | preset_key    | Preset key    | string(255) | NOT NULL    |              | G     |
 # | description   | 説明          | text(65535) | NOT NULL    |              |       |
 # | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |              |       |
-# | start_turn    | 開始局面      | integer(4)  |             |              | H     |
-# | critical_turn | 開戦          | integer(4)  |             |              | I     |
-# | outbreak_turn | Outbreak turn | integer(4)  |             |              | J     |
+# | start_turn    | 開始局面      | integer(4)  |             |              | G     |
+# | critical_turn | 開戦          | integer(4)  |             |              | H     |
+# | outbreak_turn | Outbreak turn | integer(4)  |             |              | I     |
 # | image_turn    | OGP画像の局面 | integer(4)  |             |              |       |
 # | created_at    | 作成日時      | datetime    | NOT NULL    |              |       |
 # | updated_at    | 更新日時      | datetime    | NOT NULL    |              |       |
-# | preset_id     | Preset        | integer(8)  |             | => Preset#id | K     |
+# | preset_id     | Preset        | integer(8)  |             | => Preset#id | J     |
 # |---------------+---------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
