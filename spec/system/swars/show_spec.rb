@@ -8,10 +8,15 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   end
 
   describe "HTML" do
-    it "HTMLで表示する" do
-      visit2 "/swars/battles/#{@key}"
+    def case1(params = {})
+      visit2 "/swars/battles/#{@key}", params
       assert_text "Yamada_Taro"
       assert_text "最後は投了"
+    end
+
+    it "works" do
+      case1
+      case1 scene_key: "critical_turn"
     end
   end
 
