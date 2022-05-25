@@ -216,7 +216,21 @@ module Swars
             end
           end
 
-          s = s.includes(win_user: nil, memberships: {user: nil, grade: nil, taggings: :tag})
+          # preload でもいい
+          s = s.includes({
+              win_user: nil,
+              xmode: nil,
+              rule: nil,
+              final: nil,
+              preset: nil,
+              memberships: {
+                user: nil,
+                grade: nil,
+                location: nil,
+                judge: nil,
+                taggings: :tag,
+              },
+            })
 
           s
         }
