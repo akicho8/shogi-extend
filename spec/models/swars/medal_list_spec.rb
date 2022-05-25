@@ -22,14 +22,14 @@ module Swars
     end
 
     describe "負かされた戦法" do
-      def test
+      def case1
         Battle.create! { |e| e.memberships.build(user: user, judge_key: :lose) }
         Battle.create! { |e| e.memberships.build(user: user, judge_key: :win)  } # 2戦目勝ったけど分母は負け数なので結果は変わらない
         user.user_info.medal_list.defeated_tag_counts
       end
 
       it "works" do
-        assert { test == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
+        assert { case1 == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
       end
     end
 
@@ -78,9 +78,9 @@ module Swars
     end
 
     describe "win_lose_streak_max_hash" do
-      def test(*list)
-        list.each do |win_or_lose|
-          Battle.create! do |e|
+      def case1(*list)
+        list.each.with_index do |win_or_lose, i|
+          Battle.create!(battled_at: Time.current + i) do |e|
             e.memberships.build(user: user, judge_key: win_or_lose)
           end
         end
@@ -88,13 +88,13 @@ module Swars
       end
 
       it "works" do
-        assert { test == {"win" => 0, "lose" => 0 } }
-        assert { test("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
+        assert { case1 == {"win" => 0, "lose" => 0 } }
+        assert { case1("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
       end
     end
 
     describe "every_grade_list" do
-      def test(white, judge_key)
+      def case1(white, judge_key)
         Battle.create! do |e|
           e.memberships.build(user: user, judge_key: judge_key)
           e.memberships.build(grade: Grade.find_by(key: white))
@@ -102,10 +102,10 @@ module Swars
       end
 
       before do
-        test("初段", "win")
-        test("九段", "win")
-        test("九段", "win")
-        test("九段", "lose")
+        case1("初段", "win")
+        case1("九段", "win")
+        case1("九段", "win")
+        case1("九段", "lose")
       end
 
       it "works" do
