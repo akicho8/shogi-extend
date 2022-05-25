@@ -93,7 +93,7 @@ module Swars
         hash[:judge_counts] = judge_counts
 
         # 直近勝敗リスト
-        hash[:judge_keys] = current_scope.limit(current_ox_max).pluck(:judge_key).reverse # limitは上書きできる
+        hash[:judge_keys] = current_scope.limit(current_ox_max).s_pluck_judge_key.reverse # limitは上書きできる
 
         hash[:medal_list] = medal_list.to_a
 
@@ -115,7 +115,7 @@ module Swars
     end
 
     def judge_counts
-      @judge_counts ||= judge_counts_wrap(ids_scope.group(:judge_key).count)
+      @judge_counts ||= judge_counts_wrap(ids_scope.s_group_judge_key.count)
     end
 
     def medal_list
@@ -135,7 +135,7 @@ module Swars
     end
 
     def win_scope
-      @win_scope ||= ids_scope.where(judge_key: "win")
+      @win_scope ||= ids_scope.s_where_judge_key_eq("win")
     end
 
     def win_count
@@ -143,7 +143,7 @@ module Swars
     end
 
     def lose_scope
-      @lose_scope ||= ids_scope.where(judge_key: "lose")
+      @lose_scope ||= ids_scope.s_where_judge_key_eq("lose")
     end
 
     def lose_count
@@ -171,6 +171,7 @@ module Swars
       end
     end
 
+    # 対段級
     def every_grade_list
       s = user.op_memberships
       s = win_lose_only_condition_add(s)
@@ -179,14 +180,14 @@ module Swars
       s = Swars::Membership.where(id: s.ids) # 再スコープ化
 
       s = s.joins(:grade).group(Swars::Grade.arel_table[:key]) # 段級と
-      s = s.group(:judge_key)                                  # 勝ち負けでグループ化
+      s = s.joins(:judge).group(Judge.arel_table[:key])        # 勝ち負けでグループ化
       s = s.order(Swars::Grade.arel_table[:priority])          # 相手が強い順
-      hash = s.count                                           # => {["九段", "lose"]=>2, ["九段", "win"]=>1}
+      hash = s.count                                           # => {["九段", "lose"]=>2, ["九段", "win"]=>1, ["初段", "lose"]=>1}
 
       counts = {}
-      hash.each do |(grade_key, win_or_lose), count|
+      hash.each do |(grade_key, judge_key), count|
         counts[grade_key] ||= { win: 0, lose: 0 }
-        judge_info = JudgeInfo.fetch(win_or_lose)
+        judge_info = JudgeInfo.fetch(judge_key)
         counts[grade_key][judge_info.flip.key] = count # 勝敗反転
       end
 
@@ -261,7 +262,7 @@ module Swars
         #   s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
         # end
 
-        c1 = Battle.where(Battle.arel_table[:rule_key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
+        c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
         c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
 
         # s and (c1 or c2)
@@ -396,9 +397,11 @@ module Swars
 
     def judge_info_records(judge_key)
       s = ids_scope
-      s = s.where(judge_key: judge_key)
-      s = s.joins(:battle)
-      s = s.group(Battle.arel_table[:final_key])
+      s = s.s_where_judge_key_eq(judge_key)
+
+      s = s.joins(:battle => :final)
+      s = s.group(Final.arel_table[:key])
+
       if JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL
       else
         s = s.order("count_all DESC")
@@ -510,9 +513,9 @@ module Swars
 
     def timeout_think_last_scope
       s = lose_scope
-      s = s.joins(:battle)
+      s = s.joins(:battle => :final)
       s = s.where(Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Battle.arel_table[:final_key].eq("TIMEOUT"))
+      s = s.where(Final.arel_table[:key].eq("TIMEOUT"))
       s = s.where(Membership.arel_table[:think_last].gteq(60))
     end
 
@@ -539,9 +542,9 @@ module Swars
       return ids_scope
 
       s = lose_scope
-      s = s.joins(:battle)
+      s = s.joins(:battle => :final)
       s = s.where(Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Battle.arel_table[:final_key].eq("TORYO"))
+      s = s.where(Final.arel_table[:key].eq("TORYO"))
     end
 
     def count_of_toryo_think_last
@@ -597,9 +600,9 @@ module Swars
 
     def checkmate_think_last_scope
       s = win_scope
-      s = s.joins(:battle)
       s = s.where(Membership.arel_table[:think_last].gteq(checkmate_think_last_gteq))
-      s = s.where(Battle.arel_table[:final_key].eq("CHECKMATE"))
+      s = s.joins(:battle => :final)
+      s = s.where(Final.arel_table[:key].eq("CHECKMATE"))
       # s = s.where(Battle.arel_table[:turn_max].gteq(14))
     end
 
@@ -635,9 +638,9 @@ module Swars
 
     def disconnect_count
       s = lose_scope
-      s = s.joins(:battle)
+      s = s.joins(:battle => :final)
       s = s.where(Battle.arel_table[:turn_max].gteq(14))
-      s = s.where(Battle.arel_table[:final_key].eq("DISCONNECT"))
+      s = s.where(Final.arel_table[:key].eq("DISCONNECT"))
       if v = s.count
         if v.positive?
           v
@@ -660,8 +663,8 @@ module Swars
     # SELECT AVG(swars_battles.turn_max) FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.id IN (92, 93, 96, 97, 100, 101, 103, 105, 107, 110) AND swars_memberships.judge_key = 'lose' AND swars_battles.final_key = 'TORYO'
     def avg_of_toryo_turn_max
       s = lose_scope
-      s = s.joins(:battle)
-      s = s.where(Battle.arel_table[:final_key].eq("TORYO"))
+      s = s.joins(:battle => :final)
+      s = s.where(Final.arel_table[:key].eq("TORYO"))
       if v = s.average(Battle.arel_table[:turn_max])
         v.to_i
       end
@@ -671,8 +674,8 @@ module Swars
 
     def avg_of_think_end_avg
       s = win_scope
-      s = s.joins(:battle)
-      s = s.where(Battle.arel_table[:final_key].eq("CHECKMATE"))
+      s = s.joins(:battle => :final)
+      s = s.where(Final.arel_table[:key].eq("CHECKMATE"))
       if v = s.average(:think_end_avg)
         v.to_f.round(2)
       end
@@ -691,9 +694,9 @@ module Swars
     end
 
     def avg_turn_max_for(judge_key)
-      s = ids_scope.where(judge_key: judge_key)
-      s = s.joins(:battle)
-      s = s.where(Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+      s = ids_scope.s_where_judge_key_eq(judge_key)
+      s = s.joins(:battle => :final)
+      s = s.where(Swars::Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
       if v = s.average(:turn_max)
         v.to_i
       end
@@ -912,7 +915,7 @@ module Swars
           hash[:appear_ratio] = tag.count.fdiv(denominator)         # 使用頻度, 遭遇率
 
           # 勝ち負け数
-          c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).group("judge_key").count) # => {"win" => 1, "lose" => 0}
+          c = judge_counts_wrap(s.tagged_with(tag.name, on: options[:context]).s_group_judge_key.count) # => {"win" => 1, "lose" => 0}
           if options[:judge_flip]
             c["win"], c["lose"] = c["lose"], c["win"] # => {"win" => 0, "lose" => 1}    ; 自分視点に変更
           end

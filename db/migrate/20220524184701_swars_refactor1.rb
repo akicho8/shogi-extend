@@ -1,5 +1,9 @@
 class SwarsRefactor1 < ActiveRecord::Migration[5.1]
   def up
+    change_table :swars_memberships do |t|
+      t.remove_index(name: :memberships_sbri_lk)
+    end
+
     remove_column :swars_battles, :rule_key
     remove_column :swars_battles, :final_key
     remove_column :swars_battles, :preset_key
@@ -15,10 +19,6 @@ class SwarsRefactor1 < ActiveRecord::Migration[5.1]
     change_column_null(:swars_battles, :preset_id, false)
     change_column_null(:swars_memberships, :location_id, false)
     change_column_null(:swars_memberships, :judge_id, false)
-
-    change_table :swars_memberships do |t|
-      t.remove_index(name: :memberships_sbri_lk)
-    end
 
     change_table :swars_memberships do |t|
       t.index [:battle_id, :location_id], unique: true, name: :memberships_sbri_lk

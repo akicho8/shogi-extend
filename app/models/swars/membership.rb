@@ -49,6 +49,15 @@ module Swars
     custom_belongs_to :judge, ar_model: Judge, st_model: JudgeInfo, default: nil
 
     belongs_to :battle                      # 対局
+
+    # 投了・時間切れ・詰み のみに絞る
+    #
+    #  SELECT m.* FROM m
+    #  INNER JOIN b ON b.id = m.b_id
+    #  INNER JOIN f ON f.id = b.f_id WHERE (f.key = 'TORYO' OR f.key = 'TIMEOUT' OR f.key = 'CHECKMATE')
+    #
+    scope :toryo_timeout_checkmate_only, -> { joins(:battle).merge(Battle.toryo_timeout_checkmate_only) }
+
     belongs_to :user, touch: true           # 対局者
     belongs_to :op_user, class_name: "Swars::User" # 相手
     belongs_to :opponent, class_name: "Membership", optional: true

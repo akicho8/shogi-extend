@@ -25,6 +25,8 @@ module Swars
         custom_belongs_to :final, ar_model: Final, st_model: FinalInfo, default: "投了"
         custom_belongs_to :xmode, ar_model: Xmode, st_model: XmodeInfo, default: "通常"
 
+        scope :toryo_timeout_checkmate_only, -> { joins(:final).where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) }
+
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?
             # Bioshogi::Parser.parse(Bioshogi::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa

@@ -98,6 +98,7 @@ class ApplicationRecord < ActiveRecord::Base
     #   end
     # end
     #
+    # scope :group_by_final_key, -> { joins(:final).group(Final.arel_table[:key]) }
     # scope :final_eq,     -> v { where(    final: Final.array_from(v)) }
     # scope :final_not_eq, -> v { where.not(final: Final.array_from(v)) }
     # scope :final_ex,     proc { |v; s, g|
@@ -151,6 +152,11 @@ class ApplicationRecord < ActiveRecord::Base
         end
       end
 
+      scope "s_group_#{key}_key".to_sym,    ->   { joins(key).group(ar_model.arel_table[:key])       }
+      scope "s_pluck_#{key}_key".to_sym,    ->   { joins(key).pluck(ar_model.arel_table[:key])       }
+      scope "s_where_#{key}_key_eq".to_sym, -> v { joins(key).where(ar_model.arel_table[:key].eq(v)) }
+
+      # 検索用
       scope "#{key}_eq".to_sym,     -> v { where(key => ar_model.array_from(v)) }
       scope "#{key}_not_eq".to_sym, -> v { where.not(key => ar_model.array_from(v)) }
       scope "#{key}_ex".to_sym, proc { |v; s, g|
@@ -165,8 +171,15 @@ class ApplicationRecord < ActiveRecord::Base
         s
       }
 
-      define_method("#{key}_key")  { public_send(key)&.key }
-      define_method("#{key}_key=") { |v| public_send("#{key}=", ar_model[v]) }
+      define_method("#{key}_key=") do |v|
+        public_send("#{key}=", ar_model[v])
+      end
+
+      define_method("#{key}_key") do
+        if record = public_send(key)
+          record.key
+        end
+      end
 
       define_method("#{key}_info") do
         if record = public_send(key)

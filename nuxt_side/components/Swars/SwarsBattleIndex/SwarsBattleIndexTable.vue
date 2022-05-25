@@ -36,16 +36,16 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" label="相手" :visible="base.column_visible_p('membership_right')")
     SwarsBattleIndexMembership(:base="base" :row="row" :membership="row.memberships[1]" :with_user_key="base.column_visible_p('user_key_right')")
 
-  b-table-column(v-slot="{row}" field="membership.judge_key" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="membership.judge_id" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable centered)
     | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
 
-  b-table-column(v-slot="{row}" field="membership.location_key" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="membership.location_id" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
     template(v-if="row.preset_info.handicap_shift === 0")
       | {{base.Location.fetch(row.memberships[0].location_key).name}}
     template(v-else)
       | {{base.Location.fetch(row.memberships[0].location_key).handicap_long_name}}
 
-  b-table-column(v-slot="{row}" field="final_key" :label="base.ColumnInfo.fetch('final_key').name" :visible="base.column_visible_p('final_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="final_id" :label="base.ColumnInfo.fetch('final_key').name" :visible="base.column_visible_p('final_key')" sortable centered)
     span(:class="row.final_info.class") {{row.final_info.name}}
 
   b-table-column(v-slot="{row}" field="turn_max" :label="base.ColumnInfo.fetch('turn_max').name" :visible="base.column_visible_p('turn_max')" sortable numeric centered)
@@ -60,13 +60,13 @@ b-table.SwarsBattleIndexTable(
   b-table-column(v-slot="{row}" field="membership.grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="base.column_visible_p('grade_diff')" sortable numeric centered)
     | {{row.grade_diff}}
 
-  b-table-column(v-slot="{row}" field="rule_key" :label="base.ColumnInfo.fetch('rule_key').name" :visible="base.column_visible_p('rule_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="rule_id" :label="base.ColumnInfo.fetch('rule_key').name" :visible="base.column_visible_p('rule_key')" sortable centered)
     | {{row.rule_info.name}}
 
   b-table-column(v-slot="{row}" field="xmode_id" :label="base.ColumnInfo.fetch('xmode_key').name" :visible="base.column_visible_p('xmode_key')" sortable centered)
     | {{row.xmode_info.name}}
 
-  b-table-column(v-slot="{row}" field="preset_key" :label="base.ColumnInfo.fetch('preset_key').name" :visible="base.column_visible_p('preset_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="preset_id" :label="base.ColumnInfo.fetch('preset_key').name" :visible="base.column_visible_p('preset_key')" sortable centered)
     | {{row.preset_info.name}}
 
   b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="base.column_visible_p('battled_at')" sortable centered)
