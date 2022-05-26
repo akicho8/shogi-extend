@@ -35,7 +35,6 @@ every("5 3 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
-    # "TsMaster::TimeRecord.entry_name_blank_scope.destroy_all",
     "Swars::Battle.cleanup",    # 30分かかる
     "FreeBattle.cleanup",
 
@@ -100,7 +99,6 @@ end
 #   every("15 1 31 12 *") do
 #     runner [
 #       "SlackAgent.notify(subject: 'Question', body: 'start')",
-#       "TsMaster::Question.setup(reset: true)",
 #       "SlackAgent.notify(subject: 'Question', body: 'end')",
 #     ].join(";")
 #   end

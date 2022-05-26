@@ -32,7 +32,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   User,
   Tsl,
   XyMaster,
-  TsMaster,
 ].each do |e|
   e.setup
 end

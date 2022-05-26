@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_24_184701) do
+ActiveRecord::Schema.define(version: 2022_05_26_170100) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -1228,37 +1228,6 @@ ActiveRecord::Schema.define(version: 2022_05_24_184701) do
     t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
-  end
-
-  create_table "ts_master_questions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "sfen", null: false
-    t.integer "mate", null: false
-    t.integer "position", null: false
-    t.index ["mate", "position"], name: "index_ts_master_questions_on_mate_and_position", unique: true
-    t.index ["mate"], name: "index_ts_master_questions_on_mate"
-    t.index ["position"], name: "index_ts_master_questions_on_position"
-  end
-
-  create_table "ts_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false
-    t.integer "position", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["position"], name: "index_ts_master_rules_on_position"
-  end
-
-  create_table "ts_master_time_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.bigint "user_id"
-    t.string "entry_name", null: false
-    t.string "summary"
-    t.bigint "rule_id", null: false
-    t.integer "x_count", null: false
-    t.float "spent_sec", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["entry_name"], name: "index_ts_master_time_records_on_entry_name"
-    t.index ["rule_id"], name: "index_ts_master_time_records_on_rule_id"
-    t.index ["user_id"], name: "index_ts_master_time_records_on_user_id"
   end
 
   create_table "tsl_leagues", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

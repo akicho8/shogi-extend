@@ -41,10 +41,6 @@
     li: ExternalLink(beep href="https://otologic.jp") OtoLogic
     li: ExternalLink(beep href="https://snd.dev/") SND: Crafted UI sound assets for UX developers
 
-  .section_title 実戦詰将棋『一期一会』問題集
-  ul
-    li: ExternalLink(beep href="https://yaneuraou.yaneu.com/2020/12/25/christmas-present/") やねうら王公式詰将棋500万問より
-
   template(v-if="development_p || true")
     .section_title 動画作成BGMプリセット使用曲
     ul

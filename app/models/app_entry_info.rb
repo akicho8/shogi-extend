@@ -289,20 +289,6 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: true,
-      nuxt_link_to: {path: "/practical-checkmate"},
-      title: "実戦詰将棋『一期一会』",
-      attention_label: nil,
-      og_image_key: "practical-checkmate",
-      description: "やねうら王の詰将棋500万問からﾗﾝﾀﾞﾑに出題",
-      features: [
-        "一度出会った問題には二度と会えないかも",
-        "初見力が試される",
-        "作意がないぶん逆にむずい！？",
-      ],
-    },
-    {
-      display_p: true,
-      experiment_p: true,
       nuxt_link_to: {path: "/blindfold"},
       title: "目隠し詰将棋",
       attention_label: nil,

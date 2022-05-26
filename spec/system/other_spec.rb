@@ -8,13 +8,6 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
-  it "実戦詰将棋" do
-    TsMaster.setup
-    visit "/practical-checkmate"
-    assert_text "実戦詰将棋"
-    doc_image
-  end
-
   it "目隠し詰将棋" do
     visit "/blindfold"
     assert_text "目隠し詰将棋"
