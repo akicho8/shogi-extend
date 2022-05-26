@@ -1,0 +1,1 @@
+ssh i sudo tailf /var/log/messages
