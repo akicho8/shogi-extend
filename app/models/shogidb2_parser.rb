@@ -54,7 +54,7 @@ class Shogidb2Parser
     end
 
     if v = @params[:handicap]
-      av << Bioshogi::PresetInfo.fetch(v).to_board.to_csa.strip
+      av << PresetInfo.fetch(v).to_board.to_csa.strip
     end
 
     if v = @params[:moves].first

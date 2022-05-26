@@ -4,34 +4,91 @@
 #
 # 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
 #
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
-# | name          | desc             | type        | opts                | refs              | index |
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
-# | id            | ID               | integer(8)  | NOT NULL PK         |                   |       |
-# | key           | 対局ユニークキー | string(255) | NOT NULL            |                   | A!    |
-# | battled_at    | 対局日時         | datetime    | NOT NULL            |                   | B     |
-# | rule_key      | ルール           | string(255) | NOT NULL            |                   | C     |
-# | csa_seq       | 棋譜             | text(65535) | NOT NULL            |                   |       |
-# | final_key     | 結末             | string(255) | NOT NULL            |                   | D     |
-# | win_user_id   | 勝者             | integer(8)  |                     | => Swars::User#id | E     |
-# | turn_max      | 手数             | integer(4)  | NOT NULL            |                   | F     |
-# | meta_info     | メタ情報         | text(65535) | NOT NULL            |                   |       |
-# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL            |                   | G     |
-# | preset_key    | 手合割           | string(255) | NOT NULL            |                   | H     |
-# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL            |                   |       |
-# | sfen_hash     | Sfen hash        | string(255) | NOT NULL            |                   |       |
-# | start_turn    | 開始局面         | integer(4)  |                     |                   | I     |
-# | critical_turn | 開戦             | integer(4)  |                     |                   | J     |
-# | outbreak_turn | Outbreak turn    | integer(4)  |                     |                   | K     |
-# | image_turn    | OGP画像の局面    | integer(4)  |                     |                   |       |
-# | created_at    | 作成日時         | datetime    | NOT NULL            |                   |       |
-# | updated_at    | 更新日時         | datetime    | NOT NULL            |                   |       |
-# | xmode_id      | Xmode            | integer(8)  | DEFAULT(1) NOT NULL |                   | L     |
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | name          | desc             | type        | opts        | refs              | index |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | id            | ID               | integer(8)  | NOT NULL PK |                   |       |
+# | key           | 対局ユニークキー | string(255) | NOT NULL    |                   | A!    |
+# | battled_at    | 対局日時         | datetime    | NOT NULL    |                   | B     |
+# | csa_seq       | 棋譜             | text(65535) | NOT NULL    |                   |       |
+# | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | C     |
+# | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | D     |
+# | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
+# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   | E     |
+# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
+# | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
+# | start_turn    | 開始局面         | integer(4)  |             |                   | F     |
+# | critical_turn | 開戦             | integer(4)  |             |                   | G     |
+# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | H     |
+# | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
+# | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
+# | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
+# | xmode_id      | Xmode            | integer(8)  | NOT NULL    |                   | I     |
+# | preset_id     | Preset           | integer(8)  | NOT NULL    | => Preset#id      | J     |
+# | rule_id       | Rule             | integer(8)  | NOT NULL    |                   | K     |
+# | final_id      | Final            | integer(8)  | NOT NULL    |                   | L     |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Preset (presets as Preset)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Rule (swars_rules as Swars::Rule)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Final (swars_finals as Swars::Final)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Xmode (swars_xmodes as Swars::Xmode)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -250,6 +307,20 @@
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | var_key    | 変数名   | string(255) | NOT NULL    |      | A!    |
 # | var_value  | 変数値   | text(65535) |             |      |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Judge (judges as Judge)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
@@ -518,32 +589,48 @@
 
 # == Schema Information ==
 #
+# Location (locations as Location)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | name           | desc           | type        | opts        | refs              | index      |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | id             | ID             | integer(8)  | NOT NULL PK |                   |            |
-# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |                   | A! B! C! D |
-# | user_id        | ユーザー       | integer(8)  | NOT NULL    | => User#id        | B! E       |
-# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! F       |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | G          |
-# | judge_key      | 結果           | string(255) | NOT NULL    |                   | H          |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! I       |
-# | position       | 順序           | integer(4)  |             |                   | J          |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   |            |
-# | created_at     | 作成日時       | datetime    | NOT NULL    |                   |            |
-# | updated_at     | 更新日時       | datetime    | NOT NULL    |                   |            |
-# | think_all_avg  | Think all avg  | integer(4)  |             |                   |            |
-# | think_end_avg  | Think end avg  | integer(4)  |             |                   |            |
-# | two_serial_max | Two serial max | integer(4)  |             |                   |            |
-# | think_last     | Think last     | integer(4)  |             |                   |            |
-# | think_max      | Think max      | integer(4)  |             |                   |            |
-# | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
-# | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | name           | desc           | type       | opts        | refs              | index      |
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | id             | ID             | integer(8) | NOT NULL PK |                   |            |
+# | battle_id      | 対局共通情報   | integer(8) | NOT NULL    |                   | A! B! C! D |
+# | user_id        | ユーザー       | integer(8) | NOT NULL    | => User#id        | A! E       |
+# | op_user_id     | Op user        | integer(8) |             | => Swars::User#id | C! F       |
+# | grade_id       | 棋力           | integer(8) | NOT NULL    |                   | G          |
+# | position       | 順序           | integer(4) |             |                   | H          |
+# | grade_diff     | Grade diff     | integer(4) | NOT NULL    |                   |            |
+# | created_at     | 作成日時       | datetime   | NOT NULL    |                   |            |
+# | updated_at     | 更新日時       | datetime   | NOT NULL    |                   |            |
+# | think_all_avg  | Think all avg  | integer(4) |             |                   |            |
+# | think_end_avg  | Think end avg  | integer(4) |             |                   |            |
+# | two_serial_max | Two serial max | integer(4) |             |                   |            |
+# | think_last     | Think last     | integer(4) |             |                   |            |
+# | think_max      | Think max      | integer(4) |             |                   |            |
+# | obt_think_avg  | Obt think avg  | integer(4) |             |                   |            |
+# | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
+# | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
+# | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# |----------------+----------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
+# Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
 #--------------------------------------------------------------------------------
@@ -572,20 +659,6 @@
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | key        | キー     | string(255) | NOT NULL    |      | A!    |
 # | priority   | 優先度   | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Xmode (swars_xmodes as Swars::Xmode)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
@@ -803,13 +876,14 @@
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
 # | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | judge_id   | Judge    | integer(8) | NOT NULL    | => Judge#id  | D     |
 # | position   | 順序     | integer(4) | NOT NULL    |              | E     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -897,32 +971,33 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | name          | desc          | type        | opts        | refs       | index |
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK |            |       |
-# | key           | キー          | string(255) | NOT NULL    |            | A!    |
-# | title         | タイトル      | string(255) |             |            |       |
-# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |            |       |
-# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |            |       |
-# | turn_max      | 手数          | integer(4)  | NOT NULL    |            | B     |
-# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |            |       |
-# | battled_at    | Battled at    | datetime    | NOT NULL    |            | C     |
-# | use_key       | Use key       | string(255) | NOT NULL    |            | D     |
-# | accessed_at   | 参照日時      | datetime    | NOT NULL    |            | E     |
-# | user_id       | User          | integer(8)  |             | => User#id | F     |
-# | preset_key    | Preset key    | string(255) | NOT NULL    |            | G     |
-# | description   | 説明          | text(65535) | NOT NULL    |            |       |
-# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |            |       |
-# | start_turn    | 開始局面      | integer(4)  |             |            | H     |
-# | critical_turn | 開戦          | integer(4)  |             |            | I     |
-# | outbreak_turn | Outbreak turn | integer(4)  |             |            | J     |
-# | image_turn    | OGP画像の局面 | integer(4)  |             |            |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL    |            |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL    |            |       |
-# |---------------+---------------+-------------+-------------+------------+-------|
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | name          | desc          | type        | opts        | refs         | index |
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK |              |       |
+# | key           | キー          | string(255) | NOT NULL    |              | A!    |
+# | title         | タイトル      | string(255) |             |              |       |
+# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |              |       |
+# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |              |       |
+# | turn_max      | 手数          | integer(4)  | NOT NULL    |              | B     |
+# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |              |       |
+# | battled_at    | Battled at    | datetime    | NOT NULL    |              | C     |
+# | use_key       | Use key       | string(255) | NOT NULL    |              | D     |
+# | accessed_at   | 参照日時      | datetime    | NOT NULL    |              | E     |
+# | user_id       | User          | integer(8)  |             | => User#id   | F     |
+# | description   | 説明          | text(65535) | NOT NULL    |              |       |
+# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |              |       |
+# | start_turn    | 開始局面      | integer(4)  |             |              | G     |
+# | critical_turn | 開戦          | integer(4)  |             |              | H     |
+# | outbreak_turn | Outbreak turn | integer(4)  |             |              | I     |
+# | image_turn    | OGP画像の局面 | integer(4)  |             |              |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL    |              |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL    |              |       |
+# | preset_id     | Preset        | integer(8)  |             | => Preset#id | J     |
+# |---------------+---------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1163,13 +1238,14 @@
 # | id         | ID       | integer(8) | NOT NULL PK |              |       |
 # | battle_id  | Battle   | integer(8) | NOT NULL    |              | A! B  |
 # | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | A! C  |
-# | judge_id   | Judge    | integer(8) | NOT NULL    |              | D     |
+# | judge_id   | Judge    | integer(8) | NOT NULL    | => Judge#id  | D     |
 # | position   | 順序     | integer(4) | NOT NULL    |              | E     |
 # | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
 # | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
 # |------------+----------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1226,7 +1302,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 # | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
 # | user_id             | User                | integer(8) | NOT NULL    | => ::User#id | A!    |
-# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | judge_id            | Judge               | integer(8) | NOT NULL    | => Judge#id  | B     |
 # | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
 # | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
 # | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
@@ -1249,6 +1325,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -1458,7 +1535,7 @@
 # | name                | desc                | type       | opts        | refs         | index |
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 # | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
-# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | judge_id            | Judge               | integer(8) | NOT NULL    | => Judge#id  | B     |
 # | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
 # | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
 # | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
@@ -1485,6 +1562,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 

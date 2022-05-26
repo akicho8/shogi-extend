@@ -343,23 +343,30 @@ module Swars
     end
 
     def sort_scope(s)
-      if sort_column && sort_order
-        table, column = sort_column.split(".", 2)
-        if column
-          if table == "membership"
-            # Membership が対象の並び替え
-            # column は grade_diff, location_key, judge_key のどれかになる
-            if current_swars_user
-              o = current_swars_user.memberships.order(column => sort_order)
-              s = s.joins(:memberships).merge(o)
-            end
-          else
-            raise ArgumentError, sort_column.inspect
-          end
-        else
-          # Battle のカラムに対するとソート
-          s = super(s)
+      # case sort_column
+      # when "membership.location_key"
+      #   if current_swars_user
+      #     o = current_swars_user.memberships.joins(:location).order(Location.arel_table[:key].public_send(sort_order))
+      #     s = s.joins(:memberships).merge(o)
+      #   end
+      # when "membership.judge_key"
+      #   if current_swars_user
+      #     o = current_swars_user.memberships.joins(:judge).order(Judge.arel_table[:key].public_send(sort_order))
+      #     s = s.joins(:memberships).merge(o)
+      #   end
+      # when "membership.grade_diff"
+      #   if current_swars_user
+      #     o = current_swars_user.memberships.order(:grade_diff => sort_order)
+      #     s = s.joins(:memberships).merge(o)
+      #   end
+      if md = sort_column.match(/\A(membership)\.(?<column>\w+)/)
+        if current_swars_user
+          o = current_swars_user.memberships.order(md[:column] => sort_order)
+          s = s.joins(:memberships).merge(o)
         end
+      else
+        # Battle のカラムに対するソート
+        s = super(s)
       end
       s
     end

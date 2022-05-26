@@ -1,7 +1,7 @@
 module BattleDecorator
   class SwarsBattleDecorator < Base
-    def player_name_for(location)
-      membership_for(location).user.key
+    def player_name_for(location_info)
+      membership_for(location_info).user.key
     end
 
     def battle_end_at
@@ -18,7 +18,7 @@ module BattleDecorator
       if battle.final_info.draw
         s << battle.final_info.name
       else
-        s << [lose_membership.location.call_name(handicap?), battle.final_info.name].join
+        s << [lose_membership.location_info.call_name(handicap?), battle.final_info.name].join
       end
 
       s += battle.note_tag_list.grep(/(^相|入玉|駒柱|対)/)
@@ -45,22 +45,22 @@ module BattleDecorator
       ["各", battle.rule_info.real_life_time / 1.minutes, "分"].join
     end
 
-    def total_seconds_for(location)
-      membership_for(location).total_seconds
+    def total_seconds_for(location_info)
+      membership_for(location_info).total_seconds
     end
 
     def tournament_name
       "将棋ウォーズ"
     end
 
-    def grade_name_for(location)
-      membership_for(location).grade.grade_info.name
+    def grade_name_for(location_info)
+      membership_for(location_info).grade.grade_info.name
     end
 
     private
 
-    def strategy_pack_core(location)
-      if m = membership_for(location)
+    def strategy_pack_core(location_info)
+      if m = membership_for(location_info)
         sep = " #{params[:separator]} "
         max = params[:strategy_take_max]
         s = nil

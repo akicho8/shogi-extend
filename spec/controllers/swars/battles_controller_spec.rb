@@ -3,32 +3,33 @@
 #
 # 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
 #
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
-# | name          | desc             | type        | opts                | refs              | index |
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
-# | id            | ID               | integer(8)  | NOT NULL PK         |                   |       |
-# | key           | 対局ユニークキー | string(255) | NOT NULL            |                   | A!    |
-# | battled_at    | 対局日時         | datetime    | NOT NULL            |                   | B     |
-# | rule_key      | ルール           | string(255) | NOT NULL            |                   | C     |
-# | csa_seq       | 棋譜             | text(65535) | NOT NULL            |                   |       |
-# | final_key     | 結末             | string(255) | NOT NULL            |                   | D     |
-# | win_user_id   | 勝者             | integer(8)  |                     | => Swars::User#id | E     |
-# | turn_max      | 手数             | integer(4)  | NOT NULL            |                   | F     |
-# | meta_info     | メタ情報         | text(65535) | NOT NULL            |                   |       |
-# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL            |                   | G     |
-# | preset_key    | 手合割           | string(255) | NOT NULL            |                   | H     |
-# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL            |                   |       |
-# | sfen_hash     | Sfen hash        | string(255) | NOT NULL            |                   |       |
-# | start_turn    | 開始局面         | integer(4)  |                     |                   | I     |
-# | critical_turn | 開戦             | integer(4)  |                     |                   | J     |
-# | outbreak_turn | Outbreak turn    | integer(4)  |                     |                   | K     |
-# | image_turn    | OGP画像の局面    | integer(4)  |                     |                   |       |
-# | created_at    | 作成日時         | datetime    | NOT NULL            |                   |       |
-# | updated_at    | 更新日時         | datetime    | NOT NULL            |                   |       |
-# | xmode_id      | Xmode            | integer(8)  | DEFAULT(1) NOT NULL |                   | L     |
-# |---------------+------------------+-------------+---------------------+-------------------+-------|
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | name          | desc             | type        | opts        | refs              | index |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | id            | ID               | integer(8)  | NOT NULL PK |                   |       |
+# | key           | 対局ユニークキー | string(255) | NOT NULL    |                   | A!    |
+# | battled_at    | 対局日時         | datetime    | NOT NULL    |                   | B     |
+# | csa_seq       | 棋譜             | text(65535) | NOT NULL    |                   |       |
+# | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | C     |
+# | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | D     |
+# | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
+# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   | E     |
+# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
+# | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
+# | start_turn    | 開始局面         | integer(4)  |             |                   | F     |
+# | critical_turn | 開戦             | integer(4)  |             |                   | G     |
+# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | H     |
+# | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
+# | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
+# | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
+# | xmode_id      | Xmode            | integer(8)  | NOT NULL    |                   | I     |
+# | preset_id     | Preset           | integer(8)  | NOT NULL    | => Preset#id      | J     |
+# | rule_id       | Rule             | integer(8)  | NOT NULL    |                   | K     |
+# | final_id      | Final            | integer(8)  | NOT NULL    |                   | L     |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 
@@ -72,35 +73,24 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   end
 
   describe "並び替え" do
-    describe "battle.*" do
-      it "works" do
-        get :index, params: {query: "devuser1", sort_column: "xmode_id"  }
-        assert { response.status == 200 }
-      end
+    def case1(sort_column)
+      get :index, params: { query: "devuser1", sort_column: sort_column }
+      assert { response.status == 200 }
     end
 
-    describe "membership.*" do
-      it "judge_key" do
-        get :index, params: {query: "devuser1", sort_column: "membership.judge_key", sort_order: "asc" }
-        assert { response.status == 200 }
-      end
+    it "works" do
+      case1 "xmode_id"
+      case1 "rule_id"
+      case1 "final_id"
+      case1 "preset_id"
+      case1 "membership.judge_id"
+      case1 "membership.location_id"
+      case1 "membership.grade_diff"
+    end
 
-      it "location_key" do
-        get :index, params: {query: "devuser1", sort_column: "membership.location_key", sort_order: "asc" }
-        assert { response.status == 200 }
-      end
-
-      it "grade_diff" do
-        get :index, params: {query: "devuser1", sort_column: "membership.grade_diff", sort_order: "asc" }
-        assert { response.status == 200 }
-      end
-
-      describe "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
-        it "works" do
-          get :index, params: {query: "__unknown__", sort_column: "membership.judge_key", sort_order: "asc" }
-          assert { response.status == 200 }
-        end
-      end
+    it "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
+      get :index, params: {query: "__unknown__", sort_column: "membership.judge_id" }
+      assert { response.status == 200 }
     end
   end
 

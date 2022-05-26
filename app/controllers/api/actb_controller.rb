@@ -10,7 +10,7 @@
 #   db/migrate/20200505135600_create_actb.rb
 #
 # test
-#   experiment/0860_actb.rb
+#   playground/0860_actb.rb
 #
 # model
 #   app/models/actb/membership.rb

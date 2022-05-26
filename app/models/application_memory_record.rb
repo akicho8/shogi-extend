@@ -2,11 +2,20 @@ module ApplicationMemoryRecord
   extend ActiveSupport::Concern
 
   included do
-    include MemoryRecord
+    if self < MemoryRecord
+    else
+      include MemoryRecord
+    end
   end
 
-  def name
-    key.to_s
+  class_methods do
+    def keys_from(values)
+      Array(values).collect { |e| fetch(e).key }
+    end
+
+    def array_from(values)
+      Array(values).collect { |e| fetch(e) }
+    end
   end
 
   def db_record!

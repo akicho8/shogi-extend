@@ -19,10 +19,15 @@ namespace :my do
     end
   end
 
-  # rake db_sync TABLES=time_records
   desc "本番サーバーの production の DB をローカルの development にコピーする (オプション: TABLES=t1,t2,t3)"
-  task :db_sync do
+  task :production_db_backup_to_local_and_db_sync do
     Rake::Task["my:production_db_backup_to_local"].invoke
+    Rake::Task["my:db_sync"].invoke
+  end
+
+  # rake my:db_sync
+  desc "db/shogi_web_production.sql.gz をローカルの development にコピーする"
+  task :db_sync do
     system "zcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
   end
 

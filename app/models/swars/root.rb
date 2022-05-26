@@ -1,3 +1,4 @@
+# rails r Swars.setup
 module Swars
   module Root
     def table_name_prefix
@@ -10,10 +11,16 @@ module Swars
       end
 
       [
+        Location,
+        Preset,
+        Judge,
+
         # Static
         # ActiveRecord
         Grade,
         Xmode,
+        Rule,
+        Final,
       ].each do |e|
         e.setup(options)
       end
@@ -21,12 +28,17 @@ module Swars
 
     def models
       [
+        Location,
+        Preset,
+        Judge,
+        User,
         Battle,
         Membership,
         MembershipExtra,
         Grade,
         Xmode,
-        User,
+        Rule,
+        Final,
       ]
     end
 

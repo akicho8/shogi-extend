@@ -1,6 +1,6 @@
 module Swars
   class Battle
-    concern :AssembleMethods do
+    concern :CoreMethods do
       included do
         serialize :csa_seq
         attr_accessor :kifu_body_for_test

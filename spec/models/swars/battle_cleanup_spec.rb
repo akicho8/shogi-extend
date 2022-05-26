@@ -2,6 +2,10 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
+    before do
+      Swars.setup
+    end
+
     def case1(users, attributes = {})
       users = users.collect do |user_key, grade_key|
         User.create!(user_key: user_key, grade: Grade.fetch(grade_key))

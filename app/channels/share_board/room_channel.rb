@@ -180,7 +180,7 @@ module ShareBoard
 
     def sfen_share_track_body(data)
       lmi = data["lmi"]
-      player_location = Bioshogi::Location.fetch(lmi["player_location_key"])
+      player_location = LocationInfo.fetch(lmi["player_location_key"])
 
       s = []
       s << %([#{lmi["next_turn_offset"]}])

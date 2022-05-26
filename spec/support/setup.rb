@@ -1,5 +1,9 @@
 RSpec.configure do |config|
   config.before(:suite) do
+    Preset.setup
+    Location.setup
+    Judge.setup
+
     Actb::Judge.setup
     Actb::Final.setup
     Actb::Skill.setup
@@ -12,6 +16,8 @@ RSpec.configure do |config|
 
     Swars::Grade.setup
     Swars::Xmode.setup
+    Swars::Rule.setup
+    Swars::Final.setup
   end
 
   config.before(:context) do

@@ -34,7 +34,7 @@
 #   ・R差401のとき 401.fdiv(400*2) + 0.5 → 1.001 ※Kを超えてしまう
 #   ・R差400未満で対戦するときだけ使える
 #
-# experiment/elo_rating.rb
+# playground/elo_rating.rb
 module Actb
   module EloRating
     extend self

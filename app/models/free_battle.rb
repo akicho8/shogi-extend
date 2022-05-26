@@ -3,32 +3,33 @@
 #
 # 棋譜投稿 (free_battles as FreeBattle)
 #
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | name          | desc          | type        | opts        | refs       | index |
-# |---------------+---------------+-------------+-------------+------------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK |            |       |
-# | key           | キー          | string(255) | NOT NULL    |            | A!    |
-# | title         | タイトル      | string(255) |             |            |       |
-# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |            |       |
-# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |            |       |
-# | turn_max      | 手数          | integer(4)  | NOT NULL    |            | B     |
-# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |            |       |
-# | battled_at    | Battled at    | datetime    | NOT NULL    |            | C     |
-# | use_key       | Use key       | string(255) | NOT NULL    |            | D     |
-# | accessed_at   | 参照日時      | datetime    | NOT NULL    |            | E     |
-# | user_id       | User          | integer(8)  |             | => User#id | F     |
-# | preset_key    | Preset key    | string(255) | NOT NULL    |            | G     |
-# | description   | 説明          | text(65535) | NOT NULL    |            |       |
-# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |            |       |
-# | start_turn    | 開始局面      | integer(4)  |             |            | H     |
-# | critical_turn | 開戦          | integer(4)  |             |            | I     |
-# | outbreak_turn | Outbreak turn | integer(4)  |             |            | J     |
-# | image_turn    | OGP画像の局面 | integer(4)  |             |            |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL    |            |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL    |            |       |
-# |---------------+---------------+-------------+-------------+------------+-------|
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | name          | desc          | type        | opts        | refs         | index |
+# |---------------+---------------+-------------+-------------+--------------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK |              |       |
+# | key           | キー          | string(255) | NOT NULL    |              | A!    |
+# | title         | タイトル      | string(255) |             |              |       |
+# | kifu_body     | 棋譜          | text(65535) | NOT NULL    |              |       |
+# | sfen_body     | SFEN形式棋譜  | text(65535) | NOT NULL    |              |       |
+# | turn_max      | 手数          | integer(4)  | NOT NULL    |              | B     |
+# | meta_info     | 棋譜ヘッダー  | text(65535) | NOT NULL    |              |       |
+# | battled_at    | Battled at    | datetime    | NOT NULL    |              | C     |
+# | use_key       | Use key       | string(255) | NOT NULL    |              | D     |
+# | accessed_at   | 参照日時      | datetime    | NOT NULL    |              | E     |
+# | user_id       | User          | integer(8)  |             | => User#id   | F     |
+# | description   | 説明          | text(65535) | NOT NULL    |              |       |
+# | sfen_hash     | Sfen hash     | string(255) | NOT NULL    |              |       |
+# | start_turn    | 開始局面      | integer(4)  |             |              | G     |
+# | critical_turn | 開戦          | integer(4)  |             |              | H     |
+# | outbreak_turn | Outbreak turn | integer(4)  |             |              | I     |
+# | image_turn    | OGP画像の局面 | integer(4)  |             |              |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL    |              |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL    |              |       |
+# | preset_id     | Preset        | integer(8)  |             | => Preset#id | J     |
+# |---------------+---------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
@@ -36,6 +37,7 @@ require "open-uri"
 
 class FreeBattle < ApplicationRecord
   include BattleModelMethods
+  include PresetMethods
   include ShareBoardMethods
 
   class << self
@@ -222,7 +224,7 @@ class FreeBattle < ApplicationRecord
           }
           if hash.values.any?(&:present?)
             hash.collect { |location_key, e|
-              [Bioshogi::Location.fetch(location_key).pentagon_mark, (e.presence || ["その他"]).join(" ")].join
+              [LocationInfo.fetch(location_key).pentagon_mark, (e.presence || ["その他"]).join(" ")].join
             }.join(" vs ")
           end
         end
@@ -257,10 +259,10 @@ class FreeBattle < ApplicationRecord
     end
 
     def time_chart_datasets
-      Bioshogi::Location.collect do |location|
+      LocationInfo.collect do |location_info|
         {
-          label: location.name,
-          data: time_chart_xy_list(location),
+          label: location_info.name,
+          data: time_chart_xy_list(location_info),
         }
       end
     end
@@ -271,7 +273,7 @@ class FreeBattle < ApplicationRecord
       decorator = mini_battle_decorator
       a = {}
       a[:game_name] = decorator.normalized_full_tournament_name
-      names = Bioshogi::Location.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
+      names = LocationInfo.collect { |e| [decorator.player_name_for(e), decorator.grade_name_for(e)].compact.join(" ") }
       a.update([:sente_name, :gote_name].zip(names).to_h)
       a
     end

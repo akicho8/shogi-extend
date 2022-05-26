@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_16_082500) do
+ActiveRecord::Schema.define(version: 2022_05_24_184701) do
 
   create_table "actb_bad_marks", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "自分"
@@ -915,7 +915,6 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.string "use_key", null: false
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
     t.bigint "user_id"
-    t.string "preset_key", null: false
     t.text "description", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
@@ -924,16 +923,26 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "preset_id", comment: "手合割"
     t.index ["accessed_at"], name: "index_free_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_free_battles_on_critical_turn"
     t.index ["key"], name: "index_free_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_free_battles_on_outbreak_turn"
-    t.index ["preset_key"], name: "index_free_battles_on_preset_key"
+    t.index ["preset_id"], name: "index_free_battles_on_preset_id"
     t.index ["start_turn"], name: "index_free_battles_on_start_turn"
     t.index ["turn_max"], name: "index_free_battles_on_turn_max"
     t.index ["use_key"], name: "index_free_battles_on_use_key"
     t.index ["user_id"], name: "index_free_battles_on_user_id"
+  end
+
+  create_table "judges", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_judges_on_key", unique: true
+    t.index ["position"], name: "index_judges_on_position"
   end
 
   create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -1014,6 +1023,24 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.index ["user_id"], name: "index_kiwi_lemons_on_user_id"
   end
 
+  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_locations_on_key", unique: true
+    t.index ["position"], name: "index_locations_on_position"
+  end
+
+  create_table "presets", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_presets_on_key", unique: true
+    t.index ["position"], name: "index_presets_on_position"
+  end
+
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "description", limit: 512, null: false, comment: "自己紹介"
@@ -1026,14 +1053,11 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "対局識別子"
     t.datetime "battled_at", null: false, comment: "対局開始日時"
-    t.string "rule_key", null: false, comment: "ルール"
     t.text "csa_seq", null: false, comment: "棋譜の断片"
-    t.string "final_key", null: false, comment: "結果詳細"
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
     t.datetime "accessed_at", null: false, comment: "最終参照日時"
-    t.string "preset_key", null: false
     t.text "sfen_body", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
@@ -1042,15 +1066,18 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.integer "image_turn", comment: "???"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "xmode_id", default: 1, null: false, comment: "対局モード"
+    t.bigint "xmode_id", null: false, comment: "対局モード"
+    t.bigint "preset_id", null: false, comment: "手合割"
+    t.bigint "rule_id", null: false, comment: "持ち時間"
+    t.bigint "final_id", null: false, comment: "結末"
     t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
-    t.index ["final_key"], name: "index_swars_battles_on_final_key"
+    t.index ["final_id"], name: "index_swars_battles_on_final_id"
     t.index ["key"], name: "index_swars_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
-    t.index ["preset_key"], name: "index_swars_battles_on_preset_key"
-    t.index ["rule_key"], name: "index_swars_battles_on_rule_key"
+    t.index ["preset_id"], name: "index_swars_battles_on_preset_id"
+    t.index ["rule_id"], name: "index_swars_battles_on_rule_id"
     t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
     t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
     t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
@@ -1067,6 +1094,15 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.datetime "updated_at", null: false
     t.index ["attachment_mode"], name: "index_swars_crawl_reservations_on_attachment_mode"
     t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
+  end
+
+  create_table "swars_finals", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_swars_finals_on_key", unique: true
+    t.index ["position"], name: "index_swars_finals_on_position"
   end
 
   create_table "swars_grades", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -1091,8 +1127,6 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.bigint "user_id", null: false, comment: "対局者"
     t.bigint "op_user_id", comment: "相手"
     t.bigint "grade_id", null: false, comment: "対局時の段級"
-    t.string "judge_key", null: false, comment: "勝・敗・引き分け"
-    t.string "location_key", null: false, comment: "▲△"
     t.integer "position", comment: "手番の順序"
     t.integer "grade_diff", null: false
     t.datetime "created_at", null: false
@@ -1104,16 +1138,27 @@ ActiveRecord::Schema.define(version: 2022_04_16_082500) do
     t.integer "think_max", comment: "最大考慮秒数"
     t.integer "obt_think_avg", comment: "開戦後の指し手の平均秒数"
     t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
-    t.index ["battle_id", "location_key"], name: "memberships_sbri_lk", unique: true
+    t.bigint "judge_id", null: false, comment: "勝敗"
+    t.bigint "location_id", null: false, comment: "位置"
+    t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
     t.index ["battle_id"], name: "index_swars_memberships_on_battle_id"
     t.index ["grade_id"], name: "index_swars_memberships_on_grade_id"
-    t.index ["judge_key"], name: "index_swars_memberships_on_judge_key"
-    t.index ["location_key"], name: "index_swars_memberships_on_location_key"
+    t.index ["judge_id"], name: "index_swars_memberships_on_judge_id"
+    t.index ["location_id"], name: "index_swars_memberships_on_location_id"
     t.index ["op_user_id"], name: "index_swars_memberships_on_op_user_id"
     t.index ["position"], name: "index_swars_memberships_on_position"
     t.index ["user_id"], name: "index_swars_memberships_on_user_id"
+  end
+
+  create_table "swars_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_swars_rules_on_key", unique: true
+    t.index ["position"], name: "index_swars_rules_on_position"
   end
 
   create_table "swars_search_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

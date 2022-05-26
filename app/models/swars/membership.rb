@@ -3,30 +3,32 @@
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | name           | desc           | type        | opts        | refs              | index      |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
-# | id             | ID             | integer(8)  | NOT NULL PK |                   |            |
-# | battle_id      | 対局共通情報   | integer(8)  | NOT NULL    |                   | A! B! C! D |
-# | user_id        | ユーザー       | integer(8)  | NOT NULL    | => User#id        | B! E       |
-# | op_user_id     | Op user        | integer(8)  |             | => Swars::User#id | C! F       |
-# | grade_id       | 棋力           | integer(8)  | NOT NULL    |                   | G          |
-# | judge_key      | 結果           | string(255) | NOT NULL    |                   | H          |
-# | location_key   | 先手or後手     | string(255) | NOT NULL    |                   | A! I       |
-# | position       | 順序           | integer(4)  |             |                   | J          |
-# | grade_diff     | Grade diff     | integer(4)  | NOT NULL    |                   |            |
-# | created_at     | 作成日時       | datetime    | NOT NULL    |                   |            |
-# | updated_at     | 更新日時       | datetime    | NOT NULL    |                   |            |
-# | think_all_avg  | Think all avg  | integer(4)  |             |                   |            |
-# | think_end_avg  | Think end avg  | integer(4)  |             |                   |            |
-# | two_serial_max | Two serial max | integer(4)  |             |                   |            |
-# | think_last     | Think last     | integer(4)  |             |                   |            |
-# | think_max      | Think max      | integer(4)  |             |                   |            |
-# | obt_think_avg  | Obt think avg  | integer(4)  |             |                   |            |
-# | obt_auto_max   | Obt auto max   | integer(4)  |             |                   |            |
-# |----------------+----------------+-------------+-------------+-------------------+------------|
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | name           | desc           | type       | opts        | refs              | index      |
+# |----------------+----------------+------------+-------------+-------------------+------------|
+# | id             | ID             | integer(8) | NOT NULL PK |                   |            |
+# | battle_id      | 対局共通情報   | integer(8) | NOT NULL    |                   | A! B! C! D |
+# | user_id        | ユーザー       | integer(8) | NOT NULL    | => User#id        | A! E       |
+# | op_user_id     | Op user        | integer(8) |             | => Swars::User#id | C! F       |
+# | grade_id       | 棋力           | integer(8) | NOT NULL    |                   | G          |
+# | position       | 順序           | integer(4) |             |                   | H          |
+# | grade_diff     | Grade diff     | integer(4) | NOT NULL    |                   |            |
+# | created_at     | 作成日時       | datetime   | NOT NULL    |                   |            |
+# | updated_at     | 更新日時       | datetime   | NOT NULL    |                   |            |
+# | think_all_avg  | Think all avg  | integer(4) |             |                   |            |
+# | think_end_avg  | Think end avg  | integer(4) |             |                   |            |
+# | two_serial_max | Two serial max | integer(4) |             |                   |            |
+# | think_last     | Think last     | integer(4) |             |                   |            |
+# | think_max      | Think max      | integer(4) |             |                   |            |
+# | obt_think_avg  | Obt think avg  | integer(4) |             |                   |            |
+# | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
+# | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
+# | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# |----------------+----------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
+# Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
 #--------------------------------------------------------------------------------
@@ -36,7 +38,26 @@ module Swars
     include TagMethods
     include ::Swars::MembershipTimeChartMethods
 
+    custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
+
+    if Rails.env.development? || Rails.env.test?
+      with_options allow_blank: true do
+        validates :location_id, uniqueness: { scope: :battle_id, case_sensitive: true }
+      end
+    end
+
+    custom_belongs_to :judge, ar_model: Judge, st_model: JudgeInfo, default: nil
+
     belongs_to :battle                      # 対局
+
+    # 投了・時間切れ・詰み のみに絞る
+    #
+    #  SELECT m.* FROM m
+    #  INNER JOIN b ON b.id = m.b_id
+    #  INNER JOIN f ON f.id = b.f_id WHERE (f.key = 'TORYO' OR f.key = 'TIMEOUT' OR f.key = 'CHECKMATE')
+    #
+    scope :toryo_timeout_checkmate_only, -> { joins(:battle).merge(Battle.toryo_timeout_checkmate_only) }
+
     belongs_to :user, touch: true           # 対局者
     belongs_to :op_user, class_name: "Swars::User" # 相手
     belongs_to :opponent, class_name: "Membership", optional: true
@@ -47,38 +68,6 @@ module Swars
 
     scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
 
-    begin
-      scope :judge_eq,     -> v { where(    judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
-      scope :judge_not_eq, -> v { where.not(judge_key: Array(v).collect { |e| JudgeInfo.fetch(e).key}) }
-      scope :judge_ex, proc  { |v; s, g|
-        s = all
-        g = xquery_parse(v)
-        if g[true]
-          s = s.judge_eq(g[true])
-        end
-        if g[false]
-          s = s.judge_not_eq(g[false])
-        end
-        s
-      }
-    end
-
-    begin
-      scope :location_eq,     -> v { where(    location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
-      scope :location_not_eq, -> v { where.not(location_key: Array(v).collect { |e| Bioshogi::Location.fetch(e).key}) }
-      scope :location_ex, proc  { |v; s, g|
-        s = all
-        g = xquery_parse(v)
-        if g[true]
-          s = s.location_eq(g[true])
-        end
-        if g[false]
-          s = s.location_not_eq(g[false])
-        end
-        s
-      }
-    end
-
     before_validation do
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?
@@ -86,12 +75,12 @@ module Swars
 
         m = (battle.memberships - [self]).first
         if m
-          self.location_key ||= m.location&.flip&.key
+          self.location_key ||= m.location_info&.flip&.key
           self.judge_key ||= m.judge_info&.flip&.key
         end
 
         if index = battle.memberships.find_index { |e| e == self }
-          self.location_key ||= Bioshogi::Location[index].key
+          self.location_key ||= LocationInfo[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
       end
@@ -136,35 +125,21 @@ module Swars
     end
 
     with_options presence: true do
-      validates :judge_key
       validates :user_id
       validates :op_user_id
-      validates :location_key
     end
 
     with_options allow_blank: true do
-      validates :judge_key, inclusion: JudgeInfo.keys.collect(&:to_s)
-      validates :location_key, inclusion: Bioshogi::Location.keys.collect(&:to_s)
-
       if Rails.env.development? || Rails.env.test?
         with_options uniqueness: { scope: :battle_id, case_sensitive: true } do
           validates :user_id
           validates :op_user_id
-          validates :location_key
         end
       end
     end
 
     def name_with_grade
       "#{user.key} #{grade.name}"
-    end
-
-    def location
-      Bioshogi::Location[location_key]
-    end
-
-    def judge_info
-      JudgeInfo[judge_key]
     end
 
     # 相手 FIXME: 消す

@@ -79,6 +79,14 @@ module MemoryRecordBind
       def [](key)
         lookup(key)
       end
+
+      def keys_from(values)
+        Array(values).collect { |e| fetch(e).key }
+      end
+
+      def array_from(values)
+        Array(values).collect { |e| fetch(e) }
+      end
     end
 
     def pure_info

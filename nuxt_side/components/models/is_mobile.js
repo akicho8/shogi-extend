@@ -3,6 +3,10 @@
  * https://www.abeautifulsite.net/detecting-mobile-devices-with-javascript
  */
 export const isMobile = {
+  Mobile() {
+    return typeof window !== 'undefined' &&
+      window.navigator.userAgentData && window.navigator.userAgentData.mobile
+  },
   Android() {
     return (
       typeof window !== 'undefined' &&
@@ -39,11 +43,12 @@ export const isMobile = {
   },
   any() {
     return (
-      isMobile.Android() ||
+      isMobile.Mobile() ||
+        isMobile.Android() ||
         isMobile.BlackBerry() ||
         isMobile.iOS() ||
         isMobile.Opera() ||
         isMobile.Windows()
     )
-  }
+  },
 }

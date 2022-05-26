@@ -29,7 +29,7 @@ module Swars
             labels: WinLoseInfo.collect(&:name),
             datasets: [
               {
-                data: WinLoseInfo.collect { |e| user.memberships.tagged_with(name, on: :note_tags).where(judge_key: e.key).count },
+                data: WinLoseInfo.collect { |e| user.memberships.tagged_with(name, on: :note_tags).s_where_judge_key_eq(e.key).count },
                 backgroundColor: WinLoseInfo.collect { |e| e.palette.pie_color },
               },
             ],

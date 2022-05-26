@@ -12,27 +12,10 @@ module BattleModelMethods
 
     serialize :meta_info
 
-    begin
-      scope :preset_eq,     -> v { where(    preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
-      scope :preset_not_eq, -> v { where.not(preset_key: Array(v).collect { |e| Bioshogi::PresetInfo.fetch(e).key}) }
-      scope :preset_ex, proc  { |v; s, g| # NOTE: ruby 2.6.5 では -> (v; s, g) と書けないため proc にしている
-        s = all
-        g = xquery_parse(v)
-        if g[true]
-          s = s.preset_eq(g[true])
-        end
-        if g[false]
-          s = s.preset_not_eq(g[false])
-        end
-        s
-      }
-    end
-
     before_validation do
       self.meta_info ||= {}
       self.turn_max ||= 0
       self.accessed_at ||= Time.current
-      self.preset_key ||= :"平手"
     end
 
     before_validation on: :update do
@@ -47,20 +30,6 @@ module BattleModelMethods
         end
       end
     end
-
-    with_options presence: true do
-      validates :preset_key
-      # validates :sfen_body
-      # validates :sfen_hash
-    end
-
-    with_options allow_blank: true do
-      validates :preset_key, inclusion: Bioshogi::PresetInfo.keys.collect(&:to_s)
-    end
-  end
-
-  def preset_info
-    Bioshogi::PresetInfo.fetch(preset_key)
   end
 
   # def total_seconds
@@ -133,9 +102,6 @@ module BattleModelMethods
 
     parser_exec_after(info)
     @parser_executed = true
-  end
-
-  def preset_key_set(info)
   end
 
   def parser_exec_after(info)
@@ -255,7 +221,7 @@ module BattleModelMethods
 
   # def player_info
   #   decorator = mini_battle_decorator
-  #   Bioshogi::Location.inject({}) { |a, e|
+  #   LocationInfo.inject({}) { |a, e|
   #     name = decorator.player_name_for(e.key)
   #     if false
   #       if name

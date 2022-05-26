@@ -230,13 +230,13 @@ export default {
 
     // 開始局面
     // turn sp_turn critical_turn の順に見る
-    sp_turn_for(record) {
+    sp_turn_of(record) {
       const turn = this.$route.query.turn
       if (turn != null) {
         return Number(turn)
       }
       if (this.scene_info) {
-        return this.scene_info.sp_turn_for(record)
+        return this.scene_info.sp_turn_of(record)
       }
       return record.display_turn
     },
@@ -302,7 +302,7 @@ export default {
     },
 
     sp_turn() {
-      return this.sp_turn_for(this.record)
+      return this.sp_turn_of(this.record)
     },
 
     player_info() {

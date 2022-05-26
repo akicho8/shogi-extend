@@ -13,7 +13,6 @@ module Swars
 
       included do
         belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
-        belongs_to :xmode
 
         has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
 
@@ -22,53 +21,11 @@ module Swars
         scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
 
-        begin
-          scope :rule_eq,     -> v { where(    rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
-          scope :rule_not_eq, -> v { where.not(rule_key: Array(v).collect { |e| RuleInfo.fetch(e).key}) }
-          scope :rule_ex,     proc { |v; s, g|
-            s = all
-            g = xquery_parse(v)
-            if g[true]
-              s = s.rule_eq(g[true])
-            end
-            if g[false]
-              s = s.rule_not_eq(g[false])
-            end
-            s
-          }
-        end
+        custom_belongs_to :rule,  ar_model: Rule,  st_model: RuleInfo,  default: "10分"
+        custom_belongs_to :final, ar_model: Final, st_model: FinalInfo, default: "投了"
+        custom_belongs_to :xmode, ar_model: Xmode, st_model: XmodeInfo, default: "通常"
 
-        begin
-          scope :final_eq,     -> v { where(    final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
-          scope :final_not_eq, -> v { where.not(final_key: Array(v).collect { |e| FinalInfo.fetch(e).key}) }
-          scope :final_ex,     proc { |v; s, g|
-            s = all
-            g = xquery_parse(v)
-            if g[true]
-              s = s.final_eq(g[true])
-            end
-            if g[false]
-              s = s.final_not_eq(g[false])
-            end
-            s
-          }
-        end
-
-        begin
-          scope :xmode_eq,     -> v { where(    xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
-          scope :xmode_not_eq, -> v { where.not(xmode: Array(v).collect { |e| Xmode.fetch(e) }) }
-          scope :xmode_ex,     proc { |v; s, g|
-            s = all
-            g = xquery_parse(v)
-            if g[true]
-              s = s.xmode_eq(g[true])
-            end
-            if g[false]
-              s = s.xmode_not_eq(g[false])
-            end
-            s
-          }
-        end
+        scope :toryo_timeout_checkmate_only, -> { joins(:final).where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) }
 
         before_validation on: :create do
           if Rails.env.development? || Rails.env.test?
@@ -77,7 +34,7 @@ module Swars
               self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
             end
 
-            (Bioshogi::Location.count - memberships.size).times do
+            (LocationInfo.count - memberships.size).times do
               memberships.build
             end
 
@@ -96,14 +53,12 @@ module Swars
 
           self.csa_seq ||= []
 
-          self.rule_key ||= :ten_min
-
-          self.xmode ||= Xmode.fetch("通常")
+          # self.rule_key ||= :ten_min
 
           # "" から ten_min への変換
-          if rule_key
-            self.rule_key = RuleInfo.fetch(rule_key).key
-          end
+          # if rule_key
+          #   self.rule_key = RuleInfo.fetch(rule_key).key
+          # end
 
           # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
           if key
@@ -120,28 +75,28 @@ module Swars
           # end
 
           self.battled_at ||= Time.current
-          self.final_key ||= :TORYO
+          # self.final_key ||= :TORYO
         end
 
         with_options presence: true do
           validates :key
           validates :battled_at
-          validates :rule_key
-          validates :final_key
-          validates :xmode_id
+
+          # validates :rule_key
+          # validates :final_key
+
+          # validates :rule_id
+          # validates :final_id
+          # validates :xmode_id
         end
 
-        with_options allow_blank: true do
-          if false
-            # ・このバリデーションは不要
-            # ・RecordInvalid になってしまうから
-            # ・別にフォームじゃないので必要ない
-            # ・DB の index: { unique: true } にまかせる方がよい
-            # ・RecordNotUnique なら controller 側で判定できる
-            validates :key, uniqueness: { case_sensitive: true }
-          end
-          validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
-        end
+        # if Rails.env.development?
+        #   with_options allow_blank: true do
+        #     validates :rule_key,  inclusion: RuleInfo.keys.collect(&:to_s)
+        #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
+        #     validates :xmode_key, inclusion: XmodeInfo.keys.collect(&:to_s)
+        #   end
+        # end
 
         # after_create do
         #   memberships.each(&:opponent_id_set_if_blank)
@@ -152,21 +107,13 @@ module Swars
         key
       end
 
-      def rule_info
-        RuleInfo.fetch(rule_key)
-      end
-
-      def final_info
-        FinalInfo.fetch(final_key)
-      end
-
       def battle_decorator_class
         BattleDecorator::SwarsBattleDecorator
       end
 
       def player_info
         memberships.inject({}) { |a, e|
-          a.merge(e.location.key => {
+          a.merge(e.location_info.key => {
               :name  => e.user.key,
               :class => e.judge_info.css_class,
             })
@@ -205,8 +152,8 @@ module Swars
           }
         end
 
-        def time_chart_sec_list_of(location)
-          memberships[location.code].sec_list
+        def time_chart_sec_list_of(location_info)
+          memberships[location_info.code].sec_list
         end
       end
 

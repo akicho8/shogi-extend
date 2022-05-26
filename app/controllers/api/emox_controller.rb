@@ -10,7 +10,7 @@
 #   db/migrate/20200505135600_create_emox.rb
 #
 # test
-#   experiment/0860_emox.rb
+#   playground/0860_emox.rb
 #
 # model
 #   app/models/emox/membership.rb

@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
+ApplicationRecord.connection.execute("SET foreign_key_checks = 0")
+
 Swars::User.destroy_all
 Swars::Battle.destroy_all
 
@@ -19,4 +21,4 @@ test("九段", "win")
 test("九段", "win")
 test("九段", "lose")
 
-@user1.user_info.every_grade_list # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}, :appear_ratio=>1.5}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}, :appear_ratio=>0.5}]
+@user1.user_info.every_grade_list # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}, :appear_ratio=>0.75}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}, :appear_ratio=>0.25}]

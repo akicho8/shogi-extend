@@ -8,7 +8,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 # | id                  | ID                  | integer(8) | NOT NULL PK |              |       |
 # | user_id             | User                | integer(8) | NOT NULL    | => ::User#id | A!    |
-# | judge_id            | Judge               | integer(8) | NOT NULL    |              | B     |
+# | judge_id            | Judge               | integer(8) | NOT NULL    | => Judge#id  | B     |
 # | final_id            | Final               | integer(8) | NOT NULL    |              | C     |
 # | battle_count        | Battle count        | integer(4) | NOT NULL    |              | D     |
 # | win_count           | Win count           | integer(4) | NOT NULL    |              | E     |
@@ -31,6 +31,7 @@
 # |---------------------+---------------------+------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 

@@ -16,7 +16,7 @@
 # record.memberships[1].time_chart_xy_list  # => [{:x=>2, :y=>-3 seconds}, {:x=>4, :y=>-7 seconds}, {:x=>6, :y=>-10 minutes and 10 seconds}]
 # record.time_chart_label_max               # => 6
 #
-# experiment/0260_swars_battle_time_chart.rb
+# playground/0260_swars_battle_time_chart.rb
 #
 module TimeChartMethods
   extend ActiveSupport::Concern
@@ -35,24 +35,24 @@ module TimeChartMethods
   # ウォーズのデータ不整合で先後でデータ数が2つ以上異なる場合があるため sum ではなく大きい方を2倍する
   # これでグラフ内に必ず収まる
   def time_chart_label_max
-    Bioshogi::Location.collect { |e| time_chart_sec_list_of(e).size }.max * 2
+    LocationInfo.collect { |e| time_chart_sec_list_of(e).size }.max * 2
   end
 
   # FreeBattle 用
   # Swars::Battle では変更する
   # [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}]
-  def time_chart_sec_list_of(location)
-    raw_sec_list(location)
+  def time_chart_sec_list_of(location_info)
+    raw_sec_list(location_info)
   end
 
-  # location の [10, 20] を返す
-  def raw_sec_list(location)
-    location = Bioshogi::Location[location]
+  # location_info の [10, 20] を返す
+  def raw_sec_list(location_info)
+    location_info = LocationInfo.fetch(location_info)
 
     @raw_sec_list ||= {}
-    @raw_sec_list[location] ||= yield_self do
-      c = Bioshogi::Location.count
-      pos = preset_info.to_turn_info.current_location(location.code).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
+    @raw_sec_list[location_info] ||= yield_self do
+      c = LocationInfo.count
+      pos = preset_info.to_turn_info.current_location(location_info.code).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
       v = fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
       v.collect { |e| e[:used_seconds] }
     end
@@ -62,18 +62,18 @@ module TimeChartMethods
     @raw_sec_list_all ||= fast_parsed_info.move_infos.find_all.collect { |e| e[:used_seconds] }
   end
 
-  # location の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
-  def time_chart_xy_list(location)
-    # c = Bioshogi::Location.count
-    # loc = preset_info.to_turn_info.current_location(location.code)
-    # time_chart_sec_list_of(location).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
+  # location_info の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
+  def time_chart_xy_list(location_info)
+    # c = LocationInfo.count
+    # loc = preset_info.to_turn_info.current_location(location_info.code)
+    # time_chart_sec_list_of(location_info).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location_info.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
 
-    location = Bioshogi::Location[location]
+    location_info = LocationInfo[location_info]
 
-    c = Bioshogi::Location.count
-    loc = preset_info.to_turn_info.current_location(location.code)
+    c = LocationInfo.count
+    loc = preset_info.to_turn_info.current_location(location_info.code)
 
-    a = time_chart_sec_list_of(location)
+    a = time_chart_sec_list_of(location_info)
 
     # raise memberships[0].sec_list.collect(&:to_i).inspect
 
@@ -91,7 +91,7 @@ module TimeChartMethods
       begin
         if i >= 1
           if (loc.code + i).modulo(c).nonzero?
-            y = location.value_sign * (it.next || 0)
+            y = location_info.value_sign * (it.next || 0)
           end
         end
       rescue StopIteration

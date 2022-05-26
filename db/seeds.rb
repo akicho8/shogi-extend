@@ -2,6 +2,11 @@ ENV["SLACK_AGENT_DISABLE"] = "true"
 ENV["INSIDE_DB_SEEDS_TASK"] = "1"
 
 [
+  # 汎用
+  Location,
+  Preset,
+  Judge,
+
   Emox::Rule,
   Emox::Judge,
   Emox::Final,
@@ -22,7 +27,7 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Wkbk,
   Kiwi,
   FreeBattle,
-  Swars::Grade,
+  Swars,
   Swars::Battle,
   User,
   Tsl,

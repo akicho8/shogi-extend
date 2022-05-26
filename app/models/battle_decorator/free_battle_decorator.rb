@@ -16,14 +16,14 @@ module BattleDecorator
       end
     end
 
-    def player_name_for(location)
-      if md = player_name_md(location)
+    def player_name_for(location_info)
+      if md = player_name_md(location_info)
         md["player_name"]
       end
     end
 
-    def grade_name_for(location)
-      if md = player_name_md(location)
+    def grade_name_for(location_info)
+      if md = player_name_md(location_info)
         if s = md["grade_name"]
           if md = s.match(/\((.*)\)/) # "(R123)" → "R123"
             s = md.captures.first
@@ -33,8 +33,8 @@ module BattleDecorator
       end
     end
 
-    def strategy_pack_core(location)
-      player = heavy_parsed_info.mediator.player_at(location)
+    def strategy_pack_core(location_info)
+      player = heavy_parsed_info.mediator.player_at(location_info)
       sep = " #{params[:separator]} "
       max = params[:strategy_take_max]
       s = nil
@@ -47,8 +47,8 @@ module BattleDecorator
     # "#{battle.turn_max}手" でもよい
     #
     # 自力で作る場合
-    # if location = heavy_parsed_info.mediator.win_player.location
-    #   str = player_name_for(location)
+    # if location_info = heavy_parsed_info.mediator.win_player.location
+    #   str = player_name_for(location_info)
     # end
     def battle_result_str
       str = heavy_parsed_info.judgment_message
@@ -57,11 +57,11 @@ module BattleDecorator
 
       if true
         # 「先手」を実際の名前に置き換える場合
-        Bioshogi::Location.each do |location|
-          if name = player_name_for(location).presence
-            # grade = grade_name_for(location) # FreeBattle の場合、常に空なので意味ない
+        LocationInfo.each do |location_info|
+          if name = player_name_for(location_info).presence
+            # grade = grade_name_for(location_info) # FreeBattle の場合、常に空なので意味ない
             grade = nil
-            str = str.gsub(/#{location.call_names.join("|")}/, " #{grade}#{name} ")
+            str = str.gsub(/#{location_info.call_names.join("|")}/, " #{grade}#{name} ")
           end
         end
       end
@@ -69,8 +69,8 @@ module BattleDecorator
       str
     end
 
-    def total_seconds_for(location)
-      heavy_parsed_info.mediator.player_at(location).personal_clock.total_seconds
+    def total_seconds_for(location_info)
+      heavy_parsed_info.mediator.player_at(location_info).personal_clock.total_seconds
     end
 
     def normalized_full_tournament_name
@@ -83,13 +83,13 @@ module BattleDecorator
       normalized_full_tournament_name.match(/(?<tournament_name>.*)\s*\((?<rule_name>.*)\)\z/)
     end
 
-    def full_player_name(location)
-      location = Bioshogi::Location[location]
-      heavy_parsed_info.header.to_h.values_at(*location.call_names).compact.first.to_s
+    def full_player_name(location_info)
+      location_info = LocationInfo[location_info]
+      heavy_parsed_info.header.to_h.values_at(*location_info.call_names).compact.first.to_s
     end
 
-    def player_name_md(location)
-      full_player_name(location).match(/(?<player_name>.+?)\s*(?<grade_name>\(.+\)|#{Swars::GradeInfo.keys.join("|")})?\z/) # #<MatchData "niwapin(2298)" player_name:"niwapin" grade_name:"2298">
+    def player_name_md(location_info)
+      full_player_name(location_info).match(/(?<player_name>.+?)\s*(?<grade_name>\(.+\)|#{Swars::GradeInfo.keys.join("|")})?\z/) # #<MatchData "niwapin(2298)" player_name:"niwapin" grade_name:"2298">
     end
   end
 end

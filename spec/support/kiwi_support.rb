@@ -5,6 +5,7 @@ module KiwiSupport
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     before do
+      Preset.setup
       Actb.setup
       Emox.setup
       Wkbk.setup

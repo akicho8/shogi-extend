@@ -42,7 +42,7 @@ module BattleDecorator
       end
     end
 
-    def player_name_for(location)
+    def player_name_for(location_info)
     end
 
     def end_at_s
@@ -55,19 +55,19 @@ module BattleDecorator
     # そのときはタグを pre にする
     def strategy_pack_for_all
       if battle.turn_max >= 1
-        Bioshogi::Location.collect { |location|
-          s = strategy_pack_core(location)
+        LocationInfo.collect { |location_info|
+          s = strategy_pack_core(location_info)
           s ||= "不明"
           s = s.remove(/△|▲/)
-          "#{location.pentagon_mark} #{s}"
+          "#{location_info.pentagon_mark} #{s}"
         }.join("<br>")
       end
     end
 
     # location_kanji_char(:black) # => "先 ☗"
-    def location_kanji_char(location)
-      location = Bioshogi::Location.fetch(location)
-      name = location.call_name(handicap?)
+    def location_kanji_char(location_info)
+      location_info = LocationInfo.fetch(location_info)
+      name = location_info.call_name(handicap?)
       name.chars.first
     end
 
@@ -103,7 +103,7 @@ module BattleDecorator
     def datetime_blank
     end
 
-    def grade_name_for(location)
+    def grade_name_for(location_info)
     end
 
     def umpire_name
@@ -131,11 +131,11 @@ module BattleDecorator
     def hold_time_str
     end
 
-    def total_seconds_str_for(location)
-      location = Bioshogi::Location.fetch(location)
-      seconds = total_seconds_for(location)
+    def total_seconds_str_for(location_info)
+      location_info = LocationInfo.fetch(location_info)
+      seconds = total_seconds_for(location_info)
       m, s = seconds.divmod(1.minutes)
-      [location.pentagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
+      [location_info.pentagon_mark, " ", m.nonzero? ? "#{m}分" : nil, "#{s}秒"].join
     end
 
     def tournament_name
@@ -148,9 +148,9 @@ module BattleDecorator
       params[:battle]
     end
 
-    def membership_for(location)
-      location = Bioshogi::Location.fetch(location)
-      memberships[location.code]
+    def membership_for(location_info)
+      location_info = LocationInfo.fetch(location_info)
+      memberships[location_info.code]
     end
 
     def inner_fixed_columns
@@ -248,7 +248,7 @@ module BattleDecorator
       end
     end
 
-    def total_seconds_for(location)
+    def total_seconds_for(location_info)
     end
 
     def debug_mode?
@@ -310,7 +310,7 @@ module BattleDecorator
     end
 
     def location_size
-      Bioshogi::Location.count
+      LocationInfo.count
     end
 
     def vc
