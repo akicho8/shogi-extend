@@ -1,8 +1,10 @@
 <template lang="pug">
-.SwarsBattleShowApp
-  b-loading(:active="$fetchState.pending")
-  .MainContainer(v-if="!$fetchState.pending")
-    client-only
+client-only
+  .SwarsBattleShowApp
+    FetchStateErrorMessage(:fetchState="$fetchState")
+    b-loading(:active="$fetchState.pending")
+
+    .MainContainer(v-if="record")
       SwarsBattleShowSidebar(:base="base")
       SwarsBattleShowNavbar(:base="base")
 
@@ -26,7 +28,7 @@
           )
 
       SwarsBattleShowTimeChart(
-        v-if="record && time_chart_params"
+        v-if="time_chart_params"
         :record="record"
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
@@ -71,7 +73,7 @@
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
       //-     | new_viewpoint: {{new_viewpoint}}
-  DebugPre(v-if="development_p") {{record}}
+      DebugPre(v-if="development_p") {{record}}
 </template>
 
 <script>
@@ -231,6 +233,8 @@ export default {
     // 開始局面
     // turn sp_turn critical_turn の順に見る
     sp_turn_of(record) {
+      this.__assert__(record, "record")
+
       const turn = this.$route.query.turn
       if (turn != null) {
         return Number(turn)
