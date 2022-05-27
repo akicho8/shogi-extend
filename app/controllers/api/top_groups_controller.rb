@@ -23,6 +23,7 @@ module Api
         else
           name = key
         end
+
         row[:user] = { name: name, key: key }
         row[:battles_count] = nil
         if user
@@ -31,13 +32,16 @@ module Api
           # 最近の成績
           s = user.memberships
           s = s.joins(:battle)
+          s = s.includes(:judge)
           # s = s.merge(Swars::Battle.win_lose_only) # 勝敗があるものだけ
           s = s.merge(Swars::Battle.newest_order)  # 新しいもの順
           s = s.limit(current_max)
+
           row[:judge] = s.collect { |e| e.judge_info.ox_mark }.join
 
-          row[:win]  = s.where(judge_key: :win).count
-          row[:lose] = s.where(judge_key: :lose).count
+          # 遅い
+          row[:win]  = s.s_where_judge_key_eq(:win).count
+          row[:lose] = s.s_where_judge_key_eq(:lose).count
 
           # 最近の勝率
           d = row[:win] + row[:lose]
@@ -94,6 +98,11 @@ module Api
 
       # 念のためユニーク化
       # keys.uniq
+
+      if Rails.env.test? || Rails.env.development?
+        keys = Swars::User.pluck(:key)
+      end
+
       keys
     end
 
