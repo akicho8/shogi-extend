@@ -1,1 +1,2 @@
 ssh i sudo tailf /var/log/messages
+ssh i 'sudo tailf /var/log/messages' | grep 'Cannot read'
