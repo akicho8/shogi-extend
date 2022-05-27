@@ -125,7 +125,7 @@ module Swars
 
         if false
           s = s.joins(:battle)
-          s = s.where(Swars::Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+          s = s.where(Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
         else
           s = s.toryo_timeout_checkmate_only
         end
@@ -191,7 +191,7 @@ module Swars
         end
 
         denominator = s.count
-        s = Swars::Membership.where(id: s.ids) # 再スコープ化
+        s = Membership.where(id: s.ids) # 再スコープ化
 
         tags = s.all_tag_counts(at_least: at_least_value) # 全タグ
         tags.inject(Hash.new(0)) { |a, e| a.merge(e.name => e.count.fdiv(denominator)) } # 分母は負かされ数
@@ -205,8 +205,8 @@ module Swars
       if real_count.positive?
         s = win_scope
         s = s.joins(:battle => :final)
-        s = s.where(Swars::Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
-        s = s.where(Swars::Battle.arel_table[:turn_max].gteq(turn_max_gteq))
+        s = s.where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+        s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
         s = s.tagged_with("居玉", on: :defense_tags)
         s.count.fdiv(real_count)
       end
@@ -326,7 +326,7 @@ module Swars
       b = rule_info.long_leave_alone
       if a && b
         s = lose_scope
-        s = s.where(Swars::Membership.arel_table[:think_max].between(a...b))
+        s = s.where(Membership.arel_table[:think_max].between(a...b))
         s = s.joins(:battle => :rule)
         s = s.where(Rule.arel_table[:key].eq(rule_info.key))
         s.count
@@ -341,7 +341,7 @@ module Swars
         if new_scope_count.positive?
           s = new_scope
           s = s.joins(:battle => :final).where(Final.arel_table[:key].eq("DRAW_SENNICHI"))
-          s = s.where(Swars::Battle.arel_table[:turn_max].eq(12))
+          s = s.where(Battle.arel_table[:turn_max].eq(12))
           c = s.count
           c.fdiv(new_scope_count)
         end
@@ -409,11 +409,11 @@ module Swars
       @lose_ratio_of[final_key] ||= yield_self do
         if lose_count.positive?
           if false
-            s = lose_scope.joins(:battle).where(Swars::Battle.arel_table[:final_key].eq(final_key))
+            s = lose_scope.joins(:battle).where(Battle.arel_table[:final_key].eq(final_key))
           else
-            s = lose_scope.joins(:battle => :final).where(Swars::Final.arel_table[:key].eq(final_key))
+            s = lose_scope.joins(:battle => :final).where(Final.arel_table[:key].eq(final_key))
           end
-          s = s.where(Swars::Battle.arel_table[:turn_max].gteq(14))
+          s = s.where(Battle.arel_table[:turn_max].gteq(14))
           c = s.count
           c.fdiv(lose_count)
         end
@@ -437,7 +437,7 @@ module Swars
           s = lose_scope
           s = s.joins(:battle => :final)
           s = s.where(Final.arel_table[:key].eq_any(["TORYO", "CHECKMATE"]))
-          s = s.where(Swars::Battle.arel_table[:turn_max].lteq(19))
+          s = s.where(Battle.arel_table[:turn_max].lteq(19))
           c = s.count
           c.fdiv(lose_count)
         else

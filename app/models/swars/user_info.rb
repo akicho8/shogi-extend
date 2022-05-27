@@ -131,7 +131,7 @@ module Swars
     # また group するときも order が入っていると MySQL では group に order のカラムも含めないと、
     # 正しく動かなくてわけわからんんことになるのでそれの回避
     def ids_scope
-      Swars::Membership.where(id: current_scope.ids) # 再スコープ化
+      Membership.where(id: current_scope.ids) # 再スコープ化
     end
 
     def win_scope
@@ -177,11 +177,11 @@ module Swars
       s = win_lose_only_condition_add(s)
       denominator = s.count
 
-      s = Swars::Membership.where(id: s.ids) # 再スコープ化
+      s = Membership.where(id: s.ids) # 再スコープ化
 
-      s = s.joins(:grade).group(Swars::Grade.arel_table[:key]) # 段級と
+      s = s.joins(:grade).group(Grade.arel_table[:key]) # 段級と
       s = s.joins(:judge).group(Judge.arel_table[:key])        # 勝ち負けでグループ化
-      s = s.order(Swars::Grade.arel_table[:priority])          # 相手が強い順
+      s = s.order(Grade.arel_table[:priority])          # 相手が強い順
       hash = s.count                                           # => {["九段", "lose"]=>2, ["九段", "win"]=>1, ["初段", "lose"]=>1}
 
       counts = {}
@@ -203,18 +203,18 @@ module Swars
 
     def win_lose_only_condition_add(s)
       s = condition_add(s)
-      s = s.merge(Swars::Battle.win_lose_only) # 勝敗が必ずあるもの
+      s = s.merge(Battle.win_lose_only) # 勝敗が必ずあるもの
     end
 
     # 必須の条件
     def condition_add(s)
       s = s.joins(:battle)
-      s = s.merge(Swars::Battle.newest_order)  # 直近のものから取得
+      s = s.merge(Battle.newest_order)  # 直近のものから取得
       if v = params[:rule].presence
-        s = s.merge(Swars::Battle.rule_eq(v))
+        s = s.merge(Battle.rule_eq(v))
       end
       if v = params[:xmode].presence
-        s = s.merge(Swars::Battle.xmode_eq(v))
+        s = s.merge(Battle.xmode_eq(v))
       end
       s = s.limit(sample_max)
       s
@@ -696,7 +696,7 @@ module Swars
     def avg_turn_max_for(judge_key)
       s = ids_scope.s_where_judge_key_eq(judge_key)
       s = s.joins(:battle => :final)
-      s = s.where(Swars::Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+      s = s.where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
       if v = s.average(:turn_max)
         v.to_i
       end
@@ -811,10 +811,10 @@ module Swars
       @xmode_counts ||= yield_self do
         s = user.memberships
         s = condition_add(s)
-        s = Swars::Battle.where(id: s.pluck(:battle_id))
+        s = Battle.where(id: s.pluck(:battle_id))
         s = s.group(:xmode_id)
         c = s.count
-        Swars::Xmode.all.inject({}) do |a, e|
+        Xmode.all.inject({}) do |a, e|
           a.merge(e.key => c[e.id] || 0)
         end
       end
