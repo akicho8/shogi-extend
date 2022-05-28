@@ -13,7 +13,6 @@ AppConfig.deep_merge!({
 
     ################################################################################ redis
     :redis_db_for_xy_master              => 2,    # 符号の鬼のランキング用
-    :redis_db_for_actb                   => 4,    # actb
     :redis_db_for_sidekiq                => 5,    # sidekiq
     :redis_db_for_share_board            => 8,    # 共有将棋盤
 

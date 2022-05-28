@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "ユーザー", type: :system do
-  before do
-    Actb.setup
-  end
-
   describe "ログインしてない状態" do
     it "面倒なアカウント登録" do
       visit "http://localhost:3000/xusers/sign_up"

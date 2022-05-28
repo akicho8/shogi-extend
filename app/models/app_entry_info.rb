@@ -254,26 +254,6 @@ class AppEntryInfo
       ],
     },
     {
-      display_p: Actb::Config[:actb_display_p],
-      experiment_p: true,
-      nuxt_link_to: {path: "/training"},
-      title: "将棋トレーニングバトル",
-      attention_label: nil,
-      og_image_key: "actb",
-      description: "将棋の問題を解く力を競うネット対戦ゲーム",
-      features: [
-        "自作の問題を作れる",
-        "問題投稿＆共有したいときは「インスタンス将棋問題集」の方をどうぞ",
-        # "アヒル戦法の誰得問題集がある",
-        # "面白いかと思って作ったらあんまり面白くなかった",
-        # "詰将棋の著作権に対しての価値観の違いからくるわだかまりのみを残し終了……(笑)"
-        # "対戦は 23:00 - 23:15 のみ",
-        # "棋力アップしません",
-        # "対戦→見直し→対戦のサイクルで棋力アップ(？)",
-        # "ランキング上位をめざす必要はありません",
-      ],
-    },
-    {
       display_p: true,
       experiment_p: true,
       nuxt_link_to: {path: "/blindfold"},

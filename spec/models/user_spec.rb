@@ -38,10 +38,6 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   include ActiveJob::TestHelper
 
-  before(:context) do
-    Actb.setup
-  end
-
   it "ログイン名に絵文字が含まれていてもDBが死なない" do
     assert { User.create!(name: "a🦐b").name == "a🦐b" }
   end
@@ -61,9 +57,5 @@ RSpec.describe User, type: :model do
 
   it "info" do
     assert { User.create!.info }
-  end
-
-  it "actb_created_after_days" do
-    assert { User.create!.actb_created_after_days === 0 }
   end
 end

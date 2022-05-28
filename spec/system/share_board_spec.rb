@@ -992,10 +992,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "自動マッチング" do
-    before do
-      Actb.setup
-    end
-
     it "飛vs角を1vs1" do
       a_block do
         visit_app(force_user_name: "alice", xmatch_auth_key: "handle_name_required")

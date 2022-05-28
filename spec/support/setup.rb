@@ -3,15 +3,6 @@ RSpec.configure do |config|
     Preset.setup
     Location.setup
     Judge.setup
-
-    Actb::Judge.setup
-    Actb::Final.setup
-    Actb::Skill.setup
-    Actb::Rule.setup
-    Actb::OxMark.setup
-    Actb::Lineage.setup
-    Actb::SourceAbout.setup
-
     Swars::Grade.setup
     Swars::Xmode.setup
     Swars::Rule.setup

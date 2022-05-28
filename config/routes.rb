@@ -95,10 +95,6 @@ Rails.application.routes.draw do
 
   ################################################################################ 将棋トレーニングバトル
 
-  # match "actb", to: "scripts#show", defaults: { id: "actb_app" }, via: [:get, :update]
-
-  ################################################################################ scripts
-
   resources :scripts, :path => "script", :only => [:show, :update]
 
   ################################################################################ api
@@ -127,9 +123,6 @@ Rails.application.routes.draw do
     get "swars/custom_search_setup(.:format)",            to: "swars#custom_search_setup"
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
-
-    get "actb(.:format)", to: "actb#show",   format: nil # /actb.zip もある
-    put "actb(.:format)", to: "actb#update", format: nil
 
     namespace :wkbk, format: :json do
       namespace :tops do

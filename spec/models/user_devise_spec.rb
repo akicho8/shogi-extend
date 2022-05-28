@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.describe User, type: :model do
   include ActiveJob::TestHelper
 
-  # before(:context) do
-  #   Actb.setup
-  # end
-
   it "create! のときに confirmed_at を設定するとメール認証が飛ばない" do
     perform_enqueued_jobs do
       User.create!(email: "alice@example.com", confirmed_at: Time.current)

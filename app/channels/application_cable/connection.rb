@@ -13,18 +13,10 @@ module ApplicationCable
         tags << "#{current_user.id}:#{current_user.name}"
       end
       logger.add_tags(tags)
-
-      # if current_user
-      #   # current_user.actb_lobby_messages.create!(body: "*Connection#connect") if Rails.env.development?
-      # end
     end
 
     def disconnect
       # Any cleanup work needed when the cable connection is cut.
-      # if current_user
-      #   # current_user.actb_lobby_messages.create!(body: "*Connection#disconnect") if Rails.env.development?
-      # end
-
       # ActionCable.server.remote_connections.where(once_uuid: once_uuid).disconnect
     end
 

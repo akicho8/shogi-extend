@@ -94,7 +94,6 @@ namespace :deploy do
           with rails_env: fetch(:rails_env) do
             execute :rake, "db:drop", "DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
             execute :rake, "db:create"
-            execute :rails, "runner", "Actb::BaseChannel.redis.flushdb"
           end
         end
       end

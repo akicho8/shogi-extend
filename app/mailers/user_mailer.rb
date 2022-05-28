@@ -29,45 +29,6 @@ class UserMailer < ApplicationMailer
     mail(params)
   end
 
-  # 問題の作者に通知
-  # UserMailer.question_owner_message(Actb::QuestionMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/actb/question_owner_message
-  def question_owner_message(message)
-    subject = "#{message.user.name}さんが「#{message.question.title}」にコメントしました"
-
-    out = []
-    out << message.unescaped_body
-    out << ""
-    out << message.question.page_url
-
-    if Rails.env.test? || Rails.env.development?
-      out << ""
-      out << "--"
-      out << "▼将棋トレーニングバトル"
-      out << UrlProxy.full_url_for("/actb")
-    end
-
-    body = out.join("\n")
-
-    mail(subject: subject, to: message.question.user.email, bcc: AppConfig[:admin_email], body: body)
-  end
-
-  # 以前コメントした人に通知
-  # UserMailer.question_other_message(User.first, Actb::QuestionMessage.first).deliver_later
-  # http://localhost:3000/rails/mailers/user/question_other_message
-  def question_other_message(user, message)
-    subject = "以前コメントした「#{message.question.title}」に#{message.user.name}さんがコメントしました"
-
-    out = []
-    out << message.unescaped_body
-    out << ""
-    out << message.question.page_url
-
-    body = out.join("\n")
-
-    mail(subject: subject, to: user.email, bcc: AppConfig[:admin_email], body: body)
-  end
-
   # 棋譜取得完了
   # UserMailer.battle_fetch_notify(Swars::CrawlReservation.first).deliver_later
   # http://localhost:3000/rails/mailers/user/battle_fetch_notify

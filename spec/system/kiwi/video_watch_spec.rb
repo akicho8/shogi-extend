@@ -5,7 +5,6 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
   include AliceBobCarol
 
   before do
-    Actb.setup
     Wkbk.setup
 
     login

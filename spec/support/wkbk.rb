@@ -3,7 +3,6 @@ module WkbkSupportMethods
 
   included do
     before(:context) do
-      Actb.setup
       Wkbk.setup
       Wkbk::Book.mock_setup
     end

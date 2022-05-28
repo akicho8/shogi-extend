@@ -52,10 +52,6 @@ every("5 3 * * *") do
 
     "Tsl::League.setup",
 
-    # 常時オンライン/常時対戦中になっている人を消す
-    "Actb::SchoolChannel.active_users_clear",
-    "Actb::RoomChannel.active_users_clear",
-
     "Kiwi::Lemon.background_job_for_cron", # 動画変換。job時間が 0...0 ならcronで実行する
 
     %(SlackAgent.notify(subject: "CRON", body: "end")),
@@ -90,7 +86,6 @@ if @environment == "production"
       %(ruby -r fileutils -e 'files = Dir["/var/backup/*.gz"].sort; FileUtils.rm(files - files.last(3))'),
     ].join(";")
   end
-  every("0 0 1 * *")  { runner %(Actb::Season.create!) }
 end
 
 # if @environment == "production"

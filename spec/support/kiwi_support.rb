@@ -6,7 +6,6 @@ module KiwiSupport
 
     before do
       Preset.setup
-      Actb.setup
       Wkbk.setup
       Kiwi::Folder.setup
     end

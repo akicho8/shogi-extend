@@ -22,10 +22,6 @@ require "rails_helper"
 RSpec.describe AuthInfo, type: :model do
   include ActiveJob::TestHelper
 
-  before(:context) do
-    Actb.setup
-  end
-
   let(:auth) do
     { "info" => { "email" => "sns@example.com" } }
   end
