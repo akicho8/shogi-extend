@@ -54,7 +54,7 @@ class AppEntryInfo
       nuxt_link_to: {path: "/adapter"},
       title: "なんでも棋譜変換",
       og_image_key: "adapter",
-      description: "棋譜が読み込めないときに放り込もう",
+      description: "読めない棋譜を放り込め",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
         "将棋クエストのCSA形式をKIFに変換",
@@ -134,8 +134,8 @@ class AppEntryInfo
       experiment_p: false,
       nuxt_link_to: {path: "/swars/histograms/grade"},
       title: "将棋ウォーズ棋力分布",
-      og_image_key: "swars-histograms-attack",
-      description: "偏差値とか見たいときにどうぞ",
+      og_image_key: "swars-histograms-grade",
+      description: "偏差値的なのを見たいときにどうぞ",
       features: [
         "変動するように最近のだけ出してる",
         "戦法や囲いの分布もある",
@@ -173,7 +173,7 @@ class AppEntryInfo
       experiment_p: false,
       nuxt_link_to: {path: "/three-stage-leagues"},
       title: "奨励会三段リーグ成績早見表",
-      og_image_key: "three-stage-league-players",
+      og_image_key: "three-stage-league",
       description: "個人成績を見たいときにどうぞ",
       features: [
         "スマホに最適化",
