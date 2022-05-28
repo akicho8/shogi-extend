@@ -226,19 +226,6 @@ class AppEntryInfo
       ],
     },
     {
-      display_p: true,
-      experiment_p: false,
-      nuxt_link_to: {path: "/style-editor"},
-      title: "将棋盤スタイルエディタ",
-      attention_label: nil,
-      og_image_key: "style-editor",
-      description: "将棋盤のスタイルをいじくる開発用ツール",
-      features: [
-        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
-        "これで加工した画面は自由に使ってもらってかまいません",
-      ],
-    },
-    {
       key: :gallery,
       display_p: true,
       experiment_p: false,
@@ -251,6 +238,19 @@ class AppEntryInfo
         "木目3種類 × 濃淡4種類",
         "サイズ: 1080x1080",
         "色相等は調整してください",
+      ],
+    },
+    {
+      display_p: true,
+      experiment_p: false,
+      nuxt_link_to: {path: "/style-editor"},
+      title: "将棋盤スタイルエディタ",
+      attention_label: nil,
+      og_image_key: "style-editor",
+      description: "将棋盤のスタイルをいじくる開発用ツール",
+      features: [
+        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
+        "これで加工した画面は自由に使ってもらってかまいません",
       ],
     },
   ]
