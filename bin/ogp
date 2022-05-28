@@ -81,7 +81,6 @@ LIST_ALL = [
   { url: "/stopwatch",                                                               validations: { "title" => /ストップウォッチ/,                                                                                                                                  }},
   { url: "/cpu-battle",                                                              validations: { "title" => /対戦/,                                                                                                                                              }},
   { url: "/style-editor",                                                            validations: { "title" => /スタイルエディタ/,                                                                                                                                   }},
-  { url: "/blindfold",                                                               validations: { "title" => /目隠し詰将棋/,                                                                                                                                   }},
 ]
 
 require "bundler/setup"

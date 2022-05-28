@@ -253,18 +253,6 @@ class AppEntryInfo
         "色相等は調整してください",
       ],
     },
-    {
-      display_p: true,
-      experiment_p: true,
-      nuxt_link_to: {path: "/blindfold"},
-      title: "目隠し詰将棋",
-      attention_label: nil,
-      og_image_key: "blindfold",
-      description: "声を聞いて脳内で将棋盤を作って解く<s>苦行</s>練習",
-      features: [
-        "試作なので最低限の機能のみ",
-      ],
-    },
   ]
 
   def og_meta

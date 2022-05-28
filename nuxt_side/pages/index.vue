@@ -43,7 +43,7 @@
                 li
                   nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play_click()") {{e.title}}
 
-        .column
+        .column(v-if="false")
           .title Experiment
           ul
             template(v-for="e in config")

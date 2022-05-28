@@ -8,12 +8,6 @@ RSpec.describe "その他", type: :system do
     doc_image
   end
 
-  it "目隠し詰将棋" do
-    visit "/blindfold"
-    assert_text "目隠し詰将棋"
-    doc_image
-  end
-
   describe "nuxt_login_required" do
     before do
       login_by("sysop")
