@@ -248,9 +248,9 @@ class AppEntryInfo
       og_image_key: "gallery",
       description: "将棋盤用の木をどうぞ",
       features: [
+        "濃淡4種類 x 木目3種類",
         "サイズ: 1080x1080",
-        "木目: 基本3パターン",
-        "色相: 5パターン",
+        "色相等は調整してください",
       ],
     },
     {
