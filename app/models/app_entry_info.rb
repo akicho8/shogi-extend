@@ -19,7 +19,7 @@ class AppEntryInfo
       experiment_p: false,
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
-      attention_label: "UPDATE",
+      attention_label: nil,
       og_image_key: "share-board",
       description: "仲間内でのリレー将棋や指導対局にどうぞ",
       features: [
