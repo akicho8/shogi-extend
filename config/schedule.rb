@@ -55,8 +55,6 @@ every("5 3 * * *") do
     # 常時オンライン/常時対戦中になっている人を消す
     "Actb::SchoolChannel.active_users_clear",
     "Actb::RoomChannel.active_users_clear",
-    "Emox::SchoolChannel.active_users_clear",
-    "Emox::RoomChannel.active_users_clear",
 
     "Kiwi::Lemon.background_job_for_cron", # 動画変換。job時間が 0...0 ならcronで実行する
 

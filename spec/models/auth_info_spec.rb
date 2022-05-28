@@ -24,7 +24,6 @@ RSpec.describe AuthInfo, type: :model do
 
   before(:context) do
     Actb.setup
-    Emox.setup
   end
 
   let(:auth) do

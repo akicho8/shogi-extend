@@ -5,7 +5,6 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
 
   before do
     Actb.setup
-    Emox.setup
     Wkbk.setup
 
     login

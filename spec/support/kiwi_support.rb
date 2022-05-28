@@ -7,7 +7,6 @@ module KiwiSupport
     before do
       Preset.setup
       Actb.setup
-      Emox.setup
       Wkbk.setup
       Kiwi::Folder.setup
     end

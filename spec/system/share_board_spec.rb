@@ -994,7 +994,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   describe "自動マッチング" do
     before do
       Actb.setup
-      Emox.setup
     end
 
     it "飛vs角を1vs1" do

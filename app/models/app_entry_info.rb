@@ -254,19 +254,6 @@ class AppEntryInfo
       ],
     },
     {
-      display_p: Emox::Config[:emox_display_p],
-      experiment_p: true,
-      nuxt_link_to: {path: "/emoshogi"},
-      title: "エモ将棋",
-      attention_label: nil,
-      og_image_key: "emox",
-      description: "気持ちを伝えながら指す実験的ネット将棋",
-      features: [
-        "フッターにある字を押して気持ちを伝える",
-        "いろいろアレなんで匿名",
-      ],
-    },
-    {
       display_p: Actb::Config[:actb_display_p],
       experiment_p: true,
       nuxt_link_to: {path: "/training"},

@@ -4,7 +4,6 @@ require "rails_helper"
 RSpec.describe OmniauthCallbacksController, type: :controller do
   before do
     Actb.setup
-    Emox.setup
     User.destroy_all
   end
 

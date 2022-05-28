@@ -6,7 +6,6 @@ RSpec.describe "動画詳細", type: :system, kiwi: true do
 
   before do
     Actb.setup
-    Emox.setup
     Wkbk.setup
 
     login

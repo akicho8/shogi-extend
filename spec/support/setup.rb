@@ -12,8 +12,6 @@ RSpec.configure do |config|
     Actb::Lineage.setup
     Actb::SourceAbout.setup
 
-    Emox::Rule.setup
-
     Swars::Grade.setup
     Swars::Xmode.setup
     Swars::Rule.setup

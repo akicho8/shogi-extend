@@ -4,7 +4,6 @@ module WkbkSupportMethods
   included do
     before(:context) do
       Actb.setup
-      Emox.setup
       Wkbk.setup
       Wkbk::Book.mock_setup
     end

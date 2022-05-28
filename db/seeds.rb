@@ -7,10 +7,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Preset,
   Judge,
 
-  Emox::Rule,
-  Emox::Judge,
-  Emox::Final,
-
   Actb::OxMark,
   Actb::Season,
   Actb::Lineage,
@@ -23,7 +19,6 @@ ENV["INSIDE_DB_SEEDS_TASK"] = "1"
   Actb::Question,
 
   Actb,
-  Emox,
   Wkbk,
   Kiwi,
   FreeBattle,
