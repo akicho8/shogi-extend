@@ -230,14 +230,14 @@ class AppEntryInfo
       display_p: true,
       experiment_p: false,
       nuxt_link_to: {path: "/gallery"},
-      title: "木目テクスチャ集",
+      title: "将棋盤テクスチャ集",
       attention_label: nil,
       og_image_key: "gallery",
       description: "将棋盤用の木をどうぞ",
       features: [
         "木目3種類 × 濃淡4種類",
         "サイズ: 1080x1080",
-        "色相等は調整してください",
+        "色合いは調整してください",
       ],
     },
     {
@@ -249,8 +249,9 @@ class AppEntryInfo
       og_image_key: "style-editor",
       description: "将棋盤のスタイルをいじくる開発用ツール",
       features: [
-        "もともとは将棋盤の動作テスト用に作ったものですが他の用途にも使えそうなので公開しています",
-        "これで加工した画面は自由に使ってもらってかまいません",
+        "将棋盤の動作テスト用に作ったもの",
+        "他の用途にも使えそうなので公開している",
+        "これで加工した画面は自由に使ってもらってOK",
       ],
     },
   ]
