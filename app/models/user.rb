@@ -44,7 +44,6 @@ class User < ApplicationRecord
   include UserXyMasterMethods
   include UserStaffMethods
   include UserChoreMethods
-  include ::Actb::UserMethods
   include ::Wkbk::UserMethods
   include ::Kiwi::UserMethods
   include UserCrawlReservationMethods

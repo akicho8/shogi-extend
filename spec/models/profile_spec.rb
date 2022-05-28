@@ -21,8 +21,6 @@
 require "rails_helper"
 
 RSpec.describe Profile, type: :model do
-  include ActbSupport
-
   it "delegateしているのでuserから使える" do
     assert { user1.description }
     assert { user1.twitter_key }

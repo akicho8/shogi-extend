@@ -1,6 +1,0 @@
-* 問題管理
-
-この下は base.xxx で参照してはいけない
-完全に独立している
-なので $parent.xxx で参照する → bapp.xxx
-base.current_user などは除く

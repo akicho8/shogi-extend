@@ -10,12 +10,8 @@ module UserChoreMethods
       s = s.where("sign_in_count <= 1")
       s = s.where(["name like ?", "%名無し%"])
       s = s.limit(100)
-      Actb.count_diff do
-        s.each do |r|
-          if r.actb_histories.count == 0 && r.actb_questions.count == 0
-            r.destroy!
-          end
-        end
+      s.each do |r|
+        r.destroy!
       end
     end
   end
