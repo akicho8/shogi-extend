@@ -1,7 +1,7 @@
 module BackendScript
   class UserDestroyScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMethods
-    include TargeUsersMethods
+    include TargetUsersMethods
 
     self.category = "その他"
     self.script_name = "ユーザー削除"

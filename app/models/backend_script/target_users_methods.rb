@@ -1,5 +1,5 @@
 module BackendScript
-  concern :TargeUsersMethods do
+  concern :TargetUsersMethods do
     def form_parts
       super + [
         {
