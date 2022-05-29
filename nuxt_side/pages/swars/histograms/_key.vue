@@ -10,8 +10,8 @@ client-only
     MainSection
       .container
         SwarsHistogramNavigation(:xi="xi")
-        .columns.is-vcentered.is-multiline.xform_block
-          SwarsHistogramSampleCount(:xi="xi")
+        //- .columns.is-vcentered.is-multiline.xform_block
+        //-   SwarsHistogramSampleCount(:xi="xi")
         .columns.is-centered
           .column.is-7
             CustomChart.is-unselectable(:params="xi.custom_chart_params")
