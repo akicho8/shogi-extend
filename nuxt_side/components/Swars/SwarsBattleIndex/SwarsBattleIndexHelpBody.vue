@@ -12,17 +12,17 @@ HelpContent.SwarsBattleIndexHelpBody
 
   template(v-if="true")
     article
-      h2 名前の前にあるアイコンの意味は？
+      h2 アイコンの意味は？
       ul
-        li そのアイコンをタップする
+        li アイコンをタップする
+    article
+      h2 まとめてダウンロードしたい
+      ul
+        li ダウンロード
     article
       h2 初めて使ったけど10件程度しか出てこない
       ul
-        li MENU→古い棋譜を補完
-    article
-      h2 ZIPで欲しい
-      ul
-        li MENU→ダウンロード
+        li 古い棋譜を補完
     article
       h2 棋力別の勝率とかどこで見れる？
       ul
@@ -49,11 +49,15 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 歯抜けを直すには？
     ul
-      li MENU→古い棋譜を補完
+      li 古い棋譜を補完
   article
     h2 「古い棋譜を補完」をしてみたけどもっとあるはず
     ul
       li 1ヶ月より前の棋譜は取り込めない
+  article
+    h2 1ヶ月より前のは取り込めないというけど対局URLはわかっている
+    ul
+      li そのまま検索覧に放り込む
   article
     h2 歯抜けにならないようにするには？
     ul
@@ -63,33 +67,29 @@ HelpContent.SwarsBattleIndexHelpBody
     ul
       li 最長3分待ってから検索する
   article
-    h2 ウォーズの対局URLだけはわかっている
+    h2 前回の続きからダウンロードしたい
     ul
-      li そのまま検索覧に放り込む
-  article
-    h2 前回の続きからZIPで欲しい
-    ul
-      li MENU→ダウンロード→前回の続きから
+      li ダウンロード→前回の続きから
   article
     h2 指定IDの棋譜がすべて欲しい
     ul
-      li MENU→古い棋譜を補完→ZIPファイルの添付
+      li 古い棋譜を補完→ZIPファイルの添付
 
   template(v-if="true")
     article
       h2 SNSにスクショを投稿するとき相手の名前を隠すのが面倒
       ul
-        li MENU→一覧<i :class="dot_vertical_icon" />→相手の名前
+        li 一覧<i :class="dot_vertical_icon" />→相手の名前
     article
       h2 相手より自分の名前を隠したい
       ul
-        li MENU→一覧<i :class="dot_vertical_icon" />→自分の名前
+        li 一覧<i :class="dot_vertical_icon" />→自分の名前
 
   template(v-if="true")
     article
       h2 棋譜の体裁を整えてPDFにしたい
       ul
-        li 詳細→MENU→棋譜用紙→PDFに印刷
+        li 詳細→棋譜用紙→PDFに印刷
     article
       h2 棋譜を印刷したい
       ul
@@ -107,30 +107,30 @@ HelpContent.SwarsBattleIndexHelpBody
     article
       h2 棋譜を動画にしてSNSに上げたい
       ul
-        li 詳細→MENU→動画作成
+        li 詳細→動画作成
 
     article
       h2 棋譜の検討結果を問題にして自分専用の問題集を作りたい
       ul
-        li 詳細→MENU→問題作成
+        li 詳細→問題作成
 
   template(v-if="true")
     article
       h2 ページ送りが面倒
       ul
-        li MENU→件数→200
+        li 件数→200
     article
       h2 一覧の表示が遅い
       ul
-        li MENU→件数→10
+        li 件数→10
     article
-      h2 終局図から目視で棋譜を探すには？
+      h2 終局図から目視で棋譜を探す
       ul
-        li MENU→終局→件数→200
+        li 終局→件数→200
     article
       h2 毎回棋譜コピーしてファイル保存するのが面倒
       ul
-        li MENU→一覧<i :class="dot_vertical_icon" />→保存
+        li 一覧<i :class="dot_vertical_icon" />→保存
     article
       h2 UTF-8 や Shift_JIS の意味は？
       ul
@@ -138,19 +138,19 @@ HelpContent.SwarsBattleIndexHelpBody
     article
       h2 掲示板に棋譜を貼りたい
       ul
-        li 詳細→MENU→コピー→KI2
+        li 詳細→コピー→KI2
     article
       h2 一時的にKIFファイルが欲しい
       ul
-        li 詳細→MENU→ダウンロード→KIF
+        li 詳細→ダウンロード→KIF
     article
-      h2 KIFデータへの直リンクが欲しい
+      h2 KIFへの直リンクが欲しい
       ul
-        li 詳細→MENU→表示→KIF
+        li 詳細→表示→KIF
     article
       h2 指定局面の画像が欲しい
       ul
-        li 詳細→局面調整→MENU→ダウンロード→PNG
+        li 詳細→局面調整→ダウンロード→PNG
     article
       h2 指定局面をツイートして自動的に画像を出したい
       ul
@@ -158,43 +158,43 @@ HelpContent.SwarsBattleIndexHelpBody
     article
       h2 ぴよ将棋に送るURLが欲しい
       ul
-        li 詳細→MENU→短めの直リンコピー→ぴよ将棋
+        li 詳細→短めの直リンコピー→ぴよ将棋
     article
       h2 将棋ウォーズ本家で棋譜再生したい
       ul
-        li 詳細→MENU→本家
+        li 詳細→本家
     article
       h2 対局の検討を元に詰将棋を作りたい
       ul
-        li 詳細→MENU→共有将棋盤に転送→MENU→局面編集
+        li 詳細→共有将棋盤に転送→局面編集
 
   template(v-if="true")
     article
       h2 毎回ウォーズIDを入力するのが面倒
       ul
-        li MENU→ウォーズIDを記録する
+        li ウォーズIDを記録する
     article
       h2 直近の対局をぴよ将棋で検討したいだけなのに検索するのが面倒
       ul
-        li MENU→外部アプリですぐ開く→ぴよ将棋
+        li 外部アプリですぐ開く→ぴよ将棋
     article
       h2 直近の対局をKENTOで検討したいだけなのに検索するのが面倒
       ul
-        li MENU→外部アプリですぐ開く→KENTO
+        li 外部アプリですぐ開く→KENTO
 
   template(v-if="true")
     article
-      h2 勝った対局を見返して自己肯定感を高める
+      h2 勝った対局を見返す
       ul
-        li MENU→カスタム検索→勝ち
+        li カスタム検索→勝ち
     article
-      h2 負けた対局を見返して反省する
+      h2 負けた対局を見返す
       ul
-        li MENU→カスタム検索→負け
+        li カスタム検索→負け
     article
-      h2 相手で絞り込みたい
+      h2 相手で絞り込む
       ul
-        li MENU→カスタム検索→対戦相手
+        li カスタム検索→対戦相手
     article
       h2 横断検索したい
       ul
@@ -202,7 +202,7 @@ HelpContent.SwarsBattleIndexHelpBody
     article
       h2 1手毎の消費時間を視覚的に確認したい
       ul
-        li 詳細→下
+        li 詳細
 
   article
     h2 どっちが勝ち？
@@ -212,7 +212,7 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 囲いの名前が表示されない
     ul
-      li MENU→一覧<i :class="dot_vertical_icon" />→囲い
+      li 一覧<i :class="dot_vertical_icon" />→囲い
 
   article
     h2 入力履歴を消したい
@@ -223,16 +223,11 @@ HelpContent.SwarsBattleIndexHelpBody
     article
       h2 M1 Mac を使っているとき「ぴよ将棋」を使いたいのにブラウザ版の「ぴよ将棋ｗ」に飛んでしまう
       ul
-        li プロフィール→MENU→ぴよ将棋の種類→ぴよ将棋
+        li プロフィール→ぴよ将棋の種類→ぴよ将棋
     article
       h2 なんらかの理由でスマホでも常に「ぴよ将棋ｗ」を使いたい
       ul
-        li プロフィール→MENU→ぴよ将棋の種類→ぴよ将棋ｗ
-
-  article
-    h2 1ヶ月より前のは取り込めないというけど対局URLはわかっている
-    ul
-      li 対局URLさえわかっていれば(検索覧に放り込めば)取り込める
+        li プロフィール→ぴよ将棋の種類→ぴよ将棋ｗ
 
   article
     h2 昔あった棋譜が消えた
@@ -242,7 +237,7 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 指導対局の平手戦から学びたい
     ul
-      li <i :class="home_icon" />→将棋ウォーズ十段の成績→名前タップ→MENU→カスタム検索→平手
+      li <i :class="home_icon" />→将棋ウォーズ十段の成績→名前タップ→カスタム検索→平手
 
   article
     h2 将棋ウォーズのイベント上位者の棋譜を見たい
@@ -250,9 +245,9 @@ HelpContent.SwarsBattleIndexHelpBody
       li <i :class="home_icon" />→将棋ウォーズイベント上位の成績
 
   article
-    h2 格上に勝った棋譜だけZIPで欲しい
+    h2 格上に勝った棋譜だけダウンロードしたい
     ul
-      li MENU→カスタム検索→力差1→勝ち→検索→MENU→ダウンロード
+      li カスタム検索→力差1以上→勝ち→検索→ダウンロード
 
   article
     h2 特定IDをストーキングする
@@ -272,20 +267,12 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 表示がごちゃごちゃして見にくい
     ul
-      li MENU→一覧<i :class="dot_vertical_icon" />→すべてOFF→使うのだけON
+      li 一覧<i :class="dot_vertical_icon" />→すべてOFF→使うのだけON
 
   article
     h2 将棋ウォーズ棋譜検索を使いたくない
     ul
-      li 本家で棋譜を採れるので使う必要はない
-      li 昔はできなかったが2000年ぐらいからできるようになった
-      li ただしスマホでは操作が難しい
-
-  //- template(v-if="true")
-  //-   article
-  //-     h2 ゴキブリなんとかしろ
-  //-     ul
-  //-       li 普通に対局していれば出ないようにしたので安心してください
+      li 2000年ぐらいから本家側で棋譜コピーできるようになった
 
   article
     h2 ここに載ってない
