@@ -37,9 +37,9 @@ export default {
 
     h2
       font-weight: bold
-      font-size: $size-5
-      +mobile
-        font-size: $size-6
+      font-size: $size-6
+      // +mobile
+      //   font-size: $size-6
 
       // &::before
       //   content: "🔵 "
