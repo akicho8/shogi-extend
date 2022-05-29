@@ -18,12 +18,12 @@
         .level-item.has-text-centered
           div
             .head.is-size-7 最終計測
-            .title.is-size-6 {{diff_time_format(config.updated_at)}}
+            .title.is-size-6 {{diff_time_format(xi.updated_at)}}
         .level-item.has-text-centered
           div
             .head.is-size-7 サンプル数直近
             .title.is-size-6.has-text-weight-normal
-              template(v-for="max in config.max_list")
+              template(v-for="max in xi.max_list")
                 nuxt-link.px-1(
                   :to="{name: $route.name, params: $route.params, query: {...$route.query, max: max}}"
                   :class="{'has-text-weight-bold': current_max === max}"
@@ -35,7 +35,7 @@
 export default {
   name: "SwarsHistogramNavigation",
   props: {
-    config: { type: Object, required: true },
+    xi: { type: Object, required: true },
   },
   data() {
     return {
@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     current_max() {
-      return Number(this.$route.query.max || this.config.default_limit)
+      return Number(this.$route.query.max || this.xi.default_limit)
     },
   },
 }

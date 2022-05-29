@@ -1,22 +1,24 @@
 <template lang="pug">
 client-only
-  .swars-histograms-key(v-if="config")
+  .swars-histograms-key(v-if="xi")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
         b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-histograms-key', params: {key: $route.params.key}}")
-          | 将棋ウォーズ{{config.histogram_name}}分布
+          | 将棋ウォーズ{{xi.histogram_name}}分布
 
     MainSection
       .container
-        SwarsHistogramNavigation(:config="config")
-        .columns.is-unselectable
-          .column.is-6.mt-3
-            CustomChart(:params="config.custom_chart_params")
+        SwarsHistogramNavigation(:xi="xi")
+        .columns.is-vcentered.is-multiline.xform_block
+          SwarsHistogramSampleCount(:xi="xi")
+        .columns.is-centered
+          .column.is-7
+            CustomChart.is-unselectable(:params="xi.custom_chart_params")
         .columns
           .column
             b-table.mt-3(
-              :data="config.records"
+              :data="xi.records"
               :mobile-cards="false"
               hoverable
               )
@@ -28,8 +30,9 @@ client-only
               //-   template(v-if="row.deviation_score")
               //-     | {{number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
+        SwarsHistogramProcessedSec(:xi="xi")
 
-    //- DebugPre(v-if="development_p") {{config}}
+    //- DebugPre(v-if="development_p") {{xi}}
 </template>
 
 <script>
@@ -38,17 +41,17 @@ export default {
   watchQuery: ["max"],
   async asyncData({$axios, params, query}) {
     // http://localhost:3000/api/swars_histogram.json
-    const config = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query}})
-    return { config }
+    const xi = await $axios.$get("/api/swars_histogram.json", {params: {...params, ...query}})
+    return { xi }
   },
   mounted() {
-    // this.ga_click(`${this.config.histogram_name}分布`)
+    // this.ga_click(`${this.xi.histogram_name}分布`)
     this.ga_click(`データ分布`)
   },
   computed: {
     meta() {
       return {
-        title: `将棋ウォーズ${this.config.histogram_name}分布`,
+        title: `将棋ウォーズ${this.xi.histogram_name}分布`,
         og_image_key: "swars-histograms-attack",
       }
     },

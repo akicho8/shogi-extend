@@ -14,12 +14,6 @@
 module Swars
   module Histogram
     class Grade < Base
-      if Rails.env.development?
-        BATCH_SIZE = 2
-      else
-        BATCH_SIZE = 5000
-      end
-
       # キャッシュ後なのでここでマージするとキャッシュしない
       def as_json(*)
         super.merge({
@@ -30,9 +24,8 @@ module Swars
       # すべてキャッシュ対象
       def to_h
         super.merge({
-            :rule_key          => params[:rule_key].presence,
-            :xtag              => params[:xtag].presence,
-            :real_total_count  => records.sum { |e| e[:count] },
+            :rule_key => params[:rule_key].presence,
+            :xtag     => params[:xtag].presence,
           })
       end
 
@@ -56,33 +49,17 @@ module Swars
       #   end
       # end
 
-      def aggregate_run
-        @counts_hash = {}
-        @sample_count = 0
-
+      def aggregate_core
         loop_index = 0
-        loop_max = current_max.fdiv(BATCH_SIZE).ceil
-
-        second = Benchmark.realtime do
-          Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc) do |s|
-            if loop_index >= loop_max
-              break
-            end
-            @sample_count += s.count
-            s = condition_add(s)
-            @counts_hash.update(s.group(:grade_id).count) { |_, c1, c2| c1 + c2 }
-            loop_index += 1
+        Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc) do |s|
+          if loop_index >= loop_max
+            break
           end
+          @sample_count += s.count
+          s = condition_add(s)
+          @counts_hash.update(s.group(:grade_id).count) { |_, c1, c2| c1 + c2 }
+          loop_index += 1
         end
-
-        SlackAgent.notify(subject: "棋力分布実行速度", body: {
-            :ms           => "%.1f s" % second,
-            :current_max  => current_max,
-            :BATCH_SIZE   => BATCH_SIZE,
-            :loop_max     => loop_max,
-            :loop_index   => loop_index,
-            :sample_count => @sample_count,
-          })
       end
 
       def cache_key

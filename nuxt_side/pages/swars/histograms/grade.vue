@@ -17,7 +17,7 @@ client-only
 
     MainSection(v-if="xi")
       .container
-        SwarsHistogramNavigation(:config="xi")
+        SwarsHistogramNavigation(:xi="xi")
         //- .is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
         .columns.is-multiline.is-variable.is-0-mobile
           .column(v-if="development_p || true")
@@ -33,16 +33,7 @@ client-only
             //- b-field.submit_field2
             b-field.xfield_block(custom-class="is-small")
               b-button.has-text-weight-bold(@click="submit_handle" type="is-primary") 集計
-          .column
-            nav.level.is-mobile
-              .level-item.has-text-centered
-                div
-                  .heading 直近の実サンプル数
-                  .title {{xi.sample_count}}
-              .level-item.has-text-centered
-                div
-                  .heading 絞り込み後の件数
-                  .title {{xi.real_total_count}}
+          SwarsHistogramSampleCount(:xi="xi")
         .columns.is-centered
           .column.is-7
             CustomChart.is-unselectable(:params="xi.custom_chart_params")
@@ -57,13 +48,7 @@ client-only
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{number_round(row.deviation_score)}}
-        .columns.is-vcentered.is-multiline.xform_block
-          .column
-            nav.level.is-mobile
-              .level-item.has-text-centered
-                div
-                  .heading 実行時間(秒)
-                  .title {{number_floor(xi.processed_sec, 3)}}
+        SwarsHistogramProcessedSec(:xi="xi")
 
     DebugPrint(v-if="development_p")
     DebugPre(v-if="development_p && xi")

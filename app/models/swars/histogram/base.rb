@@ -4,12 +4,20 @@ module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
     class Base
+      if Rails.env.development?
+        BATCH_SIZE = 2
+      else
+        BATCH_SIZE = 5000
+      end
+
       CHART_BAR_MAX     = 20
 
       attr_accessor :params
 
       def initialize(params)
         @params = params
+
+        @counts_hash = {}
         @sample_count = 0
       end
 
@@ -34,10 +42,28 @@ module Swars
           :max_list            => max_list,
           :records             => records,
           :custom_chart_params => custom_chart_params,
+          :real_total_count    => records.sum { |e| e[:count] },
         }
       end
 
       private
+
+      def aggregate_core
+        loop_index = 0
+        Swars::Membership.in_batches(of: BATCH_SIZE, order: :desc) do |s|
+          if loop_index >= loop_max
+            break
+          end
+          @sample_count += s.count
+          tags = s.tag_counts_on("#{tactic_key}_tags")
+          tags.each do |e|
+            @counts_hash[e.name] ||= 0
+            @counts_hash[e.name] += e.count
+          end
+          loop_index += 1
+        end
+        counts_hash_normalize
+      end
 
       def to_h_with_processed_sec
         hash = {}
@@ -91,34 +117,29 @@ module Swars
         end
       end
 
+      def loop_max
+        @loop_max ||= current_max.fdiv(BATCH_SIZE).ceil
+      end
+
       def cache_key
         [self.class.name, tactic_key, current_max]
       end
 
       def aggregate_run
-        # FIXME: in_batches に置き換える
-
-        target_ids = Swars::Membership.order(id: :desc).limit(current_max).pluck(:id)
-
-        @sample_count = target_ids.count
-
-        s = Swars::Membership.where(id: target_ids)
-        tags = s.tag_counts_on("#{tactic_key}_tags")
-        @counts_hash = tags.inject({}) { |a, e| a.merge(e.name => e.count) }    # => { "棒銀" => 3, "棒金" => 4 }
-
-        # タグにない戦法も抽出する場合
-        if false
-          @counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => @counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
+        second = Benchmark.realtime do
+          aggregate_core
         end
+        slack_notify(second)
+      end
 
-        # いらんタグを消す場合
-        if false
-          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
-            Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
-              @counts_hash.delete(e.to_s)
-            end
-          end
-        end
+      def slack_notify(second)
+        SlackAgent.notify(subject: histogram_name, body: {
+            :ms           => "%.1f s" % second,
+            :current_max  => current_max,
+            :BATCH_SIZE   => BATCH_SIZE,
+            :loop_max     => loop_max,
+            :sample_count => @sample_count,
+          })
       end
 
       def chart_bar_max
@@ -143,7 +164,7 @@ module Swars
       end
 
       def default_limit
-        10000
+        20000
       end
 
       def default_limit_max
@@ -154,7 +175,7 @@ module Swars
         if Rails.env.development?
           return [0, 1, 2, 1000, 5000, default_limit]
         end
-        [1000, 5000, 10000]
+        [5000, 10000, 20000]
       end
 
       def current_user
@@ -163,6 +184,22 @@ module Swars
 
       def cache_expires_in
         2.hour
+      end
+
+      def counts_hash_normalize
+        # タグにない戦法も抽出する場合
+        if false
+          @counts_hash = tactic_info.model.inject({}) { |a, e| a.merge(e.name => @counts_hash[e.name] || 0) } # => { "棒銀" => 3, "棒金" => 4, "風車" => 0 }
+        end
+
+        # いらんタグを消す場合
+        if false
+          if Rails.env.production? || Rails.env.staging? || Rails.env.test?
+            Array(TagMethods.reject_tag_keys[tactic_key]).each do |e|
+              @counts_hash.delete(e.to_s)
+            end
+          end
+        end
       end
     end
   end
