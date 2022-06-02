@@ -1,0 +1,29 @@
+* 隠れAPI
+
+** 棋譜変換
+
+*** パラメータ
+
+  |------------+----------------+--------------+-------------------------------|
+  | キー       | 意味           | 例           | 備考                          |
+  |------------+----------------+--------------+-------------------------------|
+  | any_source | 棋譜           | ▲68銀△62玉 | [[https://www.shogi-extend.com/adapter][なんでも棋譜変換]] の入力と同じ |
+  | to_format  | 変換先形式     | sfen         | kif ki2 csa sfen bod など     |
+  | turn       | 手数           | 1            | bod のとき有効                |
+  | format     | レスポンス形式 | json         | 普通は拡張子として指定する    |
+  |------------+----------------+--------------+-------------------------------|
+
+  - POST で実行する
+  - GET でも使える
+  - これは開発時に確認しやすくするため
+  - 本番で GET すると Request-URI Too Long (414) にひっかかってはまるので注意
+  - どのパラメータも必須ではない
+
+*** 例
+
+  1. https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=ki2
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=ki2
+  1. https://www.shogi-extend.com/api/general/any_source_to.json?any_source=68S62K&to_format=kif
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=kif
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=0
+  1. https://www.shogi-extend.com/api/general/any_source_to.txt?any_source=68S62K&to_format=bod&turn=1
