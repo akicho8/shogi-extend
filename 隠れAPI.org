@@ -1,1 +1,0 @@
-doc/隠れAPI.org
