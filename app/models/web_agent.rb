@@ -38,17 +38,19 @@ class WebAgent
   end
 
   def raw_fetch(url_or_uri)
-    response = connection.get(url_or_uri.to_s)
+    response = agent.get(url_or_uri.to_s)
     response.body
   end
 
   private
 
-  def connection
-    Faraday.new do |builder|
-      builder.response :follow_redirects # リダイレクト先をおっかける
-      builder.adapter :net_http          # これいるんか？
-      builder.headers[:user_agent] = @params[:user_agent] || DEFAULT_USER_AGENT
+  def agent
+    Faraday.new do |e|
+      e.response :follow_redirects # リダイレクト先をおっかける
+      e.headers[:user_agent] = @params[:user_agent] || DEFAULT_USER_AGENT
+      # adapter は最後に書く
+      # https://nekorails.hatenablog.com/entry/2018/09/28/152745
+      e.adapter Faraday.default_adapter
     end
   end
 end
