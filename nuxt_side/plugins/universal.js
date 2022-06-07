@@ -28,12 +28,10 @@ Vue.mixin({
     // 正直なぜこんな面倒なことを繰り返さないといけないのかわかっていない
     ...mapMutations("user", [
       "m_auth_user_logout",
-      "m_g_howl_play_mode_set",
     ]),
     ...mapActions('user', [
       "a_auth_user_fetch",
       "a_auth_user_logout",
-      "a_g_howl_play_mode_set",
     ]),
     // ...mapMutations("swars", [
     //   "m_remember_swars_user_keys_set",
@@ -42,7 +40,6 @@ Vue.mixin({
   computed: {
     ...mapState("user", [
       "g_current_user",
-      "g_howl_play_mode_key",
     ]),
     ...mapGetters("user", [
       "staff_p",

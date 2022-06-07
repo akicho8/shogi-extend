@@ -5,7 +5,6 @@ client-only
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
       p appearance_theme_key: {{appearance_theme_key}}
-      p g_howl_play_mode_key: {{g_howl_play_mode_key}}
       p watching_member_count: {{watching_member_count}}
       p os_change: {{os_change}}
       p order_enable_p: {{order_enable_p}}

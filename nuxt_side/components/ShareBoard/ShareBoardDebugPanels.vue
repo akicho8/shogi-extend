@@ -190,7 +190,6 @@
       .panel-block order_enable_p:{{base.order_enable_p}}
       .panel-block clock_box:{{!!base.clock_box}}
       .panel-block current_title:{{base.current_title}}
-      .panel-block g_howl_play_mode_key:{{g_howl_play_mode_key}}
       .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
 
   .column.is-6.is-clipped

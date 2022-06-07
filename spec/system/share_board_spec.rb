@@ -1508,18 +1508,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  xdescribe "Howlの再生モードを変更できる" do
-    it "works" do
-      visit_app
-      assert_var("g_howl_play_mode_key", "web_audio_api") # 初期値
-      hamburger_click
-      menu_item_click("設定")                             # モーダルを開く
-      find(".html5_audio").click
-      find(".close_handle").click                         # 閉じる
-      assert_var("g_howl_play_mode_key", "html5_audio")   # 変更後
-    end
-  end
-
   describe "入室したとき他に誰もいなかったら部屋のリンクのクリックを促す" do
     it "works" do
       a_block do

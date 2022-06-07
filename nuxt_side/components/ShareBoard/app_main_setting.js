@@ -6,7 +6,6 @@ import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
 import { SpMoveCancelInfo   } from "./models/sp_move_cancel_info.js"
 import { SpInternalRuleInfo } from "./models/sp_internal_rule_info.js"
 import { DebugModeInfo      } from "./models/debug_mode_info.js"
-import { HowlPlayModeInfo      } from "./models/howl_play_mode_info.js"
 
 export const app_main_setting = {
   methods: {
@@ -20,12 +19,6 @@ export const app_main_setting = {
         component: MainSettingModal,
         props: { base: this.base },
       })
-    },
-  },
-  watch: {
-    howl_play_mode_key(value) {
-      // this.$store.commit("m_g_howl_play_mode_set", value)
-      this.a_g_howl_play_mode_set(value)
     },
   },
   computed: {
@@ -48,8 +41,5 @@ export const app_main_setting = {
     DebugModeInfo()             { return DebugModeInfo                                                },
     debug_mode_info()           { return this.DebugModeInfo.fetch(this.debug_mode_key)                },
     debug_mode_p()              { return this.debug_mode_info.key === "is_debug_mode_on"              },
-
-    HowlPlayModeInfo()             { return HowlPlayModeInfo                                                },
-    howl_play_mode_info()           { return this.HowlPlayModeInfo.fetch(this.howl_play_mode_key)                },
   },
 }
