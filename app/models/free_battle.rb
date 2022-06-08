@@ -316,8 +316,11 @@ class FreeBattle < ApplicationRecord
         turn_max = nil
         if record
           turn_max = record.turn_max
-          if turn_max.zero?
-            emoji = ":失敗:"
+          # 最大0手の場合は詰将棋の局面なので失敗の絵文字にしてはいけない
+          if false
+            if turn_max.zero?
+              emoji = ":失敗:"
+            end
           end
         end
 
