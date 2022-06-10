@@ -189,7 +189,7 @@ HelpContent.ShareBoardHelpBody
       li ログインしていないとなんかしらの動物が玉になる
       li 対象が2人以上の場合は順番が早い方をリーダーとみなす
 
-  article
+  article(v-if="false")
     h2 シャウトありとは？
     p 駒が動いたり取られたときに無駄に叫ぶ (不評)
 
