@@ -62,7 +62,8 @@ class MediaBuilder
         extension = MiniMime.lookup_by_content_type(content_type).extension
         file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{extension}")
       else
-        basename = [SecureRandom.hex, e[:attributes][:name]].join("_")
+        name = e[:attributes][:name].gsub(/\p{blank}+/, "_") # "01 曲名.mp3" など懸念毎を無くすためスペースを取る
+        basename = [SecureRandom.hex, name].join("_")
         logger.info { "basename: #{basename}" }
         old_media_file_clean(keep: 3, execute: true) if false
         file_path = tmp_media_file_dir.join(Time.current.strftime("%Y%m%d"), basename)
