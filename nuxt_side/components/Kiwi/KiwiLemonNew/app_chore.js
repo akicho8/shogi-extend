@@ -12,7 +12,7 @@ export const app_chore = {
         onCancel: () => this.sound_play_click(),
         onConfirm: () => {
           this.sound_play_click()
-          const params = { any_source: this.body, to_format: "sfen" }
+          const params = { any_source: this.body || "平手" , to_format: "sfen" }
           this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
             this.bs_error_message_dialog(e)
             if (e.body) {
