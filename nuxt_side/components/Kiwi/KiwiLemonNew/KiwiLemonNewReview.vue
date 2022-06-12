@@ -67,12 +67,6 @@ export default {
     //   // height: inherit
     //   aspect-ratio: attr(width) / attr(height)
 
-  // .message
-  // white-space: pre-wrap
-  // word-break: break-all
-  // .media-left
-  //   .icon
-  //     margin: auto
-  // .media-content
-  //   margin: auto
+  .message
+    word-break: break-all
 </style>
