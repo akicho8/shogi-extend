@@ -20,7 +20,7 @@ class AppEntryInfo
       nuxt_link_to: {path: "/share-board"},
       title: "共有将棋盤",
       attention_label: nil,
-      og_image_key: "share-board",
+      og_image_key: ["share-board0", "share-board1"],
       description: "仲間内でのリレー将棋や指導対局にどうぞ",
       features: [
         "チャット機能あり",
@@ -255,6 +255,10 @@ class AppEntryInfo
       ],
     },
   ]
+
+  def og_image_key
+    Array.wrap(super).sample
+  end
 
   def og_meta
     [:title, :description, :og_image_key].inject({}) {|a, e| a.merge(e => public_send(e)) }
