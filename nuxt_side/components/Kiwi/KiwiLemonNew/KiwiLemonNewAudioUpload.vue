@@ -1,6 +1,7 @@
 <template lang="pug">
 .KiwiLemonNewAudioUpload(v-if="base.audio_theme_info.key === 'is_audio_theme_custom'")
   b-field
+    // 次のように accept="audio/*" をつけると iPhone から m4a が選択できなくなるので注意
     //- b-upload(drag-drop @input="upload_handle" native accept="audio/*")
     b-upload(drag-drop @input="upload_handle" native)
       .is-flex.is-align-items-center.px-3.py-1
