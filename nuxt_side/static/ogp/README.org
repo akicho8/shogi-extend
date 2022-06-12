@@ -1,0 +1,2 @@
+../../../app/models/app_entry_info.rb
+rake my:ogp_image_optimize
