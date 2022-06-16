@@ -4,9 +4,9 @@ module Kiwi
       included do
         belongs_to :user                          # 所有者
         belongs_to :recordable, polymorphic: true # 棋譜情報
-        has_one :banana, dependent: :destroy        # アーカイブしたときに結びつく
+        has_one :banana, dependent: :destroy      # アーカイブしたときに結びつく
 
-        scope :single_only,      -> { left_joins(:banana).where(banana: {id: nil})                    } # Bananaと結びついていないもの
+        scope :single_only,      -> { left_joins(:banana).where(banana: {id: nil})                } # Bananaと結びついていないもの
 
         scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理
         scope :done_only,        -> { where.not(process_end_at: nil)                              } # 処理済み(失敗しても入る)
@@ -41,21 +41,21 @@ module Kiwi
         main_file_clean
 
         self.process_begin_at = nil
-        self.process_end_at = nil
-        self.successed_at = nil
-        self.ffprobe_info = nil
-        self.file_size = nil
-        self.errored_at = nil
-        self.error_message = nil
+        self.process_end_at   = nil
+        self.successed_at     = nil
+        self.ffprobe_info     = nil
+        self.file_size        = nil
+        self.errored_at       = nil
+        self.error_message    = nil
       end
 
       def advanced_kif_info
         {
-          :body               => recordable.sfen_body,
-          :turn               => recordable.display_turn,
-          :abstract_viewpoint => all_params.dig(:media_builder_params, :viewpoint),
-          :color_theme_key    => all_params.dig(:media_builder_params, :color_theme_key),
-          :piece_font_weight_key          => all_params.dig(:media_builder_params, :piece_font_weight_key),
+          :body                  => recordable.sfen_body,
+          :turn                  => recordable.display_turn,
+          :abstract_viewpoint    => all_params.dig(:media_builder_params, :viewpoint),
+          :color_theme_key       => all_params.dig(:media_builder_params, :color_theme_key),
+          :piece_font_weight_key => all_params.dig(:media_builder_params, :piece_font_weight_key),
         }.compact
       end
     end
