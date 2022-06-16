@@ -1,5 +1,5 @@
 #!/bin/sh
 sudo kill -9 $(sudo lsof -t -i:3000)
 sudo kill -9 $(sudo lsof -t -i:4000)
-# foreman s -f Procfile.home
-foreman s -f Procfile.cafe
+foreman s -f Procfile.home
+# foreman s -f Procfile.cafe
