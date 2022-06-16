@@ -21,7 +21,11 @@
         | 右上のスイッチで有効にしよう
 
     template(v-if="base.order_enable_p")
+      OrderSettingModalTable(:base="base" :order_setting_modal="order_setting_modal")
+
+      //- b-table ではスマホで drag できない
       b-table(
+        v-if="false"
         :data="base.os_table_rows"
         :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
         :mobile-cards="false"
@@ -344,6 +348,7 @@ export default {
     },
   },
   computed: {
+    order_setting_modal() { return this },
   },
 }
 </script>
