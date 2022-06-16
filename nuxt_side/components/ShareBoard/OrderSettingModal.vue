@@ -84,7 +84,7 @@
                   b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
                     | {{e.name}}
 
-          .column(v-if="base.debug_mode_p")
+          .column(v-if="base.debug_mode_p || true")
             b-field(custom-class="is-small" :message="base.TwoPawnModeInfo.fetch(base.new_two_pawn_mode_key).message || base.TwoPawnModeInfo.message")
               template(#label)
                 a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.TwoPawnModeInfo)")
