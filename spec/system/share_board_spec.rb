@@ -204,7 +204,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       b_block do
         action_assert(0, "alice", "順番 ON")
-        assert_selector(".OrderSettingModal .b-table")     # 同期しているのでbob側のモーダルも有効になっている
+        assert_selector(".OrderSettingModalTable")         # 同期しているのでbob側のモーダルも有効になっている
         modal_close_handle          # 閉じる (ヘッダーに置いている)
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
@@ -1720,7 +1720,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   # OK or 観戦 トグルボタンのクリック
   def order_toggle(n)
-    find(".OrderSettingModal table tr:nth-child(#{n}) .enable_toggle_handle").click
+    find(".OrderSettingModalTable tbody tr:nth-child(#{n}) .enable_toggle_handle").click
   end
 
   def assert_white_read_sec(second)
@@ -1867,7 +1867,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   def assert_order_setting_members(names)
-    result = all(".OrderSettingModal .user_name").collect(&:text)
+    result = all(".OrderSettingModalTable tbody .user_name").collect(&:text)
     assert { result == names }
   end
 

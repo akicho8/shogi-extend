@@ -26,7 +26,7 @@ table.table.OrderSettingModalTable
         span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.current_turn)}")
           | {{row.user_name}}
       td.enabled_p
-        b-switch.enable_toggle_handle(:value="row.enabled_p" @input="(value) => enable_toggle_handle(row, value)")
+        b-switch.enable_toggle_handle(:value="row.enabled_p" @input="(value) => order_setting_modal.enable_toggle_handle(row, value)")
       td.handle_element
         b-icon(icon="drag-horizontal")
 </template>
