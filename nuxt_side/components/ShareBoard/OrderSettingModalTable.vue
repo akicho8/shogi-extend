@@ -7,7 +7,7 @@ table.table.OrderSettingModalTable
       th.user_name メンバー
       th.enabled_p 参加
       th.handle_element
-        b-icon(icon="arrow-up-down" size="is-small")
+        b-icon(icon="arrow-up-down" size="is-small" v-if="false")
   draggable(
     v-model="base.os_table_rows"
     handle=".handle_element"
