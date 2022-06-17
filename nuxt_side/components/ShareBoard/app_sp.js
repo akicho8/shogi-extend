@@ -110,7 +110,13 @@ export const app_sp = {
     // 二歩をした
     operation_double_pawn_handle() {
       this.sound_play("x")
-      this.toast_ok("それは二歩です")
+      this.toast_warn("二歩")
+    },
+
+    // 駒ワープした
+    operation_piece_warp_handle(soldier) {
+      this.sound_play("x")
+      this.toast_warn(`${soldier.name}ワープ`)
     },
 
     // ShogiPlayer コンポーネント自体を実行したいとき用

@@ -112,6 +112,7 @@ export default {
       hv["operation_invalid1"]                        = this.base.operation_invalid1_handle
       hv["operation_invalid2"]                        = this.base.operation_invalid2_handle
       hv["operation_double_pawn"]                     = this.base.operation_double_pawn_handle
+      hv["operation_piece_warp"]                      = this.base.operation_piece_warp_handle
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
       return hv
     },
