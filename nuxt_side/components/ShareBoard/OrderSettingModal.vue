@@ -56,9 +56,9 @@
             b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
 
       .buttons.mb-0.mt-2
-        b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small" icon-left="shuffle") シャッフル
-        b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small" icon-left="dice-3") 振り駒
-        b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small" icon-left="swap-vertical") 先後反転
+        b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
+        b-button.mb-0.furigoma_handle(@click="furigoma_handle" size="is-small") 振り駒
+        b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後入替
 
       hr
 
