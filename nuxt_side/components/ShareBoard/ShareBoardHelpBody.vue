@@ -283,7 +283,7 @@ HelpContent.ShareBoardHelpBody
       li 実行は一瞬だが内部では実際に5枚の歩を10回から20回振っている
 
   article
-    h2 先後入替とは？
+    h2 先後反転とは？
     p 手動で手番の順序を逆にしたいときに使う
 
   article
