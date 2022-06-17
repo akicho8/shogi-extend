@@ -62,7 +62,7 @@ export default {
     width: 1%
   .user_name
     // 名前だけ幅を設定せず残りの最大幅にする
-    text-align: left
+    text-align: left ! important
   .enabled_p
     width: 1%
   .handle_element
