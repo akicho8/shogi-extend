@@ -58,7 +58,7 @@
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
         b-button.mb-0.furigoma_handle(@click="furigoma_handle" size="is-small") 振り駒
-        b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後反転
+        b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後入替
 
       hr
 
@@ -228,13 +228,13 @@ export default {
       this.base.os_change.append("先後")
     },
 
-    // 先後反転
+    // 先後入替
     swap_handle() {
       // if (this.validate_present()) { return }
-      if (this.validate_members_even("先後反転")) { return }
+      if (this.validate_members_even("先後入替")) { return }
       this.sound_play_click()
       this.swap_core()
-      this.base.shared_al_add({label: "先後反転", message: "先後を反転しました"})
+      this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
       this.base.os_change.append("先後")
     },
 
