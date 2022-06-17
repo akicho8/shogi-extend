@@ -284,7 +284,7 @@ HelpContent.ShareBoardHelpBody
 
   article
     h2 先後入替とは？
-    p 手動で先後を逆にしたいときに使う
+    p 手動で手番の順序を逆にしたいときに使う
 
   article
     h2 駒落ちで対戦するには？
