@@ -22,7 +22,7 @@ require "rails_helper"
 RSpec.describe AuthInfo, type: :model do
   include ActiveJob::TestHelper
 
-  let(:auth) do
+  let!(:auth) do
     { "info" => { "email" => "sns@example.com" } }
   end
 

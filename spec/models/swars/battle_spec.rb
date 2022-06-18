@@ -41,7 +41,7 @@ module Swars
       Swars.setup
     end
 
-    let :record do
+    let! :record do
       Battle.create!
     end
 
@@ -52,7 +52,7 @@ module Swars
 
     describe "Twitterカード" do
       describe "to_twitter_card_params" do
-        let :value do
+        let! :value do
           record.to_twitter_card_params
         end
         it "works" do
@@ -90,7 +90,7 @@ module Swars
       end
 
       describe "投了" do
-        let :record do
+        let! :record do
           Swars::Battle.create!(final_key: :TORYO)
         end
 
@@ -111,7 +111,7 @@ module Swars
       end
 
       describe "時間切れ" do
-        let :record do
+        let! :record do
           Swars::Battle.create!(final_key: :TIMEOUT)
         end
 
@@ -131,7 +131,7 @@ module Swars
       end
 
       describe "0手目で終了" do
-        let :record do
+        let! :record do
           Swars::Battle.create!(csa_seq: [])
         end
         it "データがないときは0" do
@@ -142,7 +142,7 @@ module Swars
     end
 
     describe "相入玉タグ" do
-      let :record do
+      let! :record do
         Battle.create!(csa_seq: [["+5756FU", 0], ["-5354FU", 0], ["+5958OU", 0], ["-5152OU", 0], ["+5857OU", 0], ["-5253OU", 0], ["+5746OU", 0], ["-5364OU", 0], ["+4645OU", 0], ["-6465OU", 0], ["+4544OU", 0], ["-6566OU", 0], ["+4453OU", 0], ["-6657OU", 0]])
       end
       it "works" do

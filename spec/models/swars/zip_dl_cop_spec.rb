@@ -6,11 +6,11 @@ module Swars
       Swars.setup
     end
 
-    let(:current_user) { ::User.create!                  }
-    let(:user1)        { User.create!(user_key: "alice") }
-    let(:user2)        { User.create!(user_key: "bob")   }
+    let!(:current_user) { ::User.create!                  }
+    let!(:user1)        { User.create!(user_key: "alice") }
+    let!(:user2)        { User.create!(user_key: "bob")   }
 
-    let(:base_params) {
+    let!(:base_params) {
       {
         :current_user         => current_user,   # ログインしている人
         :current_index_scope  => user1.battles,  # 対象レコードたち

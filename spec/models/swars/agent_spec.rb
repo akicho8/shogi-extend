@@ -3,11 +3,11 @@ require "rails_helper"
 module Swars
   RSpec.describe Agent, type: :model, swars_spec: true do
     describe "index" do
-      let :result do
+      let! :result do
         Agent::Index.fetch(gtype: "", user_key: "devuser1", page_index: 0)
       end
 
-      let :ret_value do
+      let! :ret_value do
         [
           "devuser1-Yamada_Taro-20200101_123401",
           "devuser2-Yamada_Taro-20200101_123402",
@@ -27,7 +27,7 @@ module Swars
     end
 
     describe "record" do
-      let :result do
+      let! :result do
         Agent::Record.fetch(key: "devuser1-devuser2-20200101_123456")
       end
 

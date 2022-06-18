@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "棋譜投稿", type: :system do
-  # let :record do
+  # let! :record do
   #   FreeBattle.create!(kifu_body: "48玉", title: "(test_title)")
   # end
   #

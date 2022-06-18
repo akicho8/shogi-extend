@@ -2,8 +2,8 @@ require "rails_helper"
 
 module ShareBoard
   RSpec.describe RoomChannel, type: :channel, share_board_spec: true do
-    let(:user1)     { User.create!     }
-    let(:room_code) { SecureRandom.hex }
+    let!(:user1)     { User.create!     }
+    let!(:room_code) { SecureRandom.hex }
 
     before do
       stub_connection(current_user: user1, once_uuid: "(uuid)")

@@ -6,7 +6,7 @@ module Swars
       Swars.setup
     end
 
-    let :user do
+    let! :user do
       User.create!
     end
 

@@ -20,7 +20,7 @@ module Tsl
       Tsl.setup
     end
 
-    let :record do
+    let! :record do
       League.first
     end
 

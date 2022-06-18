@@ -41,7 +41,7 @@ module Swars
       Swars.setup
     end
 
-    let :record do
+    let! :record do
       Battle.create!
     end
 

@@ -22,7 +22,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       get :google
     end
 
-    let(:record) { User.first }
+    let!(:record) { User.first }
 
     it "名前がある" do
       assert { record.name == "alice" }
@@ -65,7 +65,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       get :twitter
     end
 
-    let(:record) { User.first }
+    let!(:record) { User.first }
 
     it "名前がある" do
       assert { record.name == "alice" }
@@ -110,7 +110,7 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
       get :github
     end
 
-    let(:record) { User.first }
+    let!(:record) { User.first }
 
     it "名前がある" do
       assert { record.name == "Yamada Taro" }

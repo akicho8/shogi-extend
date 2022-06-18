@@ -15,9 +15,9 @@
 require "rails_helper"
 
 RSpec.describe AppLog, type: :model do
-  let(:instance)       { FactoryBot.create(:app_log)         }
-  let(:user)           { FactoryBot.create(:user)              }
-  let(:default_attrs)  { FactoryBot.attributes_for(:app_log) }
+  let!(:instance)       { FactoryBot.create(:app_log)         }
+  let!(:user)           { FactoryBot.create(:user)              }
+  let!(:default_attrs)  { FactoryBot.attributes_for(:app_log) }
 
   it "バリデーションが正しい" do
     instance.valid?

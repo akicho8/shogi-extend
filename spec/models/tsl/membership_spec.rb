@@ -33,7 +33,7 @@ module Tsl
       Tsl.setup
     end
 
-    let :record do
+    let! :record do
       Membership.first
     end
 
