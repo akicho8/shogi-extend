@@ -278,7 +278,7 @@ export default {
 
     new_foul_limit_key_change_handle() {
       this.sound_play_click()
-      this.base.os_change.append("反則")
+      this.base.os_change.append("反則制限")
     },
 
     new_hand_every_n_change_handle() {
