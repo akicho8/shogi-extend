@@ -7,7 +7,7 @@ export class FoulLimitInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_foul_limit_off", name: "なし", message: "玄人向け",   },
+      { key: "is_foul_limit_off", name: "なし", message: "一般向け",   },
       { key: "is_foul_limit_on",  name: "あり", message: "初心者向け", },
     ]
   }
