@@ -109,17 +109,17 @@ export const app_sp = {
 
     foul_two_pawn_handle() {
       this.sound_play("x")
-      this.toast_warn("二歩")
+      this.toast_ng("二歩")
     },
 
     foul_piece_warp_handle(soldier) {
       this.sound_play("x")
-      this.toast_warn(`${soldier.name}ワープ`)
+      this.toast_ng(`${soldier.name}ワープ`)
     },
 
     foul_death_king_handle() {
       this.sound_play("x")
-      this.toast_warn("王手放置")
+      this.toast_ng("王手放置")
     },
 
     // ShogiPlayer コンポーネント自体を実行したいとき用
