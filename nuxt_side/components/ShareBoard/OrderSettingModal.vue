@@ -89,15 +89,15 @@
                     | {{e.name}}
 
           .column(v-if="base.debug_mode_p || true")
-            b-field(custom-class="is-small" :message="base.TwoPawnModeInfo.fetch(base.new_two_pawn_mode_key).message || base.TwoPawnModeInfo.message")
+            b-field(custom-class="is-small" :message="base.FoulModeInfo.fetch(base.new_foul_mode_key).message || base.FoulModeInfo.message")
               template(#label)
-                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.TwoPawnModeInfo)")
-                  | {{base.TwoPawnModeInfo.field_label}}
+                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.FoulModeInfo)")
+                  | {{base.FoulModeInfo.field_label}}
                   b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
 
               b-field.is-marginless
-                template(v-for="e in base.TwoPawnModeInfo.values")
-                  b-radio-button(v-model="base.new_two_pawn_mode_key" :native-value="e.key" size="is-small" @input="new_two_pawn_mode_key_change_handle")
+                template(v-for="e in base.FoulModeInfo.values")
+                  b-radio-button(v-model="base.new_foul_mode_key" :native-value="e.key" size="is-small" @input="new_foul_mode_key_change_handle")
                     | {{e.name}}
 
           .column(v-if="base.debug_mode_p")
@@ -276,9 +276,9 @@ export default {
       this.base.os_change.append("シャウト")
     },
 
-    new_two_pawn_mode_key_change_handle() {
+    new_foul_mode_key_change_handle() {
       this.sound_play_click()
-      this.base.os_change.append("二歩")
+      this.base.os_change.append("反則")
     },
 
     new_hand_every_n_change_handle() {
@@ -333,7 +333,7 @@ export default {
         move_guard_key: this.base.new_move_guard_key,
         avatar_king_key: this.base.new_avatar_king_key,
         shout_mode_key: this.base.new_shout_mode_key,
-        two_pawn_mode_key: this.base.new_two_pawn_mode_key,
+        foul_mode_key: this.base.new_foul_mode_key,
         hand_every_n: this.base.new_hand_every_n,
         message: message,
       })

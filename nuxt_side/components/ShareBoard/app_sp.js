@@ -107,17 +107,17 @@ export const app_sp = {
       this.toast_ok("それは相手の駒です")
     },
 
-    operation_double_pawn_handle() {
+    foul_two_pawn_handle() {
       this.sound_play("x")
       this.toast_warn("二歩")
     },
 
-    operation_piece_warp_handle(soldier) {
+    foul_piece_warp_handle(soldier) {
       this.sound_play("x")
       this.toast_warn(`${soldier.name}ワープ`)
     },
 
-    operation_king_suicide_handle() {
+    foul_death_king_handle() {
       this.sound_play("x")
       this.toast_warn("王手放置")
     },
