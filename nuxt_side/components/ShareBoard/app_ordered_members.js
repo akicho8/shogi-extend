@@ -3,7 +3,7 @@ import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import { EveryNInfo } from "@/components/models/every_n_info.js"
-import { FoulModeInfo } from "@/components/models/foul_mode_info.js"
+import { FoulLimitInfo } from "@/components/models/foul_limit_info.js"
 import _ from "lodash"
 const FAKE_P = false
 const HAND_EVERY_N_ENABLED = true // N手毎を有効にするか？
@@ -23,7 +23,7 @@ export const app_ordered_members = {
       new_move_guard_key: null, // 手番制限
       new_avatar_king_key: null, // アバター表示
       new_shout_mode_key: null, // 叫びモード
-      new_foul_mode_key: null, // 叫びモード
+      new_foul_limit_key: null, // 叫びモード
       new_hand_every_n: null, // N手毎交代
 
       os_change: null, // OsChange のインスタンス
@@ -106,7 +106,7 @@ export const app_ordered_members = {
       this.new_move_guard_key = this.move_guard_key
       this.new_avatar_king_key = this.avatar_king_key
       this.new_shout_mode_key = this.shout_mode_key
-      this.new_foul_mode_key = this.foul_mode_key
+      this.new_foul_limit_key = this.foul_limit_key
       this.new_hand_every_n = this.hand_every_n
       this.os_change = new OsChange()
     },
@@ -288,7 +288,7 @@ export const app_ordered_members = {
       this.move_guard_key  = params.move_guard_key
       this.avatar_king_key = params.avatar_king_key
       this.shout_mode_key  = params.shout_mode_key
-      this.foul_mode_key  = params.foul_mode_key
+      this.foul_limit_key  = params.foul_limit_key
       this.hand_every_n    = params.hand_every_n
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
@@ -373,9 +373,10 @@ export const app_ordered_members = {
     shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
     is_shout_mode_on() { return this.shout_mode_info.key === "is_shout_mode_on" },
 
-    FoulModeInfo()    { return FoulModeInfo                                 },
-    foul_mode_info()   { return this.FoulModeInfo.fetch(this.foul_mode_key) },
-    is_foul_mode_off() { return this.foul_mode_info.key === "is_foul_mode_off" },
+    FoulLimitInfo()     { return FoulLimitInfo                                 },
+    foul_limit_info()   { return this.FoulLimitInfo.fetch(this.foul_limit_key) },
+    is_foul_limit_off() { return this.foul_limit_info.key === "is_foul_limit_off" },
+    is_foul_limit_on() { return this.foul_limit_info.key === "is_foul_limit_on" },
 
     EveryNInfo()   { return EveryNInfo                                 },
 
@@ -387,7 +388,7 @@ export const app_ordered_members = {
         move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
         shout_mode_key:  this.shout_mode_key,
-        foul_mode_key: this.foul_mode_key,
+        foul_limit_key: this.foul_limit_key,
         hand_every_n:    this.hand_every_n,
 
         __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる

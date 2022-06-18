@@ -65,10 +65,10 @@ export default {
       hv.sp_controller                               = this.sp_controller
       hv.sp_slider                                   = this.sp_slider
 
-      // 反則
-      hv.sp_play_mode_piece_warp_disabled            = this.base.is_foul_mode_off // 角ワープ
-      hv.sp_play_mode_two_pawn_disabled              = this.base.is_foul_mode_off // 二歩
-      hv.sp_play_mode_death_king_disabled            = this.base.is_foul_mode_off // 王手放置
+      // 反則制限
+      hv.sp_play_mode_piece_warp_disabled            = this.base.is_foul_limit_on // 角ワープ
+      hv.sp_play_mode_two_pawn_disabled              = this.base.is_foul_limit_on // 二歩
+      hv.sp_play_mode_death_king_disabled            = this.base.is_foul_limit_on // 王手放置
 
       if (false) {
         hv.sp_bg_variant                             = "is_bg_variant_a"
