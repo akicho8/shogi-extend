@@ -64,6 +64,18 @@
 
       .mt-3
         .columns.is-mobile
+          .column(v-if="base.debug_mode_p || true")
+            b-field(custom-class="is-small" :message="base.FoulLimitInfo.fetch(base.new_foul_limit_key).message || base.FoulLimitInfo.message")
+              template(#label)
+                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.FoulLimitInfo)")
+                  | {{base.FoulLimitInfo.field_label}}
+                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
+
+              b-field.is-marginless
+                template(v-for="e in base.FoulLimitInfo.values")
+                  b-radio-button(v-model="base.new_foul_limit_key" :native-value="e.key" size="is-small" @input="new_foul_limit_key_change_handle")
+                    | {{e.name}}
+
           .column
             b-field(custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
               template(#label)
@@ -86,18 +98,6 @@
               b-field.is-marginless
                 template(v-for="e in base.ShoutModeInfo.values")
                   b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
-                    | {{e.name}}
-
-          .column(v-if="base.debug_mode_p || true")
-            b-field(custom-class="is-small" :message="base.FoulLimitInfo.fetch(base.new_foul_limit_key).message || base.FoulLimitInfo.message")
-              template(#label)
-                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.FoulLimitInfo)")
-                  | {{base.FoulLimitInfo.field_label}}
-                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
-
-              b-field.is-marginless
-                template(v-for="e in base.FoulLimitInfo.values")
-                  b-radio-button(v-model="base.new_foul_limit_key" :native-value="e.key" size="is-small" @input="new_foul_limit_key_change_handle")
                     | {{e.name}}
 
           .column(v-if="base.debug_mode_p")
