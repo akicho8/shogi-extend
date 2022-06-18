@@ -28,15 +28,15 @@ module Swars
       Swars.setup
     end
 
-    let! :login_user do
+    let :login_user do
       ::User.create!
     end
 
-    let! :battle do
+    let :battle do
       Battle.create!
     end
 
-    let! :battle_user do
+    let :battle_user do
       battle.users.first
     end
 

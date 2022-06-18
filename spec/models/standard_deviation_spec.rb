@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe StandardDeviation do
-  let! :sdc do
+  let :sdc do
     StandardDeviation.new([1, 2, 3])
   end
 
