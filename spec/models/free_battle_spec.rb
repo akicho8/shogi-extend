@@ -36,11 +36,11 @@
 require "rails_helper"
 
 RSpec.describe FreeBattle, type: :model do
-  let! :record do
+  let :record do
     FreeBattle.create!
   end
 
-  let! :ki2_record do
+  let :ki2_record do
     FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
   end
 

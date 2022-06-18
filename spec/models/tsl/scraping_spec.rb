@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Tsl
   RSpec.describe Scraping, type: :model do
-    let! :scraping do
+    let :scraping do
       Scraping.new(generation: 66)
     end
 

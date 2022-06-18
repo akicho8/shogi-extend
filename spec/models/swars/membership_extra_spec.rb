@@ -21,8 +21,8 @@ module Swars
       Swars.setup
     end
 
-    let!(:battle)     { Battle.create!        }
-    let!(:membership) { battle.memberships[0] }
+    let(:battle)     { Battle.create!        }
+    let(:membership) { battle.memberships[0] }
 
     it "relation" do
       assert { membership.membership_extra }

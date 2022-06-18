@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Kiwi
   RSpec.describe LemonRoomChannel, type: :channel do
-    let!(:user1) { User.create! }
+    let(:user1) { User.create! }
 
     before do
       stub_connection(current_user: user1)

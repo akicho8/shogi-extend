@@ -21,7 +21,7 @@
 require "rails_helper"
 
 RSpec.describe Profile, type: :model do
-  let!(:user1) { User.create! }
+  let(:user1) { User.create! }
 
   it "delegateしているのでuserから使える" do
     assert { user1.description }
