@@ -1425,20 +1425,21 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
   end
 
   describe "順番設定の下のわかりにくいオプションの説明" do
+    def case1(label, message)
+      find(".OrderSettingModal span", text: label, exact_text: true).click
+      assert_text(message)
+    end
+
     it "works" do
       visit_app(room_code: :my_room, force_user_name: "alice")
       hamburger_click
-      os_modal_handle               # 「順番設定」モーダルを開く
-      find(".main_switch").click                # 右上の有効スイッチをクリック
-
-      find(".avatar_king_hint_handle").click    # 「アバター」のラベルをクリック
-      assert_text("玉として表示します")
-
-      find(".shout_hint_handle").click          # 「シャウト」のラベルをクリック
-      assert_text("駒が無駄に叫びます")
-
-      find(".hand_every_n_hint_handle").click   # 「N手毎交代」のラベルをクリック
-      assert_text("1人10手毎交代のようなルール")
+      os_modal_handle            # 「順番設定」モーダルを開く
+      find(".main_switch").click # 右上の有効スイッチをクリック
+      case1("反則制限", "二歩")
+      case1("アバター", "玉として表示します")
+      case1("シャウト", "駒が無駄に叫びます")
+      case1("N手毎交代", "1人10手毎交代のようなルール")
+      case1("手番制限", "手番の人だけが駒を動かせる")
     end
   end
 

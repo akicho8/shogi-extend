@@ -63,58 +63,18 @@
       hr
 
       .mt-3
-        .columns.is-mobile
-          .column(v-if="base.debug_mode_p || true")
-            b-field(custom-class="is-small" :message="base.FoulLimitInfo.fetch(base.new_foul_limit_key).message || base.FoulLimitInfo.message")
-              template(#label)
-                a.label_with_hint.two_pawn_hint_handle(@click.stop="hint_handle(base.FoulLimitInfo)")
-                  | {{base.FoulLimitInfo.field_label}}
-                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
-
-              b-field.is-marginless
-                template(v-for="e in base.FoulLimitInfo.values")
-                  b-radio-button(v-model="base.new_foul_limit_key" :native-value="e.key" size="is-small" @input="new_foul_limit_key_change_handle")
-                    | {{e.name}}
-
+        .columns.is-mobile.other_setting
           .column
-            b-field(custom-class="is-small" :message="base.AvatarKingInfo.fetch(base.new_avatar_king_key).message || base.AvatarKingInfo.message")
-              template(#label)
-                a.label_with_hint.avatar_king_hint_handle(@click.stop="hint_handle(base.AvatarKingInfo)")
-                  | {{base.AvatarKingInfo.field_label}}
-                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
-
-              b-field.is-marginless
-                template(v-for="e in base.AvatarKingInfo.values")
-                  b-radio-button(v-model="base.new_avatar_king_key" :native-value="e.key" size="is-small" @input="new_avatar_king_key_change_handle")
-                    | {{e.name}}
-
-          .column(v-if="base.debug_mode_p")
-            b-field(custom-class="is-small" :message="base.ShoutModeInfo.fetch(base.new_shout_mode_key).message || base.ShoutModeInfo.message")
-              template(#label)
-                a.label_with_hint.shout_hint_handle(@click.stop="hint_handle(base.ShoutModeInfo)")
-                  | {{base.ShoutModeInfo.field_label}}
-                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
-
-              b-field.is-marginless
-                template(v-for="e in base.ShoutModeInfo.values")
-                  b-radio-button(v-model="base.new_shout_mode_key" :native-value="e.key" size="is-small" @input="new_shout_mode_key_change_handle")
-                    | {{e.name}}
-
-          .column(v-if="base.debug_mode_p")
-            b-field(custom-class="is-small" message="")
-              template(#label)
-                a.label_with_hint.hand_every_n_hint_handle(@click.stop="hint_handle(base.EveryNInfo)")
-                  | {{base.EveryNInfo.field_label}}
-                  b-icon(icon="comment-question-outline" size="is-small" type="is-warning" )
-              b-numberinput(size="is-small" controls-position="compact" v-model="base.new_hand_every_n" :min="1" :max="10" :exponential="true" @input="sound_play_click()")
-
-        .columns.is-mobile(v-if="development_p && false")
+            SimpleRadioButtons.foul_limit(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulLimitInfo" var_name="new_foul_limit_key" @user_input="user_input_handle")
           .column
-            b-field(label="手番制限" custom-class="is-small" :message="base.MoveGuardInfo.fetch(base.new_move_guard_key).message")
-              b-field.is-marginless
-                template(v-for="e in base.MoveGuardInfo.values")
-                  b-radio-button(v-model="base.new_move_guard_key" :native-value="e.key" size="is-small" @input="sound_play_click()")
-                    | {{e.name}}
+            SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" var_name="new_avatar_king_key" @user_input="user_input_handle")
+          .column(v-if="base.debug_mode_p")
+            SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" var_name="new_shout_mode_key" @user_input="user_input_handle")
+          .column(v-if="base.debug_mode_p")
+            SimpleRadioButtons.hand_every_n(:base="base" custom-class="is-small" element_size="is-small" model_name="HandEveryNInfo" var_name="new_hand_every_n" @user_input="user_input_handle")
+        .columns.is-mobile.other_setting(v-if="development_p")
+          .column
+            SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" var_name="new_move_guard_key" @user_input="user_input_handle")
 
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -266,24 +226,8 @@ export default {
       this.order_index_update()
     },
 
-    new_avatar_king_key_change_handle() {
-      this.sound_play_click()
-      this.base.os_change.append("アバター")
-    },
-
-    new_shout_mode_key_change_handle() {
-      this.sound_play_click()
-      this.base.os_change.append("シャウト")
-    },
-
-    new_foul_limit_key_change_handle() {
-      this.sound_play_click()
-      this.base.os_change.append("反則制限")
-    },
-
-    new_hand_every_n_change_handle() {
-      this.sound_play_click()
-      this.base.os_change.append("N手毎交代")
+    user_input_handle(model) {
+      this.base.os_change.append(model.field_label)
     },
 
     // 上下矢印ボタン
@@ -370,8 +314,9 @@ export default {
   .enable_toggle_handle
     margin: unset // 右にラベルがある想定で margin-right があるため取る
 
-  .label_with_hint
-    color: inherit
+  .other_setting
+    label
+      cursor: pointer
 
 .STAGE-development
   .OrderSettingModal

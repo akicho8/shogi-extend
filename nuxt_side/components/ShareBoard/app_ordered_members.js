@@ -2,7 +2,7 @@ import OrderSettingModal from "./OrderSettingModal.vue"
 import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
-import { EveryNInfo } from "@/components/models/every_n_info.js"
+import { HandEveryNInfo } from "@/components/models/hand_every_n_info.js"
 import { FoulLimitInfo } from "@/components/models/foul_limit_info.js"
 import _ from "lodash"
 const FAKE_P = false
@@ -13,18 +13,18 @@ export const app_ordered_members = {
   data() {
     return {
       // 共有する変数
-      order_enable_p: false,          // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
-      ordered_members: null,        // 出走順の実配列
+      order_enable_p: false, // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
+      ordered_members: null, // 出走順の実配列
       // move_guard_key: "is_move_guard_on", // 手番制限
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
-      os_table_rows:  null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
-      new_move_guard_key: null, // 手番制限
+      os_table_rows:       null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+      new_move_guard_key:  null, // 手番制限
       new_avatar_king_key: null, // アバター表示
-      new_shout_mode_key: null, // 叫びモード
-      new_foul_limit_key: null, // 叫びモード
-      new_hand_every_n: null, // N手毎交代
+      new_shout_mode_key:  null, // 叫びモード
+      new_foul_limit_key:  null, // 叫びモード
+      new_hand_every_n:    null, // N手毎交代
 
       os_change: null, // OsChange のインスタンス
     }
@@ -378,7 +378,7 @@ export const app_ordered_members = {
     is_foul_limit_off() { return this.foul_limit_info.key === "is_foul_limit_off" },
     is_foul_limit_on() { return this.foul_limit_info.key === "is_foul_limit_on" },
 
-    EveryNInfo()   { return EveryNInfo                                 },
+    HandEveryNInfo()   { return HandEveryNInfo                                 },
 
     // あとから接続した人に伝える内容
     current_xorder() {
