@@ -3,6 +3,10 @@ b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
   template(#label)
     span(:class="{'is-clickable': present_p(hint_str)}" @click="label_click_handle")
       | {{label}}
+      template(v-if="permanent_mark_append")
+        span.has-text-primary
+          | *
+
   template(v-if="real_model.input_type === 'numberinput'")
     b-numberinput(
       :size="element_size"
@@ -36,6 +40,7 @@ export default {
     model_name:   { type: String, required: true,  },
     var_name:     { type: String, required: true,  },
     element_size: { type: String, required: false, },
+    permanent_mark_append: { type: Boolean, default: false, required: false, },
   },
   methods: {
     input_handle(e) {

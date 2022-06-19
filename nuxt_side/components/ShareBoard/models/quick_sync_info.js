@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
 export class QuickSyncInfo extends ApplicationMemoryRecord {
-  static field_label = "盤面同期のタイミングは"
+  static field_label = "盤面同期のタイミング"
   static field_message = ""
 
   static get define() {
