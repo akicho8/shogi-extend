@@ -26,7 +26,7 @@
                   .image_number_body
                     | {{display_number_for(i)}}
           GalleryTopPagination(:base="base")
-          .column.is-12.cc_container.is-flex.is-justify-content-center(v-if="false")
+          .column.is-12.cc_container.is-flex.is-justify-content-center
             a.image.is-block(href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" @click="sound_play_click()")
               img(src="by-sa.svg")
     GalleryTopDebugPanels(:base="base" v-if="development_p")
