@@ -225,7 +225,7 @@ export default {
         sp_play_mode_piece_warp_disabled:                false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
         sp_play_mode_two_pawn_disabled:                false, // play_mode で二歩できる
         sp_play_mode_auto_promote:                   false, // play_mode で死に駒になるときは自動的に成る
-        sp_play_mode_not_put_if_death_soldier:       false, // play_mode で死に駒になるときは置けないようにする
+        sp_play_mode_dead_soldier_put_disabled:       false, // play_mode で死に駒になるときは置けないようにする
         sp_play_mode_only_own_piece_to_move:         false, // play_mode では自分手番とき自分の駒しか動かせないようにする
         sp_play_mode_can_not_kill_same_team_soldier: false, // play_mode では自分の駒で同じ仲間の駒を取れないようにする
       }

@@ -69,6 +69,7 @@ export default {
       hv.sp_play_mode_piece_warp_disabled            = this.base.is_foul_limit_on // 角ワープ
       hv.sp_play_mode_two_pawn_disabled              = this.base.is_foul_limit_on // 二歩
       hv.sp_play_mode_death_king_disabled            = this.base.is_foul_limit_on // 王手放置
+      hv.sp_play_mode_dead_soldier_put_disabled      = this.base.is_foul_limit_on // 死に駒打
 
       if (false) {
         hv.sp_bg_variant                             = "is_bg_variant_a"
@@ -117,6 +118,7 @@ export default {
       hv["foul_two_pawn"]                             = this.base.foul_two_pawn_handle
       hv["foul_piece_warp"]                           = this.base.foul_piece_warp_handle
       hv["foul_death_king"]                           = this.base.foul_death_king_handle
+      hv["foul_dead_soldier_put"]                     = this.base.foul_dead_soldier_put_handle
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
       return hv
     },

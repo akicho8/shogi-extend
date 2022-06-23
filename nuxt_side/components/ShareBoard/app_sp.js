@@ -122,6 +122,11 @@ export const app_sp = {
       this.toast_ng("王手放置")
     },
 
+    foul_dead_soldier_put_handle() {
+      this.sound_play("x")
+      this.toast_ng("死に駒")
+    },
+
     // ShogiPlayer コンポーネント自体を実行したいとき用
     sp_call(func) {
       return func(this.$refs.ShareBoardSp.$refs.main_sp.sp_object())
