@@ -147,17 +147,17 @@ export default {
 
       // 候補手
       candidate_report: null, // テキスト
-      candidate_rows: null,   // 配列
+      candidate_rows:   null, // 配列
 
       // デバッグ用
       pressure_rate_hash: null, // 終盤度
       think_text:         null, // 思考内容テキスト
-      turn_offset: null, // 手数
+      turn_offset:        null, // 手数
 
       // shogi-player 用パラメータ
-      sp_body: null,               // 譜面
-      sp_viewpoint: null,                  // 駒落ちなら反転させる
-      sp_human_side: null,             // 人間が操作する側を絞る
+      sp_body:       null, // 譜面
+      sp_viewpoint:  null, // 駒落ちなら反転させる
+      sp_human_side: null, // 人間が操作する側を絞る
     }
   },
 
@@ -222,10 +222,10 @@ export default {
     free_move_attrs() {
       return {
         sp_play_mode_legal_move_only:                false, // play_mode で合法手のみに絞る
-        sp_play_mode_piece_warp_disabled:                false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
-        sp_play_mode_two_pawn_disabled:                false, // play_mode で二歩できる
+        sp_play_mode_piece_warp_disabled:            false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
+        sp_play_mode_two_pawn_disabled:              false, // play_mode で二歩できる
         sp_play_mode_auto_promote:                   false, // play_mode で死に駒になるときは自動的に成る
-        sp_play_mode_dead_soldier_put_disabled:       false, // play_mode で死に駒になるときは置けないようにする
+        sp_play_mode_dead_soldier_put_disabled:      false, // play_mode で死に駒になるときは置けないようにする
         sp_play_mode_only_own_piece_to_move:         false, // play_mode では自分手番とき自分の駒しか動かせないようにする
         sp_play_mode_can_not_kill_same_team_soldier: false, // play_mode では自分の駒で同じ仲間の駒を取れないようにする
       }
