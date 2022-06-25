@@ -5,12 +5,16 @@
   .section_title.mt-0 PIECE TEXTURE
   ul
     li: ExternalLink(beep href="https://nureyon.com/") ぬれよん
+    li
+      ExternalLink(beep href="https://www.google.co.jp/search?q=Portella+lishogi") Portella
+      ExternalLink.mx-2(beep href="https://creativecommons.org/licenses/by-nc-sa/4.0/") (CC BY-NC-SA 4.0)
     li: ExternalLink(beep href="https://glyphwiki.org/") グリフウィキ
     li: ExternalLink(beep href="https://studio.beatnix.co.jp/kids-it/kids-programming/scratch/scratch-material/hiragana-katakana-minchyo/") コドモとアプリ
     li: ExternalLink(beep href="https://github.com/orangain/shogi-piece-images") orangain/shogi-piece-images
     li: ExternalLink(beep href="http://putiya.com/") プチッチ
     li: ExternalLink(beep href="https://twitter.com/Shogi_Zuan") 将棋図案駒 (404)
-    li: ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像 (404)
+
+    //- li: ExternalLink(beep href="http://mucho.girly.jp/bona/") 将棋ｱﾌﾟﾘ用ｸﾘｴﾃｨﾌﾞｺﾓﾝｽﾞ画像 (404)
 
   //- .section_title BOARD TEXTURE
   //- ul

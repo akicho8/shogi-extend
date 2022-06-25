@@ -179,9 +179,11 @@ export const app_sp = {
 
     sp_class() {
       const av = []
-      if (this.current_turn_self_p) {
-        av.push("current_turn_self_p")
-      }
+      // if (this.current_turn_self_p) {
+      //   av.push("current_turn_self_p")
+      // } else {
+      //   av.push("current_turn_not_self_p")
+      // }
       return av
     },
 

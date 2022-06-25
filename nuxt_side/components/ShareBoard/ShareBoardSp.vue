@@ -64,6 +64,8 @@ export default {
       hv.sp_layer                                    = this.sp_layer
       hv.sp_controller                               = this.sp_controller
       hv.sp_slider                                   = this.sp_slider
+      hv.sp_pi_variant                               = this.base.appearance_theme_info.sp_pi_variant
+      hv.sp_bg_variant                               = this.base.appearance_theme_info.sp_bg_variant
 
       // 反則制限
       hv.sp_play_mode_piece_warp_disabled            = this.base.is_foul_limit_on // 角ワープ
