@@ -95,6 +95,10 @@ export default {
       --sp_piece_count_gap_bottom: 58%
       --sp_piece_count_font_size: 8px
 
+  // リアル駒は元々gapを考慮して小さめに作られているため100%にしないとかなり小さく見えてしまう
+  .is_pi_variant_g
+    --sp_board_piece_rate: 100%
+
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table
   .detail-container
