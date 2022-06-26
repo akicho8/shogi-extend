@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "3.1.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
 gem "rails", "~> 6.1.4"
@@ -147,13 +147,14 @@ gem "codecov", require: false, group: :test
 
 gem "rack-cors", require: "rack/cors" # 別のドメインからJSONアクセスできるようにするための何か
 
+gem "psych", "~> 3.1"   # Psych::BadAlias: Unknown alias: default 対策
+
 # application 用
 gem "slack-ruby-client"
 
 # エラー通知
 gem "exception_notification"
 gem "slack-notifier"
-# gem "psych", "~> 3.1"   # Psych::BadAlias: Unknown alias: default 対策
 
 # devise
 gem "devise"
@@ -191,3 +192,6 @@ gem "sidekiq"
 gem "redis-namespace"
 
 gem "puma_worker_killer"
+
+# ruby 3.1.0 では gem 化した標準ライブラリは Gemfile に書かないといけない
+gem "net-smtp"

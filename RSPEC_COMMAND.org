@@ -1,3 +1,4 @@
+rspec spec/models/ spec/controllers/ spec/channels
 rspec
 rspec --only-failures
 SHARE_BOARD_SPEC_SKIP=1 rspec
