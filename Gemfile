@@ -128,7 +128,7 @@ group :development do
 end
 
 # gem "bioshogi", path: "~/src/bioshogi"
-gem "bioshogi", github: "akicho8/bioshogi"
+gem "bioshogi", github: "akicho8/bioshogi", branch: "ruby310"
 gem "rmagick"                   # for Bioshogi to_png
 gem "systemu"                   # for Bioshogi to_animation_mp4
 
