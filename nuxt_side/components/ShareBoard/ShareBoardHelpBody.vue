@@ -200,8 +200,8 @@ HelpContent.ShareBoardHelpBody
       li なので、オンラインなら1手毎交代で良い
 
   article
-    h2 盤の色を変更するには？
-    p メニュー→配色
+    h2 盤の色や駒を変更するには？
+    p メニュー→下の方→テーマ
 
   article
     h2 発言するには？
