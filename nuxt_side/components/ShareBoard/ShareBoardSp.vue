@@ -141,8 +141,8 @@ export default {
 .ShareBoardSp
   +padding_lr(unset)
 
-  // タブレット以上では大きさは動的に変更できる
-  +tablet
+  // デスクトップ以上では大きさは動的に変更できる
+  +desktop
     +padding_tb(unset)
     &.is_sb_play_mode
       max-width: calc(var(--board_width) * 1.0vmin)
@@ -185,4 +185,8 @@ export default {
   &.current_turn_self_p
     .ShareBoardSp
       --sp_board_color: var(--sb_board_active_color)
+
+// .STAGE-development
+//   .ShareBoardSp
+//     border: 4px dashed change_color($danger, $alpha: 1.0) ! important
 </style>

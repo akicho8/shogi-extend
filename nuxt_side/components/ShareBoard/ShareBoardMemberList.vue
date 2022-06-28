@@ -47,6 +47,6 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardMemberList.column
-  +tablet
+  +desktop
     +SideColumnScrollOn
 </style>

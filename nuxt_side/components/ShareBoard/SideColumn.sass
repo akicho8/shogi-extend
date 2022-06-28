@@ -4,17 +4,15 @@
 // |--------------------------+------|
 .ShareBoardApp
   .SideColumn
-    +tablet
-      max-width: 8rem
     +desktop
       max-width: 12rem
     +widescreen
       max-width: 16rem
 
     &.is_content_blank
-      +mobile
+      +touch
         display: none
-      +tablet // PCではカラムを必ず入れておかないと盤がずれるのでその中の SideColumnScroll を消す
+      +desktop // PCではカラムを必ず入れておかないと盤がずれるのでその中の SideColumnScroll を消す
         .SideColumnScroll
           display: none
 

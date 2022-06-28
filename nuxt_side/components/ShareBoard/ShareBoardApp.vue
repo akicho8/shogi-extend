@@ -50,7 +50,8 @@ client-only
 
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
-        .columns.is-centered.is-variable.is-0
+        //- .is-desktop でデスクトップ以上のときだけ横並びになる
+        .columns.is-centered.is-desktop.is-variable.is-0
           ShareBoardSp(:base="base" ref="ShareBoardSp")
           ShareBoardMemberList(:base="base")
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
@@ -316,5 +317,4 @@ export default {
 @import "./layout.sass"
 @import "./gap.sass"
 @import "./SideColumn.sass"
-
 </style>

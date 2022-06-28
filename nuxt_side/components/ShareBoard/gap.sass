@@ -12,16 +12,16 @@
           +tablet
             margin-top: var(--sb_gap)
 
-  // モバイルでは縦並びになるので上のマージンを調整する
-  +mobile
+  // タッチ端末では縦並びになるので上のマージンを調整する
+  +touch
     .SideColumn
       margin-top: 1rem
       padding: 0 0.5rem
 
   .ShareBoardSp
     // 盤の左右の隙間
-    +tablet
-      +margin_lr(0.75rem)
+    // +tablet
+    //   +margin_lr(0.75rem)
     +desktop
       +margin_lr(1.00rem)
     +widescreen

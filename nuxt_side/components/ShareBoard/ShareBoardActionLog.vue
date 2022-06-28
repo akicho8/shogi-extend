@@ -64,6 +64,6 @@ export default {
 @import "./support.sass"
 .ShareBoardActionLog.column
   +SideColumnScrollOn
-  +mobile
+  +touch
     height: 16rem
 </style>
