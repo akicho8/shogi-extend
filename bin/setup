@@ -37,6 +37,8 @@ chdir APP_ROOT do
   system! 'rails dev:cache'
 
   system! 'saferenum -x playground'
+  system! 'fd -tx -e rb -E bin -x chmod -v a-x'
+
   # system! 'saferenum -x -b 1000 config/app_data/free_battles'
 
   puts "\n== Preparing database =="
