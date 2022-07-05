@@ -32,8 +32,6 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
       { key: "is_color_theme_gingham_check_eva8",     name: "ギンガム8号機",      },
       { key: "is_color_theme_gingham_check_eva13",    name: "ギンガム13号機",     },
 
-      { key: "is_color_theme_explosion_yellow",       name: "爆発(黄)", },
-      { key: "is_color_theme_explosion_blue",         name: "爆発(青)", },
       { key: "is_color_theme_cloud_green",            name: "雲(緑)", },
       { key: "is_color_theme_cloud_pink",             name: "雲(ピンク)", },
       { key: "is_color_theme_cloud_eva0",             name: "雲(零号機)", },
