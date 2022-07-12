@@ -33,6 +33,7 @@ export class AudioCreatorInfo extends ApplicationMemoryRecord {
       { key: "鷹尾まさき",               home_site_url: "http://takao-masaki.com/",                                 },
       { key: "Kyaai",                    home_site_url: "https://www.kyaaimusic.com/",                              },
       { key: "Phalene",                  home_site_url: "https://dova-s.jp/_contents/author/profile265.html",       },
+      { key: "27Corazones Beats",        home_site_url: "https://www.27corazonesbeats.com/",                        },
     ]
   }
 }

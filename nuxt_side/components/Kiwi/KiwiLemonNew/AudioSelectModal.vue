@@ -9,7 +9,7 @@
       template(v-for="e in base.AudioThemeInfo.values")
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           template(v-if="!e.separator")
-            .column.is-4-tablet.is-3-desktop.is-2-widescreen
+            .column.is-6-tablet
               a.box(@click="click_handle(e)" :class="{'has-background-warning-light': e.key === new_key}")
                 .media
                   .media-left(v-if="e.sample_source")

@@ -29,7 +29,7 @@ module Kiwi
               :all_params => {
                 :media_builder_params => {
                   :recipe_key      => "is_recipe_mp4",
-                  :audio_theme_key => "is_audio_theme_dance_chain",
+                  :audio_theme_key => "is_audio_theme_diamond_shark",
                   :color_theme_key => "is_color_theme_real",
                   :cover_text => "(cover_text.title)\n(cover_text.description)",
                   # :width           => 2,
