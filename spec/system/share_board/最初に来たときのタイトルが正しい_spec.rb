@@ -1,4 +1,4 @@
-require "rails_helper"
+require "#{__dir__}/helper_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
