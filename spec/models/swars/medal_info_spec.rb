@@ -225,31 +225,6 @@ module Swars
       end
     end
 
-    describe "連勝" do
-      def test(list)
-        list.each do |win_or_lose|
-          Battle.create! do |e|
-            e.memberships.build(user: user, judge_key: win_or_lose)
-          end
-        end
-        user.user_info.medal_list.matched_medal_infos.collect(&:key)
-      end
-
-      it "works" do
-        assert { test(["win"] * 4).exclude?(:"5連勝") }
-
-        assert { test(["win"]).include?(:"5連勝")  }
-        assert { test(["win"]).include?(:"6連勝")  }
-        assert { test(["win"]).include?(:"7連勝")  }
-        assert { test(["win"]).include?(:"8連勝")  }
-        assert { test(["win"]).include?(:"9連勝")  }
-        assert { test(["win"]).include?(:"10連勝") }
-        assert { test(["win"]).include?(:"11連勝") }
-
-        assert { test(["lose"] * 5).include?(:"波が激しいマン") }
-      end
-    end
-
     describe "無気力マン" do
       def case1(n, final_key)
         @black = User.create!
