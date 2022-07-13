@@ -76,7 +76,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "検索クエリを自力入力しすぎ警告" do
       it "works" do
-        visit "/swars/search" # visit2 では __debug_box_skip__ がつくのでダメ
+        visit "/swars/search" # visit2 では __system_test_now__ がつくのでダメ
 
         # devuser1 で9回
         fill_in "query", with: "devuser1"

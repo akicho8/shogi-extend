@@ -16,8 +16,8 @@ end
 Capybara.configure do |config|
   # config.server                = :puma, { Silent: true } #  webrick にするとこける
   # config.server                = :puma, { Threads: "10:10", workers: 1, } # ← ぜんぜんかんけいねぇ
-  config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
-  config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
+  # config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
+  # config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
   # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = false
 end
@@ -67,7 +67,7 @@ RSpec.configure do |config|
     # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
     # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
     # p height
-    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
+    # Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
   end
 end
 
@@ -162,7 +162,7 @@ if true
 
     def visit2(path, params = {})
       params = params.merge({
-          :__debug_box_skip__ => "true",
+          :__system_test_now__ => "true",
         })
       visit "#{path}?#{params.to_query}"
     end
@@ -194,11 +194,32 @@ if true
   end
 end
 
-# ダウンロードした ZIP を削除する
 RSpec.configure do |config|
+  config.before(type: :system) do |example|
+    p ["#{__FILE__}:#{__LINE__}", __method__, ]
+    page.driver.browser.download_path = Rails.root.join("tmp").to_s
+  end
+end
+
+# # ダウンロードした ZIP を削除する
+# RSpec.configure do |config|
+#   config.after(:suite) do
+#     Dir.chdir(Rails.root) do
+#       system "rm -f *.zip"
+#     end
+#   end
+# end
+
+RSpec.configure do |config|
+  config.before(:suite) do
+    p ["#{__FILE__}:#{__LINE__}", __method__, ]
+    Rails.root.join("RSPEC_ACTIVE").write("")
+  end
   config.after(:suite) do
-    Dir.chdir(Rails.root) do
-      system "rm -f *.zip"
+    p ["#{__FILE__}:#{__LINE__}", __method__, ]
+    file = Rails.root.join("RSPEC_ACTIVE")
+    if file.exist?
+      file.delete
     end
   end
 end

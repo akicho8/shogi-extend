@@ -1,0 +1,27 @@
+rspec ./spec/system/share_board/main_spec.rb:35 # 共有将棋盤 一度入力したハンドルネームは記憶
+rspec ./spec/system/share_board/main_spec.rb:71 # 共有将棋盤 順番設定OFF状態で共有
+rspec ./spec/system/share_board/main_spec.rb:96 # 共有将棋盤 タイトル共有 works
+rspec ./spec/system/share_board/main_spec.rb:181 # 共有将棋盤 順番設定で手番お知らせ works
+rspec ./spec/system/share_board/main_spec.rb:228 # 共有将棋盤 2人対戦で1人観戦 works
+rspec ./spec/system/share_board/main_spec.rb:268 # 共有将棋盤 順番設定のあと一時的に機能OFFにしたので通知されない works
+rspec ./spec/system/share_board/main_spec.rb:362 # 共有将棋盤 片方が駒移動中に同期 works
+rspec ./spec/system/share_board/main_spec.rb:386 # 共有将棋盤 局面を戻していても同期されると最後の局面になる works
+rspec ./spec/system/share_board/main_spec.rb:430 # 共有将棋盤 局面再送 再送ダイアログ表示
+rspec ./spec/system/share_board/main_spec.rb:463 # 共有将棋盤 局面の転送 works
+rspec ./spec/system/share_board/main_spec.rb:503 # 共有将棋盤 局面転送時に時計の手番調整 works
+rspec ./spec/system/share_board/main_spec.rb:549 # 共有将棋盤 再起動 先輩であっても再起動したら後輩になる
+rspec ./spec/system/share_board/main_spec.rb:586 # 共有将棋盤 PING 成功
+rspec ./spec/system/share_board/main_spec.rb:641 # 共有将棋盤 初期配置に戻す 正しく同期する
+rspec ./spec/system/share_board/main_spec.rb:686 # 共有将棋盤 1手戻す 正しく同期する
+rspec ./spec/system/share_board/main_spec.rb:758 # 共有将棋盤 使い方 モーダルで開く
+rspec ./spec/system/share_board/main_spec.rb:798 # 共有将棋盤 時計の初回PLAYで手番の人を示す works
+rspec ./spec/system/share_board/main_spec.rb:846 # 共有将棋盤 時計開始時に視点の自動設定 平手
+rspec ./spec/system/share_board/main_spec.rb:1255 # 共有将棋盤 ツイート ツイートモーダル
+rspec ./spec/system/share_board/main_spec.rb:1280 # 共有将棋盤 画像ダウンロード works
+rspec ./spec/system/share_board/main_spec.rb:1403 # 共有将棋盤 順番設定の下のわかりにくいオプションの説明 works
+rspec ./spec/system/share_board/main_spec.rb:1483 # 共有将棋盤 入室したとき他に誰もいなかったら部屋のリンクのクリックを促す works
+rspec ./spec/system/share_board/main_spec.rb:1498 # 共有将棋盤 順番設定後に時計設置を促す works
+rspec ./spec/system/share_board/main_spec.rb:1546 # 共有将棋盤 今の指す人と次に指す人を持駒の下に表示する works
+rspec ./spec/system/swars/custom_search_spec.rb:13 # カスタム検索 フォーム入力からの検索
+rspec ./spec/system/swars/formal_sheet_spec.rb:25 # 棋譜用紙 フォントを切り替える
+rspec ./spec/system/swars/help_spec.rb:6 # よくある質問 (FAQ) モーダルで開く

@@ -55,18 +55,20 @@ module HelperMethods
     assert_selector(".is_white .is_sclock_active")
   end
 
-  def assert_move(from, to, human)
+  # 駒移動できる
+  def piece_move_o(from, to, human)
     piece_move(from, to)
-    Capybara.using_wait_time(10) do
-      assert_text(human)
-    end
+    # Capybara.using_wait_time(10) do
+    assert_text(human)
+    # end
   end
 
-  def assert_no_move(from, to, human)
+  # 駒移動できない
+  def piece_move_x(from, to, human)
     piece_move(from, to)
-    Capybara.using_wait_time(10) do
-      assert_no_text(human)
-    end
+    # Capybara.using_wait_time(10) do
+    assert_no_text(human)
+    # end
   end
 
   def piece_move(from, to)

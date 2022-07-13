@@ -26,6 +26,10 @@ module SlackAgent
       raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
+    if Rails.env.development? && Rails.root.join("RSPEC_ACTIVE").exist?
+      return
+    end
+
     wait = excessive_measure.wait_value_for_job
 
     body = []

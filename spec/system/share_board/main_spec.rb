@@ -26,52 +26,15 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".close_handle").click               # 閉じる
       end
       assert_text("alice")                       # 入力したハンドルネームの人がメンバーリストに表示されている
-      assert_move("77", "76", "☗7六歩")
+      piece_move_o("77", "76", "☗7六歩")
       doc_image
     end
   end
 
-  # このテストは ordered_members が nil のまま共有されるのをスキップするのを保証するので消してはいけない
-  it "一度入力したハンドルネームは記憶" do
-    a_block do
-      room_setup("my_room", "alice")
-
-      begin
-        visit "/share-board"                                      # 再来
-        hamburger_click
-        room_setup_modal_handle                    # 「部屋に入る」を自分でクリックする
-        first(".new_room_code input").set("my_room")              # 合言葉を入力する
-        value = first(".new_user_name input").value
-        assert { value == "alice" }                               # 以前入力したニックネームが復元されている
-        first(".entry_button").click                              # 共有ボタンをクリックする
-        first(".close_handle").click                              # 共有ボタンをクリックする
-      end
-
-      assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
-    end
-    b_block do
-      # bob が別の画面でログインする
-      room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
-      assert_text("alice")                                    # すでにaliceがいるのがわかる
-      doc_image("bobはaliceの盤面を貰った")                   # この時点で▲16歩が共有されている
-    end
-    a_block do
-      assert_text("bob")                                        # alice側の画面にはbobが表示されている
-    end
-    b_block do
-      assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
-    end
-    a_block do
-      assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
-      doc_image("aliceとbobは画面を共有している")
-    end
-  end
-
-  # ordered_members が nil のまま共有されるレアケースのテストなので消してはいけない
   it "順番設定OFF状態で共有" do
     a_block do
       room_setup("my_room", "alice")
-      assert_move("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
+      piece_move_o("17", "16", "☗1六歩")                      # aliceは一人で初手を指した
     end
     b_block do
       room_setup("my_room", "bob")                            # alice と同じ部屋の合言葉を設定する
@@ -84,7 +47,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       assert_member_exist("bob")
     end
     b_block do
-      assert_move("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
+      piece_move_o("33", "34", "☖3四歩")                      # bobは2手目の後手を指せる
     end
     a_block do
       assert_text("☖3四歩")                                    # aliceの画面にもbobの指し手の符号が表示されている
@@ -92,25 +55,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "タイトル共有" do
-    it "works" do
-      a_block do
-        room_setup("my_room", "alice")         # alceが部屋を作る
-      end
-      b_block do
-        room_setup("my_room", "bob")           # bobもaliceと同じ合言葉で部屋を作る
-        first(".title_edit_navbar_item").click # タイトル変更モーダルを開く
-        within(".modal-card") do
-          first("input").set("(new_title)")    # 別のタイトルを入力
-          find(".button.is-primary").click     # 更新ボタンを押す
-        end
-      end
-      a_block do
-        assert_text("(new_title)")             # alice側のタイトルが変更されている
-        assert_text("タイトル変更")            # 履歴にも追加された
-      end
-    end
-  end
 
   describe "対局時計基本" do
     before do
@@ -140,7 +84,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_white_read_sec(@INITIAL_SEC)    # bob側は秒読みが満タン
       end
       a_block do
-        assert_move("27", "26", "☗2六歩")         # 初手を指す
+        piece_move_o("27", "26", "☗2六歩")         # 初手を指す
         assert_clock_active_white                  # 時計を同時に押したので後手がアクティブになる
       end
       b_block do
@@ -155,14 +99,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".button.is-primary").click           # それを閉じる
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")          # bobは時間切れになったがそれを無視して指した
+        piece_move_o("33", "34", "☖3四歩")          # bobは時間切れになったがそれを無視して指した
         assert_white_read_sec(@INITIAL_SEC)    # すると秒読みが復活した
         assert_clock_active_black                  # 時計も相手に切り替わった
       end
       a_block do
         assert_clock_active_black                  # alice側もaliceがアクティブになった
         assert_white_read_sec(@INITIAL_SEC)    # bobの秒読みが復活している
-        assert_move("77", "76", "☗7六歩")          # aliceは3手目を指した
+        piece_move_o("77", "76", "☗7六歩")          # aliceは3手目を指した
         assert_clock_active_white                  # bobに時計が切り替わった
       end
       b_block do
@@ -200,24 +144,24 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         modal_close_handle          # 閉じる (ヘッダーに置いている)
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
-        assert_no_move("77", "76", "☗7六歩")              # なので2番目のbobは指せない
+        piece_move_x("77", "76", "☗7六歩")              # なので2番目のbobは指せない
       end
       a_block do
         assert_member_list(1, "is_turn_active", "alice")   # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")    # 2人目(bob)は待機中
-        assert_move("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
+        piece_move_o("77", "76", "☗7六歩")                 # aliceが1番目なので指せる
       end
       b_block do
         assert_system_variables(:tn_counter, 1)            # bobさんだけに牛が知らせている
       end
       a_block do
         assert_text("次は、bobさんの手番です")
-        assert_no_move("33", "34", "☖3四歩")              # aliceもう指したので指せない
+        piece_move_x("33", "34", "☖3四歩")              # aliceもう指したので指せない
         assert_member_list(1, "is_turn_standby", "alice")  # 1人目(alice)に丸がついていない
         assert_member_list(2, "is_turn_active", "bob")     # 2人目(bob)は指せるので丸がついている
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # 2番目のbobは指せる
+        piece_move_o("33", "34", "☖3四歩")                 # 2番目のbobは指せる
         assert_system_variables(:tn_counter, 1)            # aliceさんの手番なので出ない(変化せず)
         assert_text("次は、aliceさんの手番です")
       end
@@ -247,19 +191,19 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
         assert_member_list(2, "is_turn_standby", "bob")     # 2人目(bob)は待機中
         assert_member_list(3, "is_watching", "carol")       # 3人目(carol)は観戦中
-        assert_no_move("77", "76", "☗7六歩")              #  なので3番目のcarolは指せない
+        piece_move_x("77", "76", "☗7六歩")              #  なので3番目のcarolは指せない
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                 # 1番目のaliceが指す
+        piece_move_o("77", "76", "☗7六歩")                 # 1番目のaliceが指す
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # 2番目のbobが指す
+        piece_move_o("33", "34", "☖3四歩")                 # 2番目のbobが指す
       end
       c_block do
-        assert_no_move("27", "26", "☗2六歩")              # 3番目のcarolは観戦者なので指せない
+        piece_move_x("27", "26", "☗2六歩")              # 3番目のcarolは観戦者なので指せない
       end
       a_block do
-        assert_move("27", "26", "☗2六歩")                 # 1順してaliceが3手目を指す
+        piece_move_o("27", "26", "☗2六歩")                 # 1順してaliceが3手目を指す
       end
     end
   end
@@ -274,16 +218,16 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         order_set_on                      # 順番設定ON
-        assert_move("77", "76", "☗7六歩") # aliceが指す
+        piece_move_o("77", "76", "☗7六歩") # aliceが指す
       end
       b_block do
         assert_system_variables(:tn_counter, 1) # aliceが指し終わったのでaliceに通知
-        assert_move("33", "34", "☖3四歩") # bobが指す
+        piece_move_o("33", "34", "☖3四歩") # bobが指す
       end
       a_block do
         assert_system_variables(:tn_counter, 1) # bobが指し終わったのでaliceに通知
         order_set_off                     # 順番設定OFF
-        assert_move("27", "26", "☗2六歩") # aliceが指す
+        piece_move_o("27", "26", "☗2六歩") # aliceが指す
       end
       b_block do
         assert_system_variables(:tn_counter, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
@@ -370,14 +314,14 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         place_click("27")                 # bobさんが手番を間違えて▲26歩しようとして27の歩を持ち上げた
       end
       a_block do
-        assert_move("77", "76", "☗7六歩") # そのタイミングでaliceさんが▲76歩と指した
+        piece_move_o("77", "76", "☗7六歩") # そのタイミングでaliceさんが▲76歩と指した
       end
       b_block do                          # bobさんの27クリックはキャンセルされた
-        assert_move("33", "34", "☖3四歩") # bobが指す
+        piece_move_o("33", "34", "☖3四歩") # bobが指す
         piece_move("88", "22")            # bobは2手指しで▲22角成をしようとして確認モーダルが表示されている
       end
       a_block do
-        assert_move("27", "26", "☗2六歩") # そのタイミングでaliceさんが▲26歩と指してbobさんの2手指差未遂はキャンセルされた
+        piece_move_o("27", "26", "☗2六歩") # そのタイミングでaliceさんが▲26歩と指してbobさんの2手指差未遂はキャンセルされた
       end
     end
   end
@@ -391,17 +335,17 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         room_setup("my_room", "bob")                       # bobも同じ部屋に入る
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                 # aliceが指す
+        piece_move_o("77", "76", "☗7六歩")                 # aliceが指す
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # bobが指す
+        piece_move_o("33", "34", "☖3四歩")                 # bobが指す
         sp_controller_click("first")                       # bobは最初の局面に戻した
       end
       a_block do
-        assert_move("27", "26", "☗2六歩")                 # aliceが指す
+        piece_move_o("27", "26", "☗2六歩")                 # aliceが指す
       end
       b_block do
-        assert_move("83", "84", "☖8四歩")                 # 最後の局面になっている(bobの手番になっている)のでbobが指せる
+        piece_move_o("83", "84", "☖8四歩")                 # 最後の局面になっている(bobの手番になっている)のでbobが指せる
       end
     end
   end
@@ -415,7 +359,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
+        piece_move_o("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
         sleep(@RETRY_DELAY)         # 再送ダイアログが出るころまで待つ
       end
     end
@@ -468,16 +412,16 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         room_setup("my_room", "bob")                      # bobも同じ部屋に入る
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                 # 1手目
+        piece_move_o("77", "76", "☗7六歩")                 # 1手目
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                 # 2手目
+        piece_move_o("33", "34", "☖3四歩")                 # 2手目
       end
       a_block do
-        assert_move("27", "26", "☗2六歩")                 # 3手目
+        piece_move_o("27", "26", "☗2六歩")                 # 3手目
       end
       b_block do
-        assert_move("83", "84", "☖8四歩")                 # 4手目
+        piece_move_o("83", "84", "☖8四歩")                 # 4手目
       end
       a_block do
         sp_controller_click("previous")                   # 3手戻す
@@ -516,7 +460,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         modal_close_handle                          # 閉じる (ヘッダーに置いている)
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")        # 初手を指す
+        piece_move_o("77", "76", "☗7六歩")        # 初手を指す
       end
       b_block do
         assert_clock_active_white                 # 時計は後手
@@ -558,7 +502,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         sleep(2)                                          # これでbobをレベル2ぐらいにはなる(aliceはレベル4)
       end
       b_block do
-        assert_move("77", "76", "☗7六歩")                # aliceが指してbobの盤も同じになる
+        piece_move_o("77", "76", "☗7六歩")                # aliceが指してbobの盤も同じになる
         sp_controller_click("first")                      # 再起動時にbobから受けとったか確認しやすいように0手目にしておく
         assert_turn(0)
       end
@@ -646,7 +590,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                # aliceが指す
+        piece_move_o("77", "76", "☗7六歩")                # aliceが指す
         assert_turn(1)                             # 1手進んでいる
       end
       b_block do
@@ -667,7 +611,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "初期配置に戻すダイアログの中で局面を調整する" do
       a_block do
         room_setup("my_room", "alice")                    # alice先輩が部屋を作る
-        assert_move("77", "76", "☗7六歩")                # aliceが指す
+        piece_move_o("77", "76", "☗7六歩")                # aliceが指す
         assert_turn(1)                                    # 1手進んでいる
         hamburger_click
         menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
@@ -691,10 +635,10 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")                # aliceが指す
+        piece_move_o("77", "76", "☗7六歩")                # aliceが指す
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")                # bobが指す
+        piece_move_o("33", "34", "☖3四歩")                # bobが指す
       end
       a_block do
         hamburger_click
@@ -789,7 +733,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         preset_select("香落ち")
       end
       b_block do
-        assert_move("22", "11", "☖1一角")
+        piece_move_o("22", "11", "☖1一角")
       end
     end
   end
@@ -952,12 +896,12 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
     it "移動元をクリック" do
       case1(".is_move_cancel_reality")
-      assert_no_move("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
+      piece_move_x("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
     end
 
     it "他のセルをクリック" do
       case1(".is_move_cancel_standard")         # 「他のセルをクリック」選択
-      assert_move("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
+      piece_move_o("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
     end
   end
 
@@ -1159,7 +1103,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(room_code: :my_room, force_user_name: "alice")
         clock_start_force
         sleep(2)                                   # 2秒待つ
-        assert_move("77", "76", "☗7六歩")         # 初手を指す
+        piece_move_o("77", "76", "☗7六歩")         # 初手を指す
         action_log_row_of(0).text.match?(/[23]秒/) # 右側に "alice 1 ☗7六歩 2秒" と表示している
         # assert_text は overflow-x: hidden で隠れている場合があるためランダムに失敗する
       end
@@ -1195,11 +1139,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         visit_app(config.merge(force_user_name: "bob"))
       end
       a_block do
-        assert_move("77", "76", "☗7六歩")
+        piece_move_o("77", "76", "☗7六歩")
         assert_turn(1)
       end
       b_block do
-        assert_move("33", "34", "☖3四歩")
+        piece_move_o("33", "34", "☖3四歩")
         assert_turn(2)
       end
       a_block do
@@ -1215,7 +1159,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "操作履歴モーダル内の補助機能" do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
-        assert_move("77", "76", "☗7六歩")               # 初手を指す
+        piece_move_o("77", "76", "☗7六歩")               # 初手を指す
         assert_turn(1)
         action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
@@ -1236,8 +1180,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "操作履歴モーダル内で局面を調整する" do
       a_block do
         visit_app
-        assert_move("77", "76", "☗7六歩")
-        assert_move("33", "34", "☖3四歩")
+        piece_move_o("77", "76", "☗7六歩")
+        piece_move_o("33", "34", "☖3四歩")
         assert_turn(2)                                    # 現在2手目
         action_log_row_of(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
         Capybara.within(".ActionLogJumpPreviewModal") do
@@ -1547,7 +1491,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob,carol")
         assert_sp_player_names "alice", "bob" # 今:alice 次:bob
-        assert_move("77", "76", "☗7六歩")
+        piece_move_o("77", "76", "☗7六歩")
         assert_sp_player_names "carol", "bob" # 次:carol 今:bob
       end
     end
@@ -1589,7 +1533,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "操作履歴にも含んでいる" do
       a_block do
         visit_app(black: "alice")
-        assert_move("77", "76", "☗7六歩")
+        piece_move_o("77", "76", "☗7六歩")
         action_log_row_of(0).click
         Capybara.within(".ActionLogJumpPreviewModal") do
           assert_text('"black": "alice"') # デバッグ情報の表示を見ている

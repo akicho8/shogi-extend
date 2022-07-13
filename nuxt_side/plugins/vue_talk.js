@@ -12,6 +12,9 @@ export const vue_talk = {
     // ・tab_is_active_p() のときだけ条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなるため
     talk(source_text, options = {}) {
+      if (this.$route.query.__system_test_now__) {
+        return
+      }
       if (process.client) {
         if (source_text != null) {
           if (options.skip_if_tab_is_active_p && this.tab_is_active_p()) {
