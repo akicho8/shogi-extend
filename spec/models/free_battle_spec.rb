@@ -44,6 +44,14 @@ RSpec.describe FreeBattle, type: :model do
     FreeBattle.create!(kifu_body: Pathname(__dir__).join("sample.ki2").read)
   end
 
+  describe "空の棋譜と平手の棋譜のハッシュは同じなので同じIDになる" do
+    it "works" do
+      free_battle1 = FreeBattle.same_body_fetch(body: "")
+      free_battle2 = FreeBattle.same_body_fetch(body: "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}")
+      assert { free_battle1.id == free_battle2.id }
+    end
+  end
+
   describe "simple_versus_desc" do
     it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "手合割：平手")

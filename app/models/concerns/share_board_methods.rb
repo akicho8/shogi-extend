@@ -9,16 +9,16 @@ module ShareBoardMethods
     DOUBLE_ESCAPE_MEASURES = true # 2重エスケープ対策をするか？
 
     def same_body_fetch(params)
-      body = params[:body] || "position startpos"
+      body = params[:body].presence || "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}"
       if DOUBLE_ESCAPE_MEASURES
         if body.start_with?("position+")
           body = CGI.unescape(body) # "+" → " "
         end
       end
       body = DotSfen.unescape(body)
-      body = body.sub(Bioshogi::Sfen::STARTPOS_EXPANSION, "startpos")
       sfen_hash = Digest::MD5.hexdigest(body)
-      find_by(sfen_hash: sfen_hash, use_key: :share_board) || create!(kifu_body: body, use_key: :share_board)
+      record = find_by(sfen_hash: sfen_hash, use_key: :share_board)
+      record ||= create!(kifu_body: body, use_key: :share_board)
     end
   end
 end
