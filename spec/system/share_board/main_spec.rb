@@ -7,14 +7,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     XmatchRuleInfo.clear_all    # 重要
   end
 
-  it "最初に来たときのタイトルが正しい" do
-    a_block do
-      visit "/share-board"
-      assert_text("共有将棋盤")
-      doc_image
-    end
-  end
-
   it "視点はselfなので駒落ちのときに△側が下に来ている" do
     a_block do
       visit "/share-board?abstract_viewpoint=self&body=position+sfen+4k4%2F9%2F9%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+w+-+1&turn=0"
