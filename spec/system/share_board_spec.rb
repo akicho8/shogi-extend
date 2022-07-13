@@ -285,16 +285,16 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_move("77", "76", "☗7六歩") # aliceが指す
       end
       b_block do
-        assert_text("(通知効果音)")       # aliceが指し終わったのでbobに通知
+        assert_system_variables(:tn_counter, 1) # aliceが指し終わったのでaliceに通知
         assert_move("33", "34", "☖3四歩") # bobが指す
       end
       a_block do
-        assert_text("(通知効果音)")       # bobがが指し終わったのでaliceに通知
+        assert_system_variables(:tn_counter, 1) # bobが指し終わったのでaliceに通知
         order_set_off                     # 順番設定OFF
         assert_move("27", "26", "☗2六歩") # aliceが指す
       end
       b_block do
-        assert_no_text("(通知効果音)")    # 順番設定OFFなので通知されない
+        assert_system_variables(:tn_counter, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
       end
     end
   end
@@ -1288,7 +1288,7 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".tweet_modal_handle").click   # モーダル起動
         assert_text("この局面をツイート")
         find(".TweetModal .dropdown").click # テーマ選択
-        assert_text("木目A")
+        assert_text("紙面風")
       end
     end
 
@@ -1942,5 +1942,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
 
   def cc_modal_handle
     find(".cc_modal_handle").click
+  end
+
+  def assert_system_variables(key, value)
+    within(:id, "assert_system_variables") do
+      assert_selector(:element, text: "#{key}:#{value}", exact_text: true)
+    end
   end
 end

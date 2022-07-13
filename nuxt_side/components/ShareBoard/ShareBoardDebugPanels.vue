@@ -146,14 +146,16 @@
         | JS側で作成 プレビュー用
       .panel-block
         p.is_line_break_on(:key="base.twitter_card_url") {{base.twitter_card_url}}
-        img.is-block(:src="base.twitter_card_url" width="256")
+      .panel-block
+        a(:href="base.twitter_card_url" target="_blank") 確認
   .column.is-4
     .panel
       .panel-heading
         | Rails側で作成 og:image 用
       .panel-block
         p.is_line_break_on {{$config.MY_SITE_URL + base.config.twitter_card_options.image}}
-        img.is-block(:src=`$config.MY_SITE_URL + base.config.twitter_card_options.image` width="256")
+      .panel-block
+        a(:href=`$config.MY_SITE_URL + base.config.twitter_card_options.image` target="_blank") 確認
   .column.is-4
     .panel
       .panel-heading
@@ -179,13 +181,14 @@
       .panel-block 自分はメンバーに含まれているか？ {{base.self_is_member_p}}
       .panel-block 自分は観戦者か？ {{base.self_is_watcher_p}}
   .column.is-4
-    .panel
+    .panel#assert_system_variables
       .panel-heading
-        | 状態(for system test)
+        | [assert_system_variables]
       .panel-block(v-if="base.order_enable_p && base.ordered_members_present_p")
         | 順序:
         template(v-for="(_, i) in 11")
           | {{base.ordered_member_by_turn(i).user_name[0]}}
+      .panel-block tn_counter:{{base.tn_counter}}
       .panel-block current_turn:{{base.current_turn}}
       .panel-block order_enable_p:{{base.order_enable_p}}
       .panel-block clock_box:{{!!base.clock_box}}

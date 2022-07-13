@@ -1,6 +1,12 @@
 export const app_turn_notify = {
+  data() {
+    return {
+      tn_counter: 0,
+    }
+  },
   methods: {
     tn_notify() {
+      this.tn_counter += 1
       this.debug_alert("(通知効果音)")
       this.sound_moo()
       this.vibrate(100)
