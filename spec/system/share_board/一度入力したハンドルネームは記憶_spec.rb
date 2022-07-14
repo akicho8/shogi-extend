@@ -1,9 +1,7 @@
-require "#{__dir__}/helper_methods"
+require "#{__dir__}/shared_methods"
 
 # このテストは ordered_members が nil のまま共有されるのをスキップするのを保証するので消してはいけない
 RSpec.describe type: :system, share_board_spec: true do
-  include HelperMethods
-
   it "works" do
     a_block do
       room_setup("my_room", "alice")

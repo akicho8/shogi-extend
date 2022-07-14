@@ -1,8 +1,6 @@
-require "#{__dir__}/helper_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  include HelperMethods
-
   it "works" do
     a_block do
       room_setup("my_room", "alice")         # alceが部屋を作る
@@ -19,9 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     b_block do
       assert_text("(new_title)")             # bob側のタイトルが変更されている
-      within(".ShareBoardActionLog") do
-        assert_text("タイトル変更", wait: 9) # 履歴にも追加された
-      end
+      history_assert_text("タイトル変更")
     end
   end
 end

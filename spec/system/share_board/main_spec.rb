@@ -1,7 +1,7 @@
-require "#{__dir__}/helper_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
-  include HelperMethods
+  include SharedMethods
 
   before do
     XmatchRuleInfo.clear_all    # 重要
@@ -55,7 +55,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-
   describe "対局時計基本" do
     before do
       @INITIAL_SEC = 5
@@ -76,8 +75,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
       end
       a_block do
         clock_box_set(0, @INITIAL_SEC, 0, 0) # aliceが時計を設定する
-        find(".play_button").click                 # 開始
-        find(".dialog.modal .button.is-warning").click # 「無視して開始する」
+        find(:button, :class => "play_button").click                     # 開始
+        find(:button, :text => "無視して開始する", exact_text: true).click
         modal_close_handle  # 閉じる (ヘッダーに置いている)
       end
       b_block do
@@ -350,59 +349,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     end
   end
 
-  describe "局面再送" do
-    def case1
-      a_block do
-        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", RETRY_DELAY: @RETRY_DELAY, SEND_SUCCESS_DELAY: @SEND_SUCCESS_DELAY)
-      end
-      b_block do
-        visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
-      end
-      a_block do
-        piece_move_o("77", "76", "☗7六歩")     # aliceが指した直後bobから応答OKが0.75秒ぐらいで帰ってくる
-        sleep(@RETRY_DELAY)         # 再送ダイアログが出るころまで待つ
-      end
-    end
-    it "同期成功" do
-      @SEND_SUCCESS_DELAY  = 0 # 最速で応答する
-      @RETRY_DELAY = 1 # 1秒後に応答確認
-      case1
-      a_block do
-        assert_no_text("同期失敗")             # 同期OKになっているので「同期失敗」ダイアログは出ない
-      end
-    end
-    it "再送ダイアログ表示" do
-      @SEND_SUCCESS_DELAY  = -1 # 応答しない
-      @RETRY_DELAY = 0  # しかも0秒後に応答確認
-      case1
-      a_block do
-        assert_text("同期失敗 1回目")
-        assert_text("次の手番のbobさんの反応がないので再送しますか？")
-
-        click_text_match("再送する")
-        assert_text("同期失敗 2回目")
-        assert_text("再送1")
-
-        click_text_match("再送する")
-        assert_text("同期失敗 3回目")
-        assert_text("再送2")
-
-        doc_image
-      end
-    end
-    it "再送ダイアログ表示キャンセル" do
-      @RETRY_DELAY = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
-      @SEND_SUCCESS_DELAY  = 3 # しかし3秒後に成功したのでダイアログを消される
-      case1
-      a_block do
-        assert_text("同期失敗")
-        sleep(@SEND_SUCCESS_DELAY) # ダイアログを消される
-        assert_no_text("同期失敗")
-        doc_image
-      end
-    end
-  end
-
   describe "局面の転送" do
     it "works" do
       a_block do
@@ -430,61 +376,11 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         assert_turn(1)
 
         hamburger_click
-        menu_item_click("局面の転送")           # モーダルを開く
-        first(".sync_button").click                       # 反映する
+        menu_item_click2("局面の転送")           # モーダルを開く
+        find(:button, text: "転送する", exact_text: true).click   # 反映する
       end
       b_block do
         assert_turn(1)                             # bobの局面が戻っている
-      end
-    end
-  end
-
-  describe "局面転送時に時計の手番調整" do
-    before do
-      @INITIAL_SEC = 30
-    end
-
-    it "works" do
-      a_block do
-        room_setup("my_room", "alice")            # aliceが部屋を作る
-      end
-      b_block do
-        room_setup("my_room", "bob")              # bobが部屋を作る
-      end
-      a_block do
-        clock_open
-
-        clock_box_set(0, @INITIAL_SEC, 0, 0)    # 秒読みだけを設定
-        find(".play_button").click                # 開始
-        find(".dialog.modal .button.is-warning").click # 「無視して開始する」
-        modal_close_handle                          # 閉じる (ヘッダーに置いている)
-      end
-      a_block do
-        piece_move_o("77", "76", "☗7六歩")        # 初手を指す
-      end
-      b_block do
-        assert_clock_active_white                 # 時計は後手
-        assert_turn(1)                     # 手数1
-        sleep(1)                                  # bobは1秒考えていた
-      end
-      a_block do
-        # debugger
-        # hamburger_click
-        # menu_item_click("設定")               # モーダルを開く
-        # first(".sync_button").click           # 反映する
-        # find(".is_ctrl_mode_visible").click   # 表示したままにする
-        sp_controller_click("previous")           # 1手戻す
-        assert_turn(0)                     # 0手目に戻せてる
-
-        hamburger_click
-        menu_item_click("局面の転送")       # モーダルを開く
-        first(".sync_button").click               # 反映する
-
-        assert_clock_active_black                 # 時計は先手に切り替わっている
-      end
-      b_block do
-        assert_clock_active_black                 # bob側も時計が先手になっている
-        assert_white_read_sec(@INITIAL_SEC)       # 秒読みも復活している
       end
     end
   end
@@ -519,44 +415,8 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
     it "works" do
       a_block do
         room_setup("my_room", "alice")
-        member_list_click(1)
+        member_list_click_nth(1)
         assert_text("通信状況")
-        doc_image
-      end
-    end
-  end
-
-  describe "PING" do
-    it "成功" do
-      a_block do
-        room_setup("my_room", "alice")                    # alice先輩が部屋を作る
-      end
-      b_block do
-        room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
-      end
-      a_block do
-        member_list_click(2)
-        find(".ping_handle").click
-        assert_text("bobさんの反応速度は")
-        doc_image
-      end
-    end
-    it "失敗" do
-      @PING_OK_SEC = 3 # N秒以内ならPINGを成功とみなす
-      @PONG_DELAY  = 5 # PONGするまでの秒数(デバッグ時には PING_OK_SEC 以上の値にする)
-      a_block do
-        visit_app(room_code: :my_room, force_user_name: "alice", PING_OK_SEC: @PING_OK_SEC)
-      end
-      b_block do
-        visit_app(room_code: :my_room, force_user_name: "bob", PONG_DELAY: @PONG_DELAY)
-      end
-      a_block do
-        member_list_click(2)
-        find(".ping_handle").click # 1回押し
-        find(".ping_handle").click # 続けて押すと
-
-        assert_text("応答待ち")
-        assert_text("bobさんの霊圧が消えました")
         doc_image
       end
     end
@@ -1483,17 +1343,6 @@ RSpec.describe "共有将棋盤", type: :system, share_board_spec: true do
         find(".dropdown-item:nth-of-type(1)").click # 一番上の「ウォーズ10分」を適用
       end
       clock_box_values_eq [10, 0, 0, 0]             # 設定されている
-    end
-  end
-
-  describe "今の指す人と次に指す人を持駒の下に表示する" do
-    it "works" do
-      a_block do
-        visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob,carol")
-        assert_sp_player_names "alice", "bob" # 今:alice 次:bob
-        piece_move_o("77", "76", "☗7六歩")
-        assert_sp_player_names "carol", "bob" # 次:carol 今:bob
-      end
     end
   end
 

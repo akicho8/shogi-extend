@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module HelperMethods
+module SharedMethods
   extend ActiveSupport::Concern
 
   included do
@@ -117,15 +117,17 @@ module HelperMethods
     assert_no_selector(".MembershipLocationPlayerInfoName")
   end
 
-  # location_key 側のプレイヤー名は user_name になっていること
+  # 将棋盤内で location_key 側のプレイヤー名は user_name になっている
   def assert_sp_player_name(location_key, user_name)
-    assert_selector(:xpath, "//*[contains(@class, 'Membership') and contains(@class, 'is_#{location_key}')]//*[text()='#{user_name}']")
+    within(".ShogiPlayer") do
+      assert_selector(:element, :class => ["Membership", "is_#{location_key}"], text: user_name, exact_text: true)
+    end
   end
 
   # ▲△の順に指定のプレイヤー名を表示している
   def assert_sp_player_names(black_name, white_name)
-    assert_sp_player_name :black, black_name
-    assert_sp_player_name :white, white_name
+    assert_sp_player_name(:black, black_name)
+    assert_sp_player_name(:white, white_name)
   end
 
   # メンバーリストの上からi番目の状態と名前
@@ -147,8 +149,14 @@ module HelperMethods
     assert_no_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
   end
 
-  def member_list_click(i)
+  # メンバーリストの上ら i 番目をクリック
+  def member_list_click_nth(i)
     find(".ShareBoardMemberListOne:nth-child(#{i})").click
+  end
+
+  # メンバーリストの指定の名前をクリック
+  def member_list_name_click(name)
+    find(".ShareBoardMemberList .user_name", text: name, exact_text: true).click
   end
 
   def sp_controller_click(klass)
@@ -324,4 +332,18 @@ module HelperMethods
       assert_selector(:element, text: "#{key}:#{value}", exact_text: true)
     end
   end
+
+  # 操作履歴内を見る
+  def history_block(&block)
+    within(".ShareBoardActionLog", &block)
+  end
+
+  # 履歴内に完全一致のテキストがあること
+  def history_assert_text(text)
+    assert_selector(".ShareBoardActionLog div", text: text, exact_text: true)
+  end
+end
+
+RSpec.configure do |config|
+  config.include(SharedMethods, type: :system, share_board_spec: true)
 end

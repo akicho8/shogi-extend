@@ -1,8 +1,6 @@
-require "#{__dir__}/helper_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  include HelperMethods
-
   it "works" do
     a_block do
       visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")

@@ -124,7 +124,12 @@ if true
     end
 
     def menu_item_click(text)
+      find(".b-sidebar li a", text: text, exact_text: true).click
       first(:xpath, "//*[text()=' #{text} ']").click
+    end
+
+    def menu_item_click2(text)
+      find(".b-sidebar li a", text: text, exact_text: true).click
     end
 
     # サブメニューは左右にスペースがない
@@ -188,15 +193,14 @@ if true
   RSpec.configure do |config|
     config.include(SystemSupport, type: :system)
 
-    config.before(:example) do |ex|
-      @__full_description__ = ex.full_description
+    config.before(:example) do |e|
+      @__full_description__ = e.full_description
     end
   end
 end
 
 RSpec.configure do |config|
   config.before(type: :system) do |example|
-    p ["#{__FILE__}:#{__LINE__}", __method__, ]
     page.driver.browser.download_path = Rails.root.join("tmp").to_s
   end
 end
@@ -212,11 +216,9 @@ end
 
 RSpec.configure do |config|
   config.before(:suite) do
-    p ["#{__FILE__}:#{__LINE__}", __method__, ]
     Rails.root.join("RSPEC_ACTIVE").write("")
   end
   config.after(:suite) do
-    p ["#{__FILE__}:#{__LINE__}", __method__, ]
     file = Rails.root.join("RSPEC_ACTIVE")
     if file.exist?
       file.delete

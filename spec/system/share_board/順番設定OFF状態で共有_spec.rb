@@ -1,8 +1,6 @@
-require "#{__dir__}/helper_methods"
+require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  include HelperMethods
-
   it "works" do
     a_block do
       room_setup("my_room", "alice")
