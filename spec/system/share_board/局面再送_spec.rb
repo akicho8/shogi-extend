@@ -32,12 +32,12 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_text("次の手番のbobさんの反応がないので再送しますか？")
 
       find(:button, text: "再送する", exact_text: true).click
-      history_assert_text("再送1")
+      action_assert_text("再送1")
       assert_text("再送1")
       sync_failed_count(2)
 
       find(:button, text: "再送する", exact_text: true).click
-      history_assert_text("再送2")
+      action_assert_text("再送2")
       sync_failed_count(3)
 
       doc_image

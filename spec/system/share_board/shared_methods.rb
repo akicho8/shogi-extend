@@ -277,19 +277,6 @@ module SharedMethods
     ].zip(values).to_h
   end
 
-  # 履歴の上から index 目の行
-  def action_log_row_of(index)
-    find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
-  end
-
-  # 履歴の index 番目は user が behavior した
-  def action_assert(index, user, behavior)
-    within(action_log_row_of(index)) do
-      assert_text(user)
-      assert_text(behavior)
-    end
-  end
-
   # メッセージ送信
   def message_send(message_scope_key, message)
     find(".MessageSendModal .message_scope_dropdown").click            # スコープ選択ドロップダウンを開く
@@ -333,20 +320,41 @@ module SharedMethods
     end
   end
 
-  # 操作履歴内を見る
-  def history_block(&block)
-    within(".ShareBoardActionLog", &block)
-  end
-
-  # 履歴内に完全一致のテキストがあること
-  def history_assert_text(text)
-    assert_selector(".ShareBoardActionLog div", text: text, exact_text: true)
-  end
-
+  # 順番設定と対局時計の右上の有効をトグルする
   def main_switch_toggle
     # 本当は find(:checkbox, "有効", exact: true).click と書きたいがなぜか動かない
-    find("label", :class => "main_switch", text: "有効", exact_text: true)
+    find("label", :class => "main_switch", text: "有効", exact_text: true).click
   end
+
+  # 操作履歴
+  prepend Module.new {
+    # スコープを合わせる
+    def action_log_scope(&block)
+      within(".ShareBoardActionLog", &block)
+    end
+
+    # 完全一致のテキストがあること
+    def action_assert_text(text)
+      action_log_scope do
+        assert_selector("div", text: text, exact_text: true)
+      end
+    end
+
+    # 履歴の上から index 目の行
+    def action_log_row_of(index)
+      # action_log_scope do
+      find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+      # end
+    end
+
+    # 履歴の index 番目は user が behavior した
+    def action_assert(index, user, behavior)
+      within(action_log_row_of(index)) do
+        assert_selector(:element, text: user,     exact_text: true)
+        assert_selector(:element, text: behavior, exact_text: true)
+      end
+    end
+  }
 end
 
 RSpec.configure do |config|
