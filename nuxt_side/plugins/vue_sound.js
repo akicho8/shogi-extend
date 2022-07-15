@@ -57,7 +57,7 @@ export const vue_sound = {
         ...options,
       }
       if (this.$route.query.__system_test_now__) {
-        options.src = require("@/assets/no_audio.mp4")
+        options.src = require("@/assets/silent.mp3")
       }
       return new Howl(options)
     },
