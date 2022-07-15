@@ -598,7 +598,6 @@ rspec ./spec/system/share_board/main_spec.rb:430 # 共有将棋盤 局面再送 
 rspec ./spec/system/share_board/main_spec.rb:463 # 共有将棋盤 局面の転送 works
 rspec ./spec/system/share_board/main_spec.rb:503 # 共有将棋盤 局面転送時に時計の手番調整 works
 rspec ./spec/system/share_board/main_spec.rb:549 # 共有将棋盤 再起動 先輩であっても再起動したら後輩になる
-rspec ./spec/system/share_board/main_spec.rb:586 # 共有将棋盤 PING 成功
 rspec ./spec/system/share_board/main_spec.rb:641 # 共有将棋盤 初期配置に戻す 正しく同期する
 rspec ./spec/system/share_board/main_spec.rb:686 # 共有将棋盤 1手戻す 正しく同期する
 rspec ./spec/system/share_board/main_spec.rb:758 # 共有将棋盤 使い方 モーダルで開く

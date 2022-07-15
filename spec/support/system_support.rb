@@ -125,7 +125,6 @@ if true
 
     def menu_item_click(text)
       find(".b-sidebar li a", text: text, exact_text: true).click
-      first(:xpath, "//*[text()=' #{text} ']").click
     end
 
     def menu_item_click2(text)

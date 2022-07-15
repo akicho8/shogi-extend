@@ -1,0 +1,13 @@
+require "#{__dir__}/shared_methods"
+
+RSpec.describe type: :system, share_board_spec: true do
+  it "works" do
+    visit_app(room_code: :my_room, force_user_name: "alice")
+    hamburger_click
+    os_modal_handle                      # 「順番設定」モーダルを開く
+    main_switch_toggle                   # 右上の有効スイッチをクリック
+    find(".shuffle_handle").click        # シャッフルする
+    modal_close_handle                   # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
+    click_text_match("更新せずに閉じる") # 無視して閉じる
+  end
+end
