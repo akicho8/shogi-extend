@@ -12,13 +12,11 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
 
   it "トップ" do
     assert_text "動画作成"
-    doc_image
   end
 
   it "動画ライブラリ" do
     visit "/video"
     assert_text "動画"
-    doc_image
   end
 
   describe "トリム" do

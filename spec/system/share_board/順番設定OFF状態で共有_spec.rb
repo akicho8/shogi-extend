@@ -10,7 +10,6 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("my_room", "bob")          # alice と同じ部屋の合言葉を設定する
       assert_member_exist("alice")
       assert_member_exist("bob")
-      doc_image("bobはaliceの盤面を貰った") # この時点で▲16歩が共有されている
     end
     a_block do
       assert_member_exist("alice")
@@ -21,7 +20,6 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     a_block do
       assert_text("☖3四歩")                 # aliceの画面にもbobの指し手の符号が表示されている
-      doc_image("aliceとbobは画面を共有している")
     end
   end
 end

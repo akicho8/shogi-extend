@@ -4,33 +4,27 @@ RSpec.describe "ユーザー", type: :system do
   describe "ログインしてない状態" do
     it "面倒なアカウント登録" do
       visit "http://localhost:3000/xusers/sign_up"
-      doc_image
     end
 
     it "パスワードを忘れた" do
       visit "http://localhost:3000/xusers/password/new"
-      doc_image
     end
   end
 
   it "プロフィール表示" do
     visit "http://localhost:3000/accounts/1"
-    doc_image
   end
 
   it "プロフィール設定" do
     visit "http://localhost:3000/accounts/1/edit"
-    doc_image
   end
 
   it "ぴよ将棋設定" do
     visit "/settings/piyo_shogi"
-    doc_image
   end
 
   it "メールアドレス設定" do
     visit "/settings/email"
-    doc_image
   end
 
   # it "名前がないときプロフィール設定に飛ばされる" do

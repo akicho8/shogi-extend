@@ -25,9 +25,7 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
   it "フォントを切り替える" do
     visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
     find(".is_font_key_mincho").click
-    doc_image "明朝体"
     find(".is_font_key_gothic").click
-    doc_image "ゴシック体"
   end
 
   it "文字サイズの変更" do

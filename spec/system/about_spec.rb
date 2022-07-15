@@ -4,18 +4,15 @@ RSpec.describe "about", type: :system do
   it "プライバシー" do
     visit "/about/privacy-policy"
     assert_text "プライバシー"
-    doc_image
   end
 
   it "利用規約" do
     visit "/about/terms"
     assert_text "利用規約"
-    doc_image
   end
 
   it "クレジット" do
     visit "/about/credit"
     assert_text "THANKS"
-    doc_image
   end
 end

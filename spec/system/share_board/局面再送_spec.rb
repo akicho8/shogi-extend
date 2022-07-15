@@ -39,8 +39,6 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, text: "再送する", exact_text: true).click
       action_assert_text("再送2")
       sync_failed_count(3)
-
-      doc_image
     end
   end
 
@@ -52,7 +50,6 @@ RSpec.describe type: :system, share_board_spec: true do
       sync_failed_count(1)
       sleep(@SEND_SUCCESS_DELAY) # ダイアログを消される
       sync_failed_modal_closed
-      doc_image
     end
   end
 

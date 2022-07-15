@@ -93,21 +93,6 @@ if true
       $stdin.gets
     end
 
-    def doc_image(name = nil)
-      return unless ENV["GENERATE_IMAGE"]
-
-      max_resize
-      name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
-      path = Rails.root.join("doc/images/#{name}.png")
-      page.save_screenshot(path)
-    end
-
-    def max_resize
-      height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-      # p [:height, height]
-      Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050) # or 1050
-    end
-
     def debug
       `open #{save_screenshot}`
       `open #{save_page}`
@@ -124,10 +109,6 @@ if true
     end
 
     def menu_item_click(text)
-      find(".b-sidebar li a", text: text, exact_text: true).click
-    end
-
-    def menu_item_click2(text)
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
 

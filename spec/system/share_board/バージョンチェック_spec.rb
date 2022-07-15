@@ -14,7 +14,6 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       visit_app(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
       assert_text("新しいプログラムがあるのでブラウザをリロードします")
-      doc_image
       buefy_dialog_button_click
     end
   end

@@ -16,7 +16,6 @@ RSpec.describe "棋譜投稿", type: :system do
   #     find(".delete").click
   #     page.refresh
   #     assert_text "1-1"
-  #     doc_image
   #   end
   # end
   #
@@ -33,7 +32,6 @@ RSpec.describe "棋譜投稿", type: :system do
   #     fill_in "free_battle[kifu_body]", with: "68銀"
   #     fill_in "free_battle[title]", with: "(題名)"
   #     sleep(3)
-  #     doc_image("入力")
   #     click_button "保存"
   #
   #     assert_text "(題名)"
@@ -41,7 +39,6 @@ RSpec.describe "棋譜投稿", type: :system do
   #     # assert_text "嬉野流"
   #     # assert_text "６八銀"
   #
-  #     doc_image("詳細")
   #   end
   # end
   #
@@ -51,7 +48,6 @@ RSpec.describe "棋譜投稿", type: :system do
   #   #   click_on "コピペ新規"
   #   #   text_input_click
   #   #   assert_text "48玉"
-  #   #   doc_image
   #   # end
   #
   #   xit "詳細" do
