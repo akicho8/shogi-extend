@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe "その他", type: :system do
   it "符号の鬼" do
-    XyMaster.setup
-    visit "/xy"
+    visit2 "/xy"
     assert_text "符号の鬼"
   end
 
@@ -28,37 +27,4 @@ RSpec.describe "その他", type: :system do
       assert_text "shogi-mode.el"
     end
   end
-
-  # it "ストップウォッチ" do
-  #   visit "/stopwatch"
-  #   assert_text "Rails"
-  # end
-
-  # describe "戦法トリガー事典" do
-  #   it "一覧" do
-  #     visit "/tactics"
-  #     assert_text "Rails"
-  #   end
-  #
-  #   describe "詳細" do
-  #     it "囲い" do
-  #       visit "/tactics/ダイヤモンド美濃"
-  #       assert_text "ダイヤモンド美濃"
-  #     end
-  #
-  #     it "戦型" do
-  #       visit "/tactics/富沢キック"
-  #       assert_text "ポンポン桂"
-  #     end
-  #
-  #     it "手筋" do
-  #       visit "/tactics/パンツを脱ぐ"
-  #       assert_text "パンツを脱ぐ"
-  #     end
-  #   end
-  #
-  #   it "戦法ツリー" do
-  #     visit "/tactics-tree"
-  #     assert_text "Rails"
-  #   end
 end

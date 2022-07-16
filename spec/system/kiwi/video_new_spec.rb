@@ -15,7 +15,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
   end
 
   it "動画ライブラリ" do
-    visit "/video"
+    visit2 "/video"
     assert_text "動画"
   end
 

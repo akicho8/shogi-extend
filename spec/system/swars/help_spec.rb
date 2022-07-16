@@ -4,14 +4,14 @@ RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "モーダルで開く" do
-    visit "/swars/search"
+    visit2 "/swars/search"
     hamburger_click
     menu_item_click("よくある質問 (FAQ)")
     find(".close_handle").click
   end
 
   it "モーダルからパーマリンクで飛ぶ" do
-    visit "/swars/search"
+    visit2 "/swars/search"
     hamburger_click
     menu_item_click("よくある質問 (FAQ)")
     find(".permalink").click       # 固定URLを別タブで開く
@@ -20,7 +20,7 @@ RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
   end
 
   it "ほぼ静的ページ" do
-    visit "/swars/search/help"
+    visit2 "/swars/search/help"
     assert_text("よくある質問 (FAQ)")
   end
 end

@@ -22,6 +22,68 @@ Capybara.configure do |config|
   # config.threadsafe            = false
 end
 
+module Capybara::DSL
+  # def __danger_window_zoom__(value)
+  #   execute_script("document.body.style.zoom = #{value}")
+  # end
+  #
+  def window_max
+    current_window.maximize
+  end
+  #
+  # def confirm_function_kill!
+  #   execute_script("window.confirm = () => true")
+  # end
+  #
+  # def switch_to_window_left(windows)
+  #   safe_switch_to_window(windows.first)
+  # end
+  #
+  # def safe_switch_to_window(window)
+  #   if window
+  #     switch_to_window(window)
+  #   end
+  # end
+  #
+  # def visit_all(urls, &block)
+  #   windows = urls.collect do |e|
+  #     switch_to_new_window do
+  #       visit(e)
+  #       if block
+  #         block.call
+  #       end
+  #     end
+  #   end
+  #   switch_to_window_left(windows)
+  #   windows
+  # end
+  #
+  # def switch_to_windows(windows, &block)
+  #   begin
+  #     original = current_window
+  #     windows.collect do |e|
+  #       switch_to_window(e)
+  #       block.call
+  #     end
+  #   ensure
+  #     switch_to_window(original)
+  #   end
+  # end
+  #
+  # def switch_to_new_window(&block)
+  #   open_new_window.tap do |window|
+  #     switch_to_window(window)
+  #     if block
+  #       block.call
+  #     end
+  #   end
+  # end
+  #
+  # def active_send_keys(...)
+  #   current_session.active_element.send_keys(...)
+  # end
+end
+
 # 「Selenium::WebDriver::Error::UnknownCommandError: unknown command: Cannot call non W3C standard command while in W3C mode」対策
 # https://qiita.com/paranishian/items/17bd7a77dc953f8fbd63
 # Capybara.register_driver :headless_chrome do |app|

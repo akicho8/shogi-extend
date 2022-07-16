@@ -17,27 +17,31 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
     assert_text "９九成香左上"
   end
 
-  it "プリンターダイアログ起動" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
-    assert_selector(".printer_handle")
-  end
+  describe "オプション" do
+    before do
+      visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
+      Capybara.execute_script("document.querySelector('.formal_sheet_workspace').remove()") # 邪魔してボタンが押せないので取る
+    end
 
-  it "フォントを切り替える" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
-    find(".is_font_key_mincho").click
-    find(".is_font_key_gothic").click
-  end
+    it "プリンターダイアログ起動" do
+      assert_selector(:button, :class => "printer_handle")
+    end
 
-  it "文字サイズの変更" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
-    find(".b-numberinput .control.minus").click
-    value = find(".b-numberinput .control input").value
-    assert { value == "99" }
-  end
+    it "フォントを切り替える" do
+      find(:label, text: "明朝", exact_text: true).click
+      find(:label, text: "ゴシック", exact_text: true).click
+    end
 
-  it "使い方" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
-    find(".usage_dialog_show_handle").click
-    assert_text "PDFに保存"
+    it "文字サイズの変更" do
+      find(".b-numberinput .control.minus").click
+      assert_selector(:fillable_field, type: "number", with: "99")
+    end
+
+    it "使い方" do
+      find("a", :class => "usage_dialog_show_handle").click
+      assert_selector(".modal-card-title", text: "使い方や注意点", exact_text: true)
+      find(:button, text: "OK", exact_text: true).click
+      assert_no_selector(".dialog.modal")
+    end
   end
 end

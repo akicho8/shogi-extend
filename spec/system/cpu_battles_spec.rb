@@ -2,18 +2,18 @@ require "rails_helper"
 
 RSpec.describe "CPU対戦", type: :system do
   it "トップ" do
-    visit "/cpu-battle"
+    visit2 "/cpu-battle"
     assert_text "強さ"
   end
 
   it "CPUの強さ変更" do
-    visit "/cpu-battle"
+    visit2 "/cpu-battle"
     # choose("弱い")
     first(:xpath, "//span[text()='弱い']").click
   end
 
   it "対局" do
-    visit "/cpu-battle"
+    visit2 "/cpu-battle"
     first(:xpath, "//span[text()='平手']").click
     first(:xpath, "//span[text()='ルールわかってない']").click
     find(".start_handle").click                  # 対局開始
