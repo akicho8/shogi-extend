@@ -55,7 +55,7 @@ export default {
       if (this.present_p(this.hint_str)) {
         this.sound_stop_all()
         this.sound_play_click()
-        this.toast_ok(this.hint_str, {duration: 1000 * 7})
+        this.toast_ok(this.hint_str, {duration: 1000 * this.duration_sec})
       }
     },
   },
@@ -75,6 +75,9 @@ export default {
       }
       str = str ?? this.real_model.field_message
       return str
+    },
+    duration_sec() {
+      return this.$route.query.__system_test_now__ ? 2 : 7
     },
   },
 }

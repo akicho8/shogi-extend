@@ -29,7 +29,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, :class => "ping_handle").click # 1回押し
       find(:button, :class => "ping_handle").click # 続けて押すと
       assert_text("応答待ち")
-      assert_text("bobさんの霊圧が消えました")
+      assert_text("bobさんの霊圧が消えました", wait: 60)
     end
   end
 end

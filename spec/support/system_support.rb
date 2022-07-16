@@ -1,7 +1,7 @@
 # スクリーンショット画像がコンソールに吐かれるのを停止
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
-if true
+if false
   chromedriver_pids = `pgrep -f chromedriver`.split
   unless chromedriver_pids.empty?
     `pkill -f chromedriver`

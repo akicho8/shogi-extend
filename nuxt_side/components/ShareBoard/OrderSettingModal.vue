@@ -252,7 +252,7 @@ export default {
       this.sound_play_click()
       this.form_params_share("更新")
       this.base.os_change.clear()
-      this.delay_block(3.0, () => this.base.cc_next_message())
+      this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.base.cc_next_message())
     },
 
     ////////////////////////////////////////////////////////////////////////////////

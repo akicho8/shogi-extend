@@ -32,7 +32,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(0)                                 # 0手目に戻せてる
 
       hamburger_click
-      menu_item_click2("局面の転送")                 # モーダルを開く
+      menu_item_click("局面の転送")                 # モーダルを開く
       find(:button, text: "転送する", exact_text: true).click   # 反映する
 
       assert_clock_active_black                      # 時計は先手に切り替わっている

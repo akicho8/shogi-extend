@@ -1,617 +1,541 @@
-  1) 共有将棋盤 一度入力したハンドルネームは記憶
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_一度入力したハンドルネームは記憶_358.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:54:in `block (3 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:52:in `block (2 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  2) 共有将棋盤 順番設定OFF状態で共有
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_順番設定off状態で共有_651.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:77:in `block (3 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:76:in `block (2 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  3) 共有将棋盤 タイトル共有 works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_works_726.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:101:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:100:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  4) 共有将棋盤 順番設定で手番お知らせ works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_3_works_672.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:186:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:185:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  5) 共有将棋盤 2人対戦で1人観戦 works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested21_works_172.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:236:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:38:in `c_block'
-     # ./spec/system/share_board/main_spec.rb:235:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  6) 共有将棋盤 順番設定のあと一時的に機能OFFにしたので通知されない works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_off_works_734.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:273:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:272:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  7) 共有将棋盤 片方が駒移動中に同期 works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_5_works_399.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:367:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:366:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  8) 共有将棋盤 局面を戻していても同期されると最後の局面になる works
-     Failure/Error: find(".close_handle").click                 # 閉じる
-     
-     Selenium::WebDriver::Error::ElementClickInterceptedError:
-       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-         (Session info: headless chrome=102.0.5005.61)
-     
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_6_works_660.png
-
-     
-     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-     # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-     # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-     # ./spec/system/share_board/main_spec.rb:391:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-     # ./spec/system/share_board/main_spec.rb:390:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  9) 共有将棋盤 局面再送 再送ダイアログ表示
-     Failure/Error: assert_text("同期失敗 3回目")
+  1) {:type=>:system, :share_board_spec=>true} 成功
+     Failure/Error: assert_text("bobさんの反応速度は")
      
      Capybara::ExpectationNotMet:
-       expected to find text "同期失敗 3回目" in "共有将棋盤#1\n24\n2\nbob\nalice\n1\nメンバー\nalice\n(1)\n← 自分\n19:16:49\n1657707401219\nLV:6\n通知2回目\n3.192秒前\nbob\n(2)\n19:16:49\n1657707407012\nLV:0\n通知1回目\n3.341秒前\n操作履歴タップで戻れる\nalice\n再送2\n1\n☗7六歩\n19:17:02\nalice\n再送1\n1\n☗7六歩\n19:16:58\nalice\n1\n☗7六歩\n19:16:52\nbob\n入室\n19:16:49\nalice\n入室\n19:16:42\nあいうえお\n9\n☗00歩\n19:16:41\nあいうえお\n8\n☗00歩\n19:16:41\nあいうえお\n7\n☗00歩\n19:16:41\nあいうえお\n6\n☗00歩\n19:16:41\nあいうえお\n5\n☗00歩\n19:16:41\nあいうえお\n4\n☗00歩\n19:16:41\nあいうえお\n3\n☗00歩\n19:16:41\nあいうえお\n2\n☗00歩\n19:16:41\nあいうえお\n1\n☗00歩\n19:16:41\nあいうえお\n0\n☗00歩\n19:16:41\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 9\nsp_Howler()._howls.length → 9\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"yBDuQFxYSaZ\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"alice\",\n    \"white\": \"bob\",\n    \"other\": \"\",\n    \"member\": \"\"\n}\nplayer_names_from_query\n{\n    \"black\": \"alice\",\n    \"white\": \"bob\"\n}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n☗側: alice\n☖側: bob\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?RETRY_DELAY=0&SEND_SUCCESS_DELAY=-1&__system_test_now__=true&force_user_name=alice&ordered_member_names=alice%2Cbob&room_code=my_room&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.7g7f&turn=1&abstract_viewpoint=black&black=alice&white=bob&other=&member=\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?RETRY_DELAY=0&SEND_SUCCESS_DELAY=-1&__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&force_user_name=alice&ordered_member_names=alice%2Cbob&room_code=my_room&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (true)\n{ \"enabled_p\": true, \"order_index\": 0, \"user_name\": \"alice\" }\n{ \"enabled_p\": true, \"order_index\": 1, \"user_name\": \"bob\" }\n順番情報(computed)\n自分vs自分で対戦している？ false\n1vs1で対戦している？ true\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ false\nメンバーリストがある？ true\n今の局面のメンバーの名前 bob\n今は自分の手番か？ false\n次の局面のメンバーの名前 alice\n次は自分の手番か？ true\n前の局面のメンバーの名前 alice\n前は自分の手番か？ true\n自分はメンバーに含まれているか？ true\n自分は観戦者か？ false\n[assert_system_variables]\n順序:abababababa\ntn_counter:0\ncurrent_turn:1\norder_enable_p:true\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n19:16:41.214 clock_box mounted\n19:16:41.215 CC初期値 LOAD: [[15,60,0,0]]\n19:16:41.217 ALERT room_create\n19:16:41.219 USER subscriptions.create my_room\n19:16:41.222 HOOK initialized\n19:16:42.812 HOOK connected\n19:16:42.816 情報要求 alice -> ALL\n19:16:42.821 ALERT 生存通知\n19:16:43.018 情報要求受信 alice -> alice\n19:16:43.039 入室直前の人数 0人\n19:16:46.044 入室後3秒後 1人\n19:16:49.462 入室直前の人数 1人\n19:16:49.576 情報要求受信 bob -> alice\n19:16:49.590 ALERT 生存通知\n19:16:52.335 SP ☗7六歩\n19:16:52.794 時計受信 undefined -> alice\n19:16:52.867 ALERT 時計同期\n19:16:52.867 時計 alice は時計情報を受信して反映した\n19:16:58.082 時計受信 undefined -> alice\n19:16:58.083 ALERT 時計同期\n19:16:58.083 時計 alice は時計情報を受信して反映した\n19:17:02.525 時計受信 undefined -> alice\n19:17:02.527 ALERT 時計同期\n19:17:02.527 時計 alice は時計情報を受信して反映した\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\n次の手番のbobさんの反応がないのでaliceさんが再送しました(2回目)\nalice ☗7六歩\n時計同期\n次は、bobさんの手番です\n次の手番のbobさんの反応がないのでaliceさんが再送しました(1回目)"
+       expected to find text "bobさんの反応速度は" in "共有将棋盤#0\n14\n2\n0\nメンバー\nalice\n← 自分\n18:39:42\n1657877969627\nLV:11\n通知2回目\n0.738秒前\nbob\n18:39:42\n1657877981354\nLV:0\n通知1回目\n0.123秒前\n操作履歴タップで戻れる\nbob\n入室\n18:39:42\nalice\n入室\n18:39:30\nあいうえお\n9\n☗00歩\n18:39:25\nあいうえお\n8\n☗00歩\n18:39:25\nあいうえお\n7\n☗00歩\n18:39:25\nあいうえお\n6\n☗00歩\n18:39:25\nあいうえお\n5\n☗00歩\n18:39:25\nあいうえお\n4\n☗00歩\n18:39:25\nあいうえお\n3\n☗00歩\n18:39:25\nあいうえお\n2\n☗00歩\n18:39:25\nあいうえお\n1\n☗00歩\n18:39:25\nあいうえお\n0\n☗00歩\n18:39:25\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 10\nsp_Howler()._howls.length → 10\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"C1U4m5PmS35\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"\",\n    \"white\": \"\",\n    \"other\": \"\",\n    \"member\": \"alice, bob\"\n}\nplayer_names_from_query\n{}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n面子: alice, bob\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&room_code=my_room&black=&white=&other=&member=alice%2C+bob\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (false)\n順番情報(computed)\n自分vs自分で対戦している？ false\n1vs1で対戦している？ false\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ true\nメンバーリストがある？ false\n今の局面のメンバーの名前\n今は自分の手番か？ false\n次の局面のメンバーの名前\n次は自分の手番か？ false\n前の局面のメンバーの名前\n前は自分の手番か？ false\n自分はメンバーに含まれているか？ false\n自分は観戦者か？ true\n[assert_system_variables]\ntn_counter:0\ncurrent_turn:0\norder_enable_p:false\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n18:39:25.344 clock_box mounted\n18:39:25.345 CC初期値 LOAD: [[15,60,0,0]]\n18:39:29.624 ALERT room_create\n18:39:29.627 USER subscriptions.create my_room\n18:39:29.630 HOOK initialized\n18:39:30.952 HOOK connected\n18:39:30.956 情報要求 alice -> ALL\n18:39:30.957 ALERT 生存通知\n18:39:31.277 情報要求受信 alice -> alice\n18:39:31.286 入室直前の人数 0人\n18:39:34.430 入室後3秒後 1人\n18:39:42.140 情報要求受信 bob -> alice\n18:39:42.142 ALERT 生存通知\n18:39:42.180 入室直前の人数 1人\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\nbob\n通信状況 最高\n接続切れ 0回/1分 計0回\n接続 1回\n端末 Mac\n生存通知 直近5秒前 計1回\n入室日時 06:39:41 (6秒前)\n役割 不明\n手番 なし\n画面フォーカス ON\n情報信頼レベル 0\nイベント受信 0回 リジェクト0回\n接続ID XPL6oqi1ix0\nAPI Version 17\nブラウザ Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/102.0.5005.61 Safari/537.36\nIP 127.0.0.1\nGateway\n{\n    \"from_connection_id\": \"XPL6oqi1ix0\",\n    \"from_user_name\": \"bob\",\n    \"performed_at\": 1657877982082,\n    \"active_level\": 0,\n    \"ua_icon_key\": \"desktop_computer\",\n    \"ac_events_hash\": {\n        \"initialized\": 1,\n        \"connected\": 1\n    },\n    \"debug_mode_p\": true,\n    \"alive_notice_count\": 1,\n    \"room_joined_at\": 1657877981354,\n    \"window_active_p\": true,\n    \"user_agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/102.0.5005.61 Safari/537.36\",\n    \"remote_ip\": \"127.0.0.1\",\n    \"action\": \"member_info_share\",\n    \"API_VERSION\": 17\n}\n閉じる\nPING". (However, it was found 1 time including non-visible text.)
      
-     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_7_再送ダイアログ表示_763.png
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_17_成功_921.png
 
      
-     # ./spec/system/share_board/main_spec.rb:443:in `block (4 levels) in <main>'
-     # ./spec/support/alice_bob_carol.rb:22:in `a_block'
-     # ./spec/system/share_board/main_spec.rb:434:in `block (3 levels) in <main>'
+     # ./spec/system/share_board/PING_spec.rb:14:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/PING_spec.rb:11:in `block (2 levels) in <main>'
      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  10) 共有将棋盤 局面の転送 works
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  2) {:type=>:system, :share_board_spec=>true} 失敗
+     Failure/Error: assert_text("bobさんの霊圧が消えました")
+     
+     Capybara::ExpectationNotMet:
+       expected to find text "bobさんの霊圧が消えました" in "共有将棋盤#0\n14\n2\n0\nメンバー\nalice\n← 自分\n18:40:03\n1657877994094\nLV:7\n通知2回目\n0.668秒前\nbob\n18:40:03\n1657878000000\nLV:0\n通知1回目\n0.036秒前\n操作履歴タップで戻れる\nbob\n入室\n18:40:03\nalice\n入室\n18:39:55\nあいうえお\n9\n☗00歩\n18:39:54\nあいうえお\n8\n☗00歩\n18:39:54\nあいうえお\n7\n☗00歩\n18:39:54\nあいうえお\n6\n☗00歩\n18:39:54\nあいうえお\n5\n☗00歩\n18:39:54\nあいうえお\n4\n☗00歩\n18:39:54\nあいうえお\n3\n☗00歩\n18:39:54\nあいうえお\n2\n☗00歩\n18:39:54\nあいうえお\n1\n☗00歩\n18:39:54\nあいうえお\n0\n☗00歩\n18:39:54\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 6\nsp_Howler()._howls.length → 6\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"hMOHdAAjal7\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"\",\n    \"white\": \"\",\n    \"other\": \"\",\n    \"member\": \"alice, bob\"\n}\nplayer_names_from_query\n{}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n面子: alice, bob\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?PING_OK_SEC=3&__system_test_now__=true&force_user_name=alice&room_code=my_room&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&black=&white=&other=&member=alice%2C+bob\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?PING_OK_SEC=3&__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&force_user_name=alice&room_code=my_room&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (false)\n順番情報(computed)\n自分vs自分で対戦している？ false\n1vs1で対戦している？ false\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ true\nメンバーリストがある？ false\n今の局面のメンバーの名前\n今は自分の手番か？ false\n次の局面のメンバーの名前\n次は自分の手番か？ false\n前の局面のメンバーの名前\n前は自分の手番か？ false\n自分はメンバーに含まれているか？ false\n自分は観戦者か？ true\n[assert_system_variables]\ntn_counter:0\ncurrent_turn:0\norder_enable_p:false\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n18:39:54.090 clock_box mounted\n18:39:54.091 CC初期値 LOAD: [[15,60,0,0]]\n18:39:54.092 ALERT room_create\n18:39:54.094 USER subscriptions.create my_room\n18:39:54.097 HOOK initialized\n18:39:55.837 HOOK connected\n18:39:55.838 情報要求 alice -> ALL\n18:39:55.839 ALERT 生存通知\n18:39:56.014 情報要求受信 alice -> alice\n18:39:56.031 入室直前の人数 0人\n18:39:59.033 入室後3秒後 1人\n18:40:03.769 入室直前の人数 1人\n18:40:03.845 情報要求受信 bob -> alice\n18:40:03.850 ALERT 生存通知\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\nbob\n通信状況 最高\n接続切れ 0回/1分 計0回\n接続 1回\n端末 Mac\n生存通知 直近4秒前 計1回\n入室日時 06:40:00 (8秒前)\n役割 不明\n手番 なし\n画面フォーカス ON\n情報信頼レベル 0\nイベント受信 0回 リジェクト0回\n接続ID h2ky902wSVt\nAPI Version 17\nブラウザ Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/102.0.5005.61 Safari/537.36\nIP 127.0.0.1\nGateway\n{\n    \"from_connection_id\": \"h2ky902wSVt\",\n    \"from_user_name\": \"bob\",\n    \"performed_at\": 1657878003750,\n    \"active_level\": 0,\n    \"ua_icon_key\": \"desktop_computer\",\n    \"ac_events_hash\": {\n        \"initialized\": 1,\n        \"connected\": 1\n    },\n    \"debug_mode_p\": true,\n    \"alive_notice_count\": 1,\n    \"room_joined_at\": 1657878000000,\n    \"window_active_p\": true,\n    \"user_agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/102.0.5005.61 Safari/537.36\",\n    \"remote_ip\": \"127.0.0.1\",\n    \"action\": \"member_info_share\",\n    \"API_VERSION\": 17\n}\n閉じる\nPING". (However, it was found 1 time including non-visible text.)
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_17_失敗_944.png
+
+     
+     # ./spec/system/share_board/PING_spec.rb:32:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/PING_spec.rb:27:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  3) {:type=>:system, :share_board_spec=>true} 当事者側(自分は即座に起動してBC)
+     Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
+     
+     Capybara::ElementNotFound:
+       Unable to find visible css "label" with exact text "有効" with classes [main_switch]
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_19_当事者側(自分は即座に起動してbc)_591.png
+
+     
+     # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+     # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+     # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:25:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:25:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  4) {:type=>:system, :share_board_spec=>true} 他者側(予約するがBCの方が速いのでキャンセルされる)
+     Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
+     
+     Capybara::ElementNotFound:
+       Unable to find visible css "label" with exact text "有効" with classes [main_switch]
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_19_他者側(予約するがbcの方が速いのでキャンセルされる)_569.png
+
+     
+     # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+     # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+     # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:42:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:42:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  5) {:type=>:system, :share_board_spec=>true} 他者側(予約待ち0なので他者側で即発動)
+     Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
+     
+     Capybara::ElementNotFound:
+       Unable to find visible css "label" with exact text "有効" with classes [main_switch]
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_19_他者側(予約待ち0なので他者側で即発動)_181.png
+
+     
+     # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+     # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+     # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:59:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/シングルトン時間切れ_spec.rb:59:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  6) {:type=>:system, :share_board_spec=>true} works
+     Failure/Error: assert_selector(:element, :class => ["Membership", "is_#{location_key}"], text: user_name, exact_text: true)
+     
+     Capybara::ExpectationNotMet:
+       expected to find visible element nil with exact text "bob" with classes [Membership,is_white] with exact_text attribute within #<Capybara::Node::Element tag="div" path="/HTML/BODY[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]/DIV[1]"> but there were no matches. Also found "", which matched the selector but not all filters. 
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_29_works_470.png
+
+     
+     # ./spec/system/share_board/shared_methods.rb:123:in `block in assert_sp_player_name'
+     # ./spec/system/share_board/shared_methods.rb:122:in `assert_sp_player_name'
+     # ./spec/system/share_board/shared_methods.rb:130:in `assert_sp_player_names'
+     # ./spec/system/share_board/今の指す人と次に指す人を持駒の下に表示する_spec.rb:8:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  7) {:type=>:system, :share_board_spec=>true} モーダルで開く
+     Failure/Error: find(".close_handle").click
+     
+     Selenium::WebDriver::Error::ElementClickInterceptedError:
+       element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (68, 540). Other element would receive the click: <p>...</p>
+         (Session info: headless chrome=102.0.5005.61)
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_30_モーダルで開く_111.png
+
+     
+     # 0   chromedriver                        0x000000010f638d19 chromedriver + 5197081
+     # 1   chromedriver                        0x000000010f5c6b23 chromedriver + 4729635
+     # 2   chromedriver                        0x000000010f1a42b8 chromedriver + 393912
+     # 3   chromedriver                        0x000000010f1e0a52 chromedriver + 641618
+     # 4   chromedriver                        0x000000010f1de5d3 chromedriver + 632275
+     # 5   chromedriver                        0x000000010f1dbc14 chromedriver + 621588
+     # 6   chromedriver                        0x000000010f1da885 chromedriver + 616581
+     # 7   chromedriver                        0x000000010f1ce689 chromedriver + 566921
+     # 8   chromedriver                        0x000000010f1f6802 chromedriver + 731138
+     # 9   chromedriver                        0x000000010f1cdf45 chromedriver + 565061
+     # 10  chromedriver                        0x000000010f1f690e chromedriver + 731406
+     # 11  chromedriver                        0x000000010f2092a1 chromedriver + 807585
+     # 12  chromedriver                        0x000000010f1f66f3 chromedriver + 730867
+     # 13  chromedriver                        0x000000010f1cca49 chromedriver + 559689
+     # 14  chromedriver                        0x000000010f1cda75 chromedriver + 563829
+     # 15  chromedriver                        0x000000010f60abdd chromedriver + 5008349
+     # 16  chromedriver                        0x000000010f60fb64 chromedriver + 5028708
+     # 17  chromedriver                        0x000000010f614bcf chromedriver + 5049295
+     # 18  chromedriver                        0x000000010f6107ca chromedriver + 5031882
+     # 19  chromedriver                        0x000000010f5ea59f chromedriver + 4875679
+     # 20  chromedriver                        0x000000010f62a388 chromedriver + 5137288
+     # 21  chromedriver                        0x000000010f62a50f chromedriver + 5137679
+     # 22  chromedriver                        0x000000010f640085 chromedriver + 5226629
+     # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
+     # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
+     # ./spec/system/share_board/使い方_spec.rb:8:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  8) {:type=>:system, :share_board_spec=>true} works
+     Failure/Error: assert_text "部屋のリンクを仲間に伝えよう"
+     
+     Capybara::ExpectationNotMet:
+       expected to find text "部屋のリンクを仲間に伝えよう" in "共有将棋盤#0\n10\n1\n0\nメンバー\nalice\n← 自分\n18:46:45\n1657878404371\nLV:0\n通知1回目\n0.679秒前\n操作履歴タップで戻れる\nalice\n入室\n18:46:45\nあいうえお\n9\n☗00歩\n18:46:39\nあいうえお\n8\n☗00歩\n18:46:39\nあいうえお\n7\n☗00歩\n18:46:39\nあいうえお\n6\n☗00歩\n18:46:39\nあいうえお\n5\n☗00歩\n18:46:39\nあいうえお\n4\n☗00歩\n18:46:39\nあいうえお\n3\n☗00歩\n18:46:39\nあいうえお\n2\n☗00歩\n18:46:39\nあいうえお\n1\n☗00歩\n18:46:39\nあいうえお\n0\n☗00歩\n18:46:39\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 5\nsp_Howler()._howls.length → 5\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"cA3BikBdg82\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"\",\n    \"white\": \"\",\n    \"other\": \"\",\n    \"member\": \"alice\"\n}\nplayer_names_from_query\n{}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n面子: alice\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&room_code=my_room&black=&white=&other=&member=alice\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (false)\n順番情報(computed)\n自分vs自分で対戦している？ false\n1vs1で対戦している？ false\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ true\nメンバーリストがある？ false\n今の局面のメンバーの名前\n今は自分の手番か？ false\n次の局面のメンバーの名前\n次は自分の手番か？ false\n前の局面のメンバーの名前\n前は自分の手番か？ false\n自分はメンバーに含まれているか？ false\n自分は観戦者か？ true\n[assert_system_variables]\ntn_counter:0\ncurrent_turn:0\norder_enable_p:false\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n18:46:39.423 clock_box mounted\n18:46:39.424 CC初期値 LOAD: [[15,60,0,0]]\n18:46:44.368 ALERT room_create\n18:46:44.371 USER subscriptions.create my_room\n18:46:44.372 HOOK initialized\n18:46:45.530 HOOK connected\n18:46:45.530 情報要求 alice -> ALL\n18:46:45.530 ALERT 生存通知\n18:46:45.819 情報要求受信 alice -> alice\n18:46:46.190 入室直前の人数 0人\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\naliceさんが入室しました\nconnected". (However, it was found 1 time including non-visible text.)
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_31_works_812.png
+
+     
+     # ./spec/system/share_board/入室したとき他に誰もいなかったら部屋のリンクのクリックを促す_spec.rb:8:in `block (3 levels) in <main>'
+     # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+     # ./spec/system/share_board/入室したとき他に誰もいなかったら部屋のリンクのクリックを促す_spec.rb:5:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  9) {:type=>:system, :share_board_spec=>true} works
+     Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
+     
+     Capybara::ElementNotFound:
+       Unable to find visible css "label" with exact text "有効" with classes [main_switch]
+     
+     [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_35_works_325.png
+
+     
+     # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+     # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+     # ./spec/system/share_board/対局時計にプリセット適用_spec.rb:6:in `block (2 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+     # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
+
+  10) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_8_works_332.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_36_works_189.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:468:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:467:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/対局時計個別設定_片方を変更したとき片方は連動しない_spec.rb:7:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/対局時計個別設定_片方を変更したとき片方は連動しない_spec.rb:5:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  11) 共有将棋盤 局面転送時に時計の手番調整 works
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  11) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_9_works_994.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_37_works_660.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:508:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:507:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/対局時計初期値永続化_spec.rb:9:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  12) 共有将棋盤 再起動 先輩であっても再起動したら後輩になる
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  12) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_10_先輩であっても再起動したら後輩になる_325.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_38_works_977.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:556:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:555:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/対局時計基本_spec.rb:16:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/対局時計基本_spec.rb:15:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  13) 共有将棋盤 PING 成功
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  13) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: menu_item_click("局面の転送")                          # モーダルを開く
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      NoMethodError:
+        undefined method `menu_item_click' for #<RSpec::ExampleGroups::TypeSystemShareBoardSpecTrue_39:0x00007fc4dc83c018>
+        Did you mean?  menu_item_click
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_ping_成功_736.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_39_works_612.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:591:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:590:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/局面の転送_spec.rb:30:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/局面の転送_spec.rb:23:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  14) 共有将棋盤 初期配置に戻す 正しく同期する
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  14) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_13_正しく同期する_30.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_42_works_377.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:646:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:645:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/局面転送時に時計の手番調整_spec.rb:16:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/局面転送時に時計の手番調整_spec.rb:15:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  15) 共有将棋盤 1手戻す 正しく同期する
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  15) {:type=>:system, :share_board_spec=>true} 時計 works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested1_正しく同期する_531.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_43_nested_3_works_996.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:691:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:690:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/後から部屋に入ったときの同期_spec.rb:34:in `block (4 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/後から部屋に入ったときの同期_spec.rb:32:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  16) 共有将棋盤 使い方 モーダルで開く
-      Failure/Error: find(".close_handle").click
+  16) {:type=>:system, :share_board_spec=>true} 時計ON順番設定ONは対局中と思われる
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (68, 540). Other element would receive the click: <p>...</p>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_16_モーダルで開く_235.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_46_時計on順番設定onは対局中と思われる_255.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/main_spec.rb:762:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+      # ./spec/system/share_board/手番でないのに動かそうとしたときの反応_spec.rb:32:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:20:in `b_block'
+      # ./spec/system/share_board/手番でないのに動かそうとしたときの反応_spec.rb:31:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  17) 共有将棋盤 時計の初回PLAYで手番の人を示す works
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  17) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_play_works_617.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_48_works_308.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:803:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:802:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/shared_methods.rb:243:in `clock_start_force'
+      # ./spec/system/share_board/指し手の消費秒数を表示_spec.rb:6:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  18) 共有将棋盤 時計開始時に視点の自動設定 平手
-      Failure/Error: find(".close_handle").click                 # 閉じる
+  18) {:type=>:system, :share_board_spec=>true} 平手
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_19_平手_981.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_50_平手_13.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:838:in `block in case1'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:837:in `case1'
-      # ./spec/system/share_board/main_spec.rb:847:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:14:in `block in case1'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:11:in `case1'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:19:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  19) 共有将棋盤 ツイート ツイートモーダル
-      Failure/Error: find(".TweetModal .dropdown").click # テーマ選択
+  19) {:type=>:system, :share_board_spec=>true} 駒落ち
+      Failure/Error: find("label", :class => "main_switch", text: "有効", exact_text: true).click
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <div class="dropdown dropdown-menu-animation ShareBoardColorThemeDropdown is-bottom-left is-mobile-modal">...</div> is not clickable at point (514, 239). Other element would receive the click: <img src="http://localhost:3000/share-board.png?__system_test_now__=true&amp;body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&amp;turn=0&amp;abstract_viewpoint=black&amp;disposition=inline&amp;title=ogp_image&amp;__board_viewpoint_as_image_viewpoint__=false" loading="lazy" class="">
-          (Session info: headless chrome=102.0.5005.61)
+      Capybara::ElementNotFound:
+        Unable to find visible css "label" with exact text "有効" with classes [main_switch]
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_30_ツイートモーダル_177.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_50_駒落ち_590.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/main_spec.rb:1260:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:22:in `a_block'
-      # ./spec/system/share_board/main_spec.rb:1256:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/shared_methods.rb:326:in `os_switch_toggle'
+      # ./spec/system/share_board/shared_methods.rb:189:in `clock_open'
+      # ./spec/system/share_board/shared_methods.rb:235:in `clock_start'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:14:in `block in case1'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:11:in `case1'
+      # ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:29:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  20) 共有将棋盤 画像ダウンロード works
-      Failure/Error: find(".image_size_key_dropdown").click      # サイズ変更ドロップダウンを開く
+  20) {:type=>:system, :share_board_spec=>true} works
+      Failure/Error: menu_item_click("画像ダウンロード")        # 開く
       
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <div class="dropdown dropdown-menu-animation image_size_key_dropdown is-bottom-left is-mobile-modal">...</div> is not clickable at point (499, 239). Other element would receive the click: <div class="loading-background"></div>
-          (Session info: headless chrome=102.0.5005.61)
+      NoMethodError:
+        undefined method `menu_item_click' for #<RSpec::ExampleGroups::TypeSystemShareBoardSpecTrue_55:0x00007fc4f53a8ec0>
+        Did you mean?  menu_item_click
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_31_works_887.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_55_works_64.png
 
       
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/main_spec.rb:1287:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:22:in `a_block'
-      # ./spec/system/share_board/main_spec.rb:1281:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/画像ダウンロード_spec.rb:7:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  21) 共有将棋盤 順番設定の下のわかりにくいオプションの説明 works
+  21) {:type=>:system, :share_board_spec=>true} works
       Failure/Error: find(".OrderSettingModal span", text: label, exact_text: true).click
       
       Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <span class="is-clickable">...</span> is not clickable at point (434, 305). Other element would receive the click: <div role="alert" class="toast is-danger is-bottom fadeOut v-leave-to" style="" aria-hidden="true">...</div>
+        element click intercepted: Element <span class="is-clickable">...</span> is not clickable at point (195, 405). Other element would receive the click: <div role="alert" class="toast is-primary is-bottom" style="">...</div>
           (Session info: headless chrome=102.0.5005.61)
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_34_works_315.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_65_works_861.png
 
       
+      # 0   chromedriver                        0x000000010f638d19 chromedriver + 5197081
+      # 1   chromedriver                        0x000000010f5c6b23 chromedriver + 4729635
+      # 2   chromedriver                        0x000000010f1a42b8 chromedriver + 393912
+      # 3   chromedriver                        0x000000010f1e0a52 chromedriver + 641618
+      # 4   chromedriver                        0x000000010f1de5d3 chromedriver + 632275
+      # 5   chromedriver                        0x000000010f1dbc14 chromedriver + 621588
+      # 6   chromedriver                        0x000000010f1da885 chromedriver + 616581
+      # 7   chromedriver                        0x000000010f1ce689 chromedriver + 566921
+      # 8   chromedriver                        0x000000010f1f6802 chromedriver + 731138
+      # 9   chromedriver                        0x000000010f1cdf45 chromedriver + 565061
+      # 10  chromedriver                        0x000000010f1f690e chromedriver + 731406
+      # 11  chromedriver                        0x000000010f2092a1 chromedriver + 807585
+      # 12  chromedriver                        0x000000010f1f66f3 chromedriver + 730867
+      # 13  chromedriver                        0x000000010f1cca49 chromedriver + 559689
+      # 14  chromedriver                        0x000000010f1cda75 chromedriver + 563829
+      # 15  chromedriver                        0x000000010f60abdd chromedriver + 5008349
+      # 16  chromedriver                        0x000000010f60fb64 chromedriver + 5028708
+      # 17  chromedriver                        0x000000010f614bcf chromedriver + 5049295
+      # 18  chromedriver                        0x000000010f6107ca chromedriver + 5031882
+      # 19  chromedriver                        0x000000010f5ea59f chromedriver + 4875679
+      # 20  chromedriver                        0x000000010f62a388 chromedriver + 5137288
+      # 21  chromedriver                        0x000000010f62a50f chromedriver + 5137679
+      # 22  chromedriver                        0x000000010f640085 chromedriver + 5226629
       # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
       # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/main_spec.rb:1399:in `case1'
-      # ./spec/system/share_board/main_spec.rb:1410:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/順番設定の下のわかりにくいオプションの説明_spec.rb:5:in `case1'
+      # ./spec/system/share_board/順番設定の下のわかりにくいオプションの説明_spec.rb:18:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  22) 共有将棋盤 入室したとき他に誰もいなかったら部屋のリンクのクリックを促す works
-      Failure/Error: find(".close_handle").click                 # 閉じる
-      
-      Selenium::WebDriver::Error::ElementClickInterceptedError:
-        element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (308, 412). Other element would receive the click: <div>...</div>
-          (Session info: headless chrome=102.0.5005.61)
-      
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_37_works_676.png
-
-      
-      # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
-      # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
-      # ./spec/system/share_board/helper_methods.rb:22:in `block in room_setup'
-      # ./spec/system/share_board/helper_methods.rb:18:in `room_setup'
-      # ./spec/system/share_board/main_spec.rb:1490:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:30:in `b_block'
-      # ./spec/system/share_board/main_spec.rb:1489:in `block (3 levels) in <main>'
-      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  23) 共有将棋盤 順番設定後に時計設置を促す works
+  22) {:type=>:system, :share_board_spec=>true} works
       Failure/Error: assert_text "次は時計を設置してください"
       
       Capybara::ExpectationNotMet:
-        expected to find text "次は時計を設置してください" in "共有将棋盤#0\n17\n1\nalice\nalice\n0\nメンバー\nalice\n(1)\n← 自分\n19:35:22\n1657708520859\nLV:0\n通知1回目\n7.365秒前\n操作履歴タップで戻れる\nalice\n順番更新\n19:35:29\nalice\n順番 ON\n19:35:28\nalice\n入室\n19:35:22\nあいうえお\n9\n☗00歩\n19:35:17\nあいうえお\n8\n☗00歩\n19:35:17\nあいうえお\n7\n☗00歩\n19:35:17\nあいうえお\n6\n☗00歩\n19:35:17\nあいうえお\n5\n☗00歩\n19:35:17\nあいうえお\n4\n☗00歩\n19:35:17\nあいうえお\n3\n☗00歩\n19:35:17\nあいうえお\n2\n☗00歩\n19:35:17\nあいうえお\n1\n☗00歩\n19:35:17\nあいうえお\n0\n☗00歩\n19:35:17\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 13\nsp_Howler()._howls.length → 13\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"DObeZBeEz8M\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"alice\",\n    \"white\": \"\",\n    \"other\": \"\",\n    \"member\": \"\"\n}\nplayer_names_from_query\n{}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n☗側: alice\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&room_code=my_room&black=alice&white=&other=&member=\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (true)\n{ \"enabled_p\": true, \"order_index\": 0, \"user_name\": \"alice\" }\n順番情報(computed)\n自分vs自分で対戦している？ true\n1vs1で対戦している？ false\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ false\nメンバーリストがある？ true\n今の局面のメンバーの名前 alice\n今は自分の手番か？ true\n次の局面のメンバーの名前 alice\n次は自分の手番か？ true\n前の局面のメンバーの名前 alice\n前は自分の手番か？ true\n自分はメンバーに含まれているか？ true\n自分は観戦者か？ false\n[assert_system_variables]\n順序:aaaaaaaaaaa\ntn_counter:0\ncurrent_turn:0\norder_enable_p:true\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n19:35:17.366 clock_box mounted\n19:35:17.367 CC初期値 LOAD: [[15,60,0,0]]\n19:35:20.857 ALERT room_create\n19:35:20.859 USER subscriptions.create my_room\n19:35:20.861 HOOK initialized\n19:35:22.742 HOOK connected\n19:35:22.746 情報要求 alice -> ALL\n19:35:22.748 ALERT 生存通知\n19:35:23.330 情報要求受信 alice -> alice\n19:35:23.341 入室直前の人数 0人\n19:35:26.156 ALERT os_modal_vars_setup\n19:35:26.549 入室後3秒後 1人\n19:35:28.297 ALERT ordered_members_share 自分→自分\n19:35:28.299 ALERT os_modal_vars_setup\n19:35:28.384 ALERT order_switch_share 自分→自分\n19:35:30.070 ALERT ordered_members_share 自分→自分\n19:35:30.072 ALERT os_modal_vars_setup\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\naliceさんが順番設定を更新しました\nos_modal_vars_setup\nordered_members_share 自分→自分\norder_switch_share 自分→自分\nos_modal_vars_setup\nordered_members_share 自分→自分\n順番設定参加者1人\n有効\n順番 メンバー 参加\n☗ 1 alice\nシャッフル\n振り駒\n先後入替\n反則制限\nなし\nあり\n一般向け\nアバター\nなし\nあり\n普通に駒を表示\nシャウト\nなし\nあり\n叫ばない\nN手毎交代\n手番制限\nあり\nなし\n手番の人だけが駒を動かせる\n閉じる\nテスト\n更新"
+        expected to find text "次は時計を設置してください" in "共有将棋盤#0\n17\n1\nalice\nalice\n0\nメンバー\nalice\n(1)\n← 自分\n19:05:56\n1657879555028\nLV:0\n通知1回目\n7.269秒前\n操作履歴タップで戻れる\nalice\n順番更新\n19:06:03\nalice\n順番 ON\n19:06:02\nalice\n入室\n19:05:56\nあいうえお\n9\n☗00歩\n19:05:52\nあいうえお\n8\n☗00歩\n19:05:52\nあいうえお\n7\n☗00歩\n19:05:52\nあいうえお\n6\n☗00歩\n19:05:52\nあいうえお\n5\n☗00歩\n19:05:52\nあいうえお\n4\n☗00歩\n19:05:52\nあいうえお\n3\n☗00歩\n19:05:52\nあいうえお\n2\n☗00歩\n19:05:52\nあいうえお\n1\n☗00歩\n19:05:52\nあいうえお\n0\n☗00歩\n19:05:52\n無音化不具合検証用\n画面タップ催促表示確認\n画面タップ催促閉じる\nガヤ開始\nガヤ停止\nmute(true)\nmute(false)\nvolume(0)\nvolume(1.0)\nstop()\nunload() 重要\nautoUnlock = true\nautoSuspend = true\nautoSuspend = false\nHowler.volume() → 1\nHowler.usingWebAudio → true\nHowler.noAudio → false\nHowler.autoUnlock → false\nHowler.html5PoolSize → 10\nHowler.autoSuspend → true\nHowler.ctx → {}\nHowler.masterGain → [object GainNode]\nHowler._howls.length → 14\nsp_Howler()._howls.length → 14\nsystem_test\n[入室時の情報要求]\n時間切れ\n最初のコールバック\n当事者は自分で発動＆BC\n他者は数秒後発動\n受信\n数秒後発動キャンセル\nモーダル(通常)\nモーダル(推測)\n閉じる\nその他\nハンドルネーム入力\n順番設定中のハンドルネーム入力\nハンドルネームを空にする\n編集警告\n生存通知\n指し手\n時計同期\nリロード確認\n入室コール\n退室コール\n退室確認\n順番設定を保存せずに閉じた警告モーダル\n順番設定OFFのまま時計開始警告モーダル\n順番設定後に時計設置を促す\n将棋盤\n持ち上げた駒を元に戻す\n☗視点\n☖視点\n現在の視点 black\n時計情報永続化\nロード\n保存\nリセット\nActionCable\n再起動\n接続\n切断\n値null送信\nJSON\nJSON確認\n{\n    \"sfen_body\": \"position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\",\n    \"turn_max\": 0,\n    \"initial_turn\": 0,\n    \"board_viewpoint\": \"black\",\n    \"abstract_viewpoint\": \"black\",\n    \"title\": \"共有将棋盤\",\n    \"connection_id\": \"xlCNU0lSx3z\",\n    \"API_VERSION\": 17,\n    \"remote_ip\": \"127.0.0.1\"\n}\nSFEN\n操作 position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1\n編集\nls_attributes\n{\n    \"yomiage_mode_key\": \"is_yomiage_mode_on\",\n    \"color_theme_key\": \"is_color_theme_real\",\n    \"appearance_theme_key\": \"is_appearance_theme_a\",\n    \"sp_move_cancel_key\": \"is_move_cancel_standard\",\n    \"avatar_king_key\": \"is_avatar_king_off\",\n    \"foul_limit_key\": \"is_foul_limit_off\",\n    \"board_width\": 80,\n    \"image_size_key\": \"is_image_size_1920x1080\",\n    \"board_preset_key\": \"平手\",\n    \"user_name\": \"alice\",\n    \"persistent_cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\ncurrent_xclock\n{\n    \"cc_params\": [\n        {\n            \"initial_main_min\": 15,\n            \"initial_read_sec\": 60,\n            \"initial_extra_sec\": 0,\n            \"every_plus\": 0\n        }\n    ]\n}\n棋譜追加情報\nplayer_names_from_member\n{\n    \"black\": \"alice\",\n    \"white\": \"\",\n    \"other\": \"\",\n    \"member\": \"\"\n}\nplayer_names_from_query\n{}\nplayer_names_with_title_as_human_text\n棋戦: 共有将棋盤\n☗側: alice\nJS側で作成 プレビュー用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&room_code=my_room&black=alice&white=&other=&member=\n確認\nRails側で作成 og:image 用\nhttp://localhost:3000/share-board.png?__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0\n確認\n順番設定 (true)\n{ \"enabled_p\": true, \"order_index\": 0, \"user_name\": \"alice\" }\n順番情報(computed)\n自分vs自分で対戦している？ true\n1vs1で対戦している？ false\n3人以上で対戦している？ false\n観戦者数 0\nメンバーリストが空？ false\nメンバーリストがある？ true\n今の局面のメンバーの名前 alice\n今は自分の手番か？ true\n次の局面のメンバーの名前 alice\n次は自分の手番か？ true\n前の局面のメンバーの名前 alice\n前は自分の手番か？ true\n自分はメンバーに含まれているか？ true\n自分は観戦者か？ false\n[assert_system_variables]\n順序:aaaaaaaaaaa\ntn_counter:0\ncurrent_turn:0\norder_enable_p:true\nclock_box:false\ncurrent_title:共有将棋盤\ncc_params:[[15,60,0,0]]\nTrackLog\n19:05:52.134 clock_box mounted\n19:05:52.135 CC初期値 LOAD: [[15,60,0,0]]\n19:05:55.025 ALERT room_create\n19:05:55.028 USER subscriptions.create my_room\n19:05:55.030 HOOK initialized\n19:05:56.568 HOOK connected\n19:05:56.570 情報要求 alice -> ALL\n19:05:56.570 ALERT 生存通知\n19:05:56.950 情報要求受信 alice -> alice\n19:05:56.959 入室直前の人数 0人\n19:06:00.268 入室後3秒後 1人\n19:06:01.537 ALERT os_modal_vars_setup\n19:06:02.884 ALERT order_switch_share 自分→自分\n19:06:02.930 ALERT ordered_members_share 自分→自分\n19:06:02.930 ALERT os_modal_vars_setup\n19:06:03.802 ALERT ordered_members_share 自分→自分\n19:06:03.802 ALERT os_modal_vars_setup\n絵文字\n0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15:16:17:18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34:35:36:\nclick\n連打\naliceさんが順番設定を更新しました\n順番設定参加者1人\n有効\n順番 メンバー 参加\n☗ 1 alice\nシャッフル\n振り駒\n先後入替\n反則制限\nなし\nあり\n一般向け\nアバター\nなし\nあり\n普通に駒を表示\nシャウト\nなし\nあり\n叫ばない\nN手毎交代\n手番制限\nあり\nなし\n手番の人だけが駒を動かせる\n閉じる\nテスト\n更新"
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_38_works_416.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_type_system_share_board_spec_true_68_works_878.png
 
       
-      # ./spec/system/share_board/main_spec.rb:1505:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:22:in `a_block'
-      # ./spec/system/share_board/main_spec.rb:1499:in `block (3 levels) in <main>'
+      # ./spec/system/share_board/順番設定後に時計設置を促す_spec.rb:11:in `block (3 levels) in <main>'
+      # ./spec/support/alice_bob_carol.rb:12:in `a_block'
+      # ./spec/system/share_board/順番設定後に時計設置を促す_spec.rb:5:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  24) 共有将棋盤 今の指す人と次に指す人を持駒の下に表示する works
-      Failure/Error: assert_selector(:xpath, "//*[contains(@class, 'Membership') and contains(@class, 'is_#{location_key}')]//*[text()='#{user_name}']")
-      
-      Capybara::ExpectationNotMet:
-        expected to find visible xpath "//*[contains(@class, 'Membership') and contains(@class, 'is_white')]//*[text()='bob']" but there were no matches. Also found "", which matched the selector but not all filters. 
-      
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_9_nested_41_works_517.png
-
-      
-      # ./spec/system/share_board/helper_methods.rb:120:in `assert_sp_player_name'
-      # ./spec/system/share_board/helper_methods.rb:126:in `assert_sp_player_names'
-      # ./spec/system/share_board/main_spec.rb:1551:in `block (4 levels) in <main>'
-      # ./spec/support/alice_bob_carol.rb:22:in `a_block'
-      # ./spec/system/share_board/main_spec.rb:1547:in `block (3 levels) in <main>'
-      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
-      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
-
-  25) カスタム検索 フォーム入力からの検索
+  23) カスタム検索 フォーム入力からの検索
       Failure/Error: check("10分")
       
       Capybara::ElementNotFound:
         Unable to find visible checkbox "10分" that is not disabled
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_10_フォーム入力からの検索_985.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_10_フォーム入力からの検索_298.png
 
       
       # ./spec/system/swars/custom_search_spec.rb:15:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  26) 棋譜用紙 フォントを切り替える
+  24) 棋譜用紙 フォントを切り替える
       Failure/Error: find(".is_font_key_mincho").click
       
       Selenium::WebDriver::Error::ElementClickInterceptedError:
         element click intercepted: Element <div class="control is_font_key_mincho">...</div> is not clickable at point (77, 477). Other element would receive the click: <td class="td_kifu_data hand_size3">...</td>
           (Session info: headless chrome=102.0.5005.61)
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_11_フォントを切り替える_958.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_11_フォントを切り替える_155.png
 
       
+      # 0   chromedriver                        0x000000010f638d19 chromedriver + 5197081
+      # 1   chromedriver                        0x000000010f5c6b23 chromedriver + 4729635
+      # 2   chromedriver                        0x000000010f1a42b8 chromedriver + 393912
+      # 3   chromedriver                        0x000000010f1e0a52 chromedriver + 641618
+      # 4   chromedriver                        0x000000010f1de5d3 chromedriver + 632275
+      # 5   chromedriver                        0x000000010f1dbc14 chromedriver + 621588
+      # 6   chromedriver                        0x000000010f1da885 chromedriver + 616581
+      # 7   chromedriver                        0x000000010f1ce689 chromedriver + 566921
+      # 8   chromedriver                        0x000000010f1f6802 chromedriver + 731138
+      # 9   chromedriver                        0x000000010f1cdf45 chromedriver + 565061
+      # 10  chromedriver                        0x000000010f1f690e chromedriver + 731406
+      # 11  chromedriver                        0x000000010f2092a1 chromedriver + 807585
+      # 12  chromedriver                        0x000000010f1f66f3 chromedriver + 730867
+      # 13  chromedriver                        0x000000010f1cca49 chromedriver + 559689
+      # 14  chromedriver                        0x000000010f1cda75 chromedriver + 563829
+      # 15  chromedriver                        0x000000010f60abdd chromedriver + 5008349
+      # 16  chromedriver                        0x000000010f60fb64 chromedriver + 5028708
+      # 17  chromedriver                        0x000000010f614bcf chromedriver + 5049295
+      # 18  chromedriver                        0x000000010f6107ca chromedriver + 5031882
+      # 19  chromedriver                        0x000000010f5ea59f chromedriver + 4875679
+      # 20  chromedriver                        0x000000010f62a388 chromedriver + 5137288
+      # 21  chromedriver                        0x000000010f62a50f chromedriver + 5137679
+      # 22  chromedriver                        0x000000010f640085 chromedriver + 5226629
       # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
       # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
       # ./spec/system/swars/formal_sheet_spec.rb:27:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-  27) よくある質問 (FAQ) モーダルで開く
+  25) よくある質問 (FAQ) モーダルで開く
       Failure/Error: find(".close_handle").click
       
       Selenium::WebDriver::Error::ElementClickInterceptedError:
         element click intercepted: Element <button type="button" class="button close_handle">...</button> is not clickable at point (68, 540). Other element would receive the click: <div class="DebugBox bottom_left">...</div>
           (Session info: headless chrome=102.0.5005.61)
       
-      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_faq_モーダルで開く_877.png
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_faq_モーダルで開く_118.png
 
       
+      # 0   chromedriver                        0x000000010f638d19 chromedriver + 5197081
+      # 1   chromedriver                        0x000000010f5c6b23 chromedriver + 4729635
+      # 2   chromedriver                        0x000000010f1a42b8 chromedriver + 393912
+      # 3   chromedriver                        0x000000010f1e0a52 chromedriver + 641618
+      # 4   chromedriver                        0x000000010f1de5d3 chromedriver + 632275
+      # 5   chromedriver                        0x000000010f1dbc14 chromedriver + 621588
+      # 6   chromedriver                        0x000000010f1da885 chromedriver + 616581
+      # 7   chromedriver                        0x000000010f1ce689 chromedriver + 566921
+      # 8   chromedriver                        0x000000010f1f6802 chromedriver + 731138
+      # 9   chromedriver                        0x000000010f1cdf45 chromedriver + 565061
+      # 10  chromedriver                        0x000000010f1f690e chromedriver + 731406
+      # 11  chromedriver                        0x000000010f2092a1 chromedriver + 807585
+      # 12  chromedriver                        0x000000010f1f66f3 chromedriver + 730867
+      # 13  chromedriver                        0x000000010f1cca49 chromedriver + 559689
+      # 14  chromedriver                        0x000000010f1cda75 chromedriver + 563829
+      # 15  chromedriver                        0x000000010f60abdd chromedriver + 5008349
+      # 16  chromedriver                        0x000000010f60fb64 chromedriver + 5028708
+      # 17  chromedriver                        0x000000010f614bcf chromedriver + 5049295
+      # 18  chromedriver                        0x000000010f6107ca chromedriver + 5031882
+      # 19  chromedriver                        0x000000010f5ea59f chromedriver + 4875679
+      # 20  chromedriver                        0x000000010f62a388 chromedriver + 5137288
+      # 21  chromedriver                        0x000000010f62a50f chromedriver + 5137679
+      # 22  chromedriver                        0x000000010f640085 chromedriver + 5226629
       # 23  libsystem_pthread.dylib             0x00007fff208ad8fc _pthread_start + 224
       # 24  libsystem_pthread.dylib             0x00007fff208a9443 thread_start + 15
       # ./spec/system/swars/help_spec.rb:10:in `block (2 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
       # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-Top 20 slowest examples (664.84 seconds, 32.1% of total time):
-  共有将棋盤 対局時計基本 works
-    60.77 seconds ./spec/system/share_board/main_spec.rb:120
-  共有将棋盤 メッセージ 観戦者宛送信
-    45.03 seconds ./spec/system/share_board/main_spec.rb:314
-  共有将棋盤 時計開始時に視点の自動設定 駒落ち
-    43.77 seconds ./spec/system/share_board/main_spec.rb:855
-  共有将棋盤 手番でないのに動かそうとしたときの反応 時計ON順番設定ONは対局中と思われる
-    38.98 seconds ./spec/system/share_board/main_spec.rb:1327
-  共有将棋盤 2人対戦で1人観戦 works
-    38.13 seconds ./spec/system/share_board/main_spec.rb:228
-  共有将棋盤 シングルトン時間切れ 他者側(予約待ち0なので他者側で即発動)
-    33.74 seconds ./spec/system/share_board/main_spec.rb:1101
-  共有将棋盤 手合割 works
-    33.35 seconds ./spec/system/share_board/main_spec.rb:781
-  共有将棋盤 一度入力したハンドルネームは記憶
-    32.31 seconds ./spec/system/share_board/main_spec.rb:35
-  共有将棋盤 対局時計個別設定 片方を変更したとき片方は連動しない
-    32.3 seconds ./spec/system/share_board/main_spec.rb:1511
-  共有将棋盤 シングルトン時間切れ 当事者側(自分は即座に起動してBC)
-    30.81 seconds ./spec/system/share_board/main_spec.rb:1069
-  共有将棋盤 シングルトン時間切れ 他者側(予約するがBCの方が速いのでキャンセルされる)
-    30.57 seconds ./spec/system/share_board/main_spec.rb:1084
-  共有将棋盤 棋譜に対局者名を含める 部屋を立てた後はメンバーリストから取得する
-    29.27 seconds ./spec/system/share_board/main_spec.rb:1567
-  共有将棋盤 操作履歴 操作履歴から過去の局面に戻る
-    28.02 seconds ./spec/system/share_board/main_spec.rb:1182
-  共有将棋盤 退室するとメンバー一覧から即削除 works
-    27.9 seconds ./spec/system/share_board/main_spec.rb:720
-  共有将棋盤 手番でないのに動かそうとしたときの反応 時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした
-    27.48 seconds ./spec/system/share_board/main_spec.rb:1320
-  共有将棋盤 自動マッチング 飛vs角を1vs1
-    27.21 seconds ./spec/system/share_board/main_spec.rb:965
-  共有将棋盤 手番でないのに動かそうとしたときの反応 時計OFF順番設定ONでは検討をしていると思われる
-    27.02 seconds ./spec/system/share_board/main_spec.rb:1313
-  共有将棋盤 局面再送 再送ダイアログ表示
-    26.49 seconds ./spec/system/share_board/main_spec.rb:430
-  共有将棋盤 Aが対局時計操作中にCが入室したときBはCだけに時計情報を送るのでAの対局時計がBの内容で更新されない works
-    26.34 seconds ./spec/system/share_board/main_spec.rb:1417
-  共有将棋盤 再起動 先輩であっても再起動したら後輩になる
-    25.35 seconds ./spec/system/share_board/main_spec.rb:549
+  26) 将棋ウォーズ棋譜検索 棋譜のファイル保存 works
+      Failure/Error: first(:xpath, "//*[text()='#{text}']").click
+      
+      Capybara::ExpectationNotMet:
+        expected to find visible xpath "//*[text()='保存 (UTF-8)']" at least 1 time but there were no matches. Also found "", which matched the selector but not all filters. 
+      
+      [Screenshot Image]: /Users/ikeda/src/shogi-extend/tmp/screenshots/failures_r_spec_example_groups_nested_12_nested_8_works_171.png
 
-Top 20 slowest example groups:
-  共有将棋盤
-    18.76 seconds average (1650.61 seconds / 88 examples) ./spec/system/share_board/main_spec.rb:3
-  {:type=>:system, :share_board_spec=>true}
-    14.34 seconds average (14.34 seconds / 1 example) ./spec/system/share_board/順番設定のシャッフル_spec.rb:3
-  カスタム検索
-    11.79 seconds average (23.58 seconds / 2 examples) ./spec/system/swars/custom_search_spec.rb:3
-  動画詳細
-    7.55 seconds average (15.09 seconds / 2 examples) ./spec/system/kiwi/video_watch_spec.rb:3
-  よくある質問 (FAQ)
-    6.27 seconds average (18.81 seconds / 3 examples) ./spec/system/swars/help_spec.rb:3
-  動画作成
-    6.14 seconds average (24.54 seconds / 4 examples) ./spec/system/kiwi/video_new_spec.rb:3
-  プレイヤー情報
-    4.62 seconds average (13.86 seconds / 3 examples) ./spec/system/swars/user_info_show_spec.rb:3
-  将棋ウォーズ棋譜検索
-    4.47 seconds average (160.9 seconds / 36 examples) ./spec/system/swars/index_spec.rb:3
-  詳細
-    4.44 seconds average (26.62 seconds / 6 examples) ./spec/system/swars/show_spec.rb:3
-  {:type=>:system, :share_board_spec=>true}
-    4.14 seconds average (4.14 seconds / 1 example) ./spec/system/share_board/最初に来たときのタイトルが正しい_spec.rb:3
-  棋譜用紙
-    4.08 seconds average (24.47 seconds / 6 examples) ./spec/system/swars/formal_sheet_spec.rb:3
-  奨励会三段リーグ
-    3.49 seconds average (6.99 seconds / 2 examples) ./spec/system/three_stage_league_spec.rb:3
-  トップ
-    3.01 seconds average (3.01 seconds / 1 example) ./spec/system/top_spec.rb:3
-  その他
-    2.94 seconds average (14.68 seconds / 5 examples) ./spec/system/other_spec.rb:3
-  CPU対戦
-    2.92 seconds average (8.75 seconds / 3 examples) ./spec/system/cpu_battles_spec.rb:3
-  なんでも棋譜変換
-    2.82 seconds average (16.92 seconds / 6 examples) ./spec/system/adapter_spec.rb:3
-  head_meta
-    2.78 seconds average (2.78 seconds / 1 example) ./spec/system/head_meta_spec.rb:3
-  about
-    2.53 seconds average (7.58 seconds / 3 examples) ./spec/system/about_spec.rb:3
-  stopwatch
-    2.49 seconds average (2.49 seconds / 1 example) ./spec/system/stopwatch_spec.rb:3
-  インスタント将棋問題集
-    2.26 seconds average (15.8 seconds / 7 examples) ./spec/system/wkbk_spec.rb:3
+      
+      # ./spec/support/system_support.rb:117:in `menu_item_sub_menu_click'
+      # ./spec/system/swars/index_spec.rb:386:in `block (3 levels) in <main>'
+      # ./spec/support/database_cleaner.rb:22:in `block (3 levels) in <main>'
+      # ./spec/support/database_cleaner.rb:22:in `block (2 levels) in <main>'
 
-Finished in 34 minutes 28 seconds (files took 5.46 seconds to load)
-190 examples, 27 failures
 
-Failed examples:
-
-rspec ./spec/system/share_board/main_spec.rb:181 # 共有将棋盤 順番設定で手番お知らせ works
-rspec ./spec/system/share_board/main_spec.rb:228 # 共有将棋盤 2人対戦で1人観戦 works
-rspec ./spec/system/share_board/main_spec.rb:268 # 共有将棋盤 順番設定のあと一時的に機能OFFにしたので通知されない works
-rspec ./spec/system/share_board/main_spec.rb:362 # 共有将棋盤 片方が駒移動中に同期 works
-rspec ./spec/system/share_board/main_spec.rb:386 # 共有将棋盤 局面を戻していても同期されると最後の局面になる works
-rspec ./spec/system/share_board/main_spec.rb:430 # 共有将棋盤 局面再送 再送ダイアログ表示
-rspec ./spec/system/share_board/main_spec.rb:463 # 共有将棋盤 局面の転送 works
-rspec ./spec/system/share_board/main_spec.rb:503 # 共有将棋盤 局面転送時に時計の手番調整 works
-rspec ./spec/system/share_board/main_spec.rb:549 # 共有将棋盤 再起動 先輩であっても再起動したら後輩になる
-rspec ./spec/system/share_board/main_spec.rb:641 # 共有将棋盤 初期配置に戻す 正しく同期する
-rspec ./spec/system/share_board/main_spec.rb:686 # 共有将棋盤 1手戻す 正しく同期する
-rspec ./spec/system/share_board/main_spec.rb:758 # 共有将棋盤 使い方 モーダルで開く
-rspec ./spec/system/share_board/main_spec.rb:798 # 共有将棋盤 時計の初回PLAYで手番の人を示す works
-rspec ./spec/system/share_board/main_spec.rb:846 # 共有将棋盤 時計開始時に視点の自動設定 平手
-rspec ./spec/system/share_board/main_spec.rb:1255 # 共有将棋盤 ツイート ツイートモーダル
-rspec ./spec/system/share_board/main_spec.rb:1280 # 共有将棋盤 画像ダウンロード works
-rspec ./spec/system/share_board/main_spec.rb:1403 # 共有将棋盤 順番設定の下のわかりにくいオプションの説明 works
-rspec ./spec/system/share_board/main_spec.rb:1483 # 共有将棋盤 入室したとき他に誰もいなかったら部屋のリンクのクリックを促す works
-rspec ./spec/system/share_board/main_spec.rb:1498 # 共有将棋盤 順番設定後に時計設置を促す works
-rspec ./spec/system/share_board/main_spec.rb:1546 # 共有将棋盤 今の指す人と次に指す人を持駒の下に表示する works
+rspec ./spec/system/share_board/PING_spec.rb:4 # {:type=>:system, :share_board_spec=>true} 成功
+rspec ./spec/system/share_board/PING_spec.rb:18 # {:type=>:system, :share_board_spec=>true} 失敗
+rspec ./spec/system/share_board/シングルトン時間切れ_spec.rb:22 # {:type=>:system, :share_board_spec=>true} 当事者側(自分は即座に起動してBC)
+rspec ./spec/system/share_board/シングルトン時間切れ_spec.rb:37 # {:type=>:system, :share_board_spec=>true} 他者側(予約するがBCの方が速いのでキャンセルされる)
+rspec ./spec/system/share_board/シングルトン時間切れ_spec.rb:54 # {:type=>:system, :share_board_spec=>true} 他者側(予約待ち0なので他者側で即発動)
+rspec ./spec/system/share_board/今の指す人と次に指す人を持駒の下に表示する_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/使い方_spec.rb:4 # {:type=>:system, :share_board_spec=>true} モーダルで開く
+rspec ./spec/system/share_board/入室したとき他に誰もいなかったら部屋のリンクのクリックを促す_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/対局時計にプリセット適用_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/対局時計個別設定_片方を変更したとき片方は連動しない_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/対局時計初期値永続化_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/対局時計基本_spec.rb:8 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/局面の転送_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/局面転送時に時計の手番調整_spec.rb:8 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/後から部屋に入ったときの同期_spec.rb:31 # {:type=>:system, :share_board_spec=>true} 時計 works
+rspec ./spec/system/share_board/手番でないのに動かそうとしたときの反応_spec.rb:29 # {:type=>:system, :share_board_spec=>true} 時計ON順番設定ONは対局中と思われる
+rspec ./spec/system/share_board/指し手の消費秒数を表示_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:18 # {:type=>:system, :share_board_spec=>true} 平手
+rspec ./spec/system/share_board/時計開始時に視点の自動設定_spec.rb:28 # {:type=>:system, :share_board_spec=>true} 駒落ち
+rspec ./spec/system/share_board/画像ダウンロード_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/順番設定の下のわかりにくいオプションの説明_spec.rb:9 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/順番設定後に時計設置を促す_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
 rspec ./spec/system/swars/custom_search_spec.rb:13 # カスタム検索 フォーム入力からの検索
 rspec ./spec/system/swars/formal_sheet_spec.rb:25 # 棋譜用紙 フォントを切り替える
 rspec ./spec/system/swars/help_spec.rb:6 # よくある質問 (FAQ) モーダルで開く
-
-/usr/local/var/rbenv/versions/2.6.5/bin/ruby -I/usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.11.0/lib:/usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-support-3.11.0/lib /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/rspec-core-3.11.0/exe/rspec --pattern ./spec/system/\*\*/\*_spec.rb failed
-/Users/ikeda/src/shogi-extend $ 
+rspec ./spec/system/swars/index_spec.rb:382 # 将棋ウォーズ棋譜検索 棋譜のファイル保存 works

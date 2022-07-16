@@ -1,5 +1,6 @@
 rspec
 rspec --only-failures
+rspec --only-failures --fail-fast
 SHARE_BOARD_SPEC_SKIP=1 rspec
 rspec -t ~share_board_spec
 rspec -t share_board_spec

@@ -185,8 +185,9 @@ module SharedMethods
   def clock_open
     hamburger_click
     cc_modal_handle             # 「対局時計」モーダルを開く
+
     assert_clock_off            # 時計はまだ設置されていない
-    main_switch_toggle  # 設置する
+    clock_switch_toggle          # 設置する
     assert_clock_on             # 時計が設置された
   end
 
@@ -217,7 +218,7 @@ module SharedMethods
   def order_modal_main_switch_click(on_or_off)
     hamburger_click
     os_modal_handle                        # 「順番設定」モーダルを開く
-    main_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+    os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     action_log_row_of(0).assert_text("順番 #{on_or_off}")
     modal_close_handle                                  # 閉じる (ヘッダーに置いている)
   end
@@ -321,9 +322,13 @@ module SharedMethods
   end
 
   # 順番設定と対局時計の右上の有効をトグルする
-  def main_switch_toggle
+  def os_switch_toggle
     # 本当は find(:checkbox, "有効", exact: true).click と書きたいがなぜか動かない
     find("label", :class => "main_switch", text: "有効", exact_text: true).click
+  end
+
+  def clock_switch_toggle
+    find("label", :class => "main_switch", text: "設置", exact_text: true).click
   end
 
   # 操作履歴

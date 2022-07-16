@@ -14,7 +14,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       hamburger_click
       os_modal_handle                        # 「順番設定」モーダルを開く
-      main_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+      os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
       order_toggle(3)                                    # 3番目のcarolさんの「OK」をクリックして「観戦」に変更
       apply_button                       # 適用クリック
       modal_close_handle          # 閉じる (ヘッダーに置いている)

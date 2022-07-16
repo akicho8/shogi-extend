@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       hamburger_click
       os_modal_handle                                   # 「順番設定」モーダルを開く
-      main_switch_toggle                                # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+      os_switch_toggle                                # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
       action_assert(0, "alice", "順番 ON")              # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
       modal_close_handle                                # 閉じる (ヘッダーに置いている)
     end
