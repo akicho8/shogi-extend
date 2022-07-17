@@ -125,18 +125,13 @@ export const app_sfen_share = {
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
-        console.log(0)
         if (this.yomiagable_p) {
           // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-          console.log(1)
           this.talk(this.user_call_name(params.from_user_name), {
             onend: () => this.talk(params.lmi.yomiage, {
               onend: () => {
-                console.log(2)
                 if (params.next_user_name) {
-                  console.log(3)
                   if (this.next_notify_p) {
-                    console.log(4)
                     this.toast_ok(`次は、${this.user_call_name(params.next_user_name)}の手番です`)
                   }
                 }
