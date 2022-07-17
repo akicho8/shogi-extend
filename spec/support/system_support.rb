@@ -164,12 +164,6 @@ if true
       find(".sidebar_toggle_navbar_item").click
     end
 
-    # text が含まれる要素をクリック
-    # click_on では link か button でなければ発見できないため、テキストに @click している個所を探しづらい
-    def click_text_match(text)
-      first(:xpath, "//*[contains(text(), '#{text}')]").click
-    end
-
     def menu_item_click(text)
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
