@@ -1,7 +1,7 @@
 # スクリーンショット画像がコンソールに吐かれるのを停止
 ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
-if true
+if false
   chromedriver_pids = `pgrep -f chromedriver`.split
   unless chromedriver_pids.empty?
     `pkill -f chromedriver`
@@ -16,10 +16,72 @@ end
 Capybara.configure do |config|
   # config.server                = :puma, { Silent: true } #  webrick にするとこける
   # config.server                = :puma, { Threads: "10:10", workers: 1, } # ← ぜんぜんかんけいねぇ
-  config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
-  config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
+  # config.automatic_label_click = true # choose("ラベル名") でラジオボタンが押せるようになる
+  # config.default_max_wait_time = 5    # 2ぐらいだと chromedriver の転ける確立が高い
   # config.automatic_reload = false      # ←これを入れると安定する ← 関係ない
   # config.threadsafe            = false
+end
+
+module Capybara::DSL
+  # def __danger_window_zoom__(value)
+  #   execute_script("document.body.style.zoom = #{value}")
+  # end
+  #
+  def window_max
+    current_window.maximize
+  end
+  #
+  # def confirm_function_kill!
+  #   execute_script("window.confirm = () => true")
+  # end
+  #
+  # def switch_to_window_left(windows)
+  #   safe_switch_to_window(windows.first)
+  # end
+  #
+  # def safe_switch_to_window(window)
+  #   if window
+  #     switch_to_window(window)
+  #   end
+  # end
+  #
+  # def visit_all(urls, &block)
+  #   windows = urls.collect do |e|
+  #     switch_to_new_window do
+  #       visit(e)
+  #       if block
+  #         block.call
+  #       end
+  #     end
+  #   end
+  #   switch_to_window_left(windows)
+  #   windows
+  # end
+  #
+  # def switch_to_windows(windows, &block)
+  #   begin
+  #     original = current_window
+  #     windows.collect do |e|
+  #       switch_to_window(e)
+  #       block.call
+  #     end
+  #   ensure
+  #     switch_to_window(original)
+  #   end
+  # end
+  #
+  # def switch_to_new_window(&block)
+  #   open_new_window.tap do |window|
+  #     switch_to_window(window)
+  #     if block
+  #       block.call
+  #     end
+  #   end
+  # end
+  #
+  # def active_send_keys(...)
+  #   current_session.active_element.send_keys(...)
+  # end
 end
 
 # 「Selenium::WebDriver::Error::UnknownCommandError: unknown command: Cannot call non W3C standard command while in W3C mode」対策
@@ -67,7 +129,7 @@ RSpec.configure do |config|
     # これ visit で移動してスクリーンショットを撮る前にリサイズしないと意味がない
     # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
     # p height
-    Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
+    # Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
   end
 end
 
@@ -93,21 +155,6 @@ if true
       $stdin.gets
     end
 
-    def doc_image(name = nil)
-      return unless ENV["GENERATE_IMAGE"]
-
-      max_resize
-      name = [@__full_description__, name].compact.join("_").gsub(/\s+/, "_")
-      path = Rails.root.join("doc/images/#{name}.png")
-      page.save_screenshot(path)
-    end
-
-    def max_resize
-      height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
-      # p [:height, height]
-      Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050) # or 1050
-    end
-
     def debug
       `open #{save_screenshot}`
       `open #{save_page}`
@@ -124,7 +171,7 @@ if true
     end
 
     def menu_item_click(text)
-      first(:xpath, "//*[text()=' #{text} ']").click
+      find(".b-sidebar li a", text: text, exact_text: true).click
     end
 
     # サブメニューは左右にスペースがない
@@ -162,7 +209,7 @@ if true
 
     def visit2(path, params = {})
       params = params.merge({
-          :__debug_box_skip__ => "true",
+          :__system_test_now__ => "true",
         })
       visit "#{path}?#{params.to_query}"
     end
@@ -188,17 +235,35 @@ if true
   RSpec.configure do |config|
     config.include(SystemSupport, type: :system)
 
-    config.before(:example) do |ex|
-      @__full_description__ = ex.full_description
+    config.before(:example) do |e|
+      @__full_description__ = e.full_description
     end
   end
 end
 
-# ダウンロードした ZIP を削除する
 RSpec.configure do |config|
+  config.before(type: :system) do |example|
+    page.driver.browser.download_path = Rails.root.join("tmp").to_s
+  end
+end
+
+# # ダウンロードした ZIP を削除する
+# RSpec.configure do |config|
+#   config.after(:suite) do
+#     Dir.chdir(Rails.root) do
+#       system "rm -f *.zip"
+#     end
+#   end
+# end
+
+RSpec.configure do |config|
+  config.before(:suite) do
+    Rails.root.join("RSPEC_ACTIVE").write("")
+  end
   config.after(:suite) do
-    Dir.chdir(Rails.root) do
-      system "rm -f *.zip"
+    file = Rails.root.join("RSPEC_ACTIVE")
+    if file.exist?
+      file.delete
     end
   end
 end

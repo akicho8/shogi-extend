@@ -50,12 +50,15 @@ export const vue_sound = {
       Howler.unload()
     },
 
+    // https://github.com/goldfire/howler.js#documentation
     howl_auto_play(options) {
       options = {
         autoplay: true,
         ...options,
       }
-      // https://github.com/goldfire/howler.js#documentation
+      if (this.$route.query.__system_test_now__) {
+        options.src = require("@/assets/silent.mp3")
+      }
       return new Howl(options)
     },
   },

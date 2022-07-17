@@ -1,5 +1,4 @@
 --color
 --require spec_helper
 --require rspec-power_assert
---profile 20
 --format documentation

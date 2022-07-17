@@ -1,41 +1,41 @@
-Top 20 slowest examples (18863.08 seconds, 89.5% of total time):
-  共有将棋盤 手番でないのに動かそうとしたときの反応 時計ON順番設定ONは対局中と思われる
-    5520.73 seconds ./spec/system/share_board_spec.rb:1357
-  共有将棋盤 順番設定のシャッフル works
-    3624.15 seconds ./spec/system/share_board_spec.rb:889
-  共有将棋盤 手番でないのに動かそうとしたときの反応 時計OFF順番設定ONでは検討をしていると思われるときに観戦者が操作しようとした
-    2666.14 seconds ./spec/system/share_board_spec.rb:1350
-  共有将棋盤 時計開始時に視点の自動設定 駒落ち
-    1861.01 seconds ./spec/system/share_board_spec.rb:863
-  共有将棋盤 自動マッチング 飛vs角を1vs1
-    925.89 seconds ./spec/system/share_board_spec.rb:995
-  共有将棋盤 持ち上げ駒キャンセル方法 他のセルをクリック
-    924.32 seconds ./spec/system/share_board_spec.rb:988
-  共有将棋盤 編集モードで配置を変更しても駒箱が消えない works
-    909.86 seconds ./spec/system/share_board_spec.rb:1200
-  共有将棋盤 画像ダウンロード works
-    908.84 seconds ./spec/system/share_board_spec.rb:1310
-  共有将棋盤 順番設定の先後入替 works
-    906.9 seconds ./spec/system/share_board_spec.rb:942
-  共有将棋盤 2人対戦で1人観戦 works
-    82.33 seconds ./spec/system/share_board_spec.rb:236
-  共有将棋盤 対局時計基本 works
-    68.06 seconds ./spec/system/share_board_spec.rb:128
-  共有将棋盤 順番設定で手番お知らせ works
-    60.42 seconds ./spec/system/share_board_spec.rb:189
-  共有将棋盤 順番設定のあと一時的に機能OFFにしたので通知されない works
-    55.11 seconds ./spec/system/share_board_spec.rb:276
-  共有将棋盤 局面の転送 works
-    54.59 seconds ./spec/system/share_board_spec.rb:471
-  共有将棋盤 再起動 先輩であっても再起動したら後輩になる
-    53.39 seconds ./spec/system/share_board_spec.rb:557
-  共有将棋盤 局面転送時に時計の手番調整 works
-    53.15 seconds ./spec/system/share_board_spec.rb:511
-  共有将棋盤 時計の初回PLAYで手番の人を示す works
-    51.18 seconds ./spec/system/share_board_spec.rb:806
-  共有将棋盤 メッセージ 観戦者宛送信
-    48.14 seconds ./spec/system/share_board_spec.rb:322
-  共有将棋盤 局面を戻していても同期されると最後の局面になる works
-    45.01 seconds ./spec/system/share_board_spec.rb:394
-  共有将棋盤 一度入力したハンドルネームは記憶
-    43.86 seconds ./spec/system/share_board_spec.rb:43
+Top 20 slowest example groups:
+  共有将棋盤
+    18.76 seconds average (1650.61 seconds / 88 examples) ./spec/system/share_board/main_spec.rb:3
+  {:type=>:system, :share_board_spec=>true}
+    14.34 seconds average (14.34 seconds / 1 example) ./spec/system/share_board/順番設定のシャッフル_spec.rb:3
+  カスタム検索
+    11.79 seconds average (23.58 seconds / 2 examples) ./spec/system/swars/custom_search_spec.rb:3
+  動画詳細
+    7.55 seconds average (15.09 seconds / 2 examples) ./spec/system/kiwi/video_watch_spec.rb:3
+  よくある質問 (FAQ)
+    6.27 seconds average (18.81 seconds / 3 examples) ./spec/system/swars/help_spec.rb:3
+  動画作成
+    6.14 seconds average (24.54 seconds / 4 examples) ./spec/system/kiwi/video_new_spec.rb:3
+  プレイヤー情報
+    4.62 seconds average (13.86 seconds / 3 examples) ./spec/system/swars/user_info_show_spec.rb:3
+  将棋ウォーズ棋譜検索
+    4.47 seconds average (160.9 seconds / 36 examples) ./spec/system/swars/index_spec.rb:3
+  詳細
+    4.44 seconds average (26.62 seconds / 6 examples) ./spec/system/swars/show_spec.rb:3
+  {:type=>:system, :share_board_spec=>true}
+    4.14 seconds average (4.14 seconds / 1 example) ./spec/system/share_board/最初に来たときのタイトルが正しい_spec.rb:3
+  棋譜用紙
+    4.08 seconds average (24.47 seconds / 6 examples) ./spec/system/swars/formal_sheet_spec.rb:3
+  奨励会三段リーグ
+    3.49 seconds average (6.99 seconds / 2 examples) ./spec/system/three_stage_league_spec.rb:3
+  トップ
+    3.01 seconds average (3.01 seconds / 1 example) ./spec/system/top_spec.rb:3
+  その他
+    2.94 seconds average (14.68 seconds / 5 examples) ./spec/system/other_spec.rb:3
+  CPU対戦
+    2.92 seconds average (8.75 seconds / 3 examples) ./spec/system/cpu_battles_spec.rb:3
+  なんでも棋譜変換
+    2.82 seconds average (16.92 seconds / 6 examples) ./spec/system/adapter_spec.rb:3
+  head_meta
+    2.78 seconds average (2.78 seconds / 1 example) ./spec/system/head_meta_spec.rb:3
+  about
+    2.53 seconds average (7.58 seconds / 3 examples) ./spec/system/about_spec.rb:3
+  stopwatch
+    2.49 seconds average (2.49 seconds / 1 example) ./spec/system/stopwatch_spec.rb:3
+  インスタント将棋問題集
+    2.26 seconds average (15.8 seconds / 7 examples) ./spec/system/wkbk_spec.rb:3

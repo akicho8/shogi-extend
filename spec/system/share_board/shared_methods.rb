@@ -1,6 +1,6 @@
 require "rails_helper"
 
-module HelperMethods
+module SharedMethods
   extend ActiveSupport::Concern
 
   included do
@@ -55,18 +55,20 @@ module HelperMethods
     assert_selector(".is_white .is_sclock_active")
   end
 
-  def assert_move(from, to, human)
+  # 駒移動できる
+  def piece_move_o(from, to, human)
     piece_move(from, to)
-    Capybara.using_wait_time(10) do
-      assert_text(human)
-    end
+    # Capybara.using_wait_time(10) do
+    assert_text(human)
+    # end
   end
 
-  def assert_no_move(from, to, human)
+  # 駒移動できない
+  def piece_move_x(from, to, human)
     piece_move(from, to)
-    Capybara.using_wait_time(10) do
-      assert_no_text(human)
-    end
+    # Capybara.using_wait_time(10) do
+    assert_no_text(human)
+    # end
   end
 
   def piece_move(from, to)
@@ -115,15 +117,17 @@ module HelperMethods
     assert_no_selector(".MembershipLocationPlayerInfoName")
   end
 
-  # location_key 側のプレイヤー名は user_name になっていること
+  # 将棋盤内で location_key 側のプレイヤー名は user_name になっている
   def assert_sp_player_name(location_key, user_name)
-    assert_selector(:xpath, "//*[contains(@class, 'Membership') and contains(@class, 'is_#{location_key}')]//*[text()='#{user_name}']")
+    within(".ShogiPlayer") do
+      assert_selector(:element, :class => ["Membership", "is_#{location_key}"], text: user_name, exact_text: true)
+    end
   end
 
   # ▲△の順に指定のプレイヤー名を表示している
   def assert_sp_player_names(black_name, white_name)
-    assert_sp_player_name :black, black_name
-    assert_sp_player_name :white, white_name
+    assert_sp_player_name(:black, black_name)
+    assert_sp_player_name(:white, white_name)
   end
 
   # メンバーリストの上からi番目の状態と名前
@@ -145,8 +149,14 @@ module HelperMethods
     assert_no_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
   end
 
-  def member_list_click(i)
+  # メンバーリストの上ら i 番目をクリック
+  def member_list_click_nth(i)
     find(".ShareBoardMemberListOne:nth-child(#{i})").click
+  end
+
+  # メンバーリストの指定の名前をクリック
+  def member_list_name_click(name)
+    find(".ShareBoardMemberList .user_name", text: name, exact_text: true).click
   end
 
   def sp_controller_click(klass)
@@ -175,8 +185,9 @@ module HelperMethods
   def clock_open
     hamburger_click
     cc_modal_handle             # 「対局時計」モーダルを開く
+
     assert_clock_off            # 時計はまだ設置されていない
-    find(".main_switch").click  # 設置する
+    clock_switch_toggle          # 設置する
     assert_clock_on             # 時計が設置された
   end
 
@@ -207,7 +218,7 @@ module HelperMethods
   def order_modal_main_switch_click(on_or_off)
     hamburger_click
     os_modal_handle                        # 「順番設定」モーダルを開く
-    find(".main_switch").click                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
+    os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
     action_log_row_of(0).assert_text("順番 #{on_or_off}")
     modal_close_handle                                  # 閉じる (ヘッダーに置いている)
   end
@@ -267,27 +278,6 @@ module HelperMethods
     ].zip(values).to_h
   end
 
-  # 履歴の上から index 目の行
-  def action_log_row_of(index)
-    find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
-  end
-
-  # 履歴の index 番目は user が behavior した
-  def action_assert(index, user, behavior)
-    within(action_log_row_of(index)) do
-      assert_text(user)
-      assert_text(behavior)
-    end
-  end
-
-  # メッセージ送信
-  def message_send(message_scope_key, message)
-    find(".MessageSendModal .message_scope_dropdown").click            # スコープ選択ドロップダウンを開く
-    find(".MessageSendModal .dropdown .#{message_scope_key}").click  # スコープ選択
-    find(".MessageSendModal input").set(message)                     # メッセージ入力
-    find(".MessageSendModal .send_handle").click                     # 送信
-  end
-
   def assert_var(key, value)
     assert_text "#{key}:#{value}"
   end
@@ -322,4 +312,48 @@ module HelperMethods
       assert_selector(:element, text: "#{key}:#{value}", exact_text: true)
     end
   end
+
+  # 順番設定と対局時計の右上の有効をトグルする
+  def os_switch_toggle
+    # 本当は find(:checkbox, "有効", exact: true).click と書きたいがなぜか動かない
+    find("label", :class => "main_switch", text: "有効", exact_text: true).click
+  end
+
+  def clock_switch_toggle
+    find("label", :class => "main_switch", text: "設置", exact_text: true).click
+  end
+
+  # 操作履歴
+  prepend Module.new {
+    # スコープを合わせる
+    def action_log_scope(&block)
+      within(".ShareBoardActionLog", &block)
+    end
+
+    # 完全一致のテキストがあること
+    def action_assert_text(text)
+      action_log_scope do
+        assert_selector("div", text: text, exact_text: true)
+      end
+    end
+
+    # 履歴の上から index 目の行
+    def action_log_row_of(index)
+      # action_log_scope do
+      find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+      # end
+    end
+
+    # 履歴の index 番目は user が behavior した
+    def action_assert(index, user, behavior)
+      within(action_log_row_of(index)) do
+        assert_selector(:element, text: user,     exact_text: true)
+        assert_selector(:element, text: behavior, exact_text: true)
+      end
+    end
+  }
+end
+
+RSpec.configure do |config|
+  config.include(SharedMethods, type: :system, share_board_spec: true)
 end

@@ -1,0 +1,27 @@
+require "#{__dir__}/shared_methods"
+
+RSpec.describe type: :system, share_board_spec: true do
+  def case1(name, message)
+    find(".HandleNameModal input").set(name)         # 不正な名前を入力する
+    find(".save_handle").click                       # 保存
+    assert_text(message)                             # エラー出る
+  end
+
+  it "works" do
+    a_block do
+      visit_app
+      hamburger_click
+      menu_item_click("ハンドルネーム変更")
+      case1("", "ハンドルネームを入力してください")
+      case1("名無し", "ハンドルネームを入力してください")
+      case1(".", "ハンドルネームを入力してください")
+    end
+  end
+
+  it "URLから来ても不正なハンドルネームは通さない" do
+    a_block do
+      visit_app(room_code: :my_room, force_user_name: "nanashi", ordered_member_names: "nanashi")
+      assert_text("部屋に入る")                         # ハンドルネームが不正なのでダイアログが出ている
+    end
+  end
+end

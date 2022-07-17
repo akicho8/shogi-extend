@@ -7,22 +7,21 @@ RSpec.describe "棋譜投稿", type: :system do
   #
   # describe "一覧" do
   #   xit "表示" do
-  #     visit "/x"
+  #     visit2 "/x"
   #     assert_text "一覧"
   #   end
   #
   #   xit "modal_id の指定があるときモーダルが出て閉じたとき一覧にも1件表示されている" do
-  #     visit "/x?modal_id=#{record.to_param}"
+  #     visit2 "/x?modal_id=#{record.to_param}"
   #     find(".delete").click
   #     page.refresh
   #     assert_text "1-1"
-  #     doc_image
   #   end
   # end
   #
   # describe "投稿" do
   #   xit "入力" do
-  #     visit "/x/new"
+  #     visit2 "/x/new"
   #
   #     text_input_click
   #
@@ -33,7 +32,6 @@ RSpec.describe "棋譜投稿", type: :system do
   #     fill_in "free_battle[kifu_body]", with: "68銀"
   #     fill_in "free_battle[title]", with: "(題名)"
   #     sleep(3)
-  #     doc_image("入力")
   #     click_button "保存"
   #
   #     assert_text "(題名)"
@@ -41,28 +39,26 @@ RSpec.describe "棋譜投稿", type: :system do
   #     # assert_text "嬉野流"
   #     # assert_text "６八銀"
   #
-  #     doc_image("詳細")
   #   end
   # end
   #
   # describe "詳細(非公開)" do
   #   # it "コピペ新規" do
-  #   #   visit "/x/#{record.to_param}"
+  #   #   visit2 "/x/#{record.to_param}"
   #   #   click_on "コピペ新規"
   #   #   text_input_click
   #   #   assert_text "48玉"
-  #   #   doc_image
   #   # end
   #
   #   xit "詳細" do
-  #     visit "/x/#{record.to_param}"
+  #     visit2 "/x/#{record.to_param}"
   #     assert_text "(test_title)"
   #   end
   # end
   #
   # # describe "編集" do
   # #   it "編集" do
-  # #     visit "/x/#{record.to_param}/edit"
+  # #     visit2 "/x/#{record.to_param}/edit"
   # #   end
   # # end
   #
