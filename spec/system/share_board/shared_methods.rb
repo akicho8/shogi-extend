@@ -278,14 +278,6 @@ module SharedMethods
     ].zip(values).to_h
   end
 
-  # メッセージ送信
-  def message_send(message_scope_key, message)
-    find(".MessageSendModal .message_scope_dropdown").click            # スコープ選択ドロップダウンを開く
-    find(".MessageSendModal .dropdown .#{message_scope_key}").click  # スコープ選択
-    find(".MessageSendModal input").set(message)                     # メッセージ入力
-    find(".MessageSendModal .send_handle").click                     # 送信
-  end
-
   def assert_var(key, value)
     assert_text "#{key}:#{value}"
   end
