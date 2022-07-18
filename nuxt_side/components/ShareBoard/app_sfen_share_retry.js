@@ -79,11 +79,9 @@ export const app_sfen_share_retry = {
         type: "is-warning",
         focusOn: "confirm",
         onCancel: () => {
-          this.sound_stop_all()
           this.sound_play_click()
         },
         onConfirm: () => {
-          this.sound_stop_all()
           this.sound_play_click()
           this.sfen_share()
         },
