@@ -445,5 +445,20 @@ module Swars
         end
       end
     end
+
+    # 100手で勝った率
+    def one_hundred_win_rate
+      @one_hundred_win_rate ||= yield_self do
+        if win_count.positive?
+          s = win_scope
+          s = s.joins(:battle)
+          s = s.where(Battle.arel_table[:turn_max].eq(100))
+          c = s.count
+          c.fdiv(win_count)
+        else
+          0
+        end
+      end
+    end
   end
 end
