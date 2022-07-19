@@ -25,11 +25,6 @@ module Swars
       assert { case1(:win).include?("5連勝")  }
       assert { case1(:win).include?("5連勝")  }
       assert { case1(:win).include?("10連勝") }
-      assert { case1(:win).include?("10連勝") }
-      assert { case1(:win).include?("10連勝") }
-      assert { case1(:win).include?("10連勝") }
-      assert { case1(:win).include?("10連勝") }
-      assert { case1(:win).include?("15連勝") }
     end
 
     it "連敗" do
@@ -43,11 +38,6 @@ module Swars
       assert { case1(:lose).include?("5連敗")  }
       assert { case1(:lose).include?("5連敗")  }
       assert { case1(:lose).include?("10連敗") }
-      assert { case1(:lose).include?("10連敗") }
-      assert { case1(:lose).include?("10連敗") }
-      assert { case1(:lose).include?("10連敗") }
-      assert { case1(:lose).include?("10連敗") }
-      assert { case1(:lose).include?("15連敗") }
     end
 
     it "波が激しいマン" do
