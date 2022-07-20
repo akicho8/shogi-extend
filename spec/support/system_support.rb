@@ -221,8 +221,8 @@ if true
 
     # 最後に開いたタブに移動する
     # .kif を開いたときなどはこれを実行しないと切り替わらない
-    def switch_to_window_last
-      switch_to_window(windows.last)
+    def switch_to_window_by(&block)
+      switch_to_window(window_opened_by(&block))
     end
   end
 

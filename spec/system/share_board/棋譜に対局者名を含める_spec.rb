@@ -5,8 +5,9 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_app(title: "(title)", black: "(alice)")
     hamburger_click
     menu_item_sub_menu_click("棋譜表示")
-    menu_item_click("KIF")
-    switch_to_window_last
+    switch_to_window_by do
+      menu_item_click("KIF")
+    end
     assert_text "棋戦：(title)"
     assert_text "先手：(alice)"
   end
@@ -24,8 +25,9 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       hamburger_click
       menu_item_sub_menu_click("棋譜表示")
-      menu_item_click("KIF")
-      switch_to_window_last
+      switch_to_window_by do
+        menu_item_click("KIF")
+      end
       assert_text "棋戦：(title)"
       assert_text "先手：alice"
       assert_text "後手：bob"

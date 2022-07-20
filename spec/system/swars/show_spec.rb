@@ -38,8 +38,9 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
         visit2 "/swars/battles/#{@key}"
         hamburger_click
         find(".menu_item_show").click
-        find(".menu_item_show .kif_utf8").click
-        switch_to_window_last
+        switch_to_window_by do
+          find(".menu_item_show .kif_utf8").click
+        end
         assert_text "手数----指手---------消費時間--"
       end
     end

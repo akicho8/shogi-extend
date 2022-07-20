@@ -12,10 +12,9 @@ RSpec.describe type: :system, share_board_spec: true do
     visit2("/share-board")
     hamburger_click
     menu_item_click("使い方")
-    window = window_opened_by do
+    switch_to_window_by do
       find(:link, :class => "permalink").click       # 固定URLを別タブで開く
     end
-    switch_to_window(window) # 別タブに移動する
     assert_current_path "/share-board/help", ignore_query: true
   end
 
