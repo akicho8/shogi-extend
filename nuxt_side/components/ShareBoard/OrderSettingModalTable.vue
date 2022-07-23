@@ -6,8 +6,7 @@ table.table.OrderSettingModalTable
       th.order_index 順番
       th.user_name メンバー
       th.enabled_p 参加
-      th.handle_element
-        b-icon(icon="arrow-up-down" size="is-small" v-if="false")
+      th.handle_element ↑↓
   draggable(
     v-model="base.os_table_rows"
     handle=".handle_element"
@@ -58,6 +57,8 @@ export default {
 .OrderSettingModalTable
   white-space: nowrap
   text-align: center
+  th
+    text-align: center
   .order_index
     width: 1%
   .user_name
