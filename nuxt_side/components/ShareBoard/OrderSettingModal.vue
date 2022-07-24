@@ -19,49 +19,13 @@
     .description(v-if="!base.order_enable_p")
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで有効にしよう
-
     template(v-if="base.order_enable_p")
       OrderSettingModalTable(:base="base" :order_setting_modal="order_setting_modal")
-
-      //- b-table ではスマホで drag できない
-      b-table(
-        v-if="false"
-        :data="base.os_table_rows"
-        :row-class="(row, index) => !row.enabled_p && 'x-has-background-white-ter'"
-        :mobile-cards="false"
-        )
-
-        b-table-column(v-slot="{row}" field="order_index" label="順番" centered :width="1")
-          template(v-if="row.order_index != null")
-            | {{base.current_sfen_info.location_by_offset(row.order_index).name}}
-            | {{row.order_index + 1}}
-
-        b-table-column(v-slot="{row}" field="user_name" label="メンバー" cell-class="user_name")
-          span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.current_turn)}")
-            | {{row.user_name}}
-
-        b-table-column(v-if="false" v-slot="{row}" field="enabled_p" label="参加" centered)
-          b-button.enable_toggle_handle(size="is-small" @click="enable_toggle_handle(row)" :type="{'is-primary': row.enabled_p}")
-            template(v-if="row.enabled_p")
-              | OK
-            template(v-else)
-              | 観戦
-
-        b-table-column(v-slot="{row}" field="enabled_p" label="参加" centered)
-          b-switch.enable_toggle_handle(:value="row.enabled_p" @input="(value) => enable_toggle_handle(row, value)")
-
-        b-table-column(v-slot="{row}" custom-key="operation" label="" :width="1" centered cell-class="px-1")
-          template(v-if="row.enabled_p || true")
-            b-button(     size="is-small" icon-left="arrow-up"   @click="arrow_handle(row,-1)")
-            b-button.ml-1(size="is-small" icon-left="arrow-down" @click="arrow_handle(row, 1)")
-
       .buttons.mb-0.mt-2
         b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
         b-button.mb-0.furigoma_handle(@click="furigoma_handle" size="is-small") 振り駒
         b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後入替
-
       hr
-
       .mt-3
         .columns.is-mobile.other_setting
           .column
