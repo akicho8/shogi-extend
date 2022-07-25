@@ -291,12 +291,6 @@ HelpContent.ShareBoardHelpBody
     p 手合割
 
   article
-    h2 バリケード将棋をするには？
-    ul
-      li 手合割から設定
-      li ただしプログラムではトライルールの判定を行なわない
-
-  article
     h2 手合割の選択肢に希望のものがない
     p 局面編集
 

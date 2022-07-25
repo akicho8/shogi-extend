@@ -15,7 +15,6 @@ export class XmatchRuleInfo extends ApplicationMemoryRecord {
       { key: "rule_3vs3_05_00_00_5",           members_count_max: 6, name: "3 vs 3",     rule_desc: "5分+10秒",   board_preset_key: "平手",           cc_params_one: { initial_main_min:  5, initial_read_sec: 0, initial_extra_sec: 0, every_plus: 10, }, stage_only: ["development", "staging", "production"], },
       { key: "rule_4vs4_05_00_00_5",           members_count_max: 8, name: "4 vs 4",     rule_desc: "5分+10秒",   board_preset_key: "平手",           cc_params_one: { initial_main_min:  5, initial_read_sec: 0, initial_extra_sec: 0, every_plus: 10, }, stage_only: ["development", "staging", "production"], },
 
-      { key: "rule_1vs1_05_00_00_5_barricade", members_count_max: 2, name: "バリケード", rule_desc: "5分+10秒",   board_preset_key: "バリケード将棋", cc_params_one: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 10, }, stage_only: ["development", "staging", "production"], },
       { key: "rule_2vs2_05_00_00_5_pRvsB",     members_count_max: 4, name: "飛 vs 角",   rule_desc: "5分+10秒",   board_preset_key: "飛vs角",         cc_params_one: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 10, }, stage_only: ["development", "staging", "production"], },
       { key: "rule_self_05_00_00_5",           members_count_max: 1, name: "対自分",     rule_desc: "5分+10秒",   board_preset_key: "平手",           cc_params_one: { initial_main_min:  5, initial_read_sec:  0, initial_extra_sec:  0, every_plus: 10, }, stage_only: ["development", "staging", "production"], },
 
