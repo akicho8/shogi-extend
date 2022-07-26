@@ -58,17 +58,13 @@ module SharedMethods
   # 駒移動できる
   def piece_move_o(from, to, human)
     piece_move(from, to)
-    # Capybara.using_wait_time(10) do
     assert_text(human)
-    # end
   end
 
   # 駒移動できない
   def piece_move_x(from, to, human)
     piece_move(from, to)
-    # Capybara.using_wait_time(10) do
     assert_no_text(human)
-    # end
   end
 
   def piece_move(from, to)
