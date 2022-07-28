@@ -29,10 +29,6 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         SimpleRadioButtons(:base="base" custom-class="is-small" model_name="CorrectBehaviorInfo"     var_name="correct_behavior_key"     )
         SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ViewpointFlipInfo"       var_name="viewpoint_flip_key"       )
         SimpleRadioButtons(:base="base" custom-class="is-small" model_name="SoldierFlopInfo"         var_name="soldier_flop_key"         )
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ShowBehaviourInfo"       var_name="show_behaviour_key"       )
-
-        SimpleSlider(:base="base" label="読み上げ速度" var_name="yomiage_speed"    :min="0.5" :max="1.5" :step="0.05")
-        SimpleSlider(:base="base" label="読み上げ間隔" var_name="yomiage_interval" :min="0.0" :max="8.0" :step="0.05")
 </template>
 
 <script>

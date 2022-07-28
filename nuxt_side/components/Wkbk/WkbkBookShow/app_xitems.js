@@ -23,7 +23,6 @@ export const app_xitems = {
 
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()
-      this.yomiage_reset_on_play_start()
       this.re_ox_start()
       if (this.current_xitem) {
         this.journal_next_init()
@@ -51,7 +50,6 @@ export const app_xitems = {
       this.current_index += sign
       this.answer_tab_index = 0
       this.description_open_p = this.mobile_p()
-      this.yomiage_reset_on_play_start()
       if (this.current_xitem) {
         this.journal_next_init()
       } else {

@@ -23,14 +23,7 @@ export const app_article = {
 
     // 右側の答えを表示するか？
     answer_column_show() {
-      if (this.current_article.moves_answers.length >= 1) {
-        if (this.show_behaviour_info.key === 'show_behaviour_board') {
-          return true
-        }
-        if (this.yomiage_answer === "visible") {
-          return true
-        }
-      }
+      return this.current_article.moves_answers.length >= 1
     },
   },
 }

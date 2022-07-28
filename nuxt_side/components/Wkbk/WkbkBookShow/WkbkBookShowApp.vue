@@ -2,12 +2,6 @@
 client-only
   .WkbkBookShowApp
     DebugBox(v-if="development_p")
-      p yomiage_speed: {{yomiage_speed}}
-      p yomiage_interval: {{yomiage_interval}}
-      p yomiage_now: {{yomiage_now}}
-      p yomiage_index: {{yomiage_index}}
-      p yomiage_delay_timer: {{yomiage_delay_timer}}
-
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
@@ -52,7 +46,6 @@ import { support_parent } from "./support_parent.js"
 import { app_xitems            } from "./app_xitems.js"
 import { app_article           } from "./app_article.js"
 import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
-import { app_yomiage           } from "./app_yomiage.js"
 import { app_mode              } from "./app_mode.js"
 import { app_support           } from "./app_support.js"
 import { app_tweet_recent      } from "./app_tweet_recent.js"
@@ -74,7 +67,6 @@ export default {
     app_xitems,
     app_article,
     app_kifu_copy_buttons,
-    app_yomiage,
     app_mode,
     app_support,
     app_tweet_recent,
