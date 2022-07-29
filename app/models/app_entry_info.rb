@@ -4,7 +4,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {name: "swars-search"},
+      nuxt_link_to: { name: "swars-search" },
       title: "将棋ウォーズ棋譜検索",
       og_image_key: "swars-search",
       description: "他のアプリで検討したいときにどうぞ",
@@ -17,10 +17,10 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/share-board"},
+      nuxt_link_to: { path: "/share-board" },
       title: "共有将棋盤",
       attention_label: nil,
-      og_image_key: ["share-board0", "share-board1"],
+      og_image_key: %w(share-board0 share-board1 share-board2),
       description: "仲間内でのリレー将棋や指導対局にどうぞ",
       features: [
         "チャット機能あり",
@@ -37,7 +37,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/xy"},
+      nuxt_link_to: { path: "/xy" },
       title: "符号の鬼",
       attention_label: nil,
       og_image_key: "xy",
@@ -51,7 +51,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/adapter"},
+      nuxt_link_to: { path: "/adapter" },
       title: "なんでも棋譜変換",
       og_image_key: "adapter",
       description: "読めない棋譜を放り込め",
@@ -65,7 +65,7 @@ class AppEntryInfo
       key: :kiwi_lemon_new,
       display_p: !Rails.env.production? || true,
       experiment_p: false,
-      nuxt_link_to: {path: "/video/new"},
+      nuxt_link_to: { path: "/video/new" },
       title: "動画作成",
       attention_label: nil,
       og_image_key: "video-new",
@@ -79,7 +79,7 @@ class AppEntryInfo
       key: :kiwi_lemon_index,
       display_p: !Rails.env.production? || true,
       experiment_p: false,
-      nuxt_link_to: {path: "/video"},
+      nuxt_link_to: { path: "/video" },
       title: "動画ライブラリ",
       attention_label: nil,
       og_image_key: "video",
@@ -92,7 +92,7 @@ class AppEntryInfo
       key: :wkbk,
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/rack"},
+      nuxt_link_to: { path: "/rack" },
       title: "インスタント将棋問題集",
       attention_label: nil,
       og_image_key: "rack",
@@ -117,7 +117,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/stopwatch"},
+      nuxt_link_to: { path: "/stopwatch" },
       title: "詰将棋用ストップウォッチ",
       og_image_key: "stopwatch",
       description: "正解率や速度を見える化したいときにどうぞ",
@@ -132,7 +132,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/swars/histograms/grade"},
+      nuxt_link_to: { path: "/swars/histograms/grade" },
       title: "将棋ウォーズ棋力分布",
       og_image_key: "swars-histograms-grade",
       description: "偏差値的なのを見たいときにどうぞ",
@@ -145,7 +145,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/swars/top-group"},
+      nuxt_link_to: { path: "/swars/top-group" },
       title: "将棋ウォーズイベント上位の成績",
       og_image_key: "swars-top-group",
       description: "上位プレイヤーの棋譜を見たいときにどうぞ",
@@ -158,7 +158,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/swars/professional"},
+      nuxt_link_to: { path: "/swars/professional" },
       title: "将棋ウォーズ十段の成績",
       og_image_key: "swars-professional",
       description: "プロの棋譜を見たいときにどうぞ",
@@ -171,7 +171,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/three-stage-leagues"},
+      nuxt_link_to: { path: "/three-stage-leagues" },
       title: "奨励会三段リーグ成績早見表",
       og_image_key: "three-stage-league",
       description: "個人成績を見たいときにどうぞ",
@@ -184,7 +184,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/vs-clock"},
+      nuxt_link_to: { path: "/vs-clock" },
       title: "対局時計",
       attention_label: nil,
       og_image_key: "vs-clock",
@@ -198,7 +198,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/cpu-battle"},
+      nuxt_link_to: { path: "/cpu-battle" },
       title: "CPU対戦",
       og_image_key: "cpu-battle",
       description: "ネット将棋で心をやられたときにどうぞ",
@@ -214,7 +214,7 @@ class AppEntryInfo
     {
       display_p: true, # !Rails.env.production?,
       experiment_p: false,
-      nuxt_link_to: {path: "/vs"},
+      nuxt_link_to: { path: "/vs" },
       title: "対人戦",
       attention_label: nil,
       og_image_key: "share-board-vs",
@@ -229,7 +229,7 @@ class AppEntryInfo
       key: :gallery,
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/gallery"},
+      nuxt_link_to: { path: "/gallery" },
       title: "将棋盤テクスチャ集",
       attention_label: nil,
       og_image_key: "gallery",
@@ -243,7 +243,7 @@ class AppEntryInfo
     {
       display_p: true,
       experiment_p: false,
-      nuxt_link_to: {path: "/style-editor"},
+      nuxt_link_to: { path: "/style-editor" },
       title: "将棋盤スタイルエディタ",
       attention_label: nil,
       og_image_key: "style-editor",
