@@ -14,7 +14,7 @@ RSpec.describe Admin::ScriptsController, type: :controller do
     assert { response.status == 401 }
   end
 
-  describe "すべてのスクリプト" do
+  describe "すべてのスクリプトが開いた時点では動作する" do
     BackendScript.bundle_scripts.each do |e|
       next if e == BackendScript::SidekiqConpaneScript
       it e.script_name do

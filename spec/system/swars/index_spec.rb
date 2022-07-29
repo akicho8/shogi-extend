@@ -261,10 +261,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         visit2 "/swars/search", query: "Yamada_Taro"
         hamburger_click
-        window_opened_by do
-          find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
-        end
-        switch_to_window(window)
+        find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
         assert_current_path "/swars/direct-download", ignore_query: true
 
         # ページ遷移後
@@ -281,7 +278,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "古い棋譜を補完" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
         visit2 "/swars/users/Yamada_Taro/download-all"
-        assert_selector(".NuxtLoginContainer")
+        assert_selector(".NuxtLoginContainer", wait: 60)
       end
 
       it "正しく予約する" do
