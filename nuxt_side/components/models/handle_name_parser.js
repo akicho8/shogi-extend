@@ -1,4 +1,5 @@
 import _ from "lodash"
+const NodeEmoji = require('node-emoji')
 
 export class HandleNameParser {
   static DELETE_SUFFIX_CHARS = "!！."   // 最後にあると削除する文字たち
@@ -22,7 +23,9 @@ export class HandleNameParser {
   }
 
   get call_name() {
-    let s = _.trim(this.source)
+    let s = this.source
+    s = _.trim(s)
+    s = this.safe_emoji_strip(s)
     s = s.replace(/(.+)[@＠].*/, "$1")                                            // "alice@xxx"       → "alice"
     s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX_CHARS}]+$`), "$1") // "alice!"          → "alice"
     // s = s.replace(new RegExp(`(.+?)(${this.constructor.DELETE_SUFFIX_WORD.join('|')})$`), "$1") // "alice!"          → "alice"
@@ -44,5 +47,17 @@ export class HandleNameParser {
     }
 
     return `${s}さん`
+  }
+
+  // 絵文字を除去する
+  // ただし除去して空になるなら除去しない
+  safe_emoji_strip(str) {
+    let s = str
+    s = NodeEmoji.strip(s)
+    s = _.trim(s)
+    if (s === "") {
+      s = str
+    }
+    return s
   }
 }

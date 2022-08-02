@@ -27,4 +27,8 @@ describe('HandleNameParser', () => {
     expect(HandleNameParser.call_name("alicechan")).toEqual("alicechan")
     expect(HandleNameParser.call_name("alicekun")).toEqual("alicekun")
   })
+
+  test('絵文字が語尾に含まれる場合は除去する', () => {
+    expect(HandleNameParser.call_name("alice🍓")).toEqual("aliceさん")
+  })
 })
