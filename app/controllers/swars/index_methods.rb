@@ -5,49 +5,15 @@ module Swars
         @xnotice = Xnotice.new
       end
 
-      # rescue_from "Swars::Agent::SwarsBattleNotFound" do |exception|
-      #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-      #   render json: js_index_options.as_json, status: 404
-      # end
-
-      # rescue_from "Swars::Agent::BaseError" do |exception|
-      #   render json: { status: :error, type: :danger, message: exception.message }
-      #   # else
-      #   #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-      #   #   render json: { :xnotice => @xnotice }.as_json
-      #   # end
-      # end
-
-      # rescue_from "Swars::Agent::BaseError" do |exception|
-      #   if false
-      #     render json: { status: :error, type: :danger, message: exception.message }
-      #   else
-      #     @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-      #     render json: { :xnotice => @xnotice }.as_json
-      #   end
-      # end
-      #
-      # rescue_from "Swars::Agent::SwarsBattleNotFound" do |exception|
-      #   @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-      #   render json: js_index_options.as_json, status: 404
-      # end
-
       rescue_from "Swars::Agent::BaseError" do |exception|
-        # @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-        # render json: { :xnotice => @xnotice }.as_json
-
-        # @xnotice.add(exception.message, type: "is-danger", method: :dialog, title: exception.title)
-        # render json: { status: :error, type: :danger, message: exception.message }, status: 500
         SlackAgent.notify_exception(exception)
         render json: { message: exception.message }, status: exception.status
-        # render json: js_index_options.as_json, status: 404
       end
 
     end
 
     def index
       [
-        :redirect_if_old_path,
         :kento_json_render,
         :swars_users_key_json_render,
         :zip_dl_perform,
@@ -58,33 +24,6 @@ module Swars
           return
         end
       end
-    end
-
-    # 新しいURLにリダイレクト
-    def redirect_if_old_path
-      # routes.rb に移動
-      #
-      # if params[:format].blank? || request.format.html?
-      #   query = params.permit!.to_h.except(:controller, :action, :format, :modal_id).to_query.presence
-      #
-      #   # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
-      #   if modal_id = params[:modal_id].presence
-      #     path = ["/swars/battles/#{modal_id}", query].compact.join("?")
-      #     redirect_to UrlProxy.url_for(path)
-      #     return
-      #   end
-      #
-      #   if params[:latest_open_index] && current_swars_user_key
-      #     external_app_key = params[:external_app_key] || :piyo_shogi
-      #     path = "/swars/users/#{current_swars_user_key}/direct-open/#{external_app_key}"
-      #     redirect_to UrlProxy.url_for(path)
-      #     return
-      #   end
-      #
-      #   path = ["/swars/search", query].compact.join("?")
-      #   redirect_to UrlProxy.url_for(path)
-      #   return
-      # end
     end
 
     def default_json_render
@@ -271,15 +210,6 @@ module Swars
         v ||= extract_type1
         v ||= extract_type2
         v ||= extract_type3
-
-        # # url = query_info.urls.first
-        # # v ||= nil
-        # # v ||= Battle.user_key_extract_from_battle_url(url) # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
-        # # v ||= extract_type1              # https://shogiwars.heroz.jp/users/foo                      --> foo
-        #
-        # unless primary_record_key
-        #   extract_type1 || query_info.values.first
-        # end
       end
     end
 
@@ -343,22 +273,6 @@ module Swars
     end
 
     def sort_scope(s)
-      # case sort_column
-      # when "membership.location_key"
-      #   if current_swars_user
-      #     o = current_swars_user.memberships.joins(:location).order(Location.arel_table[:key].public_send(sort_order))
-      #     s = s.joins(:memberships).merge(o)
-      #   end
-      # when "membership.judge_key"
-      #   if current_swars_user
-      #     o = current_swars_user.memberships.joins(:judge).order(Judge.arel_table[:key].public_send(sort_order))
-      #     s = s.joins(:memberships).merge(o)
-      #   end
-      # when "membership.grade_diff"
-      #   if current_swars_user
-      #     o = current_swars_user.memberships.order(:grade_diff => sort_order)
-      #     s = s.joins(:memberships).merge(o)
-      #   end
       if md = sort_column.match(/\A(membership)\.(?<column>\w+)/)
         if current_swars_user
           o = current_swars_user.memberships.order(md[:column] => sort_order)
