@@ -207,6 +207,10 @@ module BattleModelMethods
     Rails.application.routes.url_helpers.polymorphic_url(self, {format: "png", turn: turn, viewpoint: viewpoint})
   end
 
+  def kif_url(options = {})
+    Rails.application.routes.url_helpers.full_url_for([self, {only_path: false, format: :kif, **options}])
+  end
+
   def battle_decorator(params = {})
     raise ArgumentError, "view_context required" unless params[:view_context]
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))

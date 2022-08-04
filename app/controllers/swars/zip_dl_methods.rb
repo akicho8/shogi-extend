@@ -4,7 +4,7 @@ module Swars
   concern :ZipDlMethods do
     private
 
-    def zip_dl_perform
+    def case_zip_download
       # あらかじめいろんなスコープでダウンロードできる数などを返す
       # GET http://localhost:3000/w.json?query=Yamada_Taro&download_config_fetch=true
       if params[:download_config_fetch]

@@ -9,15 +9,14 @@ module Swars
         SlackAgent.notify_exception(exception)
         render json: { message: exception.message }, status: exception.status
       end
-
     end
 
     def index
       [
-        :kento_json_render,
-        :swars_users_key_json_render,
-        :zip_dl_perform,
-        :default_json_render,
+        :case_kento_api,
+        :case_player_info,
+        :case_zip_download,
+        :case_swars_search,
       ].each do |e|
         send(e)
         if performed?
@@ -26,28 +25,45 @@ module Swars
       end
     end
 
-    def default_json_render
+    # http://localhost:3000/w.json?query=devuser1&format_type=kento
+    # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=kento
+    def case_kento_api
       if request.format.json?
-        import_process2
-        render json: js_index_options.as_json
-        return
+        if params[:format_type] == "kento"
+          if current_swars_user
+            render json: KentoApi.new({
+                :scope => current_index_scope,
+                :user  => current_swars_user,
+                :max   => params[:limit],
+              })
+          end
+        end
       end
     end
 
     # http://localhost:3000/w.json?query=Yamada_Taro&format_type=user
-    def swars_users_key_json_render
-      if request.format.json? && format_type == "user"
-        unless current_swars_user
-          render json: {}, status: :not_found
-          return
+    def case_player_info
+      if request.format.json?
+        if params[:format_type] == "user"
+          unless current_swars_user
+            render json: {}, status: :not_found
+            return
+          end
+          if params[:try_fetch] == "true"
+            import_process2
+          end
+          if Rails.env.development?
+            SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
+          end
+          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
         end
-        if params[:try_fetch] == "true"
-          import_process2
-        end
-        if Rails.env.development?
-          SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
-        end
-        render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
+      end
+    end
+
+    def case_swars_search
+      if request.format.json?
+        import_process2
+        render json: js_index_options.as_json
         return
       end
     end
@@ -216,7 +232,7 @@ module Swars
             :query_info         => query_info,
             :current_swars_user => current_swars_user,
             :primary_record_key => primary_record_key,
-            ))
+          }))
     end
 
     def current_index_scope
