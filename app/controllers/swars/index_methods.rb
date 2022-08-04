@@ -66,7 +66,7 @@ module Swars
       {
         :xnotice                => @xnotice,
         :import_enable_p        => import_enable?,
-        :current_swars_user_key => current_swars_user ? current_swars_user.key : nil,
+        :current_swars_user_key => current_swars_user&.key,
         :viewpoint              => current_viewpoint,
       }.merge(super).merge({
           :remember_swars_user_keys  => remember_swars_user_keys,
@@ -201,44 +201,10 @@ module Swars
       @current_ms_tags ||= query_info.lookup(:ms_tag)
     end
 
-    # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
-    # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/devuser3-Yamada_Taro-20200101_123403
-    # "将棋ウォーズ棋譜(maosuki:5級 vs kazookun:2級) #shogiwars #棋神解析 https://shogiwars.heroz.jp/games/Kato_Hifumi-SiroChannel-20200927_180900?tw=1"
+    # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
+    # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     def current_swars_user_key
-      @current_swars_user_key ||= yield_self do
-        v = nil
-        v ||= extract_type1
-        v ||= extract_type2
-        v ||= extract_type3
-      end
-    end
-
-    # https://shogiwars.heroz.jp/users/history/foo?gtype=&locale=ja -> foo
-    # https://shogiwars.heroz.jp/users/foo                          -> foo
-    def extract_type1
-      if url = query_info.urls.first
-        if url = URI::Parser.new.extract(url).first
-          uri = URI(url)
-          if uri.path
-            if md = uri.path.match(%r{/users/history/(.*)|/users/(.*)})
-              s = md.captures.compact.first
-              ERB::Util.html_escape(s)
-            end
-          end
-        end
-      end
-    end
-
-    # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
-    def extract_type2
-      if url = query_info.urls.first
-        Battle.user_key_extract_from_battle_url(url)
-      end
-    end
-
-    # "foo" --> foo
-    def extract_type3
-      query_info.values.first
+      @current_swars_user_key ||= query_info.swars_user_key_extractor_extract
     end
 
     def exclude_column_names
@@ -246,7 +212,11 @@ module Swars
     end
 
     def current_scope
-      @current_scope ||= current_model.search(params.merge(query_info: query_info, current_swars_user: current_swars_user, primary_record_key: primary_record_key))
+      @current_scope ||= current_model.search(params.merge({
+            :query_info         => query_info,
+            :current_swars_user => current_swars_user,
+            :primary_record_key => primary_record_key,
+            ))
     end
 
     def current_index_scope
