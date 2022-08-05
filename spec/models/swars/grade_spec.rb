@@ -17,10 +17,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Grade, type: :model, swars_spec: true do
-    before do
-      Swars.setup
-    end
-
     it "name" do
       assert { Grade.fetch("初段").name == "初段" }
     end

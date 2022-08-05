@@ -2,8 +2,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe "100手勝ちマン", type: :model, swars_spec: true do
-    before { Swars.setup }
-
     def case1(n)
       user = User.create!
       Swars::Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|

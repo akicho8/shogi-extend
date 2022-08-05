@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Api::SwarsHistogramsController, type: :controller, swars_spec: true do
-  include SwarsSupport
+  include SwarsSupport1
 
   #   def case1(key)
   #     get :show, params: {key: :attack}

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe Admin::ScriptsController, type: :controller do
   include AdminSupport
   include WkbkSupportMethods
-  include SwarsSupport
+  include SwarsSupport1
 
   it "ログイン必須になっている" do
     assert { Admin::ScriptsController.ancestors.include?(Admin::ApplicationController) }

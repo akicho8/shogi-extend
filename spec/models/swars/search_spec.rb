@@ -2,10 +2,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe type: :model, swars_spec: true do
-    before do
-      Swars.setup
-    end
-
     describe "カスタム検索からくるパラメータすべて" do
       def case1(key, value1, value2, options = {})
         black = User.create!

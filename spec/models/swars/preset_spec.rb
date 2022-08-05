@@ -17,10 +17,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe "手合割", type: :model, swars_spec: true do
-    before do
-      Swars.setup
-    end
-
     it "works" do
       battle = Battle.create!
       assert { battle.preset_info.name == "平手" }

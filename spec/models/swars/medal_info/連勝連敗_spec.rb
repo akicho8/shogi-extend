@@ -2,7 +2,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe "連勝連敗", type: :model, swars_spec: true do
-    before { Swars.setup }
     let(:user) { User.create! }
 
     def case1(judge_key, count = 1)

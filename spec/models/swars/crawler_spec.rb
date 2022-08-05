@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Crawler, type: :model, swars_spec: true do
-    include SwarsSupport
+    include SwarsSupport1
 
     before do
       Swars::User.find_each { |e| e.search_logs.create! }
