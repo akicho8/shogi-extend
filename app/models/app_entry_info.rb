@@ -20,7 +20,7 @@ class AppEntryInfo
       nuxt_link_to: { path: "/share-board" },
       title: "共有将棋盤",
       attention_label: nil,
-      og_image_key: %w(share-board0 share-board1),
+      og_image_key: %w(share-board0 share-board1 share-board2 share-board3),
       description: "仲間内でのリレー将棋や指導対局にどうぞ",
       features: [
         "チャット機能あり",
