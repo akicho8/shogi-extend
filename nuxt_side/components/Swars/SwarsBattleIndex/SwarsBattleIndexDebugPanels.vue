@@ -16,9 +16,9 @@
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合 発動
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsFormatIncompatible: true, force: true}}") SwarsFormatIncompatible 発動
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsConnectionFailed: true, force: true}}") SwarsConnectionFailed 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsUserNotFound: true, swars_user_destroy_all: true, force: true}}") SwarsUserNotFound 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsBattleNotFound: true, destroy_all: true, force: true}}") SwarsBattleNotFound 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', destroy_all: true, force: true}}") 棋譜の再取得
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsUserNotFound: true, x_swars_user_destroy_all: true, force: true}}") SwarsUserNotFound 発動
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsBattleNotFound: true, x_destroy_all: true, force: true}}") SwarsBattleNotFound 発動
+      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', x_destroy_all: true, force: true}}") 棋譜の再取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', viewpoint: 'black'}}") ☗を左に表示
       nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', viewpoint: 'white'}}") ☖を左に表示

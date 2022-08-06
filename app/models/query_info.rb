@@ -70,7 +70,6 @@ class QueryInfo
   def swars_user_key_extractor
     @swars_user_key_extractor ||= Swars::UserKeyExtractor.new(self)
   end
-  delegate :extract, to: :swars_user_key_extractor, prefix: true
 
   private
 

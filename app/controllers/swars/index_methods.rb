@@ -119,19 +119,7 @@ module Swars
           :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
         }
 
-        if Rails.env.development? || Rails.env.test?
-          if params[:destroy_all]
-            if current_swars_user
-              Battle.where(id: current_swars_user.battle_ids).destroy_all # user.battles.destroy_all だと memberships の片方が残る
-            end
-          end
-          if params[:swars_user_destroy_all]
-            DbCop.foreign_key_checks_disable
-            User.destroy_all
-            Battle.destroy_all
-            remove_instance_variable(:@current_swars_user)
-          end
-        end
+        x_delete_process
 
         before_count = 0
         if current_swars_user
@@ -216,7 +204,7 @@ module Swars
     # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     def current_swars_user_key
-      @current_swars_user_key ||= query_info.swars_user_key_extractor_extract
+      @current_swars_user_key ||= query_info.swars_user_key_extractor.extract
     end
 
     def exclude_column_names
@@ -275,6 +263,28 @@ module Swars
       end
 
       current_swars_user || primary_record_key || query_info.lookup(:ids)
+    end
+
+    def x_delete_process
+      if Rails.env.development? || Rails.env.test?
+        if params[:x_destroy_all]
+          if current_swars_user
+            Battle.where(id: current_swars_user.battle_ids).destroy_all # user.battles.destroy_all だと memberships の片方が残る
+          end
+        end
+        if params[:x_swars_user_destroy_all]
+          x_swars_user_destroy_all
+        end
+      end
+    end
+
+    def x_swars_user_destroy_all
+      DbCop.foreign_key_checks_disable
+      User.destroy_all
+      Battle.destroy_all
+      if instance_variable_defined?(:@current_swars_user)
+        remove_instance_variable(:@current_swars_user)
+      end
     end
   end
 end

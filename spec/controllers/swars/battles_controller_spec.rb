@@ -68,7 +68,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "本家でユーザーが存在しない" do
-      case2(query: "__unknown__", SwarsUserNotFound: true, swars_user_destroy_all: true)
+      case2(query: "__unknown__", SwarsUserNotFound: true, x_swars_user_destroy_all: true)
     end
   end
 
@@ -204,7 +204,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       assert { body["api_name"]                          == "将棋ウォーズ(ID:devuser1)"                                   }
       assert { body["game_list"].size                    == 1                                                             }
       assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
-      assert { body["game_list"][0]["kifu_url"]          == "http://test.host/w/devuser1-Yamada_Taro-20200101_123401.kif" }
+      assert { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/devuser1-Yamada_Taro-20200101_123401.kif" }
       assert { body["game_list"][0]["display_name"]      == "devuser1 三段 vs Yamada_Taro 四段"                           }
       assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
     end
