@@ -118,7 +118,6 @@ Rails.application.routes.draw do
 
     post "swars/download_set(.:format)",                  to: "swars#download_set"
     post "swars/crawler_run(.:format)",                   to: "swars#crawler_run"
-    get "swars/remember_swars_user_keys_fetch(.:format)", to: "swars#remember_swars_user_keys_fetch"
     get "swars/download_config_fetch(.:format)",          to: "swars#download_config_fetch"
     get "swars/custom_search_setup(.:format)",            to: "swars#custom_search_setup"
 

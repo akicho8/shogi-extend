@@ -127,11 +127,5 @@ module Api
     #         }))
     #   end
     # end
-
-    # 未使用
-    # curl http://localhost:3000/api/swars/remember_swars_user_keys_fetch
-    def remember_swars_user_keys_fetch
-      render json: session[:remember_swars_user_keys]
-    end
   end
 end

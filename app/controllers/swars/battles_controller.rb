@@ -40,7 +40,6 @@ module Swars
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
     include ZipDlMethods
-    include RememberSwarsUserKeysMethods
     include IndexMethods
     include ShowMethods
   end

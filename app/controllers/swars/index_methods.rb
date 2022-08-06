@@ -84,9 +84,7 @@ module Swars
         :import_enable_p        => import_enable?,
         :current_swars_user_key => current_swars_user&.key,
         :viewpoint              => current_viewpoint,
-      }.merge(super).merge({
-          :remember_swars_user_keys  => remember_swars_user_keys,
-        })
+      }.merge(super)
     end
 
     # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
@@ -108,8 +106,6 @@ module Swars
 
     def import_process
       if import_enable?
-        remember_swars_user_keys_update
-
         errors = []
         import_params = {
           :user_key                => current_swars_user_key,

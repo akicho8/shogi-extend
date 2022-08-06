@@ -33,9 +33,6 @@ Vue.mixin({
       "a_auth_user_fetch",
       "a_auth_user_logout",
     ]),
-    // ...mapMutations("swars", [
-    //   "m_remember_swars_user_keys_set",
-    // ]),
   },
   computed: {
     ...mapState("user", [
