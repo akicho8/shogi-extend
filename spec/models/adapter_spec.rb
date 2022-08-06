@@ -1,10 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "なんでも棋譜変換", type: :model do
-  before do
-    Swars.setup                 # for Swars::Grade
-  end
-
+RSpec.describe "なんでも棋譜変換", type: :model, swars_spec: true do
   it "表記ゆれのある手入力" do
     assert { FreeBattle.create!(kifu_body: "68銀、三4歩・☗七九角、8四歩五六歩△85歩78金").to_xxx(:kif).include?("7 ７八金(69)") }
   end

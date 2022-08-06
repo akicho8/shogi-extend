@@ -17,6 +17,10 @@ class QueryInfo
         e.parse
       end
     end
+
+    def swars_user_key_extract(*args)
+      parse(*args).swars_user_key_extractor.extract
+    end
   end
 
   attr_accessor :options
@@ -61,6 +65,10 @@ class QueryInfo
         v
       end
     end
+  end
+
+  def swars_user_key_extractor
+    @swars_user_key_extractor ||= Swars::UserKeyExtractor.new(self)
   end
 
   private

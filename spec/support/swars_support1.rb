@@ -1,4 +1,4 @@
-module SwarsSupport
+module SwarsSupport1
   extend ActiveSupport::Concern
 
   included do

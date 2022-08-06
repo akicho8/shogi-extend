@@ -37,12 +37,12 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
-    before do
-      Swars.setup
-    end
-
     let :record do
       Battle.create!
+    end
+
+    it "KIFの直リンクがモデルから取れる" do
+      assert { record.kif_url == "http://localhost:3000/w/battle1.kif" }
     end
 
     it "keyの重複はDBでのみチェックする" do

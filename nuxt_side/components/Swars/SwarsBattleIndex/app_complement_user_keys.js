@@ -3,17 +3,6 @@ import { ComplementUserKeysPrependInfo } from "./models/complement_user_keys_pre
 
 export const app_complement_user_keys = {
   methods: {
-    // JavaScript 側の this.complement_user_keys が空ならRails側で管理していた remember_swars_user_keys をコピーする
-    // TODO: この処理は数ヶ月後、Rails 側の remember_swars_user_keys を作る部分と合わせて捨てる
-    rails_session_side_copy_to_user_keys_if_blank() {
-      if (this.blank_p(this.complement_user_keys)) {
-        const old = this.xi.remember_swars_user_keys
-        if (this.present_p(old)) {
-          this.complement_user_keys = [...old]
-        }
-      }
-    },
-
     // $fetch 直後に this.xi.current_swars_user_key が有効なら履歴に取り込む
     // this.xi.current_swars_user_key の
     user_keys_update_by_query() {

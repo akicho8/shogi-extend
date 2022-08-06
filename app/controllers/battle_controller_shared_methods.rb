@@ -4,7 +4,6 @@ module BattleControllerSharedMethods
   include ShogiErrorRescueMethods
   include EncodeMethods
   include KifShowMethods
-  include KentoJsonMethods
   include SortMethods
   include PageMethods
 

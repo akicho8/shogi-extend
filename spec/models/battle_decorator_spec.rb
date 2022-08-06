@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe BattleDecorator, type: :model do
   describe "swars" do
-    include SwarsSupport
+    include SwarsSupport1
 
     before do
       @battle = Swars::Battle.first

@@ -135,7 +135,6 @@ export default {
       this.__trace__("SwarsBattleIndexApp", "fetch then")
 
       this.xi = xi
-      this.rails_session_side_copy_to_user_keys_if_blank()
 
       // なかから nuxt-link したとき $fetch が呼ばれるが、
       // this.query は前の状態なので更新する
