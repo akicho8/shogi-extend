@@ -11,8 +11,8 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_app(room_code: :my_room, force_user_name: "alice")
     hamburger_click
     os_modal_handle    # 「順番設定」モーダルを開く
-    os_switch_toggle # 右上の有効スイッチをクリック
-    case1("反則制限", "制限すると二歩・王手放置・駒ワープを指せなくします")
+    os_switch_toggle   # 右上の有効スイッチをクリック
+    case1("反則手", "制限すると二歩・王手放置・駒ワープを指せなくします")
     case1("アバター", "自分のアバターを玉として表示します")
     case1("シャウト", "駒を動かされたり取られたりしたとき駒が無駄に叫びます")
     case1("N手毎交代", "1人10手毎交代のようなルールにできます")
