@@ -243,7 +243,7 @@ module Swars
     end
 
     def sort_scope(s)
-      if md = sort_column.match(/\A(membership)\.(?<column>\w+)/)
+      if md = sort_column.match(/\A(?:membership)\.(?<column>\w+)/)
         if current_swars_user
           o = current_swars_user.memberships.order(md[:column] => sort_order)
           s = s.joins(:memberships).merge(o)
