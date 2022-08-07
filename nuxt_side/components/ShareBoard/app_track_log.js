@@ -37,9 +37,9 @@ export const app_track_log = {
     tl_alert(message) {
       if (this.debug_mode_p && this.present_p(message)) {
         if (this.$route.query.__system_test_now__) {
-        } else {
-          this.debug_alert_core(message)
+          return
         }
+        this.debug_alert_core(message)
         this.tl_add("ALERT", message)
       }
     },
