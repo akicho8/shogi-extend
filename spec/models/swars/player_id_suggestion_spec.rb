@@ -1,0 +1,47 @@
+require "rails_helper"
+
+module Swars
+  RSpec.describe PlayerIdSuggestion, type: :model, swars_spec: true do
+    describe "全角で入力した場合" do
+      it do
+        assert { PlayerIdSuggestion.new("ありす").message == "ありすさんは存在しません。ウォーズIDは半角で入力してください" }
+      end
+    end
+
+    describe "アルファベットを含む半角で入力しているが長さが範囲外" do
+      it "短かすぎる" do
+        assert { PlayerIdSuggestion.new("ab").message == "ウォーズIDは3文字以上です" }
+      end
+      it "長すぎる" do
+        assert { PlayerIdSuggestion.new("1234567890abcdef").message == "真面目に入力してください" }
+      end
+    end
+
+    describe "アルファベットを含む半角を3文字以上入力したのでサジェクションが発動する" do
+      it "大文字小文字を無視すると一致する場合" do
+        User.create!(user_key: "alice")
+        assert { PlayerIdSuggestion.new("ALICE").message == "もしかして alice さんですか？ 大文字と小文字を区別して入力してください" }
+      end
+
+      it "5人以上マッチした場合" do
+        5.times { |i| User.create!(user_key: "alice#{i}") }
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人はたくさんいます。もっと正確に入力してください" }
+      end
+
+      it "5人未満マッチした場合" do
+        User.create!(user_key: "alice1")
+        assert { PlayerIdSuggestion.new("alice").message == "もしかして alice1 さんですか？" }
+      end
+
+      it "マッチしない" do
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まるウォーズIDは存在しません。正確に入力してください" }
+      end
+    end
+
+    describe "記号を入力した場合" do
+      it do
+        assert { PlayerIdSuggestion.new(".").message == "真面目に入力してください" }
+      end
+    end
+  end
+end

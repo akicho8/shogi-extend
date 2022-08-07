@@ -106,76 +106,49 @@ module Swars
 
     def import_process
       if import_enable?
-        errors = []
-        import_params = {
-          :user_key                => current_swars_user_key,
-          :page_max                => import_page_max,
-          :force                   => params[:force],
-          :error_capture_fake      => params[:error_capture_fake],
-          :error_capture           => -> error { errors << error },
-          :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
-          :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
-          :SwarsUserNotFound       => params[:SwarsUserNotFound],
-          :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
-        }
 
         x_delete_process
 
-        before_count = 0
+        @before_count = 0
         if current_swars_user
-          before_count = current_swars_user.battles.count
+          @before_count = current_swars_user.battles.count
+        else
+          # 初回インポートでは User レコードが存在しない
         end
 
-        # 連続クロール回避 (fetchでは Rails.cache.write が後処理のためダメ)
-        success = Battle.throttle_user_import(import_params)
-        if !success
-          # ここを有効にするには rails dev:cache してキャッシュを有効にすること
+        # 連続クロール回避
+        # 開発環境で回避させるには rails dev:cache しておくこと
+        @import_errors = []
+        @import_success = Battle.throttle_user_import(import_params)
+        unless @import_success
           @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
+          return
         end
 
-        if success
-          remove_instance_variable(:@current_swars_user)
+        # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
 
-          hit_count = 0
-          if current_swars_user
-            hit_count = current_swars_user.battles.count - before_count
-            if hit_count.zero?
-              @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
-            else
-              @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
-            end
-            current_swars_user.search_logs.create!
-          else
-            SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: current_swars_user_key.inspect)
-            @xnotice.add("#{current_swars_user_key}さんは存在しません。大文字と小文字を間違えていませんか？", type: "is-warning")
-          end
-
-          if hit_count.nonzero?
-            if Rails.env.production? || Rails.env.staging?
-            else
-              slack_notify(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
-            end
-          end
-
-          # 確認方法
-          # http://localhost:3000/w?query=devuser1&error_capture_fake=true&force=true
-          if errors.present?
-            errors.each do |e|
-              body = [
-                e[:error].message.strip,
-                "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
-              ].join("\n")
-              SystemMailer.notify(fixed: true, subject: "【ウォーズ棋譜不整合】#{e[:error].message.lines.first.strip}", body: body).deliver_later
-            end
-            message = errors.collect { |e|
-              [
-                e[:error].message.strip,
-                "https://shogiwars.heroz.jp/games/#{e[:key]}?locale=ja",
-              ].collect { |e| "#{e}\n" }.join
-            }.join("\n").gsub(/\R/, "<br>")
-            @xnotice.add(message, type: "is-danger", method: :dialog, title: "棋譜の不整合")
-          end
+        unless current_swars_user
+          message = PlayerIdSuggestion.new(current_swars_user_key).message
+          SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: message)
+          @xnotice.add(message, type: "is-warning")
+          return
         end
+
+        @hit_count = 0
+        @after_count = current_swars_user.battles.count
+        @hit_count = @after_count - @before_count
+        if @hit_count.zero?
+          @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
+        else
+          @xnotice.add("#{@hit_count}件、新しく見つかりました", type: "is-info")
+        end
+        current_swars_user.search_logs.create!
+
+        if Rails.env.development?
+          slack_notify(subject: "検索", body: "#{current_swars_user_key} #{@hit_count}件")
+        end
+
+        import_error_message_build
       end
     end
 
@@ -284,6 +257,41 @@ module Swars
       if instance_variable_defined?(:@current_swars_user)
         remove_instance_variable(:@current_swars_user)
       end
+    end
+
+    def import_params
+      {
+        :user_key                => current_swars_user_key,
+        :page_max                => import_page_max,
+        :force                   => params[:force],
+        :error_capture_fake      => params[:error_capture_fake],
+        :error_capture           => -> error { @import_errors << error },
+        :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
+        :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
+        :SwarsUserNotFound       => params[:SwarsUserNotFound],
+        :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
+      }
+    end
+
+    # 確認方法
+    # http://localhost:3000/w?query=devuser1&error_capture_fake=true&force=true
+    def import_error_message_build
+      if @import_errors.present?
+        subject = "【ウォーズ棋譜不整合】"
+        SystemMailer.notify(fixed: true, subject: subject, body: error_message_body).deliver_later
+
+        body = error_message_body.gsub(/\R/, "<br>")
+        @xnotice.add(body, type: "is-danger", method: :dialog, title: "棋譜の不整合")
+      end
+    end
+
+    def error_message_body
+      @import_errors.collect { |e|
+        [
+          e[:error].message.strip,
+          BattleIdentify[e[:key]].heroz_show_url,
+        ].collect { |e| "#{e}\n" }.join
+      }.join("\n")
     end
   end
 end
