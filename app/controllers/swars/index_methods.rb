@@ -249,8 +249,7 @@ module Swars
           s = s.joins(:memberships).merge(o)
         end
       else
-        # Battle のカラムに対するソート
-        s = super(s)
+        s = super(s) # Battle のカラムに対するソート
       end
       s
     end
