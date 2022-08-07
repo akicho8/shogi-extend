@@ -4,7 +4,7 @@ module Swars
   RSpec.describe PlayerIdSuggestion, type: :model, swars_spec: true do
     describe "全角で入力した場合" do
       it do
-        assert { PlayerIdSuggestion.new("ありす").message == "ありすさんは存在しません。ウォーズIDは半角で入力してください" }
+        assert { PlayerIdSuggestion.new("ありす").message == "半角で入力してください" }
       end
     end
 
@@ -25,7 +25,7 @@ module Swars
 
       it "5人以上マッチした場合" do
         5.times { |i| User.create!(user_key: "alice#{i}") }
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人はたくさんいます。もっと正確に入力してください" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は5人以上います。もっと正確に入力してください" }
       end
 
       it "5人未満マッチした場合" do
@@ -34,7 +34,7 @@ module Swars
       end
 
       it "マッチしない" do
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まるウォーズIDは存在しません。正確に入力してください" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人はいません。正確に入力してください" }
       end
     end
 

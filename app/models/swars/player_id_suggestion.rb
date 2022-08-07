@@ -21,7 +21,7 @@ module Swars
 
     def case_zenkaku_ni_nattoru
       if user_key.match?(/[[:^ascii:]&&[:graph:]]/)
-        "#{user_key}さんは存在しません。ウォーズIDは半角で入力してください"
+        "半角で入力してください"
       end
     end
 
@@ -31,11 +31,11 @@ module Swars
         when same_length_user
           "もしかして #{same_length_user.key} さんですか？ 大文字と小文字を区別して入力してください"
         when suggestion.length >= FETCH_MAX
-          "#{user_key} から始まる人はたくさんいます。もっと正確に入力してください"
+          "#{user_key} から始まる人は#{FETCH_MAX}人以上います。もっと正確に入力してください"
         when user = suggestion.sample
           "もしかして #{user.key} さんですか？"
         else
-          "#{user_key} から始まるウォーズIDは存在しません。正確に入力してください"
+          "#{user_key} から始まる人はいません。正確に入力してください"
         end
       end
     end
