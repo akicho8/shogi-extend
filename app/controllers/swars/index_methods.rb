@@ -130,7 +130,7 @@ module Swars
         unless current_swars_user
           message = PlayerIdSuggestion.new(current_swars_user_key).message
           SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: message)
-          @xnotice.add(message, type: "is-warning")
+          @xnotice.add(message, type: "is-warning", duration_sec: 5)
           return
         end
 

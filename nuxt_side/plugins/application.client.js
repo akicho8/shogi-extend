@@ -136,7 +136,13 @@ export const vue_application = {
         this.talk(e.message)
         this.dialog_alert(e)
       } else if (e.method === "toast") {
-        this.toast_ok(e.message, {type: e.type})
+        const options = {
+          type: e.type,
+        }
+        if (e.duration_sec) {
+          options.duration = e.duration_sec * 1000
+        }
+        this.toast_ok(e.message, options)
       } else {
         throw new Error("must not happen")
       }

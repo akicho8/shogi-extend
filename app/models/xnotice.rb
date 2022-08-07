@@ -17,6 +17,7 @@ class Xnotice
     options = {
       message: message,
       method: :toast,
+      duration_sec: nil, # 表示時間
     }.merge(options)
 
     if !Rails.env.development? && options[:development_only]
