@@ -50,7 +50,7 @@ module Swars
             return
           end
           if params[:try_fetch] == "true"
-            import_process2
+            import_process_any
           end
           if Rails.env.development?
             SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
@@ -62,7 +62,7 @@ module Swars
 
     def case_swars_search
       if request.format.json?
-        import_process2
+        import_process_any
         render json: js_index_options.as_json
         return
       end
@@ -96,20 +96,20 @@ module Swars
       end
     end
 
-    def import_process2
+    def import_process_any
       if primary_record_key
         Swars::Battle.single_battle_import(key: primary_record_key)
       else
-        import_process
+        many_import_process
       end
     end
 
-    def import_process
+    def many_import_process
       if import_enable?
-
         x_delete_process
 
-        @before_count = 0
+        @before_count = nil
+        @after_count = nil
         if current_swars_user
           @before_count = current_swars_user.battles.count
         else
@@ -118,15 +118,16 @@ module Swars
 
         # 連続クロール回避
         # 開発環境で回避させるには rails dev:cache しておくこと
+        # 失敗時は current_swars_user ある場合にのみスキップする
+        # そうしないと「もしかして」メッセージの2度目が表示されない
         @import_errors = []
         @import_success = Battle.throttle_user_import(import_params)
-        unless @import_success
+        if !@import_success && current_swars_user
           @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
           return
         end
 
-        # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
-
+        # ユーザーが見つからなかったということはウォーズIDを間違えている
         unless current_swars_user
           message = PlayerIdSuggestion.new(current_swars_user_key).message
           SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: message)
@@ -134,18 +135,18 @@ module Swars
           return
         end
 
-        @hit_count = 0
+        # remove_instance_variable(:@current_swars_user) # current_swars_user.battles をリロードする目的
+
         @after_count = current_swars_user.battles.count
-        @hit_count = @after_count - @before_count
-        if @hit_count.zero?
+        if hit_count.zero?
           @xnotice.add("新しい棋譜は見つかりませんでした", type: "is-dark", development_only: true)
         else
-          @xnotice.add("#{@hit_count}件、新しく見つかりました", type: "is-info")
+          @xnotice.add("#{hit_count}件、新しく見つかりました", type: "is-info")
         end
         current_swars_user.search_logs.create!
 
         if Rails.env.development?
-          slack_notify(subject: "検索", body: "#{current_swars_user_key} #{@hit_count}件")
+          slack_notify(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
         end
 
         import_error_message_build
@@ -292,6 +293,16 @@ module Swars
           BattleIdentify[e[:key]].heroz_show_url,
         ].collect { |e| "#{e}\n" }.join
       }.join("\n")
+    end
+
+    def hit_count
+      if @after_count
+        if @before_count
+          @after_count - @before_count
+        else
+          @after_count
+        end
+      end
     end
   end
 end
