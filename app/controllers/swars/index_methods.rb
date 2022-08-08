@@ -130,7 +130,7 @@ module Swars
         # ユーザーが見つからなかったということはウォーズIDを間違えている
         unless current_swars_user
           message = PlayerIdSuggestion.new(current_swars_user_key).message
-          SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: message)
+          SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: "#{current_swars_user_key.inspect} #{message}")
           @xnotice.add(message, type: "is-warning", duration_sec: 5)
           return
         end
