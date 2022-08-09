@@ -30,7 +30,7 @@ module Swars
 
       it "5人未満マッチした場合" do
         User.create!(user_key: "alice1")
-        assert { PlayerIdSuggestion.new("alice").message == "もしかして alice1 ですか？" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は1人います。もしかして alice1 ですか？" }
       end
 
       it "マッチしない" do

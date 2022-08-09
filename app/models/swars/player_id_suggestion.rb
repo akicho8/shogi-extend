@@ -33,7 +33,7 @@ module Swars
         when suggestion.length >= FETCH_MAX
           "#{user_key} から始まる人は#{FETCH_MAX}人以上います。正確に入力してください"
         when user = suggestion.sample
-          "もしかして #{user.key} ですか？"
+          "#{user_key} から始まる人は#{suggestion.size}人います。もしかして #{user.key} ですか？"
         else
           "#{user_key} から始まる人はいません。正確に入力してください"
         end
