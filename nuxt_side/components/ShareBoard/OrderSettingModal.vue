@@ -30,7 +30,7 @@
         .columns.is-mobile.other_setting
           .column
             SimpleRadioButtons.foul_limit(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulLimitInfo" var_name="new_foul_limit_key" @user_input="user_input_handle")
-          .column
+          .column(v-if="base.debug_mode_p")
             SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" var_name="new_avatar_king_key" @user_input="user_input_handle")
           .column(v-if="base.debug_mode_p")
             SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" var_name="new_shout_mode_key" @user_input="user_input_handle")
