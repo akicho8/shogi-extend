@@ -8,6 +8,7 @@ const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
 export const app_avatar = {
   methods: {
     // private
+    // 反転しないタイプの駒を使っている場合 transform: rotate(180deg) が入っていないので明示的に指定する
     one_side_piece_replace_style(e) {
       return `
         .ShareBoardApp
@@ -17,7 +18,15 @@ export const app_avatar = {
                 background-image: url(${e.from_avatar_path});
                 border-radius: ${e.border_radius}%;
                 background-size: cover;
-              }`
+              }
+        .ShareBoardApp
+          .CustomShogiPlayer
+            .is_position_north
+              .PieceTexture
+                .PieceTextureSelf.piece_K.location_${e.location_key} {
+                  transform: rotate(180deg);
+                }
+      `
     },
   },
   computed: {
