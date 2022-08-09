@@ -4,7 +4,7 @@ module Swars
   RSpec.describe PlayerIdSuggestion, type: :model, swars_spec: true do
     describe "全角で入力した場合" do
       it do
-        assert { PlayerIdSuggestion.new("ありす").message == "半角で入力してください" }
+        assert { PlayerIdSuggestion.new("ありす").message == "ウォーズIDは半角で入力してください" }
       end
     end
 
@@ -20,17 +20,17 @@ module Swars
     describe "アルファベットを含む半角を3文字以上入力したのでサジェクションが発動する" do
       it "大文字小文字を無視すると一致する場合" do
         User.create!(user_key: "alice")
-        assert { PlayerIdSuggestion.new("ALICE").message == "もしかして alice さんですか？ 大文字と小文字を区別して入力してください" }
+        assert { PlayerIdSuggestion.new("ALICE").message == "もしかして alice ですか？ 大文字と小文字を区別して入力してください" }
       end
 
       it "5人以上マッチした場合" do
         5.times { |i| User.create!(user_key: "alice#{i}") }
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は5人以上います。もっと正確に入力してください" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は5人以上います。正確に入力してください" }
       end
 
       it "5人未満マッチした場合" do
         User.create!(user_key: "alice1")
-        assert { PlayerIdSuggestion.new("alice").message == "もしかして alice1 さんですか？" }
+        assert { PlayerIdSuggestion.new("alice").message == "もしかして alice1 ですか？" }
       end
 
       it "マッチしない" do
