@@ -52,7 +52,7 @@ export const app_otasuke = {
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.working_p) {
-          message = "次は対局時計をスタートさせよう"
+          message = "次は対局時計を開始しよう"
         }
       }
       if (message == null) {
@@ -66,6 +66,7 @@ export const app_otasuke = {
             "順番設定で反則できなくできるけど緊張感がなくなるぞ",
             "時間切れになっても続行できるけど何度もやると顰蹙を買うぞ",
             "チャットは観戦者だけに向けて発言できるぞ",
+            "履歴にはその時点まで棋譜やメンバーの状態が含まれているぞ",
           ]
         }
       }
