@@ -1,6 +1,6 @@
 module Swars
   class PlayerIdSuggestion
-    FETCH_MAX             = 5     # 候補として取得する数(任意)
+    FETCH_MAX             = 10    # 候補として取得する数(任意)
     SWARS_ID_LENGTH_RANGE = 3..15 # 固定
 
     attr_accessor :user_key
