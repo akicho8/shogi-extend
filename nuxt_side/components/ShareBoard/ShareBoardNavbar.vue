@@ -31,6 +31,9 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="chat-processing")
 
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="base.otasuke_click_handle" v-if="base.otasuke_button_show_p")
+      b-icon(icon="help")
+
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.edit_mode_p")
       .buttons
         .button.is-primary(@click="base.play_mode_handle")

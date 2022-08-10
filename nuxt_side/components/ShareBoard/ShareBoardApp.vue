@@ -74,6 +74,7 @@ import { app_clock_box            } from "./app_clock_box.js"
 import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
+import { app_otasuke          } from "./app_otasuke.js"
 import { app_ordered_members      } from "./app_ordered_members.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
@@ -129,6 +130,7 @@ export default {
     app_clock_box_time_limit,
     app_persistent_cc_params,
     app_turn_notify,
+    app_otasuke,
     app_ordered_members,
     app_battle_session,
     app_chore,
