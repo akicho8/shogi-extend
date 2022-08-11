@@ -1,10 +1,6 @@
 import _ from "lodash"
 
 export const app_otasuke = {
-  data() {
-    return {
-    }
-  },
   methods: {
     otasuke_click_handle() {
       this.sound_play_click()
