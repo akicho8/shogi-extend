@@ -26,6 +26,7 @@ class EmojiInfo
     { key: ":プリンタ:",     raw: "🖨", },
     { key: ":CHART:",        raw: "📊", },
     { key: ":NOT_FOUND:",    raw: "❓", },
+    { key: ":LOG:",          raw: "🗒", },
   ]
 
   def to_s

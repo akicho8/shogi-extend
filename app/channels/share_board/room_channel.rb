@@ -115,7 +115,7 @@ module ShareBoard
     end
 
     def ac_log(data)
-      track(data, data["subject"], data["body"])
+      track(data, data["subject"], data["body"], ":LOG:")
     end
 
     def fake_error(data)
