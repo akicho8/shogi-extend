@@ -8,6 +8,7 @@ export const app_otasuke = {
       if (_.isArray(str)) {
         str = _.sample(str)
       }
+      this.ac_log("おたすけ", str)
       this.toast_ok(str, {duration: 3 * 1000})
     },
   },
