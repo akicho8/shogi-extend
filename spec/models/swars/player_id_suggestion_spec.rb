@@ -26,11 +26,16 @@ module Swars
       it "複数人マッチした場合" do
         User.create!(user_key: "alice1", search_logs_count: 1)
         User.create!(user_key: "alice2", search_logs_count: 2)
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は2人います。もしかして alice2 ですか？" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice に該当する人は2人います。もしかして alice2 ですか？" }
       end
 
       it "マッチしない" do
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人はいません。正確に入力してください" }
+        assert { PlayerIdSuggestion.new("alice").message == "alice に該当する人はいません。正確に入力してください" }
+      end
+
+      it "部分一致とする" do
+        User.create!(user_key: "alice")
+        assert { PlayerIdSuggestion.new("lic").message == "lic に該当する人は1人います。もしかして alice ですか？" }
       end
     end
 

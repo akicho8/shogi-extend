@@ -36,9 +36,9 @@ module Swars
         when same_length_user
           "もしかして #{same_length_user.key} ですか？ 大文字と小文字を区別して入力してください"
         when suggestion
-          "#{user_key} から始まる人は#{suggestion_count}人います。もしかして #{suggestion.key} ですか？"
+          "#{user_key} に該当する人は#{suggestion_count}人います。もしかして #{suggestion.key} ですか？"
         else
-          "#{user_key} から始まる人はいません。正確に入力してください"
+          "#{user_key} に該当する人はいません。正確に入力してください"
         end
       end
     end
@@ -52,19 +52,19 @@ module Swars
       @same_length_user ||= Swars::User.find_by(["LOWER(user_key) LIKE ?", like_value])
     end
 
-    # 前方一致でもっとも検索されている人を返す
+    # 部分一致でもっとも検索されている人を返す
     def suggestion
       @suggestion ||= current_scope.order(search_logs_count: :desc).take
     end
 
-    # 前方一致した回数
+    # 部分一致した回数
     def suggestion_count
       @suggestion_count ||= current_scope.count
     end
 
-    # 前方一致スコープ
+    # 部分一致スコープ
     def current_scope
-      @current_scope ||= Swars::User.where(["LOWER(user_key) LIKE ?", like_value + "%"])
+      @current_scope ||= Swars::User.where(["LOWER(user_key) LIKE ?", "%#{like_value}%"])
     end
 
     def like_value
