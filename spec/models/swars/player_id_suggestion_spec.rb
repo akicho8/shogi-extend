@@ -23,14 +23,10 @@ module Swars
         assert { PlayerIdSuggestion.new("ALICE").message == "もしかして alice ですか？ 大文字と小文字を区別して入力してください" }
       end
 
-      it "10人以上マッチした場合" do
-        10.times { |i| User.create!(user_key: "alice#{i}") }
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は10人以上います。正確に入力してください" }
-      end
-
-      it "10人未満マッチした場合" do
-        User.create!(user_key: "alice1")
-        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は1人います。もしかして alice1 ですか？" }
+      it "複数人マッチした場合" do
+        User.create!(user_key: "alice1", search_logs_count: 1)
+        User.create!(user_key: "alice2", search_logs_count: 2)
+        assert { PlayerIdSuggestion.new("alice").message == "alice から始まる人は2人います。もしかして alice2 ですか？" }
       end
 
       it "マッチしない" do
