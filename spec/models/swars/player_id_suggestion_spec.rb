@@ -37,6 +37,10 @@ module Swars
         User.create!(user_key: "alice")
         assert { PlayerIdSuggestion.new("lic").message == "lic に該当する人は1人います。もしかして alice ですか？" }
       end
+
+      it "数字だけ" do
+        assert { PlayerIdSuggestion.new("123").message == "123 に該当する人はいません。正確に入力してください" }
+      end
     end
 
     describe "記号を入力した場合" do

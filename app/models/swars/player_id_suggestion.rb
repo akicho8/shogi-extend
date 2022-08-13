@@ -25,13 +25,13 @@ module Swars
     end
 
     def case_too_min
-      if user_key.match?(/[[:alpha:]]/) && user_key.length < SWARS_ID_LENGTH_RANGE.min
+      if user_key.match?(/[[:alnum:]]/) && user_key.length < SWARS_ID_LENGTH_RANGE.min
         "ウォーズIDは#{SWARS_ID_LENGTH_RANGE.min}文字以上です"
       end
     end
 
     def case_suggestion
-      if user_key.match?(/[[:alpha:]]/) && SWARS_ID_LENGTH_RANGE.cover?(user_key.length)
+      if user_key.match?(/[[:alnum:]]/) && SWARS_ID_LENGTH_RANGE.cover?(user_key.length)
         case
         when same_length_user
           "もしかして #{same_length_user.key} ですか？ 大文字と小文字を区別して入力してください"
