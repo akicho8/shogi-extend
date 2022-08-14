@@ -36,9 +36,9 @@ module Swars
         when same_length_user
           "もしかして #{same_length_user.key} ですか？ 大文字と小文字を区別して入力してください"
         when suggestion
-          "#{user_key} に該当する人は#{suggestion_count}人います。もしかして #{suggestion.key} ですか？"
+          "#{user_key} に似た人は#{suggestion_count}人います。もしかして #{suggestion.key} ですか？"
         else
-          "#{user_key} に該当する人はいません。正確に入力してください"
+          "#{user_key} に似た人はいません。正確に入力してください"
         end
       end
     end
