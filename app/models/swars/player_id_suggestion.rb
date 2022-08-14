@@ -10,7 +10,7 @@ module Swars
 
     def message
       s = nil
-      s ||= case_zenkaku_ni_nattoru
+      s ||= case_zenkaku
       s ||= case_too_min
       s ||= case_suggestion
       s ||= case_default
@@ -18,8 +18,8 @@ module Swars
 
     private
 
-    def case_zenkaku_ni_nattoru
-      if user_key.match?(/[[:^ascii:]&&[:graph:]]/)
+    def case_zenkaku
+      if user_key.match?(/[[:^ascii:]]/)
         "ウォーズIDは半角で入力してください"
       end
     end
