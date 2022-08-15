@@ -2,10 +2,26 @@ require "rails_helper"
 
 module Swars
   RSpec.describe PlayerIdSuggestion, type: :model, swars_spec: true do
-    describe "全角で入力した場合" do
-      it do
-        assert { PlayerIdSuggestion.new("ありす").message == "ウォーズIDは半角で入力してください" }
-      end
+    it "戦法名の場合" do
+      assert { PlayerIdSuggestion.new("嬉野流").message == "最初に特定のウォーズIDで検索してからカスタム検索で嬉野流を選択してください" }
+    end
+
+    it "手合割の場合" do
+      assert { PlayerIdSuggestion.new("二枚落ち").message == "最初に特定のウォーズIDで検索してからカスタム検索で二枚落ちを選択してください" }
+    end
+
+    it "ひらがな、カタカナ、漢字の場合" do
+      assert { PlayerIdSuggestion.new("ありす").message == "ウォーズIDはアルファベットや数字です" }
+      assert { PlayerIdSuggestion.new("アリス").message == "ウォーズIDはアルファベットや数字です" }
+      assert { PlayerIdSuggestion.new("漢漢漢").message == "ウォーズIDはアルファベットや数字です" }
+    end
+
+    it "全角で入力した場合" do
+      assert { PlayerIdSuggestion.new("ａｌｉｃｅ").message == "ウォーズIDは半角で入力してください" }
+    end
+
+    it "アルファベットと数字だけ半角だけど記号が全角" do
+      assert { PlayerIdSuggestion.new("alice＿bob").message == "「＿」の部分も半角で入力してください" }
     end
 
     describe "アルファベットを含む半角で入力しているが長さが範囲外" do

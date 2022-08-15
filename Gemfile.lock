@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 3d1fce1dc25f184d9eddbf97a92232e8e766b133
+  revision: 6b3a725596bea777e35b6027a75d147482b683d5
   specs:
     bioshogi (0.0.1)
       actionview
@@ -167,7 +167,7 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    erubi (1.10.0)
+    erubi (1.11.0)
     exception_notification (4.5.0)
       actionmailer (>= 5.2, < 8)
       activesupport (>= 5.2, < 8)
@@ -214,7 +214,7 @@ GEM
     html_format (0.0.9)
       actionpack
       activesupport
-    i18n (1.11.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -261,7 +261,7 @@ GEM
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
     nio4r (2.5.8)
-    nokogiri (1.13.6)
+    nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth (0.5.8)
@@ -456,7 +456,7 @@ GEM
     timecop (0.9.5)
     tree_support (0.1.9)
       activesupport
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
