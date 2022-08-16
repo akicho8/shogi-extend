@@ -22,7 +22,7 @@ client-only
         p rest: {{clock_box.current.rest}}
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
-        p running_p: {{clock_box.running_p}}
+        p pause_or_play_p: {{clock_box.pause_or_play_p}}
       p send_success_p={{send_success_p}}
       p x_retry_count={{x_retry_count}}
       p sequence_codes={{sequence_codes}}

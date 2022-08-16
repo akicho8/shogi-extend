@@ -1,15 +1,15 @@
 <template lang="pug">
-.Xclock(:class="clock_box.running_p ? 'is_xclock_active' : 'is_xclock_inactive'")
+.Xclock(:class="clock_box.pause_or_play_p ? 'is_xclock_active' : 'is_xclock_inactive'")
   DebugBox(v-if="development_p")
     div turn: {{clock_box.turn}}
-    div running_p: {{clock_box.running_p}}
+    div pause_or_play_p: {{clock_box.pause_or_play_p}}
     div timer: {{clock_box.timer}}
     div counter: {{clock_box.counter}}
     div zero_arrival: {{clock_box.zero_arrival}}
     div mouse_cursor_p: {{mouse_cursor_p}}
 
   //////////////////////////////////////////////////////////////////////////////// form
-  template(v-if="!clock_box.running_p")
+  template(v-if="!clock_box.pause_or_play_p")
     .screen_container.is-flex
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in clock_box.single_clocks")
@@ -28,7 +28,7 @@
       XclockAppFooter(:base="base" ref="XclockAppFooter")
 
   //////////////////////////////////////////////////////////////////////////////// 実行中
-  template(v-if="clock_box.running_p")
+  template(v-if="clock_box.pause_or_play_p")
     .pause_bg(v-if="!clock_box.timer")
     .screen_container.is-flex(:class="{mouse_cursor_hidden_p: mouse_cursor_hidden_p}")
       b-icon.controll_button.pause.is-clickable(icon="pause" v-if="clock_box.timer" @click.native="pause_handle")
@@ -154,7 +154,7 @@ export default {
       this.sound_stop_all()
     },
     pause_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
         this.sound_stop_all()
         this.sound_play_click()
         this.clock_box.pause_handle()
@@ -176,7 +176,7 @@ export default {
       }
     },
     stop_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
         this.full_screen.off()
         this.sound_stop_all()
         this.sound_play_click()
@@ -184,7 +184,7 @@ export default {
       }
     },
     play_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
       } else {
         this.full_screen.on()
         this.sound_play("start")
@@ -209,7 +209,7 @@ export default {
     },
     xswitch_handle(e) {
       // 開始前の状態では条件なく手番を切り替える
-      if (!this.clock_box.running_p) {
+      if (!this.clock_box.pause_or_play_p) {
         this.clock_box.clock_switch()
         return
       }

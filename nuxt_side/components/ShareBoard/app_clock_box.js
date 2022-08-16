@@ -131,12 +131,12 @@ export const app_clock_box = {
       this.clock_box.resume_handle()
     },
     cc_pause_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
         this.clock_box.pause_handle()
       }
     },
     cc_stop_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
         this.clock_box.stop_handle()
       }
     },
@@ -148,7 +148,7 @@ export const app_clock_box = {
       }
     },
     cc_play_handle() {
-      if (this.clock_box.running_p) {
+      if (this.clock_box.pause_or_play_p) {
       } else {
         this.clock_box.play_handle()
       }

@@ -18,7 +18,7 @@ export const app_keyboard_shortcut = {
       }
 
       // 動作中かつポーズ中は操作禁止
-      if (this.clock_box.running_p && this.clock_box.timer == null) {
+      if (this.clock_box.pause_or_play_p && this.clock_box.timer == null) {
         return
       }
 
