@@ -21,7 +21,7 @@ module Swars
     end
 
     it "アルファベットと数字だけ半角だけど記号が全角" do
-      assert { PlayerIdSuggestion.new("alice＿bob").message == "「＿」の部分も半角で入力してください" }
+      assert { PlayerIdSuggestion.new("alice＿bob").message == "＿ の部分も半角で入力してください" }
     end
 
     describe "アルファベットを含む半角で入力しているが長さが範囲外" do

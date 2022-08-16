@@ -26,7 +26,7 @@ module Swars
       -> user_key {
         if av = user_key.scan(/[[:^ascii:]&&[:^alnum:]]/).presence # 全角 かつ ０−９Ａ−Ｚ 以外なので全角記号
           s = av.uniq.join
-          "「#{s}」の部分も半角で入力してください"
+          "#{s} の部分も半角で入力してください"
         end
       },
       -> user_key {
