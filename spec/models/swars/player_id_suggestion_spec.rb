@@ -10,6 +10,10 @@ module Swars
       assert { PlayerIdSuggestion.new("二枚落ち").message == "最初に特定のウォーズIDで検索してからカスタム検索で二枚落ちを選択してください" }
     end
 
+    it "めちゃくちゃな入力" do
+      assert { PlayerIdSuggestion.new("あ" * 50).message == "めちゃくちゃな入力をしないでください" }
+    end
+
     it "ひらがな、カタカナ、漢字の場合" do
       assert { PlayerIdSuggestion.new("ありす").message == "ウォーズIDはアルファベットや数字です" }
       assert { PlayerIdSuggestion.new("アリス").message == "ウォーズIDはアルファベットや数字です" }

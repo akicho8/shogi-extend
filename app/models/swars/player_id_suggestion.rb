@@ -9,6 +9,11 @@ module Swars
         end
       },
       -> user_key {
+        if user_key.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) && user_key.length >= 50
+          "めちゃくちゃな入力をしないでください"
+        end
+      },
+      -> user_key {
         if user_key.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # あ ア 漢
           "ウォーズIDはアルファベットや数字です"
         end
