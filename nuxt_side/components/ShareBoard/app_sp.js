@@ -83,7 +83,7 @@ export const app_sp = {
           if (this.self_is_watcher_p) {
             messages.push(`あなたは観戦者なので操作できません`)
           }
-          if (this.clock_box && this.clock_box.working_p) {
+          if (this.clock_box && this.clock_box.play_p) {
             // 対局中と思われる
           } else {
             // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
@@ -194,7 +194,7 @@ export const app_sp = {
     controller_disabled_p() {
       if (this.ctrl_mode_info.key === "is_ctrl_mode_hidden") {
         if (this.clock_box) {
-          return this.clock_box.working_p
+          return this.clock_box.play_p
         }
       }
     },

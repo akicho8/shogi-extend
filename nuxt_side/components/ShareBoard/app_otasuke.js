@@ -72,13 +72,13 @@ export const app_otasuke = {
         }
       }
       if (message == null) {
-        if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.working_p) {
+        if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.play_p) {
           message = "時計をスタートして対局を始めよう"
           icon = "play"
         }
       }
       if (message == null) {
-        if (this.ac_room && this.clock_box && this.clock_box.working_p) {
+        if (this.ac_room && this.clock_box && this.clock_box.play_p) {
           message = [
             // "投了は右上のチャットで発言しよう",
             "タイトルを変更できるよ",

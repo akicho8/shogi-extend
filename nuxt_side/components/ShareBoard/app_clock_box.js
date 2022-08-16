@@ -404,7 +404,7 @@ export const app_clock_box = {
   computed: {
     CcRuleInfo()     { return CcRuleInfo                },
 
-    cc_play_p()  { return this.clock_box && this.clock_box.working_p }, // 時計の状態 PLAY
+    cc_play_p()  { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
 
     cc_unique_p()  { return this.cc_params.length == 2                 }, // 個別設定か？
     cc_common_p()  { return this.cc_params.length == 1                 }, // 共通設定か？

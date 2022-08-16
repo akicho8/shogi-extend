@@ -1,10 +1,3 @@
-// |-----------------+------+-------+------|
-// | Method          | STOP | PAUSE | PLAY |
-// |-----------------+------+-------+------|
-// | running_p       |      | o     | o    |
-// | working_p       |      |       | o    |
-// | stop_or_pause_p | o    | o     |      |
-// |-----------------+------+-------+------|
 
 const HUMAN_STATUS_LABELS = {
   running: "動作中",
@@ -229,7 +222,7 @@ export class ClockBox {
   }
 
   // 秒針が動いている状態か？ (clamp は関係なし)
-  get working_p() {
+  get play_p() {
     if (this.running_p) {
       if (this.timer) {
         // play

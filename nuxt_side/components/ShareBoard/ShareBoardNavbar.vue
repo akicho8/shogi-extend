@@ -74,7 +74,7 @@ export default {
         // hv.type = "is-primary"
         // hv.type = "is-primary"
         if (this.base.clock_box) {
-          if (this.base.clock_box.working_p) {
+          if (this.base.clock_box.play_p) {
             const rest = this.base.clock_box.current.rest
             if (rest <= 10) {
               hv.type = "is-danger"
