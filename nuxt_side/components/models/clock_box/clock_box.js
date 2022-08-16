@@ -1,8 +1,7 @@
-
 const HUMAN_STATUS_LABELS = {
-  running: "動作中",
-  pause:   "一時停止中",
-  stop:    "停止中",
+  play:  "動作中",
+  pause: "一時停止中",
+  stop:  "停止中",
 }
 
 import { SingleClock } from "./single_clock.js"
@@ -243,7 +242,7 @@ export class ClockBox {
     let v = null
     if (this.pause_or_play_p) {
       if (this.timer) {
-        v = "running"
+        v = "play"
       } else {
         v = "pause"
       }
