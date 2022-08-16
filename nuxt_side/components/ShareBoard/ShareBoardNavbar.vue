@@ -31,8 +31,14 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="chat-processing")
 
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="base.honpu_log_click_handle" v-if="base.honpu_button_show_p")
+      | 本譜
+
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.toryo_confirm_handle(@click="base.toryo_confirm_handle" v-if="base.toryo_button_show_p")
+      | 投了
+
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="base.otasuke_click_handle" v-if="base.otasuke_button_show_p")
-      b-icon(icon="help")
+      b-icon(:icon="base.otasuke_button_icon")
 
     b-navbar-item.has-text-weight-bold(tag="div" v-if="base.edit_mode_p")
       .buttons

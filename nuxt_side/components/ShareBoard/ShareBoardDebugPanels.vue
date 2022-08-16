@@ -97,6 +97,13 @@
   .column.is-2
     .panel
       .panel-heading
+        | 投了
+      a.panel-block(@click="base.toryo_confirm_handle") 投了確認ボタン
+      a.panel-block(@click="base.toryo_run_from_modal") 投了ボタン(バリデーションあり)
+      a.panel-block(@click="base.toryo_direct_run") 投了実処理
+  .column.is-2
+    .panel
+      .panel-heading
         | ActionCable
       a.panel-block(@click="base.room_recreate") 再起動
       a.panel-block(@click="base.room_create") 接続
@@ -192,6 +199,7 @@
       .panel-block current_turn:{{base.current_turn}}
       .panel-block order_enable_p:{{base.order_enable_p}}
       .panel-block clock_box:{{!!base.clock_box}}
+      .panel-block clock_box.current_status:{{base.clock_box ? base.clock_box.current_status : ''}}
       .panel-block current_title:{{base.current_title}}
       .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
 

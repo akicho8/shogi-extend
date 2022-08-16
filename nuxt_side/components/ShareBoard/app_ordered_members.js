@@ -208,6 +208,10 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // 順番設定を無効化する
+    order_switch_off_share() {
+      this.order_switch_share({order_enable_p: false, message: "無効"})
+    },
     order_switch_share(params) {
       this.ac_room_perform("order_switch_share", params) // --> app/channels/share_board/room_channel.rb
     },

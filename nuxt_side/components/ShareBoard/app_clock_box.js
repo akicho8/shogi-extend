@@ -140,6 +140,13 @@ export const app_clock_box = {
         this.clock_box.stop_handle()
       }
     },
+    // 対局時計が動いている場合は停止する
+    cc_stop_share_handle() {
+      if (this.cc_play_p) {
+        this.cc_stop_handle()
+        this.clock_box_share("停止")
+      }
+    },
     cc_play_handle() {
       if (this.clock_box.running_p) {
       } else {
@@ -397,8 +404,10 @@ export const app_clock_box = {
   computed: {
     CcRuleInfo()     { return CcRuleInfo                },
 
-    cc_unique_p() { return this.cc_params.length == 2 },
-    cc_common_p() { return this.cc_params.length == 1 },
+    cc_play_p()  { return this.clock_box && this.clock_box.working_p }, // 時計の状態 PLAY
+
+    cc_unique_p()  { return this.cc_params.length == 2                 }, // 個別設定か？
+    cc_common_p()  { return this.cc_params.length == 1                 }, // 共通設定か？
 
     // 共有する時計情報
     current_xclock() {

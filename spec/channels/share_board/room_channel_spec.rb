@@ -198,6 +198,18 @@ module ShareBoard
       end
     end
 
+    describe "投了" do
+      before do
+        subscribe(room_code: room_code)
+      end
+      it "works" do
+        data = data_factory
+        expect {
+          subscription.toryo_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "toryo_share_broadcasted", bc_params: data)
+      end
+    end
+
     describe "ログ記録" do
       before do
         subscribe(room_code: room_code)
