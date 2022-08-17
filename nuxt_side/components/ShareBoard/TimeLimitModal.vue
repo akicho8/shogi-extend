@@ -5,11 +5,11 @@
       template(v-if="time_limit_info.key === 'default'")
         | 時間切れで
       template(v-if="time_limit_info.key === 'judge'")
-        | 判定により
+        | 時間切れかつ接続切れで
       | {{clock.current.location.flip.name}}の勝ち！
   .modal-card-body
     template(v-if="time_limit_info.key === 'judge'")
-      p {{user_call_name(base.current_turn_user_name)}}は時間切れになったと思われますが{{base.cc_auto_time_limit_delay}}秒待っても本人からの通知がありませんでした
+      p {{user_call_name(base.current_turn_user_name)}}は時間切れになりましたが{{base.cc_auto_time_limit_delay}}秒待っても応答がありませんでした
     template(v-if="clock.current.time_recovery_mode_p")
       p 時間切れになっても時計は止まってないので合意の上で続行できます
     template(v-else)
