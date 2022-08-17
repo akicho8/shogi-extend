@@ -6,6 +6,16 @@ export const app_honpu = {
       honpu_log: null, // 投了したときに履歴と同じ形式のデータを1つだけ保持する。共有はしない
     }
   },
+  mounted() {
+    // 起動時に本譜登録する
+    // ・合言葉を持っていない
+    // ・body を持っている
+    if (this.blank_p(this.$route.query.room_code)) {
+      if (this.present_p(this.$route.query.body)) {
+        this.honpu_log_set()
+      }
+    }
+  },
   methods: {
     // 本譜を準備する
     honpu_log_set() {
