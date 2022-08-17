@@ -34,7 +34,7 @@ export const app_otasuke = {
         if (this.ac_room == null) {
           message = [
             "対局する場合は部屋を立てよう",
-            "詰将棋を作りたいときは局面編集しよう",
+            "詰将棋を作る場合は局面編集しよう",
             "Twitterアイコンで局面を投稿できるよ",
           ]
         }
