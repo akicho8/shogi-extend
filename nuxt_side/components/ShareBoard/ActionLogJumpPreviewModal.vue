@@ -13,7 +13,7 @@
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
-        :sp_viewpoint="base.sp_viewpoint"
+        :sp_viewpoint="sp_viewpoint"
         :sp_sound_enabled="false"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
@@ -48,9 +48,11 @@ export default {
   data() {
     return {
       new_turn: this.action_log.turn,
+      sp_viewpoint: this.base.sp_viewpoint, // メイン将棋盤の視点を初期値とする
     }
   },
   mounted() {
+    this.__assert__(this.sp_viewpoint === "white" || this.sp_viewpoint === "black")
     this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
     this.__assert__('turn' in this.action_log, "'turn' in this.action_log")
   },
