@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
-import { ActionLogJumpPreviewModalButtons } from "./ActionLogJumpPreviewModalButtons.js"
+import { support_child } from "../support_child.js"
+import { app_export } from "./app_export.js"
 
 export default {
   name: "ActionLogJumpPreviewModal",
   mixins: [
     support_child,
-    ActionLogJumpPreviewModalButtons,
+    app_export,
   ],
   props: {
     action_log: { type: Object, required: true, },
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .ActionLogJumpPreviewModal
   +modal_width(512px)
 

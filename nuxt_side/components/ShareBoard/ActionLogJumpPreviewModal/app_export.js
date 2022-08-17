@@ -4,7 +4,7 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 
-export const ActionLogJumpPreviewModalButtons = {
+export const app_export = {
   methods: {
     // 棋譜コピー
     kifu_copy_handle() {

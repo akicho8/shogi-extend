@@ -7,7 +7,7 @@ const SAME_SFEN_THEN_RETURN = false // 同じ局面なら何もしない？
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal.vue"
+import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal/ActionLogJumpPreviewModal.vue"
 
 export const app_action_log = {
   data() {
