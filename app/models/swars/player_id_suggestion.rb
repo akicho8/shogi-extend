@@ -45,7 +45,7 @@ module Swars
           when user = user_key.same_length_user
             "もしかして #{user.key} ですか？ 大文字と小文字を区別して入力してください"
           when user = user_key.suggestion_user
-            "#{user_key} に似た人は#{user_key.suggestion_count}人います。もしかして #{user.key} ですか？"
+            "#{user_key} に似た人は#{user_key.suggestion_count_human}います。もしかして #{user.key} ですか？"
           else
             "#{user_key} に似た人はいません。正確に入力してください"
           end
@@ -83,9 +83,9 @@ module Swars
         @suggestion_user ||= current_scope.order(search_logs_count: :desc).take
       end
 
-      # 部分一致した回数
-      def suggestion_count
-        @suggestion_count ||= current_scope.count
+      # 部分一致した回数(人間用表記)
+      def suggestion_count_human
+        "#{suggestion_count}人#{suggestion_count_suffix}"
       end
 
       private
@@ -102,6 +102,18 @@ module Swars
 
       def mysql_underscore_escape(str)
         str.gsub(/_/, "\\_")
+      end
+
+      # 部分一致した回数
+      def suggestion_count
+        @suggestion_count ||= current_scope.count
+      end
+
+      # 「も」
+      def suggestion_count_suffix
+        if suggestion_count >= 10
+          "も"
+        end
       end
     end
   end

@@ -61,6 +61,11 @@ module Swars
       it "数字だけ" do
         assert { PlayerIdSuggestion.new("123").message == "123 に似た人はいません。正確に入力してください" }
       end
+
+      it "マッチする人数が多い" do
+        10.times { |i| User.create!(user_key: "alice#{i}", search_logs_count: i) }
+        assert { PlayerIdSuggestion.new("alice").message == "alice に似た人は10人もいます。もしかして alice9 ですか？" }
+      end
     end
 
     describe "記号を入力した場合" do
