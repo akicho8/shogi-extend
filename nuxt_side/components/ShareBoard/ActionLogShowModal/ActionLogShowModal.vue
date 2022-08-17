@@ -39,7 +39,7 @@ import { support_child } from "../support_child.js"
 import { app_export } from "./app_export.js"
 
 export default {
-  name: "ActionLogJumpPreviewModal",
+  name: "ActionLogShowModal",
   mixins: [
     support_child,
     app_export,
@@ -79,7 +79,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ActionLogJumpPreviewModal
+.ActionLogShowModal
   +modal_width(512px)
 
   .modal-card-body
@@ -88,7 +88,7 @@ export default {
       margin-bottom: 0
 
 .STAGE-development
-  .ActionLogJumpPreviewModal
+  .ActionLogShowModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body

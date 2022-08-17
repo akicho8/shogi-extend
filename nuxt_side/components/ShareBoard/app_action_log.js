@@ -7,7 +7,7 @@ const SAME_SFEN_THEN_RETURN = false // 同じ局面なら何もしない？
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal/ActionLogJumpPreviewModal.vue"
+import ActionLogShowModal from "./ActionLogShowModal/ActionLogShowModal.vue"
 
 export const app_action_log = {
   data() {
@@ -115,7 +115,7 @@ export const app_action_log = {
     action_log_click_handle(action_log) {
       this.sound_play_click()
       this.modal_card_open({
-        component: ActionLogJumpPreviewModal,
+        component: ActionLogShowModal,
         props: {
           base: this.base,
           action_log: action_log,
