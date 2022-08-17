@@ -13,7 +13,7 @@
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
-        :sp_viewpoint="base.sp_viewpoint"
+        :sp_viewpoint="sp_viewpoint"
         :sp_sound_enabled="false"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
@@ -23,7 +23,9 @@
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
       KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
       KifCopyButton(@click="kifu_copy_handle") コピー
-      b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
+      b-button.room_code_except_url_copy_handle( @click="room_code_except_url_copy_handle"               icon-left="link"        title="棋譜再生用リンク")
+      b-button.kifu_download_handle(             @click.prevent="kifu_download_handle(current_format_type_info)" icon-left="download"    title="ダウンロード")
+      b-button.kifu_show_handle(                 @click.prevent="kifu_show_handle(current_format_type_info)"     icon-left="eye-outline" title="棋譜表示" :href="kifu_show_url(current_format_type_info)")
 
     pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
 
@@ -33,14 +35,14 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
-import { ActionLogJumpPreviewModalButtons } from "./ActionLogJumpPreviewModalButtons.js"
+import { support_child } from "../support_child.js"
+import { app_export } from "./app_export.js"
 
 export default {
-  name: "ActionLogJumpPreviewModal",
+  name: "ActionLogShowModal",
   mixins: [
     support_child,
-    ActionLogJumpPreviewModalButtons,
+    app_export,
   ],
   props: {
     action_log: { type: Object, required: true, },
@@ -48,9 +50,11 @@ export default {
   data() {
     return {
       new_turn: this.action_log.turn,
+      sp_viewpoint: this.base.sp_viewpoint, // メイン将棋盤の視点を初期値とする
     }
   },
   mounted() {
+    this.__assert__(this.sp_viewpoint === "white" || this.sp_viewpoint === "black")
     this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
     this.__assert__('turn' in this.action_log, "'turn' in this.action_log")
   },
@@ -65,12 +69,17 @@ export default {
       this.$emit("close")
     },
   },
+  computed: {
+    current_format_type_info() {
+      return this.base.FormatTypeInfo.fetch("kif_utf8")
+    },
+  },
 }
 </script>
 
 <style lang="sass">
-@import "support.sass"
-.ActionLogJumpPreviewModal
+@import "../support.sass"
+.ActionLogShowModal
   +modal_width(512px)
 
   .modal-card-body
@@ -79,7 +88,7 @@ export default {
       margin-bottom: 0
 
 .STAGE-development
-  .ActionLogJumpPreviewModal
+  .ActionLogShowModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body

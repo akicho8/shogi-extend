@@ -130,7 +130,7 @@ export class SingleClock {
 
   // 1手指したときに再生する値
   rebirth() {
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       this.main_sec += this.every_plus
       // this.generation_next(this.every_plus)
       this.read_sec_set()
@@ -141,7 +141,7 @@ export class SingleClock {
   }
 
   // switch_handle() {
-  //   if (this.running_p) {
+  //   if (this.pause_or_play_p) {
   //     // this.tap_and_auto_start_handle()
   //     this.simple_switch_handle()
   //   } else {
@@ -159,7 +159,7 @@ export class SingleClock {
   // }
 
   // tap_and_auto_start_handle() {
-  //   if (!this.running_p) {
+  //   if (!this.pause_or_play_p) {
   //     this.base.initial_boot_from(this.index)
   //     this.base.clock_switch()
   //     return
@@ -168,7 +168,7 @@ export class SingleClock {
   // }
 
   // set_or_tap_handle() {
-  //   // if (!this.running_p) {
+  //   // if (!this.pause_or_play_p) {
   //   //   if (this.turn == null) {
   //   //     this.base.turn = this.index
   //   //   }
@@ -203,7 +203,7 @@ export class SingleClock {
   }
 
   get button_type() {
-    if (!this.running_p) {
+    if (!this.pause_or_play_p) {
       return
     }
     if (this.active_p) {
@@ -217,7 +217,7 @@ export class SingleClock {
 
   get dom_class() {
     let ary = []
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       if (this.active_p) {
         ary.push("is_sclock_active")
         if (this.main_sec === 0) {
@@ -237,7 +237,7 @@ export class SingleClock {
 
   get bar_class() {
     const ary = []
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       if (this.active_p) {
         if (this.rest >= 1) {
           ary.push("is_blink")
@@ -265,8 +265,8 @@ export class SingleClock {
     return this.constructor.time_format(this.read_sec)
   }
 
-  get running_p() {
-    return this.base.running_p
+  get pause_or_play_p() {
+    return this.base.pause_or_play_p
   }
 
   get location() {

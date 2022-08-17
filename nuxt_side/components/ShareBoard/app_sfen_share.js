@@ -51,7 +51,7 @@ export const app_sfen_share = {
         this.sfen_share_params["next_user_name"] = next_user_name
       }
 
-      if (this.clock_box && this.clock_box.working_p) {
+      if (this.clock_box && this.clock_box.play_p) {
         this.sfen_share_params["elapsed_sec"] = this.clock_box.opponent.elapsed_sec_old // タップし終わったあとなので相手の情報を取る
       }
 

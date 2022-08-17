@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     clock()           { return this.base.clock_box              },
-    clock_running_p() { return this.clock && this.clock.running_p },
+    clock_running_p() { return this.clock && this.clock.pause_or_play_p },
 
     TimeLimitInfo()   { return TimeLimitInfo },
     time_limit_info() { return this.TimeLimitInfo.fetch(this.time_limit_key) },

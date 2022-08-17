@@ -7,7 +7,7 @@
         | タップで戻れる
     .ShareBoardAvatarLines
       template(v-for="(e, i) in filtered_action_logs")
-        ShareBoardAvatarLine.is-clickable(:base="base" :info="e" tag="a" :key="action_log_key(e)" @click="action_log_click_handle(e)")
+        ShareBoardAvatarLine.is-clickable(:base="base" :info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)")
           .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
           .flex_item(v-if="e.label") {{e.label}}
           template(v-if="e.lmi")
@@ -21,7 +21,6 @@
 import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
-import ActionLogJumpPreviewModal from "./ActionLogJumpPreviewModal.vue"
 
 export default {
   name: "ShareBoardActionLog",
@@ -36,16 +35,6 @@ export default {
   methods: {
     action_log_key(e) {
       return [e.performed_at, e.turn, e.from_connection_id || ""].join("-")
-    },
-    action_log_click_handle(e) {
-      this.sound_play_click()
-      this.modal_card_open({
-        component: ActionLogJumpPreviewModal,
-        props: {
-          base: this.base,
-          action_log: e,
-        },
-      })
     },
     time_format(v) {
       return dayjs(v.performed_at).format("HH:mm:ss")

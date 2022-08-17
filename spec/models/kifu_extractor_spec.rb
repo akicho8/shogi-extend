@@ -10,11 +10,11 @@ require "rails_helper"
 
 RSpec.describe KifuExtractor, type: :model, kifu_extractor: true do
   Pathname(__dir__).join("kifu_extractor").children.each do |e|
+    if e.basename.to_s.start_with?("__skip__")
+      next
+    end
     describe e.basename do
       e.children.each do |e|
-        if e.basename.to_s.start_with?("__skip__")
-          next
-        end
         it e.basename do
           source = e.join("source.txt").read
           actual = KifuExtractor.extract(source)

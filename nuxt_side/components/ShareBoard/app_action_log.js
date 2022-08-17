@@ -7,6 +7,7 @@ const SAME_SFEN_THEN_RETURN = false // 同じ局面なら何もしない？
 
 import _ from "lodash"
 import dayjs from "dayjs"
+import ActionLogShowModal from "./ActionLogShowModal/ActionLogShowModal.vue"
 
 export const app_action_log = {
   data() {
@@ -49,8 +50,10 @@ export const app_action_log = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    al_add(params) {
-      params = {...params}
+    al_factory(params = {}) {
+      params = {
+        ...params
+      }
 
       // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
       params.sfen ??= this.current_sfen
@@ -63,6 +66,11 @@ export const app_action_log = {
       // KIF に埋めたいものも合わせて保持しておく
       params.player_names_with_title ??= this.player_names_with_title
 
+      return params
+    },
+
+    al_add(params) {
+      params = this.al_factory(params)
       if (ACTION_LOG_PUSH_TO === "top") {
         this.action_logs.unshift(params)
         this.action_logs = _.take(this.action_logs, ACTION_LOG_MAX)
@@ -103,6 +111,18 @@ export const app_action_log = {
       }
     },
 
+    // 「この局面に移動しますか？」のダイアログ発動
+    action_log_click_handle(action_log) {
+      this.sound_play_click()
+      this.modal_card_open({
+        component: ActionLogShowModal,
+        props: {
+          base: this.base,
+          action_log: action_log,
+        },
+      })
+    },
+
     action_log_jump(e) {
       this.__assert__('sfen' in e, "'sfen' in e")
       this.__assert__('turn' in e, "'turn' in e")
@@ -122,5 +142,4 @@ export const app_action_log = {
       }
     },
   },
-
 }

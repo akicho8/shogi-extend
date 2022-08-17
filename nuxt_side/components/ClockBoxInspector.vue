@@ -23,7 +23,7 @@
           b-field(label="内部値")
             .control
               p elapsed_sec: {{clock_box.elapsed_sec}}
-              p running_p: {{clock_box.running_p}}
+              p pause_or_play_p: {{clock_box.pause_or_play_p}}
               p timer: {{clock_box.timer}}
               p turn: {{clock_box.turn}}
               p zero_arrival: {{clock_box.zero_arrival}}

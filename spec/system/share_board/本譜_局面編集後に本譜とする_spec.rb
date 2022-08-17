@@ -1,18 +1,19 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  it "works" do
+  it do
     a_block { visit_app(room_code: :my_room, force_user_name: "alice") }
     b_block { visit_app(room_code: :my_room, force_user_name: "bob")   }
     a_block do
-      kifu_yomikomi
-      assert_turn(1)
-      action_assert(0, "alice", "局面転送 #1")
-      action_assert(1, "alice", "棋譜読込後")
-      assert_text "棋譜を読み込んで共有しました"
+      hamburger_click
+      menu_item_click("局面編集")
+      find(:button, "理解した上で編集する").click
+      piece_move("77", "76")
+      find(".button", text: "編集完了", exact_text: true).click
+      assert_honpu_link_exist
     end
     b_block do
-      assert_turn(1)
+      assert_honpu_link_exist
     end
   end
 end

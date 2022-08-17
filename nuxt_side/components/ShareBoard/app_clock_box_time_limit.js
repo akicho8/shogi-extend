@@ -1,7 +1,7 @@
 import TimeLimitModal from "./TimeLimitModal.vue"
 
 const CC_TIME_LIMIT_BC_DELAY   = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミューレートをする用)
-const CC_AUTO_TIME_LIMIT_DELAY = 30 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する
+const CC_AUTO_TIME_LIMIT_DELAY = 10 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する
 
 export const app_clock_box_time_limit = {
   data() {

@@ -26,6 +26,11 @@ module ShareBoard
       broadcast(:force_sync_broadcasted, data)
     end
 
+    def honpu_share(data)
+      track(data, "本譜転送", data["sfen"])
+      broadcast(:honpu_share_broadcasted, data)
+    end
+
     def sfen_share(data)
       track(data, "指手送信", sfen_share_track_body(data), ":着手:")
       broadcast(:sfen_share_broadcasted, data)
@@ -103,6 +108,11 @@ module ShareBoard
       end
       track(data, action, data["message"], emoji)
       broadcast(:message_share_broadcasted, data)
+    end
+
+    def toryo_share(data)
+      track(data, "投了発動", data["message"], ":投了:")
+      broadcast(:toryo_share_broadcasted, data)
     end
 
     def ping_command(data)

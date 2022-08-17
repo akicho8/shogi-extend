@@ -22,7 +22,7 @@ client-only
         p rest: {{clock_box.current.rest}}
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
-        p running_p: {{clock_box.running_p}}
+        p pause_or_play_p: {{clock_box.pause_or_play_p}}
       p send_success_p={{send_success_p}}
       p x_retry_count={{x_retry_count}}
       p sequence_codes={{sequence_codes}}
@@ -84,6 +84,7 @@ import { app_handle_name          } from "./app_handle_name.js"
 import { app_member_info_modal    } from "./app_member_info_modal.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
+import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
 import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
@@ -116,6 +117,8 @@ import { app_force_sync           } from "./app_force_sync.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_room_recreate        } from "./app_room_recreate.js"
 import { app_back_to              } from "./app_back_to.js"
+import { app_toryo                } from "./app_toryo.js"
+import { app_honpu                } from "./app_honpu.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
 export default {
@@ -140,6 +143,7 @@ export default {
     app_member_info_modal,
     app_urls,
     app_edit_mode,
+    app_yomikomi,
     app_sp,
     app_room_setup,
     app_devise,
@@ -172,6 +176,8 @@ export default {
     app_board_preset_select,
     app_room_recreate,
     app_back_to,
+    app_toryo,
+    app_honpu,
     window_active_detector,
   ],
   props: {

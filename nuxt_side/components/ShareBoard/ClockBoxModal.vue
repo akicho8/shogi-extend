@@ -11,7 +11,7 @@
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
 
-    template(v-if="!instance || !instance.running_p")
+    template(v-if="!instance || !instance.pause_or_play_p")
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -23,7 +23,7 @@
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで設置しよう
     template(v-if="instance")
-      template(v-if="instance.running_p")
+      template(v-if="instance.pause_or_play_p")
         template(v-if="false")
           .level.is-mobile
             .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
@@ -56,7 +56,7 @@
               // ↓縦並び
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
 
-      .forms_block(v-if="!instance.running_p")
+      .forms_block(v-if="!instance.pause_or_play_p")
         template(v-for="(e, i) in base.cc_params")
           .cc_form_block
             .location_mark(v-if="base.cc_unique_p")
@@ -75,18 +75,18 @@
   .modal-card-foot
     b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.running_p")
+      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
       .buttons
-        template(v-if="instance.running_p && !instance.timer")
+        template(v-if="instance.pause_or_play_p && !instance.timer")
           b-button.stop_button(@click="stop_handle" icon-left="stop")
-        template(v-if="instance.running_p && instance.timer")
+        template(v-if="instance.pause_or_play_p && instance.timer")
           b-button.pause_button(@click="pause_handle" icon-left="pause" type="is-primary")
-        template(v-if="instance.running_p && !instance.timer")
+        template(v-if="instance.pause_or_play_p && !instance.timer")
           b-button.resume_button(@click="resume_handle" icon-left="play-pause")
-        template(v-if="!instance.running_p")
+        template(v-if="!instance.pause_or_play_p")
           b-button.play_button(@click="play_handle" icon-left="play")
 </template>
 
@@ -147,7 +147,7 @@ export default {
     },
     stop_handle() {
       this.sound_play_click()
-      if (this.instance.running_p) {
+      if (this.instance.pause_or_play_p) {
         this.base.cc_stop_handle()
         this.base.clock_box_share("停止")
       } else {

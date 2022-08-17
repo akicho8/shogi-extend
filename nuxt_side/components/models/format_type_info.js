@@ -13,4 +13,12 @@ export class FormatTypeInfo extends ApplicationMemoryRecord {
       // { key: "gif",           name: `GIF`,              name_with_turn: t => `GIF`,              format_key: "gif",  body_encode: "",          show: true,  clipboard: false, },
     ]
   }
+
+  // APIに渡すパラメータ
+  get to_h_format_and_encode() {
+    return {
+      format: this.format_key,
+      body_encode: this.body_encode,
+    }
+  }
 }

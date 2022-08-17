@@ -1,7 +1,7 @@
 const HUMAN_STATUS_LABELS = {
-  running: "動作中",
-  pause:   "一時停止中",
-  stop:    "停止中",
+  play:  "動作中",
+  pause: "一時停止中",
+  stop:  "停止中",
 }
 
 import { SingleClock } from "./single_clock.js"
@@ -31,7 +31,7 @@ export class ClockBox {
     this.turn          = null   // 0または1が手番。null:手番が設定されていない。順番ではなく 0:黒 1:白 と決まっているため駒落ちの場合1にすること
     // this.zero_arrival  = null   // 残り時間が 0 になったら true
     this.single_clocks = null   // それぞれの時計
-    this.running_p     = null   // [PLAY] で true になり [STOP] で false になる
+    this.pause_or_play_p     = null   // [PLAY] で true になり [STOP] で false になる
     this.play_count    = null   // stop で 0 になり play のたびに +1
     this.pause_count   = null   // stop で 0 になり pause のたびに +1
     this.resume_count  = null   // stop で 0 になり resume のたびに +1
@@ -59,7 +59,7 @@ export class ClockBox {
   }
 
   _var_init() {
-    this.running_p = false
+    this.pause_or_play_p = false
     this.play_count = 0
     this.pause_count = 0
     this.resume_count = 0
@@ -105,8 +105,8 @@ export class ClockBox {
   }
 
   play_handle() {
-    if (!this.running_p) {
-      this.running_p = true
+    if (!this.pause_or_play_p) {
+      this.pause_or_play_p = true
       this.play_count += 1
       this.single_clocks.forEach(e => e.variable_reset())
       this.timer_start()
@@ -114,7 +114,7 @@ export class ClockBox {
   }
 
   stop_handle() {
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       this.timer_stop()
       this._var_init()
       this.single_clocks.forEach(e => e.variable_reset())
@@ -207,24 +207,30 @@ export class ClockBox {
 
   // STOP または PAUSE している状態か？
   get stop_or_pause_p() {
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       if (this.timer) {
+        // play
       } else {
+        // pause
         return true
       }
     } else {
+      // stop
       return true
     }
   }
 
-  // 動いている状態か？
-  get working_p() {
-    if (this.running_p) {
+  // 秒針が動いている状態か？ (clamp は関係なし)
+  get play_p() {
+    if (this.pause_or_play_p) {
       if (this.timer) {
+        // play
         return true
       } else {
+        // pause
       }
     } else {
+      // stop
     }
   }
 
@@ -234,9 +240,9 @@ export class ClockBox {
 
   get current_status() {
     let v = null
-    if (this.running_p) {
+    if (this.pause_or_play_p) {
       if (this.timer) {
-        v = "running"
+        v = "play"
       } else {
         v = "pause"
       }
@@ -264,7 +270,7 @@ export class ClockBox {
     v.timer         = this.timer         // null以外ならタイマー動作中
     v.turn          = this.turn          // 0または1が手番。null:手番が設定されていない
     // v.zero_arrival  = this.zero_arrival  // 残り時間が 0 になったら true
-    v.running_p     = this.running_p     // true:動作中 false:停止中
+    v.pause_or_play_p     = this.pause_or_play_p     // true:動作中 false:停止中
     v.play_count    = this.play_count   // play で +1
     v.pause_count   = this.pause_count
     v.resume_count  = this.resume_count   // resume で +1
@@ -282,7 +288,7 @@ export class ClockBox {
 
     this.turn          = v.turn
     // this.zero_arrival  = v.zero_arrival
-    this.running_p     = v.running_p
+    this.pause_or_play_p     = v.pause_or_play_p
     this.play_count    = v.play_count
     this.pause_count   = v.pause_count
     this.resume_count  = v.resume_count
