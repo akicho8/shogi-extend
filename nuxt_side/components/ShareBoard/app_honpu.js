@@ -31,6 +31,23 @@ export const app_honpu = {
     honpu_log_click_handle() {
       this.action_log_click_handle(this.honpu_log)
     },
+
+    // 本譜の共有
+    honpu_share() {
+      if (this.honpu_log) {
+        const params = {
+          honpu_log: this.honpu_log,
+        }
+        this.ac_room_perform("honpu_share", params) // --> app/channels/share_board/room_channel.rb
+      }
+    },
+    honpu_share_broadcasted(params) {
+      // 相手側で本譜とする
+      if (this.received_from_self(params)) {
+      } else {
+        this.honpu_log = params.honpu_log
+      }
+    },
   },
 
   computed: {

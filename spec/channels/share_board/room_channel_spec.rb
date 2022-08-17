@@ -49,6 +49,18 @@ module ShareBoard
       end
     end
 
+    describe "本譜配布" do
+      before do
+        subscribe(room_code: room_code)
+      end
+      it "works" do
+        data = data_factory("sfen" => "(sfen)", "turn" => 0)
+        expect {
+          subscription.honpu_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "honpu_share_broadcasted", bc_params: data)
+      end
+    end
+
     describe "指し手送信" do
       before do
         subscribe(room_code: room_code)

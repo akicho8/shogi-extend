@@ -320,6 +320,17 @@ module SharedMethods
     find("label", :class => "main_switch", text: "設置", exact_text: true).click
   end
 
+  def kifu_yomikomi
+    hamburger_click
+    menu_item_click("棋譜の読み込み")
+    find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
+    find(".AnySourceReadModal .submit_handle").click
+  end
+
+  def assert_honpu_link_exist
+    assert_selector("a", text: "本譜", exact_text: true)
+  end
+
   # 操作履歴
   prepend Module.new {
     # スコープを合わせる

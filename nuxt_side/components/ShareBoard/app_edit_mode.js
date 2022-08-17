@@ -1,4 +1,3 @@
-import AnySourceReadModal from "@/components/AnySourceReadModal.vue"
 
 export const app_edit_mode = {
   methods: {
@@ -47,6 +46,9 @@ export const app_edit_mode = {
       if (this.edit_mode_sfen) {
         this.current_sfen = this.edit_mode_sfen
         this.edit_mode_sfen = null
+
+        this.honpu_log_set()           // 読み込んだ棋譜を本譜とする
+        this.honpu_share()             // それを他の人に共有する
       }
       this.sp_run_mode = "play_mode"
       this.shared_al_add({label: "局面編集後"})
@@ -67,39 +69,6 @@ export const app_edit_mode = {
           this.toast_warn("回収するブロックがありません")
         }
       }
-    },
-
-    // 棋譜の読み込みタップ時の処理
-    any_source_read_handle() {
-      this.sidebar_p = false
-      this.sound_play_click()
-      const modal_instance = this.modal_card_open({
-        component: AnySourceReadModal,
-        events: {
-          "update:any_source": any_source => {
-            this.$axios.$post("/api/general/any_source_to.json", {any_source: any_source, to_format: "sfen"}).then(e => {
-              this.bs_error_message_dialog(e)
-              if (e.body) {
-                this.sound_play_click()
-                this.toast_ok("棋譜を読み込みました")
-                this.shared_al_add({label: "棋譜読込前"})
-                this.current_sfen = e.body
-                this.current_turn = e.turn_max // TODO: 最大手数ではなく KENTO URL から推測する default_sp_turn
-                this.sp_viewpoint = "black"
-                this.ac_log("棋譜読込", e.body)
-                modal_instance.close()
-
-                // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-                this.delay_block(0.5, () => this.shared_al_add({label: "棋譜読込後(本筋)"}))
-
-                if (this.ac_room) {
-                  this.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました。変化した棋譜を本筋に戻す場合は履歴の「棋譜読込後(本筋)」をタップしてください`))
-                }
-              }
-            })
-          },
-        },
-      })
     },
   },
 }

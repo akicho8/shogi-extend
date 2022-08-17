@@ -84,6 +84,7 @@ import { app_handle_name          } from "./app_handle_name.js"
 import { app_member_info_modal    } from "./app_member_info_modal.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
+import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
 import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
@@ -142,6 +143,7 @@ export default {
     app_member_info_modal,
     app_urls,
     app_edit_mode,
+    app_yomikomi,
     app_sp,
     app_room_setup,
     app_devise,
