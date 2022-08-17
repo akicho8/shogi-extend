@@ -37,7 +37,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "操作履歴モーダル内の補助機能" do
     a_block do
       visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
-      piece_move_o("77", "76", "☗7六歩")               # 初手を指す
+      piece_move_o("77", "76", "☗7六歩")              # 初手を指す
       assert_turn(1)
       action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
@@ -53,10 +53,10 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".room_code_except_url_copy_handle").click # 「リンク」
       assert_text("棋譜リンクコピー")
 
-      find(".kifu_download_handle").click # 「ダウンロード」
+      find(".kifu_download_handle").click             # 「ダウンロード」
       assert_text("棋譜ダウンロード")
 
-      find(".kifu_show_handle").click # 「棋譜表示」
+      find(".kifu_show_handle").click                 # 「棋譜表示」
       assert_text("棋譜表示")
     end
   end
