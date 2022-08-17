@@ -31,8 +31,8 @@ export const app_export = {
       this.__assert__("format_key" in e, '"format_key" in e')
       return this.permalink_for({
         format: e.format_key,
+        body_encode: "auto",    // 文字コード自動判別
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
-        // ...this.player_names,
       })
     },
 
@@ -48,8 +48,7 @@ export const app_export = {
     kifu_download_url(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
       return this.permalink_for({
-        format: e.format_key,
-        body_encode: e.body_encode,
+        ...e.to_h_format_and_encode,
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方が優先される
         disposition: "attachment",
       })

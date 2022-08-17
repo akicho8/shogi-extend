@@ -24,6 +24,8 @@
       KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
       KifCopyButton(@click="kifu_copy_handle") コピー
       b-button.room_code_except_url_copy_handle(@click="room_code_except_url_copy_handle" icon-left="link") リンク
+      b-button.kifu_download_handle(@click="kifu_download_handle(current_format_type_info)" icon-left="download" title="ダウンロード")
+      b-button.kifu_show_handle(@click="kifu_show_handle(current_format_type_info)" :href="kifu_show_url(current_format_type_info)" icon-left="download" title="表示")
 
     pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
 
@@ -65,6 +67,11 @@ export default {
       this.sound_play_click()
       this.base.action_log_jump({...this.action_log, turn: this.new_turn})
       this.$emit("close")
+    },
+  },
+  computed: {
+    current_format_type_info() {
+      return this.base.FormatTypeInfo.fetch("kif_utf8")
     },
   },
 }

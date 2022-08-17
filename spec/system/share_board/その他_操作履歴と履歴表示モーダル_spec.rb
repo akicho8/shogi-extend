@@ -52,6 +52,12 @@ RSpec.describe type: :system, share_board_spec: true do
 
       find(".room_code_except_url_copy_handle").click # 「リンク」
       assert_text("棋譜リンクコピー")
+
+      find(".kifu_download_handle").click # 「ダウンロード」
+      assert_text("棋譜ダウンロード")
+
+      find(".kifu_show_handle").click # 「棋譜表示」
+      assert_text("棋譜表示")
     end
   end
 
