@@ -87,7 +87,7 @@ export const app_otasuke = {
         if (this.ac_room && this.clock_box && this.clock_box.play_p) {
           message = [
             // "投了は右上のチャットで発言しよう",
-            "タイトルを変更できるよ",
+            // "タイトルを変更できるよ",
             "盤駒のスタイルを変更できるよ",
             "間違えたときは「1手戻す」で指し直そう (でも勝手にやると顰蹙を買うよ)",
             "自分の手番になると牛が鳴くよ",

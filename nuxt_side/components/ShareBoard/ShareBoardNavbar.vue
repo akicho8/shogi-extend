@@ -4,14 +4,15 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
     b-navbar-item(@click.native="base.exit_handle")
       b-icon(icon="home")
 
-    b-navbar-item.has-text-weight-bold.title_edit_navbar_item(@click="base.title_edit_handle")
-      span.current_title.is_truncate
-        template(v-if="base.edit_mode_p")
+    b-navbar-item.has-text-weight-bold.title_navbar_item(@click="base.title_edit_handle")
+      template(v-if="base.edit_mode_p")
+        span.current_title.is_truncate.is-hidden-mobile
           span 編集モード
-        template(v-else)
+      template(v-if="base.play_mode_p")
+        span.current_title.is_truncate.is-hidden-mobile
           | {{base.current_title || '？'}}
-          span.mx-1(v-if="base.play_mode_p && (base.current_turn >= 1 || development_p)")
-            | \#{{base.current_turn}}
+        span.mx-1(v-if="base.current_turn >= 1 || development_p")
+          | \#{{base.current_turn}}
 
   template(slot="end")
     b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="base.tl_modal_handle" v-if="base.debug_mode_p")
@@ -19,7 +20,7 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
         .has-text-primary
           | {{base.track_logs.length}}
 
-    b-navbar-item.is-unselectable(tag="div" v-if="base.ac_room && development_p")
+    b-navbar-item.is-unselectable(tag="div" v-if="base.ac_room && development_p && base.debug_mode_p")
       b-icon(icon="account")
       b-tag.has-text-weight-bold(rounded)
         .has-text-primary {{base.member_infos.length}}
@@ -93,11 +94,6 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .ShareBoardNavbar
-  .current_title
-    +mobile
-      width: 12rem
-      display: inline-block
-
   // チャットアイコンは2つをずらして組み合わせる
   .message_modal_handle
     .icon

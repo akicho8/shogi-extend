@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("my_room", "bob")           # bobもaliceと同じ合言葉で部屋を作る
     end
     a_block do
-      find(".title_edit_navbar_item").click  # タイトル変更モーダルを開く
+      find(".title_navbar_item").click       # タイトル変更モーダルを開く
       within(".modal-card") do
         find("input").set("(new_title)")     # 別のタイトルを入力
         find(".button.is-primary").click     # 更新ボタンを押す
