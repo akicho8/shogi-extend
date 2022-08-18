@@ -144,7 +144,7 @@ export const app_clock_box = {
     cc_stop_share_handle() {
       if (this.cc_play_p) {
         this.cc_stop_handle()
-        this.clock_box_share({behaviour: "停止", cb_notify: false})
+        this.clock_box_share({behaviour: "停止", toast_only: true})
       }
     },
     cc_play_handle() {
