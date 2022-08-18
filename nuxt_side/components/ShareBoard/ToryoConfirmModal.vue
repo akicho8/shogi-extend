@@ -3,7 +3,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
     .modal-card-title
-      | 本当に投了しますか？
+      | 投了しますか？
   .modal-card-body
     .content
       | リレー将棋の場合はなるべく最後まで指そう
@@ -74,34 +74,4 @@ export default {
   .field:not(:last-child)
     margin-bottom: 0.75rem
 
-  .active_bar
-    margin-top: 1rem
-    height: 6px
-    width: 100%
-    border-radius: 4px
-    &.is_active
-      background-color: $primary
-      &.is_pause_off
-        animation: clock_box_modal_bar_blink 0.5s ease-in-out 0s infinite alternate
-        @keyframes clock_box_modal_bar_blink
-          0%
-            opacity: 1.0
-          100%
-            opacity: 0.0
-
-  .forms_block
-    .cc_form_block:not(:first-child)
-      .location_mark
-        margin-top: 1.5rem
-
-    +tablet
-      .cc_form_block
-        .field
-          align-items: center
-          .field-label.is-small
-            padding-top: 0
-            margin-right: 1rem
-            .label
-              white-space: nowrap
-              width: 6rem
 </style>
