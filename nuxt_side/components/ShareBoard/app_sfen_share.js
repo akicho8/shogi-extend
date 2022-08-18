@@ -33,7 +33,7 @@ export const app_sfen_share = {
         },
         sfen: this.current_sfen, // e.sfen でもよい
         turn: lmi.next_turn_offset,
-        clock_box_params: this.current_xclock_with_behaviour(), // 指し手と合わせて時計の情報も送る
+        clock_box_params: this.clock_box_share_params_factory(), // 指し手と合わせて時計の情報も送る
       }
 
       // シャウトモード用
@@ -98,6 +98,7 @@ export const app_sfen_share = {
         this.receive_xsfen(params)
       }
 
+      // 時計も更新する
       this.clock_box_share_broadcasted(params.clock_box_params)
 
       if (true) {

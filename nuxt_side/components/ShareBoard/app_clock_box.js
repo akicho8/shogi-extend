@@ -56,10 +56,10 @@ export const app_clock_box = {
       if (v) {
         this.cc_create()
         this.cc_params_apply() // ONにしたらすぐにパラメータを反映する
-        this.clock_box_share("設置")
+        this.clock_box_share({behaviour: "設置"})
       } else {
         this.cc_destroy()
-        this.clock_box_share("破棄")
+        this.clock_box_share({behaviour: "破棄"})
       }
     },
 
@@ -144,7 +144,7 @@ export const app_clock_box = {
     cc_stop_share_handle() {
       if (this.cc_play_p) {
         this.cc_stop_handle()
-        this.clock_box_share("停止")
+        this.clock_box_share({behaviour: "停止", cb_notify: false})
       }
     },
     cc_play_handle() {
@@ -251,50 +251,55 @@ export const app_clock_box = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有するためのパラメータを作る
-    current_xclock_with_behaviour(behaviour = null) {
-      const params = {...this.current_xclock}
-      if (behaviour) {
-        params.behaviour = behaviour
+    clock_box_share_params_factory(params = {}) {
+      params = {
+        toast_only: false,
+        ...params,
+        ...this.current_xclock,
+      }
+      if (params.behaviour) {
         params.room_code_except_url = this.room_code_except_url // 棋譜再現URLをログに出すため
       }
       return params
     },
     // 時計の状態をすべて共有する
-    clock_box_share(behaviour) {
-      this.__assert__(this.present_p(behaviour), "this.present_p(behaviour)")
-      const params = this.current_xclock_with_behaviour(behaviour)
+    clock_box_share(params) {
+      params = this.clock_box_share_params_factory(params)
       this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
     clock_box_share_broadcasted(params) {
       this.tl_add("時計受信", `${params.from_user_name} -> ${this.user_name}`, params)
-
       this.tl_alert("時計同期")
       if (this.received_from_self(params)) {
       } else {
         this.receive_xclock(params)
       }
-      // FIXME: params.behaviour は必ずある
-      if (params.behaviour) {
-        this.cc_action_log_store(params)         // 履歴追加
-        this.cc_location_change_and_call(params) // ニワトリ
-
-        if (params.behaviour === "時間切れ") {
-          this.time_limit_modal_handle_if_not_exist()
-        } else {
-          // 誰が操作したかを通知
-          this.toast_ok(`${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`, {onend: () => {
+      this.cc_action_log_store(params)         // 履歴追加
+      this.cc_location_change_and_call(params) // ニワトリ
+      if (false) {
+      } else if (params.behaviour === "時間切れ") {
+        this.time_limit_modal_handle_if_not_exist()
+      } else if (params.behaviour === "開始") {
+        this.toast_ok(this.cc_receive_message(params), {
+          onend: () => {
             // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
-            if (this.first_play_trigger_p(params)) {
-              if (this.current_turn_user_name) {
-                this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
-              } else {
-                // 順番設定をしていない場合
-              }
+            if (this.current_turn_user_name) {
+              this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
+            } else {
+              // 順番設定をしていない場合
             }
-          }})
-        }
+          },
+        })
+      } else if (params.behaviour) {
+        this.toast_ok(this.cc_receive_message(params), {toast_only: params.toast_only})
+      } else {
+        // 表示も音もない更新
       }
     },
+    cc_receive_message(params) {
+      return `${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`
+    },
+
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
     receive_xclock(params) {
       this.__assert__(this.present_p(params), "this.present_p(params)")
@@ -309,16 +314,15 @@ export const app_clock_box = {
     },
 
     cc_action_log_store(params) {
-      this.__assert__(params.behaviour, "params.behaviour")
-
-      params = {
-        ...params,
-        label: `時計${params.behaviour}`,
-        clock_box_attributes: null, // 容量が大きいので空にしておく
-        room_code_except_url: null, // 絶対に使わないので消しておく
+      if (params.behaviour) {
+        params = {
+          ...params,
+          label: `時計${params.behaviour}`,
+          clock_box_attributes: null, // 容量が大きいので空にしておく
+          room_code_except_url: null, // 絶対に使わないので消しておく
+        }
+        this.al_add(params)
       }
-
-      this.al_add(params)
     },
 
     cc_location_change_and_call(params) {
@@ -337,16 +341,7 @@ export const app_clock_box = {
 
     // 最初の PLAY か？
     first_play_trigger_p(params) {
-      if (true) {
-        return params.behaviour === "開始"
-      } else {
-        if (params.behaviour === "開始") {
-          const attrs = params.clock_box_attributes
-          if (attrs) {
-            return attrs.play_count === 1 && attrs.pause_count === 0 && attrs.resume_count === 0
-          }
-        }
-      }
+      return params.behaviour === "開始"
     },
 
     cc_play_confirm(params = {}) {

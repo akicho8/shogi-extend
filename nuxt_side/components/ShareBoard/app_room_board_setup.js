@@ -46,7 +46,7 @@ export const app_room_board_setup = {
         // リクエストがまとまるためコードも簡潔になる
         if (false) {
           this.clog("参加者は対局時計があることも知らないので教えてあげる")
-          this.clock_box_share("不具合再現")
+          this.clock_box_share({behaviour: "不具合再現"})
         }
       }
     },

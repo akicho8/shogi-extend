@@ -133,10 +133,6 @@
    http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
    http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
 
-** 順番設定あり・時計作動中
-
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
-
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
    http://localhost:4000/share-board?room_code=a&force_user_name=bob&ordered_member_names=alice,bob,carol&autoexec=message_modal_handle
@@ -162,3 +158,7 @@
 ** 棋譜を持っている状態で飛んでくるとそれが本譜になる
 
    http://localhost:4000/share-board?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.7g7f&turn=1
+
+** 順番設定あり・時計作動中
+
+   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
