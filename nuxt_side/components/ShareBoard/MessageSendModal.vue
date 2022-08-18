@@ -18,7 +18,7 @@
     b-field
       b-input(v-model="base.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left")
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.send_handle(:class="base.message_scope_info.class" :key="base.message_scope_info.key" @click="send_handle" :icon-left="base.message_scope_info.icon" :type="base.message_scope_info.type") {{base.message_scope_info.label}}
 </template>
 

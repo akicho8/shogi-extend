@@ -19,7 +19,7 @@
     pre(v-if="base.debug_mode_p")
       | {{pretty_inspect(member_info)}}
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
 </template>
 

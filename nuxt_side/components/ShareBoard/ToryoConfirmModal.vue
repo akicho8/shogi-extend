@@ -20,7 +20,7 @@
       //-   li 時計を止める
       //-   li 順番設定を解除する
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 逆転の一手を放つ
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 逆転の一手を放つ
     b-button.toryo_handle(@click="toryo_handle" type="is-danger") 本当に投了する
 </template>
 
@@ -67,11 +67,4 @@ export default {
   .modal-card-foot
     .button
       min-width: 6rem
-      font-weight: bold
-      &.preset_dropdown_button
-        min-width: unset        // プリセット選択は常に目立たないようにする
-
-  .field:not(:last-child)
-    margin-bottom: 0.75rem
-
 </style>

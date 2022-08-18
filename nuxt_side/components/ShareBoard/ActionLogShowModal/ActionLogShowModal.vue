@@ -30,7 +30,7 @@
     pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
 
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") キャンセル
     b-button.apply_button(@click="apply_handle" type="is-primary") {{new_turn}}手目まで戻る
 </template>
 

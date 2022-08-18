@@ -9,8 +9,8 @@
     p.has-text-grey.is-size-7
       | 自動で転送するようにしたので基本的に手動で実行する必要はありません (2021-11-23)
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") キャンセル
-    b-button.test_button(@click="test_handle" v-if="development_p") テスト
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") キャンセル
+    b-button.test_button.has-text-weight-normal(@click="test_handle" v-if="development_p") テスト
     b-button.sync_button(@click="sync_handle" type="is-danger") 転送する
 </template>
 

@@ -73,7 +73,7 @@
         b-switch.cc_unique_mode_set_handle.mt-5(:value="base.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
 
   .modal-card-foot
-    b-button.close_handle.mx-0(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
       b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")

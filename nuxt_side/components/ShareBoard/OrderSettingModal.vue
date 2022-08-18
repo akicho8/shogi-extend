@@ -41,7 +41,7 @@
             SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" var_name="new_move_guard_key" @user_input="user_input_handle")
 
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_enable_p")
       b-button.test_button(@click="test_handle" v-if="development_p") テスト
       b-button.apply_button(@click="apply_handle" :type="{'is-primary': base.os_change.has_value_p}") 更新

@@ -9,7 +9,7 @@
   .modal-card-body
     ShareBoardHelpBody
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>

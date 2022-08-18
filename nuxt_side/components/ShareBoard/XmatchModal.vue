@@ -34,7 +34,7 @@
       //- pre {{base.xmatch_rules_members}}
 
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" icon-left="chevron-left") やめる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") やめる
     b-button(size="is-small" @click="base.xmatch_interval_counter_rest_n(3)" v-if="base.current_xmatch_rule_key && development_p") 残3
     b-button.unselect_handle(@click="unselect_handle") 選択解除
 </template>

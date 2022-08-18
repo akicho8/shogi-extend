@@ -8,7 +8,7 @@
     ShareBoardTrackLog(:base="base" ref="ShareBoardTrackLog")
 
   .modal-card-foot
-    b-button.close_handle(@click="close_handle") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="close_handle") 閉じる
     b-button.close_handle(@click="test_handle" v-if="development_p") テスト
     b-button.close_handle(@click="clear_handle") クリア
 </template>
