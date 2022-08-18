@@ -10,8 +10,8 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
           span 編集モード
       template(v-if="base.play_mode_p")
         span.current_title.is_truncate.is-hidden-mobile
-          | {{base.current_title || '？'}}
-        span.mx-1(v-if="base.current_turn >= 1 || development_p")
+          | {{base.current_title}}
+        span.mx-1
           | \#{{base.current_turn}}
 
   template(slot="end")
