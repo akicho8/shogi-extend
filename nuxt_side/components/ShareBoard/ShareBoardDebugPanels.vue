@@ -188,9 +188,9 @@
       .panel-block 自分はメンバーに含まれているか？ {{base.self_is_member_p}}
       .panel-block 自分は観戦者か？ {{base.self_is_watcher_p}}
   .column.is-4
-    .panel#assert_system_variables
+    .panel#assert_system_variable
       .panel-heading
-        | [assert_system_variables]
+        | [assert_system_variable]
       .panel-block(v-if="base.order_enable_p && base.ordered_members_present_p")
         | 順序:
         template(v-for="(_, i) in 11")
@@ -202,6 +202,8 @@
       .panel-block clock_box.current_status:{{base.clock_box ? base.clock_box.current_status : ''}}
       .panel-block current_title:{{base.current_title}}
       .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
+      .panel-block next_turn_message:{{base.next_turn_message}}
+      
 
   .column.is-6.is-clipped
     .panel

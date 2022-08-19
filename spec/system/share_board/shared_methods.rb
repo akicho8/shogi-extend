@@ -304,8 +304,8 @@ module SharedMethods
     find(".cc_modal_handle").click
   end
 
-  def assert_system_variables(key, value)
-    within(:id, "assert_system_variables") do
+  def assert_system_variable(key, value)
+    within(:id, "assert_system_variable") do
       assert_selector(:element, text: "#{key}:#{value}", exact_text: true)
     end
   end

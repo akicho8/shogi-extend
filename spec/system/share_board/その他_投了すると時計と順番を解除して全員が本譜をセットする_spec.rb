@@ -18,7 +18,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   # 順番OFF 時計STOP
   def assert_order_off_and_clock_stop
-    assert_system_variables("order_enable_p", "false")
-    assert_system_variables("clock_box.current_status", "stop")
+    assert_system_variable("order_enable_p", "false")
+    assert_system_variable("clock_box.current_status", "stop")
   end
 end

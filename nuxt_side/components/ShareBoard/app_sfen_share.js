@@ -5,6 +5,7 @@ export const app_sfen_share = {
   data() {
     return {
       sfen_share_params: null, // リトライするとき用に送るパラメータを保持しておく
+      next_turn_message: null, // 直近の「次は○○の手番です」のメッセージを保持する(テスト用)
     }
   },
   methods: {
@@ -126,6 +127,7 @@ export const app_sfen_share = {
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
+        this.next_turn_message = null
         if (this.yomiagable_p) {
           // 「aliceさん」の発声後に「7 6 ふー！」を発声する
           this.talk(this.user_call_name(params.from_user_name), {
@@ -133,7 +135,8 @@ export const app_sfen_share = {
               onend: () => {
                 if (params.next_user_name) {
                   if (this.next_notify_p) {
-                    this.toast_ok(`次は、${this.user_call_name(params.next_user_name)}の手番です`)
+                    this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
+                    this.toast_ok(this.next_turn_message)
                   }
                 }
               },

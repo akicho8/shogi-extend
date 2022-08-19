@@ -13,16 +13,16 @@ RSpec.describe type: :system, share_board_spec: true do
       piece_move_o("77", "76", "☗7六歩")      # aliceが指す
     end
     b_block do
-      assert_system_variables(:tn_counter, 1) # aliceが指し終わったのでaliceに通知
+      assert_system_variable(:tn_counter, 1) # aliceが指し終わったのでaliceに通知
       piece_move_o("33", "34", "☖3四歩")      # bobが指す
     end
     a_block do
-      assert_system_variables(:tn_counter, 1) # bobが指し終わったのでaliceに通知
+      assert_system_variable(:tn_counter, 1) # bobが指し終わったのでaliceに通知
       order_set_off                           # 順番設定OFF
       piece_move_o("27", "26", "☗2六歩")      # aliceが指す
     end
     b_block do
-      assert_system_variables(:tn_counter, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
+      assert_system_variable(:tn_counter, 1) # 順番設定OFFなので通知されずカウンタは進んでいない
     end
   end
 end
