@@ -23,45 +23,24 @@ export default {
 
 <style lang="sass">
 .HelpContent
-  padding: 2rem
+  padding: 2em
   +mobile
-    padding: 1rem
+    font-size: $size-7
 
   article
     word-break: break-all
-
     &:not(:first-child)
-      margin-top: 2rem
-      // +mobile
-      //   margin-top: 2rem
-
+      margin-top: 2em
     h2
       font-weight: bold
       font-size: $size-6
-      // +mobile
-      //   font-size: $size-6
-
-      // &::before
-      //   content: "🔵 "
-    // ul
-    //   list-style: none
-
     th
       white-space: nowrap
-
+    ol, ul, p
+      margin-top:    0.5em ! important
+      margin-bottom: 0.5em ! important
     ol, ul
       margin-left: 2em
-      +mobile
-        margin-left: 1em
-
-    ul, ol, p
-      margin-top:    0.5rem ! important
-      margin-bottom: 0.5rem ! important
-
     p
       margin-left: 1em
-
-    +mobile
-      .mdi:before
-        // font-size: $size-7
 </style>
