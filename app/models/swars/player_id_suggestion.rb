@@ -14,6 +14,11 @@ module Swars
         end
       },
       -> user_key {
+        if user_key.match?(%r/\A[a-z\d][a-z\d\.\-_]+@[a-z\d\.\-]+[a-z]\z/i)
+          "ウォーズIDはメールアドレスではありません"
+        end
+      },
+      -> user_key {
         if user_key.match?(/[\p{Hiragana}\p{Katakana}\p{Han}]/) # あ ア 漢
           "ウォーズIDはアルファベットや数字です"
         end

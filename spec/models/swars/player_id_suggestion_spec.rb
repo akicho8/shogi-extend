@@ -14,6 +14,10 @@ module Swars
       assert { PlayerIdSuggestion.new("あ" * 50).message == "めちゃくちゃな入力をしないでください" }
     end
 
+    it "メールアドレスの入力" do
+      assert { PlayerIdSuggestion.new("alice.bob@gmail.com").message == "ウォーズIDはメールアドレスではありません" }
+    end
+
     it "ひらがな、カタカナ、漢字の場合" do
       assert { PlayerIdSuggestion.new("ありす").message == "ウォーズIDはアルファベットや数字です" }
       assert { PlayerIdSuggestion.new("アリス").message == "ウォーズIDはアルファベットや数字です" }
