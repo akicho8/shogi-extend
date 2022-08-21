@@ -39,7 +39,7 @@ module KifShowMethods
     # やたら例外がでるので必ず invalid: :replace が必要
     # 他のところも同様に対処した方がいいかもしれないけど他はアスキー文字しか含まないので良いとする
     if current_body_encode == "Shift_JIS"
-      text_body = text_body.encode(current_body_encode, invalid: :replace, replace: "(#{current_body_encode}に変換できない文字)")
+      text_body = text_body.encode(current_body_encode, invalid: :replace, undef: :replace, replace: "(#{current_body_encode}に変換できない文字)")
     end
 
     # if boolean_for(params[:plain])
