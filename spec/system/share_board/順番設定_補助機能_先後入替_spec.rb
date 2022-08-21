@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_order_setting_members ["1", "2", "3", "4"]
 
       find(".swap_handle").click                        # 先後入替
-      assert_text("1さんが先後を入れ替えました")
+      assert_text("1さんが先後を入れ替えました", wait: 60)
       assert_order_setting_members ["2", "1", "4", "3"] # 2つづつswapしていく
     end
   end

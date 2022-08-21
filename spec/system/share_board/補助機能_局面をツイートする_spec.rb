@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".tweet_modal_handle").click   # モーダル起動
       assert_text("この局面をツイート")
       find(".TweetModal .dropdown").click # テーマ選択
-      assert_text("紙面風")
+      assert_text("紙面風", wait: 60)
     end
   end
 
