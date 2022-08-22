@@ -1,5 +1,11 @@
 <template lang="pug">
-  b-button.KentoButton.is-small(v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
+  b-button.KentoButton.is-small(
+    title="KENTO"
+    v-bind="$attrs"
+    v-on="$listeners"
+    :target="target_default"
+    @click="click_handle"
+    )
     span.left_icon
       | ☗
     span.name(v-if="!icon_only")

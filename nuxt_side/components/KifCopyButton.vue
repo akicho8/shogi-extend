@@ -1,5 +1,10 @@
 <template lang="pug">
-  b-button.KifCopyButton.is-small(v-bind="$attrs" v-on="$listeners" @click="click_handle") コピー
+  b-button.KifCopyButton.is-small(
+    title="KIF形式でクリップボードにコピー"
+    v-bind="$attrs"
+    v-on="$listeners"
+    @click="click_handle"
+    ) コピー
 </template>
 
 <script>

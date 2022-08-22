@@ -1,10 +1,15 @@
 <template lang="pug">
-a.button.PiyoShogiButton.is-small(v-bind="$attrs" v-on="$listeners" :target="target_default" @click="click_handle")
+a.button.PiyoShogiButton.is-small(
+  :title="piyo_shogi_name"
+  v-bind="$attrs"
+  v-on="$listeners"
+  :target="target_default"
+  @click="click_handle"
+  )
   span.icon
     img.left_icon(src="~/assets/piyo_shogi_icon.png")
   span(v-if="!icon_only")
-    | ぴよ将棋
-    span(v-if="web_version_p") ｗ
+    | {{piyo_shogi_name}}
 </template>
 
 <script>
@@ -26,6 +31,13 @@ export default {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
       return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.piyo_shogi_app_p()
+    },
+    piyo_shogi_name() {
+      if (this.web_version_p) {
+        return "ぴよ将棋ｗ"
+      } else {
+        return "ぴよ将棋"
+      }
     },
   },
 }
