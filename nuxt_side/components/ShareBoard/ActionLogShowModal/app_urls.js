@@ -4,7 +4,7 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 
-export const app_export = {
+export const app_urls = {
   methods: {
     // 棋譜コピー
     kifu_copy_handle() {
@@ -21,8 +21,7 @@ export const app_export = {
     room_code_except_url_copy_handle() {
       this.sound_play_click()
       const success_message = "棋譜再生用のリンクをコピーしました"
-      const url = this.base.permalink_from_params(this.current_url_params)
-      this.clipboard_copy({text: url, success_message: success_message})
+      this.clipboard_copy({text: this.room_code_except_url, success_message: success_message})
       this.base.shared_al_add_simple("棋譜リンクコピー")
     },
 
@@ -89,6 +88,10 @@ export const app_export = {
         image_viewpoint: this.sp_viewpoint,               // abstract_viewpoint より image_viewpoint の方が優先される
         ...this.action_log.player_names_with_title,       // 面子情報
       })
+    },
+    // 棋譜再生用の棋譜リンク
+    room_code_except_url() {
+      return this.base.permalink_from_params(this.current_url_params)
     },
   },
 }

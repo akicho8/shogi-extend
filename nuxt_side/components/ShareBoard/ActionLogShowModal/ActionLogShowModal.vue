@@ -23,10 +23,29 @@
       PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
       KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
       KifCopyButton(@click="kifu_copy_handle") コピー
+
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      b-button.room_code_except_url_copy_handle( @click="room_code_except_url_copy_handle"               icon-left="link"        title="棋譜再生用リンク")
-      b-button.kifu_download_handle(             @click.prevent="kifu_download_handle(current_format_type_info)" icon-left="download"    title="ダウンロード")
-      b-button.kifu_show_handle(                 @click.prevent="kifu_show_handle(current_format_type_info)"     icon-left="eye-outline" title="棋譜表示" :href="kifu_show_url(current_format_type_info)")
+      b-button.room_code_except_url_copy_handle(
+        title="棋譜再生用リンク"
+        @click="room_code_except_url_copy_handle"
+        icon-left="link"
+        tag="a"
+        :href="room_code_except_url"
+        )
+      b-button.kifu_download_handle(
+        title="ダウンロード"
+        @click.prevent="kifu_download_handle(current_format_type_info)"
+        icon-left="download"
+        tag="a"
+        :href="kifu_download_url(current_format_type_info)"
+        )
+      b-button.kifu_show_handle(
+        title="棋譜表示"
+        @click.prevent="kifu_show_handle(current_format_type_info)"
+        icon-left="eye-outline"
+        tag="a"
+        :href="kifu_show_url(current_format_type_info)"
+        )
 
     pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
 
@@ -37,13 +56,13 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { app_export } from "./app_export.js"
+import { app_urls } from "./app_urls.js"
 
 export default {
   name: "ActionLogShowModal",
   mixins: [
     support_child,
-    app_export,
+    app_urls,
   ],
   props: {
     action_log: { type: Object, required: true, },
