@@ -27,7 +27,7 @@
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       b-button.room_code_except_url_copy_handle(
         title="棋譜再生用リンク"
-        @click="room_code_except_url_copy_handle"
+        @click.prevent="room_code_except_url_copy_handle"
         icon-left="link"
         tag="a"
         :href="room_code_except_url"

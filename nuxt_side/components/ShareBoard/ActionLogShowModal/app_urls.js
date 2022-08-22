@@ -37,6 +37,7 @@ export const app_urls = {
 
     // 指定の棋譜を表示
     kifu_show_handle(e) {
+      this.sound_play_click()
       this.window_popup(this.kifu_show_url(e))
       this.base.shared_al_add_simple("棋譜表示")
     },
@@ -53,6 +54,7 @@ export const app_urls = {
     // 指定の棋譜をダウンロード
     kifu_download_handle(e) {
       if (typeof window !== 'undefined') {
+        this.sound_play_click()
         window.location.href = this.kifu_download_url(e)
         this.base.shared_al_add_simple("棋譜ダウンロード")
       }
