@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 6b3a725596bea777e35b6027a75d147482b683d5
+  revision: 6e3c33ede8a2332f87d276b1259700c9e6fecff2
   specs:
     bioshogi (0.0.1)
       actionview
@@ -251,7 +251,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     msgpack (1.4.5)
     multi_json (1.15.0)
     multi_xml (0.6.0)
