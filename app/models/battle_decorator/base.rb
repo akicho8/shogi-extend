@@ -45,6 +45,12 @@ module BattleDecorator
     def player_name_for(location_info)
     end
 
+    def player_names_for(location_info)
+      if s = player_name_for(location_info).presence
+        s.split(/[,\s]+/)
+      end
+    end
+
     def end_at_s
     end
 

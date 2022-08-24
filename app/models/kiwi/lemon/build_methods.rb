@@ -407,9 +407,9 @@ module Kiwi
           recordable.preset_info.name,
           recordable.mini_battle_decorator.tournament_name,
           recordable.mini_battle_decorator.rule_name,
-          recordable.mini_battle_decorator.player_name_for(:black),
-          recordable.mini_battle_decorator.player_name_for(:white),
-        ].compact - ["平手"]
+          *recordable.mini_battle_decorator.player_names_for(:black),
+          *recordable.mini_battle_decorator.player_names_for(:white),
+        ].flatten.compact.uniq - ["平手"]
       end
 
       def create_notify
