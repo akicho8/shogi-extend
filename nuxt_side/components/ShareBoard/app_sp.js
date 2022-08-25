@@ -14,7 +14,7 @@ export const app_sp = {
       this.current_sfen = e.sfen
 
       // this.sound_play("shout_08")
-      // this.vibrate(10)
+      // this.vibrate_short()
 
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定

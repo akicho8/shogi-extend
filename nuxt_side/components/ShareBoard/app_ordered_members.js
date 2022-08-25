@@ -462,7 +462,7 @@ export const app_ordered_members = {
 
     self_vs_self_p() { return this.order_enable_p && (this.ordered_members || []).length === 1 }, // 自分vs自分で対戦している？
     one_vs_one_p()   { return this.order_enable_p && (this.ordered_members || []).length === 2 }, // 1vs1で対戦している？
-    many_vs_many_p() { return this.order_enable_p && (this.ordered_members || []).length >= 3  }, // 3人以上で対戦している？
+    many_vs_many_p() { return this.order_enable_p && (this.ordered_members || []).length >= 3 }, // 3人以上で対戦している？
 
     watching_member_count() { return this.name_uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
 

@@ -1,6 +1,7 @@
 // 汎用コード
 import { Gs } from "../components/models/gs.js"
 import { SpUtils } from "../components/models/sp_utils.js"
+import { Vibrator } from "../components/models/vibrator.js"
 import twemoji from 'twemoji'
 import _ from "lodash"
 
@@ -8,6 +9,7 @@ export const vue_support = {
   methods: {
     ...Gs,
     ...SpUtils,
+    ...Vibrator,
 
     ua_icon_key_get() {
       if (typeof window === "undefined") {
@@ -287,15 +289,6 @@ export const vue_support = {
     // },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    vibrate(argv) {
-      if (window.navigator.vibrate) {
-        window.navigator.vibrate(argv)
-      }
-    },
-    click_vibrate() {
-      this.vibrate(10)
-    },
 
     // b-input(@keydown.native.enter="enter_handle")
     //

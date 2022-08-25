@@ -159,7 +159,7 @@ export const app_xmatch = {
 
       this.xmatch_rules_members = params.xmatch_rules_members // マッチング画面の情報
       // this.sound_play_random(["dog1", "dog2", "dog3"])
-      this.vibrate(100)
+      this.vibrate_middle()
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
       this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.sound_play_click()

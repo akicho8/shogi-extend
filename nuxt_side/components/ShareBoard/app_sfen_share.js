@@ -164,7 +164,7 @@ export const app_sfen_share = {
     // エフェクトのタイミングがずれないようにローカルでは自分側だけで実行する
     // ブロードキャストは相手側だけで実行する
     fast_sound_effect_func(params) {
-      this.vibrate(10)
+      this.vibrate_short()
 
       if (this.is_shout_mode_on) {
         const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
