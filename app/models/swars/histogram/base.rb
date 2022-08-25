@@ -133,13 +133,18 @@ module Swars
       end
 
       def slack_notify(second)
-        SlackAgent.notify(subject: histogram_name, body: {
-            :ms           => "%.1f s" % second,
-            :current_max  => current_max,
-            :BATCH_SIZE   => BATCH_SIZE,
-            :loop_max     => loop_max,
-            :sample_count => @sample_count,
-          })
+        subject = "#{histogram_name}分布"
+        body = { :ms => "%.1f s" % second }.merge(slack_notify_params)
+        SlackAgent.notify(subject: subject, body: body)
+      end
+
+      def slack_notify_params
+        {
+          :current_max  => current_max,
+          :BATCH_SIZE   => BATCH_SIZE,
+          :loop_max     => loop_max,
+          :sample_count => @sample_count,
+        }
       end
 
       def chart_bar_max

@@ -129,17 +129,32 @@ module Swars
 
         # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=ten_min
         # http://localhost:3000/api/swars_histogram.json?key=grade&rule_key=three_min
-        if e = RuleInfo.lookup(params[:rule_key].presence)
-          s = s.rule_eq(e)
+        if v = rule_info
+          s = s.rule_eq(v)
         end
 
         # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=新嬉野流
         # http://localhost:3000/api/swars_histogram.json?key=grade&xtag=嬉野流
-        if v = params[:xtag].to_s.split(/[,\s]+/).presence
+        if v = xtag
           s = s.tagged_with(v)
         end
 
         s
+      end
+
+      def xtag
+        @xtag ||= params[:xtag].to_s.split(/[,\s]+/).presence
+      end
+
+      def rule_info
+        @rule_info ||= RuleInfo.lookup(params[:rule_key])
+      end
+
+      def slack_notify_params
+        {
+          "種類" => rule_info ? rule_info.name : "",
+          "タグ" => xtag ? xtag.join(" ") : "",
+        }.merge(super)
       end
     end
   end

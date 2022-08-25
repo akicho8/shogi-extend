@@ -82,7 +82,7 @@ export default {
     return this.$axios.$get("/api/swars_histogram.json", {params}).then(xi => {
       this.xi = xi
 
-      if (this.present_p(this.$route.query) || this.development_p) {
+      if (this.present_p(this.$route.query) && this.development_p) {
         const body = [
           ...Object.values(this.$route.query),
           this.xi.sample_count,
