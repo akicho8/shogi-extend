@@ -5,16 +5,17 @@
       template(v-if="time_limit_info.key === 'self_notification'")
         | 時間切れで
       template(v-if="time_limit_info.key === 'audo_judgement'")
-        | 時間切れかつ接続切れで
+        | 接続切れで
       | {{clock.current.location.flip.name}}の勝ち！
   .modal-card-body
     template(v-if="time_limit_info.key === 'audo_judgement'")
-      p {{user_call_name(base.current_turn_user_name)}}は時間切れになりましたが{{base.cc_auto_time_limit_delay}}秒待っても応答がありませんでした
-    template(v-if="clock.current.time_recovery_mode_p")
-      p 時間切れになっても時計は止まってないので合意の上で続行できます
+      p {{user_call_name(base.current_turn_user_name)}}は接続切れのまま時間切れになりました
     template(v-else)
-      p 時間切れになっても合意の上で続行できますが、<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
-      p もし続行する場合は時計を再設定してください
+      template(v-if="clock.current.time_recovery_mode_p")
+        p 時計は止まっていないので次の手を指せば続行できます
+      template(v-else)
+        p 続行できますが<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
+        p もし続行する場合は時計を再設定してください
   .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>

@@ -56,8 +56,8 @@
       a.panel-block(@click="base.cc_delayed_time_limit_modal") 他者は数秒後発動
       a.panel-block(@click="base.time_limit_modal_handle_if_not_exist") 受信
       a.panel-block(@click="base.cc_auto_time_limit_delay_stop") 数秒後発動キャンセル
-      a.panel-block(@click="base.time_limit_modal_handle('self_notification')") モーダル(通常)
-      a.panel-block(@click="base.time_limit_modal_handle('audo_judgement')") モーダル(推測)
+      a.panel-block(@click="base.time_limit_modal_handle('self_notification')") モーダル(自首)
+      a.panel-block(@click="base.time_limit_modal_handle('audo_judgement')") モーダル(判定)
       a.panel-block(@click="base.time_limit_modal_close") 閉じる
   .column.is-2
     .panel
