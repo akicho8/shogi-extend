@@ -27,14 +27,14 @@ export const app_clock_box_time_limit = {
           this.cc_delayed_time_limit_modal()            // 他者は表示予約
         }
       } else {
-        this.time_limit_modal_handle("default")
+        this.time_limit_modal_handle("self_notification")
       }
     },
 
     // 当事者は自分で起動してBC
     cc_time_limit_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
-      this.time_limit_modal_handle("default")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
+      this.time_limit_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.cc_time_limit_bc_delay}秒後にBC`)
       this.delay_block(this.cc_time_limit_bc_delay, () => {
         this.clock_box_share({behaviour: "時間切れ"}) // その上で、時間切れをBCする
@@ -52,7 +52,7 @@ export const app_clock_box_time_limit = {
         this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_time_limit_delay}秒待ち`})
         this.tl_alert("審議中")
         this.cc_auto_time_limit_delay_stop()
-        this.cc_auto_time_limit_delay_id = this.delay_block(this.cc_auto_time_limit_delay, () => this.time_limit_modal_handle("judge"))
+        this.cc_auto_time_limit_delay_id = this.delay_block(this.cc_auto_time_limit_delay, () => this.time_limit_modal_handle("audo_judgement"))
         this.tl_add("TIME_LIMIT", `他者側 自己判断で${this.cc_auto_time_limit_delay}秒後にmodal表示予約 (ID:${this.cc_auto_time_limit_delay_id})`)
       }
     },
@@ -74,7 +74,7 @@ export const app_clock_box_time_limit = {
         if (this.cc_auto_time_limit_delay_id) {
           this.tl_alert("時間切れ予約キャンセル")
         }
-        this.time_limit_modal_handle("default")
+        this.time_limit_modal_handle("self_notification")
       }
     },
 
