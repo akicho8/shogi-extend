@@ -30,6 +30,9 @@ class Talk
   # 除去しないとAWS側の変換が特殊文字の直前で停止してしまう
   PICTORIAL_CHARS_DELETE_ENABLE = true
 
+  # 長すぎるURLを省略するか？
+  LONG_URL_REPLACE = true
+
   def normalized_text
     @normalized_text ||= yield_self do
       s = source_text
@@ -39,6 +42,10 @@ class Talk
       if REPLACE_TABLE
         s = s.gsub(/#{REPLACE_TABLE.keys.join("|")}/o, REPLACE_TABLE)
       end
+      if LONG_URL_REPLACE
+        s = s.gsub(/(?:https?):[[:graph:]&&[:ascii:]]+/) { |s| URI(s.strip).host }
+      end
+
       s = s.sub(/\p{Space}+\z/, "")                     # "テストw　" → "テストw"
       s = s.sub(/[wｗ]+\z/) { |s| "わら" * s.size }
 

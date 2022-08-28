@@ -33,4 +33,10 @@ RSpec.describe Talk do
     obj = Talk.new(source_text: "A<b>B</b>C > D <br><br/>")
     assert { obj.normalized_text == "ABC D" }
   end
+
+  it "長いURLはドメインの部分だけ読み上げる" do
+    long_url = "●https://www.example.com/path?x=1●"
+    obj = Talk.new(source_text: long_url)
+    assert { obj.normalized_text == "●www.example.com●" }
+  end
 end
