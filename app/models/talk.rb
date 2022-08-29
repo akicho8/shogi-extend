@@ -42,8 +42,14 @@ class Talk
       if REPLACE_TABLE
         s = s.gsub(/#{REPLACE_TABLE.keys.join("|")}/o, REPLACE_TABLE)
       end
+
+      # "●http://www.xxx-yyy.com/●" -> "●example com●
       if LONG_URL_REPLACE
-        s = s.gsub(/(?:https?):[[:graph:]&&[:ascii:]]+/) { |s| URI(s.strip).host }
+        s = s.gsub(/(?:https?):[[:graph:]&&[:ascii:]]+/) { |url|
+          host = URI(url.strip).host            # => "www.xxx-yyy.com"
+          host = host.remove(/^(?:www)\b/)      # => "xxx-yyy.com"
+          host.scan(/\w+/).join(" ")            # => "xxx yyy com"
+        }
       end
 
       s = s.sub(/\p{Space}+\z/, "")                     # "テストw　" → "テストw"
