@@ -164,6 +164,10 @@ HelpContent.ShareBoardHelpBody
       li 単にひふみんアイしたいときにも用いる
 
   article
+    h2 反転すると同じ仲間の画面も反転する？
+    p
+      | 反転しない
+  article
     h2 いまどちらの手番？
     p ☗または☖の大きい方
 
