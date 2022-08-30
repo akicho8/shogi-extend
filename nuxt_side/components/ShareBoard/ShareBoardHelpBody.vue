@@ -167,6 +167,7 @@ HelpContent.ShareBoardHelpBody
     h2 反転すると同じ仲間の画面も反転する？
     p
       | 反転しない
+
   article
     h2 いまどちらの手番？
     p ☗または☖の大きい方
@@ -183,7 +184,7 @@ HelpContent.ShareBoardHelpBody
     h2 盤の色が変わるのは？
     p あなたの手番を知らせている
 
-  article
+  article(v-if="false")
     h2 アバターありとは？
     p 自分のアイコン画像が玉になる (不評)
     ul
@@ -532,10 +533,8 @@ HelpContent.ShareBoardHelpBody
   article
     h2 ログインするメリットは？
     ul
-      li
-        | アバターありにした場合に自分のプロフィール画像を玉をできる
-        ul
-          li つまり玉をカスタマイズできる
+      li プロフィール画像がアイコンになる
+      li(v-if="false") さらに「アバターあり」にした場合に自分のプロフィール画像が玉になる
       li ハンドルネームの初期値がログインネームになる
       li いまのところ他にはないがログインしている方を優待する
 
