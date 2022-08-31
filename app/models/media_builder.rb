@@ -54,12 +54,11 @@ class MediaBuilder
     end
 
     def data_uri_to_tmpfile(e)
-      bin = DataUriScheme.new(e[:url]).read
-      logger.info { "bin: #{bin.size} bytes" }
+      data_uri = DataUri.new(e[:url])
+      logger.info { "bin: #{data_uri.binary.size} bytes" }
       logger.info { "attributes: #{e[:attributes].inspect}" }
       if false
-        extension = DataUriScheme.new(e[:url]).extension
-        file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{extension}")
+        file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{data_uri.extension}")
       else
         name = BasenameNormalizer.normalize(e[:attributes][:name])
         basename = [SecureRandom.hex, name].join("_")
@@ -70,7 +69,7 @@ class MediaBuilder
       logger.info { "file_path: #{file_path}" }
       logger.info { "pwd: #{Dir.pwd}" }
       file_path.dirname.mkpath
-      file_path.binwrite(bin)
+      file_path.binwrite(data_uri.read)
       logger.info { `ls -alh #{Shellwords.escape(file_path)}`.strip }
       file_path
     end

@@ -1,14 +1,14 @@
 # フロント側の Data URI Scheme 形式のバイナリ化
 #
 #  body = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABlBMVEUAAP////973JksAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+YIHwktKVmKpzsAAAALSURBVAjXY2BABQAAEAABocUhwQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wOC0zMVQwOTo0NTo0MSswMDowMCXHz4IAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDgtMzFUMDk6NDU6NDErMDA6MDBUmnc+AAAAAElFTkSuQmCC"
-#  object = DataUriScheme.new(body)
+#  object = DataUri.new(body)
 #  object.binary       # => "..."
 #  object.read         # => "..."
 #  object.content_type # => "image/png"
 #
 require "base64"
 
-class DataUriScheme
+class DataUri
   REGEXP_FORMAT = /\A(?:data):(?<content_type>.*?);base64,(?<base64_text>.*)/
 
   def initialize(body)
@@ -30,7 +30,7 @@ class DataUriScheme
   delegate :content_type, :extension, to: :mime
 
   # ActiveStorage のカラムを更新するとき用
-  #  user.avatar.attach(io: DataUriScheme.new(value).io)
+  #  user.avatar.attach(io: DataUri.new(value).io)
   def io
     StringIO.new(binary)
   end

@@ -49,17 +49,6 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
 
-    # FIXME: とる
-    begin
-      def data_uri_scheme_to_bin(data_base64_body)
-        DataUriScheme.new(data_base64_body).binary
-      end
-
-      def data_uri_scheme_to_content_type(data_base64_body)
-        DataUriScheme.new(data_base64_body).content_type
-      end
-    end
-
     # r = plus_minus_query_parse(["a", "-b", "c", "-d"])
     # r[true]  # => ["a", "c"]
     # r[false] # => ["b", "d"]
