@@ -27,9 +27,12 @@ class DataUriScheme
   def mime
     @mime ||= MiniMime.lookup_by_content_type(parsed_attrs["content_type"])
   end
+  delegate :content_type, :extension, to: :mime
 
-  def content_type
-    mime.content_type
+  # ActiveStorage のカラムを更新するとき用
+  #  user.avatar.attach(io: DataUriScheme.new(value).io)
+  def io
+    StringIO.new(binary)
   end
 
   private

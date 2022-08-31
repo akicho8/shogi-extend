@@ -19,5 +19,13 @@ RSpec.describe DataUriScheme, type: :model do
     it "content_type" do
       assert { object.content_type == "image/png" }
     end
+
+    it "extension" do
+      assert { object.extension == "png" }
+    end
+
+    it "io" do
+      assert { object.io }
+    end
   end
 end

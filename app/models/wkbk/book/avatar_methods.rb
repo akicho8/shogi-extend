@@ -41,9 +41,7 @@ module Wkbk
       def new_file_src=(v)
         if v
           # SlackAgent.notify(subject: self.class.name, body: "カード画像更新(#{title})")
-          v = data_uri_scheme_to_bin(v)
-          io = StringIO.new(v)
-          avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
+          avatar.attach(io: DataUriScheme.new(v).io, filename: "#{SecureRandom.hex}.png")
         else
           # if avatar.attached?
           #   avatar.purge_later

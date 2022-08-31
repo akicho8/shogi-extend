@@ -54,12 +54,11 @@ class MediaBuilder
     end
 
     def data_uri_to_tmpfile(e)
-      bin = ApplicationRecord.data_uri_scheme_to_bin(e[:url])
+      bin = DataUriScheme.new(e[:url]).read
       logger.info { "bin: #{bin.size} bytes" }
       logger.info { "attributes: #{e[:attributes].inspect}" }
       if false
-        content_type = ApplicationRecord.data_uri_scheme_to_content_type(e[:url])
-        extension = MiniMime.lookup_by_content_type(content_type).extension
+        extension = DataUriScheme.new(e[:url]).extension
         file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{extension}")
       else
         name = BasenameNormalizer.normalize(e[:attributes][:name])
