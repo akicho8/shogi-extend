@@ -49,20 +49,15 @@ class ApplicationRecord < ActiveRecord::Base
       end
     end
 
-    def data_uri_scheme_to_bin(data_base64_body)
-      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,(?<body>.*)/)
-      unless md
-        raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
+    # FIXME: とる
+    begin
+      def data_uri_scheme_to_bin(data_base64_body)
+        DataUriScheme.new(data_base64_body).binary
       end
-      Base64.decode64(md["body"])
-    end
 
-    def data_uri_scheme_to_content_type(data_base64_body)
-      md = data_base64_body.match(/\A(data):(?<content_type>.*?);base64,/)
-      unless md
-        raise ArgumentError, "data URI scheme 形式になっていない : #{data_base64_body.inspect.truncate(80)}"
+      def data_uri_scheme_to_content_type(data_base64_body)
+        DataUriScheme.new(data_base64_body).content_type
       end
-      md["content_type"]
     end
 
     # r = plus_minus_query_parse(["a", "-b", "c", "-d"])
