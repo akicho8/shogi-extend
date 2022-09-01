@@ -35,6 +35,10 @@ class DataUri
     StringIO.new(binary)
   end
 
+  def inspect
+    "#<#{self.class.name} #{content_type} (#{binary.size} bytes)>"
+  end
+
   private
 
   attr_accessor :body

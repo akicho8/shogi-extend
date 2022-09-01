@@ -27,5 +27,9 @@ RSpec.describe DataUri, type: :model do
     it "io" do
       assert { object.io }
     end
+
+    it "inspect" do
+      assert { object.inspect == "#<DataUri image/png (276 bytes)>" }
+    end
   end
 end
