@@ -737,16 +737,14 @@ module Swars
             WHERE id IN (#{battle_ids.join(', ')})
             GROUP BY battled_on
         EOT
-        if Rails.env.development?
-          Rails.logger.debug(ActiveRecord::Base.connection.select_all(sql).to_a.to_t)
-          # |------------+-----------|
-          # | battled_on | count_all |
-          # |------------+-----------|
-          # | 2021-05-18 |         3 |
-          # | 2021-05-19 |         1 |
-          # | 2021-05-20 |         2 |
-          # |------------+-----------|
-        end
+        Rails.logger.debug { ActiveRecord::Base.connection.select_all(sql).to_a.to_t }
+        # |------------+-----------|
+        # | battled_on | count_all |
+        # |------------+-----------|
+        # | 2021-05-18 |         3 |
+        # | 2021-05-19 |         1 |
+        # | 2021-05-20 |         2 |
+        # |------------+-----------|
         # count_all の値たちの平均を求める
         sql = "SELECT AVG(count_all) FROM (#{sql}) as grouping" # (3 + 1 + 2) / 3 => 2
         ActiveRecord::Base.connection.select_value(sql).to_f.round(2)

@@ -64,7 +64,7 @@ module SlackAgent
   # rails r "SlackAgent.notify_exception(Exception.new)"
   # rails r 'SlackAgent.notify_exception((1/0 rescue $!))'
   def notify_exception(error, params = {})
-    Rails.logger.info(error)
+    Rails.logger.info { error }
     body = []
     if error.message
       body << error.message
