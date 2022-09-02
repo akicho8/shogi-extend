@@ -78,7 +78,7 @@ export const app_tiresome = {
           <div class="content">
             <ul class="mt-0">
               <li>ウォーズIDを毎回入力する必要はありません</li>
-              <li>右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で次から入力の手間が省けます</li>
+              <li>右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で次から入力の手間を省けます</li>
               <li>ぴよ将棋から来ている方には得におすすめです</li>
             </ul>
           </div>`,
