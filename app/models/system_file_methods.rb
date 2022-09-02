@@ -121,6 +121,15 @@ module SystemFileMethods
     end
   end
 
+  def to_h
+    {
+      :disk_cache_enable => @options[:disk_cache_enable],
+      :unique_key        => unique_key,
+      :to_browser_path   => to_browser_path,
+      :to_real_path      => to_real_path,
+    }
+  end
+
   private
 
   def disk_filename

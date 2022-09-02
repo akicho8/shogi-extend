@@ -15,14 +15,8 @@ class Talk
     end
   end
 
-  DEFAULT_POLLY_PARAMS = {
-    :output_format => "mp3",
-    :sample_rate   => "16000",
-    :text_type     => "text",
-  }
-
   def normalized_text
-    @normalized_text ||= TextNormalizer.new(source_text).to_s
+    TextNormalizer.new(source_text).to_s
   end
 
   private
@@ -46,43 +40,40 @@ class Talk
   def force_build
     params = polly_params.merge(text: normalized_text, response_target: real_path.to_s)
     real_path.dirname.mkpath
-
-    if Rails.env.development? || Rails.env.test?
-      Rails.logger.debug(params.to_t)
-    end
-
-    begin
-      resp = client.synthesize_speech(params)
-      if Rails.env.development? || Rails.env.test?
-        Rails.logger.debug(resp.to_h.to_t)
-        Rails.logger.debug({source_text: source_text, real_path: real_path}.to_t)
-      end
-    rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily, Seahorse::Client::NetworkingError => error
-      # インターネットに接続していないと client.synthesize_speech のタイミングで
-      # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
-      # のエラーになる
-      # if Rails.env.development?
-      #   # ログが見えなくなるので出力しない
-      # else
-      SlackAgent.notify_exception(error)
-      # end
-    end
+    TransformApi.new.call(params)
   end
 
   def polly_params
-    DEFAULT_POLLY_PARAMS.merge({voice_id: voice_id}, params[:polly_params])
+    TransformApi::API_DEFAULT_PARAMS.merge({voice_id: voice_id}, params[:polly_params])
   end
 
   def voice_id
     "Mizuki"                    # or Takumi
   end
 
-  def client
-    @client ||= Aws::Polly::Client.new
-  end
+  class TransformApi
+    API_DEFAULT_PARAMS = {
+      :output_format => "mp3",
+      :sample_rate   => "16000",
+      :text_type     => "text",
+    }
 
-  # class PollyAdapter
-  # end
+    def call(params)
+      Rails.logger.debug { params.to_t }
+      begin
+        resp = client.synthesize_speech(params)
+        Rails.logger.debug { resp.to_h.to_t }
+      rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily, Seahorse::Client::NetworkingError => error
+        # ネットに接続していない場合のエラー
+        # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
+        SlackAgent.notify_exception(error)
+      end
+    end
+
+    def client
+      @client ||= Aws::Polly::Client.new
+    end
+  end
 
   class TextNormalizer
     WORD_REPLACE_TABLE = {

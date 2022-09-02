@@ -306,7 +306,7 @@ module Swars
           begin
             battle.save!
           rescue ActiveRecord::RecordNotUnique, ActiveRecord::Deadlocked => error # RecordNotUnique は DB の unique index 違反
-            Rails.logger.info(error.inspect)
+            Rails.logger.info { error.inspect }
             false
           end
         end
