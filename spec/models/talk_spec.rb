@@ -29,14 +29,16 @@ RSpec.describe Talk do
     obj.cache_delete
   end
 
-  it "normalized_text" do
-    obj = Talk.new(source_text: "A<b>B</b>C > D <br><br/>")
-    assert { obj.normalized_text == "ABC D" }
-  end
+  describe Talk::TextNormalizer do
+    it "normalized_text" do
+      obj = Talk::TextNormalizer.new("A<b>B</b>C > D <br><br/>")
+      assert { obj.to_s == "ABC D" }
+    end
 
-  it "長いURLはドメインの部分を簡略したものを読み上げ内容とする" do
-    long_url = "●https://www.xxx-yyy.com/path?x=1●"
-    obj = Talk.new(source_text: long_url)
-    assert { obj.normalized_text == "●xxx yyy com●" }
+    it "長いURLはドメインの部分を簡略したものを読み上げ内容とする" do
+      long_url = "●https://www.xxx-yyy.com/path?x=1●"
+      obj = Talk::TextNormalizer.new(long_url)
+      assert { obj.to_s == "●xxx yyy com●" }
+    end
   end
 end
