@@ -4,8 +4,8 @@ RSpec.describe DataUri, type: :model do
   describe "参照系" do
     let(:object) { DataUri.new("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABlBMVEUAAP////973JksAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+YIHwktKVmKpzsAAAALSURBVAjXY2BABQAAEAABocUhwQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wOC0zMVQwOTo0NTo0MSswMDowMCXHz4IAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDgtMzFUMDk6NDU6NDErMDA6MDBUmnc+AAAAAElFTkSuQmCC") }
 
-    it "binary" do
-      assert { object.binary.size == 276 }
+    it "to_blob" do
+      assert { object.to_blob.size == 276 }
     end
 
     it "read" do
@@ -24,8 +24,8 @@ RSpec.describe DataUri, type: :model do
       assert { object.extension == "png" }
     end
 
-    it "io" do
-      assert { object.io }
+    it "stream" do
+      assert { object.stream }
     end
 
     it "inspect" do

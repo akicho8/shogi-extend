@@ -7,7 +7,7 @@ module Api
       user = current_user
 
       if v = params[:croped_image]
-        user.avatar.attach(io: DataUri.new(v).io, filename: "avatar.png")
+        user.avatar.attach(io: DataUri.new(v).stream, filename: "avatar.png")
         # user.avatar_blob.saved_changes? # => true
       end
 

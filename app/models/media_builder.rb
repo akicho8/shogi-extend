@@ -55,7 +55,7 @@ class MediaBuilder
 
     def data_uri_to_tmpfile(e)
       data_uri = DataUri.new(e[:url])
-      logger.info { "bin: #{data_uri.binary.size} bytes" }
+      logger.info { "bin: #{data_uri.to_blob.size} bytes" }
       logger.info { "attributes: #{e[:attributes].inspect}" }
       if false
         file_path = tmp_media_file_dir.join("#{SecureRandom.hex}.#{data_uri.extension}")

@@ -2,7 +2,7 @@
 #
 #  body = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABlBMVEUAAP////973JksAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+YIHwktKVmKpzsAAAALSURBVAjXY2BABQAAEAABocUhwQAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMi0wOC0zMVQwOTo0NTo0MSswMDowMCXHz4IAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjItMDgtMzFUMDk6NDU6NDErMDA6MDBUmnc+AAAAAElFTkSuQmCC"
 #  object = DataUri.new(body)
-#  object.binary       # => "..."
+#  object.to_blob       # => "..."
 #  object.read         # => "..."
 #  object.content_type # => "image/png"
 #
@@ -15,13 +15,13 @@ class DataUri
     @body = body
   end
 
-  def binary
+  def to_blob
     # https://docs.ruby-lang.org/ja/latest/class/Base64.html
-    @binary ||= Base64.decode64(parsed_attrs["base64_text"])
+    @to_blob ||= Base64.decode64(parsed_attrs["base64_text"])
   end
 
   def read
-    binary
+    to_blob
   end
 
   def mime
@@ -30,13 +30,13 @@ class DataUri
   delegate :content_type, :extension, to: :mime
 
   # ActiveStorage のカラムを更新するとき用
-  #  user.avatar.attach(io: DataUri.new(value).io)
-  def io
-    StringIO.new(binary)
+  #  user.avatar.attach(io: DataUri.new(value).stream)
+  def stream
+    StringIO.new(to_blob)
   end
 
   def inspect
-    "#<#{self.class.name} #{content_type} (#{binary.size} bytes)>"
+    "#<#{self.class.name} #{content_type} (#{to_blob.size} bytes)>"
   end
 
   private
