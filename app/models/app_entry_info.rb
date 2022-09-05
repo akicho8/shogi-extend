@@ -54,7 +54,7 @@ class AppEntryInfo
       nuxt_link_to: { path: "/adapter" },
       title: "なんでも棋譜変換",
       og_image_key: "adapter",
-      description: "棋譜でお困りの方はどうぞ",
+      description: "棋譜の差異でお困りの方向け",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
         "将棋クエストのCSA形式をKIFに変換",
