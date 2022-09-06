@@ -57,7 +57,7 @@ class AppEntryInfo
       description: "棋譜の差異でお困りの方向け",
       features: [
         "変則的な将棋倶楽部24の棋譜を正規化",
-        "将棋クエストのCSA形式をKIFに変換",
+        "KENTOのURLや将棋クエストの棋譜をKIFに変換",
         "KIF・KI2・SFEN・BOD 形式の相互変換",
       ],
     },
