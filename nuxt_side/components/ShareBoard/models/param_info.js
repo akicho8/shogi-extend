@@ -26,6 +26,7 @@ export class ParamInfo extends ParamBase {
       { key: "image_size_key",       type: "string",  name: "ダウンロード画像サイズ",        defaults: { development: null,                      production: "is_image_size_1920x1080",     }, permanent: true,  relation: "ImageSizeInfo",       desc: null, },
       { key: "board_preset_key",     type: "string",  name: "手合割",                        defaults: { development: null,                      production: "平手",                        }, permanent: true,  relation: "BoardPresetInfo",     desc: null, },
       { key: "quick_sync_key",       type: "string",  name: "同期タイミング",                defaults: { development: null,                      production: "is_quick_sync_on",            }, permanent: false, relation: "QuickSyncInfo",       desc: null, },
+      { key: "faul_caution_key",     type: "string",  name: "反則時の自動注意",              defaults: { development: null,                      production: "is_caution_on",               }, permanent: false, relation: null,                  desc: null, },
     ]
   }
 }
