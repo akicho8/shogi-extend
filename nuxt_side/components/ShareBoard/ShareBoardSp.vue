@@ -115,13 +115,18 @@ export default {
       hv["update:mediator_snapshot_sfen"]             = this.base.mediator_snapshot_sfen_set
       hv["update:turn_offset"]                        = v => this.base.current_turn = v
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
-      hv["operation_invalid1"]                        = this.base.operation_invalid1_handle
-      hv["operation_invalid2"]                        = this.base.operation_invalid2_handle
-      hv["foul_two_pawn"]                             = this.base.foul_two_pawn_handle
-      hv["foul_piece_warp"]                           = this.base.foul_piece_warp_handle
-      hv["foul_death_king"]                           = this.base.foul_death_king_handle
-      hv["foul_dead_soldier_put"]                     = this.base.foul_dead_soldier_put_handle
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
+
+      // 手番 or 先後違い系
+      hv["operation_invalid1"] = this.base.operation_invalid1_handle
+      hv["operation_invalid2"] = this.base.operation_invalid2_handle
+
+      // 反則系
+      hv["foul_two_pawn"]         = this.base.foul_two_pawn_handle
+      hv["foul_piece_warp"]       = this.base.foul_piece_warp_handle
+      hv["foul_death_king"]       = this.base.foul_death_king_handle
+      hv["foul_dead_soldier_put"] = this.base.foul_dead_soldier_put_handle
+
       return hv
     },
 
