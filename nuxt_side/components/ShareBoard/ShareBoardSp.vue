@@ -67,11 +67,9 @@ export default {
       hv.sp_pi_variant                               = this.base.appearance_theme_info.sp_pi_variant
       hv.sp_bg_variant                               = this.base.appearance_theme_info.sp_bg_variant
 
-      // 反則制限
-      hv.sp_play_mode_piece_warp_disabled            = this.base.is_foul_limit_on // 角ワープ
-      hv.sp_play_mode_two_pawn_disabled              = this.base.is_foul_limit_on // 二歩
-      hv.sp_play_mode_death_king_disabled            = this.base.is_foul_limit_on // 王手放置
-      hv.sp_play_mode_dead_soldier_put_disabled      = this.base.is_foul_limit_on // 死に駒打
+      // 反則時の挙動
+      hv.sp_play_mode_foul_check_p = this.base.foul_behavior_info.sp_play_mode_foul_check_p
+      hv.sp_play_mode_foul_break_p = this.base.foul_behavior_info.sp_play_mode_foul_break_p
 
       if (false) {
         hv.sp_bg_variant                             = "is_bg_variant_a"
@@ -122,10 +120,7 @@ export default {
       hv["operation_invalid2"] = this.base.operation_invalid2_handle
 
       // 反則系
-      hv["foul_two_pawn"]         = this.base.foul_two_pawn_handle
-      hv["foul_piece_warp"]       = this.base.foul_piece_warp_handle
-      hv["foul_death_king"]       = this.base.foul_death_king_handle
-      hv["foul_dead_soldier_put"] = this.base.foul_dead_soldier_put_handle
+      hv["foul_accident"] = this.base.foul_accident_handle
 
       return hv
     },

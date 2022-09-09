@@ -203,7 +203,7 @@
       .panel-block current_title:{{base.current_title}}
       .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
       .panel-block next_turn_message:{{base.next_turn_message}}
-      
+      .panel-block latest_foul_name:{{base.latest_foul_name}}
 
   .column.is-6.is-clipped
     .panel

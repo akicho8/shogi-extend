@@ -6,7 +6,7 @@ client-only
 </template>
 
 <script>
-import StyleEditor from "shogi-player/components/StyleEditor.vue"
+import StyleEditor from "shogi-player/components/StyleEditor/StyleEditor.vue"
 
 export default {
   name: "page-style-editor",

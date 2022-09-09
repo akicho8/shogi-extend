@@ -24,13 +24,15 @@ export const app_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
+      // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
         lmi: {
-          kif_without_from:    lmi.to_kif_without_from, // "☗7六歩"
-          next_turn_offset:    lmi.next_turn_offset,    // 1
-          player_location_key: lmi.player_location.key, // "black"
-          yomiage:             lmi.to_yomiage,          // "ななろくふ"
-          effect_key:          lmi.effect_key,          // 効果音キー
+          kif_without_from:    lmi.to_kif_without_from,        // "☗7六歩"
+          next_turn_offset:    lmi.next_turn_offset,           // 1
+          player_location_key: lmi.player_location.key,        // "black"
+          yomiage:             lmi.to_yomiage,                 // "ななろくふ"
+          effect_key:          lmi.effect_key,                 // 効果音キー
+          foul_names:          lmi.foul_list.map(e => e.name), // ["駒ワープ", "王手放置"]
         },
         sfen: this.current_sfen, // e.sfen でもよい
         turn: lmi.next_turn_offset,
@@ -74,10 +76,12 @@ export const app_sfen_share = {
       } else {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
-        this.al_add({
+        const params = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_share_params,
-        })
+        }
+        this.foul_show(params)
+        this.al_add(params)
       }
     },
 
@@ -123,6 +127,9 @@ export const app_sfen_share = {
         }
 
         this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
+
+        // 反則があれば表示
+        this.foul_show(params)
 
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})

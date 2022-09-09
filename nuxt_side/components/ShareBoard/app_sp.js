@@ -8,7 +8,7 @@ export const app_sp = {
     //   this.sound_play_click()
     // },
 
-    // 再生モードで指したときmovesあり棋譜(URLに反映する)
+    // 操作モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
       this.current_sfen = e.sfen
@@ -105,26 +105,6 @@ export const app_sp = {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.sound_play("x")
       this.toast_ok("それは相手の駒です")
-    },
-
-    foul_two_pawn_handle() {
-      this.sound_play("x")
-      this.toast_ng("二歩")
-    },
-
-    foul_piece_warp_handle(soldier) {
-      this.sound_play("x")
-      this.toast_ng(`${soldier.name}ワープ`)
-    },
-
-    foul_death_king_handle() {
-      this.sound_play("x")
-      this.toast_ng("王手放置")
-    },
-
-    foul_dead_soldier_put_handle() {
-      this.sound_play("x")
-      this.toast_ng("死に駒")
     },
 
     // ShogiPlayer コンポーネント自体を実行したいとき用

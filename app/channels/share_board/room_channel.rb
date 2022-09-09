@@ -92,7 +92,7 @@ module ShareBoard
 
     def ordered_members_share(data)
       user_names = data["ordered_members"].collect { |e| e["user_name"] }.join(" → ")
-      config = ["foul_limit_key", "avatar_king_key", "shout_mode_key"].collect { |e| data[e] }.join(" ")
+      config = ["foul_behavior_key", "avatar_king_key", "shout_mode_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
       track(data, "順番設定", message, ":順番設定:")
       broadcast(:ordered_members_share_broadcasted, data)

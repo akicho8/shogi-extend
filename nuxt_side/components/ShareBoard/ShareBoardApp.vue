@@ -114,6 +114,7 @@ import { app_appearance_theme          } from "./app_appearance_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
+import { app_foul                 } from "./app_foul.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_room_recreate        } from "./app_room_recreate.js"
 import { app_back_to              } from "./app_back_to.js"
@@ -173,6 +174,7 @@ export default {
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
+    app_foul,
     app_board_preset_select,
     app_room_recreate,
     app_back_to,

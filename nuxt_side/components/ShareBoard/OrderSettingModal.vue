@@ -29,7 +29,7 @@
       .mt-3
         .columns.is-mobile.other_setting
           .column
-            SimpleRadioButtons.foul_limit(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulLimitInfo" var_name="new_foul_limit_key" @user_input="user_input_handle")
+            SimpleRadioButtons.foul_behavior(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" var_name="new_foul_behavior_key" @user_input="user_input_handle")
           .column(v-if="base.debug_mode_p")
             SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" var_name="new_avatar_king_key" @user_input="user_input_handle")
           .column(v-if="base.debug_mode_p")
@@ -241,7 +241,7 @@ export default {
         move_guard_key: this.base.new_move_guard_key,
         avatar_king_key: this.base.new_avatar_king_key,
         shout_mode_key: this.base.new_shout_mode_key,
-        foul_limit_key: this.base.new_foul_limit_key,
+        foul_behavior_key: this.base.new_foul_behavior_key,
         hand_every_n: this.base.new_hand_every_n,
         message: message,
       })
