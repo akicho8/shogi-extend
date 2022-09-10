@@ -15,7 +15,7 @@ module Swars
     end
 
     it "メールアドレスの入力" do
-      assert { PlayerIdSuggestion.new("alice.bob@gmail.com").message == "ウォーズIDはメールアドレスではありません" }
+      assert { PlayerIdSuggestion.new("alice.bob@gmail.com").message == "それはウォーズIDではなくメールアドレスです" }
     end
 
     it "ひらがな、カタカナ、漢字の場合" do

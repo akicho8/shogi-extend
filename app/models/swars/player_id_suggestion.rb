@@ -15,7 +15,7 @@ module Swars
       },
       -> user_key {
         if user_key.match?(%r/\A[a-z\d][a-z\d\.\-_]+@[a-z\d\.\-]+[a-z]\z/i)
-          "ウォーズIDはメールアドレスではありません"
+          "それはウォーズIDではなくメールアドレスです"
         end
       },
       -> user_key {
