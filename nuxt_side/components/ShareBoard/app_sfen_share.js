@@ -80,7 +80,7 @@ export const app_sfen_share = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_share_params,
         }
-        this.foul_show(params)
+        this.foul_modal_handle(params.lmi.foul_names)
         this.al_add(params)
       }
     },
@@ -129,7 +129,7 @@ export const app_sfen_share = {
         this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
 
         // 反則があれば表示
-        this.foul_show(params)
+        this.foul_modal_handle(params.lmi.foul_names)
 
         // 「alice ▲76歩」と表示しながら
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})

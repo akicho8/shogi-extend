@@ -90,6 +90,13 @@
   .column.is-2
     .panel
       .panel-heading
+        | 反則指摘
+      a.panel-block(@click="base.foul_accident_handle({name: '二歩'})") 自分
+      a.panel-block(@click="base.foul_modal_handle(['駒ワープ', '王手放置'])") 全体
+
+  .column.is-2
+    .panel
+      .panel-heading
         | 時計情報永続化
       a.panel-block(@click="base.cc_params_load") ロード
       a.panel-block(@click="base.cc_params_save") 保存
