@@ -116,7 +116,7 @@ export const app_sfen_share = {
 
         if (this.user_name === params.next_user_name) {
           if (this.next_notify_p) {
-            this.tn_notify()
+            this.tn_notify()    // 「モ〜」
           }
 
           // 自分vs自分なら視点変更
@@ -128,27 +128,15 @@ export const app_sfen_share = {
 
         this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
 
-        // 反則があれば表示
+        // 反則があれば表示する
         this.foul_modal_handle(params.lmi.foul_names)
 
-        // 「alice ▲76歩」と表示しながら
+        // 「alice ▲76歩」は常に表示する (反則のときも)
         this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
 
-        this.next_turn_message = null
-        if (this.yomiagable_p) {
-          // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-          this.talk(this.user_call_name(params.from_user_name), {
-            onend: () => this.talk(params.lmi.yomiage, {
-              onend: () => {
-                if (params.next_user_name) {
-                  if (this.next_notify_p) {
-                    this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
-                    this.toast_ok(this.next_turn_message)
-                  }
-                }
-              },
-            }),
-          })
+        // 反則がないときだけ指し手と次の人を通知する
+        if (this.blank_p(params.lmi.foul_names)) {
+          this.next_turn_call()
         }
 
         this.received_ok_send(params)
@@ -164,6 +152,24 @@ export const app_sfen_share = {
             this.tl_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)
           }
         }
+      }
+    },
+    next_turn_call(params) {
+      this.next_turn_message = null
+      if (this.yomiagable_p) {
+        // 「aliceさん」の発声後に「7 6 ふー！」を発声する
+        this.talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
+          onend: () => this.talk(params.lmi.yomiage, {          // 「7 6 ふー！」
+            onend: () => {                                      // 「次は〜」
+              if (params.next_user_name) {
+                if (this.next_notify_p) {
+                  this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
+                  this.toast_ok(this.next_turn_message)
+                }
+              }
+            },
+          }),
+        })
       }
     },
 
