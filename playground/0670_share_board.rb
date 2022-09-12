@@ -12,7 +12,7 @@ free_battle.simple_versus_desc  # => "▲嬉野流 vs △その他"
 #
 #
 # info = Bioshogi::Parser.parse("68銀")
-# free_battle.meta_info = info.mediator.players.inject({}) do |a, player|
+# free_battle.meta_info = info.xcontainer.players.inject({}) do |a, player|
 #   a.merge(player.location.key => player.skill_set.to_h)
 # end
 # free_battle.save!
@@ -29,10 +29,10 @@ free_battle.simple_versus_desc  # => "▲嬉野流 vs △その他"
 # description                     # => "▲嬉野流 vs △その他"
 
 # info.
-# info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-# info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-# info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-# info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+# info.xcontainer.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+# info.xcontainer.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+# info.xcontainer.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+# info.xcontainer.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
 
 # >> |-------+-------------------------------------------------------------------------------------------------|
 # >> | black | {:defense=>[], :attack=>[:嬉野流], :technique=>[], :note=>[:居飛車, :相居飛車, :居玉, :相居玉]} |

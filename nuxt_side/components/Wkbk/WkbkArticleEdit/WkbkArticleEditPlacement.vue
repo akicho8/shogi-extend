@@ -31,15 +31,15 @@ MainSection.WkbkArticleEditPlacement
               b-button(@click="base.any_source_read_handle") 棋譜の読み込み
 
             .buttons.mb-0.has-addons.is-centered.are-small.mt-3(v-if="development_p")
-              b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(3)") 3
-              b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(4)") 4
-              b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(5)") 5
-              b-button(@click="$refs.main_sp.sp_object().mediator.shuffle_apply(6)") 6
+              b-button(@click="$refs.main_sp.sp_object().xcontainer.shuffle_apply(3)") 3
+              b-button(@click="$refs.main_sp.sp_object().xcontainer.shuffle_apply(4)") 4
+              b-button(@click="$refs.main_sp.sp_object().xcontainer.shuffle_apply(5)") 5
+              b-button(@click="$refs.main_sp.sp_object().xcontainer.shuffle_apply(6)") 6
               .ml-1
-              b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().mediator.slide_xy(-1, 0)")
-              b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().mediator.slide_xy(0, 1)")
-              b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().mediator.slide_xy(0, -1)")
-              b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().mediator.slide_xy(1, 0)")
+              b-button(icon-left="arrow-left"  @click="$refs.main_sp.sp_object().xcontainer.slide_xy(-1, 0)")
+              b-button(icon-left="arrow-down"  @click="$refs.main_sp.sp_object().xcontainer.slide_xy(0, 1)")
+              b-button(icon-left="arrow-up"    @click="$refs.main_sp.sp_object().xcontainer.slide_xy(0, -1)")
+              b-button(icon-left="arrow-right" @click="$refs.main_sp.sp_object().xcontainer.slide_xy(1, 0)")
 </template>
 
 <script>
@@ -62,7 +62,7 @@ export default {
     // 玉配置/玉回収
     king_formation_auto_set(v) {
       this.sound_play_click()
-      if (this.$refs.main_sp.sp_object().mediator.king_formation_auto_set_on_off(v)) {
+      if (this.$refs.main_sp.sp_object().xcontainer.king_formation_auto_set_on_off(v)) {
         this.base.piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {
         if (v) {

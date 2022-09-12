@@ -2,11 +2,11 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 battle = Swars::Battle.last
-battle.heavy_parsed_info.mediator
+battle.heavy_parsed_info.xcontainer
 membership = battle.memberships.first
 membership.sec_list             # => [1, 4, 3, 2, 1, 1, 1, 3, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 2, 1, 3]
 
-tp battle.heavy_parsed_info.mediator.hand_logs.collect(&:personal_clock)
+tp battle.heavy_parsed_info.xcontainer.hand_logs.collect(&:personal_clock)
 # >> |------------------|
 # >> | (00:01/00:00:01) |
 # >> | (00:00/00:00:00) |

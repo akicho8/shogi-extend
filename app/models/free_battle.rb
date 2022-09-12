@@ -192,7 +192,7 @@ class FreeBattle < ApplicationRecord
   end
 
   def parser_exec_after(info)
-    self.meta_info = info.mediator.players.inject({}) do |a, player|
+    self.meta_info = info.xcontainer.players.inject({}) do |a, player|
       a.merge(player.location.key => player.skill_set.to_h)
     end
 
@@ -203,10 +203,10 @@ class FreeBattle < ApplicationRecord
       self.note_tag_list = ""
       # self.other_tag_list = ""
 
-      defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-      attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-      note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      defense_tag_list.add   info.xcontainer.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+      attack_tag_list.add    info.xcontainer.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      technique_tag_list.add info.xcontainer.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+      note_tag_list.add      info.xcontainer.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     end
   end
 

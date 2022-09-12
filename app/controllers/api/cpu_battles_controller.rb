@@ -111,7 +111,7 @@ module Api
 
       info = Bioshogi::Parser.parse(@current_sfen)
       begin
-        @mediator = info.mediator
+        @xcontainer = info.xcontainer
       rescue => error
         lines = error.message.lines
         message = [
@@ -125,26 +125,26 @@ module Api
 
         # info.move_infos.size - 0
 
-        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).mediator.to_history_sfen
-        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).mediator.to_history_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, turn_limit: 1).xcontainer.to_history_sfen
+        # before_sfen = Bioshogi::Parser.parse(v, typical_error_case: :embed).xcontainer.to_history_sfen
         # render json: {failure_message: failure_message, before_sfen: before_sfen}
 
         final_decision(judge_key: :lose, irregular: true, message: message)
         return
       end
 
-      # Rails.logger.debug(@mediator.turn_info.inspect)
+      # Rails.logger.debug(@xcontainer.turn_info.inspect)
 
       if Rails.env.production? || Rails.env.staging?
       else
-        Rails.logger.debug(@mediator)
+        Rails.logger.debug(@xcontainer)
       end
 
       yomiage_process # 人間の手の読み上げ
 
       evaluation_value_generation
 
-      if executor = @mediator.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
+      if executor = @xcontainer.opponent_player.executor # 1回でも手を指さないと executor は入っていないため
         captured_soldier = executor.captured_soldier
         if captured_soldier
           if captured_soldier.piece.key == :king
@@ -156,7 +156,7 @@ module Api
 
       unless @hand
         if current_cpu_brain_info.mate_danger_check
-          @hand = @mediator.current_player.king_capture_move_hands.first
+          @hand = @xcontainer.current_player.king_capture_move_hands.first
 
           # 玉を取らない場合
           if false
@@ -200,9 +200,9 @@ module Api
       end
 
       unless @hand
-        hands = @mediator.current_player.create_all_hands.to_a
+        hands = @xcontainer.current_player.create_all_hands.to_a
         if current_cpu_brain_info.legal_only
-          hands = hands.find_all { |e| e.legal_hand?(@mediator) }
+          hands = hands.find_all { |e| e.legal_hand?(@xcontainer) }
         end
         @hand = hands.sample
       end
@@ -213,13 +213,13 @@ module Api
       end
 
       # CPUの手を指す
-      @mediator.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
-      @current_sfen = @mediator.to_history_sfen
+      @xcontainer.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
+      @current_sfen = @xcontainer.to_history_sfen
       evaluation_value_generation
 
       yomiage_process # CPUの手の読み上げる
 
-      captured_soldier = @mediator.opponent_player.executor.captured_soldier
+      captured_soldier = @xcontainer.opponent_player.executor.captured_soldier
       if captured_soldier
         if captured_soldier.piece.key == :king
           final_decision(judge_key: :lose, message: "玉を取られました")
@@ -229,7 +229,7 @@ module Api
 
       if current_cpu_brain_info.mate_danger_check
         # 人間側の合法手が生成できなければ人間側の負け
-        if @mediator.current_player.legal_all_hands.none?
+        if @xcontainer.current_player.legal_all_hands.none?
           final_decision(judge_key: :lose, message: "CPUの勝ちです")
           return
         end
@@ -241,7 +241,7 @@ module Api
     def candidate_process
       info = Bioshogi::Parser.parse(params[:candidate_sfen])
       begin
-        @mediator = info.mediator
+        @xcontainer = info.xcontainer
       rescue => error
         render json: build_response
         return
@@ -255,7 +255,7 @@ module Api
     end
 
     def iterative_deepening
-      brain = @mediator.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, **evaluator_params)
+      brain = @xcontainer.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, **evaluator_params)
       time_limit = current_cpu_brain_info.time_limit
 
       begin
@@ -281,13 +281,13 @@ module Api
     end
 
     def evaluation_value_generation
-      @score_list << {x: @mediator.turn_info.turn_offset, y: @mediator.player_at(:black).evaluator.score}
+      @score_list << {x: @xcontainer.turn_info.turn_offset, y: @xcontainer.player_at(:black).evaluator.score}
     end
 
     # 最後の手があれば読み上げる
     def yomiage_process
       if params[:yomiage_mode]
-        if last = @mediator.hand_logs.last
+        if last = @xcontainer.hand_logs.last
 
           # 方法1
           if false
@@ -333,20 +333,20 @@ module Api
 
       response[:candidate_rows] = candidate_rows     # 古いままの状態が続かないように必ず設定してビューに渡す (b-table用)
 
-      if @mediator
-        response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
-        response[:turn_offset] = @mediator.turn_info.turn_offset
+      if @xcontainer
+        response[:pressure_rate_hash] = @xcontainer.players.inject({}) { |a, e| a.merge(e.location.key => e.pressure_rate) }
+        response[:turn_offset] = @xcontainer.turn_info.turn_offset
       end
 
       if Rails.env.production? || Rails.env.staging?
       else
         response[:candidate_report] = candidate_report # そのまま表示できるテキスト
-        # response[:pressure_rate_hash] = @mediator.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
-        if @mediator
+        # response[:pressure_rate_hash] = @xcontainer.players.inject({}) { |a, e| a.merge(e.location.key => rand(0..1.0)) }
+        if @xcontainer
           response[:think_text] = [
-            @mediator.current_player.evaluator(evaluator_params).score_compute_report.to_t,
-            @mediator.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }.to_t,
-            *@mediator.players.collect { |e| e.pressure_report.to_t },
+            @xcontainer.current_player.evaluator(evaluator_params).score_compute_report.to_t,
+            @xcontainer.players.inject({}) { |a, e| a.merge(e.location => e.pressure_rate) }.to_t,
+            *@xcontainer.players.collect { |e| e.pressure_report.to_t },
           ].join
         end
       end

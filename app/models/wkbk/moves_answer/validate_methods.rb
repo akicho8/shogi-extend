@@ -47,7 +47,7 @@ module Wkbk
       # 不正な手がないことを確認
       def validate1_leagal_hands
         begin
-          mediator
+          xcontainer
         rescue Bioshogi::BioshogiError => error
           errors.add(:base, error.message.lines.first.strip)
         end
@@ -76,7 +76,7 @@ module Wkbk
         return unless Config.fetch(:black_piece_zero_check_on_function_enable)
 
         if article.lineage.pure_info.black_piece_zero_check_on
-          if mediator.opponent_player.piece_box.empty?
+          if xcontainer.opponent_player.piece_box.empty?
             # 攻め手の持駒は空なのでOK
           else
             errors.add(:base, "攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください")
@@ -110,7 +110,7 @@ module Wkbk
           if article.mate_skip?
             # 「最後は無駄合」なのでチェックしない
           else
-            if mediator.current_player.my_mate?
+            if xcontainer.current_player.my_mate?
               # 詰んでいる
             else
               errors.add(:base, "局面が難しすぎます。無駄合いの場合は「最後は無駄合い」に ON にしといてください。詰みチェックしなくなります")
@@ -125,13 +125,13 @@ module Wkbk
         @parser ||= Transform.parse(sfen)
       end
 
-      def mediator
-        @mediator ||= parser.mediator
+      def xcontainer
+        @xcontainer ||= parser.xcontainer
       end
 
       # 玉を除いて足りない駒たち
       def not_enough_piece_box
-        piece_box = mediator.not_enough_piece_box # 足りない駒が入っている箱
+        piece_box = xcontainer.not_enough_piece_box # 足りない駒が入っている箱
         if (piece_box[:king] || 0) == 1           # 玉の数が1個残っている場合は削除する
           piece_box.add(king: -1)
         end

@@ -308,7 +308,7 @@ module BattleDecorator
     end
 
     def hand_logs
-      @hand_logs ||= heavy_parsed_info.mediator.hand_logs
+      @hand_logs ||= heavy_parsed_info.xcontainer.hand_logs
     end
 
     def heavy_parsed_info

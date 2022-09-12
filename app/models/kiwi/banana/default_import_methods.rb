@@ -61,15 +61,15 @@ module Kiwi
                   :width           => 1920,
                   :height          => 1080,
                   :main_volume     => 0.8,
-                  :viewpoint       => info.mediator.win_player.location.key, # 勝った方の視点にする
+                  :viewpoint       => info.xcontainer.win_player.location.key, # 勝った方の視点にする
                 },
               },
               :banana_params => {
                 :folder_key    => "public",
                 :title         => "##{params[:index]} 羽生善治特選 #{versus} 100番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
-                :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.mediator.normalized_names_with_alias],
-                :thumbnail_pos => 1 + (info.mediator.outbreak_turn || info.mediator.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
+                :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.xcontainer.normalized_names_with_alias],
+                :thumbnail_pos => 1 + (info.xcontainer.outbreak_turn || info.xcontainer.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
               },
             }
           end

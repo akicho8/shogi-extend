@@ -1,5 +1,5 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
-import { Mediator } from "shogi-player/components/models/mediator.js"
+import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
 
 export class KifuVo {
   static KYOKUMENPEDIA_URL_PREFIX = "http://kyokumen.jp/positions/"
@@ -24,11 +24,11 @@ export class KifuVo {
   // 方法1: moves がついた SFEN から変換する場合 (遅い)
   get kpedia_url1() {
     const info = SfenParser.parse(this.attributes.sfen)
-    const mediator = new Mediator()
-    mediator.data_source = SfenParser.parse(this.attributes.sfen)
-    mediator.current_turn = this.attributes.turn || 0
-    mediator.run()
-    return this.constructor.KYOKUMENPEDIA_URL_PREFIX + mediator.to_sfen_without_turn
+    const xcontainer = new Xcontainer()
+    xcontainer.data_source = SfenParser.parse(this.attributes.sfen)
+    xcontainer.current_turn = this.attributes.turn || 0
+    xcontainer.run()
+    return this.constructor.KYOKUMENPEDIA_URL_PREFIX + xcontainer.to_sfen_without_turn
   }
 
   // 方法2: moves がない SFEN から変換する場合 (速い)

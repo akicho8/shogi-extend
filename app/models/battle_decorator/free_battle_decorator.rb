@@ -34,7 +34,7 @@ module BattleDecorator
     end
 
     def strategy_pack_core(location_info)
-      player = heavy_parsed_info.mediator.player_at(location_info)
+      player = heavy_parsed_info.xcontainer.player_at(location_info)
       sep = " #{params[:separator]} "
       max = params[:strategy_take_max]
       s = nil
@@ -47,7 +47,7 @@ module BattleDecorator
     # "#{battle.turn_max}手" でもよい
     #
     # 自力で作る場合
-    # if location_info = heavy_parsed_info.mediator.win_player.location
+    # if location_info = heavy_parsed_info.xcontainer.win_player.location
     #   str = player_name_for(location_info)
     # end
     def battle_result_str
@@ -70,7 +70,7 @@ module BattleDecorator
     end
 
     def total_seconds_for(location_info)
-      heavy_parsed_info.mediator.player_at(location_info).personal_clock.total_seconds
+      heavy_parsed_info.xcontainer.player_at(location_info).personal_clock.total_seconds
     end
 
     def normalized_full_tournament_name

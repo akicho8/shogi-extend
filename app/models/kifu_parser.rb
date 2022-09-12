@@ -129,7 +129,7 @@ class KifuParser
   end
 
   def kento_url
-    m = core.mediator
+    m = core.xcontainer
     h = {}
     if m.initial_state_board_sfen != "startpos"
       h[:initpos] = m.initial_state_board_sfen.remove(/^sfen\s*/)
@@ -164,7 +164,7 @@ class KifuParser
     if v = params[:title].presence
       core.header["棋戦"] = v
     end
-    core.mediator.players.each do |e|
+    core.xcontainer.players.each do |e|
       if v = params[e.location.key].presence
         core.header[e.call_name] = comma_included_str_normalize(v)
       end
@@ -178,7 +178,7 @@ class KifuParser
   end
 
   def turn_max
-    core.mediator.turn_info.turn_offset
+    core.xcontainer.turn_info.turn_offset
   end
 
   def source

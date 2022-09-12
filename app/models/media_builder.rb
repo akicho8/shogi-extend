@@ -274,7 +274,7 @@ class MediaBuilder
       :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
       :candidate_enable   => false,
       :validate_enable    => false,
-      :mediator_class     => Bioshogi::MediatorFast,
+      :xcontainer_class     => Bioshogi::XcontainerFast,
       :turn_limit         => turn,
     }
   end

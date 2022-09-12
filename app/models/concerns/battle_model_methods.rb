@@ -51,7 +51,7 @@ module BattleModelMethods
 
     if ENV["INTEGRITY_VALIDATE"]
       begin
-        info.mediator
+        info.xcontainer
       rescue => error
         p error
         puts error
@@ -63,12 +63,12 @@ module BattleModelMethods
       end
     end
 
-    info.mediator               # 不整合があるとここで Bioshogi::BioshogiError を投げる
+    info.xcontainer               # 不整合があるとここで Bioshogi::BioshogiError を投げる
 
-    self.turn_max = info.mediator.turn_info.turn_offset
-    self.critical_turn = info.mediator.critical_turn
-    self.outbreak_turn = info.mediator.outbreak_turn
-    self.sfen_body = info.mediator.to_history_sfen
+    self.turn_max = info.xcontainer.turn_info.turn_offset
+    self.critical_turn = info.xcontainer.critical_turn
+    self.outbreak_turn = info.xcontainer.outbreak_turn
+    self.sfen_body = info.xcontainer.to_history_sfen
     self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
     preset_key_set(info)
@@ -82,10 +82,10 @@ module BattleModelMethods
     #   self.note_tag_list = ""
     #   self.other_tag_list = ""
     #
-    #   defense_tag_list.add   info.mediator.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
-    #   attack_tag_list.add    info.mediator.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    #   technique_tag_list.add info.mediator.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
-    #   note_tag_list.add      info.mediator.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    #   defense_tag_list.add   info.xcontainer.players.flat_map { |e| e.skill_set.defense_infos.normalize.flat_map { |e| [e.name, *e.alias_names] } }
+    #   attack_tag_list.add    info.xcontainer.players.flat_map { |e| e.skill_set.attack_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    #   technique_tag_list.add info.xcontainer.players.flat_map { |e| e.skill_set.technique_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
+    #   note_tag_list.add      info.xcontainer.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     # end
 
     unless battled_at
@@ -273,21 +273,21 @@ module BattleModelMethods
     # #
     # def sfen_attrs
     #   @sfen_attrs ||= yield_self do
-    #     mediator = heavy_parsed_info.mediator
+    #     xcontainer = heavy_parsed_info.xcontainer
     #
     #     args = {}
-    #     if mediator.initial_state_board_sfen != "startpos"
-    #       args[:initpos] = mediator.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     if xcontainer.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = xcontainer.initial_state_board_sfen.remove(/^sfen\s*/)
     #     end
-    #     if mediator.hand_logs.present?
-    #       args[:moves] = mediator.hand_logs.collect(&:to_sfen).join(".")
+    #     if xcontainer.hand_logs.present?
+    #       args[:moves] = xcontainer.hand_logs.collect(&:to_sfen).join(".")
     #     end
     #     kent_query = args.to_query
     #
     #     {
-    #       initial_state_board_sfen: mediator.initial_state_board_sfen, # => "startpos"
-    #       last_sfen: mediator.to_short_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
-    #       moves: mediator.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
+    #       initial_state_board_sfen: xcontainer.initial_state_board_sfen, # => "startpos"
+    #       last_sfen: xcontainer.to_short_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+    #       moves: xcontainer.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
     #       kent_query: kent_query,
     #     }
     #   }.call
@@ -295,14 +295,14 @@ module BattleModelMethods
     #
     # def kento_app_embed_url
     #   @kento_app_embed_url ||= yield_self do
-    #     mediator = heavy_parsed_info.mediator
+    #     xcontainer = heavy_parsed_info.xcontainer
     #
     #     args = {}
-    #     if mediator.initial_state_board_sfen != "startpos"
-    #       args[:initpos] = mediator.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     if xcontainer.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = xcontainer.initial_state_board_sfen.remove(/^sfen\s*/)
     #     end
-    #     if mediator.hand_logs.present?
-    #       args[:moves] = mediator.hand_logs.collect(&:to_sfen).join(".")
+    #     if xcontainer.hand_logs.present?
+    #       args[:moves] = xcontainer.hand_logs.collect(&:to_sfen).join(".")
     #     end
     #
     #     "https://www.kento-shogi.com/?#{args.to_query}"

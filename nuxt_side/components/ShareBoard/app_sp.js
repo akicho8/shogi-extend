@@ -129,12 +129,12 @@ export const app_sp = {
 
     // 駒箱調整
     sp_piece_box_piece_counts_adjust() {
-      return this.sp_call(e => e.mediator.piece_box_piece_counts_adjust())
+      return this.sp_call(e => e.xcontainer.piece_box_piece_counts_adjust())
     },
 
     // 玉の自動配置
     sp_king_formation_auto_set_on_off(v) {
-      return this.sp_call(e => e.mediator.king_formation_auto_set_on_off(v))
+      return this.sp_call(e => e.xcontainer.king_formation_auto_set_on_off(v))
     },
 
     // スマホから戻ったときに音が鳴るようにする
