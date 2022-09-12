@@ -4,7 +4,7 @@ module KifuExtractor
   class CaseContentPreset < Extractor
     def resolve
       if e = PresetInfo.lookup(item.source)
-        @body = e.to_position_sfen
+        @body = e.to_short_sfen
       end
     end
   end
