@@ -42,7 +42,7 @@ client-only
         .buttons.is-centered
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play_click()")
           KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play_click()")
-          KifCopyButton(@click="kifu_copy_handle2")
+          KifCopyButton(@click="kifu_copy_button_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
           TweetButton(:body="permalink_url" @after_click="sound_play_click()")
@@ -100,9 +100,9 @@ export default {
     return {
       record: null,            // 属性がたくさん入ってる
 
-      sp_run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      current_turn: null,       // KENTOに渡すための手番
-      new_viewpoint: null,          // 視点
+      sp_run_mode: null,       // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      current_turn: null,      // KENTOに渡すための手番
+      new_viewpoint: null,     // 視点
       bod_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
@@ -189,8 +189,7 @@ export default {
       }}, () => {}, () => {})
     },
 
-    kifu_copy_handle2() {
-      this.sound_play_click()
+    kifu_copy_button_handle() {
       this.kifu_copy_handle(this.FormatTypeInfo.fetch('kif_utf8'))
     },
 

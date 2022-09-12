@@ -60,7 +60,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定"    @click="base.abstract_viewpoint_key_select_modal_handle")
 
         ShareBoardSidebarExport(:base="base")
-          b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_dl_modal_handle")
+          b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${base.current_turn}`" @click.native="base.image_dl_modal_handle")
           b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
 
         b-menu-list(label="その他")
