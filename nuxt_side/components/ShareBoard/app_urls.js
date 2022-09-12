@@ -1,4 +1,5 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
+import { KifuVo } from "@/components/models/kifu_vo.js"
 
 export const app_urls = {
   methods: {
@@ -29,6 +30,7 @@ export const app_urls = {
     other_app_click_handle(app_name) {
       this.sidebar_p = false
       this.sound_play_click()
+      this.ga_click(app_name)
 
       this.shared_al_add({
         label: `${app_name}起動`,
@@ -86,6 +88,10 @@ export const app_urls = {
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
       })
+    },
+
+    kpedia_url() {
+      return KifuVo.create({sfen: this.bod_sfen}).kpedia_url
     },
 
     // 合言葉だけを付与したURL

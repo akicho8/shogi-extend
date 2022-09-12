@@ -26,6 +26,8 @@ export const app_sfen_share = {
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
+        sfen: e.sfen,
+        turn: e.turn,
         lmi: {
           kif_without_from:    lmi.to_kif_without_from,        // "☗7六歩"
           next_turn_offset:    lmi.next_turn_offset,           // 1
@@ -34,8 +36,6 @@ export const app_sfen_share = {
           effect_key:          lmi.effect_key,                 // 効果音キー
           foul_names:          lmi.foul_list.map(e => e.name), // ["駒ワープ", "王手放置"]
         },
-        sfen: this.current_sfen, // e.sfen でもよい
-        turn: lmi.next_turn_offset,
         clock_box_params: this.clock_box_share_params_factory(), // 指し手と合わせて時計の情報も送る
       }
 

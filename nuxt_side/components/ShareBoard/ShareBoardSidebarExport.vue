@@ -1,8 +1,8 @@
 <template lang="pug">
+// なぜだかわからない b-menu-list.ShareBoardSidebarExport とはできない
 .ShareBoardSidebarExport
   b-menu-list(label="EXPORT")
-    b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_dl_modal_handle")
-    b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
+    slot
 
     b-menu-item.is_active_unset(icon="clipboard-plus-outline" @click="sound_play_click()")
       template(slot="label" slot-scope="props")
@@ -29,15 +29,24 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+// import { support_child } from "./support_child.js"
 
 export default {
   name: "ShareBoardSidebarExport",
-  mixins: [support_child],
+  // mixins: [support_child],
+  props: {
+    // base.current_turn
+    // base.kifu_copy_handle(e)
+    // base.kifu_show_handle(e)
+    // base.kifu_show_url(e)
+    // base.kifu_download_handle(e)
+    // base.kifu_download_url(e)
+    base: { type: Object, required: true },
+  },
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+// @import "./support.sass"
 .ShareBoardSidebarExport
 </style>

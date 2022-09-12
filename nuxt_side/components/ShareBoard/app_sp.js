@@ -3,6 +3,12 @@ const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 import _ from "lodash"
 
 export const app_sp = {
+  data() {
+    return {
+      bod_sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    }
+  },
+
   methods: {
     // internal_rule_input_handle() {
     //   this.sound_play_click()
@@ -11,7 +17,10 @@ export const app_sp = {
     // 操作モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
     play_mode_advanced_full_moves_sfen_set(e) {
+      // sfen と turn を同時に更新すること
+      // そうしないと computed が二度走ってしまう
       this.current_sfen = e.sfen
+      this.current_turn = e.turn  // last_move_info.next_turn_offset と同じ
 
       // this.sound_play("shout_08")
       // this.vibrate_short()
@@ -35,8 +44,9 @@ export const app_sp = {
 
     // デバッグ用
     mediator_snapshot_sfen_set(sfen) {
+      this.bod_sfen = sfen
       if (this.development_p) {
-        // this.$buefy.toast.open({message: `mediator_snapshot_sfen -> ${sfen}`, queue: false})
+        this.$buefy.toast.open("mediator_snapshot_sfen")
       }
     },
 

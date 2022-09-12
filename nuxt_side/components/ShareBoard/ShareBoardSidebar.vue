@@ -48,6 +48,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="link"                   label="棋譜リンクコピー" :href="base.room_code_except_url"                                    @click="base.room_code_except_url_copy_handle" )
           b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋"         :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')")
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.kento_app_with_params_url"      :target="target_default" @click="base.other_app_click_handle('KENTO')")
+          b-menu-item.is_active_unset(icon="alpha-p-box-outline"    label="局面ペディア"     :href="base.kpedia_url"              :target="target_default" @click="base.other_app_click_handle('局面ペディア')")
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
           b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle")
@@ -59,6 +60,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定"    @click="base.abstract_viewpoint_key_select_modal_handle")
 
         ShareBoardSidebarExport(:base="base")
+          b-menu-item.is_active_unset(icon="image" label="画像ダウンロード" @click.native="base.image_dl_modal_handle")
+          b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="base.general_help_modal_handle")
@@ -102,7 +105,7 @@ export default {
   .sidebar-content
     width: 20rem
 
-  .menu-label
+  .menu-label:not(:first-child), .ShareBoardSidebarExport
     margin-top: 2em
 
   .user_account

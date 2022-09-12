@@ -24,6 +24,7 @@ client-only
             :sp_viewpoint.sync="new_viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
+            @update:mediator_snapshot_sfen="v => bod_sfen = v"
             ref="main_sp"
           )
 
@@ -32,7 +33,7 @@ client-only
         :record="record"
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
-        :chart_turn="new_turn"
+        :chart_turn="current_turn"
         :sp_viewpoint="new_viewpoint"
         ref="SwarsBattleShowTimeChart"
       )
@@ -41,7 +42,7 @@ client-only
         .buttons.is-centered
           PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play_click()")
           KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play_click()")
-          KifCopyButton(@click="kifu_copy_handle")
+          KifCopyButton(@click="kifu_copy_handle2")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
           TweetButton(:body="permalink_url" @after_click="sound_play_click()")
@@ -61,11 +62,11 @@ client-only
       //- .columns
       //-   .column.is-half-desktop.is_buttons_column
       //-     .buttons.is-centered
-      //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="new_turn")
+      //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="current_turn")
 
       //-   DebugPre(v-if="development_p")
       //-     | start_turn: {{start_turn}}
-      //-     | new_turn: {{new_turn}}
+      //-     | current_turn: {{current_turn}}
       //-     | record.turn: {{record.turn}}
       //-     | record.display_turn: {{record.display_turn}}
       //-     | record.critical_turn: {{record.critical_turn}}
@@ -79,15 +80,19 @@ client-only
 <script>
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
+import { app_export      } from "./app_export.js"
 import { app_sidebar     } from "./app_sidebar.js"
 
 import { SceneInfo } from "../models/scene_info.js"
+import { KifuVo } from "@/components/models/kifu_vo.js"
+import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 
 export default {
   name: "SwarsBattleShowApp",
   mixins: [
     support_parent,
     app_chore,
+    app_export,
     app_sidebar,
   ],
 
@@ -96,8 +101,9 @@ export default {
       record: null,            // 属性がたくさん入ってる
 
       sp_run_mode: null,          // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
-      new_turn: null,       // KENTOに渡すための手番
+      current_turn: null,       // KENTOに渡すための手番
       new_viewpoint: null,          // 視点
+      bod_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
@@ -150,7 +156,7 @@ export default {
   },
 
   watch: {
-    new_turn() { this.url_replace() },
+    current_turn() { this.url_replace() },
     new_viewpoint() { this.url_replace() },
   },
 
@@ -178,14 +184,14 @@ export default {
       // FIXME: queryだけ変更するとエラーになる
       this.$router.replace({query: {
         ...this.$route.query,
-        turn: this.new_turn,
+        turn: this.current_turn,
         viewpoint: this.new_viewpoint,
       }}, () => {}, () => {})
     },
 
-    kifu_copy_handle() {
+    kifu_copy_handle2() {
       this.sound_play_click()
-      this.kif_clipboard_copy({kc_path: this.record.show_path})
+      this.kifu_copy_handle(this.FormatTypeInfo.fetch('kif_utf8'))
     },
 
     sidebar_toggle() {
@@ -205,7 +211,7 @@ export default {
     // バトル情報がセットされたタイミングまたは変更されたタイミング
     record_setup() {
       // 開始手数を保存 (KENTOに渡すためでもある)
-      this.new_turn = this.sp_turn
+      this.current_turn = this.sp_turn
 
       // 継盤解除
       this.sp_run_mode = "view_mode"
@@ -220,6 +226,8 @@ export default {
           this.sp_run_mode = "play_mode"
         }
       }
+
+      this.bod_sfen = this.record.sfen_body
     },
 
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
@@ -248,13 +256,13 @@ export default {
     // SwarsBattleShowTimeChart でチャートをクリックしたときに変更する
     turn_set_from_chart(v) {
       this.$refs.main_sp.sp_object().api_board_turn_set(v) // 直接 shogi-player に設定
-      this.new_turn = v                                    // KENTO用に設定 (shogi-playerからイベントが来ないため)
+      this.current_turn = v                                    // KENTO用に設定 (shogi-playerからイベントが来ないため)
       this.slider_focus()                             // チャートを動かした直後も左右キーが使えるようにする
     },
 
     // shogi-player の局面が変化したときの手数を取り出す
     real_turn_set(v) {
-      this.new_turn = v
+      this.current_turn = v
     },
 
     // this.$nextTick(() => this.slider_focus()) の方法だと失敗する
@@ -263,10 +271,17 @@ export default {
         this.$refs.main_sp.sp_object().api_turn_slider_focus()
       }
     },
+
+    other_app_click_handle(app_name) {
+      this.sidebar_p = false
+      this.sound_play_click()
+      this.ga_click(app_name)
+    },
   },
 
   computed: {
     base() { return this },
+    FormatTypeInfo() { return FormatTypeInfo },
 
     SceneInfo()  { return SceneInfo                             },
     scene_info() { return this.SceneInfo.lookup(this.scene_key) },
@@ -295,14 +310,14 @@ export default {
 
     og_image() {
       const params = new URLSearchParams()
-      params.set("turn", this.new_turn)
+      params.set("turn", this.current_turn)
       params.set("viewpoint", this.new_viewpoint)
       params.set("color_theme_key", this.color_theme_key)
       return `${this.record.show_path}.png?${params}`
     },
 
     og_title() {
-      return `${this.record.title} ${this.new_turn}手目`
+      return `${this.record.title} ${this.current_turn}手目`
     },
 
     sp_turn() {
@@ -323,7 +338,7 @@ export default {
       // }
 
       const params = new URLSearchParams()
-      params.set("turn", this.new_turn)
+      params.set("turn", this.current_turn)
       params.set("viewpoint", this.new_viewpoint)
 
       return `${url}/swars/battles/${this.record.key}?${params}`
@@ -332,7 +347,7 @@ export default {
     // png_dl_url() {
     //   const params = new URLSearchParams()
     //   params.set("attachment", true)
-    //   params.set("turn", this.new_turn)
+    //   params.set("turn", this.current_turn)
     //   params.set("viewpoint", this.new_viewpoint)
     //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
     // },
@@ -341,7 +356,7 @@ export default {
       return this.piyo_shogi_auto_url({
         path:      this.record.show_path,
         sfen:      this.record.sfen_body,
-        turn:      this.new_turn,
+        turn:      this.current_turn,
         viewpoint: this.new_viewpoint,
         ...this.record.piyo_shogi_base_params,
       })
@@ -350,9 +365,13 @@ export default {
     kento_app_with_params_url() {
       return this.kento_full_url({
         sfen:      this.record.sfen_body,
-        turn:      this.new_turn,
+        turn:      this.current_turn,
         viewpoint: this.new_viewpoint,
       })
+    },
+
+    kpedia_url() {
+      return KifuVo.create({sfen: this.bod_sfen}).kpedia_url
     },
 
     // tweet_url() {
@@ -370,7 +389,7 @@ export default {
         title: "将棋ウォーズ棋譜",
 
         body:  this.record.sfen_body,
-        turn:  this.new_turn,
+        turn:  this.current_turn,
         abstract_viewpoint: this.new_viewpoint,
       }
     },
@@ -390,7 +409,7 @@ export default {
     style_editor_query() {
       return {
         body: this.record.sfen_body,
-        turn: this.new_turn,
+        turn: this.current_turn,
         viewpoint: this.new_viewpoint,
         ...this.player_info_hash,
       }
