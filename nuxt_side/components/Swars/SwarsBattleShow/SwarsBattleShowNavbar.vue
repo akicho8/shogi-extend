@@ -3,7 +3,7 @@ MainNavbar.SwarsBattleShowNavbar
   template(slot="brand")
     b-navbar-item(@click="base.back_handle")
       b-icon(icon="chevron-left")
-    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: base.current_turn, viewpoint: base.new_viewpoint}}")
+    b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'swars-battles-key', params: {key: $route.params.key}, query: {turn: base.current_turn, viewpoint: base.sp_viewpoint}}")
       | \#{{base.current_turn}}
   template(slot="end")
     b-navbar-item.px_5_if_tablet.has-text-weight-bold(@click="base.tweet_handle")

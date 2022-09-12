@@ -21,7 +21,7 @@ client-only
             sp_slider="is_slider_on"
             sp_summary="is_summary_off"
             sp_controller="is_controller_on"
-            :sp_viewpoint.sync="new_viewpoint"
+            :sp_viewpoint.sync="sp_viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
             @update:mediator_snapshot_sfen="v => bod_sfen = v"
@@ -34,7 +34,7 @@ client-only
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="current_turn"
-        :sp_viewpoint="new_viewpoint"
+        :sp_viewpoint="sp_viewpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
@@ -73,7 +73,7 @@ client-only
       //-     | record.outbreak_turn: {{record.outbreak_turn}}
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
-      //-     | new_viewpoint: {{new_viewpoint}}
+      //-     | sp_viewpoint: {{sp_viewpoint}}
       DebugPre(v-if="development_p") {{record}}
 </template>
 
@@ -102,7 +102,7 @@ export default {
 
       sp_run_mode: null,       // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       current_turn: null,      // KENTOに渡すための手番
-      new_viewpoint: null,     // 視点
+      sp_viewpoint: null,     // 視点
       bod_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
@@ -157,7 +157,7 @@ export default {
 
   watch: {
     current_turn() { this.url_replace() },
-    new_viewpoint() { this.url_replace() },
+    sp_viewpoint() { this.url_replace() },
   },
 
   methods: {
@@ -185,7 +185,7 @@ export default {
       this.$router.replace({query: {
         ...this.$route.query,
         turn: this.current_turn,
-        viewpoint: this.new_viewpoint,
+        viewpoint: this.sp_viewpoint,
       }}, () => {}, () => {})
     },
 
@@ -216,7 +216,7 @@ export default {
       this.sp_run_mode = "view_mode"
 
       // 最初の上下反転状態
-      this.new_viewpoint = this.default_viewpoint
+      this.sp_viewpoint = this.default_viewpoint
 
       // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
       // これは勝手にやらない方がいい？
@@ -310,7 +310,7 @@ export default {
     og_image() {
       const params = new URLSearchParams()
       params.set("turn", this.current_turn)
-      params.set("viewpoint", this.new_viewpoint)
+      params.set("viewpoint", this.sp_viewpoint)
       params.set("color_theme_key", this.color_theme_key)
       return `${this.record.show_path}.png?${params}`
     },
@@ -338,7 +338,7 @@ export default {
 
       const params = new URLSearchParams()
       params.set("turn", this.current_turn)
-      params.set("viewpoint", this.new_viewpoint)
+      params.set("viewpoint", this.sp_viewpoint)
 
       return `${url}/swars/battles/${this.record.key}?${params}`
     },
@@ -347,7 +347,7 @@ export default {
     //   const params = new URLSearchParams()
     //   params.set("attachment", true)
     //   params.set("turn", this.current_turn)
-    //   params.set("viewpoint", this.new_viewpoint)
+    //   params.set("viewpoint", this.sp_viewpoint)
     //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
     // },
 
@@ -356,7 +356,7 @@ export default {
         path:      this.record.show_path,
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
-        viewpoint: this.new_viewpoint,
+        viewpoint: this.sp_viewpoint,
         ...this.record.piyo_shogi_base_params,
       })
     },
@@ -365,7 +365,7 @@ export default {
       return this.kento_full_url({
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
-        viewpoint: this.new_viewpoint,
+        viewpoint: this.sp_viewpoint,
       })
     },
 
@@ -389,7 +389,7 @@ export default {
 
         body:  this.record.sfen_body,
         turn:  this.current_turn,
-        abstract_viewpoint: this.new_viewpoint,
+        abstract_viewpoint: this.sp_viewpoint,
       }
     },
 
@@ -409,7 +409,7 @@ export default {
       return {
         body: this.record.sfen_body,
         turn: this.current_turn,
-        viewpoint: this.new_viewpoint,
+        viewpoint: this.sp_viewpoint,
         ...this.player_info_hash,
       }
     }
