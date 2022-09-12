@@ -24,7 +24,7 @@ client-only
             :sp_viewpoint.sync="sp_viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
-            @update:mediator_snapshot_sfen="v => bod_sfen = v"
+            @update:short_sfen="v => short_sfen = v"
             ref="main_sp"
           )
 
@@ -103,7 +103,7 @@ export default {
       sp_run_mode: null,       // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       current_turn: null,      // KENTOに渡すための手番
       sp_viewpoint: null,     // 視点
-      bod_sfen: null,          // BOD タイプの sfen
+      short_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
@@ -226,7 +226,7 @@ export default {
         }
       }
 
-      this.bod_sfen = this.record.sfen_body
+      this.short_sfen = this.record.sfen_body
     },
 
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
@@ -370,7 +370,7 @@ export default {
     },
 
     kpedia_url() {
-      return KifuVo.create({sfen: this.bod_sfen}).kpedia_url
+      return KifuVo.create({sfen: this.short_sfen}).kpedia_url
     },
 
     // tweet_url() {

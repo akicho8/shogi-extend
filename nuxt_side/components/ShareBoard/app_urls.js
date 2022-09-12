@@ -91,7 +91,7 @@ export const app_urls = {
     },
 
     kpedia_url() {
-      return KifuVo.create({sfen: this.bod_sfen}).kpedia_url
+      return KifuVo.create({sfen: this.short_sfen}).kpedia_url
     },
 
     // 合言葉だけを付与したURL

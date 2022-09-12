@@ -22,7 +22,7 @@
       sp_summary="is_summary_off"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
-      @update:mediator_snapshot_sfen="v => snapshot_sfen = v"
+      @update:short_sfen="v => short_sfen = v"
       @update:turn_offset="turn_offset_set"
       )
   .modal-card-foot
@@ -60,7 +60,7 @@ export default {
       sp_viewpoint:  null,
 
       // ShogiPlayerの状態を受けとる用
-      snapshot_sfen: null,
+      short_sfen: null,
       turn_offset:   null,
 
     }
@@ -128,7 +128,7 @@ export default {
       this.sound_play_click()
       const info = this.sfen_parse(this.sp_body)
       const moves = _.drop(info.moves, this.turn_offset)            // [a, b, c, d, e].drop(2) => [c, d, e]
-      this.base_sfen = this.sfen_normalize(this.snapshot_sfen)      // bから始まる棋譜の最後の手番を1にしたもの
+      this.base_sfen = this.sfen_normalize(this.short_sfen)      // bから始まる棋譜の最後の手番を1にしたもの
       this.sp_body = this.sfen_add_moves(this.base_sfen, moves)     // ShogiPlayer用にその手番から始まる棋譜にする
       if (this.next_jump_to === "last") {
         this.sp_turn = moves.length                                 // 最後から表示

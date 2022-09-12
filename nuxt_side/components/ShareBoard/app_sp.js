@@ -5,7 +5,7 @@ import _ from "lodash"
 export const app_sp = {
   data() {
     return {
-      bod_sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+      short_sfen: "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
     }
   },
 
@@ -43,10 +43,10 @@ export const app_sp = {
     },
 
     // デバッグ用
-    mediator_snapshot_sfen_set(sfen) {
-      this.bod_sfen = sfen
+    short_sfen_set(sfen) {
+      this.short_sfen = sfen
       if (this.development_p) {
-        this.$buefy.toast.open("mediator_snapshot_sfen")
+        this.$buefy.toast.open("short_sfen")
       }
     },
 
