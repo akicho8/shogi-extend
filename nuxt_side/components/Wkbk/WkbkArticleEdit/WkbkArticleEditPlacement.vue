@@ -14,7 +14,7 @@ MainSection.WkbkArticleEditPlacement
             :sp_sound_enabled="false"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
-            @update:edit_mode_snapshot_sfen="base.edit_mode_snapshot_sfen"
+            @update:edit_mode_short_sfen="base.edit_mode_short_sfen"
             ref="main_sp"
             )
           .footer_buttons

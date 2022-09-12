@@ -10,7 +10,7 @@ export const app_placement = {
 
   methods: {
     // 配置で駒を動かしたときのフック。article.init_sfen は変更しないようにする
-    edit_mode_snapshot_sfen(sfen) {
+    edit_mode_short_sfen(sfen) {
       this.sp_body = sfen
     },
 

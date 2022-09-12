@@ -9,7 +9,7 @@ export const app_article = {
 
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
-    edit_mode_snapshot_sfen(sfen) {
+    edit_mode_short_sfen(sfen) {
       if (this.article.init_sfen !== sfen) {
         if (this.article.moves_answers.length >= 1) {
           this.toast_ok("元の配置を変更したので正解を削除しました")

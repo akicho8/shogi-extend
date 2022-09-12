@@ -286,7 +286,7 @@ module BattleModelMethods
     #
     #     {
     #       initial_state_board_sfen: mediator.initial_state_board_sfen, # => "startpos"
-    #       last_sfen: mediator.to_snapshot_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+    #       last_sfen: mediator.to_short_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
     #       moves: mediator.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
     #       kent_query: kent_query,
     #     }

@@ -54,7 +54,7 @@ export const app_sp = {
     // ・常に更新するが、URLにはすぐには反映しない→やっぱり反映する
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
-    edit_mode_snapshot_sfen_set(v) {
+    edit_mode_short_sfen_set(v) {
       this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える

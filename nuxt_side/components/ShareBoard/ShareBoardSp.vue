@@ -109,7 +109,7 @@ export default {
     sp_hook() {
       const hv = {}
       hv["update:play_mode_advanced_full_moves_sfen"] = this.base.play_mode_advanced_full_moves_sfen_set
-      hv["update:edit_mode_snapshot_sfen"]            = this.base.edit_mode_snapshot_sfen_set
+      hv["update:edit_mode_short_sfen"]            = this.base.edit_mode_short_sfen_set
       hv["update:short_sfen"]             = this.base.short_sfen_set
       hv["update:turn_offset"]                        = v => this.base.current_turn = v
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
