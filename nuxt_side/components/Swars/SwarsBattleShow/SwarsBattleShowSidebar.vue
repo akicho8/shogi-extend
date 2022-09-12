@@ -10,6 +10,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
           b-menu-item.is_active_unset(label="動画作成" tag="nuxt-link" :to="{name: 'video-new', query: {body: base.record.sfen_body, viewpoint_key: base.new_viewpoint}}" @click.native="sound_play_click()")
           b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.new_turn, viewpoint: base.new_viewpoint}}" @click.native="sound_play_click()")
           b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="sound_play_click()")
+          b-menu-item.is_active_unset(label="局面ペディア" :href="base.kpedia_url" :target="target_default" @click="base.other_app_click_handle('局面ペディア')")
 
         b-menu-list(label="export")
           b-menu-item.is_active_unset(label="棋譜用紙 (PDF)"   tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="sound_play_click()")
