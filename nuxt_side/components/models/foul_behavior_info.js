@@ -14,9 +14,9 @@ export class FoulBehaviorInfo extends ApplicationMemoryRecord {
       // | 上級者向け     |       |       | 反則かどうかは人が判断する                       |        |
       // | 初心者向け     | o     | o     | 反則になりそうなら emit して動作をキャンセルする |        |
       // |----------------+-------+-------+--------------------------------------------------+--------|
-      { key: "is_foul_behavior_auto",   name: "できる(指摘あり)", message: "指し終わったあと自動的に指摘する(81・24風)", sp_play_mode_foul_check_p: true,  sp_play_mode_foul_break_p: false, },
-      { key: "is_foul_behavior_newbie", name: "できない",         message: "初心者向けで反則できない(ウォーズ風)",       sp_play_mode_foul_check_p: true,  sp_play_mode_foul_break_p: true,  },
-      { key: "is_foul_behavior_throw",  name: "できる",           message: "リアルで対面対局するのと同じ",               sp_play_mode_foul_check_p: false, sp_play_mode_foul_break_p: false, },
+      { key: "is_foul_behavior_auto",   name: "できる",   message: "自動的に指摘する(81・24風)",   sp_play_mode_foul_check_p: true,  sp_play_mode_foul_break_p: false, environment: ["development", "staging", "production"], },
+      { key: "is_foul_behavior_newbie", name: "できない", message: "初心者向け(ウォーズ風)",       sp_play_mode_foul_check_p: true,  sp_play_mode_foul_break_p: true,  environment: ["development", "staging", "production"], },
+      { key: "is_foul_behavior_throw",  name: "フリー",   message: "リアルで対面対局するのと同じ", sp_play_mode_foul_check_p: false, sp_play_mode_foul_break_p: false, environment: ["development"],                          },
     ]
   }
 }
