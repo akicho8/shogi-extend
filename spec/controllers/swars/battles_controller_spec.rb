@@ -211,6 +211,28 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   end
 
   describe "show" do
+    it "BODの場合はturnで示す局面に変化する" do
+      get :show, params: { id: record.to_param, format: "bod", turn: 1 }
+      response.body.should == <<~EOT
+後手の持駒：なし
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩v歩v歩v歩v歩v歩v歩v歩v歩|三
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ 歩 ・ ・ ・ ・|六
+| 歩 歩 歩 歩 ・ 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+先手の持駒：なし
+手数＝1 ▲５六歩(57) まで
+後手番
+EOT
+    end
+
     it "PNG画像が見れる" do
       get :show, params: { id: record.to_param, format: "png", width: "", turn: 999 }
       assert { response.status == 302 }
