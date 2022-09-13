@@ -36,11 +36,11 @@ export const app_ordered_members = {
 
   methods: {
     // alice bob carol dave の順番で設定する場合は
-    // ordered_member_names=alice,bob,carol,dave とする
-    // ordered_member_names= なら空で設定
+    // fixed_order_names=alice,bob,carol,dave とする
+    // fixed_order_names= なら空で設定
     os_setup_by_url_params() {
-      if ("ordered_member_names" in this.$route.query) {
-        const names = this.str_to_words(this.$route.query.ordered_member_names)
+      if ("fixed_order_names" in this.$route.query) {
+        const names = this.str_to_words(this.$route.query["fixed_order_names"])
         this.os_setup_by_names(names)
       }
     },
@@ -490,6 +490,30 @@ export const app_ordered_members = {
     // 変更したけど保存せずにモーダルを閉じようとしている？
     os_modal_close_if_not_save_p() {
       return this.order_enable_p && this.os_change.has_value_p
+    },
+
+    // 最終的に左側に表示する並びになっているメンバーリスト
+    // 順番設定されているときは対局者を優先的に上に表示する
+    visible_member_infos() {
+      if (this.order_enable_p) {
+        if (this.ordered_members) {
+          return _.sortBy(this.member_infos, e => {
+            let found = null
+            if (false) {
+              found = this.ordered_members.find(v => v.user_name === e.from_user_name) // O(n)
+            } else {
+              found = this.ordered_member_names_hash[e.from_user_name] // O(1)
+            }
+            if (found) {
+              return found.order_index
+            } else {
+              // 見つからなかった人は「観戦」なので一番下に移動させておく
+              return this.member_infos.length
+            }
+          })
+        }
+      }
+      return this.member_infos
     },
   },
 }

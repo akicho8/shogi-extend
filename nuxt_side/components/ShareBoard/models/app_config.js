@@ -1,0 +1,5 @@
+export const AppConfig = {
+  ALIVE_NOTIFY_INTERVAL: 30,   // N秒ごとに存在を通知する
+  ALIVE_SEC: 30 + 5,           // N秒未満なら活発とみなす
+  KILL_SEC: 30 + 30,           // 通知がN秒前より古いユーザーは破棄
+}

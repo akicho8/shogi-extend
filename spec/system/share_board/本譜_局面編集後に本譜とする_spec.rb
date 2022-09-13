@@ -2,8 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it do
-    a_block { visit_app(room_code: :my_room, force_user_name: "alice") }
-    b_block { visit_app(room_code: :my_room, force_user_name: "bob")   }
+    a_block { visit_app(room_code: :my_room, fixed_user_name: "alice") }
+    b_block { visit_app(room_code: :my_room, fixed_user_name: "bob")   }
     a_block do
       hamburger_click
       menu_item_click("局面編集")

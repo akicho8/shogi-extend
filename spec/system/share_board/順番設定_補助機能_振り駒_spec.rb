@@ -4,12 +4,12 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(shakashaka_count, piece_names, message)
     a_block do
       visit_app({
-          :room_code                 => :my_room,
-          :force_user_name           => "1",
-          :ordered_member_names      => "1,2,3,4",
-          :handle_name_validate_skip => "true",
-          :furigoma_random_key       => "is_true",        # 毎回反転が起きる
-          :shakashaka_count          => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
+          :room_code            => :my_room,
+          :fixed_user_name      => "1",
+          :fixed_order_names    => "1,2,3,4",
+          :handle_name_validate => "false",
+          :furigoma_random_key  => "is_true",        # 毎回反転が起きる
+          :shakashaka_count     => shakashaka_count, # 2回すると反転の反転で表に戻る(つまり「歩」が5枚)
         })
 
       hamburger_click

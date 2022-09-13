@@ -66,6 +66,8 @@ import { Location                 } from "shogi-player/components/models/locatio
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
 import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
 
+import { AppConfig                } from "./models/app_config.js"
+
 import { support_parent           } from "./support_parent.js"
 
 import { app_action_log           } from "./app_action_log.js"
@@ -94,6 +96,7 @@ import { app_xmatch               } from "./app_xmatch.js"
 import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_active_level    } from "./app_room_active_level.js"
 import { app_room_members         } from "./app_room_members.js"
+import { app_member_bc      } from "./app_member_bc.js"
 import { app_net_level            } from "./app_net_level.js"
 import { app_ping                 } from "./app_ping.js"
 import { app_tweet                } from "./app_tweet.js"
@@ -154,6 +157,7 @@ export default {
     app_room_board_setup,
     app_room_active_level,
     app_room_members,
+    app_member_bc,
     app_net_level,
     app_ping,
     app_tweet,
@@ -284,6 +288,7 @@ export default {
   computed: {
     base()           { return this },
     FormatTypeInfo() { return FormatTypeInfo },
+    AppConfig()      { return AppConfig },
 
     page_title() {
       if (this.current_turn === 0) {

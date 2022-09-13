@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "最新" do
     @API_VERSION = ShareBoardControllerMethods::API_VERSION
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+      visit_app(room_code: :my_room, fixed_user_name: "alice", API_VERSION: @API_VERSION)
       assert_no_text("新しいプログラムがあるのでブラウザをリロードします")
     end
   end
@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "更新" do
     @API_VERSION = ShareBoardControllerMethods::API_VERSION + 1
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "alice", API_VERSION: @API_VERSION)
+      visit_app(room_code: :my_room, fixed_user_name: "alice", API_VERSION: @API_VERSION)
       assert_text("新しいプログラムがあるのでブラウザをリロードします")
       buefy_dialog_button_click
     end

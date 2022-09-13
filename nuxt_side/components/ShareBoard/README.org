@@ -67,11 +67,14 @@
   |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
   | key                         | desc                                                    | Example                                                                                   |
   |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
+  | fixed_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&fixed_user_name=alice                       |
+  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                           |
+  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                           |
+  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
-  | force_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&force_user_name=alice                       |
-  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&force_user_name=alice&SEND_SUCCESS_DELAY=-1 |
+  | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                           |
+  | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&SEND_SUCCESS_DELAY=-1 |
   | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                           |
-  | ordered_member_names        | 順番設定の名前(複数)                                    |                                                                                           |
   | clock_box_initial_main_min  | 持ち時間(分)                                            |                                                                                           |
   | clock_box_initial_read_sec  | 秒読み(秒)                                              |                                                                                           |
   | clock_box_initial_extra_sec | 猶予(秒)                                                |                                                                                           |
@@ -85,40 +88,40 @@
 
 ** alice と bob の部屋を作るには？
 
-  http://localhost:4000/share-board?room_code=my_room&force_user_name=alice
-  http://localhost:4000/share-board?room_code=my_room&force_user_name=bob
+  http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice
+  http://localhost:4000/share-board?room_code=my_room&fixed_user_name=bob
 
 ** 順番設定済みで開始するには？
 
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice
 
 ** 順番設定済みのテスト
 
    3人
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol&autoexec=os_modal_handle
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice,bob,carol&autoexec=os_modal_handle
 
    4人
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice,bob,carol,dave&autoexec=os_modal_handle
 
 ** 振り駒
 
    # 常に反転 x 2回 なので 歩5枚
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=2
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=2
 
    # 常に反転 x 3回 なので と金5枚
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=3
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice,bob,carol,dave&autoexec=os_modal_handle&furigoma_random_key=is_true&shakashaka_count=3
 
 ** 再送モーダル発動確認するには？ (待ち時間が短かすぎて発動)
 
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice&RETRY_DELAY=0&SEND_SUCCESS_DELAY=3
 
 ** 再送モーダル発動確認するには？
 
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice&SEND_SUCCESS_DELAY=-1
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice&SEND_SUCCESS_DELAY=-1
 
 ** 時計設定済みで部屋に入るには？
 
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** プリセット指定
 
@@ -130,12 +133,12 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=bob&ordered_member_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=bob&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
-   http://localhost:4000/share-board?room_code=a&force_user_name=bob&ordered_member_names=alice,bob,carol&autoexec=message_modal_handle
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=bob&fixed_order_names=alice,bob,carol&autoexec=message_modal_handle
 
 ** メンバーステイタス確認
 
@@ -153,7 +156,7 @@
 
 ** 順番設定済み + 対局時計ON
 
-   http://localhost:4000/share-board?room_code=a&force_user_name=alice&ordered_member_names=alice,bob&autoexec=cc_create
+   http://localhost:4000/share-board?room_code=a&fixed_user_name=alice&fixed_order_names=alice,bob&autoexec=cc_create
 
 ** 棋譜を持っている状態で飛んでくるとそれが本譜になる
 
@@ -161,4 +164,8 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_code=my_room&force_user_name=alice&ordered_member_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
+
+** 部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
+
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_names=b,d,a,c&handle_name_validate=false

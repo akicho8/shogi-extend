@@ -31,7 +31,7 @@ export const app_chore = {
       }
 
       // インターバル実行の再スタートで即座にメンバー情報を反映する
-      this.member_info_bc_restart()
+      this.member_bc_restart()
 
       // ウィンドウを離れたらエントリー解除する
       if (!focus_p) {

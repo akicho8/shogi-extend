@@ -49,7 +49,7 @@ export const app_handle_name = {
 
     handle_name_set(user_name) {
       this.user_name = user_name
-      this.member_info_bc_restart() // 新しい名前をBCする
+      this.member_bc_restart() // 新しい名前をBCする
     },
 
     handle_name_clear_handle() {
@@ -57,7 +57,7 @@ export const app_handle_name = {
     },
 
     handle_name_validate(s) {
-      if (this.$route.query.handle_name_validate_skip === "true") {
+      if (this.$route.query.handle_name_validate === "false") {
         return true
       }
       const message = HandleNameValidator.valid_with_message(s)
