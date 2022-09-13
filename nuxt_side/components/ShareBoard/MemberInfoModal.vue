@@ -131,11 +131,6 @@ export default {
         },
         {
           enabled: this.staff_p || this.$config.STAGE === "staging",
-          label: "IP",
-          value: this.base.config.record.remote_ip,
-        },
-        {
-          enabled: this.staff_p || this.$config.STAGE === "staging",
           label: "Gateway",
           value: this.base.config.record.remote_name,
         },
