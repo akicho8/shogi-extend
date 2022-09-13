@@ -12,6 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
     foul_behavior_key("is_foul_behavior_auto")
     assert_selector(".place_2_2.current")
     assert_selector(".ShareBoardActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_selector(".FoulModal", text: "二歩で☖の勝ち！")
   end
 
   it "初心者用「できない・注意あり(本人へ)」" do
