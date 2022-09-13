@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     visit_app
     hamburger_click
-    menu_item_click("画像ダウンロード")        # 開く
+    menu_item_click("画像ダウンロード #0")      # 開く
     assert_selector(".ImageDlModal")            # モーダルが開いている
 
     find(".image_size_key_dropdown").click      # サイズ変更ドロップダウンを開く

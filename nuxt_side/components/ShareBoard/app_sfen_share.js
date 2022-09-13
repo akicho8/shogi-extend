@@ -136,7 +136,7 @@ export const app_sfen_share = {
 
         // 反則がないときだけ指し手と次の人を通知する
         if (this.blank_p(params.lmi.foul_names)) {
-          this.next_turn_call()
+          this.next_turn_call(params)
         }
 
         this.received_ok_send(params)

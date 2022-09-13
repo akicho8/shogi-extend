@@ -28,7 +28,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       assert_member_list(1, "is_turn_active", "alice")  # 1人目(alice)に丸がついている
       assert_member_list(2, "is_turn_standby", "bob")   # 2人目(bob)は待機中
-      piece_move_o("77", "76", "☗7六歩")                             # aliceが1番目なので指せる
+      piece_move_o("77", "76", "☗7六歩")               # aliceが1番目なので指せる
       assert_system_variable(:next_turn_message, "次は、bobさんの手番です")
     end
     b_block do

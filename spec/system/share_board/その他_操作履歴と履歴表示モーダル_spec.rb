@@ -4,9 +4,9 @@ RSpec.describe type: :system, share_board_spec: true do
   it "操作履歴から過去の局面に戻る" do
     def config
       {
-        :room_code            => :my_room,
+        :room_code         => :my_room,
         :fixed_order_names => "alice,bob",
-        :quick_sync_key       => "is_quick_sync_off", # 手動同期にしておく
+        :quick_sync_key    => "is_quick_sync_off", # 手動同期にしておく
       }
     end
 
