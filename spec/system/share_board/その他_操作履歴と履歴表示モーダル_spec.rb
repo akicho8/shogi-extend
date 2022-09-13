@@ -5,16 +5,16 @@ RSpec.describe type: :system, share_board_spec: true do
     def config
       {
         :room_code            => :my_room,
-        :ordered_member_names => "alice,bob",
+        :fixed_order_names => "alice,bob",
         :quick_sync_key       => "is_quick_sync_off", # 手動同期にしておく
       }
     end
 
     a_block do
-      visit_app(config.merge(force_user_name: "alice"))
+      visit_app(config.merge(fixed_user_name: "alice"))
     end
     b_block do
-      visit_app(config.merge(force_user_name: "bob"))
+      visit_app(config.merge(fixed_user_name: "bob"))
     end
     a_block do
       piece_move_o("77", "76", "☗7六歩")
@@ -36,7 +36,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "操作履歴モーダル内の補助機能" do
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice")
+      visit_app(room_code: :my_room, fixed_user_name: "alice", fixed_order_names: "alice")
       piece_move_o("77", "76", "☗7六歩")              # 初手を指す
       assert_turn(1)
       action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動

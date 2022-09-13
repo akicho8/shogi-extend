@@ -2,8 +2,8 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
-    a_block { visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob", clock_box_initial_main_min: 60, clock_box_play_handle: true) }
-    b_block { visit_app(room_code: :my_room, force_user_name: "bob",   ordered_member_names: "alice,bob", clock_box_initial_main_min: 60, clock_box_play_handle: true) }
+    a_block { visit_app(room_code: :my_room, fixed_user_name: "alice", fixed_order_names: "alice,bob", clock_box_initial_main_min: 60, clock_box_play_handle: true) }
+    b_block { visit_app(room_code: :my_room, fixed_user_name: "bob",   fixed_order_names: "alice,bob", clock_box_initial_main_min: 60, clock_box_play_handle: true) }
     a_block do
       find("a", text: "投了", exact_text: true).click # ヘッダーの「投了」ボタンを押す
       find(:button, "本当に投了する").click           # モーダルが表示されるので本当に投了する

@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "works" do
-    visit_app(room_code: :my_room, force_user_name: "alice")
+    visit_app(room_code: :my_room, fixed_user_name: "alice")
     hamburger_click
     os_modal_handle    # 「順番設定」モーダルを開く
     os_switch_toggle   # 右上の有効スイッチをクリック

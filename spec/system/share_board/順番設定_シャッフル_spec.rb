@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "1", ordered_member_names: "1,2,3,4", handle_name_validate_skip: "true")
+      visit_app(room_code: :my_room, fixed_user_name: "1", fixed_order_names: "1,2,3,4", handle_name_validate: "false")
 
       hamburger_click
       os_modal_handle # 「順番設定」モーダルを開く(すでに有効になっている)

@@ -3,13 +3,13 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "alice,bob")
+      visit_app(room_code: :my_room, fixed_user_name: "alice", fixed_order_names: "alice,bob")
     end
     b_block do
-      visit_app(room_code: :my_room, force_user_name: "bob", ordered_member_names: "alice,bob")
+      visit_app(room_code: :my_room, fixed_user_name: "bob", fixed_order_names: "alice,bob")
     end
     c_block do
-      visit_app(room_code: :my_room, force_user_name: "carol", ordered_member_names: "alice,bob")
+      visit_app(room_code: :my_room, fixed_user_name: "carol", fixed_order_names: "alice,bob")
     end
   end
   it "時計OFF順番設定ONでは検討をしていると思われる" do
@@ -36,7 +36,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
   it "順番設定で誰も参加していない" do
     a_block do
-      visit_app(room_code: :my_room, force_user_name: "alice", ordered_member_names: "")
+      visit_app(room_code: :my_room, fixed_user_name: "alice", fixed_order_names: "")
       place_click("77")
       assert_text("(順番設定で対局者の指定がないので誰も操作できません)")
     end

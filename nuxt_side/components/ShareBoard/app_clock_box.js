@@ -1,6 +1,5 @@
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
 
-import { IntervalRunner } from '@/components/models/interval_runner.js'
 import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
 import { Location       } from "shogi-player/components/models/location.js"

@@ -19,7 +19,7 @@ export const app_room_setup = {
       // 1. query.user_name         (URL引数)
       // 2. query.default_user_name (URL引数)
       // 3. g_current_user_name     (ログイン名)
-      this.user_name = this.$route.query.force_user_name || this.user_name
+      this.user_name = this.$route.query.fixed_user_name || this.user_name
     }
 
     if (this.room_code) {
@@ -96,7 +96,7 @@ export const app_room_setup = {
           this.ua_notify_once()                       // USER_AGENT を記録
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
-          this.member_info_bc_restart()
+          this.member_bc_restart()
         },
         disconnected: e => {
           this.ac_events_hash_inc("disconnected")

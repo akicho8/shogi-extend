@@ -2,6 +2,57 @@
 .columns.is-multiline.ShareBoardDebugPanels
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
+  .column.is-2
+    .panel
+      .panel-heading
+        | メンバー情報通知<br>{{base.member_bc_status}}
+      a.panel-block(@click="base.member_bc_create") create
+      a.panel-block(@click="base.member_bc_destroy") destroy
+      a.panel-block(@click="base.member_bc_restart") restart
+      a.panel-block(@click="base.member_bc_stop") stop
+      a.panel-block(@click="base.member_bc_callback") callback
+  .column.is-4
+    .panel
+      .panel-heading
+        | メンバーリスト({{base.member_infos.length}})
+      template(v-for="e in base.member_infos")
+        .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.from_connection_id}})
+  .column.is-2
+    .panel
+      .panel-heading
+        | メンバーと順番
+      .panel-block
+        | 面子: {{base.member_infos.map(e => e.from_user_name).join(" ")}}
+      .panel-block
+        | 順番: {{(base.ordered_members || []).map(e => e.user_name).join(" ")}}
+      .panel-block
+        | 最終: {{base.visible_member_infos.map(e => e.from_user_name).join(" ")}}
+      .panel-block
+        pre {{base.player_names_with_title_as_human_text}}
+  .column.is-4
+    .panel
+      .panel-heading
+        | 順番設定 ({{base.order_enable_p}})
+      template(v-for="e in (base.ordered_members || [])")
+        .panel-block {{e}}
+  .column.is-4
+    .panel
+      .panel-heading
+        | 順番情報(computed)
+      .panel-block 自分vs自分で対戦している？ {{base.self_vs_self_p}}
+      .panel-block 1vs1で対戦している？ {{base.one_vs_one_p}}
+      .panel-block 3人以上で対戦している？ {{base.many_vs_many_p}}
+      .panel-block 観戦者数 {{base.watching_member_count}}
+      .panel-block メンバーリストが空？ {{base.ordered_members_blank_p}}
+      .panel-block メンバーリストがある？ {{base.ordered_members_present_p}}
+      .panel-block 今の局面のメンバーの名前 {{base.current_turn_user_name}}
+      .panel-block 今は自分の手番か？ {{base.current_turn_self_p}}
+      .panel-block 次の局面のメンバーの名前 {{base.next_turn_user_name}}
+      .panel-block 次は自分の手番か？ {{base.next_turn_self_p}}
+      .panel-block 前の局面のメンバーの名前 {{base.previous_turn_user_name}}
+      .panel-block 前は自分の手番か？ {{base.previous_turn_self_p}}
+      .panel-block 自分はメンバーに含まれているか？ {{base.self_is_member_p}}
+      .panel-block 自分は観戦者か？ {{base.self_is_watcher_p}}
   .column.is-4
     .panel
       .panel-heading
@@ -67,7 +118,6 @@
       a.panel-block(@click="base.handle_name_alert") 順番設定中のハンドルネーム入力
       a.panel-block(@click="base.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="base.edit_warn_modal_handle") 編集警告
-      a.panel-block(@click="base.member_info_bc_restart") 生存通知
       a.panel-block(@click="base.al_add_test") 指し手
       a.panel-block(@click="base.clock_box_share({behaviour: '時計同期手動実行'})") 時計同期
       a.panel-block(@click="base.reload_modal_handle") リロード確認
@@ -170,30 +220,6 @@
         p.is_line_break_on {{$config.MY_SITE_URL + base.config.twitter_card_options.image}}
       .panel-block
         a(:href=`$config.MY_SITE_URL + base.config.twitter_card_options.image` target="_blank") 確認
-  .column.is-4
-    .panel
-      .panel-heading
-        | 順番設定 ({{base.order_enable_p}})
-      template(v-for="e in (base.ordered_members || [])")
-        .panel-block {{e}}
-  .column.is-4
-    .panel
-      .panel-heading
-        | 順番情報(computed)
-      .panel-block 自分vs自分で対戦している？ {{base.self_vs_self_p}}
-      .panel-block 1vs1で対戦している？ {{base.one_vs_one_p}}
-      .panel-block 3人以上で対戦している？ {{base.many_vs_many_p}}
-      .panel-block 観戦者数 {{base.watching_member_count}}
-      .panel-block メンバーリストが空？ {{base.ordered_members_blank_p}}
-      .panel-block メンバーリストがある？ {{base.ordered_members_present_p}}
-      .panel-block 今の局面のメンバーの名前 {{base.current_turn_user_name}}
-      .panel-block 今は自分の手番か？ {{base.current_turn_self_p}}
-      .panel-block 次の局面のメンバーの名前 {{base.next_turn_user_name}}
-      .panel-block 次は自分の手番か？ {{base.next_turn_self_p}}
-      .panel-block 前の局面のメンバーの名前 {{base.previous_turn_user_name}}
-      .panel-block 前は自分の手番か？ {{base.previous_turn_self_p}}
-      .panel-block 自分はメンバーに含まれているか？ {{base.self_is_member_p}}
-      .panel-block 自分は観戦者か？ {{base.self_is_watcher_p}}
   .column.is-4
     .panel#assert_system_variable
       .panel-heading

@@ -68,13 +68,15 @@ export const app_player_names = {
       }
       this.member_infos.forEach(e => {
         let name = e.from_user_name
-        const location = this.location_by_name(name)
+        const location = this.location_by_name(name)      // 先後
         let key = null
+        let index = this.member_infos.length
         if (location) {
           key = location.key
+          index = this.order_index_by_user_name(name) // 順番設定から自分の番号(0..)を取得
         } else {
           if (this.order_enable_p) {
-            key = "other"
+            key = "other"       // 順番設定されているけど順番に含まれていないということは観戦している人
           } else {
             key = "member"
           }
@@ -82,13 +84,11 @@ export const app_player_names = {
         if (false) {
           name = encodeURIComponent(name)
         }
-        av[key].push(name)
+        av[key].push({index, name}) // あとで index でソートする
       })
       return _.reduce(av, (a, list, key) => {
         // 既存パラメータがURLにあっても上書きしたいのですべてのキーを含める
-        // if (this.present_p(list)) {
-        // }
-        a[key] = list.join(", ")
+        a[key] = _.sortBy(list, "index").map(e => e.name).join(", ")
         return a
       }, {})
     },
