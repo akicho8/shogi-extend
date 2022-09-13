@@ -97,6 +97,7 @@ export const app_otasuke = {
             "二歩が心配なときは順番設定で反則を「できない」にしよう",
             "「投了」すると「本譜」が出現するよ",
           ]
+          message = null
         }
       }
       if (message) {
