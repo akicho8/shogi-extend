@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.AdapterSidebar.is-unselectable(fullheight right v-model="base.sidebar_p")
+b-sidebar.AdapterSidebar.is-unselectable(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       NavbarItemSidebarClose(@click="base.sidebar_toggle")

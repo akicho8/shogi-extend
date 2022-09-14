@@ -1,7 +1,7 @@
 <template lang="pug">
 .UserShow(v-if="!$fetchState.pending")
   client-only
-    b-sidebar.is-unselectable.UserShow-Sidebar(fullheight right v-model="sidebar_p")
+    b-sidebar.is-unselectable.UserShow-Sidebar(fullheight right overlay v-model="sidebar_p")
       .mx-4.my-4
         .is-flex.is-justify-content-space-between.is-align-items-center
           b-button.px-5(@click="sidebar_toggle" icon-left="menu")
