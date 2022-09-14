@@ -271,10 +271,12 @@ export default {
       }
     },
 
+    // いまのところ「局面ペディア」に遷移するときだけ使っている
     other_app_click_handle(app_name) {
       this.sidebar_p = false
       this.sound_play_click()
       this.ga_click(app_name)
+      this.remote_notify({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
     },
   },
 

@@ -31,6 +31,7 @@ export const app_urls = {
       this.sidebar_p = false
       this.sound_play_click()
       this.ga_click(app_name)
+      this.remote_notify({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 
       this.shared_al_add({
         label: `${app_name}起動`,
