@@ -1,10 +1,10 @@
 <template lang="pug">
 #app
-  nav.navbar.is-transparent.is-primary
+  nav.navbar.is-transparent.is-dark
     .navbar-brand
       router-link.navbar-item(to="/")
         img(src="@/assets/logo.png" width="32")
-        | Legacy Vue2 Based App
+        | 順番アルゴリズム検証
   .section
     .container.is-fluid
       router-view

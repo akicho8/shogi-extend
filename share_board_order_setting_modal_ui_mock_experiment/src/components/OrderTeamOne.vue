@@ -1,18 +1,17 @@
 <template lang="pug">
-.OrderGroupOne
-  .OrderGroupOneTitle.is-size-7.has-text-weight-bold
+.OrderTeamOne
+  .OrderTeamOneTitle.is-size-7.has-text-weight-bold
     | {{label}}
   VueDraggable(
-    :class="position"
     tag="ul"
     :animation="200"
-    group="OrderGroup"
+    group="OrderTeam"
     ghostClass="ghost_element"
-    v-model="base[group_key]"
+    v-model="base[team_key]"
     )
-    template(v-for="row in base[group_key]")
-      li.is-size-7(:key="row.user_name")
-        | {{row.user_name}}
+    template(v-for="row in base[team_key]")
+      li.is-size-7(:key="row")
+        | {{row}}
 </template>
 
 <script>
@@ -21,9 +20,8 @@ import VueDraggable from "vuedraggable"
 export default {
   inject: ["base"],
   props: {
-    group_key: { type: String, required: true, },
-    position:  { type: String, required: true, },
-    label:     { type: String, required: true, },
+    team_key: { type: String, required: true, },
+    label:    { type: String, required: true, },
   },
   components: {
     VueDraggable,
@@ -32,14 +30,14 @@ export default {
 </script>
 
 <style lang="sass">
-.OrderGroupOne
+.OrderTeamOne
   overflow: hidden
   white-space: nowrap
   min-width: 3rem
   text-align: center
   border: 1px dashed change_color(blue, $alpha: 0.5)
 
-  .OrderGroupOneTitle
+  .OrderTeamOneTitle
     border: 1px dashed change_color(blue, $alpha: 0.5)
   ul
     border: 1px dashed change_color(red, $alpha: 0.5)
