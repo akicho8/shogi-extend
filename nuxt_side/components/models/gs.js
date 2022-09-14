@@ -85,7 +85,7 @@ export const Gs = {
     if (v < 0) {
       v = n + v
     }
-    return v + 0
+    return v + 0                // -0 を 0 にするため
   },
 
   // 使用例
