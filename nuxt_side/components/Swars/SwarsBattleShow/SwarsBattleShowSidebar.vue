@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight right v-model="base.sidebar_p")
+b-sidebar.SwarsBattleShowSidebar.is-unselectable(fullheight right v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       NavbarItemSidebarClose(@click="base.sidebar_toggle")
@@ -23,9 +23,6 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(type="is-light" fullheight righ
 
         b-menu-list(label="リンク")
           b-menu-item.is_active_unset(label="本家" @click="base.official_show_handle")
-
-  //- PageCloseButton(@click="back_handle" position="is_absolute" size="is-medium")
-  //- b-button.sidebar_toggle_button(icon-left="dots-vertical" @click="sidebar_toggle" type="is-text")
 </template>
 
 <script>

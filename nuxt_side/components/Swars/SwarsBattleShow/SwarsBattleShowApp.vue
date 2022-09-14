@@ -420,16 +420,7 @@ export default {
 </script>
 
 <style lang="sass">
-$button_z_index: 2
-
 .SwarsBattleShowApp
-  //////////////////////////////////////////////////////////////////////////////// ヘッダー
-  .sidebar_toggle_button
-    position: absolute
-    top: 0
-    right: 0
-    z-index: $button_z_index
-
   //////////////////////////////////////////////////////////////////////////////// 1ページ目
   .FirstView
     // background-color: hsl(99.5, 40.6, 80.2)
