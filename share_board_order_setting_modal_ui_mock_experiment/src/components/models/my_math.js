@@ -8,7 +8,7 @@ export const MyMath = {
   // 一周してくれる賢い剰余
   // -1 % 3 => 2
   //  4 % 3 => 1
-  ruby_like_modulo(v, n) {
+  imodulo(v, n) {
     this.assert_nonzero(n)
     v = v % n
     v = Math.trunc(v)
@@ -16,5 +16,12 @@ export const MyMath = {
       v = n + v
     }
     return v + 0
-  }
+  },
+
+  // 整数を割ったとき小数にしない
+  // -10 % 3 => -4
+  idiv(v, n) {
+    this.assert_nonzero(n)
+    return Math.floor(v / n)
+  },
 }
