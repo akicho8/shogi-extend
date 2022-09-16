@@ -5,7 +5,7 @@ export const app_chore = {
   methods: {
     kifu_copy_handle(row) {
       this.sound_play_click()
-      this.kif_clipboard_copy({kc_path: row.show_path})
+      this.kif_clipboard_copy_from_url(`${row.show_path}.kif`)
     },
 
     kifu_save_url(row, params = {}) {

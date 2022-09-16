@@ -212,7 +212,7 @@ module BattleControllerSharedMethods
           :piyo_shogi_base_params,
         ],
         ).tap do |a|
-        a[:show_path] = polymorphic_path([ns_prefix, e]) # ← これはとりあえずいる kc_path などに渡している
+        a[:show_path] = polymorphic_path([ns_prefix, e])
       end
     end
   end

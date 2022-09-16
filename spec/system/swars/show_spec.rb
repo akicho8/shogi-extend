@@ -20,39 +20,33 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
     end
   end
 
-  describe "棋譜" do
+  # BODだけ特殊で局面を反映するのでCSAなどよりBODのテストを優先で行う
+  # というかこれがあれば他の形式のテストは不要
+  describe "表示・コピー・ダウンロード" do
     before do
-      visit2 "/swars/battles/#{@key}"
-      hamburger_click
-    end
-    it "コピー" do
-      menu_item_sub_menu_click("棋譜コピー")
-      menu_item_click("CSA")
-      assert_text "コピーしました"
-    end
-    it "表示" do
-      menu_item_sub_menu_click("棋譜表示")
-      switch_to_window_by { menu_item_click("CSA") }
-      assert_text "%TORYO"
-    end
-    it "ダウンロード" do
-      file = Rails.root.join("tmp/#{@key}.csa")
-      FileUtils.rm_f(file)
-      menu_item_sub_menu_click("棋譜ダウンロード")
-      menu_item_click("CSA")
-      assert { file.exist? }
-    end
-  end
-
-  describe "BODだけ特殊で盤の手数の局面になる" do
-    it "works" do
       visit2 "/swars/battles/#{@key}"
       find(".ShogiPlayer .button.first").click # 0手目
       find(".ShogiPlayer .button.next").click  # 1手目
       hamburger_click
+    end
+    it "棋譜表示" do
       menu_item_sub_menu_click("棋譜表示")
       switch_to_window_by { menu_item_click("BOD #1") }
       assert_text "手数＝1"
+    end
+    it "棋譜コピー" do
+      menu_item_sub_menu_click("棋譜コピー")
+      Clipboard.write("")
+      menu_item_click("BOD #1")
+      Clipboard.read.include?("手数＝1")
+    end
+    it "棋譜ダウンロード" do
+      menu_item_sub_menu_click("棋譜ダウンロード")
+      file = Rails.root.join("tmp/#{@key}.bod")
+      FileUtils.rm_f(file)
+      menu_item_click("BOD #1")
+      assert { file.exist? }
+      assert { file.read.include?("手数＝1") }
     end
   end
 

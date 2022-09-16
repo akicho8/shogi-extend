@@ -46,23 +46,18 @@ export const vue_clipboard = {
       })
     },
 
-    // 指定 URL の結果をクリップボードにコピー
-    // 前回取得したテキストを保存し、2度目からはajaxしない
+    // 指定 URL の結果をクリップボードにコピーする
+    // 前回取得したテキストを保存し2度目はリクエストしない
     // 成功したら true を返す
-    async kif_clipboard_copy(params) {
-      const kc_format = params.kc_format || "kif"
-      const url = `${params.kc_path}.${kc_format}`
-      const text = this.kif_clipboard_copy_cache[url]
-
-      if (text) {
-        return this.clipboard_copy({text: text})
-      } else {
-        const text = await this.$axios.$get(url)
+    async kif_clipboard_copy_from_url(url) {
+      let text = this.kif_clipboard_copy_cache[url]
+      if (text == null) {
+        text = await this.$axios.$get(url)
         if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
           this.$set(this.kif_clipboard_copy_cache, url, text)
         }
-        return this.clipboard_copy({text: text})
       }
+      return this.clipboard_copy({text: text})
     },
 
     // params.text をクリップボードにコピー

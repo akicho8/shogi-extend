@@ -15,7 +15,8 @@ import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 export const app_export = {
   methods: {
     async kifu_copy_handle(e, params = {}) {
-      const retv = await this.kif_clipboard_copy({kc_path: this.record.show_path, kc_format: e.format_key})
+      const url = this.kifu_show_url(e, params)
+      const retv = await this.kif_clipboard_copy_from_url(url)
       if (retv) {
         this.sidebar_close()
       }
