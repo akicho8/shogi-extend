@@ -1,9 +1,22 @@
 import { O1Strategy } from "./o1_strategy.js"
+import { OxState } from "./ox_state.js"
 import { O2State } from "./o2_state.js"
+import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
+import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
+import _ from "lodash"
 
-export class O1State {
+export class O1State extends OxState {
   constructor(users = []) {
+    super()
     this.users = users
+  }
+
+  shuffle_core() {
+    this.reset_by_users(Gs2.ary_shuffle(this.users))
+  }
+
+  swap_exec() {
+    this.users = Gs2.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs2.ary_reverse(e))
   }
 
   demo_set() {
@@ -14,9 +27,18 @@ export class O1State {
     this.users = users
   }
 
-  current_user_by_turn(turn, tegoto) {
-    const strategy = new O1Strategy(this.users.length, turn, tegoto)
+  strategy_create(...args) {
+    return new O1Strategy(this.users.length, ...args)
+  }
+
+  current_user_by_turn(...args) {
+    const strategy = this.strategy_create(...args)
     return this.users[strategy.user_index]
+  }
+
+  current_team_by_turn(...args) {
+    const strategy = this.strategy_create(...args)
+    return strategy.team_index
   }
 
   get to_o1_state() {
@@ -25,11 +47,15 @@ export class O1State {
 
   get to_o2_state() {
     const state = new O2State()
-    this.users.forEach((e, i) => {
-      const strategy = new O1Strategy(this.users.length, i, 1)
-      const user = this.users[strategy.user_index]
-      state.main_teams[strategy.team_index].push(user)
-    })
+    if (false) {
+      this.users.forEach((e, i) => {
+        const strategy = new O1Strategy(this.users.length, i, 1, 0)
+        const user = this.users[strategy.user_index]
+        state.main_teams[strategy.team_index].push(user)
+      })
+    } else {
+      state.reset_by_users(this.users)
+    }
     return state
   }
 
@@ -41,4 +67,17 @@ export class O1State {
   }
 
   ////////////////////////////////////////////////////////////////////////////////
+
+  get foo() {
+    return {
+      ...super.foo,
+      users: this.users,
+    }
+  }
+
+  set foo(v) {
+    this.users = v.users
+  }
 }
+
+window.O1State = O1State

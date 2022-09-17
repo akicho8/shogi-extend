@@ -185,7 +185,7 @@ export default {
       const rows = this.base.os_table_rows
       let a = rows.filter(e => e.enabled_p) // new_ordered_members と同じ
       let b = rows.filter(e => !e.enabled_p)
-      let c = this.ruby_like_each_slice_to_a(a, 2).flatMap(e => this.safe_reverse(e))
+      let c = this.ary_each_slice_to_a(a, 2).flatMap(e => this.ary_reverse(e))
       this.base.os_table_rows = [...c, ...b]
       this.order_index_update()
     },

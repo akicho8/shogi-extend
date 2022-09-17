@@ -1,3 +1,4 @@
+import { Gs2 } from "./gs2.js"
 import _ from "lodash"
 import dayjs from "dayjs"
 import { HandleNameParser } from "./handle_name_parser.js"
@@ -25,6 +26,8 @@ const KANJI_TO_HANKAKU_NUMBER_TABLE = {
 
 // vue_support.js の methods に追加する
 export const Gs = {
+  ...Gs2,
+
   __trace__(scope, method) {
     if (!this.development_p) {
       return ""
@@ -69,51 +72,12 @@ export const Gs = {
   dot_sfen_escape(...args)   { return DotSfen.escape(...args)   }, // SFENの " " を "." に変更
   dot_sfen_unescape(...args) { return DotSfen.unescape(...args) }, // SFENの "." を " " に変更
 
-  assert_nonzero(v) {
-    if (v === 0) {
-      throw new Error("divided by 0")
-    }
-  },
-
-  // 一周してくれる賢い剰余
-  // -1 % 3 => 2
-  //  4 % 3 => 1
-  ruby_like_modulo(v, n) {
-    this.assert_nonzero(n)
-    v = v % n
-    v = Math.trunc(v)
-    if (v < 0) {
-      v = n + v
-    }
-    return v + 0                // -0 を 0 にするため
-  },
-
   // 使用例
   //  foo_next(sign) {
   //    this.foo_key = this.ary_cycle_at(this.FooInfo.values, this.foo_info.code + sign).key
   //  }
   ary_cycle_at(ary, index) {
-    return ary[this.ruby_like_modulo(index, ary.length)]
-  },
-
-  // expect(Gs.ruby_like_each_slice_to_a(["a", "b", "c", "d"], 2)).toEqual([["a", "b"], ["c", "d"]])
-  // expect(Gs.ruby_like_each_slice_to_a(["a", "b", "c"], 2)).toEqual([["a", "b"], ["c"]])
-  // expect(() => Gs.ruby_like_each_slice_to_a(["a", "b"], 0)).toThrow()
-  // expect(Gs.ruby_like_each_slice_to_a([], 2)).toEqual([])
-  ruby_like_each_slice_to_a(ary, step) {
-    if (step <= 0) {
-      throw new Error("invalid slice size")
-    }
-    const new_ary = []
-    for (let i = 0; i < ary.length; i += step) {
-      new_ary.push(ary.slice(i, i + step))
-    }
-    return new_ary
-  },
-
-  // ary を破壊しない安全な reverse
-  safe_reverse(ary) {
-    return ary.slice().reverse()
+    return ary[this.imodulo(index, ary.length)]
   },
 
   // 文字列からハッシュコードに変換
@@ -459,7 +423,7 @@ export const Gs = {
   ary_move(list, from, to) {
     const n = list.length
     list = [...list]
-    to = this.ruby_like_modulo(to, n)
+    to = this.imodulo(to, n)
     if (from === to || from > n - 1 || to > n - 1) {
       return list
     }

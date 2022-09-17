@@ -153,7 +153,7 @@ export const app_ordered_members = {
         // step + offset                   # => 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 4, 5, 4, 5, 4, 5, 6, 7, 6, 7
         this.assert_nonzero(this.hand_every_n)
         const step = Math.floor(turn / (PAIR * this.hand_every_n)) * PAIR
-        const offset = this.ruby_like_modulo(turn, PAIR)
+        const offset = this.imodulo(turn, PAIR)
         turn = step + offset
       }
 
