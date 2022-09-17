@@ -3,13 +3,10 @@
 // そのため1回目で失敗したときにキャッシュしておき、2度目で axios のアクセスが発声しないようにすることでコピーを成功させる
 const IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND = true
 
-export const vue_clipboard = {
-  data() {
-    return {
-      kif_clipboard_copy_cache: {},
-    }
-  },
+// もともと Vue 側の data に入れていたけどリアクティブである必要ないのでこっちでいい
+const __KIFU_COPY_CACHE_FOR_IOS__ = {}
 
+export const vue_clipboard = {
   methods: {
     // いちばん簡単なインターフェイス
     simple_clipboard_copy(text) {
@@ -29,7 +26,7 @@ export const vue_clipboard = {
 
       // BODをコピーするときだけ turn が入っているので一応キーに含める
       const key = [any_source, options.to_format, (options.turn || "")].join("-")
-      const body = this.kif_clipboard_copy_cache[key]
+      const body = __KIFU_COPY_CACHE_FOR_IOS__[key]
       if (body) {
         return this.simple_clipboard_copy(body)
       }
@@ -39,7 +36,7 @@ export const vue_clipboard = {
         if (e.body) {
           if (!this.simple_clipboard_copy(e.body)) {
             if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-              this.$set(this.kif_clipboard_copy_cache, key, e.body)
+              __KIFU_COPY_CACHE_FOR_IOS__[key] = e.body
             }
           }
         }
@@ -50,11 +47,11 @@ export const vue_clipboard = {
     // 前回取得したテキストを保存し2度目はリクエストしない
     // 成功したら true を返す
     async kif_clipboard_copy_from_url(url) {
-      let text = this.kif_clipboard_copy_cache[url]
+      let text = __KIFU_COPY_CACHE_FOR_IOS__[url]
       if (text == null) {
         text = await this.$axios.$get(url)
         if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-          this.$set(this.kif_clipboard_copy_cache, url, text)
+          __KIFU_COPY_CACHE_FOR_IOS__[url] = text
         }
       }
       return this.clipboard_copy({text: text})
