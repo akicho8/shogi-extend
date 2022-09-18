@@ -1,16 +1,16 @@
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
 export class O2Strategy {
-  constructor(sizes, turn, tegoto, start2) {
+  constructor(sizes, turn, tegoto, kaisi) {
     this.sizes = sizes
     this.turn = turn          // N手目
     this.tegoto = tegoto      // N手毎
-    this.start2 = start2        // 開始
+    this.kaisi = kaisi        // 開始
   }
 
   // チームのインデックスを返す
   get team_index() {
-    return Gs2.imodulo(this.turn + this.start2, this.sizes.length)
+    return Gs2.imodulo(this.turn + this.kaisi, this.sizes.length)
   }
 
   // チーム内のインデックスを返す
@@ -25,6 +25,6 @@ export class O2Strategy {
 
   // デバッグ用
   get to_a() {
-    return [this.sizes, this.turn, this.tegoto, this.start2, this.team_index, this.user_index]
+    return [this.sizes, this.turn, this.tegoto, this.kaisi, this.team_index, this.user_index]
   }
 }

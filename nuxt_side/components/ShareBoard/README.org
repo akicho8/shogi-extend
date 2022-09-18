@@ -166,6 +166,10 @@
 
    http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
 
-** 部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
+** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
    http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_names=b,d,a,c&handle_name_validate=false
+
+** 自分は a で部屋に abcd いて順番が abcd で順番設定を開く
+
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle

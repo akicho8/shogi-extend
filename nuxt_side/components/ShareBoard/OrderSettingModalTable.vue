@@ -8,7 +8,7 @@ table.table.OrderSettingModalTable
       th.enabled_p 参加
       th.handle_element ↑↓
   draggable(
-    v-model="base.os_table_rows"
+    v-model="base.new_order_unit"
     handle=".handle_element"
     ghost-class="ghost_element"
     @choose="sound_play_click()"
@@ -16,7 +16,7 @@ table.table.OrderSettingModalTable
     @change="change_handle"
     tag="tbody"
     )
-    tr(v-for="row in base.os_table_rows" :key="row.user_name")
+    tr(v-for="row in base.new_order_unit" :key="row.user_name")
       td.order_index
         template(v-if="row.order_index != null")
           | {{base.current_sfen_info.location_by_offset(row.order_index).name}}

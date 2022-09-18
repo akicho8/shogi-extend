@@ -62,9 +62,22 @@ export class O1State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  // 一周したと仮定したときの選択されたユーザーの配列
-  get round_users() {
+  // 一周したと仮定したときの選択されたユーザーの配列(黒から始まる)
+  get black_start_order_uniq_users() {
     return this.users
+  }
+
+  get user_total_count() {
+    return this.users.length
+  }
+
+  get flat_uniq_users() {
+    return this.users
+  }
+
+  // すべてのユーザーが選択されるまでの最長ターン数
+  get round_size() {
+    return this.users.length
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -84,4 +97,3 @@ export class O1State extends OxState {
 if (typeof window !== 'undefined') {
   window.O1State = O1State
 }
-

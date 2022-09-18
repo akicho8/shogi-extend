@@ -4,7 +4,7 @@ import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
 export class OrderUnit {
   constructor() {
-    this.order_state = new O1State()
+    this.order_state = new O2State()
     this.member_other = []
   }
 
@@ -31,8 +31,8 @@ export class OrderUnit {
     this.member_other = []
   }
 
-  current_user_by_turn(turn, tegoto, start2) {
-    return this.order_state.current_user_by_turn(turn, tegoto, start2)
+  current_user_by_turn(turn, tegoto, kaisi) {
+    return this.order_state.current_user_by_turn(turn, tegoto, kaisi)
   }
 
   state_change_handle(method) {

@@ -6,10 +6,10 @@
 
       template(v-if="base.order_enable_p")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{base.new_ordered_members.length}}人
-        span.ml-1(v-if="base.new_ordered_members_odd_p")
-          b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
-            b-icon(icon="alert" type="is-warning" size="is-small")
+          | 参加者{{base.new_order_unit.user_total_count}}人
+        //- span.ml-1(v-if="base.new_order_unit_odd_p")
+        //-   b-tooltip(label="奇数では1周で先後が変わる" position="is-right" size="is-small")
+        //-     b-icon(icon="alert" type="is-warning" size="is-small")
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -35,7 +35,7 @@
           .column(v-if="base.debug_mode_p")
             SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" var_name="new_shout_mode_key" @user_input="user_input_handle")
           .column(v-if="base.debug_mode_p")
-            SimpleRadioButtons.hand_every_n(:base="base" custom-class="is-small" element_size="is-small" model_name="HandEveryNInfo" var_name="new_hand_every_n" @user_input="user_input_handle")
+            SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" var_name="new_tegoto" @user_input="user_input_handle")
         .columns.is-mobile.other_setting(v-if="development_p")
           .column
             SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" var_name="new_move_guard_key" @user_input="user_input_handle")
@@ -71,7 +71,7 @@ export default {
       // 一番最初に有効にしたときは1度更新を押した状態にする
       // 余計な世話になっているかもしれないので状況を見て無効にするかもしれない
       if (v) {
-        if (this.base.ordered_members == null) {
+        if (this.base.order_unit == null) { // null ではなく、空だったら、とする
           this.form_params_share("")
         }
       }
@@ -110,17 +110,19 @@ export default {
     },
 
     shuffle_core() {
-      const rows = this.base.os_table_rows
-      let a = rows.filter(e => e.enabled_p) // new_ordered_members と同じ
-      let b = rows.filter(e => !e.enabled_p)
-      for (let i = 0; i < SHUFFLE_MAX; i++) {
-        const c = _.shuffle(a)
-        if (!_.isEqual(c, a)) {
-          this.base.os_table_rows = [...c, ...b]
-          this.order_index_update()
-          break
-        }
-      }
+      this.base.new_order_unit.shuffle_core()
+
+      // const rows = this.base.new_order_unit
+      // let a = rows.filter(e => e.enabled_p) // new_order_unit と同じ
+      // let b = rows.filter(e => !e.enabled_p)
+      // for (let i = 0; i < SHUFFLE_MAX; i++) {
+      //   const c = _.shuffle(a)
+      //   if (!_.isEqual(c, a)) {
+      //     this.base.new_order_unit = [...c, ...b]
+      //     this.order_index_update()
+      //     break
+      //   }
+      // }
     },
 
     // 振り駒
@@ -132,21 +134,19 @@ export default {
         shakashaka_count: this.$route.query.shakashaka_count,
       })
       const prefix = `振り駒をした結果、${furigoma_pack.message}`
-      if (this.blank_p(this.base.new_ordered_members)) {
+      if (this.blank_p(this.base.new_order_unit)) {
         this.sound_play("x")
         this.toast_warn(`${prefix}でしたが誰も参加していませんでした`)
         return
       }
-      if (this.base.new_ordered_members_odd_p) {
-        this.sound_play("x")
-        this.toast_warn(`${prefix}でしたが参加人数が奇数のときはチーム編成が変わるので無効です`)
-        return
-      }
+      //- if (this.base.new_order_unit_odd_p) {
+      //-   this.sound_play("x")
+      //-   this.toast_warn(`${prefix}でしたが参加人数が奇数のときはチーム編成が変わるので無効です`)
+      //-   return
+      //- }
       this.sound_play_click()
-      if (furigoma_pack.swap_p) {
-        this.swap_core()
-      }
-      const user_name = this.base.new_ordered_members[0].user_name
+      this.base.new_order_unit.furigoma_core(furigoma_pack.swap_p)
+      const user_name = this.base.new_order_unit.first_user(this.kaisi)
       const message = `${prefix}で${this.user_call_name(user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
       this.base.os_change.append("先後")
@@ -157,50 +157,41 @@ export default {
       // if (this.validate_present()) { return }
       if (this.validate_members_even("先後入替")) { return }
       this.sound_play_click()
-      this.swap_core()
+      this.base.new_order_unit.swap_exec()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
       this.base.os_change.append("先後")
     },
 
-    // 1人以上いること
-    validate_present() {
-      if (this.blank_p(this.base.new_ordered_members)) {
-        this.sound_play("x")
-        this.toast_warn(`誰も参加していません`)
-        return true
-      }
-    },
+    // // 1人以上いること
+    // validate_present() {
+    //   if (this.blank_p(this.base.new_order_unit)) {
+    //     this.sound_play("x")
+    //     this.toast_warn(`誰も参加していません`)
+    //     return true
+    //   }
+    // },
 
     // 偶数人数であること
     validate_members_even(name) {
-      if (this.base.new_ordered_members_odd_p) {
-        this.sound_play("x")
-        this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
-        return true
-      }
+      //- if (this.base.new_order_unit_odd_p) {
+      //-   this.sound_play("x")
+      //-   this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
+      //-   return true
+      //- }
     },
 
     // 先後入れ替え
-    swap_core() {
-      const rows = this.base.os_table_rows
-      let a = rows.filter(e => e.enabled_p) // new_ordered_members と同じ
-      let b = rows.filter(e => !e.enabled_p)
-      let c = this.ary_each_slice_to_a(a, 2).flatMap(e => this.ary_reverse(e))
-      this.base.os_table_rows = [...c, ...b]
-      this.order_index_update()
-    },
+    // swap_core() {
+    //   const rows = this.base.new_order_unit
+    //   let a = rows.filter(e => e.enabled_p) // new_order_unit と同じ
+    //   let b = rows.filter(e => !e.enabled_p)
+    //   let c = this.ary_each_slice_to_a(a, 2).flatMap(e => this.ary_reverse(e))
+    //   this.base.new_order_unit = [...c, ...b]
+    //   this.order_index_update()
+    // },
 
     user_input_handle(model) {
       this.base.os_change.append(model.field_label)
-    },
-
-    // 上下矢印ボタン
-    arrow_handle(row, sign) {
-      this.sound_play_click()
-      const index = this.base.os_table_rows.findIndex(e => e.user_name === row.user_name)
-      this.base.os_table_rows = this.ary_move(this.base.os_table_rows, index, index + sign)
-      this.order_index_update()
-      this.base.os_change.append("順番")
     },
 
     // 参加 or 不参加ボタン
@@ -223,7 +214,7 @@ export default {
 
     order_index_update() {
       let index = 0
-      this.base.os_table_rows.forEach(e => {
+      this.base.new_order_unit.forEach(e => {
         if (e.enabled_p) {
           e.order_index = index
           index += 1
@@ -236,13 +227,13 @@ export default {
     // フォームの内容を新しい値として配信
     // 自分も含めて受信して更新する
     form_params_share(message) {
-      this.base.ordered_members_share({
-        ordered_members: this.base.new_ordered_members,
-        move_guard_key: this.base.new_move_guard_key,
-        avatar_king_key: this.base.new_avatar_king_key,
-        shout_mode_key: this.base.new_shout_mode_key,
+      this.base.any_order_share({
+        order_unit:        this.base.new_order_unit.attribute,
+        move_guard_key:    this.base.new_move_guard_key,
+        avatar_king_key:   this.base.new_avatar_king_key,
+        shout_mode_key:    this.base.new_shout_mode_key,
         foul_behavior_key: this.base.new_foul_behavior_key,
-        hand_every_n: this.base.new_hand_every_n,
+        tegoto:            this.base.new_tegoto,
         message: message,
       })
     },

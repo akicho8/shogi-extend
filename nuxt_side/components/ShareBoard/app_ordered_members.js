@@ -2,10 +2,10 @@ import OrderSettingModal from "./OrderSettingModal.vue"
 import { OsChange } from "./models/os_change.js"
 import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
 import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
-import { HandEveryNInfo } from "@/components/models/hand_every_n_info.js"
+import { TegotoInfo } from "@/components/models/tegoto_info.js"
 import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
+import { OrderUnit } from "./models/order_unit/order_unit.js"
 import _ from "lodash"
-const HAND_EVERY_N_ENABLED = true // N手毎を有効にするか？
 const PAIR = 2
 
 export const app_ordered_members = {
@@ -13,17 +13,19 @@ export const app_ordered_members = {
     return {
       // 共有する変数
       order_enable_p: false, // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
-      ordered_members: null, // 出走順の実配列
+      order_unit: null,      // 出走順の実配列
+      kaisi: 0,              // 駒落ちなら 1 にする
+
       // move_guard_key: "is_move_guard_on", // 手番制限
 
       // ローカルのモーダルで使うテンポラリ変数
       // 「適用」してはじめて実変数に反映する
-      os_table_rows:       null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
-      new_move_guard_key:  null, // 手番制限
-      new_avatar_king_key: null, // アバター表示
-      new_shout_mode_key:  null, // 叫びモード
-      new_foul_behavior_key:  null, // 反則をどうするか
-      new_hand_every_n:    null, // N手毎交代
+      new_order_unit:         null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
+      new_move_guard_key:    null, // 手番制限
+      new_avatar_king_key:   null, // アバター表示
+      new_shout_mode_key:    null, // 叫びモード
+      new_foul_behavior_key: null, // 反則をどうするか
+      new_tegoto:            null, // N手毎交代
 
       os_change: null, // OsChange のインスタンス
     }
@@ -45,11 +47,12 @@ export const app_ordered_members = {
     },
 
     os_setup_by_names(names) {
-      this.ordered_members = names.map((e, i) => ({
+      const users = names.map((e, i) => ({
+        user_name: e,
         enabled_p: true,
         order_index: i,
-        user_name: e,
       }))
+      this.order_unit = OrderUnit.create(users)
 
       this.order_enable_p = true  // 有効化
     },
@@ -101,29 +104,32 @@ export const app_ordered_members = {
     // 順番設定モーダル内で使うデータの準備
     os_modal_vars_setup() {
       this.tl_alert("os_modal_vars_setup")
-      this.os_table_rows_build()
-      this.new_move_guard_key = this.move_guard_key
-      this.new_avatar_king_key = this.avatar_king_key
-      this.new_shout_mode_key = this.shout_mode_key
+
+      this.new_order_unit_setup()
+
+      this.new_move_guard_key    = this.move_guard_key
+      this.new_avatar_king_key   = this.avatar_king_key
+      this.new_shout_mode_key    = this.shout_mode_key
       this.new_foul_behavior_key = this.foul_behavior_key
-      this.new_hand_every_n = this.hand_every_n
+      this.new_tegoto            = this.tegoto
+
       this.os_change = new OsChange()
     },
 
-    os_table_rows_build() {
-      if (this.ordered_members == null) {
+    new_order_unit_setup() {
+      if (this.order_unit == null) {
         // 最初は全員を「参加」状態で入れる
-        this.os_table_rows = _.cloneDeep(this.os_table_rows_default)
+        this.new_order_unit = OrderUnit.create(_.cloneDeep(this.os_table_rows_default))
       } else {
         // 1度自分で設定または他者から共有されている ordered_members を使う
-        this.os_table_rows = _.cloneDeep(this.ordered_members)
+        this.new_order_unit = this.order_unit.clone()
 
         // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
         if (true) {
           this.os_table_rows_default.forEach(m => {
-            if (!this.os_table_rows.some(e => e.user_name === m.user_name)) {
-              this.os_table_rows.push({
-                ...m,
+            if (!this.new_order_unit.member_other.some(e => e.user_name === m.user_name)) {
+              this.new_order_unit.member_other.push({
+                user_name: m.user_name,
                 order_index: null,  // 順番なし
                 enabled_p: false,   // 観戦
               })
@@ -141,22 +147,10 @@ export const app_ordered_members = {
         // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
       }
-      if (this.ordered_members_blank_p) {
+      if (this.omembers_blank_p) {
         return null
       }
-
-      if (HAND_EVERY_N_ENABLED) {
-        // n = 3 # N手毎交代
-        // step = turn / (PAIR * n) * PAIR # => 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6
-        // offset = turn % PAIR            # => 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1
-        // step + offset                   # => 0, 1, 0, 1, 0, 1, 2, 3, 2, 3, 2, 3, 4, 5, 4, 5, 4, 5, 6, 7, 6, 7
-        this.assert_nonzero(this.hand_every_n)
-        const step = Math.floor(turn / (PAIR * this.hand_every_n)) * PAIR
-        const offset = this.imodulo(turn, PAIR)
-        turn = step + offset
-      }
-
-      return this.ary_cycle_at(this.ordered_members, turn)
+      return this.order_unit.current_user_by_turn(turn, this.tegoto, this.kaisi)
     },
 
     // 局面 turn の手番のメンバーの名前
@@ -166,7 +160,7 @@ export const app_ordered_members = {
         return e.user_name
       }
     },
-    // 局面 turn の手番の順番
+    // 局面 turn の手番の順番 ← なくてもいい？
     order_index_by_turn(turn) {
       const e = this.ordered_member_by_turn(turn)
       if (e) {
@@ -180,10 +174,10 @@ export const app_ordered_members = {
       if (this.order_disable_p) {
         return null
       }
-      if (this.ordered_members_blank_p) {
+      if (this.omembers_blank_p) {
         return null
       }
-      const e = this.ordered_members.find(e => e.user_name === user_name)
+      const e = this.order_unit.real_order_users(this.tegoto, this.kaisi).find(e => e.user_name === user_name)
       if (e) {
         if (e.enabled_p) {
           return e.order_index
@@ -245,14 +239,14 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_members_share(params) {
-      this.ac_room_perform("ordered_members_share", params) // --> app/channels/share_board/room_channel.rb
+    any_order_share(params) {
+      this.ac_room_perform("any_order_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    ordered_members_share_broadcasted(params) {
+    any_order_share_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.tl_alert("ordered_members_share 自分→自分")
+        this.tl_alert("any_order_share 自分→自分")
       } else {
-        this.tl_alert("ordered_members_share 自分→他者")
+        this.tl_alert("any_order_share 自分→他者")
         if (false) {
           this.os_modal_close() // もし他者が順番設定モーダルを開いていたら閉じる
         }
@@ -284,7 +278,7 @@ export const app_ordered_members = {
     receive_xorder(params) {
       this.__assert__(this.present_p(params), "this.present_p(params)")
       this.__assert__("order_enable_p" in params, '"order_enable_p" in params')
-      this.__assert__("ordered_members" in params, '"ordered_members" in params')
+      this.__assert__("order_unit" in params, '"order_unit" in params')
 
       this.tl_alert("順番設定パラメータを先代から受信")
 
@@ -292,12 +286,14 @@ export const app_ordered_members = {
       this.om_vars_copy_from(params)
     },
     om_vars_copy_from(params) {
-      this.ordered_members = params.ordered_members
-      this.move_guard_key  = params.move_guard_key
-      this.avatar_king_key = params.avatar_king_key
-      this.shout_mode_key  = params.shout_mode_key
-      this.foul_behavior_key  = params.foul_behavior_key
-      this.hand_every_n    = params.hand_every_n
+      this.order_unit        = OrderUnit.from_attributes(params.order_unit)
+      this.move_guard_key    = params.move_guard_key
+      this.avatar_king_key   = params.avatar_king_key
+      this.shout_mode_key    = params.shout_mode_key
+      this.foul_behavior_key = params.foul_behavior_key
+      this.tegoto            = params.tegoto
+      this.kaisi             = params.kaisi
+
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
 
@@ -324,8 +320,8 @@ export const app_ordered_members = {
 
     order_lookup_from_name(name) {
       if (this.order_enable_p) {
-        if (this.ordered_members) {
-          return this.ordered_member_names_hash[name]
+        if (this.order_unit) {
+          return this.omember_names_hash[name]
         }
       }
     },
@@ -384,24 +380,25 @@ export const app_ordered_members = {
     FoulBehaviorInfo()     { return FoulBehaviorInfo                                 },
     foul_behavior_info()   { return this.FoulBehaviorInfo.fetch(this.foul_behavior_key) },
 
-    HandEveryNInfo()   { return HandEveryNInfo                                 },
+    TegotoInfo()   { return TegotoInfo                                 },
 
     // あとから接続した人に伝える内容
     current_xorder() {
       return {
         order_enable_p:  this.order_enable_p,
-        ordered_members: this.ordered_members,
+        order_unit:      this.order_unit ? this.order_unit.attributes : null,
         move_guard_key:  this.move_guard_key,
         avatar_king_key: this.avatar_king_key,
         shout_mode_key:  this.shout_mode_key,
         foul_behavior_key: this.foul_behavior_key,
-        hand_every_n:    this.hand_every_n,
+        tegoto:    this.tegoto,
+        kaisi:    this.kaisi,
 
-        __nil_check_skip_keys__: "ordered_members", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
+        __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
 
-    // モーダル用の os_table_rows の初期値
+    // モーダル用の new_order_unit の初期値
     os_table_rows_default() {
       return this.name_uniq_member_infos.map((e, i) => {
         return {
@@ -414,14 +411,14 @@ export const app_ordered_members = {
     },
 
     // 順番設定ダイアログ内での、参加者だけの配列
-    new_ordered_members() {
-      return this.os_table_rows.filter(e => e.enabled_p)
+    new_order_unit() {
+      return this.new_order_unit.filter(e => e.enabled_p)
     },
 
     // 順番設定ダイアログ内での、参加者数は奇数か？
-    new_ordered_members_odd_p() {
-      return this.odd_p(this.new_ordered_members.length)
-    },
+    // new_order_unit_odd_p() {
+    //   return this.odd_p(this.new_order_unit.length)
+    // },
 
     // 手番制限
     // 条件 機能ON
@@ -434,7 +431,7 @@ export const app_ordered_members = {
       if (this.order_enable_p) {
         if (this.ac_room) {
           // メンバーリストが揃っているなら
-          // if (this.ordered_members_blank_p) {
+          // if (this.omembers_blank_p) {
           if (this.move_guard_info.key === "is_move_guard_on") {
             // 手番制限なら観戦者含めて全体を「禁止」にする
             retv = "none"
@@ -450,15 +447,15 @@ export const app_ordered_members = {
 
     order_disable_p() { return !this.order_enable_p }, // 順番設定OFF？
 
-    self_vs_self_p() { return this.order_enable_p && (this.ordered_members || []).length === 1 }, // 自分vs自分で対戦している？
-    one_vs_one_p()   { return this.order_enable_p && (this.ordered_members || []).length === 2 }, // 1vs1で対戦している？
-    many_vs_many_p() { return this.order_enable_p && (this.ordered_members || []).length >= 3 }, // 3人以上で対戦している？
+    self_vs_self_p() { return this.order_enable_p && this.order_unit && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
+    one_vs_one_p()   { return this.order_enable_p && this.order_unit && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
+    many_vs_many_p() { return this.order_enable_p && this.order_unit && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
 
     watching_member_count() { return this.name_uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
 
     // private
-    ordered_members_blank_p()   { return this.blank_p(this.ordered_members)              }, // メンバーリストが空？
-    ordered_members_present_p() { return this.present_p(this.ordered_members)            }, // メンバーリストがある？
+    omembers_blank_p()   { return this.order_unit == null || this.order_unit.user_total_count === 0 }, // メンバーリストが空？
+    omembers_present_p() { return this.order_unit && this.order_unit.user_total_count > 0           }, // メンバーリストがある？
     current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 今の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name  }, // 今は自分の手番か？
     next_turn_user_name()       { return this.user_name_by_turn(this.current_turn + 1)   }, // 次の局面のメンバーの名前
@@ -468,14 +465,16 @@ export const app_ordered_members = {
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
     self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
 
-    ordered_member_names_oneline() { return (this.ordered_members || []).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
+    ordered_member_names_oneline() {
+      if (this.order_unit) {
+        return this.order_unit.real_order_users(this.tegoto, this.kaisi).map(e => e.user_name).join("→")
+      }
+    }, // 順序(デバッグ用)
 
-    // 名前からO(1)で ordered_members の要素を引くためのハッシュ
-    ordered_member_names_hash() {
-      if (this.order_enable_p) {
-        if (this.ordered_members) {
-          return this.ordered_members.reduce((a, e) => ({...a, [e.user_name]: e}), {})
-        }
+    // 名前から順番を知るためのハッシュ
+    omember_names_hash() {
+      if (this.order_unit) {
+        return this.order_unit.omember_names_hash(this.kaisi)
       }
     },
 
@@ -488,21 +487,8 @@ export const app_ordered_members = {
     // 順番設定されているときは対局者を優先的に上に表示する
     visible_member_infos() {
       if (this.order_enable_p) {
-        if (this.ordered_members) {
-          return _.sortBy(this.member_infos, e => {
-            let found = null
-            if (false) {
-              found = this.ordered_members.find(v => v.user_name === e.from_user_name) // O(n)
-            } else {
-              found = this.ordered_member_names_hash[e.from_user_name] // O(1)
-            }
-            if (found) {
-              return found.order_index
-            } else {
-              // 見つからなかった人は「観戦」なので一番下に移動させておく
-              return this.member_infos.length
-            }
-          })
+        if (this.order_unit) {
+          return _.sortBy(this.member_infos, e => this.omember_names_hash[e.from_user_name] ?? this.member_infos.length)
         }
       }
       return this.member_infos

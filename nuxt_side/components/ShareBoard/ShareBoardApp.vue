@@ -16,7 +16,7 @@ client-only
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
-      p ordered_members: {{ordered_members}}
+      p order_unit: {{order_unit}}
 
       template(v-if="clock_box")
         p rest: {{clock_box.current.rest}}

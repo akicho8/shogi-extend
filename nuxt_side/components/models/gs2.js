@@ -1,6 +1,22 @@
 import _ from "lodash"
 
 export const Gs2 = {
+  __assert__(value, message = null) {
+    if (!value) {
+      console.error(value)
+      alert(message || "ぶっこわれました")
+      debugger
+    }
+  },
+
+  __assert_equal__(expected, actual, message = null) {
+    if (actual !== expected) {
+      console.error(`<${expected}> expected but was <${actual}>`)
+      alert(message || "ぶっこわれました")
+      debugger
+    }
+  },
+
   assert_nonzero(v) {
     if (v === 0) {
       throw new Error("divided by 0")
@@ -56,5 +72,19 @@ export const Gs2 = {
   // ただし window に結び付いてないと取得できない
   str_constantize(str) {
     return Function(`return ${str}`)()
+  },
+
+  n_times_collect(n, block) {
+    const ary = []
+    for (let i = 0; i < n; i++) {
+      ary.push(block(i))
+    }
+    return ary
+  },
+
+  n_times(n, block) {
+    for (let i = 0; i < n; i++) {
+      block(i)
+    }
   },
 }

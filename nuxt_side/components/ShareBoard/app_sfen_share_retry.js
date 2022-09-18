@@ -34,7 +34,7 @@ export const app_sfen_share_retry = {
     },
     sfen_share_callback_set() {
       if (RETRY_FUNCTION) {
-        if (this.order_enable_p && this.ordered_members_present_p) {
+        if (this.order_enable_p && this.omembers_present_p) {
           if (this.RETRY_DELAY >= 0) {
             this.retry_delay_cancel()
             this.retry_delay_id = this.delay_block(this.retry_check_delay, () => {

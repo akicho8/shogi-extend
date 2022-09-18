@@ -23,18 +23,18 @@
         | メンバーと順番
       .panel-block
         | 面子: {{base.member_infos.map(e => e.from_user_name).join(" ")}}
-      .panel-block
-        | 順番: {{(base.ordered_members || []).map(e => e.user_name).join(" ")}}
-      .panel-block
-        | 最終: {{base.visible_member_infos.map(e => e.from_user_name).join(" ")}}
+      //- .panel-block
+      //-   | 順番: {{(base.ordered_members || []).map(e => e.user_name).join(" ")}}
+      //- .panel-block
+      //-   | 最終: {{base.visible_member_infos.map(e => e.from_user_name).join(" ")}}
       .panel-block
         pre {{base.player_names_with_title_as_human_text}}
   .column.is-4
     .panel
       .panel-heading
         | 順番設定 ({{base.order_enable_p}})
-      template(v-for="e in (base.ordered_members || [])")
-        .panel-block {{e}}
+      //- template(v-for="e in (base.ordered_members || [])")
+      //-   .panel-block {{e}}
   .column.is-4
     .panel
       .panel-heading
@@ -43,8 +43,8 @@
       .panel-block 1vs1で対戦している？ {{base.one_vs_one_p}}
       .panel-block 3人以上で対戦している？ {{base.many_vs_many_p}}
       .panel-block 観戦者数 {{base.watching_member_count}}
-      .panel-block メンバーリストが空？ {{base.ordered_members_blank_p}}
-      .panel-block メンバーリストがある？ {{base.ordered_members_present_p}}
+      .panel-block メンバーリストが空？ {{base.omembers_blank_p}}
+      .panel-block メンバーリストがある？ {{base.omembers_present_p}}
       .panel-block 今の局面のメンバーの名前 {{base.current_turn_user_name}}
       .panel-block 今は自分の手番か？ {{base.current_turn_self_p}}
       .panel-block 次の局面のメンバーの名前 {{base.next_turn_user_name}}
@@ -224,7 +224,7 @@
     .panel#assert_system_variable
       .panel-heading
         | [assert_system_variable]
-      .panel-block(v-if="base.order_enable_p && base.ordered_members_present_p")
+      .panel-block(v-if="base.order_enable_p && base.omembers_present_p")
         | 順序:
         template(v-for="(_, i) in 11")
           | {{base.ordered_member_by_turn(i).user_name[0]}}

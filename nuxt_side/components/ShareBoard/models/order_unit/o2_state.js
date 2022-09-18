@@ -60,7 +60,7 @@ export class O2State extends OxState {
         }
       })
     } else {
-      const users = _.compact(_.uniq(this.round_users))
+      const users = _.compact(_.uniq(this.black_start_order_uniq_users))
       state.reset_by_users(users)
     }
     return state
@@ -72,14 +72,22 @@ export class O2State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  // 一周したと仮定したときの選択されたユーザーの配列
-  // null を含む
-  get round_users() {
+  // 黒から開始して約一周したと仮定したときのユーザーの配列(重複なし, null なし)
+  // これは他のにコピーするときに使いやすい
+  get black_start_order_uniq_users() {
     const users = []
     _.times(this.round_size, turn => {
       users.push(this.current_user_by_turn(turn, 1, 0))
     })
-    return users
+    return _.compact(_.uniq(users))
+  }
+
+  get user_total_count() {
+    return this.teams.reduce((a, e) => a + e.length, 0)
+  }
+
+  get flat_uniq_users() {
+    return this.teams.flat()
   }
 
   // すべてのユーザーが選択されるまでの最長ターン数
@@ -89,13 +97,14 @@ export class O2State extends OxState {
   // a d であれば "a b c" と "b" だと "a b c" の方が大きく 3 なので 3 * 2 = 6 となるが、右側を選択しないので 5 になる
   // b
   // c
+  // ↑ まちがい
   get round_size() {
     const a = this.teams[0].length
     const b = this.teams[1].length
     if (a <= b) {
       return b * 2
     } else {
-      return a * 2 - 1
+      return a * 2
     }
   }
 
@@ -115,4 +124,3 @@ export class O2State extends OxState {
 if (typeof window !== 'undefined') {
   window.O2State = O2State
 }
-

@@ -3,7 +3,7 @@ import { Location   } from "shogi-player/components/models/location.js"
 import { AvatarKingInfo } from "./models/avatar_king_info.js"
 import { GuardianDisplayInfo } from "./models/guardian_display_info.js"
 
-const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
+const AVATAR_AS_KING = true // アバターを玉にする(優先度高)
 
 export const app_avatar = {
   methods: {
@@ -57,8 +57,8 @@ export const app_avatar = {
     //
     avatars_hash() {
       const hash = {}
-      if (this.order_enable_p && this.ordered_members_present_p) {
-        for (const om of this.ordered_members) {
+      if (this.order_enable_p && this.omembers_present_p) {
+        for (const om of this.order_unit.flat_uniq_users) {
           const e = this.base.room_member_names_hash[om.user_name]
           if (e) { // メンバー一覧に存在するなら
             const location = this.current_sfen_info.location_by_offset(om.order_index)
