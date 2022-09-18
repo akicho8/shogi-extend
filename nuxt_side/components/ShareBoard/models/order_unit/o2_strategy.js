@@ -1,4 +1,4 @@
-import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
+import { Gs2 } from "../../../models/gs2.js"
 
 export class O2Strategy {
   constructor(sizes, turn, tegoto, start2) {

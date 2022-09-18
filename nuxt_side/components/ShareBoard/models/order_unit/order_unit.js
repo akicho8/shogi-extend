@@ -1,6 +1,6 @@
 import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
-import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
+import { Gs2 } from "../../../models/gs2.js"
 
 export class OrderUnit {
   constructor() {

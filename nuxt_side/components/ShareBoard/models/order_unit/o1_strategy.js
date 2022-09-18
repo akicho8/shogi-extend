@@ -1,5 +1,5 @@
-import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
-import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
+import { Gs2 } from "../../../models/gs2.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export class O1Strategy {
   constructor(size, turn, tegoto, start2) {

@@ -1,8 +1,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-const FAKE_P = false
-
 export const app_room_members = {
   data() {
     return {

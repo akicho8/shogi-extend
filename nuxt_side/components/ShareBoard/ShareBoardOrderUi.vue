@@ -1,5 +1,5 @@
 <template lang="pug">
-.MainApp
+.ShareBoardOrderUi
   .columns
     .column
       .buttons
@@ -16,7 +16,7 @@
       b-field(label="N手毎" custom-class="is-small")
         b-input(type="number" v-model.number="tegoto" :min="1" max="5")
       b-field(label="開始" custom-class="is-small")
-        b-input(type="number" v-model.number="start2" :min="0" max="1")
+        b-input(type="number" v-model.number="start" :min="0" max="1")
   .columns
     .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
       .TeamContainer
@@ -32,7 +32,7 @@
       p
         | turn(-9..9):
         template(v-for="turn in turn_test_range")
-          | {{order_unit.current_user_by_turn(turn, tegoto, start2)}}
+          | {{order_unit.current_user_by_turn(turn, tegoto, start)}}
   .columns
     .column
       pre
@@ -46,12 +46,13 @@
 import _ from "lodash"
 import VueDraggable from "vuedraggable"
 
-import { OrderUnit } from "./models/order_unit.js"
+import { OrderUnit } from "./models/order_unit/order_unit.js"
 
 // Components
 import OrderTeamOne from "./OrderTeamOne.vue"
 
 export default {
+  name: "ShareBoardOrderUi",
   mixins: [
   ],
   components: {
@@ -88,7 +89,7 @@ export default {
 </script>
 
 <style lang="sass">
-.MainApp
+.ShareBoardOrderUi
   .columns
     .column
       border: 1px dashed blue

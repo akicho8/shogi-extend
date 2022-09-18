@@ -5,7 +5,6 @@ import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
 import { HandEveryNInfo } from "@/components/models/hand_every_n_info.js"
 import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
 import _ from "lodash"
-const FAKE_P = false
 const HAND_EVERY_N_ENABLED = true // N手毎を有効にするか？
 const PAIR = 2
 
@@ -404,13 +403,6 @@ export const app_ordered_members = {
 
     // モーダル用の os_table_rows の初期値
     os_table_rows_default() {
-      if (this.development_p && FAKE_P) {
-        return ["alice", "bob", "carol", "dave", "ellen"].map((e, i) => ({
-          enabled_p: true,
-          order_index: i,
-          user_name: e,
-        }))
-      }
       return this.name_uniq_member_infos.map((e, i) => {
         return {
           enabled_p: true,

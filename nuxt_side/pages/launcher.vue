@@ -76,6 +76,7 @@ export default {
         { title: "Inspire",                               to: { name: "inspire"                      }, },
         { title: "404",                                   to: { name: "not_found"                    }, },
         { title: "バイブレーション",                      to: { name: "experiment-VibrateApp"        }, },
+        { title: "手番UI検証",                            to: { name: "experiment-OrderUiTest"       }, },
       ],
     }
   },
