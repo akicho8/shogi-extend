@@ -4383,10 +4383,10 @@ js-base64@^2.1.8:
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.9.tgz#748911fb04f48a60c4771b375cac45a80df11c03"
   integrity sha512-xcinL3AuDJk7VSzsHgb9DvvIXayBbadtMZ4HFPx8rUszbW1MuNMlwYVC4zzCZ6e1sqZpnNS5ZFYOhXqA39T7LQ==
 
-js-memory-record@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.19.tgz#826a8737051baf533cd3cc269fc75fd45e2f97cb"
-  integrity sha512-FT7hcC0keSZXhHmqSmXhAIepTREWWTfbbxsFY9nPIqswVSNYW59ik9ttgK7ZAB/OMD7Bpk7ocYBVbI+ZQmh5uQ==
+js-memory-record@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.yarnpkg.com/js-memory-record/-/js-memory-record-0.0.22.tgz#8e96aa77495ca220d189b6e93b5df5fb6876dc01"
+  integrity sha512-xZlrydlA/xk1qZTPB/Mi4QMdV7mPiZmWNHsXFsGIk5m4g/1smu+jva3f3IZOU3SlZ9ne46wQpuIYHEfumiBVbA==
   dependencies:
     babel-runtime latest
     core-js latest

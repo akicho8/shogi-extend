@@ -9,7 +9,7 @@
   "dependencies": {
     "babel-standalone": "^6.26.0",
     "buefy": "^0.7.0",
-    "js-memory-record": "^0.0.19",
+    "js-memory-record": "^0.0.22",
     "lodash": "^4.17.21",
     "sass": "^1.15.3",
     "vue": "^2.5.17",
