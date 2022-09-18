@@ -24,9 +24,9 @@
         OrderTeamOne(:user_list.sync="order_unit.member_other" label="観戦")
     .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
       .TeamContainer
-        OrderTeamOne(:user_list.sync="order_unit.order_state.main_teams[0]"  label="☗")
+        OrderTeamOne(:user_list.sync="order_unit.order_state.teams[0]"  label="☗")
         OrderTeamOne(:user_list.sync="order_unit.member_other" label="観戦")
-        OrderTeamOne(:user_list.sync="order_unit.order_state.main_teams[1]"  label="☖")
+        OrderTeamOne(:user_list.sync="order_unit.order_state.teams[1]"  label="☖")
     .column
       p 1手毎で1周したときの順: {{order_unit.order_state.round_users}}
       p
@@ -39,7 +39,7 @@
         | {{order_unit}}
     .column
       pre
-        | {{order_unit.foo}}
+        | {{order_unit.attributes}}
 </template>
 
 <script>
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     // name をオブジェクトにして、一行のときの観戦フラグを持たせる
-    // main_teams, main_teams を2つの配列にする
+    // teams, teams を2つの配列にする
     // 2手づつの場合も検証する
   },
   computed: {

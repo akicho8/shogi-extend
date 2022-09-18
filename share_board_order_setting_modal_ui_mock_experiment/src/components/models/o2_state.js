@@ -7,40 +7,39 @@ import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
 // TODO: 最後にできれば Immutable にしたい
 export class O2State extends OxState {
-  constructor(main_teams = [[], []]) {
+  constructor(teams = [[], []]) {
     super()
-    this.main_teams = main_teams
+    this.teams = teams
   }
 
   shuffle_core() {
-    this.reset_by_users(Gs2.ary_shuffle(this.main_teams.flat()))
+    this.reset_by_users(Gs2.ary_shuffle(this.teams.flat()))
   }
 
   swap_exec() {
-    this.main_teams = [this.main_teams[1], this.main_teams[0]]
+    this.teams = [this.teams[1], this.teams[0]]
   }
 
   demo_set() {
-    this.main_teams = [["a"], ["b", "c"]]
+    this.teams = [["a"], ["b", "c"]]
   }
 
   reset_by_users(users) {
-    this.main_teams = [[], []]
-
-    users.forEach((e, i) => {
+    this.teams = [[], []]
+    _.times(users.length, i => {
       const strategy = new O1Strategy(users.length, i, 1, 0)
       const user = users[strategy.user_index]
-      this.main_teams[strategy.team_index].push(user)
+      this.teams[strategy.team_index].push(user)
     })
   }
 
   strategy_create(...args) {
-    return new O2Strategy(this.main_teams.map(e => e.length), ...args)
+    return new O2Strategy(this.teams.map(e => e.length), ...args)
   }
 
   current_user_by_turn(...args) {
     const strategy = this.strategy_create(...args)
-    return this.main_teams[strategy.team_index][strategy.user_index]
+    return this.teams[strategy.team_index][strategy.user_index]
   }
 
   current_team_by_turn(...args) {
@@ -53,9 +52,8 @@ export class O2State extends OxState {
 
     if (false) {
       _.times(this.round_size, turn => {
-        console.log([this.main_teams.map(e => e.length), turn, 1, 0])
-        const strategy = new O2Strategy(this.main_teams.map(e => e.length), turn, 1, 0)
-        const name = this.main_teams[strategy.team_index][strategy.user_index]
+        const strategy = new O2Strategy(this.teams.map(e => e.length), turn, 1, 0)
+        const name = this.teams[strategy.team_index][strategy.user_index]
         console.log(name)
         if (!state.users.includes(name)) {
           state.users.push(name)
@@ -92,8 +90,8 @@ export class O2State extends OxState {
   // b
   // c
   get round_size() {
-    const a = this.main_teams[0].length
-    const b = this.main_teams[1].length
+    const a = this.teams[0].length
+    const b = this.teams[1].length
     if (a <= b) {
       return b * 2
     } else {
@@ -103,14 +101,14 @@ export class O2State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  get foo() {
+  get attributes() {
     return {
-      ...super.foo,
-      main_teams: this.main_teams,
+      ...super.attributes,
+      teams: this.teams,
     }
   }
-  set foo(v) {
-    this.main_teams = v.main_teams
+  set attributes(v) {
+    this.teams = v.teams
   }
 }
 

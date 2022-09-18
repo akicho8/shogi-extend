@@ -43,21 +43,21 @@ export class OrderUnit {
     return this.order_state.constructor.name
   }
 
-  get foo() {
+  get attributes() {
     return {
       member_other: this.member_other,
-      order_state: this.order_state.foo,
+      order_state: this.order_state.attributes,
     }
   }
-  set foo(v) {
+  set attributes(v) {
     this.member_other = v.member_other
     const klass = Gs2.str_constantize(v.order_state.class_name)
     const order_state = new klass()
-    order_state.foo = v.order_state
+    order_state.attributes = v.order_state
     this.order_state = order_state
   }
 
   dump_and_load() {
-    this.foo = this.foo
+    this.attributes = this.attributes
   }
 }

@@ -10,7 +10,7 @@ export class OxState {
     return this.constructor.name
   }
 
-  get foo() {
+  get attributes() {
     return {
       class_name: this.class_name,
     }

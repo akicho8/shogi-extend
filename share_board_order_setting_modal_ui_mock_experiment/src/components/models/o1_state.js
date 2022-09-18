@@ -5,6 +5,7 @@ import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
 import _ from "lodash"
 
+// value object 化する
 export class O1State extends OxState {
   constructor(users = []) {
     super()
@@ -51,7 +52,7 @@ export class O1State extends OxState {
       this.users.forEach((e, i) => {
         const strategy = new O1Strategy(this.users.length, i, 1, 0)
         const user = this.users[strategy.user_index]
-        state.main_teams[strategy.team_index].push(user)
+        state.teams[strategy.team_index].push(user)
       })
     } else {
       state.reset_by_users(this.users)
@@ -68,14 +69,14 @@ export class O1State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  get foo() {
+  get attributes() {
     return {
-      ...super.foo,
+      ...super.attributes,
       users: this.users,
     }
   }
 
-  set foo(v) {
+  set attributes(v) {
     this.users = v.users
   }
 }
