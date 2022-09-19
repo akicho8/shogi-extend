@@ -11,7 +11,7 @@ b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
     b-numberinput(
       :size="element_size"
       controls-position="compact"
-      v-model="base[var_name]"
+      v-model="real_value"
       :min="real_model.min"
       :max="real_model.max"
       :exponential="true"
@@ -23,7 +23,7 @@ b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
         v-if="e.environment == null || e.environment.includes($config.STAGE)"
         :class="e.key"
         @input="input_handle"
-        v-model="base[var_name]"
+        v-model="real_value"
         :native-value="e.key"
         :type="e.type"
         v-on="$listeners"
@@ -38,9 +38,23 @@ export default {
   props: {
     base:         { type: Object, required: true,  },
     model_name:   { type: String, required: true,  },
-    var_name:     { type: String, required: true,  },
+    var_name:     { type: String, required: false, }, // DEPRECATION
     element_size: { type: String, required: false, },
     permanent_mark_append: { type: Boolean, default: false, required: false, },
+    my_value:     { required: false, },
+  },
+  data() {
+    return {
+      current_my_value: this.my_value,
+    }
+  },
+  watch: {
+    my_value() {
+      this.current_my_value = this.my_value
+    },
+    current_my_value() {
+      this.$emit("update:my_value", this.current_my_value)
+    },
   },
   methods: {
     input_handle(e) {
@@ -61,7 +75,6 @@ export default {
   },
   computed: {
     real_model() { return this.base[this.model_name]                     },
-    real_value() { return this.base[this.var_name]                       },
     current()    { return this.real_model.fetch(this.real_value)         },
     label()      { return this.real_model.field_label                    },
     hint_str()   { return (this.real_model.hint_messages || []).join("") },
@@ -78,6 +91,22 @@ export default {
     },
     duration_sec() {
       return this.$route.query.__system_test_now__ ? 2 : 7
+    },
+    real_value: {
+      get() {
+        if (this.var_name) {
+          return this.base[this.var_name]
+        } else {
+          return this.current_my_value
+        }
+      },
+      set(v) {
+        if (this.var_name) {
+          this.base[this.var_name] = v
+        } else {
+          this.current_my_value = v
+        }
+      },
     },
   },
 }
