@@ -90,13 +90,14 @@ module ShareBoard
       broadcast(:order_switch_share_broadcasted, data)
     end
 
-    def any_order_share(data)
+    def new_order_share(data)
+      user_names = []
       # user_names = data["order_unit"]["order_state"].collect { |e| e["user_name"] }.join(" → ")
-      user_names = data["order_unit"]["order_state"] # 動的にかわる
+      # user_names = data["order_unit"]["order_state"] # 動的にかわる
       config = ["foul_behavior_key", "avatar_king_key", "shout_mode_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
       track(data, "順番設定", message, ":順番設定:")
-      broadcast(:any_order_share_broadcasted, data)
+      broadcast(:new_order_share_broadcasted, data)
     end
 
     def message_share(data)

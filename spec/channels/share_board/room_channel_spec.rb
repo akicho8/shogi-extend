@@ -194,8 +194,8 @@ module ShareBoard
             ],
           })
         expect {
-          subscription.any_order_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "any_order_share_broadcasted", bc_params: data)
+          subscription.new_order_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "new_order_share_broadcasted", bc_params: data)
       end
     end
 

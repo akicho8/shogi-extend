@@ -1,6 +1,8 @@
+// このなかで watch_users を管理するべきか考える
+
 import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
-import { Gs2 } from "../../../models/gs2.js"
+import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
 export class OrderUnit {
@@ -19,7 +21,7 @@ export class OrderUnit {
 
   constructor() {
     this.order_state = new O2State()
-    this.member_other = []
+    this.watch_users = []
   }
 
   reset_by_users(...args) {
@@ -36,17 +38,17 @@ export class OrderUnit {
 
   furigoma_core(swap_flag) {
     if (swap_flag) {
-      this.swap_exec()
+      this.swap_run()
     }
   }
 
-  swap_exec() {
-    this.order_state.swap_exec()
+  swap_run() {
+    this.order_state.swap_run()
   }
 
   clear() {
     this.order_state.reset_by_users([])
-    this.member_other = []
+    this.watch_users = []
   }
 
   current_user_by_turn(turn, tegoto, kaisi) {
@@ -63,22 +65,23 @@ export class OrderUnit {
 
   get attributes() {
     return {
-      member_other: this.member_other,
+      watch_users: this.watch_users,
       order_state: this.order_state.attributes,
     }
   }
   set attributes(v) {
-    this.member_other = v.member_other
+    this.watch_users = v.watch_users
     const klass = Gs2.str_constantize(v.order_state.class_name)
     const order_state = new klass()
     order_state.attributes = v.order_state
     this.order_state = order_state
   }
 
-  clone() {
+  // これを使って new_v.order_unit を作っている
+  deep_clone() {
     const object = new this.constructor()
-    object.attributes = this.attributes
-    return object
+    object.attributes = this.attributes // 内部は同じものを見ているので危険
+    return _.cloneDeep(object)          // 別のものにしないと new_v.order_unit が order_unit に即反映されてしまう
   }
 
   dump_and_load() {
@@ -116,8 +119,7 @@ export class OrderUnit {
     const users = this.real_order_users(1, kaisi)
     let index = 0
     const acc = users.reduce((a, e) => {
-      if (e.user_name in a) {
-      } else {
+      if (Gs2.blank_p(a[e.user_name])) {
         a[e.user_name] = index
         index += 1
       }
@@ -125,5 +127,52 @@ export class OrderUnit {
     }, {})
     return acc            // => { alice: 2, bob: 1 }
     // return this.order_unit.real_order_users(this.tegoto, this.kaisi).reduce((a, e) => ({...a, [e.user_name]: e}), {})
+  }
+
+  // 先後入れ替えできるか？
+  get irekae_can_p() {
+    return this.order_state.irekae_can_p
+  }
+
+  get error_messages() {
+    return this.order_state.error_messages
+  }
+
+  get valid_p() {
+    return Gs2.blank_p(this.order_state.error_messages)
+  }
+
+  get invalid_p() {
+    return !this.valid_p
+  }
+
+  get inspect() {
+    const users = this.real_order_users(1, 0)
+    const list = users.map(e => e ? e.user_name : ".").join(",")
+    const list2 = this.watch_users.map(e => e.user_name).join(",")
+    return `順:${list} 観:${list2} 整:${this.valid_p} 替:${this.irekae_can_p} (${this.state_name})`
+  }
+
+  // 観戦者を含めて指定の名前はこの中に存在するか？
+  member_include_p(user_name) {
+    const users = [...this.flat_uniq_users, ...this.watch_users]
+    return users.some(e => e.user_name === user_name)
+  }
+
+  // 観戦者の追加
+  watch_users_add(users) {
+    Gs2.ary_wrap(users).forEach(m => {
+      Gs2.__assert__(m.from_user_name, "m.from_user_name")
+      if (this.member_include_p(m.from_user_name)) {
+        // すでにいるので skip
+      } else {
+        // いないので追加
+        this.watch_users.push({
+          user_name: m.from_user_name,
+          order_index: null,  // 順番なし
+          enabled_p: false,   // 観戦
+        })
+      }
+    })
   }
 }

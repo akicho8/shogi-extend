@@ -1,7 +1,7 @@
 import { O1Strategy } from "./o1_strategy.js"
 import { OxState } from "./ox_state.js"
 import { O2State } from "./o2_state.js"
-import { Gs2 } from "../../../models/gs2.js"
+import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -16,7 +16,7 @@ export class O1State extends OxState {
     this.reset_by_users(Gs2.ary_shuffle(this.users))
   }
 
-  swap_exec() {
+  swap_run() {
     this.users = Gs2.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs2.ary_reverse(e))
   }
 
@@ -78,6 +78,19 @@ export class O1State extends OxState {
   // すべてのユーザーが選択されるまでの最長ターン数
   get round_size() {
     return this.users.length
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+
+  // 先後入れ替えできるか？
+  get irekae_can_p() {
+    return Gs2.even_p(this.user_total_count)
+  }
+
+  // 準備できたか？
+  get error_messages() {
+    const messages = this.super.error_messages
+    return messages
   }
 
   ////////////////////////////////////////////////////////////////////////////////

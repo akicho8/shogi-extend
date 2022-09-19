@@ -3,7 +3,7 @@ import { O2Strategy } from "./o2_strategy.js"
 import { OxState } from "./ox_state.js"
 import { O1State } from "./o1_state.js"
 import _ from "lodash"
-import { Gs2 } from "../../../models/gs2.js"
+import { Gs2 } from "@/components/models/gs2.js"
 
 // TODO: 最後にできれば Immutable にしたい
 export class O2State extends OxState {
@@ -16,7 +16,7 @@ export class O2State extends OxState {
     this.reset_by_users(Gs2.ary_shuffle(this.teams.flat()))
   }
 
-  swap_exec() {
+  swap_run() {
     this.teams = [this.teams[1], this.teams[0]]
   }
 
@@ -60,8 +60,7 @@ export class O2State extends OxState {
         }
       })
     } else {
-      const users = _.compact(_.uniq(this.black_start_order_uniq_users))
-      state.reset_by_users(users)
+      state.reset_by_users(this.black_start_order_uniq_users)
     }
     return state
   }
@@ -86,26 +85,32 @@ export class O2State extends OxState {
     return this.teams.reduce((a, e) => a + e.length, 0)
   }
 
+  // 順不同で含まれているユーザーたちを返す
   get flat_uniq_users() {
     return this.teams.flat()
   }
 
   // すべてのユーザーが選択されるまでの最長ターン数
-  // a b であれば "a" と "b c d" だと "b c d" の方が大きく 3 なので 3 * 2 = 6 となる
-  //   c
-  //   d
-  // a d であれば "a b c" と "b" だと "a b c" の方が大きく 3 なので 3 * 2 = 6 となるが、右側を選択しないので 5 になる
-  // b
-  // c
-  // ↑ まちがい
+  // [[a], [b, c, d]] の場合、黒から始めたとすれば 6 で白からなら 5 になる
+  // 厳密でなくていいので単に多い方の2倍で良い
   get round_size() {
-    const a = this.teams[0].length
-    const b = this.teams[1].length
-    if (a <= b) {
-      return b * 2
-    } else {
-      return a * 2
+    return _.max(this.teams.map(e => e.length)) * this.teams.length
+  }
+
+  // 先後入れ替えできるか？
+  get irekae_can_p() {
+    return true
+  }
+
+  // 準備できたか？
+  get error_messages() {
+    const messages = super.error_messages
+    if (this.user_total_count >= 1) {
+      if (this.teams.some(e => e.length === 0)) {
+        messages.push(`各チームに最低1人入れてください`)
+      }
     }
+    return messages
   }
 
   ////////////////////////////////////////////////////////////////////////////////

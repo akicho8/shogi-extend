@@ -1,33 +1,22 @@
-import OrderSettingModal from "./OrderSettingModal.vue"
-import { OsChange } from "./models/os_change.js"
-import { MoveGuardInfo } from "@/components/models/move_guard_info.js"
-import { ShoutModeInfo } from "@/components/models/shout_mode_info.js"
-import { TegotoInfo } from "@/components/models/tegoto_info.js"
-import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
-import { OrderUnit } from "./models/order_unit/order_unit.js"
-import _ from "lodash"
-const PAIR = 2
+// 対局中に参照する順番
 
-export const app_ordered_members = {
+import { MoveGuardInfo    } from "@/components/models/move_guard_info.js"
+import { ShoutModeInfo    } from "@/components/models/shout_mode_info.js"
+import { TegotoInfo       } from "@/components/models/tegoto_info.js"
+import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
+
+import { OrderUnit        } from "./order_unit/order_unit.js"
+import { app_new_order    } from "./app_new_order.js"
+
+import _ from "lodash"
+
+export const app_main_order = {
+  mixins: [app_new_order],
   data() {
     return {
       // 共有する変数
       order_enable_p: false, // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
       order_unit: null,      // 出走順の実配列
-      kaisi: 0,              // 駒落ちなら 1 にする
-
-      // move_guard_key: "is_move_guard_on", // 手番制限
-
-      // ローカルのモーダルで使うテンポラリ変数
-      // 「適用」してはじめて実変数に反映する
-      new_order_unit:         null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
-      new_move_guard_key:    null, // 手番制限
-      new_avatar_king_key:   null, // アバター表示
-      new_shout_mode_key:    null, // 叫びモード
-      new_foul_behavior_key: null, // 反則をどうするか
-      new_tegoto:            null, // N手毎交代
-
-      os_change: null, // OsChange のインスタンス
     }
   },
 
@@ -57,92 +46,10 @@ export const app_ordered_members = {
       this.order_enable_p = true  // 有効化
     },
 
-    // 順番設定モーダル起動
-    os_modal_handle() {
-      if (this.if_room_is_empty()) { return }
-      this.sidebar_p = false
-      this.sound_play_click()
-      this.__assert__(this.$os_modal_instance == null, "this.$os_modal_instance == null")
-      this.$os_modal_instance = this.modal_card_open({
-        component: OrderSettingModal,
-        props: { base: this.base },
-        canCancel: [],
-        onCancel: () => {
-          this.__assert__(false, "must not happen")
-          this.sound_play_click()
-          this.os_modal_close()
-        },
-      })
-    },
-
-    // 順番設定モーダルを閉じる
-    // 別のところから強制的に閉じたいとき用
-    os_modal_close() {
-      if (this.$os_modal_instance) {
-        this.$os_modal_instance.close()
-        this.$os_modal_instance = null
-        this.tl_alert("this.$os_modal_instance = null")
-      }
-    },
-
-    os_modal_close_confirm(params = {}) {
-      this.sound_play_click()
-      this.talk("ちょっと待って。変更を適用せずに閉じようとしています")
-      this.dialog_confirm({
-        title: "ちょっと待って",
-        type: "is-warning",
-        hasIcon: true,
-        message: this.os_change ? this.os_change.message : "(os_change undefined)",
-        confirmText: "更新せずに閉じる",
-        focusOn: "cancel",
-        ...params,
-      })
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 順番設定モーダル内で使うデータの準備
-    os_modal_vars_setup() {
-      this.tl_alert("os_modal_vars_setup")
-
-      this.new_order_unit_setup()
-
-      this.new_move_guard_key    = this.move_guard_key
-      this.new_avatar_king_key   = this.avatar_king_key
-      this.new_shout_mode_key    = this.shout_mode_key
-      this.new_foul_behavior_key = this.foul_behavior_key
-      this.new_tegoto            = this.tegoto
-
-      this.os_change = new OsChange()
-    },
-
-    new_order_unit_setup() {
-      if (this.order_unit == null) {
-        // 最初は全員を「参加」状態で入れる
-        this.new_order_unit = OrderUnit.create(_.cloneDeep(this.os_table_rows_default))
-      } else {
-        // 1度自分で設定または他者から共有されている ordered_members を使う
-        this.new_order_unit = this.order_unit.clone()
-
-        // しかし、あとから接続して来た人たちが含まれていないため「観戦」状態で追加する
-        if (true) {
-          this.os_table_rows_default.forEach(m => {
-            if (!this.new_order_unit.member_other.some(e => e.user_name === m.user_name)) {
-              this.new_order_unit.member_other.push({
-                user_name: m.user_name,
-                order_index: null,  // 順番なし
-                enabled_p: false,   // 観戦
-              })
-            }
-          })
-        }
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // 手数からメンバーを取得
-    ordered_member_by_turn(turn) {
+    current_user_by_turn(turn) {
       if (this.order_disable_p) {
         // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
@@ -150,23 +57,23 @@ export const app_ordered_members = {
       if (this.omembers_blank_p) {
         return null
       }
-      return this.order_unit.current_user_by_turn(turn, this.tegoto, this.kaisi)
+      return this.order_unit.current_user_by_turn(turn, this.tegoto, this.start_color)
     },
 
     // 局面 turn の手番のメンバーの名前
     user_name_by_turn(turn) {
-      const e = this.ordered_member_by_turn(turn)
+      const e = this.current_user_by_turn(turn)
       if (e) {
         return e.user_name
       }
     },
-    // 局面 turn の手番の順番 ← なくてもいい？
-    order_index_by_turn(turn) {
-      const e = this.ordered_member_by_turn(turn)
-      if (e) {
-        return e.order_index
-      }
-    },
+    // // 局面 turn の手番の順番 ← なくてもいい？
+    // order_index_by_turn(turn) {
+    //   const e = this.current_user_by_turn(turn)
+    //   if (e) {
+    //     return e.order_index
+    //   }
+    // },
 
     // 指定の名前の人の順序
     order_index_by_user_name(user_name) {
@@ -177,7 +84,7 @@ export const app_ordered_members = {
       if (this.omembers_blank_p) {
         return null
       }
-      const e = this.order_unit.real_order_users(this.tegoto, this.kaisi).find(e => e.user_name === user_name)
+      const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
       if (e) {
         if (e.enabled_p) {
           return e.order_index
@@ -239,26 +146,40 @@ export const app_ordered_members = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    any_order_share(params) {
-      this.ac_room_perform("any_order_share", params) // --> app/channels/share_board/room_channel.rb
+    // フォームの内容を新しい値として配信
+    // 自分も含めて受信して反映する
+    new_order_share(message) {
+      this.__assert__(this.new_v.order_unit, "this.new_v.order_unit")
+      const params = {
+        order_unit:        this.new_v.order_unit.attributes,
+        //
+        move_guard_key:    this.new_v.move_guard_key,
+        avatar_king_key:   this.new_v.avatar_king_key,
+        shout_mode_key:    this.new_v.shout_mode_key,
+        foul_behavior_key: this.new_v.foul_behavior_key,
+        tegoto:            this.new_v.tegoto,
+        //
+        message:           message,
+      }
+      this.ac_room_perform("new_order_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    any_order_share_broadcasted(params) {
+    new_order_share_broadcasted(params) {
       if (this.received_from_self(params)) {
-        this.tl_alert("any_order_share 自分→自分")
+        this.tl_alert("new_order_share 自分→自分")
       } else {
-        this.tl_alert("any_order_share 自分→他者")
+        this.tl_alert("new_order_share 自分→他者")
         if (false) {
           this.os_modal_close() // もし他者が順番設定モーダルを開いていたら閉じる
         }
       }
 
-      this.om_vars_copy_from(params)
+      // new_v.order_unit のパラメータを order_unit に反映する
+      this.order_copy_from_bc(params)
 
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // これは「自分→自身」でも動くので「観戦」状態の人が一番下に移動する
-      if (true) {
-        this.os_modal_vars_setup()
-      }
+      // 新しくなった order_unit を new_v.order_unit に反映する
+      this.os_modal_vars_setup()
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
@@ -283,16 +204,18 @@ export const app_ordered_members = {
       this.tl_alert("順番設定パラメータを先代から受信")
 
       this.order_enable_p = params.order_enable_p
-      this.om_vars_copy_from(params)
+      this.order_copy_from_bc(params)
     },
-    om_vars_copy_from(params) {
-      this.order_unit        = OrderUnit.from_attributes(params.order_unit)
+
+    order_copy_from_bc(params) {
+      if (params.order_unit) {
+        this.order_unit = OrderUnit.from_attributes(params.order_unit)
+      }
       this.move_guard_key    = params.move_guard_key
       this.avatar_king_key   = params.avatar_king_key
       this.shout_mode_key    = params.shout_mode_key
       this.foul_behavior_key = params.foul_behavior_key
       this.tegoto            = params.tegoto
-      this.kaisi             = params.kaisi
 
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
     },
@@ -385,39 +308,36 @@ export const app_ordered_members = {
     // あとから接続した人に伝える内容
     current_xorder() {
       return {
-        order_enable_p:  this.order_enable_p,
-        order_unit:      this.order_unit ? this.order_unit.attributes : null,
-        move_guard_key:  this.move_guard_key,
-        avatar_king_key: this.avatar_king_key,
-        shout_mode_key:  this.shout_mode_key,
+        order_enable_p:    this.order_enable_p,
+        order_unit:        this.order_unit ? this.order_unit.attributes : null,
+        move_guard_key:    this.move_guard_key,
+        avatar_king_key:   this.avatar_king_key,
+        shout_mode_key:    this.shout_mode_key,
         foul_behavior_key: this.foul_behavior_key,
-        tegoto:    this.tegoto,
-        kaisi:    this.kaisi,
-
+        tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
     },
 
-    // モーダル用の new_order_unit の初期値
+    // モーダル用の new_v.order_unit の初期値
     os_table_rows_default() {
       return this.name_uniq_member_infos.map((e, i) => {
         return {
-          enabled_p: true,
-          order_index: i,
+          enabled_p: true,      // FIXME: これとれないか検討する
+          order_index: i,       // FIXME: これとれないか検討する
           user_name: e.from_user_name,
         }
       })
-      return v
     },
 
-    // 順番設定ダイアログ内での、参加者だけの配列
-    new_order_unit() {
-      return this.new_order_unit.filter(e => e.enabled_p)
-    },
+    // 順番設定ダイアログ内での、参加者だけの配列 FIXME: とる
+    // new_v.order_unit() {
+    //   return this.new_v.order_unit.filter(e => e.enabled_p)
+    // },
 
     // 順番設定ダイアログ内での、参加者数は奇数か？
     // new_order_unit_odd_p() {
-    //   return this.odd_p(this.new_order_unit.length)
+    //   return this.odd_p(this.new_v.order_unit.length)
     // },
 
     // 手番制限
@@ -467,14 +387,14 @@ export const app_ordered_members = {
 
     ordered_member_names_oneline() {
       if (this.order_unit) {
-        return this.order_unit.real_order_users(this.tegoto, this.kaisi).map(e => e.user_name).join("→")
+        return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→")
       }
     }, // 順序(デバッグ用)
 
     // 名前から順番を知るためのハッシュ
     omember_names_hash() {
       if (this.order_unit) {
-        return this.order_unit.omember_names_hash(this.kaisi)
+        return this.order_unit.omember_names_hash(this.start_color)
       }
     },
 

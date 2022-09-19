@@ -77,7 +77,7 @@ import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_otasuke          } from "./app_otasuke.js"
-import { app_ordered_members      } from "./app_ordered_members.js"
+import { app_main_order      } from "./order_mod/app_main_order.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
 import { app_avatar               } from "./app_avatar.js"
@@ -138,7 +138,7 @@ export default {
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
-    app_ordered_members,
+    app_main_order,
     app_battle_session,
     app_chore,
     app_avatar,
@@ -208,6 +208,11 @@ export default {
 
       record:          this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       edit_mode_sfen:  null,               // 編集モードでの棋譜
+    }
+  },
+  provide() {
+    return {
+      TheSb: this,
     }
   },
   beforeMount() {

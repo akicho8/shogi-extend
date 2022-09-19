@@ -19,13 +19,13 @@
         b-input(type="number" v-model.number="kaisi" :min="0" max="1")
   .columns
     .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
-      .TeamContainer
+      .TeamsContainer
         OrderTeamOne(:user_list.sync="order_unit.order_state.users" label="一列")
-        OrderTeamOne(:user_list.sync="order_unit.member_other" label="観戦")
+        OrderTeamOne(:user_list.sync="order_unit.watch_users" label="観戦")
     .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
-      .TeamContainer
+      .TeamsContainer
         OrderTeamOne(:user_list.sync="order_unit.order_state.teams[0]"  label="☗")
-        OrderTeamOne(:user_list.sync="order_unit.member_other" label="観戦")
+        OrderTeamOne(:user_list.sync="order_unit.watch_users" label="観戦")
         OrderTeamOne(:user_list.sync="order_unit.order_state.teams[1]"  label="☖")
     .column
       p 1手毎で1周したときの順: {{order_unit.order_state.round_users}}
@@ -92,7 +92,7 @@ export default {
   .columns
     .column
       border: 1px dashed blue
-  .TeamContainer
-    width: 12rem
-    display: flex // OrderTeamOne を横並び化
+  .TeamsContainer
+    display: flex
+    justify-content: center
 </style>

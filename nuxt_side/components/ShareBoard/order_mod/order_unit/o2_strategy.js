@@ -1,13 +1,22 @@
-import { Gs2 } from "../../../models/gs2.js"
+import { Gs2 } from "@/components/models/gs2.js"
+import _ from "lodash"
 
 export class O2Strategy {
   constructor(sizes, turn, tegoto, kaisi) {
-    Gs2.__assert__(tegoto >= 1, "tegoto >= 1")
+    // このようなチェックを自力で行うのであれば TypeScript にした方がいいのかもしれない
+    Gs2.__assert__(sizes != null, "sizes != null")
+    Gs2.__assert__(turn != null, "turn != null")
+    Gs2.__assert__(tegoto != null, "tegoto != null")
+    Gs2.__assert__(kaisi != null, "kaisi != null")
 
-    this.sizes = sizes
-    this.turn = turn          // N手目
-    this.tegoto = tegoto      // N手毎
-    this.kaisi = kaisi        // 開始
+    Gs2.__assert__(tegoto >= 1, "tegoto >= 1")
+    Gs2.__assert__(_.isArray(sizes), "_.isArray(sizes)")
+    Gs2.__assert__(sizes.length == 2, "sizes.length == 2")
+
+    this.sizes  = sizes  // [2, 3] のような形式
+    this.turn   = turn   // N手目
+    this.tegoto = tegoto // N手毎
+    this.kaisi  = kaisi  // 開始
   }
 
   // チームのインデックスを返す

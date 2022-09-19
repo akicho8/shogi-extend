@@ -1,8 +1,12 @@
-import { Gs2 } from "../../../models/gs2.js"
+import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export class O1Strategy {
   constructor(size, turn, tegoto, kaisi) {
+    Gs2.__assert__(size != null, "size != null")
+    Gs2.__assert__(turn != null, "turn != null")
+    Gs2.__assert__(tegoto != null, "tegoto != null")
+    Gs2.__assert__(kaisi != null, "kaisi != null")
     Gs2.__assert__(tegoto >= 1, "tegoto >= 1")
 
     this.size = size          // ユーザーはN人いる

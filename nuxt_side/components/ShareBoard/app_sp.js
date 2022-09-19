@@ -164,6 +164,7 @@ export const app_sp = {
     next_location()                { return this.current_sfen_info.next_location                        },
     current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) },
     base_location()                { return this.current_sfen_info.location_by_offset(0)                },
+    start_color()                  { return this.base_location.code }, // 0:平手 1:駒落ち
 
     current_xsfen()                { return { sfen: this.current_sfen, turn: this.current_turn } },
 
