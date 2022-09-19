@@ -95,24 +95,6 @@ export const Gs = {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  // lodash の _.isEmpty は不自然な挙動なので使うべからず
-  blank_p(value) {
-    return value === undefined || value === null ||
-      (typeof value === "object" && Object.keys(value).length === 0) ||
-      (typeof value === "string" && value.trim().length === 0)
-  },
-
-  present_p(value) {
-    return !this.blank_p(value)
-  },
-
-  presence(value) {
-    if (this.blank_p(value)) {
-      return null
-    }
-    return value
-  },
-
   bool_p(value) {
     return typeof value === "boolean"
   },
@@ -170,7 +152,7 @@ export const Gs = {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  rand(n) {
+  irand(n) {
     return Math.floor(Math.random() * n)
   },
 
@@ -217,14 +199,6 @@ export const Gs = {
 
 
   ////////////////////////////////////////////////////////////////////////////////
-
-  even_p(v) {
-    return (v % 2) === 0
-  },
-
-  odd_p(v) {
-    return !this.even_p(v)
-  },
 
   ////////////////////////////////////////////////////////////////////////////////
 
