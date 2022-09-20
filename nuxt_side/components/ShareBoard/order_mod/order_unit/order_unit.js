@@ -183,7 +183,6 @@ export class OrderUnit {
         this.watch_users.push({
           user_name: m.from_user_name,
           order_index: null,  // 順番なし
-          enabled_p: false,   // 観戦
         })
       }
     })

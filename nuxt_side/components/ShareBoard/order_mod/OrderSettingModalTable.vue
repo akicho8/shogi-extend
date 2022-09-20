@@ -16,7 +16,6 @@
 //-     tr
 //-       th.order_index 順番
 //-       th.user_name メンバー
-//-       th.enabled_p 参加
 //-       th.handle_element ↑↓
 //-   draggable(
 //-     v-model="base.new_v.order_unit"
@@ -35,8 +34,6 @@
 //-       td.user_name.is_line_break_on
 //-         span(:class="{'has-text-weight-bold': row.order_index === base.order_index_by_turn(base.current_turn)}")
 //-           | {{row.user_name}}
-//-       td.enabled_p
-//-         b-switch.enable_toggle_handle(:value="row.enabled_p" @input="(value) => TheOSM.enable_toggle_handle(row, value)")
 //-       td.handle_element
 //-         b-icon(icon="drag-horizontal")
 </template>
@@ -73,8 +70,6 @@ export default {
   // .user_name
   //   // 名前だけ幅を設定せず残りの最大幅にする
   //   text-align: left ! important
-  // .enabled_p
-  //   width: 1%
   // .handle_element
   //   width: 1%
   //   +padding_lr(1rem)

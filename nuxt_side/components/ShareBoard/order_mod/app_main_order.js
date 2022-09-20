@@ -43,7 +43,6 @@ export const app_main_order = {
     os_setup_by_names(names) {
       const users = names.map((e, i) => ({
         user_name: e,
-        enabled_p: true,
         order_index: i,
       }))
       this.order_unit = OrderUnit.create(users)
@@ -86,14 +85,6 @@ export const app_main_order = {
       if (indexes) {
         return indexes[0]
       }
-      // const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
-      // if (e) {
-      //   if (e.enabled_p) {
-      //     return e.order_index
-      //   } else {
-      //     // 観戦中
-      //   }
-      // }
     },
 
     // 指定の名前の人の最初の順序
@@ -101,18 +92,6 @@ export const app_main_order = {
       if (this.order_enable_p) {
         return this.name_to_indexes_hash[user_name]
       }
-      // if (indexes) {
-      //   return indexes[0]
-      // }
-      //
-      // // const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
-      // // if (e) {
-      // //   if (e.enabled_p) {
-      // //     return e.order_index
-      // //   } else {
-      // //     // 観戦中
-      // //   }
-      // // }
     },
 
     // 表示用の手番の番号
@@ -345,41 +324,26 @@ export const app_main_order = {
     os_table_rows_default() {
       return this.name_uniq_member_infos.map((e, i) => {
         return {
-          enabled_p: true,      // FIXME: これとれないか検討する
           order_index: i,       // FIXME: これとれないか検討する
           user_name: e.from_user_name,
         }
       })
     },
 
-    // 順番設定ダイアログ内での、参加者だけの配列 FIXME: とる
-    // new_v.order_unit() {
-    //   return this.new_v.order_unit.filter(e => e.enabled_p)
-    // },
-
-    // 順番設定ダイアログ内での、参加者数は奇数か？
-    // new_order_unit_odd_p() {
-    //   return this.odd_p(this.new_v.order_unit.length)
-    // },
-
     // 手番制限
-    // 条件 機能ON
-    // 条件 共有中のとき
+    // 条件 順番設定ON
+    // 条件 部屋が立っている
     // 条件 メンバーリストが揃っている
     // 条件 手番制限ON
     // 条件 自分の手番はないとき
     sp_human_side() {
-      let retv = "both"
-      if (this.order_enable_p) {
-        if (this.ac_room) {
-          // メンバーリストが揃っているなら
-          // if (this.omembers_blank_p) {
-          if (this.move_guard_info.key === "is_move_guard_on") {
-            // 手番制限なら観戦者含めて全体を「禁止」にする
-            retv = "none"
-            if (this.current_turn_self_p) {
-              // そのあとで対象者だけを指せるようにする
-              retv = "both"
+      let retv = "both"                                          // デフォルトは誰でも動かせる
+      if (this.order_enable_p) {                                 // 順番設定が有効かつ
+        if (this.ac_room) {                                      // 部屋が立てられていて
+          if (this.move_guard_info.key === "is_move_guard_on") { // 手番制限ありなら
+            retv = "none"                                        // 観戦者含めて全体を「禁止」にする
+            if (this.current_turn_self_p) {                      // そのあとで対象者だけを
+              retv = "both"                                      // 指せるようにする
             }
           }
         }
@@ -398,28 +362,37 @@ export const app_main_order = {
     // private
     omembers_blank_p()   { return this.order_unit == null || this.order_unit.user_total_count === 0 }, // メンバーリストが空？
     omembers_present_p() { return this.order_unit && this.order_unit.user_total_count > 0           }, // メンバーリストがある？
-    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 今の局面のメンバーの名前
-    current_turn_self_p()       { return this.current_turn_user_name === this.user_name  }, // 今は自分の手番か？
-    next_turn_user_name()       { return this.user_name_by_turn(this.current_turn + 1)   }, // 次の局面のメンバーの名前
-    next_turn_self_p()          { return this.next_turn_user_name === this.user_name     }, // 次は自分の手番か？
+
+    //////////////////////////////////////////////////////////////////////////////// 手番関連
+
+    // -1
     previous_turn_user_name()   { return this.user_name_by_turn(this.current_turn - 1)   }, // 前の局面のメンバーの名前
     previous_turn_self_p()      { return this.previous_turn_user_name === this.user_name }, // 前は自分の手番か？
+    // 0
+    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 今の局面のメンバーの名前
+    current_turn_self_p()       { return this.current_turn_user_name === this.user_name  }, // 今は自分の手番か？
+    // +1
+    next_turn_user_name()       { return this.user_name_by_turn(this.current_turn + 1)   }, // 次の局面のメンバーの名前
+    next_turn_self_p()          { return this.next_turn_user_name === this.user_name     }, // 次は自分の手番か？
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
     self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
 
-    ordered_member_names_oneline() {
-      if (this.order_unit) {
-        return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→")
-      }
-    }, // 順序(デバッグ用)
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ordered_member_names_oneline() { return this.order_unit && this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
+
+    //////////////////////////////////////////////////////////////////////////////// 名前からO(1)で参照するためのハッシュ
 
     name_to_indexes_hash() { return this.order_unit && this.order_unit.name_to_indexes_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
-    name_to_user_hash()    { return this.order_unit && this.order_unit.name_to_user_hash(this.start_color)        }, // 名前から情報を知るためのハッシュ
+    name_to_user_hash()    { return this.order_unit && this.order_unit.name_to_user_hash(this.start_color)    }, // 名前から情報を知るためのハッシュ
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
-    os_modal_close_if_not_save_p() {
-      return this.order_enable_p && this.os_change.has_value_p
-    },
+    os_modal_close_if_not_save_p() { return this.order_enable_p && this.os_change.has_value_p },
 
     // 最終的に左側に表示する並びになっているメンバーリスト
     // 順番設定されているときは対局者を優先的に上に表示する

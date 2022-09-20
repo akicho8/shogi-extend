@@ -160,14 +160,6 @@ export default {
       this.base.os_change.append(model.field_label)
     },
 
-    //- // 参加 or 不参加ボタン
-    //- enable_toggle_handle(row, value) {
-    //-   this.sound_play_toggle(value)
-    //-   row.enabled_p = value
-    //-   this.order_index_update()
-    //-   this.base.os_change.append("参加")
-    //- },
-
     // 反映
     apply_handle() {
       if (this.invalid_case1()) { return }
@@ -178,18 +170,6 @@ export default {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-
-    //- order_index_update() {
-    //-   let index = 0
-    //-   this.base.new_v.order_unit.forEach(e => {
-    //-     if (e.enabled_p) {
-    //-       e.order_index = index
-    //-       index += 1
-    //-     } else {
-    //-       e.order_index = null
-    //-     }
-    //-   })
-    //- },
 
     ////////////////////////////////////////////////////////////////////////////////
 

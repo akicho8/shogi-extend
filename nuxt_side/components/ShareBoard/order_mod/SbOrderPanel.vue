@@ -37,24 +37,7 @@
     .panel
       .panel-heading
         | 順番情報(computed)
-      .panel-block 自分vs自分で対戦している？ {{TheSb.self_vs_self_p}}
-      .panel-block 1vs1で対戦している？ {{TheSb.one_vs_one_p}}
-      .panel-block 3人以上で対戦している？ {{TheSb.many_vs_many_p}}
-      .panel-block 観戦者数 {{TheSb.watching_member_count}}
-      .panel-block メンバーリストが空？ {{TheSb.omembers_blank_p}}
-      .panel-block メンバーリストがある？ {{TheSb.omembers_present_p}}
-      .panel-block 今の局面のメンバーの名前 {{TheSb.current_turn_user_name}}
-      .panel-block 今は自分の手番か？ {{TheSb.current_turn_self_p}}
-      .panel-block 次の局面のメンバーの名前 {{TheSb.next_turn_user_name}}
-      .panel-block 次は自分の手番か？ {{TheSb.next_turn_self_p}}
-      .panel-block 前の局面のメンバーの名前 {{TheSb.previous_turn_user_name}}
-      .panel-block 前は自分の手番か？ {{TheSb.previous_turn_self_p}}
-      .panel-block 自分はメンバーに含まれているか？ {{TheSb.self_is_member_p}}
-      .panel-block 自分は観戦者か？ {{TheSb.self_is_watcher_p}}
-  .column.is-4
-    .panel
-      .panel-heading 順番情報(computed)
-      .panel-block 0手目の色 {{TheSb.base_location.name}}
+      .panel-block 0手目の色 {{TheSb.start_color}}
       .panel-block 自分vs自分で対戦している？ {{TheSb.self_vs_self_p}}
       .panel-block 1vs1で対戦している？ {{TheSb.one_vs_one_p}}
       .panel-block 3人以上で対戦している？ {{TheSb.many_vs_many_p}}
