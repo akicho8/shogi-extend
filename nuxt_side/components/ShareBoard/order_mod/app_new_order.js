@@ -43,7 +43,6 @@ export const app_new_order = {
       // 2. 順番設定を持っていなければ新規で既存メンバーたちを流し込む
       if (this.order_unit) {
         this.new_v.order_unit = this.order_unit.deep_clone()
-        console.log(this.new_v.order_unit.inspect)
       } else {
         this.new_v.order_unit = OrderUnit.create(this.os_table_rows_default)
       }

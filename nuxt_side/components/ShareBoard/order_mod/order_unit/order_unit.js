@@ -13,9 +13,9 @@ export class OrderUnit {
   }
 
   // 流し込み
-  static create(...args) {
+  static create(users = []) {
     const object = new this()
-    object.reset_by_users(...args)
+    object.reset_by_users(users)
     return object
   }
 
@@ -91,7 +91,7 @@ export class OrderUnit {
   get self_vs_self_p()   { return this.order_state.self_vs_self_p }
   get one_vs_one_p()     { return this.order_state.one_vs_one_p }
   get many_vs_many_p()   { return this.order_state.many_vs_many_p }
-  get user_total_count() { return this.order_state.user_total_count }
+  get main_user_count() { return this.order_state.main_user_count }
 
   get black_start_order_uniq_users() {
     return this.order_state.black_start_order_uniq_users
@@ -114,19 +114,32 @@ export class OrderUnit {
   }
 
   // 名前から順番を知るためのハッシュ
-  omember_names_hash(kaisi) {
-    // return this.order_unit.real_order_users(this.tegoto, this.kaisi).reduce((a, e) => ({...a, [e.user_name]: e}), {})
+  // a b
+  //   c
+  // だった場合 { a: [0, 2], b: [1], c:[3] }
+  name_to_indexes_hash(kaisi) {
     const users = this.real_order_users(1, kaisi)
     let index = 0
-    const acc = users.reduce((a, e) => {
+    return users.reduce((a, e) => {
+      if (a[e.user_name] == null) {
+        a[e.user_name] = []
+      }
+      a[e.user_name].push(index)
+      index += 1
+      return a
+    }, {})
+  }
+
+  // 名前からユーザーを引くハッシュ
+  // => { alice: {...}, bob: {...} }
+  name_to_user_hash(kaisi) {
+    const users = this.real_order_users(1, kaisi)
+    return users.reduce((a, e) => {
       if (Gs2.blank_p(a[e.user_name])) {
-        a[e.user_name] = index
-        index += 1
+        a[e.user_name] = e
       }
       return a
     }, {})
-    return acc            // => { alice: 2, bob: 1 }
-    // return this.order_unit.real_order_users(this.tegoto, this.kaisi).reduce((a, e) => ({...a, [e.user_name]: e}), {})
   }
 
   // 先後入れ替えできるか？
@@ -147,10 +160,10 @@ export class OrderUnit {
   }
 
   get inspect() {
-    const users = this.real_order_users(1, 0)
-    const list = users.map(e => e ? e.user_name : ".").join(",")
-    const list2 = this.watch_users.map(e => e.user_name).join(",")
-    return `順:${list} 観:${list2} 整:${this.valid_p} 替:${this.irekae_can_p} (${this.state_name})`
+    const list0 = this.real_order_users(1, 0).map(e => e ? e.user_name : "?").join("")
+    const list1 = this.real_order_users(1, 1).map(e => e ? e.user_name : "?").join("")
+    const wlist = this.watch_users.map(e => e.user_name).join(",")
+    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.irekae_can_p}] (${this.state_name})`
   }
 
   // 観戦者を含めて指定の名前はこの中に存在するか？

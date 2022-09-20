@@ -11,7 +11,7 @@ ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
   // 順番設定しているときに表示する番号
   .flex_item.left_tag_or_icon(v-if="base.order_lookup(info)")
     //- b-tag(rounded) {{base.order_display_index(info)}}
-    | ({{base.order_display_index(info)}})
+    | {{base.order_display_index(info)}}
 
   // 反応がない場合
   //- b-icon.flex_item(v-if="base.member_is_disconnect(info)" icon="lan-disconnect" type="is-danger" size="is-small")

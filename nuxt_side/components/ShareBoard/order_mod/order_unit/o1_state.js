@@ -67,7 +67,8 @@ export class O1State extends OxState {
     return this.users
   }
 
-  get user_total_count() {
+  // 対局者の数
+  get main_user_count() {
     return this.users.length
   }
 
@@ -84,7 +85,7 @@ export class O1State extends OxState {
 
   // 先後入れ替えできるか？
   get irekae_can_p() {
-    return Gs2.even_p(this.user_total_count)
+    return Gs2.even_p(this.main_user_count)
   }
 
   // 準備できたか？

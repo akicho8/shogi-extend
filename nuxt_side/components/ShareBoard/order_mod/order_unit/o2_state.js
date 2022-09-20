@@ -81,7 +81,8 @@ export class O2State extends OxState {
     return _.compact(_.uniq(users))
   }
 
-  get user_total_count() {
+  // 対局者の数
+  get main_user_count() {
     return this.teams.reduce((a, e) => a + e.length, 0)
   }
 
@@ -105,7 +106,7 @@ export class O2State extends OxState {
   // 準備できたか？
   get error_messages() {
     const messages = super.error_messages
-    if (this.user_total_count >= 1) {
+    if (this.main_user_count >= 1) {
       if (this.teams.some(e => e.length === 0)) {
         messages.push(`各チームに最低1人入れてください`)
       }

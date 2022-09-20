@@ -18,9 +18,9 @@ export class OxState {
     }
   }
 
-  get self_vs_self_p() { return this.user_total_count.length === 1 } // 自分vs自分で対戦している？
-  get one_vs_one_p()   { return this.user_total_count.length === 2 } // 1vs1で対戦している？
-  get many_vs_many_p() { return this.user_total_count.length >= 3  } // 3人以上で対戦している？
+  get self_vs_self_p() { return this.main_user_count.length === 1 } // 自分vs自分で対戦している？
+  get one_vs_one_p()   { return this.main_user_count.length === 2 } // 1vs1で対戦している？
+  get many_vs_many_p() { return this.main_user_count.length >= 3  } // 3人以上で対戦している？
 
   // turn 0 から開始したときのユーザーたち
   // null を含む
@@ -38,7 +38,7 @@ export class OxState {
   // 準備できたか？
   get error_messages() {
     const messages = []
-    if (this.user_total_count === 0) {
+    if (this.main_user_count === 0) {
       messages.push(`誰も参加していません`)
     }
     return messages

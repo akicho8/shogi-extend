@@ -5,6 +5,8 @@ import { ShoutModeInfo    } from "@/components/models/shout_mode_info.js"
 import { TegotoInfo       } from "@/components/models/tegoto_info.js"
 import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
 
+import { Location       } from "shogi-player/components/models/location.js"
+
 import { OrderUnit        } from "./order_unit/order_unit.js"
 import { app_new_order    } from "./app_new_order.js"
 
@@ -20,21 +22,24 @@ export const app_main_order = {
     }
   },
 
-  created() {
-    this.os_setup_by_url_params()
+  mounted() {
+    this.os_setup()
   },
 
   methods: {
-    // alice bob carol dave の順番で設定する場合は
-    // fixed_order_names=alice,bob,carol,dave とする
-    // fixed_order_names= なら空で設定
-    os_setup_by_url_params() {
-      if ("fixed_order_names" in this.$route.query) {
-        const names = this.str_to_words(this.$route.query["fixed_order_names"])
+    os_setup() {
+      if (this.present_p(this.fixed_order_names)) {
+        // alice bob carol dave の順番で設定する場合は
+        // fixed_order_names=alice,bob,carol,dave とする
+        // fixed_order_names= なら空で設定
+        const names = this.str_to_words(this.fixed_order_names)
         this.os_setup_by_names(names)
+      } else {
+        // this.order_unit = OrderUnit.create()
       }
     },
 
+    // 指定の名前
     os_setup_by_names(names) {
       const users = names.map((e, i) => ({
         user_name: e,
@@ -42,7 +47,6 @@ export const app_main_order = {
         order_index: i,
       }))
       this.order_unit = OrderUnit.create(users)
-
       this.order_enable_p = true  // 有効化
     },
 
@@ -50,7 +54,7 @@ export const app_main_order = {
 
     // 手数からメンバーを取得
     current_user_by_turn(turn) {
-      if (this.order_disable_p) {
+      if (!this.order_enable_p) {
         // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
         return null
       }
@@ -67,6 +71,7 @@ export const app_main_order = {
         return e.user_name
       }
     },
+
     // // 局面 turn の手番の順番 ← なくてもいい？
     // order_index_by_turn(turn) {
     //   const e = this.current_user_by_turn(turn)
@@ -75,35 +80,62 @@ export const app_main_order = {
     //   }
     // },
 
-    // 指定の名前の人の順序
+    // 指定の名前の人の最初の順序
     order_index_by_user_name(user_name) {
-      // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
-      if (this.order_disable_p) {
-        return null
+      const indexes = this.order_indexes_by_user_name(user_name)
+      if (indexes) {
+        return indexes[0]
       }
-      if (this.omembers_blank_p) {
-        return null
+      // const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
+      // if (e) {
+      //   if (e.enabled_p) {
+      //     return e.order_index
+      //   } else {
+      //     // 観戦中
+      //   }
+      // }
+    },
+
+    // 指定の名前の人の最初の順序
+    order_indexes_by_user_name(user_name) {
+      if (this.order_enable_p) {
+        return this.name_to_indexes_hash[user_name]
       }
-      const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
-      if (e) {
-        if (e.enabled_p) {
-          return e.order_index
-        } else {
-          // 観戦中
-        }
+      // if (indexes) {
+      //   return indexes[0]
+      // }
+      //
+      // // const e = this.order_unit.real_order_users(this.tegoto, this.start_color).find(e => e.user_name === user_name)
+      // // if (e) {
+      // //   if (e.enabled_p) {
+      // //     return e.order_index
+      // //   } else {
+      // //     // 観戦中
+      // //   }
+      // // }
+    },
+
+    // 表示用の手番の番号
+    order_display_index(user_name) {
+      const indexes = this.order_indexes_by_user_name(user_name)
+      if (indexes) {
+        return "(" + indexes.map(e => e + 1).join(",") + ")"
       }
     },
 
-    // 指定の名前の人の location
-    location_by_name(name) {
+    // 指定の名前の人が最初に指すときの location
+    initial_location_by_name(name) {
       const index = this.order_index_by_user_name(name) // 順番設定から自分の番号(0..)を取得
       if (this.present_p(index)) {
-        // this.tl_add("順番番号", index)
-        // this.__assert__(this.present_p(index), "this.present_p(index)")
-        const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
-        // this.tl_add("場所確定", location.key)
-        return location
+        return Location[index]
       }
+      // if (this.present_p(index)) {
+      //   // this.tl_add("順番番号", index)
+      //   // this.__assert__(this.present_p(index), "this.present_p(index)")
+      //   const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
+      //   // this.tl_add("場所確定", location.key)
+      //   return location
+      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +158,7 @@ export const app_main_order = {
         this.tl_alert("order_switch_share 自分→他者")
       }
       this.order_enable_p = params.order_enable_p
-      if (this.order_disable_p) {
+      if (!this.order_enable_p) {
         this.message_scope_key = "is_message_scope_public"
       }
       if (params.message) {
@@ -223,7 +255,7 @@ export const app_main_order = {
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_set_by_self_location() {
       this.__assert__(this.user_name, "this.user_name")
-      const location = this.location_by_name(this.user_name) // 自分の▲△
+      const location = this.initial_location_by_name(this.user_name) // 自分の▲△
       if (location) {
         this.sp_viewpoint = location.key                     // その視点に変更する
       }
@@ -233,19 +265,9 @@ export const app_main_order = {
       return this.order_lookup_from_name(e.from_user_name)
     },
 
-    // 表示用の手番の番号
-    order_display_index(e) {
-      const found = this.order_lookup(e)
-      if (found) {
-        return found.order_index + 1
-      }
-    },
-
     order_lookup_from_name(name) {
-      if (this.order_enable_p) {
-        if (this.order_unit) {
-          return this.omember_names_hash[name]
-        }
+      if (this.order_ok) {
+        return this.name_to_user_hash[name]
       }
     },
 
@@ -263,7 +285,7 @@ export const app_main_order = {
         is_window_blur:  this.member_is_window_blur(e),  // Windowが非アクティブ状態か？
       }
     },
-    member_is_joined(e)       { return this.order_disable_p                                                     }, // 初期状態
+    member_is_joined(e)       { return !this.order_enable_p                                                     }, // 初期状態
     member_is_turn_active(e)  { return this.order_lookup(e) && this.current_turn_user_name === e.from_user_name }, // 手番の人
     member_is_turn_standby(e) { return this.order_lookup(e) && this.current_turn_user_name !== e.from_user_name }, // 手番待ちの人
     member_is_watching(e)     { return this.order_enable_p && !this.order_lookup(e)                               }, // 観戦
@@ -365,7 +387,7 @@ export const app_main_order = {
       return retv
     },
 
-    order_disable_p() { return !this.order_enable_p }, // 順番設定OFF？
+    order_ok() { return this.order_enable_p && this.order_unit }, // 順番設定ONかつ、順番情報が入っている状態か？
 
     self_vs_self_p() { return this.order_enable_p && this.order_unit && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
     one_vs_one_p()   { return this.order_enable_p && this.order_unit && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
@@ -391,12 +413,8 @@ export const app_main_order = {
       }
     }, // 順序(デバッグ用)
 
-    // 名前から順番を知るためのハッシュ
-    omember_names_hash() {
-      if (this.order_unit) {
-        return this.order_unit.omember_names_hash(this.start_color)
-      }
-    },
+    name_to_indexes_hash() { return this.order_unit && this.order_unit.name_to_indexes_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
+    name_to_user_hash()    { return this.order_unit && this.order_unit.name_to_user_hash(this.start_color)        }, // 名前から情報を知るためのハッシュ
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
     os_modal_close_if_not_save_p() {
@@ -408,7 +426,9 @@ export const app_main_order = {
     visible_member_infos() {
       if (this.order_enable_p) {
         if (this.order_unit) {
-          return _.sortBy(this.member_infos, e => this.omember_names_hash[e.from_user_name] ?? this.member_infos.length)
+          return _.sortBy(this.member_infos, e => {
+            return this.order_index_by_user_name(e.from_user_name) ?? this.member_infos.length
+          })
         }
       }
       return this.member_infos
