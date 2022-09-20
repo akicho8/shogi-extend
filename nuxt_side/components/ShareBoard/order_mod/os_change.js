@@ -1,4 +1,4 @@
-import { Gs } from '@/components/models/gs.js'
+import { Gs2 } from '@/components/models/gs2.js'
 import _ from "lodash"
 
 export class OsChange {
@@ -7,7 +7,7 @@ export class OsChange {
   }
 
   append(str) {
-    this.list.push(str)
+    this.list = _.uniq([...this.list, str])
   }
 
   clear() {
@@ -15,7 +15,7 @@ export class OsChange {
   }
 
   get something() {
-    return _.uniq(this.list).join("や")
+    return this.list.join("や")
   }
 
   get message() {
@@ -23,6 +23,6 @@ export class OsChange {
   }
 
   get has_value_p() {
-    return Gs.present_p(this.list)
+    return Gs2.present_p(this.list)
   }
 }
