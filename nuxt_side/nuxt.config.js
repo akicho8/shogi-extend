@@ -352,6 +352,10 @@ const config = {
         options: {
           // name: "[path][name]-[contenthash].[ext]"
           name: "blob/[name]-[contenthash].[ext]",
+          // require("path/to/xxx.wav") が { default: "/_nuxt/blob/xxx.wav", __esModule: true, ...} になってしまう対策
+          // https://github.com/webpack-contrib/file-loader#esmodule
+          // false にすると単にパス "/_nuxt/blob/xxx.wav" になる
+          esModule: false,
         },
       })
       config.module.rules.push({
