@@ -2,7 +2,7 @@
 .OrderTeamOne
   //- ghostClass="ghost_element"
   //- @start="event_check"
-  .OrderTeamOneTitle.is-size-7.has-text-weight-bold
+  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@click="TheOSM.state_toggle_handle")
     | {{label}}
   VueDraggable(
     tag="ul"

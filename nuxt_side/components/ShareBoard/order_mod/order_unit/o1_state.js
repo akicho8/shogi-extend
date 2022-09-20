@@ -89,7 +89,7 @@ export class O1State extends OxState {
 
   // 準備できたか？
   get error_messages() {
-    const messages = this.super.error_messages
+    const messages = super.error_messages
     return messages
   }
 

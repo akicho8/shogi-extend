@@ -198,6 +198,11 @@ export default {
       this.sound_play_click()
       this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
     },
+
+    state_toggle_handle() {
+      this.sound_play_click()
+      this.base.new_v.order_unit.state_toggle()
+    },
   },
   computed: {
     kakutei_type() {

@@ -1,9 +1,14 @@
 <template lang="pug">
 .OrderSettingModalTable
   .TeamsContainer
-    OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
-    OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
-    OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"         label="観戦")
+    template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
+      OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.users"   label="☗☖")
+      OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"         label="観戦")
+
+    template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
+      OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
+      OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
+      OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"          label="観戦")
 
 //- // vuedraggable はスマホでも drag できる
 //- table.table.OrderSettingModalTable

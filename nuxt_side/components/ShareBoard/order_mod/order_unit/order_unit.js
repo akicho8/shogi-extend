@@ -175,4 +175,12 @@ export class OrderUnit {
       }
     })
   }
+
+  state_toggle() {
+    if (this.order_state.constructor.name === "O1State") {
+      this.state_change_handle("to_o2_state")
+    } else {
+      this.state_change_handle("to_o1_state")
+    }
+  }
 }
