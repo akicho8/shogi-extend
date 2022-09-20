@@ -240,6 +240,11 @@ const config = {
         // },
       },
     ],
+
+    // https://qiita.com/nakazawaken1/items/8f25ce58a27be092f7bc
+    // yarn add --dev nuxt-vite
+    // まともにビルドできない
+    // "nuxt-vite",
   ],
   /*
   ** Nuxt.js modules
