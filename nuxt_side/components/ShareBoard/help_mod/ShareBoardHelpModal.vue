@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "ShareBoardHelpModal",
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .ShareBoardHelpModal
   +modal_width(800px)
   .modal-card-body

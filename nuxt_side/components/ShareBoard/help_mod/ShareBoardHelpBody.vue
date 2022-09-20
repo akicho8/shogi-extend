@@ -566,22 +566,18 @@ HelpContent.ShareBoardHelpBody
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "ShareBoardHelpBody",
   mixins: [
     support_child,
   ],
-  data() {
-    return {
-    }
-  },
 }
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .ShareBoardHelpBody
   th
     text-align: right ! important
