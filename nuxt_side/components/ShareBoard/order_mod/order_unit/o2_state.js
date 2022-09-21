@@ -13,7 +13,7 @@ export class O2State extends OxState {
   }
 
   shuffle_core() {
-    this.reset_by_users(Gs2.ary_shuffle(this.teams.flat()))
+    this.users_allocate(Gs2.ary_shuffle(this.teams.flat()))
   }
 
   swap_run() {
@@ -24,7 +24,7 @@ export class O2State extends OxState {
     this.teams = [["a"], ["b", "c"]]
   }
 
-  reset_by_users(users) {
+  users_allocate(users) {
     this.teams = [[], []]
     _.times(users.length, i => {
       const strategy = new O1Strategy(users.length, i, 1, 0)
@@ -60,7 +60,7 @@ export class O2State extends OxState {
         }
       })
     } else {
-      state.reset_by_users(this.black_start_order_uniq_users)
+      state.users_allocate(this.black_start_order_uniq_users)
     }
     return state
   }
@@ -106,7 +106,7 @@ export class O2State extends OxState {
   // 準備できたか？
   get error_messages() {
     const messages = super.error_messages
-    if (this.main_user_count >= 1) {
+    if (!this.empty_p) {
       if (this.teams.some(e => e.length === 0)) {
         messages.push(`各チームに最低1人入れてください`)
       }

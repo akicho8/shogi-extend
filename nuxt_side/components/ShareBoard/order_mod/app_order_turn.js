@@ -13,7 +13,10 @@
 //
 // FIXME: ユーザー名を引数に取りメソッドが多いということはユーザー名の Value Object にするべきか？
 //
-export const app_turn_and_name = {
+
+import { Gs2 } from "@/components/models/gs2.js"
+
+export const app_order_turn = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -36,6 +39,7 @@ export const app_turn_and_name = {
     // 優先度をつける順番であって location ではないので注意
     user_name_to_initial_turn(user_name) {
       if (this.order_enable_p) {
+        Gs2.__assert__(user_name)
         const turns = this.name_to_turns_hash[user_name]
         if (turns) {
           return turns[0]
@@ -63,7 +67,6 @@ export const app_turn_and_name = {
   computed: {
     // 名前からO(1)で参照するためのハッシュたち
     // turnからは直接計算で一発で求まる
-    name_to_turns_hash()   { return this.order_unit && this.order_unit.name_to_turns_hash(this.start_color)  }, // 名前から順番を知るためのハッシュ
-    name_to_object_hash()  { return this.order_unit && this.order_unit.name_to_object_hash                 }, // 名前から情報を知るためのハッシュ
+    name_to_turns_hash()  { return this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
   },
 }

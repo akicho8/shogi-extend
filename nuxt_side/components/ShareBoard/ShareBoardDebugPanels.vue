@@ -191,7 +191,7 @@
     .panel#assert_system_variable
       .panel-heading
         | [assert_system_variable]
-      .panel-block(v-if="base.order_enable_p && base.omembers_present_p")
+      .panel-block(v-if="base.order_enable_p")
         | 順序:
         template(v-for="(_, i) in 11")
           | {{base.turn_to_user_object(i).user_name[0]}}

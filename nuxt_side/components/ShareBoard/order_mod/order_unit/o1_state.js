@@ -13,7 +13,7 @@ export class O1State extends OxState {
   }
 
   shuffle_core() {
-    this.reset_by_users(Gs2.ary_shuffle(this.users))
+    this.users_allocate(Gs2.ary_shuffle(this.users))
   }
 
   swap_run() {
@@ -21,10 +21,10 @@ export class O1State extends OxState {
   }
 
   demo_set() {
-    this.reset_by_users(["a", "b", "c", "d", "e"])
+    this.users_allocate(["a", "b", "c", "d", "e"])
   }
 
-  reset_by_users(users) {
+  users_allocate(users) {
     this.users = users
   }
 
@@ -55,7 +55,7 @@ export class O1State extends OxState {
         state.teams[strategy.team_index].push(user)
       })
     } else {
-      state.reset_by_users(this.users)
+      state.users_allocate(this.users)
     }
     return state
   }

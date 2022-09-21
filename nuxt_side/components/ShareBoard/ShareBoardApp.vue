@@ -6,7 +6,7 @@ client-only
     DebugBox.is-hidden-mobile(v-if="development_p")
       p appearance_theme_key: {{appearance_theme_key}}
       p watching_member_count: {{watching_member_count}}
-      p os_change: {{os_change}}
+      p new_v.os_change: {{new_v.os_change}}
       p order_enable_p: {{order_enable_p}}
 
       p avatars_hash: {{avatars_hash}}
@@ -16,7 +16,6 @@ client-only
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
-      p order_unit: {{order_unit}}
 
       template(v-if="clock_box")
         p rest: {{clock_box.current.rest}}
@@ -77,7 +76,7 @@ import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_otasuke          } from "./app_otasuke.js"
-import { app_main_order      } from "./order_mod/app_main_order.js"
+import { app_order_main      } from "./order_mod/app_order_main.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
 import { app_avatar               } from "./app_avatar.js"
@@ -138,7 +137,7 @@ export default {
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
-    app_main_order,
+    app_order_main,
     app_battle_session,
     app_chore,
     app_avatar,

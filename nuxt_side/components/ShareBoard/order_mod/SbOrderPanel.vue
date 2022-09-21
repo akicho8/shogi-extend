@@ -32,7 +32,7 @@
         .panel-block
           pre
             | 名前→情報
-            | {{TheSb.name_to_object_hash}}
+            | {{TheSb.order_unit.name_to_object_hash}}
   .column.is-4
     .panel
       .panel-heading
@@ -41,9 +41,8 @@
       .panel-block 自分vs自分で対戦している？ {{TheSb.self_vs_self_p}}
       .panel-block 1vs1で対戦している？ {{TheSb.one_vs_one_p}}
       .panel-block 3人以上で対戦している？ {{TheSb.many_vs_many_p}}
+      .panel-block 対局者数 {{TheSb.order_unit.main_user_count}}
       .panel-block 観戦者数 {{TheSb.watching_member_count}}
-      .panel-block メンバーリストが空？ {{TheSb.omembers_blank_p}}
-      .panel-block メンバーリストがある？ {{TheSb.omembers_present_p}}
       .panel-block 今の局面のメンバーの名前 {{TheSb.current_turn_user_name}}
       .panel-block 今は自分の手番か？ {{TheSb.current_turn_self_p}}
       .panel-block 次の局面のメンバーの名前 {{TheSb.next_turn_user_name}}

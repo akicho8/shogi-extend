@@ -1,9 +1,9 @@
 import { Gs2 } from "@/components/models/gs2.js"
 
 export class OxState {
-  static create_by_users(...args) {
+  static create_by_users(users) {
     const object = new this()
-    object.reset_by_users(...args)
+    object.users_allocate(users)
     Object.freeze(object)
     return object
   }
@@ -38,9 +38,13 @@ export class OxState {
   // 準備できたか？
   get error_messages() {
     const messages = []
-    if (this.main_user_count === 0) {
+    if (this.empty_p) {
       messages.push(`誰も参加していません`)
     }
     return messages
+  }
+
+  get empty_p() {
+    return this.main_user_count === 0
   }
 }

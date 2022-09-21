@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     end_handle() {
-      this.TheOSM.base.os_change.append("順番")
+      this.TheOSM.base.new_v.os_change.append("順番")
     },
   },
 }

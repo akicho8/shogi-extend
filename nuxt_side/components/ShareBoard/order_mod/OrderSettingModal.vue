@@ -69,9 +69,6 @@ export default {
       TheOSM: this,
     }
   },
-  beforeMount() {
-    this.base.os_modal_vars_setup()
-  },
   methods: {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
@@ -79,13 +76,12 @@ export default {
       this.sound_play_toggle(v)
       this.base.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
-      // 一番最初に有効にしたときは1度反映を押した状態にする
-      // 余計な世話になっているかもしれないので状況を見て無効にするかもしれない
-      if (v) {
-        if (this.base.order_unit == null) { // null ではなく、空だったら、とする
-          this.base.new_order_share("")
-        }
-      }
+      // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
+      // if (v) {
+      //   if (this.base.order_unit.main_user_count === 0) {
+      //     this.base.new_order_share("")
+      //   }
+      // }
     },
 
     close_handle() {
@@ -117,7 +113,7 @@ export default {
       this.sound_play_click()
       this.base.new_v.order_unit.shuffle_core()
       this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
-      this.base.os_change.append("順番")
+      this.base.new_v.os_change.append("順番")
     },
 
     // 振り駒
@@ -134,7 +130,7 @@ export default {
       Gs2.__assert__(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
-      this.base.os_change.append("先後")
+      this.base.new_v.os_change.append("先後")
     },
 
     // 先後入替
@@ -143,7 +139,7 @@ export default {
       this.sound_play_click()
       this.base.new_v.order_unit.swap_run()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
-      this.base.os_change.append("先後")
+      this.base.new_v.os_change.append("先後")
     },
 
     // 反映時のエラーの内容は new_v.order_unit に任せる
@@ -166,7 +162,7 @@ export default {
     },
 
     user_input_handle(model) {
-      this.base.os_change.append(model.field_label)
+      this.base.new_v.os_change.append(model.field_label)
     },
 
     // 反映
@@ -174,7 +170,7 @@ export default {
       if (this.invalid_case1()) { return }
       this.sound_play_click()
       this.base.new_order_share("反映")
-      this.base.os_change.clear()
+      this.base.new_v.os_change.clear()
       this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.base.cc_next_message())
     },
 
@@ -194,7 +190,7 @@ export default {
       if (this.base.new_v.order_unit.invalid_p) {
         return "is-warning"
       }
-      if (this.base.os_change.has_value_p) {
+      if (this.base.new_v.os_change.has_value_p) {
         return "is-primary"
       }
     },

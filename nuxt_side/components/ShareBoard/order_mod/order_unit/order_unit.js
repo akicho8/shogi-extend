@@ -13,9 +13,9 @@ export class OrderUnit {
   }
 
   // 流し込み
-  static create(users = []) {
+  static create(user_names = []) {
     const object = new this()
-    object.reset_by_users(users)
+    object.user_names_allocate(user_names)
     return object
   }
 
@@ -24,12 +24,17 @@ export class OrderUnit {
     this.watch_users = []
   }
 
-  reset_by_users(...args) {
-    this.order_state.reset_by_users(...args)
+  user_names_allocate(user_names) {
+    const users = user_names.map(e => ({user_name: e}))
+    this.order_state.users_allocate(users)
+  }
+
+  users_allocate(users) {
+    this.order_state.users_allocate(users)
   }
 
   sample_set() {
-    this.order_state.reset_by_users(["a", "b", "c", "d", "e"])
+    this.order_state.user_names_allocate(["a", "b", "c", "d", "e"])
   }
 
   shuffle_core() {
@@ -47,7 +52,7 @@ export class OrderUnit {
   }
 
   clear() {
-    this.order_state.reset_by_users([])
+    this.order_state.users_allocate([])
     this.watch_users = []
   }
 
@@ -91,7 +96,7 @@ export class OrderUnit {
   get self_vs_self_p()   { return this.order_state.self_vs_self_p }
   get one_vs_one_p()     { return this.order_state.one_vs_one_p }
   get many_vs_many_p()   { return this.order_state.many_vs_many_p }
-  get main_user_count() { return this.order_state.main_user_count }
+  get main_user_count()  { return this.order_state.main_user_count }
 
   get black_start_order_uniq_users() {
     return this.order_state.black_start_order_uniq_users
@@ -169,8 +174,9 @@ export class OrderUnit {
     return users.some(e => e.user_name === user_name)
   }
 
-  // 観戦者の追加
-  watch_users_add(user_names) {
+  // 観戦者の追加(対局者は除外する)
+  watch_users_set(user_names) {
+    this.watch_users = []
     user_names.forEach(user_name => {
       if (!this.user_name_exist_p(user_name)) {
         this.watch_users.push({user_name: user_name})

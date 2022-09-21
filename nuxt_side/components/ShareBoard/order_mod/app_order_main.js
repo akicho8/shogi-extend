@@ -1,53 +1,42 @@
-// 対局中に参照する順番
+// 対局中に参照する順番設定
 
-import { MoveGuardInfo    } from "@/components/models/move_guard_info.js"
-import { ShoutModeInfo    } from "@/components/models/shout_mode_info.js"
-import { TegotoInfo       } from "@/components/models/tegoto_info.js"
-import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
+import { OrderUnit } from "./order_unit/order_unit.js"
 
-import { Location       } from "shogi-player/components/models/location.js"
-
-import { OrderUnit        } from "./order_unit/order_unit.js"
-import { app_new_order    } from "./app_new_order.js"
-import { app_turn_and_name    } from "./app_turn_and_name.js"
+import { app_order_new    } from "./app_order_new.js"
+import { app_order_turn   } from "./app_order_turn.js"
+import { app_order_option } from "./app_order_option.js"
 
 import _ from "lodash"
 
-export const app_main_order = {
+export const app_order_main = {
   mixins: [
-    app_new_order,
-    app_turn_and_name,
+    app_order_new,
+    app_order_turn,
+    app_order_option,
   ],
   data() {
     return {
-      // 共有する変数
-      order_enable_p: false, // 順番設定 true:有効 false:無効 モーダル内では元変数を直接変更している
-      order_unit: null,      // 出走順の実配列
+      order_enable_p: false,          // 順番設定 ON OFF
+      order_unit: OrderUnit.create(), // 順番設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
     }
   },
-
   mounted() {
     this.os_setup()
   },
-
   methods: {
     os_setup() {
       if (this.present_p(this.fixed_order_names)) {
         // alice bob carol dave の順番で設定する場合は
         // fixed_order_names=alice,bob,carol,dave とする
-        // fixed_order_names= なら空で設定
         const names = this.str_to_words(this.fixed_order_names)
         this.os_setup_by_names(names)
-      } else {
-        // this.order_unit = OrderUnit.create()
       }
     },
 
     // 指定の名前
     os_setup_by_names(names) {
-      const users = names.map((e, i) => ({user_name: e}))
-      this.order_unit = OrderUnit.create(users)
-      this.order_enable_p = true  // 有効化
+      this.order_unit = OrderUnit.create(names)
+      this.order_enable_p = true
     },
 
 
@@ -125,7 +114,7 @@ export const app_main_order = {
       // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
       // これは「自分→自身」でも動くので「観戦」状態の人が一番下に移動する
       // 新しくなった order_unit を new_v.order_unit に反映する
-      this.os_modal_vars_setup()
+      this.os_modal_init()
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
@@ -180,8 +169,8 @@ export const app_main_order = {
     },
 
     order_lookup_from_name(user_name) {
-      if (this.order_ok) {
-        return this.name_to_object_hash[user_name]
+      if (this.order_enable_p) {
+        return this.order_unit.name_to_object_hash[user_name]
       }
     },
 
@@ -229,18 +218,6 @@ export const app_main_order = {
   },
 
   computed: {
-    MoveGuardInfo()   { return MoveGuardInfo                                 },
-    move_guard_info() { return this.MoveGuardInfo.fetch(this.move_guard_key) },
-
-    ShoutModeInfo()   { return ShoutModeInfo                                 },
-    shout_mode_info() { return this.ShoutModeInfo.fetch(this.shout_mode_key) },
-    is_shout_mode_on() { return this.shout_mode_info.key === "is_shout_mode_on" },
-
-    FoulBehaviorInfo()     { return FoulBehaviorInfo                                 },
-    foul_behavior_info()   { return this.FoulBehaviorInfo.fetch(this.foul_behavior_key) },
-
-    TegotoInfo()   { return TegotoInfo                                 },
-
     // あとから接続した人に伝える内容
     current_xorder() {
       return {
@@ -253,11 +230,6 @@ export const app_main_order = {
         tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }
-    },
-
-    // モーダル用の new_v.order_unit の初期値
-    os_table_rows_default() {
-      return this.uniq_member_infos.map((e, i) => ({user_name: e.from_user_name}))
     },
 
     // 手番制限
@@ -283,15 +255,11 @@ export const app_main_order = {
 
     order_ok() { return this.order_enable_p && this.order_unit }, // 順番設定ONかつ、順番情報が入っている状態か？
 
-    self_vs_self_p() { return this.order_enable_p && this.order_unit && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
-    one_vs_one_p()   { return this.order_enable_p && this.order_unit && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
-    many_vs_many_p() { return this.order_enable_p && this.order_unit && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
+    self_vs_self_p() { return this.order_enable_p && this.order_unit.self_vs_self_p }, // 自分vs自分で対戦している？
+    one_vs_one_p()   { return this.order_enable_p && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
+    many_vs_many_p() { return this.order_enable_p && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
 
     watching_member_count() { return this.uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
-
-    // private
-    omembers_blank_p()   { return this.order_unit == null || this.order_unit.main_user_count === 0 }, // メンバーリストが空？
-    omembers_present_p() { return this.order_unit && this.order_unit.main_user_count > 0           }, // メンバーリストがある？
 
     //////////////////////////////////////////////////////////////////////////////// 手番関連
 
@@ -312,13 +280,13 @@ export const app_main_order = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_member_names_oneline() { return this.order_unit && this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
+    ordered_member_names_oneline() { return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 
 
     ////////////////////////////////////////////////////////////////////////////////
 
     // 変更したけど保存せずにモーダルを閉じようとしている？
-    os_modal_close_if_not_save_p() { return this.order_enable_p && this.os_change.has_value_p },
+    os_modal_close_if_not_save_p() { return this.order_enable_p && this.new_v.os_change.has_value_p },
 
     // 最終的に左側に表示する並びになっているメンバーリスト
     // 順番設定されているときは対局者を優先的に上に表示する
