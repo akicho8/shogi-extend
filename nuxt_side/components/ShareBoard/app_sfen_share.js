@@ -19,7 +19,7 @@ export const app_sfen_share = {
       this.__assert__(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
         this.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset_max, "lmi.next_turn_offset === this.current_sfen_turn_offset_max")
+        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく

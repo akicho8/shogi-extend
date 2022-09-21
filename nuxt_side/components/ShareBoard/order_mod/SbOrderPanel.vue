@@ -51,6 +51,21 @@
       .panel-block 前は自分の手番か？ {{TheSb.previous_turn_self_p}}
       .panel-block 自分はメンバーに含まれているか？ {{TheSb.self_is_member_p}}
       .panel-block 自分は観戦者か？ {{TheSb.self_is_watcher_p}}
+
+  .column.is-4(v-if="TheSb.new_v.order_unit")
+    .panel
+      .panel-heading
+        | new_v stringify
+      .panel-block
+        pre
+          | {{TheSb.new_v.order_unit}}
+  .column.is-4(v-if="TheSb.new_v.order_unit")
+    .panel
+      .panel-heading
+        | new_v attributes
+      .panel-block
+        pre
+          | {{TheSb.new_v.order_unit.attributes}}
 </template>
 
 <script>

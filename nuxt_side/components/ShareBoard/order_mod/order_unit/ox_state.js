@@ -1,3 +1,5 @@
+// O1State, O2State の共通部分
+
 import { Gs2 } from "@/components/models/gs2.js"
 
 export class OxState {
@@ -26,13 +28,13 @@ export class OxState {
   // null を含む
   real_order_users(tegoto, kaisi) {
     return Gs2.n_times_collect(this.round_size * tegoto, i => {
-      return this.turn_to_user_object(i, tegoto, kaisi)
+      return this.turn_to_item(i, tegoto, kaisi)
     })
   }
 
   // kaisi色から開始したときの0手目の人を返す
   first_user(kaisi) {
-    return this.turn_to_user_object(0, 1, kaisi)
+    return this.turn_to_item(0, 1, kaisi)
   }
 
   // 準備できたか？

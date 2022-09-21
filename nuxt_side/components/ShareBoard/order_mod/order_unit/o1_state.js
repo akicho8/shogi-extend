@@ -1,6 +1,8 @@
 import { O1Strategy } from "./o1_strategy.js"
 import { OxState } from "./ox_state.js"
 import { O2State } from "./o2_state.js"
+import { Item } from "./item.js"
+
 import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
@@ -20,9 +22,9 @@ export class O1State extends OxState {
     this.users = Gs2.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs2.ary_reverse(e))
   }
 
-  demo_set() {
-    this.users_allocate(["a", "b", "c", "d", "e"])
-  }
+  // demo_set() {
+  //   this.users_allocate(["a", "b", "c", "d", "e"])
+  // }
 
   users_allocate(users) {
     this.users = users
@@ -32,7 +34,7 @@ export class O1State extends OxState {
     return new O1Strategy(this.users.length, ...args)
   }
 
-  turn_to_user_object(...args) {
+  turn_to_item(...args) {
     const strategy = this.strategy_create(...args)
     return this.users[strategy.user_index]
   }
@@ -96,15 +98,28 @@ export class O1State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  // {
+  //   "watch_users": [],
+  //   "order_state": {
+  //     "class_name": "O1State",
+  //     "users": [
+  //       "a",
+  //       "b",
+  //       "c",
+  //       "d",
+  //       "e"
+  //     ]
+  //   }
+  // }
   get attributes() {
     return {
       ...super.attributes,
-      users: this.users,
+      users: this.users.map(e => e.as_json),
     }
   }
 
   set attributes(v) {
-    this.users = v.users
+    this.users = v.users.map(user_name => Item.create(user_name))
   }
 }
 

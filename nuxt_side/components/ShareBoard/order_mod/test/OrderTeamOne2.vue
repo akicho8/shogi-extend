@@ -11,8 +11,8 @@
     v-model="current_user_list"
     )
     template(v-for="e in current_user_list")
-      li(:key="e")
-        | {{e}}
+      li(:key="e.unique_key")
+        | {{e.to_s}}({{e.unique_key}})
 </template>
 
 <script>
@@ -20,8 +20,8 @@ import VueDraggable from "vuedraggable"
 
 export default {
   props: {
-    user_list:    { type: Array,   required: true,  },
-    label:        { type: String,  required: true,  },
+    user_list: { type: Array,   required: true,  },
+    label:     { type: String,  required: true,  },
   },
   components: {
     VueDraggable,

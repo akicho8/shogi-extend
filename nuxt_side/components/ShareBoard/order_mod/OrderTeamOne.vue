@@ -12,8 +12,8 @@
     @end="end_handle"
     )
     template(v-for="e in current_user_list")
-      li(:key="e.user_name")
-        | {{e.user_name}}
+      li(:key="e.unique_key")
+        | {{e.to_s}}
 </template>
 
 <script>

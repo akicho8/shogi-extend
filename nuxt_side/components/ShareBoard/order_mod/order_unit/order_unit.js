@@ -2,6 +2,7 @@
 
 import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
+import { Item } from "./item.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
@@ -25,7 +26,7 @@ export class OrderUnit {
   }
 
   user_names_allocate(user_names) {
-    const users = user_names.map(e => ({user_name: e}))
+    const users = user_names.map(user_name => Item.create(user_name))
     this.order_state.users_allocate(users)
   }
 
@@ -34,7 +35,7 @@ export class OrderUnit {
   }
 
   sample_set() {
-    this.order_state.user_names_allocate(["a", "b", "c", "d", "e"])
+    this.user_names_allocate(["a", "b", "c", "d", "e"])
   }
 
   shuffle_core() {
@@ -56,8 +57,8 @@ export class OrderUnit {
     this.watch_users = []
   }
 
-  turn_to_user_object(turn, tegoto, kaisi) {
-    return this.order_state.turn_to_user_object(turn, tegoto, kaisi)
+  turn_to_item(turn, tegoto, kaisi) {
+    return this.order_state.turn_to_item(turn, tegoto, kaisi)
   }
 
   state_change_handle(method) {
@@ -68,17 +69,19 @@ export class OrderUnit {
     return this.order_state.constructor.name
   }
 
+  // 観戦者は含まないでよい
   get attributes() {
-    return {
-      watch_users: this.watch_users,
-      order_state: this.order_state.attributes,
-    }
+    // return {
+    //   // watch_users: this.watch_users,
+    //   // order_state: this.order_state.attributes,
+    // }
+    return this.order_state.attributes
   }
   set attributes(v) {
-    this.watch_users = v.watch_users
-    const klass = Gs2.str_constantize(v.order_state.class_name)
+    // this.watch_users = v.watch_users
+    const klass = Gs2.str_constantize(v.class_name)
     const order_state = new klass()
-    order_state.attributes = v.order_state
+    order_state.attributes = v
     this.order_state = order_state
   }
 
@@ -90,7 +93,9 @@ export class OrderUnit {
   }
 
   dump_and_load() {
-    this.attributes = this.attributes
+    const json = JSON.parse(JSON.stringify(this.attributes))
+    this.clear()
+    this.attributes = json
   }
 
   get self_vs_self_p()   { return this.order_state.self_vs_self_p }
@@ -162,26 +167,23 @@ export class OrderUnit {
   }
 
   get inspect() {
-    const list0 = this.real_order_users(1, 0).map(e => e ? e.user_name : "?").join("")
-    const list1 = this.real_order_users(1, 1).map(e => e ? e.user_name : "?").join("")
-    const wlist = this.watch_users.map(e => e.user_name).join(",")
-    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.irekae_can_p}] (${this.state_name})`
+    const list0 = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join("")
+    const list1 = this.real_order_users(1, 1).map(e => e ? e.to_s : "?").join("")
+    const wlist = this.watch_users.map(e => e.to_s).join(",")
+    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.irekae_can_p ? 'o' : 'x'}] (${this.state_name})`
   }
 
   // 観戦者を含めて指定の名前はこの中に存在するか？
-  user_name_exist_p(user_name) {
-    const users = [...this.flat_uniq_users, ...this.watch_users]
-    return users.some(e => e.user_name === user_name)
-  }
+  // user_name_exist_p(user_name) {
+  //   const users = [...this.flat_uniq_users, ...this.watch_users]
+  //   return users.some(e => e.user_name === user_name)
+  // }
 
   // 観戦者の追加(対局者は除外する)
   watch_users_set(user_names) {
-    this.watch_users = []
-    user_names.forEach(user_name => {
-      if (!this.user_name_exist_p(user_name)) {
-        this.watch_users.push({user_name: user_name})
-      }
-    })
+    const hash = this.name_to_object_hash
+    user_names = user_names.filter(user_name => !hash[user_name]) // 対局者を除外する
+    this.watch_users = user_names.map(user_name => Item.create(user_name))
   }
 
   state_toggle() {

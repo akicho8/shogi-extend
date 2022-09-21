@@ -2,6 +2,7 @@ import { O1Strategy } from "./o1_strategy.js"
 import { O2Strategy } from "./o2_strategy.js"
 import { OxState } from "./ox_state.js"
 import { O1State } from "./o1_state.js"
+import { Item } from "./item.js"
 import _ from "lodash"
 import { Gs2 } from "@/components/models/gs2.js"
 
@@ -20,9 +21,9 @@ export class O2State extends OxState {
     this.teams = [this.teams[1], this.teams[0]]
   }
 
-  demo_set() {
-    this.teams = [["a"], ["b", "c"]]
-  }
+  // demo_set() {
+  //   this.users_allocate(["a", "b", "c", "d", "e"])
+  // }
 
   users_allocate(users) {
     this.teams = [[], []]
@@ -37,7 +38,7 @@ export class O2State extends OxState {
     return new O2Strategy(this.teams.map(e => e.length), ...args)
   }
 
-  turn_to_user_object(...args) {
+  turn_to_item(...args) {
     const strategy = this.strategy_create(...args)
     return this.teams[strategy.team_index][strategy.user_index]
   }
@@ -76,7 +77,7 @@ export class O2State extends OxState {
   get black_start_order_uniq_users() {
     const users = []
     _.times(this.round_size, turn => {
-      users.push(this.turn_to_user_object(turn, 1, 0))
+      users.push(this.turn_to_item(turn, 1, 0))
     })
     return _.compact(_.uniq(users))
   }
@@ -116,14 +117,31 @@ export class O2State extends OxState {
 
   ////////////////////////////////////////////////////////////////////////////////
 
+  // {
+  //   "watch_users": [],
+  //   "order_state": {
+  //     "class_name": "O2State",
+  //     "teams": [
+  //       [
+  //         "a",
+  //         "c",
+  //         "e"
+  //       ],
+  //       [
+  //         "b",
+  //         "d"
+  //       ]
+  //     ]
+  //   }
+  // }
   get attributes() {
     return {
       ...super.attributes,
-      teams: this.teams,
+      teams: this.teams.map(e => e.map(e => e.as_json))
     }
   }
   set attributes(v) {
-    this.teams = v.teams
+    this.teams = v.teams.map(e => e.map(user_name => Item.create(user_name)))
   }
 }
 
