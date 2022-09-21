@@ -6,7 +6,7 @@
 
       template(v-if="base.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{base.new_v.order_unit.user_total_count}}人
+          | 参加者{{base.new_v.order_unit.main_user_count}}人
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
@@ -17,11 +17,20 @@
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで有効にしよう
     template(v-if="base.order_enable_p")
-      OrderSettingModalTable(:base="base")
+      .TeamsContainer
+        template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.users"   label="☗☖")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"         label="観戦")
+
+        template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"          label="観戦")
+
       .buttons.is-centered.mb-0.mt-4
-        b-button.mb-0.shuffle_handle(@click="shuffle_handle" size="is-small") シャッフル
-        b-button.mb-0.furigoma_handle(@click="furigoma_handle" size="is-small") 振り駒
-        b-button.mb-0.swap_handle(@click="swap_handle" size="is-small") 先後入替
+        b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
+        b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small") 振り駒
+        b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small") 先後入替
       hr
       .mt-3
         .columns.is-mobile.other_setting
@@ -169,10 +178,6 @@ export default {
       this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.base.cc_next_message())
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-
-    ////////////////////////////////////////////////////////////////////////////////
-
     hint_handle(model) {
       this.sound_stop_all()
       this.sound_play_click()
@@ -218,6 +223,13 @@ export default {
   .other_setting
     label
       cursor: pointer
+
+  .TeamsContainer
+    // width: 12rem
+    // width: 100%
+    display: flex // OrderTeamOne を横並び化
+    justify-content: center
+    gap: 2px
 
 .STAGE-development
   .OrderSettingModal

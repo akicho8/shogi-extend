@@ -3,8 +3,9 @@
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | Method                                   | Description                |                                   |
 // |------------------------------------------+----------------------------+-----------------------------------|
-// | turn_to_user_object(turn)                | 手数 → ユーザー情報       |                                   |
-// | turn_to_user_name(turn)                  | 手数 → ユーザー名         |                                   |
+// | turn_to_user_object(turn)                | 手数 → ユーザー情報       | tegoto, start_color 依存          |
+// | turn_to_user_name(turn)                  | 手数 → ユーザー名         | 同上                              |
+// |------------------------------------------+----------------------------+-----------------------------------|
 // | user_name_to_initial_turn(user_name)     | 名前 → 手数               | 平手・駒落ちに関係なく最初の人は0 |
 // | user_name_to_initial_location(user_name) | 名前 → Location           | 駒落ちで最初の人は白              |
 // | user_name_to_display_turns(user_name)    | 名前 → 表示用の番号文字列 | "(1, 3)"                          |
@@ -57,5 +58,12 @@ export const app_turn_and_name = {
         return "(" + turns.map(e => e + 1).join(",") + ")"
       }
     },
+  },
+
+  computed: {
+    // 名前からO(1)で参照するためのハッシュたち
+    // turnからは直接計算で一発で求まる
+    name_to_turns_hash()   { return this.order_unit && this.order_unit.name_to_turns_hash(this.start_color)  }, // 名前から順番を知るためのハッシュ
+    name_to_object_hash()  { return this.order_unit && this.order_unit.name_to_object_hash                 }, // 名前から情報を知るためのハッシュ
   },
 }

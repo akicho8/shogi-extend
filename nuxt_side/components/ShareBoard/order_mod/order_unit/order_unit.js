@@ -132,12 +132,9 @@ export class OrderUnit {
 
   // 名前からユーザーを引くハッシュ
   // => { alice: {...}, bob: {...} }
-  name_to_object_hash(kaisi) {
-    const users = this.real_order_users(1, kaisi)
-    return users.reduce((a, e) => {
-      if (Gs2.blank_p(a[e.user_name])) {
-        a[e.user_name] = e
-      }
+  get name_to_object_hash() {
+    return this.flat_uniq_users.reduce((a, e) => {
+      a[e.user_name] = e
       return a
     }, {})
   }
@@ -167,23 +164,16 @@ export class OrderUnit {
   }
 
   // 観戦者を含めて指定の名前はこの中に存在するか？
-  member_include_p(user_name) {
+  user_name_exist_p(user_name) {
     const users = [...this.flat_uniq_users, ...this.watch_users]
     return users.some(e => e.user_name === user_name)
   }
 
   // 観戦者の追加
-  watch_users_add(users) {
-    Gs2.ary_wrap(users).forEach(m => {
-      Gs2.__assert__(m.from_user_name, "m.from_user_name")
-      if (this.member_include_p(m.from_user_name)) {
-        // すでにいるので skip
-      } else {
-        // いないので追加
-        this.watch_users.push({
-          user_name: m.from_user_name,
-          order_index: null,  // 順番なし
-        })
+  watch_users_add(user_names) {
+    user_names.forEach(user_name => {
+      if (!this.user_name_exist_p(user_name)) {
+        this.watch_users.push({user_name: user_name})
       }
     })
   }

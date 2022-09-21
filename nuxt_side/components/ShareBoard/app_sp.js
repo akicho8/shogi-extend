@@ -146,6 +146,8 @@ export const app_sp = {
       return this.sp_call(e => e.sp_Howler())
     },
 
+    // 手数 → 色変換
+    // 駒落ちによる開始色が変わる条件の大元はこれ
     turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
   },
   computed: {

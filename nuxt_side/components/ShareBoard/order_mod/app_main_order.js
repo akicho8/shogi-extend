@@ -45,10 +45,7 @@ export const app_main_order = {
 
     // 指定の名前
     os_setup_by_names(names) {
-      const users = names.map((e, i) => ({
-        user_name: e,
-        order_index: i,
-      }))
+      const users = names.map((e, i) => ({user_name: e}))
       this.order_unit = OrderUnit.create(users)
       this.order_enable_p = true  // 有効化
     },
@@ -182,9 +179,9 @@ export const app_main_order = {
       return this.order_lookup_from_name(e.from_user_name)
     },
 
-    order_lookup_from_name(name) {
+    order_lookup_from_name(user_name) {
       if (this.order_ok) {
-        return this.name_to_object_hash[name]
+        return this.name_to_object_hash[user_name]
       }
     },
 
@@ -260,12 +257,7 @@ export const app_main_order = {
 
     // モーダル用の new_v.order_unit の初期値
     os_table_rows_default() {
-      return this.name_uniq_member_infos.map((e, i) => {
-        return {
-          order_index: i,       // FIXME: これとれないか検討する
-          user_name: e.from_user_name,
-        }
-      })
+      return this.uniq_member_infos.map((e, i) => ({user_name: e.from_user_name}))
     },
 
     // 手番制限
@@ -295,11 +287,11 @@ export const app_main_order = {
     one_vs_one_p()   { return this.order_enable_p && this.order_unit && this.order_unit.one_vs_one_p   }, // 1vs1で対戦している？
     many_vs_many_p() { return this.order_enable_p && this.order_unit && this.order_unit.many_vs_many_p }, // 3人以上で対戦している？
 
-    watching_member_count() { return this.name_uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
+    watching_member_count() { return this.uniq_member_infos.filter(e => this.member_is_watching(e)).length }, // 観戦者数
 
     // private
-    omembers_blank_p()   { return this.order_unit == null || this.order_unit.user_total_count === 0 }, // メンバーリストが空？
-    omembers_present_p() { return this.order_unit && this.order_unit.user_total_count > 0           }, // メンバーリストがある？
+    omembers_blank_p()   { return this.order_unit == null || this.order_unit.main_user_count === 0 }, // メンバーリストが空？
+    omembers_present_p() { return this.order_unit && this.order_unit.main_user_count > 0           }, // メンバーリストがある？
 
     //////////////////////////////////////////////////////////////////////////////// 手番関連
 
@@ -322,10 +314,6 @@ export const app_main_order = {
 
     ordered_member_names_oneline() { return this.order_unit && this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 
-    // 名前からO(1)で参照するためのハッシュたち
-    // turnからは直接計算で一発で求まる 
-    name_to_turns_hash()   { return this.order_unit && this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
-    name_to_object_hash()  { return this.order_unit && this.order_unit.name_to_object_hash(this.start_color)    }, // 名前から情報を知るためのハッシュ
 
     ////////////////////////////////////////////////////////////////////////////////
 

@@ -53,7 +53,7 @@ export const app_new_order = {
     // 観戦者の追加
     // 独立して叩けるようにする
     watch_users_add() {
-      this.new_v.order_unit.watch_users_add(this.name_uniq_member_infos)
+      this.new_v.order_unit.watch_users_add(this.room_user_names)
     },
 
     // 順番設定モーダル起動

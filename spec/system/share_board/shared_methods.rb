@@ -92,7 +92,7 @@ module SharedMethods
 
   # OK or 観戦 トグルボタンのクリック
   def order_toggle(n)
-    find(".OrderSettingModalTable tbody tr:nth-child(#{n}) .enable_toggle_handle").click
+    find(".TeamsContainer tbody tr:nth-child(#{n}) .enable_toggle_handle").click
   end
 
   def assert_white_read_sec(second)
@@ -249,7 +249,7 @@ module SharedMethods
   end
 
   def assert_order_setting_members(names)
-    result = all(".OrderSettingModalTable tbody .user_name").collect(&:text)
+    result = all(".TeamsContainer tbody .user_name").collect(&:text)
     assert { result == names }
   end
 
