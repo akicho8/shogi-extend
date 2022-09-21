@@ -194,7 +194,7 @@
       .panel-block(v-if="base.order_enable_p && base.omembers_present_p")
         | 順序:
         template(v-for="(_, i) in 11")
-          | {{base.current_user_by_turn(i).user_name[0]}}
+          | {{base.turn_to_user_object(i).user_name[0]}}
       .panel-block tn_counter:{{base.tn_counter}}
       .panel-block current_turn:{{base.current_turn}}
       .panel-block order_enable_p:{{base.order_enable_p}}

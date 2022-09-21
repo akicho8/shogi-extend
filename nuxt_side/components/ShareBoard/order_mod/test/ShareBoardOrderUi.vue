@@ -42,7 +42,7 @@
       p
         | ターン0〜7: 
         template(v-for="turn in turn_test_range")
-          | {{order_unit.current_user_by_turn(turn, tegoto, start_color)}}
+          | {{order_unit.turn_to_user_object(turn, tegoto, start_color)}}
   .columns
     .column
       pre

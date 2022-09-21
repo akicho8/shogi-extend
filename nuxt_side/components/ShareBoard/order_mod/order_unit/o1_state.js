@@ -32,7 +32,7 @@ export class O1State extends OxState {
     return new O1Strategy(this.users.length, ...args)
   }
 
-  current_user_by_turn(...args) {
+  turn_to_user_object(...args) {
     const strategy = this.strategy_create(...args)
     return this.users[strategy.user_index]
   }

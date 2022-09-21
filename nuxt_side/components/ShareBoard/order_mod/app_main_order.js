@@ -9,11 +9,15 @@ import { Location       } from "shogi-player/components/models/location.js"
 
 import { OrderUnit        } from "./order_unit/order_unit.js"
 import { app_new_order    } from "./app_new_order.js"
+import { app_turn_and_name    } from "./app_turn_and_name.js"
 
 import _ from "lodash"
 
 export const app_main_order = {
-  mixins: [app_new_order],
+  mixins: [
+    app_new_order,
+    app_turn_and_name,
+  ],
   data() {
     return {
       // 共有する変数
@@ -49,69 +53,6 @@ export const app_main_order = {
       this.order_enable_p = true  // 有効化
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 手数からメンバーを取得
-    current_user_by_turn(turn) {
-      if (!this.order_enable_p) {
-        // これがないと順番設定を無効にしても ordered_members が生きていると通知されてしまう
-        return null
-      }
-      if (this.omembers_blank_p) {
-        return null
-      }
-      return this.order_unit.current_user_by_turn(turn, this.tegoto, this.start_color)
-    },
-
-    // 局面 turn の手番のメンバーの名前
-    user_name_by_turn(turn) {
-      const e = this.current_user_by_turn(turn)
-      if (e) {
-        return e.user_name
-      }
-    },
-
-    // // 局面 turn の手番の順番 ← なくてもいい？
-    // order_index_by_turn(turn) {
-    //   const e = this.current_user_by_turn(turn)
-    //   if (e) {
-    //     return e.order_index
-    //   }
-    // },
-
-    // 指定の名前の人の順序たち
-    // order_indexes_by_user_name(user_name) {
-    //   if (this.order_enable_p) {
-    //     return this.name_to_turns_hash[user_name]
-    //   }
-    // },
-
-    // 指定の名前の人の最初の順序
-    // 優先度をつける順番であって location ではないので注意
-    name_to_initial_turn(name) {
-      if (this.order_enable_p) {
-        const turns = this.name_to_turns_hash[name]
-        if (turns) {
-          return turns[0]
-        }
-      }
-    },
-
-    // 指定の名前の人の最初の色
-    name_to_initial_location(name) {
-      if (this.order_enable_p) {
-        const turn = this.name_to_initial_turn(name)
-        return this.turn_to_location(turn)
-      }
-    },
-
-    // 表示用の手番の番号
-    name_to_display_turns(name) {
-      const turns = this.name_to_turns_hash[name]
-      if (turns) {
-        return "(" + turns.map(e => e + 1).join(",") + ")"
-      }
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -133,6 +74,7 @@ export const app_main_order = {
         this.tl_alert("order_switch_share 自分→他者")
       }
       this.order_enable_p = params.order_enable_p
+      // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
       if (!this.order_enable_p) {
         this.message_scope_key = "is_message_scope_public"
       }
@@ -230,7 +172,7 @@ export const app_main_order = {
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_set_by_self_location() {
       this.__assert__(this.user_name, "this.user_name")
-      const location = this.name_to_initial_location(this.user_name) // 自分の▲△
+      const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
       if (location) {
         this.sp_viewpoint = location.key                     // その視点に変更する
       }
@@ -362,13 +304,13 @@ export const app_main_order = {
     //////////////////////////////////////////////////////////////////////////////// 手番関連
 
     // -1
-    previous_turn_user_name()   { return this.user_name_by_turn(this.current_turn - 1)   }, // 前の局面のメンバーの名前
+    previous_turn_user_name()   { return this.turn_to_user_name(this.current_turn - 1)   }, // 前の局面のメンバーの名前
     previous_turn_self_p()      { return this.previous_turn_user_name === this.user_name }, // 前は自分の手番か？
     // 0
-    current_turn_user_name()    { return this.user_name_by_turn(this.current_turn)       }, // 今の局面のメンバーの名前
+    current_turn_user_name()    { return this.turn_to_user_name(this.current_turn)       }, // 今の局面のメンバーの名前
     current_turn_self_p()       { return this.current_turn_user_name === this.user_name  }, // 今は自分の手番か？
     // +1
-    next_turn_user_name()       { return this.user_name_by_turn(this.current_turn + 1)   }, // 次の局面のメンバーの名前
+    next_turn_user_name()       { return this.turn_to_user_name(this.current_turn + 1)   }, // 次の局面のメンバーの名前
     next_turn_self_p()          { return this.next_turn_user_name === this.user_name     }, // 次は自分の手番か？
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -380,8 +322,8 @@ export const app_main_order = {
 
     ordered_member_names_oneline() { return this.order_unit && this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
 
-    //////////////////////////////////////////////////////////////////////////////// 名前からO(1)で参照するためのハッシュ
-
+    // 名前からO(1)で参照するためのハッシュたち
+    // turnからは直接計算で一発で求まる 
     name_to_turns_hash()   { return this.order_unit && this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
     name_to_object_hash()  { return this.order_unit && this.order_unit.name_to_object_hash(this.start_color)    }, // 名前から情報を知るためのハッシュ
 
@@ -396,7 +338,7 @@ export const app_main_order = {
       if (this.order_enable_p) {
         if (this.order_unit) {
           return _.sortBy(this.member_infos, e => {
-            return this.name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
+            return this.user_name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
           })
         }
       }

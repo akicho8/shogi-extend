@@ -26,13 +26,13 @@ export class OxState {
   // null を含む
   real_order_users(tegoto, kaisi) {
     return Gs2.n_times_collect(this.round_size * tegoto, i => {
-      return this.current_user_by_turn(i, tegoto, kaisi)
+      return this.turn_to_user_object(i, tegoto, kaisi)
     })
   }
 
   // kaisi色から開始したときの0手目の人を返す
   first_user(kaisi) {
-    return this.current_user_by_turn(0, 1, kaisi)
+    return this.turn_to_user_object(0, 1, kaisi)
   }
 
   // 準備できたか？

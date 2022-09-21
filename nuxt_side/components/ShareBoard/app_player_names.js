@@ -68,7 +68,7 @@ export const app_player_names = {
       }
       this.member_infos.forEach(e => {
         let name = e.from_user_name
-        const location = this.name_to_initial_location(name)      // 先後
+        const location = this.user_name_to_initial_location(name)      // 先後
         let key = null
         let index = this.member_infos.length
         if (location) {

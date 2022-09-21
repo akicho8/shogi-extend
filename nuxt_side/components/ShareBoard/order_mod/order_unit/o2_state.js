@@ -37,7 +37,7 @@ export class O2State extends OxState {
     return new O2Strategy(this.teams.map(e => e.length), ...args)
   }
 
-  current_user_by_turn(...args) {
+  turn_to_user_object(...args) {
     const strategy = this.strategy_create(...args)
     return this.teams[strategy.team_index][strategy.user_index]
   }
@@ -76,7 +76,7 @@ export class O2State extends OxState {
   get black_start_order_uniq_users() {
     const users = []
     _.times(this.round_size, turn => {
-      users.push(this.current_user_by_turn(turn, 1, 0))
+      users.push(this.turn_to_user_object(turn, 1, 0))
     })
     return _.compact(_.uniq(users))
   }

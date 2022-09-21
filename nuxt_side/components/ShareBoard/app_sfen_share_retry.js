@@ -63,7 +63,7 @@ export const app_sfen_share_retry = {
       this.x_retry_count += 1
       this.sfen_share_not_reach()
 
-      const next_user_name = this.user_name_by_turn(this.sfen_share_params.turn)
+      const next_user_name = this.turn_to_user_name(this.sfen_share_params.turn)
       const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がないので再送しますか？`
       const message2 = `<span class="has-text-grey is-size-7 mx-1">${this.retry_check_delay}秒後に再度確認します</span>`
       const message3 = `${message1}${message2}`
