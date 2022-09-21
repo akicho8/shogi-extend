@@ -117,7 +117,7 @@ export class OrderUnit {
   // a b
   //   c
   // だった場合 { a: [0, 2], b: [1], c:[3] }
-  name_to_indexes_hash(kaisi) {
+  name_to_turns_hash(kaisi) {
     const users = this.real_order_users(1, kaisi)
     let index = 0
     return users.reduce((a, e) => {
@@ -132,7 +132,7 @@ export class OrderUnit {
 
   // 名前からユーザーを引くハッシュ
   // => { alice: {...}, bob: {...} }
-  name_to_user_hash(kaisi) {
+  name_to_object_hash(kaisi) {
     const users = this.real_order_users(1, kaisi)
     return users.reduce((a, e) => {
       if (Gs2.blank_p(a[e.user_name])) {

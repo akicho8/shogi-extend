@@ -68,12 +68,12 @@ export const app_player_names = {
       }
       this.member_infos.forEach(e => {
         let name = e.from_user_name
-        const location = this.initial_location_by_name(name)      // 先後
+        const location = this.name_to_initial_location(name)      // 先後
         let key = null
         let index = this.member_infos.length
         if (location) {
           key = location.key
-          index = this.name_to_indexes_hash[name][0] // 順番設定から自分の番号(0..)を取得
+          index = this.name_to_turns_hash[name][0] // 順番設定から自分の番号(0..)を取得
         } else {
           if (this.order_enable_p) {
             key = "other"       // 順番設定されているけど順番に含まれていないということは観戦している人

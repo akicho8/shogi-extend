@@ -79,42 +79,38 @@ export const app_main_order = {
     //   }
     // },
 
+    // 指定の名前の人の順序たち
+    // order_indexes_by_user_name(user_name) {
+    //   if (this.order_enable_p) {
+    //     return this.name_to_turns_hash[user_name]
+    //   }
+    // },
+
     // 指定の名前の人の最初の順序
-    order_index_by_user_name(user_name) {
-      const indexes = this.order_indexes_by_user_name(user_name)
-      if (indexes) {
-        return indexes[0]
+    // 優先度をつける順番であって location ではないので注意
+    name_to_initial_turn(name) {
+      if (this.order_enable_p) {
+        const turns = this.name_to_turns_hash[name]
+        if (turns) {
+          return turns[0]
+        }
       }
     },
 
-    // 指定の名前の人の最初の順序
-    order_indexes_by_user_name(user_name) {
+    // 指定の名前の人の最初の色
+    name_to_initial_location(name) {
       if (this.order_enable_p) {
-        return this.name_to_indexes_hash[user_name]
+        const turn = this.name_to_initial_turn(name)
+        return this.turn_to_location(turn)
       }
     },
 
     // 表示用の手番の番号
-    order_display_index(user_name) {
-      const indexes = this.order_indexes_by_user_name(user_name)
-      if (indexes) {
-        return "(" + indexes.map(e => e + 1).join(",") + ")"
+    name_to_display_turns(name) {
+      const turns = this.name_to_turns_hash[name]
+      if (turns) {
+        return "(" + turns.map(e => e + 1).join(",") + ")"
       }
-    },
-
-    // 指定の名前の人が最初に指すときの location
-    initial_location_by_name(name) {
-      const index = this.order_index_by_user_name(name) // 順番設定から自分の番号(0..)を取得
-      if (this.present_p(index)) {
-        return Location[index]
-      }
-      // if (this.present_p(index)) {
-      //   // this.tl_add("順番番号", index)
-      //   // this.__assert__(this.present_p(index), "this.present_p(index)")
-      //   const location = this.current_sfen_info.location_by_offset(index) // その番号を手番すると自分の最初の場所がわかる
-      //   // this.tl_add("場所確定", location.key)
-      //   return location
-      // }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -234,7 +230,7 @@ export const app_main_order = {
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_set_by_self_location() {
       this.__assert__(this.user_name, "this.user_name")
-      const location = this.initial_location_by_name(this.user_name) // 自分の▲△
+      const location = this.name_to_initial_location(this.user_name) // 自分の▲△
       if (location) {
         this.sp_viewpoint = location.key                     // その視点に変更する
       }
@@ -246,7 +242,7 @@ export const app_main_order = {
 
     order_lookup_from_name(name) {
       if (this.order_ok) {
-        return this.name_to_user_hash[name]
+        return this.name_to_object_hash[name]
       }
     },
 
@@ -386,8 +382,8 @@ export const app_main_order = {
 
     //////////////////////////////////////////////////////////////////////////////// 名前からO(1)で参照するためのハッシュ
 
-    name_to_indexes_hash() { return this.order_unit && this.order_unit.name_to_indexes_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
-    name_to_user_hash()    { return this.order_unit && this.order_unit.name_to_user_hash(this.start_color)    }, // 名前から情報を知るためのハッシュ
+    name_to_turns_hash()   { return this.order_unit && this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
+    name_to_object_hash()  { return this.order_unit && this.order_unit.name_to_object_hash(this.start_color)    }, // 名前から情報を知るためのハッシュ
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -400,7 +396,7 @@ export const app_main_order = {
       if (this.order_enable_p) {
         if (this.order_unit) {
           return _.sortBy(this.member_infos, e => {
-            return this.order_index_by_user_name(e.from_user_name) ?? this.member_infos.length
+            return this.name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
           })
         }
       }

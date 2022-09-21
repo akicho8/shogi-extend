@@ -10,8 +10,8 @@ ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
 
   // 順番設定しているときに表示する番号
   .flex_item.left_tag_or_icon(v-if="base.order_lookup(info)")
-    //- b-tag(rounded) {{base.order_display_index(info)}}
-    | {{base.order_display_index(info)}}
+    //- b-tag(rounded) {{base.name_to_display_turns(info)}}
+    | {{base.name_to_display_turns(info)}}
 
   // 反応がない場合
   //- b-icon.flex_item(v-if="base.member_is_disconnect(info)" icon="lan-disconnect" type="is-danger" size="is-small")
@@ -26,6 +26,8 @@ ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
     .flex_item LV:{{info.active_level}}
     .flex_item 通知{{info.alive_notice_count}}回目
     .flex_item {{base.member_elapsed_sec(info)}}秒前
+    template(v-if="base.order_lookup(info)")
+      | {{base.name_to_initial_location(info.from_user_name).name}}
 </template>
 
 <script>

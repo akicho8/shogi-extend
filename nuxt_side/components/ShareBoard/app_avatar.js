@@ -59,7 +59,7 @@ export const app_avatar = {
       const hash = {}
       if (this.order_enable_p && this.omembers_present_p) {
         for (const om of this.order_unit.flat_uniq_users) {
-          const e = this.base.room_member_names_hash[om.user_name]
+          const e = this.room_member_names_hash[om.user_name]
           if (e) { // メンバー一覧に存在するなら
             const location = this.current_sfen_info.location_by_offset(om.order_index)
             if (hash[location.key] == null) {

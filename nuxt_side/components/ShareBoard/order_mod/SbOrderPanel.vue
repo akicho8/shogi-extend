@@ -28,11 +28,11 @@
         .panel-block
           pre
             | 名前→indexes
-            | {{TheSb.name_to_indexes_hash}}
+            | {{TheSb.name_to_turns_hash}}
         .panel-block
           pre
             | 名前→情報
-            | {{TheSb.name_to_user_hash}}
+            | {{TheSb.name_to_object_hash}}
   .column.is-4
     .panel
       .panel-heading

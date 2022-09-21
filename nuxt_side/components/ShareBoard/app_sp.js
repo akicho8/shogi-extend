@@ -146,6 +146,7 @@ export const app_sp = {
       return this.sp_call(e => e.sp_Howler())
     },
 
+    turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
   },
   computed: {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },
@@ -162,9 +163,9 @@ export const app_sp = {
     current_sfen_info()            { return this.sfen_parse(this.current_sfen)                           }, // SFENのあらゆる情報
     current_sfen_turn_offset_max() { return this.current_sfen_info.turn_offset_max                       }, // 最後の手数
     next_location()                { return this.current_sfen_info.next_location                         }, // 次の色
-    current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) }, // 現在の色
-    base_location()                { return this.current_sfen_info.location_by_offset(0)                 }, // 0手目の色
-    start_color()                  { return this.base_location.code                                      }, // 0:平手 1:駒落ち
+    current_location()             { return this.turn_to_location(this.current_turn) }, // 現在の色
+    base_location()                { return this.turn_to_location(0)                 }, // 0手目の色
+    start_color()                  { return this.base_location.code                                      }, // 0:平手 1:駒落ち (超重要)
 
     current_xsfen()                { return { sfen: this.current_sfen, turn: this.current_turn } },
 
