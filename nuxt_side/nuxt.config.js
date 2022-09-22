@@ -227,8 +227,9 @@ const config = {
   // components: true,
   components: [
     {
-      path: "@/components/",
+      path: "~/components",
       pathPrefix: false,
+      extensions: ["vue"],
     },
   ],
 
