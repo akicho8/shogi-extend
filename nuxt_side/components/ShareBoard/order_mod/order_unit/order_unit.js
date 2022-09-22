@@ -137,10 +137,13 @@ export class OrderUnit {
     const users = this.real_order_users(1, kaisi)
     let index = 0
     return users.reduce((a, e) => {
-      if (a[e.user_name] == null) {
-        a[e.user_name] = []
+      // Gs2.__assert__(e != null, "e != null")
+      if (e) {
+        if (a[e.user_name] == null) {
+          a[e.user_name] = []
+        }
+        a[e.user_name].push(index)
       }
-      a[e.user_name].push(index)
       index += 1
       return a
     }, {})
