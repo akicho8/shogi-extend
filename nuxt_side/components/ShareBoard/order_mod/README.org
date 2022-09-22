@@ -1,15 +1,19 @@
 http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_state=to_o2_state&tegoto=2&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle
 http://localhost:4000/experiment/OrderUiTest
 
+|------+--------------------------+---------------------------------------|
+| 順番 | 挙動                     | 駒落ち時の開始盤面                    |
+|------+--------------------------+---------------------------------------|
+| 1列  | 順番は同じで先後が変わる | △からなので△視点に変わる            |
+| 2列  | 色は同じで順番が変わる   | 色が同じなのでaの盤の向きは変わらない |
+|------+--------------------------+---------------------------------------|
 
-http://localhost:4000/share-board?room_code=my_room&fixed_user_name=nanashi&fixed_order_names=nanashi
-
-room_code: :my_room, fixed_user_name: "nanashi", fixed_order_names: "nanashi"
-
-
-
-一周するまでのおおまかな手数(1手毎換算): 5
-
-☗開始かつ1手毎で1周(重複なし): abc
-
-実際の順: baacc
+|------+------+----+----|
+| 順番 | 手合 | a  | b  |
+|------+------+----+----|
+| 1列  | 平手 | ▲ | △ |
+|      | 落ち | △ | ▲ |
+|------+------+----+----|
+| 2列  | 平手 | ▲ | △ |
+|      | 落ち | ▲ | △ |
+|------+------+----+----|

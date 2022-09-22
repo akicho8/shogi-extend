@@ -13,6 +13,26 @@ export const Xassertion = {
     }
   },
 
+  __assert_kind_of_integer__(value, message = null) {
+    this.__assert__(Number.isInteger(value))
+  },
+
+  __assert_kind_of_string__(value, message = null) {
+    this.__assert_equal__("string", typeof value, message)
+  },
+
+  __assert_kind_of_array__(value, message = null) {
+    this.__assert_equal__("array", typeof value, message)
+  },
+
+  __assert_kind_of_hash__(value, message = null) {
+    this.__assert_equal__("object", typeof value, message)
+  },
+
+  __assert_kind_of_object__(value, message = null) {
+    this.__assert_equal__("object", typeof value, message)
+  },
+
   __assert_nonzero__(v, message = "divided by 0") {
     this.__assert__(v !== 0, message)
   },

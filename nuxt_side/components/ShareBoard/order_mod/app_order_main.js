@@ -16,7 +16,6 @@ export const app_order_main = {
   ],
   data() {
     return {
-      order_enable_p: false,          // 順番設定 ON OFF
       order_unit: OrderUnit.create(), // 順番設定 情報 (nullかどうかの確認が大変すぎるため最初から入れておく)
     }
   },
@@ -26,12 +25,9 @@ export const app_order_main = {
   methods: {
     os_setup() {
       if (this.present_p(this.fixed_order_names)) {
-        // alice bob carol dave の順番で設定する場合は
-        // fixed_order_names=alice,bob,carol,dave とする
-        const names = this.str_to_words(this.fixed_order_names)
-        this.os_setup_by_names(names)
-        this.order_unit.state_change_handle(this.fixed_order_state)
+        this.os_setup_by_names(this.str_to_words(this.fixed_order_names))
       }
+      this.order_unit.state_switch_to(this.fixed_order_state) // 主にデバッグ用
     },
 
     // 指定の名前
@@ -39,7 +35,6 @@ export const app_order_main = {
       this.order_unit = OrderUnit.create(names)
       this.order_enable_p = true
     },
-
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -192,7 +187,7 @@ export const app_order_main = {
     member_is_joined(e)       { return !this.order_enable_p                                                     }, // 初期状態
     member_is_turn_active(e)  { return this.order_lookup(e) && this.current_turn_user_name === e.from_user_name }, // 手番の人
     member_is_turn_standby(e) { return this.order_lookup(e) && this.current_turn_user_name !== e.from_user_name }, // 手番待ちの人
-    member_is_watching(e)     { return this.order_enable_p && !this.order_lookup(e)                               }, // 観戦
+    member_is_watching(e)     { return this.order_enable_p && !this.order_lookup(e)                             }, // 観戦
     member_is_self(e)         { return this.connection_id === e.from_connection_id                              }, // 自分
 
     // Windowが非アクティブ状態か？
@@ -282,7 +277,6 @@ export const app_order_main = {
     ////////////////////////////////////////////////////////////////////////////////
 
     ordered_member_names_oneline() { return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
-
 
     ////////////////////////////////////////////////////////////////////////////////
 

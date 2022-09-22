@@ -35,7 +35,7 @@ export class OrderUnit {
     return this.order_state.current_user_by_turn(turn, tegoto, kaisi)
   }
 
-  state_change_handle(method) {
+  state_switch_to(method) {
     this.order_state = this.order_state[method]
   }
 

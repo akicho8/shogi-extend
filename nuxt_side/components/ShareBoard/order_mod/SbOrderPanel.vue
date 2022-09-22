@@ -38,7 +38,8 @@
       .panel-heading
         | [assert_system_variable]
       .panel-block order_enable_p:{{TheSb.order_enable_p}}
-      .panel-block 順序:{{TheSb.order_unit.real_order_users2(TheSb.tegoto, TheSb.start_color)}}
+      .panel-block 順序1:{{TheSb.order_unit.real_order_users2(TheSb.tegoto, TheSb.start_color)}}
+      .panel-block(v-if="TheSb.new_v.order_unit") 順序2:{{TheSb.new_v.order_unit.real_order_users2(TheSb.tegoto, TheSb.start_color)}}
   .column.is-4
     .panel
       .panel-heading

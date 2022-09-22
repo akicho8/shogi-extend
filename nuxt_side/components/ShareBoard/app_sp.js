@@ -88,7 +88,9 @@ export const app_sp = {
         this.sound_play("x")
         const messages = []
         const name = this.current_turn_user_name
-        if (name) {
+        if (this.blank_p(name)) {
+          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
+        } else {
           messages.push(`今は${this.user_call_name(name)}の手番です`)
           if (this.self_is_watcher_p) {
             messages.push(`あなたは観戦者なので操作できません`)
@@ -99,8 +101,6 @@ export const app_sp = {
             // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
             messages.push(`検討する場合は順番設定を解除してください`)
           }
-        } else {
-          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
         }
         if (this.present_p(messages)) {
           const full_message = messages.join("。")

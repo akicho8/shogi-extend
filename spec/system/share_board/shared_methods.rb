@@ -90,9 +90,12 @@ module SharedMethods
     assert_no_selector "#{place_class(place)}.lifted_from_p"
   end
 
-  # OK or 観戦 トグルボタンのクリック
-  def order_toggle(n)
-    find(".TeamsContainer tbody tr:nth-child(#{n}) .enable_toggle_handle").click
+  # klass の上からn番目のメンバーを観戦に移動する
+  # klass: [dnd_black, dnd_white, dnd_both]
+  def drag_to_watch(klass, n)
+    a = find(".#{klass} li:nth-child(#{n.next})")
+    b = find(".dnd_watch_users ul")
+    a.drag_to(b)
   end
 
   def assert_white_read_sec(second)
@@ -205,19 +208,22 @@ module SharedMethods
   end
 
   def order_set_on
-    order_modal_main_switch_click("ON")
+    order_modal_main_switch_click(true)
   end
 
   def order_set_off
-    order_modal_main_switch_click("OFF")
+    order_modal_main_switch_click(false)
   end
 
-  def order_modal_main_switch_click(on_or_off)
+  def order_modal_main_switch_click(enabled)
     hamburger_click
     os_modal_handle                        # 「順番設定」モーダルを開く
-    os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-    action_log_row_of(0).assert_text("順番 #{on_or_off}")
-    modal_close_handle                                  # 閉じる (ヘッダーに置いている)
+    os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
+    action_log_row_of(0).assert_text("順番 #{enabled ? 'ON' : 'OFF'}")
+    if enabled
+      apply_button                          # 明示的に適用する
+    end
+    modal_close_handle                      # 閉じる (ヘッダーに置いている)
   end
 
   def apply_button
@@ -254,8 +260,13 @@ module SharedMethods
   end
 
   def assert_order_team_one(klass, names)
-    result = all(".#{klass} li").collect(&:text).join(",")
+    result = all(".#{klass} li").collect(&:text).join("")
     assert { result == names }
+  end
+
+  def assert_order_team_one2(black, white)
+    assert_order_team_one "dnd_black", black
+    assert_order_team_one "dnd_white", white
   end
 
   # なんでもいいから1vs1のルールを選択する
@@ -309,8 +320,16 @@ module SharedMethods
     find(".cc_modal_handle").click
   end
 
+  def assert_system_variable_selector_args(key, value)
+    [".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true]
+  end
+
   def assert_system_variable(key, value)
-    assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
+    assert_selector(*assert_system_variable_selector_args(key, value))
+  end
+
+  def assert_no_system_variable(key, value)
+    assert_no_selector(*assert_system_variable_selector_args(key, value))
   end
 
   # 順番設定と対局時計の右上の有効をトグルする
@@ -358,6 +377,13 @@ module SharedMethods
     # 履歴の index 番目は user が behavior した
     def action_assert(index, user, behavior)
       within(action_log_row_of(index)) do
+        assert_selector(:element, text: user,     exact_text: true)
+        assert_selector(:element, text: behavior, exact_text: true)
+      end
+    end
+
+    def action_assert2(user, behavior)
+      within(".ShareBoardActionLog") do
         assert_selector(:element, text: user,     exact_text: true)
         assert_selector(:element, text: behavior, exact_text: true)
       end

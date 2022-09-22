@@ -3,8 +3,8 @@
   .columns
     .column
       .buttons
-        .button(@click="order_unit.state_change_handle('to_o1_state')") 1列
-        .button(@click="order_unit.state_change_handle('to_o2_state')") 2列
+        .button(@click="order_unit.state_switch_to('to_o1_state')") 1列
+        .button(@click="order_unit.state_switch_to('to_o2_state')") 2列
         .button(@click="order_unit.sample_set()") 例
         .button(@click="order_unit.clear()") 削除
         .button(@click="order_unit.order_state.demo_set()") デモ

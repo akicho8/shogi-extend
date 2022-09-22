@@ -13,13 +13,14 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       hamburger_click
       os_modal_handle                                   # 「順番設定」モーダルを開く
-      os_switch_toggle                                # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信)
-      action_assert(0, "alice", "順番 ON")              # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
+      os_switch_toggle                                  # 有効スイッチをクリック
+      action_assert2("alice", "順番 ON")                # aliceが有効にしたことが(ActionCable経由で)自分に伝わった
+      apply_button                                      # 確定
       modal_close_handle                                # 閉じる (ヘッダーに置いている)
     end
     b_block do
-      action_assert(0, "alice", "順番 ON")
-      assert_selector(".TeamsContainer")        # 同期しているのでbob側のモーダルも有効になっている
+      action_assert2("alice", "順番 ON")
+      assert_selector(".TeamsContainer")                # 同期しているのでbob側のモーダルも有効になっている
       modal_close_handle                                # 閉じる (ヘッダーに置いている)
       assert_member_list(1, "is_turn_active", "alice")  # 1人目(alice)に丸がついている
       assert_member_list(2, "is_turn_standby", "bob")   # 2人目(bob)は待機中

@@ -20,10 +20,6 @@ export class OxState {
     }
   }
 
-  get self_vs_self_p() { return this.main_user_count.length === 1 } // 自分vs自分で対戦している？
-  get one_vs_one_p()   { return this.main_user_count.length === 2 } // 1vs1で対戦している？
-  get many_vs_many_p() { return this.main_user_count.length >= 3  } // 3人以上で対戦している？
-
   // turn 0 から開始したときのユーザーたち
   // null を含む
   real_order_users(tegoto, kaisi) {
@@ -51,7 +47,8 @@ export class OxState {
     return messages
   }
 
-  get empty_p() {
-    return this.main_user_count === 0
-  }
+  get empty_p()        { return this.main_user_count === 0 } // 対戦者がいない？
+  get self_vs_self_p() { return this.main_user_count === 1 } // 自分vs自分で対戦している？ (または相手がいない)
+  get one_vs_one_p()   { return this.main_user_count === 2 } // 1vs1で対戦している？
+  get many_vs_many_p() { return this.main_user_count >= 3  } // 3人以上で対戦している？
 }

@@ -61,7 +61,7 @@ export class OrderUnit {
     return this.order_state.turn_to_item(turn, tegoto, kaisi)
   }
 
-  state_change_handle(method) {
+  state_switch_to(method) {
     Gs2.__assert__(this.order_state[method], "this.order_state[method]")
     this.order_state = this.order_state[method]
   }
@@ -99,10 +99,11 @@ export class OrderUnit {
     this.attributes = json
   }
 
-  get self_vs_self_p()   { return this.order_state.self_vs_self_p }
-  get one_vs_one_p()     { return this.order_state.one_vs_one_p }
-  get many_vs_many_p()   { return this.order_state.many_vs_many_p }
   get main_user_count()  { return this.order_state.main_user_count }
+  get empty_p()          { return this.order_state.empty_p         }
+  get self_vs_self_p()   { return this.order_state.self_vs_self_p  }
+  get one_vs_one_p()     { return this.order_state.one_vs_one_p    }
+  get many_vs_many_p()   { return this.order_state.many_vs_many_p  }
 
   get black_start_order_uniq_users() {
     return this.order_state.black_start_order_uniq_users
@@ -197,9 +198,9 @@ export class OrderUnit {
 
   state_toggle() {
     if (this.order_state.constructor.name === "O1State") {
-      this.state_change_handle("to_o2_state")
+      this.state_switch_to("to_o2_state")
     } else {
-      this.state_change_handle("to_o1_state")
+      this.state_switch_to("to_o1_state")
     }
   }
 }

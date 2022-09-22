@@ -7,14 +7,17 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_user_name      => "a",
         :fixed_member_names   => "a",
         :fixed_order_names    => "a",
-        :fixed_order_state    => "to_o1_state",
+        :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
         :autoexec             => "os_modal_handle",
       })
-    hamburger_click
-    os_modal_handle
-    os_switch_toggle
+
     apply_button
-    assert_text "次は時計を設置してください"
+    assert_text "各チームに最低1人入れてください"
+
+    drag_to_watch("dnd_black", 0) # a を観戦に移動
+
+    apply_button
+    assert_text "誰も参加していません"
   end
 end

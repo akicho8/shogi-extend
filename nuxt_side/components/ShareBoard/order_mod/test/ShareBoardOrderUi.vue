@@ -5,8 +5,8 @@
       .buttons
         .button(@click="order_unit.sample_set()") 面子セット
         .button(@click="order_unit.clear()") クリア
-        .button(@click="order_unit.state_change_handle('to_o1_state')") 1列
-        .button(@click="order_unit.state_change_handle('to_o2_state')") 2列
+        .button(@click="order_unit.state_switch_to('to_o1_state')") 1列
+        .button(@click="order_unit.state_switch_to('to_o2_state')") 2列
         //- .button(@click="order_unit.order_state.demo_set()") デモ
         .button(@click="order_unit.shuffle_core()") シャッフル
         .button(@click="order_unit.furigoma_core(Math.random() < 0.5)") 振り駒

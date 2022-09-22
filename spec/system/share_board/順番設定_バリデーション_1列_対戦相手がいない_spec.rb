@@ -11,10 +11,10 @@ RSpec.describe type: :system, share_board_spec: true do
         :handle_name_validate => "false",
         :autoexec             => "os_modal_handle",
       })
-    hamburger_click
-    os_modal_handle
-    os_switch_toggle
+
+    drag_to_watch("dnd_both", 0) # a を観戦に移動
+
     apply_button
-    assert_text "次は時計を設置してください"
+    assert_text "誰も参加していません"
   end
 end

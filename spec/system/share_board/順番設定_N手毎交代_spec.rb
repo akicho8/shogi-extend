@@ -10,9 +10,9 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b,c",
         :fixed_order_state    => fixed_order_state,
         :handle_name_validate => "false",
-        :body                 => "position sfen 9/9/9/9/9/9/9/9/9 w - 1", # 白から始まる
+        :body                 => SfenGenerator.start_from(:white),
       })
-    assert_system_variable("順序", order)
+    assert_system_variable("順序1", order)
   end
 
   it { case1("to_o1_state", 1, "abc")      } # 白からでも順番通り

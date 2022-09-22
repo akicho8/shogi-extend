@@ -3,7 +3,7 @@
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | Method                                   | Description                |                                   |
 // |------------------------------------------+----------------------------+-----------------------------------|
-// | turn_to_item(turn)                | 手数 → ユーザー情報       | tegoto, start_color 依存          |
+// | turn_to_item(turn)                       | 手数 → ユーザー情報       | tegoto, start_color 依存          |
 // | turn_to_user_name(turn)                  | 手数 → ユーザー名         | 同上                              |
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | user_name_to_initial_turn(user_name)     | 名前 → 手数               | 平手・駒落ちに関係なく最初の人は0 |
@@ -22,6 +22,7 @@ export const app_order_turn = {
 
     // 手数からユーザー情報を取得する
     turn_to_item(turn) {
+      Gs2.__assert_kind_of_integer__(turn)
       if (this.order_enable_p) {
         return this.order_unit.turn_to_item(turn, this.tegoto, this.start_color)
       }
@@ -29,6 +30,7 @@ export const app_order_turn = {
 
     // 手数からユーザー名を取得する
     turn_to_user_name(turn) {
+      Gs2.__assert_kind_of_integer__(turn)
       const e = this.turn_to_item(turn)
       if (e) {
         return e.user_name
@@ -38,6 +40,7 @@ export const app_order_turn = {
     // 指定の名前の人の最初の順序
     // 優先度をつける順番であって location ではないので注意
     user_name_to_initial_turn(user_name) {
+      Gs2.__assert_kind_of_string__(user_name)
       if (this.order_enable_p) {
         Gs2.__assert__(user_name)
         const turns = this.name_to_turns_hash[user_name]
@@ -49,6 +52,7 @@ export const app_order_turn = {
 
     // 名前から最初の色を求める
     user_name_to_initial_location(user_name) {
+      Gs2.__assert_kind_of_string__(user_name)
       if (this.order_enable_p) {
         const turn = this.user_name_to_initial_turn(user_name)
         return this.turn_to_location(turn)
@@ -57,6 +61,7 @@ export const app_order_turn = {
 
     // 名前から表示用の手番の番号を求める
     user_name_to_display_turns(user_name) {
+      Gs2.__assert_kind_of_string__(user_name)
       const turns = this.name_to_turns_hash[user_name]
       if (turns) {
         return "(" + turns.map(e => e + 1).join(",") + ")"
@@ -67,6 +72,6 @@ export const app_order_turn = {
   computed: {
     // 名前からO(1)で参照するためのハッシュたち
     // turnからは直接計算で一発で求まる
-    name_to_turns_hash()  { return this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
+    name_to_turns_hash() { return this.order_unit.name_to_turns_hash(this.start_color) }, // 名前から順番を知るためのハッシュ
   },
 }
