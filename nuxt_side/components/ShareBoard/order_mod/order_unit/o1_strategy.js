@@ -16,7 +16,8 @@ export class O1Strategy {
   }
 
   get team_index() {
-    return Gs2.imodulo(this.turn + this.kaisi, Location.count)
+    // return Gs2.imodulo(this.turn + this.kaisi, Location.count)
+    return Gs2.imodulo(this.turn, Location.count)
   }
 
   get user_index() {

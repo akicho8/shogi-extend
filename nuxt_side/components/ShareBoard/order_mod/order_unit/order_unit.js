@@ -62,6 +62,7 @@ export class OrderUnit {
   }
 
   state_change_handle(method) {
+    Gs2.__assert__(this.order_state[method], "this.order_state[method]")
     this.order_state = this.order_state[method]
   }
 
@@ -113,6 +114,11 @@ export class OrderUnit {
 
   real_order_users(tegoto, kaisi) {
     return this.order_state.real_order_users(tegoto, kaisi)
+  }
+
+  // デバッグ用
+  real_order_users2(tegoto, kaisi) {
+    return this.order_state.real_order_users2(tegoto, kaisi)
   }
 
   get flat_uniq_users() {

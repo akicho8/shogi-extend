@@ -188,16 +188,11 @@
       .panel-block
         a(:href=`$config.MY_SITE_URL + base.config.twitter_card_options.image` target="_blank") 確認
   .column.is-4
-    .panel#assert_system_variable
+    .panel.assert_system_variable
       .panel-heading
         | [assert_system_variable]
-      .panel-block(v-if="base.order_enable_p")
-        | 順序:
-        template(v-for="(_, i) in 11")
-          | {{base.turn_to_item(i).user_name[0]}}
       .panel-block tn_counter:{{base.tn_counter}}
       .panel-block current_turn:{{base.current_turn}}
-      .panel-block order_enable_p:{{base.order_enable_p}}
       .panel-block clock_box:{{!!base.clock_box}}
       .panel-block clock_box.current_status:{{base.clock_box ? base.clock_box.current_status : ''}}
       .panel-block current_title:{{base.current_title}}

@@ -305,9 +305,7 @@ module SharedMethods
   end
 
   def assert_system_variable(key, value)
-    within(:id, "assert_system_variable") do
-      assert_selector(:element, text: "#{key}:#{value}", exact_text: true)
-    end
+    assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
   end
 
   # 順番設定と対局時計の右上の有効をトグルする

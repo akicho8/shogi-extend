@@ -79,7 +79,9 @@ export class O1State extends OxState {
   }
 
   // すべてのユーザーが選択されるまでの最長ターン数
+  // abc で白からになると baac になる
   get round_size() {
+    // return this.users.length + Location.count
     return this.users.length
   }
 

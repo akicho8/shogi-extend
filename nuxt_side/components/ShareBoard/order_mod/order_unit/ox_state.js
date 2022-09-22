@@ -32,6 +32,11 @@ export class OxState {
     })
   }
 
+  // 1手毎としたときの約一周したときの名前を順番に並べた文字列
+  real_order_users2(tegoto, kaisi) {
+    return this.real_order_users(tegoto, kaisi).map(e => e ? e.to_s : "?").join("")
+  }
+
   // kaisi色から開始したときの0手目の人を返す
   first_user(kaisi) {
     return this.turn_to_item(0, 1, kaisi)

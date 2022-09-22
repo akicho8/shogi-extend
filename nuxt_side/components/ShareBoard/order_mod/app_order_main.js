@@ -30,6 +30,7 @@ export const app_order_main = {
         // fixed_order_names=alice,bob,carol,dave とする
         const names = this.str_to_words(this.fixed_order_names)
         this.os_setup_by_names(names)
+        this.order_unit.state_change_handle(this.fixed_order_state)
       }
     },
 

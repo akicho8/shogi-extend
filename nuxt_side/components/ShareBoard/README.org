@@ -70,6 +70,7 @@
   | fixed_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&fixed_user_name=alice                       |
   | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                           |
   | fixed_order_names           | 順番設定した名前たち                                    |                                                                                           |
+  | fixed_order_state           | 順番設定方法                                            |                                                                                           |
   |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
   | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                           |

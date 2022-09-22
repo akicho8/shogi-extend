@@ -19,7 +19,7 @@
     template(v-if="base.order_enable_p")
       .TeamsContainer
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.users"   label="☗☖")
+          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.users"   label="対局")
           OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"         label="観戦")
 
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
@@ -40,7 +40,7 @@
             SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="base.new_v.avatar_king_key" @user_input="user_input_handle")
           .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p && false")
             SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" :my_value.sync="base.new_v.shout_mode_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p && false")
+          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
             SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="base.new_v.tegoto" @user_input="user_input_handle")
         .columns.is-mobile.other_setting(v-if="development_p && false")
           .column.is-flex.is-justify-content-center

@@ -34,6 +34,12 @@
             | 名前→情報
             | {{TheSb.order_unit.name_to_object_hash}}
   .column.is-4
+    .panel.assert_system_variable
+      .panel-heading
+        | [assert_system_variable]
+      .panel-block order_enable_p:{{TheSb.order_enable_p}}
+      .panel-block 順序:{{TheSb.order_unit.real_order_users2(TheSb.tegoto, TheSb.start_color)}}
+  .column.is-4
     .panel
       .panel-heading
         | 順番情報(computed)
