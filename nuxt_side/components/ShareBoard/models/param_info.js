@@ -28,7 +28,7 @@ export class ParamInfo extends ParamBase {
       { key: "quick_sync_key",       type: "string",  name: "同期タイミング",                defaults: { development: null,                      production: "is_quick_sync_on",            }, permanent: false, relation: "QuickSyncInfo",       desc: null, },
       { key: "faul_caution_key",     type: "string",  name: "反則時の自動注意",              defaults: { development: null,                      production: "is_caution_on",               }, permanent: false, relation: null,                  desc: null, },
       { key: "fixed_order_names",    type: "string",  name: "順番設定",                      defaults: { development: null,                      production: "",                            }, permanent: false, relation: null,                  desc: null, },
-      { key: "fixed_order_state",    type: "string",  name: "順番設定方法",                  defaults: { development: null,                      production: "O2State",                     }, permanent: false, relation: null,                  desc: null, },
+      { key: "fixed_order_state",    type: "string",  name: "順番設定方法",                  defaults: { development: null,                      production: "to_o2_state",                 }, permanent: false, relation: null,                  desc: null, },
     ]
   }
 }
