@@ -1,0 +1,13 @@
+rspec ~/src/shogi-extend/spec/system/share_board/その他_手番でないのに動かそうとしたときの反応_spec.rb:15
+rspec ~/src/shogi-extend/spec/system/share_board/その他_手番でないのに動かそうとしたときの反応_spec.rb:37
+rspec ~/src/shogi-extend/spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb:37
+rspec ~/src/shogi-extend/spec/system/share_board/同期_二人だけ対戦で1人観戦_spec.rb:4
+rspec ~/src/shogi-extend/spec/system/share_board/対局時計_時計開始時に視点の自動設定_spec.rb:18
+rspec ~/src/shogi-extend/spec/system/share_board/対局時計_時計開始時に視点の自動設定_spec.rb:28
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_シャッフル_spec.rb:4
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_補助機能_先後入替_spec.rb:4
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_補助機能_手番通知_spec.rb:4
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_補助機能_振り駒_spec.rb:26
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_補助機能_振り駒_spec.rb:30
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_設定後に時計設置を促す_spec.rb:4
+rspec ~/src/shogi-extend/spec/system/share_board/順番設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb:4

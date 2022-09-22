@@ -253,6 +253,11 @@ module SharedMethods
     assert { result == names }
   end
 
+  def assert_order_team_one(klass, names)
+    result = all(".#{klass} li").collect(&:text).join(",")
+    assert { result == names }
+  end
+
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
     hamburger_click

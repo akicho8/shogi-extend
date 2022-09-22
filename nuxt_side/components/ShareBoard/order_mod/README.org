@@ -2,6 +2,12 @@ http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_memb
 http://localhost:4000/experiment/OrderUiTest
 
 
+http://localhost:4000/share-board?room_code=my_room&fixed_user_name=nanashi&fixed_order_names=nanashi
+
+room_code: :my_room, fixed_user_name: "nanashi", fixed_order_names: "nanashi"
+
+
+
 一周するまでのおおまかな手数(1手毎換算): 5
 
 ☗開始かつ1手毎で1周(重複なし): abc

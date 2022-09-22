@@ -19,13 +19,11 @@
     template(v-if="base.order_enable_p")
       .TeamsContainer
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.users"   label="対局")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"         label="観戦")
-
+          OrderTeamOne.dnd_both(:user_list.sync="base.new_v.order_unit.order_state.users"   label="対局")
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
-          OrderTeamOne(:user_list.sync="base.new_v.order_unit.watch_users"          label="観戦")
+          OrderTeamOne.dnd_black(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne.dnd_white(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
+        OrderTeamOne.dnd_watch_users(:user_list.sync="base.new_v.order_unit.watch_users" label="観戦")
 
       .buttons.is-centered.mb-0.mt-4
         b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
@@ -36,13 +34,13 @@
         .columns.is-mobile.other_setting
           .column.is-flex.is-justify-content-center
             SimpleRadioButtons.foul_behavior(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" :my_value.sync="base.new_v.foul_behavior_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p && false")
+          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
             SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="base.new_v.avatar_king_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p && false")
+          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
             SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" :my_value.sync="base.new_v.shout_mode_key" @user_input="user_input_handle")
           .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
             SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="base.new_v.tegoto" @user_input="user_input_handle")
-        .columns.is-mobile.other_setting(v-if="development_p && false")
+        .columns.is-mobile.other_setting(v-if="development_p")
           .column.is-flex.is-justify-content-center
             SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" :my_value.sync="base.new_v.move_guard_key" @user_input="user_input_handle")
 
