@@ -16,6 +16,9 @@
     .description(v-if="!base.order_enable_p")
       .has-text-centered.has-text-grey.my-6
         | 右上のスイッチで有効にしよう
+  .modal-card-body(@click="!base.order_enable_p && main_switch_handle(true)")
+    .has-text-centered.has-text-grey.my-6(v-if="!base.order_enable_p")
+      | 右上のスイッチで有効にしよう
     template(v-if="base.order_enable_p")
       .TeamsContainer
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")

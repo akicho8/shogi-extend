@@ -15,7 +15,7 @@
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
-  .modal-card-body
+  .modal-card-body(@click="!instance && main_switch_handle(true)")
     //- pre
     //-   | {{base.cc_params}}
 
