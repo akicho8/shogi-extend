@@ -88,12 +88,12 @@ export default {
   name: "ShareBoardSidebar",
   mixins: [support_child],
   computed: {
-    mi1_bold_p() { return this.base.ac_room                                },
-    mi1_hand_p() { return !this.base.ac_room                               },
-    mi2_bold_p() { return this.base.ac_room && this.base.order_enable_p    },
-    mi2_hand_p() { return this.base.ac_room && !this.base.order_enable_p   },
-    mi3_bold_p() { return this.base.order_enable_p && this.base.clock_box  },
-    mi3_hand_p() { return this.base.order_enable_p && !this.base.clock_box },
+    mi1_bold_p() { return this.base.ac_room                                                                 },
+    mi1_hand_p() { return !this.base.ac_room                                                                },
+    mi2_bold_p() { return this.base.ac_room && this.base.order_enable_p && this.base.order_unit.valid_p     },
+    mi2_hand_p() { return this.base.ac_room && (!this.base.order_enable_p || !this.base.order_unit.valid_p) },
+    mi3_bold_p() { return this.mi2_bold_p && this.base.clock_box                                            },
+    mi3_hand_p() { return this.mi2_bold_p && !this.base.clock_box                                           },
   },
 }
 </script>
