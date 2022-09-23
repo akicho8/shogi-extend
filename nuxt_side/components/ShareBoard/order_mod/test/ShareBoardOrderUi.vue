@@ -27,13 +27,13 @@
       //-   b-input(type="number" v-model.number="start_color" :min="0" max="1")
     .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
       .TeamContainer
-        OrderTeamOne2(:user_list.sync="order_unit.order_state.users" label="一列")
-        OrderTeamOne2(:user_list.sync="order_unit.watch_users" label="観戦")
+        OrderTeamOne2(:items.sync="order_unit.order_state.users" label="一列")
+        OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")
     .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
       .TeamContainer
-        OrderTeamOne2(:user_list.sync="order_unit.order_state.teams[0]"  label="☗")
-        OrderTeamOne2(:user_list.sync="order_unit.watch_users" label="観戦")
-        OrderTeamOne2(:user_list.sync="order_unit.order_state.teams[1]"  label="☖")
+        OrderTeamOne2(:items.sync="order_unit.order_state.teams[0]"  label="☗")
+        OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")
+        OrderTeamOne2(:items.sync="order_unit.order_state.teams[1]"  label="☖")
     .column.is-12
       p 一周するまでのおおまかな手数(1手毎換算): {{order_unit.round_size}}
       p ☗開始かつ1手毎で1周(重複なし): {{order_unit.order_state.black_start_order_uniq_users.map(e => e ? e.to_s : '?').join('')}}

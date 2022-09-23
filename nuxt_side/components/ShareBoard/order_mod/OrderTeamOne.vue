@@ -1,19 +1,16 @@
 <template lang="pug">
 .OrderTeamOne
-  //- ghostClass="ghost_element"
-  //- @start="event_check"
   .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@click="TheOSM.state_toggle_handle")
     | {{label}}
   VueDraggable(
     tag="ul"
     :animation="200"
     group="OrderTeam"
-    v-model="current_user_list"
-    @end="end_handle"
+    v-model="current_items"
     )
-    template(v-for="e in current_user_list")
+    template(v-for="e in current_items")
       li(:key="e.unique_key")
-        | {{e.to_s}}
+        .text(v-text="e.to_s")
 </template>
 
 <script>
@@ -21,8 +18,8 @@ import VueDraggable from "vuedraggable"
 
 export default {
   props: {
-    user_list:    { type: Array,   required: true,  },
-    label:        { type: String,  required: true,  },
+    label: { type: String, required: true, },
+    items: { type: Array,  required: true, },
   },
   components: {
     VueDraggable,
@@ -30,66 +27,48 @@ export default {
   inject: ["TheOSM"],
   data() {
     return {
-      current_user_list: this.user_list,
+      current_items: this.items,
     }
   },
   watch: {
-    user_list() {
-      this.current_user_list = this.user_list
-    },
-    current_user_list() {
-      this.$emit("update:user_list", this.current_user_list)
-    },
-  },
-  methods: {
-    end_handle() {
-      this.TheOSM.base.new_v.os_change.append("順番")
-    },
+    items()         { this.current_items = this.items                },
+    current_items() { this.$emit("update:items", this.current_items) },
   },
 }
 </script>
 
 <style lang="sass">
 .OrderTeamOne
-  overflow: hidden
   white-space: nowrap
   min-width: 4rem
   max-width: 6rem
   text-align: center
-  border: 1px border $grey-light
   font-size: $size-7
 
-  .OrderTeamOneTitle
-    // border: 1px dashed change_color(blue, $alpha: 0.5)
   ul
+    margin-top: 6px // ラベルとの差
     display: flex
-    gap: 2px
+    gap: 6px        // 上下の差
     flex-direction: column
+    height: 100%    // ← ulの下の空いた空間にdropできるようになる (超重要)
 
-    // border: 1px dashed change_color(red, $alpha: 0.5)
-    height: 100% // ← 超重要。ulの下の空いた空間にdropできるようになる
-    cursor: move
-
-    // 名前の一つ
+    // ドラッグ要素
     li
-      // border: 1px dashed change_color(blue, $alpha: 0.5)
-      background-color: $white-ter
-      border-radius: 4px
-      line-height: 1.5
-      padding: 0.25rem 0.5rem
+      background-color: $white
+      border: 1px solid $grey-lighter
+      border-radius: 2px
+      padding: 0.25rem 0.75rem
+      cursor: move
+      // overflow: hidden で切ったと右のパッディングがなくなるため li に直接テキストを入れない
+      .text
+        line-height: 2.5
+        overflow: hidden
 
     // 持ち上げられた元の要素
     .sortable-ghost
-      opacity: 0.5
-      // .ghost_element
-      // opacity: 0.1
+      opacity: 0
 
     // 持ち上げて動かしている要素
     .sortable-drag
-      overflow: hidden
-      opacity: 1.0 ! important  // ← 効かない
-      // background-color: $white-ter
-      // // border: 1px solid $grey-lighter
-      // border: 1px solid $primary
-      // background-color: blue
+      opacity: 1.0 ! important  // 1.0 にしたいが Sortable 側で 0.8 がハードコーディングされていて変更できない(FIXME)
 </style>

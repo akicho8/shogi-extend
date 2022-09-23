@@ -8,9 +8,9 @@
     tag="ul"
     :animation="200"
     group="OrderTeam"
-    v-model="current_user_list"
+    v-model="current_items"
     )
-    template(v-for="e in current_user_list")
+    template(v-for="e in current_items")
       li(:key="e.unique_key")
         | {{e.to_s}}({{e.unique_key}})
 </template>
@@ -20,7 +20,7 @@ import VueDraggable from "vuedraggable"
 
 export default {
   props: {
-    user_list: { type: Array,   required: true,  },
+    items: { type: Array,   required: true,  },
     label:     { type: String,  required: true,  },
   },
   components: {
@@ -28,15 +28,15 @@ export default {
   },
   data() {
     return {
-      current_user_list: this.user_list,
+      current_items: this.items,
     }
   },
   watch: {
-    user_list() {
-      this.current_user_list = this.user_list
+    items() {
+      this.current_items = this.items
     },
-    current_user_list() {
-      this.$emit("update:user_list", this.current_user_list)
+    current_items() {
+      this.$emit("update:items", this.current_items)
     },
   },
 }

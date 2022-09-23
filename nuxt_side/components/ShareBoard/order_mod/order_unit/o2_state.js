@@ -100,7 +100,7 @@ export class O2State extends OxState {
   }
 
   // 先後入れ替えできるか？
-  get irekae_can_p() {
+  get swap_enable_p() {
     return true
   }
 

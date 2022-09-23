@@ -88,7 +88,7 @@ export class O1State extends OxState {
   ////////////////////////////////////////////////////////////////////////////////
 
   // 先後入れ替えできるか？
-  get irekae_can_p() {
+  get swap_enable_p() {
     return Gs2.even_p(this.main_user_count)
   }
 
@@ -101,16 +101,13 @@ export class O1State extends OxState {
   ////////////////////////////////////////////////////////////////////////////////
 
   // {
-  //   "watch_users": [],
-  //   "order_state": {
-  //     "class_name": "O1State",
-  //     "users": [
-  //       "a",
-  //       "b",
-  //       "c",
-  //       "d",
-  //       "e"
-  //     ]
+  //  "class_name": "O1State",
+  //  "users": [
+  //    "a",
+  //    "b",
+  //    "c",
+  //    "d",
+  //    "e"
   //   }
   // }
   get attributes() {

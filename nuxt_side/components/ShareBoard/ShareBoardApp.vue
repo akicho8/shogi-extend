@@ -6,7 +6,6 @@ client-only
     DebugBox.is-hidden-mobile(v-if="development_p")
       p appearance_theme_key: {{appearance_theme_key}}
       p watching_member_count: {{watching_member_count}}
-      p new_v.os_change: {{new_v.os_change}}
       p order_enable_p: {{order_enable_p}}
 
       p avatars_hash: {{avatars_hash}}

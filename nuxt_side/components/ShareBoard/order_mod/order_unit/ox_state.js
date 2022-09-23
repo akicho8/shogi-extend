@@ -1,6 +1,7 @@
 // O1State, O2State の共通部分
 
 import { Gs2 } from "@/components/models/gs2.js"
+const MD5 = require("md5.js")
 
 export class OxState {
   static create_by_users(users) {
@@ -29,8 +30,14 @@ export class OxState {
   }
 
   // 1手毎としたときの約一周したときの名前を順番に並べた文字列
-  real_order_users2(tegoto, kaisi) {
+  real_order_users_to_s(tegoto, kaisi) {
     return this.real_order_users(tegoto, kaisi).map(e => e ? e.to_s : "?").join("")
+  }
+
+  // 差分確認用のハッシュ
+  get hash() {
+    const str = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join(",")
+    return new MD5().update(str).digest("hex")
   }
 
   // kaisi色から開始したときの0手目の人を返す

@@ -276,7 +276,7 @@ export const app_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    ordered_member_names_oneline() { return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e.user_name).join("→") }, // 順序(デバッグ用)
+    ordered_member_names_oneline() { return this.order_unit.real_order_users(this.tegoto, this.start_color).map(e => e ? e.user_name : "?").join("→") }, // 順序(デバッグ用)
 
     ////////////////////////////////////////////////////////////////////////////////
 

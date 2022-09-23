@@ -12,45 +12,40 @@
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="base.order_enable_p" @input="main_switch_handle") 有効
-  .modal-card-body
-    .description(v-if="!base.order_enable_p")
-      .has-text-centered.has-text-grey.my-6
-        | 右上のスイッチで有効にしよう
   .modal-card-body(@click="!base.order_enable_p && main_switch_handle(true)")
     .has-text-centered.has-text-grey.my-6(v-if="!base.order_enable_p")
       | 右上のスイッチで有効にしよう
     template(v-if="base.order_enable_p")
+      //- pre {{JSON.stringify(base.new_v.os_change.to_h)}}
       .TeamsContainer
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
-          OrderTeamOne.dnd_both(:user_list.sync="base.new_v.order_unit.order_state.users"   label="対局")
+          OrderTeamOne.dnd_both(:items.sync="base.new_v.order_unit.order_state.users"   label="対局")
         template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
-          OrderTeamOne.dnd_black(:user_list.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne.dnd_white(:user_list.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
-        OrderTeamOne.dnd_watch_users(:user_list.sync="base.new_v.order_unit.watch_users" label="観戦")
+          OrderTeamOne.dnd_black(:items.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne.dnd_white(:items.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
+        OrderTeamOne.dnd_watch_users(:items.sync="base.new_v.order_unit.watch_users" label="観戦")
 
-      .buttons.is-centered.mb-0.mt-4
+      .buttons.is-centered.mb-0.mt-5
         b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
         b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small") 振り駒
         b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small") 先後入替
       hr
-      .mt-3
-        .columns.is-mobile.other_setting
-          .column.is-flex.is-justify-content-center
-            SimpleRadioButtons.foul_behavior(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" :my_value.sync="base.new_v.foul_behavior_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
-            SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="base.new_v.avatar_king_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
-            SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" :my_value.sync="base.new_v.shout_mode_key" @user_input="user_input_handle")
-          .column.is-flex.is-justify-content-center(v-if="base.debug_mode_p")
-            SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="base.new_v.tegoto" @user_input="user_input_handle")
-        .columns.is-mobile.other_setting(v-if="development_p")
-          .column.is-flex.is-justify-content-center
-            SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" :my_value.sync="base.new_v.move_guard_key" @user_input="user_input_handle")
+      .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
+        .column.is-12
+          SimpleRadioButtons.foul_behavior(:base="base" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" :my_value.sync="base.new_v.foul_behavior_key")
+        .column.is-12(v-if="base.debug_mode_p")
+          SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="base.new_v.avatar_king_key")
+        .column.is-12(v-if="base.debug_mode_p")
+          SimpleRadioButtons.shout_mode(:base="base" custom-class="is-small" element_size="is-small" model_name="ShoutModeInfo" :my_value.sync="base.new_v.shout_mode_key")
+        .column.is-12(v-if="base.debug_mode_p")
+          SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="base.new_v.tegoto")
+        .column.is-12(v-if="base.debug_mode_p")
+          SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" :my_value.sync="base.new_v.move_guard_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="base.order_enable_p")
-      b-button.apply_button(@click="apply_handle" :type="kakutei_type") 確定
+      b-button.apply_button(@click="apply_handle" :type="submit_button_color") 確定
 </template>
 
 <script>
@@ -185,7 +180,7 @@ export default {
     },
   },
   computed: {
-    kakutei_type() {
+    submit_button_color() {
       if (this.base.new_v.order_unit.invalid_p) {
         return "is-warning"
       }
@@ -194,37 +189,21 @@ export default {
       }
     },
   },
-
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
 .OrderSettingModal
-  +modal_width_auto
-
-  .table
-    td
-      vertical-align: center
-
-  .description
-    max-width: 26rem
-    p:not(:first-child)
-      margin-top: 0.75rem
-
-  // .enable_toggle_handle
-  //   margin: unset // 右にラベルがある想定で margin-right があるため取る
-
-  .other_setting
-    label
-      cursor: pointer
+  +modal_max_width(480px)
+  // +modal_width_auto
 
   .TeamsContainer
     // width: 12rem
     // width: 100%
     display: flex // OrderTeamOne を横並び化
     justify-content: center
-    gap: 2px
+    gap: 6px
 
 .STAGE-development
   .OrderSettingModal

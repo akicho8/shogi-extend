@@ -20,6 +20,27 @@ export class OrderUnit {
     return object
   }
 
+  // Delegate Methods
+
+  get main_user_count()                { return this.order_state.main_user_count                      }
+  get empty_p()                        { return this.order_state.empty_p                              }
+  get self_vs_self_p()                 { return this.order_state.self_vs_self_p                       }
+  get one_vs_one_p()                   { return this.order_state.one_vs_one_p                         }
+  get many_vs_many_p()                 { return this.order_state.many_vs_many_p                       }
+
+  get black_start_order_uniq_users()   { return this.order_state.black_start_order_uniq_users         }
+  first_user(kaisi)                    { return this.order_state.first_user(kaisi)                    }
+  real_order_users(tegoto, kaisi)      { return this.order_state.real_order_users(tegoto, kaisi)      }
+  real_order_users_to_s(tegoto, kaisi) { return this.order_state.real_order_users_to_s(tegoto, kaisi) }
+  get hash()                           { return this.order_state.hash                                 }
+  get flat_uniq_users()                { return this.order_state.flat_uniq_users                      }
+  get round_size()                     { return this.order_state.round_size                           }
+  get swap_enable_p()                  { return this.order_state.swap_enable_p                        }
+  get error_messages()                 { return this.order_state.error_messages                       }
+  users_allocate(users)                { this.order_state.users_allocate(users)                       }
+  shuffle_core()                       { this.order_state.shuffle_core()                              }
+  swap_run()                           { this.order_state.swap_run()                                  }
+
   constructor() {
     this.order_state = new O2State()
     this.watch_users = []
@@ -30,31 +51,19 @@ export class OrderUnit {
     this.order_state.users_allocate(users)
   }
 
-  users_allocate(users) {
-    this.order_state.users_allocate(users)
+  clear() {
+    this.order_state.users_allocate([])
+    this.watch_users = []
   }
 
   sample_set() {
     this.user_names_allocate(["a", "b", "c", "d", "e"])
   }
 
-  shuffle_core() {
-    this.order_state.shuffle_core()
-  }
-
   furigoma_core(swap_flag) {
     if (swap_flag) {
       this.swap_run()
     }
-  }
-
-  swap_run() {
-    this.order_state.swap_run()
-  }
-
-  clear() {
-    this.order_state.users_allocate([])
-    this.watch_users = []
   }
 
   turn_to_item(turn, tegoto, kaisi) {
@@ -72,10 +81,6 @@ export class OrderUnit {
 
   // 観戦者は含まないでよい
   get attributes() {
-    // return {
-    //   // watch_users: this.watch_users,
-    //   // order_state: this.order_state.attributes,
-    // }
     return this.order_state.attributes
   }
   set attributes(v) {
@@ -97,37 +102,6 @@ export class OrderUnit {
     const json = JSON.parse(JSON.stringify(this.attributes))
     this.clear()
     this.attributes = json
-  }
-
-  get main_user_count()  { return this.order_state.main_user_count }
-  get empty_p()          { return this.order_state.empty_p         }
-  get self_vs_self_p()   { return this.order_state.self_vs_self_p  }
-  get one_vs_one_p()     { return this.order_state.one_vs_one_p    }
-  get many_vs_many_p()   { return this.order_state.many_vs_many_p  }
-
-  get black_start_order_uniq_users() {
-    return this.order_state.black_start_order_uniq_users
-  }
-
-  first_user(kaisi) {
-    return this.order_state.first_user(kaisi)
-  }
-
-  real_order_users(tegoto, kaisi) {
-    return this.order_state.real_order_users(tegoto, kaisi)
-  }
-
-  // デバッグ用
-  real_order_users2(tegoto, kaisi) {
-    return this.order_state.real_order_users2(tegoto, kaisi)
-  }
-
-  get flat_uniq_users() {
-    return this.order_state.flat_uniq_users
-  }
-
-  get round_size() {
-    return this.order_state.round_size
   }
 
   // 名前から順番を知るためのハッシュ
@@ -159,15 +133,6 @@ export class OrderUnit {
     }, {})
   }
 
-  // 先後入れ替えできるか？
-  get irekae_can_p() {
-    return this.order_state.irekae_can_p
-  }
-
-  get error_messages() {
-    return this.order_state.error_messages
-  }
-
   get valid_p() {
     return Gs2.blank_p(this.order_state.error_messages)
   }
@@ -180,7 +145,7 @@ export class OrderUnit {
     const list0 = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join("")
     const list1 = this.real_order_users(1, 1).map(e => e ? e.to_s : "?").join("")
     const wlist = this.watch_users.map(e => e.to_s).join(",")
-    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.irekae_can_p ? 'o' : 'x'}] (${this.state_name})`
+    return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.state_name})`
   }
 
   // 観戦者を含めて指定の名前はこの中に存在するか？
@@ -189,11 +154,17 @@ export class OrderUnit {
   //   return users.some(e => e.user_name === user_name)
   // }
 
-  // 観戦者の追加(対局者は除外する)
-  watch_users_set(user_names) {
-    const hash = this.name_to_object_hash
-    user_names = user_names.filter(user_name => !hash[user_name]) // 対局者を除外する
-    this.watch_users = user_names.map(user_name => Item.create(user_name))
+  // 全員追加
+  // 1. 空なら全員対局者にする
+  // 2. 空でなければ対局者以外を観戦者にすう
+  auto_users_set(user_names) {
+    if (this.empty_p) {
+      this.user_names_allocate(user_names)
+    } else {
+      const hash = this.name_to_object_hash
+      user_names = user_names.filter(user_name => !hash[user_name]) // 対局者を除外する
+      this.watch_users = user_names.map(user_name => Item.create(user_name))
+    }
   }
 
   state_toggle() {
