@@ -8,6 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
     os_switch_toggle                   # 右上の有効スイッチをクリック
     find(".shuffle_handle").click        # シャッフルする
     modal_close_handle                   # 閉じる (ヘッダーに置いている) とするがダイアログが表示される
-    find(:button, text: "更新せずに閉じる", exact_text: true).click # 無視して閉じる
+    find(:button, text: "確定せずに閉じる", exact_text: true).click # 無視して閉じる
   end
 end

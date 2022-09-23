@@ -114,11 +114,11 @@ export default {
       this.sound_play_click()
       this.base.new_v.order_unit.shuffle_core()
       this.base.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
-      this.base.new_v.os_change.append("順番")
     },
 
     // 振り駒
     furigoma_handle() {
+      if (this.invalid_case1()) { return }
       if (this.invalid_case2("振り駒")) { return }
       const furigoma_pack = FurigomaPack.run({
         furigoma_random_key: this.$route.query.furigoma_random_key,
@@ -131,7 +131,6 @@ export default {
       Gs2.__assert__(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.base.shared_al_add({label: furigoma_pack.piece_names, message: message})
-      this.base.new_v.os_change.append("先後")
     },
 
     // 先後入替
@@ -140,7 +139,6 @@ export default {
       this.sound_play_click()
       this.base.new_v.order_unit.swap_run()
       this.base.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
-      this.base.new_v.os_change.append("先後")
     },
 
     // 反映時のエラーの内容は new_v.order_unit に任せる
@@ -155,21 +153,21 @@ export default {
 
     // 偶数人数であること
     invalid_case2(name) {
-      if (!this.base.new_v.order_unit.irekae_can_p) {
+      if (!this.base.new_v.order_unit.swap_enable_p) {
         this.sound_play("x")
         this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
       }
     },
 
-    user_input_handle(model) {
-      this.base.new_v.os_change.append(model.field_label)
-    },
-
     // 反映
     apply_handle() {
       if (this.invalid_case1()) { return }
       this.sound_play_click()
+      if (!this.base.new_v.os_change.has_changes_to_save_p) {
+        this.toast_ok(`変更はありません`)
+        return
+      }
       this.base.new_order_share("反映")
       this.base.new_v.os_change.clear()
       this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.base.cc_next_message())
@@ -191,7 +189,7 @@ export default {
       if (this.base.new_v.order_unit.invalid_p) {
         return "is-warning"
       }
-      if (this.base.new_v.os_change.has_value_p) {
+      if (this.base.new_v.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
     },

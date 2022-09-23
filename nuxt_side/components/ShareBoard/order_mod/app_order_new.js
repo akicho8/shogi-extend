@@ -41,14 +41,10 @@ export const app_order_new = {
 
     // 順番設定モーダル内で使うデータの準備
     os_modal_init() {
-      if (this.order_unit.empty_p) {                                   // 対局者が一人も入っていなかったら(初期状態)
-        this.new_v.order_unit = OrderUnit.create(this.room_user_names) // 全員流し込む
-      } else {
-        this.new_v.order_unit = this.order_unit.deep_clone()           // 現在の順番設定をコピーする
-        this.new_v.order_unit.watch_users_set(this.room_user_names)    // 残りの観戦者をセットする(対局者は自動的に除く)
-      }
+      // 現在の順番設定をコピーする
+      this.new_v.order_unit = this.order_unit.deep_clone()
 
-      // オプション的なもの
+      // オプション的なものもコピーする
       {
         this.new_v.move_guard_key    = this.move_guard_key
         this.new_v.avatar_king_key   = this.avatar_king_key
@@ -58,7 +54,10 @@ export const app_order_new = {
       }
 
       // 変更記録用
-      this.new_v.os_change = new OsChange()
+      this.new_v.os_change = new OsChange(this.new_v)
+
+      // 残りの観戦者をセットする(対局者は自動的に除く)
+      this.new_v.order_unit.auto_users_set(this.room_user_names)
     },
 
     // 順番設定モーダルを閉じる
@@ -73,13 +72,13 @@ export const app_order_new = {
     // 閉じる
     os_modal_close_confirm(params = {}) {
       this.sound_play_click()
-      this.talk("ちょっと待って。変更を適用せずに閉じようとしています")
+      this.talk("変更を適用せずに閉じようとしています")
       this.dialog_confirm({
         title: "ちょっと待って",
         type: "is-warning",
         hasIcon: true,
         message: this.new_v.os_change ? this.new_v.os_change.message : "(new_v.os_change undefined)",
-        confirmText: "更新せずに閉じる",
+        confirmText: "確定せずに閉じる",
         focusOn: "cancel",
         ...params,
       })

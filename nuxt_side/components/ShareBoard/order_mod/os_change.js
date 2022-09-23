@@ -1,28 +1,43 @@
 import { Gs2 } from '@/components/models/gs2.js'
-import _ from "lodash"
+const MD5 = require("md5.js")
 
 export class OsChange {
-  constructor() {
-    this.list = []
+  constructor(context) {
+    Gs2.__assert_kind_of_hash__(context)
+    this.context = context
+    this.original_hash = this.current_hash
   }
 
-  append(str) {
-    this.list = _.uniq([...this.list, str])
-  }
-
-  clear() {
-    this.list = []
-  }
-
-  get something() {
-    return this.list.join("や")
+  // 変更があるか？
+  get has_changes_to_save_p() {
+    return this.original_hash != this.current_hash
   }
 
   get message() {
-    return `${this.something}の変更を適用しないまま閉じようとしています<br>適用するにはキャンセルして確定をタップしてください`
+    return `変更を適用しないまま閉じようとしています<br>適用するにはキャンセルして確定をタップしてください`
   }
 
-  get has_value_p() {
-    return Gs2.present_p(this.list)
+  // デバッグ用
+  get to_h() {
+    return {
+      original_hash: this.original_hash,
+      current_hash: this.current_hash,
+    }
+  }
+
+  // private
+
+  get current_hash() {
+    const str = JSON.stringify([
+      this.context.order_unit.hash,
+      [
+        this.context.move_guard_key,
+        this.context.avatar_king_key,
+        this.context.shout_mode_key,
+        this.context.foul_behavior_key,
+        this.context.tegoto,
+      ]
+    ])
+    return new MD5().update(str).digest("hex")
   }
 }
