@@ -20,7 +20,6 @@ export class FurigomaPack {
     }
     this.values = Gs.n_times_collect(this.options.size, () => new FurigomaPawn(this.options))
     this.count = 0
-    console.log(this.inspect)
   }
 
   // 指定回数だけシャッフルする
@@ -31,7 +30,6 @@ export class FurigomaPack {
   shaka() {
     this.values.forEach(e => e.shaka())
     this.count += 1
-    console.log(this.inspect)
   }
 
   // 逆にする必要があるか？
