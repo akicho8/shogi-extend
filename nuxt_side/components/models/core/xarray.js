@@ -1,3 +1,4 @@
+import { Xinteger } from "./xinteger.js"
 import _ from "lodash"
 
 export const Xarray = {
@@ -32,5 +33,22 @@ export const Xarray = {
       return ary
     }
     return [ary]
+  },
+
+  // ary 内のインデックス from の要素を to に移動
+  // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
+  ary_move(ary, from, to) {
+    const n = ary.length
+    ary = [...ary]
+    to = Xinteger.imodulo(to, n)
+    if (from === to || from > n - 1 || to > n - 1) {
+      return ary
+    }
+    const v = ary[from]
+    const tail = ary.slice(from + 1)
+    ary.splice(from)
+    Array.prototype.push.apply(ary, tail)
+    ary.splice(to, 0, v)
+    return ary
   },
 }

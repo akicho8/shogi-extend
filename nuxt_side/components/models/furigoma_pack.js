@@ -62,7 +62,7 @@ export class FurigomaPack {
     if (v != null) {
       return parseInt(v)
     }
-    return Gs.rand_int_range(10, 20)
+    return Gs.irand_range(10, 20)
   }
 
   get inspect() {

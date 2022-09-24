@@ -1,9 +1,11 @@
+import { Xassertion } from "./xassertion.js"
+
 export const Xinteger = {
   // 小数にしない一周してくれる賢い剰余
   // -1 % 3 => 2
   //  4 % 3 => 1
   imodulo(v, n) {
-    this.__assert_nonzero__(n)
+    Xassertion.__assert_nonzero__(n)
     v = v % n
     v = Math.trunc(v)
     if (v < 0) {
@@ -15,7 +17,7 @@ export const Xinteger = {
   // 整数を割ったとき小数にしない
   // -10 % 3 => -4
   idiv(v, n) {
-    this.__assert_nonzero__(n)
+    Xassertion.__assert_nonzero__(n)
     return Math.floor(v / n)
   },
 

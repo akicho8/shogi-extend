@@ -1,0 +1,24 @@
+import { Xhash } from "@/components/models/core/xhash.js"
+
+const HASH_VALUE1 = {
+  a: 0,
+  b: 1,
+  c: "",
+  d: {},
+  e: {a: 0},
+  f: [],
+  g: ["a"],
+  h: true,
+  i: false,
+  j: null,
+  k: undefined,
+}
+
+describe("Xhash", () => {
+  test("hash_compact_if_null", () => {
+    expect(Xhash.hash_compact_if_null(HASH_VALUE1)).toEqual({a: 0, b: 1, c: "", d: {}, e: {a: 0}, f: [], g: ["a"], h: true, i: false})
+  })
+  test("hash_compact_if_blank", () => {
+    expect(Xhash.hash_compact_if_blank(HASH_VALUE1)).toEqual({a: 0, b: 1, e: {a:0}, g: ["a"], h: true})
+  })
+})

@@ -70,10 +70,6 @@ export const Gs = {
     return _.sumBy([...str], e => e.codePointAt(0))
   },
 
-  hankaku_format(str) {
-    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
-  },
-
   // kanji_hankaku_format("(三二)") => "(32)"
   kanji_hankaku_format(str) {
     return str.replace(/[〇一二三四五六七八九]/g, s => KANJI_TO_HANKAKU_NUMBER_TABLE[s])
@@ -91,7 +87,6 @@ export const Gs = {
   // p(value)              { console.log(this.inspect(value))        },
   // a(value)              { alert(this.inspect(value))              },
   pretty_alert(value)   { alert(this.pretty_inspect(value))       },
-  a(value)              { alert(this.pretty_inspect(value))       },
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -148,20 +143,6 @@ export const Gs = {
       return a
     }
     return this.math_gcd(b, a % b)
-  },
-
-  ////////////////////////////////////////////////////////////////////////////////
-
-  irand(n) {
-    return Math.floor(Math.random() * n)
-  },
-
-  // 整数で min..max の間の乱数
-  // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-  rand_int_range(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min + 1) + min)
   },
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -259,32 +240,8 @@ export const Gs = {
   fprintf(...args) { return Extsprintf.fprintf(...args) },
 
   user_call_name(str) {
-    if (this.development_p) {
-      this.__assert__(this.present_p(str), "this.present_p(str)")
-    }
+    this.__assert__(this.present_p(str), "this.present_p(str) in user_call_name")
     return HandleNameParser.call_name(str)
-  },
-
-  // {a: 1, b: null, c:undefined, d: ""} => {a: 1, d: ""}
-  hash_compact_if_null(hash) {
-    return _.reduce(hash, (a, val, key) => {
-      if (val == null) {
-      } else {
-        a[key] = val
-      }
-      return a
-    }, {})
-  },
-
-  // {a: 1, b: null, c:undefined, d: ""} => {a: 1}
-  hash_compact_if_blank(hash) {
-    return _.reduce(hash, (a, val, key) => {
-      if (val == null || val === "") {
-      } else {
-        a[key] = val
-      }
-      return a
-    }, {})
   },
 
   // { a: 1, c: 3, b: 2, d: 4 }.sort_by { |k, v| -v }.take(3).to_h # => {:d=>4, :c=>3, :b=>2}
@@ -336,14 +293,6 @@ export const Gs = {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  hira_to_kata(str) {
-    return str.replace(/[\u3041-\u3096]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60))
-  },
-
-  kata_to_hira(str) {
-    return str.replace(/[\u30A1-\u30FA]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60))
-  },
-
   // ../../../node_modules/autolinker/README.md
   // newWindow: true で target="_blank" になる
   auto_link(str, options = {}) {
@@ -361,23 +310,6 @@ export const Gs = {
     } else {
       return v
     }
-  },
-
-  // list 内のインデックス from の要素を to に移動
-  // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
-  ary_move(list, from, to) {
-    const n = list.length
-    list = [...list]
-    to = this.imodulo(to, n)
-    if (from === to || from > n - 1 || to > n - 1) {
-      return list
-    }
-    const v = list[from]
-    const tail = list.slice(from + 1)
-    list.splice(from)
-    Array.prototype.push.apply(list, tail)
-    list.splice(to, 0, v)
-    return list
   },
 
   str_squish(str) {
@@ -420,11 +352,6 @@ export const Gs = {
       av.push(str)
     }
     return av.join(" ")
-  },
-
-  str_to_boolean(str) {
-    str = (str ?? "").toString().trim()
-    return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
   },
 
   has_content_class(value, options = {}) {
