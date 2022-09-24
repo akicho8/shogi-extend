@@ -11,7 +11,6 @@ RSpec.describe type: :system, share_board_spec: true do
           :SEND_SUCCESS_DELAY => -1, # 相手が応答しない
           :RETRY_DELAY        => 0,  # しかも0秒後に応答確認
           })
-      Capybara.using_wait_time(0) { debugger }
       piece_move_o("77", "76", "☗7六歩")             # 初手を指す
       assert_turn(1)
     end

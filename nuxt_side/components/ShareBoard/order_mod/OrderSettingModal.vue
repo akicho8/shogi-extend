@@ -164,7 +164,6 @@ export default {
         return
       }
       this.base.new_order_share("反映")
-      this.base.new_v.os_change.clear()
       this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.base.cc_next_message())
     },
 

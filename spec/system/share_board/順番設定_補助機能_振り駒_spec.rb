@@ -21,11 +21,11 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "2回反転して元に戻る" do
     case1("2", "歩歩歩歩歩", "1さんが振り駒をした結果、歩が5枚で1さんの先手になりました")
-    assert_order_team_one2 "1,3", "2,4"
+    assert_order_team_one2 "13", "24"
   end
 
   it "3回反転して逆になる" do
     case1("3", "ととととと", "1さんが振り駒をした結果、と金が5枚で2さんの先手になりました")
-    assert_order_team_one2 "2,4", "1,3"
+    assert_order_team_one2 "24", "13"
   end
 end

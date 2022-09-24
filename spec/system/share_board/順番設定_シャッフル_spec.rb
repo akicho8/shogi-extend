@@ -15,7 +15,6 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "works" do
     case1
-    Capybara.using_wait_time(0) { debugger }
     assert_system_variable("順序2", "12345678")
     find(".shuffle_handle").click
     assert_text("1さんがシャッフルしました", wait: 60)

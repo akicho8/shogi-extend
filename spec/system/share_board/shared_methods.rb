@@ -134,18 +134,17 @@ module SharedMethods
   def assert_member_list(i, klass, user_name)
     assert_selector(".ShareBoardMemberListOne:nth-child(#{i})")             # まずi番目が存在する
     assert_selector(".ShareBoardMemberListOne:nth-child(#{i}).#{klass}")    # 次にi番目の種類
-    # i 番目のメンバーは user_name である
-    assert_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberListOne')][#{i}]//*[text()='#{user_name}']")
+    assert_selector(".ShareBoardMemberListOne:nth-child(#{i}) .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーが存在する
   def assert_member_exist(user_name)
-    assert_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
+    assert_selector(".ShareBoardMemberList .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーが存在しない
   def assert_member_missing(user_name)
-    assert_no_selector(:xpath, "//*[contains(@class, 'ShareBoardMemberList')]//*[text()='#{user_name}']")
+    assert_no_selector(".ShareBoardMemberList .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーリストの上ら i 番目をクリック

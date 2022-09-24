@@ -6,10 +6,8 @@ RSpec.describe type: :system, share_board_spec: true do
         :room_code            => :my_room,
         :fixed_user_name      => "a",
         :fixed_member_names   => "a",
-        :fixed_order_names    => "a",
         :fixed_order_state    => "to_o1_state",
         :handle_name_validate => "false",
-        :autoexec             => "os_modal_handle",
       })
     hamburger_click
     os_modal_handle
