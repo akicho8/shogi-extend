@@ -7,7 +7,7 @@
       .image.is-flex-shrink-0
         img.is-rounded(:src="user.avatar_path")
       .ml-1.is-hidden-mobile
-        | {{string_truncate(user.name, {length: s_config.TRUNCATE_MAX})}}
+        | {{str_truncate(user.name, {length: s_config.TRUNCATE_MAX})}}
 </template>
 
 <script>

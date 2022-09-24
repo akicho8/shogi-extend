@@ -21,11 +21,26 @@ export const Xinteger = {
     return Math.floor(v / n)
   },
 
+  idivmod(v, n) {
+    return [this.idiv(v, n), this.imodulo(v, n)]
+  },
+
   even_p(v) {
     return (v % 2) === 0
   },
 
   odd_p(v) {
     return !this.even_p(v)
+  },
+
+  gcd(a, b) {
+    if (a === 0) {
+      return b
+    }
+    return this.gcd(b % a, a)
+  },
+
+  lcm(a, b) {
+    return a * b / this.gcd(a, b)
   },
 }

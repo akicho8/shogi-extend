@@ -16,4 +16,10 @@ describe("Xinteger", () => {
     expect(Xinteger.odd_p(0)).toEqual(false)
     expect(Xinteger.odd_p(1)).toEqual(true)
   })
+  test("gcd", () => {
+    expect(Xinteger.gcd(12, 16)).toEqual(4)
+  })
+  test("lcm", () => {
+    expect(Xinteger.lcm(4, 6)).toEqual(12)
+  })
 })

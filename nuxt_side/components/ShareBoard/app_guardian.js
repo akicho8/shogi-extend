@@ -25,7 +25,7 @@ export const app_guardian = {
       //   return _.sample(this.guardian_list)
       // }
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
-      const hash_number = this.hash_number_from_str([pepper, str].join("-"))
+      const hash_number = this.str_to_hash_number([pepper, str].join("-"))
       return this.ary_cycle_at(this.guardian_list, hash_number)
     },
   },

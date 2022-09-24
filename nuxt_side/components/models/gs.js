@@ -2,9 +2,6 @@ import { Gs2 } from "./gs2.js"
 import _ from "lodash"
 import dayjs from "dayjs"
 import { HandleNameParser } from "./handle_name_parser.js"
-import Autolinker from 'autolinker'
-const strip_tags = require('striptags')
-// const ModExtsprintf = require('extsprintf')
 import { ScreenSizeDetector } from "./screen_size_detector.js"
 
 import Extsprintf from 'extsprintf'
@@ -56,20 +53,6 @@ export const Gs = {
   dot_sfen_escape(...args)   { return DotSfen.escape(...args)   }, // SFENの " " を "." に変更
   dot_sfen_unescape(...args) { return DotSfen.unescape(...args) }, // SFENの "." を " " に変更
 
-  // 使用例
-  //  foo_next(sign) {
-  //    this.foo_key = this.ary_cycle_at(this.FooInfo.values, this.foo_info.code + sign).key
-  //  }
-  ary_cycle_at(ary, index) {
-    return ary[this.imodulo(index, ary.length)]
-  },
-
-  // 文字列からハッシュコードに変換
-  // これは単純なものでよい
-  hash_number_from_str(str) {
-    return _.sumBy([...str], e => e.codePointAt(0))
-  },
-
   // kanji_hankaku_format("(三二)") => "(32)"
   kanji_hankaku_format(str) {
     return str.replace(/[〇一二三四五六七八九]/g, s => KANJI_TO_HANKAKU_NUMBER_TABLE[s])
@@ -87,63 +70,6 @@ export const Gs = {
   // p(value)              { console.log(this.inspect(value))        },
   // a(value)              { alert(this.inspect(value))              },
   pretty_alert(value)   { alert(this.pretty_inspect(value))       },
-
-  ////////////////////////////////////////////////////////////////////////////////
-
-  bool_p(value) {
-    return typeof value === "boolean"
-  },
-
-  ////////////////////////////////////////////////////////////////////////////////
-
-  // 片方を1に正規化した比率
-  //
-  //  100 : 50 = x : 1
-  //  50x = 100
-  //  x = 100 / 50
-  //  x = 2
-  //  ↓
-  //  a : b = x : 1
-  //  bx = a
-  //  x = a / b
-  //
-  math_wh_normalize_aspect_ratio(w, h) {
-    w = w || 0
-    h = h || 0
-    if (w === 0 || h === 0) {
-      return
-    }
-    if (w >= h) {
-      w = w / h
-      h = 1
-    } else {
-      h = h / w
-      w = 1
-    }
-    return [w, h]
-  },
-
-  // 人間向け表記の比率
-  // 片方を1にするのではなく 4:3 などと表示する
-  // ただOGPは 40:21 になり 1.91:1 の方が人間向け表記としてよく使われている
-  math_wh_gcd_aspect_ratio(w, h) {
-    w = w || 0
-    h = h || 0
-    if (w === 0 || h === 0) {
-      return
-    }
-    const v = this.math_gcd(w, h)
-    w = w / v
-    h = h / v
-    return [w, h]
-  },
-
-  math_gcd(a, b) {
-    if (b === 0) {
-      return a
-    }
-    return this.math_gcd(b, a % b)
-  },
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -178,44 +104,12 @@ export const Gs = {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-
   ////////////////////////////////////////////////////////////////////////////////
 
   ////////////////////////////////////////////////////////////////////////////////
-
-  time_format_human_hms(seconds) {
-    let format = ""
-    if (seconds < 60) {
-      format = "s秒"
-    } else if (seconds < 60 * 60) {
-      format = "m分s秒"
-    } else {
-      format = "H時間m分"
-    }
-    return dayjs.unix(seconds).format(format)
-  },
 
   //////////////////////////////////////////////////////////////////////////////// tag
 
-  tags_wrap(str) {
-    return _.compact((str ?? "").split(/[,\s]+/))
-  },
-
-  tags_append(tags, append_tags) {
-    tags = this.tags_wrap(tags)
-    append_tags = this.tags_wrap(append_tags)
-    return _.uniq([...tags, ...append_tags])
-  },
-
-  tags_remove(tags, remove_tags) {
-    tags = this.tags_wrap(tags)
-    remove_tags = this.tags_wrap(remove_tags)
-    return _.reject(tags, e => remove_tags.includes(e))
-  },
-
-  simple_format(str) {
-    return str.replace(/\n/g, "<br>")
-  },
 
   // str から現在の手数を推測する
   // https://www.kento-shogi.com/?branch=B%2A8b.9c8c.8b7c%2B.7b7c.5b8b%2B.8c7d.P%2A7e.7d6c.8b6b.6c5d.6b5b&branchFrom=120&moves=2g2f.3c3d.2f2e.2b3c.2h2f.8b2b.4i3h.3a4b.2f3f.2c2d.2e2d.2b2d.P%2A2g.5a6b.9g9f.9c9d.7i6h.6b7b.3i4h.7a8b.6i7i.8c8d.5i5h.8b8c.8h9g.7b8b.9g7e.6a7b.7e6f.4c4d.3f2f.P%2A2e.2f5f.4a5b.5f4f.4b4c.3g3f.5b6b.4h3g.6c6d.7g7f.1c1d.1g1f.6b6c.5h4h.7c7d.4h3i.8a7c.5g5f.2d2b.6h5g.2b4b.5f5e.5c5d.5e5d.4c5d.5g5f.P%2A5e.5f5e.5d5e.6f5e.S%2A4e.4f4e.4d4e.5e3c%2B.2a3c.B%2A5a.4b5b.5a3c%2B.5b5i%2B.3i2h.5i7i.N%2A5e.R%2A5i.S%2A3i.B%2A5g.S%2A4h.5g4h%2B.3g4h.5i6i%2B.5e6c%2B.7b6c.7f7e.N%2A5f.P%2A5i.5f4h%2B.3i4h.4e4f.7e7d.4f4g%2B.7d7c%2B.6c7c.3h4g.P%2A4f.4g4f.G%2A4i.P%2A7d.8c7d.N%2A8f.4i4h.8f7d.7i7d.P%2A7e.7d7e.B%2A8f.7e8f.8g8f.B%2A3i.2h1h.4h3h.R%2A5b.P%2A7b.S%2A7a.8b9c.N%2A8e.8d8e.3c6f.N%2A8d.6f3i.3h3i.B%2A8b.9c8c.8b7c%2B.7b7c.G%2A8b.8c7d.P%2A7e.7d7e.5b5e%2B.N%2A6e.P%2A7f.8d7f.G%2A6f.7e8f.6f7f.8f8g#118
@@ -225,14 +119,6 @@ export const Gs = {
     if (md) {
       return parseInt(md[1])
     }
-  },
-
-  // strip_tags(html)
-  // strip_tags(html, '<strong>')
-  // strip_tags(html, ['a'])
-  // strip_tags(html, [], '\n')
-  strip_tags(...args) {
-    return strip_tags(...args)
   },
 
   sprintf(...args) { return Extsprintf.sprintf(...args) },
@@ -293,67 +179,7 @@ export const Gs = {
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  // ../../../node_modules/autolinker/README.md
-  // newWindow: true で target="_blank" になる
-  auto_link(str, options = {}) {
-    return Autolinker.link(str, {newWindow: true, truncate: 30, mention: "twitter", ...options})
-  },
-
-  // string_truncate("hello", {length: 20})
-  string_truncate(str, options = {}) {
-    return _.truncate(str, {omission: "...", length: 80, ...options})
-  },
-
-  defval(v, default_value) {
-    if (v == null) {
-      return default_value
-    } else {
-      return v
-    }
-  },
-
-  str_squish(str) {
-    str = (str || "").toString()
-    str = str.replace(/[\s\u3000]+/g, " ")
-    str = str.trim()
-    return str
-  },
-
-  str_strip(str) {
-    str = (str || "").toString()
-    str = str.trim()
-    return str
-  },
-
-  // str_to_tags("a,b,a") // => ["a", "b"]
-  str_to_tags(str) {
-    return _.uniq(this.str_to_words(str))
-  },
-
-  // str_to_tags("a,b,a") // => ["a", "b", "a"]
-  str_to_words(str) {
-    str = (str || "").toString()
-    str = str.replace(/,/g, " ")
-    str = this.str_squish(str)
-    let av = []
-    if (this.present_p(str)) {
-      av = str.split(/\s+/)
-    }
-    return av
-  },
-
-  // keywords_str_toggle("a b", "c")   //=> "a b c"
-  // keywords_str_toggle("a b c", "c") //=> "a b"
-  keywords_str_toggle(keywords_str, str) {
-    let av = this.str_to_tags(keywords_str)
-    if (av.includes(str)) {
-      _.pull(av, str)
-    } else {
-      av.push(str)
-    }
-    return av.join(" ")
-  },
-
+  // 単純に value があるかないかでクラスを割り振る
   has_content_class(value, options = {}) {
     options = {
       present_class: "is_content_present",

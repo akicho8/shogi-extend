@@ -35,6 +35,11 @@ export const Xarray = {
     return [ary]
   },
 
+  // はみ出ない
+  ary_cycle_at(ary, index) {
+    return ary[Xinteger.imodulo(index, ary.length)]
+  },
+
   // ary 内のインデックス from の要素を to に移動
   // https://qiita.com/nowayoutbut/items/991515b32805e21f8892
   ary_move(ary, from, to) {

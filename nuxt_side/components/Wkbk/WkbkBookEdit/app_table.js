@@ -42,7 +42,7 @@ export const app_table = {
     tag_search_handle(tag) {
       this.sound_play_click()
       this.talk(tag)
-      tag = this.tags_append(this.tag, tag).join(",")
+      tag = this.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
 

@@ -23,7 +23,7 @@
       | {{row.elapsed_human}}
 
     b-table-column(v-slot="{row}" label="表紙" cell-class="cover_text is-size-7 is_line_break_on")
-      | {{string_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
+      | {{str_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
 
     b-table-column(v-slot="{row}")
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")

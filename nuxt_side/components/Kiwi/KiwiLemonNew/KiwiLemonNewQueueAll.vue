@@ -28,7 +28,7 @@
       b-tag(rounded :type="row.status_info.type" :class="row.status_info.class")
         | {{row.status_info.name}}
     b-table-column(v-slot="{row}" field="name" label="所有者")
-      | {{string_truncate(row.user.name, {length: 10})}}
+      | {{str_truncate(row.user.name, {length: 10})}}
 </template>
 
 <script>

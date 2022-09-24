@@ -31,7 +31,7 @@ export const HandleNameValidator = {
       return null
     } else {
       const pepper = dayjs().format("YYYY-MM-DD")
-      const hash_number = Gs.hash_number_from_str([pepper, s].join("-"))
+      const hash_number = Gs.str_to_hash_number([pepper, s].join("-"))
       const prefix = Gs.ary_cycle_at(this.prefix_list, hash_number)
       return `${prefix}${options.name}を入力してください`
     }

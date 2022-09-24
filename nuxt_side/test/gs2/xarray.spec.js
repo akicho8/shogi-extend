@@ -23,6 +23,10 @@ describe("Xarray", () => {
     expect(Xarray.ary_wrap("a")).toEqual(["a"])
     expect(Xarray.ary_wrap({})).toEqual([{}])
   })
+  test("ary_cycle_at", () => {
+    expect(Xarray.ary_cycle_at([0, 1], -1)).toEqual(1)
+    expect(Xarray.ary_cycle_at([0, 1], 2)).toEqual(0)
+  })
   test("ary_move", () => {
     const ary = ["a", "b", "c"]
     expect(Xarray.ary_move(ary, 0, 1)).toEqual(["b", "a", "c"])

@@ -408,7 +408,7 @@ export const app_form = {
     ////////////////////////////////////////////////////////////////////////////////
 
     i_size_aspect_ratio_human() {
-      let r = this.math_wh_gcd_aspect_ratio(this.rect_width, this.rect_height)
+      let r = this.aspect_ratio_gcd(this.rect_width, this.rect_height)
       if (r == null) {
         return "? : ?"
       }
@@ -418,7 +418,7 @@ export const app_form = {
     i_size_danger_p() {
       return false
 
-      let r = this.math_wh_normalize_aspect_ratio(this.rect_width, this.rect_height)
+      let r = this.aspect_ratio_normalize(this.rect_width, this.rect_height)
       if (r == null) {
         return true
       }

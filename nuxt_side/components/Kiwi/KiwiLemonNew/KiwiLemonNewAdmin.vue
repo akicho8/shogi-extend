@@ -54,7 +54,7 @@
         | {{row.error_message}}
 
     b-table-column(v-slot="{row}" label="表紙" cell-class="cover_text is-size-7 is_line_break_on")
-      | {{string_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
+      | {{str_truncate(row.all_params.media_builder_params.cover_text, {length: 80})}}
 
     b-table-column(v-slot="{row}" label="操作")
       .buttons.is-flex-wrap-nowrap.are-small.mb-0
