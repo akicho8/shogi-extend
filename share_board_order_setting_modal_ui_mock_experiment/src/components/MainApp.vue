@@ -16,7 +16,7 @@
       b-field(label="N手毎" custom-class="is-small")
         b-input(type="number" v-model.number="tegoto" :min="1" max="5")
       b-field(label="開始" custom-class="is-small")
-        b-input(type="number" v-model.number="kaisi" :min="0" max="1")
+        b-input(type="number" v-model.number="scolor" :min="0" max="1")
   .columns
     .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
       .TeamsContainer
@@ -32,7 +32,7 @@
       p
         | turn(-9..9):
         template(v-for="turn in turn_test_range")
-          | {{order_unit.current_user_by_turn(turn, tegoto, kaisi)}}
+          | {{order_unit.current_user_by_turn(turn, tegoto, scolor)}}
   .columns
     .column
       pre
@@ -67,7 +67,7 @@ export default {
     return {
       order_unit: new OrderUnit(),
       tegoto: 1,
-      kaisi: 1,
+      scolor: 1,
     }
   },
   mounted() {

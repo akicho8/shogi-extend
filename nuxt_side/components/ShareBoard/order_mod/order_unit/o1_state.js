@@ -7,7 +7,6 @@ import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
-// value object 化する
 export class O1State extends OxState {
   constructor(users = []) {
     super()
@@ -21,10 +20,6 @@ export class O1State extends OxState {
   swap_run() {
     this.users = Gs2.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs2.ary_reverse(e))
   }
-
-  // demo_set() {
-  //   this.users_allocate(["a", "b", "c", "d", "e"])
-  // }
 
   users_allocate(users) {
     this.users = users
@@ -50,15 +45,7 @@ export class O1State extends OxState {
 
   get to_o2_state() {
     const state = new O2State()
-    if (false) {
-      this.users.forEach((e, i) => {
-        const strategy = new O1Strategy(this.users.length, i, 1, 0)
-        const user = this.users[strategy.user_index]
-        state.teams[strategy.team_index].push(user)
-      })
-    } else {
-      state.users_allocate(this.users)
-    }
+    state.users_allocate(this.users)
     return state
   }
 

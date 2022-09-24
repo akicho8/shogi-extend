@@ -31,8 +31,8 @@ export class OrderUnit {
     this.watch_users = []
   }
 
-  current_user_by_turn(turn, tegoto, kaisi) {
-    return this.order_state.current_user_by_turn(turn, tegoto, kaisi)
+  current_user_by_turn(turn, tegoto, scolor) {
+    return this.order_state.current_user_by_turn(turn, tegoto, scolor)
   }
 
   state_switch_to(method) {

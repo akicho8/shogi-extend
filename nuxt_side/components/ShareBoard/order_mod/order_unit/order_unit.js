@@ -1,4 +1,7 @@
-// このなかで watch_users を管理するべきか考える
+// 順番管理
+// ・観戦者はこのクラスだけが持つ
+// ・O1State, O2State を切り替える
+// ・切り替えても観戦者には何も影響がない
 
 import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
@@ -22,24 +25,24 @@ export class OrderUnit {
 
   // Delegate Methods
 
-  get main_user_count()                { return this.order_state.main_user_count                      }
-  get empty_p()                        { return this.order_state.empty_p                              }
-  get self_vs_self_p()                 { return this.order_state.self_vs_self_p                       }
-  get one_vs_one_p()                   { return this.order_state.one_vs_one_p                         }
-  get many_vs_many_p()                 { return this.order_state.many_vs_many_p                       }
+  get main_user_count()                 { return this.order_state.main_user_count                       }
+  get empty_p()                         { return this.order_state.empty_p                               }
+  get self_vs_self_p()                  { return this.order_state.self_vs_self_p                        }
+  get one_vs_one_p()                    { return this.order_state.one_vs_one_p                          }
+  get many_vs_many_p()                  { return this.order_state.many_vs_many_p                        }
 
-  get black_start_order_uniq_users()   { return this.order_state.black_start_order_uniq_users         }
-  first_user(kaisi)                    { return this.order_state.first_user(kaisi)                    }
-  real_order_users(tegoto, kaisi)      { return this.order_state.real_order_users(tegoto, kaisi)      }
-  real_order_users_to_s(tegoto, kaisi) { return this.order_state.real_order_users_to_s(tegoto, kaisi) }
-  get hash()                           { return this.order_state.hash                                 }
-  get flat_uniq_users()                { return this.order_state.flat_uniq_users                      }
-  get round_size()                     { return this.order_state.round_size                           }
-  get swap_enable_p()                  { return this.order_state.swap_enable_p                        }
-  get error_messages()                 { return this.order_state.error_messages                       }
-  users_allocate(users)                { this.order_state.users_allocate(users)                       }
-  shuffle_core()                       { this.order_state.shuffle_core()                              }
-  swap_run()                           { this.order_state.swap_run()                                  }
+  get black_start_order_uniq_users()    { return this.order_state.black_start_order_uniq_users          }
+  first_user(scolor)                    { return this.order_state.first_user(scolor)                    }
+  real_order_users(tegoto, scolor)      { return this.order_state.real_order_users(tegoto, scolor)      }
+  real_order_users_to_s(tegoto, scolor) { return this.order_state.real_order_users_to_s(tegoto, scolor) }
+  get hash()                            { return this.order_state.hash                                  }
+  get flat_uniq_users()                 { return this.order_state.flat_uniq_users                       }
+  get round_size()                      { return this.order_state.round_size                            }
+  get swap_enable_p()                   { return this.order_state.swap_enable_p                         }
+  get error_messages()                  { return this.order_state.error_messages                        }
+  users_allocate(users)                 { this.order_state.users_allocate(users)                        }
+  shuffle_core()                        { this.order_state.shuffle_core()                               }
+  swap_run()                            { this.order_state.swap_run()                                   }
 
   constructor() {
     this.order_state = new O2State()
@@ -66,8 +69,8 @@ export class OrderUnit {
     }
   }
 
-  turn_to_item(turn, tegoto, kaisi) {
-    return this.order_state.turn_to_item(turn, tegoto, kaisi)
+  turn_to_item(turn, tegoto, scolor) {
+    return this.order_state.turn_to_item(turn, tegoto, scolor)
   }
 
   state_switch_to(method) {
@@ -108,11 +111,10 @@ export class OrderUnit {
   // a b
   //   c
   // だった場合 { a: [0, 2], b: [1], c:[3] }
-  name_to_turns_hash(kaisi) {
-    const users = this.real_order_users(1, kaisi)
+  name_to_turns_hash(scolor) {
+    const users = this.real_order_users(1, scolor)
     let index = 0
     return users.reduce((a, e) => {
-      // Gs2.__assert__(e != null, "e != null")
       if (e) {
         if (a[e.user_name] == null) {
           a[e.user_name] = []
@@ -148,15 +150,9 @@ export class OrderUnit {
     return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.state_name})`
   }
 
-  // 観戦者を含めて指定の名前はこの中に存在するか？
-  // user_name_exist_p(user_name) {
-  //   const users = [...this.flat_uniq_users, ...this.watch_users]
-  //   return users.some(e => e.user_name === user_name)
-  // }
-
   // 全員追加
   // 1. 空なら全員対局者にする
-  // 2. 空でなければ対局者以外を観戦者にすう
+  // 2. 空でなければ対局者以外を観戦者にする
   auto_users_set(user_names) {
     if (this.empty_p) {
       this.user_names_allocate(user_names)

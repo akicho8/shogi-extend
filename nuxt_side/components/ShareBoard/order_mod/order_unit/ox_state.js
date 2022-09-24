@@ -23,15 +23,15 @@ export class OxState {
 
   // turn 0 から開始したときのユーザーたち
   // null を含む
-  real_order_users(tegoto, kaisi) {
+  real_order_users(tegoto, scolor) {
     return Gs2.n_times_collect(this.round_size * tegoto, i => {
-      return this.turn_to_item(i, tegoto, kaisi)
+      return this.turn_to_item(i, tegoto, scolor)
     })
   }
 
   // 1手毎としたときの約一周したときの名前を順番に並べた文字列
-  real_order_users_to_s(tegoto, kaisi) {
-    return this.real_order_users(tegoto, kaisi).map(e => e ? e.to_s : "?").join("")
+  real_order_users_to_s(tegoto, scolor) {
+    return this.real_order_users(tegoto, scolor).map(e => e ? e.to_s : "?").join("")
   }
 
   // 差分確認用のハッシュ
@@ -41,8 +41,8 @@ export class OxState {
   }
 
   // kaisi色から開始したときの0手目の人を返す
-  first_user(kaisi) {
-    return this.turn_to_item(0, 1, kaisi)
+  first_user(scolor) {
+    return this.turn_to_item(0, 1, scolor)
   }
 
   // 準備できたか？
