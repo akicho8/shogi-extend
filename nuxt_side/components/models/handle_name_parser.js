@@ -18,7 +18,8 @@ export class HandleNameParser {
   }
 
   constructor(s, options = {}) {
-    this.source = s ?? ""
+    Xassertion.__assert__(Xobject.present_p(s), "this.present_p(s) in HandleNameParser")
+    this.source = s
     this.options = options
   }
 

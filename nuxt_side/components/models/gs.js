@@ -62,7 +62,6 @@ export const Gs = {
   },
 
   user_call_name(str) {
-    this.__assert__(this.present_p(str), "this.present_p(str) in user_call_name")
     return HandleNameParser.call_name(str)
   },
 
