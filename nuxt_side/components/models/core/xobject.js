@@ -1,3 +1,5 @@
+const util = require("util")
+
 export const Xobject = {
   // lodash の _.isEmpty は不自然な挙動なので使ってはいけない
   blank_p(value) {
@@ -22,15 +24,15 @@ export const Xobject = {
   },
 
   pp(value) {
-    console.log(JSON.stringify(value))
+    console.log(util.inspect(value))
   },
 
   short_inspect(value) {
-    return JSON.stringify(value)
+    return util.inspect(value)
   },
 
   i(value) {
-    return JSON.stringify(value)
+    return util.inspect(value)
   },
 
   pretty_inspect(value) {
