@@ -1,4 +1,4 @@
-import { Xinteger } from "./Xinteger.js"
+import { Xinteger } from "./xinteger.js"
 
 export const Xtime = {
   time_format_human_hms(seconds) {
