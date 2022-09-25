@@ -1,10 +1,12 @@
 import _ from "lodash"
 const NodeEmoji = require('node-emoji')
+import { Xassertion } from "@/components/models/core/xassertion.js"
+import { Xobject } from "@/components/models/core/xobject.js"
 
 export class HandleNameParser {
-  static DELETE_SUFFIX_CHARS = "!！."   // 最後にあると削除する文字たち
-  // static DELETE_SUFFIX_WORD  = "chan"   // 最後にあると削除する単語たち
-  static DELETE_CHAR         = "。"     // どこにあっても削除する文字たち
+  static DELETE_SUFFIX_CHARS = "!！."           // 最後にあると削除する文字たち
+  static DELETE_SUFFIX_WORD  = ["だよ", "です"] // 最後にあると削除する単語たち
+  static DELETE_CHAR         = "。"             // どこにあっても削除する文字たち
 
   // call_name("SOS団")             → "SOS団"
   // call_name("ありす")            → "ありすさん"
@@ -27,13 +29,13 @@ export class HandleNameParser {
     let s = this.source
     s = _.trim(s)
     s = this.safe_emoji_strip(s)
-    s = s.replace(/(.+)[@＠].*/, "$1")                                            // "alice@xxx"       → "alice"
-    s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX_CHARS}]+$`), "$1") // "alice!"          → "alice"
-    // s = s.replace(new RegExp(`(.+?)(${this.constructor.DELETE_SUFFIX_WORD.join('|')})$`), "$1") // "alice!"          → "alice"
-    s = s.replace(new RegExp(`[${this.constructor.DELETE_CHAR}]`, "g"), "")       // "alice。"         → "alice"
-    s = s.replace(/(.+)\(.*\)$/, "$1")                                            // "alice123(xxx)"   → "alice123"
-    s = s.replace(/(.+)（.*）$/, "$1")                                            // "alice123（xxx）" → "alice123"
-    s = s.replace(/(\D+)\d+$/, "$1")                                              // "alice123"        → "alice"
+    s = s.replace(/(.+)[@＠].*/, "$1")                                                          // "alice@xxx"       → "alice"
+    s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX_CHARS}]+$`), "$1")         // "alice!"          → "alice"
+    s = s.replace(new RegExp(`(.+?)(${this.constructor.DELETE_SUFFIX_WORD.join('|')})$`), "$1") // "aliceだよ"       → "alice"
+    s = s.replace(new RegExp(`[${this.constructor.DELETE_CHAR}]`, "g"), "")                     // "ali。ce"         → "alice"
+    s = s.replace(/(.+)\(.*\)$/, "$1")                                                          // "alice123(xxx)"   → "alice123"
+    s = s.replace(/(.+)（.*）$/, "$1")                                                          // "alice123（xxx）" → "alice123"
+    s = s.replace(/(\D+)\d+$/, "$1")                                                            // "alice123"        → "alice"
 
     if (s.match(/.(ん|ン|ﾝ|さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人|chan|kun)$/)) {
       return s
