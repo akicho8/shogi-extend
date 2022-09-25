@@ -258,14 +258,14 @@ module SharedMethods
     assert { result == names }
   end
 
-  def assert_order_team_one(klass, names)
-    result = all(".#{klass} li").collect(&:text).join("")
+  def __assert_order_team_one(klass, names)
+    result = all(".#{klass} li").collect(&:text).join
     assert { result == names }
   end
 
-  def assert_order_team_one2(black, white)
-    assert_order_team_one "dnd_black", black
-    assert_order_team_one "dnd_white", white
+  def assert_order_team_one(black, white)
+    __assert_order_team_one "dnd_black", black
+    __assert_order_team_one "dnd_white", white
   end
 
   # なんでもいいから1vs1のルールを選択する

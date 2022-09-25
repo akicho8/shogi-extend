@@ -31,7 +31,7 @@
         OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")
     .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
       .TeamContainer
-        OrderTeamOne2(:items.sync="order_unit.order_state.teams[0]"  label="☗")
+        OrderTeamOne2(:items.sync="order_unit.order_state.teams[0]"  label="☗" ref="OrderTeamOne2")
         OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")
         OrderTeamOne2(:items.sync="order_unit.order_state.teams[1]"  label="☖")
     .column.is-12
@@ -77,12 +77,50 @@ export default {
       order_unit: new OrderUnit(),
       tegoto: 1,
       start_color: 0,
+      os_dnd_count: 0,
     }
   },
   mounted() {
     this.order_unit.sample_set()
     // 操作中に変更すると SortableJS がエラーになる
     // setInterval(() => this.order_unit.dump_and_load(), 1000*3)
+
+    setInterval(() => {
+      // const el = this.$refs.OrderTeamOne2.$refs.draggable
+      // console.log(el)
+      // el.cancel()
+
+      // let KEvent = new KeyboardEvent("keyup", {code: 27});
+      // document.dispatchEvent(KEvent);
+
+      // const foo = {
+      //   "key": "Escape",
+      //   "keyCode": 27,
+      //   "which": 27,
+      //   "code": "Escape",
+      //   "location": 0,
+      //   "altKey": false,
+      //   "ctrlKey": false,
+      //   "metaKey": false,
+      //   "shiftKey": false,
+      //   "repeat": false,
+      // }
+      // KeyboardEvent isValidElem
+
+      // const doc = document.querySelector('body')
+      // const doc = this.$refs.OrderTeamOne2.$refs.draggable
+      // console.log(doc)
+      // doc._sortable._onDrop()
+
+      // doc.$el.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }))
+      // console.debug(1)
+
+    }, 1000*3)
+
+    // setInterval(() => {
+    //   this.order_unit = new OrderUnit()
+    //   this.order_unit.user_names_allocate(_.shuffle(["a", "b", "c", "d", "e", "f", "g"]))
+    // }, 1000*3)
   },
   computed: {
     turn_test_range() {

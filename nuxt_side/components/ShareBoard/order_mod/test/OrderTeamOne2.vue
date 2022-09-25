@@ -3,12 +3,15 @@
   //- ghostClass="ghost_element"
   //- @start="event_check"
   .OrderTeamOne2Title.is-size-7.has-text-weight-bold
-    | {{label}}
+    | {{label}}{{base.os_dnd_count}}
   VueDraggable(
     tag="ul"
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
+    ref="draggable"
+    @start="base.os_dnd_count += 1"
+    @end="base.os_dnd_count -= 1"
     )
     template(v-for="e in current_items")
       li(:key="e.unique_key")
@@ -21,11 +24,12 @@ import VueDraggable from "vuedraggable"
 export default {
   props: {
     items: { type: Array,   required: true,  },
-    label:     { type: String,  required: true,  },
+    label: { type: String,  required: true,  },
   },
   components: {
     VueDraggable,
   },
+  inject: ["base"],
   data() {
     return {
       current_items: this.items,

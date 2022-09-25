@@ -7,6 +7,8 @@
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
+    @start="TheSb.new_v.os_dnd_count += 1"
+    @end=  "TheSb.new_v.os_dnd_count -= 1"
     )
     template(v-for="e in current_items")
       li(:key="e.unique_key")
@@ -24,7 +26,7 @@ export default {
   components: {
     VueDraggable,
   },
-  inject: ["TheOSM"],
+  inject: ["TheSb", "TheOSM"],
   data() {
     return {
       current_items: this.items,

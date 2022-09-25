@@ -77,55 +77,6 @@ export const app_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // フォームの内容を新しい値として配信
-    // 自分も含めて受信して反映する
-    new_order_share(message) {
-      this.__assert__(this.new_v.order_unit, "this.new_v.order_unit")
-      const params = {
-        order_unit:        this.new_v.order_unit.attributes,
-        //
-        move_guard_key:    this.new_v.move_guard_key,
-        avatar_king_key:   this.new_v.avatar_king_key,
-        shout_mode_key:    this.new_v.shout_mode_key,
-        foul_behavior_key: this.new_v.foul_behavior_key,
-        tegoto:            this.new_v.tegoto,
-        //
-        message:           message,
-      }
-      this.ac_room_perform("new_order_share", params) // --> app/channels/share_board/room_channel.rb
-    },
-    new_order_share_broadcasted(params) {
-      if (this.received_from_self(params)) {
-        this.tl_alert("new_order_share 自分→自分")
-      } else {
-        this.tl_alert("new_order_share 自分→他者")
-        if (false) {
-          this.os_modal_close() // もし他者が順番設定モーダルを開いていたら閉じる
-        }
-      }
-
-      // new_v.order_unit のパラメータを order_unit に反映する
-      this.order_copy_from_bc(params)
-
-      // 順番設定モーダルを開いているかどうかに関係なくモーダルで使う変数を更新する
-      // これは「自分→自身」でも動くので「観戦」状態の人が一番下に移動する
-      // 新しくなった order_unit を new_v.order_unit に反映する
-      this.os_modal_init()
-
-      if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
-      }
-
-      if (this.present_p(params.message)) {
-        this.al_add({
-          ...params,
-          label: "順番更新",
-          sfen: this.current_sfen,
-          turn: this.current_turn,
-        })
-      }
-    },
-
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
     receive_xorder(params) {
       this.__assert__(this.present_p(params), "this.present_p(params)")
@@ -139,9 +90,10 @@ export const app_order_main = {
     },
 
     order_copy_from_bc(params) {
-      if (params.order_unit) {
-        this.order_unit = OrderUnit.from_attributes(params.order_unit)
-      }
+      this.__assert__(params.order_unit)
+
+      this.order_unit        = OrderUnit.from_attributes(params.order_unit)
+
       this.move_guard_key    = params.move_guard_key
       this.avatar_king_key   = params.avatar_king_key
       this.shout_mode_key    = params.shout_mode_key
