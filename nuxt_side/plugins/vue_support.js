@@ -4,6 +4,7 @@ import { SpUtils } from "../components/models/sp_utils.js"
 import { Vibrator } from "../components/models/vibrator.js"
 import twemoji from 'twemoji'
 import _ from "lodash"
+const util = require("util")
 
 export const vue_support = {
   methods: {
@@ -278,7 +279,8 @@ export const vue_support = {
   },
 
   computed: {
-    _() { return _ },
+    _()    { return _    },
+    util() { return util },
   },
 
   directives: {
