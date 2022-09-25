@@ -6,6 +6,7 @@ import { Xstring    } from "./core/xstring.js"
 import { Xhash      } from "./core/xhash.js"
 import { Xenumerate } from "./core/xenumerate.js"
 import { Xobject    } from "./core/xobject.js"
+import { Xformat    } from "./core/xformat.js"
 import { Xdelay     } from "./core/xdelay.js"
 import { Xmath      } from "./core/xmath.js"
 import { Xrand      } from "./core/xrand.js"
@@ -23,6 +24,7 @@ export const Gs2 = {
   ...Xhash,
   ...Xenumerate,
   ...Xobject,
+  ...Xformat,
   ...Xdelay,
   ...Xmath,
   ...Xrand,
