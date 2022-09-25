@@ -105,7 +105,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
 
       b-table-column(v-slot="{row}" custom-key="answer_stat.difficulty_rate" field="answer_stat.difficulty_rate" label="正解率" centered sortable)
         template(v-if="row.answer_stat.difficulty_rate != null")
-          | {{float_to_integer_percentage(row.answer_stat.difficulty_rate)}}
+          | {{number_truncate(row.answer_stat.difficulty_rate * 100)}}
           //- span.has-text-grey.is-size-7.ml-1 %
 
       b-table-column(v-slot="{row}" custom-key="answer_stat.spent_sec_total" field="answer_stat.spent_sec_total" label="総時間" centered sortable)

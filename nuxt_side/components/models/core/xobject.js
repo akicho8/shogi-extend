@@ -25,8 +25,16 @@ export const Xobject = {
     console.log(JSON.stringify(value))
   },
 
+  short_inspect(value) {
+    return JSON.stringify(value)
+  },
+
   i(value) {
     return JSON.stringify(value)
+  },
+
+  pretty_inspect(value) {
+    return JSON.stringify(value, null, 4)
   },
 
   a(value) {

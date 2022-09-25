@@ -12,7 +12,7 @@
           .vs_name {{row.tag.name}}
         .column.is-narrow.is-paddingless.use_rate_block
           .use_rate_label 遭遇率
-          .use_rate_value {{float_to_perc(row.appear_ratio, 1)}}
+          .use_rate_value {{floatx100_percentage(row.appear_ratio, 1)}}
           .use_rate_unit %
       .columns.is-gapless
         .column.is-paddingless

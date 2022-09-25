@@ -277,6 +277,10 @@ export const vue_support = {
     },
   },
 
+  computed: {
+    _() { return _ },
+  },
+
   directives: {
     // Twitter で使われている絵文字に置き換える
     //
