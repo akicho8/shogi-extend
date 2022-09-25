@@ -192,8 +192,12 @@ export const app_order_main = {
         if (this.ac_room) {                                      // 部屋が立てられていて
           if (this.move_guard_info.key === "is_move_guard_on") { // 手番制限ありなら
             retv = "none"                                        // 観戦者含めて全体を「禁止」にする
-            if (this.current_turn_self_p) {                      // そのあとで対象者だけを
-              retv = "both"                                      // 指せるようにする
+            if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
+              retv = "both"
+            } else {
+              if (this.current_turn_self_p) {                    // そのあとで対象者だけを
+                retv = "both"                                    // 指せるようにする
+              }
             }
           }
         }
