@@ -34,6 +34,34 @@ export class OxState {
     return this.real_order_users(tegoto, scolor).map(e => e ? e.to_s : "?").join("")
   }
 
+  // 名前から順番を知るためのハッシュ
+  // a b
+  //   c
+  // だった場合 { a: [0, 2], b: [1], c:[3] }
+  name_to_turns_hash(scolor) {
+    const users = this.real_order_users(1, scolor)
+    let index = 0
+    return users.reduce((a, e) => {
+      if (e) {
+        if (a[e.user_name] == null) {
+          a[e.user_name] = []
+        }
+        a[e.user_name].push(index)
+      }
+      index += 1
+      return a
+    }, {})
+  }
+
+  // 名前からユーザーを引くハッシュ
+  // => { alice: {...}, bob: {...} }
+  get name_to_object_hash() {
+    return this.flat_uniq_users.reduce((a, e) => {
+      a[e.user_name] = e
+      return a
+    }, {})
+  }
+
   // 差分確認用のハッシュ
   get hash() {
     const str = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join(",")

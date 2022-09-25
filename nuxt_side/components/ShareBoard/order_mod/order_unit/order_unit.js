@@ -35,6 +35,8 @@ export class OrderUnit {
   first_user(scolor)                    { return this.order_state.first_user(scolor)                    }
   real_order_users(tegoto, scolor)      { return this.order_state.real_order_users(tegoto, scolor)      }
   real_order_users_to_s(tegoto, scolor) { return this.order_state.real_order_users_to_s(tegoto, scolor) }
+  name_to_turns_hash(scolor)            { return this.order_state.name_to_turns_hash(scolor)            }
+  get name_to_object_hash()             { return this.order_state.name_to_object_hash                   }
   get hash()                            { return this.order_state.hash                                  }
   get flat_uniq_users()                 { return this.order_state.flat_uniq_users                       }
   get round_size()                      { return this.order_state.round_size                            }
@@ -105,34 +107,6 @@ export class OrderUnit {
     const json = JSON.parse(JSON.stringify(this.attributes))
     this.clear()
     this.attributes = json
-  }
-
-  // 名前から順番を知るためのハッシュ
-  // a b
-  //   c
-  // だった場合 { a: [0, 2], b: [1], c:[3] }
-  name_to_turns_hash(scolor) {
-    const users = this.real_order_users(1, scolor)
-    let index = 0
-    return users.reduce((a, e) => {
-      if (e) {
-        if (a[e.user_name] == null) {
-          a[e.user_name] = []
-        }
-        a[e.user_name].push(index)
-      }
-      index += 1
-      return a
-    }, {})
-  }
-
-  // 名前からユーザーを引くハッシュ
-  // => { alice: {...}, bob: {...} }
-  get name_to_object_hash() {
-    return this.flat_uniq_users.reduce((a, e) => {
-      a[e.user_name] = e
-      return a
-    }, {})
   }
 
   get valid_p() {

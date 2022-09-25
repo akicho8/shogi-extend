@@ -25,4 +25,12 @@ describe("OrderUnit", () => {
       expect(order_unit.inspect).toEqual("[黒開始:a?] [白開始:?a] [観:b] [整:false] [替:o] (O2State)")
     })
   })
+  test("name_to_turns_hash", () => {
+    const order_unit = OrderUnit.create(["a", "b", "c"])
+    expect(order_unit.name_to_turns_hash(1)).toEqual({b: [0, 2], a: [1], c: [3]})
+  })
+  test("name_to_object_hash", () => {
+    const order_unit = OrderUnit.create(["a", "b", "c"])
+    expect(!!order_unit.name_to_object_hash["a"]).toEqual(true)
+  })
 })
