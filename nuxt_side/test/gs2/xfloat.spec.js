@@ -14,9 +14,9 @@ describe("Xfloat", () => {
     expect(Xfloat.number_round_s(1.0, 2)).toEqual("1.00")
   })
   test("number_truncate", () => {
-    expect(Xfloat.number_truncate(1.23, 1)).toEqual(1.2)
+    expect(Xfloat.number_truncate(1.23, 1)).toBeCloseTo(1.2)
   })
   test("floatx100_percentage", () => {
-    expect(Xfloat.floatx100_percentage(0.12345, 2)).toEqual(12.34)
+    expect(Xfloat.floatx100_percentage(0.12345, 2)).toBeCloseTo(12.34)
   })
 })
