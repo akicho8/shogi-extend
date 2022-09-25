@@ -387,7 +387,7 @@ export const app_clock_box = {
     cc_params_inspect(params) {
       this.__assert__(_.isArray(params), "_.isArray(params)")
       const values = params.map(params => this.CcRuleInfo.cc_params_keys.map(e => params[e]))
-      return this.short_inspect(values)
+      return JSON.stringify(values)
     },
 
     cc_params_debug(label, params) {
