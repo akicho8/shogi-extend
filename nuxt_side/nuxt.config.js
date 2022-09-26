@@ -373,6 +373,12 @@ const config = {
         // exclude: /(node_modules)/,
       })
     },
+
+    // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
+    // https://qiita.com/hiroyukiwk/items/b283ef5312b289be6ce8
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+    },
   },
 
   // https://nuxtjs.org/guide/runtime-config
