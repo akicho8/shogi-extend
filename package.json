@@ -1,6 +1,7 @@
 {
   "license": "UNLICENSED",
   "dependencies": {
+    "@babel/preset-env": "7.12.17",
     "@rails/actioncable": "^6.0.3",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
