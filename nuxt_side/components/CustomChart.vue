@@ -3,7 +3,6 @@ canvas#main_canvas.CustomChart(ref="main_canvas")
 </template>
 
 <script>
-
 const CHART_CONFIG_DEFAULT = {
   type: "bar",
   options: {
@@ -142,6 +141,7 @@ const CHART_CONFIG_DEFAULT = {
 }
 
 import chart_mixin from "@/components/models/chart_mixin.js" // FIXME
+import _ from "lodash"
 
 export default {
   name: "CustomChart",
@@ -179,7 +179,7 @@ export default {
 
       {
         const v = this.params.scales_yAxes_display
-        if (this.bool_p(v)) {
+        if (_.isBoolean(v)) {
           this._chart_config.options.scales.yAxes[0].display = v
         }
       }

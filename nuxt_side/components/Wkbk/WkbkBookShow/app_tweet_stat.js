@@ -154,7 +154,7 @@ export const app_tweet_stat = {
       if (v == null) {
         return ""
       }
-      return this.float_to_integer_percentage(v) + "%"
+      return this.number_truncate(v) * 100 + "%"
     },
   },
   computed: {
@@ -187,14 +187,14 @@ export const app_tweet_stat = {
       if (this.max_count === 0) {
         return "0%"
       }
-      return this.float_to_perc2(this.jo_counts.correct / this.max_count) + "%"
+      return this.number_truncate(this.jo_counts.correct / this.max_count * 100, 2) + "%"
     },
 
     st_ox_rate() {
       if (this.jo_ox_total === 0) {
         return "0%"
       }
-      return this.float_to_perc2(this.jo_counts.correct / this.jo_ox_total) + "%"
+      return this.number_truncate(this.jo_counts.correct / this.jo_ox_total * 100, 2) + "%"
     },
 
     jo_ox_total() {

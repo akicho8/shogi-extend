@@ -15,7 +15,7 @@
       b-switch.main_switch(size="is-small" type="is-primary" v-model="clock_box_p" @input="main_switch_handle") 設置
 
   ////////////////////////////////////////////////////////////////////////////////
-  .modal-card-body
+  .modal-card-body(@click="!instance && main_switch_handle(true)")
     //- pre
     //-   | {{base.cc_params}}
 
@@ -91,8 +91,6 @@
 </template>
 
 <script>
-const AUTO_CLOSE_IF_START_RESUME = false // START と RESUME 実行後にモーダルを閉じるか？
-
 import { support_child } from "./support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
@@ -133,7 +131,7 @@ export default {
       this.base.cc_params_apply()
       this.base.cc_play_handle()
       this.base.clock_box_share({behaviour: "開始"})
-      if (AUTO_CLOSE_IF_START_RESUME) {
+      if (this.base.auto_close_p) {
         this.$emit("close")
       }
     },
@@ -158,7 +156,7 @@ export default {
       this.sound_play_click()
       this.base.cc_resume_handle()
       this.base.clock_box_share({behaviour: "再開"})
-      if (AUTO_CLOSE_IF_START_RESUME) {
+      if (this.base.auto_close_p) {
         this.$emit("close")
       }
     },

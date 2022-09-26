@@ -44,7 +44,7 @@ export default {
     },
     toggle_handle(str) {
       this.sound_play_click()
-      this.input_body = this.keywords_str_toggle(this.input_body, str)
+      this.input_body = this.tags_str_toggle(this.input_body, str)
       if (this.input_body.length >= 1) {
         this.input_body += " "
       }

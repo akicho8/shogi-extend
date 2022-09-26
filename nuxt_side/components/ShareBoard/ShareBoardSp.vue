@@ -109,8 +109,8 @@ export default {
     sp_hook() {
       const hv = {}
       hv["update:play_mode_advanced_full_moves_sfen"] = this.base.play_mode_advanced_full_moves_sfen_set
-      hv["update:edit_mode_short_sfen"]            = this.base.edit_mode_short_sfen_set
-      hv["update:short_sfen"]             = this.base.short_sfen_set
+      hv["update:edit_mode_short_sfen"]               = this.base.edit_mode_short_sfen_set
+      hv["update:short_sfen"]                         = this.base.short_sfen_set
       hv["update:turn_offset"]                        = v => this.base.current_turn = v
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
@@ -136,7 +136,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "../../node_modules/shogi-player/components/stylesheets/helper.sass"
+@import "shogi-player/components/stylesheets/helper.sass"
 
 .ShareBoardSp
   +padding_lr(unset)

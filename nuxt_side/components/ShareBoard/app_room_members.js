@@ -1,8 +1,6 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-const FAKE_P = false
-
 export const app_room_members = {
   data() {
     return {
@@ -130,9 +128,8 @@ export const app_room_members = {
     member_infos_find_all_newest(list) {
       if (this.fixed_member_names_p) {
         return list
-      } else {
-        return list.filter(e => this.member_elapsed_sec(e) < this.AppConfig.KILL_SEC)
       }
+      return list.filter(e => this.member_elapsed_sec(e) < this.AppConfig.KILL_SEC)
     },
 
     // 生きているか？
@@ -162,6 +159,10 @@ export const app_room_members = {
     },
   },
   computed: {
+    uniq_member_infos()    { return _.uniqBy(this.member_infos, "from_user_name") },                                // 名前でユニークにした member_infos
+    room_user_names()      { return this.uniq_member_infos.map(e => e.from_user_name) },                            // ユニークな名前のリスト
+    room_user_names_hash() { return this.uniq_member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {}) }, // 名前からO(1)で member_infos の要素を引くためのハッシュ
+
     // メンバーリストを固定させるか？
     fixed_member_names_p() {
       return "fixed_member_names" in this.$route.query
@@ -173,22 +174,12 @@ export const app_room_members = {
       }
     },
 
-    // 名前をユニークにした member_infos
-    name_uniq_member_infos() {
-      return _.uniqBy(this.member_infos, "from_user_name")
-    },
-
     // 一番上にいる人は自分か？
     // つまり最古参メンバーか？
     current_member_is_leader_p() {
       if (this.present_p(this.member_infos)) {
         return this.member_infos[0].from_connection_id === this.connection_id
       }
-    },
-
-    // 名前からO(1)で member_infos の要素を引くためのハッシュ
-    room_member_names_hash() {
-      return this.member_infos.reduce((a, e) => ({...a, [e.from_user_name]: e}), {})
     },
   },
 }

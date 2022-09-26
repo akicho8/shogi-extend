@@ -20,7 +20,7 @@ export class ParamBase extends ApplicationMemoryRecord {
     Gs.__assert__(this.default !== undefined || this.defaults !== undefined, `${this.key} の default と defaults が未定義`)
     if (this.defaults) {
       Gs.__assert__(context.$config.STAGE, "context.$config.STAGE")
-      v = this.defaults[context.$config.STAGE] || this.defaults["production"]
+      v = this.defaults[context.$config.STAGE] ?? this.defaults["production"] // || では development の false が無視されてしまう
     } else {
       Gs.__assert__(this.default !== undefined, `${this.key} の default が未定義`)
       v = this.default

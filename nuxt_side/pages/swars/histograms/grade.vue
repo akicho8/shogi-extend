@@ -45,7 +45,7 @@ client-only
               hoverable
               )
               b-table-column(v-slot="{row}" field="grade.priority"  label="棋力" sortable) {{row.grade.key}}
-              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{float_to_perc(row.ratio, 2)}} %
+              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{floatx100_percentage(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{number_round(row.deviation_score)}}
         SwarsHistogramProcessedSec(:xi="xi")

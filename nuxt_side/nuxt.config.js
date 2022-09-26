@@ -223,7 +223,16 @@ const config = {
   ** Auto import components
   ** See https://nuxtjs.org/api/configuration-components
   */
-  components: true,
+  // true はめちゃくちゃ使いにくい
+  // components: true,
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+      extensions: ["vue"],
+    },
+  ],
+
   /*
   ** Nuxt.js dev-modules
   */

@@ -19,7 +19,7 @@ export const app_sfen_share = {
       this.__assert__(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
         this.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_offset_max, "lmi.next_turn_offset === this.current_sfen_turn_offset_max")
+        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
@@ -49,7 +49,7 @@ export const app_sfen_share = {
         }
       }
 
-      const next_user_name = this.user_name_by_turn(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
+      const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
       if (next_user_name) {
         this.sfen_share_params["next_user_name"] = next_user_name
       }
@@ -146,7 +146,7 @@ export const app_sfen_share = {
     },
     from_user_name_valid(params) {
       if (this.development_p) {
-        const name = this.user_name_by_turn(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
+        const name = this.turn_to_user_name(params.lmi.next_turn_offset - 1) // alice, bob がいて初手を指したら alice
         if (name) {
           if (params.from_user_name !== name) {
             this.tl_alert(`${this.user_call_name(name)}の手番でしたが${this.user_call_name(params.from_user_name)}が指しました`)

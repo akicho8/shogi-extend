@@ -223,7 +223,7 @@ export default {
   methods: {
     zoom_handle() {
       this.sound_play_click()
-      this.bar_preset_key = this.BarPresetInfo.fetch(this.ruby_like_modulo(this.bar_preset_info.code + 1, this.BarPresetInfo.values.length)).key
+      this.bar_preset_key = this.BarPresetInfo.fetch(this.imodulo(this.bar_preset_info.code + 1, this.BarPresetInfo.values.length)).key
       // this._chart_config.options.aspectRatio = this.bar_preset_info.value
       // this.chart_create()
       // this.debug_alert(this._chart_config.options.aspectRatio)

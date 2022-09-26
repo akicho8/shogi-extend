@@ -45,7 +45,7 @@ export default {
     next_handle(v) {
       this.sound_play_click()
       const i = this.base.board_preset_info.code + v
-      const new_index = this.ruby_like_modulo(i, this.base.BoardPresetInfo.values.length)
+      const new_index = this.imodulo(i, this.base.BoardPresetInfo.values.length)
       const next = this.base.BoardPresetInfo.fetch(new_index)
       this.base.board_preset_key = next.key
     },

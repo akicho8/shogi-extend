@@ -88,7 +88,9 @@ export const app_sp = {
         this.sound_play("x")
         const messages = []
         const name = this.current_turn_user_name
-        if (name) {
+        if (this.blank_p(name)) {
+          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
+        } else {
           messages.push(`今は${this.user_call_name(name)}の手番です`)
           if (this.self_is_watcher_p) {
             messages.push(`あなたは観戦者なので操作できません`)
@@ -99,8 +101,6 @@ export const app_sp = {
             // 時計OFFか時計停止中なので対局が終わっていると思われる (が、順番設定を解除していない)
             messages.push(`検討する場合は順番設定を解除してください`)
           }
-        } else {
-          messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
         }
         if (this.present_p(messages)) {
           const full_message = messages.join("。")
@@ -146,6 +146,9 @@ export const app_sp = {
       return this.sp_call(e => e.sp_Howler())
     },
 
+    // 手数 → 色変換
+    // 駒落ちによる開始色が変わる条件の大元はこれ
+    turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
   },
   computed: {
     play_mode_p() { return this.sp_run_mode === 'play_mode' },
@@ -159,11 +162,12 @@ export const app_sp = {
     //     //- last_location_key: this.current_sfen_info.last_location.key,
     //   }
     // },
-    current_sfen_info()            { return this.sfen_parse(this.current_sfen)                          },
-    current_sfen_turn_offset_max() { return this.current_sfen_info.turn_offset_max                      },
-    next_location()                { return this.current_sfen_info.next_location                        },
-    current_location()             { return this.current_sfen_info.location_by_offset(this.current_turn) },
-    base_location()                { return this.current_sfen_info.location_by_offset(0)                },
+    current_sfen_info()     { return this.sfen_parse(this.current_sfen)       }, // SFENのあらゆる情報
+    current_sfen_turn_max() { return this.current_sfen_info.turn_offset_max   }, // 最後の手数
+    next_location()         { return this.current_sfen_info.next_location     }, // 次の色
+    current_location()      { return this.turn_to_location(this.current_turn) }, // 現在の色
+    base_location()         { return this.turn_to_location(0)                 }, // 0手目の色
+    start_color()           { return this.base_location.code                  }, // 0:平手 1:駒落ち (超重要)
 
     current_xsfen()                { return { sfen: this.current_sfen, turn: this.current_turn } },
 

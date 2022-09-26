@@ -4,9 +4,9 @@ client-only
     | {{__trace__('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
+      p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p watching_member_count: {{watching_member_count}}
-      p os_change: {{os_change}}
       p order_enable_p: {{order_enable_p}}
 
       p avatars_hash: {{avatars_hash}}
@@ -16,7 +16,6 @@ client-only
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}
-      p ordered_members: {{ordered_members}}
 
       template(v-if="clock_box")
         p rest: {{clock_box.current.rest}}
@@ -77,7 +76,7 @@ import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_otasuke          } from "./app_otasuke.js"
-import { app_ordered_members      } from "./app_ordered_members.js"
+import { app_order_main      } from "./order_mod/app_order_main.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
 import { app_avatar               } from "./app_avatar.js"
@@ -106,7 +105,7 @@ import { app_sound_bug            } from "./app_sound_bug.js"
 import { app_message              } from "./app_message.js"
 import { app_main_setting         } from "./app_main_setting.js"
 import { app_sound_resume         } from "./app_sound_resume.js"
-import { app_help                 } from "./app_help.js"
+import { app_help                 } from "./help_mod/app_help.js"
 import { app_sidebar              } from "./app_sidebar.js"
 import { app_user_name            } from "./app_user_name.js"
 import { app_storage              } from "./app_storage.js"
@@ -138,7 +137,7 @@ export default {
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
-    app_ordered_members,
+    app_order_main,
     app_battle_session,
     app_chore,
     app_avatar,
@@ -208,6 +207,11 @@ export default {
 
       record:          this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
       edit_mode_sfen:  null,               // 編集モードでの棋譜
+    }
+  },
+  provide() {
+    return {
+      TheSb: this,
     }
   },
   beforeMount() {

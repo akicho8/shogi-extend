@@ -7,11 +7,11 @@
     :animation="200"
     group="OrderTeam"
     ghostClass="ghost_element"
-    v-model="base[team_key]"
+    v-model="current_user_list"
     )
-    template(v-for="row in base[team_key]")
-      li.is-size-7(:key="row")
-        | {{row}}
+    template(v-for="e in current_user_list")
+      li.is-size-7(:key="e")
+        | {{e}}
 </template>
 
 <script>
@@ -20,11 +20,24 @@ import VueDraggable from "vuedraggable"
 export default {
   inject: ["base"],
   props: {
-    team_key: { type: String, required: true, },
+    user_list: { type: Array,  required: true, },
     label:    { type: String, required: true, },
   },
   components: {
     VueDraggable,
+  },
+  data() {
+    return {
+      current_user_list: this.user_list,
+    }
+  },
+  watch: {
+    user_list() {
+      this.current_user_list = this.user_list
+    },
+    current_user_list() {
+      this.$emit("update:user_list", this.current_user_list)
+    },
   },
 }
 </script>

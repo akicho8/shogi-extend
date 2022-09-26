@@ -70,6 +70,7 @@
   | fixed_user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&fixed_user_name=alice                       |
   | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                           |
   | fixed_order_names           | 順番設定した名前たち                                    |                                                                                           |
+  | fixed_order_state           | 順番設定方法                                            |                                                                                           |
   |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
   | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
   | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                           |
@@ -82,6 +83,7 @@
   | clock_box_play_handle       | true なら即開始                                         |                                                                                           |
   | xmatch_auth_key             |                                                         |                                                                                           |
   | xmatch_wait_max             |                                                         |                                                                                           |
+  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                           |
   |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
 
 * 開発用URL
@@ -166,6 +168,10 @@
 
    http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
 
-** 部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
+** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
    http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_names=b,d,a,c&handle_name_validate=false
+
+** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
+
+   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle

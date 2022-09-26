@@ -1,10 +1,10 @@
-import { mount } from '@vue/test-utils'
-import { HandleNameParser } from '@/components/models/handle_name_parser.js'
+import { HandleNameParser } from "@/components/models/handle_name_parser.js"
 
-describe('HandleNameParser', () => {
-  test('基本', () => {
+describe("HandleNameParser", () => {
+  test("基本", () => {
     expect(HandleNameParser.call_name("foo123(456)")).toEqual("fooさん")
     expect(HandleNameParser.call_name("fooさん")).toEqual("fooさん")
+    expect(HandleNameParser.call_name("fooだよ")).toEqual("fooさん")
     expect(HandleNameParser.call_name("女王")).toEqual("女王様")
     expect(HandleNameParser.call_name("ココ")).toEqual("ココちゃん")
     expect(HandleNameParser.call_name("coco")).toEqual("cocoちゃん")
@@ -19,16 +19,16 @@ describe('HandleNameParser', () => {
     expect(HandleNameParser.call_name("alice.")).toEqual("aliceさん")
   })
 
-  test('ちゃん', () => {
+  test("ちゃん", () => {
     expect(HandleNameParser.call_name("aliceちゃん")).toEqual("aliceちゃん") // 最後が "ん" の影響でスルーされているだけ
   })
 
-  test('chan/kun', () => {
+  test("chan/kun", () => {
     expect(HandleNameParser.call_name("alicechan")).toEqual("alicechan")
     expect(HandleNameParser.call_name("alicekun")).toEqual("alicekun")
   })
 
-  test('絵文字が語尾に含まれる場合は除去する', () => {
+  test("絵文字が語尾に含まれる場合は除去する", () => {
     expect(HandleNameParser.call_name("alice🍓")).toEqual("aliceさん")
   })
 })

@@ -57,7 +57,7 @@ export const app_tweet = {
     },
 
     rate_per() {
-      return this.float_to_perc(this.rate)
+      return this.floatx100_percentage(this.rate)
     },
 
     rate() {

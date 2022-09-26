@@ -18,17 +18,17 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset.important.room_setup_modal_handle(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_handle")
             template(#label)
               | 部屋に入る
-              b-icon.is_hand_blink(size="is-small" icon="hand-pointing-left" v-if="mi1_hand_p")
+              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
 
           b-menu-item.is_active_unset.important.os_modal_handle(:class="base.bold_if(mi2_bold_p)" icon="numeric-2-circle-outline" @click="base.os_modal_handle")
             template(#label)
               | 順番設定
-              b-icon.is_hand_blink(size="is-small" icon="hand-pointing-left" v-if="mi2_hand_p")
+              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi2_hand_p")
 
           b-menu-item.is_active_unset.important.cc_modal_handle(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_handle")
             template(#label)
               | 対局時計
-              b-icon.is_hand_blink(size="is-small" icon="hand-pointing-left" v-if="mi3_hand_p")
+              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
 
         b-menu-list(label="局面操作")
           b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")
@@ -70,7 +70,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
-
+          b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sound_play_click()" v-if="development_p")
       .box.mt-5
         .title.is-6 スタイル設定
         SimpleSlider.is-hidden-touch(:base="base" label="盤の大きさ" var_name="board_width" :min="60" :max="100" :step="1.0")
@@ -88,12 +88,12 @@ export default {
   name: "ShareBoardSidebar",
   mixins: [support_child],
   computed: {
-    mi1_bold_p() { return this.base.ac_room                                },
-    mi1_hand_p() { return !this.base.ac_room                               },
-    mi2_bold_p() { return this.base.ac_room && this.base.order_enable_p    },
-    mi2_hand_p() { return this.base.ac_room && !this.base.order_enable_p   },
-    mi3_bold_p() { return this.base.order_enable_p && this.base.clock_box  },
-    mi3_hand_p() { return this.base.order_enable_p && !this.base.clock_box },
+    mi1_bold_p() { return this.base.ac_room                                                                 },
+    mi1_hand_p() { return !this.base.ac_room                                                                },
+    mi2_bold_p() { return this.base.ac_room && this.base.order_enable_p && this.base.order_unit.valid_p     },
+    mi2_hand_p() { return this.base.ac_room && (!this.base.order_enable_p || !this.base.order_unit.valid_p) },
+    mi3_bold_p() { return this.mi2_bold_p && this.base.clock_box                                            },
+    mi3_hand_p() { return this.mi2_bold_p && !this.base.clock_box                                           },
   },
 }
 </script>

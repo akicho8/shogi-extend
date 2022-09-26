@@ -68,7 +68,7 @@ export const app_tweet_recent = {
       if (this.re_ox_total === 0) {
         return "0%"
       } else {
-        return this.float_to_perc2(this.re_ox_rate) + "%"
+        return this.number_truncate(this.re_ox_rate * 100, 2) + "%"
       }
     },
 

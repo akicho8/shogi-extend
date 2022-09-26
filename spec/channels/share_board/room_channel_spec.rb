@@ -187,14 +187,15 @@ module ShareBoard
       end
       it "works" do
         data = data_factory({
-            "ordered_members" => [
+            "order_unit" => [
+              # FIXME
               { "user_name" => "alice", },
               { "user_name" => "bob",   },
             ],
           })
         expect {
-          subscription.ordered_members_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "ordered_members_share_broadcasted", bc_params: data)
+          subscription.new_order_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "new_order_share_broadcasted", bc_params: data)
       end
     end
 

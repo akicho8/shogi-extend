@@ -40,13 +40,13 @@ export const app_otasuke = {
         }
       }
       if (message == null) {
-        if (this.ac_room && !this.order_enable_p && this.name_uniq_member_infos.length < 2) {
+        if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length < 2) {
           message = "次は部屋のリンクを仲間に伝えよう。リンクは「部屋に入る」の中にあるよ"
           icon = "play"
         }
       }
       if (message == null) {
-        if (this.ac_room && !this.order_enable_p && this.name_uniq_member_infos.length >= 2) {
+        if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length >= 2) {
           message = "次は順番を設定しよう"
           icon = "play"
         }

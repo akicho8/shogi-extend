@@ -73,7 +73,7 @@ export class Lemon extends Model {
   }
 
   get aspect_ratio() {
-    return Gs.math_wh_normalize_aspect_ratio(this.width, this.height)
+    return Gs.aspect_ratio_normalize(this.width, this.height)
   }
 
   get aspect_ratio_max() {

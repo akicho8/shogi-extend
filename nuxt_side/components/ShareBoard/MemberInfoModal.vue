@@ -94,7 +94,7 @@ export default {
         {
           enabled: true,
           label: "手番",
-          value: this.base.order_display_index(this.member_info) ?? "なし",
+          value: this.base.user_name_to_display_turns(this.member_info.from_user_name) ?? "なし",
         },
         {
           enabled: true,

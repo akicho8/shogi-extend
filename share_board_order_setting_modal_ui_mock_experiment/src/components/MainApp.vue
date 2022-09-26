@@ -1,33 +1,52 @@
 <template lang="pug">
 .MainApp
-  .columns.is-multiline
+  .columns
     .column
-      b-field(custom-class="is-small")
-        b-radio-button(custom-class="is-small" v-model="strategy_key" native-value="strategy1" @input="strategy_change_handle") 一列
-        b-radio-button(custom-class="is-small" v-model="strategy_key" native-value="strategy2" @input="strategy_change_handle") 二列
-  .columns.is-multiline
+      .buttons
+        .button(@click="order_unit.state_switch_to('to_o1_state')") 1列
+        .button(@click="order_unit.state_switch_to('to_o2_state')") 2列
+        .button(@click="order_unit.sample_set()") 例
+        .button(@click="order_unit.clear()") 削除
+        .button(@click="order_unit.order_state.demo_set()") デモ
+        .button(@click="order_unit.shuffle_core()") シャッフル
+        .button(@click="order_unit.furigoma_core(Math.random() < 0.5)") 振り駒
+        .button(@click="order_unit.swap_exec()") 先後反転
+        .button(@click="order_unit.dump_and_load()") dump_and_load
+
+      b-field(label="N手毎" custom-class="is-small")
+        b-input(type="number" v-model.number="tegoto" :min="1" max="5")
+      b-field(label="開始" custom-class="is-small")
+        b-input(type="number" v-model.number="scolor" :min="0" max="1")
+  .columns
+    .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
+      .TeamsContainer
+        OrderTeamOne(:user_list.sync="order_unit.order_state.users" label="一列")
+        OrderTeamOne(:user_list.sync="order_unit.watch_users" label="観戦")
+    .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
+      .TeamsContainer
+        OrderTeamOne(:user_list.sync="order_unit.order_state.teams[0]"  label="☗")
+        OrderTeamOne(:user_list.sync="order_unit.watch_users" label="観戦")
+        OrderTeamOne(:user_list.sync="order_unit.order_state.teams[1]"  label="☖")
     .column
-      .TeamContainer
-        OrderTeamOne(team_key="member_simple" label="一列")
+      p 1手毎で1周したときの順: {{order_unit.order_state.round_users}}
+      p
+        | turn(-9..9):
+        template(v-for="turn in turn_test_range")
+          | {{order_unit.current_user_by_turn(turn, tegoto, scolor)}}
+  .columns
     .column
-      template(v-for="turn in range")
-        div {{test_case1(turn)}}
+      pre
+        | {{order_unit}}
     .column
-      .TeamContainer
-        OrderTeamOne(team_key="member_black"  label="☗")
-        OrderTeamOne(team_key="member_other"  label="観戦")
-        OrderTeamOne(team_key="member_white"  label="☖")
-    .column
-      template(v-for="turn in range")
-        div {{test_case2(turn)}}
+      pre
+        | {{order_unit.attributes}}
 </template>
 
 <script>
 import _ from "lodash"
 import VueDraggable from "vuedraggable"
 
-import { Strategy1 } from "./models/strategy1.js"
-import { Strategy2 } from "./models/strategy2.js"
+import { OrderUnit } from "./models/order_unit.js"
 
 // Components
 import OrderTeamOne from "./OrderTeamOne.vue"
@@ -46,60 +65,23 @@ export default {
   },
   data() {
     return {
-      strategy_key: "strategy1",
-      member_black: [],
-      member_white: [],
-      member_other: [],
-      member_simple: [ "a", "b", "c", "d", "e" ],
+      order_unit: new OrderUnit(),
+      tegoto: 1,
+      scolor: 1,
     }
+  },
+  mounted() {
+    this.order_unit.sample_set()
   },
   methods: {
     // name をオブジェクトにして、一行のときの観戦フラグを持たせる
-    // member_black, member_white を2つの配列にする
+    // teams, teams を2つの配列にする
     // 2手づつの場合も検証する
-
-    strategy_change_handle(strategy_key) {
-      if (this.strategy_key === "strategy1") {
-        [...this.member_black, ...this.member_white].forEach((e, i) => {
-          const strategy = new Strategy2([this.member_black.length, this.member_white.length], i)
-          const teams = [this.member_black, this.member_white]
-          const name = teams[strategy.team_index][strategy.player_index]
-          this.member_simple.push(name)
-        })
-        this.member_other.forEach(e => this.member_simple.push(e))
-        this.member_black = []
-        this.member_white = []
-        this.member_other = []
-      }
-      if (this.strategy_key === "strategy2") {
-        this.member_simple.forEach((e, i) => {
-          const strategy = new Strategy1(this.member_simple.length, i)
-          const name = this.member_simple[strategy.player_index]
-          const list = [this.member_black, this.member_white][strategy.team_index]
-          list.push(name)
-        })
-        this.member_simple = []
-      }
-    },
-    s1_name(t) {
-      const strategy = new Strategy1(this.member_simple.length, t)
-      return this.member_simple[strategy.player_index]
-    },
-    test_case1(t) {
-      const strategy = new Strategy1(this.member_simple.length, t)
-      const name = this.member_simple[strategy.player_index]
-      return [strategy.to_a, name]
-    },
-    test_case2(t) {
-      const strategy = new Strategy2([this.member_black.length, this.member_white.length], t)
-      const teams = [this.member_black, this.member_white]
-      const name = teams[strategy.team_index][strategy.player_index]
-      return [strategy.to_a, name]
-    },
   },
   computed: {
-    range() {
-      return [-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    turn_test_range() {
+      // return [-9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     },
   },
 }
@@ -110,7 +92,7 @@ export default {
   .columns
     .column
       border: 1px dashed blue
-  .TeamContainer
-    width: 12rem
-    display: flex // OrderTeamOne を横並び化
+  .TeamsContainer
+    display: flex
+    justify-content: center
 </style>

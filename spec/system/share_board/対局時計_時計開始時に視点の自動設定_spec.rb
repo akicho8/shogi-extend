@@ -1,37 +1,39 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def case1(preset_key)
-    a_block do
-      room_setup("my_room", "alice") # aliceが部屋を作る
-    end
-    b_block do
-      room_setup("my_room", "bob")   # bobも同じ部屋に入る
-    end
-    a_block do
-      preset_select(preset_key)      # 手合割設定
-      order_set_on                   # 順番設定ON
-      clock_start                    # 対局時計PLAY
-    end
+  def visit_app2(fixed_order_state, b_or_w, fixed_user_name)
+    visit_app({
+        :room_code            => :my_room,
+        :fixed_user_name      => fixed_user_name,
+        :fixed_member_names   => "a,b",
+        :fixed_order_names    => "a,b",
+        :fixed_order_state    => fixed_order_state,
+        :handle_name_validate => false,
+        :body                 => SfenGenerator.start_from(b_or_w)
+      })
   end
 
-  it "平手" do
-    case1("平手")
+  def case1(fixed_order_state, b_or_w, a_side_location_key, b_side_location_key)
+    a_block { visit_app2(fixed_order_state, b_or_w, "a") }
+    b_block { visit_app2(fixed_order_state, b_or_w, "b") }
     a_block do
-      assert_viewpoint(:black) # bob が▲なので盤が反転していない
+      clock_start # 対局時計PLAY
     end
-    b_block do
-      assert_viewpoint(:white) # alice が△なので盤が反転している
-    end
+    a_block { assert_viewpoint(a_side_location_key) }
+    b_block { assert_viewpoint(b_side_location_key) }
   end
 
-  it "駒落ち" do
-    case1("八枚落ち")
-    a_block do
-      assert_viewpoint(:white) # bob が△なので盤が反転している
-    end
-    b_block do
-      assert_viewpoint(:black) # alice が▲なので盤が反転している
-    end
-  end
+  # |------+------+----+----|
+  # | 順番 | 手合 | a  | b  |
+  # |------+------+----+----|
+  # | 1列  | 平手 | ▲ | △ |
+  # |      | 落ち | △ | ▲ |
+  # |------+------+----+----|
+  # | 2列  | 平手 | ▲ | △ |
+  # |      | 落ち | ▲ | △ |
+  # |------+------+----+----|
+  it { case1(:to_o1_state, :black, :black, :white) }
+  it { case1(:to_o1_state, :white, :white, :black) }
+  it { case1(:to_o2_state, :black, :black, :white) }
+  it { case1(:to_o2_state, :white, :black, :white) }
 end

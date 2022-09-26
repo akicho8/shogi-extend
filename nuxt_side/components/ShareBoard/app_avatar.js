@@ -3,7 +3,7 @@ import { Location   } from "shogi-player/components/models/location.js"
 import { AvatarKingInfo } from "./models/avatar_king_info.js"
 import { GuardianDisplayInfo } from "./models/guardian_display_info.js"
 
-const AVATAR_AS_KING   = true // アバターを玉にする(優先度高)
+const PROFILE_IMAGE_AS_KING = true // アバターを玉にする(優先度高)
 
 export const app_avatar = {
   methods: {
@@ -57,15 +57,16 @@ export const app_avatar = {
     //
     avatars_hash() {
       const hash = {}
-      if (this.order_enable_p && this.ordered_members_present_p) {
-        for (const om of this.ordered_members) {
-          const e = this.base.room_member_names_hash[om.user_name]
-          if (e) { // メンバー一覧に存在するなら
-            const location = this.current_sfen_info.location_by_offset(om.order_index)
+      if (this.order_ok) {
+        for (const om of this.order_unit.flat_uniq_users) {
+          const e = this.room_user_names_hash[om.user_name]
+          if (e) { // メンバー一覧に存在するなら(これはもういなくなっている可能性があるから)
+            const location = this.user_name_to_initial_location(om.user_name)
             if (hash[location.key] == null) {
               let value = null
 
-              if (AVATAR_AS_KING) {
+              // 自分のプロフィール画像をアバターにする
+              if (PROFILE_IMAGE_AS_KING) {
                 if (value == null) {
                   if (e.from_avatar_path) {
                     value = {
@@ -76,6 +77,7 @@ export const app_avatar = {
                 }
               }
 
+              // 動物をアバターにする
               if (this.guardian_display_info.key === "is_guardian_display_on") {
                 if (value == null) {
                   value = {
