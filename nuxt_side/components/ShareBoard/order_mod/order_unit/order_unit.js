@@ -87,7 +87,8 @@ export class OrderUnit {
   }
   set attributes(v) {
     // this.watch_users = v.watch_users
-    const klass = Gs2.str_constantize(v.state_name)
+    // const klass = Gs2.str_constantize(v.state_name)
+    const klass = this.state_class_hash[v.state_name]
     const order_state = new klass()
     order_state.attributes = v
     this.order_state = order_state
@@ -139,6 +140,13 @@ export class OrderUnit {
       this.state_switch_to("to_o2_state")
     } else {
       this.state_switch_to("to_o1_state")
+    }
+  }
+
+  get state_class_hash() {
+    return {
+      O1State: O1State,
+      O2State: O2State,
     }
   }
 }
