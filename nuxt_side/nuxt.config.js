@@ -229,7 +229,7 @@ const config = {
     {
       path: "~/components",
       pathPrefix: false,
-      extensions: ["vue"],
+      extensions: ["vue"],      // vue で絞らないと js まで対象になって警告で埋め尽される
     },
   ],
 
@@ -252,7 +252,7 @@ const config = {
 
     // https://qiita.com/nakazawaken1/items/8f25ce58a27be092f7bc
     // yarn add --dev nuxt-vite
-    // まともにビルドできない
+    // たしかに速いがまともにビルドできない
     // "nuxt-vite",
   ],
   /*
@@ -415,13 +415,13 @@ if (process.env.NODE_ENV === "development") {
   // // ↓これいらんはず
   // config.proxy["/api"]        = process.env.MY_SITE_URL
 
-  // ↓これはいる(たぶん)
-  config.proxy["/system"]     = process.env.MY_SITE_URL // for mp3
-  config.proxy["/rails"]      = process.env.MY_SITE_URL // for /rails/active_storage/*
-  config.proxy["/assets"]     = process.env.MY_SITE_URL // for /assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png
-  // config.proxy["/x.json"]     = process.env.MY_SITE_URL // for /x.json
-  config.proxy["/admin"]     = process.env.MY_SITE_URL
-  config.proxy["/animation-files"]     = process.env.MY_SITE_URL
+  // ↓たぶんこれはいる
+  config.proxy["/system"]          = process.env.MY_SITE_URL // for mp3
+  config.proxy["/rails"]           = process.env.MY_SITE_URL // for /rails/active_storage/*
+  config.proxy["/assets"]          = process.env.MY_SITE_URL // for /assets/human/0005_fallback.png
+  // config.proxy["/x.json"]       = process.env.MY_SITE_URL // for /x.json
+  config.proxy["/admin"]           = process.env.MY_SITE_URL
+  config.proxy["/animation-files"] = process.env.MY_SITE_URL
 }
 
 export default config

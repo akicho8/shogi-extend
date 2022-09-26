@@ -14,7 +14,6 @@ RSpec.describe type: :system, share_board_spec: true do
       cc_in(1) do
         clock_box_values_eq [1, 2, 3, 4]            # ▲側は変更されていない (内容は同じだが別のメモリを指している)
       end
-      # find(".play_button").click                    # 開始
     end
     b_block do
       room_setup("my_room", "bob")

@@ -42,9 +42,9 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a", # 順番設定で黒側に一人aがいる
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
-        :body                 => SfenGenerator.start_from(:white),
+        :body                 => SfenGenerator.start_from(:white), # 後手から始まる
       })
-    place_click("77")           # a が77をクリックしたが現在の対局者は空になっている
-    assert_text("(順番設定で対局者の指定がないので誰も操作できません)")
+    piece_move_o("33", "34", "☖3四歩") # a が代走する
+    piece_move_o("77", "76", "☗7六歩") # a が自分の手を指す
   end
 end
