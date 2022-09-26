@@ -89,7 +89,7 @@
       a.panel-block(@click="base.reload_modal_handle") リロード確認
       a.panel-block(@click="base.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="base.room_leave_call({from_user_name: 'alice'})") 退室コール
-      a.panel-block(@click="base.exit_confirm_then()") 退室確認
+      a.panel-block(@click="base.run_or_room_out_confirm()") 退室確認
       a.panel-block(@click="base.os_modal_close_confirm()") 順番設定を保存せずに閉じた警告モーダル
       a.panel-block(@click="base.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="base.cc_next_message") 順番設定後に時計設置を促す

@@ -66,38 +66,44 @@ export const app_chore = {
 
     // 動画作成
     video_new_handle() {
-      this.exit_confirm_then(() => {
+      this.run_or_room_out_confirm(() => {
         this.$router.push({name: "video-new", query: {body: this.current_sfen, viewpoint_key: this.sp_viewpoint}})
       })
     },
 
     // プロフィールアイコンを押して移動
     profile_click_handle(e) {
-      this.exit_confirm_then(() => {
+      this.run_or_room_out_confirm(() => {
         this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
       })
     },
 
     // ホームアイコンを押してトップに戻る
     exit_handle() {
-      this.exit_confirm_then(() => {
-        this.$router.push({name: "index"})
-      })
-    },
-
-    // 退出するときはとりあえずこれをかます
-    exit_confirm_then(block = () => {}) {
       this.sound_play_click()
       if (this.exit_warning_p) {
-        this.exit_confirm(block)
+        this.run_or_room_out_confirm(() => this.room_destroy())
+        return
+      }
+      if (this.clock_box && this.clock_box.play_p) {
+        this.exit_confirm_modal_for_clock_works(() => this.$router.push({name: "index"}))
+        return
+      }
+      this.$router.push({name: "index"})
+    },
+
+    // 外に出るときはこれをかます
+    run_or_room_out_confirm(block = () => {}) {
+      this.sound_play_click()
+      if (this.exit_warning_p) {
+        this.room_out_confirm_dialog(block)
         return
       }
       block()
     },
 
-    exit_confirm(block = () => {}) {
-      const message = "対局中のように見えますが本当に退室してもよいですか？"
-      this.sound_play_click()
+    room_out_confirm_dialog(block = () => {}) {
+      const message = "本当に退室してもよいですか？"
       this.talk(message)
       this.dialog_confirm({
         title: "退室",
@@ -105,14 +111,30 @@ export const app_chore = {
         confirmText: "退室する",
         focusOn: "cancel",
         onCancel: () => {
-          this.sound_stop_all()
           this.sound_play_click()
           this.ac_log("退室", "キャンセル")
         },
         onConfirm: () => {
-          this.sound_stop_all()
           this.sound_play_click()
           this.ac_log("退室", "実行")
+          block()
+        },
+      })
+    },
+
+    exit_confirm_modal_for_clock_works(block = () => {}) {
+      const message = "時計が動いていますが本当に終了してもよいですか？"
+      this.talk(message)
+      this.dialog_confirm({
+        title: "確認",
+        message: message,
+        confirmText: "終了する",
+        focusOn: "cancel",
+        onCancel: () => {
+          this.sound_play_click()
+        },
+        onConfirm: () => {
+          this.sound_play_click()
           block()
         },
       })
@@ -129,7 +151,14 @@ export const app_chore = {
     AbstractViewpointInfo() { return AbstractViewpointInfo },
     abstract_viewpoint_info() { return this.AbstractViewpointInfo.fetch(this.abstract_viewpoint) },
 
-    exit_warning_p() { return this.ac_room || this.clock_box },                   // 退出時警告を出すか？
-    home_display_p() { return this.clock_box == null || !this.clock_box.play_p }, // Home 表示条件は時計がないか、時計が動いていないとき
+    exit_warning_p() { return this.ac_room },                   // 退出時警告を出すか？
+
+    // Home 表示条件
+    home_display_p() {
+      if (this.self_is_member_p) {
+        return false
+      }
+      return true
+    }
   },
 }
