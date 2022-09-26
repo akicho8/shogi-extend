@@ -13,7 +13,7 @@ export class O2State extends OxState {
     this.teams = teams
   }
 
-  get klass_name() {
+  get state_name() {
     return "O2State"
   }
 

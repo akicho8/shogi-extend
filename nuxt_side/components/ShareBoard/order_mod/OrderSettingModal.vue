@@ -18,9 +18,9 @@
     template(v-if="base.order_enable_p")
       //- pre {{JSON.stringify(base.new_v.os_change.to_h)}}
       .TeamsContainer
-        template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O1State'")
+        template(v-if="base.new_v.order_unit.order_state.state_name === 'O1State'")
           OrderTeamOne.dnd_both(:items.sync="base.new_v.order_unit.order_state.users"   label="対局")
-        template(v-if="base.new_v.order_unit.order_state.constructor.name === 'O2State'")
+        template(v-if="base.new_v.order_unit.order_state.state_name === 'O2State'")
           OrderTeamOne.dnd_black(:items.sync="base.new_v.order_unit.order_state.teams[0]" label="☗")
           OrderTeamOne.dnd_white(:items.sync="base.new_v.order_unit.order_state.teams[1]" label="☖")
         OrderTeamOne.dnd_watch_users(:items.sync="base.new_v.order_unit.watch_users" label="観戦")

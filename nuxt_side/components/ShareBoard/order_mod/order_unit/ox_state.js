@@ -11,14 +11,14 @@ export class OxState {
     return object
   }
 
-  get klass_name() {
+  get state_name() {
     // return this.constructor.name とするとビルド時に名前が代わる
     alert("class_name is not implemented")
   }
 
   get attributes() {
     return {
-      klass_name: this.klass_name,
+      state_name: this.state_name,
     }
   }
 

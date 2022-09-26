@@ -13,7 +13,7 @@ export class O1State extends OxState {
     this.users = users
   }
 
-  get klass_name() {
+  get state_name() {
     return "O1State"
   }
 
@@ -92,7 +92,7 @@ export class O1State extends OxState {
   ////////////////////////////////////////////////////////////////////////////////
 
   // {
-  //  "klass_name": "O1State",
+  //  "state_name": "O1State",
   //  "users": [
   //    "a",
   //    "b",

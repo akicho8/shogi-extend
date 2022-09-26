@@ -25,11 +25,11 @@
       //-   b-input(type="number" v-model.number="tegoto" :min="1" max="5")
       //- b-field(label="開始" custom-class="is-small")
       //-   b-input(type="number" v-model.number="start_color" :min="0" max="1")
-    .column(v-if="order_unit.order_state.constructor.name === 'O1State'")
+    .column(v-if="order_unit.order_state.state_name === 'O1State'")
       .TeamContainer
         OrderTeamOne2(:items.sync="order_unit.order_state.users" label="一列")
         OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")
-    .column(v-if="order_unit.order_state.constructor.name === 'O2State'")
+    .column(v-if="order_unit.order_state.state_name === 'O2State'")
       .TeamContainer
         OrderTeamOne2(:items.sync="order_unit.order_state.teams[0]"  label="☗" ref="OrderTeamOne2")
         OrderTeamOne2(:items.sync="order_unit.watch_users" label="観戦")

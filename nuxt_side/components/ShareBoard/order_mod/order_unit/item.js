@@ -11,7 +11,7 @@ export class Item {
 
   constructor(object) {
     Object.assign(this, object)
-    this.unique_key = _.uniqueId(this.constructor.name)
+    this.unique_key = _.uniqueId("item")
   }
 
   get to_s() {

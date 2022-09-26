@@ -45,6 +45,7 @@ export class OrderUnit {
   users_allocate(users)                 { this.order_state.users_allocate(users)                        }
   shuffle_core()                        { this.order_state.shuffle_core()                               }
   swap_run()                            { this.order_state.swap_run()                                   }
+  get state_name()                      { return this.order_state.state_name                            }
 
   constructor() {
     this.order_state = new O2State()
@@ -80,17 +81,13 @@ export class OrderUnit {
     this.order_state = this.order_state[method]
   }
 
-  get state_name() {
-    return this.order_state.constructor.name
-  }
-
   // 観戦者は含まないでよい
   get attributes() {
     return this.order_state.attributes
   }
   set attributes(v) {
     // this.watch_users = v.watch_users
-    const klass = Gs2.str_constantize(v.klass_name)
+    const klass = Gs2.str_constantize(v.state_name)
     const order_state = new klass()
     order_state.attributes = v
     this.order_state = order_state
@@ -138,7 +135,7 @@ export class OrderUnit {
   }
 
   state_toggle() {
-    if (this.order_state.constructor.name === "O1State") {
+    if (this.order_state.state_name === "O1State") {
       this.state_switch_to("to_o2_state")
     } else {
       this.state_switch_to("to_o1_state")
