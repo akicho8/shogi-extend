@@ -90,7 +90,6 @@ export class OrderUnit {
   }
   set attributes(v) {
     // this.watch_users = v.watch_users
-    alert(`Gs2.str_constantize("${v.klass_name}")`)
     const klass = Gs2.str_constantize(v.klass_name)
     const order_state = new klass()
     order_state.attributes = v

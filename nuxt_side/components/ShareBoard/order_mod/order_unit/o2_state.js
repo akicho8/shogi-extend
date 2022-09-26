@@ -151,7 +151,4 @@ export class O2State extends OxState {
 
 if (typeof window !== 'undefined') {
   window.O2State = O2State
-  alert("window.O1State = O1State")
-} else {
-  alert("window.O1State = O1State できない")
 }
