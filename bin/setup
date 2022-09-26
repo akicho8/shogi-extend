@@ -20,8 +20,8 @@ chdir APP_ROOT do
 
   # Install JavaScript dependencies if using Yarn
   system('bin/yarn')
-  system('cd nuxt_side && yarn')
-  # system('cd error_page_app && yarn')
+  system('cd nuxt_side && npm i')
+  # system('cd error_page_app && npm i')
 
   # puts "\n== Copying sample files =="
   # unless File.exist?('config/database.yml')
