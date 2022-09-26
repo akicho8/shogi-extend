@@ -205,11 +205,6 @@ module ShareBoardControllerMethods
         :remote_ip     => request.remote_ip, # メンバー情報で表示する
       })
 
-    # ステージングでフリーズしてタイムアウトが50%の確立で起きるので危険
-    if false
-      attrs[:remote_name] = (Resolv.getname(request.remote_ip.to_s) rescue nil) # 最低 6ms かかる
-    end
-
     attrs
   end
 
