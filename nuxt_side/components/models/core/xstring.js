@@ -6,6 +6,7 @@ export const Xstring = {
   // 文字列をクラス化
   // ・window に結び付いてないと取得できない
   // ・return Function(`return ${str}`)() は window[str]() とするのとかわらない
+  // ・自作の Foo クラスを window.Foo = Foo としてもビルドすると Foo は別名の1文字になっていたりするのでこれでは引けない
   str_constantize(str) {
     Xassertion.__assert__(typeof window !== 'undefined', "typeof window !== 'undefined'")
     Xassertion.__assert__(window[str], "window[str]")

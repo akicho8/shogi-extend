@@ -13,6 +13,10 @@ export class O1State extends OxState {
     this.users = users
   }
 
+  get klass_name() {
+    return "O1State"
+  }
+
   shuffle_core() {
     this.users_allocate(Gs2.ary_shuffle(this.users))
   }
@@ -88,7 +92,7 @@ export class O1State extends OxState {
   ////////////////////////////////////////////////////////////////////////////////
 
   // {
-  //  "class_name": "O1State",
+  //  "klass_name": "O1State",
   //  "users": [
   //    "a",
   //    "b",

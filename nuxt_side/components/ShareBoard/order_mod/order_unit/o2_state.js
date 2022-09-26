@@ -13,6 +13,10 @@ export class O2State extends OxState {
     this.teams = teams
   }
 
+  get klass_name() {
+    return "O2State"
+  }
+
   shuffle_core() {
     this.users_allocate(Gs2.ary_shuffle(this.teams.flat()))
   }
@@ -147,4 +151,7 @@ export class O2State extends OxState {
 
 if (typeof window !== 'undefined') {
   window.O2State = O2State
+  alert("window.O1State = O1State")
+} else {
+  alert("window.O1State = O1State できない")
 }
