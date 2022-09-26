@@ -2,7 +2,7 @@
 
 # cap staging next_side:deploy
 
-after "deploy:updated", "next_side:deploy"
+# after "deploy:updated", "next_side:deploy"
 
 namespace :next_side do
   desc "Next側のアップロード"
