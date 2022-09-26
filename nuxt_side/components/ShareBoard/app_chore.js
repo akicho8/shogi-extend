@@ -80,42 +80,42 @@ export const app_chore = {
 
     // ホームアイコンを押してトップに戻る
     exit_handle() {
-      // 対局中であれば確認して退出するのみ
-      if (this.exit_warning_p) {
-        this.exit_confirm_then(() => this.room_destroy())
-        return
-      }
-
-      this.sound_play_click()
-      this.$router.push({name: "index"})
+      this.exit_confirm_then(() => {
+        this.$router.push({name: "index"})
+      })
     },
 
     // 退出するときはとりあえずこれをかます
     exit_confirm_then(block = () => {}) {
       this.sound_play_click()
-      if (!this.exit_warning_p) {
-        block()
-      } else {
-        const message = "対局中のように見えますが本当に退室してもよいですか？"
-        this.talk(message)
-        this.dialog_confirm({
-          title: "退室",
-          message: message,
-          confirmText: "退室する",
-          focusOn: "cancel",
-          onCancel: () => {
-            this.sound_stop_all()
-            this.sound_play_click()
-            this.ac_log("退室", "キャンセル")
-          },
-          onConfirm: () => {
-            this.sound_stop_all()
-            this.sound_play_click()
-            this.ac_log("退室", "実行")
-            block()
-          },
-        })
+      if (this.exit_warning_p) {
+        this.exit_confirm(block)
+        return
       }
+      block()
+    },
+
+    exit_confirm(block = () => {}) {
+      const message = "対局中のように見えますが本当に退室してもよいですか？"
+      this.sound_play_click()
+      this.talk(message)
+      this.dialog_confirm({
+        title: "退室",
+        message: message,
+        confirmText: "退室する",
+        focusOn: "cancel",
+        onCancel: () => {
+          this.sound_stop_all()
+          this.sound_play_click()
+          this.ac_log("退室", "キャンセル")
+        },
+        onConfirm: () => {
+          this.sound_stop_all()
+          this.sound_play_click()
+          this.ac_log("退室", "実行")
+          block()
+        },
+      })
     },
 
     bold_if(cond) {
@@ -129,6 +129,7 @@ export const app_chore = {
     AbstractViewpointInfo() { return AbstractViewpointInfo },
     abstract_viewpoint_info() { return this.AbstractViewpointInfo.fetch(this.abstract_viewpoint) },
 
-    exit_warning_p() { return this.ac_room || this.clock_box }, // 退出時警告を出すか？
+    exit_warning_p() { return this.ac_room || this.clock_box },                   // 退出時警告を出すか？
+    home_display_p() { return this.clock_box == null || !this.clock_box.play_p }, // Home 表示条件は時計がないか、時計が動いていないとき
   },
 }

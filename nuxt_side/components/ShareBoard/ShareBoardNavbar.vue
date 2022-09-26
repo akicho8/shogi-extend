@@ -1,7 +1,7 @@
 <template lang="pug">
 MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
   template(slot="brand")
-    b-navbar-item(@click.native="base.exit_handle")
+    b-navbar-item(@click.native="base.exit_handle" v-if="base.home_display_p")
       b-icon(icon="home")
 
     b-navbar-item.has-text-weight-bold.title_navbar_item(@click="base.title_edit_handle")
