@@ -47,14 +47,13 @@ export default {
   align-items: center
   justify-content: flex-start
 
+  gap: 0.25rem
   line-height: 1.75
 
   .flex_item
     // 基本横1行の設定とする
     flex-shrink: 0  // 縮小禁止 = テキストが折り返し抑制 (発言などの場合はオーバーライドして1にすること)
 
-    &:not(:first-child)
-      margin-left: 0.25rem // 基本の隙間はここだけ
     &.avatar_img
       display: block // inlineだと余計な隙間が生まれるため念のためblockにしておく
       width: 24px
