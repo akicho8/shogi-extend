@@ -56,19 +56,7 @@ export class O2State extends OxState {
 
   get to_o1_state() {
     const state = new O1State()
-
-    if (false) {
-      _.times(this.round_size, turn => {
-        const strategy = new O2Strategy(this.teams.map(e => e.length), turn, 1, 0)
-        const name = this.teams[strategy.team_index][strategy.user_index]
-        console.log(name)
-        if (!state.users.includes(name)) {
-          state.users.push(name)
-        }
-      })
-    } else {
-      state.users_allocate(this.black_start_order_uniq_users)
-    }
+    state.users_allocate(this.black_start_order_uniq_users)
     return state
   }
 
@@ -81,10 +69,7 @@ export class O2State extends OxState {
   // 黒から開始して約一周したと仮定したときのユーザーの配列(重複なし, null なし)
   // これは他のにコピーするときに使いやすい
   get black_start_order_uniq_users() {
-    const users = []
-    _.times(this.round_size, turn => {
-      users.push(this.turn_to_item(turn, 1, 0))
-    })
+    const users = Gs2.n_times_collect(this.round_size, turn => this.turn_to_item(turn, 1, 0))
     return _.compact(_.uniq(users))
   }
 
@@ -139,7 +124,7 @@ export class O2State extends OxState {
   // {
   //   "watch_users": [],
   //   "order_state": {
-  //     "class_name": "O2State",
+  //     "state_name": "O2State",
   //     "teams": [
   //       [
   //         "a",
