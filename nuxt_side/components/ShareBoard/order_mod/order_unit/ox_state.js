@@ -54,13 +54,21 @@ export class OxState {
     }, {})
   }
 
+  cache_clear() {
+    this.memo = {}
+  }
+
   // 名前からユーザーを引くハッシュ
   // => { alice: {...}, bob: {...} }
   get name_to_object_hash() {
-    return this.flat_uniq_users.reduce((a, e) => {
+    if (this.memo["name_to_object_hash"]) {
+      return this.memo["name_to_object_hash"]
+    }
+    this.memo["name_to_object_hash"] = this.flat_uniq_users.reduce((a, e) => {
       a[e.user_name] = e
       return a
     }, {})
+    return this.memo["name_to_object_hash"]
   }
 
   // 差分確認用のハッシュ

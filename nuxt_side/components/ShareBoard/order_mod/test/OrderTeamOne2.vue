@@ -11,7 +11,7 @@
     v-model="current_items"
     ref="draggable"
     @start="base.os_dnd_count += 1"
-    @end="base.os_dnd_count -= 1"
+    @end="end_handle"
     )
     template(v-for="e in current_items")
       li(:key="e.unique_key")
@@ -41,6 +41,12 @@ export default {
     },
     current_items() {
       this.$emit("update:items", this.current_items)
+    },
+  },
+  methods: {
+    end_handle() {
+      this.base.os_dnd_count -= 1
+      this.base.order_unit.cache_clear()
     },
   },
 }
