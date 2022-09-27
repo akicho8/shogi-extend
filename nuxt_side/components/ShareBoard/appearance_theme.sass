@@ -38,3 +38,12 @@
       // --sp_board_invert:     1                   // 盤の色反転
       // --sp_board_sepia:      0.6                 // ややセピア調して彩度を下げる
       // --sp_piece_grayscale:  0.6                 // 駒の彩度を下げる
+
+  .ShareBoardSp
+    // 盤の色(基本)
+    --sp_board_color: var(--sb_board_normal_color)
+
+  // 盤の色(手番のとき)
+  &.current_turn_self_p
+    .ShareBoardSp
+      --sp_board_color: var(--sb_board_active_color)

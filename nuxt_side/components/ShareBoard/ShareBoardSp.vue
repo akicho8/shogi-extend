@@ -177,19 +177,4 @@ export default {
           max-width: 3em
           white-space: nowrap
           overflow: hidden
-
-//////////////////////////////////////////////////////////////////////////////// 配色
-.ShareBoardApp
-  .ShareBoardSp
-    // 盤の色(基本)
-    --sp_board_color: var(--sb_board_normal_color)
-
-  // 盤の色(手番のとき)
-  &.current_turn_self_p
-    .ShareBoardSp
-      --sp_board_color: var(--sb_board_active_color)
-
-// .STAGE-development
-//   .ShareBoardSp
-//     border: 4px dashed change_color($danger, $alpha: 1.0) ! important
 </style>
