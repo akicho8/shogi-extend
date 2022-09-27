@@ -65,7 +65,7 @@ export default {
       hv.sp_controller                               = this.sp_controller
       hv.sp_slider                                   = this.sp_slider
 
-      if (this.base.play_mode_p) {
+      if (!this.base.edit_mode_p) {
         hv.sp_pi_variant = this.base.appearance_theme_info.sp_pi_variant
         hv.sp_bg_variant = this.base.appearance_theme_info.sp_bg_variant
       }
