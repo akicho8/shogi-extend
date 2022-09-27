@@ -64,8 +64,11 @@ export default {
       hv.sp_layer                                    = this.sp_layer
       hv.sp_controller                               = this.sp_controller
       hv.sp_slider                                   = this.sp_slider
-      hv.sp_pi_variant                               = this.base.appearance_theme_info.sp_pi_variant
-      hv.sp_bg_variant                               = this.base.appearance_theme_info.sp_bg_variant
+
+      if (this.base.play_mode_p) {
+        hv.sp_pi_variant = this.base.appearance_theme_info.sp_pi_variant
+        hv.sp_bg_variant = this.base.appearance_theme_info.sp_bg_variant
+      }
 
       // 反則時の挙動
       hv.sp_play_mode_foul_check_p = this.base.foul_behavior_info.sp_play_mode_foul_check_p
