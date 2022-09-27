@@ -1,5 +1,5 @@
 <template lang="pug">
-ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
+ShareBoardAvatarLine.SbMemberOne.is-clickable(
   :info="info"
   :replace_icon="replace_icon(info)"
   :key="info.from_connection_id"
@@ -37,7 +37,7 @@ import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
 export default {
-  name: "ShareBoardMemberListOne",
+  name: "SbMemberOne",
   mixins: [support_child],
   inject: ["TheSb"],
   props: {
@@ -61,7 +61,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardMemberListOne
+.SbMemberOne
   &.ShareBoardAvatarLine
     &.is_window_blur
     &.is_disconnect

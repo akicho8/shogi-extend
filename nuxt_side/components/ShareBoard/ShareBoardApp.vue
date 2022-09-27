@@ -52,7 +52,7 @@ client-only
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
         .columns.is-centered.is-desktop.is-variable.is-0
           ShareBoardSp(:base="base" ref="ShareBoardSp")
-          ShareBoardMemberList
+          SbMemberList
           ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
         ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
 </template>

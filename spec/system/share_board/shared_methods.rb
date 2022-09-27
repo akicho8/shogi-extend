@@ -132,30 +132,30 @@ module SharedMethods
   # メンバーリストの上からi番目の状態と名前
   # 一気に調べるのではなく段階的に調べる
   def assert_member_list(i, klass, user_name)
-    assert_selector(".ShareBoardMemberListOne:nth-child(#{i})")             # まずi番目が存在する
-    assert_selector(".ShareBoardMemberListOne:nth-child(#{i}).#{klass}")    # 次にi番目の種類
-    assert_selector(".ShareBoardMemberListOne:nth-child(#{i}) .user_name", text: user_name, exact_text: true)
+    assert_selector(".SbMemberOne:nth-child(#{i})")             # まずi番目が存在する
+    assert_selector(".SbMemberOne:nth-child(#{i}).#{klass}")    # 次にi番目の種類
+    assert_selector(".SbMemberOne:nth-child(#{i}) .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーが存在する
   def assert_member_exist(user_name)
-    assert_selector(".ShareBoardMemberList .user_name", text: user_name, exact_text: true)
+    assert_selector(".SbMemberList .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーが存在しない
   def assert_member_missing(user_name)
-    assert_no_selector(".ShareBoardMemberList .user_name", text: user_name, exact_text: true)
+    assert_no_selector(".SbMemberList .user_name", text: user_name, exact_text: true)
   end
 
   # メンバーリストの上ら i 番目をクリック
   def member_list_click_nth(i)
-    assert_selector(".ShareBoardMemberListOne", wait: 60)
-    find(".ShareBoardMemberListOne:nth-child(#{i})").click
+    assert_selector(".SbMemberOne", wait: 60)
+    find(".SbMemberOne:nth-child(#{i})").click
   end
 
   # メンバーリストの指定の名前をクリック
   def member_list_name_click(name)
-    find(".ShareBoardMemberList .user_name", text: name, exact_text: true).click
+    find(".SbMemberList .user_name", text: name, exact_text: true).click
   end
 
   def sp_controller_click(klass)

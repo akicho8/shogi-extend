@@ -124,7 +124,7 @@ export const app_order_main = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    // ShareBoardMemberList の1行のクラスに使っている
+    // SbMemberList の1行のクラスに使っている
     member_info_class(e) {
       return {
         is_joined:       this.member_is_joined(e),       // 初期状態

@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardMemberList.SideColumn.column(:class="has_content_class(TheSb.visible_member_infos)")
+.SbMemberList.SideColumn.column(:class="has_content_class(TheSb.visible_member_infos)")
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title.is-clickable.player_names_copy_handle(@click="TheSb.player_names_copy_handle")
       | メンバー
@@ -8,7 +8,7 @@
         template(v-if="TheSb.order_unit.state_name === 'O1State'")
           // 従来の分けない方法
           .ShareBoardAvatarLines
-            ShareBoardMemberListOne(v-for="info in TheSb.visible_member_infos" :info="info")
+            SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info")
         template(v-if="TheSb.order_unit.state_name === 'O2State'")
           template(v-if="true")
             // member_infos の中身を余さず表示する方法
@@ -17,12 +17,12 @@
               .LocationTitle
                 HexagonMark(:location_key="location.key")
               .ShareBoardAvatarLines
-                ShareBoardMemberListOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info")
+                SbMemberOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info")
             .LocationBlock(v-if="present_p(TheSb.visible_member_groups['watcher'])")
               .LocationTitle.is-invisible
                 b-tag(rounded) 観戦
               .ShareBoardAvatarLines
-                ShareBoardMemberListOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info")
+                SbMemberOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info")
           template(v-if="false")
             // simple_teams を元に表示する方法
             // ・名前が重複している場合に1つしか表示されないのでやめ
@@ -33,10 +33,10 @@
                 .ShareBoardAvatarLines
                   template(v-for="user_name in user_names")
                     template(v-if="TheSb.room_user_names_hash[user_name]")
-                      ShareBoardMemberListOne(:info="TheSb.room_user_names_hash[user_name]")
+                      SbMemberOne(:info="TheSb.room_user_names_hash[user_name]")
       template(v-else)
         .ShareBoardAvatarLines
-          ShareBoardMemberListOne(v-for="info in TheSb.visible_member_infos" :info="info")
+          SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info")
 </template>
 
 <script>
@@ -45,7 +45,7 @@ import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
 export default {
-  name: "ShareBoardMemberList",
+  name: "SbMemberList",
   mixins: [support_child],
   inject: ["TheSb"],
   computed: {
@@ -56,7 +56,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardMemberList.column
+.SbMemberList.column
   +desktop
     +SideColumnScrollOn
 

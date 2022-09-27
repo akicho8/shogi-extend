@@ -18,7 +18,7 @@ export const app_ping = {
 
   methods: {
     // メンバーをタップしたとき
-    // --> ShareBoardMemberList.vue
+    // --> SbMemberList.vue
     member_info_ping_handle(e) {
       this.sound_play_click()
       if (this.ping_running_p) {
