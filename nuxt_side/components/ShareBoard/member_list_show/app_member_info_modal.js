@@ -8,7 +8,6 @@ export const app_member_info_modal = {
       this.modal_card_open({
         component: MemberInfoModal,
         props: {
-          base: this.base,
           member_info: member_info,
         },
       })

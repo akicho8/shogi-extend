@@ -77,12 +77,13 @@ import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
 import { app_otasuke          } from "./app_otasuke.js"
 import { app_order_main      } from "./order_mod/app_order_main.js"
+import { app_member_list      } from "./member_list_show/app_member_list.js"
+import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
 import { app_avatar               } from "./app_avatar.js"
 import { app_guardian             } from "./app_guardian.js"
 import { app_handle_name          } from "./app_handle_name.js"
-import { app_member_info_modal    } from "./app_member_info_modal.js"
 import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_yomikomi             } from "./app_yomikomi.js"
@@ -138,6 +139,7 @@ export default {
     app_turn_notify,
     app_otasuke,
     app_order_main,
+    app_member_list,
     app_battle_session,
     app_chore,
     app_avatar,
