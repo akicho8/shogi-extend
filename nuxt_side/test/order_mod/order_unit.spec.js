@@ -33,4 +33,8 @@ describe("OrderUnit", () => {
     const order_unit = OrderUnit.create(["a", "b", "c"])
     expect(!!order_unit.name_to_object_hash["a"]).toEqual(true)
   })
+  test("hash", () => {
+    const order_unit = OrderUnit.create(["a", "b", "c"])
+    expect(order_unit.hash).toEqual("cc4ec9d81da1bcfb4795b2617ef14d78")
+  })
 })

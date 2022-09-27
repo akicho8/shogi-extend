@@ -17,7 +17,13 @@ export const app_otasuke = {
   computed: {
     // 「？」ボタン表示条件
     otasuke_button_show_p() {
-      return this.otasuke_current_message_info != null
+      if (this.edit_mode_p) {
+        return false
+      }
+      if (this.otasuke_current_message_info == null) {
+        return false
+      }
+      return true
     },
     // 「？」ボタンのアイコン
     otasuke_button_icon() {

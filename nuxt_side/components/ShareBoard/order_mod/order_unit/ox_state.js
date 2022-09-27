@@ -15,6 +15,18 @@ export class OxState {
     this.memo = {}
   }
 
+  cache_clear() {
+    this.memo = {}
+  }
+
+  memoize(key, block) {
+    if (key in this.memo) {
+      return this.memo[key]
+    }
+    this.memo[key] = block()
+    return this.memo[key]
+  }
+
   get state_name() {
     // return this.constructor.name とするとビルド時に名前が代わる
     alert("class_name is not implemented")
@@ -29,8 +41,10 @@ export class OxState {
   // turn 0 から開始したときのユーザーたち
   // null を含む
   real_order_users(tegoto, scolor) {
-    return Gs2.n_times_collect(this.round_size * tegoto, i => {
-      return this.turn_to_item(i, tegoto, scolor)
+    return this.memoize(`real_order_users/${tegoto}/${scolor}`, () => {
+      return Gs2.n_times_collect(this.round_size * tegoto, i => {
+        return this.turn_to_item(i, tegoto, scolor)
+      })
     })
   }
 
@@ -43,36 +57,28 @@ export class OxState {
   // a b
   //   c
   // で黒から始める場合 { a: [0, 2], b: [1], c:[3] }
+  // で白から始める場合 { a: [1, 3], b: [0], c:[2] }
   name_to_turns_hash(scolor) {
-    const users = this.real_order_users(1, scolor)
-    let index = 0
-    return users.reduce((a, e) => {
-      if (e) {
-        if (a[e.user_name] == null) {
-          a[e.user_name] = []
+    return this.memoize(`name_to_turns_hash/${scolor}`, () => {
+      const users = this.real_order_users(1, scolor)
+      return users.reduce((a, e, i) => {
+        if (e) {
+          if (a[e.user_name] == null) {
+            a[e.user_name] = []
+          }
+          a[e.user_name].push(i)
         }
-        a[e.user_name].push(index)
-      }
-      index += 1
-      return a
-    }, {})
+        return a
+      }, {})
+    })
   }
 
-  cache_clear() {
-    this.memo = {}
-  }
-
-  // 名前からユーザーを引くハッシュ
-  // => { alice: {...}, bob: {...} }
+  // 名前からユーザーを引くためのハッシュ
+  // => { alice: <Item>, bob: <Item> }
   get name_to_object_hash() {
-    if (this.memo["name_to_object_hash"]) {
-      return this.memo["name_to_object_hash"]
-    }
-    this.memo["name_to_object_hash"] = this.flat_uniq_users.reduce((a, e) => {
-      a[e.user_name] = e
-      return a
-    }, {})
-    return this.memo["name_to_object_hash"]
+    return this.memoize("name_to_object_hash", () => {
+      return this.flat_uniq_users.reduce((a, e) => ({...a, [e.user_name]: e}), {})
+    })
   }
 
   // 差分確認用のハッシュ
