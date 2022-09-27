@@ -65,8 +65,9 @@ export class OxState {
 
   // 差分確認用のハッシュ
   get hash() {
-    const str = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join(",")
-    return new MD5().update(str).digest("hex")
+    const users_str = this.real_order_users(1, 0).map(e => e ? e.to_s : "?").join(",")
+    const all = [this.state_name, users_str].join(":")
+    return new MD5().update(all).digest("hex")
   }
 
   // kaisi色から開始したときの0手目の人を返す
