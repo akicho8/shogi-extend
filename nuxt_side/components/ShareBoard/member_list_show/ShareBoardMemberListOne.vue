@@ -19,6 +19,8 @@ ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
   .flex_item.is-size-7(v-if="base.member_is_window_blur(info)") よそ見中
   .flex_item.is-size-7(v-if="base.member_is_disconnect(info)") 応答なし
   .flex_item.is-size-7(v-if="base.member_is_self(info)") ← 自分
+  .flex_item.is-size-7(v-if="base.current_turn_user_name === info.from_user_name") ← 今
+  .flex_item.is-size-7(v-if="base.next_turn_user_name === info.from_user_name") ← 次
 
   template(v-if="development_p")
     .flex_item {{time_format(info)}}
@@ -31,7 +33,7 @@ ShareBoardAvatarLine.ShareBoardMemberListOne.is-clickable(
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
@@ -58,7 +60,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 .ShareBoardMemberListOne
   &.ShareBoardAvatarLine
     &.is_window_blur

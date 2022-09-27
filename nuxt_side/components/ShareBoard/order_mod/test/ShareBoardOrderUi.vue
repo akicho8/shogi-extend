@@ -39,6 +39,10 @@
       p ☗開始かつ1手毎で1周(重複なし): {{order_unit.order_state.black_start_order_uniq_users.map(e => e ? e.to_s : '?').join('')}}
       p 実際の順: {{order_unit.order_state.real_order_users(tegoto, start_color).map(e => e ? e.to_s : '?').join('')}}
       p 0〜49: {{turn_test_range}}
+      p inspect: {{order_unit.inspect}}
+      p name_to_object_hash: {{order_unit.name_to_object_hash}}
+    .column.is-12
+      b-button(@click="() => p(order_unit.name_to_object_hash)") name_to_object_hash
     .column.is-6
       p stringify
       pre

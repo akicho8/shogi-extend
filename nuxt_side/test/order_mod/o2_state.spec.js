@@ -26,4 +26,8 @@ describe("O2State", () => {
     expect(f(10)).toEqual("b")
     expect(f(11)).toEqual("a")
   })
+  test("simple_teams", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    expect(object.simple_teams).toEqual([["a", "c"], ["b"]])
+  })
 })

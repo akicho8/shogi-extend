@@ -23,10 +23,12 @@ export class O1State extends OxState {
 
   swap_run() {
     this.users = Gs2.ary_each_slice_to_a(this.users, Location.count).flatMap(e => Gs2.ary_reverse(e))
+    this.cache_clear()
   }
 
   users_allocate(users) {
     this.users = users
+    this.cache_clear()
   }
 
   strategy_create(...args) {
@@ -87,6 +89,19 @@ export class O1State extends OxState {
   get error_messages() {
     const messages = super.error_messages
     return messages
+  }
+
+  // 黒白の順で分ける
+  // a b
+  // c
+  // で黒から始める場合
+  // [
+  //   [ "a" "c" ],
+  //   [ "b"     ],
+  // ]
+  // 1:100 人だと無駄が多いことがわかるので、つまり teams だけを参照するのがいい
+  get simple_teams() {
+    alert("must not happen")
   }
 
   ////////////////////////////////////////////////////////////////////////////////

@@ -46,6 +46,8 @@ export class OrderUnit {
   shuffle_core()                        { this.order_state.shuffle_core()                               }
   swap_run()                            { this.order_state.swap_run()                                   }
   get state_name()                      { return this.order_state.state_name                            }
+  cache_clear()                         { this.order_state.cache_clear()                                }
+  get simple_teams()                    { return this.order_state.simple_teams                          }
 
   constructor() {
     this.order_state = new O2State()

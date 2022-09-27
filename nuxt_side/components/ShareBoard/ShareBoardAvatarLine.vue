@@ -47,10 +47,11 @@ export default {
   align-items: center
   justify-content: flex-start
 
+  line-height: 1.75
+
   .flex_item
     // 基本横1行の設定とする
     flex-shrink: 0  // 縮小禁止 = テキストが折り返し抑制 (発言などの場合はオーバーライドして1にすること)
-    line-height: 1  // 高さを取っておく
 
     &:not(:first-child)
       margin-left: 0.25rem // 基本の隙間はここだけ
@@ -68,7 +69,7 @@ export default {
 
 .ShareBoardApp.debug_mode_p
   .ShareBoardAvatarLine
-    flex-wrap: wrap
+    // flex-wrap: wrap
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .flex_item
       border: 1px dashed change_color($danger, $alpha: 0.5)

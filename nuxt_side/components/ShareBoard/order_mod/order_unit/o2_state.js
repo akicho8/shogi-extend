@@ -23,6 +23,7 @@ export class O2State extends OxState {
 
   swap_run() {
     this.teams = [this.teams[1], this.teams[0]]
+    this.cache_clear()
   }
 
   // demo_set() {
@@ -31,6 +32,7 @@ export class O2State extends OxState {
 
   users_allocate(users) {
     this.teams = [[], []]
+    this.cache_clear()
     _.times(users.length, i => {
       const strategy = new O1Strategy(users.length, i, 1, 0)
       const user = users[strategy.user_index]
@@ -117,6 +119,19 @@ export class O2State extends OxState {
       }
     }
     return messages
+  }
+
+  // 黒白の順で分ける
+  // a b
+  // c
+  // で黒から始める場合
+  // [
+  //   [ "a", "c" ],
+  //   [ "b"      ],
+  // ]
+  // 1:100 人だと無駄が多いことがわかるので、つまり teams だけを参照するのがいい
+  get simple_teams() {
+    return this.teams.map(users => users.map(e => e.user_name))
   }
 
   ////////////////////////////////////////////////////////////////////////////////

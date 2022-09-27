@@ -7,8 +7,8 @@
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
-    @start="TheSb.new_v.os_dnd_count += 1"
-    @end=  "TheSb.new_v.os_dnd_count -= 1"
+    @start="start_handle"
+    @end="end_handle"
     )
     template(v-for="e in current_items")
       li(:key="e.unique_key")
@@ -35,6 +35,15 @@ export default {
   watch: {
     items()         { this.current_items = this.items                },
     current_items() { this.$emit("update:items", this.current_items) },
+  },
+  methods: {
+    start_handle() {
+      this.TheSb.new_v.os_dnd_count += 1
+    },
+    end_handle() {
+      this.TheSb.new_v.os_dnd_count -= 1
+      this.TheSb.new_v.order_unit.cache_clear()
+    },
   },
 }
 </script>

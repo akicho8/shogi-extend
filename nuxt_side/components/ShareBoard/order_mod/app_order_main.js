@@ -243,13 +243,25 @@ export const app_order_main = {
     // 順番設定されているときは対局者を優先的に上に表示する
     visible_member_infos() {
       if (this.order_enable_p) {
-        if (this.order_unit) {
-          return _.sortBy(this.member_infos, e => {
-            return this.user_name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
-          })
-        }
+        return _.sortBy(this.member_infos, e => {
+          return this.user_name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
+        })
       }
       return this.member_infos
+    },
+
+    // 黒・白・観戦のグループでユーザー配列を返す
+    // 順番設定 ON のときのみ有効
+    // { black: [...], white: [...], other: [...] }
+    visible_member_groups() {
+      this.__assert__(this.order_enable_p)
+      return _.groupBy(this.visible_member_infos, e => {
+        const location = this.user_name_to_initial_location(e.from_user_name)
+        if (location) {
+          return location.key
+        }
+        return "watcher"
+      })
     },
   },
 }

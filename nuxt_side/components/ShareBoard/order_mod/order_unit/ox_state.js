@@ -11,6 +11,10 @@ export class OxState {
     return object
   }
 
+  constructor() {
+    this.memo = {}
+  }
+
   get state_name() {
     // return this.constructor.name とするとビルド時に名前が代わる
     alert("class_name is not implemented")
@@ -38,7 +42,7 @@ export class OxState {
   // 名前から順番を知るためのハッシュ
   // a b
   //   c
-  // だった場合 { a: [0, 2], b: [1], c:[3] }
+  // で黒から始める場合 { a: [0, 2], b: [1], c:[3] }
   name_to_turns_hash(scolor) {
     const users = this.real_order_users(1, scolor)
     let index = 0
@@ -78,7 +82,7 @@ export class OxState {
     return new MD5().update(all).digest("hex")
   }
 
-  // kaisi色から開始したときの0手目の人を返す
+  // scolor色から開始したときの0手目の人を返す
   first_user(scolor) {
     return this.turn_to_item(0, 1, scolor)
   }
