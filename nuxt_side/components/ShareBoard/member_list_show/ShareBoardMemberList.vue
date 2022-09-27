@@ -15,11 +15,11 @@
             // ・名前が重複していても表示する
             .LocationBlock(v-for="location in Location.values")
               .LocationTitle
-                b-tag(rounded) {{location.name}}
+                HexagonMark(:location_key="location.key")
               .ShareBoardAvatarLines
                 ShareBoardMemberListOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info")
             .LocationBlock(v-if="present_p(TheSb.visible_member_groups['watcher'])")
-              .LocationTitle
+              .LocationTitle.is-invisible
                 b-tag(rounded) 観戦
               .ShareBoardAvatarLines
                 ShareBoardMemberListOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info")
@@ -28,7 +28,7 @@
             // ・名前が重複している場合に1つしか表示されないのでやめ
             template(v-for="(user_names, i) in TheSb.order_unit.simple_teams")
               .LocationBlock
-                .LocationTitle.is-hidden
+                .LocationTitle
                   b-tag(rounded) {{Location.fetch(i).name}}
                 .ShareBoardAvatarLines
                   template(v-for="user_name in user_names")
@@ -64,4 +64,8 @@ export default {
     display: flex
     flex-direction: column
     gap: 1rem // 先後間の隙間。△の上の隙間に相当する
+    .LocationBlock
+      .LocationTitle
+        margin-left: 7px
+        font-size: 0.75rem
 </style>
