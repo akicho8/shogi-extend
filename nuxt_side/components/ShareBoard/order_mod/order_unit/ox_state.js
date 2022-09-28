@@ -27,9 +27,10 @@ export class OxState {
     return this.memo[key]
   }
 
+  // もしこれが呼ばれた場合 nuxt.config.js の babel: { presets({ isServer }, [preset, options]) { options.loose = true },} が原因
   get state_name() {
-    // return this.constructor.name とするとビルド時に名前が代わる
-    alert("class_name is not implemented")
+    // ビルド時に名前が代わるため this.constructor.name とは書けない
+    alert("state_name is not implemented")
   }
 
   get attributes() {
