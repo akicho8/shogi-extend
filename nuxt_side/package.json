@@ -5,6 +5,7 @@
   "author": "akicho8",
   "private": true,
   "scripts": {
+    "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
     "start": "nuxt start",
