@@ -21,7 +21,7 @@ namespace :nuxt_side do
     if true
       # 1. nuxt_side/.nuxt を nuxt_side/.nuxt として転送
       # 2. nuxt_side/static/* も Nuxt が直接配信しているるため転送が必要
-      # 3. nuxt_side で yarn
+      # 3. nuxt_side で npm install
       Dir.chdir("nuxt_side") { system "nuxt build --dotenv .env.#{fetch(:stage)}" }
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
@@ -38,7 +38,7 @@ namespace :nuxt_side do
         upload! "nuxt_side/static/#{fetch(:stage)}.robots.txt", "#{release_path}/nuxt_side/static/robots.txt"
 
         within "#{release_path}/nuxt_side" do
-          execute :yarn
+          execute :npm, "install"
         end
         execute :ls, "-al #{release_path}/nuxt_side"
       end
