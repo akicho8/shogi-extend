@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
+const PRODUCTION_P = process.env.NODE_ENV === "production"
 
 const SITE_DESC = "将棋のいろんなツールを提供するサイト。" + [
   "将棋ウォーズ棋譜検索・統計",
@@ -319,12 +320,12 @@ const config = {
   build: {
     // Nuxt.jsのビルドを高速化してみる
     // https://tech.contracts.co.jp/entry/2020/12/14/161147
-    parallel: true,
-    cache: true,
-    hardSource: true,
+    parallel: !PRODUCTION_P,
+    cache: !PRODUCTION_P,
+    hardSource: !PRODUCTION_P,
 
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
-    extractCSS: process.env.NODE_ENV === "production", // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
+    extractCSS: PRODUCTION_P, // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
 
     // これは一体なんなんだ……？
     optimization: {
@@ -384,7 +385,11 @@ const config = {
       // ↓よくわかっていない
       // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
       // https://qiita.com/hiroyukiwk/items/b283ef5312b289be6ce8
-      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+      plugins: [
+        ["@babel/plugin-proposal-private-methods",            { loose: true }],
+        ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+      ],
+
       // 【超注意】
       // テンプレートメソッドパターン動かなくなる原因はこれ
       // super 経由で呼ぶメソッドが親子を跨げなくなる
