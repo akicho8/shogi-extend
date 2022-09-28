@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 
 const BUILD_VERSION = dayjs().format("YYYY-MM-DD HH:mm:ss")
 const PRODUCTION_P = process.env.NODE_ENV === "production"
+const DEVELOPMENT_P = !PRODUCTION_P
 
 const SITE_DESC = "将棋のいろんなツールを提供するサイト。" + [
   "将棋ウォーズ棋譜検索・統計",
@@ -23,7 +24,7 @@ const axios = require("axios")
 const sitemap = {
   hostname: process.env.MY_NUXT_URL,
   gzip: true,
-  cacheTime: (process.env.NODE_ENV === "development" ? 0 : 1000 * 60 * 60), // 1時間
+  cacheTime: (DEVELOPMENT_P ? 0 : 1000 * 60 * 60), // 1時間
   exclude: [
     "/experiment/**",
     "/settings/**",
@@ -133,7 +134,7 @@ const config = {
       // { name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" },
 
       { hid: "description", name: "description", content: SITE_DESC },
-      { name: "action-cable-url", content: (process.env.NODE_ENV === "development" ? process.env.MY_SITE_URL : "") + "/maincable" },
+      { name: "action-cable-url", content: (DEVELOPMENT_P ? process.env.MY_SITE_URL : "") + "/maincable" },
 
       // 「ホーム画面に追加」したあとアプリのような画面にする設定
 
@@ -292,8 +293,8 @@ const config = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    debug: process.env.NODE_ENV === "development",
-    // proxy: process.env.NODE_ENV === "development",
+    debug: DEVELOPMENT_P,
+    // proxy: DEVELOPMENT_P,
 
     // baseURL の設定があれば、何を実行しても 3000 の方に行くので /api は 3000 のような proxy を設定する必要はないっぽい
     // baseURL: process.env.MY_SITE_URL, // generate する staging では proxy が無効になり https://shogi-flow.xyz/api/* を叩かせる
@@ -320,9 +321,9 @@ const config = {
   build: {
     // Nuxt.jsのビルドを高速化してみる
     // https://tech.contracts.co.jp/entry/2020/12/14/161147
-    parallel: !PRODUCTION_P,
-    cache: !PRODUCTION_P,
-    hardSource: !PRODUCTION_P,
+    parallel: DEVELOPMENT_P,
+    cache: DEVELOPMENT_P,
+    hardSource: DEVELOPMENT_P,
 
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: PRODUCTION_P, // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
@@ -439,7 +440,7 @@ const config = {
 }
 
 // :src="/rails/..." のときに 3000 に切り替えるための仕組みであって axios はなんも関係ない
-if (process.env.NODE_ENV === "development") {
+if (DEVELOPMENT_P) {
   // // これがないと CORS にひっかかる
   // // ↓これいらんはず
   // config.proxy["/api"]        = process.env.MY_SITE_URL
