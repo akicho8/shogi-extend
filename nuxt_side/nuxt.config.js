@@ -377,7 +377,10 @@ const config = {
     babel: {
       // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
       // https://qiita.com/hiroyukiwk/items/b283ef5312b289be6ce8
-      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+      // plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]], // ← この方法でも警告が大量にでる
+      presets({ isServer }, [preset, options]) {
+        options.loose = true
+      },
 
       // nuxt generateの際に「[BABEL] Note: The code generator has deoptimised the styling of」のメッセージ
       // https://qiita.com/someone7140/items/5acfc94c63f16115ac99
