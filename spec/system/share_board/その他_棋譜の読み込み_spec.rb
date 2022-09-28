@@ -7,8 +7,8 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       kifu_yomikomi
       assert_turn(1)
-      action_assert(0, "alice", "局面転送 #1")
-      action_assert(1, "alice", "棋譜読込後")
+      assert_action_index(0, "alice", "局面転送 #1")
+      assert_action_index(1, "alice", "棋譜読込後")
       assert_text "棋譜を読み込んで共有しました"
     end
     b_block do
