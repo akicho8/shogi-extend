@@ -22,13 +22,13 @@ RSpec.describe type: :system, share_board_spec: true do
       action_assert2("alice", "順番 ON")
       assert_selector(".TeamsContainer")                # 同期しているのでbob側のモーダルも有効になっている
       modal_close_handle                                # 閉じる (ヘッダーに置いている)
-      assert_member_list(1, "is_turn_active", "alice")  # 1人目(alice)に丸がついている
-      assert_member_list(2, "is_turn_standby", "bob")   # 2人目(bob)は待機中
-      piece_move_x("77", "76", "☗7六歩")                # なので2番目のbobは指せない
+      assert_member_status("alice", :is_turn_active)     # 1人目(alice)に丸がついている
+      assert_member_status("bob", :is_turn_standby)      # 2人目(bob)は待機中
+      piece_move_x("77", "76", "☗7六歩")               # なので2番目のbobは指せない
     end
     a_block do
-      assert_member_list(1, "is_turn_active", "alice")  # 1人目(alice)に丸がついている
-      assert_member_list(2, "is_turn_standby", "bob")   # 2人目(bob)は待機中
+      assert_member_status("alice", :is_turn_active)     # 1人目(alice)に丸がついている
+      assert_member_status("bob", :is_turn_standby)      # 2人目(bob)は待機中
       piece_move_o("77", "76", "☗7六歩")               # aliceが1番目なので指せる
       assert_system_variable(:next_turn_message, "次は、bobさんの手番です")
     end
@@ -36,9 +36,9 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_system_variable(:tn_counter, 1)           # bobさんだけに牛が知らせている
     end
     a_block do
-      piece_move_x("33", "34", "☖3四歩")                # aliceもう指したので指せない
-      assert_member_list(1, "is_turn_standby", "alice") # 1人目(alice)に丸がついていない
-      assert_member_list(2, "is_turn_active", "bob")    # 2人目(bob)は指せるので丸がついている
+      piece_move_x("33", "34", "☖3四歩")              # aliceもう指したので指せない
+      assert_member_status("alice", :is_turn_standby)    # 1人目(alice)に丸がついていない
+      assert_member_status("bob", :is_turn_active)       # 2人目(bob)は指せるので丸がついている
     end
     b_block do
       piece_move_o("33", "34", "☖3四歩")               # 2番目のbobは指せる

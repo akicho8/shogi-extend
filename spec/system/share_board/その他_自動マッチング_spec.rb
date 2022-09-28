@@ -27,13 +27,13 @@ RSpec.describe type: :system, share_board_spec: true do
     # app/models/xmatch_rule_info.rb
     a_block do
       assert_viewpoint(:black)                         # alice, bob の順で alice は先手なので▲の向きになっている
-      assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
-      assert_member_list(2, "is_turn_standby", "bob")  # 2人目(bob)は待機中
+      assert_member_status("alice", :is_turn_active)   # 1人目(alice)に丸がついている
+      assert_member_status("bob", :is_turn_standby)    # 2人目(bob)は待機中
     end
     b_block do
       assert_viewpoint(:white)                         # alice, bob の順で bob は後手なので△の向きになっている
-      assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
-      assert_member_list(2, "is_turn_standby", "bob")  # 2人目(bob)は待機中
+      assert_member_status("alice", :is_turn_active)   # 1人目(alice)に丸がついている
+      assert_member_status("bob", :is_turn_standby)    # 2人目(bob)は待機中
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".rule_self_05_00_00_5").click         # 自分vs自分
 
       assert_viewpoint(:black)                         # 平手の初手なので▲視点
-      assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
+      assert_member_status("alice", :is_turn_active) # 1人目(alice)に丸がついている
     end
   end
 

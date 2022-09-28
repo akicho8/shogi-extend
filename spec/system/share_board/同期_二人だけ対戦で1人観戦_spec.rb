@@ -20,9 +20,9 @@ RSpec.describe type: :system, share_board_spec: true do
       modal_close_handle                               # 閉じる (ヘッダーに置いている)
     end
     c_block do
-      assert_member_list(1, "is_turn_active", "alice") # 1人目(alice)に丸がついている
-      assert_member_list(2, "is_turn_standby", "bob")  # 2人目(bob)は待機中
-      assert_member_list(3, "is_watching", "carol")    # 3人目(carol)は観戦中
+      assert_member_status("alice", :is_turn_active)     # 1人目(alice)に丸がついている
+      assert_member_status("bob", :is_turn_standby)      # 2人目(bob)は待機中
+      assert_member_status("carol", :is_watching)        # 3人目(carol)は観戦中
       piece_move_x("77", "76", "☗7六歩")               #  なので3番目のcarolは指せない
     end
     a_block do
