@@ -225,23 +225,25 @@ export default {
     // this.$nuxt.error({statusCode: 500, message: "xxx"})
     // return
 
-    // どれかが変更されたらURLを更新
-    this.$watch(() => [
-      this.sp_run_mode,
-      this.sp_internal_rule_key,
-      this.current_sfen,
-      this.current_turn,
-      this.current_title,
-      this.abstract_viewpoint,
-      this.room_code,
-      this.color_theme_key,
-    ], () => {
-      // 両方エラーになってしまう
-      //   this.$router.replace({name: "share-board", query: this.current_url_params})
-      //   this.$router.replace({query: this.current_url_params})
-      // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
-      this.$router.replace({query: this.current_url_params}).catch(e => {})
-    })
+    if (this.AppConfig.WATCH_AND_URL_REPLACE) {
+      // どれかが変更されたらURLを更新
+      this.$watch(() => [
+        this.sp_run_mode,
+        this.sp_internal_rule_key,
+        this.current_sfen,
+        this.current_turn,
+        this.current_title,
+        this.abstract_viewpoint,
+        this.room_code,
+        this.color_theme_key,
+      ], () => {
+        // 両方エラーになってしまう
+        //   this.$router.replace({name: "share-board", query: this.current_url_params})
+        //   this.$router.replace({query: this.current_url_params})
+        // パラメータだけ変更するときは変更してくれるけどエラーになるっぽいのでエラーにぎりつぶす(いいのか？)
+        this.$router.replace({query: this.current_url_params}).catch(e => {})
+      })
+    }
 
     this.autoexec()
   },
