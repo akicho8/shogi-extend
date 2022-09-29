@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "インスタント将棋問題集", type: :system do
+RSpec.describe "将棋ドリル", type: :system do
   it "問題集トップ" do
     visit2 "/rack"
     assert_text "問題集"

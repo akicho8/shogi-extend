@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("インスタント将棋問題集")
+    this.ga_click("将棋ドリル")
   },
 
   // fetchOnServer: false,

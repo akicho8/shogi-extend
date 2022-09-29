@@ -245,7 +245,7 @@ module Wkbk
       list = [
         title,
         *tag_list,
-        "インスタント将棋問題集",
+        "将棋ドリル",
       ]
       list.collect { |e| "#" + e.gsub(/[\p{blank}-]+/, "_") }.join(" ")
     end
@@ -257,7 +257,7 @@ module Wkbk
 
       if Rails.env.development?
         if user
-          self.title ||= "#{user.name}のインスタント将棋問題集第#{user.wkbk_books.count.next}弾(仮)"
+          self.title ||= "#{user.name}の将棋ドリル第#{user.wkbk_books.count.next}弾(仮)"
         end
         self.title       ||= "あ" * 80
         self.description ||= "い" * 256

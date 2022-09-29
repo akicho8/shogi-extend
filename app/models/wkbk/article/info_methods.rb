@@ -88,7 +88,7 @@ module Wkbk
       private
 
       def tweet_tag_part
-        [*tag_list, "インスタント将棋問題集"].collect { |e|
+        [*tag_list, "将棋ドリル"].collect { |e|
           "#" + e.gsub(/[\p{blank}-]+/, "_")
         }.join(" ")
       end

@@ -37,5 +37,5 @@ Top 20 slowest example groups:
     2.53 seconds average (7.58 seconds / 3 examples) ./spec/system/about_spec.rb:3
   stopwatch
     2.49 seconds average (2.49 seconds / 1 example) ./spec/system/stopwatch_spec.rb:3
-  インスタント将棋問題集
+  将棋ドリル
     2.26 seconds average (15.8 seconds / 7 examples) ./spec/system/wkbk_spec.rb:3

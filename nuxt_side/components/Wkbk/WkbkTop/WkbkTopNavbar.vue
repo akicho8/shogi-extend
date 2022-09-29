@@ -4,7 +4,7 @@ MainNavbar.WkbkTopNavbar(:spaced="false" wrapper-class="container is-fluid px-0"
     NavbarItemHome
     b-navbar-item.has-text-weight-bold.px_0_if_mobile(tag="nuxt-link" :to="{name: 'rack'}")
       span.is-hidden-mobile
-        | インスタント将棋問題集
+        | 将棋ドリル
       span.is-hidden-tablet
         | 問題集
 

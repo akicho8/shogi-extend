@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "wkbk"
-    self.script_name = "インスタント将棋問題集 問題"
+    self.script_name = "将棋ドリル 問題"
 
     def script_body
       s = Wkbk::Article.all

@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "wkbk"
-    self.script_name = "インスタント将棋問題集 KPI"
+    self.script_name = "将棋ドリル KPI"
 
     def script_body
       # 日別の履歴数を求める

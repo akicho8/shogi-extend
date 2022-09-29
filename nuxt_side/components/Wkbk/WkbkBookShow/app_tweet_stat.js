@@ -17,7 +17,7 @@ export const app_tweet_stat = {
       })
 
       if (process.client) {
-        this.ga_click(`インスタント将棋問題集→${this.book.title}`)
+        this.ga_click(`将棋ドリル→${this.book.title}`)
         this.talk(this.book.title)
         if (this.development_p && false) {
           this.journal_test()
