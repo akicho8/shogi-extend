@@ -8,7 +8,7 @@
         template(v-if="TheSb.order_unit.state_name === 'O1State'")
           // 従来の分けない方法
           .ShareBoardAvatarLines
-            SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info")
+            SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info" :key="info.from_connection_id")
         template(v-if="TheSb.order_unit.state_name === 'O2State'")
           template(v-if="true")
             // member_infos の中身を余さず表示する方法
@@ -17,12 +17,12 @@
               .TeamName
                 HexagonMark(:location_key="location.key")
               .ShareBoardAvatarLines
-                SbMemberOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info")
+                SbMemberOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info" :key="info.from_connection_id")
             .TeamBlock.watcher(v-if="present_p(TheSb.visible_member_groups['watcher'])")
               .TeamName.is-invisible
                 b-tag(rounded) 観戦
               .ShareBoardAvatarLines
-                SbMemberOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info")
+                SbMemberOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info" :key="info.from_connection_id")
           template(v-if="false")
             // simple_teams を元に表示する方法
             // ・名前が重複している場合に1つしか表示されないのでやめ
@@ -36,7 +36,7 @@
                       SbMemberOne(:info="TheSb.room_user_names_hash[user_name]")
       template(v-else)
         .ShareBoardAvatarLines
-          SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info")
+          SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info" :key="info.from_connection_id")
 </template>
 
 <script>
