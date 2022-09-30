@@ -9,7 +9,6 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(fullheight right overlay v-mode
           b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: base.share_board_query}" @click.native="sound_play_click()")
           b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.current_turn, viewpoint: base.sp_viewpoint}}" @click.native="sound_play_click()")
           b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="sound_play_click()")
-          b-menu-item.is_active_unset(:label="`局面ペディア #${base.current_turn}`" :href="base.kpedia_url" :target="target_default" @click="base.other_app_click_handle('局面ペディア')")
 
         ShareBoardSidebarExport(:base="base")
           b-menu-item.is_active_unset(icon="printer" label="棋譜用紙 (PDF)" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="sound_play_click()")
