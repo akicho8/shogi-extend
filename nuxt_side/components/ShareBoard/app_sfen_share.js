@@ -1,5 +1,4 @@
 import _ from "lodash"
-import { BehaviorEffectInfo } from "./models/behavior_effect_info.js"
 
 export const app_sfen_share = {
   data() {
@@ -134,8 +133,11 @@ export const app_sfen_share = {
         // 反則があれば表示する
         this.foul_modal_handle(params.lmi.foul_names)
 
-        // 「alice ▲76歩」は常に表示する (反則のときも)
-        this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
+        if (this.order_enable_p) {
+          // 「alice ▲76歩」は常に表示する (反則のときも)
+          // , position: "is-top", type: "is-dark"
+          this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
+        }
 
         // 反則がないときだけ指し手と次の人を通知する
         if (this.blank_p(params.lmi.foul_names)) {
@@ -181,21 +183,6 @@ export const app_sfen_share = {
     // ブロードキャストは相手側だけで実行する
     fast_sound_effect_func(params) {
       this.vibrate_short()
-
-      if (this.is_shout_mode_on) {
-        const info = BehaviorEffectInfo.fetch(params.lmi.effect_key)
-        this.sound_play_random(info.sound_key)
-
-        this.delay_block(0.25, () => {
-          // location_key: ks.location.key,
-          // piece_key:    ks.piece.key,
-          // promoted:     ks.promoted,
-          if (params.lmi.killed_soldier) {
-            const info = BehaviorEffectInfo.fetch("killed_and_death")
-            this.sound_play_random(info.sound_key)
-          }
-        })
-      }
     },
   },
   computed: {
@@ -207,7 +194,9 @@ export const app_sfen_share = {
         return false
       }
 
-      return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      if (this.order_enable_p) {
+        return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      }
     },
   },
 }
