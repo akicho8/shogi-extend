@@ -52,7 +52,6 @@ export default {
       hv.sp_run_mode                                 = this.base.sp_run_mode
       hv.sp_turn                                     = this.base.current_turn
       hv.sp_body                                     = this.base.current_sfen
-      hv.sp_sound_enabled                            = true
       hv.sp_player_info                              = this.base.sp_player_info
       hv.sp_human_side                               = this.base.sp_human_side
       hv.sp_debug_mode                               = "is_debug_mode_off"
@@ -117,6 +116,7 @@ export default {
       hv["update:turn_offset"]                        = v => this.base.current_turn = v
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
+      hv["sound_play"]                                = () => this.sound_play("piece_put")
 
       // 手番 or 先後違い系
       hv["operation_invalid1"] = this.base.operation_invalid1_handle

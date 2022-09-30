@@ -10,7 +10,6 @@
       :sp_viewpoint="article.viewpoint"
       :sp_turn="0"
       sp_summary="is_summary_off"
-      :sp_sound_enabled="false"
       :sp_op_disabled="true"
       )
 </template>

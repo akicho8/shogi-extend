@@ -137,15 +137,6 @@ export const app_sp = {
       return this.sp_call(e => e.xcontainer.king_formation_auto_set_on_off(v))
     },
 
-    // スマホから戻ったときに音が鳴るようにする
-    // sp_sound_resume_all() {
-    //   return this.sp_call(e => e.sp_sound_resume_all())
-    // },
-
-    sp_Howler() {
-      return this.sp_call(e => e.sp_Howler())
-    },
-
     // 手数 → 色変換
     // 駒落ちによる開始色が変わる条件の大元はこれ
     turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },

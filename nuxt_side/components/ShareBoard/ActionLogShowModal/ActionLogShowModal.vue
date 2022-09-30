@@ -14,7 +14,6 @@
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
         :sp_viewpoint="sp_viewpoint"
-        :sp_sound_enabled="false"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
         @update:turn_offset="v => new_turn = v"

@@ -47,17 +47,6 @@
       a.panel-block Howler.masterGain → {{Howler.masterGain}}
       a.panel-block Howler._howls.length → {{Howler._howls.length}}
 
-      template(v-if="base.sp_Howler()")
-        //- a.panel-block base.sp_Howler().volume() → {{base.sp_Howler().volume()}}
-        //- a.panel-block base.sp_Howler().usingWebAudio → {{base.sp_Howler().usingWebAudio}}
-        //- a.panel-block base.sp_Howler().noAudio → {{base.sp_Howler().noAudio}}
-        //- a.panel-block base.sp_Howler().autoUnlock → {{base.sp_Howler().autoUnlock}}
-        //- a.panel-block base.sp_Howler().html5PoolSize → {{base.sp_Howler().html5PoolSize}}
-        //- a.panel-block base.sp_Howler().autoSuspend → {{base.sp_Howler().autoSuspend}}
-        //- a.panel-block base.sp_Howler().masterGain → {{base.sp_Howler().masterGain}}
-        //- a.panel-block base.sp_Howler().ctx → {{pretty_inspect(base.sp_Howler().ctx)}}
-        a.panel-block sp_Howler()._howls.length → {{base.sp_Howler()._howls.length}}
-
   .column.is-2
     .panel
       .panel-heading

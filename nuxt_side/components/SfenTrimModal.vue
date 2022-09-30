@@ -17,7 +17,6 @@
       :sp_body="sp_body"
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="sp_viewpoint"
-      :sp_sound_body_changed="false"
       :sp_board_cell_left_click_user_handle="() => true"
       sp_summary="is_summary_off"
       sp_slider="is_slider_on"

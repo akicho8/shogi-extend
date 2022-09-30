@@ -20,7 +20,6 @@
         sp_pi_variant="is_pi_variant_b"
         :sp_hidden_if_piece_stand_blank="false"
         :sp_op_disabled="true"
-        :sp_sound_enabled="false"
         :sp_turn="0"
         :sp_body="base.board_preset_info.sfen"
       )
@@ -85,8 +84,6 @@ export default {
     width: 16rem
     --sp_board_padding: 0
     --sp_board_color: transparent
-    --sp_shadow_offset: 0
-    --sp_shadow_blur: 0
     --sp_grid_outer_stroke: 0
     --sp_grid_outer_color: hsl(0, 0%, 80%)
     --sp_grid_color:       hsl(0, 0%, 80%)

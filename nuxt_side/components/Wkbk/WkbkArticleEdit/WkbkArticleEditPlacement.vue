@@ -10,8 +10,6 @@ MainSection.WkbkArticleEditPlacement
             :sp_body="base.article.init_sfen"
             :sp_turn="0"
             :sp_viewpoint.sync="base.article.viewpoint"
-            :sp_sound_body_changed="false"
-            :sp_sound_enabled="false"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
             @update:edit_mode_short_sfen="base.edit_mode_short_sfen"
