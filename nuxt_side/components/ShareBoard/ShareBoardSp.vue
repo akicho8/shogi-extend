@@ -116,7 +116,11 @@ export default {
       hv["update:turn_offset"]                        = v => this.base.current_turn = v
       hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
       hv["one_way:sp_turn_user_changed"]              = this.base.sp_turn_user_changed
-      hv["sound_play"]                                = () => this.sound_play("piece_put")
+
+      hv["sound_play"] = () => {
+        this.sound_play("piece_put")
+        this.vibrate_short()
+      }
 
       // 手番 or 先後違い系
       hv["operation_invalid1"] = this.base.operation_invalid1_handle

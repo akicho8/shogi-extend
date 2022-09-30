@@ -102,7 +102,10 @@ export const app_sfen_share = {
         this.receive_xsfen(params)
 
         // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
-        this.$nextTick(() => this.sound_play("piece_put"))
+        this.$nextTick(() => {
+          this.sound_play("piece_put")
+          this.vibrate_short()
+        })
       }
 
       // 時計も更新する
