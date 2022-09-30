@@ -96,7 +96,6 @@ export const app_order_main = {
 
       this.move_guard_key    = params.move_guard_key
       this.avatar_king_key   = params.avatar_king_key
-      this.shout_mode_key    = params.shout_mode_key
       this.foul_behavior_key = params.foul_behavior_key
       this.tegoto            = params.tegoto
 
@@ -130,7 +129,6 @@ export const app_order_main = {
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
         move_guard_key:    this.move_guard_key,
         avatar_king_key:   this.avatar_king_key,
-        shout_mode_key:    this.shout_mode_key,
         foul_behavior_key: this.foul_behavior_key,
         tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる

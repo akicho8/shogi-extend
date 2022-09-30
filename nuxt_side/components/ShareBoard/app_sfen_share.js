@@ -38,16 +38,6 @@ export const app_sfen_share = {
         clock_box_params: this.clock_box_share_params_factory(), // 指し手と合わせて時計の情報も送る
       }
 
-      // シャウトモード用
-      const ks = lmi.killed_soldier
-      if (ks) {
-        this.sfen_share_params.lmi.killed_soldier = {
-          location_key: ks.location.key,
-          piece_key:    ks.piece.key,
-          promoted:     ks.promoted,
-        }
-      }
-
       const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
       if (next_user_name) {
         this.sfen_share_params["next_user_name"] = next_user_name
@@ -58,8 +48,6 @@ export const app_sfen_share = {
       }
 
       this.sequence_code_embed()
-
-      this.fast_sound_effect_func(this.sfen_share_params) // ブロードキャスト前に実行
     },
 
     // 指し手の配信
@@ -94,9 +82,6 @@ export const app_sfen_share = {
           this.tl_alert("指し手のBCにより編集を解除")
           this.sp_run_mode = "play_mode"
         }
-
-        // 即座にシャウトする
-        this.fast_sound_effect_func(params)
 
         // 受信したSFENを盤に反映
         this.receive_xsfen(params)

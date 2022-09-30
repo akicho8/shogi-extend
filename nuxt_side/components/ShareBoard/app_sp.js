@@ -22,9 +22,6 @@ export const app_sp = {
       this.current_sfen = e.sfen
       this.current_turn = e.turn  // last_move_info.next_turn_offset と同じ
 
-      // this.sound_play("shout_08")
-      // this.vibrate_short()
-
       // 時計があれば操作した側のボタンを押す
       // last_move_info.player_location なら指した人の色で判定
       // last_move_info.to_location なら駒の色で判定

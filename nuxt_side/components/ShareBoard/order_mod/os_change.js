@@ -33,7 +33,6 @@ export class OsChange {
       [
         this.context.move_guard_key,
         this.context.avatar_king_key,
-        this.context.shout_mode_key,
         this.context.foul_behavior_key,
         this.context.tegoto,
       ]

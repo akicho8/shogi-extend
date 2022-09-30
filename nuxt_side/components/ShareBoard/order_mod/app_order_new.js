@@ -14,7 +14,6 @@ export const app_order_new = {
         order_unit:        null, // テーブル用(出走順の実配列にあとから参加した人や観戦の人を追加したテンポラリ)
         move_guard_key:    null, // 手番制限
         avatar_king_key:   null, // アバター表示
-        shout_mode_key:    null, // 叫びモード
         foul_behavior_key: null, // 反則をどうするか
         tegoto:            null, // N手毎交代
         os_change:         null, // OsChange のインスタンス
@@ -53,7 +52,6 @@ export const app_order_new = {
       {
         this.new_v.move_guard_key    = this.move_guard_key
         this.new_v.avatar_king_key   = this.avatar_king_key
-        this.new_v.shout_mode_key    = this.shout_mode_key
         this.new_v.foul_behavior_key = this.foul_behavior_key
         this.new_v.tegoto            = this.tegoto
       }
@@ -99,7 +97,6 @@ export const app_order_new = {
         //
         move_guard_key:    this.new_v.move_guard_key,
         avatar_king_key:   this.new_v.avatar_king_key,
-        shout_mode_key:    this.new_v.shout_mode_key,
         foul_behavior_key: this.new_v.foul_behavior_key,
         tegoto:            this.new_v.tegoto,
         //
