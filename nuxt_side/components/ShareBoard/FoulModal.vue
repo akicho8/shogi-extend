@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | {{reason}}で{{base.current_location.name}}の勝ち！
+      | {{reason}}で{{TheSb.current_location.name}}の勝ち！
   .modal-card-body
     p 「1手戻す」で指し直せます
     p(v-if="TheSb.toryo_button_show_p") 反則を受け入れる場合は投了しよう
@@ -14,13 +14,13 @@
 export default {
   name: "FoulModal",
   props: {
-    base:       { type: Object, required: true, },
     foul_names: { type: Array,  required: true, },
   },
+  inject: ["TheSb"],
   methods: {
     close_handle() {
       this.sound_play_click()
-      this.base.foul_modal_close()
+      this.TheSb.foul_modal_close()
       this.$emit("close")
     },
   },

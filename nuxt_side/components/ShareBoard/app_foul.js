@@ -34,7 +34,6 @@ export const app_foul = {
         this.foul_modal_instance = this.modal_card_open({
           component: FoulModal,
           props: {
-            base: this.base,
             foul_names: foul_names,
           },
           onCancel: () => {
