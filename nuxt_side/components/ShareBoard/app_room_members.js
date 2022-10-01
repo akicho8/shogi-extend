@@ -41,7 +41,6 @@ export const app_room_members = {
           room_joined_at:     index,        // 部屋に入った日時(古参比較用)
           window_active_p:    true,         // Windowの状態
           user_agent:         null,         // ブラウザ情報
-          remote_ip:          null,
         }
         if (this.user_name === name) {
           params["from_connection_id"] = this.connection_id
@@ -83,7 +82,6 @@ export const app_room_members = {
         room_joined_at:      this.room_joined_at,          // 部屋に入った日時(古参比較用)
         window_active_p:     this.window_active_p,         // Windowの状態
         user_agent:          window.navigator.userAgent,   // ブラウザ情報
-        remote_ip:           this.config.record.remote_ip, // Rails側で取得したIP
       }) // --> app/channels/share_board/room_channel.rb
     },
 

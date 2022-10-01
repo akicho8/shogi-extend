@@ -202,7 +202,6 @@ module ShareBoardControllerMethods
         # :room_code => params[:room_code] || "",
         :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
         :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
-        :remote_ip     => request.remote_ip, # メンバー情報で表示する
       })
 
     attrs

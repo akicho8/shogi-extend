@@ -130,11 +130,6 @@ export default {
           value: this.member_info.user_agent,
           value_class: "is-size-7",
         },
-        {
-          enabled: this.staff_p || this.$config.STAGE === "staging",
-          label: "IP",
-          value: this.TheSb.config.record.remote_ip,
-        },
       ]
     },
   },
