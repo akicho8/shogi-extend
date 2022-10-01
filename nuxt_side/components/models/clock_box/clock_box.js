@@ -220,7 +220,7 @@ export class ClockBox {
     }
   }
 
-  // 秒針が動いている状態か？ (clamp は関係なし)
+  // 秒針が動いている状態か？ (時間切れでマイナスを0に補正されている状態でもtrue)
   get play_p() {
     if (this.pause_or_play_p) {
       if (this.timer) {
