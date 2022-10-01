@@ -13,6 +13,8 @@ a.button.PiyoShogiButton.is-small(
 </template>
 
 <script>
+import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
+
 export default {
   name: "PiyoShogiButton",
   props: {
@@ -30,7 +32,7 @@ export default {
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
-      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.piyo_shogi_app_p()
+      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !PiyoShogi2.native_p
     },
     piyo_shogi_name() {
       if (this.web_version_p) {

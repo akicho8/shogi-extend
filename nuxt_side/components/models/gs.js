@@ -1,4 +1,5 @@
 import { Gs2 } from "./gs2.js"
+import { Gs3 } from "./gs3.js"
 import _ from "lodash"
 import dayjs from "dayjs"
 import { HandleNameParser } from "./handle_name_parser.js"
@@ -22,6 +23,7 @@ const KANJI_TO_HANKAKU_NUMBER_TABLE = {
 // vue_support.js の methods に追加する
 export const Gs = {
   ...Gs2,
+  ...Gs3,
 
   __trace__(scope, method) {
     if (!this.development_p) {

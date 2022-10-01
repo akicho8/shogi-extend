@@ -2,6 +2,8 @@
 import { Gs } from "../components/models/gs.js"
 import { SpUtils } from "../components/models/sp_utils.js"
 import { Vibrator } from "../components/models/vibrator.js"
+import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
+
 import twemoji from 'twemoji'
 import _ from "lodash"
 const util = require("util")
@@ -11,6 +13,10 @@ export const vue_support = {
     ...Gs,
     ...SpUtils,
     ...Vibrator,
+
+    piyo_shogi_auto_url(params) {
+      return PiyoShogi2.create(params).url
+    },
 
     ua_icon_key_get() {
       if (typeof window === "undefined") {
@@ -148,12 +154,6 @@ export const vue_support = {
       this.window_popup(this.tweet_url_build_from_params(params))
     },
 
-    as_full_url(path) {
-      if (!path.match(/^http/)) {
-        path = this.$config.MY_SITE_URL + path
-      }
-      return path
-    },
 
     ////////////////////////////////////////////////////////////////////////////////
 
