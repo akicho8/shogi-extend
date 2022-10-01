@@ -5,7 +5,7 @@
       | {{reason}}で{{base.current_location.name}}の勝ち！
   .modal-card-body
     p 「1手戻す」で指し直せます
-    p 反則を受け入れる場合は投了しよう
+    p(v-if="TheSb.toryo_button_show_p") 反則を受け入れる場合は投了しよう
   .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>
