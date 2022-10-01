@@ -219,6 +219,16 @@ HelpContent.SwarsBattleIndexHelpBody
     ul
       li 各自のブラウザで該当する Local Storage を削除する
 
+  template(v-if="true")
+    article
+      h2 M1 Mac を使っているとき「ぴよ将棋」を使いたいのにブラウザ版の「ぴよ将棋ｗ」に飛んでしまう
+      ul
+        li プロフィール→ぴよ将棋の種類→ぴよ将棋
+    article
+      h2 なんらかの理由でスマホでも常に「ぴよ将棋ｗ」を使いたい
+      ul
+        li プロフィール→ぴよ将棋の種類→ぴよ将棋ｗ
+
   article
     h2 昔あった棋譜が消えた
     ul

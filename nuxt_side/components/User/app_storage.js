@@ -6,6 +6,7 @@ export const app_storage = {
   ],
   data() {
     return {
+      piyo_shogi_type_key: null,
     }
   },
   beforeMount() {
@@ -17,6 +18,7 @@ export const app_storage = {
     },
     ls_default() {
       return {
+        piyo_shogi_type_key: "auto",
       }
     },
   },
