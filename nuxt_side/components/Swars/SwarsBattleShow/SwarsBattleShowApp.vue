@@ -155,10 +155,10 @@ export default {
     this.ga_click("バトル詳細")
   },
 
-  watch: {
-    current_turn() { this.url_replace() },
-    sp_viewpoint() { this.url_replace() },
-  },
+  // watch: {
+  //   current_turn() { this.url_replace() },
+  //   sp_viewpoint() { this.url_replace() },
+  // },
 
   methods: {
     tweet_handle() {
