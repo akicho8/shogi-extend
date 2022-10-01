@@ -190,7 +190,7 @@ export const app_sfen_share = {
       // 
       // return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
       
-      return this.order_enable_p && this.clock_box
+      return this.cc_play_p
     },
   },
 }
