@@ -20,7 +20,7 @@ tmux split-window -h -t shogi.2
 # | 2 | 3 |
 # |---+---|
 
-tmux send-keys -t shogi.0 'cd ~/src/shogi-extend' C-m
+tmux send-keys -t shogi.0 'cd ~/src/shogi-extend/nuxt_side' C-m
 
 tmux send-keys -t shogi.1 'cd ~/src/shogi-player' C-m
 tmux send-keys -t shogi.1 'nuxt dev -p 5000' C-m
