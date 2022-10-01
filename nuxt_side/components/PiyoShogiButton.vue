@@ -5,6 +5,7 @@ a.button.PiyoShogiButton.is-small(
   v-on="$listeners"
   :target="target_default"
   @click="click_handle"
+  v-if="PiyoShogi2.current_info.showable_p"
   )
   span.icon
     img.left_icon(src="~/assets/piyo_shogi_icon.png")
@@ -13,8 +14,6 @@ a.button.PiyoShogiButton.is-small(
 </template>
 
 <script>
-import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
-
 export default {
   name: "PiyoShogiButton",
   props: {
@@ -32,7 +31,7 @@ export default {
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
-      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !PiyoShogi2.native_p
+      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoShogi2.current_info.native_p
     },
     piyo_shogi_name() {
       if (this.web_version_p) {

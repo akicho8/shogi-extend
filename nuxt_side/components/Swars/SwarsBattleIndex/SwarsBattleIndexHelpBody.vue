@@ -219,7 +219,7 @@ HelpContent.SwarsBattleIndexHelpBody
     ul
       li 各自のブラウザで該当する Local Storage を削除する
 
-  template(v-if="true")
+  template(v-if="false")
     article
       h2 M1 Mac を使っているとき「ぴよ将棋」を使いたいのにブラウザ版の「ぴよ将棋ｗ」に飛んでしまう
       ul

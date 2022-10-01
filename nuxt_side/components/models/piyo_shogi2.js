@@ -7,30 +7,22 @@ import { isMobile } from "@/components/models/is_mobile.js"
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
-const FORCE_PIYO_SHOGI_TYPE_KEY = null // 種類を強制する
-
 export class PiyoShogi2 {
-  // モバイルアプリ版が起動できるか？
-  // public
-  static get native_p() {
-    if ("memo_native_p" in this) {
-      return this.memo_native_p
+  static get current_info() {
+    if ("memo_current_info" in this) {
+      return this.memo_current_info
     }
-    this.memo_native_p = this.__native_p
-    return this.memo_native_p
+    this.memo_current_info = this.__current_info
+    return this.memo_current_info
   }
-  // private
-  static get __native_p() {
+  static get __current_info() {
     const v = MyLocalStorage.get("user_settings")
-    Gs2.p(`PiyoShogi2.__native_p -> ${Gs2.i(v)}`)
-    let piyo_shogi_type_key = "auto"
+    Gs2.p(`PiyoShogi2.__current_info -> ${Gs2.i(v)}`)
+    let key = "auto"
     if (v) {
-      piyo_shogi_type_key = v.piyo_shogi_type_key
+      key = v.piyo_shogi_type_key
     }
-    if (FORCE_PIYO_SHOGI_TYPE_KEY) {
-      piyo_shogi_type_key = FORCE_PIYO_SHOGI_TYPE_KEY
-    }
-    return PiyoShogiTypeInfo.fetch(piyo_shogi_type_key).func()
+    return PiyoShogiTypeInfo.fetch(key)
   }
 
   static create(params) {
@@ -62,7 +54,7 @@ export class PiyoShogi2 {
     Gs2.__assert__(this.params.path, "this.params.path")
     const url = new URL(Gs3.as_full_url(this.params.path))
 
-    // http://xxx/native_p?yyy=1 --> http://xxx/native_p.kif?yyy=1
+    // http://xxx/current_info?yyy=1 --> http://xxx/current_info.kif?yyy=1
     url.pathname = url.pathname + ".kif"
 
     const a = {...this.params, url: url}
@@ -119,6 +111,6 @@ export class PiyoShogi2 {
   }
 
   get native_p() {
-    return this.constructor.native_p
+    return this.constructor.current_info.native_p
   }
 }

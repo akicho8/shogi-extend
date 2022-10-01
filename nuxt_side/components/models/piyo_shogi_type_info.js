@@ -4,9 +4,17 @@ import { isMobile } from "@/components/models/is_mobile.js"
 export class PiyoShogiTypeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { key: "auto",   name: "自動判別",   message: "一般的なスマホやPCを使っている人向け",                                                                           func: () => isMobile.iOS() || isMobile.Android(), },
-      { key: "native", name: "ぴよ将棋",   message: "M1 Mac に「ぴよ将棋」を入れたのに「ぴよ将棋ｗ」が起動して困っている人向け",                                      func: () => true,                                 },
-      { key: "web",    name: "ぴよ将棋ｗ", message: "スマホになんかしらの制約で「ぴよ将棋」を入れられなかったり「ぴよ将棋」があるのに「ぴよ将棋ｗ」を使いたい人向け", func: () => false,                                },
+      { key: "auto",   name: "自動判別",   showable_p_fn: () => this.native_p, native_p_fn: () => isMobile.iOS() || isMobile.Android(), message: "スマホだけで「ぴよ将棋」を表示する", },
+      { key: "native", name: "ぴよ将棋",   showable_p_fn: () => true,          native_p_fn: () => true,                                 message: "常に「ぴよ将棋」を使う",             },
+      { key: "web",    name: "ぴよ将棋ｗ", showable_p_fn: () => true,          native_p_fn: () => false,                                message: "常に「ぴよ将棋ｗ」を使う",           },
     ]
+  }
+
+  get showable_p() {
+    return this.showable_p_fn()
+  }
+
+  get native_p() {
+    return this.native_p_fn()
   }
 }

@@ -279,8 +279,9 @@ export const vue_support = {
   },
 
   computed: {
-    _()    { return _    },
-    util() { return util },
+    _()          { return _          },
+    util()       { return util       },
+    PiyoShogi2() { return PiyoShogi2 },
   },
 
   directives: {
