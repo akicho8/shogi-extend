@@ -19,9 +19,9 @@ RSpec.describe "ユーザー", type: :system do
     visit2 "http://localhost:3000/accounts/1/edit"
   end
 
-  it "ぴよ将棋設定" do
-    visit2 "/settings/piyo_shogi"
-  end
+  # xit "ぴよ将棋設定" do
+  #   visit2 "/settings/piyo_shogi"
+  # end
 
   it "メールアドレス設定" do
     visit2 "/settings/email"
