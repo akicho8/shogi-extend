@@ -45,10 +45,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       file = Rails.root.join("tmp/#{@key}.bod")
       FileUtils.rm_f(file)
       menu_item_click("BOD #1")
-      300.times do |e|
-        p ["#{__FILE__}:#{__LINE__}", __method__, file.exist?]
-        sleep(0.01)
-      end
+      sleep(1) # 0.03 秒かかるため余裕を見て待つ
       assert { file.exist? }
       assert { file.read.include?("手数＝1") }
     end
