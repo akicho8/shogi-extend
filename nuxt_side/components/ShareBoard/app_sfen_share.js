@@ -116,23 +116,11 @@ export const app_sfen_share = {
           }
         }
 
-        this.from_user_name_valid(params) // 指し手制限をしていないとき別の人が指したかチェックする
-
-        // 反則があれば表示する
-        this.foul_modal_handle(params.lmi.foul_names)
-
-        if (this.order_enable_p) {
-          // 「alice ▲76歩」は常に表示する (反則のときも)
-          // , position: "is-top", type: "is-dark"
-          this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, {toast_only: true})
-        }
-
-        // 反則がないときだけ指し手と次の人を通知する
-        if (this.blank_p(params.lmi.foul_names)) {
-          this.next_turn_call(params)
-        }
-
-        this.received_ok_send(params)
+        this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
+        this.foul_modal_handle(params.lmi.foul_names) // 反則があれば表示する
+        this.from_user_toast(params)                  // 誰が操作したかを表示する
+        this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
+        this.received_ok_send(params)                 // 受信OKを指し手に通知する
       }
 
       this.al_add(params)
@@ -147,22 +135,35 @@ export const app_sfen_share = {
         }
       }
     },
+    from_user_toast(params) {
+      const options = {
+        toast_only: true,
+        // position: "is-top",
+      }
+      // if (this.order_enable_p) {
+      // ・「alice ▲76歩」は常に表示する (反則のときも)
+      // ・検討中にサイレント更新されると困る
+      // , position: "is-top", type: "is-dark"
+      this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
+      // }
+    },
     next_turn_call(params) {
       this.next_turn_message = null
-      if (this.yomiagable_p) {
-        // 「aliceさん」の発声後に「7 6 ふー！」を発声する
-        this.talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
-          onend: () => this.talk(params.lmi.yomiage, {          // 「7 6 ふー！」
-            onend: () => {                                      // 「次は〜」
-              if (params.next_user_name) {
-                if (this.next_notify_p) {
-                  this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
-                  this.toast_ok(this.next_turn_message)
+      if (this.blank_p(params.lmi.foul_names)) {                  // 反則がなかった場合
+        if (this.yomiagable_p) {
+          this.talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
+            onend: () => this.talk(params.lmi.yomiage, {          // 「7 6 ふー！」
+              onend: () => {                                      // 「次は〜」
+                if (params.next_user_name) {
+                  if (this.next_notify_p) {
+                    this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
+                    this.toast_ok(this.next_turn_message)
+                  }
                 }
-              }
-            },
-          }),
-        })
+              },
+            }),
+          })
+        }
       }
     },
 
@@ -177,14 +178,19 @@ export const app_sfen_share = {
     // 時計が設置されてなくて読み上げOFFのときはダメ
     // 時計が設置されている または 読み上げON はOK
     yomiagable_p() {
-      // 本番で自分vs自分は読み上げない
-      if (!this.development_p && this.self_vs_self_p) {
-        return false
-      }
+      // // 本番で自分vs自分は読み上げない
+      // if (this.self_vs_self_p) {
+      //   return false
+      // }
 
-      if (this.order_enable_p) {
-        return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
-      }
+      // // 順番設定 OFF なら読み上げない
+      // if (!this.order_enable_p) {
+      //   return false
+      // }
+      // 
+      // return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      
+      return this.order_enable_p && this.clock_box
     },
   },
 }
