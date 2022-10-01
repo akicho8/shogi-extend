@@ -215,7 +215,6 @@ const config = {
     // client only
     "~/plugins/mixin_mod.client.js",
     "~/plugins/chart_init.client.js",
-    "~/plugins/local_storage_persistedstate.client.js",
 
     // 両方
     "~/plugins/axios.js",

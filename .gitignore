@@ -34,3 +34,4 @@ yarn-debug.log*
 /kifu_data*
 /db/*.gz
 /*.kif
+.byebug_history
