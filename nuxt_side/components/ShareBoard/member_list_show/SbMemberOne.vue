@@ -8,7 +8,7 @@ ShareBoardAvatarLine.SbMemberOne.is-clickable(
   )
 
   // 順番設定しているときに表示する番号
-  .flex_item.left_tag_or_icon(v-if="TheSb.order_lookup(info)")
+  .flex_item.left_tag_or_icon(v-if="development_p && TheSb.order_lookup(info)")
     //- b-tag(rounded) {{TheSb.user_name_to_display_turns(info)}}
     | {{TheSb.user_name_to_display_turns(info.from_user_name)}}
 
