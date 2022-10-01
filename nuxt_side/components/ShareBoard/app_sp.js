@@ -42,9 +42,9 @@ export const app_sp = {
     // デバッグ用
     short_sfen_set(sfen) {
       this.short_sfen = sfen
-      if (this.development_p) {
-        this.$buefy.toast.open("short_sfen")
-      }
+      // if (this.development_p) {
+      //   this.$buefy.toast.open("short_sfen")
+      // }
     },
 
     // 編集モード時の局面
