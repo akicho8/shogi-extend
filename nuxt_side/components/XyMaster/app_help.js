@@ -29,7 +29,7 @@ export const app_help = {
         onCancel:  () => this.help_dialog_cancel_process(),
       })
 
-      this.talk(TALK_MESSAGE, {rate: 2.0, onend: () => help_dialog_instance.close()})
+      this.talk(TALK_MESSAGE, {validate_length: false, rate: 2.0, onend: () => help_dialog_instance.close()})
     },
 
     // private
