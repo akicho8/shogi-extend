@@ -107,7 +107,7 @@ module Api
           a.merge(e.key => {
               :key    => e.key,
               :name   => e.name,
-              :values => e.model.collect(&:name),
+              :values => e.model.collect(&:name).uniq, # uniq はキーが異なっても名前が同じものがある場合があるため
             })
         end
 
