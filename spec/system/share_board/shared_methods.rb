@@ -22,7 +22,16 @@ module SharedMethods
       find(".entry_button").click                 # 共有ボタンをクリックする
       find(".close_handle").click                 # 閉じる
     end
-    assert_text(user_name)                       # 入力したハンドルネームの人が参加している
+    assert_text(user_name) # 入力したハンドルネームの人が参加している
+  end
+
+  def room_setup_by_fillin_params
+    hamburger_click
+    room_setup_modal_handle                       # 「部屋に入る」を自分でクリックする
+    Capybara.within(".RoomSetupModal") do
+      find(".entry_button").click                 # 共有ボタンをクリックする
+      find(".close_handle").click                 # 閉じる
+    end
   end
 
   def room_recreate_apply
@@ -38,7 +47,7 @@ module SharedMethods
   # 退室
   def room_leave
     hamburger_click
-    room_setup_modal_handle  # 「部屋に入る」を自分でクリックする
+    room_setup_modal_handle        # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
   end
