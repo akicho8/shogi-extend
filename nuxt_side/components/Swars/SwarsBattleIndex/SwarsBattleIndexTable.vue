@@ -70,7 +70,7 @@ b-table.SwarsBattleIndexTable(
     | {{row.preset_info.name}}
 
   b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="base.column_visible_p('battled_at')" sortable centered)
-    | {{row_time_format(row.battled_at)}}
+    | {{time_format_row(row.battled_at)}}
 
   b-table-column(v-slot="{row}" :visible="base.operation_any_column_visible_p")
     .buttons.are-small

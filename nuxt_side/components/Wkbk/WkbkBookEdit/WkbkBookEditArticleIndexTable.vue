@@ -45,10 +45,10 @@
       | {{row.article.turn_max}}
 
     b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" sortable centered label="追加日")
-      | {{row_time_format(row.created_at)}}
+      | {{time_format_row(row.created_at)}}
 
     b-table-column(v-slot="{row}" custom-key="article.created_at" field="article.created_at" sortable centered label="作成日")
-      | {{row_time_format(row.article.created_at)}}
+      | {{time_format_row(row.article.created_at)}}
 </template>
 
 <script>

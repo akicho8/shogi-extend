@@ -34,7 +34,7 @@ export const app_search = {
     ////////////////////////////////////////////////////////////////////////////////
 
     date_search_path(row) {
-      return this.search_path({date: this.date_to_ymd(row.battled_on)})
+      return this.search_path({date: this.time_format_ymd(row.battled_on)})
     },
 
     vs_grade_search_path(row) {

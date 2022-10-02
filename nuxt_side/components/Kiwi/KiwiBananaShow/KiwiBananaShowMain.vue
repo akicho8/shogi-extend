@@ -36,8 +36,7 @@
             nuxt-link(:to="{name: 'users-id', params: {id: base.banana.user.id}}" @click.native="sound_play_click()")
               | {{base.banana.user.name}}
 
-            //- span.ml-1 {{updated_time_format(base.banana.updated_at)}}
-            span.ml-3 {{diff_time_format(base.banana.updated_at)}}
+            span.ml-3 {{time_format_diff(base.banana.updated_at)}}
 
             b-icon.ml-3(icon="eye-outline" size="is-small")
             span.ml-1 {{base.banana.access_logs_count}}

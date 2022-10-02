@@ -8,9 +8,9 @@
       )
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.one_box_title
-          | {{date_to_custom_format(row.battled_on) + " "}}
+          | {{time_format_md_or_ymd(row.battled_on) + " "}}
           .ml-1(:class="base.battled_on_to_css_class(row)")
-            | {{date_to_wday(row.battled_on)}}
+            | {{time_format_wday_name(row.battled_on)}}
       .columns.is-mobile.is-gapless
         .column.is-paddingless
           WinLoseCircle(:info="row" size="is-small" :narrowed="true")

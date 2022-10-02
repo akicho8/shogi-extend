@@ -10,7 +10,7 @@
     .mt-1.is_line_break_on.has-text-grey.is_body
       | {{banana.user.name}}
 
-      span.ml-2 {{diff_time_format(banana.updated_at)}}
+      span.ml-2 {{time_format_diff(banana.updated_at)}}
 
       p
         b-icon(icon="eye-outline" size="is-small")

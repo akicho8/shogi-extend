@@ -40,7 +40,7 @@ export const app_chore = {
     },
 
     scs_time_format(seconds) {
-      return this.time_format_human_hms(seconds)
+      return this.xtime_format_human_hms(seconds)
     },
   },
 

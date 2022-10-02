@@ -47,7 +47,7 @@ export default {
       if (seconds < 60) {
         return `${seconds}秒前`
       } else {
-        return this.diff_time_format(v)
+        return this.time_format_diff(v)
       }
     },
   },
@@ -83,7 +83,7 @@ export default {
           enabled: true,
           label: "入室日時",
           value: [
-            this.dayjs_format(this.member_info.room_joined_at, "hh:mm:ss"),
+            this.dayjs(this.member_info.room_joined_at).format("hh:mm:ss"),
             `(${this.seconds_ago(this.member_info.room_joined_at)})`,
           ].join(" "),
         },

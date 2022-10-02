@@ -41,9 +41,9 @@
     b-table-column(v-slot="{row}" custom-key="folder_key" field="folder.position" :label="base.BookIndexColumnInfo.fetch('folder_key').name" sortable :visible="!!base.visible_hash.folder_key")
       WkbkFolder(:folder_key="row.folder_key")
 
-    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{row_time_format(row.created_at)}}
+    b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" :label="base.BookIndexColumnInfo.fetch('created_at').name" sortable :visible="!!base.visible_hash.created_at") {{time_format_row(row.created_at)}}
 
-    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{row_time_format(row.updated_at)}}
+    b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" :label="base.BookIndexColumnInfo.fetch('updated_at').name" sortable :visible="!!base.visible_hash.updated_at") {{time_format_row(row.updated_at)}}
 
     b-table-column(v-slot="{row}" custom-key="bookships_count" field="bookships_count" :label="base.BookIndexColumnInfo.fetch('bookships_count').name" sortable numeric :visible="!!base.visible_hash.bookships_count") {{row.bookships_count}}
 

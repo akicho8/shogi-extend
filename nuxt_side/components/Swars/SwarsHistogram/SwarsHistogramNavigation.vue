@@ -18,7 +18,7 @@
         .level-item.has-text-centered
           div
             .head.is-size-7 最終計測
-            .title.is-size-6 {{diff_time_format(xi.updated_at)}}
+            .title.is-size-6 {{time_format_diff(xi.updated_at)}}
         .level-item.has-text-centered
           div
             .head.is-size-7 サンプル数直近

@@ -16,8 +16,8 @@ export class ValidationInfo extends ApplicationMemoryRecord {
     return [
       {
         name: "長さ",
-        should_be: c => `長さが${Gs.time_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
-        human_value: (c, e) => `${Gs.time_format_human_hms(e.duration)}`,
+        should_be: c => `長さが${Gs.xtime_format_human_hms(this.MP4_TIME_SECOND_MAX)}以下`,
+        human_value: (c, e) => `${Gs.xtime_format_human_hms(e.duration)}`,
         environment: null,
         alert_icon_key: "alert",
         alert_icon_type: "is-danger",
