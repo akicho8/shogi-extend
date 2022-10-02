@@ -188,6 +188,7 @@
       .panel-block cc_params:{{base.cc_params_inspect(base.cc_params)}}
       .panel-block next_turn_message:{{base.next_turn_message}}
       .panel-block latest_foul_name:{{base.latest_foul_name}}
+      .panel-block abstract_viewpoint:{{base.abstract_viewpoint}}
 
   .column.is-6.is-clipped
     .panel

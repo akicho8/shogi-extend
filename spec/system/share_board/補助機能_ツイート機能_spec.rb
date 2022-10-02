@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  it "ツイートモーダル" do
+  it "モーダル" do
     a_block do
       visit_app
       find(".tweet_modal_handle").click   # モーダル起動
@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
   end
 
-  it "ツイート画像の視点設定" do
+  it "画像の視点設定" do
     a_block do
       visit_app
       hamburger_click
@@ -20,7 +20,8 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".AbstractViewpointKeySelectModal .white").click     # 「常に☖」を選択
       find(".submit_handle").click                              # 「保存」
       assert_no_selector(".AbstractViewpointKeySelectModal")    # モーダルが閉じている
-      assert { current_query["abstract_viewpoint"] == "white" } # URLが変更になっている
+      assert { current_query["abstract_viewpoint"].blank? }     # 元々はURLを変更していたが今は変更しないようにした
+      assert_system_variable(:abstract_viewpoint, "white")      # 内部では反転しているので問題ない
     end
   end
 end
