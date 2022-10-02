@@ -194,12 +194,7 @@ HelpContent.ShareBoardHelpBody
   article(v-if="false")
     h2 N手毎交代とは？
     ul
-      li N回指したら次の人と交代する
-      li 例えば a b c d の4人で2手毎交代なら a b a b c d c d の順で繰り返す
-      li a b c の3人で2手毎交代なら a b a b c a c a b c b c の順で繰り返す
-      li 複数回指す理由は、対面で1手毎だと移動が慌ただしくなってしまうからと考えられる
-      li また、1人で何回も連続で指してると後続が待ちくたびれる
-      li なので、オンラインなら1手毎交代で良い
+      li N回指したら次の仲間に交代する
 
   article
     h2 盤の色や駒を変更するには？

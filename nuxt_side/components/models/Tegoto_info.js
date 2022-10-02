@@ -7,8 +7,7 @@ export class TegotoInfo extends ApplicationMemoryRecord {
   static min = 1
   static max = 10
   static hint_messages = [
-    "1人10手毎交代のようなルールにできます。",
-    "ただそれは席の移動で慌しくなるのを心配したテレビ用のルールと考えられるためオンラインなら1手毎交代がおすすめです",
+    "N回指したら次の仲間に交代します",
   ]
   static get define() {
     return [
