@@ -229,7 +229,7 @@ export default {
       // どれかが変更されたらURLを更新
       this.$watch(() => [
         this.sp_run_mode,
-        this.sp_internal_rule_key,
+        this.legal_key,
         this.current_sfen,
         this.current_turn,
         this.current_title,

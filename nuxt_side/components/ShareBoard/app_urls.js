@@ -60,7 +60,7 @@ export const app_urls = {
         abstract_viewpoint:   this.abstract_viewpoint,
         room_code:            this.room_code,
         sp_run_mode:          this.sp_run_mode,
-        sp_internal_rule_key: this.sp_internal_rule_key,
+        legal_key: this.legal_key,
         color_theme_key:      this.color_theme_key,
         ...this.player_names,
       }

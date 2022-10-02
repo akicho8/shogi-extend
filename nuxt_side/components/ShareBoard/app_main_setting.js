@@ -4,7 +4,7 @@ import { CtrlModeInfo       } from "./models/ctrl_mode_info.js"
 import { QuickSyncInfo      } from "./models/quick_sync_info.js"
 import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
 import { SpMoveCancelInfo   } from "./models/sp_move_cancel_info.js"
-import { SpInternalRuleInfo } from "./models/sp_internal_rule_info.js"
+import { LegalInfo } from "./models/legal_info.js"
 import { DebugModeInfo      } from "./models/debug_mode_info.js"
 
 export const app_main_setting = {
@@ -34,9 +34,9 @@ export const app_main_setting = {
     SpMoveCancelInfo()          { return SpMoveCancelInfo                                             },
     sp_move_cancel_info()       { return this.SpMoveCancelInfo.fetch(this.sp_move_cancel_key)         },
 
-    SpInternalRuleInfo()        { return SpInternalRuleInfo                                           },
-    sp_internal_rule_info()     { return this.SpInternalRuleInfo.fetch(this.sp_internal_rule_key)     },
-    sp_internal_rule_strict_p() { return this.sp_internal_rule_info.key === "is_internal_rule_strict" },
+    LegalInfo()        { return LegalInfo                                           },
+    legal_info()     { return this.LegalInfo.fetch(this.legal_key)     },
+    legal_strict_p() { return this.legal_info.key === "strict" },
 
     DebugModeInfo()             { return DebugModeInfo                                                },
     debug_mode_info()           { return this.DebugModeInfo.fetch(this.debug_mode_key)                },

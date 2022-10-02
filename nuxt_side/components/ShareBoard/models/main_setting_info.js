@@ -8,7 +8,7 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
       { key: "ctrl_mode_key",        },
       { key: "quick_sync_key",       },
       { key: "yomiage_mode_key",     },
-      { key: "sp_internal_rule_key", },
+      { key: "legal_key", },
       { key: "foul_behavior_key",       },
       { key: "debug_mode_key",       },
     ]
