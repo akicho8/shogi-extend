@@ -24,7 +24,7 @@ export const vue_talk = {
               source_text: source_text,
             }
             if (this.$route.query.__system_test_now__) {
-              return this.howl_auto_play({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
+              return this.sound_play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
             }
             return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
               if (e.browser_path == null) {
@@ -46,7 +46,7 @@ export const vue_talk = {
         ...HOWL_TALK_OPTIONS_DEFAULT,
         ...options,
       }
-      return this.howl_auto_play(options)
+      return this.sound_play_now(options)
     },
   },
 }
