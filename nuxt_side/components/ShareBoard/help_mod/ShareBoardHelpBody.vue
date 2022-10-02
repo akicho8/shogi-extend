@@ -192,10 +192,6 @@ HelpContent.ShareBoardHelpBody
       li 対象が2人以上の場合は順番が早い方をリーダーとみなす
 
   article(v-if="false")
-    h2 シャウトありとは？
-    p 駒が動いたり取られたときに無駄に叫ぶ (不評)
-
-  article(v-if="false")
     h2 N手毎交代とは？
     ul
       li N回指したら次の人と交代する
