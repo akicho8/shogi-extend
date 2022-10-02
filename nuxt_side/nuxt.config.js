@@ -219,6 +219,7 @@ const config = {
     // 両方
     "~/plugins/axios.js",
     "~/plugins/universal.js",
+    "~/plugins/my_plugin.js",
   ],
   /*
   ** Auto import components
