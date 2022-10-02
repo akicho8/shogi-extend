@@ -35,3 +35,5 @@ yarn-debug.log*
 /db/*.gz
 /*.kif
 .byebug_history
+/SEPC_FAILED.org
+/SPEC_FAILED.org
