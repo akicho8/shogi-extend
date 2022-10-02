@@ -3,7 +3,7 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 
-export const SpUtils = {
+export const SpUtil = {
   // sfen_parser.moves.length
   sfen_parse(sfen) {
     return SfenParser.parse(sfen)

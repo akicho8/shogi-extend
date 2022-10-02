@@ -1,6 +1,6 @@
 // 汎用コード
 import { Gs } from "../components/models/gs.js"
-import { SpUtils } from "../components/models/sp_utils.js"
+import { SpUtil } from "../components/models/sp_util.js"
 import { Vibrator } from "../components/models/vibrator.js"
 import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
 
@@ -11,7 +11,7 @@ const util = require("util")
 export const vue_support = {
   methods: {
     ...Gs,
-    ...SpUtils,
+    ...SpUtil,
     ...Vibrator,
 
     piyo_shogi_auto_url(params) {
