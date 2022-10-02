@@ -3,7 +3,6 @@ import Vue from "vue"
 
 import { vue_application       } from "./application.client.js"
 import { vue_actioncable       } from "./actioncable.client.js"
-import { vue_storage           } from "./vue_storage.js"
 import { vue_clipboard         } from "./vue_clipboard.js"
 import { vue_scroll            } from "./vue_scroll.js"
 import { vue_mounted_next      } from "./vue_mounted_next.js"
@@ -15,7 +14,6 @@ import { SoundUtil } from "@/components/models/sound_util.js"
 Vue.mixin({
   mixins: [
     vue_application,
-    vue_storage,
     vue_clipboard,
     vue_actioncable,
     vue_scroll,
