@@ -1,27 +1,17 @@
-//////////////////////////////////////////////////////////////////////////////// dayjs
 import dayjs from "dayjs"
 
 import "dayjs/locale/ja.js"
-dayjs.locale('ja')
+dayjs.locale("ja")
 
-// import timezone from "dayjs/plugin/timezone.js"
-// import utc from "dayjs/plugin/utc.js"
-// dayjs.extend(timezone)
-// dayjs.extend(utc)
-// dayjs.tz.setDefault("Asia/Tokyo")
-
-// // https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#isbetween
-// import isBetween from 'dayjs/plugin/isBetween'
-// dayjs.extend(isBetween)
-
-// https://github.com/iamkun/dayjs/blob/master/docs/ja/Plugin.md#relativetime
-import relativeTime from 'dayjs/plugin/relativeTime'
+// 相対日時対応
+// https://zenn.dev/catnose99/articles/ba540f5c233847
+// dayjs('2021-01-24T01:00:00').fromNow() // => 1時間前
+import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
 
-export const vue_time = {
+export const TimeUtil = {
   methods: {
     // debug console 用
-    // GVI.dayjs()
     dayjs(...args) {
       return dayjs(...args)
     },

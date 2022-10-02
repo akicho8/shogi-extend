@@ -3,7 +3,6 @@
 import Vue from "vue"
 
 import { vue_support          } from "./vue_support.js"
-import { vue_time             } from "./vue_time.js"
 import { vue_browser_and_form } from "./vue_browser_and_form.js"
 import { vue_head             } from "./vue_head.js"
 import { vue_talk             } from "./vue_talk.js"
@@ -15,7 +14,6 @@ import { mapState, mapGetters, mapMutations, mapActions } from "vuex"
 Vue.mixin({
   mixins: [
     vue_support,
-    vue_time,
     vue_browser_and_form,
     vue_head,
     vue_talk,
