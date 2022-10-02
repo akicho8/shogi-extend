@@ -15,25 +15,18 @@ export const vue_talk = {
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなるため
     talk(source_text, options = {}) {
       if (source_text != null) {
-        if (options.skip_if_tab_is_active_p && this.tab_is_active_p()) { // ←有効にしてはいけない
-          // この場合 options.onend を実行しないので注意
-          if (this.development_p && options.onend) {
-            alert("options.onend がありますがタブがアクティブでないため実行されていません")
-          }
-        } else {
-          const params = {
-            source_text: source_text,
-          }
-          if (this.$route.query.__system_test_now__) {
-            return this.sound_play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
-          }
-          return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
-            if (e.browser_path == null) {
-              return Promise.reject("browser_path is blank")
-            }
-            this.talk_sound_play(e, options)
-          })
+        const params = {
+          source_text: source_text,
         }
+        if (this.$route.query.__system_test_now__) {
+          return SoundUtil.sound_play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
+        }
+        return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
+          if (e.browser_path == null) {
+            return Promise.reject("browser_path is blank")
+          }
+          this.talk_sound_play(e, options)
+        })
       }
     },
 
