@@ -402,6 +402,10 @@ const config = {
       // https://qiita.com/someone7140/items/5acfc94c63f16115ac99
       compact: false,
     },
+
+    postcss: {
+      plugins: { 'postcss-custom-properties': { warnings: false } },
+    },
   },
 
   // https://nuxtjs.org/guide/runtime-config
