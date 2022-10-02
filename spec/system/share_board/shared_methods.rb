@@ -80,16 +80,12 @@ module SharedMethods
     find(".room_setup_modal_handle").click
   end
 
-  def assert_system_variable_selector_args(key, value)
-    [".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true]
-  end
-
   def assert_system_variable(key, value)
-    assert_selector(*assert_system_variable_selector_args(key, value))
+    assert_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
   end
 
   def assert_no_system_variable(key, value)
-    assert_no_selector(*assert_system_variable_selector_args(key, value))
+    assert_no_selector(".assert_system_variable .panel-block", text: "#{key}:#{value}", exact_text: true)
   end
 
   def kifu_yomikomi
