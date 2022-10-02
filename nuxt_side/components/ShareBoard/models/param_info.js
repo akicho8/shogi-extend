@@ -14,7 +14,6 @@ export class ParamInfo extends ParamBase {
       { key: "debug_mode_key",       type: "string",  name: "デバッグモード",                defaults: { development: "is_debug_mode_on",        production: "is_debug_mode_off",           }, permanent: false, relation: "DebugModeInfo",       desc: null, },
       { key: "sp_move_cancel_key",   type: "string",  name: "駒移動キャンセル",              defaults: { development: "is_move_cancel_standard", production: "is_move_cancel_standard",     }, permanent: true,  relation: "SpMoveCancelInfo",    desc: null, },
 
-      { key: "move_guard_key",       type: "string",  name: "操作制限",                      defaults: { development: null,                      production: "is_move_guard_on",            }, permanent: false, relation: "MoveGuardInfo",       desc: null, },
       { key: "avatar_king_key",      type: "string",  name: "玉をアバターにする",            defaults: { development: null,                      production: "is_avatar_king_off",          }, permanent: true,  relation: "AvatarKingInfo",      desc: null, },
       { key: "foul_behavior_key",    type: "string",  name: "反則制限モード",                defaults: { development: null,                      production: "is_foul_behavior_auto",       }, permanent: true,  relation: "FoulBehaviorInfo",    desc: null, },
       { key: "tegoto",               type: "integer", name: "N手毎交代",                     defaults: { development: null,                      production: 1,                             }, permanent: false, relation: null,                  desc: null, },

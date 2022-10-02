@@ -37,8 +37,6 @@
           SimpleRadioButtons.avatar_king(:base="base" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="base.new_v.avatar_king_key")
         .column.is-12(v-if="base.debug_mode_p")
           SimpleRadioButtons.tegoto(:base="base" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="base.new_v.tegoto")
-        .column.is-12(v-if="base.debug_mode_p")
-          SimpleRadioButtons.move_guard(:base="base" custom-class="is-small" element_size="is-small" model_name="MoveGuardInfo" :my_value.sync="base.new_v.move_guard_key")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

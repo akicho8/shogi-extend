@@ -94,7 +94,6 @@ export const app_order_main = {
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
-      this.move_guard_key    = params.move_guard_key
       this.avatar_king_key   = params.avatar_king_key
       this.foul_behavior_key = params.foul_behavior_key
       this.tegoto            = params.tegoto
@@ -127,7 +126,6 @@ export const app_order_main = {
       return {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
-        move_guard_key:    this.move_guard_key,
         avatar_king_key:   this.avatar_king_key,
         foul_behavior_key: this.foul_behavior_key,
         tegoto:            this.tegoto,
@@ -139,20 +137,17 @@ export const app_order_main = {
     // 条件 順番設定ON
     // 条件 部屋が立っている
     // 条件 メンバーリストが揃っている
-    // 条件 手番制限ON
     // 条件 自分の手番はないとき
     sp_human_side() {
       let retv = "both"                                          // デフォルトは誰でも動かせる
       if (this.order_enable_p) {                                 // 順番設定が有効かつ
         if (this.ac_room) {                                      // 部屋が立てられていて
-          if (this.move_guard_info.key === "is_move_guard_on") { // 手番制限ありなら
-            retv = "none"                                        // 観戦者含めて全体を「禁止」にする
-            if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
-              retv = "both"
-            } else {
-              if (this.current_turn_self_p) {                    // そのあとで対象者だけを
-                retv = "both"                                    // 指せるようにする
-              }
+          retv = "none"                                        // 観戦者含めて全体を「禁止」にする
+          if (this.self_vs_self_p) {                           // 自分vs自分なら例外的に常時自分にする
+            retv = "both"
+          } else {
+            if (this.current_turn_self_p) {                    // そのあとで対象者だけを
+              retv = "both"                                    // 指せるようにする
             }
           }
         }
