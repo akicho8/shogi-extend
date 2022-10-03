@@ -17,7 +17,6 @@ export class PiyoShogi2 {
   }
   static get __current_info() {
     const v = MyLocalStorage.get("user_settings")
-    Gs2.p(`PiyoShogi2.__current_info -> ${Gs2.i(v)}`)
     let key = "auto"
     if (v) {
       key = v.piyo_shogi_type_key
