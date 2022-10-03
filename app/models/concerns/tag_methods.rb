@@ -16,7 +16,7 @@ module TagMethods
         "ふんどしの桂",
         "継ぎ桂",
       ],
-    }.transform_values { |e| e.collect(&:to_sym) }
+    }
   }
 
   included do

@@ -72,7 +72,7 @@ module Swars
 
           # 「居飛車」という情報は戦型から自明なので戦型も囲いもないときだけ入れる
           if names.blank?
-            names += e.tag_names_for(:note) - (reject_tag_keys[:note] || []).collect(&:to_s)
+            names += e.tag_names_for(:note) - (reject_tag_keys[:note] || [])
           end
 
           names = names.presence || ["その他"]
