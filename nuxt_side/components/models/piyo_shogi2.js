@@ -8,8 +8,11 @@ import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
 export class PiyoShogi2 {
+  static cache_clear() {
+    this.memo_current_info = null
+  }
   static get current_info() {
-    if ("memo_current_info" in this) {
+    if (this.memo_current_info) {
       return this.memo_current_info
     }
     this.memo_current_info = this.__current_info
