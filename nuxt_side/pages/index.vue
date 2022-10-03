@@ -35,7 +35,47 @@
   .footer.when_mobile_footer_scroll_problem_workaround(v-if="config")
     .container
       .columns
-        //- ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
+        .column
+          .title Apps
+          ul
+            template(v-for="e in config")
+              template(v-if="e.display_p && !e.experiment_p")
+                li
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play_click()") {{e.title}}
+
+        .column(v-if="false")
+          .title Experiment
+          ul
+            template(v-for="e in config")
+              template(v-if="e.display_p && e.experiment_p")
+                li
+                  nuxt-link(:to="e.nuxt_link_to" @click.native="sound_play_click()") {{e.title}}
+
+        .column
+          .title About
+          ul
+            li
+              nuxt-link(:to="{path: '/about/privacy-policy'}" @click.native="sound_play_click()") プライバシー
+            li
+              nuxt-link(:to="{path: '/about/terms'}" @click.native="sound_play_click()") 利用規約
+            li
+              nuxt-link(:to="{path: '/about/credit'}" @click.native="sound_play_click()") クレジット
+            li
+              ExternalLink(href="https://twitter.com/sgkinakomochi" beep) 問い合わせ
+
+        .column
+          .title GitHub
+          ul
+            li
+              ExternalLink(href="https://github.com/akicho8/shogi-extend" beep) shogi-extend
+            li
+              ExternalLink(href="https://akicho8.github.io/shogi-player/" beep) shogi-player
+            li
+              ExternalLink(href="https://github.com/akicho8/bioshogi" beep) bioshogi
+            li
+              ExternalLink(href="https://github.com/akicho8/SKK-JISYO.shogi" beep) 将棋用語辞書
+            li
+              ExternalLink(href="https://github.com/akicho8/shogi-mode" beep) shogi-mode.el
 </template>
 
 <script>
