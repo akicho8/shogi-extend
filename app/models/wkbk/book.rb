@@ -230,13 +230,13 @@ module Wkbk
         {
           :title       => "新規 - 問題集",
           :description => description || "",
-          :og_image    => "rack-books",
+          :og_image_key => "rack-books",
         }
       else
         {
           :title       => [title, user.name].join(" - "),
           :description => description || "",
-          :og_image    => og_image_path || "rack-books",
+          :og_image    => og_image_path || "/ogp/rack-books.png",
         }
       end
     end

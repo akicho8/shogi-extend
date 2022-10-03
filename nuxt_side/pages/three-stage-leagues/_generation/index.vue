@@ -16,7 +16,7 @@ export default {
       return {
         title: this.config.page_title,
         description: `奨励会三段リーグの結果を見やすく表示します`,
-        og_image_key: "three-stage-leagues",
+        og_image_key: "three-stage-league",
       }
     },
   },

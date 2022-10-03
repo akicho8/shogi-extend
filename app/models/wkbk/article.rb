@@ -241,16 +241,16 @@ module Wkbk
     def og_meta
       if new_record?
         {
-          :title       => "新規 - 問題",
-          :description => "",
-          :og_image    => "rack-books",
+          :title        => "新規 - 問題",
+          :description  => "",
+          :og_image_key => "rack-books",
         }
       else
         {
           :title       => [title, user.name].find_all(&:present?).join(" - "),
           # :description => description || "",
           :description => direction_message,
-          :og_image    => og_image_path || "rack-books",
+          :og_image    => og_image_path || "/ogp/rack-books.png",
         }
       end
     end

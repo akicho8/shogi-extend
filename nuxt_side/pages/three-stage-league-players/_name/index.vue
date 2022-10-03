@@ -14,7 +14,7 @@ export default {
     meta() {
       return {
         title: [`${this.config.main_user.name}の成績`, "奨励会三段リーグ"],
-        og_image_key: "three-stage-league-players",
+        og_image_key: "three-stage-league-player",
       }
     },
   },
