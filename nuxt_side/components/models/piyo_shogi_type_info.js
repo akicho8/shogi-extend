@@ -10,10 +10,8 @@ export class PiyoShogiTypeInfo extends ApplicationMemoryRecord {
     ]
   }
 
+  // for PiyoShogiButton.vue
   get showable_p() {
-    if (__NUXT__.config.STAGE === "development") {
-      return true
-    }
     return this.showable_p_fn()
   }
 
