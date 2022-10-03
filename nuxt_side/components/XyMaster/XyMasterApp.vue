@@ -568,11 +568,13 @@ export default {
 
   &.is_input_mode_tap
     --sp_board_piece_rate: 76.6%                // セル内の駒の大きさ
-    --sp_piece_opacity: var(--xy_piece_opacity) // ゴーストの濃さ
+    .CustomShogiPlayer
+      .PieceTextureSelf
+        opacity: var(--xy_piece_opacity)        // ゴーストの濃さ
 
     .is_tapped_cell                             // 直前に押されたセル
       background-color: $primary                // 青くする
-      --sp_piece_invert: 1.0                    // 駒の色を反転
+      --sp_piece_invert: 1.0                    // 駒の色を反転(この設定はもうない)
 
   .tweet_box_container
     display: flex
