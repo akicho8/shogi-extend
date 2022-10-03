@@ -1,7 +1,7 @@
 // HOWLER.js
 // https://github.com/goldfire/howler.js#documentation
 
-const SOURCE_TEXT_MAX = 140
+const MESSAGE_LENGTH_MAX = 140
 
 const HOWL_TALK_OPTIONS_DEFAULT = {
   volume: 0.5,
@@ -16,18 +16,18 @@ export const vue_talk = {
     // しゃべる
     // ・tab_is_active_p() のときだけ条件を入れてはいけない
     // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなるため
-    talk(source_text, options = {}) {
-      if (source_text == null) {
+    talk(message, options = {}) {
+      message = String(message ?? "")
+      if (message === "") {
         return
       }
-      Gs2.__assert_kind_of_string__(source_text)
       if (options.validate_length !== false) {
-        if (source_text.length > SOURCE_TEXT_MAX) {
+        if (message.length > MESSAGE_LENGTH_MAX) {
           return
         }
       }
       const params = {
-        source_text: source_text,
+        source_text: message,
       }
       if (this.$route.query.__system_test_now__) {
         SoundUtil.sound_play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
