@@ -1,11 +1,11 @@
 <template lang="pug">
 a.button.PiyoShogiButton.is-small(
+  v-if="PiyoShogi2.current_info.showable_p || $config.STAGE === 'development'"
   :title="piyo_shogi_name"
   v-bind="$attrs"
   v-on="$listeners"
   :target="target_default"
   @click="click_handle"
-  v-if="PiyoShogi2.current_info.showable_p || $config.STAGE === 'development'"
   )
   span.icon
     img.left_icon(src="~/assets/piyo_shogi_icon.png")
