@@ -32,8 +32,9 @@ export const app_order_new = {
       this.__assert__(this.os_modal_instance == null, "this.os_modal_instance == null")
       this.os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
-        props: { base: this.base },
+        props: { },
         canCancel: [],
+        // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
         onCancel: () => {
           this.__assert__(false, "must not happen")
           this.sound_play_click()
