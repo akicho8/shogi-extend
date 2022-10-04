@@ -32,4 +32,11 @@ describe("Xarray", () => {
     expect(Xarray.ary_move(ary, 0, 1)).toEqual(["b", "a", "c"])
     expect(ary).toEqual(["a", "b", "c"])
   })
+  test("ary_rotate", () => {
+    const ary = ["a", "b", "c"]
+    expect(Xarray.ary_rotate(ary)).toEqual(["b", "c", "a"])
+    expect(Xarray.ary_rotate(ary, 2)).toEqual(["c", "a", "b"])
+    expect(Xarray.ary_rotate(ary, -2)).toEqual(["b", "c", "a"])
+    expect(ary).toEqual(["a", "b", "c"])
+  })
 })

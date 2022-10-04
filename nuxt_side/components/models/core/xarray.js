@@ -56,4 +56,20 @@ export const Xarray = {
     ary.splice(to, 0, v)
     return ary
   },
+
+  ary_rotate(ary, n = 1) {
+    ary = [...ary]
+    if (ary.length > 0) {
+      if (n > 0) {
+        for (let i = 0; i < n; i += 1) {
+          ary.push(ary.shift())
+        }
+      } else {
+        for (let i = 0; i < -n; i += 1) {
+          ary.unshift(ary.pop())
+        }
+      }
+    }
+    return ary
+  },
 }

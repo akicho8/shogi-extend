@@ -22,7 +22,7 @@ export class O2State extends OxState {
   }
 
   swap_run() {
-    this.teams = [this.teams[1], this.teams[0]]
+    this.teams = Gs2.ary_rotate(this.teams)
     this.cache_clear()
   }
 
