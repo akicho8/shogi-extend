@@ -149,14 +149,17 @@ export const app_force_sync = {
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
-      this.receive_xsfen(params) // これで current_location が更新される
+      {
+        this.receive_xsfen(params)       // これで current_location が更新される
+        this.se_force_sync()             // 他者は盤面変化に気付かないため音を出す→自分も含めて音出した方が自分にも親切だった
+        if (this.received_from_self(params)) {
+        } else {
+        }
+      }
       if (this.clock_box) {
         this.clock_box.location_to(this.current_location)
       }
       if (params.message) {
-        if (this.received_from_self(params)) {
-        } else {
-        }
         if (params.silent_notify) {
           this.debug_alert("silent_notify")
           this.toast_ok(params.message, {toast_only: true, duration: 1000})

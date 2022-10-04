@@ -103,6 +103,7 @@ import { app_tweet                } from "./app_tweet.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
 import { app_sound_bug            } from "./app_sound_bug.js"
+import { app_sound_effect         } from "./app_sound_effect.js"
 import { app_message              } from "./app_message.js"
 import { app_main_setting         } from "./app_main_setting.js"
 import { app_sound_resume         } from "./app_sound_resume.js"
@@ -165,6 +166,7 @@ export default {
     app_image_dl,
     app_update,
     app_sound_bug,
+    app_sound_effect,
     app_message,
     app_main_setting,
     app_sound_resume,

@@ -65,8 +65,14 @@ export const app_sp = {
       // }
     },
 
+    // ユーザーがコントローラやスライダーで手数を変更した瞬間
+    user_turn_change(v) {
+      this.se_user_turn_change()
+      this.user_turn_change_lazy(v)
+    },
+
     // ユーザーがコントローラやスライダーで操作し終わったら転送する
-    sp_turn_user_changed: _.debounce(function(v) {
+    user_turn_change_lazy: _.debounce(function(v) {
       if (this.ac_room) {
         // https://twitter.com/Sushikuine_24/status/1522370383131062272
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`, {silent_notify: true}))
