@@ -19,6 +19,9 @@ export class O2State extends OxState {
 
   shuffle_core() {
     this.users_allocate(Gs2.ary_shuffle(this.teams.flat()))
+    if (Gs2.irand(this.teams.length) === 0) {
+      this.swap_run()
+    }
   }
 
   swap_run() {
