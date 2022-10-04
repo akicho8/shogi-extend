@@ -144,7 +144,7 @@ export const app_sfen_share = {
       // ・「alice ▲76歩」は常に表示する (反則のときも)
       // ・検討中にサイレント更新されると困る
       // , position: "is-top", type: "is-dark"
-      this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
+      // this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
       // }
     },
     next_turn_call(params) {
