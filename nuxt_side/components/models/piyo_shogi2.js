@@ -15,10 +15,10 @@ export class PiyoShogi2 {
     if (this.memo_current_info) {
       return this.memo_current_info
     }
-    this.memo_current_info = this.__current_info
+    this.memo_current_info = this.__current_info__
     return this.memo_current_info
   }
-  static get __current_info() {
+  static get __current_info__() { // private
     const v = MyLocalStorage.get("user_settings")
     let key = "auto"
     if (v) {
@@ -40,19 +40,19 @@ export class PiyoShogi2 {
   get url() {
     if (this.native_p) {    // モバイル版
       if (this.params.path) {
-        return this.deep_link_url // KIFファイルを渡す方法
+        return this.app_url // KIFファイルを渡す方法
       } else {
-        return this.http_link_url // SFENを引数に渡す方法
+        return this.web_url // SFENを引数に渡す方法
       }
     } else {
-      return this.http_link_url   // SFENを引数に渡す方法
+      return this.web_url   // SFENを引数に渡す方法
     }
   }
 
   //////////////////////////////////////////////////////////////////////////////// private
 
   // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているので format=kif にはできない
-  get deep_link_url() {
+  get app_url() {
     Gs2.__assert__(this.params.path, "this.params.path")
     const url = new URL(Gs3.as_full_url(this.params.path))
 
@@ -67,7 +67,7 @@ export class PiyoShogi2 {
 
   // app, web 自動切り替え
   // 常にSFENを渡す
-  get http_link_url() {
+  get web_url() {
     Gs2.__assert__(this.params.sfen, "this.params.sfen")
     const ordered_keys = ["viewpoint", "num", "sente_name", "gote_name", "game_name", "sfen"]
     return this.params_to_url(this.params, ordered_keys)
