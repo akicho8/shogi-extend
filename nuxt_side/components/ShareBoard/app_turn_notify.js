@@ -9,11 +9,7 @@ export const app_turn_notify = {
       this.tn_counter += 1
       this.debug_alert("(通知効果音)")
       this.sound_play("notification")
-      // this.sound_moo()
       this.vibrate_long()
-    },
-    sound_moo() {
-      this.sound_play_random(["moo1", "moo2", "moo3"])
     },
   },
   computed: {
