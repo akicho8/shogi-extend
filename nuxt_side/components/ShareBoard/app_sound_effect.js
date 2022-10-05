@@ -10,7 +10,6 @@ export const app_sound_effect = {
     // スライダーを自分が動かしたときの音
     se_user_turn_change() {
       this.sound_play_click()
-      this.vibrate_short()
     },
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
     se_force_sync() {
@@ -20,7 +19,6 @@ export const app_sound_effect = {
     // ☗☖をタップして反転したときの音
     se_user_viewpoint_flip() {
       this.sound_play_click()
-      this.vibrate_short()
     },
   },
 }
