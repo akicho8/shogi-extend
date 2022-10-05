@@ -1,5 +1,13 @@
 export const app_sound_effect = {
   methods: {
+    // 意図して持ち上げた
+    se_user_piece_lift() {
+      this.sound_play_click()
+    },
+    // 意図してキャンセルした
+    se_user_piece_cancel() {
+      this.sound_play_click()
+    },
     // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
     se_user_piece_put() {
       this.$nextTick(() => {

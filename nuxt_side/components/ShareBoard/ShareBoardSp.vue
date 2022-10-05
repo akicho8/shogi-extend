@@ -119,6 +119,8 @@ export default {
       hv["user_piece_put"]      = this.base.se_user_piece_put      // 意図して指したとき
       hv["user_viewpoint_flip"] = this.base.se_user_viewpoint_flip // 意図して☗☖をタップして反転させたとき
       hv["user_turn_change"]    = this.base.user_turn_change       // スライダーを動かしたとき
+      hv["user_piece_lift"]     = this.base.se_user_piece_lift     // 意図して持ち上げた
+      hv["user_piece_cancel"]   = this.base.se_user_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
       hv["operation_invalid1"] = this.base.operation_invalid1_handle
