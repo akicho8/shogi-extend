@@ -100,10 +100,6 @@ export const app_sfen_share = {
         this.cc_auto_time_limit_delay_stop()
 
         if (this.user_name === params.next_user_name) {
-          if (this.next_notify_p) {
-            this.tn_notify()    // 「モ〜」
-          }
-
           // 自分vs自分なら視点変更
           if (this.self_vs_self_p) {
             const location = this.current_sfen_info.location_by_offset(params.lmi.next_turn_offset)
@@ -151,6 +147,9 @@ export const app_sfen_share = {
               onend: () => {                                      // 「次は〜」
                 if (params.next_user_name) {
                   if (this.next_notify_p) {
+                    if (this.user_name === params.next_user_name) {
+                      this.tn_notify()
+                    }
                     this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
                     this.toast_ok(this.next_turn_message)
                   }
