@@ -96,7 +96,7 @@ module SharedMethods
   end
 
   def assert_honpu_link_exist
-    assert_selector("a", text: "本譜", exact_text: true)
+    assert_selector("a", text: "本譜", exact_text: true, wait: 60)
   end
 end
 
