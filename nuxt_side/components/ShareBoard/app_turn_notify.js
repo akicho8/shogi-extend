@@ -8,7 +8,8 @@ export const app_turn_notify = {
     tn_notify() {
       this.tn_counter += 1
       this.debug_alert("(通知効果音)")
-      this.sound_moo()
+      this.sound_play("notification")
+      // this.sound_moo()
       this.vibrate_long()
     },
     sound_moo() {

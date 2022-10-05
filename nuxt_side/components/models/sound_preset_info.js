@@ -13,6 +13,7 @@ export class SoundPresetInfo extends ApplicationMemoryRecord {
       { key: "click",                                source: require("@/assets/SND01_sine/tap_03.wav"),       volume: 0.40, },
       { key: "toggle_on",                            source: require("@/assets/SND01_sine/toggle_on.wav"),       volume: 0.40, },
       { key: "toggle_off",                           source: require("@/assets/SND01_sine/toggle_off.wav"),       volume: 0.40, },
+      { key: "notification",                         source: require("@/assets/SND01_sine/notification.wav"),       volume: 0.40, },
 
       // { key: "click2",                               source: require("@/assets/UniversalSoundFX/IMPACTS/Wood/IMPACT_Wood_Plank_On_Wood_Pile_06_Short_mono.wav"),      volume: 0.40, },
       // { key: "click3",                               source: require("@/assets/UniversalSoundFX/USER_INTERFACES/Beeps/UI_Beep_Single_Saw_stereo.wav"),                volume: 0.40, },
