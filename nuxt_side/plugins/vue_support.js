@@ -1,9 +1,10 @@
 // 汎用コード
-import { Gs } from "../components/models/gs.js"
-import { SpUtil } from "../components/models/sp_util.js"
-import { Vibrator } from "../components/models/vibrator.js"
+import { Gs         } from "@/components/models/gs.js"
+import { SpUtil     } from "@/components/models/sp_util.js"
+import { Vibrator   } from "@/components/models/vibrator.js"
+import { WinTab     } from "@/components/models/win_tab.js"
 import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
-import { TimeUtil } from "@/components/models/time_util.js"
+import { TimeUtil   } from "@/components/models/time_util.js"
 
 import twemoji from 'twemoji'
 import _ from "lodash"
@@ -14,6 +15,7 @@ export const vue_support = {
     ...Gs,
     ...SpUtil,
     ...Vibrator,
+    ...WinTab,
     ...TimeUtil,
 
     piyo_shogi_auto_url(params) {
