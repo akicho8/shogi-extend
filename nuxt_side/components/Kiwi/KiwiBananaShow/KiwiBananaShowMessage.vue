@@ -22,7 +22,7 @@
           span.is-size-7.has-text-grey-light.is_line_break_off.mr-1(v-if="false")
             | \#{{banana_message.position}}
           span.is-size-7.has-text-grey-light.is_line_break_off
-            | {{time_format_diff(banana_message.created_at)}}
+            | {{$time.format_diff(banana_message.created_at)}}
           span.is-hidden
             | {{banana_message.id}}
       .level.is-mobile(v-if="false")

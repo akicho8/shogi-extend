@@ -61,7 +61,7 @@ export const app_action_log = {
 
       // その他
       params.from_user_name ??= this.user_name
-      params.performed_at ??= this.time_current_ms()
+      params.performed_at ??= this.$time.current_ms()
 
       // KIF に埋めたいものも合わせて保持しておく
       params.player_names_with_title ??= this.player_names_with_title
@@ -93,14 +93,14 @@ export const app_action_log = {
         turn: i,
         // last_location_key: "white",
         from_user_name: "あいうえお",
-        performed_at: this.time_current_ms(),
+        performed_at: this.$time.current_ms(),
       })
 
       // this.al_add({
       //   label: "foo",
       //   sfen: "position startpos",
       //   turn: 0,
-      //   performed_at: this.time_current_ms(),
+      //   performed_at: this.$time.current_ms(),
       // })
 
     },

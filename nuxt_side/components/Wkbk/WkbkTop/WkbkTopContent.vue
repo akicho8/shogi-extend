@@ -26,7 +26,7 @@
             .title.is_line_break_on.mb-0 {{e.title}}
             .mt-1.is_line_break_on.has-text-grey.is_body.is-size-7
               | {{e.user.name}}
-              span.ml-2 {{time_format_diff(e.updated_at)}}
+              span.ml-2 {{$time.format_diff(e.updated_at)}}
               p
                 b-icon(icon="eye-outline" size="is-small")
                 span.ml-1 {{e.access_logs_count}}

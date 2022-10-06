@@ -35,12 +35,12 @@ export const app_ping = {
       this.ac_room_perform("ping_command", {
         to_user_name: e.from_user_name,
         to_connection_id: e.from_connection_id,
-        ping_at: this.time_current_ms(),
+        ping_at: this.$time.current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     ping_command_broadcasted(params) {
       if (params.to_connection_id === this.connection_id) {
-        const now = this.time_current_ms()
+        const now = this.$time.current_ms()
         this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         const gap = now - params.ping_at
         this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${gap}ms`)
@@ -51,7 +51,7 @@ export const app_ping = {
         to_user_name: params.from_user_name,
         to_connection_id: params.from_connection_id,
         ping_at: params.ping_at,
-        pong_at: this.time_current_ms(),
+        pong_at: this.$time.current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
     pong_command_broadcasted(params) {
@@ -60,7 +60,7 @@ export const app_ping = {
           return
         }
         this.ping_done()
-        const now = this.time_current_ms()
+        const now = this.$time.current_ms()
         const gap = now - params.ping_at
         const sec = this.number_floor(gap / 1000, 3)
         if (this.development_p) {

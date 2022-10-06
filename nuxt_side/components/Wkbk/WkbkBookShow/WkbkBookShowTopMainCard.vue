@@ -21,7 +21,7 @@
           .mt-1.is_line_break_on.has-text-grey.is-size-6
             nuxt-link(:to="{name: 'users-id', params: {id: base.book.user.id}}" @click.native="$sound.play_click()")
               | {{base.book.user.name}}
-            span.ml-2 {{time_format_diff(base.book.updated_at)}}
+            span.ml-2 {{$time.format_diff(base.book.updated_at)}}
 
             b-icon.ml-2(icon="eye-outline" size="is-small")
             span.ml-1 {{base.book.access_logs_count}}

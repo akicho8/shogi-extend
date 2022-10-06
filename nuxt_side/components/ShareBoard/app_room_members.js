@@ -29,7 +29,7 @@ export const app_room_members = {
 
     // ダミーをうめる
     member_add_by_names(names) {
-      // const performed_at = this.time_current_ms()
+      // const performed_at = this.$time.current_ms()
       names.forEach((name, index) => {
         const params = {
           ...this.ac_room_perform_default_params(),
@@ -60,7 +60,7 @@ export const app_room_members = {
     // room_joined_at は古参度でソートするため
     member_info_init() {
       this.alive_notice_count = 0
-      this.room_joined_at = this.time_current_ms()
+      this.room_joined_at = this.$time.current_ms()
     },
 
     // 自分が存在することをみんなに伝える
@@ -148,7 +148,7 @@ export const app_room_members = {
 
     // 通達があってからの経過秒数
     member_elapsed_sec(e) {
-      return (this.time_current_ms() - e.performed_at) / 1000
+      return (this.$time.current_ms() - e.performed_at) / 1000
     },
 
     // 退出

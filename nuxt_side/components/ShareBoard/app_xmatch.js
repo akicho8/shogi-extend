@@ -118,7 +118,7 @@ export const app_xmatch = {
         params = {
           from_connection_id: this.connection_id,      // 送信者識別子
           from_user_name:     this.user_name,          // 送信者名
-          performed_at:       this.time_current_ms(),  // 実行日時(ms)
+          performed_at:       this.$time.current_ms(),  // 実行日時(ms)
           ua_icon_key:            this.ua_icon_key,            // 端末の種類を表すアイコン文字列
           ...params,
         }

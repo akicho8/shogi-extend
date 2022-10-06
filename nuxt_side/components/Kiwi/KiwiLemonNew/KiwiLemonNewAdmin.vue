@@ -44,10 +44,10 @@
       | {{row.recipe_info.name}}
 
     b-table-column(v-slot="{row}" field="created_at" label="登録" sortable)
-      | {{time_format_row(row.created_at)}}
+      | {{$time.format_row(row.created_at)}}
 
     b-table-column(v-slot="{row}" field="processed_at" label="終了" sortable)
-      | {{time_format_row(row.process_end_at)}}
+      | {{$time.format_row(row.process_end_at)}}
 
     b-table-column(v-slot="{row}" field="errored_at" label="エラー" sortable)
       .is_line_break_on.has-text-danger.is-size-7(v-if="row.errored_at")

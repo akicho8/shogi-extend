@@ -133,9 +133,9 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
       //-   b-tag.is-clickable.mr-1(v-for="tag in row.tag_list" @click.native.prevent.stop="base.tag_search_handle(tag)" rounded)
       //-     | {{tag}}
       //-
-      //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時") {{time_format_row(row.created_at)}}
+      //- b-table-column(v-slot="{row}" custom-key="created_at" field="created_at" label="作成日時") {{$time.format_row(row.created_at)}}
       b-table-column(v-slot="{row}" custom-key="updated_at" field="updated_at" label="最終更新" :visible="false")
-        | {{time_format_row(row.article.updated_at)}}
+        | {{$time.format_row(row.article.updated_at)}}
       //-
       //- b-table-column(v-slot="{row}" custom-key="operation" label="" width="1")
       //-   template(v-if="g_current_user && g_current_user.id === row.user.id || development_p")

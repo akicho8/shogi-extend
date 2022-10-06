@@ -49,7 +49,7 @@ export const app_track_log = {
       }
       const params = {
         id: this.track_logs_id,
-        created_at: this.time_current_ms(),
+        created_at: this.$time.current_ms(),
         section,
         message,
         detail_info,

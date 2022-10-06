@@ -43,11 +43,11 @@ export default {
       this.TheSb.member_info_ping_handle(this.member_info)
     },
     seconds_ago(v) {
-      const seconds = Math.ceil((this.time_current_ms() - v) / 1000)
+      const seconds = Math.ceil((this.$time.current_ms() - v) / 1000)
       if (seconds < 60) {
         return `${seconds}秒前`
       } else {
-        return this.time_format_diff(v)
+        return this.$time.format_diff(v)
       }
     },
   },
@@ -83,7 +83,7 @@ export default {
           enabled: true,
           label: "入室日時",
           value: [
-            this.dayjs(this.member_info.room_joined_at).format("hh:mm:ss"),
+            this.$time.create(this.member_info.room_joined_at).format("hh:mm:ss"),
             `(${this.seconds_ago(this.member_info.room_joined_at)})`,
           ].join(" "),
         },

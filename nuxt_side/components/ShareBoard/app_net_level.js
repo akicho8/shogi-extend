@@ -10,7 +10,7 @@ export const app_net_level = {
   methods: {
     // 指定メンバーの入室してからの経過秒数
     member_elapsed_sec_from_join(e) {
-      return (this.time_current_ms() - e.room_joined_at) / MS_PER_SECOND
+      return (this.$time.current_ms() - e.room_joined_at) / MS_PER_SECOND
     },
 
     // 指定メンバーの入室してから1分当たりの接続切れ数

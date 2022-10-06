@@ -1,3 +1,13 @@
+// |---------------------|
+// | dayjs(...args)      |
+// | current_ms()        |
+// | format_row(t)       |
+// | format_diff(t)      |
+// | format_md_or_ymd(t) |
+// | format_ymd(t)       |
+// | format_wday_name(t) |
+// |---------------------|
+
 import dayjs from "dayjs"
 
 import "dayjs/locale/ja.js"
@@ -10,17 +20,17 @@ import relativeTime from "dayjs/plugin/relativeTime"
 dayjs.extend(relativeTime)
 
 export const TimeUtil = {
-  dayjs(...args) {
+  create(...args) {
     return dayjs(...args)
   },
 
-  time_current_ms() {
+  current_ms() {
     return dayjs().valueOf()
   },
 
   // テーブル内の行で表示する用
   // https://day.js.org/docs/en/parse/string-format
-  time_format_row(t) {
+  format_row(t) {
     if (this.blank_p(t)) {
       return ""
     }
@@ -37,11 +47,11 @@ export const TimeUtil = {
   },
 
   // 「N分前」形式
-  time_format_diff(t) {
+  format_diff(t) {
     return dayjs(t).fromNow()
   },
 
-  time_format_md_or_ymd(t) {
+  format_md_or_ymd(t) {
     let format = "YYYY-MM-DD"
     const time = dayjs(t)
     if (time.year() === dayjs().year()) {
@@ -50,11 +60,11 @@ export const TimeUtil = {
     return time.format(format)
   },
 
-  time_format_ymd(t) {
+  format_ymd(t) {
     return dayjs(t).format("YYYY-MM-DD")
   },
 
-  time_format_wday_name(t) {
+  format_wday_name(t) {
     return dayjs(t).format("ddd")
   },
 }
