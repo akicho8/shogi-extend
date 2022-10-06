@@ -13,7 +13,7 @@ export const app_xitems = {
 
   methods: {
     play_start() {
-      this.sound_play("start")
+      this.$sound.play("start")
       this.mode_set("running")
 
       // 範囲外なら0に戻す
@@ -37,12 +37,12 @@ export const app_xitems = {
     },
 
     skip_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.next_process()
     },
 
     previous_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.next_process(-1)
     },
 
@@ -60,7 +60,7 @@ export const app_xitems = {
     goal_check() {
       this.__assert__(!this.current_xitem)
       this.mode_set("standby")
-      this.sound_play("win")
+      this.$sound.play("win")
       this.re_ox_stop()
     },
 
@@ -82,7 +82,7 @@ export const app_xitems = {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
         } else {
           this.toast_ok("正解")
-          this.sound_play("o")
+          this.$sound.play("o")
         }
       } else {
         // 不正解
@@ -90,7 +90,7 @@ export const app_xitems = {
     },
 
     description_open_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.description_open_p = !this.description_open_p
     },
   },

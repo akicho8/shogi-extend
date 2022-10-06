@@ -15,11 +15,11 @@ b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
         v-model="xxx_value"
         :min="min"
         :max="max"
-        @input="sound_play_click()"
+        @input="$sound.play_click()"
         :disabled="!xxx_enabled"
         expanded
         )
-      b-select(v-model="xxx_compare" @input="sound_play_click()" :disabled="!xxx_enabled" :size="base.input_element_size")
+      b-select(v-model="xxx_compare" @input="$sound.play_click()" :disabled="!xxx_enabled" :size="base.input_element_size")
         option(v-for="e in base.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     switch_handle(v) {
-      this.sound_play_toggle(v)
+      this.$sound.play_toggle(v)
       if (v) {
         this.talk(this.label)
       }

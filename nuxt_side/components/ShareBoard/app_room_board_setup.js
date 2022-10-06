@@ -13,7 +13,7 @@ export const app_room_board_setup = {
       this.tl_add("情報要求受信", `${params.from_user_name} -> ${this.user_name}`, params)
       // this.tl_alert(`${this.user_call_name(params.from_user_name)}が入室しました`)
       if (this.development_p) {
-        this.sound_play("pon")
+        this.$sound.play("pon")
       }
       this.clog(`${params.from_connection_id} が要求`)
       if (this.received_from_self(params)) {

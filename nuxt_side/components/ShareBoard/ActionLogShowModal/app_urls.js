@@ -8,7 +8,7 @@ export const app_urls = {
   methods: {
     // 棋譜コピー
     kifu_copy_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.general_kifu_copy(this.action_log.sfen, {
         to_format: "kif",
         turn: this.new_turn,
@@ -19,7 +19,7 @@ export const app_urls = {
 
     // 棋譜リンクコピー
     room_code_except_url_copy_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       const success_message = "棋譜再生用のリンクをコピーしました"
       this.clipboard_copy({text: this.room_code_except_url, success_message: success_message})
       this.base.shared_al_add_simple("棋譜リンクコピー")
@@ -37,7 +37,7 @@ export const app_urls = {
 
     // 指定の棋譜を表示
     kifu_show_handle(e) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.window_popup(this.kifu_show_url(e))
       this.base.shared_al_add_simple("棋譜表示")
     },
@@ -54,7 +54,7 @@ export const app_urls = {
     // 指定の棋譜をダウンロード
     kifu_download_handle(e) {
       if (typeof window !== 'undefined') {
-        this.sound_play_click()
+        this.$sound.play_click()
         window.location.href = this.kifu_download_url(e)
         this.base.shared_al_add_simple("棋譜ダウンロード")
       }

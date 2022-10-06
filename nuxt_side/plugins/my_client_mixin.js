@@ -20,8 +20,6 @@ import { vue_mounted_next      } from "./vue_mounted_next.js"
 import { vue_support_nuxt_side } from "./vue_support_nuxt_side.js"
 import { vue_talk              } from "./vue_talk.js"
 
-import { SoundUtil } from "@/components/models/sound_util.js"
-
 if (!Vue.__client_js_mixin__) {
   Vue.__client_js_mixin__ = true
   Vue.mixin({
@@ -34,8 +32,5 @@ if (!Vue.__client_js_mixin__) {
       vue_support_nuxt_side,
       vue_talk,
     ],
-    methods: {
-      ...SoundUtil,
-    },
   })
 }

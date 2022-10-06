@@ -29,7 +29,7 @@
             | Photo by {{author}}
           .xxx_items
             template(v-for="e in list")
-              .is-size-7.is_line_break_on(v-html="auto_link(e.photo_url, {truncate: 140})" @click="sound_play_click()")
+              .is-size-7.is_line_break_on(v-html="auto_link(e.photo_url, {truncate: 140})" @click="$sound.play_click()")
 
   template(v-if="false")
     .section_title BOT TEXTURE
@@ -53,7 +53,7 @@
           .xxx_items
             .xxx_item(v-for="record in list")
               ExternalLink.is-block(beep :href="record.source_url") {{record.name}}
-              //- .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="sound_play_click()")
+              //- .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="$sound.play_click()")
 
   .section_title PROGRAM
   ul
@@ -113,7 +113,7 @@ export default {
 
   methods: {
     back_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.back_to()
     },
     click_handle() {

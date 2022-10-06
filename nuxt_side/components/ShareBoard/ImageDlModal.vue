@@ -4,7 +4,7 @@
     .modal-card-title 画像ダウンロード
     ShareBoardColorThemeDropdown(:base="base")
 
-    b-dropdown.image_size_key_dropdown(v-model="base.image_size_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" @change="base.image_size_key_change_handle")
+    b-dropdown.image_size_key_dropdown(v-model="base.image_size_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" @change="base.image_size_key_change_handle")
       template(#trigger)
         b-button(:label="base.image_size_info.name" icon-right="menu-down" size="is-small")
       template(v-for="e in base.ImageSizeInfo.values")
@@ -39,11 +39,11 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
     download_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.image_dl_run()
     },
   },

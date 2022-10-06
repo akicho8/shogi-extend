@@ -65,16 +65,16 @@ export default {
     op_click_handle(e) {
       if (this.current_op !== e.key) {
         this.current_op = e.key
-        this.sound_play_click()
+        this.$sound.play_click()
         this.talk(e.yomiage)
       }
     },
     add_handle(tag) {
-      this.sound_play_toggle(true)
+      this.$sound.play_toggle(true)
       this.talk(tag)
     },
     remove_handle(tag) {
-      this.sound_play_toggle(false)
+      this.$sound.play_toggle(false)
     },
   },
   computed: {

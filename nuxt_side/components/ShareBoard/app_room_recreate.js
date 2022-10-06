@@ -16,7 +16,7 @@ export const app_room_recreate = {
     room_recreate_modal_handle() {
       if (this.if_room_is_empty()) { return }
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: RoomRecreateModal,
         props: { base: this.base },

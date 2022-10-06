@@ -5,7 +5,7 @@ export const app_player_names = {
   methods: {
     // メンバーの名前をコピーする
     player_names_copy_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.simple_clipboard_copy(this.player_names_with_title_as_human_text)
     },
   },

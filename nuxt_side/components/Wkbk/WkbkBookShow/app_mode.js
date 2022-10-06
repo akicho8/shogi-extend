@@ -12,16 +12,16 @@ export const app_mode = {
 
     quit_handle() {
       if (this.is_running_p) {
-        this.sound_stop_all()
+        this.$sound.stop_all()
         this.talk("途中で辞めました")
-        this.sound_play_click()
+        this.$sound.play_click()
         this.mode_set("standby")
         this.re_ox_stop()
       }
     },
 
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.mode_set("standby")
     },
   },

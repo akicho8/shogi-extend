@@ -102,7 +102,7 @@ export default {
   ],
   methods: {
     main_switch_handle(v) {
-      this.sound_play_toggle(v)
+      this.$sound.play_toggle(v)
       this.base.cc_main_switch_set(v)
       if (v) {
         this.delay_block(1, () => {
@@ -111,7 +111,7 @@ export default {
       }
     },
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
     play_handle() {
@@ -127,7 +127,7 @@ export default {
     },
     play_core_handle() {
       this.__assert__(!this.clock_box)
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.cc_params_apply()
       this.base.cc_play_handle()
       this.base.clock_box_share({behaviour: "開始"})
@@ -136,7 +136,7 @@ export default {
       }
     },
     pause_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.cc_pause_handle()
       this.base.clock_box_share({behaviour: "一時停止"})
       if (this.base.ac_room && this.base.order_enable_p) {
@@ -144,7 +144,7 @@ export default {
       }
     },
     stop_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.instance.pause_or_play_p) {
         this.base.cc_stop_handle()
         this.base.clock_box_share({behaviour: "停止"})
@@ -153,7 +153,7 @@ export default {
       }
     },
     resume_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.cc_resume_handle()
       this.base.clock_box_share({behaviour: "再開"})
       if (this.base.auto_close_p) {
@@ -161,7 +161,7 @@ export default {
       }
     },
     save_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.cc_params_apply()
       this.toast_ok("反映しました")
     },
@@ -174,7 +174,7 @@ export default {
       }
     },
     cc_unique_mode_set_handle(value) {
-      this.sound_play_toggle(value)
+      this.$sound.play_toggle(value)
       this.base.cc_unique_mode_set(value)
     },
   },

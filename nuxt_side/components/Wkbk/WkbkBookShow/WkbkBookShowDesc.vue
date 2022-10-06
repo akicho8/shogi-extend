@@ -20,8 +20,8 @@ export default {
   mixins: [support_child],
   methods: {
     submit_handle() {
-      this.sound_stop_all()
-      this.sound_play_click()
+      this.$sound.stop_all()
+      this.$sound.play_click()
       this.$emit("close")
     },
   },

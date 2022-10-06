@@ -36,7 +36,7 @@ export default {
   inject: ["TheSb"],
   methods: {
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
     ping_handle() {

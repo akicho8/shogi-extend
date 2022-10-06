@@ -25,7 +25,7 @@ export const app_update = {
     },
     reload_modal_handle() {
       this.talk(MESSAGE)
-      this.sound_stop_all()
+      this.$sound.stop_all()
       this.dialog_alert({
         message: MESSAGE,
         onConfirm: () => this.force_reload(),

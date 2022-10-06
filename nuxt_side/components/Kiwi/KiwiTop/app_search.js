@@ -10,22 +10,22 @@ export const app_search = {
   },
   methods: {
     search_preset_handle(e) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.router_push({search_preset_key: e.key, page: null, tag: null})
     },
     tag_click_handle(tag) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(tag)
       tag = this.tags_add(this.tag, tag).join(",")
       this.router_push({tag})
     },
     tag_remove_handle(tag) {
-      this.sound_play_click()
+      this.$sound.play_click()
       tag = this.tags_remove(this.tag, tag).join(",")
       this.router_push({tag})
     },
     search_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.router_push({})
     },
   },

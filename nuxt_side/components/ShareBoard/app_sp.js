@@ -11,7 +11,7 @@ export const app_sp = {
 
   methods: {
     // internal_rule_input_handle() {
-    //   this.sound_play_click()
+    //   this.$sound.play_click()
     // },
 
     // 操作モードで指したときmovesあり棋譜(URLに反映する)
@@ -89,7 +89,7 @@ export const app_sp = {
     operation_invalid1_handle() {
       this.debug_alert("手番が違うのに操作しようとした")
       if (this.order_enable_p) {
-        this.sound_play("x")
+        this.$sound.play("x")
         const messages = []
         const name = this.current_turn_user_name
         if (this.blank_p(name)) {
@@ -117,7 +117,7 @@ export const app_sp = {
     // 自分が手番だが相手の駒を動かそうとした
     operation_invalid2_handle() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
-      this.sound_play("x")
+      this.$sound.play("x")
       if (this.development_p) {
         this.toast_ok("それは相手の駒です")
       }

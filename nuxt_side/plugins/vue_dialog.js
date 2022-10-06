@@ -16,8 +16,8 @@ export const vue_dialog = {
         type: `is-${options.type}`,
         // hasIcon: true,
         message: message,
-        onConfirm: () => { this.sound_play_click() },
-        onCancel:  () => { this.sound_play_click() },
+        onConfirm: () => { this.$sound.play_click() },
+        onCancel:  () => { this.$sound.play_click() },
       })
     },
 
@@ -90,7 +90,7 @@ export const vue_dialog = {
         if (bs_error.board) {
           message += `<div class="mb-0 error_message_pre has-background-white-ter box is-shadowless">${bs_error.board}</div>`
         }
-        this.sound_play("x")
+        this.$sound.play("x")
         this.error_message_dialog(message)
       }
     },
@@ -145,7 +145,7 @@ export const vue_dialog = {
         hasModalCard: true,
         animation: "",
         canCancel: ["outside", "escape"],
-        onCancel: () => this.sound_play_click(),
+        onCancel: () => this.$sound.play_click(),
         ...params,
       })
     },
@@ -157,10 +157,10 @@ export const vue_dialog = {
         cancelText: "キャンセル",
         animation: "",
         inputAttrs: { type: "text", value: "", required: false },
-        onCancel: () => this.sound_play_click(),
+        onCancel: () => this.$sound.play_click(),
         onConfirm: value => {
           this.debug_alert(value)
-          this.sound_play_click()
+          this.$sound.play_click()
         },
         ...params,
       })
@@ -172,8 +172,8 @@ export const vue_dialog = {
         message: "本当にもよいですか？",
         cancelText: "キャンセル",
         animation: "",
-        onCancel: () => this.sound_play_click(),
-        onConfirm: () => this.sound_play_click(),
+        onCancel: () => this.$sound.play_click(),
+        onConfirm: () => this.$sound.play_click(),
         ...params,
       })
     },
@@ -183,8 +183,8 @@ export const vue_dialog = {
         animation: "",
         confirmText: "OK",
         onConfirm: () => {
-          this.sound_stop_all()
-          this.sound_play_click()
+          this.$sound.stop_all()
+          this.$sound.play_click()
         },
         ...params,
       })

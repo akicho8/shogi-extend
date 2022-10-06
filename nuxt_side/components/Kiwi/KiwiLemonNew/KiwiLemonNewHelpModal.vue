@@ -22,7 +22,7 @@ export default {
   ],
   methods: {
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
   },

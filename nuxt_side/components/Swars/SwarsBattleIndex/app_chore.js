@@ -4,7 +4,7 @@ import _ from "lodash"
 export const app_chore = {
   methods: {
     kifu_copy_handle(row) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.kif_clipboard_copy_from_url(`${row.show_path}.kif`)
     },
 
@@ -22,13 +22,13 @@ export const app_chore = {
     },
 
     kifu_save_handle(row) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     },
 
     home_bookmark_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$buefy.dialog.alert({
         title: "ホーム画面に追加",
         message: `
@@ -38,14 +38,14 @@ export const app_chore = {
         canCancel: ["outside", "escape"],
         confirmText: "わかった",
         type: 'is-info',
-        onConfirm: () => this.sound_play_click(),
-        onCancel:  () => this.sound_play_click(),
+        onConfirm: () => this.$sound.play_click(),
+        onCancel:  () => this.$sound.play_click(),
       })
     },
 
     external_app_handle(info) {
       if (this.xi.current_swars_user_key) {
-        this.sound_play_click()
+        this.$sound.play_click()
         MyLocalStorage.set("external_app_setup", true)
         this.$router.push({
           name: 'swars-users-key-direct-open-external_app_key',
@@ -60,7 +60,7 @@ export const app_chore = {
     // 棋譜ダウンロード
     zip_dl_handle(e) {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
 
       this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
 

@@ -43,7 +43,7 @@ export const app_room_setup = {
   methods: {
     room_setup_modal_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: RoomSetupModal,
         props: { base: this.base },
@@ -223,7 +223,7 @@ export const app_room_setup = {
     ////////////////////////////////////////////////////////////////////////////////
     if_room_is_empty() {
       if (this.blank_p(this.ac_room)) {
-        this.sound_play_click()
+        this.$sound.play_click()
         this.toast_warn("まず部屋を立てよう")
         return true
       }

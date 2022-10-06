@@ -107,11 +107,11 @@ export default {
       this.$fetch()
     },
     submit_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.router_push({})
     },
     xtag_input_handle(v) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(v || "指定なし")
     },
   },

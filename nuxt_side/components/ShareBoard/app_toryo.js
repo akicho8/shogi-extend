@@ -4,7 +4,7 @@ export const app_toryo = {
   methods: {
     // 投了確認モーダル発動
     toryo_confirm_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: ToryoConfirmModal,
         props: { base: this.base },

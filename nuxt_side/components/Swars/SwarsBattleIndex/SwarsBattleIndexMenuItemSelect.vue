@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(this.query_preset_info.name)
       this.remote_notify({subject: "プリセット", body: this.query_preset_info.name})
     },

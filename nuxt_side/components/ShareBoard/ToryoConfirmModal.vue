@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     toryo_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
       if (!this.base.toryo_button_show_p) {
         this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
@@ -55,7 +55,7 @@ export default {
       this.base.toryo_run_from_modal()
     },
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
   },

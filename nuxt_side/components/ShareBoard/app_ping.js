@@ -20,7 +20,7 @@ export const app_ping = {
     // メンバーをタップしたとき
     // --> SbMemberList.vue
     member_info_ping_handle(e) {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.ping_running_p) {
         this.toast_warn("応答待ち")
         return

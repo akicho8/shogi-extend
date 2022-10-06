@@ -5,7 +5,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export const app_link_to = {
   methods: {
     show_handle(row) {
-      this.sound_play_click()
+      this.$sound.play_click()
       const params = {}
       params.viewpoint = row.memberships[0].location_key
       if (this.layout_info.key === "is_layout_board") {

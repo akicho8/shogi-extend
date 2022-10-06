@@ -35,8 +35,8 @@ export const app_help = {
     // private
 
     help_dialog_cancel_process() {
-      this.sound_stop_all()
-      this.sound_play_click()
+      this.$sound.stop_all()
+      this.$sound.play_click()
     },
   },
 }

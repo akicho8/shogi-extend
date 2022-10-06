@@ -1,5 +1,5 @@
 <template lang="pug">
-b-dropdown.ShareBoardColorThemeDropdown(v-model="base.color_theme_key" @active-change="e => e && sound_play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
+b-dropdown.ShareBoardColorThemeDropdown(v-model="base.color_theme_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
   template(#trigger)
     b-button(:label="base.color_theme_info.name" icon-right="menu-down" size="is-small")
   template(v-for="e in base.ColorThemeInfo.values")

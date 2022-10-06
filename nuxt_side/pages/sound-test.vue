@@ -8,7 +8,7 @@
     .container.is-fluid
       .buttons
         template(v-for="e of SoundPresetInfo.values")
-          b-button(@click="sound_play(e.key)") {{e.key}}
+          b-button(@click="$sound.play(e.key)") {{e.key}}
 
       .box
         p Howler
@@ -36,7 +36,6 @@
 
 <script>
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
-// import { Howler } from "howler"
 
 export default {
   name: "sound-test",
@@ -51,7 +50,7 @@ export default {
   },
   methods: {
     row_play(row) {
-      this.sound_play(row.key, {volume: this.volumes[row.key]})
+      this.$sound.play(row.key, {volume: this.volumes[row.key]})
     },
     all_play() {
       SoundPresetInfo.values.forEach(e => this.row_play(e))
@@ -59,7 +58,7 @@ export default {
   },
   computed: {
     SoundPresetInfo() { return SoundPresetInfo },
-     Howler() { return Howler      },
+    Howler() { return Howler      },
   },
 }
 </script>

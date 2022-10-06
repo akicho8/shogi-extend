@@ -66,7 +66,7 @@ export default {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
     main_switch_handle(v) {
-      this.sound_play_toggle(v)
+      this.$sound.play_toggle(v)
       this.TheSb.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
@@ -81,13 +81,13 @@ export default {
       if (this.TheSb.os_modal_close_if_not_save_p) {
         this.TheSb.os_modal_close_confirm({
           onConfirm: () => {
-            this.sound_play_click()
+            this.$sound.play_click()
             this.direct_close_handle()
           },
         })
         return
       }
-      this.sound_play_click()
+      this.$sound.play_click()
       this.direct_close_handle()
     },
 
@@ -97,13 +97,13 @@ export default {
     },
 
     test_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.tn_notify()
     },
 
     // シャッフル
     shuffle_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.new_v.order_unit.shuffle_core()
       this.TheSb.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
     },
@@ -117,7 +117,7 @@ export default {
         shakashaka_count: this.$route.query.shakashaka_count,
       })
       const prefix = `振り駒をした結果、${furigoma_pack.message}`
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.TheSb.new_v.order_unit.first_user(this.TheSb.start_color)
       Gs2.__assert__(user != null, "user != null")
@@ -128,7 +128,7 @@ export default {
     // 先後入替
     swap_handle() {
       if (this.invalid_case2("先後入替")) { return }
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.new_v.order_unit.swap_run()
       this.TheSb.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
     },
@@ -137,7 +137,7 @@ export default {
     invalid_case1() {
       const messages = this.TheSb.new_v.order_unit.error_messages
       if (Gs2.present_p(messages)) {
-        this.sound_play("x")
+        this.$sound.play("x")
         messages.forEach(e => this.toast_warn(e))
         return true
       }
@@ -146,7 +146,7 @@ export default {
     // 偶数人数であること
     invalid_case2(name) {
       if (!this.TheSb.new_v.order_unit.swap_enable_p) {
-        this.sound_play("x")
+        this.$sound.play("x")
         this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
       }
@@ -155,7 +155,7 @@ export default {
     // 反映
     apply_handle() {
       if (this.invalid_case1()) { return }
-      this.sound_play_click()
+      this.$sound.play_click()
       if (!this.TheSb.new_v.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
         return
@@ -165,13 +165,13 @@ export default {
     },
 
     hint_handle(model) {
-      this.sound_stop_all()
-      this.sound_play_click()
+      this.$sound.stop_all()
+      this.$sound.play_click()
       this.toast_ok(model.hint_messages.join(""), {duration: 1000 * 7})
     },
 
     state_toggle_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.new_v.order_unit.state_toggle()
     },
   },

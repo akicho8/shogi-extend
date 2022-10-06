@@ -26,31 +26,31 @@ export const vue_talk = {
           return
         }
       }
+      if (this.$route.query.__system_test_now__) {
+        SoundUtil.play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
+        return
+      }
       const params = {
         source_text: message,
-      }
-      if (this.$route.query.__system_test_now__) {
-        SoundUtil.sound_play_now({...HOWL_TALK_OPTIONS_DEFAULT, ...options})
-        return
       }
       return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
         if (e.browser_path == null) {
           return Promise.reject("browser_path is blank")
         }
-        this.talk_sound_play(e, options) // onend にフックできればいいので戻値不要
+        this.talk_play(e, options) // onend にフックできればいいので戻値不要
       })
     },
 
     // private
 
-    talk_sound_play(e, options = {}) {
+    talk_play(e, options = {}) {
       // https://github.com/goldfire/howler.js#documentation
       options = {
         src: e.browser_path,
         ...HOWL_TALK_OPTIONS_DEFAULT,
         ...options,
       }
-      SoundUtil.sound_play_now(options) // 戻値不要
+      SoundUtil.play_now(options) // 戻値不要
     },
   },
 }

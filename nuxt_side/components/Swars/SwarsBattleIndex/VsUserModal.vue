@@ -43,18 +43,18 @@ export default {
       this.desktop_focus_to(this.$refs.main_input_tag)
     },
     toggle_handle(str) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.input_body = this.tags_str_toggle(this.input_body, str)
       if (this.input_body.length >= 1) {
         this.input_body += " "
       }
     },
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
     apply_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.vs_user_keys_remember(this.input_body)
       this.base.vs_user_research_handle(this.input_body)
       this.$emit("close")

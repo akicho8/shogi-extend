@@ -287,7 +287,7 @@ export default {
     // 盤面のみ最初の状態に戻す
     reset_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.current_sfen = this.config.record.sfen_body        // 渡している棋譜
       this.current_turn = this.config.record.initial_turn     // 現在の手数
       this.toast_ok("局面をいっちばん最初にここに来たときの状態に戻しました")

@@ -40,14 +40,14 @@ export default {
   methods: {
     // キャンセル
     cancel_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       // this.$router.push({name: "users-id", params: {id: this.g_current_user.id}})
       this.back_to()
     },
 
     // 保存
     async save_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
 
       const retv = await this.$axios.$put("/api/settings/email_update", {email: this.new_email})
       this.xnotice_run_all(retv)

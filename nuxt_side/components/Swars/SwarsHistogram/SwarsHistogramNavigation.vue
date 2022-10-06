@@ -10,7 +10,7 @@
             tag="nuxt-link"
             :to="{...item.to, query: {}}"
             :class="{'is-active': item.to.params.key === $route.params.key}"
-            @click.native="sound_play_click()")
+            @click.native="$sound.play_click()")
             | {{item.title}}
   .column
     .level.is-mobile.mb-0
@@ -27,7 +27,7 @@
                 nuxt-link.px-1(
                   :to="{name: $route.name, params: $route.params, query: {...$route.query, max: max}}"
                   :class="{'has-text-weight-bold': current_max === max}"
-                  @click.native="sound_play_click()")
+                  @click.native="$sound.play_click()")
                   | {{max}}
 </template>
 

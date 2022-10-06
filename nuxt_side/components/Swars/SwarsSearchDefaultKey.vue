@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     set_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.remote_notify({emoji: ":得:", subject: `ウォーズID記憶設定 ${this.new_key}`, body: "覚えました"})
@@ -61,7 +61,7 @@ export default {
       }
     },
     unset_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.remote_notify({subject: `ウォーズID記憶消去 ${this.new_key}`, body: "忘れました"})
@@ -71,7 +71,7 @@ export default {
       }
     },
     back_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
     },
   },

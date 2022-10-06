@@ -27,7 +27,7 @@ export const app_table = {
     },
 
     sort_handle(sort_column, sort_order) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.router_push({sort_column, sort_order})
     },
   },

@@ -81,7 +81,7 @@ export const app_clock_box_time_limit = {
     // 時間切れモーダル発動
     time_limit_modal_handle(time_limit_key) {
       this.tl_alert("時間切れモーダル起動完了")
-      this.sound_play("lose")         // ちーん
+      this.$sound.play("lose")         // ちーん
 
       this.time_limit_modal_close()
       this.time_limit_modal_instance = this.modal_card_open({
@@ -91,7 +91,7 @@ export const app_clock_box_time_limit = {
           time_limit_key: time_limit_key,
         },
         onCancel: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.time_limit_modal_close()
         },
       })

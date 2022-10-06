@@ -19,7 +19,7 @@ export default {
   inject: ["TheSb"],
   methods: {
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.TheSb.foul_modal_close()
       this.$emit("close")
     },

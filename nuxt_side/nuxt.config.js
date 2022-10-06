@@ -212,14 +212,11 @@ const config = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    // client only
-    { src: "~/plugins/client.js",     mode: "client" },
-    { src: "~/plugins/chart_init.js", mode: "client" },
-
-    // 両方
-    "~/plugins/axios.js",
-    "~/plugins/universal.js",
-    "~/plugins/my_plugin.js",
+    { src: "~/plugins/my_client_mixin.js",  mode: "client" },
+    { src: "~/plugins/my_client_plugin.js", mode: "client" },
+    { src: "~/plugins/my_chart_init.js",    mode: "client" },
+    { src: "~/plugins/axios.js",                           },
+    { src: "~/plugins/universal.js",                       },
   ],
   /*
   ** Auto import components

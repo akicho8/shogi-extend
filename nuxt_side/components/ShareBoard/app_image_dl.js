@@ -5,7 +5,7 @@ export const app_image_dl = {
   methods: {
     image_dl_modal_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: ImageDlModal,
         props: { base: this.base },
@@ -13,7 +13,7 @@ export const app_image_dl = {
     },
 
     image_size_key_change_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.color_theme_loading_start()
     },
 

@@ -10,26 +10,26 @@ export const app_urls = {
       this.__assert__(this.present_p(this.room_code), "this.present_p(this.room_code)")
       if (this.blank_p(this.room_code)) {
         // ここは通らないはず
-        this.sound_play_click()
+        this.$sound.play_click()
         this.toast_warn("まだ合言葉を設定してません")
         return
       }
 
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.clipboard_copy({text: this.room_code_only_url, success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.clipboard_copy({text: this.room_code_except_url, success_message: "棋譜再生用のリンクをコピーしました"})
     },
 
     other_app_click_handle(app_name) {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.ga_click(app_name)
       this.remote_notify({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 

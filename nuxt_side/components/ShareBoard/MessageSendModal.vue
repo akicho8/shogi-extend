@@ -8,7 +8,7 @@
         | チャット
     b-button.test_button(type="is-small" @click="test_handle" v-if="development_p") 追加
     b-field(v-if="base.message_scope_dropdown_show_p")
-      b-dropdown(animation="" position="is-bottom-left" v-model="base.message_scope_key" @active-change="e => e && sound_play_click()" @change="change_handle")
+      b-dropdown(animation="" position="is-bottom-left" v-model="base.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
         template(#trigger)
           b-button.message_scope_dropdown(icon-right="dots-vertical" size="is-small")
         template(v-for="e in base.MessageScopeInfo.values")
@@ -40,15 +40,15 @@ export default {
   },
   methods: {
     close_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.$emit("close")
     },
     test_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.ml_add_test()
     },
     change_handle(key) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(this.base.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
@@ -62,13 +62,13 @@ export default {
           this.close_handle()
           return
         } else {
-          this.sound_play("x")
+          this.$sound.play("x")
           this.base.message_body = ""
           this.input_focus()
           return
         }
       }
-      this.sound_play_click()
+      this.$sound.play_click()
       this.base.message_share({message: this.base.message_body, message_scope_key: this.base.message_scope_info.key})
       this.base.message_body = ""
       this.input_focus()

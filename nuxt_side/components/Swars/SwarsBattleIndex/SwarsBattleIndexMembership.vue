@@ -10,7 +10,7 @@
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
       template(v-if="base.column_visible_p(key)")
         template(v-for="name in membership[key]")
-          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="sound_play_click()")
+          nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")
             b-tag(rounded) {{name}}
 </template>
 

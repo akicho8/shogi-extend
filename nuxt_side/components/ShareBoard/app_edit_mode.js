@@ -19,7 +19,7 @@ export const app_edit_mode = {
         type: "is-danger",
         hasIcon: false,
         onConfirm: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.shared_al_add({label: "局面編集前"})
           this.sp_run_mode = "edit_mode"
         },
@@ -29,7 +29,7 @@ export const app_edit_mode = {
     // 編集モード
     edit_mode_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.ac_room) {
         this.edit_warn_modal_handle()
         return
@@ -41,7 +41,7 @@ export const app_edit_mode = {
     // 編集完了
     play_mode_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       // 編集モードの最後のSFENを play_mode の sfen に戻す
       if (this.edit_mode_sfen) {
         this.current_sfen = this.edit_mode_sfen
@@ -59,7 +59,7 @@ export const app_edit_mode = {
 
     // 玉配置/玉回収
     king_formation_auto_set(v) {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.sp_king_formation_auto_set_on_off(v)) {
         this.sp_piece_box_piece_counts_adjust() // 玉が増える場合があるので駒箱を調整する
       } else {

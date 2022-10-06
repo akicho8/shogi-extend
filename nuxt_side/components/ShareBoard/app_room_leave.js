@@ -4,7 +4,7 @@ export const app_room_leave = {
     room_entry_call(params) {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
-      this.sound_play("room_entry")
+      this.$sound.play("room_entry")
       this.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
 
       this.delay_block(3, () => {
@@ -20,7 +20,7 @@ export const app_room_leave = {
     // 退室時のエフェクト
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
-      this.sound_play("room_leave")
+      this.$sound.play("room_leave")
       this.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
     },
 

@@ -42,7 +42,7 @@ export const app_chore = {
     // 視点設定変更
     abstract_viewpoint_key_select_modal_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: AbstractViewpointKeySelectModal,
         props: { base: this.base },
@@ -52,13 +52,13 @@ export const app_chore = {
     // タイトル編集
     title_edit_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.dialog_prompt({
         title: "タイトル",
         confirmText: "更新",
         inputAttrs: { type: "text", value: this.current_title, required: false },
         onConfirm: value => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.current_title_set(value)
         },
       })
@@ -80,7 +80,7 @@ export const app_chore = {
 
     // ホームアイコンを押してトップに戻る
     exit_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.exit_warning_p) {
         this.run_or_room_out_confirm(() => this.room_destroy())
         return
@@ -94,7 +94,7 @@ export const app_chore = {
 
     // 外に出るときはこれをかます
     run_or_room_out_confirm(block = () => {}) {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.exit_warning_p) {
         this.room_out_confirm_dialog(block)
         return
@@ -111,11 +111,11 @@ export const app_chore = {
         confirmText: "退室する",
         focusOn: "cancel",
         onCancel: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.ac_log("退室", "キャンセル")
         },
         onConfirm: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.ac_log("退室", "実行")
           block()
         },
@@ -131,10 +131,10 @@ export const app_chore = {
         confirmText: "終了する",
         focusOn: "cancel",
         onCancel: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
         },
         onConfirm: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           block()
         },
       })

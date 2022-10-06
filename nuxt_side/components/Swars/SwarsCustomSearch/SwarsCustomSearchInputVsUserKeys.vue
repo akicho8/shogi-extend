@@ -53,11 +53,11 @@ export default {
     },
     add_handle(key) {
       this.remember_update(key)
-      this.sound_play_toggle(true)
+      this.$sound.play_toggle(true)
       this.talk(key)
     },
     remove_handle(key) {
-      this.sound_play_toggle(false)
+      this.$sound.play_toggle(false)
     },
     remember_update(key) {
       let av = this.str_to_tags(key)

@@ -42,8 +42,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="base.room_recreate_modal_handle" v-if="base.debug_mode_p")
 
         b-menu-list(label="検討")
-          //- b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="sound_play_click()")
-          //- b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="sound_play_click()")
+          //- b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="$sound.play_click()")
+          //- b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="$sound.play_click()")
           b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))")
           b-menu-item.is_active_unset(icon="link"                   label="棋譜リンクコピー" :href="base.room_code_except_url"                                      @click.prevent="base.room_code_except_url_copy_handle" )
           b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋"         :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')")
@@ -69,7 +69,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
-          b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="sound_play_click()" v-if="development_p")
+          b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="$sound.play_click()" v-if="development_p")
       .box.mt-5
         .title.is-6 スタイル設定
         SimpleSlider.is-hidden-touch(:base="base" label="盤の大きさ" var_name="board_width" :min="60" :max="100" :step="1.0")

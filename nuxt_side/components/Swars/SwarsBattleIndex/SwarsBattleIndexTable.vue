@@ -78,14 +78,14 @@ b-table.SwarsBattleIndexTable(
         v-if="base.column_visible_p('piyo_shogi')"
         type="button"
         :href="base.piyo_shogi_app_with_params_url(row)"
-        @click="sound_play_click()"
+        @click="$sound.play_click()"
         )
 
       KentoButton(
         v-if="base.column_visible_p('kento')"
         tag="a"
         :href="base.kento_app_with_params_url(row)"
-        @click="sound_play_click()"
+        @click="$sound.play_click()"
         )
 
       KifCopyButton(
@@ -109,7 +109,7 @@ b-table.SwarsBattleIndexTable(
         v-if="base.column_visible_p('show')"
         tag="nuxt-link"
         :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location_key}}"
-        @click.native="sound_play_click()"
+        @click.native="$sound.play_click()"
         )
         | 詳細
 </template>

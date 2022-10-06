@@ -16,7 +16,7 @@ export const app_foul = {
     // 初心者モードの反則チェックありだけど反則できないときに反則したときの処理
     // ここは何もしなければ将棋ウォーズのようになる
     foul_accident_handle(attrs) {
-      this.sound_play("x")               // 自分だけに軽く知らせる
+      this.$sound.play("x")               // 自分だけに軽く知らせる
       this.latest_foul_name = attrs.name // デバッグ用
       this.toast_ng(attrs.name)          // "二歩"
     },
@@ -25,11 +25,11 @@ export const app_foul = {
     // 反則モーダル発動
     foul_modal_handle(foul_names) {
       if (this.present_p(foul_names)) {
-        this.sound_play("lose") // おおげさに「ちーん」にしておく
+        this.$sound.play("lose") // おおげさに「ちーん」にしておく
         // const str = params.lmi.foul_names.join("と")
         // this.toast_ng(`${str}の反則です`)
         // this.tl_alert("反則モーダル起動完了")
-        // this.sound_play("lose")         // ちーん
+        // this.$sound.play("lose")         // ちーん
         this.foul_modal_close()
         this.foul_modal_instance = this.modal_card_open({
           component: FoulModal,
@@ -37,7 +37,7 @@ export const app_foul = {
             foul_names: foul_names,
           },
           onCancel: () => {
-            this.sound_play_click()
+            this.$sound.play_click()
             this.foul_modal_close()
           },
         })

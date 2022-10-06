@@ -85,7 +85,7 @@ export const app_clock_box = {
       this.clock_box = new ClockBox({
         turn: this.current_location.code, // this.current_sfen を元にした現在の手番
         clock_switch_hook: () => {
-          // this.sound_play_click()
+          // this.$sound.play_click()
         },
         time_zero_callback: e => {
           this.cc_time_zero_callback()
@@ -119,7 +119,7 @@ export const app_clock_box = {
 
     cc_modal_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: ClockBoxModal,
         props: { base: this.base },
@@ -154,9 +154,9 @@ export const app_clock_box = {
     },
     cc_dropdown_active_change(on) {
       if (on) {
-        this.sound_play_click()
+        this.$sound.play_click()
       } else {
-        this.sound_play_click()
+        this.$sound.play_click()
       }
     },
 
@@ -332,7 +332,7 @@ export const app_clock_box = {
           // this.tn_notify()                 // 牛
           this.tl_alert(`${this.user_name}から開始を${this.user_name}だけに通知`)
         }
-        this.sound_play("rooster")
+        this.$sound.play("rooster")
       }
     },
 
@@ -344,7 +344,7 @@ export const app_clock_box = {
     },
 
     cc_play_confirm(params = {}) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk("ちょっと待って。先に順番設定をしてください")
       this.dialog_confirm({
         title: "ちょっと待って",

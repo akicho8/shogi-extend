@@ -61,10 +61,10 @@ export const app_tiresome = {
     },
 
     tiresome_alert_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
 
       // this.delay_block(1, () => {
-      //   this.sound_stop_all()
+      //   this.$sound.stop_all()
       //   this.talk("ウォーズIDを毎回入力する必要はありません")
       // })
 
@@ -85,12 +85,12 @@ export const app_tiresome = {
         confirmText: "やってみる",
         cancelText: "不便なまま生きる",
         onConfirm: () => {
-          this.sound_play("o")
+          this.$sound.play("o")
           this.tiresome_modal_selected = "yes"
           this.remote_notify({emoji: ":CHECK:", subject: subject, body: `やってみる`})
         },
         onCancel: () => {
-          this.sound_play("x")
+          this.$sound.play("x")
           this.tiresome_modal_selected = "no"
           this.remote_notify({emoji: ":X:", subject: subject, body: `不便なまま生きる`})
         },

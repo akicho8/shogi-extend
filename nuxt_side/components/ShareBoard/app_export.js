@@ -17,7 +17,7 @@ export const app_export = {
 
     // 現在のURLをコピー
     current_url_copy_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.clipboard_copy({text: this.current_url, success_message: "現在のURLをコピーしました"})
     },
 
@@ -25,7 +25,7 @@ export const app_export = {
     kifu_copy_handle(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.general_kifu_copy(this.current_sfen, {
         to_format: e.format_key,
         turn: this.current_turn,

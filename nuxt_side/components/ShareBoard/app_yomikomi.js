@@ -13,7 +13,7 @@ export const app_yomikomi = {
     // 棋譜の読み込みタップ時の処理
     yomikomi_modal_open_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.yomikomi_modal_close()
       this.yomikomi_modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
@@ -40,7 +40,7 @@ export const app_yomikomi = {
       this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
         this.bs_error_message_dialog(e)
         if (e.body) {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.toast_ok("棋譜を読み込みました")
           this.shared_al_add({label: "棋譜読込前"})
 

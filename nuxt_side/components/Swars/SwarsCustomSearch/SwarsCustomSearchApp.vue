@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     search_click_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },

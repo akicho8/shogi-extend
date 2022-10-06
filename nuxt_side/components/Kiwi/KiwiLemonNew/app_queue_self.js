@@ -16,19 +16,19 @@ export const app_queue_self = {
       this.progress_info = null
       if (data.noisy) {
         if (false) {
-          this.sound_stop_all()
+          this.$sound.stop_all()
         }
         if (this.done_record.successed_at) {
           if (false) {
-            this.sound_play("rooster")
+            this.$sound.play("rooster")
             this.delay_block(1.5, () => this.toast_ok(`${this.done_record.id}番が完了しました`))
           } else {
-            this.sound_play("o")
+            this.$sound.play("o")
             this.toast_ok(`${this.done_record.id}番が完了しました`)
           }
         }
         if (this.done_record.errored_at) {
-          this.sound_play("x")
+          this.$sound.play("x")
           this.toast_ok(`${this.done_record.id}番が失敗しました`)
         }
       }

@@ -31,7 +31,7 @@ export const app_article = {
     ////////////////////////////////////////////////////////////////////////////////
 
     article_save_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
 
       if (!this.editable_p) {
         this.toast_ng("所有者でないため更新できません")
@@ -70,7 +70,7 @@ export const app_article = {
         }
         if (e.article) {
           this.article = new Article(e.article)
-          this.sound_stop_all()
+          this.$sound.stop_all()
           this.toast_ok(`${before_save_button_name}しました`)
 
           // 新規の初期値にするため保存しておく
@@ -93,7 +93,7 @@ export const app_article = {
         }
       }
       if (this.article.moves_valid_p(moves)) {
-        this.sound_play("o")
+        this.$sound.play("o")
         this.toast_ok("正解")
         this.valid_count += 1
       }

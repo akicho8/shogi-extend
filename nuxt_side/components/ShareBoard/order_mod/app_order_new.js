@@ -27,7 +27,7 @@ export const app_order_new = {
 
       if (this.if_room_is_empty()) { return }
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.os_modal_init()
       this.__assert__(this.os_modal_instance == null, "this.os_modal_instance == null")
       this.os_modal_instance = this.modal_card_open({
@@ -37,7 +37,7 @@ export const app_order_new = {
         // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
         onCancel: () => {
           this.__assert__(false, "must not happen")
-          this.sound_play_click()
+          this.$sound.play_click()
           this.os_modal_close()
         },
       })
@@ -73,7 +73,7 @@ export const app_order_new = {
 
     // 閉じる
     os_modal_close_confirm(params = {}) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk("変更を適用せずに閉じようとしています")
       this.dialog_confirm({
         title: "ちょっと待って",

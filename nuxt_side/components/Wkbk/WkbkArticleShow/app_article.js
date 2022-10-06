@@ -21,7 +21,7 @@ export const app_article = {
       //   }
       // }
       if (this.article.moves_valid_p(moves)) {
-        this.sound_play("o")
+        this.$sound.play("o")
         this.toast_ok("正解")
         // this.valid_count += 1
       }

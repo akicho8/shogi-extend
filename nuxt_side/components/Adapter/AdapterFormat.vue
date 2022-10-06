@@ -21,7 +21,7 @@
                 expanded
                 tag="nuxt-link"
                 :to="{name: 'adapter', query: {body: str_strip(e.body)}}"
-                @click="sound_play_click()"
+                @click="$sound.play_click()"
                 size="is-small") テスト
 
               //- .card.is-size-7
@@ -33,7 +33,7 @@
               //-   .card-footer
               //-     nuxt-link.card-footer-item(
               //-       :to="{name: 'adapter', query: {body: str_strip(e.body)}}"
-              //-       @click.native="sound_play_click()") TEST
+              //-       @click.native="$sound.play_click()") TEST
               //-
               //- nav.panel
               //-   .panel-heading
@@ -47,7 +47,7 @@
               //-       outlined
               //-       tag="nuxt-link"
               //-       :to="{name: 'adapter', query: {body: str_strip(e.body)}}"
-              //-       @click="sound_play_click()"
+              //-       @click="$sound.play_click()"
               //-       size="is-small") テスト
 
 </template>

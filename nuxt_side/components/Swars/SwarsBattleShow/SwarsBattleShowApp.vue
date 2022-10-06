@@ -40,12 +40,12 @@ client-only
 
       .app_buttons_container
         .buttons.is-centered
-          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="sound_play_click()")
-          KentoButton(tag="a" :href="kento_app_with_params_url" @click="sound_play_click()")
+          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="$sound.play_click()")
+          KentoButton(tag="a" :href="kento_app_with_params_url" @click="$sound.play_click()")
           KifCopyButton(@click="kifu_copy_button_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
-          TweetButton(:body="permalink_url" @after_click="sound_play_click()")
+          TweetButton(:body="permalink_url" @after_click="$sound.play_click()")
           b-button(icon-left="menu" @click="sidebar_toggle" size="is-small")
 
       .battle_title_container.has-background-grey-lighter.py-6.battle_title.has-text-grey-dark.is-size-7-mobile
@@ -162,7 +162,7 @@ export default {
 
   methods: {
     tweet_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.tweet_window_popup({text: this.permalink_url})
     },
 
@@ -194,12 +194,12 @@ export default {
     },
 
     sidebar_toggle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.sidebar_p = !this.sidebar_p
     },
 
     back_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.back_to({name: "swars-search"})
     },
 
@@ -274,7 +274,7 @@ export default {
     // いまのところ「局面ペディア」に遷移するときだけ使っている
     other_app_click_handle(app_name) {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.ga_click(app_name)
       this.remote_notify({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
     },

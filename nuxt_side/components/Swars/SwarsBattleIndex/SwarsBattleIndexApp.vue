@@ -171,7 +171,7 @@ export default {
 
     scene_key_set(info) {
       // if (this.scene_key != info.key) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(info.name)
       this.scene_key = info.key
       // }
@@ -183,7 +183,7 @@ export default {
 
     layout_key_set(info) {
       // if (this.layout_key != info.key) {
-      this.sound_play_click()
+      this.$sound.play_click()
       this.talk(info.name)
       this.layout_key = info.key
       this.remote_notify({subject: "レイアウト", body: info.name})

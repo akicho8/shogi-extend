@@ -9,7 +9,7 @@
   .is-flex.rule_container
     template(v-for="(row, key) in base.info.rules_hash")
       template(v-if="blank_p(base.rule) || base.rule === row.rule_name")
-        nuxt-link.rule_one.is-clickable(tag="span" :to="base.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="sound_play_click()")
+        nuxt-link.rule_one.is-clickable(tag="span" :to="base.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
           span.rule_name.is-size-7.has-text-grey
             | {{row.rule_name}}
           span.grade_name.is-size-5

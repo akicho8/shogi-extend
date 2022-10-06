@@ -24,7 +24,7 @@ export const app_board_preset_select = {
 
     board_preset_select_modal_handle() {
       this.sidebar_p = false
-      this.sound_play_click()
+      this.$sound.play_click()
       this.modal_card_open({
         component: BoardPresetSelectModal,
         props: { base: this.base },

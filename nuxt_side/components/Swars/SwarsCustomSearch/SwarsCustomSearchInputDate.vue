@@ -9,8 +9,8 @@ b-field.field_block.SwarsCustomSearchInputDate(custom-class="is-small")
     :icon-right="present_p(base.battled_at_range) ? 'close-circle' : ''"
     icon-right-clickable
     @icon-right-click.stop="clear_handle"
-    @range-start="sound_play_click()"
-    @range-end="sound_play_click()"
+    @range-start="$sound.play_click()"
+    @range-end="$sound.play_click()"
     range
     trap-focus
     :mobile-native="false"
@@ -31,7 +31,7 @@ export default {
   ],
   methods: {
     clear_handle() {
-      this.sound_play_toggle(false)
+      this.$sound.play_toggle(false)
       this.base.battled_at_range = []
     },
   },

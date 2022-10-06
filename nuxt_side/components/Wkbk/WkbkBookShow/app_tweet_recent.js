@@ -28,7 +28,7 @@ export const app_tweet_recent = {
     },
 
     re_ox_apply(answer_kind_info) {
-      this.sound_play(answer_kind_info.key)
+      this.$sound.play(answer_kind_info.key)
       this.journal_record(answer_kind_info.key)
       this.$data[`re_${answer_kind_info.key}_count`] += 1
     },

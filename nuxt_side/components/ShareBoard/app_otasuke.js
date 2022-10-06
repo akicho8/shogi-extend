@@ -4,7 +4,7 @@ export const app_otasuke = {
   methods: {
     // 「？」をクリックしたときの処理
     otasuke_click_handle() {
-      this.sound_play_click()
+      this.$sound.play_click()
       let info = this.otasuke_current_message_info
       let message = info.message
       if (_.isArray(message)) {

@@ -2,10 +2,10 @@
 .column.is-5.XyMasterRanking(v-if="base.is_mode_idol && base.time_records_hash")
   b-field.scope_info_field
     template(v-for="e in base.ScopeInfo.values")
-      b-radio-button(v-model="base.scope_key" :native-value="e.key" @input="sound_play_click()")
+      b-radio-button(v-model="base.scope_key" :native-value="e.key" @input="$sound.play_click()")
         | {{e.name}}
 
-  b-tabs(v-model="base.current_rule_index" expanded @input="sound_play_click()")
+  b-tabs(v-model="base.current_rule_index" expanded @input="$sound.play_click()")
     template(v-for="e in base.RuleInfo.values")
       b-tab-item(:label="e.name" :value="e.key")
         b-table(
@@ -32,7 +32,7 @@
           b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(row.created_at)}}
 
   .has-text-centered-mobile
-    b-switch(v-model="base.entry_name_uniq_p" @input="sound_play_click()") プレイヤー別順位
+    b-switch(v-model="base.entry_name_uniq_p" @input="$sound.play_click()") プレイヤー別順位
 </template>
 
 <script>

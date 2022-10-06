@@ -57,7 +57,7 @@ export const app_sfen_share_retry = {
       }
     },
     retry_confirm() {
-      this.sound_play("x")
+      this.$sound.play("x")
 
       this.x_retry_count_total += 1
       this.x_retry_count += 1
@@ -79,10 +79,10 @@ export const app_sfen_share_retry = {
         type: "is-warning",
         focusOn: "confirm",
         onCancel: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
         },
         onConfirm: () => {
-          this.sound_play_click()
+          this.$sound.play_click()
           this.sfen_share()
         },
       })

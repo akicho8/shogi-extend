@@ -13,7 +13,7 @@ export default {
   methods: {
     click_handle() {
       if (this.beep) {
-        this.sound_play_click()
+        this.$sound.play_click()
       }
     },
   },

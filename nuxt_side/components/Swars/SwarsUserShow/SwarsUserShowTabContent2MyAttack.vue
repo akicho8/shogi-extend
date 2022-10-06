@@ -4,7 +4,7 @@
     nuxt-link.box.one_box.two_column(
       :key="`every_my_attack_list/${i}`"
       :to="base.tag_search_path(row)"
-      @click.native="sound_play_click()"
+      @click.native="$sound.play_click()"
       )
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.one_box_title

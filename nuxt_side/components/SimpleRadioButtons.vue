@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     input_handle(e) {
-      this.sound_play_click()
+      this.$sound.play_click()
       if (this.real_model.input_type === 'numberinput') {
       } else {
         this.talk(this.current.talk_message || this.current.name)
@@ -67,8 +67,8 @@ export default {
     },
     label_click_handle(e) {
       if (this.present_p(this.hint_str)) {
-        this.sound_stop_all()
-        this.sound_play_click()
+        this.$sound.stop_all()
+        this.$sound.play_click()
         this.toast_ok(this.hint_str, {duration: 1000 * this.duration_sec})
       }
     },
