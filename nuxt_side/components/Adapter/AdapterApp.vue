@@ -385,11 +385,11 @@ export default {
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url({
+        return this.$KifuVo({
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
           viewpoint: this.record.viewpoint,
-        })
+        }).kento_full_url
       }
     },
 

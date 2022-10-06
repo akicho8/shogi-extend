@@ -84,15 +84,15 @@ export const app_urls = {
     },
 
     kento_app_with_params_url() {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         sfen: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
-      })
+      }).kento_full_url
     },
 
     kpedia_url() {
-      return KifuVo.create({sfen: this.short_sfen}).kpedia_url
+      return this.$KifuVo.create({sfen: this.short_sfen}).kpedia_url
     },
 
     // 合言葉だけを付与したURL

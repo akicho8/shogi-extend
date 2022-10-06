@@ -90,11 +90,11 @@ export default {
     },
     // KENTOで開く
     kento_app_with_params_url() {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         turn: 0,
         sfen: this.base.sp_body,
         viewpoint: this.base.viewpoint,
-      })
+      }).kento_full_url
     },
   },
 }

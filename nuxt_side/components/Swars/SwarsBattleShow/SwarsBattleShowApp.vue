@@ -364,11 +364,11 @@ export default {
     },
 
     kento_app_with_params_url() {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
         viewpoint: this.sp_viewpoint,
-      })
+      }).kento_full_url
     },
 
     kpedia_url() {

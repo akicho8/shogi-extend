@@ -74,11 +74,11 @@ export const app_urls = {
       })
     },
     kento_app_with_params_url() {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         sfen: this.action_log.sfen,
         turn: this.new_turn,
         viewpoint: this.sp_viewpoint,
-      })
+      }).kento_full_url
     },
     current_url_params() {
       return this.base.url_params_clean({

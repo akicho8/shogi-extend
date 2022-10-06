@@ -102,11 +102,11 @@ export default {
     },
     kento_app_with_params_url() {
       if (this.record) {
-        return this.kento_full_url({
+        return this.$KifuVo.create({
           sfen: this.record.sfen_body,
           turn: this.record.display_turn,
           viewpoint: "black",
-        })
+        }).kento_full_url
       }
     },
   },

@@ -25,11 +25,11 @@ export const app_link_to = {
     },
 
     kento_app_with_params_url(record) {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         sfen: record.sfen_body,
         turn: this.scene_info.sp_turn_of(record),
         viewpoint: record.viewpoint,
-      })
+      }).kento_full_url
     },
   },
 }

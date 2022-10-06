@@ -19,11 +19,11 @@ export const app_kifu_copy_buttons = {
 
     // 指定の解答の「KENTO」へのリンク
     answers_kento_app_with_params_url(moves_answer) {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         turn: 0,
         sfen: this.article.init_sfen_with(moves_answer),
         viewpoint: this.base.article.viewpoint,
-      })
+      }).kento_full_url
     },
 
     // 指定の解答のコピー処理
@@ -57,11 +57,11 @@ export const app_kifu_copy_buttons = {
     // },
     // // 解答元の指し手の「KENTO」へのリンク
     // answer_base_kento_app_with_params_url() {
-    //   return this.kento_full_url({
+    //   return this.$KifuVo.create({
     //     turn: 0,
     //     sfen: this.answer_base_sfen,
     //     viewpoint: this.base.article.viewpoint,
-    //   })
+    //   }).kento_full_url
     // },
   },
 }

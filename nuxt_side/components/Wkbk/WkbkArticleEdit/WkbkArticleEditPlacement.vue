@@ -86,11 +86,11 @@ export default {
       })
     },
     kento_app_with_params_url() {
-      return this.kento_full_url({
+      return this.$KifuVo.create({
         sfen: this.base.article.init_sfen,
         turn: 0,
         viewpoint: this.base.article.viewpoint,
-      })
+      }).kento_full_url
     },
   },
 }
