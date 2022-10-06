@@ -118,7 +118,9 @@ export const app_sp = {
     operation_invalid2_handle() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.sound_play("x")
-      this.toast_ok("それは相手の駒です")
+      if (this.development_p) {
+        this.toast_ok("それは相手の駒です")
+      }
     },
 
     // ShogiPlayer コンポーネント自体を実行したいとき用
