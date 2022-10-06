@@ -213,8 +213,8 @@ const config = {
   */
   plugins: [
     // client only
-    "~/plugins/mixin_mod.client.js",
-    "~/plugins/chart_init.client.js",
+    { src: "~/plugins/client.js",     mode: "client" },
+    { src: "~/plugins/chart_init.js", mode: "client" },
 
     // 両方
     "~/plugins/axios.js",
