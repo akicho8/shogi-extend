@@ -1,6 +1,9 @@
 // window.Howler と window.Howl を定義する
 // 他のところで個別に import してはいけない(重要)
 import { Howl, Howler } from "howler"
+if (process.env.NODE_ENV === "development") {
+  console.log("[load] Howler")
+}
 
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
