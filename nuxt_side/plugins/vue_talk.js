@@ -14,8 +14,8 @@ import { Gs2 } from "@/components/models/gs2.js"
 export const vue_talk = {
   methods: {
     // しゃべる
-    // ・tab_is_active_p() のときだけ条件を入れてはいけない
-    // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなるため
+    // ・タブが見えているときだけの条件を入れてはいけない
+    // ・onend に依存して次の処理に繋げている場合もあるためシステムテストが通らなくなる
     talk(message, options = {}) {
       message = String(message ?? "")
       if (message === "") {
