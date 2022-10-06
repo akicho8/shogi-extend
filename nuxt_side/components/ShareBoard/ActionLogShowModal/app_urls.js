@@ -63,7 +63,7 @@ export const app_urls = {
   },
   computed: {
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         sfen: this.action_log.sfen,
         turn: this.new_turn,
         viewpoint: this.sp_viewpoint,
@@ -71,14 +71,14 @@ export const app_urls = {
         game_name:  this.action_log.player_names_with_title.title,
         sente_name: this.action_log.player_names_with_title.black,
         gote_name:  this.action_log.player_names_with_title.white,
-      })
+      }).piyo_url
     },
     kento_app_with_params_url() {
       return this.$KifuVo.create({
         sfen: this.action_log.sfen,
         turn: this.new_turn,
         viewpoint: this.sp_viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
     current_url_params() {
       return this.base.url_params_clean({

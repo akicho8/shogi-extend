@@ -373,13 +373,13 @@ export default {
 
     piyo_shogi_app_with_params_url() {
       if (this.record) {
-        return this.piyo_shogi_auto_url({
+        return this.$KifuVo.create({
           ...this.record.piyo_shogi_base_params,
           path: this.show_path,
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
           viewpoint: this.record.viewpoint,
-        })
+        }).piyo_url
       }
     },
 
@@ -389,7 +389,7 @@ export default {
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
           viewpoint: this.record.viewpoint,
-        }).kento_full_url
+        }).kento_url
       }
     },
 

@@ -9,8 +9,8 @@ export const SpUtil = {
     return SfenParser.parse(sfen)
   },
 
-  kento_full_url(attributes) {
-    return KifuVo.create(attributes).kento_full_url
+  kento_url(attributes) {
+    return KifuVo.create(attributes).kento_url
   },
 
   query_to_turn(query, max) {

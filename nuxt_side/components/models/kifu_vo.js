@@ -1,5 +1,6 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
+import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
 import { Gs2 } from "@/components/models/gs2.js"
 
 export class KifuVo {
@@ -8,12 +9,19 @@ export class KifuVo {
   }
 
   constructor(attributes = {}) {
+    Gs2.__assert__(Gs2.present_p(attributes), "attributes is blank")
     this.attributes = attributes
+  }
+
+  //////////////////////////////////////////////////////////////////////////////// ぴよ将棋
+
+  get piyo_url() {
+    return PiyoShogi2.create(this.attributes).url
   }
 
   //////////////////////////////////////////////////////////////////////////////// KENTO
 
-  get kento_full_url() {
+  get kento_url() {
     Gs2.__assert__(this.attributes.sfen, "sfen is blank")
 
     const info = SfenParser.parse(this.attributes.sfen)

@@ -79,18 +79,18 @@ export default {
 
   computed: {
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
-        turn: 0,
+      return this.$KifuVo.create({
         sfen: this.base.article.init_sfen,
+        turn: 0,
         viewpoint: this.base.article.viewpoint,
-      })
+      }).piyo_url
     },
     kento_app_with_params_url() {
       return this.$KifuVo.create({
         sfen: this.base.article.init_sfen,
         turn: 0,
         viewpoint: this.base.article.viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
   },
 }

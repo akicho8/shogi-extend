@@ -354,13 +354,13 @@ export default {
     // },
 
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         path:      this.record.show_path,
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
         viewpoint: this.sp_viewpoint,
         ...this.record.piyo_shogi_base_params,
-      })
+      }).piyo_url
     },
 
     kento_app_with_params_url() {
@@ -368,7 +368,7 @@ export default {
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
         viewpoint: this.sp_viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
 
     kpedia_url() {

@@ -82,11 +82,11 @@ export default {
   computed: {
     // ぴよ将棋で開く
     piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         turn: 0,
         sfen: this.base.sp_body,
         viewpoint: this.base.viewpoint,
-      })
+      }).piyo_url
     },
     // KENTOで開く
     kento_app_with_params_url() {
@@ -94,7 +94,7 @@ export default {
         turn: 0,
         sfen: this.base.sp_body,
         viewpoint: this.base.viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
   },
 }

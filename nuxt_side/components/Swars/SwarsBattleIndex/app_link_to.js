@@ -15,13 +15,13 @@ export const app_link_to = {
     },
 
     piyo_shogi_app_with_params_url(record) {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         path: record.show_path,
         sfen: record.sfen_body,
         turn: this.scene_info.sp_turn_of(record),
         viewpoint: record.viewpoint,
         ...record.piyo_shogi_base_params,
-      })
+      }).piyo_url
     },
 
     kento_app_with_params_url(record) {
@@ -29,7 +29,7 @@ export const app_link_to = {
         sfen: record.sfen_body,
         turn: this.scene_info.sp_turn_of(record),
         viewpoint: record.viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
   },
 }

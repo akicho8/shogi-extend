@@ -12,12 +12,12 @@ export default {
     return { record }
   },
   mounted() {
-    location.href = this.piyo_shogi_auto_url({
+    location.href = this.$KifuVo.create({
       path: `/w/${this.record.key}`,
       sfen: this.record.sfen_body,
       turn: this.record.display_turn,
       ...this.record.piyo_shogi_base_params,
-    })
+    }).piyo_url
   },
 }
 </script>

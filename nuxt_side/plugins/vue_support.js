@@ -1,7 +1,6 @@
 // 汎用コード
 import { Gs         } from "@/components/models/gs.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
-import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
 
 import twemoji from 'twemoji'
 import _ from "lodash"
@@ -11,10 +10,6 @@ export const vue_support = {
   methods: {
     ...Gs,
     ...SpUtil,
-
-    piyo_shogi_auto_url(params) {
-      return PiyoShogi2.create(params).url
-    },
 
     ua_icon_key_get() {
       if (typeof window === "undefined") {

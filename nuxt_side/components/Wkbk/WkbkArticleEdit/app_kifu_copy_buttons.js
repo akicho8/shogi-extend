@@ -10,11 +10,11 @@ export const app_kifu_copy_buttons = {
   methods: {
     // 指定の解答の「ぴよ将棋」へのリンク
     answers_piyo_shogi_app_with_params_url(moves_answer) {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         turn: 0,
         sfen: this.article.init_sfen_with(moves_answer),
         viewpoint: this.base.article.viewpoint,
-      })
+      }).piyo_url
     },
 
     // 指定の解答の「KENTO」へのリンク
@@ -23,7 +23,7 @@ export const app_kifu_copy_buttons = {
         turn: 0,
         sfen: this.article.init_sfen_with(moves_answer),
         viewpoint: this.base.article.viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
 
     // 指定の解答のコピー処理
@@ -49,11 +49,11 @@ export const app_kifu_copy_buttons = {
   computed: {
     // 解答元の指し手の「ぴよ将棋」へのリンク
     answer_base_piyo_shogi_app_with_params_url() {
-      return this.piyo_shogi_auto_url({
+      return this.$KifuVo.create({
         turn: 0,
         sfen: this.answer_base_sfen,
         viewpoint: this.base.article.viewpoint,
-      })
+      }).piyo_url
     },
     // 解答元の指し手の「KENTO」へのリンク
     answer_base_kento_app_with_params_url() {
@@ -61,7 +61,7 @@ export const app_kifu_copy_buttons = {
         turn: 0,
         sfen: this.answer_base_sfen,
         viewpoint: this.base.article.viewpoint,
-      }).kento_full_url
+      }).kento_url
     },
   },
 }
