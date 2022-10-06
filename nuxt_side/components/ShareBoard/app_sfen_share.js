@@ -165,7 +165,7 @@ export const app_sfen_share = {
     // エフェクトのタイミングがずれないようにローカルでは自分側だけで実行する
     // ブロードキャストは相手側だけで実行する
     fast_sound_effect_func(params) {
-      this.vibrate_short()
+      this.$beat.call_short()
     },
   },
   computed: {

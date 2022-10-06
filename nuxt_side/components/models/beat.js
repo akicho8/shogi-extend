@@ -1,22 +1,22 @@
-export const Vibrator = {
-  vibrate_short() {
-    this.vibrate(10)
+export const Beat = {
+  call_short() {
+    this.call_custom(10)
   },
 
-  vibrate_middle() {
-    this.vibrate(100)
+  call_middle() {
+    this.call_custom(100)
   },
 
-  vibrate_long() {
-    this.vibrate([
+  call_long() {
+    this.call_custom([
       50, 200, 100, 50,
       50, 200, 100, 50,
       50,
     ])
   },
 
-  vibrate(argv) {
-    if (!this.vibrate_support_p()) {
+  call_custom(argv) {
+    if (!this.support_p()) {
       return
     }
 
@@ -25,7 +25,7 @@ export const Vibrator = {
 
   // private
 
-  vibrate_support_p() {
+  support_p() {
     if (typeof window !== 'undefined') {
       return !!window.navigator.vibrate
     }
