@@ -52,10 +52,10 @@ export default {
   },
   methods: {
     typing_handle(text) {
-      text = this.normalize_for_autocomplete(text)
+      text = this.str_normalize_for_ac(text)
       const av = []
       _.each(this.base.xi.tactic_infos, (e, _) => {
-        const values = e.values.filter(e => this.normalize_for_autocomplete(e).indexOf(text) >= 0)
+        const values = e.values.filter(e => this.str_normalize_for_ac(e).indexOf(text) >= 0)
         if (values.length >= 1) {
           av.push({name: `── ${e.name} ──`, values: values})
         }

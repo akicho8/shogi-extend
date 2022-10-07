@@ -49,7 +49,7 @@ const SHUFFLE_MAX = 8
 
 import { support_child } from "../support_child.js"
 import { Gs2           } from "@/components/models/gs2.js"
-import { FurigomaPack  } from "@/components/models/furigoma_pack.js"
+import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 

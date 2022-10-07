@@ -17,6 +17,7 @@ b-dropdown.ShareBoardColorThemeDropdown(v-model="base.color_theme_key" @active-c
 
 <script>
 import { support_child } from "./support_child.js"
+import { ScreenSizeDetector } from "@/components/models/screen_size_detector.js"
 
 export default {
   name: "ShareBoardColorThemeDropdown",
@@ -27,7 +28,7 @@ export default {
     }
   },
   beforeMount() {
-    this.screen_is_desktop = this.screen_match_p("desktop")
+    this.screen_is_desktop = ScreenSizeDetector.match_p("desktop")
   },
 }
 </script>

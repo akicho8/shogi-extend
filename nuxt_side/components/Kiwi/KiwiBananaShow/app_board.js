@@ -1,3 +1,5 @@
+import { DotSfen } from "@/components/models/dot_sfen.js"
+
 export const app_board = {
   data() {
     return {
@@ -24,7 +26,7 @@ export const app_board = {
     current_share_board_params() {
       return {
         ...this.banana.advanced_kif_info,
-        body: this.dot_sfen_escape(this.banana.advanced_kif_info.body),
+        body: DotSfen.escape(this.banana.advanced_kif_info.body),
       }
     },
   },

@@ -1,5 +1,5 @@
 import _ from "lodash"
-const NodeEmoji = require('node-emoji')
+const NodeEmoji = require("node-emoji")
 import { Xassertion } from "@/components/models/core/xassertion.js"
 import { Xobject } from "@/components/models/core/xobject.js"
 

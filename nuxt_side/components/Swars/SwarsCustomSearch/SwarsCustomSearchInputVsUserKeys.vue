@@ -44,11 +44,11 @@ export default {
   },
   methods: {
     typing_handle(text) {
-      text = this.normalize_for_autocomplete(text)
+      text = this.str_normalize_for_ac(text)
       this.filtered_keys = this.base.remember_vs_user_keys.filter(e => {
         // 1. vs_user_keys にまだ含まれていないものかつ (すでに入力した名前を補完に出さないようにするため)
         // 2. マッチするものに絞る
-        return !this.base.vs_user_keys.includes(e) && this.normalize_for_autocomplete(e).indexOf(text) >= 0
+        return !this.base.vs_user_keys.includes(e) && this.str_normalize_for_ac(e).indexOf(text) >= 0
       })
     },
     add_handle(key) {

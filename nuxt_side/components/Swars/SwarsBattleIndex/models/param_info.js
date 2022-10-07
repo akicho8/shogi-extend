@@ -1,6 +1,6 @@
 import { ParamBase } from '@/components/models/param_base.js'
-import { Gs } from '@/components/models/gs.js'
 import { ColumnInfo } from './column_info.js'
+import { VisibleUtil } from "@/components/models/visible_util.js"
 
 export class ParamInfo extends ParamBase {
   static get define() {
@@ -20,6 +20,6 @@ export class ParamInfo extends ParamBase {
   }
 
   static get visible_hash_default() {
-    return Gs.as_visible_hash(ColumnInfo.values)
+    return VisibleUtil.as_visible_hash(ColumnInfo.values)
   }
 }

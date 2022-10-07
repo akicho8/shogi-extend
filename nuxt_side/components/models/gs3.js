@@ -1,3 +1,4 @@
+import { HandleNameParser } from "./handle_name_parser.js"
 import { Xassertion } from "./core/xassertion.js"
 
 export const Gs3 = {
@@ -7,5 +8,23 @@ export const Gs3 = {
       path = __NUXT__.config.MY_SITE_URL + path
     }
     return path
+  },
+
+  user_call_name(str) {
+    return HandleNameParser.call_name(str)
+  },
+
+  // 単純に value があるかないかでクラスを割り振る
+  has_content_class(value, options = {}) {
+    options = {
+      present_class: "is_content_present",
+      blank_class: "is_content_blank",
+      ...options,
+    }
+    if (this.present_p(value)) {
+      return options.present_class
+    } else {
+      return options.blank_class
+    }
   },
 }

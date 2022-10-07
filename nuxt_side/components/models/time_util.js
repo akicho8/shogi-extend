@@ -1,5 +1,5 @@
 // |---------------------|
-// | dayjs(...args)      |
+// | create(...args)     |
 // | current_ms()        |
 // | format_row(t)       |
 // | format_diff(t)      |
@@ -27,7 +27,7 @@ export const TimeUtil = {
   },
 
   current_ms() {
-    return dayjs().valueOf()
+    return this.create().valueOf()
   },
 
   // テーブル内の行で表示する用
@@ -36,9 +36,9 @@ export const TimeUtil = {
     if (Xobject.blank_p(t)) {
       return ""
     }
-    const time = dayjs(t)
-    const diff_day = dayjs().diff(time, "day")
-    const diff_year = dayjs().diff(time, "year")
+    const time = this.create(t)
+    const diff_day = this.create().diff(time, "day")
+    const diff_year = this.create().diff(time, "year")
     if (diff_day < 1) {
       return time.format("H:mm")
     }
@@ -50,23 +50,25 @@ export const TimeUtil = {
 
   // 「N分前」形式
   format_diff(t) {
-    return dayjs(t).fromNow()
+    return this.create(t).fromNow()
   },
 
   format_md_or_ymd(t) {
-    let format = "YYYY-MM-DD"
-    const time = dayjs(t)
-    if (time.year() === dayjs().year()) {
+    let format = null
+    const time = this.create(t)
+    if (time.year() === this.create().year()) {
       format = "M / D"
+    } else {
+      format = "YYYY-MM-DD"
     }
     return time.format(format)
   },
 
   format_ymd(t) {
-    return dayjs(t).format("YYYY-MM-DD")
+    return this.create(t).format("YYYY-MM-DD")
   },
 
   format_wday_name(t) {
-    return dayjs(t).format("ddd")
+    return this.create(t).format("ddd")
   },
 }

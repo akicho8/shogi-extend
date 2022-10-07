@@ -8,13 +8,13 @@ export const app_tiresome = {
   },
 
   mounted() {
-    this.__trace__("app_tiresome", "mounted")
+    this.$debug.trace("app_tiresome", "mounted")
     this.mounted_then_query_present_p = this.present_p(this.$route.query.query)
   },
 
   methods: {
     tiresome_alert_check() {
-      this.__trace__("app_tiresome", "tiresome_alert_check")
+      this.$debug.trace("app_tiresome", "tiresome_alert_check")
 
       if (this.url_prams_without_query_exist_p) {
         // ページ移動やソート条件を変えたりしているだけなのでスキップ
@@ -96,6 +96,36 @@ export const app_tiresome = {
         },
       })
     },
+
+    // counts_hash_reverse_sort_take({ a: 1, c: 3, b: 2, d: 4 }, 3) => {:d=>4, :c=>3, :b=>2}
+    // count_hash_reverse_sort_by_count_and_take(hash, n) {
+    //   let list = this.hash_to_key_value_list(hash)
+    //   list = _.sortBy(list, [e => -e.value])
+    //   list = _.take(list, n)
+    //   return this.key_value_list_to_hash(list)
+    // },
+
+    // key, value のキーをもった配列から hash に戻す
+    // key_value_list_to_hash(ary) {
+    //   return ary.reduce((a, e) => ({...a, [e.key]: e.value}), {})
+    // },
+
+    // { a: 1, c: 3, b: 2, d: 4 }.sort_by { |k, v| -v }.take(3).to_h # => {:d=>4, :c=>3, :b=>2}
+    //
+    // ↓
+    //
+    // let list = this.hash_to_key_value_list(hash)
+    // list = _.sortBy(list, [e => -e.value])
+    // list = _.take(list, 3)
+    // hash = this.key_value_list_to_hash(list)
+
+    // hash を key, value のキーをもった配列にする
+    // hash_to_key_value_list(hash) {
+    //   return _.reduce(hash, (a, value, key) => {
+    //     a.push({key: key, value: value})
+    //     return a
+    //   }, [])
+    // },
   },
 
   computed: {

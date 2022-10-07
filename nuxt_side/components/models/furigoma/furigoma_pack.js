@@ -1,5 +1,5 @@
-import { Gs } from '@/components/models/gs.js'
-import { FurigomaPawn } from './furigoma_pawn.js'
+import { Gs } from "@/components/models/gs.js"
+import { FurigomaPawn } from "./furigoma_pawn.js"
 
 export class FurigomaPack {
   static run(...args) {

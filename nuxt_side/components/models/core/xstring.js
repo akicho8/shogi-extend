@@ -2,6 +2,19 @@ import { Xassertion } from "./xassertion.js"
 import { Xobject } from "./xobject.js"
 import _ from "lodash"
 
+const KANJI_NUMBER_TO_HANKAKU_DIGIT_TABLE = {
+  "〇": "0",
+  "一": "1",
+  "二": "2",
+  "三": "3",
+  "四": "4",
+  "五": "5",
+  "六": "6",
+  "七": "7",
+  "八": "8",
+  "九": "9",
+}
+
 export const Xstring = {
   // 文字列をクラス化
   // ・window に結び付いてないと取得できない
@@ -11,18 +24,6 @@ export const Xstring = {
     Xassertion.__assert__(typeof window !== 'undefined', "typeof window !== 'undefined'")
     Xassertion.__assert__(window[str], "window[str]")
     return window[str]
-  },
-
-  hira_to_kata(str) {
-    return str.replace(/[\u3041-\u3096]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60))
-  },
-
-  kana_to_hira(str) {
-    return str.replace(/[\u30A1-\u30FA]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60))
-  },
-
-  hankaku_format(str) {
-    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
   },
 
   str_to_boolean(str) {
@@ -81,5 +82,28 @@ export const Xstring = {
   // 文字列の文字のコードの合計
   str_to_hash_number(str) {
     return _.sumBy([...str], e => e.codePointAt(0))
+  },
+
+  hira_to_kata(str) {
+    return str.replace(/[\u3041-\u3096]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0x60))
+  },
+
+  kana_to_hira(str) {
+    return str.replace(/[\u30A1-\u30FA]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60))
+  },
+
+  hankaku_format(str) {
+    return str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0))
+  },
+
+  // kanji_hankaku_number_format("(三二)") => "(32)"
+  kanji_hankaku_number_format(str) {
+    return str.replace(/[〇一二三四五六七八九]/g, s => KANJI_NUMBER_TO_HANKAKU_DIGIT_TABLE[s])
+  },
+
+  // Gs.str_normalize_for_ac("Ａ四") => "a4"
+  str_normalize_for_ac(str) {
+    const hankaku = this.hankaku_format(str ?? "")
+    return this.kanji_hankaku_number_format(hankaku).toLowerCase()
   },
 }

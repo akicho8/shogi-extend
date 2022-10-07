@@ -61,6 +61,7 @@ export const HandleNameValidator = {
     }
     return !error
   },
+
   get prefix_list() {
     return [
       "素敵な",

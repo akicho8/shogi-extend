@@ -4,15 +4,6 @@ describe("Xstring", () => {
   test("str_constantize", () => {
     expect(Xstring.str_constantize("Object")).toEqual(Object)
   })
-  test("hira_to_kata", () => {
-    expect(Xstring.hira_to_kata("あア")).toEqual("アア")
-  })
-  test("kana_to_hira", () => {
-    expect(Xstring.kana_to_hira("あア")).toEqual("ああ")
-  })
-  test("hankaku_format", () => {
-    expect(Xstring.hankaku_format("Ａａ０")).toEqual("Aa0")
-  })
   test("str_to_boolean", () => {
     expect(Xstring.str_to_boolean("1")).toEqual(true)
   })
@@ -46,5 +37,20 @@ describe("Xstring", () => {
   test("str_to_hash_number", () => {
     expect(Xstring.str_to_hash_number("a")).toEqual(97)
     expect(Xstring.str_to_hash_number("aa")).toEqual(97 + 97)
+  })
+  test("hira_to_kata", () => {
+    expect(Xstring.hira_to_kata("あア")).toEqual("アア")
+  })
+  test("kana_to_hira", () => {
+    expect(Xstring.kana_to_hira("あア")).toEqual("ああ")
+  })
+  test("hankaku_format", () => {
+    expect(Xstring.hankaku_format("Ａａ０")).toEqual("Aa0")
+  })
+  test("kanji_hankaku_number_format", () => {
+    expect(Xstring.kanji_hankaku_number_format("変換〇一二三四五六七八九")).toEqual("変換0123456789")
+  })
+  test("str_normalize_for_ac", () => {
+    expect(Xstring.str_normalize_for_ac("Ａ四")).toEqual("a4")
   })
 })

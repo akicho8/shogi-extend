@@ -105,7 +105,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    this.__trace__("SwarsBattleIndexApp", "fetch begin")
+    this.$debug.trace("SwarsBattleIndexApp", "fetch begin")
 
     let params = {...this.$route.query}
 
@@ -132,7 +132,7 @@ export default {
     // Number(params.per || 1)
 
     return this.$axios.$get("/w.json", {params: params}).then(xi => {
-      this.__trace__("SwarsBattleIndexApp", "fetch then")
+      this.$debug.trace("SwarsBattleIndexApp", "fetch then")
 
       this.xi = xi
 

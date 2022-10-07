@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
   .ShareBoardApp(:style="component_style" :class="component_class")
-    | {{__trace__('ShareBoardApp', 'render')}}
+    | {{$debug.trace('ShareBoardApp', 'render')}}
     div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
@@ -219,10 +219,10 @@ export default {
     }
   },
   beforeMount() {
-    this.__trace__("ShareBoardApp", "beforeMount")
+    this.$debug.trace("ShareBoardApp", "beforeMount")
   },
   mounted() {
-    this.__trace__("ShareBoardApp", "mounted")
+    this.$debug.trace("ShareBoardApp", "mounted")
 
     // this.$nuxt.error({statusCode: 500, message: "xxx"})
     // return
