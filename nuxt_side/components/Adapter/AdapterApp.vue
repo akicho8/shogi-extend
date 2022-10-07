@@ -385,7 +385,7 @@ export default {
 
     kento_app_with_params_url() {
       if (this.record) {
-        return this.$KifuVo({
+        return this.$KifuVo.create({
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
           viewpoint: this.record.viewpoint,
