@@ -1,6 +1,7 @@
 // 汎用コード
 import { Gs         } from "@/components/models/gs.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
+import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
 
 import twemoji from 'twemoji'
 import _ from "lodash"
@@ -271,6 +272,7 @@ export const vue_support = {
     },
   },
 
+  // FIXME: plugin にする
   computed: {
     _()          { return _          },
     util()       { return util       },
