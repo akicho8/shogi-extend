@@ -14,6 +14,5 @@ RSpec.describe type: :system, share_board_spec: true do
     os_switch_toggle   # 右上の有効スイッチをクリック
     case1("反則", "反則は「二歩」「王手放置」「駒ワープ」「死に駒」のみが対象です")
     case1("N手毎交代", "N回指したら次の仲間に交代します")
-    case1("アバター", "自分のアバターを玉として表示します")
   end
 end

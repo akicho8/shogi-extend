@@ -185,13 +185,6 @@ HelpContent.ShareBoardHelpBody
     p あなたの手番を知らせている
 
   article(v-if="false")
-    h2 アバターありとは？
-    p 自分のアイコン画像が玉になる (不評)
-    ul
-      li ログインしていないとなんかしらの動物が玉になる
-      li 対象が2人以上の場合は順番が早い方をリーダーとみなす
-
-  article(v-if="false")
     h2 N手毎交代とは？
     ul
       li N回指したら次の仲間に交代する
@@ -525,7 +518,6 @@ HelpContent.ShareBoardHelpBody
     h2 ログインするメリットは？
     ul
       li プロフィール画像がアイコンになる
-      li(v-if="false") さらに「アバターあり」にした場合に自分のプロフィール画像が玉になる
       li ハンドルネームの初期値がログインネームになる
       li いまのところ他にはないがログインしている方を優待する
 

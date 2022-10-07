@@ -2,14 +2,11 @@
 client-only
   .ShareBoardApp(:style="component_style" :class="component_class")
     | {{$debug.trace('ShareBoardApp', 'render')}}
-    div(is="style" v-text="component_raw_css" v-if="avatar_king_info.key === 'is_avatar_king_on'")
     DebugBox.is-hidden-mobile(v-if="development_p")
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
       p watching_member_count: {{watching_member_count}}
       p order_enable_p: {{order_enable_p}}
-
-      p avatars_hash: {{avatars_hash}}
 
       p time_limit_modal_instance: {{!!time_limit_modal_instance}}
       p cc_auto_time_limit_delay_id: {{cc_auto_time_limit_delay_id}}
@@ -81,7 +78,6 @@ import { app_member_list      } from "./member_list_show/app_member_list.js"
 import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
-import { app_avatar               } from "./app_avatar.js"
 import { app_guardian             } from "./app_guardian.js"
 import { app_handle_name          } from "./app_handle_name.js"
 import { app_urls                 } from "./app_urls.js"
@@ -143,7 +139,6 @@ export default {
     app_member_list,
     app_battle_session,
     app_chore,
-    app_avatar,
     app_guardian,
     app_handle_name,
     app_member_info_modal,

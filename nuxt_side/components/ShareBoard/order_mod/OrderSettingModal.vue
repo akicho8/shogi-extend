@@ -34,8 +34,6 @@
         .column.is-12
           SimpleRadioButtons.foul_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" :my_value.sync="TheSb.new_v.foul_behavior_key")
         .column.is-12(v-if="TheSb.debug_mode_p")
-          SimpleRadioButtons.avatar_king(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AvatarKingInfo" :my_value.sync="TheSb.new_v.avatar_king_key")
-        .column.is-12(v-if="TheSb.debug_mode_p")
           SimpleRadioButtons.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="TheSb.new_v.tegoto")
 
   .modal-card-foot

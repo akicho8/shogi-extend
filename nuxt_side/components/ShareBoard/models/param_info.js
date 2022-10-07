@@ -6,7 +6,6 @@ export class ParamInfo extends ParamBase {
       { key: "title",                type: "string",  name: "タイトル",                      defaults: { development: null,                      production: "共有将棋盤",                  }, permanent: false, relation: null,                  desc: null, },
       { key: "sp_run_mode",          type: "string",  name: "将棋盤モード",                  defaults: { development: null,                      production: "play_mode",                   }, permanent: false, relation: null,                  desc: null, },
       { key: "yomiage_mode_key",     type: "string",  name: "読み上げモード",                defaults: { development: null,                      production: "is_yomiage_mode_on",          }, permanent: true,  relation: "YomiageModeInfo",     desc: null, },
-      { key: "guardian_display_key", type: "string",  name: "守護獣表示",                    defaults: { development: null,                      production: "is_guardian_display_on",      }, permanent: false, relation: "GuardianDisplayInfo", desc: null, },
       { key: "legal_key",            type: "string",  name: "内部ルール",                    defaults: { development: null,                      production: "strict",     }, permanent: false, relation: "LegalInfo",  desc: null, },
       { key: "color_theme_key",      type: "string",  name: "画像の配色",                    defaults: { development: null,                      production: "is_color_theme_real",         }, permanent: true,  relation: "ColorThemeInfo",      desc: null, },
       { key: "appearance_theme_key", type: "string",  name: "基本配色",                      defaults: { development: null,                      production: "is_appearance_theme_a",       }, permanent: true,  relation: "AppearanceThemeInfo", desc: null, },
@@ -14,7 +13,6 @@ export class ParamInfo extends ParamBase {
       { key: "debug_mode_key",       type: "string",  name: "デバッグモード",                defaults: { development: "is_debug_mode_on",        production: "is_debug_mode_off",           }, permanent: false, relation: "DebugModeInfo",       desc: null, },
       { key: "sp_move_cancel_key",   type: "string",  name: "駒移動キャンセル",              defaults: { development: "is_move_cancel_standard", production: "is_move_cancel_standard",     }, permanent: true,  relation: "SpMoveCancelInfo",    desc: null, },
 
-      { key: "avatar_king_key",      type: "string",  name: "玉をアバターにする",            defaults: { development: null,                      production: "is_avatar_king_off",          }, permanent: true,  relation: "AvatarKingInfo",      desc: null, },
       { key: "foul_behavior_key",    type: "string",  name: "反則制限モード",                defaults: { development: null,                      production: "is_foul_behavior_auto",       }, permanent: true,  relation: "FoulBehaviorInfo",    desc: null, },
       { key: "tegoto",               type: "integer", name: "N手毎交代",                     defaults: { development: null,                      production: 1,                             }, permanent: false, relation: null,                  desc: null, },
 

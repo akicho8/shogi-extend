@@ -11,8 +11,8 @@
       template(v-if="info.from_avatar_path")
         img.avatar_img.flex_item(:src="info.from_avatar_path")
 
-      // 自分プロフィール画像がないかつ守護獣モードなら守護獣表示
-      template(v-if="info.from_avatar_path == null && TheSb.guardian_display_key === 'is_guardian_display_on'")
+      // 自分プロフィール画像がないなら守護獣表示
+      template(v-if="info.from_avatar_path == null")
         XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian")
 
     // 名前
