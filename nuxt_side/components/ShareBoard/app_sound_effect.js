@@ -2,11 +2,15 @@ export const app_sound_effect = {
   methods: {
     // 意図して持ち上げた
     se_user_piece_lift() {
-      this.$sound.play_click()
+      if (this.sp_run_mode === "play_mode") {
+        this.$sound.play_click()
+      }
     },
     // 意図してキャンセルした
     se_user_piece_cancel() {
-      this.$sound.play_click()
+      if (this.sp_run_mode === "play_mode") {
+        this.$sound.play_click()
+      }
     },
     // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
     se_user_piece_put() {
@@ -26,7 +30,9 @@ export const app_sound_effect = {
     },
     // ☗☖をタップして反転したときの音
     se_user_viewpoint_flip() {
-      this.$sound.play_click()
+      if (this.sp_run_mode === "play_mode") {
+        this.$sound.play_click()
+      }
     },
   },
 }
