@@ -24,10 +24,12 @@ export const app_order_main = {
   },
   methods: {
     os_setup() {
+      // 引数があればその順番にする
       if (this.present_p(this.fixed_order_names)) {
         this.os_setup_by_names(this.str_to_words(this.fixed_order_names))
       }
-      this.order_unit.state_switch_to(this.fixed_order_state) // 主にデバッグ用
+      // 1列か2列かを確定する。初期値は2列
+      this.order_unit.state_switch_to(this.fixed_order_state)
     },
 
     // 指定の名前
