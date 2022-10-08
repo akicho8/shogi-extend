@@ -41,7 +41,7 @@
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 
 export default {
