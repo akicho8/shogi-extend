@@ -1,4 +1,4 @@
-import { FurigomaPack } from "@/components/models/furigoma_pack.js"
+import { FurigomaPack } from "@/components/models/furigoma/furigoma_pack.js"
 
 describe("FurigomaPack", () => {
   test("1回振るごとに反転する", () => {
