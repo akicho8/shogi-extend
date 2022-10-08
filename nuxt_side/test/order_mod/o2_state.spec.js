@@ -30,4 +30,8 @@ describe("O2State", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.simple_teams).toEqual([["a", "c"], ["b"]])
   })
+  test("real_order_users_to_s", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    expect(object.real_order_users_to_s(1, 0)).toEqual("abcb")
+  })
 })

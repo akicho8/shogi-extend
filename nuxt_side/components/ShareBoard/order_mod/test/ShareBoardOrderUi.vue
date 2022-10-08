@@ -4,6 +4,7 @@
     .column.is-12
       .buttons
         .button(@click="order_unit.sample_set()") 面子セット
+        .button(@click="order_unit.auto_users_set(['a', 'b', 'c', 'd', 'e'])") 初回相当
         .button(@click="order_unit.clear()") クリア
         .button(@click="order_unit.state_switch_to('to_o1_state')") 1列
         .button(@click="order_unit.state_switch_to('to_o2_state')") 2列

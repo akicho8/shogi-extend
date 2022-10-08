@@ -12,8 +12,8 @@ module SharedMethods
     visit2("/share-board", *args)
   end
 
-  def room_setup(room_code, user_name)
-    visit_app
+  def room_setup(room_code, user_name, params = {})
+    visit_app(params)
     hamburger_click
     room_setup_modal_handle        # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do

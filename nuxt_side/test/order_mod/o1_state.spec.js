@@ -22,4 +22,8 @@ describe("O1State", () => {
     expect(f(6)).toEqual("c")
     expect(f(7)).toEqual("a")
   })
+  test("real_order_users_to_s", () => {
+    const object = new O1State([Item.create("a"), Item.create("b"), Item.create("c")])
+    expect(object.real_order_users_to_s(1, 0)).toEqual("abc")
+  })
 })

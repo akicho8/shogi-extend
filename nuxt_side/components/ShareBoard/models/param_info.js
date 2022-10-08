@@ -26,6 +26,7 @@ export class ParamInfo extends ParamBase {
       { key: "fixed_order_state",    type: "string",  name: "順番設定の方法",                defaults: { development: null,                      production: "to_o2_state",                 }, permanent: false, relation: null,                  desc: null, },
       { key: "order_enable_p",       type: "boolean", name: "順番設定が有効か？",            defaults: { development: null,                      production: false,                         }, permanent: false, relation: null,                  desc: null, },
       { key: "auto_close_p",         type: "boolean", name: "自動的に閉じるか？",            defaults: { development: false,                     production: true,                          }, permanent: false, relation: null,                  desc: null, },
+      { key: "shuffle_first",      type: "boolean", name: "順番設定初回自動シャッフル",    defaults: { development: null,                      production: true,                          }, permanent: false, relation: null,                  desc: null, },
 
       { key: "xmatch_wait_max",      type: "integer", name: "待ち時間最大",                  defaults: { development: null,                      production: 60 * 3,                        }, permanent: false, relation: null,                  desc: null, },
       { key: "xmatch_redis_ttl",     type: "integer", name: "マッチングエントリ度の更新TTL", defaults: { development: null,                      production: 60 * 3 + 3,                    }, permanent: false, relation: null,                  desc: null, },

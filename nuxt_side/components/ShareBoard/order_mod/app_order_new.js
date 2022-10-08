@@ -56,8 +56,8 @@ export const app_order_new = {
       // 変更記録用
       this.new_v.os_change = new OsChange(this.new_v)
 
-      // 残りの観戦者をセットする(対局者は自動的に除く)
-      this.new_v.order_unit.auto_users_set(this.room_user_names)
+      // 残りの観戦者をセットする(対局者は自動的に除く・始めての場合は全員入れてシャッフルする)
+      this.new_v.order_unit.auto_users_set(this.room_user_names, {with_shuffle: this.shuffle_first})
     },
 
     // 順番設定モーダルを閉じる

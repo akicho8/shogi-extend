@@ -56,11 +56,11 @@ export class OrderUnit {
 
   user_names_allocate(user_names) {
     const users = user_names.map(user_name => Item.create(user_name))
-    this.order_state.users_allocate(users)
+    this.users_allocate(users)
   }
 
   clear() {
-    this.order_state.users_allocate([])
+    this.users_allocate([])
     this.watch_users = []
   }
 
@@ -124,16 +124,23 @@ export class OrderUnit {
     return `[黒開始:${list0}] [白開始:${list1}] [観:${wlist}] [整:${this.valid_p}] [替:${this.swap_enable_p ? 'o' : 'x'}] (${this.state_name})`
   }
 
-  // 全員追加
-  // 1. 空なら全員対局者にする
-  // 2. 空でなければ対局者以外を観戦者にする
-  auto_users_set(user_names) {
+  // 順番設定モーダル内で使うデータの準備
+  //  1. 空なら全員対局者にする
+  //  2. 空でなければ対局者以外を観戦者にする
+  auto_users_set(user_names, options = {}) {
+    options = {
+      with_shuffle: true,
+      ...options,
+    }
+    const users = user_names.map(e => Item.create(e))
     if (this.empty_p) {
-      this.user_names_allocate(user_names)
+      this.users_allocate(users)
+      if (options.with_shuffle) {
+        this.shuffle_core()       // モーダルを最初に開いたときシャッフル済みにしておく(重要)
+      }
     } else {
       const hash = this.name_to_object_hash
-      user_names = user_names.filter(user_name => !hash[user_name]) // 対局者を除外する
-      this.watch_users = user_names.map(user_name => Item.create(user_name))
+      this.watch_users = users.filter(e => !hash[e.user_name]) // 対局者を除外した残りを観戦者にする
     }
   }
 

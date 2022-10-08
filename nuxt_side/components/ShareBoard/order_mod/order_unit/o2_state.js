@@ -37,7 +37,7 @@ export class O2State extends OxState {
     this.teams = [[], []]
     this.cache_clear()
     _.times(users.length, i => {
-      const strategy = new O1Strategy(users.length, i, 1, 0)
+      const strategy = new O1Strategy(users.length, i, 1, 0) // 0:左右の順で振り分ける
       const user = users[strategy.user_index]
       this.teams[strategy.team_index].push(user)
     })
