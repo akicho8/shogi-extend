@@ -267,7 +267,7 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 将棋ウォーズ棋譜検索を使いたくない
     ul
-      li 2000年ぐらいから本家側で棋譜コピーできるようになった
+      li 2020年ぐらいから本家側で棋譜コピーできるようになった
 
   article
     h2 ここに載ってない
