@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
         :autoexec             => "os_modal_handle",
-        :shuffle_first      => shuffle_first,
+        :shuffle_first        => shuffle_first,
       })
     os_switch_toggle
   end
