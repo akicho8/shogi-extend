@@ -29,6 +29,7 @@ class EmojiInfo
     { key: ":CHART:",        raw: "📊", },
     { key: ":NOT_FOUND:",    raw: "❓", },
     { key: ":LOG:",          raw: "🗒", },
+    { key: ":棋譜:",         raw: "📝", },
   ]
 
   def to_s

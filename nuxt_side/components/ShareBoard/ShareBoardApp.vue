@@ -78,6 +78,7 @@ import { app_member_list      } from "./member_list_show/app_member_list.js"
 import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
 import { app_battle_session      } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
+import { app_kifu_mail                } from "./app_kifu_mail.js"
 import { app_guardian             } from "./app_guardian.js"
 import { app_handle_name          } from "./app_handle_name.js"
 import { app_urls                 } from "./app_urls.js"
@@ -139,6 +140,7 @@ export default {
     app_member_list,
     app_battle_session,
     app_chore,
+    app_kifu_mail,
     app_guardian,
     app_handle_name,
     app_member_info_modal,

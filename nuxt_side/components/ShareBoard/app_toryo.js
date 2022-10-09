@@ -43,6 +43,11 @@ export const app_toryo = {
         this.cc_stop_share_handle()   // 時計 停止
         this.order_switch_off_share() // 順番 OFF
       }
+
+      // ログインしていれば自分に棋譜を送信する
+      if (this.g_current_user) {
+        this.kifu_mail_run({silent: true})
+      }
     },
   },
 

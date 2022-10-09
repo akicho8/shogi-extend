@@ -83,6 +83,7 @@
       a.panel-block(@click="base.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="base.cc_next_message") 順番設定後に時計設置を促す
       a.panel-block(@click="base.tn_notify") 牛
+      a.panel-block(@click="base.kifu_mail_handle") 棋譜メール
 
   .column.is-2
     .panel
