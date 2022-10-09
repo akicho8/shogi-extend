@@ -87,6 +87,8 @@ Rails.application.routes.draw do
 
   ################################################################################ 他サービス
 
+  # 共有将棋盤
+  # 本当は /api 側だけを使いたいが拡張子がついた /share-board.png などに対応するために設置してある
   resource :share_board, path: "share-board", only: [:show]
 
   namespace :kiwi, path: "" do
@@ -210,13 +212,20 @@ Rails.application.routes.draw do
     resources :app_entry_infos, only: :index
     resources :users
     resource :cpu_battle, only: [:show, :create]
-    resource :share_board, only: [:show, :create]
     resource :three_stage_league, only: [:show]
     resource :three_stage_league_player, only: [:show]
     resource :swars_grade_histogram, only: [:show]
     resource :swars_histogram, only: [:show]
     resource :professional, only: [:show]
     resource :top_group, only: [:show]
+
+    # 共有将棋盤用API
+    resource :share_board, only: [:show, :create] do
+      post :remote_notify2
+      if Rails.env.development?
+        get :remote_notify2
+      end
+    end
   end
 
   ################################################################################ admin
