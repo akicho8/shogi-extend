@@ -1,7 +1,3 @@
-
-
-# => "https://tinyurl.com/yqp7ct"
-
 module TinyUrl
   extend self
 
@@ -12,8 +8,12 @@ module TinyUrl
         resp.body
       end
     rescue => error
-      SlackAgent.notify_exception(error)
+      ExceptionNotifier.notify_exception(error)
       nil
     end
+  end
+
+  def safe_create(url)
+    create(url) || url
   end
 end

@@ -70,6 +70,25 @@ class KifuParser
     end
   end
 
+  def to_share_board_url
+    UrlProxy.full_url_for({
+        path: "/share-board",
+        query: {
+          :body               => core.to_sfen,
+          :title              => params[:title],
+          :black              => params[:black],
+          :white              => params[:white],
+          :member             => params[:member],
+          :other              => params[:other],
+          :abstract_viewpoint => params[:abstract_viewpoint],
+        }.compact,
+      })
+  end
+
+  def to_share_board_tiny_url
+    @to_share_board_tiny_url ||= TinyUrl.safe_create(to_share_board_url)
+  end
+
   def to_kento_url
     m = core.xcontainer
     h = {}
@@ -82,14 +101,8 @@ class KifuParser
     "#{KENTO_URL}/?#{h.to_query}"
   end
 
-  def to_share_board_url
-    UrlProxy.full_url_for({
-        path: "/share-board",
-        query: {
-          body: core.to_sfen,
-          # abstract_viewpoint: :black,
-        },
-      })
+  def to_kento_tiny_url
+    @kento_tiny_url ||= TinyUrl.safe_create(to_kento_url)
   end
 
   # for app/models/battle_decorator/base.rb

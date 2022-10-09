@@ -1,3 +1,12 @@
+# |---------------------|
+# | public              |
+# |---------------------|
+# | subject             |
+# | body                |
+# | attachment_filename |
+# | attachment_body     |
+# |---------------------|
+
 # for KifuMailer
 class KifuMailAdapter
   attr_accessor :params
@@ -8,21 +17,21 @@ class KifuMailAdapter
 
   def subject
     str = []
-    str << "棋譜メール"
-    str
+    str << params[:title]
+    str << "棋譜"
+    str.join(" ")
   end
 
   def body
-    [
-      {
-        "再生用URL" => params[:url] || kifu_parser.to_share_board_url,
-        "棋譜(KI2)" => kifu_parser.to_ki2,
-      }.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")
-    ]
-  end
-
-  def kifu_parser
-    @kifu_parser ||= KifuParser.new(params.merge(source: params[:sfen]))
+    hv = {}
+    hv["棋譜再生"]        = kifu_parser.to_share_board_tiny_url
+    hv["KENTO"]           = kifu_parser.to_kento_tiny_url
+    hv["share_board_url"] = params[:app_urls][:share_board_url]
+    hv["piyo_url"]        = params[:app_urls][:piyo_url]
+    hv["piyo_url2"]       = TinyUrl.safe_create(params[:app_urls][:piyo_url])
+    hv["kento_url"]       = params[:app_urls][:kento_url]
+    hv["棋譜(KI2)"]       = kifu_parser.to_ki2
+    hv.collect { |k, v| "▼#{k}\n#{v}".strip }.join("\n\n")
   end
 
   def attachment_filename
@@ -31,6 +40,16 @@ class KifuMailAdapter
       normalized_title,
     ].compact.join("_")
     s + ".kif"
+  end
+
+  def attachment_body
+    kifu_parser.to_kif
+  end
+
+  private
+
+  def kifu_parser
+    @kifu_parser ||= KifuParser.new(params)
   end
 
   def normalized_title

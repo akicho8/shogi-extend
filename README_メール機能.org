@@ -1,0 +1,14 @@
+* 確認方法
+
+http://localhost:4000/share-board?autoexec=mail_handle
+
+http://localhost:3000/api/share_board/kifu_notify.json
+
+app/mailers/kifu_mailer.rb
+app/models/kifu_mail_adapter.rb
+app/models/kifu_parser.rb
+app/models/tiny_url.rb
+nuxt_side/components/ShareBoard/README_メール機能.org
+nuxt_side/components/ShareBoard/app_mail.js
+spec/mailers/previews/kifu_preview.rb
+spec/models/kifu_mail_adapter_spec.rb

@@ -221,9 +221,9 @@ Rails.application.routes.draw do
 
     # 共有将棋盤用API
     resource :share_board, only: [:show, :create] do
-      post :remote_notify2
+      post :kifu_notify
       if Rails.env.development?
-        get :remote_notify2
+        get :kifu_notify
       end
     end
   end
