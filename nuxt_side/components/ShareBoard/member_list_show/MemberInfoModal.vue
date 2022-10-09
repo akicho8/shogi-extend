@@ -126,6 +126,11 @@ export default {
         },
         {
           enabled: true,
+          label: "Client Version",
+          value: this.$config.CSR_BUILD_VERSION,
+        },
+        {
+          enabled: true,
           label: "ブラウザ",
           value: this.member_info.user_agent,
           value_class: "is-size-7",
