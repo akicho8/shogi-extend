@@ -16,7 +16,6 @@ export const app_message = {
       this.$sound.play_click()
       this.modal_card_open({
         component: MessageSendModal,
-        props: { base: this.base },
       })
     },
 
