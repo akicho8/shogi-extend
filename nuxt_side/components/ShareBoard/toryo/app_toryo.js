@@ -58,23 +58,22 @@ export const app_toryo = {
         this.order_switch_off_share() // 順番 OFF
       }
 
-      if (params.win_location_key) {                              // 勝ち負けが明確で
-        if (this.my_location) {                                   // 自分は対局者で
-          if (this.my_location.key === params.win_location_key) { // 勝った場合
-          }
+      // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする
+      if (this.received_from_self(params)) {
+        if (params.win_location_key) {
+          this.medal_plus_handle(params.win_location_key)
         }
       }
 
       // ログインしていれば自分に棋譜を送信する
+      // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
       if (this.g_current_user) {
-        this.kifu_mail_run({
-          silent: true,
-          sb_judge_key: this.toryo_then_self_judge_key(params),
-        })
+        this.kifu_mail_run({silent: true, sb_judge_key: this.toryo_then_self_judge_key(params)})
       }
     },
 
     // 投了時に自分のチームは勝ったのか？
+    // 返すキーは sb_judge_info.rb に合わせること
     toryo_then_self_judge_key(params) {
       if (params.win_location_key) {                              // 勝ち負けが明確で
         if (this.my_location) {                                   // 自分は対局者で
@@ -84,8 +83,7 @@ export const app_toryo = {
             return "lose"
           }
         } else {
-          // params.win_location_key 側が勝ったことはわかる
-          // だが、自分は観戦者
+          // params.win_location_key 側が勝ったことはわかるけど自分は観戦者だったので勝ち負けに関心はない
           return "none"
         }
       } else {

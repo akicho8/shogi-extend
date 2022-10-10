@@ -66,6 +66,7 @@ import { AppConfig                } from "./models/app_config.js"
 
 import { support_parent           } from "./support_parent.js"
 
+import { app_xtitle               } from "./app_xtitle.js"
 import { app_action_log           } from "./app_action_log.js"
 import { app_message_logs         } from "./app_message_logs.js"
 import { app_clock_box            } from "./app_clock_box.js"
@@ -121,6 +122,7 @@ import { app_room_recreate        } from "./app_room_recreate.js"
 import { app_back_to              } from "./app_back_to.js"
 import { app_toryo                } from "./toryo/app_toryo.js"
 import { app_honpu                } from "./toryo/app_honpu.js"
+import { app_medal                } from "./toryo/app_medal.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
 export default {
@@ -129,6 +131,7 @@ export default {
     // どう見ても mixins の使い方を間違えている
     support_parent,
     autoexec_methods,
+    app_xtitle,
     app_action_log,
     app_message_logs,
     app_clock_box,
@@ -184,6 +187,7 @@ export default {
     app_back_to,
     app_toryo,
     app_honpu,
+    app_medal,
     window_active_detector,
   ],
   props: {
@@ -198,7 +202,6 @@ export default {
     return {
       // watch して url に反映するもの
       current_sfen:       this.config.record.sfen_body,          // 渡している棋譜
-      current_title:      this.config.record.title,              // 現在のタイトル
       current_turn:       this.config.record.initial_turn,       // 現在の手数
       abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
 
@@ -254,7 +257,7 @@ export default {
       title = _.trim(title)
       if (this.current_title != title) {
         this.current_title = title
-        this.title_share(this.current_title)
+        this.title_share()
       }
     },
 
@@ -297,17 +300,7 @@ export default {
     FormatTypeInfo() { return FormatTypeInfo },
     AppConfig()      { return AppConfig },
 
-    page_title() {
-      if (this.current_turn === 0) {
-        return this.current_title
-      } else {
-        return `${this.current_title} ${this.current_turn}手目`
-      }
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
-
-    current_xtitle() { return { title: this.current_title } },
 
     ////////////////////////////////////////////////////////////////////////////////
 

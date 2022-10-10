@@ -54,6 +54,11 @@ module ShareBoard
       broadcast(:title_share_broadcasted, data)
     end
 
+    def medal_counts_hash_share(data)
+      track(data, "メダル", data["medal_counts_hash"].inspect)
+      broadcast(:medal_counts_hash_share_broadcasted, data)
+    end
+
     def setup_info_request(data)
       track(data, "情報要求", "ください > ALL")
       broadcast(:setup_info_request_broadcasted, data)
