@@ -109,7 +109,7 @@ export const app_order_new = {
         this.al_add({
           ...params,
           label: "順番更新",
-          sfen: this.current_sfen,
+          sfen: this.current_sfen, // FIXME: とる
           turn: this.current_turn,
         })
       }

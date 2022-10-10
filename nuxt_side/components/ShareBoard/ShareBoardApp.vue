@@ -119,8 +119,8 @@ import { app_foul                 } from "./app_foul.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_room_recreate        } from "./app_room_recreate.js"
 import { app_back_to              } from "./app_back_to.js"
-import { app_toryo                } from "./app_toryo.js"
-import { app_honpu                } from "./app_honpu.js"
+import { app_toryo                } from "./toryo/app_toryo.js"
+import { app_honpu                } from "./toryo/app_honpu.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
 export default {

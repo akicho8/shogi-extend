@@ -19,7 +19,10 @@ export const app_honpu = {
   methods: {
     // 本譜を準備する
     honpu_log_set() {
-      this.honpu_log = this.al_factory()
+      const params = {
+        // win_location_key: this.current_location.flip.key, // SFENと手数を確認しなくても投了した側がすぐにわかるようにしておく
+      }
+      this.honpu_log = this.al_factory(params)
     },
 
     // 本譜を削除する

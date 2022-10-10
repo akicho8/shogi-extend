@@ -6,6 +6,7 @@
 # | attachment_filename |
 # | attachment_body     |
 # | mail_to_address     |
+# | main_icon           |
 # |---------------------|
 
 # for KifuMailer
@@ -20,6 +21,7 @@ class KifuMailAdapter
       :other  => "(other)",
       :member => "(member)",
       :abstract_viewpoint => "white",
+      :sb_judge_key => "win",  # win, lose, none
       :__debug_app_urls__ => {
         :share_board_url => "http://localhost:3000/share-board?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&abstract_viewpoint=black",
         :piyo_url        => "piyoshogi://?viewpoint=black&num=4&url=http://localhost:3000/share-board.kif?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&abstract_viewpoint=black",
@@ -78,6 +80,10 @@ class KifuMailAdapter
     else
       AppConfig[:admin_email]
     end
+  end
+
+  def main_icon
+    SbJudgeInfo.fetch(params[:sb_judge_key]).icon
   end
 
   private

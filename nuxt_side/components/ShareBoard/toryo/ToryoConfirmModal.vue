@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 
 .STAGE-development
   .ToryoConfirmModal

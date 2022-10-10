@@ -1,8 +1,11 @@
+// 確認方法: README_kifu_mail.org
+
+import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
 export const app_kifu_mail = {
   methods: {
-    // 確認方法: README_kifu_mail.org
+    // 「メール送信」ボタンが押されたとき
     kifu_mail_handle() {
       this.$sound.play_click()
       // 部屋に入っているときは別ページに飛ぶと困るだろうから警告を出すに留める
@@ -13,18 +16,24 @@ export const app_kifu_mail = {
       if (this.nuxt_login_required()) { return }
       this.kifu_mail_run()
     },
+    // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
+      Gs2.__assert__(this.g_current_user, "this.g_current_user")
       options = {
-        silent: false,
+        silent: false,     // true: 何も表示しない
+        sb_judge_key: "none", // 勝ち負け (win, lose, none)
         ...options,
       }
+      // そのまま KifuParser.new(params) できる形式にまとめる
       const params = {
         source: this.current_sfen,
         turn: this.current_turn,
         title: this.current_title,
         abstract_viewpoint: this.abstract_viewpoint,
+        sb_judge_key: options.sb_judge_key,
         ...this.player_names,
       }
+      // そのまま KifuParser で作るURLとフロント側で作ったパラメータに差異がないか確認するためのもの
       if (this.debug_mode_p) {
         params.__debug_app_urls__ = {
           share_board_url: this.room_code_except_url,
