@@ -1,56 +1,58 @@
 <template lang="pug">
 .AdapterApp
-  DebugBox(v-if="development_p")
-    div change_counter: {{change_counter}}
+  //- client-only にしないとぴよ将棋の部分でSSRとCSRの差ができてエラーになる
+  client-only
+    DebugBox(v-if="development_p")
+      div change_counter: {{change_counter}}
 
-  AdapterSidebar(:base="base")
+    AdapterSidebar(:base="base")
 
-  MainNavbar
-    template(slot="brand")
-      NavbarItemHome
-      b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
-    template(slot="end")
-      NavbarItemSidebarOpen(@click="sidebar_toggle")
+    MainNavbar
+      template(slot="brand")
+        NavbarItemHome
+        b-navbar-item.has-text-weight-bold(@click="clear_handle") なんでも棋譜変換
+      template(slot="end")
+        NavbarItemSidebarOpen(@click="sidebar_toggle")
 
-  MainSection
-    .container
-      .columns.is-centered
-        .column
-          b-field(:type="input_text_field_type")
-            b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" :placeholder="SHARED_STRING.kifu_body_placeholder")
+    MainSection
+      .container
+        .columns.is-centered
+          .column
+            b-field(:type="input_text_field_type")
+              b-input(type="textarea" ref="input_text" v-model.trim="input_text" expanded rows="8" :placeholder="SHARED_STRING.kifu_body_placeholder")
 
-          b-field.mt-5
-            .control
-              .buttons.is-centered
-                b-button(@click="validate_handle") 検証
-                //- b-button(@click="share_board_open_handle") 盤面
+            b-field.mt-5
+              .control
+                .buttons.is-centered
+                  b-button(@click="validate_handle") 検証
+                  //- b-button(@click="share_board_open_handle") 盤面
 
-          b-field.mt-5
-            .control
-              .buttons.is-centered
-                PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-                KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
-                KifCopyButton(@click="clipboard_open_handle")
+            b-field.mt-5
+              .control
+                .buttons.is-centered
+                  PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
+                  KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+                  KifCopyButton(@click="clipboard_open_handle")
 
-          b-field.mt-5
-            .control
-              .buttons.is-centered.are-small
-                b-button(@click="share_board_first_open_handle") 詰将棋
-                b-button(@click="share_board_last_open_handle") 終了図
+            b-field.mt-5
+              .control
+                .buttons.is-centered.are-small
+                  b-button(@click="share_board_first_open_handle") 詰将棋
+                  b-button(@click="share_board_last_open_handle") 終了図
 
-          b-field.mt-5
-            .control
-              .buttons.is-centered.are-small
-                b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))"     tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存
-                b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
+            b-field.mt-5
+              .control
+                .buttons.is-centered.are-small
+                  b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))"     tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存
+                  b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
 
-      .columns(v-if="record")
-        .column
-          pre.box.has-background-white-ter
-            | {{record.all_kifs.kif}}
+        .columns(v-if="record")
+          .column
+            pre.box.has-background-white-ter
+              | {{record.all_kifs.kif}}
 
-  DebugPre(v-if="development_p")
-    | {{record}}
+    DebugPre(v-if="development_p")
+      | {{record}}
 </template>
 
 <script>
