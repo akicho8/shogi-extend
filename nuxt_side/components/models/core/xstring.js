@@ -45,16 +45,12 @@ export const Xstring = {
     return str
   },
 
-  // str_to_tags("a,b,a") // => ["a", "b", "a"]
+  // str_to_words("a,b,a") // => ["a", "b", "a"]
   str_to_words(str) {
     str = (str || "").toString()
     str = str.replace(/,/g, " ")
     str = this.str_squish(str)
-    let av = []
-    if (Xobject.present_p(str)) {
-      av = str.split(/\s+/)
-    }
-    return av
+    return this.str_split(str, /\s+/)
   },
 
   // str_to_tags("a,b,a") // => ["a", "b"]
@@ -72,6 +68,16 @@ export const Xstring = {
       av.push(str)
     }
     return av.join(" ")
+  },
+
+  // str_split("", //) // => []
+  // JavaScript の split は "".split(//) で [""] になる罠があるため使ってはいけない
+  str_split(str, regexp = /\s+/) {
+    str = (str || "").toString()
+    if (Xobject.blank_p(str)) {
+      return []
+    }
+    return str.split(regexp)
   },
 
   // str_truncate("hello", {length: 20})

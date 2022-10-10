@@ -21,7 +21,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, "本当に投了する").click           # モーダルが表示されるので本当に投了する
     end
     a_block do
-      Capybara.using_wait_time(0) { debugger }
+      # Capybara.using_wait_time(0) { debugger }
     end
   end
 end

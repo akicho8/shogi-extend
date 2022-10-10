@@ -2,6 +2,8 @@
 
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
+import { InsideCommandInfo } from "../models/inside_command_info.js"
+import _ from "lodash"
 
 export const app_message = {
   data() {
@@ -23,6 +25,17 @@ export const app_message = {
 
     // 送信
     message_share(params) {
+      if (params.message.startsWith("/")) {
+        let str = params.message
+        str = str.replace(/^./, "")
+        const args = this.str_split(str)
+        const command = args.shift()
+        const info = InsideCommandInfo.lookup(command)
+        if (info) {
+          info.command_fn(this, args)
+          return
+        }
+      }
       if (this.ac_room) {
         this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
       } else {

@@ -30,6 +30,7 @@ const CLOSE_IF_BLANK_MESSAGE_POST = false // 空送信で閉じる？
 export default {
   name: "MessageSendModal",
   mixins: [support_child],
+  inject: ["TheSb"],
   mounted() {
     this.input_focus()
 
