@@ -1,7 +1,7 @@
 // チャット発言送信
 
 import MessageSendModal from "./MessageSendModal.vue"
-import { MessageScopeInfo } from "./models/message_scope_info.js"
+import { MessageScopeInfo } from "../models/message_scope_info.js"
 
 export const app_message = {
   data() {

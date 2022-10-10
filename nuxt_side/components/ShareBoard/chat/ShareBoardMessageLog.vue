@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 
 .ShareBoardMessageLog
   position: relative

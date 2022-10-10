@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 const CLOSE_IF_BLANK_MESSAGE_POST = false // 空送信で閉じる？
 
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .MessageSendModal
   +modal_width(24rem)
   .modal-card-body
