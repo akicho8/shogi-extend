@@ -1,26 +1,16 @@
 <template lang="pug">
-.ShareBoardMessageLog(v-if="TheSb.message_logs.length >= 1 || true")
+.ShareBoardMessageLog
   .scroll_block.is_scroll_y
-    template(v-for="(e, i) in TheSb.message_logs")
-      template(v-if="TheSb.message_share_received_p(e)")
-        //- .message_log_one(:key="e.unique_key")
+    template(v-for="e in TheSb.message_logs")
+      template(v-show="TheSb.message_share_received_p(e)")
         ShareBoardAvatarLine(:info="e" :key="e.unique_key")
-          XemojiWrap.flex_item.is_line_break_on.message_body(:class="{'has-text-success': e.message_scope_key === 'is_message_scope_private'}" :str="auto_link(e.message)")
-        //- template(v-if="present_p(e.result_str)")
-        //-   pre.result_pre.is_line_break_on {{e.result_str}}
+          XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.css_class" :str="e.auto_linked_message")
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
-
 export default {
   name: "ShareBoardMessageLog",
-  mixins: [support_child],
   inject: ["TheSb"],
-  mounted() {
-    // ここで実行しても効かない
-    // this.TheSb.ml_scroll_to_bottom()
-  },
 }
 </script>
 
@@ -42,8 +32,6 @@ export default {
         // line-height: 1.1  // 発言が1行のとき名前と発言がずれるので設定しない方が良い
       .user_name
         color: $grey
-    .result_pre
-      padding: 0.5rem
 
 .STAGE-development
   .ShareBoardMessageLog

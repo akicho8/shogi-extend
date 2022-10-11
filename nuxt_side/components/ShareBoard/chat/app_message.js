@@ -5,6 +5,7 @@ import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { InsideCommandInfo } from "../models/inside_command_info.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
+import { Xmessage } from "./xmessage.js"
 
 export const app_message = {
   data() {
@@ -26,7 +27,7 @@ export const app_message = {
 
     // 送信
     message_share(params) {
-      if (this.inline_command_run(params) === "break") {
+      if (this.inside_command_run(params) === "break") {
         return
       }
       if (this.ac_room) {
@@ -41,17 +42,11 @@ export const app_message = {
 
     // 受信
     message_share_broadcasted(params) {
-      this.ml_add(params) // あとで表示するため対象でなくても受信はしておく
-
-      if (this.message_share_received_p(params)) {
-        this.$buefy.toast.open({
-          container: ".MainBoard",
-          message: `${this.presence(params.from_user_name) ?? '？'}: ${params.message}`,
-          position: "is-top",
-          type: params.message_scope_key === "is_message_scope_private" ? "is-success" : "is-white",
-          queue: false,
-        })
-        this.talk(params.message)
+      const xmessage = Xmessage.create(params)
+      this.ml_add_xmessage(xmessage)                  // 後で表示するためスコープに関係なく発言履歴に追加する
+      if (this.message_share_received_p(params)) {    // 見てもいいなら
+        this.$buefy.toast.open(xmessage.toast_params) // 表示
+        this.talk(xmessage.message)                   // しゃべる
       }
     },
 
@@ -68,7 +63,7 @@ export const app_message = {
       return exec
     },
 
-    inline_command_run(params) {
+    inside_command_run(params) {
       if (params.message.startsWith("/")) {
         let str = params.message
         str = str.replace(/^./, "")
@@ -82,7 +77,7 @@ export const app_message = {
             if (!_.isString(value)) {
               value = Gs2.short_inspect(value)
             }
-            this.ml_bot(value)
+            this.local_bot_say(value)
           }
         }
         return "break"

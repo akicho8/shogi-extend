@@ -1,6 +1,7 @@
 import { Xassertion } from "./xassertion.js"
 import { Xobject } from "./xobject.js"
 import _ from "lodash"
+const MD5 = require("md5.js")
 
 const KANJI_NUMBER_TO_HANKAKU_DIGIT_TABLE = {
   "〇": "0",
@@ -111,5 +112,9 @@ export const Xstring = {
   str_normalize_for_ac(str) {
     const hankaku = this.hankaku_format(str ?? "")
     return this.kanji_hankaku_number_format(hankaku).toLowerCase()
+  },
+
+  str_to_md5(str) {
+    return new MD5().update(str).digest("hex")
   },
 }

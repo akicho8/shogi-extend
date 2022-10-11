@@ -6,7 +6,7 @@
         XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
       template(v-else)
         | チャット
-    b-button.test_button(type="is-small" @click="test_handle" v-if="development_p") 追加
+    b-button.test_button(type="is-small" @click="TheSb.ml_test" v-if="development_p") 追加
     b-field(v-if="TheSb.message_scope_dropdown_show_p")
       b-dropdown(animation="" position="is-bottom-left" v-model="TheSb.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
         template(#trigger)
@@ -25,8 +25,6 @@
 <script>
 import { support_child } from "../support_child.js"
 
-const CLOSE_IF_BLANK_MESSAGE_POST = false // 空送信で閉じる？
-
 export default {
   name: "MessageSendModal",
   mixins: [support_child],
@@ -44,10 +42,6 @@ export default {
       this.$sound.play_click()
       this.$emit("close")
     },
-    test_handle() {
-      this.$sound.play_click()
-      this.TheSb.ml_add_test()
-    },
     change_handle(key) {
       this.$sound.play_click()
       this.talk(this.TheSb.MessageScopeInfo.fetch(key).name)
@@ -59,7 +53,7 @@ export default {
     },
     send_handle() {
       if (this.blank_p(this.TheSb.message_body)) {
-        if (CLOSE_IF_BLANK_MESSAGE_POST) {
+        if (this.TheSb.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
           this.close_handle()
           return
         } else {

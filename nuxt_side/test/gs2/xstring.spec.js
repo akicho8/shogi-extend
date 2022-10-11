@@ -58,4 +58,7 @@ describe("Xstring", () => {
   test("str_normalize_for_ac", () => {
     expect(Xstring.str_normalize_for_ac("Ａ四")).toEqual("a4")
   })
+  test("str_to_md5", () => {
+    expect(Xstring.str_to_md5("a")).toEqual("0cc175b9c0f1b6a831c399e269772661")
+  })
 })
