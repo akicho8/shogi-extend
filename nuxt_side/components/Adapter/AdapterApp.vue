@@ -1,7 +1,8 @@
 <template lang="pug">
-.AdapterApp
-  //- client-only にしないとぴよ将棋の部分でSSRとCSRの差ができてエラーになる
-  client-only
+// meta タグは重要なだけで SSR である効果はあまりない
+// また client-only な部分を server で実行してしまう恐れがあるため入れている
+client-only
+  .AdapterApp
     DebugBox(v-if="development_p")
       div change_counter: {{change_counter}}
 

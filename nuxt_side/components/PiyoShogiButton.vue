@@ -1,16 +1,18 @@
 <template lang="pug">
-a.button.PiyoShogiButton.is-small(
-  v-if="PiyoShogi2.current_info.showable_p || $config.STAGE === 'development'"
-  :title="piyo_shogi_name"
-  v-bind="$attrs"
-  v-on="$listeners"
-  :target="target_default"
-  @click="click_handle"
-  )
-  span.icon
-    img.left_icon(src="~/assets/piyo_shogi_icon.png")
-  span(v-if="!icon_only")
-    | {{piyo_shogi_name}}
+//- PiyoShogi2.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
+client-only
+  a.button.PiyoShogiButton.is-small(
+    v-if="PiyoShogi2.current_info.showable_p || $config.STAGE === 'development'"
+    :title="piyo_shogi_name"
+    v-bind="$attrs"
+    v-on="$listeners"
+    :target="target_default"
+    @click="click_handle"
+    )
+    span.icon
+      img.left_icon(src="~/assets/piyo_shogi_icon.png")
+    span(v-if="!icon_only")
+      | {{piyo_shogi_name}}
 </template>
 
 <script>
