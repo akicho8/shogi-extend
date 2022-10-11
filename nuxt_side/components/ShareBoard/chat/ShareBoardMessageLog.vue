@@ -2,7 +2,7 @@
 .ShareBoardMessageLog
   .scroll_block.is_scroll_y
     template(v-for="e in TheSb.message_logs")
-      template(v-show="TheSb.message_share_received_p(e)")
+      template(v-if="TheSb.message_share_received_p(e)")
         ShareBoardAvatarLine(:info="e" :key="e.unique_key")
           XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.css_class" :str="e.auto_linked_message")
 </template>
