@@ -52,7 +52,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "入力補完" do
       def case1(query, complement_user_keys)
         search_by(query)
-        assert_var_eq(:complement_user_keys, complement_user_keys)
+        assert_var_eq(:complement_user_keys, complement_user_keys, wait: 5)
       end
 
       it "順番が正しい" do
@@ -415,9 +415,9 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     assert { value == query }
   end
 
-  def assert_var_eq(var, val)
+  def assert_var_eq(var, val, options = {})
     within(".system_test_variables") do
-      assert_text("[#{var}=#{val}]")
+      assert_text("[#{var}=#{val}]", options)
     end
   end
 
