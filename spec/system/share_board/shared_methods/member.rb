@@ -32,7 +32,7 @@ module SharedMethods
 
   # 指定のメンバーは指定のテキストを持っている
   def assert_member_has_text(user_name, text)
-    el = find(".SbMemberOne .user_name", text: user_name, exact_text: true).find(:xpath, "..")
+    el = find(".SbMemberOne .user_name", text: user_name, exact_text: true, wait: 10).find(:xpath, "..")
     el.assert_selector(:element, text: text, exact_text: true)
   end
 end
