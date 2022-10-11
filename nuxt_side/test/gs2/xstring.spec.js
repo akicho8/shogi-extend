@@ -31,6 +31,11 @@ describe("Xstring", () => {
     expect(Xstring.tags_str_toggle("a b", "c")).toEqual("a b c")
     expect(Xstring.tags_str_toggle("a b c", "c")).toEqual("a b")
   })
+  test("str_split", () => {
+    expect(Xstring.str_split("a b")).toEqual(["a", "b"])
+    expect(Xstring.str_split("a,b,a", /,/)).toEqual(["a", "b", "a"])
+    expect(Xstring.str_split("", /,/)).toEqual([])
+  })
   test("str_truncate", () => {
     expect(Xstring.str_truncate("12345", {length: 4})).toEqual("1...")
   })

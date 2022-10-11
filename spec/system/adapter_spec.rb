@@ -10,7 +10,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
     visit2 "/adapter"
     find("textarea").set("68S")
     find(".KifCopyButton").click
-    assert_text "コピーしました"
+    assert_text "コピーしました", wait: 10
   end
 
   # http://localhost:3000/adapter?body=foo

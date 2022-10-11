@@ -7,10 +7,10 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "works" do
     a_block do
-      room_setup("my_room", "alice")                 # aliceが部屋を作る
+      room_setup("test_room", "alice")                 # aliceが部屋を作る
     end
     b_block do
-      room_setup("my_room", "bob")                   # bobが部屋を作る
+      room_setup("test_room", "bob")                   # bobが部屋を作る
     end
     a_block do
       clock_open

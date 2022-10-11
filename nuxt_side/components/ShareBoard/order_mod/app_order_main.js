@@ -70,7 +70,7 @@ export const app_order_main = {
         this.al_add({
           ...params,
           label: "順番 " + (params.order_enable_p ? "ON" : "OFF"),
-          sfen: this.current_sfen,
+          sfen: this.current_sfen, // FIXME: とる
           turn: this.current_turn,
         })
       }
@@ -179,6 +179,10 @@ export const app_order_main = {
 
     self_is_member_p()          { return !!this.order_lookup_from_name(this.user_name)   }, // 自分はメンバーに含まれているか？
     self_is_watcher_p()         { return !this.self_is_member_p                          }, // 自分は観戦者か？
+    my_location()               { return this.user_name_to_initial_location(this.user_name) }, // 自分の色
+
+    ////////////////////////////////////////////////////////////////////////////////
+
 
     ////////////////////////////////////////////////////////////////////////////////
 

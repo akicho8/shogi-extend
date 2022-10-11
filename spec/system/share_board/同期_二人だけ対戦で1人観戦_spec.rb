@@ -3,13 +3,13 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      room_setup("my_room", "alice")                   # aliceが部屋を作る
+      room_setup("test_room", "alice")                   # aliceが部屋を作る
     end
     b_block do
-      room_setup("my_room", "bob")                     # bobも同じ部屋に入る
+      room_setup("test_room", "bob")                     # bobも同じ部屋に入る
     end
     c_block do
-      room_setup("my_room", "carol")                   # carolは観戦目的で同じ部屋に入る
+      room_setup("test_room", "carol")                   # carolは観戦目的で同じ部屋に入る
     end
     a_block do
       hamburger_click

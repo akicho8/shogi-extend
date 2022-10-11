@@ -1,5 +1,19 @@
 <template lang="pug">
 .columns.is-multiline.ShareBoardDebugPanels
+  .column.is-2
+    .panel
+      .panel-heading
+        | メダル
+      .panel-block
+        b-button(size="is-small" @click="base.medal_plus_handle('black', 1)") ☗+1
+        b-button(size="is-small" @click="base.medal_plus_handle('black', -1)") ☗-1
+        b-button(size="is-small" @click="base.medal_plus_handle('white', 1)") ☖+1
+        b-button(size="is-small" @click="base.medal_plus_handle('white', -1)") ☖-1
+      .panel-block
+        b-button(size="is-small" @click="base.medal_plus_to_self_handle(1)") 俺+1
+        b-button(size="is-small" @click="base.medal_plus_to_self_handle(-1)") 俺-1
+      .panel-block
+        pre {{base.medal_counts_hash}}
   .column.is-12
     SbOrderPanel
   .column.is-6(v-if="base.clock_box")
@@ -83,7 +97,7 @@
       a.panel-block(@click="base.cc_play_confirm()") 順番設定OFFのまま時計開始警告モーダル
       a.panel-block(@click="base.cc_next_message") 順番設定後に時計設置を促す
       a.panel-block(@click="base.tn_notify") 牛
-
+      a.panel-block(@click="base.kifu_mail_handle") 棋譜メール
   .column.is-2
     .panel
       .panel-heading

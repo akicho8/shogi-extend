@@ -4,12 +4,12 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      room_setup("my_room", "alice")
+      room_setup("test_room", "alice")
       begin
         visit "/share-board"                         # 再来
         hamburger_click
         room_setup_modal_handle                      # 「部屋に入る」を自分でクリックする
-        find(".new_room_code input").set("my_room")  # 合言葉を入力する
+        find(".new_room_code input").set("test_room")  # 合言葉を入力する
         value = find(".new_user_name input").value
         assert { value == "alice" }                  # 以前入力したニックネームが復元されている
         find(".entry_button").click                  # 共有ボタンをクリックする
@@ -18,7 +18,7 @@ RSpec.describe type: :system, share_board_spec: true do
       piece_move_o("17", "16", "☗1六歩")              # aliceは一人で初手を指した
     end
     b_block do
-      room_setup("my_room", "bob")                   # bob が別の画面でログインし、alice と同じ部屋の合言葉を設定する
+      room_setup("test_room", "bob")                   # bob が別の画面でログインし、alice と同じ部屋の合言葉を設定する
       assert_text("alice")                           # すでにaliceがいるのがわかる
     end
     a_block do

@@ -1,13 +1,13 @@
 // ▼必要なメソッド
-//
-//  current_turn
-//  kifu_copy_handle(e)
-//  kifu_show_handle(e)
-//  kifu_show_url(e)
-//  kifu_download_handle(e)
-//  kifu_download_url(e)
-//
-// ../../SwarsBattleShow/app_export.js とメソッドを合わせる
+// |-------------------------|
+// | current_turn            |
+// | kifu_copy_handle(e)     |
+// | kifu_show_handle(e)     |
+// | kifu_show_url(e)        |
+// | kifu_download_handle(e) |
+// | kifu_download_url(e)    |
+// |-------------------------|
+// ../Swars/SwarsBattleShow/app_export.js とメソッドを合わせる
 
 import _ from "lodash"
 

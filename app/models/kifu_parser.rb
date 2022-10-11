@@ -70,6 +70,42 @@ class KifuParser
     end
   end
 
+  def to_share_board_url
+    UrlProxy.full_url_for({
+        path: "/share-board",
+        query: {
+          :body               => core.to_sfen,
+          :title              => params[:title],
+          :black              => params[:black],
+          :white              => params[:white],
+          :member             => params[:member],
+          :other              => params[:other],
+          :turn               => params[:turn],
+          :abstract_viewpoint => params[:abstract_viewpoint],
+        }.compact,
+      })
+  end
+
+  def to_share_board_tiny_url
+    @to_share_board_tiny_url ||= TinyUrl.from(to_share_board_url)
+  end
+
+  def to_kento_url
+    m = core.xcontainer
+    h = {}
+    if m.initial_state_board_sfen != "startpos"
+      h[:initpos] = m.initial_state_board_sfen.remove(/^sfen\s*/)
+    end
+    if m.hand_logs.present?
+      h[:moves] = m.hand_logs.collect(&:to_sfen).join(".")
+    end
+    "#{KENTO_URL}/?#{h.to_query}"
+  end
+
+  def to_kento_tiny_url
+    @kento_tiny_url ||= TinyUrl.from(to_kento_url)
+  end
+
   # for app/models/battle_decorator/base.rb
   def core_parser
     core
@@ -110,8 +146,8 @@ class KifuParser
       "ぴよ将棋" => show_url("piyo_shogi"),
       "KENTO"    => show_url("kento"),
       # "検索URL" => search_url,
-      # "KENTO"      => kento_url,
-      # "共有将棋盤" => share_board_url,
+      # "KENTO"      => to_kento_url,
+      # "共有将棋盤" => to_share_board_url,
       # "対局URL"    => swars_battle_url,
     }.reject { |k, v| v.blank? }
   end
@@ -126,28 +162,6 @@ class KifuParser
     if v = swars_battle_key
       UrlProxy.full_url_for("/swars/search?query=#{v}")
     end
-  end
-
-  def kento_url
-    m = core.xcontainer
-    h = {}
-    if m.initial_state_board_sfen != "startpos"
-      h[:initpos] = m.initial_state_board_sfen.remove(/^sfen\s*/)
-    end
-    if m.hand_logs.present?
-      h[:moves] = m.hand_logs.collect(&:to_sfen).join(".")
-    end
-    "#{KENTO_URL}/?#{h.to_query}"
-  end
-
-  def share_board_url
-    UrlProxy.full_url_for({
-        path: "/share-board",
-        query: {
-          body: core.to_sfen,
-          abstract_viewpoint: :black,
-        },
-      })
   end
 
   def swars_battle_url
