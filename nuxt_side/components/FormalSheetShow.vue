@@ -53,7 +53,8 @@
                       | {{new_info.player_name_for_black}}
                     td.b_b.b_r.td_tournament_label(rowspan="2")
                       .value
-                        | &nbsp;棋戦名
+                        //- なぜか上に寄ってしまうためしかたなく&nbsp;で調整している
+                        | &nbsp;&nbsp;棋戦名
                     td.b_b.b_r(@click="edit_to(page_index, 'tournament_name')" :class="{editable: page_index === 0}")
                       | {{new_info.tournament_name}}
                     td.b_b.b_r.td_datetime_label
@@ -83,7 +84,8 @@
 
                     td.b_b.b_r.td_playing_field_label(rowspan="2")
                       .value
-                        | &nbsp;対局場
+                        //- なぜか上に寄ってしまうためしかたなく&nbsp;で調整している
+                        | &nbsp;&nbsp;対局場
                     td.b_b.b_r.td_playing_field_name(rowspan="2" @click="edit_to(page_index, 'playing_field_name')" :class="{editable: page_index === 0}")
                       | {{new_info.playing_field_name}}
 
