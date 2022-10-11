@@ -90,8 +90,8 @@
 
 ** alice と bob の部屋を作るには？
 
-  http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice
-  http://localhost:4000/share-board?room_code=my_room&fixed_user_name=bob
+  http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=alice
+  http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=bob
 
 ** 順番設定済みで開始するには？
 
@@ -123,7 +123,7 @@
 
 ** 時計設定済みで部屋に入るには？
 
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** プリセット指定
 
@@ -135,8 +135,8 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=bob&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=alice&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=bob&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
@@ -146,11 +146,11 @@
 
 *** 接続切れ
 
-   http://localhost:4000/share-board?room_code=my_room&member_is_disconnect=true
+   http://localhost:4000/share-board?room_code=dev_room&member_is_disconnect=true
 
 *** よそ見中
 
-   http://localhost:4000/share-board?room_code=my_room&member_is_window_blur=true
+   http://localhost:4000/share-board?room_code=dev_room&member_is_window_blur=true
 
 ** 対局時計をONにして起動する(あと持ち時間0)
 
@@ -166,12 +166,12 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=alice&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=alice&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_names=b,d,a,c&handle_name_validate=false
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e,f&fixed_order_names=b,d,a,c&handle_name_validate=false
 
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
-   http://localhost:4000/share-board?room_code=my_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle
+   http://localhost:4000/share-board?room_code=dev_room&fixed_user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle

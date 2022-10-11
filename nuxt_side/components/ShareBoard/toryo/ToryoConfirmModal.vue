@@ -15,8 +15,8 @@
   //-     //-   li 時計を止める
   //-     //-   li 順番を解除する
   //-     //- | 投了するとついでに時計と順番を解除します
-  //-     //- template(v-if="base.self_is_member_p")
-  //-     //-   template(v-if="base.current_turn_self_p")
+  //-     //- template(v-if="TheSb.self_is_member_p")
+  //-     //-   template(v-if="TheSb.current_turn_self_p")
   //-     //-     | 本当に投了しますか？
   //-     //-   template(v-else)
   //-     //-     | 手番ではないのに投了しますか？
@@ -38,9 +38,8 @@ import _ from "lodash"
 
 export default {
   name: "ToryoConfirmModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
+  inject: ["TheSb"],
   mounted() {
     this.talk(this.message)
   },
@@ -48,11 +47,11 @@ export default {
     toryo_handle() {
       this.$sound.play_click()
       this.$emit("close")
-      if (!this.base.toryo_button_show_p) {
+      if (!this.TheSb.toryo_button_show_p) {
         this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
         return
       }
-      this.base.toryo_run_from_modal()
+      this.TheSb.toryo_run_from_modal()
     },
     close_handle() {
       this.$sound.play_click()
@@ -62,8 +61,8 @@ export default {
   computed: {
     message() {
       let s = null
-      if (this.base.self_is_member_p) {
-        if (this.base.current_turn_self_p) {
+      if (this.TheSb.self_is_member_p) {
+        if (this.TheSb.current_turn_self_p) {
           s = "本当に投了しますか？"
         } else {
           s = "手番ではないけど本当に投了しますか？"

@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "正しく同期する" do
     a_block do
-      room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+      room_setup("test_room", "alice")                    # alice先輩が部屋を作る
     end
     b_block do
-      room_setup("my_room", "bob")                      # bob後輩が同じ部屋に入る
+      room_setup("test_room", "bob")                      # bob後輩が同じ部屋に入る
     end
     a_block do
       piece_move_o("77", "76", "☗7六歩")                # aliceが指す
@@ -29,7 +29,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "初期配置に戻すダイアログの中で局面を調整する" do
     a_block do
-      room_setup("my_room", "alice")                    # alice先輩が部屋を作る
+      room_setup("test_room", "alice")                    # alice先輩が部屋を作る
       piece_move_o("77", "76", "☗7六歩")                # aliceが指す
       assert_turn(1)                                    # 1手進んでいる
       hamburger_click

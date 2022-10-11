@@ -3,6 +3,7 @@
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { InsideCommandInfo } from "../models/inside_command_info.js"
+import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
 export const app_message = {
@@ -25,16 +26,8 @@ export const app_message = {
 
     // 送信
     message_share(params) {
-      if (params.message.startsWith("/")) {
-        let str = params.message
-        str = str.replace(/^./, "")
-        const args = this.str_split(str)
-        const command = args.shift()
-        const info = InsideCommandInfo.lookup(command)
-        if (info) {
-          info.command_fn(this, args)
-          return
-        }
+      if (this.inline_command_run(params) === "break") {
+        return
       }
       if (this.ac_room) {
         this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
@@ -73,6 +66,27 @@ export const app_message = {
         }
       }
       return exec
+    },
+
+    inline_command_run(params) {
+      if (params.message.startsWith("/")) {
+        let str = params.message
+        str = str.replace(/^./, "")
+        str = str.trim()
+        const args = this.str_split(str)
+        const command = args.shift()
+        const info = InsideCommandInfo.lookup(command)
+        if (info) {
+          let value = info.command_fn(this, args)
+          if (value != null) {
+            if (!_.isString(value)) {
+              value = Gs2.short_inspect(value)
+            }
+            this.ml_bot(value)
+          }
+        }
+        return "break"
+      }
     },
   },
 

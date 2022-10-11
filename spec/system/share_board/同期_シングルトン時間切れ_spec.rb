@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   def case1(fixed_user_name)
     visit_app({
-        "room_code"                => "my_room",
+        "room_code"                => "test_room",
         "fixed_user_name"          => fixed_user_name,
         "fixed_order_names"     => "alice,bob",
         "RETRY_DELAY"              => -1,

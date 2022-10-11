@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def visit_app2(fixed_order_state, b_or_w, fixed_user_name)
     visit_app({
-        :room_code            => :my_room,
+        :room_code            => :test_room,
         :fixed_user_name      => fixed_user_name,
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",

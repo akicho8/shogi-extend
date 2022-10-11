@@ -12,7 +12,7 @@ ShareBoardAvatarLine.SbMemberOne.is-clickable(
     //- b-tag(rounded) {{TheSb.user_name_to_display_turns(info)}}
     | {{TheSb.user_name_to_display_turns(info.from_user_name)}}
 
-  .flex_item.is-size-6(v-if="win_mark_exist_p(info)") {{win_mark(info)}}
+  .flex_item.is-size-6(v-if="win_mark.display_p") {{win_mark.text}}
 
   // 反応がない場合
   //- b-icon.flex_item(v-if="TheSb.member_is_disconnect(info)" icon="lan-disconnect" type="is-danger" size="is-small")
@@ -37,6 +37,7 @@ ShareBoardAvatarLine.SbMemberOne.is-clickable(
 import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
+import { WinMark } from "./win_mark.js"
 
 export default {
   name: "SbMemberOne",
@@ -57,22 +58,9 @@ export default {
         return "😴"
       }
     },
-    win_mark(info) {
-      const max = 5
-      const medal = "⭐"
-      const count = this.TheSb.medal_counts_hash[info.from_user_name]
-      if (count != null) {
-        if (count <= max) {
-          return medal.repeat(count)
-        } else {
-          return `${medal} ${count}`
-        }
-      }
-    },
-    win_mark_exist_p(info) {
-      const count = this.TheSb.medal_counts_hash[info.from_user_name] ?? 0
-      return count > 0
-    },
+  },
+  computed: {
+    win_mark() { return new WinMark(this.TheSb.medal_counts_hash, this.info.from_user_name) },
   },
 }
 </script>

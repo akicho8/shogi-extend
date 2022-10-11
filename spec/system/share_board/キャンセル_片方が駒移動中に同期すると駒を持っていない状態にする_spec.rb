@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      room_setup("my_room", "alice")    # aliceが部屋を作る
+      room_setup("test_room", "alice")    # aliceが部屋を作る
     end
     b_block do
-      room_setup("my_room", "bob")      # bobも同じ部屋に入る
+      room_setup("test_room", "bob")      # bobも同じ部屋に入る
     end
     b_block do
       place_click("27")                 # bobさんが手番を間違えて▲26歩しようとして27の歩を持ち上げた

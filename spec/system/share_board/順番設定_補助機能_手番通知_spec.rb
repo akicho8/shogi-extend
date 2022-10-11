@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      room_setup("my_room", "alice")                    # aliceが部屋を作る
+      room_setup("test_room", "alice")                    # aliceが部屋を作る
     end
     b_block do
-      room_setup("my_room", "bob")                      # bobも同じ部屋に入る
+      room_setup("test_room", "bob")                      # bobも同じ部屋に入る
       hamburger_click
       os_modal_handle                                   # 「順番設定」モーダルを開く (まだ無効の状態)
     end

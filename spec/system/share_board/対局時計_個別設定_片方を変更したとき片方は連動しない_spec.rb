@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      room_setup("my_room", "alice")
+      room_setup("test_room", "alice")
       clock_open
       clock_box_set(1, 2, 3, 4)                     # aliceが時計を設定する
       find(".cc_unique_mode_set_handle").click      # 個別設定を押す
@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
       end
     end
     b_block do
-      room_setup("my_room", "bob")
+      room_setup("test_room", "bob")
       assert_text "cc_params:[[1,2,3,4],[5,6,7,8]]" # 個別設定がbobにも伝わっている
     end
   end

@@ -1,3 +1,4 @@
+import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
 export const app_medal = {
@@ -34,10 +35,11 @@ export const app_medal = {
       this.ac_room_perform("medal_counts_hash_share", {medal_counts_hash: medal_counts_hash})
     },
     medal_counts_hash_share_broadcasted(params) {
-      this.receive_medal_counts_hash(params)
+      this.receive_medal_counts_hash(params.medal_counts_hash)
     },
-    receive_medal_counts_hash(params) {
-      this.medal_counts_hash = params.medal_counts_hash // 自分もみんなと同じようにここだけで更新する
+    receive_medal_counts_hash(medal_counts_hash) {
+      Gs2.__assert__(medal_counts_hash, "medal_counts_hash")
+      this.medal_counts_hash = medal_counts_hash // 自分もみんなと同じようにここだけで更新する
     },
   },
 }
