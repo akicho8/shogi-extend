@@ -19,7 +19,7 @@
 require "resolv"
 
 module ShareBoardControllerMethods
-  API_VERSION = 26
+  API_VERSION = 27
 
   extend ActiveSupport::Concern
 
