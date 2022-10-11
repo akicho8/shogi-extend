@@ -72,7 +72,13 @@ export const app_message = {
         const command = args.shift()
         const info = InsideCommandInfo.lookup(command)
         if (info) {
-          let value = info.command_fn(this, args)
+          let value = null
+          try {
+            value = info.command_fn(this, args)
+          } catch (e) {
+            console.error(e)
+            value = e
+          }
           if (value != null) {
             if (!_.isString(value)) {
               value = Gs2.short_inspect(value)

@@ -10,8 +10,8 @@
         b-button(size="is-small" @click="base.medal_plus_handle('white', 1)") ☖+1
         b-button(size="is-small" @click="base.medal_plus_handle('white', -1)") ☖-1
       .panel-block
-        b-button(size="is-small" @click="base.medal_plus_to_self_handle(1)") 俺+1
-        b-button(size="is-small" @click="base.medal_plus_to_self_handle(-1)") 俺-1
+        b-button(size="is-small" @click="base.medal_plus_to_user_handle(base.user_name, 1)") 俺+1
+        b-button(size="is-small" @click="base.medal_plus_to_user_handle(base.user_name, -1)") 俺-1
       .panel-block
         pre {{base.medal_counts_hash}}
   .column.is-12
