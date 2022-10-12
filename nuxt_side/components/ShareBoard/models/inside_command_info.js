@@ -13,12 +13,14 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
     return [
       {
         key: "test",
+        example: "/test a b c",
         command_fn: (context, args) => {
           return args
         },
       },
       {
         key: "ping",
+        example: "/ping",
         command_fn: (context, args) => {
           context.toast_ok("pong")
           return "pong"
@@ -26,13 +28,14 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
       },
       {
         key: "echo",
+        example: "/echo abc",
         command_fn: (context, args) => {
           return args.join(" ")
         },
       },
       {
         key: "medal-team",
-        example: "medal-team black 1",
+        example: "/medal-team black 1",
         command_fn: (context, args) => {
           const location_key = args[0]
           const plus = parseInt(args[1] ?? "1")
@@ -41,7 +44,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
       },
       {
         key: "medal-user",
-        example: "medal-user alice 1",
+        example: "/medal-user alice 1",
         command_fn: (context, args) => {
           const user_name = args[0]
           const plus = parseInt(args[1] ?? "1")
