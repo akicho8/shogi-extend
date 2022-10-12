@@ -256,5 +256,18 @@ module ShareBoard
         }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_al_add_broadcasted", bc_params: data)
       end
     end
+
+    describe "メダル" do
+      before do
+        subscribe(room_code: room_code)
+      end
+      it "works" do
+        data = data_factory("medal_counts_hash" => {"alice" => 1})
+        expect {
+          subscription.medal_counts_hash_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "medal_counts_hash_share_broadcasted", bc_params: data)
+      end
+    end
+
   end
 end
