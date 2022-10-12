@@ -28,7 +28,7 @@ export const app_medal = {
     // 指定のユーザーだけにこっそりメダル付与 (デバッグ用)
     medal_plus_to_user_handle(user_name, plus = 1) {
       const hv = _.clone(this.medal_counts_hash) // ここでは medal_counts_hash を破壊しない
-      hv[user_name] = (hv[this.user_name] ?? 0) + plus
+      hv[user_name] = (hv[user_name] ?? 0) + plus
       this.medal_counts_hash_share(hv)
     },
 
