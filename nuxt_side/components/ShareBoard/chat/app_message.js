@@ -65,13 +65,16 @@ export const app_message = {
 
     inside_command_run(params) {
       if (params.message.startsWith("/")) {
+        this.local_say(params.message)
         let str = params.message
         str = str.replace(/^./, "")
         str = str.trim()
         const args = this.str_split(str)
         const command = args.shift()
         const info = InsideCommandInfo.lookup(command)
-        if (info) {
+        if (info == null) {
+          this.local_bot_say("command not found")
+        } else {
           let value = null
           try {
             value = info.command_fn(this, args)

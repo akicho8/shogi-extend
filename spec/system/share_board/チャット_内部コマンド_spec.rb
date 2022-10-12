@@ -1,0 +1,43 @@
+require "#{__dir__}/shared_methods"
+
+RSpec.describe type: :system, share_board_spec: true do
+  before do
+    visit_app({
+        :room_code            => :test_room,
+        :fixed_user_name      => "a",
+        :fixed_member_names   => "a,b,c,d",
+        :fixed_order_names    => "a,b,c,d",
+        :handle_name_validate => "false",
+      })
+    find(".message_modal_handle").click
+  end
+
+  it "/ping" do
+    chat_message_send("/ping")
+    assert_message_received_o("pong")
+  end
+
+  it "/test" do
+    chat_message_send("/test a b c")
+    assert_message_received_o("[ 'a', 'b', 'c' ]")
+  end
+
+  it "/echo" do
+    chat_message_send("/echo abc")
+    assert_message_received_o("abc")
+  end
+
+  it "/medal-team" do
+    chat_message_send("/medal-team white +1")
+    assert_member_has_text("b", "⭐")
+    assert_member_has_text("d", "⭐")
+  end
+
+  it "/medal-user" do
+    chat_message_send("/medal-user b +2")
+    assert_member_has_text("b", "⭐⭐")
+
+    chat_message_send("/medal-user b -1")
+    assert_member_has_text("b", "⭐")
+  end
+end

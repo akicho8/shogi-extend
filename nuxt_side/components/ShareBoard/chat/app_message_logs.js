@@ -31,6 +31,10 @@ export const app_message_logs = {
       this.ml_add({from_user_name: "Bot", message: message})
     },
 
+    local_say(message) {
+      this.ml_add({from_user_name: this.user_name, message: message})
+    },
+
     // 一番下までスクロール
     ml_scroll_to_bottom() {
       const elem = document.querySelector(".ShareBoardMessageLog .scroll_block")

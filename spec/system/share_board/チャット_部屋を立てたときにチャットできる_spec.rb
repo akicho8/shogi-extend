@@ -13,10 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     a_block do
       find(".message_modal_handle").click            # 開く
-      within(".MessageSendModal") do
-        find(:fillable_field).set(message1)          # メッセージ入力
-        find(:button, :class => "send_handle").click # 送信
-      end
+      chat_message_send(message1)
       assert_message_received_o(message1)
     end
     b_block do
@@ -64,27 +61,5 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:fillable_field).send_keys("\n")
     end
     assert_message_received_o(message1)
-  end
-
-  def assert_message_received_o(message)
-    within(".MessageSendModal") do
-      assert_selector(".message_body", text: message, exact_text: true)
-    end
-  end
-
-  def assert_message_received_x(message)
-    within(".MessageSendModal") do
-      assert_no_selector(".message_body", text: message, exact_text: true)
-    end
-  end
-
-  # 指定のスコープにしてからメッセージ送信
-  def scoped_message_send(message_scope_key, message)
-    within(".MessageSendModal") do
-      find(".message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
-      find(".dropdown .#{message_scope_key}").click  # スコープ選択
-      find(:fillable_field).set(message)             # メッセージ入力
-      find(".send_handle").click                     # 送信
-    end
   end
 end
