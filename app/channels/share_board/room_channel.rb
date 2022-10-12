@@ -146,6 +146,11 @@ module ShareBoard
       broadcast(:medal_counts_hash_share_broadcasted, data)
     end
 
+    def user_kill(data)
+      track(data, "強制退出", "KILL #{data["killed_user_name"]}")
+      broadcast(:user_kill_broadcasted, data)
+    end
+
     private
 
     def room_code

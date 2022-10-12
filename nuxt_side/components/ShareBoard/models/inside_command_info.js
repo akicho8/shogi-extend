@@ -51,6 +51,14 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
           context.medal_plus_to_user_handle(user_name, plus)
         },
       },
+      {
+        key: "kill",
+        example: "/kill alice",
+        command_fn: (context, args) => {
+          const user_name = args[0]
+          context.user_kill(user_name)
+        },
+      },
     ]
   }
 }

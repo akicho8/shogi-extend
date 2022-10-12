@@ -269,5 +269,16 @@ module ShareBoard
       end
     end
 
+    describe "強制退室" do
+      before do
+        subscribe(room_code: room_code)
+      end
+      it "works" do
+        data = data_factory("killed_user_name" => "(killed_user_name)")
+        expect {
+          subscription.user_kill(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "user_kill_broadcasted", bc_params: data)
+      end
+    end
   end
 end

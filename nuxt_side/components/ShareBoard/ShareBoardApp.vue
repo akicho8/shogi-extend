@@ -87,6 +87,7 @@ import { app_sp                   } from "./app_sp.js"
 import { app_room_setup           } from "./app_room_setup.js"
 import { app_devise               } from "./app_devise.js"
 import { app_room_leave           } from "./app_room_leave.js"
+import { app_user_kill            } from "./app_user_kill.js"
 import { app_track_log            } from "./app_track_log.js"
 import { app_xmatch               } from "./auto_matching/app_xmatch.js"
 import { app_room_board_setup     } from "./app_room_board_setup.js"
@@ -155,6 +156,7 @@ export default {
     app_room_setup,
     app_devise,
     app_room_leave,
+    app_user_kill,
     app_track_log,
     app_xmatch,
     app_room_board_setup,
