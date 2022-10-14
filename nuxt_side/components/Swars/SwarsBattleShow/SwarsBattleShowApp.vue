@@ -388,8 +388,7 @@ export default {
         // record.description:  戦法のみ
         //
         title: "将棋ウォーズ棋譜",
-
-        body:  this.record.sfen_body,
+        xbody:  this.urlsafe_encode64(this.record.sfen_body),
         turn:  this.current_turn,
         abstract_viewpoint: this.sp_viewpoint,
       }

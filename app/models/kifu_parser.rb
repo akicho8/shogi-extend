@@ -74,7 +74,8 @@ class KifuParser
     UrlProxy.full_url_for({
         path: "/share-board",
         query: {
-          :body               => core.to_sfen,
+          # :body               => DotSfen.escape(core.to_sfen),
+          :xbody              => Base64.urlsafe_encode64(core.to_sfen, padding: false),
           :title              => params[:title],
           :black              => params[:black],
           :white              => params[:white],

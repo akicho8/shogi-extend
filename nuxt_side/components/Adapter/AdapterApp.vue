@@ -149,7 +149,7 @@ export default {
         this.$router.push({
           name: "share-board",
           query: {
-            body: this.record.all_kifs.sfen,
+            xbody: this.urlsafe_encode64(this.record.all_kifs.sfen),
             turn: force_turn ?? this.fixed_turn,
             abstract_viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",

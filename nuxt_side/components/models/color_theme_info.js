@@ -1,4 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
+import { Gs2 } from "@/components/models/gs2.js"
 
 const SAMPLE_SFEN = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
 
@@ -20,7 +21,7 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
   thumbnail_url(context) {
     const url_base = context.$config.MY_SITE_URL + "/share-board.png"
     const url = new URL(url_base)
-    url.searchParams.set("body", SAMPLE_SFEN)
+    url.searchParams.set("xbody", Gs2.urlsafe_encode64(SAMPLE_SFEN))
     url.searchParams.set("color_theme_key", this.key)
     url.searchParams.set("width", 1920 * this.constructor.image_scale)
     url.searchParams.set("height", 1080 * this.constructor.image_scale)

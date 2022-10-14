@@ -53,8 +53,9 @@ export const app_urls = {
   computed: {
     current_url_params() {
       const e = {
-        ...this.$route.query,                  // デバッグ用パラメータを保持するため
-        body: DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
+        // ...this.$route.query,                 // デバッグ用パラメータを保持するため ← これがあると xbody が残る
+        // body: DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
+        xbody:                this.urlsafe_encode64(this.current_sfen),
         turn:                 this.current_turn,
         title:                this.current_title,
         abstract_viewpoint:   this.abstract_viewpoint,

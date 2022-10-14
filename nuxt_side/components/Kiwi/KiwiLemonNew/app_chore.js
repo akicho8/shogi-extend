@@ -16,7 +16,11 @@ export const app_chore = {
           this.$axios.$post("/api/general/any_source_to.json", params).then(e => {
             this.bs_error_message_dialog(e)
             if (e.body) {
-              this.$router.push({name: "share-board", query: { body: e.body, abstract_viewpoint: this.viewpoint_key }})
+              const params = {
+                xbody: this.urlsafe_encode64(e.body),
+                abstract_viewpoint: this.viewpoint_key,
+              }
+              this.$router.push({name: "share-board", query: params})
             }
           })
         },

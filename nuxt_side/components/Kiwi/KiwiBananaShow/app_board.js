@@ -26,7 +26,7 @@ export const app_board = {
     current_share_board_params() {
       return {
         ...this.banana.advanced_kif_info,
-        body: DotSfen.escape(this.banana.advanced_kif_info.body),
+        xbody: this.urlsafe_encode64(this.banana.advanced_kif_info.body),
       }
     },
   },
