@@ -14,6 +14,7 @@ import { Xtag       } from "./core/xtag.js"
 import { Xhtml      } from "./core/xhtml.js"
 import { Xtime      } from "./core/xtime.js"
 import { Xaratio    } from "./core/xaratio.js"
+import { Xbase64    } from "./core/xbase64.js"
 
 export const Gs2 = {
   ...Xassertion,
@@ -32,4 +33,5 @@ export const Gs2 = {
   ...Xhtml,
   ...Xtime,
   ...Xaratio,
+  ...Xbase64,
 }
