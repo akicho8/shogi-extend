@@ -2,6 +2,7 @@ import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
 import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
 import { Gs2 } from "@/components/models/gs2.js"
+import { DotSfen } from "@/components/models/dot_sfen.js"
 
 export class KifuVo {
   static create(...args) {
@@ -38,7 +39,7 @@ export class KifuVo {
     // moves は別のパラメータでスペースを . に置き換えている(KENTOの独自の工夫)
     const { moves } = info.attributes
     if (moves) {
-      url.searchParams.set("moves", moves.replace(/\s+/g, "."))
+      url.searchParams.set("moves", DotSfen.space_to_dot_replace(moves))
     }
 
     // #n が手数
