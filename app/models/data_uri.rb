@@ -20,6 +20,10 @@ class DataUri
     @to_blob ||= Base64.decode64(parsed_attrs["base64_text"])
   end
 
+  def to_data_uri
+    "data:#{content_type};base64,#{Base64.strict_encode64(to_blob)}"
+  end
+
   def read
     to_blob
   end
