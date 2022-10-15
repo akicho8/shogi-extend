@@ -10,14 +10,19 @@ module KifuExtractor
       if uri = extracted_uri
         if uri.query || uri.fragment
           params = params_collect
-          all_lookup_param_keys.each do |key|
-            if s = params[key]
-              s = DotSfen.unescape(s)
-              if s.present?
-                if Bioshogi::Parser.accepted_class(s)
-                  if legal_valid?(s)
-                    @body = s
-                    break
+          if s = params["xbody"]
+            @body = SafeSfen.decode(s) # xbody の場合はすべてのチェックを省くので速い
+          else
+            all_lookup_param_keys.each do |key|
+              if s = params[key]
+                s = DotSfen.unescape(s)
+                p [key, s, Bioshogi::Parser.accepted_class(s)]
+                if s.present?
+                  if Bioshogi::Parser.accepted_class(s)
+                    if legal_valid?(s)
+                      @body = s
+                      break
+                    end
                   end
                 end
               end
