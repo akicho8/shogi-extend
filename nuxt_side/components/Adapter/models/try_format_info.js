@@ -1,3 +1,5 @@
+import { SafeSfen } from "@/components/models/safe_sfen.js"
+
 const FID_F03FD8D20A7EDED3B334EC8559F54BC5 = `
 手合割：平手
 手数----指手---------消費時間--
@@ -191,7 +193,9 @@ export class TryFormatInfo extends ApplicationMemoryRecord {
       {
         name: "共有将棋盤",
         items: [
-          { name: "二歩", success: true,  body: "https://www.shogi-extend.com/share-board?body=position.sfen.4k4%2F9%2F4p4%2F9%2F9%2F9%2F4P4%2F9%2F4K4.b.P.1.moves.5g5f.5c5d.P%2a5e", },
+          { name: "KI2風形式 (76歩34歩22角成)",         success: true,  body: `https://www.shogi-extend.com/share-board?body=${encodeURIComponent("76歩34歩22角成")}`, },
+          { name: "SFENのスペースがドット(二歩)",       success: true,  body: "https://www.shogi-extend.com/share-board?body=position.sfen.4k4%2F9%2F4p4%2F9%2F9%2F9%2F4P4%2F9%2F4K4.b.P.1.moves.5g5f.5c5d.P%2a5e", },
+          { name: "URL Safe Base64 形式 (xbodyに指定)", success: true,  body: `https://www.shogi-extend.com/share-board?xbody=${SafeSfen.encode("76歩34歩22角成")}`, },
         ],
       },
 
