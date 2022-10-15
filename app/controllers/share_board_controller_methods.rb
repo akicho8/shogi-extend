@@ -16,7 +16,6 @@
 #  ・リンクは         share-board?body%3Dposition になっている
 #  ・ので不正なアドレスと認識される。Chrome では問題なし
 #
-require "resolv"
 
 module ShareBoardControllerMethods
   API_VERSION = 28
