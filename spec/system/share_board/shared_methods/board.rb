@@ -66,4 +66,9 @@ module SharedMethods
   def no_lifted_from(place)
     assert_no_selector "#{place_class(place)}.lifted_from_p"
   end
+
+  # location_key 色の piece_key が盤上にある
+  def assert_soldier_exist(location_key, piece_key, promoted)
+    assert_selector ".MainBoard .PieceTextureSelf.location_#{location_key}.promoted_#{promoted}.piece_name.piece_#{piece_key}"
+  end
 end
