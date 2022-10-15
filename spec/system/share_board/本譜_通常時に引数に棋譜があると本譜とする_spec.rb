@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "xbody" do
-    visit_app(xbody: DotSfen.urlsafe_escape("position startpos"))
+    visit_app(xbody: SafeSfen.encode("position startpos"))
     assert_honpu_link_exist
   end
 end
