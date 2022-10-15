@@ -86,6 +86,7 @@ import { app_sidebar     } from "./app_sidebar.js"
 import { SceneInfo } from "../models/scene_info.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
+import { SafeSfen } from "@/components/models/safe_sfen.js"
 
 export default {
   name: "SwarsBattleShowApp",
@@ -388,7 +389,7 @@ export default {
         // record.description:  戦法のみ
         //
         title: "将棋ウォーズ棋譜",
-        xbody:  this.urlsafe_encode64(this.record.sfen_body),
+        xbody:  SafeSfen.encode(this.record.sfen_body),
         turn:  this.current_turn,
         abstract_viewpoint: this.sp_viewpoint,
       }

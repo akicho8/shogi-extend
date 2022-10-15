@@ -63,6 +63,7 @@ import { support_parent } from "./support_parent.js"
 import { app_chore      } from "./app_chore.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
+import { SafeSfen } from "@/components/models/safe_sfen.js"
 
 import _ from "lodash"
 
@@ -149,7 +150,7 @@ export default {
         this.$router.push({
           name: "share-board",
           query: {
-            xbody: this.urlsafe_encode64(this.record.all_kifs.sfen),
+            xbody: SafeSfen.encode(this.record.all_kifs.sfen),
             turn: force_turn ?? this.fixed_turn,
             abstract_viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",

@@ -1,3 +1,5 @@
+import { SafeSfen } from "@/components/models/safe_sfen.js"
+
 export const app_chore = {
   methods: {
     any_source_edit_handle() {
@@ -17,7 +19,7 @@ export const app_chore = {
             this.bs_error_message_dialog(e)
             if (e.body) {
               const params = {
-                xbody: this.urlsafe_encode64(e.body),
+                xbody: SafeSfen.encode(e.body),
                 abstract_viewpoint: this.viewpoint_key,
               }
               this.$router.push({name: "share-board", query: params})

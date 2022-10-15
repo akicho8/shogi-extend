@@ -5,11 +5,11 @@ module ShareBoardMethods
     def same_body_fetch(params)
       body = nil
       if v = params[:xbody].presence
-        body ||= Base64.urlsafe_decode64(v)
+        body ||= SafeSfen.decode(v)
       else
         body ||= params[:body].presence
         body ||= "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}"
-        body = DotSfen.unescape(body)
+        body = DotSfen.unescape(body) # sfen 以外が来るのも想定しておく
       end
       sfen_hash = Digest::MD5.hexdigest(body)
       record = find_by(sfen_hash: sfen_hash, use_key: :share_board)

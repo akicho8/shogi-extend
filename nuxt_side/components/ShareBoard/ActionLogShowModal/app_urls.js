@@ -2,6 +2,7 @@
 // ShareBoard.vue のスコープのものとメソッド名が重複しているので注意
 
 import { DotSfen } from "@/components/models/dot_sfen.js"
+import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export const app_urls = {
@@ -84,7 +85,7 @@ export const app_urls = {
       return this.base.url_params_clean({
         // 必須
         // body: DotSfen.escape(this.action_log.sfen),
-        xbody: this.urlsafe_encode64(this.action_log.sfen),
+        xbody: SafeSfen.encode(this.action_log.sfen),
         // オプション
         turn: this.new_turn,
         abstract_viewpoint: this.base.abstract_viewpoint, // メインの盤ではなくプレビュー盤の視点を渡した方がよい(↓追加)

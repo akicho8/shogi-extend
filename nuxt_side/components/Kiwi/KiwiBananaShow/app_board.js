@@ -1,4 +1,5 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
+import { SafeSfen } from "@/components/models/safe_sfen.js"
 
 export const app_board = {
   data() {
@@ -26,7 +27,7 @@ export const app_board = {
     current_share_board_params() {
       return {
         ...this.banana.advanced_kif_info,
-        xbody: this.urlsafe_encode64(this.banana.advanced_kif_info.body),
+        xbody: SafeSfen.encode(this.banana.advanced_kif_info.body),
       }
     },
   },

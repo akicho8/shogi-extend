@@ -1,4 +1,5 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
+import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 
 export const app_urls = {
@@ -55,7 +56,7 @@ export const app_urls = {
       const e = {
         // ...this.$route.query,                 // デバッグ用パラメータを保持するため ← これがあると xbody が残る
         // body: DotSfen.escape(this.current_sfen), // 編集モードでもURLを更新するため
-        xbody:                this.urlsafe_encode64(this.current_sfen),
+        xbody:                SafeSfen.encode(this.current_sfen),
         turn:                 this.current_turn,
         title:                this.current_title,
         abstract_viewpoint:   this.abstract_viewpoint,

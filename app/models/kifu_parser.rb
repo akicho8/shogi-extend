@@ -77,7 +77,7 @@ class KifuParser
           # Nuxt.js の不具合で :body => core.to_sfen は動かなかったが 2.15.8 で直ったのでそれでもいい
           # :body               => core.to_sfen,
           # :body               => DotSfen.escape(core.to_sfen),
-          :xbody              => Base64.urlsafe_encode64(core.to_sfen, padding: false),
+          :xbody              => SafeSfen.encode(core.to_sfen),
           :title              => params[:title],
           :black              => params[:black],
           :white              => params[:white],
