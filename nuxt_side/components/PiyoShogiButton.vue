@@ -47,10 +47,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700&display=swap")
-
 .PiyoShogiButton
-  font-family: "M PLUS Rounded 1c", sans-serif
   font-weight: 700
 
   .left_icon
