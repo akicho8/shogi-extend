@@ -37,9 +37,10 @@ export class KifuVo {
     }
 
     // moves は別のパラメータでスペースを . に置き換えている(KENTOの独自の工夫)
+    // moves のところだけなので DotSfen.escape は使えない
     const { moves } = info.attributes
     if (moves) {
-      url.searchParams.set("moves", DotSfen.space_to_dot_replace(moves))
+      url.searchParams.set("moves", moves.replace(/\s+/g, "."))
     }
 
     // #n が手数
