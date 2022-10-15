@@ -1,8 +1,13 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  it "通常時" do
-    visit_app(body: "position startpos")
+  it "bodyパラメータ" do
+    visit_app(body: DotSfen.escape("position startpos"))
+    assert_honpu_link_exist
+  end
+
+  it "xbodyパラメータ" do
+    visit_app(xbody: DotSfen.urlsafe_escape("position startpos"))
     assert_honpu_link_exist
   end
 
