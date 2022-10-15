@@ -2,7 +2,7 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   def foul_behavior_key(foul_behavior_key)
-    sfen = DotSfen.space_to_dot_replace("position sfen 8+r/8B/7PK/9/9/9/9/9/9 b P 1")
+    sfen = "position sfen 8+r/8B/7PK/9/9/9/9/9/9 b P 1"
     visit_app(body: sfen, foul_behavior_key: foul_behavior_key)
     find(".Membership.is_black .piece_P").click # 持駒の歩を持つ
     find(".place_2_2").click                    # 22打
