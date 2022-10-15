@@ -225,6 +225,7 @@ export default {
     this.$debug.trace("ShareBoardApp", "beforeMount")
   },
   mounted() {
+    // console.log(this.$route)
     this.$debug.trace("ShareBoardApp", "mounted")
 
     // this.$nuxt.error({statusCode: 500, message: "xxx"})

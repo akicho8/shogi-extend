@@ -8,6 +8,11 @@ client-only
 export default {
   name: "share-board",
   async asyncData({ $axios, query }) {
+    if (process.env.NODE_ENV === "development") {
+      console.log("SSR {")
+      console.log(query)
+      console.log("SSR }")
+    }
     const e = await $axios.$get("/api/share_board", {params: query})
     if (e.bs_error) {
       return { bs_error: e.bs_error }

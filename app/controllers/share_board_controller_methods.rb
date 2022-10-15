@@ -30,6 +30,8 @@ module ShareBoardControllerMethods
   end
 
   def show
+    # raise params.inspect
+
     # nginx の設定で /share-board.\w+ は Rails 側にリクエストが来る
     # そこで format の指定がなかったり HTML だったりする場合にのみ Nuxt 側に飛ばす
     # 本当は Rails 側を経由したくないがこれまでの互換性を考慮するとこうするしかない

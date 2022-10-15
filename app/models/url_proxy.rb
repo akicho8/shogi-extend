@@ -38,6 +38,7 @@ module UrlProxy
       if query = path[:query].presence
         if query.kind_of?(Hash)
           query = query.to_query
+          # query = query.collect{|k, v|"#{k}=#{v}"}.join("&")
         end
       end
 
