@@ -16,4 +16,8 @@ module DotSfen
     end
     sfen
   end
+
+  def space_to_dot_replace(sfen)
+    sfen.gsub(/\s+/, ".")
+  end
 end
