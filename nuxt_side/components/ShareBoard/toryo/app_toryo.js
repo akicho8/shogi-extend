@@ -96,9 +96,10 @@ export const app_toryo = {
   computed: {
     // 投了ボタン表示条件
     // ・対局メンバーに含まれる
-    // ・時計が PLAY 状態
+    // ・時計が PLAY 状態 ← やめ
     toryo_button_show_p() {
-      return this.self_is_member_p && this.cc_play_p
+      // return this.self_is_member_p && this.cc_play_p
+      return this.self_is_member_p
     },
   },
 }
