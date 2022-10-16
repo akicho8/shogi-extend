@@ -16,7 +16,6 @@ module KifuExtractor
             all_lookup_param_keys.each do |key|
               if s = params[key]
                 s = DotSfen.unescape(s)
-                p [key, s, Bioshogi::Parser.accepted_class(s)]
                 if s.present?
                   if Bioshogi::Parser.accepted_class(s)
                     if legal_valid?(s)
