@@ -18,8 +18,13 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit ({ commit, dispatch }, { req }) {
     await dispatch("user/a_auth_user_fetch")
+
     // if (req.session && req.session.current_user) {
     //   commit('m_auth_user_set', req.session.current_user)
     // }
+
+    // USER_AGENT がとれる
+    // console.log("user-agent")
+    // console.log(req.headers['user-agent'])
   },
 }

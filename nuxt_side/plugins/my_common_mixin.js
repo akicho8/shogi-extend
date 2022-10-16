@@ -4,6 +4,7 @@ import Vue from "vue"
 
 import { vue_support          } from "./vue_support.js"
 import { vue_browser_and_form } from "./vue_browser_and_form.js"
+import { vue_my_mobile         } from "./vue_my_mobile.js"
 import { vue_head             } from "./vue_head.js"
 import { vue_auth             } from "./vue_auth.js"
 import { vue_shared_string    } from "./vue_shared_string.js"
@@ -14,6 +15,7 @@ Vue.mixin({
   mixins: [
     vue_support,
     vue_browser_and_form,
+    vue_my_mobile,
     vue_head,
     vue_auth,
     vue_shared_string,

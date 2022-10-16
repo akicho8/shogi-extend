@@ -72,7 +72,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { Soldier } from "shogi-player/components/models/soldier.js"
 import { Place   } from "shogi-player/components/models/place.js"
 
-import { isMobile        } from "@/components/models/is_mobile.js"
+import { isMobile } from "@/components/models/is_mobile.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
