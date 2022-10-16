@@ -126,7 +126,7 @@ export default {
         },
         {
           enabled: true,
-          label: "セッションカウンタ",
+          label: "Sカウンタ",
           value: this.member_info.from_session_counter,
         },
         {

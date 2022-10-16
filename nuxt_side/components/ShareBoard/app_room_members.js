@@ -121,9 +121,11 @@ export const app_room_members = {
     },
 
     // 処理順序重要
+    // セッションIDはブラウザをリロードしても同じIDを返すため同じ人と判断できる
     member_infos_normalize() {
       this.member_infos = _.orderBy(this.member_infos, "performed_at", "desc")      // 情報が新しいもの順に並べてから
-      this.member_infos = _.uniqBy(this.member_infos, "from_connection_id")         // ユーザーの重複を防ぐ(新しい方を採取できる)
+      // this.member_infos = _.uniqBy(this.member_infos, "from_connection_id")         // ユーザーの重複を防ぐ(新しい方を採取できる) ←分身してしまう
+      this.member_infos = _.uniqBy(this.member_infos, e => [e.from_user_name, e.from_session_id].join("/")) // ユーザーの重複を防ぐ(新しい方を採取できる)←分身しない方法
       this.member_infos = this.member_infos_find_all_newest(this.member_infos)      // 通知が来た時間が最近の人だけを採取する
       this.member_infos = _.orderBy(this.member_infos, ["room_joined_at"], ["asc"]) // 上から古参順に並べる
     },
