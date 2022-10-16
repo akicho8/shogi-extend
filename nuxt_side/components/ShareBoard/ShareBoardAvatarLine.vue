@@ -1,4 +1,5 @@
 <template lang="pug">
+// 外側で必ず key を指定すること
 .ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
   // すべて名前が入力されていないとだめ
   template(v-if="info.from_user_name")
