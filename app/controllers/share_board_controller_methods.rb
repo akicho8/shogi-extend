@@ -29,6 +29,17 @@ module ShareBoardControllerMethods
   end
 
   def show
+    # http://localhost:3000/share-board.kif
+    # render plain: session.id.to_s
+    # return
+    # render plain: sb_session_counter
+    # return
+
+    # session[:a] ||= 0
+    # session[:a] += 1
+    # render plain: session[:a].inspect
+    # return
+
     # raise params.inspect
 
     # nginx の設定で /share-board.\w+ は Rails 側にリクエストが来る
@@ -201,9 +212,10 @@ module ShareBoardControllerMethods
     # リアルタイム共有
     attrs = attrs.merge({
         # :room_code => params[:room_code] || "",
-        :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
-        :session_id    => sb_session_id,
-        :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
+        :connection_id   => ApplicationRecord.secure_random_urlsafe_base64_token,
+        :session_id      => sb_session_id,
+        :session_counter => sb_session_counter,
+        :API_VERSION     => API_VERSION,       # これとActionCableで返すバージョンを比較する
       })
 
     attrs
@@ -256,6 +268,15 @@ module ShareBoardControllerMethods
   end
 
   def sb_session_id
-    session[:sb_session_id] ||= ApplicationRecord.secure_random_urlsafe_base64_token
+    if false
+      session[:sb_session_id] ||= ApplicationRecord.secure_random_urlsafe_base64_token
+    else
+      Digest::MD5.hexdigest(session.id.to_s)
+    end
+  end
+
+  def sb_session_counter
+    session[:sb_session_counter] ||= 0
+    session[:sb_session_counter] += 1
   end
 end

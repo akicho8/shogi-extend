@@ -126,6 +126,11 @@ export default {
         },
         {
           enabled: true,
+          label: "セッションカウンタ",
+          value: this.member_info.from_session_counter,
+        },
+        {
+          enabled: true,
           label: "API Version",
           value: this.member_info.API_VERSION,
         },
