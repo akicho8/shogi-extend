@@ -202,6 +202,7 @@ module ShareBoardControllerMethods
     attrs = attrs.merge({
         # :room_code => params[:room_code] || "",
         :connection_id => ApplicationRecord.secure_random_urlsafe_base64_token,
+        :session_id    => sb_session_id,
         :API_VERSION   => API_VERSION,       # これとActionCableで返すバージョンを比較する
       })
 
@@ -252,5 +253,9 @@ module ShareBoardControllerMethods
   # 駒落ちを考慮した擬似ターン数
   def number_of_turns_in_consideration_of_the_frame_dropping
     current_record.sfen_info.location.code + initial_turn
+  end
+
+  def sb_session_id
+    session[:sb_session_id] ||= ApplicationRecord.secure_random_urlsafe_base64_token
   end
 end

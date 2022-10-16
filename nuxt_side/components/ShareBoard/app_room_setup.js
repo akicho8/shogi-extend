@@ -213,6 +213,9 @@ export const app_room_setup = {
     // 自分と他者を区別するためのコード(タブが2つあればそれぞれ異なる)
     connection_id() { return this.config.record.connection_id },
 
+    // 同じタブから再度入ったとき同じになる
+    session_id() { return this.config.record.session_id },
+
     // 合言葉と名前が入力済みなので共有可能か？
     connectable_p() { return this.present_p(this.room_code) && this.present_p(this.user_name) },
   },

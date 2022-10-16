@@ -32,7 +32,7 @@
       .panel-heading
         | メンバーリスト({{base.member_infos.length}})
       template(v-for="e in base.member_infos")
-        .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.from_connection_id}})
+        .panel-block {{e.room_joined_at}} {{e.from_user_name}} ({{e.from_session_id}} {{e.from_connection_id}})
   .column.is-4
     .panel
       .panel-heading

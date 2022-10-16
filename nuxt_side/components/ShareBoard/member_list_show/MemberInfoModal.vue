@@ -121,6 +121,11 @@ export default {
         },
         {
           enabled: true,
+          label: "セッションID",
+          value: this.member_info.from_session_id,
+        },
+        {
+          enabled: true,
           label: "API Version",
           value: this.member_info.API_VERSION,
         },

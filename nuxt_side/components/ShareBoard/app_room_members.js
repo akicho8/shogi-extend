@@ -33,6 +33,7 @@ export const app_room_members = {
       names.forEach((name, index) => {
         const params = {
           ...this.ac_room_perform_default_params(),
+          from_session_id:    index,        // 送信者識別子
           from_connection_id: index,        // 送信者識別子
           from_user_name:     name,         // 名前
           performed_at:       0,            // 実行日時(ms)
@@ -43,6 +44,7 @@ export const app_room_members = {
           user_agent:         null,         // ブラウザ情報
         }
         if (this.user_name === name) {
+          params["from_session_id"] = this.session_id
           params["from_connection_id"] = this.connection_id
         }
         this.member_add(params)
@@ -78,6 +80,7 @@ export const app_room_members = {
       this.alive_notice_count += 1
       this.ac_room_perform("member_info_share", {
         // この情報はそのまま member_infos に追加する
+        from_session_id:     this.session_id,              // 送信者識別子
         alive_notice_count:  this.alive_notice_count,      // 通知した回数
         room_joined_at:      this.room_joined_at,          // 部屋に入った日時(古参比較用)
         window_active_p:     this.window_active_p,         // Windowの状態
