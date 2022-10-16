@@ -13,9 +13,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "pug": "^3.0.2",
-    "pug-loader": "^2.4.0",
-    "pug-plain-loader": "^1.1.0",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/proxy": "^2.0.1",
     "@nuxtjs/pwa": "^3.2.2",
@@ -37,7 +34,7 @@
     "nuxt-buefy": "0.4.23",
     "pattern.css": "^1.0.0",
     "secure-ls": "^1.2.6",
-    "shogi-player": "^0.0.357",
+    "shogi-player": "^0.0.358",
     "striptags": "^3.1.1",
     "twemoji": "^13.1.0",
     "url-safe-base64": "^1.1.1",
