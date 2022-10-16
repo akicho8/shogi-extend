@@ -19,6 +19,13 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("alice.")).toEqual("aliceさん")
   })
 
+  test("ん", () => {
+    expect(HandleNameParser.call_name("○ん")).toEqual("○んさん")
+    expect(HandleNameParser.call_name("○○ん")).toEqual("○○んさん")
+    expect(HandleNameParser.call_name("○○○ん")).toEqual("○○○ん")
+    expect(HandleNameParser.call_name("○○○○ん")).toEqual("○○○○ん")
+  })
+
   test("ちゃん", () => {
     expect(HandleNameParser.call_name("aliceちゃん")).toEqual("aliceちゃん") // 最後が "ん" の影響でスルーされているだけ
   })
