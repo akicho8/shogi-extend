@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: c773e7036010deb0640928a96f5f1c53c73f5e55
+  revision: 8d990c8dfc5b49850875e5b495da6aaa8b8172f7
   specs:
     bioshogi (0.0.1)
       actionview
@@ -447,7 +447,7 @@ GEM
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
     systemu (2.6.5)
-    table_format (0.0.13)
+    table_format (0.0.15)
       activesupport
     temple (0.8.2)
     test-prof (1.0.7)

@@ -56,6 +56,7 @@ module Swars
         assert { w("右四間飛車左美濃").include?("右四間飛車マン")           }
         assert { b("ダイヤモンド美濃").include?("ダイヤマン")               }
         assert { b("チョコレート囲い").include?("チョコレートマン")         }
+        assert { b("幽霊角").include?("幽霊角マン")                         }
         assert { b("極限早繰り銀").include?("極限早繰りマン")               }
         assert { b("坊主美濃").include?("坊主マン")                         }
         assert { b("ツノ銀中飛車").include?("中飛車マン")                   }
