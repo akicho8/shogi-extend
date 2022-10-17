@@ -18,7 +18,7 @@ export const app_chore = {
       // }
 
       if (focus_p) {
-        if (this.mobile_p()) {
+        if (this.mobile_p) {
           this.sound_resume_modal_handle()
         }
       }

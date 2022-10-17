@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 
 export default {
   name: "AppEntryInfo",

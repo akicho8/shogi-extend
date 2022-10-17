@@ -71,7 +71,7 @@
 
 <script>
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 // import { Dictionary } from "@/components/models/dictionary.js"
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"

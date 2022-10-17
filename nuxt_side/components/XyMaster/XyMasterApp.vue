@@ -72,7 +72,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { Soldier } from "shogi-player/components/models/soldier.js"
 import { Place   } from "shogi-player/components/models/place.js"
 
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
@@ -488,7 +488,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     default_rule_key() {
-      if (isMobile.any()) {
+      if (MyMobile.mobile_p) {
         return "rule100t"
       } else {
         return "rule100"

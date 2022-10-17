@@ -2,6 +2,7 @@
 import { Gs         } from "@/components/models/gs.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
 import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
+import { MyMobile   } from "@/components/models/my_mobile.js"
 
 import twemoji from 'twemoji'
 import _ from "lodash"
@@ -17,7 +18,7 @@ export const vue_support = {
         return "question"
       } else {
         const ua = window.navigator.userAgent.toLowerCase()
-        if (this.mobile_p()) {
+        if (MyMobile.mobile_p) {
           if (ua.indexOf("android") >= 0) {
             return "android"
           } else if (ua.indexOf("ipad") >= 0 || (ua.indexOf("macintosh") >= 0 && "ontouchend" in document)) {

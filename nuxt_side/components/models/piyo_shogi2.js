@@ -3,7 +3,7 @@
 
 import { Gs2 } from "@/components/models/gs2.js"
 import { Gs3 } from "@/components/models/gs3.js"
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 

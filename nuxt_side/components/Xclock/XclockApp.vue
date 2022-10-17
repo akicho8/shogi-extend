@@ -64,7 +64,7 @@
 <script>
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { DeviseAngle  } from "@/components/models/devise_angle.js"
-import { isMobile     } from "@/components/models/is_mobile.js"
+import { MyMobile     } from "@/components/models/my_mobile.js"
 import { FullScreenController   } from "@/components/models/full_screen_controller.js"
 import { CcRuleInfo       } from "@/components/models/cc_rule_info.js"
 
@@ -196,7 +196,7 @@ export default {
     play_talk_message() {
       let s = ""
       s += "対局かいし。"
-      if (isMobile.any()) {
+      if (MyMobile.mobile_p) {
         if (DeviseAngle.portrait_p()) {
           s += "ブラウザのタブを1つだけにして、スマホを横向きにしてください"
         } else {

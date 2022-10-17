@@ -190,7 +190,7 @@
 <script>
 const AUTO_PRINT = false
 
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 
 export default {
   name: "FormalSheetShow",
@@ -265,7 +265,7 @@ export default {
     },
 
     edit_to(page_index, key) {
-      if (isMobile.any()) {
+      if (MyMobile.mobile_p) {
         if (page_index === 0) {
           this.$buefy.dialog.prompt({
             inputAttrs: {type: "text", value: this.new_info[key], required: false},
@@ -308,7 +308,7 @@ export default {
     // PCのブラウザのみ有効にする
     // モバイルブラウザは反応しないので常時有効でもよいが念のためPCの場合のみにしとく
     direct_editable_p() {
-      return !isMobile.any()
+      return !MyMobile.mobile_p
     },
   },
 }

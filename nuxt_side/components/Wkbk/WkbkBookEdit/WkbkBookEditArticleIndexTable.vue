@@ -53,7 +53,7 @@
 
 <script>
 import { support_child } from "./support_child.js"
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 
 export default {
   name: "WkbkBookEditArticleIndexTable",
@@ -73,7 +73,7 @@ export default {
       const index = this.base.book.ordered_bookships.findIndex(e => e.id === object.id)
       this.base.book.ordered_bookships = this.ary_move(this.base.book.ordered_bookships, index, index + sign)
       if (this.run_count === 0) {
-        if (!isMobile.any()) {
+        if (!MyMobile.mobile_p) {
           this.toast_ok("マウスでドラッグアンドドロップできますよ")
         }
       }

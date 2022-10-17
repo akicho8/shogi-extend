@@ -168,7 +168,7 @@ nav.panel.mb-0.WkbkBookShowTopXitemTable
 
 <script>
 import { support_child } from "./support_child.js"
-import { isMobile } from "@/components/models/is_mobile.js"
+import { MyMobile } from "@/components/models/my_mobile.js"
 
 export default {
   name: "WkbkBookShowTopXitemTable",
@@ -195,7 +195,7 @@ export default {
     //   const index = this.base.book.xitems.findIndex(e => e.key === object.key)
     //   this.base.book.xitems = this.ary_move(this.base.book.xitems, index, index + sign)
     //   if (this.run_count === 0) {
-    //     if (!isMobile.any()) {
+    //     if (!MyMobile.mobile_p) {
     //       this.toast_ok("マウスでドラッグアンドドロップできますよ")
     //     }
     //   }

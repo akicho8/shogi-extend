@@ -1,11 +1,8 @@
-import { isMobile } from "../components/models/is_mobile.js"
+import { MyMobile } from "../components/models/my_mobile.js"
 import _ from "lodash"
 
 export const vue_browser_and_form = {
   methods: {
-    mobile_p()  { return isMobile.any()  },
-    desktop_p() { return !isMobile.any() },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     // // 他のウィンドウで開く
@@ -52,7 +49,7 @@ export const vue_browser_and_form = {
     },
 
     window_popup_if_desktop(url, options = {}) {
-      if (this.desktop_p()) {
+      if (this.desktop_p) {
         this.window_popup(url, options)
       } else {
         location.href = url
@@ -66,7 +63,7 @@ export const vue_browser_and_form = {
     // モバイルでないときだけ elem にフォーカスする
     // なぜか $nextTick ではフォーカスされない場合があるため setTimeout に変更
     desktop_focus_to(elem) {
-      if (!isMobile.any()) {
+      if (!MyMobile.mobile_p) {
         this.focus_to(elem)
       }
     },
@@ -85,7 +82,7 @@ export const vue_browser_and_form = {
     // スマホ → _self
     //    PC  → _blank
     target_default() {
-      return isMobile.any() ? "_self" : "_blank"
+      return MyMobile.mobile_p ? "_self" : "_blank"
     },
   },
 }
