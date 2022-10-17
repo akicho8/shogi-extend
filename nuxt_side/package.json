@@ -36,6 +36,7 @@
     "secure-ls": "^1.2.6",
     "shogi-player": "^0.0.360",
     "striptags": "^3.1.1",
+    "tinyurl": "^1.1.7",
     "twemoji": "^13.1.0",
     "url-safe-base64": "^1.1.1",
     "util": "^0.12.4",

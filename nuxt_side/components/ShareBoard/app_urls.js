@@ -1,6 +1,7 @@
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
+const TinyURL = require('tinyurl')
 
 export const app_urls = {
   methods: {
@@ -26,6 +27,23 @@ export const app_urls = {
       this.sidebar_p = false
       this.$sound.play_click()
       this.clipboard_copy({text: this.room_code_except_url, success_message: "棋譜再生用のリンクをコピーしました"})
+    },
+
+    // 「短縮URLのコピー」
+    room_code_except_url_short_copy_handle() {
+      this.sidebar_p = false
+      this.$sound.play_click()
+      TinyURL.shorten(this.room_code_except_url).then(res => {
+        if (res === "Error") {
+          this.toast_ng("なんかしらの原因で失敗しました")
+          return
+        }
+        this.clipboard_copy({text: res, success_message: "棋譜再生用の短縮URLをコピーしました"})
+      }, error => {
+        console.error(error)
+        this.toast_ng("失敗しました (ネットワークに繋っていない？)")
+        return
+      })
     },
 
     other_app_click_handle(app_name) {
