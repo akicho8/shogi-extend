@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
   it "works" do
     menu_item_click("棋譜URLコピー")
-    assert_text("棋譜再生用のリンクをコピーしました")
+    assert_text("棋譜再生用のURLをコピーしました")
   end
   it "works" do
     menu_item_click("棋譜URLコピー (短縮)")

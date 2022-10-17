@@ -26,7 +26,7 @@ export const app_urls = {
     room_code_except_url_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.clipboard_copy({text: this.room_code_except_url, success_message: "棋譜再生用のリンクをコピーしました"})
+      this.clipboard_copy({text: this.room_code_except_url, success_message: "棋譜再生用のURLをコピーしました"})
     },
 
     // 「短縮URLのコピー」

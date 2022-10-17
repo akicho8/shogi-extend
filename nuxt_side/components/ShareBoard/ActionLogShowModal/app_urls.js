@@ -21,7 +21,7 @@ export const app_urls = {
     // 棋譜URLコピー
     room_code_except_url_copy_handle() {
       this.$sound.play_click()
-      const success_message = "棋譜再生用のリンクをコピーしました"
+      const success_message = "棋譜再生用のURLをコピーしました"
       this.clipboard_copy({text: this.room_code_except_url, success_message: success_message})
       this.base.shared_al_add_simple("棋譜URLコピー")
     },
