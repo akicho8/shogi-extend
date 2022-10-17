@@ -202,7 +202,7 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ClockBoxModal
-  +modal_width(30rem)
+  +modal_width(24rem)
 
   .modal-card-body
     padding: 1.5rem
