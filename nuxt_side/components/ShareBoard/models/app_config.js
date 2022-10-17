@@ -10,4 +10,10 @@ export const AppConfig = {
   CHAT_MESSAGES_SIZE_MAX: 100,                // チャット発言履歴保持件数
 
   CLOSE_IF_BLANK_MESSAGE_POST: false,         // 空送信で閉じるか？
+
+  CLOCK_PRESET_USE: false,                    // 対局時計の初期設定リストを(CcRuleInfo)を表示するか？
+}
+
+if (process.env.NODE_ENV === "development") {
+  AppConfig.CLOCK_PRESET_USE = true
 }

@@ -75,7 +75,7 @@
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p")
+      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p && base.AppConfig.CLOCK_PRESET_USE")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
         template(v-for="e in base.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
