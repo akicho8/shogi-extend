@@ -67,7 +67,7 @@ import { AppConfig                } from "./models/app_config.js"
 import { support_parent           } from "./support_parent.js"
 
 import { app_xtitle               } from "./app_xtitle.js"
-import { app_action_log           } from "./app_action_log.js"
+import { app_action_log           } from "./action_log/app_action_log.js"
 import { app_clock_box            } from "./app_clock_box.js"
 import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
