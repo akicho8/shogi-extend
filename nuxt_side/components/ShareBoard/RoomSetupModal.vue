@@ -4,7 +4,7 @@
     .modal-card-title
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
-      b-button(@click="base.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
+    b-button(@click="base.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
   .modal-card-body
     template(v-if="true || !base.ac_room")
       template(v-if="room_code_field_locked")
