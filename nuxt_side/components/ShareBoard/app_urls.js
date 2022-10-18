@@ -64,7 +64,7 @@ export const app_urls = {
 
     // ../../../app/controllers/share_boards_controller.rb の current_og_image_path と一致させること
     // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きする
-    url_with(params = {}) {
+    url_merge(params = {}) {
       return this.url_for({...this.current_url_params, ...params})
     },
 
@@ -81,9 +81,9 @@ export const app_urls = {
     },
   },
   computed: {
-    current_url()      { return this.url_with({})                         },
-    json_debug_url()   { return this.url_with({format: "json"})           },
-    twitter_card_url() { return this.url_with({format: "png"})            },
+    current_url()      { return this.url_merge({})                         },
+    json_debug_url()   { return this.url_merge({format: "json"})           },
+    twitter_card_url() { return this.url_merge({format: "png"})            },
     room_url()         { return this.url_for({room_code: this.room_code}) }, // 合言葉だけを付与したURL(タイトル不要)
 
     // room_code や autoexec は含めない

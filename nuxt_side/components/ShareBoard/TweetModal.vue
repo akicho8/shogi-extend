@@ -36,7 +36,7 @@ export default {
       this.base.tweet_handle()
     },
     preview_url(options = {}) {
-      return this.base.url_with({
+      return this.base.url_merge({
         format: "png",
         abstract_viewpoint: this.base.abstract_viewpoint,
         disposition: "inline",

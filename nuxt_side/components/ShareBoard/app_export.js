@@ -40,7 +40,7 @@ export const app_export = {
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
-      return this.url_with({
+      return this.url_merge({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
@@ -58,7 +58,7 @@ export const app_export = {
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
-      return this.url_with({
+      return this.url_merge({
         ...e.to_h_format_and_encode,
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方が優先される
         disposition: "attachment",
