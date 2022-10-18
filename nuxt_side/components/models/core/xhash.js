@@ -14,7 +14,7 @@ export const Xhash = {
   },
 
   // {a: 1, b: null, c:undefined, d: ""} => {a: 1}
-  hash_compact_if_blank(hash) {
+  hash_compact_blank(hash) {
     return _.reduce(hash, (a, val, key) => {
       if (Xobject.present_p(val)) {
         a[key] = val

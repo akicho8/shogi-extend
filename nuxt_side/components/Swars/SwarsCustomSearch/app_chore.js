@@ -6,7 +6,7 @@ export const app_chore = {
     // 戻る
     back_click_handle() {
       this.$sound.play_click()
-      this.back_to({name: "swars-search", query: this.hash_compact_if_blank({query: this.user_key})})
+      this.back_to({name: "swars-search", query: this.hash_compact_blank({query: this.user_key})})
     },
 
     // タイトルをクリックするとオプション類を外す
