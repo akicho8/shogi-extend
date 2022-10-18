@@ -21,7 +21,7 @@ export const app_image_dl = {
     },
 
     image_dl_preview_url(options = {}) {
-      return this.permalink_for({
+      return this.url_with({
         format: "png",
         abstract_viewpoint: this.sp_viewpoint,
         disposition: "inline",

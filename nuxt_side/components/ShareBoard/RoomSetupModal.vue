@@ -4,7 +4,7 @@
     .modal-card-title
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
-    b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
+    b-button(@click="base.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
   .modal-card-body
     .content(v-if="false")
       ul
@@ -15,7 +15,7 @@
           .has-text-grey.is-size-7
             | メニューにある「部屋のリンク」を伝えてもよし
           .is-flex.is-align-items-center(v-if="false")
-            b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" outlined :disabled="!base.room_code") 部屋のリンク
+            b-button(@click="base.room_url_copy_handle" icon-left="link" outlined :disabled="!base.room_code") 部屋のリンク
             span.ml-1 を伝えてもよし
         li(v-if="false")
           | <b>待った</b>や<b>反則の取り消し</b>は合意の上、当人が下の左矢印で局面を戻して指し直してください
@@ -46,7 +46,7 @@
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
-    //- b-button(@click="base.room_code_only_url_copy_handle" icon-left="link" :disabled="blank_p(base.ac_room)") 部屋URL
+    //- b-button(@click="base.room_url_copy_handle" icon-left="link" :disabled="blank_p(base.ac_room)") 部屋URL
     template(v-if="base.ac_room")
       b-button.leave_button(@click="leave_handle" type="is-danger") 退室
     template(v-else)

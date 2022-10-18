@@ -36,7 +36,7 @@ export const app_kifu_mail = {
       // そのまま KifuParser で作るURLとフロント側で作ったパラメータに差異がないか確認するためのもの
       if (this.debug_mode_p) {
         params.__debug_app_urls__ = {
-          share_board_url: this.room_code_except_url,
+          share_board_url: this.current_url,
           piyo_url:        this.piyo_shogi_app_with_params_url,
           kento_url:       this.kento_app_with_params_url,
         }

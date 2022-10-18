@@ -47,7 +47,7 @@ export default {
       this.base.abstract_viewpoint = this.new_abstract_viewpoint
     },
     preview_url(options = {}) {
-      return this.base.permalink_for({
+      return this.base.url_with({
         format: "png",
         abstract_viewpoint: this.new_abstract_viewpoint,
         disposition: "inline",

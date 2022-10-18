@@ -19,17 +19,17 @@ export const app_urls = {
     },
 
     // 棋譜URLコピー
-    room_code_except_url_copy_handle() {
+    room_url_copy_handle() {
       this.$sound.play_click()
       const success_message = "棋譜再生用のURLをコピーしました"
-      this.clipboard_copy({text: this.room_code_except_url, success_message: success_message})
+      this.clipboard_copy({text: this.current_url, success_message: success_message})
       this.base.shared_al_add_simple("棋譜URLコピー")
     },
 
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
-      return this.base.permalink_for({
+      return this.base.url_with({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
@@ -45,7 +45,7 @@ export const app_urls = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
-      return this.base.permalink_from_params({
+      return this.base.url_for({
         ...this.current_url_params,
         ...e.to_h_format_and_encode,
         disposition: "attachment",
@@ -82,7 +82,7 @@ export const app_urls = {
       }).kento_url
     },
     current_url_params() {
-      return this.base.url_params_clean({
+      return this.base.pc_url_params_clean({
         // 必須
         // body: DotSfen.escape(this.action_log.sfen),
         xbody: SafeSfen.encode(this.action_log.sfen),
@@ -94,8 +94,8 @@ export const app_urls = {
       })
     },
     // 棋譜再生用の棋譜リンク
-    room_code_except_url() {
-      return this.base.permalink_from_params(this.current_url_params)
+    current_url() {
+      return this.base.url_for(this.current_url_params)
     },
   },
 }

@@ -37,7 +37,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="base.board_preset_select_modal_handle")
-          b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="base.room_code_only_url_copy_handle")
+          b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="base.room_url_copy_handle")
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production' || true")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="base.room_recreate_modal_handle" v-if="base.debug_mode_p")
 
@@ -49,8 +49,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.kento_app_with_params_url"      target="_blank" @click="base.other_app_click_handle('KENTO')")
 
         b-menu-list(label="棋譜再生用パーマリンク")
-          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.room_code_except_url" @click.prevent="base.room_code_except_url_copy_handle" )
-          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.room_code_except_url_short_copy_handle" )
+          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.current_url" @click.prevent="base.room_url_copy_handle" )
+          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.room_url_short_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
           b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle")

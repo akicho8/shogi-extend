@@ -257,7 +257,7 @@ export const app_clock_box = {
         ...this.current_xclock,
       }
       if (params.behaviour) {
-        params.room_code_except_url = this.room_code_except_url // 棋譜再現URLをログに出すため
+        params.current_url = this.current_url // 棋譜再現URLをログに出すため
       }
       return params
     },
@@ -318,7 +318,7 @@ export const app_clock_box = {
           ...params,
           label: `時計${params.behaviour}`,
           clock_box_attributes: null, // 容量が大きいので空にしておく
-          room_code_except_url: null, // 絶対に使わないので消しておく
+          current_url: null, // 絶対に使わないので消しておく
         }
         this.al_add(params)
       }
