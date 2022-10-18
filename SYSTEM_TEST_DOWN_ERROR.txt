@@ -1,0 +1,107 @@
+ℹ [Axios] [200 OK] [GET] /api/share_board
+{
+  "record": {
+    "sfen_body": "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
+    "turn_max": 0,
+    "initial_turn": 0,
+    "board_viewpoint": "black",
+    "abstract_viewpoint": "black",
+    "title": "共有将棋盤",
+    "connection_id": "syEUitlPMZj",
+    "session_id": "877c0c44c96f226a5eac41ccee458b02",
+    "session_counter": 1,
+    "API_VERSION": 29
+  },
+  "twitter_card_options": {
+    "title": "共有将棋盤",
+    "image": "/share-board.png?__system_test_now__=true&abstract_viewpoint=black&body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&fixed_order_names=alice%2Cbob&fixed_user_name=alice&room_code=test_room&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=0",
+    "description": ""
+  }
+}
+
+<--- Last few GCs --->
+
+[54918:0x102883000]  1674498 ms: Mark-sweep 2008.7 (2084.2) -> 1990.5 (2079.6) MB, 1821.1 / 0.1 ms  (average mu = 0.388, current mu = 0.467) allocation failure scavenge might not succeed
+[54918:0x102883000]  1676583 ms: Mark-sweep 2003.8 (2079.9) -> 1992.2 (2082.6) MB, 2031.7 / 0.1 ms  (average mu = 0.276, current mu = 0.026) allocation failure scavenge might not succeed
+
+<--- JS stacktrace --->
+
+==== JS stack trace =========================================
+
+    0: ExitFrame [pc: 0x10092fbd9]
+Security context: 0x32f9387408a1 <JSObject>
+    1: mergeOptions(aka mergeOptions) [0x32f991266c39] [/Users/ikeda/src/shogi-extend/nuxt_side/node_modules/vue/dist/vue.runtime.common.dev.js:~1508] [pc=0x19a6b5ff0d62](this=0x32f9a96404a9 <undefined>,0x32f916ce05d1 <Object map = 0x32f9b41cc2d1>,0x32f9d343a519 <Object map = 0x32f90efeac81>,0x32f9a96404a9 <undefined>)
+    2: resolveConstructorOptions(aka resol...
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+ 1: 0x10007e743 node::Abort() [/opt/nodenv/versions/12.13.0/bin/node]
+ 2: 0x10007e8c7 node::OnFatalError(char const*, char const*) [/opt/nodenv/versions/12.13.0/bin/node]
+ 3: 0x100176267 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/opt/nodenv/versions/12.13.0/bin/node]
+ 4: 0x100176203 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/opt/nodenv/versions/12.13.0/bin/node]
+ 5: 0x1002fa2b5 v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/opt/nodenv/versions/12.13.0/bin/node]
+ 6: 0x1002fb984 v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/opt/nodenv/versions/12.13.0/bin/node]
+ 7: 0x1002f8857 v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/opt/nodenv/versions/12.13.0/bin/node]
+ 8: 0x1002f683d v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/opt/nodenv/versions/12.13.0/bin/node]
+ 9: 0x100301f54 v8::internal::Heap::AllocateRawWithLightRetry(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/opt/nodenv/versions/12.13.0/bin/node]
+10: 0x100301fcf v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/opt/nodenv/versions/12.13.0/bin/node]
+11: 0x1002cd9a9 v8::internal::Factory::NewFixedArrayWithFiller(v8::internal::RootIndex, int, v8::internal::Object, v8::internal::AllocationType) [/opt/nodenv/versions/12.13.0/bin/node]
+12: 0x1005072eb v8::internal::OrderedHashTable<v8::internal::OrderedHashSet, 1>::Rehash(v8::internal::Isolate*, v8::internal::Handle<v8::internal::OrderedHashSet>, int) [/opt/nodenv/versions/12.13.0/bin/node]
+13: 0x100506e5d v8::internal::OrderedHashSet::Add(v8::internal::Isolate*, v8::internal::Handle<v8::internal::OrderedHashSet>, v8::internal::Handle<v8::internal::Object>) [/opt/nodenv/versions/12.13.0/bin/node]
+14: 0x1004badb5 v8::internal::KeyAccumulator::AddKey(v8::internal::Handle<v8::internal::Object>, v8::internal::AddKeyConversion) [/opt/nodenv/versions/12.13.0/bin/node]
+15: 0x1004bd956 v8::internal::KeyAccumulator::CollectOwnPropertyNames(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::JSObject>) [/opt/nodenv/versions/12.13.0/bin/node]
+16: 0x1004bc2fe v8::internal::KeyAccumulator::CollectOwnKeys(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::JSObject>) [/opt/nodenv/versions/12.13.0/bin/node]
+17: 0x1004bb5db v8::internal::KeyAccumulator::CollectKeys(v8::internal::Handle<v8::internal::JSReceiver>, v8::internal::Handle<v8::internal::JSReceiver>) [/opt/nodenv/versions/12.13.0/bin/node]
+18: 0x1004bc99e v8::internal::FastKeyAccumulator::GetKeysSlow(v8::internal::GetKeysConversion) [/opt/nodenv/versions/12.13.0/bin/node]
+19: 0x1004babd0 v8::internal::FastKeyAccumulator::GetKeys(v8::internal::GetKeysConversion) [/opt/nodenv/versions/12.13.0/bin/node]
+20: 0x1005ed3a4 v8::internal::Runtime_ForInEnumerate(int, unsigned long*, v8::internal::Isolate*) [/opt/nodenv/versions/12.13.0/bin/node]
+21: 0x10092fbd9 Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/opt/nodenv/versions/12.13.0/bin/node]
+sh: line 1: 54918 Abort trap: 6           nuxt dev -p 4000 -o --dotenv .env.cafe
+exited with code 134
+
+
+
+
+
+
+08:05:08 nuxt_side.1          | ℹ [Axios] [200 OK] [GET] /api/session/auth_user_fetch.json
+08:05:08 nuxt_side.1          | null
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | <--- Last few GCs --->
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | [74266:0x102883000]  1076327 ms: Mark-sweep 1982.8 (2083.4) -> 1981.0 (2084.9) MB, 2008.4 / 0.1 ms  (average mu = 0.089, current mu = 0.011) allocation failure GC in old space requested
+08:05:12 nuxt_side.1          | [74266:0x102883000]  1078937 ms: Mark-sweep 1983.2 (2084.9) -> 1981.2 (2083.9) MB, 2523.4 / 0.1 ms  (average mu = 0.059, current mu = 0.033) allocation failure GC in old space requested
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | <--- JS stacktrace --->
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | ==== JS stack trace =========================================
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | Security context: 0x0f7872c408a1 <JSObject>
+08:05:12 nuxt_side.1          |     0: builtin exit frame: update(this=0x0f7858968081 <JSObject>,0x0f78b3c03fc9 <String[#4]: utf8>,0x0f7858967f51 <Very long string[603874]>,0x0f7858968081 <JSObject>)
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          |     1: update [0xf7832a9a7c1] [internal/crypto/hash.js:78] [bytecode=0xf78eba41d99 offset=109](this=0x0f7858968041 <Hash map = 0xf78b67a7c61>,0x0f7858967f51 <Very long string[603874]>,0x0f78b3c03fc9 <String[#4]: utf8>)
+08:05:12 nuxt_side.1          |     2: ent...
+08:05:12 nuxt_side.1          |
+08:05:12 nuxt_side.1          | FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+08:05:12 nuxt_side.1          |  1: 0x10007e743 node::Abort() [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  2: 0x10007e8c7 node::OnFatalError(char const*, char const*) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  3: 0x100176267 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  4: 0x100176203 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  5: 0x1002fa2b5 v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  6: 0x1002fb984 v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  7: 0x1002f8857 v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  8: 0x1002f683d v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          |  9: 0x100301f54 v8::internal::Heap::AllocateRawWithLightRetry(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 10: 0x100301fcf v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 11: 0x1002d0ea3 v8::internal::Factory::NewRawTwoByteString(int, v8::internal::AllocationType) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 12: 0x100517551 v8::internal::String::SlowFlatten(v8::internal::Isolate*, v8::internal::Handle<v8::internal::ConsString>, v8::internal::AllocationType) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 13: 0x10019513b v8::String::WriteUtf8(v8::Isolate*, char*, int, int*, int) const [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 14: 0x100102906 node::StringBytes::Write(v8::Isolate*, char*, unsigned long, v8::Local<v8::Value>, node::encoding, int*) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 15: 0x1001327aa node::StringBytes::InlineDecoder::Decode(node::Environment*, v8::Local<v8::String>, v8::Local<v8::Value>, node::encoding) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 16: 0x100133c14 node::crypto::Hash::HashUpdate(v8::FunctionCallbackInfo<v8::Value> const&) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 17: 0x1001e1480 v8::internal::FunctionCallbackArguments::Call(v8::internal::CallHandlerInfo) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 18: 0x1001e0a5f v8::internal::MaybeHandle<v8::internal::Object> v8::internal::(anonymous namespace)::HandleApiCallHelper<false>(v8::internal::Isolate*, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::HeapObject>, v8::internal::Handle<v8::internal::FunctionTemplateInfo>, v8::internal::Handle<v8::internal::Object>, v8::internal::BuiltinArguments) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 19: 0x1001e0160 v8::internal::Builtin_Impl_HandleApiCall(v8::internal::BuiltinArguments, v8::internal::Isolate*) [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | 20: 0x10092fcd9 Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_BuiltinExit [/opt/nodenv/versions/12.13.0/bin/node]
+08:05:12 nuxt_side.1          | sh: line 1: 74266 Abort trap: 6           nuxt dev -p 4000 -o --dotenv .env.cafe
+08:05:13 nuxt_side.1          | exited with code 134
