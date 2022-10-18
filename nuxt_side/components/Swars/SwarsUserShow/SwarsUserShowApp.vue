@@ -127,7 +127,7 @@ export default {
     XmodeSelectInfo() { return XmodeSelectInfo  },
 
     url_params() {
-      return this.hash_compact_if_null({
+      return this.hash_compact({
         tab_index:  this.tab_index,
         rule:       this.rule,
         sample_max: this.sample_max,

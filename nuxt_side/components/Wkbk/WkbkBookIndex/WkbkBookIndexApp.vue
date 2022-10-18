@@ -110,7 +110,7 @@ export default {
   methods: {
     router_push(params) {
       params = {...this.url_params, ...params}
-      params = this.hash_compact_if_null(params)
+      params = this.hash_compact(params)
       this.$router.push({name: "rack-books", query: params})
     },
   },

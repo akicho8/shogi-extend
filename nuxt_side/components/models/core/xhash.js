@@ -3,7 +3,7 @@ import { Xobject } from "./xobject.js"
 
 export const Xhash = {
   // {a: 1, b: null, c:undefined, d: ""} => {a: 1, d: ""}
-  hash_compact_if_null(hash) {
+  hash_compact(hash) {
     return _.reduce(hash, (a, val, key) => {
       if (val == null) {
       } else {
