@@ -1,5 +1,8 @@
 #!/bin/sh
 k spring -x
+sudo kill -9 $(sudo lsof -t -i:3000) >/dev/null 2>&1
+sudo kill -9 $(sudo lsof -t -i:4000) >/dev/null 2>&1
+sudo kill -9 $(sudo lsof -t -i:5000) >/dev/null 2>&1
 sudo kill -9 $(sudo lsof -t -i:8000) >/dev/null 2>&1
 
 # Google Chrome 再起動
