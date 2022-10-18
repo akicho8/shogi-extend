@@ -22,4 +22,14 @@ export const Xhash = {
       return a
     }, {})
   },
+
+  // const hash = { a: 1, b: 1, }
+  // const value = Xhash.hash_delete(hash, "a")
+  // hash  // => {b: 1}
+  // value // => 1
+  hash_delete(hash, key) {
+    const value = hash[key]
+    delete hash[key]
+    return value
+  },
 }
