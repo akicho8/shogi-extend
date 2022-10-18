@@ -24,14 +24,14 @@ export const app_urls = {
     },
 
     // 「棋譜コピー (リンク)」
-    room_url_copy_handle() {
+    current_url_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
       this.clipboard_copy({text: this.current_url, success_message: "棋譜再生用のURLをコピーしました"})
     },
 
     // 「短縮URLのコピー」
-    room_url_short_copy_handle() {
+    current_url_short_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
       TinyURL.shorten(this.current_url).then(res => {

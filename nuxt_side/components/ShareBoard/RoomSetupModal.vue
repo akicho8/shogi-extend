@@ -4,7 +4,7 @@
     .modal-card-title
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="base.ac_room && false") 入室中
-    b-button(@click="base.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
+      b-button(@click="base.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(base.ac_room)") 部屋のリンク
   .modal-card-body
     .content(v-if="false")
       ul
@@ -46,7 +46,6 @@
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
-    //- b-button(@click="base.room_url_copy_handle" icon-left="link" :disabled="blank_p(base.ac_room)") 部屋URL
     template(v-if="base.ac_room")
       b-button.leave_button(@click="leave_handle" type="is-danger") 退室
     template(v-else)

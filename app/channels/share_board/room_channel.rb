@@ -69,7 +69,7 @@ module ShareBoard
     def clock_box_share(data)
       if data["behaviour"].present?
         values = data["cc_params"].collect { |e| e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus") }
-        url = data["room_code_except_url"]
+        url = data["current_url"]
         message = "#{data["behaviour"]} #{values} #{url}"
         track(data, "対局時計", message, ":対局時計:")
       end

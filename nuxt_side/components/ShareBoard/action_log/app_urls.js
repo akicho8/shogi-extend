@@ -19,7 +19,7 @@ export const app_urls = {
     },
 
     // 棋譜URLコピー
-    room_url_copy_handle() {
+    current_url_copy_handle() {
       this.$sound.play_click()
       const success_message = "棋譜再生用のURLをコピーしました"
       this.clipboard_copy({text: this.current_url, success_message: success_message})

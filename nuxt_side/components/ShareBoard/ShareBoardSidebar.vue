@@ -49,8 +49,8 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.kento_app_with_params_url"      target="_blank" @click="base.other_app_click_handle('KENTO')")
 
         b-menu-list(label="棋譜再生用パーマリンク")
-          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.current_url" @click.prevent="base.room_url_copy_handle" )
-          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.room_url_short_copy_handle" )
+          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.current_url" @click.prevent="base.current_url_copy_handle" )
+          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_url_short_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
           b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle")
@@ -58,7 +58,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 
         b-menu-list(label="SNS共有")
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="base.tweet_modal_handle")
-          b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="base.current_url_copy_handle")
+          //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="base.current_url_copy_handle")
           b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定"    @click="base.abstract_viewpoint_key_select_modal_handle")
 
         ShareBoardSidebarExport(:base="base")

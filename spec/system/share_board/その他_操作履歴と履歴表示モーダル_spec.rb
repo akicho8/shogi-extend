@@ -51,7 +51,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".KifCopyButton").click                    # 「コピー」
       assert_text("棋譜コピー")
 
-      find(".room_code_except_url_copy_handle").click # 「リンク」
+      find(".current_url_copy_handle").click # 「リンク」
       assert_text("棋譜再生用のURLをコピー")
 
       find(".kifu_download_handle").click             # 「ダウンロード」

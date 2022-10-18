@@ -24,9 +24,9 @@
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      b-button.room_url_copy_handle(
+      b-button.current_url_copy_handle(
         title="棋譜再生用リンク"
-        @click.prevent="room_url_copy_handle"
+        @click.prevent="current_url_copy_handle"
         icon-left="link"
         tag="a"
         :href="current_url"
