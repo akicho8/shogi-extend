@@ -15,12 +15,6 @@ export const app_export = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// clipboard
 
-    // 現在のURLをコピー
-    current_url_copy_handle() {
-      this.$sound.play_click()
-      this.clipboard_copy({text: this.current_url, success_message: "現在のURLをコピーしました"})
-    },
-
     // 指定の棋譜をコピー
     kifu_copy_handle(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
