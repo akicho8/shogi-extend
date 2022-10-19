@@ -4,7 +4,7 @@
     template(v-for="e in TheSb.message_logs")
       template(v-if="TheSb.message_share_received_p(e)")
         SbAvatarLine(:info="e" :key="e.unique_key")
-          XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.css_class" :str="e.auto_linked_message")
+          XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.message_class" :str="e.auto_linked_message")
 </template>
 
 <script>

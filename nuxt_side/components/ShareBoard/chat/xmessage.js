@@ -5,7 +5,7 @@
 // | from_user_name      |
 // | unique_key          |
 // | toast_params        |
-// | css_class           |
+// | message_class       |
 // |---------------------|
 
 import { Gs2 } from "@/components/models/gs2.js"
@@ -47,10 +47,8 @@ export class Xmessage {
   }
 
   // 表示するときの色
-  get css_class() {
-    return {
-      "has-text-success": this.message_scope_info.key === "is_message_scope_private",
-    }
+  get message_class() {
+    return this.message_scope_info.message_class
   }
 
   // スコープ
@@ -65,11 +63,7 @@ export class Xmessage {
   }
 
   get toast_type() {
-    if (this.message_scope_info.key === "is_message_scope_private") {
-      return "is-success"
-    } else {
-      return "is-white"
-    }
+    return this.message_scope_info.toast_type
   }
 
   unique_key_generate() {
