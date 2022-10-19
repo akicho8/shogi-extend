@@ -1,4 +1,5 @@
 #!/bin/sh
+rm log/*.log
 sudo kill -9 $(sudo lsof -t -i:3000) >/dev/null 2>&1
 sudo kill -9 $(sudo lsof -t -i:4000) >/dev/null 2>&1
 # foreman s -f Procfile.home
