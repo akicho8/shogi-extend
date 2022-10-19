@@ -90,7 +90,7 @@ module Api
     private
 
     def user_save(user)
-      unless user.save
+      if !user.save
         error_messages = user.errors.full_messages.join(" ")
         render json: { xnotice: Xnotice.add(error_messages, type: "is-danger", method: :dialog) }
       end

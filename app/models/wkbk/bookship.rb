@@ -49,7 +49,7 @@ module Wkbk
     validate do
       if changes_to_save[:book_id] || changes_to_save[:article_id] || changes_to_save[:user_id]
         if book && article && user
-          unless [book.user, article.user, user].uniq.one?
+          if ![book.user, article.user, user].uniq.one?
             errors.add(:base, "問題集と問題の所有者が異なります")
           end
         end

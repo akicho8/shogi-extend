@@ -39,14 +39,14 @@ class UsersController < ApplicationController
   skip_before_action :user_name_required, action: [:edit, :update]
 
   before_action only: [:index] do
-    unless sysop?
+    if !sysop?
       redirect_to :root, alert: "アクセス権限がありません"
     end
   end
 
   before_action only: [:edit, :update, :destroy] do
-    unless current_user == current_record
-      unless Rails.env.test?
+    if current_user != current_record
+      if !Rails.env.test?
         redirect_to :root, alert: "アクセス権限がありません"
       end
     end

@@ -7,7 +7,7 @@ module ToolBelt
     end
 
     def to_html
-      return unless Rails.env.development?
+      return if !Rails.env.development?
 
       h.tag.div(build.join.html_safe, :class => "box tool_belt")
     end

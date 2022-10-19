@@ -38,7 +38,7 @@ module Kiwi
         before_action :authenticate_xuser! # 使用禁止。これは current_user の管理と異なる
       else
         before_action do
-          unless current_user
+          if !current_user
             redirect_to :login
           end
         end
@@ -77,7 +77,7 @@ module Kiwi
           render json: lemon.as_json(Kiwi::Lemon.json_struct_for_done_record)
         }
         format.all {
-          unless lemon.real_path.exist?
+          if !lemon.real_path.exist?
             raise ActionController::RoutingError, "ファイルが生成されていません"
           end
           send_file_with_range lemon.real_path, type: Mime[media_builder.recipe_info.real_ext], disposition: params[:disposition] || "inline", filename: lemon.filename_human

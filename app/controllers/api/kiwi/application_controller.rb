@@ -28,14 +28,14 @@ module Api
           end
         end
 
-        unless record.show_can(current_user)
+        if !record.show_can(current_user)
           raise KiwiPermissionError
         end
       end
 
       # def edit_permission_valid!(record)
-      #   raise "must not happen" unless current_user
-      #   unless record.user == current_user
+      #   raise "must not happen" if !current_user
+      #   if record.user != current_user
       #     raise KiwiPermissionError
       #   end
       # end

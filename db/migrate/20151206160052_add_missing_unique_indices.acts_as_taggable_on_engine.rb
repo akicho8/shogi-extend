@@ -20,7 +20,7 @@ AddMissingUniqueIndices.class_eval do
 
     remove_index :taggings, name: 'taggings_idx'
 
-    add_index :taggings, :tag_id unless index_exists?(:taggings, :tag_id)
+    add_index :taggings, :tag_id if !index_exists?(:taggings, :tag_id)
     add_index :taggings, [:taggable_id, :taggable_type, :context]
   end
 end

@@ -1,4 +1,4 @@
-unless ENV["REMOTE_BUILD"] == "1"
+if ENV["REMOTE_BUILD"] != "1"
   # cap production deploy:assets:precompile
 
   # 元のタスクの内容は消しておく

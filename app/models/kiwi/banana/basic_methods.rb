@@ -183,7 +183,7 @@ module Kiwi
       end
 
       def human_name_when_save
-        raise "must not happen" unless saved_changes?
+        raise "must not happen" if !saved_changes?
         if saved_changes[:id]
           "作成"
         else

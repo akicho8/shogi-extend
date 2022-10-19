@@ -19,10 +19,10 @@ module ApplicationCable
       #   ...
       # end
       def once_run(key, options = {})
-        raise ArgumentError unless key
+        raise ArgumentError if !key
 
         if key.kind_of? Array
-          raise ArgumentError unless key.flatten.all?
+          raise ArgumentError if !key.flatten.all?
           key = key.join("/")
         end
 

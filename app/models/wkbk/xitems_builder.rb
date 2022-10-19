@@ -22,7 +22,7 @@ module Wkbk
       s = book.sequence.pure_info.apply[s] # これは最後でもいい？
       s = s.joins(:article).includes(article: :moves_answers)
 
-      unless Book.article_json_struct_for_show[:only].include?(:id)
+      if !Book.article_json_struct_for_show[:only].include?(:id)
         raise "must not happen"
       end
 

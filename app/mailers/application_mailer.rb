@@ -20,7 +20,7 @@ class ApplicationMailer < ActionMailer::Base
     if APP_NAME_APPEND
       av << "[#{AppConfig[:app_name]}]"
     end
-    unless Rails.env.production?
+    if !Rails.env.production?
       av << "[#{Rails.env}]"
     end
     s = av.join

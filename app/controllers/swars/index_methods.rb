@@ -45,7 +45,7 @@ module Swars
     def case_player_info
       if request.format.json?
         if params[:format_type] == "user"
-          unless current_swars_user
+          if !current_swars_user
             render json: {}, status: :not_found
             return
           end
@@ -128,7 +128,7 @@ module Swars
         end
 
         # ユーザーが見つからなかったということはウォーズIDを間違えている
-        unless current_swars_user
+        if !current_swars_user
           message = PlayerIdSuggestion.new(current_swars_user_key).message
           SlackAgent.notify(emoji: ":NOT_FOUND:", subject: "ウォーズID不明", body: "#{current_swars_user_key.inspect} #{message}")
           @xnotice.add(message, type: "is-warning", duration_sec: 5)
@@ -196,7 +196,7 @@ module Swars
     def current_index_scope
       @current_index_scope ||= yield_self do
         s = current_scope
-        unless primary_key_like?
+        if !primary_key_like?
           s = s.none
         end
         s

@@ -154,7 +154,7 @@ module Api
         end
       end
 
-      unless @hand
+      if !@hand
         if current_cpu_brain_info.mate_danger_check
           @hand = @xcontainer.current_player.king_capture_move_hands.first
 
@@ -168,7 +168,7 @@ module Api
         end
       end
 
-      unless @hand
+      if !@hand
         if current_cpu_brain_info.depth_max_range
           iterative_deepening
 
@@ -199,7 +199,7 @@ module Api
         end
       end
 
-      unless @hand
+      if !@hand
         hands = @xcontainer.current_player.create_all_hands.to_a
         if current_cpu_brain_info.legal_only
           hands = hands.find_all { |e| e.legal_hand?(@xcontainer) }
@@ -207,7 +207,7 @@ module Api
         @hand = hands.sample
       end
 
-      unless @hand
+      if !@hand
         final_decision(judge_key: :win, message: "CPUが投了しました。もう何も指す手がなかったようです")
         return
       end

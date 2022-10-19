@@ -35,7 +35,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user = current_user
 
     # ユーザーが特定できていないときは認証情報から復元する
-    unless user
+    if !user
       if current_auth_info
         user ||= current_auth_info.user
       end
@@ -50,7 +50,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # 復元できないときは新規ユーザーを作成する
     # Google の場合なぜか auth.info.name にメールアドレスが入っている
-    unless user
+    if !user
       if Rails.env.development? || Rails.env.staging?
         SlackAgent.notify(subject: "omniauth", body: auth.as_json)
       end
@@ -97,7 +97,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     # ユーザーに認証情報が含まれていなければ追加する
     if user.valid?
-      unless user.auth_infos.find_by(provider: auth.provider)
+      if !user.auth_infos.find_by(provider: auth.provider)
         auth_info = user.auth_infos.create(auth: auth)
         if auth_info.invalid?
           return_to = session[:return_to] || :new_xuser_session

@@ -24,7 +24,7 @@ module Swars
       # Swars::Battle.find_each(&:membership_extra_create_if_nothing) }
       def membership_extra_create_if_nothing
         if m = memberships.first
-          unless m.membership_extra
+          if !m.membership_extra
             membership_extra_build_if_nothing
             memberships.each { |e| e.membership_extra.save! }
           end
@@ -35,7 +35,7 @@ module Swars
       def membership_extra_build_if_nothing
         fast_parsed_info.xcontainer.players.each.with_index do |player, i|
           m = memberships[i]
-          unless m.membership_extra
+          if !m.membership_extra
             m.build_membership_extra(used_piece_counts: player.used_piece_counts)
           end
         end

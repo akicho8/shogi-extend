@@ -10,7 +10,7 @@ module TinyUrl
   def create(url)
     begin
       resp = Faraday.get("https://tinyurl.com/api-create.php", url: url)
-      unless resp.success?
+      if !resp.success?
         raise "短縮URL化に失敗しました : #{url.inspect}"
       end
       resp.body

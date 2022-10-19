@@ -36,7 +36,7 @@ class DateRange
       a ||= "#{DATE_YEAR_MIN}-01-01"
       b ||= "#{DATE_YEAR_MAX}-01-01"
       ab = [a, b].collect { |e| Ymd.new(*ymd_scan(e)) }
-      unless ab.all?(&:valid?)
+      if !ab.all?(&:valid?)
         raise ArgumentError, @source.inspect
       end
       a, b = ab
@@ -47,7 +47,7 @@ class DateRange
       end
     else
       v = Ymd.new(*ymd_scan(s))
-      unless v.valid?
+      if !v.valid?
         raise ArgumentError, @source.inspect
       end
       v.to_range

@@ -137,7 +137,7 @@ module Swars
           keys = []
           (params[:page_max] || 1).times do |i|
             page_keys = []
-            unless params[:dry_run]
+            if !params[:dry_run]
               page_keys = Agent::Index.fetch(params.merge(page_index: i))
             end
             sleep_on(params)
@@ -240,13 +240,13 @@ module Swars
           end
 
           # 対局中や引き分けのときは棋譜がないのでスキップ
-          unless info[:fetch_successed]
+          if !info[:fetch_successed]
             return
           end
 
           # # 引き分けを考慮すると急激に煩雑になるため取り込まない
           # # ここで DRAW_SENNICHI も弾く
-          # unless info[:__final_key].match?(/(SENTE|GOTE)_WIN/)
+          # if !info[:__final_key].match?(/(SENTE|GOTE)_WIN/)
           #   return
           # end
 

@@ -31,7 +31,7 @@ module EncodeMethods
   def current_disposition
     value = params[:disposition]
 
-    unless value
+    if !value
       if key = [:inline, :attachment].find { |e| boolean_for(params[e]) }
         value ||= key
       end

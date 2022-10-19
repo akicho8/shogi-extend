@@ -28,7 +28,7 @@ nav#main_nav.navbar.is-primary
       .navbar-end
         = render partial: "rails_env_links"
 
-        / - unless current_user
+        / - if !current_user
         /   = link_to("アカウント作成", [:new, :session], class: "navbar-item")
         /
         / - if current_user
@@ -42,7 +42,7 @@ nav#main_nav.navbar.is-primary
         /         = link_to("プロフィール", [current_user], id: "header_profile_show")
         /       b-dropdown-item(:has-link="true" :paddingless="true")
         /         = link_to("設定", [:edit, current_user])
-        /       - unless current_user
+        /       - if !current_user
         /         b-dropdown-item(:separator="true")
         /         b-dropdown-item(:has-link="true" :paddingless="true")
         /           = link_to("Googleアカウントでログイン", :xuser_google_oauth2_callback_function_omniauth_authorize, class: "navbar-item")

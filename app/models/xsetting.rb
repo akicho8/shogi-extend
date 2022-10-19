@@ -41,7 +41,7 @@ class Xsetting < ApplicationRecord
       validate do
         # めちゃくちゃな設定名はDBに入れることができないようにする
         # AvailableXsetting は動的に変わるため validates_inclusion_of は使えない
-        unless AvailableXsetting[var_key]
+        if !AvailableXsetting[var_key]
           errors.add(:var_key, :inclusion, :value => var_key)
         end
       end
@@ -65,7 +65,7 @@ class Xsetting < ApplicationRecord
         var_key = var_key.to_s
         xsetting = find_or_default(var_key)
         value = value_cast(var_key, value) # 入力値の型変換
-        unless options[:force]
+        if !options[:force]
           if xsetting.value == value
             if xsetting.new_record?
               logger_puts var_key, "設定値がキャッシュ値と同じなのでそれを返す"

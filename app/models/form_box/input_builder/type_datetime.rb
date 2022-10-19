@@ -29,7 +29,7 @@ module FormBox
       end
 
       def step
-        unless params[:second_skip]
+        if !params[:second_skip]
           params[:datetime_step] || 1 # 秒まで入力。60 なら秒省略
         end
       end

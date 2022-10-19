@@ -24,7 +24,7 @@ class TacticNotesController < ApplicationController
   end
 
   def show
-    unless current_record
+    if !current_record
       redirect_to :tactic_notes, alert: "#{params[:id].inspect} は見つかりませんでした"
       return
     end
@@ -168,7 +168,7 @@ class TacticNotesController < ApplicationController
 
     if detail?
       root = e.root
-      unless root.children.empty?
+      if !root.children.empty?
         row["系図"] = tag.pre(:class => "tree") do
           root.to_s_tree { |o|
             if o.key == e.key
@@ -204,7 +204,7 @@ class TacticNotesController < ApplicationController
     row["種類"] = e.tactic_info.name
     row["別名"] = e.alias_names.join(sep)
 
-    unless detail?
+    if !detail?
       row["親"] = e.parent ? link_to(e.parent.name, [:tactic_note, id: e.parent.key]) : nil
       row["兄弟"] = e.siblings.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe
       row["派生"] = e.children.collect {|e| link_to(e.key, [:tactic_note, id: e.key]) }.join(sep).html_safe

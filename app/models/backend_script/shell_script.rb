@@ -15,8 +15,8 @@ module BackendScript
     end
 
     def script_body
-      return unless submitted?
-      return unless current_command
+      return if !submitted?
+      return if !current_command
 
       stdout, stderr, status = Open3.capture3(current_command, :chdir => Rails.root)
       out = ""
@@ -24,7 +24,7 @@ module BackendScript
         out << h.bootstrap_label_tag("エラーコード #{status.exitstatus}", :color => :danger)
         out << h.bootstrap_alert(stderr, :tag => :pre, :type => :danger)
       end
-      unless stdout.empty?
+      if !stdout.empty?
         out << h.content_tag(:pre, stdout)
       end
       out

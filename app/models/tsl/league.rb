@@ -23,7 +23,7 @@ module Tsl
 
       # rails r 'Tsl::League.generation_update(30)'
       def generation_update(generation, options = {})
-        tp({"三段リーグ取得": generation}) unless Rails.env.test?
+        tp({"三段リーグ取得": generation}) if !Rails.env.test?
 
         league = Tsl::League.find_or_create_by!(generation: generation)
         scraping = Tsl::Scraping.new(options.merge(generation: generation))

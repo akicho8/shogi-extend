@@ -3,7 +3,7 @@ module Wkbk
     concern :ImportExportMethods do
       class_methods do
         def setup(options = {})
-          # unless exists?
+          # if !exists?
           #   case
           #   when Rails.env.production?
           #     import_all(max: 1024)

@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
     # ・Google Chrome で inline 表示するときこれにすると動かないので send_file を使う
     #
     def send_file_with_range(path, options = {})
-      raise MissingFile, "Cannot read file #{path}" unless File.file?(path) && File.readable?(path)
+      raise MissingFile, "Cannot read file #{path}" if !(File.file?(path) && File.readable?(path))
 
       if range_value = request.headers["range"]
         file_size = File.size(path)

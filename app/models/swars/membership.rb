@@ -101,7 +101,7 @@ module Swars
         self.grade ||= Grade.first
       end
 
-      unless op_user_id
+      if !op_user_id
         if battle
           if m = (battle.memberships - [self]).first
             self.op_user_id = m.user_id
@@ -110,7 +110,7 @@ module Swars
       end
 
       # 対戦相手との段級位の差を保持しておく
-      unless grade_diff
+      if !grade_diff
         if m = (battle.memberships - [self]).first
           if grade && m.grade
             self.grade_diff = -(m.grade.priority - grade.priority)

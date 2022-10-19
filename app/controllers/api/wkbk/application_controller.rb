@@ -22,7 +22,7 @@ module Api
           return
         end
 
-        unless record.show_can(current_user)
+        if !record.show_can(current_user)
           raise WkbkPermissionError
         end
       end
@@ -38,8 +38,8 @@ module Api
       end
 
       # def edit_permission_valid!(record)
-      #   raise "must not happen" unless current_user
-      #   unless record.user == current_user
+      #   raise "must not happen" if !current_user
+      #   if record.user != current_user
       #     raise WkbkPermissionError
       #   end
       # end

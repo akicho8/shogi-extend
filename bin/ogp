@@ -108,7 +108,7 @@ class Ogp < Thor
         "画像" => "",
       }.tap do |row|
         url = e[:url]
-        unless url.start_with?("http")
+        if !url.start_with?("http")
           url = host + e[:url]
         end
         puts url

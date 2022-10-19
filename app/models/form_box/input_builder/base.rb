@@ -44,7 +44,7 @@ module FormBox
 
       def i18n_label
         label = params[:label]
-        unless label
+        if !label
           if s = I18n.t("attributes.#{params[:key]}", :default => "").presence
             label = s
           else
@@ -68,7 +68,7 @@ module FormBox
 
       def label_html_options
         o = {}
-        # unless params[:inline]
+        # if !params[:inline]
         # o[:class] = "label col-md-#{params[:left_width]}"
         o[:class] = "label"
         # end

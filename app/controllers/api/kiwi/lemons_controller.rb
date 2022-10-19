@@ -42,7 +42,7 @@ module Api
         :zombie_kill_now,
         :background_job_kick,
       ] do
-        unless staff?
+        if !staff?
           raise ActionController::RoutingError, "No route matches [#{request.method}] #{request.path_info.inspect}"
         end
       end

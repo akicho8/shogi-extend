@@ -109,7 +109,7 @@ module Swars
             # 制限なし
           else
             # キャッシュが死なないように max_list の項目だけ許可する
-            unless max_list.include?(v)
+            if !max_list.include?(v)
               v = default_limit
             end
           end

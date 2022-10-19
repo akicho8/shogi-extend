@@ -8,7 +8,7 @@ module Swars
       # あらかじめいろんなスコープでダウンロードできる数などを返す
       # GET http://localhost:3000/w.json?query=Yamada_Taro&download_config_fetch=true
       if params[:download_config_fetch]
-        unless current_user
+        if !current_user
           render json: {}, status: 401
           return
         end
@@ -30,7 +30,7 @@ module Swars
       # 特定のスコープでダウンロードする
       # GET http://localhost:3000/w.zip?query=Yamada_Taro
       if request.format.zip?
-        unless current_user
+        if !current_user
           render plain: "ログインしてください", status: 401
           return
         end

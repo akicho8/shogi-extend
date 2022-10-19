@@ -3,7 +3,7 @@
 # ▼POSTタイプのときにsubmitする前の段階で何か実行させるには？
 #
 #   def show_action
-#     unless target_record.group_info
+#     if !target_record.group_info
 #       c.redirect_to(script_link_path(:id => :foo))
 #     end
 #     super

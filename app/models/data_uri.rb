@@ -56,7 +56,7 @@ class DataUri
   end
 
   def assert_data_uri_schema_format(md)
-    unless md
+    if !md
       raise ArgumentError, "data URI scheme 形式になっていない : #{body.inspect.truncate(40)}"
     end
   end

@@ -211,7 +211,7 @@ module Swars
             end
 
             # なんでこんなんいるんだっけ？
-            unless selected
+            if !selected
               s = s.joins(:memberships).merge(Membership.where(user_id: current_swars_user.id))
             end
           end

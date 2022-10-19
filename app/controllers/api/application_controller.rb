@@ -5,7 +5,7 @@ module Api
     include ShogiErrorRescueMethods # for bs_error
 
     def api_login_required
-      unless current_user
+      if !current_user
         render json: { statusCode: 403, message: "ログインしてください" }, status: 403
       end
     end

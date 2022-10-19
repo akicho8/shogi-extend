@@ -19,7 +19,7 @@ module BattleModelMethods
     end
 
     before_validation on: :update do
-      unless sfen_body
+      if !sfen_body
         self.sfen_body ||= fast_parsed_info.to_sfen
       end
 
@@ -88,7 +88,7 @@ module BattleModelMethods
     #   note_tag_list.add      info.xcontainer.players.flat_map { |e| e.skill_set.note_infos.normalize.flat_map  { |e| [e.name, *e.alias_names] } }
     # end
 
-    unless battled_at
+    if !battled_at
       if v = info.header["開始日時"].presence
         if t = (Time.zone.parse(v) rescue nil)
           self.battled_at ||= t
@@ -212,7 +212,7 @@ module BattleModelMethods
   end
 
   def battle_decorator(params = {})
-    raise ArgumentError, "view_context required" unless params[:view_context]
+    raise ArgumentError, "view_context required" if !params[:view_context]
     @battle_decorator ||= battle_decorator_class.new(params.merge(battle: self))
   end
 

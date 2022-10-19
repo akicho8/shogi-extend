@@ -120,7 +120,7 @@ class ApplicationRecord < ActiveRecord::Base
 
       if default
         before_validation do
-          unless public_send("#{key}_id")
+          if !public_send("#{key}_id")
             public_send("#{key}_id=", ar_model.fetch(default).id)
           end
         end

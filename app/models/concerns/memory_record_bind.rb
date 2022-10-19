@@ -25,7 +25,7 @@ module MemoryRecordBind
 
       validates :key, allow_blank: true, inclusion: pure_class.keys.collect(&:to_s)
 
-      unless method_defined?(:name)
+      if !method_defined?(:name)
         delegate :name, to: :pure_info
       end
     end
@@ -45,7 +45,7 @@ module MemoryRecordBind
         end
 
         # if Rails.env.test?
-        #   unless find_by(key: key)
+        #   if !find_by(key: key)
         #     setup
         #   end
         # end

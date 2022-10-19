@@ -46,7 +46,7 @@ module UrlProxy
         raise ArgumentError, "path[:path] is blank"
       end
 
-      unless path[:path].start_with?("/")
+      if !path[:path].start_with?("/")
         raise ArgumentError, "path が / から始まっていない : #{path[:path].inspect}"
       end
 

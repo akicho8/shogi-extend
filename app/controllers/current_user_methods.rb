@@ -84,7 +84,7 @@ module CurrentUserMethods
         end
       end
 
-      unless user
+      if !user
         # ユーザー削除後にそのユーザーと同じでIDでユーザーを作ったとき、
         # セッションに残っているユーザーIDで新しく作ったユーザーにすりかわることができるのを防ぐ
         current_user_clear
@@ -95,15 +95,11 @@ module CurrentUserMethods
   end
 
   def current_user_set(user)
-    unless user.kind_of?(Integer) || user.kind_of?(User)
-      raise ArgumentError, user.inspect
-    end
-
     if user.kind_of?(Integer)
       user = User.find_by(id: user)
     end
 
-    unless user.kind_of?(User)
+    if !user.kind_of?(User)
       raise ArgumentError, user.inspect
     end
 
@@ -116,7 +112,7 @@ module CurrentUserMethods
 
   # すでにログインしているユーザーのIDをActionCableで拾えるようにするため
   def current_user_set_for_action_cable(user)
-    raise ArgumentError, user.inspect unless user.kind_of?(User)
+    raise ArgumentError, user.inspect if !user.kind_of?(User)
     cookies.signed[:user_id] = { value: user.id, expires: 1.years.from_now } # for app/channels/application_cable/connection.rb
   end
 
@@ -129,7 +125,7 @@ module CurrentUserMethods
   end
 
   def sysop_login_unless_logout
-    unless current_user
+    if !current_user
       current_user_set(User.sysop)
     end
   end

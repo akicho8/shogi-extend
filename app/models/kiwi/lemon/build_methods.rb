@@ -63,7 +63,7 @@ module Kiwi
           if background_job_disabled?
             background_job_inactive_message_build("夜中")
           else
-            unless background_job_kick_active?
+            if !background_job_kick_active?
               background_job_inactive_message_build(::Kiwi::Lemon.background_job_range_to_s)
             end
           end

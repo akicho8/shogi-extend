@@ -26,7 +26,7 @@ module Kiwi
       end
 
       # if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-      #   unless Article.exists?
+      #   if !Article.exists?
       #     Article.import_all
       #   end
       # end

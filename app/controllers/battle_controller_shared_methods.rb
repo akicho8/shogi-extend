@@ -83,7 +83,7 @@ module BattleControllerSharedMethods
     included do
       before_action only: [:edit, :update, :destroy] do
         if request.format.html?
-          unless editable_record?(current_record)
+          if !editable_record?(current_record)
             message = ["アクセス権限がありません"]
             if Rails.env.development?
               message << "(フッターのデバッグリンクから任意のユーザーまたは sysop でログインしてください)"

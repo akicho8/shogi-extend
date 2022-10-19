@@ -15,7 +15,7 @@ module FormBox
           checked = (elsms.first.to_s == default.to_s)
 
           s = "".html_safe
-          unless params[:freeze]
+          if !params[:freeze]
             s << h.hidden_field_tag(key, elsms.last, :id => nil) # 非チェック時に偽を返すための技
           end
           s << h.check_box_tag(key, elsms.first, checked, :id => _for, :disabled => params[:freeze]) + right_label

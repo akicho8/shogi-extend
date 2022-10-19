@@ -27,7 +27,7 @@ module XyMaster
     # end
     #
     # if Rails.env.staging? || Rails.env.production? || options[:import_all] || ENV["INSIDE_DB_SEEDS_TASK"]
-    #   unless XyMaster::Question.exists?
+    #   if !XyMaster::Question.exists?
     #     XyMaster::Question.import_all
     #   end
     # end

@@ -66,7 +66,7 @@ module ViewSupportHelper
     options = options.dup
     type = options.delete(:type)
     tag = options.delete(:tag) || :div
-    raise ArgumentError, "#{type.inspect}" unless type.to_s.in?(["success", "info", "warning", "danger"])
+    raise ArgumentError, "#{type.inspect}" if !type.to_s.in?(["success", "info", "warning", "danger"])
     type = "alert-#{type}"
     content_tag(tag, str, options.merge(:class => "alert #{type}"))
   end

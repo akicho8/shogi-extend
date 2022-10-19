@@ -27,7 +27,7 @@ module KifuExtractor
 
             # sente gote がついたパスは正しいキーになっている
             # "https://lishogi.org/ZY2Tyy2d/sente" -> "ZY2Tyy2d"
-            unless key
+            if !key
               if md = uri.path.match(%r{^/(?<key>\w+)/(sente|gote)})
                 key = md["key"]
               end
@@ -35,7 +35,7 @@ module KifuExtractor
 
             # 棋譜ダウンロードURLも正しい
             # "https://lishogi.org/game/export/ZY2Tyy2d?csa=1&clocks=0"
-            unless key
+            if !key
               if md = uri.path.match(%r{^/game/export/(?<key>\w+)})
                 key = md["key"]
               end
@@ -44,7 +44,7 @@ module KifuExtractor
             # sente gote がついていないパスのキーは9文字以上ならきっと正しくない
             # 先頭の8文字だけが実際のキー
             # "https://lishogi.org/ZY2Tyy2dUdLl" => "ZY2Tyy2dUdLl" => "ZY2Tyy2d"
-            unless key
+            if !key
               if md = uri.path.match(%r{^/(?<key>\w+)})
                 key = md["key"].first(key_max)
               end

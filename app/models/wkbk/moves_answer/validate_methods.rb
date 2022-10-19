@@ -73,7 +73,7 @@ module Wkbk
 
       # 「詰将棋」なら先手の駒が余っていないことを確認する
       def validate3_piece_box_is_empty
-        return unless Config.fetch(:black_piece_zero_check_on_function_enable)
+        return if !Config.fetch(:black_piece_zero_check_on_function_enable)
 
         if article.lineage.pure_info.black_piece_zero_check_on
           if xcontainer.opponent_player.piece_box.empty?
@@ -104,7 +104,7 @@ module Wkbk
 
       # 「詰将棋」か「持駒限定詰将棋」か「実戦詰め筋」なら詰んでいることを確認
       def validate6_mate
-        return unless Config.fetch(:mate_validate_on_function_enable)
+        return if !Config.fetch(:mate_validate_on_function_enable)
 
         if article.lineage.pure_info.mate_validate_on
           if article.mate_skip?

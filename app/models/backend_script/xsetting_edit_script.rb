@@ -61,7 +61,7 @@ module BackendScript
         raise "競合しているため更新できません。フォームを開いてから保存する間に他の人の更新が#{diff}回ありました。いまは最新の値をフォームに取り込んだので速やかに操作すれば更新できるはずです。"
       end
 
-      unless current_reset
+      if !current_reset
         # 保存する前にすべてチェックする
         current_xsetting.collect do |var_key, value|
           meta = AvailableXsetting.fetch(var_key)
@@ -71,7 +71,7 @@ module BackendScript
             # rescue Exception => error # 外側では StandardError しか捕捉していないため
             #   raise ArgumentError, error.inspect
             # end
-            unless r
+            if !r
               raise ArgumentError, "#{meta.name} (#{meta.key}) の値 #{value.inspect} が不正です"
             end
           end

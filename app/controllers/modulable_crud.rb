@@ -6,7 +6,7 @@ module ModulableCrud
     included do
       if Rails.env.development?
         before_action do
-          unless request.get?
+          if !request.get?
             v = params.permit!.to_h
             begin
               Rails.cache.write(:before_post_params, v, expires_in: 1.minutes)
@@ -141,7 +141,7 @@ module ModulableCrud
 
     def save_and_redirect
       current_record_session_clear
-      unless current_record_save
+      if !current_record_save
         render :edit
         return
       end
@@ -221,7 +221,7 @@ module ModulableCrud
       when _goto_confirm?
         # 確認画面行き
         current_record.assign_attributes(current_record_params)
-        unless current_record_valid?
+        if !current_record_valid?
           render :edit
           return
         end

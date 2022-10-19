@@ -3,7 +3,7 @@ ENV["RAILS_SYSTEM_TESTING_SCREENSHOT"] ||= "simple"
 
 if false
   chromedriver_pids = `pgrep -f chromedriver`.split
-  unless chromedriver_pids.empty?
+  if !chromedriver_pids.empty?
     `pkill -f chromedriver`
     sleep(1)
     tp({

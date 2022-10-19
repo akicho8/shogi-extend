@@ -61,7 +61,7 @@ class KiwiMailer < ApplicationMailer
     body << "動画作成"
     body << UrlProxy.full_url_for("/video/new")
 
-    unless useless_mail_address?(lemon.user.email)
+    if !useless_mail_address?(lemon.user.email)
       if lemon.real_path
         if lemon.real_path.exist?
           attachments[lemon.filename_human] = lemon.real_path.read

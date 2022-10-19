@@ -70,7 +70,7 @@ class Shogidb2Parser
   def body
     @params[:moves].collect { |e|
       if v = e[:csa]
-        unless v.start_with?("%")
+        if !v.start_with?("%")
           v
         end
       end
