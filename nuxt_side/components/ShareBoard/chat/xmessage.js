@@ -10,7 +10,7 @@
 
 import { Gs2 } from "@/components/models/gs2.js"
 import { TimeUtil } from "@/components/models/time_util.js"
-import { MessageScopeInfo }  from "@/components/ShareBoard/models/message_scope_info.js"
+import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
 
 export class Xmessage {
   static create(params) {
