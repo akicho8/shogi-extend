@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
-  .ShareBoardApp(:style="component_style" :class="component_class")
-    | {{$debug.trace('ShareBoardApp', 'render')}}
+  .SbApp(:style="component_style" :class="component_class")
+    | {{$debug.trace('SbApp', 'render')}}
     DebugBox.is-hidden-mobile(v-if="development_p")
       p new_v.os_dnd_count: {{new_v.os_dnd_count}}
       p appearance_theme_key: {{appearance_theme_key}}
@@ -41,17 +41,17 @@ client-only
       //- p URL: {{current_url}}
       //- p サイドバー {{sidebar_p}}
 
-    ShareBoardSidebar(:base="base")
-    ShareBoardNavbar(:base="base")
+    SbSidebar(:base="base")
+    SbNavbar(:base="base")
 
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
         .columns.is-centered.is-desktop.is-variable.is-0
-          ShareBoardSp(:base="base" ref="ShareBoardSp")
+          SbSp(:base="base" ref="SbSp")
           SbMemberList
-          ShareBoardActionLog(:base="base" ref="ShareBoardActionLog")
-        ShareBoardDebugPanels(:base="base" v-if="debug_mode_p")
+          SbActionLog(:base="base" ref="SbActionLog")
+        SbDebugPanels(:base="base" v-if="debug_mode_p")
 </template>
 
 <script>
@@ -128,7 +128,7 @@ import { app_medal     } from "./toryo/app_medal.js"
 import { app_kifu_mail } from "./toryo/app_kifu_mail.js"
 
 export default {
-  name: "ShareBoardApp",
+  name: "SbApp",
   mixins: [
     // どう見ても mixins の使い方を間違えている
     support_parent,
@@ -222,11 +222,11 @@ export default {
     }
   },
   beforeMount() {
-    this.$debug.trace("ShareBoardApp", "beforeMount")
+    this.$debug.trace("SbApp", "beforeMount")
   },
   mounted() {
     // console.log(this.$route)
-    this.$debug.trace("ShareBoardApp", "mounted")
+    this.$debug.trace("SbApp", "mounted")
 
     // this.$nuxt.error({statusCode: 500, message: "xxx"})
     // return

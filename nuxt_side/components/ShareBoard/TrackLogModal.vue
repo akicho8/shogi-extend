@@ -5,7 +5,7 @@
       | ログ ({{base.track_logs.length}})
 
   .modal-card-body
-    ShareBoardTrackLog(:base="base" ref="ShareBoardTrackLog")
+    SbTrackLog(:base="base" ref="SbTrackLog")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") 閉じる

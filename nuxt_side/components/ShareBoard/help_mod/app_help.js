@@ -1,4 +1,4 @@
-import ShareBoardHelpModal from "./ShareBoardHelpModal.vue"
+import SbHelpModal from "./SbHelpModal.vue"
 
 export const app_help = {
   methods: {
@@ -6,7 +6,7 @@ export const app_help = {
       this.sidebar_p = false
       this.$sound.play_click()
       this.modal_card_open({
-        component: ShareBoardHelpModal,
+        component: SbHelpModal,
         props: { base: this.base },
       })
     },

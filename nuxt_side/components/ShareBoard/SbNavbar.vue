@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
+MainNavbar.SbNavbar(v-bind="component_attrs")
   template(slot="brand")
     b-navbar-item(@click.native="base.exit_handle" v-if="base.home_display_p")
       b-icon(icon="home")
@@ -54,7 +54,7 @@ MainNavbar.ShareBoardNavbar(v-bind="component_attrs")
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ShareBoardNavbar",
+  name: "SbNavbar",
   mixins: [support_child],
   computed: {
     component_attrs() {
@@ -93,7 +93,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.ShareBoardNavbar
+.SbNavbar
   // チャットアイコンは2つをずらして組み合わせる
   .message_modal_handle
     .icon
@@ -107,10 +107,10 @@ export default {
 
 //////////////////////////////////////////////////////////////////////////////// __theme__
 
-// .ShareBoardApp
+// .SbApp
 //   &.is_appearance_theme_b
 //     &.normal_mode_p
-//       .ShareBoardNavbar
+//       .SbNavbar
 //         &.is-primary
 //           background-color: transparent
 //           .navbar-item, .navbar-link

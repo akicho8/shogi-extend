@@ -1,6 +1,6 @@
 <template lang="pug">
 // 外側で必ず key を指定すること
-.ShareBoardAvatarLine(v-bind="$attrs" v-on="$listeners")
+.SbAvatarLine(v-bind="$attrs" v-on="$listeners")
   // すべて名前が入力されていないとだめ
   template(v-if="info.from_user_name")
     // replace_icon が最優先
@@ -26,7 +26,7 @@ import { support_child } from "./support_child.js"
 import _ from "lodash"
 
 export default {
-  name: "ShareBoardAvatarLine",
+  name: "SbAvatarLine",
   mixins: [support_child],
   inject: ["TheSb"],
   props: {
@@ -42,7 +42,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardAvatarLine
+.SbAvatarLine
   width: 100%
   display: flex
   align-items: center
@@ -66,8 +66,8 @@ export default {
     &.user_name
       // color: $primary
 
-.ShareBoardApp.debug_mode_p
-  .ShareBoardAvatarLine
+.SbApp.debug_mode_p
+  .SbAvatarLine
     // flex-wrap: wrap
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .flex_item

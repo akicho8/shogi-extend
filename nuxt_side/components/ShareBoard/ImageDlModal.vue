@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title 画像ダウンロード
-    ShareBoardColorThemeDropdown(:base="base")
+    SbColorThemeDropdown(:base="base")
 
     b-dropdown.image_size_key_dropdown(v-model="base.image_size_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" @change="base.image_size_key_change_handle")
       template(#trigger)

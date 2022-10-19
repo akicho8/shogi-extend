@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.ShareBoardDebugPanels
+.columns.is-multiline.SbDebugPanels
   .column.is-2
     .panel
       .panel-heading
@@ -209,7 +209,7 @@
       .panel-heading
         | TrackLog
       .panel-block
-        ShareBoardTrackLog(:base="base")
+        SbTrackLog(:base="base")
   .column.is-12
     .panel
       .panel-heading
@@ -234,7 +234,7 @@ import _ from "lodash"
 // import { Howl, Howler } from "howler"
 
 export default {
-  name: "ShareBoardDebugPanels",
+  name: "SbDebugPanels",
   mixins: [support_child],
 
   methods: {
@@ -258,7 +258,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.ShareBoardDebugPanels
+.SbDebugPanels
   .xemoji
     height: 4rem
     width: unset

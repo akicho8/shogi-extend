@@ -37,7 +37,7 @@ export const app_message_logs = {
 
     // 一番下までスクロール
     ml_scroll_to_bottom() {
-      const elem = document.querySelector(".ShareBoardMessageLog .scroll_block")
+      const elem = document.querySelector(".SbMessageLog .scroll_block")
       if (elem) {
         this.scroll_to_bottom(elem)
       }

@@ -1,15 +1,15 @@
 <template lang="pug">
-.ShareBoardMessageLog
+.SbMessageLog
   .scroll_block.is_scroll_y
     template(v-for="e in TheSb.message_logs")
       template(v-if="TheSb.message_share_received_p(e)")
-        ShareBoardAvatarLine(:info="e" :key="e.unique_key")
+        SbAvatarLine(:info="e" :key="e.unique_key")
           XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.css_class" :str="e.auto_linked_message")
 </template>
 
 <script>
 export default {
-  name: "ShareBoardMessageLog",
+  name: "SbMessageLog",
   inject: ["TheSb"],
 }
 </script>
@@ -17,7 +17,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.ShareBoardMessageLog
+.SbMessageLog
   position: relative
   height: 10rem
   margin-bottom: 1rem
@@ -25,7 +25,7 @@ export default {
   .scroll_block
     @extend %overlay
     padding: 0
-    .ShareBoardAvatarLine
+    .SbAvatarLine
       padding: 0.2rem 0
       .message_body
         flex-shrink: 1
@@ -34,7 +34,7 @@ export default {
         color: $grey
 
 .STAGE-development
-  .ShareBoardMessageLog
+  .SbMessageLog
     .scroll_block
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

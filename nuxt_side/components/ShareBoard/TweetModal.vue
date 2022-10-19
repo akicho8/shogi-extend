@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title ツイート
-    ShareBoardColorThemeDropdown(:base="base")
+    SbColorThemeDropdown(:base="base")
 
   .modal-card-body
     .preview_image_container.is-flex

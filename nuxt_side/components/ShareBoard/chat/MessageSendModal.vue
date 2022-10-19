@@ -14,7 +14,7 @@
         template(v-for="e in TheSb.MessageScopeInfo.values")
           b-dropdown-item(:key="e.key" :class="e.key" :value="e.key" v-text="e.name")
   .modal-card-body
-    ShareBoardMessageLog(ref="ShareBoardMessageLog")
+    SbMessageLog(ref="SbMessageLog")
     b-field
       b-input(v-model="TheSb.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
@@ -32,7 +32,7 @@ export default {
   mounted() {
     this.input_focus()
 
-    // 本当は ShareBoardMessageLog.vue の mounted で実行したかったが
+    // 本当は SbMessageLog.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
     this.TheSb.ml_scroll_to_bottom()

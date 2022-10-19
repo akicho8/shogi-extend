@@ -8,7 +8,7 @@
 // | --sb_side_bg_color      | 両サイドのカラムの背景色 |
 // |-------------------------+--------------------------|
 // appearance_theme_info.js
-.ShareBoardApp
+.SbApp
   &.is_appearance_theme_a
     #{--sb_bg_color}:           #{$white}
     #{--sb_board_normal_color}: hsla(  0,  0%,   0%, 0.2)
@@ -39,11 +39,11 @@
       // --sp_board_sepia:      0.6                 // ややセピア調して彩度を下げる
       // --sp_piece_grayscale:  0.6                 // 駒の彩度を下げる
 
-  .ShareBoardSp
+  .SbSp
     // 盤の色(基本)
     --sp_board_color: var(--sb_board_normal_color)
 
   // 盤の色(手番のとき)
   // &.current_turn_self_p
-  //   .ShareBoardSp
+  //   .SbSp
   //     --sp_board_color: var(--sb_board_active_color)

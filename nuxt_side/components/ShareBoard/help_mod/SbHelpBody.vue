@@ -1,5 +1,5 @@
 <template lang="pug">
-HelpContent.ShareBoardHelpBody
+HelpContent.SbHelpBody
   article
     h2 対局するには？ (3行で)
     ol
@@ -532,7 +532,7 @@ HelpContent.ShareBoardHelpBody
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ShareBoardHelpBody",
+  name: "SbHelpBody",
   mixins: [
     support_child,
   ],
@@ -541,7 +541,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardHelpBody
+.SbHelpBody
   th
     text-align: right ! important
 </style>

@@ -7,7 +7,7 @@
       a.permalink(href="/share-board/help" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    ShareBoardHelpBody
+    SbHelpBody
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
@@ -16,7 +16,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ShareBoardHelpModal",
+  name: "SbHelpModal",
   mixins: [support_child],
   methods: {
     close_handle() {
@@ -29,7 +29,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardHelpModal
+.SbHelpModal
   +modal_width(800px)
   .modal-card-body
     padding: 0

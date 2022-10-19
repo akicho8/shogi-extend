@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "一般用「できる・注意あり(全体へ)」" do
     foul_behavior_key("is_foul_behavior_auto")
     assert_selector(".place_2_2.current")
-    assert_selector(".ShareBoardActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
     assert_selector(".FoulModal", text: "二歩で☖の勝ち！")
   end
 
@@ -19,12 +19,12 @@ RSpec.describe type: :system, share_board_spec: true do
     foul_behavior_key("is_foul_behavior_newbie")
     assert_no_selector(".place_2_2.current")
     assert_system_variable(:latest_foul_name, "二歩")
-    assert_no_selector(".ShareBoardActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
   end
 
   it "玄人用「できる・注意なし」" do
     foul_behavior_key("is_foul_behavior_throw")
     assert_selector(".place_2_2.current")
-    assert_no_selector(".ShareBoardActionLog .flex_item", text: "二歩", exact_text: true)
+    assert_no_selector(".SbActionLog .flex_item", text: "二歩", exact_text: true)
   end
 end

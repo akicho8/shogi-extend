@@ -1,7 +1,7 @@
 module SharedMethods
   # スコープを合わせる
   def action_log_scope(&block)
-    within(".ShareBoardActionLog", &block)
+    within(".SbActionLog", &block)
   end
 
   # 完全一致のテキストがあること
@@ -13,7 +13,7 @@ module SharedMethods
 
   # 履歴の上から index 目の行
   def action_log_row_of(index)
-    find(".ShareBoardActionLog .ShareBoardAvatarLine:nth-child(#{index.next})")
+    find(".SbActionLog .SbAvatarLine:nth-child(#{index.next})")
   end
 
   # 履歴の index 番目は user が behavior した
@@ -25,7 +25,7 @@ module SharedMethods
   end
 
   def assert_action(user, behavior)
-    within(".ShareBoardActionLog") do
+    within(".SbActionLog") do
       assert_selector(:element, text: user,     exact_text: true)
       assert_selector(:element, text: behavior, exact_text: true)
     end

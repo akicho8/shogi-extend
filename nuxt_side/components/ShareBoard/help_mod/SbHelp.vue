@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardHelp
+.SbHelp
   MainNavbar
     template(slot="brand")
       NavbarItemHome(icon="chevron-left" :to="{name: 'share-board'}")
@@ -9,21 +9,21 @@
     .container
       .columns.is-centered.is-gapless
         .MainColumn.column
-          ShareBoardHelpBody
+          SbHelpBody
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "ShareBoardHelp",
+  name: "SbHelp",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardHelp
+.SbHelp
   .MainSection.section
     +mobile
       padding: 0rem

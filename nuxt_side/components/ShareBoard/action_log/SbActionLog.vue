@@ -1,13 +1,13 @@
 <template lang="pug">
-.ShareBoardActionLog.SideColumn.column(:class="has_content_class(filtered_action_logs)")
+.SbActionLog.SideColumn.column(:class="has_content_class(filtered_action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title
       | 操作履歴
       span.mini_title_desc
         | タップで戻れる
-    .ShareBoardAvatarLines
+    .SbAvatarLines
       template(v-for="(e, i) in filtered_action_logs")
-        ShareBoardAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)")
+        SbAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)")
           .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
           .flex_item(v-if="e.label") {{e.label}}
           template(v-if="e.lmi")
@@ -25,7 +25,7 @@ import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
 
 export default {
-  name: "ShareBoardActionLog",
+  name: "SbActionLog",
   mixins: [support_child],
   mounted() {
     if (this.development_p) {
@@ -53,7 +53,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ShareBoardActionLog.column
+.SbActionLog.column
   +SideColumnScrollOn
   +touch
     height: 16rem

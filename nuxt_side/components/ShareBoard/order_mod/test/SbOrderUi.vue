@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardOrderUi
+.SbOrderUi
   .columns.is-centered.is-multiline.is-variable.is-4.is-marginless
     .column.is-12
       .buttons
@@ -65,7 +65,7 @@ import { OrderUnit } from "../order_unit/order_unit.js"
 import OrderTeamOne2 from "./OrderTeamOne2.vue"
 
 export default {
-  name: "ShareBoardOrderUi",
+  name: "SbOrderUi",
   mixins: [
   ],
   components: {
@@ -139,13 +139,13 @@ export default {
 </script>
 
 <style lang="sass">
-.ShareBoardOrderUi
+.SbOrderUi
   word-break: break-all
   .TeamContainer
     // width: 24rem
     display: flex
 .STAGE-development
-  .ShareBoardOrderUi
+  .SbOrderUi
     .columns
       .column
         border: 1px dashed blue

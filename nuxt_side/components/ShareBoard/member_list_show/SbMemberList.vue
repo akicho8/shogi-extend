@@ -3,11 +3,11 @@
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title.is-clickable.player_names_copy_handle(@click="TheSb.player_names_copy_handle")
       | メンバー
-    .ShareBoardAvatarLinesWrap
+    .SbAvatarLinesWrap
       template(v-if="TheSb.order_enable_p")
         template(v-if="TheSb.order_unit.state_name === 'O1State'")
           // 従来の分けない方法
-          .ShareBoardAvatarLines
+          .SbAvatarLines
             SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info" :key="info.from_connection_id")
         template(v-if="TheSb.order_unit.state_name === 'O2State'")
           template(v-if="true")
@@ -16,12 +16,12 @@
             .TeamBlock(v-for="location in Location.values" :class="location.key")
               .TeamName
                 HexagonMark(:location_key="location.key")
-              .ShareBoardAvatarLines
+              .SbAvatarLines
                 SbMemberOne(v-for="info in TheSb.visible_member_groups[location.key]" :info="info" :key="info.from_connection_id")
             .TeamBlock.watcher(v-if="present_p(TheSb.visible_member_groups['watcher'])")
               .TeamName.is-invisible
                 b-tag(rounded) 観戦
-              .ShareBoardAvatarLines
+              .SbAvatarLines
                 SbMemberOne(v-for="info in TheSb.visible_member_groups['watcher']" :info="info" :key="info.from_connection_id")
           template(v-if="false")
             // simple_teams を元に表示する方法
@@ -30,12 +30,12 @@
               .TeamBlock
                 .TeamName
                   b-tag(rounded) {{Location.fetch(i).name}}
-                .ShareBoardAvatarLines
+                .SbAvatarLines
                   template(v-for="user_name in user_names")
                     template(v-if="TheSb.room_user_names_hash[user_name]")
                       SbMemberOne(:info="TheSb.room_user_names_hash[user_name]")
       template(v-else)
-        .ShareBoardAvatarLines
+        .SbAvatarLines
           SbMemberOne(v-for="info in TheSb.visible_member_infos" :info="info" :key="info.from_connection_id")
 </template>
 
@@ -60,7 +60,7 @@ export default {
   +desktop
     +SideColumnScrollOn
 
-  .ShareBoardAvatarLinesWrap
+  .SbAvatarLinesWrap
     display: flex
     flex-direction: column
     gap: 1rem // 先後間の隙間。△の上の隙間に相当する

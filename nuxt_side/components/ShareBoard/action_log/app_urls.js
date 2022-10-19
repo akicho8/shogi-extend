@@ -1,5 +1,5 @@
 // ActionLogShowModal 用の mixins
-// ShareBoard.vue のスコープのものとメソッド名が重複しているので注意
+// Sb.vue のスコープのものとメソッド名が重複しているので注意
 
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"

@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="base.sidebar_p")
+b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       NavbarItemSidebarClose(@click="base.sidebar_toggle")
@@ -61,7 +61,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
           //- b-menu-item.is_active_unset(icon="link"    label="ツイートリンクのコピー"    @click="base.current_url_copy_handle")
           b-menu-item.is_active_unset(icon="eye"     label="ツイート画像の視点設定"    @click="base.abstract_viewpoint_key_select_modal_handle")
 
-        ShareBoardSidebarExport(:base="base")
+        SbSidebarExport(:base="base")
           b-menu-item.is_active_unset(icon="image" :label="`画像ダウンロード #${base.current_turn}`" @click.native="base.image_dl_modal_handle")
           b-menu-item.is_active_unset(icon="movie" label="動画変換" @click.native="base.video_new_handle")
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="base.kifu_mail_handle")
@@ -88,7 +88,7 @@ b-sidebar.is-unselectable.ShareBoardSidebar(fullheight right overlay v-model="ba
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ShareBoardSidebar",
+  name: "SbSidebar",
   mixins: [support_child],
   computed: {
     mi1_bold_p() { return this.base.ac_room                                                                 },
@@ -104,11 +104,11 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardSidebar
+.SbSidebar
   .sidebar-content
     width: 20rem
 
-  .menu-label:not(:first-child), .ShareBoardSidebarExport
+  .menu-label:not(:first-child), .SbSidebarExport
     margin-top: 2em
 
   .user_account

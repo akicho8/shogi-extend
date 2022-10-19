@@ -1,5 +1,5 @@
 <template lang="pug">
-.ShareBoardSp.MainColumn.column(:class="main_column_class")
+.SbSp.MainColumn.column(:class="main_column_class")
   CustomShogiPlayer.is_mobile_vertical_good_style(
     v-bind="sp_bind"
     v-on="sp_hook"
@@ -34,7 +34,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ShareBoardSp",
+  name: "SbSp",
   mixins: [support_child],
   computed: {
     // .column に指定するクラス
@@ -145,7 +145,7 @@ export default {
 @import "./support.sass"
 @import "shogi-player/components/stylesheets/helper.sass"
 
-.ShareBoardSp
+.SbSp
   +padding_lr(unset)
 
   // デスクトップ以上では大きさは動的に変更できる

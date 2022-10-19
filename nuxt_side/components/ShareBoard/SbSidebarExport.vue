@@ -1,6 +1,6 @@
 <template lang="pug">
-// なぜだかわからない b-menu-list.ShareBoardSidebarExport とはできない
-.ShareBoardSidebarExport
+// なぜだかわからない b-menu-list.SbSidebarExport とはできない
+.SbSidebarExport
   b-menu-list(label="EXPORT")
     slot
 
@@ -32,7 +32,7 @@
 // import { support_child } from "./support_child.js"
 
 export default {
-  name: "ShareBoardSidebarExport",
+  name: "SbSidebarExport",
   // mixins: [support_child],
   props: {
     // base.current_turn
@@ -48,5 +48,5 @@ export default {
 
 <style lang="sass">
 // @import "./support.sass"
-.ShareBoardSidebarExport
+.SbSidebarExport
 </style>

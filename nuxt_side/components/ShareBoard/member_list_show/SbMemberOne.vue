@@ -1,5 +1,5 @@
 <template lang="pug">
-ShareBoardAvatarLine.SbMemberOne.is-clickable(
+SbAvatarLine.SbMemberOne.is-clickable(
   :info="info"
   :replace_icon="replace_icon(info)"
   :key="info.from_connection_id"
@@ -68,7 +68,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbMemberOne
-  &.ShareBoardAvatarLine
+  &.SbAvatarLine
     &.is_window_blur
     &.is_disconnect
     &.is_self

@@ -125,7 +125,7 @@ export const app_sp = {
 
     // ShogiPlayer コンポーネント自体を実行したいとき用
     sp_call(func) {
-      return func(this.$refs.ShareBoardSp.$refs.main_sp.sp_object())
+      return func(this.$refs.SbSp.$refs.main_sp.sp_object())
     },
 
     // 持駒を元に戻す(デバッグ用)

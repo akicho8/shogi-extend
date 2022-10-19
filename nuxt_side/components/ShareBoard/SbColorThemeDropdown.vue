@@ -1,5 +1,5 @@
 <template lang="pug">
-b-dropdown.ShareBoardColorThemeDropdown(v-model="base.color_theme_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
+b-dropdown.SbColorThemeDropdown(v-model="base.color_theme_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
   template(#trigger)
     b-button(:label="base.color_theme_info.name" icon-right="menu-down" size="is-small")
   template(v-for="e in base.ColorThemeInfo.values")
@@ -20,7 +20,7 @@ import { support_child } from "./support_child.js"
 import { ScreenSizeDetector } from "@/components/models/screen_size_detector.js"
 
 export default {
-  name: "ShareBoardColorThemeDropdown",
+  name: "SbColorThemeDropdown",
   mixins: [support_child],
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="sass">
-.ShareBoardColorThemeDropdown
+.SbColorThemeDropdown
   // 上下の不自然な隙間を取る
   .dropdown-content
     padding-top: 0

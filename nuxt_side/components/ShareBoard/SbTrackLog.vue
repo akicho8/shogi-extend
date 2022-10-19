@@ -3,7 +3,7 @@
 //- :paginated="false"
 //- :per-page="200"
 //- :pagination-simple="true"
-b-table.ShareBoardTrackLog(
+b-table.SbTrackLog(
   :data="base.track_logs"
   :mobile-cards="false"
   :show-header="false"
@@ -24,7 +24,7 @@ import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 
 export default {
-  name: "ShareBoardTrackLog",
+  name: "SbTrackLog",
   mixins: [support_child],
   mounted() {
     // ここで実行しても効かない
@@ -41,7 +41,7 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 
-.ShareBoardTrackLog
+.SbTrackLog
   // position: relative
   // height: 50vh
   // margin-bottom: 1rem

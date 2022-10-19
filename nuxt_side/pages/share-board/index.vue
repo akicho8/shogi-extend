@@ -1,7 +1,7 @@
 <template lang="pug">
 client-only
-  //- client-only しないと ShareBoardApp の beforeMount が呼ばれる前に render されたりともうめちくちゃなことになる
-  ShareBoardApp(:config="config" v-if="config")
+  //- client-only しないと SbApp の beforeMount が呼ばれる前に render されたりともうめちくちゃなことになる
+  SbApp(:config="config" v-if="config")
 </template>
 
 <script>
