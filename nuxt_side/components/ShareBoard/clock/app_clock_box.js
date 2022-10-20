@@ -121,10 +121,7 @@ export const app_clock_box = {
     cc_modal_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.modal_card_open({
-        component: ClockBoxModal,
-        props: { base: this.base },
-      })
+      this.modal_card_open({component: ClockBoxModal})
     },
 
     cc_resume_handle() {

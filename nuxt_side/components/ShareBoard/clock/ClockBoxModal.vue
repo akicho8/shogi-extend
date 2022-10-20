@@ -17,7 +17,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body(@click="!instance && main_switch_handle(true)")
     //- pre
-    //-   | {{base.cc_params}}
+    //-   | {{TheSb.cc_params}}
 
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
@@ -26,22 +26,22 @@
       template(v-if="instance.pause_or_play_p")
         template(v-if="false")
           .level.is-mobile
-            .level-item.has-text-centered(v-if="base.cc_params.initial_main_min >= 0")
+            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_main_min >= 0")
               div
                 p.heading 持ち時間
-                p.title.is-5 {{base.cc_params.initial_main_min}}分
-            .level-item.has-text-centered(v-if="base.cc_params.initial_read_sec >= 1")
+                p.title.is-5 {{TheSb.cc_params.initial_main_min}}分
+            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_read_sec >= 1")
               div
                 p.heading 秒読み
-                p.title.is-5 {{base.cc_params.initial_read_sec}}秒
-            .level-item.has-text-centered(v-if="base.cc_params.initial_extra_sec >= 1")
+                p.title.is-5 {{TheSb.cc_params.initial_read_sec}}秒
+            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_extra_sec >= 1")
               div
                 p.heading 猶予
-                p.title.is-5 {{base.cc_params.initial_extra_sec}}秒
-            .level-item.has-text-centered(v-if="base.cc_params.every_plus >= 1")
+                p.title.is-5 {{TheSb.cc_params.initial_extra_sec}}秒
+            .level-item.has-text-centered(v-if="TheSb.cc_params.every_plus >= 1")
               div
                 p.heading 1手毎加算
-                p.title.is-5 {{base.cc_params.every_plus}}秒
+                p.title.is-5 {{TheSb.cc_params.every_plus}}秒
           hr
         .level.is-mobile
           template(v-for="(e, i) in instance.single_clocks")
@@ -57,9 +57,9 @@
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
 
       .forms_block(v-if="!instance.pause_or_play_p")
-        template(v-for="(e, i) in base.cc_params")
+        template(v-for="(e, i) in TheSb.cc_params")
           .cc_form_block
-            .location_mark(v-if="base.cc_unique_p")
+            .location_mark(v-if="TheSb.cc_unique_p")
               | {{Location.fetch(i).name}}
             b-field(horizontal label="持ち時間(分)" custom-class="is-small")
               b-numberinput.initial_main_min(expanded controls-position="compact"  v-model="e.initial_main_min"  :min="0" :max="60*6"  :exponential="true")
@@ -74,14 +74,14 @@
                 | ﾌｨｯｼｬｰﾙｰﾙ用
               b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
 
-        b-switch.cc_unique_mode_set_handle.mt-5(:value="base.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
+        b-switch.cc_unique_mode_set_handle.mt-5(:value="TheSb.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => base.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p && base.AppConfig.CLOCK_PRESET_USE")
+      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => TheSb.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p && TheSb.AppConfig.CLOCK_PRESET_USE")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
-        template(v-for="e in base.CcRuleInfo.values")
+        template(v-for="e in TheSb.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
       .buttons
         template(v-if="instance.pause_or_play_p && !instance.timer")
@@ -101,13 +101,12 @@ import _ from "lodash"
 
 export default {
   name: "ClockBoxModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
+  inject: ["TheSb"],
   methods: {
     main_switch_handle(v) {
       this.$sound.play_toggle(v)
-      this.base.cc_main_switch_set(v)
+      this.TheSb.cc_main_switch_set(v)
       if (v) {
         this.delay_block(1, () => {
           this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 5})
@@ -119,8 +118,8 @@ export default {
       this.$emit("close")
     },
     play_handle() {
-      if (this.base.clock_start_even_though_order_is_not_enabled_p) {
-        this.base.cc_play_confirm({
+      if (this.TheSb.clock_start_even_though_order_is_not_enabled_p) {
+        this.TheSb.cc_play_confirm({
           onConfirm: () => {
             this.play_core_handle()
           },
@@ -132,45 +131,45 @@ export default {
     play_core_handle() {
       this.__assert__(!this.clock_box)
       this.$sound.play_click()
-      this.base.cc_params_apply()
-      this.base.cc_play_handle()
-      this.base.clock_box_share({cc_key: "ck_start"})
-      if (this.base.auto_close_p) {
+      this.TheSb.cc_params_apply()
+      this.TheSb.cc_play_handle()
+      this.TheSb.clock_box_share({cc_key: "ck_start"})
+      if (this.TheSb.auto_close_p) {
         this.$emit("close")
       }
     },
     pause_handle() {
       this.$sound.play_click()
-      this.base.cc_pause_handle()
-      this.base.clock_box_share({cc_key: "ck_pause"})
-      if (this.base.ac_room && this.base.order_enable_p) {
+      this.TheSb.cc_pause_handle()
+      this.TheSb.clock_box_share({cc_key: "ck_pause"})
+      if (this.TheSb.ac_room && this.TheSb.order_enable_p) {
         this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。誰でも駒を動かせるようになります", {duration: 1000 * 10}))
       }
     },
     stop_handle() {
       this.$sound.play_click()
       if (this.instance.pause_or_play_p) {
-        this.base.cc_stop_handle()
-        this.base.clock_box_share({cc_key: "ck_stop"})
+        this.TheSb.cc_stop_handle()
+        this.TheSb.clock_box_share({cc_key: "ck_stop"})
       } else {
         this.toast_ok("すでに停止しています")
       }
     },
     resume_handle() {
       this.$sound.play_click()
-      this.base.cc_resume_handle()
-      this.base.clock_box_share({cc_key: "ck_resume"})
-      if (this.base.auto_close_p) {
+      this.TheSb.cc_resume_handle()
+      this.TheSb.clock_box_share({cc_key: "ck_resume"})
+      if (this.TheSb.auto_close_p) {
         this.$emit("close")
       }
     },
     save_handle() {
       this.$sound.play_click()
-      this.base.cc_params_apply()
+      this.TheSb.cc_params_apply()
       this.toast_ok("反映しました")
     },
     cc_params_set_handle(e) {
-      this.base.cc_params = e.cc_params   // cloneDeep したものを渡している
+      this.TheSb.cc_params = e.cc_params   // cloneDeep したものを渡している
       if (false) {
         this.toast_ok(`${e.name}のプリセットを読み込みました`)
       } else {
@@ -179,12 +178,12 @@ export default {
     },
     cc_unique_mode_set_handle(value) {
       this.$sound.play_toggle(value)
-      this.base.cc_unique_mode_set(value)
+      this.TheSb.cc_unique_mode_set(value)
     },
   },
   computed: {
     Location() { return Location },
-    instance() { return this.base.clock_box },
+    instance() { return this.TheSb.clock_box },
     clock_box_p: {
       get()  { return !!this.instance },
       set(v) {},
