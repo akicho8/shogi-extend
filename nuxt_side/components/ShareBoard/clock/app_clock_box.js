@@ -217,6 +217,10 @@ export const app_clock_box = {
         this.timeout_modal_handle_if_not_exist()
       } else if (cc_info.key === "ck_start") {
         this.__cc_start_call(params)
+        this.toast_ok(this.__cc_receive_message(params), {onend: () => {
+          if (this.received_from_self(params)) {
+            this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 3})
+          }
       } else if (cc_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {toast_only: params.toast_only})
       }
