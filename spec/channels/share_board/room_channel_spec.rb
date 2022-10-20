@@ -150,7 +150,14 @@ module ShareBoard
         subscribe(room_code: room_code)
       end
       it "works" do
-        data = data_factory
+        data = data_factory({
+            "cc_key" => "ck_start",
+            "cc_params" => [
+              { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
+              { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
+            ],
+            "current_url" => SecureRandom.hex,
+          })
         expect {
           subscription.clock_box_share(data)
         }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "clock_box_share_broadcasted", bc_params: data)

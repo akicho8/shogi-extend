@@ -67,12 +67,10 @@ module ShareBoard
     end
 
     def clock_box_share(data)
-      if data["cc_key"].present?
-        values = data["cc_params"].collect { |e| e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus") }
-        url = data["current_url"]
-        message = [data["cc_key"], values, url].compact.join(" ")
-        track(data, "対局時計", message, ":対局時計:")
-      end
+      values = data["cc_params"].collect { |e| e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus") }
+      url = data["current_url"]
+      message = [data["cc_key"], values.inspect, url].compact.join(" ")
+      track(data, "対局時計", message, ":対局時計:")
       broadcast(:clock_box_share_broadcasted, data)
     end
 
