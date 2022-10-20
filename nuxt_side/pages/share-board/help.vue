@@ -1,5 +1,5 @@
 <template lang="pug">
-ShareBoardHelp
+SbHelp
 </template>
 
 <script>
