@@ -140,8 +140,6 @@ export default {
     app_xtitle,
     app_action_log,
     app_message_logs,
-    app_clock_box,
-    app_clock_box_timeout,
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
@@ -196,6 +194,11 @@ export default {
     app_honpu,
     app_medal,
     window_active_detector,
+
+    // clock
+    app_clock_box,
+    app_clock_box_timeout,
+    app_clock_decorator,
   ],
   props: {
     config: { type: Object, required: true },
