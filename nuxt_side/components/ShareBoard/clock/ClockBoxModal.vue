@@ -48,11 +48,7 @@
               b-numberinput.initial_read_sec(expanded controls-position="compact"  v-model="e.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
             b-field(horizontal label="猶予(秒)" custom-class="is-small")
               b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
-            b-field(horizontal custom-class="is-small")
-              template(#label)
-                | 1手毎加算(秒)
-                <br>
-                | ﾌｨｯｼｬｰﾙｰﾙ用
+            b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
               b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
 
         b-switch.cc_unique_mode_set_handle.mt-5(:value="TheSb.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
