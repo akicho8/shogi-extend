@@ -2,14 +2,14 @@
 .modal-card(v-if="clock_running_p")
   .modal-card-head
     .modal-card-title
-      template(v-if="time_limit_info.key === 'self_notification'")
+      template(v-if="timeout_info.key === 'self_notification'")
         | 時間切れで
-      template(v-if="time_limit_info.key === 'audo_judgement'")
+      template(v-if="timeout_info.key === 'audo_judgement'")
         | 接続切れで
       | {{clock.current.location.flip.name}}の勝ち！
   .modal-card-body
-    template(v-if="time_limit_info.key === 'audo_judgement'")
-      p {{user_call_name(base.current_turn_user_name)}}は接続切れのまま時間切れになりました
+    template(v-if="timeout_info.key === 'audo_judgement'")
+      p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
     template(v-else)
       template(v-if="clock.current.time_recovery_mode_p")
         p 時計は止まっていないので次の手を指せば続行できます
@@ -21,17 +21,17 @@
 </template>
 
 <script>
-import { TimeoutInfo } from "../models/time_limit_info.js"
+import { TimeoutInfo } from "../models/timeout_info.js"
 
 export default {
   name: "TimeoutModal",
   props: {
-    base:           { type: Object, required: true, },
-    time_limit_key: { type: String, required: true, },
+    timeout_key: { type: String, required: true, },
   },
+  inject: ["TheSb"],
   mounted() {
     if (!this.clock_running_p) {
-      this.base.tl_alert("対局時計は設定されていません")
+      this.TheSb.tl_alert("対局時計は設定されていません")
     }
   },
   watch: {
@@ -45,7 +45,7 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.base.time_limit_modal_close()
+      this.TheSb.timeout_modal_close()
       this.$emit("close")
     },
     submit_handle() {
@@ -53,11 +53,11 @@ export default {
     },
   },
   computed: {
-    clock()           { return this.base.clock_box              },
+    clock()           { return this.TheSb.clock_box              },
     clock_running_p() { return this.clock && this.clock.pause_or_play_p },
 
     TimeoutInfo()   { return TimeoutInfo },
-    time_limit_info() { return this.TimeoutInfo.fetch(this.time_limit_key) },
+    timeout_info() { return this.TimeoutInfo.fetch(this.timeout_key) },
   },
 }
 </script>

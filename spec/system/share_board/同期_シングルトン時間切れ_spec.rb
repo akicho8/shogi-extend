@@ -28,11 +28,11 @@ RSpec.describe type: :system, share_board_spec: true do
       sleep(@initial_read_sec)
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
         assert_text("当事者は自分で起動してBC")
-        assert_time_limit_modal_exist
+        assert_timeout_modal_exist
         assert_text("BC受信時にはすでにモーダル起動済み")
       end
     end
-    b_block { assert_time_limit_modal_exist }
+    b_block { assert_timeout_modal_exist }
   end
 
   it "他者側(予約するがBCの方が速いのでキャンセルされる)" do
@@ -46,10 +46,10 @@ RSpec.describe type: :system, share_board_spec: true do
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
         assert_text("BC受信によってモーダル起動開始")
         assert_text("時間切れ予約キャンセル")
-        assert_time_limit_modal_exist
+        assert_timeout_modal_exist
       end
     end
-    a_block { assert_time_limit_modal_exist }
+    a_block { assert_timeout_modal_exist }
   end
 
   it "他者側(予約待ち0なので他者側で即発動)" do
@@ -62,9 +62,9 @@ RSpec.describe type: :system, share_board_spec: true do
       sleep(@initial_read_sec)
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
         assert_text("BC受信時にはすでにモーダル起動済み")
-        assert_time_limit_modal_exist
+        assert_timeout_modal_exist
       end
     end
-    a_block { assert_time_limit_modal_exist }
+    a_block { assert_timeout_modal_exist }
   end
 end

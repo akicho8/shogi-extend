@@ -275,7 +275,7 @@ export const app_clock_box = {
       this.cc_location_change_and_call(params) // 視点変更とニワトリ
       if (false) {
       } else if (params.cc_key === "ck_timeout") {
-        this.time_limit_modal_handle_if_not_exist()
+        this.timeout_modal_handle_if_not_exist()
       } else if (params.cc_key === "ck_start") {
         this.toast_ok(this.cc_receive_message(params), {
           onend: () => {

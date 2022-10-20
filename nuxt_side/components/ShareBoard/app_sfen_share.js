@@ -97,7 +97,7 @@ export const app_sfen_share = {
         // これがないと alice は時間切れになっていないと言うが、bob側は3秒後に発動してしまって時間切れだと言って食い違いが発生する
         // この猶予を利用してわざと alice が残り0秒指しするのが心配かもしれないが、
         // 時計が0になった時点で即座にBCするので問題ない
-        this.cc_auto_time_limit_delay_stop()
+        this.cc_auto_timeout_delay_stop()
 
         if (this.user_name === params.next_user_name) {
           // 自分vs自分なら視点変更

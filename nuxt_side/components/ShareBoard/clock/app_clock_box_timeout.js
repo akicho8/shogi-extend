@@ -6,12 +6,12 @@ const CC_AUTO_TIME_LIMIT_DELAY = 10 // 他の人は自分時計の判断で即�
 export const app_clock_box_timeout = {
   data() {
     return {
-      cc_auto_time_limit_delay_id: null, // モーダルを発動するまでのタイマーのID
-      time_limit_modal_instance: null,   // モーダルを表示中ならそのインスタンス
+      cc_auto_timeout_delay_id: null, // モーダルを発動するまでのタイマーのID
+      timeout_modal_instance: null,   // モーダルを表示中ならそのインスタンス
     }
   },
   beforeDestroy() {
-    this.time_limit_modal_close()
+    this.timeout_modal_close()
   },
   methods: {
     // 各自で時間切れが発動したときの処理
@@ -22,92 +22,91 @@ export const app_clock_box_timeout = {
     cc_time_zero_callback() {
       if (this.ac_room && this.order_enable_p) {
         if (this.current_turn_self_p) {
-          this.cc_time_limit_modal_show_and_broadcast() // 当事者は発動してBC
+          this.cc_timeout_modal_show_and_broadcast() // 当事者は発動してBC
         } else {
-          this.cc_delayed_time_limit_modal()            // 他者は表示予約
+          this.cc_delayed_timeout_modal()            // 他者は表示予約
         }
       } else {
-        this.time_limit_modal_handle("self_notification")
+        this.timeout_modal_handle("self_notification")
       }
     },
 
     // 当事者は自分で起動してBC
-    cc_time_limit_modal_show_and_broadcast() {
+    cc_timeout_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
-      this.time_limit_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
-      this.tl_add("TIME_LIMIT", `本人側 ${this.cc_time_limit_bc_delay}秒後にBC`)
-      this.delay_block(this.cc_time_limit_bc_delay, () => {
+      this.timeout_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
+      this.tl_add("TIME_LIMIT", `本人側 ${this.cc_timeout_bc_delay}秒後にBC`)
+      this.delay_block(this.cc_timeout_bc_delay, () => {
         this.clock_box_share({cc_key: "ck_timeout"}) // その上で、時間切れをBCする
       })
     },
 
     // 他者は表示予約
     // 数秒後以内にBCされたらそっちを優先してこちらはキャンセル
-    cc_delayed_time_limit_modal() {
-      if (this.time_limit_modal_instance) {
+    cc_delayed_timeout_modal() {
+      if (this.timeout_modal_instance) {
         // 当事者側の時間が進んでいて＆他者の時間が遅れている場合、
         // 当事者側がすぐにBCしてきてすでにモーダルを表示しているため何もしないでおく
         this.tl_add("TIME_LIMIT", `他者側 なんと予約する前に当事者からBCされてモーダルを表示していた`)
       } else {
-        this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_time_limit_delay}秒待ち`})
+        this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_timeout_delay}秒待ち`})
         this.tl_alert("審議中")
-        this.cc_auto_time_limit_delay_stop()
-        this.cc_auto_time_limit_delay_id = this.delay_block(this.cc_auto_time_limit_delay, () => this.time_limit_modal_handle("audo_judgement"))
-        this.tl_add("TIME_LIMIT", `他者側 自己判断で${this.cc_auto_time_limit_delay}秒後にmodal表示予約 (ID:${this.cc_auto_time_limit_delay_id})`)
+        this.cc_auto_timeout_delay_stop()
+        this.cc_auto_timeout_delay_id = this.delay_block(this.cc_auto_timeout_delay, () => this.timeout_modal_handle("audo_judgement"))
+        this.tl_add("TIME_LIMIT", `他者側 自己判断で${this.cc_auto_timeout_delay}秒後にmodal表示予約 (ID:${this.cc_auto_timeout_delay_id})`)
       }
     },
 
     // 表示予約キャンセル
-    cc_auto_time_limit_delay_stop() {
-      if (this.cc_auto_time_limit_delay_id) {
-        this.delay_stop(this.cc_auto_time_limit_delay_id)
-        this.cc_auto_time_limit_delay_id = null
+    cc_auto_timeout_delay_stop() {
+      if (this.cc_auto_timeout_delay_id) {
+        this.delay_stop(this.cc_auto_timeout_delay_id)
+        this.cc_auto_timeout_delay_id = null
       }
     },
 
     // 時間切れがBCされたときに呼ぶ
-    time_limit_modal_handle_if_not_exist() {
-      if (this.time_limit_modal_instance) {
+    timeout_modal_handle_if_not_exist() {
+      if (this.timeout_modal_instance) {
         this.tl_alert("BC受信時にはすでにモーダル起動済み")
       } else {
         this.tl_alert("BC受信によってモーダル起動開始")
-        if (this.cc_auto_time_limit_delay_id) {
+        if (this.cc_auto_timeout_delay_id) {
           this.tl_alert("時間切れ予約キャンセル")
         }
-        this.time_limit_modal_handle("self_notification")
+        this.timeout_modal_handle("self_notification")
       }
     },
 
     // 時間切れモーダル発動
-    time_limit_modal_handle(time_limit_key) {
+    timeout_modal_handle(timeout_key) {
       this.tl_alert("時間切れモーダル起動完了")
       this.$sound.play("lose")         // ちーん
 
-      this.time_limit_modal_close()
-      this.time_limit_modal_instance = this.modal_card_open({
+      this.timeout_modal_close()
+      this.timeout_modal_instance = this.modal_card_open({
         component: TimeoutModal,
         props: {
-          base: this.base,
-          time_limit_key: time_limit_key,
+          timeout_key: timeout_key,
         },
         onCancel: () => {
           this.$sound.play_click()
-          this.time_limit_modal_close()
+          this.timeout_modal_close()
         },
       })
     },
 
-    time_limit_modal_close() {
-      this.cc_auto_time_limit_delay_stop() // 重要
+    timeout_modal_close() {
+      this.cc_auto_timeout_delay_stop() // 重要
 
-      if (this.time_limit_modal_instance) {
-        this.time_limit_modal_instance.close()
-        this.time_limit_modal_instance = null
+      if (this.timeout_modal_instance) {
+        this.timeout_modal_instance.close()
+        this.timeout_modal_instance = null
       }
     },
   },
   computed: {
-    cc_auto_time_limit_delay() { return parseFloat(this.$route.query.CC_AUTO_TIME_LIMIT_DELAY || CC_AUTO_TIME_LIMIT_DELAY) },
-    cc_time_limit_bc_delay()   { return parseFloat(this.$route.query.CC_TIME_LIMIT_BC_DELAY || CC_TIME_LIMIT_BC_DELAY)     },
+    cc_auto_timeout_delay() { return parseFloat(this.$route.query.CC_AUTO_TIME_LIMIT_DELAY || CC_AUTO_TIME_LIMIT_DELAY) },
+    cc_timeout_bc_delay()   { return parseFloat(this.$route.query.CC_TIME_LIMIT_BC_DELAY || CC_TIME_LIMIT_BC_DELAY)     },
   },
 }
