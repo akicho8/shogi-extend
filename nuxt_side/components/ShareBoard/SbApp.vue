@@ -124,6 +124,7 @@ import { app_message_logs } from "./chat/app_message_logs.js"
 
 import { app_clock_box         } from "./clock/app_clock_box.js"
 import { app_clock_box_timeout } from "./clock/app_clock_box_timeout.js"
+import { app_clock_decorator   } from "./clock/app_clock_decorator.js"
 
 import { app_toryo     } from "./toryo/app_toryo.js"
 import { app_honpu     } from "./toryo/app_honpu.js"
