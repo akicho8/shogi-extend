@@ -24,25 +24,6 @@
         | 右上のスイッチで設置しよう
     template(v-if="instance")
       template(v-if="instance.pause_or_play_p")
-        template(v-if="false")
-          .level.is-mobile
-            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_main_min >= 0")
-              div
-                p.heading 持ち時間
-                p.title.is-5 {{TheSb.cc_params.initial_main_min}}分
-            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_read_sec >= 1")
-              div
-                p.heading 秒読み
-                p.title.is-5 {{TheSb.cc_params.initial_read_sec}}秒
-            .level-item.has-text-centered(v-if="TheSb.cc_params.initial_extra_sec >= 1")
-              div
-                p.heading 猶予
-                p.title.is-5 {{TheSb.cc_params.initial_extra_sec}}秒
-            .level-item.has-text-centered(v-if="TheSb.cc_params.every_plus >= 1")
-              div
-                p.heading 1手毎加算
-                p.title.is-5 {{TheSb.cc_params.every_plus}}秒
-          hr
         .level.is-mobile
           template(v-for="(e, i) in instance.single_clocks")
             .level-item.has-text-centered.has-text-weight-bold.is-flex-direction-column
