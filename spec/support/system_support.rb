@@ -201,11 +201,13 @@ if true
       visit "http://localhost:3000/eval?#{code.to_query(:code)}"
     end
 
-    def visit2(path, params = {})
-      params = params.merge({
-          :__system_test_now__ => "true",
-        })
-      visit "#{path}?#{params.to_query}"
+    def visit2(url, append_params = {})
+      append_params = append_params.merge(__system_test_now__: "true")
+      uri = URI(url)                              # => #<URI::HTTPS https://example.com/?a=1&b=2>
+      params = Rack::Utils.parse_query(uri.query) # => {"a"=>"1", "b"=>"2"}
+      params.update(append_params.stringify_keys) # => {"a"=>"1", "b"=>"2", "c"=>3}
+      uri.query = params.to_query                 # => "a=1&b=2&c=3"
+      visit(uri.to_s)
     end
 
     def current_query
