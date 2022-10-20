@@ -42,7 +42,7 @@ client-only
       //- p サイドバー {{sidebar_p}}
 
     SbSidebar(:base="base")
-    SbNavbar(:base="base")
+    SbNavbar
 
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
