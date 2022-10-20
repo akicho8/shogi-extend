@@ -10,7 +10,8 @@ RSpec.describe "奨励会三段リーグ", type: :system do
   end
 
   it "個人成績" do
-    visit2 "/three-stage-league-players/伊藤匠"
+    name = Rack::Utils.escape("伊藤匠")
+    visit2 "/three-stage-league-players/#{name}"
     assert_text "伊藤匠"
   end
 end
