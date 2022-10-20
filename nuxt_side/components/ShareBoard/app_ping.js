@@ -64,9 +64,9 @@ export const app_ping = {
         const gap = now - params.ping_at
         const sec = this.number_floor(gap / 1000, 3)
         if (this.development_p) {
-          this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {toast_only: true})
+          this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {talk: false})
         }
-        this.toast_ok(`応答速度: ${sec}秒`, {toast_only: true, duration: 1000})
+        this.toast_ok(`応答速度: ${sec}秒`, {talk: false, duration: 1000})
         this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${gap}ms`)
       }
     },

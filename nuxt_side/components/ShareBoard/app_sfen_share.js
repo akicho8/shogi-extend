@@ -128,7 +128,7 @@ export const app_sfen_share = {
     },
     from_user_toast(params) {
       const options = {
-        toast_only: true,
+        talk: false,
         // position: "is-top",
       }
       // if (this.order_enable_p) {

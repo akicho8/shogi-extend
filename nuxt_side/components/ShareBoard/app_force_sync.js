@@ -162,7 +162,7 @@ export const app_force_sync = {
       if (params.message) {
         if (params.silent_notify) {
           this.debug_alert("silent_notify")
-          this.toast_ok(params.message, {toast_only: true, duration: 1000})
+          this.toast_ok(params.message, {talk: false, duration: 1000})
         } else {
           this.toast_ok(params.message)
         }

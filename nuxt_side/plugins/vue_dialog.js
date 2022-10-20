@@ -1,3 +1,5 @@
+import { Xhash } from "@/components/models/core/xhash.js"
+
 export const vue_dialog = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -32,35 +34,36 @@ export const vue_dialog = {
     //////////////////////////////////////////////////////////////////////////////// FIXME 冗長すぎる
 
     toast_ok(message, options = {}) {
-      this.toast_primitive({message: message, ...options})
+      this.toast_primitive(message, {type: "is-primary", ...options})
     },
 
     toast_warn(message, options = {}) {
-      this.toast_primitive({message: message, type: "is-warning", ...options})
+      this.toast_primitive(message, {type: "is-warning", ...options})
     },
 
     toast_ng(message, options = {}) {
-      this.toast_primitive({message: message, type: "is-danger", ...options})
+      this.toast_primitive(message, {type: "is-danger", ...options})
     },
 
-    toast_primitive(params = {}) {
+    toast_primitive(message, params = {}) {
       params = {
+        toast: true,
+        talk: true,
         position: "is-bottom",
         type: "is-primary",
         queue: false,
         ...params,
       }
-      if (params.message) {
+      if (message) {
         if (this.development_p) {
-          this.clog(params.message)
+          this.clog(message)
         }
-
-        if (!params.talk_only) {
-          this.$buefy.toast.open(params)
+        const h = Xhash.hash_extract_self(params, "toast", "talk")
+        if (h.toast) {
+          this.$buefy.toast.open({...params, message: message})
         }
-        if (!params.toast_only) {
-          // volume, rate, onend は talk 用オプション
-          this.talk(params.message, params)
+        if (h.talk) {
+          this.talk(message, params) // volume, rate, onend は talk 用オプション
         }
       }
     },

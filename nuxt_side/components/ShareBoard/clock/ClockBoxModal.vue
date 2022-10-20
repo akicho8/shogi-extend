@@ -145,7 +145,7 @@ export default {
       if (false) {
         this.toast_ok(`${e.name}のプリセットを読み込みました`)
       } else {
-        this.toast_ok(`読み込みました`, {toast_only: true})
+        this.toast_ok(`読み込みました`, {talk: false})
       }
     },
     cc_unique_mode_set_handle(value) {

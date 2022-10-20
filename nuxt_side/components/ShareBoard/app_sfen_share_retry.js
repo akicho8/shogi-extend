@@ -115,7 +115,7 @@ export const app_sfen_share_retry = {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
           if (params.x_retry_count >= 1) {
             const message = `次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`
-            this.toast_warn(message, {duration: 1000 * RETRY_TOAST_SEC, toast_only: true})
+            this.toast_warn(message, {duration: 1000 * RETRY_TOAST_SEC, talk: false})
           }
           if (params.next_user_name === this.user_name) {
             // 自分が下家なので上家に受信したことを伝える

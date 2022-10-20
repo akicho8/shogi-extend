@@ -42,13 +42,9 @@ export const app_order_main = {
 
     // 順番設定を無効化する
     order_switch_off_share() {
-      this.order_switch_share({order_enable_p: false, message: "無効", toast_only: true})
+      this.order_switch_share({order_enable_p: false, message: "無効", talk: false})
     },
     order_switch_share(params) {
-      params = {
-        toast_only: false,
-        ...params,
-      }
       this.ac_room_perform("order_switch_share", params) // --> app/channels/share_board/room_channel.rb
     },
     order_switch_share_broadcasted(params) {
@@ -64,7 +60,7 @@ export const app_order_main = {
       }
       if (params.message) {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
-        this.toast_ok(message, {toast_only: params.toast_only})
+        this.toast_ok(message, {toast: true, talk: true, ...params})
       }
       if (this.present_p(params.message)) {
         this.al_add({

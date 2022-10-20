@@ -140,7 +140,7 @@ export const app_clock_box = {
     cc_stop_share_handle() {
       if (this.cc_play_p) {
         this.cc_stop_handle()
-        this.clock_box_share("ck_stop", {toast_only: true})
+        this.clock_box_share("ck_silent_stop")
       }
     },
     cc_play_handle() {
@@ -189,7 +189,7 @@ export const app_clock_box = {
       const cc_info = CcInfo.fetch(cc_key)
       params = {
         cc_key: cc_info.key,
-        toast_only: false,
+        talk: true,
         ...params,
         ...this.current_xclock,
       }
@@ -217,12 +217,14 @@ export const app_clock_box = {
         this.timeout_modal_handle_if_not_exist()
       } else if (cc_info.key === "ck_start") {
         this.__cc_start_call(params)
+      } else if (cc_info.key === "ck_on") {
         this.toast_ok(this.__cc_receive_message(params), {onend: () => {
           if (this.received_from_self(params)) {
             this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 3})
           }
+        }})
       } else if (cc_info.toast_p) {
-        this.toast_ok(this.__cc_receive_message(params), {toast_only: params.toast_only})
+        this.toast_ok(this.__cc_receive_message(params), {talk: cc_info.with_talk})
       }
     },
     __cc_receive_message(params) {
