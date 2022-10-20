@@ -88,7 +88,7 @@
       a.panel-block(@click="base.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="base.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="base.al_add_test") 指し手
-      a.panel-block(@click="base.clock_box_share({behaviour: '時計同期手動実行'})") 時計同期
+      a.panel-block(@click="base.clock_box_share({cc_key: 'ck_manual_sync'})") 時計同期
       a.panel-block(@click="base.reload_modal_handle") リロード確認
       a.panel-block(@click="base.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="base.room_leave_call({from_user_name: 'alice'})") 退室コール

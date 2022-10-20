@@ -1,8 +1,9 @@
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
 
-import { ClockBox       } from "@/components/models/clock_box/clock_box.js"
-import { CcRuleInfo     } from "@/components/models/cc_rule_info.js"
-import { Location       } from "shogi-player/components/models/location.js"
+import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
+import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
+import { CcInfo     } from "./models/cc_info.js"
+import { Location   } from "shogi-player/components/models/location.js"
 
 import _ from "lodash"
 
@@ -55,10 +56,10 @@ export const app_clock_box = {
       if (v) {
         this.cc_create()
         this.cc_params_apply() // ONにしたらすぐにパラメータを反映する
-        this.clock_box_share({behaviour: "設置"})
+        this.clock_box_share({cc_key: "ck_on"})
       } else {
         this.cc_destroy()
-        this.clock_box_share({behaviour: "破棄"})
+        this.clock_box_share({cc_key: "ck_off"})
       }
     },
 
@@ -143,7 +144,7 @@ export const app_clock_box = {
     cc_stop_share_handle() {
       if (this.cc_play_p) {
         this.cc_stop_handle()
-        this.clock_box_share({behaviour: "停止", toast_only: true})
+        this.clock_box_share({cc_key: "ck_stop", toast_only: true})
       }
     },
     cc_play_handle() {
@@ -256,7 +257,7 @@ export const app_clock_box = {
         ...params,
         ...this.current_xclock,
       }
-      if (params.behaviour) {
+      if (params.cc_key) {
         params.current_url = this.current_url // 棋譜再現URLをログに出すため
       }
       return params
@@ -274,11 +275,11 @@ export const app_clock_box = {
         this.receive_xclock(params)
       }
       this.cc_action_log_store(params)         // 履歴追加
-      this.cc_location_change_and_call(params) // ニワトリ
+      this.cc_location_change_and_call(params) // 視点変更とニワトリ
       if (false) {
-      } else if (params.behaviour === "時間切れ") {
+      } else if (params.cc_key === "ck_timeout") {
         this.time_limit_modal_handle_if_not_exist()
-      } else if (params.behaviour === "開始") {
+      } else if (params.cc_key === "ck_start") {
         this.toast_ok(this.cc_receive_message(params), {
           onend: () => {
             // その後でPLAYの初回なら誰か初手を指すかしゃべる(全員)
@@ -289,14 +290,15 @@ export const app_clock_box = {
             }
           },
         })
-      } else if (params.behaviour) {
+      } else if (params.cc_key) {
         this.toast_ok(this.cc_receive_message(params), {toast_only: params.toast_only})
       } else {
         // 表示も音もない更新
       }
     },
     cc_receive_message(params) {
-      return `${this.user_call_name(params.from_user_name)}が時計を${params.behaviour}しました`
+      const cc_info = CcInfo.fetch(params.cc_key)
+      return `${this.user_call_name(params.from_user_name)}が時計を${cc_info.name}しました`
     },
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
@@ -313,10 +315,11 @@ export const app_clock_box = {
     },
 
     cc_action_log_store(params) {
-      if (params.behaviour) {
+      if (params.cc_key) {
+        const cc_info = CcInfo.fetch(params.cc_key)
         params = {
           ...params,
-          label: `時計${params.behaviour}`,
+          label: `時計${cc_info.name}`,
           clock_box_attributes: null, // 容量が大きいので空にしておく
           current_url: null, // 絶対に使わないので消しておく
         }
@@ -340,7 +343,7 @@ export const app_clock_box = {
 
     // 最初の PLAY か？
     first_play_trigger_p(params) {
-      return params.behaviour === "開始"
+      return params.cc_key === "ck_start"
     },
 
     cc_play_confirm(params = {}) {
@@ -386,7 +389,7 @@ export const app_clock_box = {
 
     cc_params_inspect(params) {
       this.__assert__(_.isArray(params), "_.isArray(params)")
-      const values = params.map(params => this.CcRuleInfo.cc_params_keys.map(e => params[e]))
+      const values = params.map(params => CcRuleInfo.cc_params_keys.map(e => params[e]))
       return JSON.stringify(values)
     },
 
@@ -396,7 +399,8 @@ export const app_clock_box = {
   },
 
   computed: {
-    CcRuleInfo()     { return CcRuleInfo                },
+    CcRuleInfo() { return CcRuleInfo },
+    CcInfo()     { return CcInfo     },
 
     cc_play_p()  { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
 

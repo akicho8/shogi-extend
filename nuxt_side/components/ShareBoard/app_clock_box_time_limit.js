@@ -37,7 +37,7 @@ export const app_clock_box_time_limit = {
       this.time_limit_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.cc_time_limit_bc_delay}秒後にBC`)
       this.delay_block(this.cc_time_limit_bc_delay, () => {
-        this.clock_box_share({behaviour: "時間切れ"}) // その上で、時間切れをBCする
+        this.clock_box_share({cc_key: "ck_timeout"}) // その上で、時間切れをBCする
       })
     },
 

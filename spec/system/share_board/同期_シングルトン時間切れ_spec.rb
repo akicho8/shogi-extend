@@ -3,7 +3,7 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   before do
     @initial_read_sec         = 5 # 5秒切れ負け
-    @CC_TIME_LIMIT_BC_DELAY   = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミューレート)
+    @CC_TIME_LIMIT_BC_DELAY   = 0 # 当事者はN秒待って他者たちに時間切れをBCする (ネット遅延のシミュレート)
     @CC_AUTO_TIME_LIMIT_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
   end
 
@@ -11,7 +11,8 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_app({
         "room_code"                => "test_room",
         "fixed_user_name"          => fixed_user_name,
-        "fixed_order_names"     => "alice,bob",
+        "fixed_member_names"       => "alice,bob",
+        "fixed_order_names"        => "alice,bob",
         "RETRY_DELAY"              => -1,
         "CC_AUTO_TIME_LIMIT_DELAY" => @CC_AUTO_TIME_LIMIT_DELAY,
         "CC_TIME_LIMIT_BC_DELAY"   => @CC_TIME_LIMIT_BC_DELAY,

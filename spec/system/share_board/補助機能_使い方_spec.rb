@@ -20,6 +20,6 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "ほぼ静的ページ" do
     visit2("/share-board/help")
-    assert_text("リレー将棋")
+    assert_text("順番設定")
   end
 end

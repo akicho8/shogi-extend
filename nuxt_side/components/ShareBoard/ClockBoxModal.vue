@@ -134,7 +134,7 @@ export default {
       this.$sound.play_click()
       this.base.cc_params_apply()
       this.base.cc_play_handle()
-      this.base.clock_box_share({behaviour: "開始"})
+      this.base.clock_box_share({cc_key: "ck_start"})
       if (this.base.auto_close_p) {
         this.$emit("close")
       }
@@ -142,7 +142,7 @@ export default {
     pause_handle() {
       this.$sound.play_click()
       this.base.cc_pause_handle()
-      this.base.clock_box_share({behaviour: "一時停止"})
+      this.base.clock_box_share({cc_key: "ck_pause"})
       if (this.base.ac_room && this.base.order_enable_p) {
         this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。誰でも駒を動かせるようになります", {duration: 1000 * 10}))
       }
@@ -151,7 +151,7 @@ export default {
       this.$sound.play_click()
       if (this.instance.pause_or_play_p) {
         this.base.cc_stop_handle()
-        this.base.clock_box_share({behaviour: "停止"})
+        this.base.clock_box_share({cc_key: "ck_stop"})
       } else {
         this.toast_ok("すでに停止しています")
       }
@@ -159,7 +159,7 @@ export default {
     resume_handle() {
       this.$sound.play_click()
       this.base.cc_resume_handle()
-      this.base.clock_box_share({behaviour: "再開"})
+      this.base.clock_box_share({cc_key: "ck_resume"})
       if (this.base.auto_close_p) {
         this.$emit("close")
       }
