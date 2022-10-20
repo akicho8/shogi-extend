@@ -35,7 +35,7 @@ export const app_sfen_share = {
           effect_key:          lmi.effect_key,                 // 効果音キー
           foul_names:          lmi.foul_list.map(e => e.name), // ["駒ワープ", "王手放置"]
         },
-        clock_box_params: this.clock_box_share_params_factory(), // 指し手と合わせて時計の情報も送る
+        clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }
 
       const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
