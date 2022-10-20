@@ -32,4 +32,19 @@ export const Xhash = {
     delete hash[key]
     return value
   },
+
+  // const hash = { a: 1, b: 1, c: 1, }
+  // const value = Xhash.hash_extract_self(hash, "a", "b", "d")
+  // expect(hash).toEqual({c: 1})
+  // expect(value).toEqual({a: 1, b: 1})
+  hash_extract_self(hash, ...keys) {
+    const result = {}
+    keys.forEach(key => {
+      const value = this.hash_delete(hash, key)
+      if (value != null) {
+        result[key] = value
+      }
+    })
+    return result
+  }
 }
