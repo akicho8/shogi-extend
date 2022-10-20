@@ -68,15 +68,11 @@ import { support_parent           } from "./support_parent.js"
 
 import { app_xtitle               } from "./app_xtitle.js"
 import { app_action_log           } from "./action_log/app_action_log.js"
-import { app_clock_box            } from "./app_clock_box.js"
-import { app_clock_box_time_limit } from "./app_clock_box_time_limit.js"
 import { app_persistent_cc_params } from "./app_persistent_cc_params.js"
 import { app_turn_notify          } from "./app_turn_notify.js"
-import { app_otasuke          } from "./app_otasuke.js"
-import { app_order_main      } from "./order_mod/app_order_main.js"
-import { app_member_list      } from "./member_list_show/app_member_list.js"
-import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
-import { app_battle_session      } from "./app_battle_session.js"
+import { app_otasuke              } from "./app_otasuke.js"
+import { app_order_main           } from "./order_mod/app_order_main.js"
+import { app_battle_session       } from "./app_battle_session.js"
 import { app_chore                } from "./app_chore.js"
 import { app_guardian             } from "./app_guardian.js"
 import { app_handle_name          } from "./app_handle_name.js"
@@ -93,7 +89,7 @@ import { app_xmatch               } from "./auto_matching/app_xmatch.js"
 import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_active_level    } from "./app_room_active_level.js"
 import { app_room_members         } from "./app_room_members.js"
-import { app_member_bc      } from "./app_member_bc.js"
+import { app_member_bc            } from "./app_member_bc.js"
 import { app_net_level            } from "./app_net_level.js"
 import { app_ping                 } from "./app_ping.js"
 import { app_tweet                } from "./app_tweet.js"
@@ -101,8 +97,6 @@ import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
 import { app_sound_bug            } from "./app_sound_bug.js"
 import { app_sound_effect         } from "./app_sound_effect.js"
-import { app_message              } from "./chat/app_message.js"
-import { app_message_logs         } from "./chat/app_message_logs.js"
 import { app_main_setting         } from "./app_main_setting.js"
 import { app_sound_resume         } from "./app_sound_resume.js"
 import { app_help                 } from "./help_mod/app_help.js"
@@ -110,9 +104,9 @@ import { app_sidebar              } from "./app_sidebar.js"
 import { app_user_name            } from "./app_user_name.js"
 import { app_storage              } from "./app_storage.js"
 import { app_export               } from "./app_export.js"
-import { app_player_names               } from "./app_player_names.js"
+import { app_player_names         } from "./app_player_names.js"
 import { app_color_theme          } from "./app_color_theme.js"
-import { app_appearance_theme          } from "./app_appearance_theme.js"
+import { app_appearance_theme     } from "./app_appearance_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
@@ -121,6 +115,15 @@ import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_room_recreate        } from "./app_room_recreate.js"
 import { app_back_to              } from "./app_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
+
+import { app_member_list          } from "./member_list_show/app_member_list.js"
+import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
+
+import { app_message      } from "./chat/app_message.js"
+import { app_message_logs } from "./chat/app_message_logs.js"
+
+import { app_clock_box         } from "./clock/app_clock_box.js"
+import { app_clock_box_timeout } from "./clock/app_clock_box_timeout.js"
 
 import { app_toryo     } from "./toryo/app_toryo.js"
 import { app_honpu     } from "./toryo/app_honpu.js"
@@ -137,7 +140,7 @@ export default {
     app_action_log,
     app_message_logs,
     app_clock_box,
-    app_clock_box_time_limit,
+    app_clock_box_timeout,
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,

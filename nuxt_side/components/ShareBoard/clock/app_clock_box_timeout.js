@@ -1,9 +1,9 @@
-import TimeLimitModal from "./TimeLimitModal.vue"
+import TimeoutModal from "./TimeoutModal.vue"
 
 const CC_TIME_LIMIT_BC_DELAY   = 0  // 当事者はN秒待って他者たちに時間切れをBCする (基本0。ネット遅延のシミューレートをする用)
 const CC_AUTO_TIME_LIMIT_DELAY = 10 // 他の人は自分時計の判断で即座に時間切れを予約しN秒後にmodalを発動する
 
-export const app_clock_box_time_limit = {
+export const app_clock_box_timeout = {
   data() {
     return {
       cc_auto_time_limit_delay_id: null, // モーダルを発動するまでのタイマーのID
@@ -85,7 +85,7 @@ export const app_clock_box_time_limit = {
 
       this.time_limit_modal_close()
       this.time_limit_modal_instance = this.modal_card_open({
-        component: TimeLimitModal,
+        component: TimeoutModal,
         props: {
           base: this.base,
           time_limit_key: time_limit_key,

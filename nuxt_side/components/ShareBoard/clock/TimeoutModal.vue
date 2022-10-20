@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import { TimeLimitInfo } from "./models/time_limit_info.js"
+import { TimeoutInfo } from "../models/time_limit_info.js"
 
 export default {
-  name: "TimeLimitModal",
+  name: "TimeoutModal",
   props: {
     base:           { type: Object, required: true, },
     time_limit_key: { type: String, required: true, },
@@ -56,14 +56,16 @@ export default {
     clock()           { return this.base.clock_box              },
     clock_running_p() { return this.clock && this.clock.pause_or_play_p },
 
-    TimeLimitInfo()   { return TimeLimitInfo },
-    time_limit_info() { return this.TimeLimitInfo.fetch(this.time_limit_key) },
+    TimeoutInfo()   { return TimeoutInfo },
+    time_limit_info() { return this.TimeoutInfo.fetch(this.time_limit_key) },
   },
 }
 </script>
 
 <style lang="sass">
-.TimeLimitModal
+@import "../support.sass"
+
+.TimeoutModal
   +modal_max_width(25rem)
   .modal-card-body
     p:not(:first-child)

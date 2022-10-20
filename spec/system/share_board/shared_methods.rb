@@ -72,7 +72,7 @@ module SharedMethods
 
   # 時間切れモーダルが存在する
   def assert_time_limit_modal_exist
-    assert_selector(".TimeLimitModal")
+    assert_selector(".TimeoutModal")
   end
 
   def assert_var(key, value)

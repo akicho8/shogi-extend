@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class TimeLimitInfo extends ApplicationMemoryRecord {
+export class TimeoutInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "self_notification", name: "自首", desc: "時間切れになったので自分で通知した場合",                             },

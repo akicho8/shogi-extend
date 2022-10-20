@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -183,7 +183,7 @@ export default {
     },
   },
   computed: {
-    Location()  { return Location },
+    Location() { return Location },
     instance() { return this.base.clock_box },
     clock_box_p: {
       get()  { return !!this.instance },
@@ -194,7 +194,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 
 .STAGE-development
   .ClockBoxModal
