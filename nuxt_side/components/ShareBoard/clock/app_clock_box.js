@@ -258,8 +258,8 @@ export const app_clock_box = {
     },
 
     __cc_action_log_store(params) {
-      if (params.cc_key) {
-        const cc_info = CcInfo.fetch(params.cc_key)
+      const cc_info = CcInfo.fetch(params.cc_key)
+      if (cc_info.history) {
         params = {
           ...params,
           label: `時計${cc_info.name}`,
