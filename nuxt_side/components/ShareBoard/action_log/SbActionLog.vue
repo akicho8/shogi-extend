@@ -1,7 +1,7 @@
 <template lang="pug">
 .SbActionLog.SideColumn.column(:class="has_content_class(filtered_action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .mini_title
+    .mini_title(v-if="base.debug_mode_p")
       | 操作履歴
       span.mini_title_desc
         | タップで戻れる

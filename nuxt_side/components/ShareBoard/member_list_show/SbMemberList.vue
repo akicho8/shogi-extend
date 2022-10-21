@@ -1,7 +1,7 @@
 <template lang="pug">
 .SbMemberList.SideColumn.column(:class="has_content_class(TheSb.visible_member_infos)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .mini_title.is-clickable.player_names_copy_handle(@click="TheSb.player_names_copy_handle")
+    .mini_title.is-clickable.player_names_copy_handle(@click="TheSb.player_names_copy_handle" v-if="TheSb.debug_mode_p")
       | メンバー
     .SbAvatarLinesWrap
       template(v-if="TheSb.order_enable_p")
