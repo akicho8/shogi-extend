@@ -4,7 +4,7 @@
 
 export const DebugUtil = {
   trace(scope, method) {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV !== "production") {
       return ""
     }
     let count = "-"
