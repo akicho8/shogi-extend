@@ -28,11 +28,11 @@ export default {
   name: "SbActionLog",
   mixins: [support_child],
   mounted() {
-    if (this.development_p) {
-      for (let i = 0; i < 10; i++) {
-        this.base.al_add_test()
-      }
-    }
+    // if (this.development_p) {
+    //   for (let i = 0; i < 10; i++) {
+    //     this.base.al_add_test()
+    //   }
+    // }
   },
   methods: {
     action_log_key(e) {
