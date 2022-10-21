@@ -229,7 +229,7 @@ export const app_clock_box = {
     },
     __cc_receive_message(params) {
       const cc_info = CcInfo.fetch(params.cc_key)
-      return `${this.user_call_name(params.from_user_name)}が時計を${cc_info.name}しました`
+      return `${this.user_call_name(params.from_user_name)}が${cc_info.receive_message}`
     },
     __cc_start_call(params) {
       this.toast_ok(this.__cc_receive_message(params), {
@@ -262,7 +262,8 @@ export const app_clock_box = {
       if (cc_info.history) {
         params = {
           ...params,
-          label: `時計${cc_info.name}`,
+          label: cc_info.label,
+          label_type: cc_info.label_type,
           clock_box_attributes: null, // 容量が大きいので空にしておく
           current_url: null, // 絶対に使わないので消しておく
         }
