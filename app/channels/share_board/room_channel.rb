@@ -135,7 +135,7 @@ module ShareBoard
     end
 
     def shared_al_add(data)
-      track(data, data["label"], data)
+      track(data, data["label"])
       broadcast(:shared_al_add_broadcasted, data)
     end
 
@@ -166,7 +166,7 @@ module ShareBoard
       ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
     end
 
-    def track(data, action, message, emoji = nil)
+    def track(data, action, message = nil, emoji = nil)
       subject = []
       subject << "共有将棋盤"
       subject << "[#{room_code}]"
@@ -184,10 +184,6 @@ module ShareBoard
       body = body.join(" ").squish
 
       SlackAgent.notify(subject: subject, body: body, emoji: emoji)
-
-      if Rails.env.development? && false
-        SlackAgent.notify(subject: key, body: data)
-      end
     end
 
     def subscribed_track(action)
