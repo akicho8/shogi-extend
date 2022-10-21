@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+require "pathname"
+
+app_root = Pathname("#{__dir__}/..").expand_path
+Dir.chdir(app_root)
+
+10.times do |i|
+  p "#{i.next}回目 開始"
+  success = system("start")
+  if success
+    break
+  end
+  p "#{i.next}回目 戻値=#{success}"
+end
