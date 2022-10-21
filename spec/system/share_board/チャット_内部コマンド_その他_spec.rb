@@ -40,4 +40,11 @@ RSpec.describe type: :system, share_board_spec: true do
     chat_message_send("/medal-user b -1")
     assert_member_has_text("b", "⭐")
   end
+
+  it "/debug" do
+    chat_message_send("/debug")
+    chat_message_send("/var debug_mode_p")
+    assert_message_received_o("false")
+    chat_message_send("/debug")
+  end
 end

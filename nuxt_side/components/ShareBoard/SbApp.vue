@@ -98,6 +98,7 @@ import { app_update               } from "./app_update.js"
 import { app_sound_bug            } from "./app_sound_bug.js"
 import { app_sound_effect         } from "./app_sound_effect.js"
 import { app_main_setting         } from "./app_main_setting.js"
+import { app_debug                } from "./app_debug.js"
 import { app_sound_resume         } from "./app_sound_resume.js"
 import { app_help                 } from "./help_mod/app_help.js"
 import { app_sidebar              } from "./app_sidebar.js"
@@ -174,6 +175,7 @@ export default {
     app_sound_effect,
     app_message,
     app_main_setting,
+    app_debug,
     app_sound_resume,
     app_help,
     app_sidebar,

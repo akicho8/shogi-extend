@@ -59,6 +59,15 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
           context.user_kill(user_name)
         },
       },
+      {
+        desc: "デバッグモード(引数なしでトグル)",
+        key: "debug",
+        example: "/debug on",
+        preformat: true,
+        command_fn: (context, args) => {
+          context.debug_mode_set_any(args[0])
+        },
+      },
     ]
   }
 }

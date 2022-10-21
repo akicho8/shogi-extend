@@ -5,13 +5,9 @@ import { QuickSyncInfo      } from "./models/quick_sync_info.js"
 import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
 import { SpMoveCancelInfo   } from "./models/sp_move_cancel_info.js"
 import { LegalInfo } from "./models/legal_info.js"
-import { DebugModeInfo      } from "./models/debug_mode_info.js"
 
 export const app_main_setting = {
   methods: {
-    // for autoexec
-    is_debug_mode_on() { this.debug_mode_key = "is_debug_mode_on" },
-
     general_setting_modal_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
@@ -37,9 +33,5 @@ export const app_main_setting = {
     LegalInfo()        { return LegalInfo                                           },
     legal_info()     { return this.LegalInfo.fetch(this.legal_key)     },
     legal_strict_p() { return this.legal_info.key === "strict" },
-
-    DebugModeInfo()             { return DebugModeInfo                                                },
-    debug_mode_info()           { return this.DebugModeInfo.fetch(this.debug_mode_key)                },
-    debug_mode_p()              { return this.debug_mode_info.key === "is_debug_mode_on"              },
   },
 }
