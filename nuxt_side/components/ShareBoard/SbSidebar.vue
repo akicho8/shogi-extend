@@ -18,17 +18,17 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset.important.room_setup_modal_handle(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_handle")
             template(#label)
               | 部屋に入る
-              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
+              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
 
           b-menu-item.is_active_unset.important.os_modal_handle(:class="base.bold_if(mi2_bold_p)" icon="numeric-2-circle-outline" @click="base.os_modal_handle")
             template(#label)
               | 順番設定
-              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi2_hand_p")
+              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi2_hand_p")
 
           b-menu-item.is_active_unset.important.cc_modal_handle(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_handle")
             template(#label)
               | 対局時計
-              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
+              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
 
         b-menu-list(label="局面操作")
           b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")

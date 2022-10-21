@@ -91,7 +91,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
             :disabled="menu_item_disabled")
             template(#label)
               | ウォーズIDを記憶する
-              b-icon.is_hand_blink(size="is-small" icon="arrow-left-bold" v-if="!menu_item_disabled && !base.mounted_then_swars_search_default_key_present_p")
+              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="!menu_item_disabled && !base.mounted_then_swars_search_default_key_present_p")
 
           b-menu-item.is_active_unset.home_bookmark_handle(
             label="ホーム画面に追加"
