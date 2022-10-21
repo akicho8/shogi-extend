@@ -17,8 +17,6 @@ module Swars
   class Xmode < ApplicationRecord
     include MemoryRecordBind::Basic
 
-    acts_as_list top_of_list: 0
-
     with_options dependent: :destroy do
       has_many :battles
       has_many :memberships, through: :battles
