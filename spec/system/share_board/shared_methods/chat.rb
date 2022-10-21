@@ -8,9 +8,9 @@ module SharedMethods
   end
 
   # message を受信した
-  def assert_message_received_o(message)
+  def assert_message_received_o(message, options = {})
     within(".MessageSendModal") do
-      assert_selector(".message_body", text: message, exact_text: true)
+      assert_selector(".message_body", {text: message, exact_text: true}.merge(options))
     end
   end
 

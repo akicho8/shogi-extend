@@ -41,6 +41,21 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_member_has_text("b", "⭐")
   end
 
+  it "/header" do
+    chat_message_send("/header")
+    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a, c\n☖側: b, d")
+  end
+
+  it "/help" do
+    chat_message_send("/help")
+    assert_message_received_o("/help", exact_text: false)
+  end
+
+  it "/var" do
+    chat_message_send("/var user_name")
+    assert_message_received_o("a")
+  end
+
   it "/debug" do
     chat_message_send("/debug")
     chat_message_send("/var debug_mode_p")

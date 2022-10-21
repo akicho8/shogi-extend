@@ -86,6 +86,11 @@ export const app_message = {
             if (!_.isString(value)) {
               value = Gs2.short_inspect(value)
             }
+            if (info.preformat) {
+              value = `<pre>${value}</pre>`
+            } else {
+              value = this.str_simple_format(value)
+            }
             this.local_bot_say(value)
           }
         }
