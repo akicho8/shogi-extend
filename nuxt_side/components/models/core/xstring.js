@@ -28,7 +28,7 @@ export const Xstring = {
   },
 
   str_to_boolean(str) {
-    str = (str ?? "").toString().trim()
+    str = (str ?? "").toString().trim().toLowerCase()
     return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
   },
 
@@ -116,5 +116,9 @@ export const Xstring = {
 
   str_to_md5(str) {
     return new MD5().update(str).digest("hex")
+  },
+
+  str_simple_format(str) {
+    return str.replace(/\n/g, "<br/>")
   },
 }

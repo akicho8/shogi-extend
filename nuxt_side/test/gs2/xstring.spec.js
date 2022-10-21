@@ -5,7 +5,8 @@ describe("Xstring", () => {
     expect(Xstring.str_constantize("Object")).toEqual(Object)
   })
   test("str_to_boolean", () => {
-    expect(Xstring.str_to_boolean("1")).toEqual(true)
+    expect(Xstring.str_to_boolean("ON")).toEqual(true)
+    expect(Xstring.str_to_boolean(true)).toEqual(true)
   })
   test("str_squish", () => {
     expect(Xstring.str_squish("　　a　　b　　")).toEqual("a b")
@@ -60,5 +61,8 @@ describe("Xstring", () => {
   })
   test("str_to_md5", () => {
     expect(Xstring.str_to_md5("a")).toEqual("0cc175b9c0f1b6a831c399e269772661")
+  })
+  test("str_simple_format", () => {
+    expect(Xstring.str_simple_format("\n\n")).toEqual("<br/><br/>")
   })
 })
