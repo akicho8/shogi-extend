@@ -223,15 +223,12 @@
 import { support_child } from "./support_child.js"
 import _ from "lodash"
 
-// import { Howl, Howler } from "howler"
-
 export default {
   name: "SbDebugPanels",
   mixins: [support_child],
   computed: {
-    Howler() { return Howler },
+    Howler() { return window.Howler },
   },
-
 }
 </script>
 
