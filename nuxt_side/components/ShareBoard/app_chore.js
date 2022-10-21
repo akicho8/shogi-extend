@@ -154,11 +154,9 @@ export const app_chore = {
     exit_warning_p() { return this.ac_room },                   // 退出時警告を出すか？
 
     // Home 表示条件
+    // ・対局メンバーではない
     home_display_p() {
-      if (this.self_is_member_p) {
-        return false
-      }
-      return true
+      return !this.self_is_member_p
     }
   },
 }
