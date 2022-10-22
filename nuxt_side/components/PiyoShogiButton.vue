@@ -26,10 +26,6 @@ export default {
       this.ga_click("ぴよ将棋")
     },
   },
-  watch: {
-    "$attrs.href": function(v) {
-    }
-  },
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
