@@ -27,7 +27,7 @@ export const app_message = {
 
     // 送信
     message_share(params) {
-      if (this.inside_command_run(params) === "break") {
+      if (this.inside_command_parse_and_run(params) === "break") {
         return
       }
       if (this.ac_room) {
@@ -63,7 +63,7 @@ export const app_message = {
       return exec
     },
 
-    inside_command_run(params) {
+    inside_command_parse_and_run(params) {
       if (params.message.startsWith("/")) {
         this.local_say(params.message)
         let str = params.message

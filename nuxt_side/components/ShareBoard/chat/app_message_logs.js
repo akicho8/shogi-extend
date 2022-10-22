@@ -27,6 +27,7 @@ export const app_message_logs = {
       this.local_bot_say("OK")
     },
 
+    // Bot用 (自分だけが見える)
     local_bot_say(message) {
       this.ml_add({from_user_name: "Bot", message: message})
     },

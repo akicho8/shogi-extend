@@ -22,10 +22,6 @@ import dayjs from "dayjs"
 export default {
   name: "SbTrackLog",
   mixins: [support_child],
-  mounted() {
-    // ここで実行しても効かない
-    // this.base.ml_scroll_to_bottom()
-  },
   methods: {
     time_format(t) {
       return dayjs(t).format("HH:mm:ss.SSS")
