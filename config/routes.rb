@@ -210,7 +210,7 @@ Rails.application.routes.draw do
 
     resource :talk, only: [:show, :create]
     resources :app_entry_infos, only: :index
-    resources :users
+    resources :users, only: [:show]
     resource :cpu_battle, only: [:show, :create]
     resource :three_stage_league, only: [:show]
     resource :three_stage_league_player, only: [:show]

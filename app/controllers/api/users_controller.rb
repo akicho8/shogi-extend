@@ -35,53 +35,17 @@
 
 module Api
   class UsersController < ::Api::ApplicationController
-    # skip_before_action :user_name_required, action: [:edit, :update]
-    #
-    # before_action only: [:index] do
-    #   if !sysop?
-    #     redirect_to :root, alert: "アクセス権限がありません"
-    #   end
-    # end
-    #
-    # before_action only: [:edit, :update, :destroy] do
-    #   if current_user != current_record
-    #     if !Rails.env.test?
-    #       redirect_to :root, alert: "アクセス権限がありません"
-    #     end
-    #   end
-    # end
-    #
-
-    # http://localhost:3000/api/users/1.json
+    # curl http://localhost:3000/api/users/1.json
     def show
       user = User.find(params[:id])
       render json: user.as_json_simple_public_profile
     end
 
-    # def update
-    #   if params[:command] == "social_connect"
-    #     session[:return_to] = polymorphic_path([:edit, current_record])
-    #     redirect_to omniauth_authorize_path(:xuser, social_media_info.key)
-    #     return
-    #   end
-    #
-    #   if params[:command] == "social_disconnect"
-    #     current_record.auth_infos.where(provider: social_media_info.key).destroy_all
-    #     redirect_to polymorphic_path([:edit, current_record]), notice: "#{social_media_info.name} アカウントとの連携を解除しました"
-    #     return
-    #   end
-    #
-    #   super
-    # end
-    #
-    # private
-    #
-    # def redirect_to_where
-    #   [:edit, ns_prefix, current_record]
-    # end
-    #
-    # def social_media_info
-    #   SocialMediaInfo.fetch(params[:provider])
+    # # curl -d _method=delete http://localhost:3000/api/users/5
+    # def destroy
+    #   # render plain: "ok"
+    #   # current_record.destroy!
+    #   render json: { message: "削除しました" }
     # end
   end
 end
