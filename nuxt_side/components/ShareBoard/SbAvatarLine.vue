@@ -18,6 +18,9 @@
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
+
+    // メダル
+    UserMedal.flex_item.is-size-7(v-if="medal_show_p" :name="info.from_user_name")
   slot
 </template>
 
@@ -30,11 +33,13 @@ export default {
   mixins: [support_child],
   inject: ["TheSb"],
   props: {
-    info:         { type: Object, required: true },
-    replace_icon: { type: String, required: false },
+    info:            { type: Object, required: true  },
+    replace_icon:    { type: String, required: false },
+    medal_show_p: { type: Boolean, default: true  },
   },
   computed: {
     default_guardian() { return this.TheSb.guardian_from_str(this.info.from_user_name) },
+    medal_vo()         { return this.TheSb.medal_vo_by_name(this.info.from_user_name)  },
   },
 }
 </script>

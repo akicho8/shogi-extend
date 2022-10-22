@@ -35,7 +35,8 @@ export default {
           border-radius: 4px
       .user_name
         color: $grey
-
+      .UserMedal
+        color: $grey
 .STAGE-development
   .SbMessageLog
     .scroll_block

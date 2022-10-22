@@ -59,7 +59,8 @@ export class Xmessage {
   // private
 
   get toast_message() {
-    return `${Gs2.presence(this.from_user_name) ?? '？'}: ${this.message}`
+    const name = Gs2.presence(this.from_user_name) ?? "？"
+    return `${name}: ${this.message}`
   }
 
   get toast_type() {

@@ -1,6 +1,6 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
-import { WinMark } from "./win_mark.js"
+import { MedalVo } from "./medal_vo.js"
 import _ from "lodash"
 
 export const app_medal = {
@@ -46,8 +46,8 @@ export const app_medal = {
     },
 
     // Helper
-    win_mark_by_user_name(user_name) {
-      return new WinMark(this.medal_counts_hash, user_name)
+    medal_vo_by_name(user_name) {
+      return new MedalVo(this.medal_counts_hash, user_name)
     },
   },
 }

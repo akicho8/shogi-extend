@@ -7,7 +7,7 @@
         | タップで戻れる
     .SbAvatarLines
       template(v-for="(e, i) in filtered_action_logs")
-        SbAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)")
+        SbAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)" :medal_show_p="false")
           .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
 
           template(v-if="e.label")
