@@ -14,7 +14,8 @@
               b-menu-item.is_active_unset(label="ぴよ将棋の種類"     tag="nuxt-link" :to="{name: 'settings-piyo_shogi'}"     @click.native="$sound.play_click()")
             b-menu-list(label="その他")
               b-menu-item.is_active_unset(label="アカウント連携" :href="`${$config.MY_SITE_URL}/accounts/${record.id}/edit`")
-              b-menu-item.is_active_unset(label="ログアウト" @click="logout_handle")
+              b-menu-item.is_active_unset(label="ログアウト" @click="auth_user_logout_handle")
+              b-menu-item.is_active_unset(label="退会"       @click="auth_user_destroy_handle")
     MainNavbar
       template(slot="brand")
         NavbarItemHome
@@ -58,11 +59,26 @@ export default {
     })
   },
   methods: {
-    async logout_handle() {
+    async auth_user_logout_handle() {
       this.$sound.play_click()
       await this.a_auth_user_logout()
       this.toast_ok("ログアウトしました")
       this.$router.push("/")
+    },
+    auth_user_destroy_handle() {
+      this.$sound.play_click()
+      this.dialog_confirm({
+        message: "退会してもよろしいですか？",
+        confirmText: "退会する",
+        type: "is-danger",
+        onConfirm: () => {
+          this.$sound.play_click()
+          this.a_auth_user_destroy({fake: this.$route.query.fake}).then(() => {
+            this.toast_ok("退会しました")
+            this.$router.push("/")
+          })
+        },
+      })
     },
     back_handle() {
       this.$sound.play_click()

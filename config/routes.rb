@@ -154,6 +154,7 @@ Rails.application.routes.draw do
     resource :session, only: [] do
       get :auth_user_fetch
       delete :auth_user_logout   # ログアウト
+      delete :auth_user_destroy   # 退会
     end
 
     resource :settings, only: [] do

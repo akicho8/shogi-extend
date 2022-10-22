@@ -28,6 +28,7 @@ Vue.mixin({
     ...mapActions('user', [
       "a_auth_user_fetch",
       "a_auth_user_logout",
+      "a_auth_user_destroy",
     ]),
   },
   computed: {

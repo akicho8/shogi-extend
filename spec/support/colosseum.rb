@@ -12,6 +12,7 @@ RSpec::Rails::ControllerExampleGroup.module_eval do
       when User
         user_logout
         controller.current_user_set(attributes)
+        attributes
       when Hash
         create(:user, attributes).tap do |user|
           user_logout

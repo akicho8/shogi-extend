@@ -50,4 +50,15 @@ export const actions = {
       // FIXME: 結果を表示したいけどどうやって xnotice_run_all を呼ぶ？ → というかサーバー側で呼ばれているので無理なのか？？？
     })
   },
+
+  // 退会
+  async a_auth_user_destroy({commit}, {fake}) {
+    // curl -d _method=delete http://localhost:3000/api/session/auth_user_destroy.json
+    const params = {
+      fake: fake,
+    }
+    return this.$axios.$delete("/api/session/auth_user_destroy.json", {params: params}).then(e => {
+      commit("m_auth_user_logout")
+    })
+  },
 }

@@ -180,12 +180,12 @@ if true
     # user としてログインした状態にする
     # しかしこの方法はタブを2つ開いても二人を別々にログインした状態で維持にするのが難しい
     def login_as(user)
-      visit("http://localhost:3000/?_user_id=#{user.id}")
+      visit2("http://localhost:3000/", _user_id: user.id)
     end
 
     # こちらを推奨
     def login_by(key)
-      visit("http://localhost:3000/?_login_by_key=#{key}")
+      visit2("http://localhost:3000/", _login_by_key: key)
     end
 
     def login
@@ -193,7 +193,7 @@ if true
     end
 
     def logout
-      visit("http://localhost:3000/?_user_id=0")
+      visit2("http://localhost:3000/", _user_id: 0)
     end
 
     def eval_code(*code)
