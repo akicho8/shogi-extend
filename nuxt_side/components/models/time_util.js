@@ -71,4 +71,8 @@ export const TimeUtil = {
   format_wday_name(t) {
     return this.create(t).format("ddd")
   },
+
+  format_hhmmss(t) {
+    return this.create(t).format("HH:mm:ss")
+  },
 }
