@@ -2,7 +2,7 @@
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Xmessage } from "./xmessage.js"
+import { MessageDto } from "./message_dto.js"
 
 export const app_message_logs = {
   data() {
@@ -13,11 +13,11 @@ export const app_message_logs = {
   methods: {
     // 発言の追加
     ml_add(params) {
-      this.ml_add_xmessage(Xmessage.create(params))
+      this.ml_add_xmessage(MessageDto.create(params))
     },
 
-    ml_add_xmessage(xmessage) {
-      this.message_logs.push(xmessage)
+    ml_add_xmessage(message_dto) {
+      this.message_logs.push(message_dto)
       this.message_logs = _.takeRight(this.message_logs, this.AppConfig.CHAT_MESSAGES_SIZE_MAX)
       this.ml_scroll_to_bottom()
     },

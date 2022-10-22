@@ -5,7 +5,7 @@ import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { InsideCommandInfo } from "../models/inside_command_info.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
-import { Xmessage } from "./xmessage.js"
+import { MessageDto } from "./message_dto.js"
 
 export const app_message = {
   data() {
@@ -42,11 +42,11 @@ export const app_message = {
 
     // 受信
     message_share_broadcasted(params) {
-      const xmessage = Xmessage.create(params)
-      this.ml_add_xmessage(xmessage)                  // 後で表示するためスコープに関係なく発言履歴に追加する
+      const message_dto = MessageDto.create(params)
+      this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.message_share_received_p(params)) {    // 見てもいいなら
-        this.$buefy.toast.open(xmessage.toast_params) // 表示
-        this.talk(xmessage.message)                   // しゃべる
+        this.$buefy.toast.open(message_dto.toast_params) // 表示
+        this.talk(message_dto.message)                   // しゃべる
       }
     },
 

@@ -8,7 +8,7 @@ const SAME_SFEN_THEN_RETURN = false // 同じ局面なら何もしない？
 import _ from "lodash"
 import dayjs from "dayjs"
 import ActionLogShowModal from "./ActionLogShowModal.vue"
-import { XactionLog } from "./xaction_log.js"
+import { ActionLogDto } from "./action_log_dto.js"
 
 export const app_action_log = {
   data() {
@@ -67,16 +67,16 @@ export const app_action_log = {
       // KIF に埋めたいものも合わせて保持しておく
       params.player_names_with_title ??= this.player_names_with_title
 
-      return XactionLog.create(params)
+      return ActionLogDto.create(params)
     },
 
     al_add(params) {
-      const xaction_log = this.al_factory(params)
+      const action_log_dto = this.al_factory(params)
       if (ACTION_LOG_PUSH_TO === "top") {
-        this.action_logs.unshift(xaction_log)
+        this.action_logs.unshift(action_log_dto)
         this.action_logs = _.take(this.action_logs, ACTION_LOG_MAX)
       } else {
-        this.action_logs.push(xaction_log)
+        this.action_logs.push(action_log_dto)
         this.action_logs = _.takeRight(this.action_logs, ACTION_LOG_MAX)
         this.al_scroll_to_bottom()
       }
