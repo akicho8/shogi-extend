@@ -335,8 +335,6 @@ ActiveRecord::Schema.define(version: 2022_10_03_152700) do
     t.integer "search_logs_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "ban_at", comment: "牢獄行き日時"
-    t.index ["ban_at"], name: "index_swars_users_on_ban_at"
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
