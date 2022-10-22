@@ -1,13 +1,13 @@
 <template lang="pug">
-.SbActionLog.SideColumn.column(:class="has_content_class(filtered_action_logs)")
+.SbActionLog.SideColumn.column(:class="has_content_class(base.action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
     .mini_title(v-if="base.debug_mode_p")
       | 操作履歴
       span.mini_title_desc
         | タップで戻れる
     .SbAvatarLines
-      template(v-for="(e, i) in filtered_action_logs")
-        SbAvatarLine.is-clickable(:info="e" tag="a" :key="action_log_key(e)" @click="base.action_log_click_handle(e)" :medal_show_p="false")
+      template(v-for="(e, i) in base.action_logs")
+        SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="base.action_log_click_handle(e)" :medal_show_p="false")
           .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
 
           template(v-if="e.label")
@@ -23,38 +23,15 @@
               b-tag.flex_item(type="is-danger" size="is-small") {{e}}
 
           .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
-          .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{time_format(e)}}
+          .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{e.dispay_time}}
 </template>
 
 <script>
 import { support_child } from "../support_child.js"
-import dayjs from "dayjs"
-import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "SbActionLog",
   mixins: [support_child],
-  mounted() {
-    // if (this.development_p) {
-    //   for (let i = 0; i < 10; i++) {
-    //     this.base.al_add_test()
-    //   }
-    // }
-  },
-  methods: {
-    action_log_key(e) {
-      return [e.performed_at, e.turn, e.from_connection_id || ""].join("-")
-    },
-    time_format(v) {
-      return dayjs(v.performed_at).format("HH:mm:ss")
-    },
-  },
-  computed: {
-    filtered_action_logs() {
-      // return _.reverse(this.base.action_logs.slice())
-      return this.base.action_logs
-    },
-  },
 }
 </script>
 
