@@ -30,7 +30,6 @@ export default {
 <style lang="sass">
 // https://www.kento-shogi.com/
 .KentoButton
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
   font-weight: 700
 
   &:hover
