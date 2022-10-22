@@ -7,7 +7,7 @@ import { MyMobile } from "@/components/models/my_mobile.js"
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
-export class PiyoUtil {
+export class PiyoShogiUtil {
   static cache_clear() {
     this.memo_current_info = null
   }

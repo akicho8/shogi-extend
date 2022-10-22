@@ -1,6 +1,6 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
-import { PiyoUtil } from "@/components/models/piyo_util.js"
+import { PiyoShogiUtil } from "@/components/models/piyo_shogi_util.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
@@ -17,7 +17,7 @@ export class KifuVo {
   //////////////////////////////////////////////////////////////////////////////// ぴよ将棋
 
   get piyo_url() {
-    return PiyoUtil.create(this.attributes).url
+    return PiyoShogiUtil.create(this.attributes).url
   }
 
   //////////////////////////////////////////////////////////////////////////////// KENTO

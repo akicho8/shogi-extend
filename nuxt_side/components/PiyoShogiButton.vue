@@ -1,8 +1,8 @@
 <template lang="pug">
-//- PiyoUtil.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
+//- PiyoShogiUtil.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
 client-only
   a.button.PiyoShogiButton.is-small(
-    v-if="PiyoUtil.current_info.showable_p || $config.STAGE === 'development'"
+    v-if="PiyoShogiUtil.current_info.showable_p || $config.STAGE === 'development'"
     :title="piyo_shogi_name"
     v-bind="$attrs"
     v-on="$listeners"
@@ -29,7 +29,7 @@ export default {
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
-      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoUtil.current_info.native_p
+      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoShogiUtil.current_info.native_p
     },
     piyo_shogi_name() {
       if (this.web_version_p) {
