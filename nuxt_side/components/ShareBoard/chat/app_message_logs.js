@@ -31,8 +31,13 @@ export const app_message_logs = {
       this.ml_add({from_user_name: "Bot", message: message})
     },
 
+    // 自分だけが見える発言
     local_say(message) {
-      this.ml_add({from_user_name: this.user_name, message: message})
+      this.ml_add({
+        from_user_name: this.user_name,
+        message: message,
+        from_avatar_path: this.g_current_user.avatar_path,
+      })
     },
 
     // 一番下までスクロール
