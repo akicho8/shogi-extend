@@ -37,7 +37,7 @@ export const app_message_logs = {
       this.ml_add({
         from_user_name: this.user_name,
         message: message,
-        from_avatar_path: this.g_current_user.avatar_path,
+        from_avatar_path: this.g_current_user?.avatar_path,
       })
     },
 
