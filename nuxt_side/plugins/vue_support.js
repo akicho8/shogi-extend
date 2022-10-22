@@ -1,7 +1,7 @@
 // 汎用コード
 import { Gs         } from "@/components/models/gs.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
-import { PiyoShogi2 } from "@/components/models/piyo_shogi2.js"
+import { PiyoUtil } from "@/components/models/piyo_util.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
 
 import twemoji from 'twemoji'
@@ -277,7 +277,7 @@ export const vue_support = {
   computed: {
     _()          { return _          },
     util()       { return util       },
-    PiyoShogi2() { return PiyoShogi2 },
+    PiyoUtil() { return PiyoUtil },
   },
 
   directives: {

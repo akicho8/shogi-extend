@@ -1,8 +1,8 @@
 <template lang="pug">
-//- PiyoShogi2.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
+//- PiyoUtil.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
 client-only
   a.button.PiyoShogiButton.is-small(
-    v-if="PiyoShogi2.current_info.showable_p || $config.STAGE === 'development'"
+    v-if="PiyoUtil.current_info.showable_p || $config.STAGE === 'development'"
     :title="piyo_shogi_name"
     v-bind="$attrs"
     v-on="$listeners"
@@ -10,8 +10,8 @@ client-only
     @click="click_handle"
     )
     span.icon
-      img.left_icon(src="~/assets/piyo_shogi_icon.png")
-    span(v-if="!icon_only")
+      img.icon_left(src="~/assets/piyo_shogi_icon.png")
+    span(v-if="label_p")
       | {{piyo_shogi_name}}
 </template>
 
@@ -19,7 +19,7 @@ client-only
 export default {
   name: "PiyoShogiButton",
   props: {
-    icon_only: { default: false, },
+    label_p: { default: true, },
   },
   methods: {
     click_handle() {
@@ -29,7 +29,7 @@ export default {
   computed: {
     // 「ぴよ将棋w」に飛ぼうとしている？
     web_version_p() {
-      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoShogi2.current_info.native_p
+      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoUtil.current_info.native_p
     },
     piyo_shogi_name() {
       if (this.web_version_p) {
@@ -44,9 +44,9 @@ export default {
 
 <style lang="sass">
 .PiyoShogiButton
-  font-weight: 700
+  font-weight: bold
 
-  .left_icon
+  .icon_left
     +icon_rorate_if_button_hover("PiyoShogiButton")
 
   //////////////////////////////////////// 色も黄色にする

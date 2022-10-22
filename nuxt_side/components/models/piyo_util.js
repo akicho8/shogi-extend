@@ -7,7 +7,7 @@ import { MyMobile } from "@/components/models/my_mobile.js"
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 import { PiyoShogiTypeInfo } from "@/components/models/piyo_shogi_type_info.js"
 
-export class PiyoShogi2 {
+export class PiyoUtil {
   static cache_clear() {
     this.memo_current_info = null
   }
@@ -91,9 +91,9 @@ export class PiyoShogi2 {
       let v = params[e]
       if (v != null) {
         if (this.native_p) {
-          // 注意点
-          // ・「ぴよ将棋」のアプリ版はエンコードするとまったく読めなくなる
-          // ・URLの最後に ".kif" の文字列が来ないといけない
+          // ぴよ将棋の罠
+          // ・アプリ版はエンコードすると読めなくなる
+          // ・URLの最後に ".kif" の文字列がないと読めなくなる
         } else {
           v = encodeURIComponent(v)
         }
