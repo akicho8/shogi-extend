@@ -1,15 +1,15 @@
 <template lang="pug">
-  b-button.KentoButton.is-small(
-    title="KENTO"
-    v-bind="$attrs"
-    v-on="$listeners"
-    :target="target_default"
-    @click="click_handle"
-    )
-    span.left_icon
-      | ☗
-    span.name(v-if="!icon_only")
-      | KENTO
+b-button.KentoButton.is-small(
+  title="KENTO"
+  v-bind="$attrs"
+  v-on="$listeners"
+  :target="target_default"
+  @click="click_handle"
+  )
+  span.icon_left
+    | ☗
+  span.name(v-if="label_p")
+    | KENTO
 </template>
 
 <script>
@@ -17,7 +17,7 @@
 export default {
   name: "KentoButton",
   props: {
-    icon_only: { default: false, },
+    label_p: { default: true, },
   },
   methods: {
     click_handle() {
@@ -30,13 +30,12 @@ export default {
 <style lang="sass">
 // https://www.kento-shogi.com/
 .KentoButton
-  font-weight: 700
-
+  font-weight: bold
   &:hover
-    .left_icon
+    .icon_left
       animation: rotation 0.5s -0.25s ease-in-out infinite alternate
 
-  .left_icon
+  .icon_left
     display: inline-block
     color: hsl(33, 91%, 65%)
 
