@@ -129,8 +129,9 @@ import { app_clock_decorator   } from "./clock/app_clock_decorator.js"
 
 import { app_toryo     } from "./toryo/app_toryo.js"
 import { app_honpu     } from "./toryo/app_honpu.js"
-import { app_medal     } from "./toryo/app_medal.js"
 import { app_kifu_mail } from "./toryo/app_kifu_mail.js"
+
+import { app_medal     } from "./medal/app_medal.js"
 
 export default {
   name: "SbApp",
