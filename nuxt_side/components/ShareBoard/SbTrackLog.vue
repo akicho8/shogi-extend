@@ -1,8 +1,4 @@
 <template lang="pug">
-//- .scroll_block
-//- :paginated="false"
-//- :per-page="200"
-//- :pagination-simple="true"
 b-table.SbTrackLog(
   :data="base.track_logs"
   :mobile-cards="false"
@@ -42,22 +38,6 @@ export default {
 @import "./support.sass"
 
 .SbTrackLog
-  // position: relative
-  // height: 50vh
-  // margin-bottom: 1rem
-
-  // .scroll_block
-    // @extend %overlay
-    // overflow-y: auto
-
-    // border-radius: 3px
-    // background-color: $white-ter
-    // padding: 0
-
-    // .track_log
-    //   line-height: 1.5
-    //   padding: 0 0.5rem
-
   .detail-container
     padding: 0
 
