@@ -1,5 +1,6 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
+import { WinMark } from "./win_mark.js"
 import _ from "lodash"
 
 export const app_medal = {
@@ -42,6 +43,11 @@ export const app_medal = {
     receive_medal_counts_hash(medal_counts_hash) {
       Gs2.__assert__(medal_counts_hash, "medal_counts_hash")
       this.medal_counts_hash = medal_counts_hash // 自分もみんなと同じようにここだけで更新する
+    },
+
+    // Helper
+    win_mark_by_user_name(user_name) {
+      return new WinMark(this.medal_counts_hash, user_name)
     },
   },
 }
