@@ -47,7 +47,7 @@ export const app_toryo = {
       this.ac_room_perform("toryo_share", params) // --> app/channels/share_board/room_channel.rb
     },
     toryo_share_broadcasted(params) {
-      this.al_add({...params, label: "投了"}) // 履歴に追加する。別になくてもよい
+      this.al_add({...params, label: "投了", label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
       this.honpu_log_set()                    // 本譜を作る。すでにあれば上書き
 
       // 投了を押した本人が時計と順番を解除する
