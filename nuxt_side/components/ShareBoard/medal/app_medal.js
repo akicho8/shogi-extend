@@ -1,90 +1,88 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { MedalVo } from "./medal_vo.js"
-import _ from "lodash"
 
 const ACQUIRE_MEDAL_COUNT_PERSISTED_P = false // 獲得メダル数を保持するか？
 
 export const app_medal = {
   data() {
     return {
-      medal_counts_hash: {},
+      medal_counts_hash: {}, // 名前がキーで値が個数。みんなの個数が入っている。
     }
   },
+  mounted() {
+    this.medal_init()
+  },
   methods: {
-    // (部屋に入るタイミングで)メダル獲得数を取り込む
+    // 起動時にはメダル獲得数を表示に反映する
     medal_init() {
-      // this.medal_counts_hash[this.user_name] = this.acquire_medal_count
-      // this.tl_add("メダル", `${this.acquire_medal_count} で復帰`, this.medal_counts_hash)
-    },
-
-    // (更新の通知を受信したタイミング)もし自分が含まれていたら(localStorageを)更新する
-    medal_persisted() {
-      const count = this.medal_counts_hash[this.user_name]
-      if (count != null) {
-        if (ACQUIRE_MEDAL_COUNT_PERSISTED_P) {
-          this.tl_add("メダル", `更新 ${this.acquire_medal_count} --> ${count}`, this.medal_counts_hash)
-          this.acquire_medal_count = count
-        }
+      if (this.present_p(this.user_name)) {
+        this.receive_xmedal(this.current_xmedal)
       }
     },
 
-    // チーム毎に一括でメダル付与
-    // win_location_key 側のチームのみんなを count する
-    medal_add_to_team(target_location_key, count = 1) {
-      const target_location = Location.fetch(target_location_key)
-      const hv = _.clone(this.medal_counts_hash) // ここでは medal_counts_hash を破壊しない
-      this.room_user_names.forEach(e => {
-        const user_location = this.user_name_to_initial_location(e)
-        if (user_location) {
-          if (user_location.key === target_location.key) {
-            hv[e] = (hv[e] ?? 0) + count
-          }
+    // 自分が勝った側 (win_location_key) のメンバーであれば +plus する
+    medal_add_to_self_if_win(win_location_key, plus) {
+      const win_location = Location.fetch(win_location_key)
+      if (this.my_location) {
+        if (this.my_location.key === win_location.key) {
+          // 勝った側
+          this.medal_add_to_self(plus)
+        } else {
+          // 負けた側
         }
-      })
-      this.medal_counts_hash_share(hv)
-    },
-
-    // 指定のユーザーだけにこっそりメダル付与 (デバッグ用)
-    medal_add_to_user(user_name, count = 1) {
-      if (this.present_p(user_name)) {
-        const hv = _.clone(this.medal_counts_hash) // ここでは medal_counts_hash を破壊しない
-        Gs2.__assert__(user_name, "user_name")
-        hv[user_name] = (hv[user_name] ?? 0) + count
-        this.medal_counts_hash_share(hv)
-      }
-    },
-
-    // サイドバー用
-    sidebar_medal_add_to_user_handle(count) {
-      this.$sound.play_click()
-      this.medal_add_to_user(this.user_name, count)
-    },
-
-    // 共有
-    medal_counts_hash_share(medal_counts_hash) {
-      const params = {medal_counts_hash: medal_counts_hash}
-      if (this.ac_room) {
-        this.ac_room_perform("medal_counts_hash_share", params)
       } else {
-        this.medal_counts_hash_share_broadcasted({
+        // 対局者ではない
+      }
+    },
+
+    // 自分のメダル数を +plus してみんなに伝える
+    medal_add_to_self(plus) {
+      this.acquire_medal_count += plus
+      this.acquire_medal_count_share()
+    },
+
+    // 自分のメダル数を +plus してみんなに伝える(サイドバー用)
+    medal_add_to_self_handle(plus) {
+      this.$sound.play_click()
+      this.medal_add_to_self(plus)
+    },
+
+    // 自分のメダル数を(自分を含めて)みんなに伝える
+    acquire_medal_count_share() {
+      if (this.ac_room) {
+        this.ac_room_perform("acquire_medal_count_share", this.current_xmedal)
+      } else {
+        this.acquire_medal_count_share_broadcasted({
           ...this.ac_room_perform_default_params(),
-          ...params,
+          ...this.current_xmedal,
         })
       }
     },
-    medal_counts_hash_share_broadcasted(params) {
-      this.receive_medal_counts_hash(params.medal_counts_hash)
+    acquire_medal_count_share_broadcasted(params) {
+      if (this.received_from_self(params)) {
+      } else {
+      }
+      this.receive_xmedal(params)
     },
-    receive_medal_counts_hash(medal_counts_hash) {
-      Gs2.__assert__(medal_counts_hash, "medal_counts_hash")
-      this.medal_counts_hash = medal_counts_hash // 自分もみんなと同じようにここだけで更新する
-      this.medal_persisted()                     // 自分のだけをlocalStorageに保存
+    receive_xmedal(params) {
+      Gs2.__assert__(this.present_p(params.medal_user_name), "this.present_p(params.medal_user_name)")
+      Gs2.__assert__(this.present_p(params.acquire_medal_count), "this.present_p(params.acquire_medal_count)")
+      this.$set(this.medal_counts_hash, params.medal_user_name, params.acquire_medal_count) // これで画面に星の数が反映される
     },
 
     // Helper
     medal_vo_by_name(user_name) {
       return new MedalVo(this.medal_counts_hash, user_name)
+    },
+  },
+  computed: {
+    // 部屋に入ったときや更新するときはこれを送る
+    current_xmedal() {
+      return {
+        medal_user_name: this.user_name,               // 誰が
+        acquire_medal_count: this.acquire_medal_count, // 何個持っている
+      }
     },
   },
 }

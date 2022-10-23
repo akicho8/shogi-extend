@@ -5,10 +5,10 @@
       .panel-heading
         | メダル
       .panel-block
-        b-button(size="is-small" @click="base.medal_add_to_team('black', 1)") ☗+1
-        b-button(size="is-small" @click="base.medal_add_to_team('black', -1)") ☗-1
-        b-button(size="is-small" @click="base.medal_add_to_team('white', 1)") ☖+1
-        b-button(size="is-small" @click="base.medal_add_to_team('white', -1)") ☖-1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('black', 1)") ☗+1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('black', -1)") ☗-1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('white', 1)") ☖+1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('white', -1)") ☖-1
       .panel-block
         b-button(size="is-small" @click="base.medal_add_to_user(base.user_name, 1)") 俺+1
         b-button(size="is-small" @click="base.medal_add_to_user(base.user_name, -1)") 俺-1

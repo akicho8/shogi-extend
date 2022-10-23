@@ -271,8 +271,8 @@ module ShareBoard
       it "works" do
         data = data_factory("medal_counts_hash" => {"alice" => 1})
         expect {
-          subscription.medal_counts_hash_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "medal_counts_hash_share_broadcasted", bc_params: data)
+          subscription.acquire_medal_count_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
       end
     end
 

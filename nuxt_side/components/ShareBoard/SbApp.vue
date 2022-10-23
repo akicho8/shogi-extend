@@ -130,7 +130,8 @@ import { app_toryo     } from "./toryo/app_toryo.js"
 import { app_honpu     } from "./toryo/app_honpu.js"
 import { app_kifu_mail } from "./toryo/app_kifu_mail.js"
 
-import { app_medal } from "./medal/app_medal.js"
+import { app_medal      } from "./medal/app_medal.js"
+import { app_medal_plus } from "./medal/app_medal_plus.js"
 
 import { app_appearance_theme } from "./appearance_theme/app_appearance_theme.js"
 
@@ -197,6 +198,7 @@ export default {
     app_toryo,
     app_honpu,
     app_medal,
+    app_medal_plus,
     window_active_detector,
 
     // clock

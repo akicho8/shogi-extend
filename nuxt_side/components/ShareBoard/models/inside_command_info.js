@@ -47,7 +47,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         command_fn: (context, args) => {
           const location_key = args[0]
           const plus = parseInt(args[1] ?? "1")
-          context.medal_add_to_team(location_key, plus)
+          context.medal_add_to_self_if_win(location_key, plus)
         },
       },
       {

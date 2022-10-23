@@ -82,7 +82,7 @@ export const app_room_setup = {
       this.member_infos_init()
       this.member_info_init()
       this.active_level_init()
-      this.medal_init()
+      // this.medal_init()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)

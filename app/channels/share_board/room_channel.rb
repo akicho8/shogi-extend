@@ -139,9 +139,20 @@ module ShareBoard
       broadcast(:shared_al_add_broadcasted, data)
     end
 
-    def medal_counts_hash_share(data)
-      track(data, "メダル", data["medal_counts_hash"].inspect)
-      broadcast(:medal_counts_hash_share_broadcasted, data)
+    def acquire_medal_count_share(data)
+      # track(data, "メダル", "#{data["medal_user_name"]} = #{data["acquire_medal_count"]"}")
+      medal_user_name = data["medal_user_name"]
+      acquire_medal_count = data["acquire_medal_count"]
+      track(data, "メダル＝", "#{medal_user_name} = #{acquire_medal_count}")
+      broadcast(:acquire_medal_count_share_broadcasted, data)
+    end
+
+    def medal_add_to_user_share(data)
+      # track(data, "メダル", "#{data["medal_user_name"]} = #{data["acquire_medal_count"]"}")
+      medal_user_name = data["medal_user_name"]
+      acquire_medal_plus = data["acquire_medal_plus"]
+      track(data, "メダル＋", "#{medal_user_name} + #{acquire_medal_plus}")
+      broadcast(:medal_add_to_user_share_broadcasted, data)
     end
 
     def user_kill(data)

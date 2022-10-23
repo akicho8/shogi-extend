@@ -58,12 +58,13 @@ export const app_toryo = {
         this.order_switch_off_share() // 順番 OFF
       }
 
-      // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする
-      if (this.received_from_self(params)) {
-        if (params.win_location_key) {
-          this.medal_add_to_team(params.win_location_key)
-        }
+      // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする、としていたが
+      // 問題が出てきたため各自がポイント+1することにした (これは medal_add_to_self_if_win のなかでの話だけどみんな呼ばないといけない)
+      // if (this.received_from_self(params)) {
+      if (params.win_location_key) {
+        this.medal_add_to_self_if_win(params.win_location_key, 1)
       }
+      // }
 
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
