@@ -1,12 +1,13 @@
 <!-- -*- compile-command: "scp piyo_shogi_test.html i:/var/www/shogi_web_production/current/public/system/; open https://www.shogi-extend.com/system/piyo_shogi_test" -*- -->
 <html>
   <head>
+    <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=0" />
+    <style>body { display: flex; flex-direction: column; }</style>
   </head>
   <body>
-    <a href="piyoshogi://?url=https://www.shogi-extend.com/example_utf_8.kif">1</a>
-    <a href="piyoshogi://?url=https://www.shogi-extend.com/share-board.kif?turn=3&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">2</a>
-    <a href="piyoshogi://?url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">3</a>
-    <a href="piyoshogi://?viewpoint=black&num=3&game_name=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&sfen=position%20sfen%20lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL%20b%20-%201%20moves%207g7f%203c3d%208h2b+">4</a>
+    <a href="piyoshogi://?url=https://www.shogi-extend.com/example_utf_8.kif">1. 引数がないKIFのURLは読み込める</a>
+    <a href="piyoshogi://?url=https://www.shogi-extend.com/share-board.kif?turn=3&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">2. KIFに引数があると「読み込みました」と出るが読み込めていない (xbody パラメータが url パラメータと同レベルで解釈されているため)</a>
+    <a href="piyoshogi://?url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">3. 上の問題に対処するため全体をエスケープするがエラー (対応しない形式と出る)</a>
   </body>
 </html>
