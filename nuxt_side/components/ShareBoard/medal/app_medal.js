@@ -47,10 +47,12 @@ export const app_medal = {
 
     // 指定のユーザーだけにこっそりメダル付与 (デバッグ用)
     medal_add_to_user(user_name, count = 1) {
-      const hv = _.clone(this.medal_counts_hash) // ここでは medal_counts_hash を破壊しない
-      Gs2.__assert__(user_name, "user_name")
-      hv[user_name] = (hv[user_name] ?? 0) + count
-      this.medal_counts_hash_share(hv)
+      if (this.present_p(user_name)) {
+        const hv = _.clone(this.medal_counts_hash) // ここでは medal_counts_hash を破壊しない
+        Gs2.__assert__(user_name, "user_name")
+        hv[user_name] = (hv[user_name] ?? 0) + count
+        this.medal_counts_hash_share(hv)
+      }
     },
 
     // サイドバー用
