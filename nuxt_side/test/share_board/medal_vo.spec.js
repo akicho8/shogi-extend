@@ -1,4 +1,4 @@
-import { MedalVo } from "@/components/ShareBoard/toryo/medal_vo.js"
+import { MedalVo } from "@/components/ShareBoard/medal/medal_vo.js"
 
 describe("MedalVo", () => {
   it("works", () => {

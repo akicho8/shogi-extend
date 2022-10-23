@@ -15,7 +15,7 @@ describe("OrderUnit", () => {
     test("対局者が空なので全員を対局者とする", () => {
       const order_unit = OrderUnit.create()
       expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:] [整:false] [替:o] (O2State)")
-      order_unit.auto_users_set(["a", "b"])
+      order_unit.auto_users_set(["a", "b"], {with_shuffle: false})
       expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:] [整:true] [替:o] (O2State)")
     })
     test("対局者がいるので対局者を除いて観戦者にする", () => {
