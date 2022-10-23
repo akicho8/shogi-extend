@@ -61,7 +61,7 @@ export const app_toryo = {
       // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする
       if (this.received_from_self(params)) {
         if (params.win_location_key) {
-          this.medal_plus_handle(params.win_location_key)
+          this.medal_add_to_team(params.win_location_key)
         }
       }
 

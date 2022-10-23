@@ -32,6 +32,7 @@ export class ParamInfo extends ParamBase {
       { key: "xmatch_redis_ttl",     type: "integer", name: "マッチングエントリ度の更新TTL", defaults: { development: null,                      production: 60 * 3 + 3,                    }, permanent: false, relation: null,                  desc: null, },
       { key: "xmatch_auth_key",      type: "string",  name: "ルール選択時に認証方法",        defaults: { development: null,                      production: "handle_name_required",        }, permanent: false, relation: "XmatchAuthInfo",      desc: null, },
 
+      { key: "acquire_medal_count",      type: "integer", name: "メダル保持数",                  defaults: { development: null,                      production: 0,                        }, permanent: true, relation: null,                  desc: null, },
     ]
   }
 }

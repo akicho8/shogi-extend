@@ -47,7 +47,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         command_fn: (context, args) => {
           const location_key = args[0]
           const plus = parseInt(args[1] ?? "1")
-          context.medal_plus_handle(location_key, plus)
+          context.medal_add_to_team(location_key, plus)
         },
       },
       {
@@ -57,7 +57,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         command_fn: (context, args) => {
           const user_name = args[0]
           const plus = parseInt(args[1] ?? "1")
-          context.medal_plus_to_user_handle(user_name, plus)
+          context.medal_add_to_user(user_name, plus)
         },
       },
       {
