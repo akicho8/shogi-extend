@@ -18,13 +18,15 @@
       </li>
       <li>
         ×<a href="piyoshogi://?num=3&url=https://www.shogi-extend.com/share-board.kif?turn=3&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
-        引数があるKIFのURLは読み込めない。「読み込みました」と出るが0手目までしか読み込めていない。おそらく turn や xbody パラメータが url パラメータの値として読み取られていない
+        引数があるKIFのURLは読み込めない。「読み込みました」と出るが0手目までしか読み込めていない。おそらく turn や xbody パラメータが url パラメータの値として読み取られていない。(これが正しく読めないのは問題ない)
       </li>
       <li>
-        ×<a href="piyoshogi://?num=3&url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
-        上の問題に対処するため url パラメータに指定する値(URL全体)をエスケープするがエラーになる。「対応しない形式です」と表示される
+        △<a href="piyoshogi://?num=3&url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
+        上の問題に対処するため url パラメータに指定する値(URL全体)をエスケープしている<br>
+        iOS 版ではエラーになる。「棋譜が読み込めませんでした 対応しない形式です」と表示される<br/>
+        Android 版では問題なく読み込める。
       </li>
     </ol>
-    <p>ぴよ将棋 iOS版 v4.9.6 で確認</p>
+    <p>ぴよ将棋 iOS版, Android版ともに v4.9.6 で確認</p>
   </body>
 </html>
