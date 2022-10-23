@@ -83,7 +83,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
         b-field(label="音が出なくなったとき用")
           b-button(@click="base.sound_resume_all_with_rooster") 音復活
 
-      .box.mt-5
+      .box.mt-5(v-if="false")
         b-field(:label="`メダル数調整 (${base.acquire_medal_count})`")
           .control
             b-button(@click="base.sidebar_medal_add_to_user_handle(-1)") -1

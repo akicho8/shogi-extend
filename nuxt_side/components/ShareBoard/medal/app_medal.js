@@ -3,7 +3,7 @@ import { Location } from "shogi-player/components/models/location.js"
 import { MedalVo } from "./medal_vo.js"
 import _ from "lodash"
 
-const ACQUIRE_MEDAL_COUNT_PERSISTED_P = true // 獲得メダル数を保持するか？
+const ACQUIRE_MEDAL_COUNT_PERSISTED_P = false // 獲得メダル数を保持するか？
 
 export const app_medal = {
   data() {
@@ -14,8 +14,8 @@ export const app_medal = {
   methods: {
     // (部屋に入るタイミングで)メダル獲得数を取り込む
     medal_init() {
-      this.medal_counts_hash[this.user_name] = this.acquire_medal_count
-      this.tl_add("メダル", `${this.acquire_medal_count} で復帰`, this.medal_counts_hash)
+      // this.medal_counts_hash[this.user_name] = this.acquire_medal_count
+      // this.tl_add("メダル", `${this.acquire_medal_count} で復帰`, this.medal_counts_hash)
     },
 
     // (更新の通知を受信したタイミング)もし自分が含まれていたら(localStorageを)更新する
