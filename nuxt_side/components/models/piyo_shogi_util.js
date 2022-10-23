@@ -53,16 +53,23 @@ export class PiyoShogiUtil {
 
   // ぴよ将棋はコンテンツを見ているのではなく .kif という拡張子を見ているので format=kif にはできない
   get app_url() {
-    Gs2.__assert__(this.params.path, "this.params.path")
-    const url = new URL(Gs3.as_full_url(this.params.path))
+    // let url = this.params.kif_url
+    //
+    // if (Gs3.blank_p(url)) {
+    //   Gs2.__assert__(this.params.path, "this.params.path")
+    //   url = new URL(Gs3.as_full_url(this.params.path))
+    //   url.pathname = url.pathname + ".kif" // http://xxx/yyy?zzz=1 --> http://xxx/yyy.kif?zzz=1
+    // }
+    //
+    // const a = {...this.params, url: url}
+    //
+    // const ordered_keys = ["num", "url"]
+    // const ordered_url = this.params_to_url(a, ordered_keys) // 最後を url=xxx.kif にしないと動かない。順序重要。
+    // return ordered_url
 
-    // http://xxx/current_info?yyy=1 --> http://xxx/current_info.kif?yyy=1
-    url.pathname = url.pathname + ".kif"
-
-    const a = {...this.params, url: url}
-    const ordered_keys = ["viewpoint", "num", "url"]
-    const url2 = this.params_to_url(a, ordered_keys) // 最後を url=xxx.kif にしないと動かない。順序重要。
-    return url2
+    Gs2.__assert__(this.params.sfen, "this.params.sfen")
+    const ordered_keys = ["viewpoint", "num", "sente_name", "gote_name", "game_name", "sfen"]
+    return this.params_to_url(this.params, ordered_keys)
   }
 
   // app, web 自動切り替え
@@ -78,11 +85,7 @@ export class PiyoShogiUtil {
       ...params,
       num: params.turn, // turn -> num
     }
-    return [
-      this.url_prefix,
-      "?",
-      this.params_to_sorted_query(params, ordered_keys),
-    ].join("")
+    return [this.url_prefix, this.params_to_sorted_query(params, ordered_keys)].join("?")
   }
 
   params_to_sorted_query(params, ordered_keys) {

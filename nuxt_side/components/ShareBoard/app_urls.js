@@ -82,6 +82,7 @@ export const app_urls = {
   },
   computed: {
     current_url()      { return this.url_merge({})                         },
+    current_kif_url()  { return this.url_merge({format: "kif"})            },
     json_debug_url()   { return this.url_merge({format: "json"})           },
     twitter_card_url() { return this.url_merge({format: "png"})            },
     room_url()         { return this.url_for({room_code: this.room_code}) }, // 合言葉だけを付与したURL(タイトル不要)
@@ -103,7 +104,7 @@ export const app_urls = {
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
       return this.$KifuVo.create({
-        path: this.current_url,
+        // kif_url: this.current_kif_url,
         sfen: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
