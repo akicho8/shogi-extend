@@ -20,10 +20,11 @@ export const app_room_setup = {
       // 2. query.default_user_name (URL引数)
       // 3. g_current_user_name     (ログイン名)
       this.user_name = this.$route.query.fixed_user_name || this.user_name
+      this.medal_write()
     }
 
     if (this.room_code) {
-      if (!this.base.handle_name_validate(this.user_name)) {
+      if (!this.handle_name_validate(this.user_name)) {
         // 合言葉設定済みURLから来て名前は設定していない
         this.room_setup_modal_handle()
         return
@@ -82,7 +83,6 @@ export const app_room_setup = {
       this.member_infos_init()
       this.member_info_init()
       this.active_level_init()
-      // this.medal_init()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)

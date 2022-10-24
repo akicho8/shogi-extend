@@ -49,6 +49,7 @@ export const app_handle_name = {
 
     handle_name_set(user_name) {
       this.user_name = user_name
+      this.medal_write()
       this.member_bc_restart() // 新しい名前をBCする
     },
 

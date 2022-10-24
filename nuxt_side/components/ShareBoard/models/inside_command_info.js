@@ -45,9 +45,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         key: "medal-team",
         example: "/medal-team black 1",
         command_fn: (context, args) => {
-          const location_key = args[0]
-          const plus = parseInt(args[1] ?? "1")
-          context.medal_add_to_self_if_win(location_key, plus)
+          context.medal_add_to_team(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
@@ -55,9 +53,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         key: "medal-user",
         example: "/medal-user alice 1",
         command_fn: (context, args) => {
-          const user_name = args[0]
-          const plus = parseInt(args[1] ?? "1")
-          context.medal_add_to_user(user_name, plus)
+          context.medal_add_to_user(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
@@ -65,8 +61,7 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         key: "kill",
         example: "/kill alice",
         command_fn: (context, args) => {
-          const user_name = args[0]
-          context.user_kill(user_name)
+          context.user_kill(args[0])
         },
       },
       {

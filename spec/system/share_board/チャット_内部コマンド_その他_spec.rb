@@ -27,20 +27,6 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_message_received_o("abc")
   end
 
-  it "/medal-team" do
-    chat_message_send("/medal-team white +1")
-    assert_member_has_text("b", "⭐")
-    assert_member_has_text("d", "⭐")
-  end
-
-  it "/medal-user" do
-    chat_message_send("/medal-user b +2")
-    assert_member_has_text("b", "⭐⭐")
-
-    chat_message_send("/medal-user b -1")
-    assert_member_has_text("b", "⭐")
-  end
-
   it "/header" do
     chat_message_send("/header")
     assert_message_received_o("棋戦: 共有将棋盤\n☗側: a, c\n☖側: b, d")
