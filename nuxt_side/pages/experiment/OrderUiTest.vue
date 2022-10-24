@@ -1,6 +1,6 @@
 <template lang="pug">
 .OrderUiTest
-  ShareBoardOrderUi
+  SbOrderUi
 </template>
 
 <script>
