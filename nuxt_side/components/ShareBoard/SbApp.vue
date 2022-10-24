@@ -107,7 +107,6 @@ import { app_storage              } from "./app_storage.js"
 import { app_export               } from "./app_export.js"
 import { app_player_names         } from "./app_player_names.js"
 import { app_color_theme          } from "./app_color_theme.js"
-import { app_appearance_theme     } from "./app_appearance_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
@@ -131,7 +130,9 @@ import { app_toryo     } from "./toryo/app_toryo.js"
 import { app_honpu     } from "./toryo/app_honpu.js"
 import { app_kifu_mail } from "./toryo/app_kifu_mail.js"
 
-import { app_medal     } from "./medal/app_medal.js"
+import { app_medal } from "./medal/app_medal.js"
+
+import { app_appearance_theme } from "./appearance_theme/app_appearance_theme.js"
 
 export default {
   name: "SbApp",
@@ -319,7 +320,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "./appearance_theme.sass"
+@import "./appearance_theme/appearance_theme.sass"
 @import "./layout.sass"
 @import "./gap.sass"
 @import "./SideColumn.sass"

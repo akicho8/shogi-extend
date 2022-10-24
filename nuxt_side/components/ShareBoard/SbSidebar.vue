@@ -74,11 +74,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="$sound.play_click()" v-if="development_p")
-      .box.mt-5
-        .title.is-6 スタイル設定
-        SimpleSlider.is-hidden-touch(:base="base" label="盤の大きさ" var_name="board_width" :min="60" :max="100" :step="1.0")
-        SimpleRadioButtons(:base="base" model_name="AppearanceThemeInfo" var_name="appearance_theme_key" custom-class="is-small")
-
+      AppearanceUi.mt-5
       .box.mt-5
         b-field(label="音が出なくなったとき用")
           b-button(@click="base.sound_resume_all_with_rooster") 音復活
