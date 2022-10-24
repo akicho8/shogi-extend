@@ -3,12 +3,15 @@
   .modal-card-head
     .modal-card-title
       | {{member_info.from_user_name}}
+      span.mx-1(v-if="TheSb.member_is_self(member_info)")
+        | (自分)
+
   .modal-card-body
     .table-container
       table.table.is-fullwidth.is-narrow
-        tbody
+        tbody.is-size-7
           template(v-for="row in table_rows")
-            tr(v-if="row.enabled || development_p")
+            tr(v-if="row.enabled || TheSb.debug_mode_p")
               th {{row.label}}
               td.is_line_break_on(:class="row.value_class")
                 template(v-if="_.isFunction(row.value)")
@@ -116,6 +119,16 @@ export default {
         },
         {
           enabled: true,
+          label: "API Version",
+          value: this.member_info.API_VERSION,
+        },
+        {
+          enabled: true,
+          label: "Client Version",
+          value: this.$config.CSR_BUILD_VERSION,
+        },
+        {
+          enabled: true,
           label: "接続ID",
           value: this.member_info.from_connection_id,
         },
@@ -128,16 +141,6 @@ export default {
           enabled: true,
           label: "Sカウンタ",
           value: this.member_info.from_session_counter,
-        },
-        {
-          enabled: true,
-          label: "API Version",
-          value: this.member_info.API_VERSION,
-        },
-        {
-          enabled: true,
-          label: "Client Version",
-          value: this.$config.CSR_BUILD_VERSION,
         },
         {
           enabled: true,
