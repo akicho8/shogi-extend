@@ -17,7 +17,7 @@ SbAvatarLine.SbMemberOne.is-clickable(
 
   .flex_item.is-size-7(v-if="TheSb.member_is_window_blur(info)") よそ見中
   .flex_item.is-size-7(v-if="TheSb.member_is_disconnect(info)") 応答なし
-  .flex_item.is-size-7(v-if="TheSb.member_is_self(info)") ← 自分
+  .flex_item.is-size-7(v-if="TheSb.debug_mode_p && TheSb.member_is_self(info)") ← 自分
   .flex_item.is-size-7(v-if="TheSb.current_turn_user_name === info.from_user_name") ← 今
   .flex_item.is-size-7(v-if="TheSb.next_turn_user_name === info.from_user_name") ← 次
 
