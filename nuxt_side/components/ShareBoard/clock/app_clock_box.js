@@ -2,7 +2,7 @@ const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被ら
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
-import { CcInfo     } from "../models/cc_info.js"
+import { CcInfo     } from "./cc_info.js"
 
 import _ from "lodash"
 

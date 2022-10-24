@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { TimeoutInfo } from "../models/timeout_info.js"
+import { TimeoutInfo } from "./timeout_info.js"
 
 export default {
   name: "TimeoutModal",
