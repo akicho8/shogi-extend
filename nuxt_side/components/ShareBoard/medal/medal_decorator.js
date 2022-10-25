@@ -1,4 +1,4 @@
-export class MedalVo {
+export class MedalDecorator {
   constructor(counts_hash, user_name) {
     this.counts_hash = counts_hash
     this.user_name = user_name

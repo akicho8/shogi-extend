@@ -1,6 +1,6 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import { Location } from "shogi-player/components/models/location.js"
-import { MedalVo } from "./medal_vo.js"
+import { MedalDecorator } from "./medal_decorator.js"
 
 export const app_medal = {
   data() {
@@ -68,8 +68,8 @@ export const app_medal = {
     },
 
     // Helper
-    medal_vo_by_name(user_name) {
-      return new MedalVo(this.medal_counts_hash, user_name)
+    medal_decorator_by_name(user_name) {
+      return new MedalDecorator(this.medal_counts_hash, user_name)
     },
   },
   computed: {
