@@ -39,15 +39,6 @@ module Kiwi
       end
     end
 
-    # def title_share(data)
-    #   track(data, "タイトル", "#{data["title"].inspect} に変更")
-    #   broadcast(:title_share_broadcasted, data)
-    # end
-
-    def ac_log(data)
-      track(data, data["subject"], data["body"])
-    end
-
     def speak(data)
       if current_user
         current_user.kiwi_banana_message_speak(current_banana, data["message_body"])
@@ -65,24 +56,6 @@ module Kiwi
       end
       # bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
       ActionCable.server.broadcast("kiwi/banana_room_channel/#{banana_id}", {bc_action: bc_action, bc_params: bc_params})
-    end
-
-    def track(data, action, body)
-      key = "動画表示 [#{banana_id}] #{action}"
-      if Rails.env.development? && false
-        SlackAgent.notify(subject: key, body: data)
-      end
-
-      SlackAgent.notify(subject: key, body: %(:#{data["ua_icon_key"]}: #{data["from_user_name"]}(#{data["active_level"]}): #{body}).squish)
-    end
-
-    def subscribed_track(action)
-      if current_user
-        body = current_user.name
-      else
-        body = ""
-      end
-      SlackAgent.notify(subject: "動画表示 #{action}", body: "#{body}")
     end
 
     def banana_id
