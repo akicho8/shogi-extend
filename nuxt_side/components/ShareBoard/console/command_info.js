@@ -1,20 +1,29 @@
-// |--------------------|
-// | test               |
-// | ping               |
-// | echo               |
-// | medal-team black 1 |
-// | medal-user alice 1 |
-// | header             |
-// | help               |
-// | var                |
-// | debug              |
-// |--------------------|
+// |---------------------|
+// | /help               |
+// | /test               |
+// | /ping               |
+// | /echo               |
+// | /medal-team black 1 |
+// | /medal-user alice 1 |
+// | /header             |
+// | /var                |
+// | /debug              |
+// |---------------------|
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class InsideCommandInfo extends ApplicationMemoryRecord {
+export class CommandInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
+      {
+        desc: "ヘルプ",
+        key: "help",
+        example: "/help",
+        preformat: true,
+        command_fn: (context, args) => {
+          return CommandInfo.values.map(e => `${e.example}: ${e.desc}`).join("\n")
+        },
+      },
       {
         desc: "テスト用",
         key: "test",
@@ -41,7 +50,15 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "指定チームのメダルの増減",
+        desc: "メダル情報の確認",
+        key: "medal",
+        example: "/medal",
+        command_fn: (context, args) => {
+          return JSON.stringify(context.medal_counts_hash)
+        },
+      },
+      {
+        desc: "指定チームのメダルの増減(部屋でのみ使用可)",
         key: "medal-team",
         example: "/medal-team black 1",
         command_fn: (context, args) => {
@@ -49,11 +66,19 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "指定の人のメダルの増減",
+        desc: "指定の人のメダルの増減(部屋でのみ使用可)",
         key: "medal-user",
         example: "/medal-user alice 1",
         command_fn: (context, args) => {
           context.medal_add_to_user(args[0], parseInt(args[1] ?? "1"))
+        },
+      },
+      {
+        desc: "自分のメダル増減",
+        key: "medal-self",
+        example: "/medal-self 1",
+        command_fn: (context, args) => {
+          context.medal_add_to_self(parseInt(args[0] ?? "1"))
         },
       },
       {
@@ -71,15 +96,6 @@ export class InsideCommandInfo extends ApplicationMemoryRecord {
         preformat: true,
         command_fn: (context, args) => {
           return context.player_names_with_title_as_human_text
-        },
-      },
-      {
-        desc: "ヘルプ",
-        key: "help",
-        example: "/help",
-        preformat: true,
-        command_fn: (context, args) => {
-          return InsideCommandInfo.values.map(e => `${e.example}: ${e.desc}`).join("\n")
         },
       },
       {

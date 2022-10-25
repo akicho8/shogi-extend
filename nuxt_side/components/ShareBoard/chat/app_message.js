@@ -2,7 +2,6 @@
 
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
-import { InsideCommandInfo } from "../models/inside_command_info.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 import { MessageDto } from "./message_dto.js"
@@ -27,7 +26,7 @@ export const app_message = {
 
     // 送信
     message_share(params) {
-      if (this.inside_command_parse_and_run(params) === "break") {
+      if (this.console_command_run(params) === "break") {
         return
       }
       if (this.ac_room) {
@@ -61,41 +60,6 @@ export const app_message = {
         }
       }
       return exec
-    },
-
-    inside_command_parse_and_run(params) {
-      if (params.message.startsWith("/")) {
-        this.local_say(params.message)
-        let str = params.message
-        str = str.replace(/^./, "")
-        str = str.trim()
-        const args = this.str_split(str)
-        const command = args.shift()
-        const info = InsideCommandInfo.lookup(command)
-        if (info == null) {
-          this.local_bot_say("command not found")
-        } else {
-          let value = null
-          try {
-            value = info.command_fn(this, args)
-          } catch (e) {
-            console.error(e)
-            value = e
-          }
-          if (value != null) {
-            if (!_.isString(value)) {
-              value = Gs2.short_inspect(value)
-            }
-            if (info.preformat) {
-              value = `<pre>${value}</pre>`
-            } else {
-              value = this.str_simple_format(value)
-            }
-            this.local_bot_say(value)
-          }
-        }
-        return "break"
-      }
     },
   },
 

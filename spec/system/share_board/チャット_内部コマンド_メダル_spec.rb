@@ -34,11 +34,27 @@ RSpec.describe type: :system, share_board_spec: true do
   it "/medal-team" do
     a_block do
       chat_message_send("/medal-team white +1")
-      debugger
       assert_member_has_text("b", "⭐")
     end
     b_block do
       assert_member_has_text("b", "⭐")
+    end
+  end
+
+  it "/medal-self" do
+    a_block do
+      chat_message_send("/medal-self 1")
+      assert_member_has_text("a", "⭐")
+    end
+    b_block do
+      assert_member_has_text("a", "⭐")
+    end
+  end
+
+  it "/medal" do
+    a_block do
+      chat_message_send("/medal")
+      assert_message_received_o('{"a":0}')
     end
   end
 end

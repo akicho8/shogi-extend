@@ -122,6 +122,8 @@ import { app_net_level            } from "./member_list_show/app_net_level.js"
 import { app_message      } from "./chat/app_message.js"
 import { app_message_logs } from "./chat/app_message_logs.js"
 
+import { app_console      } from "./console/app_console.js"
+
 import { app_clock_box         } from "./clock/app_clock_box.js"
 import { app_clock_box_timeout } from "./clock/app_clock_box_timeout.js"
 import { app_clock_decorator   } from "./clock/app_clock_decorator.js"
@@ -143,7 +145,9 @@ export default {
     autoexec_methods,
     app_xtitle,
     app_action_log,
+    app_message,
     app_message_logs,
+    app_console,
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
@@ -176,7 +180,6 @@ export default {
     app_update,
     app_sound_bug,
     app_sound_effect,
-    app_message,
     app_main_setting,
     app_debug,
     app_sound_resume,
