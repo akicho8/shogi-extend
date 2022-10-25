@@ -67,6 +67,7 @@ export const app_room_board_setup = {
         xorder:  this.current_xorder,    // 順番設定
         xclock:  this.current_xclock,    // 対局時計
         ////////////////////////////////////////////////////////////////////////////////
+        active_level: this.active_level,      // 先輩度(高い方が信憑性のある情報)
       }
       this.ac_room_perform("setup_info_send", params) // --> app/channels/share_board/room_channel.rb
     },

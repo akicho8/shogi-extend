@@ -88,6 +88,7 @@ export const app_room_members = {
         room_joined_at:      this.room_joined_at,          // 部屋に入った日時(古参比較用)
         window_active_p:     this.window_active_p,         // Windowの状態
         user_agent:          window.navigator.userAgent,   // ブラウザ情報
+        active_level:        this.active_level,            // 先輩度(高い方が信憑性のある情報)
       }) // --> app/channels/share_board/room_channel.rb
     },
 

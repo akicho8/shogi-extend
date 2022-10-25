@@ -188,7 +188,9 @@ module ShareBoard
       body << ":#{data["ua_icon_key"]}:"
       body << ac_event_str(data)
       body << data["from_user_name"]
-      body << data["active_level"].to_s + ":"
+      if v = data["active_level"]
+        body << v.to_s + ":"
+      end
       if v = message.presence
         body << v
       end
