@@ -194,7 +194,7 @@ class TacticNotesController < ApplicationController
     row["歩がない"] = e.not_have_pawn ? checked : nil
     row["打時"] = e.drop_only ? checked : nil
     row["キル時"] = e.kill_only ? checked : nil
-    row["開戦前"] = e.cold_war ? checked : nil
+    row["カオス度"] = e.chaos_level
     row["所持あり"] = e.hold_piece_in ? e.hold_piece_in.to_s : nil
     row["所持なし"] = e.hold_piece_not_in ? e.hold_piece_not_in.to_s : nil
     row["持駒が空"] = e.hold_piece_empty ? checked : nil
