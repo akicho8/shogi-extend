@@ -16,6 +16,9 @@ describe("Xstring", () => {
     expect(Xstring.str_strip(null)).toEqual("")
     expect(Xstring.str_strip("　　a　　b　　")).toEqual("a　　b")
   })
+  test("str_strip_tags", () => {
+    expect(Xstring.str_strip_tags("<xxx>foo</xxx> <xxx>bar</xxx>")).toEqual("foo bar")
+  })
   test("str_to_words", () => {
     expect(Xstring.str_to_words("")).toEqual([])
     expect(Xstring.str_to_words(null)).toEqual([])
