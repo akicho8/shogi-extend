@@ -22,9 +22,9 @@ export const Xarray = {
     return [...ary].reverse()
   },
 
-  // 元を破壊させない
+  // 元は破壊しない
   ary_shuffle(ary) {
-    return _.shuffle([...ary])
+    return _.shuffle(ary)
   },
 
   // 必ず配列にする
