@@ -29,10 +29,10 @@ export const Xarray = {
 
   // 必ず配列にする
   ary_wrap(ary) {
-    if (_.isArray(ary)) {
-      return ary
+    if (!_.isArray(ary)) {
+      ary = [ary]
     }
-    return [ary]
+    return ary
   },
 
   // はみ出ない
