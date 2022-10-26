@@ -42,4 +42,11 @@ export const Xobject = {
   a(value) {
     alert(this.i(value))
   },
+
+  // async func() {
+  //   await Xobject.sleep(1)
+  // }
+  sleep(second) {
+    return new Promise(resolve => setTimeout(resolve, second * 1000))
+  },
 }
