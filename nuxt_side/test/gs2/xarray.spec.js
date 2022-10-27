@@ -39,4 +39,14 @@ describe("Xarray", () => {
     expect(Xarray.ary_rotate(ary, -2)).toEqual(["b", "c", "a"])
     expect(ary).toEqual(["a", "b", "c"])
   })
+  test("ary_take", () => {
+    const ary = ["a", "b", "c"]
+    expect(Xarray.ary_take(ary, 1)).toEqual(["a"])
+    expect(ary).toEqual(["a", "b", "c"])
+  })
+  test("ary_drop", () => {
+    const ary = ["a", "b", "c"]
+    expect(Xarray.ary_drop(ary, 1)).toEqual(["b", "c"])
+    expect(ary).toEqual(["a", "b", "c"])
+  })
 })

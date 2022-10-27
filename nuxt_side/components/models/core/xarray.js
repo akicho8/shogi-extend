@@ -72,4 +72,12 @@ export const Xarray = {
     }
     return ary
   },
+
+  ary_take(ary, index) {
+    return _.take(ary, index)
+  },
+
+  ary_drop(ary, index) {
+    return _.drop(ary, index)
+  },
 }
