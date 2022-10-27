@@ -3,11 +3,12 @@
 // | /test               |
 // | /ping               |
 // | /echo               |
+// | /send               |
+// | /var                |
+// | /debug              |
 // | /medal-team black 1 |
 // | /medal-user alice 1 |
 // | /header             |
-// | /var                |
-// | /debug              |
 // |---------------------|
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
@@ -47,6 +48,31 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/echo abc",
         command_fn: (context, args) => {
           return args.join(" ")
+        },
+      },
+      {
+        desc: "特定のメソッドを実行",
+        key: "send",
+        example: "/send method args...",
+        command_fn: (context, args) => {
+          return context[args[0]](...context.ary_drop(args, 1))
+        },
+      },
+      {
+        desc: "変数確認",
+        key: "var",
+        example: "/var user_name",
+        preformat: true,
+        command_fn: (context, args) => {
+          return context[args[0]]
+        },
+      },
+      {
+        desc: "デバッグモード(引数なしでトグル)",
+        key: "debug",
+        example: "/debug on",
+        command_fn: (context, args) => {
+          context.debug_mode_set_any(args[0])
         },
       },
       {
@@ -96,24 +122,6 @@ export class CommandInfo extends ApplicationMemoryRecord {
         preformat: true,
         command_fn: (context, args) => {
           return context.player_names_with_title_as_human_text
-        },
-      },
-      {
-        desc: "変数確認",
-        key: "var",
-        example: "/var user_name",
-        preformat: true,
-        command_fn: (context, args) => {
-          return context[args[0]]
-        },
-      },
-      {
-        desc: "デバッグモード(引数なしでトグル)",
-        key: "debug",
-        example: "/debug on",
-        preformat: true,
-        command_fn: (context, args) => {
-          context.debug_mode_set_any(args[0])
         },
       },
     ]
