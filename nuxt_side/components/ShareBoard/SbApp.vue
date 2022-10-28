@@ -90,7 +90,6 @@ import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_active_level    } from "./app_room_active_level.js"
 import { app_room_members         } from "./app_room_members.js"
 import { app_member_bc            } from "./app_member_bc.js"
-import { app_tweet                } from "./app_tweet.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
 import { app_sound_bug            } from "./app_sound_bug.js"
@@ -136,6 +135,8 @@ import { app_medal      } from "./medal/app_medal.js"
 import { app_medal_plus } from "./medal/app_medal_plus.js"
 
 import { app_appearance_theme } from "./appearance_theme/app_appearance_theme.js"
+
+import { app_tweet } from "./tweet/app_tweet.js"
 
 export default {
   name: "SbApp",

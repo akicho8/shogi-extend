@@ -143,12 +143,17 @@ export const vue_support = {
       return url.toString()
     },
 
-    // tweet_window_popup({text: "body"})
-    // tweet_window_popup({url: "https://example.com/"})
+    // URLとテキストを含める場合に気をつけること
+    //
+    // 方法1. url と text を別に指定する → 1行目を空行にできない
+    // this.tweet_window_popup({url: this.current_url, text: this.tweet_hash_tag})
+    //
+    // 方法2. 自力で text に url 含める → 1行目を空行にできる
+    // this.tweet_window_popup({text: await this.tweet_body()})
+    //
     tweet_window_popup(params) {
       this.window_popup(this.tweet_url_build_from_params(params))
     },
-
 
     ////////////////////////////////////////////////////////////////////////////////
 
