@@ -31,20 +31,11 @@ export const app_urls = {
     },
 
     // 「短縮URLのコピー」
-    current_url_short_copy_handle() {
+    async current_url_short_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      TinyURL.shorten(this.current_url).then(res => {
-        if (res === "Error") {
-          this.toast_ng("なんかしらの原因で失敗しました")
-          return
-        }
-        this.clipboard_copy({text: res, success_message: "棋譜再生用の短縮URLをコピーしました"})
-      }, error => {
-        console.error(error)
-        this.toast_ng("失敗しました (ネットワークに繋っていない？)")
-        return
-      })
+      const url = await TinyURL.shorten(this.current_url)
+      this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})
     },
 
     other_app_click_handle(app_name) {
