@@ -6,6 +6,10 @@ import _ from "lodash"
 
 export const app_console = {
   methods: {
+    func_add(a, b) {
+      return a + b
+    },
+
     console_command_run(params) {
       if (params.message.startsWith("/")) {
         this.local_say(params.message)

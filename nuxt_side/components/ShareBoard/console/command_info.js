@@ -53,7 +53,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
       {
         desc: "特定のメソッドを実行",
         key: "send",
-        example: "/send method args...",
+        example: "/send func_add a b c",
         command_fn: (context, args) => {
           return context[args[0]](...context.ary_drop(args, 1))
         },

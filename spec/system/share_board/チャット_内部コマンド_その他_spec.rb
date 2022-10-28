@@ -27,11 +27,6 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_message_received_o("abc")
   end
 
-  it "/header" do
-    chat_message_send("/header")
-    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a, c\n☖側: b, d")
-  end
-
   it "/help" do
     chat_message_send("/help")
     assert_message_received_o("/help", exact_text: false)
@@ -47,5 +42,15 @@ RSpec.describe type: :system, share_board_spec: true do
     chat_message_send("/var debug_mode_p")
     assert_message_received_o("false")
     chat_message_send("/debug")
+  end
+  
+  it "/send" do
+    chat_message_send("/send func_add a b")
+    assert_message_received_o("ab")
+  end
+
+  it "/header" do
+    chat_message_send("/header")
+    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a, c\n☖側: b, d")
   end
 end
