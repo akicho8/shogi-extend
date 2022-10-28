@@ -233,15 +233,14 @@ export default {
       vertical-align: middle
 
     .is-xmode-通常
-      // background-color: $success-light
-      // background-color: $white-ter
-      // background-color: $primary-light
     .is-xmode-友達
-      // background-color: $primary-light
-      // background-color: $primary-light
-      background-color: $white-ter
+      background-color: $warning-light
+      .tag
+        background-color: $white
     .is-xmode-指導
-      background-color: $primary-light
+      background-color: $danger-light
+      .tag
+        background-color: $white
 
   // 小さな盤面をたくさん表示
   .CustomShogiPlayer
