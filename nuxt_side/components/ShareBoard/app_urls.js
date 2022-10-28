@@ -83,7 +83,6 @@ export const app_urls = {
       const params = {
         ...this.player_names,
         abstract_viewpoint:   this.abstract_viewpoint,
-        legal_key:            this.legal_key,
         color_theme_key:      this.color_theme_key,
         title:                this.current_title,
         turn:                 this.current_turn,
