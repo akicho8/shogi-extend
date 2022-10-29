@@ -14,37 +14,39 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
         span.mx-1
           | \#{{TheSb.current_turn}}
 
-  template(slot="end")
-    b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="TheSb.tl_modal_handle" v-if="TheSb.debug_mode_p")
-      b-tag.has-text-weight-bold(rounded)
-        .has-text-primary
-          | {{TheSb.track_logs.length}}
-
-    b-navbar-item.is-unselectable(tag="div" v-if="TheSb.ac_room && development_p && TheSb.debug_mode_p")
-      b-icon(icon="account")
-      b-tag.has-text-weight-bold(rounded)
-        .has-text-primary {{TheSb.member_infos.length}}
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="TheSb.tweet_modal_handle" v-if="TheSb.tweet_button_show_p")
-      b-icon(icon="twitter" type="is-white")
-
-    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="TheSb.message_modal_handle" v-if="TheSb.ac_room || true")
-      b-icon.account_icon(icon="account")
-      b-icon.message_icon(icon="chat-processing")
-
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="TheSb.honpu_log_click_handle" v-if="TheSb.honpu_button_show_p")
-      | 本譜
-
+  template(slot="start")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.give_up_confirm_handle(@click="TheSb.give_up_confirm_handle" v-if="TheSb.give_up_button_show_p")
       | 投了
 
+    template(v-if="TheSb.debug_mode_p")
+      b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="TheSb.tl_modal_handle")
+        b-tag.has-text-weight-bold(rounded)
+          .has-text-primary
+            | {{TheSb.track_logs.length}}
+
+      b-navbar-item.is-unselectable(tag="div" v-if="TheSb.ac_room && development_p")
+        b-icon(icon="account")
+        b-tag.has-text-weight-bold(rounded)
+          .has-text-primary {{TheSb.member_infos.length}}
+
+  template(slot="end")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="TheSb.otasuke_click_handle" v-if="TheSb.otasuke_button_show_p")
       b-icon(:icon="TheSb.otasuke_button_icon")
+
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.tweet_modal_handle(@click="TheSb.tweet_modal_handle" v-if="TheSb.tweet_button_show_p")
+      b-icon(icon="twitter" type="is-white")
 
     b-navbar-item.has-text-weight-bold(tag="div" v-if="TheSb.edit_mode_p")
       .buttons
         .button.is-primary(@click="TheSb.play_mode_handle")
           | 編集完了
+
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="TheSb.honpu_log_click_handle" v-if="TheSb.honpu_button_show_p")
+      | 本譜
+
+    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="TheSb.message_modal_handle" v-if="TheSb.ac_room || true")
+      b-icon.account_icon(icon="account")
+      b-icon.message_icon(icon="chat-processing")
 
     // テストで参照しているので sidebar_toggle_navbar_item は取ったらいけん
     NavbarItemSidebarOpen(@click="TheSb.sidebar_toggle" v-if="TheSb.play_mode_p")
