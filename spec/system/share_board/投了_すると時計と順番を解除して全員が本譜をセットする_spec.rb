@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block { case1("alice") }
     b_block { case1("bob")   }
     a_block do
-      toryo_run
+      give_up_run
       assert_order_off_and_clock_stop                 # 順番がOFFになり、時計はSTOPになる
       assert_honpu_link_exist                         # 本譜のリンクがある
     end

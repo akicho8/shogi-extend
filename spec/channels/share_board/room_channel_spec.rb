@@ -224,8 +224,8 @@ module ShareBoard
       it "works" do
         data = data_factory
         expect {
-          subscription.toryo_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "toryo_share_broadcasted", bc_params: data)
+          subscription.give_up_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "give_up_share_broadcasted", bc_params: data)
       end
     end
 

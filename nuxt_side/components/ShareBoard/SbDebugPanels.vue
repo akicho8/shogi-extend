@@ -125,9 +125,9 @@
     .panel
       .panel-heading
         | 投了
-      a.panel-block(@click="base.toryo_confirm_handle") 投了確認ボタン
-      a.panel-block(@click="base.toryo_run_from_modal") 投了ボタン(バリデーションあり)
-      a.panel-block(@click="base.toryo_direct_run") 投了実処理
+      a.panel-block(@click="base.give_up_confirm_handle") 投了確認ボタン
+      a.panel-block(@click="base.give_up_run_from_modal") 投了ボタン(バリデーションあり)
+      a.panel-block(@click="base.give_up_direct_run") 投了実処理
   .column.is-2
     .panel
       .panel-heading

@@ -35,7 +35,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="TheSb.honpu_log_click_handle" v-if="TheSb.honpu_button_show_p")
       | 本譜
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.toryo_confirm_handle(@click="TheSb.toryo_confirm_handle" v-if="TheSb.toryo_button_show_p")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.give_up_confirm_handle(@click="TheSb.give_up_confirm_handle" v-if="TheSb.give_up_button_show_p")
       | 投了
 
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.otasuke_click_handle(@click="TheSb.otasuke_click_handle" v-if="TheSb.otasuke_button_show_p")

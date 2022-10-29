@@ -8,6 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names => "alice,bob",
         :fixed_order_names  => "alice,bob",
       })
-    assert_toryo_button
+    assert_give_up_button
   end
 end

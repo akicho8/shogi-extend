@@ -1,34 +1,34 @@
-import ToryoConfirmModal from "./ToryoConfirmModal.vue"
+import GiveUpConfirmModal from "./GiveUpConfirmModal.vue"
 
-export const app_toryo = {
+export const app_give_up = {
   methods: {
     // 投了確認モーダル発動
-    toryo_confirm_handle() {
+    give_up_confirm_handle() {
       this.$sound.play_click()
       this.modal_card_open({
-        component: ToryoConfirmModal,
+        component: GiveUpConfirmModal,
       })
     },
 
     // 投了ボタンを押したときの処理
-    toryo_run_from_modal() {
-      if (!this.toryo_button_show_p) {
+    give_up_run_from_modal() {
+      if (!this.give_up_button_show_p) {
         this.toast_ng("投了確認を出している間に投了できなくなりました")
         return
       }
-      this.toryo_direct_run()
+      this.give_up_direct_run()
     },
 
     // そのまま実行
     // 投了メッセージをカスタマイズしたくなるが結局チャットでもみんな「負けました」としか言わないので固定で良い
     // 必要ないところをこだわって複雑にしてはいけない
-    toryo_direct_run() {
+    give_up_direct_run() {
       this.message_share({message: "負けました", message_scope_key: "is_message_scope_public"})
-      this.toryo_share()
+      this.give_up_share()
     },
 
     // 投了トリガーを配る
-    toryo_share() {
+    give_up_share() {
       const params = {}
       if (this.AppConfig.TORYO_THEN_CURRENT_LOCATION_IS_LOSE) {
         // 方法1: 投了ボタンが押されたときの手番のチームを負けとする
@@ -44,14 +44,14 @@ export const app_toryo = {
           // 普通の遷移ではここに来ないが来た場合は観戦者が押したことになる
         }
       }
-      this.ac_room_perform("toryo_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("give_up_share", params) // --> app/channels/share_board/room_channel.rb
     },
-    toryo_share_broadcasted(params) {
+    give_up_share_broadcasted(params) {
       this.al_add({...params, label: "投了", label_type: "is-danger"}) // 履歴に追加する。別になくてもよい
       this.honpu_log_set()                    // 本譜を作る。すでにあれば上書き
 
       // 投了を押した本人が時計と順番を解除する
-      // この処理は toryo_direct_run で行う手もあるが「投了」→「時計停止」→「順番OFF」の順で
+      // この処理は give_up_direct_run で行う手もあるが「投了」→「時計停止」→「順番OFF」の順で
       // 履歴に入れたいのでこっちの方がよい
       if (this.received_from_self(params)) {
         this.cc_stop_share_handle()   // 時計 STOP
@@ -69,13 +69,13 @@ export const app_toryo = {
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
       if (this.g_current_user) {
-        this.kifu_mail_run({silent: true, sb_judge_key: this.toryo_then_self_judge_key(params)})
+        this.kifu_mail_run({silent: true, sb_judge_key: this.give_up_then_self_judge_key(params)})
       }
     },
 
     // 投了時に自分のチームは勝ったのか？
     // 返すキーは sb_judge_info.rb に合わせること
-    toryo_then_self_judge_key(params) {
+    give_up_then_self_judge_key(params) {
       if (params.win_location_key) {                              // 勝ち負けが明確で
         if (this.my_location) {                                   // 自分は対局者で
           if (this.my_location.key === params.win_location_key) { // 勝った場合
@@ -98,7 +98,7 @@ export const app_toryo = {
     // 投了ボタン表示条件
     // ・対局メンバーに含まれる
     // ・時計が PLAY 状態 ← やめ
-    toryo_button_show_p() {
+    give_up_button_show_p() {
       // return this.self_is_member_p && this.cc_play_p
       return this.self_is_member_p
     },

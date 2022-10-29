@@ -110,9 +110,9 @@ module ShareBoard
       broadcast(:message_share_broadcasted, data)
     end
 
-    def toryo_share(data)
+    def give_up_share(data)
       track(data, "投了発動", data["message"], ":投了:")
-      broadcast(:toryo_share_broadcasted, data)
+      broadcast(:give_up_share_broadcasted, data)
     end
 
     def ping_command(data)

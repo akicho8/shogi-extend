@@ -102,13 +102,13 @@ module SharedMethods
     assert_selector("a", text: "本譜", exact_text: true, wait: 60)
   end
 
-  def toryo_run
+  def give_up_run
     find("a", text: "投了", exact_text: true, wait: 60).click # bob は手番ではないがヘッダーの「投了」ボタンを押す
     find(:button, "本当に投了する").click                     # モーダルが表示されるので本当に投了する
   end
 
   # 投了ボタンがある
-  def assert_toryo_button
+  def assert_give_up_button
     assert_selector("a", text: "投了", exact_text: true)
   end
 end
