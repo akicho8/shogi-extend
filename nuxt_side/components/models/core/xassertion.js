@@ -37,6 +37,8 @@ export const Xassertion = {
     this.__assert__(v !== 0, message)
   },
 
+  // private
+
   __assert_show__(message = null) {
     message = message || "ぶっこわれました"
     if (typeof window !== 'undefined') {
