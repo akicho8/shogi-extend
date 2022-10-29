@@ -1,31 +1,8 @@
 <template lang="pug">
 .modal-card
-  ////////////////////////////////////////////////////////////////////////////////
   .modal-card-head
-    .modal-card-title
-      | 投了
-  .modal-card-body
-    | {{message}}
-  //- .modal-card-body
-  //-   .content
-  //-     //- p 投了すると実行する内容
-  //-     //- ul
-  //-     //-   //- li リレー将棋の場合はなるべく最後まで指そう
-  //-     //-   li 投了の旨を発言する
-  //-     //-   li 時計を止める
-  //-     //-   li 順番を解除する
-  //-     //- | 投了するとついでに時計と順番を解除します
-  //-     //- template(v-if="TheSb.self_is_member_p")
-  //-     //-   template(v-if="TheSb.current_turn_self_p")
-  //-     //-     | 本当に投了しますか？
-  //-     //-   template(v-else)
-  //-     //-     | 手番ではないのに投了しますか？
-  //-     //- template(v-else)
-  //-     //-   | 対局者ではないのに投了しますか？
-  //-     //- ol
-  //-     //-   li 「負けました」発言する
-  //-     //-   li 時計を止める
-  //-     //-   li 順番設定を解除する
+    .modal-card-title 投了
+  .modal-card-body {{message}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 逆転の一手を放つ
     b-button.toryo_handle(@click="toryo_handle" type="is-danger") 本当に投了する
