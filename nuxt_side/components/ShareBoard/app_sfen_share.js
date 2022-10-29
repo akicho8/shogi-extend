@@ -55,8 +55,12 @@ export const app_sfen_share = {
       if (this.ac_room) { // ac_room が有効でないときに sfen_share_callback_set を呼ばないようにするため
         this.send_success_p = false // 数ms後に相手から応答があると true になる
         const params = {
-          x_retry_count: this.x_retry_count, // 0:初回 1以上:再送回数
           ...this.sfen_share_params,
+          x_retry_count: this.x_retry_count, // 1以上:再送回数
+        }
+        if (this.x_retry_count >= 1) {
+          params.label = `再送${this.x_retry_count}`
+          params.label_type = "is-warning"
         }
         this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
         this.sfen_share_callback_set()
