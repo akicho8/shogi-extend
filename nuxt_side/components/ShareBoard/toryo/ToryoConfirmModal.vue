@@ -4,7 +4,7 @@
     .modal-card-title 投了
   .modal-card-body {{message}}
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 逆転の一手を放つ
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 考え直す
     b-button.toryo_handle(@click="toryo_handle" type="is-danger") 本当に投了する
 </template>
 
