@@ -1,21 +1,29 @@
+# 将棋ウォーズのダメ設計が漏れないように隠蔽する
+
 module Swars
   class PresetMagicNumberInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "magic_number_is_0", normalized_key: "平手",     __swars_key: "Hirate",   },
-      { key: "magic_number_is_1", normalized_key: "香落ち",   __swars_key: "Kyo",      },
-      { key: "magic_number_is_2", normalized_key: "角落ち",   __swars_key: "Kaku",     },
-      { key: "magic_number_is_3", normalized_key: "飛車落ち", __swars_key: "Hisha",    },
-      { key: "magic_number_is_4", normalized_key: "飛香落ち", __swars_key: "HishaKyo", },
-      { key: "magic_number_is_5", normalized_key: "二枚落ち", __swars_key: "Two",      },
-      { key: "magic_number_is_6", normalized_key: "四枚落ち", __swars_key: "Four",     },
-      { key: "magic_number_is_7", normalized_key: "六枚落ち", __swars_key: "Six",      },
-      { key: "magic_number_is_8", normalized_key: "八枚落ち", __swars_key: "Eight",    },
-      { key: "magic_number_is_9", normalized_key: "十枚落ち", __swars_key: "Ten",      },
+      { key: "magic_number:0", real_key: "平手",     },
+      { key: "magic_number:1", real_key: "香落ち",   },
+      { key: "magic_number:2", real_key: "角落ち",   },
+      { key: "magic_number:3", real_key: "飛車落ち", },
+      { key: "magic_number:4", real_key: "飛香落ち", },
+      { key: "magic_number:5", real_key: "二枚落ち", },
+      { key: "magic_number:6", real_key: "四枚落ち", },
+      { key: "magic_number:7", real_key: "六枚落ち", },
+      { key: "magic_number:8", real_key: "八枚落ち", },
+      { key: "magic_number:9", real_key: "十枚落ち", },
     ]
 
+    class << self
+      def by_magick_number(number)
+        fetch("magic_number:#{number}")
+      end
+    end
+
     def preset_info
-      PresetInfo.fetch(normalized_key)
+      PresetInfo.fetch(real_key)
     end
   end
 end

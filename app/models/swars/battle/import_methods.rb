@@ -261,7 +261,7 @@ module Swars
             end
           end
 
-          preset_key = PresetMagicNumberInfo.fetch("magic_number_is_#{info[:preset_magic_number]}").preset_info.key
+          preset_key = PresetMagicNumberInfo.by_magick_number(info[:preset_magic_number]).preset_info.key
 
           battle = Battle.new({
               :key        => info[:key],
