@@ -34,18 +34,20 @@
 # |------------------------+----------------------------+-------------+---------------------+------+-------|
 
 class User < ApplicationRecord
-  include UserCoreMethods
-  include UserAvatarMethods
-  include UserProfileMethods
-  include UserDeviseMethods
-  include UserTagMethods
-  include UserRaceMethods
-  include UserFreeBattleMethods
-  include UserXyMasterMethods
-  include UserStaffMethods
-  include UserChoreMethods
+  include CoreMethods
+  include AvatarMethods
+  include ProfileMethods
+  include DeviseMethods
+  include TagMethods
+  include RaceMethods
+  include FreeBattleMethods
+  include XyMasterMethods
+  include StaffMethods
+  include InfoMethods
+  include ChoreMethods
+  include CrawlReservationMethods
+  include ZipDlLogMethods
+
   include ::Wkbk::UserMethods
   include ::Kiwi::UserMethods
-  include UserCrawlReservationMethods
-  include UserZipDlLogMethods
 end

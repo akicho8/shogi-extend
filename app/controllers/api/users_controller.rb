@@ -40,12 +40,5 @@ module Api
       user = User.find(params[:id])
       render json: user.as_json_simple_public_profile
     end
-
-    # # curl -d _method=delete http://localhost:3000/api/users/5
-    # def destroy
-    #   # render plain: "ok"
-    #   # current_record.destroy!
-    #   render json: { message: "削除しました" }
-    # end
   end
 end
