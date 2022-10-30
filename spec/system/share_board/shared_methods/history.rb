@@ -1,13 +1,8 @@
 module SharedMethods
-  # スコープを合わせる
-  def action_log_scope(&block)
-    within(".SbActionLog", &block)
-  end
-
   # 完全一致のテキストがあること
   def action_assert_text(text)
-    action_log_scope do
-      assert_selector("div", text: text, exact_text: true)
+    within(".SbActionLog") do
+      assert_selector(:element, text: text, exact_text: true)
     end
   end
 
@@ -24,6 +19,7 @@ module SharedMethods
     end
   end
 
+  # 履歴の user が behavior した
   def assert_action(user, behavior)
     within(".SbActionLog") do
       assert_selector(:element, text: user,     exact_text: true)
