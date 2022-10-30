@@ -45,7 +45,7 @@ module Tsl
               user[:lose] = user[:ox].count("●")
             end
 
-            user[:name] = name_normalize(user[:name])
+            user[:name] = NameNormalizer.normalize(user[:name])
             user[:result_key] = result_key_normalize(user[:result_key])
 
             [:age, :win, :lose, :start_pos].each do |e|
@@ -74,7 +74,7 @@ module Tsl
 
     def html_fetch
       if Rails.env.test?
-        return Pathname("#{__dir__}/mock_index.html").read.toutf8
+        return Pathname("#{__dir__}/mock/mock_index.html").read.toutf8
       end
 
       Rails.cache.fetch(source_url, :expires_in => 1.hour) do
@@ -83,14 +83,6 @@ module Tsl
         rescue OpenURI::HTTPError, SocketError
         end
       end
-    end
-
-    # 連盟の表記がバラバラ
-    def name_normalize(str)
-      str = str.gsub("小髙", "小高")
-      str = str.gsub("泰煕", "泰熙")
-      str = str.gsub("廣瀬章人", "広瀬章人")
-      str = str.gsub(/[斉齋齊]藤/, "斎藤")
     end
 
     def result_key_normalize(key)
