@@ -203,7 +203,7 @@ Rails.application.routes.draw do
       resources :time_records, only: [:index, :create, :update]
     end
 
-    resource :talk, only: [:show, :create]
+    resource :talk, only: :create
     resources :app_entry_infos, only: :index
     resources :users, only: [:show]
     resource :cpu_battle, only: [:show, :create]
