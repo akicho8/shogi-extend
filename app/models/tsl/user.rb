@@ -73,12 +73,12 @@ module Tsl
 
     # シーズン generation を含まないこれまでの在籍回数
     def seat_count(generation)
-      memberships.joins(:league).where(Tsl::League.arel_table[:generation].lt(generation)).count
+      memberships.joins(:league).where(League.arel_table[:generation].lt(generation)).count
     end
 
     # 在籍回数のかわりに表示したい在籍毎の勝数
     def zaiseki_win_list(generation)
-      g = Tsl::League.arel_table[:generation]
+      g = League.arel_table[:generation]
       s = memberships.joins(:league).where(g.lt(generation))
       s.order(g.asc).pluck(:win)
     end

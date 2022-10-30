@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# Membership (tsl_memberships as Tsl::Membership)
+# Membership (tsl_memberships as Membership)
 #
 # |--------------------------+--------------------------+-------------+-------------+------------+-------|
 # | name                     | desc                     | type        | opts        | refs       | index |
