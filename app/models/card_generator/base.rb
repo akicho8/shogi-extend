@@ -13,8 +13,6 @@ module CardGenerator
         :format           => "png",           # 出力する画像タイプ
         :debug            => false,
 
-        # :variation        => 16,              # 色の数
-        # :index            => nil,             # nil:ランダム 整数:hueをvariationで分割した位置
         :hue              => nil,             # nil:ランダム
 
         :font_file        => nil,             # フォント nil:自動 指定があるならそれ
@@ -95,18 +93,6 @@ module CardGenerator
     private
 
     def main_render
-      # base_s = "#00d1b2"
-      # base_color = RGB::Color.from_rgb_hex(base_s)
-      # count = 8
-      # index = 0
-      #
-      # c = RGB::Color.from_fractions((1.0 / count) * index, base_color.s, base_color.l)
-      # background = c.html               # => "#D10000", "#D19D00", "#69D100", "#00D134", "#00D1D1", "#0034D1", "#6800D1", "#D1009D"
-      # fill = c.lighten_percent(97).html # => "#FFF6F6", "#FFFDF6", "#FAFFF6", "#F6FFF8", "#F6FFFF", "#F6F8FF", "#FAF6FF", "#FFF6FD"
-
-      # font_color                  # => "#FFF6F6"
-      # background_color            # => "#D10000"
-
       draw = Magick::Draw.new
       draw.gravity        = Magick::CenterGravity
       draw.font           = params[:font_file] || Bioshogi::ImageRenderer.default_params.fetch(:font_bold)
@@ -120,13 +106,7 @@ module CardGenerator
     end
 
     def body
-      @body ||= yield_self do
-        if v = params[:body]
-          v
-        else
-          "将棋ドリル"
-        end
-      end
+      @body ||= params[:body] || "(blank)"
     end
 
     def font_size
@@ -139,26 +119,7 @@ module CardGenerator
       end
     end
 
-    # def base_s
-    #   params[:base_s]
-    # end
-
-    def variation
-      params[:variation]
-    end
-
-    # def index
-    #   @index ||= yield_self do
-    #     if v = params[:index]
-    #       v.modulo(variation)
-    #     else
-    #       rand(variation)
-    #     end
-    #   }.call
-    # end
-
     def hue
-      # base_color.h + (1.0 / variation) * index
       @hue ||= base_color.h + (params[:hue] || rand)
     end
 
@@ -167,7 +128,6 @@ module CardGenerator
     end
 
     def background_color
-      # return Color::RGB.from_html("#FFFFFF").to_hsl
       @background_color ||= Color::HSL.from_fraction(hue, base_color.s, base_color.l)
     end
 
@@ -179,116 +139,14 @@ module CardGenerator
       @stroke_color ||= Color::HSL.from_fraction(hue, base_color.s, base_color.l - params[:stroke_darker])
     end
 
-    # # 格子色
-    # def lattice_color
-    #   params[:lattice_color] || params[:piece_color]
-    # end
-    #
-    # def frame_color
-    #   params[:frame_color] || params[:piece_color]
-    # end
-
-    # def frame_draw
-    #   if frame_stroke_width
-    #     draw_context do |c|
-    #       c.stroke(frame_color)
-    #       c.stroke_width(frame_stroke_width)
-    #       c.stroke_linejoin("round") # 曲がり角を丸める 動いてない？
-    #       c.fill = "transparent"
-    #       c.rectangle(*px(V[0, 0]), *px(V[lattice.w, lattice.h])) # stroke_width に応じてずれる心配なし
-    #     end
-    #   end
-    # end
-
     def draw_context
       c = Magick::Draw.new
       yield c
       c.draw(canvas)
     end
 
-    # def px(v)
-    #   top_left + v * cell_size
-    # end
-
-    # def line_draw(c, v1, v2)
-    #   c.line(*px(v1), *px(v2))
-    # end
-
-    # def cell_draw(c, v)
-    #   if v
-    #     c.rectangle(*px(v), *px(v + V.one))
-    #   end
-    # end
-
-    # def char_draw(pos:, text:, rotation:, color: params[:piece_color], bold: false, font_size: params[:font_size_hold])
-    #   c = Magick::Draw.new
-    #   c.rotation = rotation
-    #   # c.font_weight = Magick::BoldWeight # 効かない
-    #   c.pointsize = cell_size * font_size
-    #   if bold
-    #     c.font = params[:font_bold] || params[:normal_font]
-    #   else
-    #     c.font = params[:normal_font]
-    #   end
-    #   c.stroke = "transparent"
-    #   # c.stroke_antialias(false) # 効かない？
-    #   c.fill = color
-    #   c.gravity = Magick::CenterGravity
-    #   c.annotate(canvas, *cell_size_rect, *px(pos), text)
-    # end
-
     def image_rect
       @image_rect ||= Rect[params[:width], params[:height]]
-    end
-
-    # def cell_size
-    #   @cell_size ||= (vmin * params[:board_rate]) / lattice.h
-    # end
-    #
-    # def vmin
-    #   @vmin ||= image_rect.to_a.min
-    # end
-    #
-    # def cell_size_rect
-    #   @cell_size_rect ||= Rect[cell_size, cell_size]
-    # end
-
-    # def center
-    #   @center ||= V[canvas.columns / 2, canvas.rows / 2]
-    # end
-    #
-    # def top_left
-    #   @top_left ||= center - lattice * cell_size / 2
-    # end
-    #
-    # def v_bottom_right_outer
-    #   @v_bottom_right_outer ||= V[lattice.w, lattice.h - 1]
-    # end
-    #
-    # def v_top_left_outer
-    #   @v_top_left_outer ||= V[-1, 0]
-    # end
-    #
-    # def lattice_stroke_width
-    #   params[:lattice_stroke_width]
-    # end
-    #
-    # def frame_stroke_width
-    #   params[:frame_stroke_width] || lattice_stroke_width
-    # end
-
-    class V < Vector
-      def self.one
-        self[1, 1]
-      end
-
-      def x
-        self[0]
-      end
-
-      def y
-        self[1]
-      end
     end
 
     class Rect < Vector
