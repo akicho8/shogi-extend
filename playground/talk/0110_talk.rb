@@ -1,5 +1,5 @@
 require "./setup"
-obj = Talk.new(source_text: "こんにちは")
+obj = Talk.create(source_text: "こんにちは")
 tp obj.to_h
 # >> |-------------------+---------------------------------------------------------------------------------------------|
 # >> | disk_cache_enable | true                                                                                        |
