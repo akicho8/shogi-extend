@@ -46,6 +46,11 @@ export const Xstring = {
     return str
   },
 
+  str_strip_tags(str) {
+    const dom_parser = new DOMParser()
+    return dom_parser.parseFromString(str, "text/html").body.textContent
+  },
+
   // str_to_words("a,b,a") // => ["a", "b", "a"]
   str_to_words(str) {
     str = (str || "").toString()

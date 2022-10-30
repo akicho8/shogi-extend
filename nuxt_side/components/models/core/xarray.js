@@ -22,17 +22,17 @@ export const Xarray = {
     return [...ary].reverse()
   },
 
-  // 元を破壊させない
+  // 元は破壊しない
   ary_shuffle(ary) {
-    return _.shuffle([...ary])
+    return _.shuffle(ary)
   },
 
   // 必ず配列にする
   ary_wrap(ary) {
-    if (_.isArray(ary)) {
-      return ary
+    if (!_.isArray(ary)) {
+      ary = [ary]
     }
-    return [ary]
+    return ary
   },
 
   // はみ出ない
@@ -71,5 +71,13 @@ export const Xarray = {
       }
     }
     return ary
+  },
+
+  ary_take(ary, index) {
+    return _.take(ary, index)
+  },
+
+  ary_drop(ary, index) {
+    return _.drop(ary, index)
   },
 }

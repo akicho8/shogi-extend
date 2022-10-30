@@ -1,9 +1,9 @@
 <template lang="pug">
-span.UserMedal(v-if="medal_vo.exist_p")
-  | {{medal_vo.visible_medal_text}}
-  template(v-if="!medal_vo.count_lteq_max")
+span.UserMedal(v-if="medal_decorator.exist_p")
+  | {{medal_decorator.visible_medal_text}}
+  template(v-if="!medal_decorator.count_lteq_max")
     span.count.has-text-gold
-      | {{medal_vo.count}}
+      | {{medal_decorator.count}}
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
   },
   inject: ["TheSb"],
   computed: {
-    medal_vo() { return this.TheSb.medal_vo_by_name(this.name) },
+    medal_decorator() { return this.TheSb.medal_decorator_by_name(this.name) },
   },
 }
 </script>

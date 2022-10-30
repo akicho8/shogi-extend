@@ -79,12 +79,6 @@ Rails.application.routes.draw do
 
   resources :free_battles, path: "x"
 
-  ################################################################################ 戦法トリガー事典
-
-  resources :tactic_notes, path: "tactics", only: [:index, :show]
-
-  get "tactics-tree",    to: "tactic_notes#index", defaults: {mode: "tree"},    as: :tree
-
   ################################################################################ 他サービス
 
   # 共有将棋盤

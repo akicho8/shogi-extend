@@ -8,8 +8,6 @@
     .SbAvatarLines
       template(v-for="(e, i) in base.action_logs")
         SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="base.action_log_click_handle(e)" :medal_show_p="false")
-          .flex_item(v-if="present_p(e.x_retry_count) && e.x_retry_count >= 1") 再送{{e.x_retry_count}}
-
           template(v-if="e.label")
             template(v-if="e.label && e.label_type")
               b-tag.flex_item(:type="e.label_type" size="is-small") {{e.label}}

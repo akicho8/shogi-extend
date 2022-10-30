@@ -38,4 +38,8 @@ describe("HandleNameParser", () => {
   test("絵文字が語尾に含まれる場合は除去する", () => {
     expect(HandleNameParser.call_name("alice🍓")).toEqual("aliceさん")
   })
+
+  test("なんとかして装飾を削除する", () => {
+    expect(HandleNameParser.call_name("○○○ンです( ᐛ )／")).toEqual("○○○ン")
+  })
 })

@@ -30,7 +30,6 @@ module ShareBoard
         "from_connection_id" => SecureRandom.hex,
         "from_user_name" => "alice",
         "performed_at"   => Time.current.to_i,
-        "active_level"   => 1,
         "ac_events_hash" => {},
         "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
         "debug_mode_p"   => true,
@@ -225,8 +224,8 @@ module ShareBoard
       it "works" do
         data = data_factory
         expect {
-          subscription.toryo_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "toryo_share_broadcasted", bc_params: data)
+          subscription.give_up_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "give_up_share_broadcasted", bc_params: data)
       end
     end
 
@@ -271,8 +270,8 @@ module ShareBoard
       it "works" do
         data = data_factory("medal_counts_hash" => {"alice" => 1})
         expect {
-          subscription.medal_counts_hash_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "medal_counts_hash_share_broadcasted", bc_params: data)
+          subscription.acquire_medal_count_share(data)
+        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
       end
     end
 

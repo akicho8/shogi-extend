@@ -62,11 +62,12 @@ export const app_room_board_setup = {
         ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
         xtitle:  this.current_xtitle,    // タイトル
-        medal_counts_hash:  this.medal_counts_hash,    // スコア情報
+        xmedal:  this.current_xmedal,    // スコア情報
         xsfen:   this.current_xsfen,     // 棋譜と現在の局面(手数)
         xorder:  this.current_xorder,    // 順番設定
         xclock:  this.current_xclock,    // 対局時計
         ////////////////////////////////////////////////////////////////////////////////
+        active_level: this.active_level,      // 先輩度(高い方が信憑性のある情報)
       }
       this.ac_room_perform("setup_info_send", params) // --> app/channels/share_board/room_channel.rb
     },
@@ -83,7 +84,7 @@ export const app_room_board_setup = {
             this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
             this.receive_xtitle(params.xtitle)
-            this.receive_medal_counts_hash(params.medal_counts_hash)
+            this.receive_xmedal(params.xmedal)
             this.receive_xsfen(params.xsfen)
             this.receive_xorder(params.xorder)
             this.receive_xclock(params.xclock)

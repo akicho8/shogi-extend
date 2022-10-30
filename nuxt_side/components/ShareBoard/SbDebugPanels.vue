@@ -5,10 +5,10 @@
       .panel-heading
         | メダル
       .panel-block
-        b-button(size="is-small" @click="base.medal_add_to_team('black', 1)") ☗+1
-        b-button(size="is-small" @click="base.medal_add_to_team('black', -1)") ☗-1
-        b-button(size="is-small" @click="base.medal_add_to_team('white', 1)") ☖+1
-        b-button(size="is-small" @click="base.medal_add_to_team('white', -1)") ☖-1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('black', 1)") ☗+1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('black', -1)") ☗-1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('white', 1)") ☖+1
+        b-button(size="is-small" @click="base.medal_add_to_self_if_win('white', -1)") ☖-1
       .panel-block
         b-button(size="is-small" @click="base.medal_add_to_user(base.user_name, 1)") 俺+1
         b-button(size="is-small" @click="base.medal_add_to_user(base.user_name, -1)") 俺-1
@@ -125,9 +125,9 @@
     .panel
       .panel-heading
         | 投了
-      a.panel-block(@click="base.toryo_confirm_handle") 投了確認ボタン
-      a.panel-block(@click="base.toryo_run_from_modal") 投了ボタン(バリデーションあり)
-      a.panel-block(@click="base.toryo_direct_run") 投了実処理
+      a.panel-block(@click="base.give_up_confirm_handle") 投了確認ボタン
+      a.panel-block(@click="base.give_up_run_from_modal") 投了ボタン(バリデーションあり)
+      a.panel-block(@click="base.give_up_direct_run") 投了実処理
   .column.is-2
     .panel
       .panel-heading

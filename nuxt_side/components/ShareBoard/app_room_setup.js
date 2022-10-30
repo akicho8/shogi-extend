@@ -20,10 +20,11 @@ export const app_room_setup = {
       // 2. query.default_user_name (URL引数)
       // 3. g_current_user_name     (ログイン名)
       this.user_name = this.$route.query.fixed_user_name || this.user_name
+      this.medal_write()
     }
 
     if (this.room_code) {
-      if (!this.base.handle_name_validate(this.user_name)) {
+      if (!this.handle_name_validate(this.user_name)) {
         // 合言葉設定済みURLから来て名前は設定していない
         this.room_setup_modal_handle()
         return
@@ -82,7 +83,6 @@ export const app_room_setup = {
       this.member_infos_init()
       this.member_info_init()
       this.active_level_init()
-      this.medal_init()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)
@@ -147,7 +147,6 @@ export const app_room_setup = {
         from_connection_id: this.connection_id,     // 送信者識別子
         from_user_name:     this.user_name,         // 送信者名
         performed_at:       this.$time.current_ms(), // 実行日時(ms)
-        active_level:       this.active_level,      // 先輩度(高い方が信憑性のある情報)
         ua_icon_key:        this.ua_icon_key,       // 端末の種類を表すアイコン文字列
         ac_events_hash:     this.ac_events_hash,    // イベント数(デバッグ用)
         debug_mode_p:       this.debug_mode_p,

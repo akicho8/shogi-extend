@@ -2,29 +2,25 @@
 .modal-card
   .modal-card-head
     .modal-card-title ツイート
-    SbColorThemeDropdown(:base="base")
+    SbColorThemeDropdown(:base="TheSb")
 
   .modal-card-body
     .preview_image_container.is-flex
       .preview_image.is-flex
         .is-size-7.has-text-grey.has-text-centered(v-if="false")
           | 意図した視点でない場合は<b>ツイート画像の視点設定</b>で変更できます
-        b-image(:src="ogp_image_url" @load="base.color_theme_image_load_handle" @error="base.color_theme_image_error_handle" :loading="true")
+        b-image(:src="ogp_image_url" @load="TheSb.color_theme_image_load_handle" @error="TheSb.color_theme_image_error_handle" :loading="true")
   .modal-card-foot
     b-button(@click="close_handle") キャンセル
-    //- b-button.submit_handle(@click="submit_handle" type="is-primary") 保存
-    b-button(@click="submit_handle" :type="base.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この局面をツイート
-    //- TweetButton(size="" :body="base.tweet_body" :type="base.advanced_p ? 'is-twitter' : ''" v-if="base.play_mode_p") ツイート
+    b-button(@click="submit_handle" :type="TheSb.advanced_p ? 'is-twitter' : ''" icon-left="twitter") この局面をツイート
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
-
 export default {
   name: "TweetModal",
-  mixins: [support_child],
+  inject: ["TheSb"],
   beforeMount() {
-    this.base.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
+    this.TheSb.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
   methods: {
     close_handle() {
@@ -33,12 +29,12 @@ export default {
     },
     submit_handle() {
       this.$emit("close")
-      this.base.tweet_handle()
+      this.TheSb.tweet_handle()
     },
     preview_url(options = {}) {
-      return this.base.url_merge({
+      return this.TheSb.url_merge({
         format: "png",
-        abstract_viewpoint: this.base.abstract_viewpoint,
+        abstract_viewpoint: this.TheSb.abstract_viewpoint,
         disposition: "inline",
         ...options,
       })

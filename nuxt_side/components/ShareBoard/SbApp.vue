@@ -90,7 +90,6 @@ import { app_room_board_setup     } from "./app_room_board_setup.js"
 import { app_room_active_level    } from "./app_room_active_level.js"
 import { app_room_members         } from "./app_room_members.js"
 import { app_member_bc            } from "./app_member_bc.js"
-import { app_tweet                } from "./app_tweet.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
 import { app_sound_bug            } from "./app_sound_bug.js"
@@ -122,17 +121,22 @@ import { app_net_level            } from "./member_list_show/app_net_level.js"
 import { app_message      } from "./chat/app_message.js"
 import { app_message_logs } from "./chat/app_message_logs.js"
 
+import { app_console      } from "./console/app_console.js"
+
 import { app_clock_box         } from "./clock/app_clock_box.js"
 import { app_clock_box_timeout } from "./clock/app_clock_box_timeout.js"
 import { app_clock_decorator   } from "./clock/app_clock_decorator.js"
 
-import { app_toryo     } from "./toryo/app_toryo.js"
-import { app_honpu     } from "./toryo/app_honpu.js"
-import { app_kifu_mail } from "./toryo/app_kifu_mail.js"
+import { app_give_up     } from "./give_up/app_give_up.js"
+import { app_honpu     } from "./give_up/app_honpu.js"
+import { app_kifu_mail } from "./give_up/app_kifu_mail.js"
 
-import { app_medal } from "./medal/app_medal.js"
+import { app_medal      } from "./medal/app_medal.js"
+import { app_medal_plus } from "./medal/app_medal_plus.js"
 
 import { app_appearance_theme } from "./appearance_theme/app_appearance_theme.js"
+
+import { app_tweet } from "./tweet/app_tweet.js"
 
 export default {
   name: "SbApp",
@@ -142,7 +146,9 @@ export default {
     autoexec_methods,
     app_xtitle,
     app_action_log,
+    app_message,
     app_message_logs,
+    app_console,
     app_persistent_cc_params,
     app_turn_notify,
     app_otasuke,
@@ -175,7 +181,6 @@ export default {
     app_update,
     app_sound_bug,
     app_sound_effect,
-    app_message,
     app_main_setting,
     app_debug,
     app_sound_resume,
@@ -194,9 +199,10 @@ export default {
     app_board_preset_select,
     app_room_recreate,
     app_back_to,
-    app_toryo,
+    app_give_up,
     app_honpu,
     app_medal,
+    app_medal_plus,
     window_active_detector,
 
     // clock
@@ -246,7 +252,6 @@ export default {
       // どれかが変更されたらURLを更新
       this.$watch(() => [
         this.sp_run_mode,
-        this.legal_key,
         this.current_sfen,
         this.current_turn,
         this.current_title,
