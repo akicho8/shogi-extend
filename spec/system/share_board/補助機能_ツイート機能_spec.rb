@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
         find(:button, text: "この局面をツイート", exact_text: true).click
       end
       switch_to_window(window)
-      assert_text("ログインしますか？", wait: 10)
+      assert_text("Twitter, Inc.", wait: 10)
     end
   end
 
