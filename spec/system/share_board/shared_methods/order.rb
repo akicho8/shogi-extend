@@ -44,6 +44,10 @@ module SharedMethods
     a.drag_to(b)
   end
 
+  def assert_order_on
+    assert_system_variable(:order_enable_p, true)
+  end
+
   def assert_order_setting_members(names)
     result = all(".TeamsContainer tbody .user_name").collect(&:text)
     assert { result == names }

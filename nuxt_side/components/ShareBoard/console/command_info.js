@@ -124,6 +124,35 @@ export class CommandInfo extends ApplicationMemoryRecord {
           return context.player_names_with_title_as_human_text
         },
       },
+      {
+        desc: "開始",
+        key: "対局中",
+        example: "/対局中",
+        preformat: true,
+        command_fn: (context, args) => {
+          if (context.blank_p(context.room_code)) {
+            context.room_code = "test_room"
+          }
+          if (context.blank_p(context.user_name)) {
+            context.user_name = "alice"
+          }
+          if (context.blank_p(context.ac_room)) {
+            context.room_create()
+          }
+          context.os_setup_by_names(["alice"])
+          context.order_unit.state_switch_to("to_o1_state")
+          // if (!context.order_enable_p) {
+          //   context.order_unit.state_switch_to("to_o1_state")
+          //   context.order_switch_share({order_enable_p: true})
+          // }
+          // if (context.blank_p(context.clock_box)) {
+          context.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }]
+          context.cc_create()
+          context.cc_params_apply()
+          context.clock_box.play_handle()
+          // }
+        },
+      },
     ]
   }
 }
