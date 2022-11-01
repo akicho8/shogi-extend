@@ -98,6 +98,7 @@ export const app_room_setup = {
           this.active_level_increment_timer.restart() // 切断後にアクティブレベルを上げないようにしているから復帰する
           this.setup_info_request()
           this.member_bc_restart()
+          this.acquire_medal_count_share() // 自分のメダル数を伝える(これをしないと元からいる人は新人のメダル数がわからない)
         },
         disconnected: e => {
           this.ac_events_hash_inc("disconnected")
