@@ -54,7 +54,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "/medal" do
     a_block do
       chat_message_send("/medal")
-      assert_message_received_o('{"a":0}')
+      assert_message_received_o('{"a":0,"b":0}') # a は b の個数を受信しているの重要
     end
   end
 end
