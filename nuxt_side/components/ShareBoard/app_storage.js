@@ -8,7 +8,6 @@ export const app_storage = {
   data() {
     return {
       ...ParamInfo.null_value_data_hash,
-      persistent_cc_params: null,
     }
   },
   computed: {
@@ -19,13 +18,6 @@ export const app_storage = {
         return `share_board_v${STORAGE_VERSION}`
       } else {
         return `share_board`
-      }
-    },
-
-    ls_default() {
-      return {
-        ...this.pc_ls_default,
-        persistent_cc_params: this.CcRuleInfo.default_cc_params,
       }
     },
   },
