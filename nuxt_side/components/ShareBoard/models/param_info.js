@@ -3,6 +3,7 @@ import { ParamBase } from '@/components/models/param_base.js'
 export class ParamInfo extends ParamBase {
   static get define() {
     return [
+      { key: "room_code",            type: "string",  name: "合言葉",                        defaults: { development: null,                      production: null,                          }, permanent: true,  relation: null,                  desc: null, },
       { key: "title",                type: "string",  name: "タイトル",                      defaults: { development: null,                      production: "共有将棋盤",                  }, permanent: false, relation: null,                  desc: null, },
       { key: "sp_run_mode",          type: "string",  name: "将棋盤モード",                  defaults: { development: null,                      production: "play_mode",                   }, permanent: false, relation: null,                  desc: null, },
       { key: "yomiage_mode_key",     type: "string",  name: "読み上げモード",                defaults: { development: null,                      production: "is_yomiage_mode_on",          }, permanent: true,  relation: "YomiageModeInfo",     desc: null, },

@@ -1,47 +1,51 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import RoomSetupModal              from "./RoomSetupModal.vue"
+import RoomSetupModal from "./RoomSetupModal.vue"
+import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
 
 export const app_room_setup = {
   data() {
     return {
-      // room_code: this.config.record.room_code, // リアルタイム共有合言葉
-      room_code: null,         // 合言葉
-      ac_room: null,           // subscriptions.create のインスタンス
-      ac_events_hash: {},      // ACのイベントが発生した回数を記録(デバッグ用)
+      ac_room: null,      // subscriptions.create のインスタンス
+      ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
     }
   },
   mounted() {
-    if (true) {
-      this.room_code = this.$route.query.room_code || this.room_code
-
-      // 名前の優先順位
-      // 1. query.user_name         (URL引数)
-      // 2. query.default_user_name (URL引数)
-      // 3. g_current_user_name     (ログイン名)
-      this.user_name = this.$route.query.fixed_user_name || this.user_name
-      this.medal_write()
-    }
-
-    if (this.room_code) {
-      if (!this.handle_name_validate(this.user_name)) {
-        // 合言葉設定済みURLから来て名前は設定していない
-        this.room_setup_modal_handle()
-        return
-      }
-      // 合言葉設定済みURLから来て名前は設定しているのですぐに共有する
-      this.room_create()
-    } else {
-      // 通常の起動
-      if (this.development_p) {
-        // this.room_code_set("__room_code__", "alice")
-      }
-    }
+    this.name_setup()
+    this.room_setup_auto()
   },
   beforeDestroy() {
     this.room_destroy()
   },
   methods: {
+    name_setup() {
+      // 名前の優先順位
+      // 1. query.user_name         (URL引数)
+      // 2. query.default_user_name (URL引数)
+      // 3. g_current_user_name     (ログイン名)
+      this.user_name = this.$route.query.fixed_user_name || this.user_name
+      this.handle_name_set(this.user_name)
+    },
+
+    // URLに合言葉の指定があればそのまま部屋に入る
+    room_setup_auto() {
+      // URLに合言葉がない場合は何もしない
+      if (this.blank_p(this.$route.query.room_code)) {
+        return
+      }
+      // 合言葉が復元できたとしても元々空であれば何もしない
+      if (this.blank_p(this.room_code)) {
+        return
+      }
+      // 名前が未入力または不正な場合はモーダルを表示する
+      if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
+        this.room_setup_modal_handle()
+        return
+      }
+      // 合言葉と名前は問題ないので部屋に入る
+      this.room_create()
+    },
+
     room_setup_modal_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
