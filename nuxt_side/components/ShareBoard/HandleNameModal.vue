@@ -36,7 +36,7 @@ export default {
     save_handle() {
       this.$sound.play_click()
       this.new_name = _.trim(this.new_name)
-      if (!this.base.handle_name_validate(this.new_name)) {
+      if (this.base.handle_name_invalid_then_toast_warn(this.new_name)) {
         return
       }
       this.base.handle_name_set(this.new_name)

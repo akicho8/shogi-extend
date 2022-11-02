@@ -30,6 +30,7 @@ import _ from "lodash"
 import { support_child } from "./support_child.js"
 
 const ROOM_ENTRY_THEN_MODAL_CLOSE = false // 入室後にモーダルを閉じるか？ (閉じると「部屋のリンク」がコピーできない)
+const ROOM_CODE_ALWAYS_SHOW       = true  // 合言葉は表示しっぱなしにするか？
 
 export default {
   name: "RoomSetupModal",
@@ -76,7 +77,7 @@ export default {
         return
       }
 
-      if (!this.base.handle_name_validate(this.new_user_name)) {
+      if (this.base.handle_name_invalid_then_toast_warn(this.new_user_name)) {
         return
       }
 
@@ -92,6 +93,9 @@ export default {
 
     // 鍵有効 (合言葉が入力済みのとき)
     room_code_field_lock() {
+      if (ROOM_CODE_ALWAYS_SHOW) {
+        return
+      }
       this.room_code_field_locked = this.present_p(this.base.room_code)
     },
     // 鍵解除

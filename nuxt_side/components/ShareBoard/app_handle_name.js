@@ -57,19 +57,16 @@ export const app_handle_name = {
       this.handle_name_set("")
     },
 
-    handle_name_validate(s) {
+    handle_name_invalid_then_toast_warn(s) {
       if (this.$route.query.handle_name_validate === "false") {
-        return true
+        return false
       }
       const message = HandleNameValidator.valid_with_message(s)
       if (message) {
         this.toast_warn(message)
-        if (false) {
-          this.nuxt_login_modal_open()
-        }
-        return false
+        return true
       }
-      return true
+      return false
     },
   },
 }
