@@ -1,18 +1,18 @@
 // 使い方
 //
-// ▼this.ParamInfo を参照できるようにしておく
-//
-//   import { ParamInfo         } from "./models/param_info.js"
-//   computed: {
-//      ParamInfo() { return ParamInfo },
-//   },
-//
-// ▼本体
-//
 //   import { params_controller } from "@/components/params_controller.js"
+//   import { ParamInfo         } from "./models/param_info.js"
 //
 //   export const app_storage = {
 //     mixins: [params_controller],
+//     data() {
+//       return {
+//         ...ParamInfo.null_value_data_hash,
+//       }
+//     },
+//     computed: {
+//       ParamInfo() { return ParamInfo },
+//     },
 //   }
 //
 // ▼初回に @input="xxx_handle" などが反応してしまうのを回避するには？
@@ -64,6 +64,8 @@ export const params_controller = {
             v = this.str_to_words(v)
           } else if (e.type === "boolean") {
             v = this.str_to_boolean(v)
+          } else if (e.type === "json") {
+            v = JSON.parse(v)
           } else if (e.type === "string") {
           } else {
             throw new Error("must not happen")
