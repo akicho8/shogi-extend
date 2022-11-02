@@ -43,7 +43,7 @@ export const app_clock_box = {
   methods: {
     cc_setup_by_url_params() {
       ["initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus"].forEach(key => {
-        const argv = this.$route.query[`clock_box_${key}`]
+        const argv = this.$route.query[`clock_box.${key}`]
         if (this.present_p(argv)) {
           const value = parseInt(argv)
           this.$set(this.cc_params[0], key, value)

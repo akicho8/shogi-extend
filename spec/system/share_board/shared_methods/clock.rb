@@ -66,10 +66,10 @@ module SharedMethods
   # URLにする時計のパラメータ
   def clock_box_params(values)
     [
-      :"clock_box_initial_main_min",
-      :"clock_box_initial_read_sec",
-      :"clock_box_initial_extra_sec",
-      :"clock_box_every_plus",
+      :"clock_box.initial_main_min",
+      :"clock_box.initial_read_sec",
+      :"clock_box.initial_extra_sec",
+      :"clock_box.every_plus",
     ].zip(values).to_h
   end
 

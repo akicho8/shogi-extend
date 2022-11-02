@@ -3,13 +3,13 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
-        :room_code                  => :test_room,
-        :user_name            => user_name,
-        :fixed_member_names         => "alice,bob",
-        :fixed_order_names          => "alice,bob",
-        :clock_box_initial_main_min => 60,
-        :clock_box_play_handle      => true,
-        :acquire_medal_count        => 1,
+        :room_code                   => :test_room,
+        :user_name                   => user_name,
+        :fixed_member_names          => "alice,bob",
+        :fixed_order_names           => "alice,bob",
+        "clock_box.initial_main_min" => 60,
+        :clock_box_play_handle       => true,
+        :acquire_medal_count         => 1,
       })
   end
 

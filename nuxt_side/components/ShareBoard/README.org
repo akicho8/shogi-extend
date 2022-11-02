@@ -76,10 +76,10 @@
   | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                           |
   | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&user_name=alice&SEND_SUCCESS_DELAY=-1 |
   | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                           |
-  | clock_box_initial_main_min  | 持ち時間(分)                                            |                                                                                           |
-  | clock_box_initial_read_sec  | 秒読み(秒)                                              |                                                                                           |
-  | clock_box_initial_extra_sec | 猶予(秒)                                                |                                                                                           |
-  | clock_box_every_plus        | 1手毎加算(秒)                                           |                                                                                           |
+  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                           |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                           |
+  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                           |
+  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                           |
   | clock_box_play_handle       | true なら即開始                                         |                                                                                           |
   | xmatch_auth_key             |                                                         |                                                                                           |
   | xmatch_wait_max             |                                                         |                                                                                           |
@@ -123,7 +123,7 @@
 
 ** 時計設定済みで部屋に入るには？
 
-   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&clock_box_initial_main_min=1&clock_box_initial_read_sec=30&clock_box_initial_extra_sec=60&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&clock_box.initial_main_min=1&clock_box.initial_read_sec=30&clock_box.initial_extra_sec=60&clock_box.every_plus=0&clock_box_play_handle=true
 
 ** プリセット指定
 
@@ -135,8 +135,8 @@
 
 ** 順番設定あり・時計作動中・すぐ時間切れになる
 
-   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
-   http://localhost:4000/share-board?room_code=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box_initial_main_min=0&clock_box_initial_read_sec=3&clock_box_initial_extra_sec=0&clock_box_every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&RETRY_DELAY=-1&clock_box.initial_main_min=0&clock_box.initial_read_sec=3&clock_box.initial_extra_sec=0&clock_box.every_plus=0&clock_box_play_handle=true
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
@@ -154,7 +154,7 @@
 
 ** 対局時計をONにして起動する(あと持ち時間0)
 
-   http://localhost:4000/share-board?autoexec=cc_create,cc_modal_handle&clock_box_initial_main_min=0
+   http://localhost:4000/share-board?autoexec=cc_create,cc_modal_handle&clock_box.initial_main_min=0
 
 ** 順番設定済み + 対局時計ON
 
@@ -166,7 +166,7 @@
 
 ** 順番設定あり・時計作動中
 
-   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&clock_box_initial_main_min=60&clock_box_play_handle=true
+   http://localhost:4000/share-board?room_code=dev_room&user_name=alice&fixed_order_state=to_o1_state&fixed_order_names=alice,bob&clock_box.initial_main_min=60&clock_box_play_handle=true
 
 ** 自分は a で部屋に abcdef いて順番が bdac のとき左の並びは bdacef になるの確認
 
