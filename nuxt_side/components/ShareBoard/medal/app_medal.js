@@ -8,12 +8,11 @@ export const app_medal = {
       medal_counts_hash: {}, // 名前がキーで値が個数。みんなの個数が入っている。
     }
   },
-  mounted() {
-    this.medal_write()
-  },
   methods: {
     // 起動時に名前が復元できていればメダル獲得数を表示に反映する
+    // これは this.user_name を設定した直後に自動的に呼ぶ
     medal_write() {
+      this.clog(`medal_write()`)
       if (this.present_p(this.user_name)) {
         this.receive_xmedal(this.current_xmedal)
       }

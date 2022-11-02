@@ -11,22 +11,13 @@ export const app_room_setup = {
     }
   },
   mounted() {
-    this.name_setup()
+    // this.name_setup()
     this.room_setup_auto()
   },
   beforeDestroy() {
     this.room_destroy()
   },
   methods: {
-    name_setup() {
-      // 名前の優先順位
-      // 1. query.user_name         (URL引数)
-      // 2. query.default_user_name (URL引数)
-      // 3. g_current_user_name     (ログイン名)
-      this.user_name = this.$route.query.fixed_user_name || this.user_name
-      this.handle_name_set(this.user_name)
-    },
-
     // URLに合言葉の指定があればそのまま部屋に入る
     room_setup_auto() {
       // URLに合言葉がない場合は何もしない

@@ -49,7 +49,11 @@ export const app_handle_name = {
 
     handle_name_set(user_name) {
       this.user_name = user_name
-      this.medal_write()
+      this.handle_name_updated()
+    },
+
+    handle_name_updated() {
+      this.medal_write()       // メダルと名前を結び付ける
       this.member_bc_restart() // 新しい名前をBCする
     },
 

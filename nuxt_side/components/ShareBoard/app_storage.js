@@ -25,7 +25,6 @@ export const app_storage = {
     ls_default() {
       return {
         ...this.pc_ls_default,
-        user_name:            this.default_user_name,
         persistent_cc_params: this.CcRuleInfo.default_cc_params,
       }
     },
