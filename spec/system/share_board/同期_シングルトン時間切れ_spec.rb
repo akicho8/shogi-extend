@@ -7,10 +7,10 @@ RSpec.describe type: :system, share_board_spec: true do
     @CC_AUTO_TIME_LIMIT_DELAY = 3 # 通知が来なくてもN秒後に自力で時間切れモーダルを表示
   end
 
-  def case1(fixed_user_name)
+  def case1(user_name)
     visit_app({
         "room_code"                => "test_room",
-        "fixed_user_name"          => fixed_user_name,
+        "user_name"          => user_name,
         "fixed_member_names"       => "alice,bob",
         "fixed_order_names"        => "alice,bob",
         "RETRY_DELAY"              => -1,

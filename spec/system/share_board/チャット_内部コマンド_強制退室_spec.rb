@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
-      visit_app(room_code: "test_room", fixed_user_name: "alice") # このテストに限っては fixed_member_names 使用禁止
+      visit_app(room_code: "test_room", user_name: "alice") # このテストに限っては fixed_member_names 使用禁止
     end
     b_block do
-      visit_app(room_code: "test_room", fixed_user_name: "bob")
+      visit_app(room_code: "test_room", user_name: "bob")
     end
     a_block do
       find(".message_modal_handle").click

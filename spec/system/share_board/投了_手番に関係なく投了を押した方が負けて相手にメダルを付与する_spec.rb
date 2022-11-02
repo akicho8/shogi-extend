@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
         :room_code                  => :test_room,
-        :fixed_user_name            => user_name,
+        :user_name            => user_name,
         :fixed_member_names         => "alice,bob",
         :fixed_order_names          => "alice,bob",
         :clock_box_initial_main_min => 60,

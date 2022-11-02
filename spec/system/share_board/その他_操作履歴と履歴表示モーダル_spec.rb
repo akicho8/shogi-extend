@@ -2,10 +2,10 @@ require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
   it "操作履歴から過去の局面に戻る" do
-    def case1(fixed_user_name)
+    def case1(user_name)
       visit_app({
           :room_code          => :test_room,
-          :fixed_user_name    => fixed_user_name,
+          :user_name    => user_name,
           :fixed_member_names => "alice,bob",
           :fixed_order_names  => "alice,bob",
           :quick_sync_key     => "is_quick_sync_off", # 手動同期にしておく
@@ -37,7 +37,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "操作履歴モーダル内の補助機能" do
     a_block do
-      visit_app(room_code: :test_room, fixed_user_name: "alice", fixed_order_names: "alice", fixed_order_state: "to_o1_state")
+      visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", fixed_order_state: "to_o1_state")
 
       piece_move_o("77", "76", "☗7六歩")              # 初手を指す
       assert_turn(1)

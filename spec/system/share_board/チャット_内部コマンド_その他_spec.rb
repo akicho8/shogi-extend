@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   before do
     visit_app({
         :room_code            => :test_room,
-        :fixed_user_name      => "a",
+        :user_name      => "a",
         :fixed_member_names   => "a,b,c,d",
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => "false",

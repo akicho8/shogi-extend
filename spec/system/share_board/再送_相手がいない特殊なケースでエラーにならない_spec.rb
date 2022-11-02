@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       visit_app({
           :room_code          => :test_room,
-          :fixed_user_name    => "alice",
+          :user_name    => "alice",
           :fixed_order_names  => "alice", # 白側に誰もいないため初手を指したあとで失敗する
           :fixed_order_state  => "to_o2_state",
           :SEND_SUCCESS_DELAY => -1, # 相手が応答しない

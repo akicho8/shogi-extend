@@ -3,10 +3,10 @@ require "#{__dir__}/shared_methods"
 RSpec.describe type: :system, share_board_spec: true do
   it "飛vs角を1vs1" do
     a_block do
-      visit_app(fixed_user_name: "alice", xmatch_auth_key: "handle_name_required")
+      visit_app(user_name: "alice", xmatch_auth_key: "handle_name_required")
     end
     b_block do
-      visit_app(fixed_user_name: "bob", xmatch_auth_key: "handle_name_required")
+      visit_app(user_name: "bob", xmatch_auth_key: "handle_name_required")
     end
     a_block do
       hamburger_click
@@ -39,7 +39,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "自分vs自分 平手" do
     a_block do
-      visit_app(fixed_user_name: "alice", xmatch_auth_key: "handle_name_required")
+      visit_app(user_name: "alice", xmatch_auth_key: "handle_name_required")
 
       hamburger_click
       menu_item_click("自動マッチング")          # モーダルを開く
@@ -53,7 +53,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "時間切れ" do
     @xmatch_wait_max = 2
     a_block do
-      visit_app(fixed_user_name: "alice", xmatch_wait_max: @xmatch_wait_max, xmatch_auth_key: "handle_name_required")
+      visit_app(user_name: "alice", xmatch_wait_max: @xmatch_wait_max, xmatch_auth_key: "handle_name_required")
 
       hamburger_click
       menu_item_click("自動マッチング")          # モーダルを開く
