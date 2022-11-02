@@ -72,7 +72,7 @@ export default {
       this.new_user_name = _.trim(this.new_user_name)
 
       if (this.blank_p(this.new_room_code)) {
-        this.toast_ng("合言葉を入力してください")
+        this.toast_warn("合言葉を入力してください")
         return
       }
 
