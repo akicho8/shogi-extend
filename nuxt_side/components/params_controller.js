@@ -40,6 +40,7 @@ export const params_controller = {
     this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
     this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
+    this.pc_after_set_call()                         // 4. それぞれの後処理があれば呼ぶ
     this.pc_mounted()
     this.clog(`pc_standby_ok: ${this.pc_standby_ok}`)
     this.$nextTick(() => {
@@ -63,8 +64,9 @@ export const params_controller = {
             v = this.str_to_words(v)
           } else if (e.type === "boolean") {
             v = this.str_to_boolean(v)
+          } else if (e.type === "string") {
           } else {
-            // string
+            throw new Error("must not happen")
           }
           this.clog(`this.$data["${e.key}"] = ${JSON.stringify(v)} (from query)`)
           this.$data[e.key] = v
@@ -128,6 +130,14 @@ export const params_controller = {
             this.$data[e.key] = e.default_for(this)
             this.clog(`[設定値][NG] this.${e.key} の ${this.short_inspect(value)} を ${this.short_inspect(e.default_for(this))} に変更`)
           }
+        }
+      })
+    },
+
+    pc_after_set_call() {
+      this.ParamInfo.values.forEach(e => {
+        if (e.after_set) {
+          e.after_set(this)
         }
       })
     },

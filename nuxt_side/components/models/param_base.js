@@ -1,5 +1,6 @@
 import { ApplicationMemoryRecord } from "./application_memory_record.js"
 import { Gs } from "./gs.js"
+import _ from "lodash"
 
 export class ParamBase extends ApplicationMemoryRecord {
   // 例
@@ -24,6 +25,11 @@ export class ParamBase extends ApplicationMemoryRecord {
     } else {
       Gs.__assert__(this.default !== undefined, `${this.key} の default が未定義`)
       v = this.default
+    }
+
+    // 初期値とする値が関数なら呼ぶ
+    if (_.isFunction(v)) {
+      v = v(context)
     }
 
     // Hash の場合そのまま返してしまうと初期値が更新されてしまう
