@@ -42,11 +42,17 @@ export const app_clock_box = {
 
   methods: {
     cc_setup_by_url_params() {
-      ["initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus"].forEach(key => {
-        const argv = this.$route.query[`clock_box.${key}`]
-        if (this.present_p(argv)) {
-          const value = parseInt(argv)
-          this.$set(this.cc_params[0], key, value)
+      [
+        "initial_main_min",
+        "initial_read_sec",
+        "initial_extra_sec",
+        "every_plus",
+      ].forEach(column => {
+        const key = `clock_box.${column}`
+        const value = this.$route.query[key]
+        if (this.present_p(value)) {
+          const iv = parseInt(value)
+          this.$set(this.cc_params[0], column, iv)
         }
       })
     },
