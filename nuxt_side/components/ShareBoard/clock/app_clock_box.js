@@ -29,7 +29,7 @@ export const app_clock_box = {
       this.clock_box.play_handle()
     }
 
-    if (this.$route.query.clock_box_play_handle === "true") {
+    if (this.$route.query["clock_auto_start"] === "true") {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
