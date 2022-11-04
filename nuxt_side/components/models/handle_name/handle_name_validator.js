@@ -1,76 +1,115 @@
+// import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
+//
+// const handle_name_validator = HandleNameValidator.create(str, {name: "名前"})
+// const message = handle_name_validator.valid_message
+// if (message) {
+//   this.toast_warn(message)
+//   return
+// }
+//
+
 import _ from "lodash"
 import dayjs from "dayjs"
 import { Gs } from "../gs.js"
 import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 
-export const HandleNameValidator = {
-  get MAX_LENGTH() { return 16 },
+export class HandleNameValidator {
+  static MAX_LENGTH = 16
 
-  // import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
-  //
-  // const message = HandleNameValidator.valid_with_message(str, {name: "名前"})
-  // if (message) {
-  //   this.toast_warn(message)
-  //   return
-  // }
-  //
-  valid_with_message(s, options = {}) {
-    options = {
+  static PREFIX_LIST = [
+    "素敵な",
+    "友好的な",
+    "真面目に",
+    "親近感のある",
+    "フレンドリーな",
+    "親しみのある",
+    "捨てハンでない",
+  ]
+
+  static create(source) {
+    return new this(source)
+  }
+
+  static valid_message(source, options = {}) {
+    return this.create(source, options).valid_message
+  }
+
+  static valid_p(source, options) {
+    return this.create(source, options).valid_p
+  }
+
+  static invalid_p(source, options) {
+    return this.create(source, options).invalid_p
+  }
+
+  constructor(source, options) {
+    this.source = source
+    this.options = {
       name: "ハンドルネーム",
       ...options,
     }
-    s = _.trim(s)
-    if (s.length === 0) {
-      return `${options.name}を入力してください`
-    }
-    if (s.length > this.MAX_LENGTH) {
-      return `${options.name}が長すぎます`
-    }
-    if (this.valid(s)) {
-      return null
-    } else {
-      const pepper = dayjs().format("YYYY-MM-DD")
-      const hash_number = Gs.str_to_hash_number([pepper, s].join("-"))
-      const prefix = Gs.ary_cycle_at(this.prefix_list, hash_number)
-      return `${prefix}${options.name}を入力してください`
-    }
-  },
-  valid(s) {
-    s = s.replace(/[\s\u3000]+/g, "") // 空白を取る (Chrome と Firefox は \s が全角スペースにマッチする)
-    s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
-    s = Gs.hankaku_format(s)          // 半角化
-    let error = false
-    if (!error) {
-      error = (s.length === 0)
-    }
-    if (!error) {
-      error = (s.length > this.MAX_LENGTH)
-    }
-    if (!error) {
-      error = s.match(new RegExp(this.prefix_list.join("|"), "i")) // 素敵な○○
-    }
-    if (!error) {
-      error = s.match(new RegExp(HandleNameNgWordList.join("|"), "i")) // 通りすがり
-    }
-    if (!error) {
-      error = (s.length <= 1 && !s.match(/[一-龠]/)) // 1文字のひらがな
-    }
-    if (!error) {
-      error = [...s].length === TwitterEmojiParser(s).length // すべて絵文字
-    }
-    return !error
-  },
+  }
 
-  get prefix_list() {
-    return [
-      "素敵な",
-      "友好的な",
-      "真面目に",
-      "親近感のある",
-      "フレンドリーな",
-      "親しみのある",
-      "捨てハンでない",
-    ]
-  },
+  get valid_p() {
+    return this.valid_message == null
+  }
+
+  get invalid_p() {
+    return !this.valid_p
+  }
+
+  get valid_message() {
+    let s = this.normalized_source
+
+    let message = null
+    if (message == null) {
+      if (Gs.blank_p(s)) {
+        message = `${this.options.name}を入力してください`
+      }
+    }
+    if (message == null) {
+      if (s.length > this.MAX_LENGTH) {
+        message = `${this.options.name}は${this.MAX_LENGTH}文字以下にしてください`
+      }
+    }
+    if (message == null) {
+      if (s.match(new RegExp(this.constructor.PREFIX_LIST.join("|"), "i"))) { // 素敵な○○
+        message = this.message_sample
+      }
+    }
+    if (message == null) {
+      if (s.match(new RegExp(HandleNameNgWordList.join("|"), "i"))) {  // 通りすがり
+        message = this.message_sample
+      }
+    }
+    if (message == null) {
+      if (s.length <= 1 && !s.match(/[一-龠]/)) { // 1文字のひらがな
+        message = this.message_sample
+      }
+    }
+    if (message == null) {
+      if ([...s].length === TwitterEmojiParser(s).length) { // すべて絵文字
+        message = `${this.options.name}には絵文字以外も入力してください`
+      }
+    }
+    return message
+  }
+
+  // private
+
+  get normalized_source() {
+    let s = this.source
+    s = Gs.str_space_remove(s)
+    s = s.replace(/[\.・]/g, "")      // ノイズ文字を取る
+    s = Gs.hankaku_format(s)
+    return s
+  }
+
+  get message_sample() {
+    const pepper = dayjs().format("YYYY-MM-DD")
+    const hash_number = Gs.str_to_hash_number([pepper, this.source].join("-"))
+    const prefix = Gs.ary_cycle_at(this.constructor.PREFIX_LIST, hash_number)
+    return `${prefix}${this.options.name}を入力してください`
+  }
 }

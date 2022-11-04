@@ -65,7 +65,7 @@ export const app_handle_name = {
       if (this.$route.query.handle_name_validate === "false") {
         return false
       }
-      const message = HandleNameValidator.valid_with_message(s)
+      const message = HandleNameValidator.valid_message(s)
       if (message) {
         this.toast_warn(message)
         return true

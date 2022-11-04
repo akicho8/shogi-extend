@@ -34,7 +34,7 @@ export const app_ranking = {
         inputAttrs: { type: "text", value: this.entry_name, placeholder: "名前", },
         canCancel: false,
         onConfirm: value => {
-          const message = HandleNameValidator.valid_with_message(value, {name: "名前"})
+          const message = HandleNameValidator.valid_message(value, {name: "名前"})
           if (message) {
             this.$sound.play("x")
             this.toast_warn(message)

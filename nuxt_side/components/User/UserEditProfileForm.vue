@@ -102,7 +102,7 @@ export default {
 
     // 名前が不正か？
     name_invalid_message() {
-      return HandleNameValidator.valid_with_message(this.base.new_name, {name: "名前"})
+      return HandleNameValidator.valid_message(this.base.new_name, {name: "名前"})
     },
 
     image_source() {

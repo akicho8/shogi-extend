@@ -78,7 +78,7 @@ export default {
           if (this.nuxt_login_required()) { return }
         }
         if (this.base.xmatch_auth_info.key === "handle_name_required") {
-          if (!HandleNameValidator.valid(this.base.user_name)) {
+          if (HandleNameValidator.invalid_p(this.base.user_name)) {
             this.toast_warn("ログインするかハンドルネームを入力してください")
             this.base.handle_name_modal_core({success_callback: () => this.rule_click_core(e) }) // 入力後にクリックしている
             return

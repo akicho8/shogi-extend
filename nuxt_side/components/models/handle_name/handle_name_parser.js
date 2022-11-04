@@ -14,17 +14,17 @@ export class HandleNameParser {
   // call_name("SOS団")             → "SOS団"
   // call_name("ありす")            → "ありすさん"
   // call_name("ありす123(居飛車)") → "ありすさん"
-  static call_name(s, options = {}) {
-    return this.parse(s, options).call_name
+  static call_name(source, options = {}) {
+    return this.parse(source, options).call_name
   }
 
-  static parse(s, options = {}) {
-    return new this(s, options)
+  static parse(source, options = {}) {
+    return new this(source, options)
   }
 
-  constructor(s, options = {}) {
-    Xassertion.__assert__(Xobject.present_p(s), "this.present_p(s) in HandleNameParser")
-    this.source = s
+  constructor(source, options = {}) {
+    Xassertion.__assert__(Xobject.present_p(source), "this.present_p(source) in HandleNameParser")
+    this.source = source
     this.options = options
   }
 
@@ -70,6 +70,8 @@ export class HandleNameParser {
 
     return `${s}さん`
   }
+
+  // private
 
   // 絵文字を除去する
   // ただし除去して空になるなら除去しない
