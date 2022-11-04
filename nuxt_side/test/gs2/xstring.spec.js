@@ -8,6 +8,9 @@ describe("Xstring", () => {
     expect(Xstring.str_to_boolean("ON")).toEqual(true)
     expect(Xstring.str_to_boolean(true)).toEqual(true)
   })
+  test("str_space_remove", () => {
+    expect(Xstring.str_space_remove("　a 　 b　")).toEqual("ab")
+  })
   test("str_squish", () => {
     expect(Xstring.str_squish("　　a　　b　　")).toEqual("a b")
     expect(Xstring.str_squish(null)).toEqual("")

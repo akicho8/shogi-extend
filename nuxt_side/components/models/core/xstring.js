@@ -28,17 +28,28 @@ export const Xstring = {
   },
 
   str_to_boolean(str) {
-    str = (str ?? "").toString().trim().toLowerCase()
+    str = (str ?? "").toString()
+    str = str.trim().toLowerCase()
     return ["1", "t", "true", "on", "enabled", "enable"].includes(str)
   },
 
+  // 全角を含めてスペースを除去する
+  // Chrome と Firefox は \s が全角スペースにマッチする
+  str_space_remove(str) {
+    str = (str ?? "").toString()
+    str = str.replace(/[\s\u3000]+/g, "")
+    return str
+  },
+
+  // 全角を含めて連続するスペースを1つにする
   str_squish(str) {
-    str = (str || "").toString()
+    str = (str ?? "").toString()
     str = str.replace(/[\s\u3000]+/g, " ")
     str = str.trim()
     return str
   },
 
+  // 全角を含めて前後のスペースを除去する
   str_strip(str) {
     str = (str || "").toString()
     str = str.replace(/^[\s\u3000]+/, "")
