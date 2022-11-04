@@ -53,54 +53,17 @@ module Swars
 
           self.csa_seq ||= []
 
-          # self.rule_key ||= :ten_min
-
-          # "" から ten_min への変換
-          # if rule_key
-          #   self.rule_key = RuleInfo.fetch(rule_key).key
-          # end
-
           # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
           if key
-            if key.include?("-")
-              ymd_str = key.split("-").last
-              if ymd_str.match?(/\A\d+_\d+\z/)
-                self.battled_at ||= Time.zone.parse(ymd_str) rescue nil
-              end
-            end
+            self.battled_at ||= KeyToTime.new(key).to_time
           end
-
-          # if Rails.env.development? || Rails.env.test?
-          #   self.battled_at ||= Time.current + (self.class.count * 6.hour)
-          # end
-
           self.battled_at ||= Time.current
-          # self.final_key ||= :TORYO
         end
 
         with_options presence: true do
           validates :key
           validates :battled_at
-
-          # validates :rule_key
-          # validates :final_key
-
-          # validates :rule_id
-          # validates :final_id
-          # validates :xmode_id
         end
-
-        # if Rails.env.development?
-        #   with_options allow_blank: true do
-        #     validates :rule_key,  inclusion: RuleInfo.keys.collect(&:to_s)
-        #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
-        #     validates :xmode_key, inclusion: XmodeInfo.keys.collect(&:to_s)
-        #   end
-        # end
-
-        # after_create do
-        #   memberships.each(&:opponent_id_set_if_blank)
-        # end
       end
 
       def to_param
@@ -154,24 +117,6 @@ module Swars
 
         def time_chart_sec_list_of(location_info)
           memberships[location_info.code].sec_list
-        end
-      end
-
-      concerning :ViewHelper do
-        def left_right_memberships(current_swars_user)
-          a = memberships.to_a
-          if current_swars_user
-            if a.last.user == current_swars_user # 対象者がいるときは対象者を左
-              a = a.reverse
-            end
-          else
-            if win_user_id
-              if a.last.judge_key == "win" # 対象者がいないときは勝った方を左
-                a = a.reverse
-              end
-            end
-          end
-          a
         end
       end
     end
