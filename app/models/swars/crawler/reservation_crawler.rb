@@ -14,7 +14,7 @@ module Swars
           key = record.target_user_key
           report_for(key) do
             other_options = battle_count_diff_block(key) do
-              Battle.user_import(params.merge(user_key: key))
+              Importer::UserImporter.new(params.merge(user_key: key)).run
             end
             record.update!(processed_at: Time.current)
             UserMailer.battle_fetch_notify(record, other_options).deliver_later

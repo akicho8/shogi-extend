@@ -10,7 +10,7 @@ module SwarsSupport1
 
     before do
       Swars.setup
-      Swars::Battle.user_import(user_key: "devuser1")
+      Swars::Importer::UserImporter.new(user_key: "devuser1").run
     end
   end
 end

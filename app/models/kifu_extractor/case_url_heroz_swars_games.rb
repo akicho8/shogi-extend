@@ -10,7 +10,7 @@ module KifuExtractor
     def resolve
       if url_type? || swars_battle_url_match?
         if key = Swars::Battle.battle_key_extract(item.source)
-          Swars::Battle.single_battle_import(key: key)
+          Swars::Importer::SingleBattleImporter.new(key: key).run
           if battle = Swars::Battle.find_by(key: key)
             @body = battle.kifu_body
           end

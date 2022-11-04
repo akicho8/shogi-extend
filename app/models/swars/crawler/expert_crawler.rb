@@ -13,7 +13,7 @@ module Swars
       def perform
         params[:user_keys].each do |user_key|
           report_for(user_key) do
-            Battle.user_import(params.merge(user_key: user_key))
+            Importer::UserImporter.new(params.merge(user_key: user_key)).run
           end
         end
       end

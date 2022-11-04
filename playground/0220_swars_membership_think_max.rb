@@ -2,7 +2,7 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Battle.user_import(user_key: "devuser1")
+Swars::Importer::UserImporter.new(user_key: "devuser1").run
 tp Swars::Membership
 # >> |------------------------------------------------------------------|
 # >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype= |

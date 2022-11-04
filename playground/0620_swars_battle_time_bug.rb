@@ -18,4 +18,4 @@ Swars::Battle.destroy_all
 
 Swars::User.find_by(key: "itoshinTV").battles.destroy_all
 
-Swars::Battle.user_import(user_key: "itoshinTV", run_remote: true)
+Swars::Importer::UserImporter.new(user_key: "itoshinTV", run_remote: true).run
