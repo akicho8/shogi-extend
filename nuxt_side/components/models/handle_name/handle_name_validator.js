@@ -1,13 +1,13 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Gs } from "./gs.js"
+import { Gs } from "../gs.js"
 import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 
 export const HandleNameValidator = {
   get MAX_LENGTH() { return 16 },
 
-  // import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
+  // import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
   //
   // const message = HandleNameValidator.valid_with_message(str, {name: "名前"})
   // if (message) {

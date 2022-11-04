@@ -1,4 +1,4 @@
-import { HandleNameParser } from "@/components/models/handle_name_parser.js"
+import { HandleNameParser } from "@/components/models/handle_name/handle_name_parser.js"
 
 describe("HandleNameParser", () => {
   test("基本", () => {

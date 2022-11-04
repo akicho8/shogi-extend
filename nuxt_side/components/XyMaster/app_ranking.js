@@ -1,7 +1,7 @@
 const CONGRATS_LTEQ = 10          // N位以内ならおめでとう
 
 import _ from "lodash"
-import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
+import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
 
 export const app_ranking = {
   data() {

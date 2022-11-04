@@ -1,4 +1,4 @@
-import { HandleNameValidator } from "@/components/models/handle_name_validator.js"
+import { HandleNameValidator } from "@/components/models/handle_name/handle_name_validator.js"
 
 describe("HandleNameValidator", () => {
   test("短かくても漢字なら良い", () => {

@@ -1,7 +1,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import RoomSetupModal from "./RoomSetupModal.vue"
-import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
+import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
 
 export const app_room_setup = {
   data() {

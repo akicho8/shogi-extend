@@ -1,4 +1,4 @@
-import { HandleNameValidator } from '@/components/models/handle_name_validator.js'
+import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
 import HandleNameModal from "./HandleNameModal.vue"
 import _ from "lodash"
 
