@@ -2,13 +2,13 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Battle.count             # => 41
-# Swars::Importer::UserImporter.new(user_key: "Kadokura_Keita", run_remote: true).run
-# Swars::Importer::UserImporter.new(user_key: "itoshinTV", run_remote: true).run
-# Swars::Importer::UserImporter.new(user_key: "SuzutukiZ", run_remote: true).run
-# Swars::Importer::UserImporter.new(user_key: "youface", run_remote: true).run
-# Swars::Importer::UserImporter.new(user_key: "asa2yoru", run_remote: true).run
-# Swars::Importer::UserImporter.new(user_key: "patrick0169", run_remote: true).run
-Swars::Importer::UserImporter.new(user_key: "Shogochandrsu", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "Kadokura_Keita", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "itoshinTV", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "SuzutukiZ", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "youface", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "asa2yoru", run_remote: true).run
+# Swars::Importer::AllRuleImporter.new(user_key: "patrick0169", run_remote: true).run
+Swars::Importer::AllRuleImporter.new(user_key: "Shogochandrsu", run_remote: true).run
 Swars::Battle.count             # => 41
 
 # >> |---------------------------------------------|

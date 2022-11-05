@@ -1,9 +1,9 @@
 module Swars
   module Importer
-    class MultipleBattleImporter
+    class OneRuleImporter
       attr_accessor :params
 
-      # Importer::MultipleBattleImporter.new(user_key: "chrono_", gtype: "").run
+      # Importer::OneRuleImporter.new(user_key: "chrono_", gtype: "").run
       def initialize(params = {})
         @params = {
           :verbose            => Rails.env.development?,
@@ -84,7 +84,7 @@ module Swars
             if params[:error_capture_fake]
               raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
             end
-            SingleBattleImporter.new(params.merge(key: key, skip_if_exist: false)).run
+            BattleImporter.new(params.merge(key: key, skip_if_exist: false)).run
           rescue Bioshogi::BioshogiError => error
             if f = params[:error_capture]
               f.call({key: key, error: error})

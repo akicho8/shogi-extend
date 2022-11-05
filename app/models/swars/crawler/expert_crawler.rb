@@ -13,7 +13,7 @@ module Swars
       def perform
         params[:user_keys].each do |user_key|
           report_for(user_key) do
-            Importer::UserImporter.new(params.merge(user_key: user_key)).run
+            Importer::AllRuleImporter.new(params.merge(user_key: user_key)).run
           end
         end
       end

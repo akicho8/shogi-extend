@@ -76,7 +76,7 @@ module Swars
       # ウォーズ検索のクロール待ち時間と分けるためIPで判別しようかと思ったがIPはほぼランダムに変わる
       if @counter == 1
         # slack_notify(subject: "KENTOアクセス元IP", body: request.remote_ip)
-        Swars::Importer::ThrottleUserImporter.new(user_key: @user.key, page_max: 1).run
+        Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
       end
     end
 

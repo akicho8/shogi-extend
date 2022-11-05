@@ -7,7 +7,7 @@ module KifuExtractor
         if uri.path
           if md = uri.path.match(%r{/swars/battles/(?<battle_key>[\w-]+)})
             key = md["battle_key"]
-            Swars::Importer::SingleBattleImporter.new(key: key).run
+            Swars::Importer::BattleImporter.new(key: key).run
             if battle = Swars::Battle.find_by(key: key)
               @body = battle.kifu_body
             end

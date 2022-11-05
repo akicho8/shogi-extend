@@ -1,9 +1,9 @@
 module Swars
   module Importer
-    class SingleBattleImporter
+    class BattleImporter
       attr_accessor :params
 
-      # Importer::SingleBattleImporter.new(user_key: "chrono_", gtype: "").run
+      # Importer::BattleImporter.new(user_key: "chrono_", gtype: "").run
       def initialize(params = {})
         @params = {
           verbose: Rails.env.development?,

@@ -10,7 +10,7 @@ module SwarsSupport1
 
     before do
       Swars.setup
-      Swars::Importer::UserImporter.new(user_key: "devuser1").run
+      Swars::Importer::AllRuleImporter.new(user_key: "devuser1").run
     end
   end
 end

@@ -1,6 +1,6 @@
 module Swars
   module Importer
-    class ThrottleUserImporter
+    class ThrottleImporter
       attr_accessor :params
 
       def initialize(params = {})
@@ -20,7 +20,7 @@ module Swars
         end
         Rails.cache.write(cache_key, true, expires_in: params[:seconds])
 
-        UserImporter.new(params).run
+        AllRuleImporter.new(params).run
         true
       end
 

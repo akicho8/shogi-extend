@@ -6,7 +6,7 @@ module SwarsSystemSupport
       command = <<~EOT
         Swars::Battle.destroy_all
         Swars.setup
-        Swars::Importer::UserImporter.new(user_key: "devuser1").run
+        Swars::Importer::AllRuleImporter.new(user_key: "devuser1").run
       EOT
       %x(rails runner -e development '#{command}')
     end

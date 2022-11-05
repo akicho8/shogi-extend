@@ -78,19 +78,19 @@ module Swars
         # これらはなるべく使うな
         if true
           def throttle_user_import(params = {})
-            Importer::ThrottleUserImporter.new(params).run
+            Importer::ThrottleImporter.new(params).run
           end
 
           def user_import(params = {})
-            Importer::UserImporter.new(params).run
+            Importer::AllRuleImporter.new(params).run
           end
 
           def multiple_battle_import(params = {})
-            Importer::MultipleBattleImporter.new(params).run
+            Importer::OneRuleImporter.new(params).run
           end
 
           def single_battle_import(params = {})
-            Importer::SingleBattleImporter.new(params).run
+            Importer::BattleImporter.new(params).run
           end
         end
       end

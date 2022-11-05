@@ -13,7 +13,7 @@ module Swars
       def perform
         User.regular_only.limit(params[:limit]).each do |user|
           report_for(user.key) do
-            Importer::UserImporter.new(params.merge(user_key: user.key)).run
+            Importer::AllRuleImporter.new(params.merge(user_key: user.key)).run
           end
         end
       end
