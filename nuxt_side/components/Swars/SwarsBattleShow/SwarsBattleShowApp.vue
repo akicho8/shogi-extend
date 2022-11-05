@@ -125,11 +125,11 @@ export default {
     // console.log(this)
 
     // console.log(this.$route.query)
-    // http://localhost:3000/w.json?query=devuser1&format_type=user
-    // http://localhost:4000/swars/users/devuser1
+    // http://localhost:3000/w.json?query=DevUser1&format_type=user
+    // http://localhost:4000/swars/users/DevUser1
 
-    // http://localhost:3000/w/devuser1-Yamada_Taro-20200101_123401.json?basic_fetch=1
-    // http://localhost:4000/swars/battles/devuser1-Yamada_Taro-20200101_123401
+    // http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.json?basic_fetch=1
+    // http://localhost:4000/swars/battles/DevUser1-YamadaTaro-20200101_123401
     // const record = await $axios.$get(`/w/${params.key}.json`, {params: {ogp_only: true, basic_fetch: true, ...query}})
 
     const params = {

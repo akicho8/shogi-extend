@@ -4,13 +4,13 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   before do
-    @key = "devuser1-Yamada_Taro-20200101_123401"
+    @key = "DevUser1-YamadaTaro-20200101_123401"
   end
 
   describe "HTML" do
     def case1(params = {})
       visit2 "/swars/battles/#{@key}", params
-      assert_text "Yamada_Taro"
+      assert_text "YamadaTaro"
       assert_text "最後は投了"
     end
 

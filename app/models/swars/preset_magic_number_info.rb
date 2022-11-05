@@ -17,7 +17,7 @@ module Swars
     ]
 
     class << self
-      def by_magick_number(number)
+      def by_magic_number(number)
         fetch("magic_number:#{number}")
       end
     end

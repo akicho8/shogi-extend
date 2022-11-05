@@ -21,7 +21,7 @@ module UrlProxy
 
   # ホストなし
   # rails r "p UrlProxy.url_for('/about/terms')"
-  # rails r "p UrlProxy.url_for(path: '/swars/search', query: {query: 'devuser1'})"
+  # rails r "p UrlProxy.url_for(path: '/swars/search', query: {query: 'DevUser1'})"
   def url_for(*args)
     workaround(*args)
   end

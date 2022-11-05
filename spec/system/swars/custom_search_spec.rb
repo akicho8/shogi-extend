@@ -4,17 +4,17 @@ RSpec.describe "カスタム検索", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "サイドバーから遷移" do
-    visit2 "/swars/search", query: "Yamada_Taro"
+    visit2 "/swars/search", query: "YamadaTaro"
     hamburger_click
     find(".swars_custom_search_handle").click
-    assert_current_path "/swars/search/custom?user_key=Yamada_Taro"
+    assert_current_path "/swars/search/custom?user_key=YamadaTaro"
   end
 
   it "フォーム入力からの検索" do
-    visit2 "/swars/search/custom", user_key: "Yamada_Taro"
+    visit2 "/swars/search/custom", user_key: "YamadaTaro"
     find(:label, text: "10分", exact_text: true).click
     within(".new_query_field") do
-      assert_selector(:fillable_field, with: "Yamada_Taro 持ち時間:10分")
+      assert_selector(:fillable_field, with: "YamadaTaro 持ち時間:10分")
     end
     click_on("検索")
     assert_current_path "/swars/search", ignore_query: true

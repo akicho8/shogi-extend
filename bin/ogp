@@ -58,14 +58,14 @@ LIST_ALL = [
   # { url: "/settings/email",                                                          validations: { "code" => "404",                                                                                                                                      }},
   #
   # { url: "/",                                                                        validations: { "title" => "SHOGI-EXTEND(c)",                                                                                                           }},
-  # { url: "/swars/search?query=Yamada_Taro",                                          validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
-  # { url: "/swars/users/Yamada_Taro/",                                                validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
-  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/",                     validations: { "og:image" => /Yamada_Taro.*png.*turn/                                                                                                                                                                }},
-  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black", validations: { "og:image" => /Yamada_Taro.*png.*turn=100/,                                                                                                                                                                }},
-  # { url: "/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet",         validations: { "og:title" => /Yamada_Taro/,                                                                                                                                                                }},
-  # { url: "/swars/users/Yamada_Taro/direct-open/kento",                               validations: { "title" => /KENTO/, "mobile_icon" => /kento/,                                                                                                                          }},
-  # { url: "/swars/users/Yamada_Taro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mobile_icon" => /piyo_shogi/,                                                                                                                     }},
-  # { url: "/swars/users/Yamada_Taro/kento-api",                                       validations: { "title" => /Yamada_Taro/,                                                                                                                                       }},
+  # { url: "/swars/search?query=YamadaTaro",                                          validations: { "title" => /YamadaTaro/,                                                                                                                                       }},
+  # { url: "/swars/users/YamadaTaro/",                                                validations: { "og:title" => /YamadaTaro/,                                                                                                                                                                }},
+  # { url: "/swars/battles/DevUser3-YamadaTaro-20200101_123403/",                     validations: { "og:image" => /YamadaTaro.*png.*turn/                                                                                                                                                                }},
+  # { url: "/swars/battles/DevUser3-YamadaTaro-20200101_123403/?turn=100&viewpoint=black", validations: { "og:image" => /YamadaTaro.*png.*turn=100/,                                                                                                                                                                }},
+  # { url: "/swars/battles/DevUser3-YamadaTaro-20200101_123403/formal-sheet",         validations: { "og:title" => /YamadaTaro/,                                                                                                                                                                }},
+  # { url: "/swars/users/YamadaTaro/direct-open/kento",                               validations: { "title" => /KENTO/, "mobile_icon" => /kento/,                                                                                                                          }},
+  # { url: "/swars/users/YamadaTaro/direct-open/piyo_shogi",                          validations: { "title" => /ぴよ/,  "mobile_icon" => /piyo_shogi/,                                                                                                                     }},
+  # { url: "/swars/users/YamadaTaro/kento-api",                                       validations: { "title" => /YamadaTaro/,                                                                                                                                       }},
   # { url: "/swars/histograms/attack",                                                 validations: { "title" => /戦型/,                                                                                                                                              }},
   # { url: "/swars/histograms/grade",                                                  validations: { "title" => /棋力/,                                                                                                                                              }},
   # { url: "/swars/top-group",                                                         validations: { "title" => /上位/,                                                                                                                                              }},
@@ -226,14 +226,14 @@ end
 # >> http://localhost:4000/settings/profile
 # >> http://localhost:4000/settings/email
 # >> http://localhost:4000/
-# >> http://localhost:4000/swars/search?query=Yamada_Taro
-# >> http://localhost:4000/swars/users/Yamada_Taro/
-# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/
-# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/?turn=100&viewpoint=black
-# >> http://localhost:4000/swars/battles/devuser3-Yamada_Taro-20200101_123403/formal-sheet
-# >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/kento
-# >> http://localhost:4000/swars/users/Yamada_Taro/direct-open/piyo_shogi
-# >> http://localhost:4000/swars/users/Yamada_Taro/kento-api
+# >> http://localhost:4000/swars/search?query=YamadaTaro
+# >> http://localhost:4000/swars/users/YamadaTaro/
+# >> http://localhost:4000/swars/battles/DevUser3-YamadaTaro-20200101_123403/
+# >> http://localhost:4000/swars/battles/DevUser3-YamadaTaro-20200101_123403/?turn=100&viewpoint=black
+# >> http://localhost:4000/swars/battles/DevUser3-YamadaTaro-20200101_123403/formal-sheet
+# >> http://localhost:4000/swars/users/YamadaTaro/direct-open/kento
+# >> http://localhost:4000/swars/users/YamadaTaro/direct-open/piyo_shogi
+# >> http://localhost:4000/swars/users/YamadaTaro/kento-api
 # >> http://localhost:4000/swars/histograms/attack
 # >> http://localhost:4000/swars/histograms/grade
 # >> http://localhost:4000/swars/top-group

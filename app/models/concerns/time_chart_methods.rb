@@ -1,7 +1,7 @@
 # 時間チャート
 #
-# user1 = Swars::User.create!(:key => "devuser1")
-# user2 = Swars::User.create!(:key => "devuser2")
+# user1 = Swars::User.create!(:key => "DevUser1")
+# user2 = Swars::User.create!(:key => "DevUser2")
 #
 # record = Swars::Battle.new
 # record.final_key = :TIMEOUT

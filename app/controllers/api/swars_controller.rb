@@ -37,8 +37,8 @@
 module Api
   class SwarsController < ::Api::ApplicationController
     concerning :CrawlReservationMethods do
-      # curl -d _method=post http://localhost:3000/api/swars/users/devuser1/download_set
-      # http://localhost:3000/api/swars/users/devuser1/download_set
+      # curl -d _method=post http://localhost:3000/api/swars/users/DevUser1/download_set
+      # http://localhost:3000/api/swars/users/DevUser1/download_set
       def download_set
         no = ::Swars::CrawlReservation.active_only.count
         record = current_user.swars_crawl_reservations.create(crawl_reservation_params)
@@ -116,7 +116,7 @@ module Api
     end
 
     # concerning :SwarsUserKeyDirectDownloadMethods do
-    #   # GET http://localhost:3000/api/swars/download_config_fetch?query=Yamada_Taro
+    #   # GET http://localhost:3000/api/swars/download_config_fetch?query=YamadaTaro
     #   def download_config_fetch
     #     render json: zip_dl_cop.to_config
     #   end

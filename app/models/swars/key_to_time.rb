@@ -13,5 +13,9 @@ module Swars
         end
       end
     end
+
+    def to_time!
+      to_time or raise ArgumentError, @key.inspect
+    end
   end
 end

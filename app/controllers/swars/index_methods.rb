@@ -25,7 +25,7 @@ module Swars
       end
     end
 
-    # http://localhost:3000/w.json?query=devuser1&format_type=kento
+    # http://localhost:3000/w.json?query=DevUser1&format_type=kento
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=kento
     def case_kento_api
       if request.format.json?
@@ -41,7 +41,7 @@ module Swars
       end
     end
 
-    # http://localhost:3000/w.json?query=Yamada_Taro&format_type=user
+    # http://localhost:3000/w.json?query=YamadaTaro&format_type=user
     def case_player_info
       if request.format.json?
         if params[:format_type] == "user"
@@ -275,7 +275,7 @@ module Swars
     end
 
     # 確認方法
-    # http://localhost:3000/w?query=devuser1&error_capture_fake=true&force=true
+    # http://localhost:3000/w?query=DevUser1&error_capture_fake=true&force=true
     def import_error_message_build
       if @import_errors.present?
         subject = "【ウォーズ棋譜不整合】"

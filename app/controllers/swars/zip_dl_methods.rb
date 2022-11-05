@@ -6,7 +6,7 @@ module Swars
 
     def case_zip_download
       # あらかじめいろんなスコープでダウンロードできる数などを返す
-      # GET http://localhost:3000/w.json?query=Yamada_Taro&download_config_fetch=true
+      # GET http://localhost:3000/w.json?query=YamadaTaro&download_config_fetch=true
       if params[:download_config_fetch]
         if !current_user
           render json: {}, status: 401
@@ -28,7 +28,7 @@ module Swars
       end
 
       # 特定のスコープでダウンロードする
-      # GET http://localhost:3000/w.zip?query=Yamada_Taro
+      # GET http://localhost:3000/w.zip?query=YamadaTaro
       if request.format.zip?
         if !current_user
           render plain: "ログインしてください", status: 401

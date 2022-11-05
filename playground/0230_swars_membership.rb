@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-Swars::Importer::AllRuleImporter.new(user_key: "devuser1").run
+Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
 
 tp Swars::Membership
 # >> |------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype= |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype= |
 # >> |------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype=sb |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype=sb |
 # >> |--------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype=s1 |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype=s1 |
 # >> |--------------------------------------------------------------------|
 # >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------------+-----------------+--------------------+---------------|
 # >> | id | battle_id | user_id | grade_id | judge_key | location_key | position | created_at                | updated_at                | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list |

@@ -15,36 +15,36 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "クエリ検索" do
     it "検索フォームに入力して検索する" do
       visit2 "/swars/search"
-      fill_in "query", with: "Yamada_Taro"
-      assert_query "Yamada_Taro"
+      fill_in "query", with: "YamadaTaro"
+      assert_query "YamadaTaro"
       find(".search_click_handle").click
       assert_list_present
     end
 
     it "謎の空白が混入するBiDi問題" do
       visit2 "/swars/search"
-      fill_in "query", with: "\u{202A}Yamada_Taro\u{202C}"
+      fill_in "query", with: "\u{202A}YamadaTaro\u{202C}"
       find(".search_click_handle").click
       assert_list_present
     end
 
     describe "検索クエリ内各パラメータ" do
       it "ウォーズIDだけを指定する" do
-        visit2 "/swars/search", query: "Yamada_Taro"
-        assert_query "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
+        assert_query "YamadaTaro"
         assert_list_present
       end
 
       it "相手で絞る" do
-        visit2 "/swars/search", query: "Yamada_Taro vs:devuser2"
+        visit2 "/swars/search", query: "YamadaTaro vs:DevUser2"
         assert_var_eq(:records_length, 1)
       end
 
       it "囲い名で絞る" do
-        visit2 "/swars/search", query: "Yamada_Taro tag:舟囲い"
+        visit2 "/swars/search", query: "YamadaTaro tag:舟囲い"
         assert_var_eq(:records_length, 3)
 
-        visit2 "/swars/search", query: "Yamada_Taro tag:高美濃囲い"
+        visit2 "/swars/search", query: "YamadaTaro tag:高美濃囲い"
         assert_var_eq(:records_length, 0)
       end
     end
@@ -59,18 +59,18 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", complement_user_keys: "b a" # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "b|a")         # Rails側からのコピーをかわせる
 
-        case1 :devuser1, "devuser1|b|a"                     # devuser1が直近に登場
-        case1 :devuser1, "devuser1|b|a"                     # devuser1はすでに入っているので変化なし
-        case1 :devuser2, "devuser2|devuser1|b"              # devuser2が先頭に入ったが最大3件なのでaが溢れた
-        case1 :devuser3, "devuser3|devuser2|devuser1"       # devuser3が先頭に入ったが最大3件なのでbが溢れた
-        case1 :devuser0, "devuser3|devuser2|devuser1"       # devuser0は存在しないので変化なし
+        case1 :DevUser1, "DevUser1|b|a"                     # DevUser1が直近に登場
+        case1 :DevUser1, "DevUser1|b|a"                     # DevUser1はすでに入っているので変化なし
+        case1 :DevUser2, "DevUser2|DevUser1|b"              # DevUser2が先頭に入ったが最大3件なのでaが溢れた
+        case1 :DevUser3, "DevUser3|DevUser2|DevUser1"       # DevUser3が先頭に入ったが最大3件なのでbが溢れた
+        case1 :DevUser0, "DevUser3|DevUser2|DevUser1"       # DevUser0は存在しないので変化なし
       end
 
       it "クエリ全体を取り込む" do
         visit2 "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "xxx")                           # Rails側からのコピーをかわせる
-        search_by "　devuser1　tag:a,b　手数:>=1　"                           # 入力が汚なくても
-        assert_var_eq(:complement_user_keys, "devuser1 tag:a,b 手数:>=1|xxx") # squishして取り込んでいる
+        search_by "　DevUser1　tag:a,b　手数:>=1　"                           # 入力が汚なくても
+        assert_var_eq(:complement_user_keys, "DevUser1 tag:a,b 手数:>=1|xxx") # squishして取り込んでいる
       end
     end
 
@@ -78,16 +78,16 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "works" do
         visit "/swars/search" # visit2 では __system_test_now__ がつくのでダメ
 
-        # devuser1 で9回
-        fill_in "query", with: "devuser1"
+        # DevUser1 で9回
+        fill_in "query", with: "DevUser1"
         9.times { find(".search_click_handle").click }
-        assert_var_eq(:tiresome_previous_user_key, "devuser1")
+        assert_var_eq(:tiresome_previous_user_key, "DevUser1")
         assert_var_eq(:tiresome_count, 9)
 
-        # Yamada_Taro で1回で計10回になるがカウンタをリセットするので発動しない
-        fill_in "query", with: "Yamada_Taro"
+        # YamadaTaro で1回で計10回になるがカウンタをリセットするので発動しない
+        fill_in "query", with: "YamadaTaro"
         find(".search_click_handle").click
-        assert_var_eq(:tiresome_previous_user_key, "Yamada_Taro")
+        assert_var_eq(:tiresome_previous_user_key, "YamadaTaro")
         assert_var_eq(:tiresome_count, 1)
 
         # +9回で計10回になり発動する
@@ -102,7 +102,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "一覧要素の一番上の対局の各操作ボタンをクリックする" do
     before do
-      visit2 "/swars/search", query: "Yamada_Taro"
+      visit2 "/swars/search", query: "YamadaTaro"
     end
 
     it "ぴよ将棋" do
@@ -110,9 +110,9 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         first(".PiyoShogiButton").click
       end
       assert_text("ぴよ将棋w")
-      assert_text("後手:Yamada_Taro 四段")
-      assert_text("先手:devuser3 三段")
-      assert { current_url == "https://www.studiok-i.net/ps/?num=34&sente_name=devuser3%20%E4%B8%89%E6%AE%B5&gote_name=Yamada_Taro%20%E5%9B%9B%E6%AE%B5&game_name=%E5%B0%86%E6%A3%8B%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA(10%E5%88%86)&sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%205g5f%208c8d%207g7f%208d8e%208h7g%206a5b%202h5h%207a6b%207i6h%205a4b%206h5g%204b3b%205i4h%201c1d%201g1f%206c6d%205f5e%206b6c%205g5f%203a4b%204h3h%204c4d%203h2h%204b4c%203i3h%207c7d%209g9f%209c9d%209i9g%203c3d%204g4f%202b3c%205h9h%208e8f%208g8f%208b8d%206i5h%203b2b%209f9e%209d9e%209g9e%20P*9d%209e9d%209a9d%20P*9e%207d7e%207f7e%203c2d%205h4g%204a3b%209e9d%205c5d%20L*8e%205d5e%205f5e%20P*7f%207g9i%208d8e%208f8e%202d3c%204f4e%20L*8f%205e4d%204c4d%209i4d%208f8i%2B%20S*4a%20S*4c%204a3b%2B%204c3b%209d9c%2B%203c4d%204e4d%20L*4e%204d4c%2B%204e4g%2B%204c3b%202b3b%203h4g%207f7g%2B%209c8c%20B*6e%209h9b%2B%206e4g%2B%20L*4h%20P*4f%204h4g%204f4g%2B%20P*4h%20S*5h%204i3i%20L*3h%203i3h%204g3h%202h3h%20S*1g%20B*5d%20G*4c%205d4c%2B%203b4c%20L*4f%20N*4d%202i1g%20B*5g%20S*5e%20G*5d%20R*4a%204c3c%205e4d" }
+      assert_text("後手:YamadaTaro 四段")
+      assert_text("先手:DevUser3 三段")
+      assert { current_url == "https://www.studiok-i.net/ps/?num=34&sente_name=DevUser3%20%E4%B8%89%E6%AE%B5&gote_name=YamadaTaro%20%E5%9B%9B%E6%AE%B5&game_name=%E5%B0%86%E6%A3%8B%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA(10%E5%88%86)&sfen=position%20sfen%20lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL%20b%20-%201%20moves%205g5f%208c8d%207g7f%208d8e%208h7g%206a5b%202h5h%207a6b%207i6h%205a4b%206h5g%204b3b%205i4h%201c1d%201g1f%206c6d%205f5e%206b6c%205g5f%203a4b%204h3h%204c4d%203h2h%204b4c%203i3h%207c7d%209g9f%209c9d%209i9g%203c3d%204g4f%202b3c%205h9h%208e8f%208g8f%208b8d%206i5h%203b2b%209f9e%209d9e%209g9e%20P*9d%209e9d%209a9d%20P*9e%207d7e%207f7e%203c2d%205h4g%204a3b%209e9d%205c5d%20L*8e%205d5e%205f5e%20P*7f%207g9i%208d8e%208f8e%202d3c%204f4e%20L*8f%205e4d%204c4d%209i4d%208f8i%2B%20S*4a%20S*4c%204a3b%2B%204c3b%209d9c%2B%203c4d%204e4d%20L*4e%204d4c%2B%204e4g%2B%204c3b%202b3b%203h4g%207f7g%2B%209c8c%20B*6e%209h9b%2B%206e4g%2B%20L*4h%20P*4f%204h4g%204f4g%2B%20P*4h%20S*5h%204i3i%20L*3h%203i3h%204g3h%202h3h%20S*1g%20B*5d%20G*4c%205d4c%2B%203b4c%20L*4f%20N*4d%202i1g%20B*5g%20S*5e%20G*5d%20R*4a%204c3c%205e4d" }
     end
 
     it "KENTO" do
@@ -129,28 +129,28 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     it "詳細" do
       first(".ShowButton").click
-      assert_current_path "/swars/battles/devuser3-Yamada_Taro-20200101_123403/", ignore_query: true
+      assert_current_path "/swars/battles/DevUser3-YamadaTaro-20200101_123403/", ignore_query: true
     end
   end
 
   describe "ACTION" do
     it "プレイヤー情報" do
-      visit2 "/swars/search", query: "Yamada_Taro"
+      visit2 "/swars/search", query: "YamadaTaro"
       hamburger_click
       find(".swars_users_key_handle").click
-      assert_current_path "/swars/users/Yamada_Taro/", ignore_query: true
+      assert_current_path "/swars/users/YamadaTaro/", ignore_query: true
     end
   end
 
   describe "表示形式" do
     describe "テーブルカラムのトグル" do
       it "最初に検索したとき日付のカラムがある" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         table_in { assert_text("2020-01-01") }
       end
 
       it "日時のカラムを非表示にする" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
 
         column_toggle_menu_open
@@ -160,12 +160,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "保存している" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         column_toggle_menu_open
         menu_item_sub_menu_click("日時")
 
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         assert_list_present
         table_in { assert_no_text("2020-01-01") }
       end
@@ -173,12 +173,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "切り替え" do
       it "初期値は一覧になっている" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         assert_selector(".SwarsBattleIndexTable")
       end
 
       it "一覧から盤面に切り替える" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".is_layout_board").click
         assert_selector(".SwarsBattleIndexBoard")
@@ -186,7 +186,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "盤面を開戦から終局に変更する" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".is_layout_board").click
         find(".is_scene_turn_max").click
@@ -204,7 +204,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".per_change_menu_item").click
         find(".is_per1").click
@@ -213,12 +213,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "保存している" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".per_change_menu_item").click
         find(".is_per1").click
 
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         assert_var_eq(:per, 1)
         assert_var_eq(:records_length, 1)
       end
@@ -226,7 +226,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "フィルタ" do
       it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".filter_set_menu_item").click
         find(".query_preset_judge_win").click # 「勝ち」
@@ -236,11 +236,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "相手で絞る" do
       it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".vs_user_modal_handle").click
         within(".VsUserModal") do
-          find("input").set("devuser1")
+          find("input").set("DevUser1")
           find(".apply_handle").click
         end
         assert_no_selector(".VsUserModal")
@@ -259,7 +259,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       it "正しくダウンロードする" do
         login_by :sysop
 
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".swars_direct_download_handle").click         # 「ダウンロード」をクリック
         assert_current_path "/swars/direct-download", ignore_query: true
@@ -277,17 +277,17 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "古い棋譜を補完" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
-        visit2 "/swars/users/Yamada_Taro/download-all"
+        visit2 "/swars/users/YamadaTaro/download-all"
         assert_selector(".NuxtLoginContainer", wait: 60)
       end
 
       it "正しく予約する" do
         login_by :sysop
 
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".swars_users_key_download_all_handle").click # 「古い棋譜を補完」をクリック
-        assert_current_path "/swars/users/Yamada_Taro/download-all", ignore_query: true
+        assert_current_path "/swars/users/YamadaTaro/download-all", ignore_query: true
 
         # ページ遷移後
         find(".crawler_run_handle_handle").click           # 「さばく」
@@ -307,7 +307,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   describe "一歩進んだ使い方" do
     describe "ウォーズIDを記憶する" do
       it "検索初期値を設定してあるので引数なしで来たのに結果が出ている" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         default_swars_id_set
 
         visit2 "/swars/search"
@@ -315,15 +315,15 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "検索初期値を解除したので引数なしで来たときは検索できない" do
-        visit2 "/swars/search", query: "Yamada_Taro"
-        assert_query "Yamada_Taro"
-        default_swars_id_set   # 検索初期値に Yamada_Taro を設定
+        visit2 "/swars/search", query: "YamadaTaro"
+        assert_query "YamadaTaro"
+        default_swars_id_set   # 検索初期値に YamadaTaro を設定
 
-        visit2 "/swars/search" # 再度検索ページに飛ぶと Yamada_Taro で検索している
-        assert_query "Yamada_Taro"
+        visit2 "/swars/search" # 再度検索ページに飛ぶと YamadaTaro で検索している
+        assert_query "YamadaTaro"
         assert_list_present
 
-        default_swars_id_unset # 検索初期値の Yamada_Taro を解除
+        default_swars_id_unset # 検索初期値の YamadaTaro を解除
         visit2 "/swars/search"
         assert_query ""
         assert_list_blank    # 何も検索されていない
@@ -332,7 +332,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "ホーム画面に追加" do
       it "works" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".home_bookmark_handle").click
         assert_selector(".dialog.modal.is-active")
@@ -342,30 +342,30 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     describe "外部APPショートカット" do
       before do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".external_app_menu_item").click
       end
 
       it "ぴよ将棋" do
         find(".is_external_app_piyo_shogi").click
-        assert_current_path "/swars/users/Yamada_Taro/direct-open/piyo_shogi/", ignore_query: true
+        assert_current_path "/swars/users/YamadaTaro/direct-open/piyo_shogi/", ignore_query: true
       end
 
       it "KENTO" do
         find(".is_external_app_kento").click
-        assert_current_path "/swars/users/Yamada_Taro/direct-open/kento/", ignore_query: true
+        assert_current_path "/swars/users/YamadaTaro/direct-open/kento/", ignore_query: true
       end
     end
 
     describe "KENTO_API" do
       it "works" do
-        visit2 "/swars/search", query: "Yamada_Taro"
+        visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
         find(".swars_users_key_kento_api_menu_item").click
 
         # 移動後
-        assert_current_path "/swars/users/Yamada_Taro/kento-api", ignore_query: true
+        assert_current_path "/swars/users/YamadaTaro/kento-api", ignore_query: true
         assert_text("Yamada_Taroさん専用の KENTO API 設定手順")         # タイトルが正しい
         find(".clipboard_copy_handle").click                            # 「URLをコピー」をクリック
         switch_to_window_by do
@@ -378,7 +378,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "棋譜のファイル保存" do
     it "works" do
-      visit2 "/swars/search", query: "Yamada_Taro"
+      visit2 "/swars/search", query: "YamadaTaro"
       hamburger_click
       column_toggle_menu_open
       menu_item_sub_menu_click("保存 (UTF-8)")
@@ -406,7 +406,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def assert_list_present
     assert_text "1-3 / 3"
-    assert_text "Yamada_Taro 四段"
+    assert_text "YamadaTaro 四段"
     assert_text("ぴよ将棋")
   end
 
@@ -438,9 +438,9 @@ end
 # >> |----+--------------------------------------+---------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-------------+----------+-----------+---------------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+------------+---------------+---------------+------------+---------------------------+---------------------------+------------------+-----------------+--------------------+---------------+----------------|
 # >> | id | key                                  | battled_at                | rule_key | csa_seq                                                                                                                                                                                                                                                             | final_key | win_user_id | turn_max | meta_info | accessed_at               | preset_key | sfen_body                                                                                                                                                                                                                                                           | sfen_hash                        | start_turn | critical_turn | outbreak_turn | image_turn | created_at                | updated_at                | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list | other_tag_list |
 # >> |----+--------------------------------------+---------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-------------+----------+-----------+---------------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+------------+---------------+---------------+------------+---------------------------+---------------------------+------------------+-----------------+--------------------+---------------+----------------|
-# >> |  1 | devuser1-Yamada_Taro-20200101_123401 | 2020-01-01 12:34:01 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           1 |      109 | {}        | 2021-12-08 20:09:58 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:58 +0900 | 2021-12-08 20:09:58 +0900 |                  |                 |                    |               |                |
-# >> |  2 | devuser2-Yamada_Taro-20200101_123402 | 2020-01-01 12:34:02 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           3 |      109 | {}        | 2021-12-08 20:09:58 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:58 +0900 | 2021-12-08 20:09:58 +0900 |                  |                 |                    |               |                |
-# >> |  3 | devuser3-Yamada_Taro-20200101_123403 | 2020-01-01 12:34:03 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           4 |      109 | {}        | 2021-12-08 20:09:59 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:59 +0900 | 2021-12-08 20:09:59 +0900 |                  |                 |                    |               |                |
+# >> |  1 | DevUser1-YamadaTaro-20200101_123401 | 2020-01-01 12:34:01 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           1 |      109 | {}        | 2021-12-08 20:09:58 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:58 +0900 | 2021-12-08 20:09:58 +0900 |                  |                 |                    |               |                |
+# >> |  2 | DevUser2-YamadaTaro-20200101_123402 | 2020-01-01 12:34:02 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           3 |      109 | {}        | 2021-12-08 20:09:58 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:58 +0900 | 2021-12-08 20:09:58 +0900 |                  |                 |                    |               |                |
+# >> |  3 | DevUser3-YamadaTaro-20200101_123403 | 2020-01-01 12:34:03 +0900 | ten_min  | [["+5756FU", 600], ["-8384FU", 599], ["+7776FU", 598], ["-8485FU", 598], ["+8877KA", 597], ["-6152KI", 597], ["+2858HI", 595], ["-7162GI", 588], ["+7968GI", 594], ["-5142OU", 588], ["+6857GI", 593], ["-4232OU", 586], ["+5948OU", 592], ["-1314FU", 579], ["+... | TORYO     |           4 |      109 | {}        | 2021-12-08 20:09:59 +0900 | 平手       | position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 5g5f 8c8d 7g7f 8d8e 8h7g 6a5b 2h5h 7a6b 7i6h 5a4b 6h5g 4b3b 5i4h 1c1d 1g1f 6c6d 5f5e 6b6c 5g5f 3a4b 4h3h 4c4d 3h2h 4b4c 3i3h 7c7d 9g9f 9c9d 9i9g 3c3d 4g4f 2b3c 5h9h 8e8f 8g... | d1df9c82d90fffa58b462b38dbe2b4a1 |            |            34 |            43 |            | 2021-12-08 20:09:59 +0900 | 2021-12-08 20:09:59 +0900 |                  |                 |                    |               |                |
 # >> |----+--------------------------------------+---------------------------+----------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------+-------------+----------+-----------+---------------------------+------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+------------+---------------+---------------+------------+---------------------------+---------------------------+------------------+-----------------+--------------------+---------------+----------------|
 # >> .
 # >>

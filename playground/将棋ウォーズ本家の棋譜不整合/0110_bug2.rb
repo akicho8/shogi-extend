@@ -7,7 +7,7 @@ user1 = Swars::User.create!
 user2 = Swars::User.create!
 Swars::Battle.destroy_all
 
-# p Swars::Agent::Record.fetch(run_remote: true, key: "falcon39-StarCerisier-20200909_213410")
+# p Swars::Agent::Record.fetch(remote_run: true, key: "falcon39-StarCerisier-20200909_213410")
 # exit
 r = Swars::Battle.new
 r.memberships.build(user: user1, grade: Swars::Grade.last)

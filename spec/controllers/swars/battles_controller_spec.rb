@@ -44,7 +44,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
   describe "ERROR" do
     def case1(params)
-      get :index, params: { query: "devuser1", force: true, format: :json, **params }
+      get :index, params: { query: "DevUser1", force: true, format: :json, **params }
       assert { response.status != 200 }
     end
 
@@ -64,7 +64,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "棋譜の不整合" do
-      case2(query: "devuser1", error_capture_fake: true)
+      case2(query: "DevUser1", error_capture_fake: true)
     end
 
     it "本家でユーザーが存在しない" do
@@ -74,7 +74,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
   describe "並び替え" do
     def case1(sort_column)
-      get :index, params: { query: "devuser1", sort_column: sort_column }
+      get :index, params: { query: "DevUser1", sort_column: sort_column }
       assert { response.status == 200 }
     end
 
@@ -97,41 +97,41 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   # TODO テストは search_spec.rb で書く
   describe "詳細検索" do
     it "vs" do
-      get :index, params: {query: "Yamada_Taro vs:devuser1"}
+      get :index, params: {query: "YamadaTaro vs:DevUser1"}
       assert { controller.current_scope.count == 1 }
     end
 
     it "judge" do
-      get :index, params: {query: "devuser1 judge:win"}
+      get :index, params: {query: "DevUser1 judge:win"}
       assert { controller.current_scope.count == 1 }
     end
 
     it "vs-grade" do
-      get :index, params: {query: "devuser1 vs-grade:四段"}
+      get :index, params: {query: "DevUser1 vs-grade:四段"}
       assert { controller.current_scope.count == 1 }
     end
 
     it "turn_max:>=500" do
-      get :index, params: {query: "devuser1 turn_max:>=500"}
+      get :index, params: {query: "DevUser1 turn_max:>=500"}
       assert { controller.current_scope.count == 0 }
       assert { response.status == 200 }
     end
 
     it "turn_max:<=500" do
-      get :index, params: {query: "devuser1 turn_max:<=500"}
+      get :index, params: {query: "DevUser1 turn_max:<=500"}
       assert { controller.current_scope.count == 1 }
       assert { response.status == 200 }
     end
 
     describe "手合割" do
       it "平手" do
-        get :index, params: {query: "devuser1 手合割:平手"}
+        get :index, params: {query: "DevUser1 手合割:平手"}
         assert { controller.current_scope.count == 1 }
         assert { response.status == 200 }
       end
 
       it "駒落ち" do
-        get :index, params: {query: "devuser1 手合割:-平手"}
+        get :index, params: {query: "DevUser1 手合割:-平手"}
         assert { controller.current_scope.count == 0 }
         assert { response.status == 200 }
       end
@@ -145,7 +145,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "index + query" do
-      get :index, params: {query: "devuser1"}
+      get :index, params: {query: "DevUser1"}
       assert { response.status == 200 }
       assert { assigns(:current_records).size == 1 }
       assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
@@ -153,7 +153,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
     describe "ウォーズの対局キーが含まれるURLで検索" do
       it "レコードあり" do
-        get :index, params: {query: "https://shogiwars.heroz.jp/games/devuser1-Yamada_Taro-20200101_123401?tw=1"}
+        get :index, params: {query: "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401?tw=1"}
         assert { controller.current_scope.count == 1 }
         assert { response.status == 200 }
       end
@@ -170,7 +170,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       end
 
       def case1(body_encode)
-        get :index, params: { query: "devuser1", format: "zip", body_encode: body_encode}
+        get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
         assert { response.status == 200 }
         assert { controller.current_scope.count == 1 }
         assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
@@ -178,7 +178,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
         Zip::InputStream.open(StringIO.new(response.body)) do |zis|
           entry = zis.get_next_entry
-          assert { entry.name == "devuser1/2020-01-01/devuser1-Yamada_Taro-20200101_123401.kif" }
+          assert { entry.name == "DevUser1/2020-01-01/DevUser1-YamadaTaro-20200101_123401.kif" }
           assert { entry.time.to_s == "2020-01-01 12:34:01 +0900" } # 奇数秒が入っていること
           bin = zis.read
           assert { NKF.guess(bin).to_s == body_encode }
@@ -189,23 +189,23 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       it { case1("Shift_JIS") }
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
-        get :index, params: {query: "Yamada_Taro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
+        get :index, params: {query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
         json = JSON.parse(response.body, symbolize_names: true)
         assert { json[:form_params_default] }
       end
     end
 
     it "KENTO棋譜リストAPI" do
-      get :index, params: { query: "devuser1", format: "json", format_type: "kento" }
+      get :index, params: { query: "DevUser1", format: "json", format_type: "kento" }
       assert { response.status == 200 }
 
       body = JSON.parse(response.body)
       assert { body["api_version"]                       == "2020-02-02"                                                  }
-      assert { body["api_name"]                          == "将棋ウォーズ(ID:devuser1)"                                   }
+      assert { body["api_name"]                          == "将棋ウォーズ(ID:DevUser1)"                                   }
       assert { body["game_list"].size                    == 1                                                             }
       assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
-      assert { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/devuser1-Yamada_Taro-20200101_123401.kif" }
-      assert { body["game_list"][0]["display_name"]      == "devuser1 三段 vs Yamada_Taro 四段"                           }
+      assert { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.kif" }
+      assert { body["game_list"][0]["display_name"]      == "DevUser1 三段 vs YamadaTaro 四段"                           }
       assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
     end
   end

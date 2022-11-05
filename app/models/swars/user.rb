@@ -65,7 +65,7 @@ module Swars
 
     concerning :GradeMethods do
       included do
-        belongs_to :grade                          # すべてのモードのなかで一番よい段級位
+        belongs_to :grade # すべてのモードのなかで一番よい段級位
 
         before_validation do
           if Rails.env.development? || Rails.env.test?

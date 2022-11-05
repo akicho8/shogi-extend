@@ -31,7 +31,7 @@
 #   end
 # end
 
-# 外部から fetch("http://localhost:3000/w.json?query=devuser1").then(r => r.json()).then(r => console.log(r)) できるかどうかで確認できる
+# 外部から fetch("http://localhost:3000/w.json?query=DevUser1").then(r => r.json()).then(r => console.log(r)) できるかどうかで確認できる
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # if Rails.env.production? || Rails.env.staging?

@@ -4,22 +4,22 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "必要な情報を表示している" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
-    assert_text "Yamada_Taro"
+    visit2 "/swars/battles/DevUser1-YamadaTaro-20200101_123402/formal-sheet"
+    assert_text "YamadaTaro"
     assert_text "記録係"
     assert_text "後手投了"
-    assert_text "109手で devuser1 三段の勝ち"
+    assert_text "109手で DevUser1 三段の勝ち"
     assert_text "2020年1月1日12時34分"
   end
 
   it "デバッグモード" do
-    visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet", formal_sheet_debug: true
+    visit2 "/swars/battles/DevUser1-YamadaTaro-20200101_123402/formal-sheet", formal_sheet_debug: true
     assert_text "９九成香左上"
   end
 
   describe "オプション" do
     before do
-      visit2 "/swars/battles/devuser1-Yamada_Taro-20200101_123402/formal-sheet"
+      visit2 "/swars/battles/DevUser1-YamadaTaro-20200101_123402/formal-sheet"
       Capybara.execute_script("document.querySelector('.formal_sheet_workspace').remove()") # 邪魔してボタンが押せないので取る
     end
 

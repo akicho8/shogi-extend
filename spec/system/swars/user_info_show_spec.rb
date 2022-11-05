@@ -4,17 +4,17 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
   include SwarsSystemSupport
 
   it "最初に開いたときのタブは日付になっている" do
-    visit2 "/swars/users/Yamada_Taro"
+    visit2 "/swars/users/YamadaTaro"
     assert_current_tab_at 0
   end
 
   it "引数でデフォルトのタブを変更する" do
-    visit2 "/swars/users/Yamada_Taro", tab_index: 1
+    visit2 "/swars/users/YamadaTaro", tab_index: 1
     assert_current_tab_at 1
   end
 
   it "タブを変更する" do
-    visit2 "/swars/users/Yamada_Taro"
+    visit2 "/swars/users/YamadaTaro"
 
     tab_click_by_name("日付")
     within(".boxes") { assert_text "2020-01-01" }

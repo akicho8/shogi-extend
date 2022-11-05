@@ -12,7 +12,7 @@ module Swars
 
       def run
         RuleInfo.each do |e|
-          OneRuleImporter.new(params.merge(gtype: e.swars_real_key)).run
+          OneRuleImporter.new(params.merge(rule_key: e.key)).run
         end
       end
     end

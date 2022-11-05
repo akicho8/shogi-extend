@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-tp Swars::Agent.new(run_remote: true).index_get(gtype: "",  user_key: "kinakom0chi", page_index: 0)
+tp Swars::Agent.new(remote_run: true).index_get(gtype: "",  user_key: "kinakom0chi", page_index: 0)
 # >> |-----------------------------------------+------------------------------------------------------------------------------------------------|
 # >> | key                                     | user_infos                                                                                     |
 # >> |-----------------------------------------+------------------------------------------------------------------------------------------------|

@@ -26,7 +26,7 @@ export const app_chore = {
     all_reset_handle() {
       this.$sound.play_click()
       this.pc_data_reset()
-      this.$router.replace({}).catch(err => {}) // "?user_key=Yamada_Taro" を外す かつ NavigationDuplicated 対策
+      this.$router.replace({}).catch(err => {}) // "?user_key=YamadaTaro" を外す かつ NavigationDuplicated 対策
       this.toast_ok("すべてリセットしました")
       this.sidebar_p = false
     },

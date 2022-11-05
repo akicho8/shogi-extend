@@ -71,8 +71,8 @@ export default {
     },
   },
 
-  // http://localhost:4000/swars/users/devuser1
-  // http://localhost:3000/w.json?query=devuser1&format_type=user
+  // http://localhost:4000/swars/users/DevUser1
+  // http://localhost:3000/w.json?query=DevUser1&format_type=user
   // http://localhost:3000/w.json?query=foo&format_type=user
   // fetch({error}) とすると $fetchState がつくられなくなる謎の罠あり
   fetchOnServer: false,

@@ -2,46 +2,46 @@
 require File.expand_path('../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-Swars::Importer::AllRuleImporter.new(user_key: "devuser1").run
+Swars::Importer::AllRuleImporter.new(user_key: "DevUser1").run
 tp Swars::Membership
 # >> |------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype= |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype= |
 # >> |------------------------------------------------------------------|
 # >> |---------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/devuser1-Yamada_Taro-20190111_230933?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20190111_230933?locale=ja |
 # >> |---------------------------------------------------------------------------------|
 # >> |------------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/Takechan831-Yamada_Taro-20190111_223848?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/Takechan831-YamadaTaro-20190111_223848?locale=ja |
 # >> |------------------------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/kibou36-Yamada_Taro-20190111_222649?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/kibou36-YamadaTaro-20190111_222649?locale=ja |
 # >> |--------------------------------------------------------------------------------|
 # >> |-------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/Yamada_Taro-kz0619-20190111_190218?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/YamadaTaro-kz0619-20190111_190218?locale=ja |
 # >> |-------------------------------------------------------------------------------|
 # >> |---------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/SOAREMAN-Yamada_Taro-20190111_181540?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/SOAREMAN-YamadaTaro-20190111_181540?locale=ja |
 # >> |---------------------------------------------------------------------------------|
 # >> |---------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/yuga_jus-Yamada_Taro-20190111_171547?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/yuga_jus-YamadaTaro-20190111_171547?locale=ja |
 # >> |---------------------------------------------------------------------------------|
 # >> |-------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/kekkun-Yamada_Taro-20190111_162548?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/kekkun-YamadaTaro-20190111_162548?locale=ja |
 # >> |-------------------------------------------------------------------------------|
 # >> |----------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/Yamada_Taro-akkunn_xx-20190111_130425?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/YamadaTaro-akkunn_xx-20190111_130425?locale=ja |
 # >> |----------------------------------------------------------------------------------|
 # >> |-------------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/takayanyanta-Yamada_Taro-20190111_124228?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/takayanyanta-YamadaTaro-20190111_124228?locale=ja |
 # >> |-------------------------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/MinoriChihara-Yamada_Taro-20190111_084942?locale=ja |
+# >> | https://shogiwars.heroz.jp/games/MinoriChihara-YamadaTaro-20190111_084942?locale=ja |
 # >> |--------------------------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype=sb |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype=sb |
 # >> |--------------------------------------------------------------------|
 # >> |--------------------------------------------------------------------|
-# >> | https://shogiwars.heroz.jp/games/history?user_id=devuser1&gtype=s1 |
+# >> | https://shogiwars.heroz.jp/games/history?user_id=DevUser1&gtype=s1 |
 # >> |--------------------------------------------------------------------|
 # >> |-----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------------+-----------------+--------------------+---------------|
 # >> | id  | battle_id | user_id | grade_id | judge_key | location_key | position | created_at                | updated_at                | grade_diff | think_max | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list |

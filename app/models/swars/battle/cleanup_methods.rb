@@ -7,7 +7,7 @@ module Swars
         scope :cleanup_scope, -> (params = {}) {
           params = {
             expires_in: 45.days,
-            skip_users: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:battles_destroy_skip_users] : ["devuser1"],
+            skip_users: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:battles_destroy_skip_users] : ["DevUser1"],
           }.merge(params)
 
           s = all

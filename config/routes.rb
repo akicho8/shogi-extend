@@ -32,14 +32,14 @@ Rails.application.routes.draw do
     query = request.params.except(:format).to_query.presence
     path = nil
 
-    # http://localhost:3000/w?flip=false&modal_id=devuser1-Yamada_Taro-20200101_123401&turn=34
+    # http://localhost:3000/w?flip=false&modal_id=DevUser1-YamadaTaro-20200101_123401&turn=34
     if !path
       if modal_id = request.params[:modal_id]
         path = { path: "/swars/battles/#{modal_id}", query: query }
       end
     end
 
-    # http://localhost:3000/w?query=devuser1&latest_open_index=0&external_app_key=piyo_shogi
+    # http://localhost:3000/w?query=DevUser1&latest_open_index=0&external_app_key=piyo_shogi
     if !path
       if request.params[:latest_open_index]
         user_key = request.params[:query]
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://localhost:3000/w?query=devuser1&user_info_show=true
+    # http://localhost:3000/w?query=DevUser1&user_info_show=true
     if !path
       if request.params[:user_info_show]
         user_key = request.params[:query]
@@ -56,7 +56,7 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://localhost:3000/w?query=devuser1
+    # http://localhost:3000/w?query=DevUser1
     if !path
       path = { path: "/swars/search", query: query }
     end

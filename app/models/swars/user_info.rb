@@ -73,8 +73,8 @@ module Swars
     end
 
     # http://localhost:3000/w.json?query=kinakom0chi&format_type=user
-    # http://localhost:3000/w.json?query=devuser1&format_type=user
-    # http://localhost:3000/w.json?query=devuser1&format_type=user&debug=true
+    # http://localhost:3000/w.json?query=DevUser1&format_type=user
+    # http://localhost:3000/w.json?query=DevUser1&format_type=user&debug=true
     # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
     def to_hash
       {}.tap do |hash|

@@ -2,15 +2,15 @@
 require File.expand_path('../../../config/environment', __FILE__)
 
 Swars::Battle.destroy_all
-# Swars::Importer::AllRuleImporter.new(run_remote: true, user_key: "StarCerisier", page_max: 2).run
+# Swars::Importer::AllRuleImporter.new(remote_run: true, user_key: "StarCerisier", page_max: 2).run
 
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "fap34-StarCerisier-20200831_215840").run
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "deefstar-StarCerisier-20200822_181008").run
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "Kotakota3-StarCerisier-20200815_213555").run
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "gessmanager-StarCerisier-20200909_231451").run
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "StarCerisier-shogimonamour-20200909_222308").run
-# Swars::Importer::BattleImporter.new(run_remote: true, key: "yamasaki2017-StarCerisier-20200909_220047").run
-Swars::Importer::BattleImporter.new(run_remote: true, key: "falcon39-StarCerisier-20200909_213410").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "fap34-StarCerisier-20200831_215840").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "deefstar-StarCerisier-20200822_181008").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "Kotakota3-StarCerisier-20200815_213555").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "gessmanager-StarCerisier-20200909_231451").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "StarCerisier-shogimonamour-20200909_222308").run
+# Swars::Importer::BattleImporter.new(remote_run: true, key: "yamasaki2017-StarCerisier-20200909_220047").run
+Swars::Importer::BattleImporter.new(remote_run: true, key: "falcon39-StarCerisier-20200909_213410").run
 
 # Swars::Importer::BattleImporter.new(key: "falcon39-StarCerisier-20200909_213410").run
 

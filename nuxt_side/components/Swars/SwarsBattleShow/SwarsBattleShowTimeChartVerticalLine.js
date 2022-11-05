@@ -119,13 +119,13 @@ export default {
     // time_chart_params:
     //   labels: (5) [0, 1, 2, 3, 4]
     //   datasets[0]
-    //     label: "devuser1"
+    //     label: "DevUser1"
     //     data[]
     //       0: {x: 1, y: +3}
     //       1: {x: 3, y: +2}
     //       ...
     //   datasets[1]
-    //     label: "devuser2"
+    //     label: "DevUser2"
     //     data[]
     //       0: {x: 2, y: -3}
     //       1: {x: 4, y: -2}

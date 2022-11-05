@@ -13,15 +13,15 @@
       a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを記憶するダイアログ発動
       a.panel-block(@click="remote_notify") remote_notify
 
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', error_capture_fake: true, force: true}}") 棋譜の不整合 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsFormatIncompatible: true, force: true}}") SwarsFormatIncompatible 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsConnectionFailed: true, force: true}}") SwarsConnectionFailed 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsUserNotFound: true, x_swars_user_destroy_all: true, force: true}}") SwarsUserNotFound 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', SwarsBattleNotFound: true, x_destroy_all: true, force: true}}") SwarsBattleNotFound 発動
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', x_destroy_all: true, force: true}}") 棋譜の再取得
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro'}}") 棋譜の普通に取得
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', viewpoint: 'black'}}") ☗を左に表示
-      nuxt-link.panel-block(:to="{query: {query: 'Yamada_Taro', viewpoint: 'white'}}") ☖を左に表示
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', error_capture_fake: true, force: true}}") 棋譜の不整合 発動
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', SwarsFormatIncompatible: true, force: true}}") SwarsFormatIncompatible 発動
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', SwarsConnectionFailed: true, force: true}}") SwarsConnectionFailed 発動
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', SwarsUserNotFound: true, x_swars_user_destroy_all: true, force: true}}") SwarsUserNotFound 発動
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', SwarsBattleNotFound: true, x_destroy_all: true, force: true}}") SwarsBattleNotFound 発動
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', x_destroy_all: true, force: true}}") 棋譜の再取得
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro'}}") 棋譜の普通に取得
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', viewpoint: 'black'}}") ☗を左に表示
+      nuxt-link.panel-block(:to="{query: {query: 'YamadaTaro', viewpoint: 'white'}}") ☖を左に表示
       nuxt-link.panel-block(:to="{query: {query: '', all: 'true', per: 50, debug: 'true'}}") 全レコード表示
 
   .column.is-4

@@ -47,6 +47,7 @@ module Swars
     end
 
     custom_belongs_to :judge, ar_model: Judge, st_model: JudgeInfo, default: nil
+    custom_belongs_to :grade, ar_model: Grade, st_model: GradeInfo, default: nil
 
     belongs_to :battle                      # 対局
 
@@ -62,15 +63,15 @@ module Swars
     belongs_to :op_user, class_name: "Swars::User" # 相手
     belongs_to :opponent, class_name: "Membership", optional: true
 
-    belongs_to :grade             # 対局したときの段位
-
     acts_as_list top_of_list: 0, scope: :battle
 
     scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
 
     before_validation do
+
       # テストを書きやすいようにする
       if Rails.env.development? || Rails.env.test?
+
         # self.user ||= User.create!
 
         m = (battle.memberships - [self]).first
@@ -83,6 +84,7 @@ module Swars
           self.location_key ||= LocationInfo[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
+
       end
 
       if user

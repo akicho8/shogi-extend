@@ -40,8 +40,8 @@ module Swars
       a
     end
 
-    # 先後 http://localhost:4000/swars/search?query=Yamada_Taro&viewpoint=white
-    # 対象 http://localhost:4000/swars/search?query=Yamada_Taro
+    # 先後 http://localhost:4000/swars/search?query=YamadaTaro&viewpoint=white
+    # 対象 http://localhost:4000/swars/search?query=YamadaTaro
     # 勝者 http://localhost:4000/swars/search?query=&all=true&per=50&debug=true
     def ordered_memberships(e, v)
       if current_viewpoint
