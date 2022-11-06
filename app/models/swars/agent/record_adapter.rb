@@ -2,14 +2,16 @@ module Swars
   module Agent
     class RecordAdapter
       attr_accessor :props
+      attr_accessor :options
 
-      def initialize(root_props)
-        @props = root_props.fetch("gameHash")
+      def initialize(react_props, options = {})
+        @props = react_props.fetch("gameHash")
+        @options = options
       end
 
       def to_h
         {
-          "対局KEY"   => key,
+          "対局KEY"   => key_vo,
           "対局日時"  => battled_at.strftime("%F %T"),
           "ルール"    => rule_info,
           "種類"      => xmode_info,
@@ -26,14 +28,14 @@ module Swars
       end
 
       # 対局KEY
-      def key
-        props.fetch("name")
+      def key_vo
+        @key_vo ||= options[:key_vo] || KeyVo.wrap(props.fetch("name"))
       end
 
       # 対局日時
       # データには含まれていないため key から取り出す
       def battled_at
-        @battled_at ||= KeyToTime.new(key).to_time!
+        @battled_at ||= key_vo.to_time
       end
 
       # 10分・3分・10秒
@@ -57,15 +59,17 @@ module Swars
       end
 
       # 両者
+      # 先後名は props.fetch("gote"), props.fetch("gote") で取れるが
+      # mock の都合で key から取得している
       def memberships
         [
           {
-            :user_key   => props.fetch("sente"),
+            :user_key   => key_vo.user_key_at(:black),
             :grade_info => magic_number_to_grade_info("sente_dan"),
-            :judge_info  => judge_info_for("SENTE"),
+            :judge_info => judge_info_for("SENTE"),
           },
           {
-            :user_key   => props.fetch("gote"),
+            :user_key   => key_vo.user_key_at(:white),
             :grade_info => magic_number_to_grade_info("gote_dan"),
             :judge_info => judge_info_for("GOTE"),
           },
@@ -170,7 +174,13 @@ module Swars
 
       begin
         def win_index
-          win_side_name == "SENTE" ? 0 : 1
+          if v = win_side_name
+            if v == "SENTE"
+              0
+            else
+              1
+            end
+          end
         end
 
         def win_side_name

@@ -19,9 +19,6 @@ module Swars
         end
         md = html.match(/data-react-props="(.*?)"/)
         md or raise SwarsFormatIncompatible
-        # if params[:SwarsFormatIncompatible]
-        #   raise SwarsFormatIncompatible
-        # end
         JSON.parse(CGI.unescapeHTML(md.captures.first))
       end
 

@@ -33,11 +33,8 @@ module Swars
           end
           body ||= ""
         end
-        ary = body.scan(/game_id=([\w-]+)/).flatten
-        result = IndexResult.new
-        result.last_page = ary.size < params[:items_per_page]
-        result.keys = ary
-        result
+        keys = body.scan(/game_id=([\w-]+)/).flatten
+        IndexResult.new(keys: keys, last_page: keys.size < params[:items_per_page])
       end
 
       private

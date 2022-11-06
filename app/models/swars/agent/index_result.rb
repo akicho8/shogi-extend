@@ -4,11 +4,15 @@ module Swars
       attr_accessor :keys
       attr_accessor :last_page
 
-      def self.empty
-        r = new
-        r.keys = []
-        r.last_page = true
-        r
+      class << self
+        def empty
+          new
+        end
+      end
+
+      def initialize(keys: [], last_page: true)
+        @keys = keys
+        @last_page = last_page
       end
 
       def last_page?

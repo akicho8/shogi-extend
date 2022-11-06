@@ -1,4 +1,4 @@
-# 将棋ウォーズのダメ設計が漏れないように隠蔽する
+# 将棋ウォーズのダメ設計が漏れ出ないように隠蔽する
 
 module Swars
   class PresetMagicNumberInfo

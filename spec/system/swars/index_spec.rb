@@ -366,7 +366,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
         # 移動後
         assert_current_path "/swars/users/YamadaTaro/kento-api", ignore_query: true
-        assert_text("Yamada_Taroさん専用の KENTO API 設定手順")         # タイトルが正しい
+        assert_text("YamadaTaroさん専用の KENTO API 設定手順")         # タイトルが正しい
         find(".clipboard_copy_handle").click                            # 「URLをコピー」をクリック
         switch_to_window_by do
           find(".jump_to_kento_setting_handle").click                     # 「KENTO側で設定」の「移動」をクリック

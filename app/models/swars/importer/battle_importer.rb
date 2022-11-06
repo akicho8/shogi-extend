@@ -19,27 +19,27 @@ module Swars
         end
 
         props = Agent::Record.new(params).fetch
-        info = Agent::RecordAdapter.new(props)
+        info = Agent::RecordAdapter.new(props, key_vo: key_vo)
         if info.invalid?
           return
         end
 
         info.memberships.each do |e|
           User.find_or_initialize_by(user_key: e[:user_key]).tap do |user|
-            # FIXME: 取って↑を find_or_create にする
+            # 常にランクを更新する
             if true
               grade = Grade.fetch(e[:grade_info].key)
-              user.grade = grade # 常にランクを更新する
-              begin
-                user.save!
-              rescue ActiveRecord::RecordNotUnique
-              end
+              user.grade = grade
+            end
+            begin
+              user.save!
+            rescue ActiveRecord::RecordNotUnique
             end
           end
         end
 
         battle = Battle.new({
-            :key        => params[:key], # info.key だとmock版の中の固定のkeyになってしまうため
+            :key        => info.key_vo.to_s,
             :rule_key   => info.rule_info.key,
             :csa_seq    => info.csa_seq, # FIXME: 完全なCSAを渡すか？ 時間は別にして渡すか？
             :preset_key => info.preset_info.key,
@@ -62,6 +62,13 @@ module Swars
           Rails.logger.info { error.inspect }
           false
         end
+
+      end
+
+      private
+
+      def key_vo
+        @key_vo ||= KeyVo.wrap(params[:key])
       end
     end
   end

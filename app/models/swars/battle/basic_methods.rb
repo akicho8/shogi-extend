@@ -54,10 +54,12 @@ module Swars
           self.csa_seq ||= []
 
           # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
-          if key
-            self.battled_at ||= KeyToTime.new(key).to_time
+          if battled_at.blank?
+            if KeyVo.valid?(key)
+              self.battled_at ||= KeyVo.wrap(key).to_time
+            end
+            self.battled_at ||= Time.current
           end
-          self.battled_at ||= Time.current
         end
 
         with_options presence: true do
