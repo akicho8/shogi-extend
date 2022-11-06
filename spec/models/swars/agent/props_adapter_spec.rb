@@ -18,16 +18,16 @@ require "rails_helper"
 
 module Swars
   module Agent
-    RSpec.describe RecordAdapter, type: :model, swars_spec: true do
+    RSpec.describe PropsAdapter, type: :model, swars_spec: true do
       let(:react_props) { eval(Pathname(__dir__).join("react_props.rb").read) }
-      let(:object) { RecordAdapter.new(react_props) }
+      let(:object) { PropsAdapter.new(react_props) }
 
       it "to_h" do
         assert { object.to_h }
       end
 
-      it "key_vo" do
-        assert { object.key_vo.to_s == "alice-bob-20000101_112233" }
+      it "key" do
+        assert { object.key.to_s == "alice-bob-20000101_112233" }
       end
 
       it "battled_at" do

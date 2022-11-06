@@ -1,7 +1,6 @@
 module Swars
   module Agent
     class Fetcher
-      BASE_URL   = "https://shogiwars.heroz.jp"
       USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36"
 
       attr_reader :params
@@ -10,36 +9,30 @@ module Swars
         @params = {
           :remote_run => ENV["RUN_REMOTE"].in?(["1", "true"]) || Rails.env.production? || Rails.env.staging?,
           :sleep      => nil,
-          :dry_run    => false,
           :verbose    => false,
         }.merge(params)
       end
 
       def fetch(type, url)
-        if params[:SwarsConnectionFailed]
-          raise SwarsConnectionFailed
+        if params[:RaiseConnectionFailed]
+          raise Faraday::ConnectionFailed, ""
         end
 
         if local_run?
-          return mock_html(type)
-        end
-
-        begin
+          mock_html(type)
+        else
           resp = agent.get(url)
           sleep_on
           if resp.success?
             resp.body.force_encoding("UTF-8")
           end
-        rescue Faraday::ConnectionFailed => error
-          # SystemMailer.notify_exception(error)
-          raise SwarsConnectionFailed
         end
       end
 
       private
 
       def agent
-        @agent ||= Faraday.new(url: BASE_URL) do |conn|
+        @agent ||= Faraday.new do |conn|
           raise if OpenSSL::SSL::VERIFY_PEER != OpenSSL::SSL::VERIFY_NONE
           conn.use FaradayMiddleware::Instrumentation # --> config/initializers/0260_faraday_logger.rb
           conn.headers[:user_agent] = USER_AGENT
@@ -60,10 +53,6 @@ module Swars
       end
 
       def sleep_on
-        if params[:dry_run]
-          return
-        end
-
         if v = params[:sleep]
           v = v.to_f
           if v.positive?

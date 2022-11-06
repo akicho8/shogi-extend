@@ -13,40 +13,51 @@ module Swars
       def run
         # すでに登録済みなら何もしない
         if params[:skip_if_exist]
-          if Battle.exists?(key: params[:key])
+          if Battle.exists?(key: key.to_s)
             return
           end
         end
 
+        # 本家から取得する
         props = Agent::Record.new(params).fetch
-        info = Agent::RecordAdapter.new(props, key_vo: key_vo)
-        if info.invalid?
+
+        # 扱いやすい形で取れるようにする
+        @info = Agent::PropsAdapter.new(props, key: key)
+
+        # 無効な対局データは取り込まない
+        if @info.invalid?
           return
         end
 
-        info.memberships.each do |e|
-          User.find_or_initialize_by(user_key: e[:user_key]).tap do |user|
-            # 常にランクを更新する
-            if true
-              grade = Grade.fetch(e[:grade_info].key)
-              user.grade = grade
-            end
-            begin
-              user.save!
-            rescue ActiveRecord::RecordNotUnique
-            end
-          end
-        end
+        # 対局者の作成・更新
+        @info.memberships.each { |e| user_create_or_update(e) }
 
-        battle = Battle.new({
-            :key        => info.key_vo.to_s,
-            :rule_key   => info.rule_info.key,
-            :csa_seq    => info.csa_seq, # FIXME: 完全なCSAを渡すか？ 時間は別にして渡すか？
-            :preset_key => info.preset_info.key,
-            :xmode_key  => info.xmode_info.key,
-            :battled_at => info.battled_at,
+        # 対局レコードの作成
+        battle_create
+      end
+
+      private
+
+      def key
+        params[:key]
+      end
+
+      def user_create_or_update(e)
+        grade = Grade.fetch(e[:grade_info].key)
+        user = User.find_or_initialize_by(user_key: e[:user_key])
+        user.grade_update_if_new(grade)
+      end
+
+      def battle_create
+        Battle.create!({
+            :key        => @info.key.to_s,
+            :rule_key   => @info.rule_info.key,
+            :csa_seq    => @info.csa_seq, # FIXME: 完全なCSAを渡すか？ 時間は別にして渡すか？
+            :preset_key => @info.preset_info.key,
+            :xmode_key  => @info.xmode_info.key,
+            :battled_at => @info.battled_at,
           }) do |battle|
-          info.memberships.each.with_index do |e, i|
+          @info.memberships.each.with_index do |e, i|
             battle.memberships.build({
                 :user         => User.find_by!(user_key: e[:user_key]),
                 :grade_key    => e[:grade_info].key,
@@ -55,20 +66,6 @@ module Swars
               })
           end
         end
-
-        begin
-          battle.save!
-        rescue ActiveRecord::RecordNotUnique, ActiveRecord::Deadlocked => error # RecordNotUnique は DB の unique index 違反
-          Rails.logger.info { error.inspect }
-          false
-        end
-
-      end
-
-      private
-
-      def key_vo
-        @key_vo ||= KeyVo.wrap(params[:key])
       end
     end
   end

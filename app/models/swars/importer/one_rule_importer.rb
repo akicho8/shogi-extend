@@ -6,73 +6,51 @@ module Swars
       # Importer::OneRuleImporter.new(user_key: "kinakom0chi", rule_key: :ten_min).run
       def initialize(params = {})
         @params = {
-          :verbose            => Rails.env.development?,
-          :last_page_break    => true,  # 最後のページと思われるときは終わる
-          :early_break        => false, # 1ページ目で新しいものが見つからなければ終わる
-          :error_capture      => nil,   # blockが渡されていれば呼ぶ
-          :error_capture_fake => false, # trueならわざと例外
+          :verbose                => Rails.env.development?,
+          :last_page_break        => true,  # 最後のページと思われるときは終わる
+          :early_break            => false, # 1ページ目で新しいものが見つからなければ終わる
+          :bs_error_capture_block => nil,   # blockが渡されていれば呼ぶ
+          :bs_error_capture_fake  => false, # trueならわざと例外
         }.merge(params)
       end
 
       def run
-        if params[:SwarsFormatIncompatible]
-          raise Agent::SwarsFormatIncompatible
-        end
-        keys = all_battle_keys_collect      # 履歴ページから対局URLを収集する
-        keys = exist_key_reject(keys)       # すでに取り込んであるものは除外する
-        keys.each(&method(:import_process)) # 新しいものだけ取り込む
+        new_keys.each(&method(:import_process))
       end
 
       private
 
-      # 対象ルールのすべての対局キーを取得する
-      def all_battle_keys_collect
-        keys = []
+      # 対象ルールのすべての(まだDBには取り込んでいない)対局キーたちを集める
+      def new_keys
+        new_keys = Set.new
         (params[:page_max] || 1).times do |i|
-          result = Agent::Index.new(params.merge(page_index: i)).fetch
-          if params[:verbose]
-            puts "[#{params[:user_key]}][P#{i.next}][#{rule_info.name}][#{result.keys.size}件][#{result.last_page? ? '最後' : '続く'}]"
-          end
-          keys += result.keys
-          # 最後のページと思われる場合は終わる
+          result = Agent::History.new(params.merge(page_index: i)).fetch
+          log_puts { [params[:user_key], "P#{i.next}", rule_info.name, result.inspect].join(" ") }
+          new_keys += result.new_keys
           if params[:last_page_break]
             if result.last_page?
-              if params[:verbose]
-                puts "[P#{i.next}] 最後のページだった --> break"
-              end
+              log_puts { "最後のページと思われるので終わる" }
               break
             end
           end
-          # 新しいものがなければ終わる (次のページもないと想定する)
           if params[:early_break]
-            new_keys = result.keys - Battle.where(key: result.keys).pluck(:key)
-            if new_keys.empty?
-              if params[:verbose]
-                puts "[P#{i.next}] 新しいレコードがなかった --> break"
-              end
+            if result.new_keys.empty?
+              log_puts { "新しい対局が見つからなかったので終わる(次のページはないと考える)" }
               break
             end
           end
         end
-        keys
-      end
-
-      # 既存のキーは除外する
-      def exist_key_reject(keys)
-        if params[:error_capture_fake]
-          return keys
-        end
-        keys - Battle.where(key: keys).pluck(:key)
+        new_keys
       end
 
       def import_process(key)
         begin
-          if params[:error_capture_fake]
+          if params[:bs_error_capture_fake]
             raise Bioshogi::BioshogiError, "(test1)\n(test2)\n"
           end
           BattleImporter.new(params.merge(key: key, skip_if_exist: false)).run
         rescue Bioshogi::BioshogiError => error
-          if f = params[:error_capture]
+          if f = params[:bs_error_capture_block]
             f.call({key: key, error: error})
           else
             raise error
@@ -82,6 +60,13 @@ module Swars
 
       def rule_info
         @rule_info ||= RuleInfo.fetch(params[:rule_key])
+      end
+
+      def log_puts
+        if !params[:verbose]
+          return
+        end
+        puts yield
       end
     end
   end

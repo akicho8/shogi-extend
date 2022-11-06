@@ -42,5 +42,29 @@ module Swars
     include ZipDlMethods
     include IndexMethods
     include ShowMethods
+
+    before_action do
+      @xnotice = Xnotice.new
+    end
+
+    rescue_from "Swars::Agent::BaseError" do |exception|
+      SlackAgent.notify_exception(exception)
+      render json: { message: exception.message }, status: exception.status
+    end
+
+    rescue_from "Faraday::ConnectionFailed" do |exception|
+      SlackAgent.notify_exception(exception)
+      render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
+    end
+
+    rescue_from "ActiveRecord::RecordNotUnique" do |exception|
+      SlackAgent.notify_exception(exception)
+      render json: { message: "連打したのでぶっこわれました" }, status: 500
+    end
+
+    rescue_from "ActiveRecord::Deadlocked" do |exception|
+      SlackAgent.notify_exception(exception)
+      render json: { message: "データベースが死にそうです" }, status: 500
+    end
   end
 end

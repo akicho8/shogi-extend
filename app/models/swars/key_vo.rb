@@ -1,8 +1,10 @@
-# キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
-
 module Swars
   class KeyVo
     class << self
+      def [](value)
+        wrap(value)
+      end
+
       def wrap(value)
         if value.kind_of? self
           return value
@@ -31,6 +33,11 @@ module Swars
       key
     end
 
+    def originator_url
+      q = { locale: "ja" }
+      "https://shogiwars.heroz.jp/games/#{self}?#{q.to_query}"
+    end
+
     def to_time
       Time.zone.parse(parts.last)
     end
@@ -56,6 +63,26 @@ module Swars
       if invalid?
         raise ArgumentError, @key.inspect
       end
+    end
+
+    def <=>(other)
+      [self.class, key] <=> [other.class, other.key]
+    end
+
+    def ==(other)
+      self.class == other.class && key == other.key
+    end
+
+    def eql?(other)
+      self == other
+    end
+
+    def hash
+      key.hash
+    end
+
+    def inspect
+      "<#{self}>"
     end
 
     private

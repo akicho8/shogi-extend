@@ -8,13 +8,11 @@ module Swars
       end
 
       def default_params
-        {
-          :remote_run => false,
-        }
+        {}
       end
 
       def fetcher
-        @fetcher ||= Fetcher.new(params) # remote_run, dry_run, sleep を渡している
+        @fetcher ||= Fetcher.new(params) # remote_run, sleep を渡している
       end
     end
   end

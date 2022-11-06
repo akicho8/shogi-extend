@@ -1,16 +1,5 @@
 module Swars
   concern :IndexMethods do
-    included do
-      before_action do
-        @xnotice = Xnotice.new
-      end
-
-      rescue_from "Swars::Agent::BaseError" do |exception|
-        SlackAgent.notify_exception(exception)
-        render json: { message: exception.message }, status: exception.status
-      end
-    end
-
     def index
       [
         :case_kento_api,
@@ -122,6 +111,7 @@ module Swars
         # そうしないと「もしかして」メッセージの2度目が表示されない
         @import_errors = []
         @import_success = Importer::ThrottleImporter.new(import_params).run
+        import_error_message_build
         if !@import_success && current_swars_user
           @xnotice.add("さっき取得したばかりです", type: "is-warning", development_only: true)
           return
@@ -148,8 +138,6 @@ module Swars
         if Rails.env.development?
           slack_notify(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
         end
-
-        import_error_message_build
       end
     end
 
@@ -231,8 +219,10 @@ module Swars
     private
 
     def primary_key_like?
-      if Rails.env.development? && params[:all]
-        return true
+      if Rails.env.development?
+        if params[:all]
+          return true
+        end
       end
 
       current_swars_user || primary_record_key || query_info.lookup(:ids)
@@ -241,17 +231,12 @@ module Swars
     def x_delete_process
       if Rails.env.development? || Rails.env.test?
         if params[:x_destroy_all]
-          if current_swars_user
-            Battle.where(id: current_swars_user.battle_ids).destroy_all # user.battles.destroy_all だと memberships の片方が残る
-          end
-        end
-        if params[:x_swars_user_destroy_all]
-          x_swars_user_destroy_all
+          x_destroy_all
         end
       end
     end
 
-    def x_swars_user_destroy_all
+    def x_destroy_all
       DbCop.foreign_key_checks_disable
       User.destroy_all
       Battle.destroy_all
@@ -264,18 +249,18 @@ module Swars
       {
         :user_key                => current_swars_user_key,
         :page_max                => import_page_max,
-        :force                   => params[:force],
-        :error_capture_fake      => params[:error_capture_fake],
-        :error_capture           => -> error { @import_errors << error },
+        :throttle_cache_clear    => params[:throttle_cache_clear],
+        :bs_error_capture_fake   => params[:bs_error_capture_fake],
+        :bs_error_capture_block        => -> error { @import_errors << error },
         :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
-        :SwarsConnectionFailed   => params[:SwarsConnectionFailed],
+        :RaiseConnectionFailed   => params[:RaiseConnectionFailed],
         :SwarsUserNotFound       => params[:SwarsUserNotFound],
         :SwarsBattleNotFound     => params[:SwarsBattleNotFound],
       }
     end
 
     # 確認方法
-    # http://localhost:3000/w?query=DevUser1&error_capture_fake=true&force=true
+    # http://localhost:3000/w?query=DevUser1&bs_error_capture_fake=true&throttle_cache_clear=true
     def import_error_message_build
       if @import_errors.present?
         subject = "【ウォーズ棋譜不整合】"
@@ -290,7 +275,7 @@ module Swars
       @import_errors.collect { |e|
         [
           e[:error].message.strip,
-          BattleIdentify[e[:key]].heroz_show_url,
+          KeyVo.wrap(e[:key]).originator_url,
         ].collect { |e| "#{e}\n" }.join
       }.join("\n")
     end

@@ -142,11 +142,11 @@ swars_react_props = {
     "javascript.log_level"=>"error"},
   "version"=>""}
 
-record_adapter = Swars::Agent::RecordAdapter.new(swars_react_props)
-tp record_adapter.to_h
+props_adapter = Swars::Agent::PropsAdapter.new(swars_react_props)
+tp props_adapter.to_h
 # >> |-----------+--------------------------------------|
 # >> |   対局KEY | kinakom0chi-myan0730-20221104_220631 |
-# >> |  対局日時 | 20221104_220631                      |
+# >> |  対局日時 | 2022-11-04 22:06:31                  |
 # >> |    ルール | 10分                                 |
 # >> |      種類 | 通常                                 |
 # >> |    手合割 | 平手                                 |

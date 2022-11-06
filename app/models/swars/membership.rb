@@ -233,7 +233,7 @@ module Swars
 
       def medal_params(params = {})
         info = first_matched_medal
-        if v = (params[:debug] || ENV["MEDAL_DEBUG"])
+        if v = (params[:medal_debug] || ENV["MEDAL_DEBUG"])
           info = MembershipMedalInfo[(id + v.to_i).modulo(MembershipMedalInfo.count)]
         end
         info.medal_params_build(self)

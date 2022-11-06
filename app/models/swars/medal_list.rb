@@ -32,7 +32,7 @@ module Swars
     def to_a
       list = matched_medal_infos.collect(&:medal_params)
 
-      if params[:debug]
+      if params[:medal_debug]
         list << { method: "tag", name: "X", type: "is-white" }
         list << { method: "tag", name: "X", type: "is-black" }
         list << { method: "tag", name: "X", type: "is-light" }
@@ -79,7 +79,7 @@ module Swars
       # if Rails.env.development?
       #   return MedalInfo
       # end
-      MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:debug] }
+      MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:medal_debug] }
     end
 
     ################################################################################ 戦法・戦術を使った回数

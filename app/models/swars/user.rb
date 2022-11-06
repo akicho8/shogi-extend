@@ -78,19 +78,31 @@ module Swars
 
           # Grade が下がらないようにする
           # 例えば10分メインの人が3分を1回やっただけで30級に戻らないようにする
-          if will_save_change_to_attribute?(:grade_id)
-            ov, nv = attribute_change_to_be_saved(:grade_id)
-            if ov && nv
-              if Grade.find(ov).priority < Grade.find(nv).priority
-                self.grade_id = ov
-              end
-            end
-          end
+          # if will_save_change_to_attribute?(:grade_id)
+          #   ov, nv = attribute_change_to_be_saved(:grade_id)
+          #   if ov && nv
+          #     if Grade.find(ov).priority < Grade.find(nv).priority
+          #       self.grade_id = ov
+          #     end
+          #   end
+          # end
         end
       end
 
       def grade_key=(key)
         self.grade = Grade.find_by!(key: key)
+      end
+
+      # 指定の grade の方が段位が上であれば設定する
+      def grade_update_if_new(new_grade)
+        if grade
+          if new_grade.priority < grade.priority
+            self.grade = new_grade
+          end
+        else
+          self.grade = grade
+        end
+        save!
       end
 
       def grade_key

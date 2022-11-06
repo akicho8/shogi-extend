@@ -1,6 +1,6 @@
 module Swars
   module Agent
-    class RecordAdapter
+    class PropsAdapter
       attr_accessor :props
       attr_accessor :options
 
@@ -11,7 +11,7 @@ module Swars
 
       def to_h
         {
-          "対局KEY"   => key_vo,
+          "対局KEY"   => key,
           "対局日時"  => battled_at.strftime("%F %T"),
           "ルール"    => rule_info,
           "種類"      => xmode_info,
@@ -28,14 +28,14 @@ module Swars
       end
 
       # 対局KEY
-      def key_vo
-        @key_vo ||= options[:key_vo] || KeyVo.wrap(props.fetch("name"))
+      def key
+        @key ||= options[:key] || KeyVo.wrap(props.fetch("name"))
       end
 
       # 対局日時
       # データには含まれていないため key から取り出す
       def battled_at
-        @battled_at ||= key_vo.to_time
+        @battled_at ||= key.to_time
       end
 
       # 10分・3分・10秒
@@ -64,12 +64,12 @@ module Swars
       def memberships
         [
           {
-            :user_key   => key_vo.user_key_at(:black),
+            :user_key   => key.user_key_at(:black),
             :grade_info => magic_number_to_grade_info("sente_dan"),
             :judge_info => judge_info_for("SENTE"),
           },
           {
-            :user_key   => key_vo.user_key_at(:white),
+            :user_key   => key.user_key_at(:white),
             :grade_info => magic_number_to_grade_info("gote_dan"),
             :judge_info => judge_info_for("GOTE"),
           },

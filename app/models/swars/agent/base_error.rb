@@ -15,15 +15,9 @@ module Swars
       end
     end
 
-    class SwarsConnectionFailed < BaseError
+    class RaiseConnectionFailed < BaseError
       def initialize(status = nil, message = nil)
         super(408, "混み合っています<br>しばらくしてからアクセスしてください")
-      end
-    end
-
-    class SwarsUserNotFound < BaseError
-      def initialize(status = nil, message = nil)
-        super(404, "ウォーズIDが存在しません<br>大文字と小文字を間違えていませんか？")
       end
     end
 

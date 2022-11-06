@@ -10,7 +10,7 @@ module Swars
       end
 
       def run
-        if params[:force]
+        if params[:throttle_cache_clear]
           Rails.cache.delete(cache_key)
         end
         if Rails.cache.exist?(cache_key)

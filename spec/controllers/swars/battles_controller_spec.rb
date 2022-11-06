@@ -44,12 +44,12 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
   describe "ERROR" do
     def case1(params)
-      get :index, params: { query: "DevUser1", force: true, format: :json, **params }
+      get :index, params: { query: "DevUser1", throttle_cache_clear: true, format: :json, **params }
       assert { response.status != 200 }
     end
 
     def case2(params)
-      get :index, params: { force: true, format: :json, **params }
+      get :index, params: { throttle_cache_clear: true, format: :json, **params }
       assert { response.status == 200 }
       json = JSON.parse(response.body, symbolize_names: true)
       assert { json[:xnotice][:infos][0][:message] }
@@ -60,15 +60,15 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
     end
 
     it "本家に一時的にアクセスできない" do
-      case1(SwarsConnectionFailed: true)
+      case1(RaiseConnectionFailed: true)
     end
 
     it "棋譜の不整合" do
-      case2(query: "DevUser1", error_capture_fake: true)
+      case2(query: "DevUser1", bs_error_capture_fake: true)
     end
 
     it "本家でユーザーが存在しない" do
-      case2(query: "__unknown__", SwarsUserNotFound: true, x_swars_user_destroy_all: true)
+      case2(query: "__unknown__", SwarsUserNotFound: true, x_destroy_all: true)
     end
   end
 
