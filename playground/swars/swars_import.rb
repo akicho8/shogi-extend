@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../../config/environment', __FILE__)
-DbCop.foreign_key_checks_disable
+ForeignKey.disabled
 Swars::Battle.destroy_all
 Swars::User.destroy_all
 # Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true,  early_break: true, page_max: 2).run

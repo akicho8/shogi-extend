@@ -63,7 +63,7 @@ module Kiwi
 
         # rails r 'Kiwi::Banana.mock_setup'
         def mock_setup
-          DbCop.foreign_key_checks_disable
+          ForeignKey.disabled
 
           mock_setup2
 

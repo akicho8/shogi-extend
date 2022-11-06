@@ -1,6 +1,6 @@
 class CreateWkbk < ActiveRecord::Migration[6.0]
   def change
-    DbCop.foreign_key_checks_disable do
+    ForeignKey.disabled do
       ################################################################################ 静的
 
       # フォルダ

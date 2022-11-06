@@ -23,7 +23,7 @@ class DropEmox < ActiveRecord::Migration[5.1]
       :emox_settings,
       :emox_vs_records,
     ].each do |e|
-      DbCop.foreign_key_checks_disable do
+      ForeignKey.disabled do
         drop_table e, if_exists: true
       end
     end

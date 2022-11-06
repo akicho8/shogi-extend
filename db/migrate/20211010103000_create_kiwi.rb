@@ -30,7 +30,7 @@
 
 class CreateKiwi < ActiveRecord::Migration[6.0]
   def change
-    DbCop.foreign_key_checks_disable
+    ForeignKey.disabled
 
     create_table :kiwi_folders, force: true do |t|
       t.string :key,                                   null: false, index: { unique: true }

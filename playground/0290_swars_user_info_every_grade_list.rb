@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-ApplicationRecord.connection.execute("SET foreign_key_checks = 0")
+ForeignKey.disabled
 
 Swars::User.destroy_all
 Swars::Battle.destroy_all

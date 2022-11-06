@@ -13,7 +13,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on",                          # 時間→日付変換
+            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",                          # 時間→日付変換
             "COUNT(*) AS count_all",                                                        # 履歴数
             "COUNT(answer_kind_id = #{Wkbk::AnswerKind.fetch(:correct).id} or NULL) AS correct_count", # o
             "COUNT(answer_kind_id = #{Wkbk::AnswerKind.fetch(:mistake).id} or NULL) AS mistake_count", # x
@@ -29,7 +29,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク問題作成者数
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
@@ -44,7 +44,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク問題作成者数
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎

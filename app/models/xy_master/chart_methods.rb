@@ -6,7 +6,7 @@ module XyMaster
 
     class_methods do
       def chartjs_datasets(params)
-        DbCop.mysql_convert_tz_with_time_zone_validate!
+        DbUtil.mysql_convert_tz_with_time_zone_validate!
 
         rule = Rule.fetch(params[:chart_rule_key])
         chart_scope_info = ChartScopeInfo.fetch(params[:chart_scope_key])
@@ -34,7 +34,7 @@ module XyMaster
         end
 
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
-        result = scope.select("entry_name, DATE(#{DbCop.tz_adjust(:created_at)}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
+        result = scope.select("entry_name, DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
 
         names_hash.collect.with_index { |(name, _), i|
           palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))

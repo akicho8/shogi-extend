@@ -1,6 +1,6 @@
 class DeleteRobot < ActiveRecord::Migration[6.0]
   def up
-    DbCop.foreign_key_checks_disable do
+    ForeignKey.disabled do
       tp User
       User.robot_only.each do |e|
         if e.email != "shogi.extend+bot@gmail.com"

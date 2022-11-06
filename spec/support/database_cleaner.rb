@@ -1,7 +1,7 @@
 if defined?(DatabaseCleaner)
   RSpec.configure do |config|
     config.before(:suite) do
-      # DbCop.foreign_key_checks_disable
+      # ForeignKey.disabled
     end
 
     # デフォルト

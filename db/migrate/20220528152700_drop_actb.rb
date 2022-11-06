@@ -33,7 +33,7 @@ class DropActb < ActiveRecord::Migration[5.1]
       :actb_udemaes,
       :actb_vs_records,
     ].each do |e|
-      DbCop.foreign_key_checks_disable do
+      ForeignKey.disabled do
         drop_table e, if_exists: true
       end
     end
