@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 tp Swars::Agent.new(remote_run: true).index_get(gtype: "",  user_key: "kinakom0chi", page_index: 0)
 # >> |-----------------------------------------+------------------------------------------------------------------------------------------------|

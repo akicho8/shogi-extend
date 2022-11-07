@@ -19,8 +19,8 @@ require "rails_helper"
 module Swars
   module Agent
     RSpec.describe PropsAdapter, type: :model, swars_spec: true do
-      let(:react_props) { eval(Pathname(__dir__).join("react_props.rb").read) }
-      let(:object) { PropsAdapter.new(react_props) }
+      let(:root_props) { eval(Pathname(__dir__).join("root_props.rb").read) }
+      let(:object) { PropsAdapter.new(root_props) }
 
       it "to_h" do
         assert { object.to_h }

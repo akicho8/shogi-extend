@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 key = "misaka_Level5-ohakado-20200327_161334"
 battle = Swars::Battle.find_by(key: key)

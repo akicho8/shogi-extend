@@ -43,49 +43,49 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   end
 
   describe "ERROR" do
-    def case1(params)
-      get :index, params: { query: "DevUser1", throttle_cache_clear: true, format: :json, **params }
+    def case_ng(params)
+      get :index, params: { query: "DevUser1", x_destroy_all: true, throttle_cache_clear: true, format: :json, **params }
       assert { response.status != 200 }
     end
 
-    def case2(params)
-      get :index, params: { throttle_cache_clear: true, format: :json, **params }
+    def case_ok(params)
+      get :index, params: { query: "DevUser1", x_destroy_all: true, throttle_cache_clear: true, format: :json, **params }
       assert { response.status == 200 }
       json = JSON.parse(response.body, symbolize_names: true)
       assert { json[:xnotice][:infos][0][:message] }
     end
 
     it "本家の構造が変わった" do
-      case1(SwarsFormatIncompatible: true)
+      case_ng(SwarsFormatIncompatible: true)
     end
 
     it "本家に一時的にアクセスできない" do
-      case1(RaiseConnectionFailed: true)
+      case_ng(RaiseConnectionFailed: true)
     end
 
     it "棋譜の不整合" do
-      case2(query: "DevUser1", bs_error_capture_fake: true)
+      case_ok(query: "DevUser1", bs_error_capture_fake: true)
     end
 
     it "本家でユーザーが存在しない" do
-      case2(query: "__unknown__", SwarsUserNotFound: true, x_destroy_all: true)
+      case_ok(query: "__unknown__", SwarsUserNotFound: true)
     end
   end
 
   describe "並び替え" do
-    def case1(sort_column)
+    def case_ng(sort_column)
       get :index, params: { query: "DevUser1", sort_column: sort_column }
       assert { response.status == 200 }
     end
 
     it "works" do
-      case1 "xmode_id"
-      case1 "rule_id"
-      case1 "final_id"
-      case1 "preset_id"
-      case1 "membership.judge_id"
-      case1 "membership.location_id"
-      case1 "membership.grade_diff"
+      case_ng "xmode_id"
+      case_ng "rule_id"
+      case_ng "final_id"
+      case_ng "preset_id"
+      case_ng "membership.judge_id"
+      case_ng "membership.location_id"
+      case_ng "membership.grade_diff"
     end
 
     it "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
@@ -169,7 +169,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         user_login
       end
 
-      def case1(body_encode)
+      def case_ng(body_encode)
         get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
         assert { response.status == 200 }
         assert { controller.current_scope.count == 1 }
@@ -185,8 +185,8 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         end
       end
 
-      it { case1("UTF-8")     }
-      it { case1("Shift_JIS") }
+      it { case_ng("UTF-8")     }
+      it { case_ng("Shift_JIS") }
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
         get :index, params: {query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
@@ -265,7 +265,7 @@ EOT
     end
 
     it "本家で対局が見つからない" do
-      get :show, params: { id: "xxx", format: :json, SwarsBattleNotFound: true }
+      get :show, params: { id: "alice-bob-20200101_123403", format: :json, x_destroy_all: true, throttle_cache_clear: true, SwarsBattleNotFound: true }
       assert { response.status != 200 }
       # json = JSON.parse(response.body, symbolize_names: true)
       # assert { json[:xnotice][:infos][0][:message] }

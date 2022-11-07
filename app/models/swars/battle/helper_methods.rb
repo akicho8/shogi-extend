@@ -27,7 +27,8 @@ module Swars
         # 汚い文字列から最初に見つけたURLから対局キーを取得
         def battle_key_extract(str)
           if url = battle_url_extract(str)
-            URI(url).path.split("/").last
+            key = URI(url).path.split("/").last
+            KeyVo.wrap(key)
           end
         end
 

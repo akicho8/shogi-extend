@@ -9,9 +9,7 @@ module Swars
         if value.kind_of? self
           return value
         end
-        object = new(value)
-        object.validate!
-        object
+        new(value).tap(&:validate!)
       end
 
       def valid?(value)
@@ -20,6 +18,10 @@ module Swars
 
       def invalid?(value)
         new(value).invalid?
+      end
+
+      def generate(**params)
+        KeyGenerator.generate(**params)
       end
     end
 

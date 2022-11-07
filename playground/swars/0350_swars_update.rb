@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../../config/environment', __FILE__)
 
 user1 = Swars::User.create!
 user2 = Swars::User.create!

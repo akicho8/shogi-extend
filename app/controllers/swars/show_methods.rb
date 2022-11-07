@@ -4,12 +4,13 @@ module Swars
 
     def current_record
       @current_record ||= yield_self do
-        if v = params[:id].presence
+        if key = params[:id].presence
+          key = KeyVo.wrap(key)
           if request.from_crawler?
           else
-            current_model.single_battle_import(key: v, SwarsBattleNotFound: params[:SwarsBattleNotFound])
+            Importer::BattleImporter.new(key: key, SwarsBattleNotFound: params[:SwarsBattleNotFound]).run
           end
-          current_scope.find_by!(key: v)
+          current_scope.find_by!(key: key.to_s)
         else
           current_scope.new
         end

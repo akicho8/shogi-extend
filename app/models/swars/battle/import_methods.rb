@@ -10,7 +10,7 @@ module Swars
           end
 
           if Rails.env.development?
-            user_import(user_key: "DevUser1")
+            Importer::AllRuleImporter.new(user_key: "DevUser1").run
             if ENV["IT_IS_CALLED_THE_CRAWLER_AT_THE_TIME_OF_SETUP"]
               puts Crawler::RegularCrawler.new.run.rows.to_t
               puts Crawler::ExpertCrawler.new.run.rows.to_t
@@ -73,25 +73,6 @@ module Swars
           end
           puts
           p c
-        end
-
-        # これらはなるべく使うな
-        if true
-          def throttle_user_import(params = {})
-            Importer::ThrottleImporter.new(params).run
-          end
-
-          def user_import(params = {})
-            Importer::AllRuleImporter.new(params).run
-          end
-
-          def multiple_battle_import(params = {})
-            Importer::OneRuleImporter.new(params).run
-          end
-
-          def single_battle_import(params = {})
-            Importer::BattleImporter.new(params).run
-          end
         end
       end
     end

@@ -4,11 +4,11 @@ module Swars
   module Agent
     RSpec.describe Record, type: :model, swars_spec: true do
       it "development" do
-        object = Record.new(key: "DevUser1-DevUser2-20200101_123456").fetch
+        object = Record.new(key: KeyVo.wrap("DevUser1-DevUser2-20200101_123456")).fetch
         assert { object.dig("gameHash", "name") == "MockUser1-MockUser2-20000101_112233" }
       end
       it "production" do
-        object = Record.new(key: "Kato_Hifumi-SiroChannel-20190317_140844", remote_run: true).fetch
+        object = Record.new(key: KeyVo.wrap("Kato_Hifumi-SiroChannel-20190317_140844"), remote_run: true).fetch
         assert { object.dig("gameHash", "name") == "Kato_Hifumi-SiroChannel-20190317_140844" }
       end
     end
