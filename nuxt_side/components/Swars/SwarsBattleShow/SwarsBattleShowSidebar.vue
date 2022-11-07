@@ -34,7 +34,6 @@ export default {
   methods: {
   },
   computed: {
-    official_show_url() { return `https://shogiwars.heroz.jp/games/${this.base.record.key}` },
   },
 }
 </script>

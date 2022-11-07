@@ -9,4 +9,7 @@ export const app_chore = {
       this.window_popup_if_desktop(this.official_show_url, {width: 400, height: 700})
     },
   },
+  computed: {
+    official_show_url() { return `https://shogiwars.heroz.jp/games/${this.record.key}` },
+  },
 }

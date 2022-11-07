@@ -62,4 +62,11 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       assert_current_path "/swars/battles/#{@key}.png", ignore_query: true
     end
   end
+
+  it "本家" do
+    visit2 "/swars/battles/#{@key}"
+    hamburger_click
+    switch_to_window(window_opened_by { menu_item_click("本家") })
+    assert { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
+  end
 end
