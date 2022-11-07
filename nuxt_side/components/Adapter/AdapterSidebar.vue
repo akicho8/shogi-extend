@@ -9,7 +9,7 @@ b-sidebar.AdapterSidebar.is-unselectable(fullheight right overlay v-model="base.
           b-menu-item.is_active_unset(@click="base.share_board_first_open_handle" :label="`共有将棋盤 #${0}`")
           b-menu-item.is_active_unset(@click="base.share_board_last_open_handle"  :label="`共有将棋盤 #${base.fixed_turn}`" v-if="base.fixed_turn > 0")
           b-menu-item.is_active_unset(@click="base.video_new_open_handle" label="動画作成")
-          b-menu-item.is_active_unset(@click="base.style_editor_open_handle" label="スタイルエディタに転送")
+          b-menu-item.is_active_unset(@click="base.style_editor_open_handle" label="ｽﾀｲﾙｴﾃﾞｨﾀに転送")
 
         b-menu-list(label="Export")
           b-menu-item.is_active_unset(@click="base.print_open_handle" label="棋譜用紙 (PDF)")

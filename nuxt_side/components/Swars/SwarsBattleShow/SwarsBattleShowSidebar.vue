@@ -8,7 +8,7 @@ b-sidebar.SwarsBattleShowSidebar.is-unselectable(fullheight right overlay v-mode
         b-menu-list(label="Action")
           b-menu-item.is_active_unset(label="共有将棋盤に転送"       tag="nuxt-link" :to="{name: 'share-board', query: base.share_board_query}" @click.native="$sound.play_click()")
           b-menu-item.is_active_unset(label="問題作成"               tag="nuxt-link" :to="{name: 'rack-articles-new', query: {body: base.record.sfen_body, turn: base.current_turn, viewpoint: base.sp_viewpoint}}" @click.native="$sound.play_click()")
-          b-menu-item.is_active_unset(label="スタイルエディタに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="$sound.play_click()")
+          b-menu-item.is_active_unset(label="ｽﾀｲﾙｴﾃﾞｨﾀに転送" tag="nuxt-link" :to="{name: 'style-editor', query: base.style_editor_query}" @click.native="$sound.play_click()")
 
         SbSidebarExport(:base="base")
           b-menu-item.is_active_unset(icon="printer" label="棋譜用紙 (PDF)" tag="nuxt-link" :to="{name: 'swars-battles-key-formal-sheet', params: {key: base.record.key}}" @click.native="$sound.play_click()")
@@ -41,6 +41,9 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowSidebar
+  .sidebar-content
+    width: 20rem
+
   .menu-list
     .icon
       color: $primary
