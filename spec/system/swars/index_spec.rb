@@ -224,16 +224,6 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
     end
 
-    describe "フィルタ" do
-      it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "YamadaTaro"
-        hamburger_click
-        find(".filter_set_menu_item").click
-        find(".query_preset_judge_win").click # 「勝ち」
-        assert_var_eq(:records_length, 0)
-      end
-    end
-
     describe "相手で絞る" do
       it "サイドバーから変更する" do
         visit2 "/swars/search", query: "YamadaTaro"

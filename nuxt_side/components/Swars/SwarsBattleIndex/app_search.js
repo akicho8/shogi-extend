@@ -1,5 +1,3 @@
-import { QueryPresetInfo } from "./models/query_preset_info.js"
-
 export const app_search = {
   data() {
     return {
@@ -89,8 +87,6 @@ export const app_search = {
     },
   },
   computed: {
-    QueryPresetInfo() { return QueryPresetInfo                  },
-
     current_route_query() {
       return {
         query:       this.query,
