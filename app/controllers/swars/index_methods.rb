@@ -80,7 +80,7 @@ module Swars
     def primary_record_key
       @primary_record_key ||= yield_self do
         if query = params[:query].presence
-          Battle.battle_key_extract(query)
+          BattleUrl.key(query)
         end
       end
     end

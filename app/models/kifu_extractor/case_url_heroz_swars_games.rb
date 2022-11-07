@@ -9,7 +9,7 @@ module KifuExtractor
   class CaseUrlHerozSwarsGames < Extractor
     def resolve
       if url_type? || swars_battle_url_match?
-        if key = Swars::Battle.battle_key_extract(item.source)
+        if key = Swars::BattleUrl.key(item.source)
           Swars::Importer::BattleImporter.new(key: key).run
           if battle = Swars::Battle.find_by(key: key.to_s)
             @body = battle.kifu_body

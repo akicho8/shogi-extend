@@ -31,7 +31,7 @@ module Swars
     # https://shogiwars.heroz.jp/games/foo-bar-20200204_211329" --> foo
     def case_battle_url
       if url = query_info.urls.first
-        Swars::Battle.user_key_extract_from_battle_url(url)
+        BattleUrl.user_key(url)
       end
     end
 
