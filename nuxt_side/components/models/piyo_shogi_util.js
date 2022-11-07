@@ -101,6 +101,7 @@ export class PiyoShogiUtil {
           // ぴよ将棋の罠
           // ・アプリ版はエンコードすると読めなくなる
           // ・URLの最後に ".kif" の文字列がないと読めなくなる
+          v = encodeURIComponent(v)
         } else {
           v = encodeURIComponent(v)
         }
