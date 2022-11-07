@@ -68,23 +68,6 @@ export const app_search = {
         this.$sound.play_click()
       })
     },
-
-    // ここだけ特別で this.query で上書きしている
-    // なぜならフィルターは query に埋め込まないといけないから
-    filter_research(query) {
-      alert("未使用")
-
-      if (!this.xi.current_swars_user_key) {
-        this.toast_warn("先に誰かで検索してください")
-        return
-      }
-      const new_query = _.trim(`${this.xi.current_swars_user_key} ${query}`)
-
-      // ここで設定しておくと検索前に変更される。けどなくてもい。意味あるかな？
-      this.query = new_query
-
-      this.interactive_search({query: new_query})
-    },
   },
   computed: {
     current_route_query() {
