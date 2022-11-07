@@ -39,7 +39,7 @@ export class PiyoShogiUtil {
   // app のとき path があれば kif の URL を渡す
   get url() {
     if (this.native_p) {    // モバイル版
-      if (this.params.path) {
+      if (this.params.kif_url ?? this.params.path) {
         return this.app_url // KIFファイルを渡す方法
       } else {
         return this.web_url // SFENを引数に渡す方法

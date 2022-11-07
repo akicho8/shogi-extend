@@ -94,7 +94,7 @@ export const app_urls = {
     // 外部アプリ
     piyo_shogi_app_with_params_url() {
       return this.$KifuVo.create({
-        // kif_url: this.current_kif_url,
+        kif_url: this.current_kif_url,
         sfen: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
