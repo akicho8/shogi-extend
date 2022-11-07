@@ -92,7 +92,7 @@ export default {
     piyo_shogi_app_with_params_url() {
       if (this.record) {
         return this.$KifuVo.create({
-          path: this.record.show_path,
+          kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
           sfen: this.record.sfen_body,
           turn: this.record.display_turn,
           viewpoint: this.record.viewpoint,

@@ -16,7 +16,7 @@ export const app_link_to = {
 
     piyo_shogi_app_with_params_url(record) {
       return this.$KifuVo.create({
-        path: record.show_path,
+        kif_url: `${this.$config.MY_SITE_URL}${record.show_path}.kif`,
         sfen: record.sfen_body,
         turn: this.scene_info.sp_turn_of(record),
         viewpoint: record.viewpoint,
