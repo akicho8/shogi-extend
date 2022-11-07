@@ -4,7 +4,7 @@ module Swars
 
     Commands = [
       Command.new { |user_key|
-        if e = Bioshogi::TacticInfo.flat_lookup(user_key) || PresetInfo.lookup(user_key)
+        if e = Bioshogi::TacticInfo.fuzzy_flat_lookup(user_key) || PresetInfo.lookup(user_key)
           "最初に特定のウォーズIDで検索してからカスタム検索で#{e.name}を選択してください"
         end
       },

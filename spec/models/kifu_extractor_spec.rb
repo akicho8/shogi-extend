@@ -54,9 +54,6 @@ RSpec.describe KifuExtractor, type: :model, kifu_extractor: true do
   end
 
   it "曖昧な戦法囲い名" do
-    assert { case1("嬉野") }
-    assert { case1("角頭歩") }
     assert { case1("アヒル") }
-    assert { case1("阪田流向かい飛車") }
   end
 end
