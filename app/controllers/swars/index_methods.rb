@@ -237,11 +237,12 @@ module Swars
     end
 
     def x_destroy_all
-      ForeignKey.disabled
-      User.destroy_all
-      Battle.destroy_all
-      if instance_variable_defined?(:@current_swars_user)
-        remove_instance_variable(:@current_swars_user)
+      ForeignKey.disabled do
+        User.destroy_all
+        Battle.destroy_all
+        if instance_variable_defined?(:@current_swars_user)
+          remove_instance_variable(:@current_swars_user)
+        end
       end
     end
 
