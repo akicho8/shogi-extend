@@ -42,7 +42,7 @@ module Swars
           end
 
           if v = params[:primary_record_key] # バトルが指定されている
-            s = s.where(key: v)
+            s = s.where(key: v.to_s)
           end
 
           begin

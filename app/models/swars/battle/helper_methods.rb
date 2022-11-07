@@ -35,7 +35,7 @@ module Swars
         # 汚い文字列から最初に見つけたURLから対局キーを取得して最初の人を抽出
         def user_key_extract_from_battle_url(str)
           if key = battle_key_extract(str)
-            key.split("-").first
+            key.user_keys.first
           end
         end
       end

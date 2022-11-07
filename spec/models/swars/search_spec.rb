@@ -62,5 +62,20 @@ module Swars
         assert { case1("-角落ち,-飛車落ち") == ["平手"] }
       end
     end
+
+    describe "Options" do
+      it "primary_record_key" do
+        key = KeyVo.generate
+        black = User.create!
+        white = User.create!
+        Battle.create_with_members!([black, white], key: key.to_s)
+        battles = Battle.search({
+            :query_info         => QueryInfo.parse(""),
+            :current_swars_user => black,
+            :primary_record_key => key,
+          })
+        assert { battles.exists? }
+      end
+    end
   end
 end
