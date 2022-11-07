@@ -37,7 +37,7 @@
 
       b-field.mt-5
         .control
-          b-switch.attachment_mode_switch_handle(v-model="attachment_mode" true-value="with_zip" false-value="nothing" :disabled="!g_current_user")
+          b-switch.attachment_mode_switch_handle(v-model="attachment_mode" true-value="with_zip" false-value="nothing" @input="attachment_mode_input" :disabled="!g_current_user")
             | ZIPファイルの添付
 
       b-field.mt-5
@@ -109,6 +109,10 @@ export default {
     back_handle() {
       this.$sound.play_click()
       this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
+    },
+
+    attachment_mode_input(value) {
+      this.$sound.play_toggle(value === "with_zip")
     },
   },
   computed: {
