@@ -33,18 +33,17 @@ export const Xhash = {
     return value
   },
 
-  // const hash = { a: 1, b: 1, c: 1, }
+  // const hash = { a: 1, b: null, c: 1, }
   // const value = Xhash.hash_extract_self(hash, "a", "b", "d")
   // expect(hash).toEqual({c: 1})
-  // expect(value).toEqual({a: 1, b: 1})
+  // expect(value).toEqual({a: 1, b: null})
   hash_extract_self(hash, ...keys) {
     const result = {}
     keys.forEach(key => {
-      const value = this.hash_delete(hash, key)
-      if (value != null) {
-        result[key] = value
+      if (key in hash) {
+        result[key] = this.hash_delete(hash, key)
       }
     })
     return result
-  }
+  },
 }

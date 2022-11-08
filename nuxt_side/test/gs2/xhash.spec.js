@@ -28,9 +28,10 @@ describe("Xhash", () => {
     expect(value).toEqual(1)
   })
   test("hash_extract_self", () => {
-    const hash = { a: 1, b: 1, c: 1, }
+    const hash = { a: 1, b: null, c: 1, }
     const value = Xhash.hash_extract_self(hash, "a", "b", "d")
     expect(hash).toEqual({c: 1})
-    expect(value).toEqual({a: 1, b: 1})
+    expect(value).toEqual({a: 1, b: null})
+  })
   })
 })
