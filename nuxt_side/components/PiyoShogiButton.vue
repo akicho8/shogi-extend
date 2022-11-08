@@ -1,8 +1,8 @@
 <template lang="pug">
-//- PiyoShogiUtil.current_info.showable_p が client でしか動かないため必ず client-only 配下に入れること
+//- PiyoShogiTypeCurrent.info.showable_p が client でしか動かないため必ず client-only 配下に入れること
 client-only
   a.button.PiyoShogiButton.is-small(
-    v-if="PiyoShogiUtil.current_info.showable_p || $config.STAGE === 'development'"
+    v-if="PiyoShogiTypeCurrent.info.showable_p || $config.STAGE === 'development'"
     :title="piyo_shogi_name"
     v-bind="$attrs"
     v-on="$listeners"
@@ -12,7 +12,7 @@ client-only
     span.icon
       img.icon_left(src="~/assets/piyo_shogi_icon.png")
     span(v-if="label_p")
-      | {{piyo_shogi_name}}
+      | ぴよ将棋
 </template>
 
 <script>
@@ -24,19 +24,6 @@ export default {
   methods: {
     click_handle() {
       this.ga_click("ぴよ将棋")
-    },
-  },
-  computed: {
-    // 「ぴよ将棋w」に飛ぼうとしている？
-    web_version_p() {
-      return (this.$attrs.href && this.$attrs.href.includes("https://www.studiok-i.net/ps/")) || !this.PiyoShogiUtil.current_info.native_p
-    },
-    piyo_shogi_name() {
-      if (this.web_version_p) {
-        return "ぴよ将棋ｗ"
-      } else {
-        return "ぴよ将棋"
-      }
     },
   },
 }
