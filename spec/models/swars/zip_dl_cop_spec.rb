@@ -51,7 +51,7 @@ module Swars
 
         Zip::InputStream.open(zip_dl_cop.to_zip_output_stream) do |zis|
           entry = zis.get_next_entry
-          assert { entry.name               == "alice/2000-01-01/battle2.ki2" }
+          assert { entry.name               == "alice/2000-01-01/alice-bob-20000101_000001.ki2" }
           assert { NKF.guess(zis.read).to_s == "Shift_JIS"                    }
         end
 

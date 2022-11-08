@@ -42,7 +42,7 @@ module Swars
     end
 
     it "KIFの直リンクがモデルから取れる" do
-      assert { record.kif_url == "http://localhost:3000/w/battle1.kif" }
+      assert { record.kif_url == "http://localhost:3000/w/alice-bob-20000101_000000.kif" }
     end
 
     it "keyの重複はDBでのみチェックする" do
@@ -58,7 +58,7 @@ module Swars
         it "works" do
           assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
           assert { value[:url]         == nil                                                        }
-          assert { value[:image]       == "http://localhost:3000/w/battle1.png?turn=5&viewpoint=black" }
+          assert { value[:image]       == "http://localhost:3000/w/alice-bob-20000101_000000.png?turn=5&viewpoint=black" }
           assert { value[:description] == "新嬉野流 vs 2手目△３ニ飛戦法"                                   }
         end
         it "turnを変更できる" do
