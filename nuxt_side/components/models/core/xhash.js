@@ -46,4 +46,18 @@ export const Xhash = {
     })
     return result
   },
+
+  // const hash = { a: 1, b: null, c: 1, }
+  // const value = Xhash.hash_slice(hash, "a", "b", "d")
+  // expect(hash).toEqual({ a: 1, b: null, c: 1, })
+  // expect(value).toEqual({a: 1, b: null})
+  hash_slice(hash, ...keys) {
+    const result = {}
+    keys.forEach(key => {
+      if (key in hash) {
+        result[key] = hash[key]
+      }
+    })
+    return result
+  },
 }
