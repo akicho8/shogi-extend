@@ -1,7 +1,6 @@
 // 汎用コード
 import { Gs         } from "@/components/models/gs.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
-import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
 
 import twemoji from 'twemoji'
@@ -282,7 +281,6 @@ export const vue_support = {
   computed: {
     _()          { return _          },
     util()       { return util       },
-    PiyoShogiTypeCurrent() { return PiyoShogiTypeCurrent },
   },
 
   directives: {

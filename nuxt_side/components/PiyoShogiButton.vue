@@ -1,8 +1,8 @@
 <template lang="pug">
-//- PiyoShogiTypeCurrent.info.showable_p が client でしか動かないため必ず client-only 配下に入れること
+//- $PiyoShogiTypeCurrent.info.showable_p が client でしか動かないため必ず client-only 配下に入れること
 client-only
   a.button.PiyoShogiButton.is-small(
-    v-if="PiyoShogiTypeCurrent.info.showable_p || $config.STAGE === 'development'"
+    v-if="$PiyoShogiTypeCurrent.info.showable_p || $config.STAGE === 'development'"
     :title="piyo_shogi_name"
     v-bind="$attrs"
     v-on="$listeners"

@@ -46,7 +46,7 @@ export default {
       this.$sound.play_click()
       if (this.new_piyo_shogi_type_key != this.piyo_shogi_type_key) {
         this.piyo_shogi_type_key = this.new_piyo_shogi_type_key
-        this.PiyoShogiTypeCurrent.reset()
+        this.$PiyoShogiTypeCurrent.reset()
         this.toast_ok(`${this.piyo_shogi_type_info.name}に変更しました`)
       } else {
         this.toast_ok("変更はありませんでした")

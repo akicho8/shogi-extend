@@ -1,6 +1,5 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
-import { PiyoShogiTypeCurrent } from "@/components/models/piyo_shogi_type_current.js"
 import { PiyoShogiUrlCreator } from "@/components/models/piyo_shogi_url_creator.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"

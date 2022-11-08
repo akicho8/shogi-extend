@@ -5,6 +5,6 @@ describe("PiyoShogiTypeCurrent", () => {
     PiyoShogiTypeCurrent.reset()
   })
   it("info", () => {
-    expect(PiyoShogiTypeCurrent.info.key).toEqual("auto")
+    expect($PiyoShogiTypeCurrent.info.key).toEqual("auto")
   })
 })
