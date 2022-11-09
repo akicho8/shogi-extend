@@ -21,7 +21,7 @@ module SharedMethods
 
   # メンバーリストの上ら i 番目をクリック
   def member_list_click_nth(i)
-    assert_selector(".SbMemberOne", wait: 60)
+    assert_selector(".SbMemberOne", wait: 30)
     find(".SbMemberOne:nth-child(#{i})").click
   end
 

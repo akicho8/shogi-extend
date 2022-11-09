@@ -99,11 +99,11 @@ module SharedMethods
   end
 
   def assert_honpu_link_exist
-    assert_selector("a", text: "本譜", exact_text: true, wait: 60)
+    assert_selector("a", text: "本譜", exact_text: true, wait: 30)
   end
 
   def give_up_run
-    find("a", text: "投了", exact_text: true, wait: 60).click # bob は手番ではないがヘッダーの「投了」ボタンを押す
+    find("a", text: "投了", exact_text: true, wait: 30).click # bob は手番ではないがヘッダーの「投了」ボタンを押す
     find(:button, "本当に投了する").click                     # モーダルが表示されるので本当に投了する
   end
 

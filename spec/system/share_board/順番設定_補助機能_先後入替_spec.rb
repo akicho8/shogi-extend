@@ -17,7 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
     case1
     assert_order_team_one "13", "24"
     find(".swap_handle").click
-    assert_text("1さんが先後を入れ替えました", wait: 60)
+    assert_text("1さんが先後を入れ替えました", wait: 30)
     assert_order_team_one "24", "13"
   end
 end

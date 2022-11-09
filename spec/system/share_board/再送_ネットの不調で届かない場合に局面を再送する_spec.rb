@@ -54,7 +54,7 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   def sync_failed_count(n)
-    assert_selector(".modal-card-title", text: "同期失敗 #{n}回目", exact_text: true, wait: 60)
+    assert_selector(".modal-card-title", text: "同期失敗 #{n}回目", exact_text: true, wait: 30)
   end
 
   def sync_failed_modal_closed

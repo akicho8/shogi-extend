@@ -268,7 +268,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     describe "古い棋譜を補完" do
       it "ログインしていない場合はSNS経由ログインモーダル発動" do
         visit2 "/swars/users/YamadaTaro/download-all"
-        assert_selector(".NuxtLoginContainer", wait: 60)
+        assert_selector(".NuxtLoginContainer", wait: 30)
       end
 
       it "正しく予約する" do

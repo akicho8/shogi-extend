@@ -17,7 +17,7 @@ RSpec.describe type: :system, share_board_spec: true do
     case1
     assert_system_variable("順序2", "12345678")
     find(".shuffle_handle").click
-    assert_text("1さんがシャッフルしました", wait: 60)
+    assert_text("1さんがシャッフルしました", wait: 30)
     assert_no_system_variable("順序2", "12345678")
   end
 end
