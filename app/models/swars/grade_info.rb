@@ -46,6 +46,9 @@ module Swars
 
     class << self
       def lookup(v)
+        if v.kind_of? String
+          v = v.tr("０-９", "0-9")
+        end
         super || invert_table[v]
       end
 
@@ -53,9 +56,13 @@ module Swars
 
       def invert_table
         @invert_table ||= inject({}) do |a, e|
-          a.merge({
+          a = a.merge({
               e.short_name => e,
             })
+          if v = e.kanji_number_dan
+            a = a.merge(v => e)
+          end
+          a
         end
       end
     end
@@ -66,6 +73,12 @@ module Swars
 
     def short_name
       @short_name ||= name.remove(/[段級]/)
+    end
+
+    def kanji_number_dan
+      if name.include?("段")
+        Bioshogi::KanjiNumber.kanji_to_number_string(name)
+      end
     end
   end
 end
