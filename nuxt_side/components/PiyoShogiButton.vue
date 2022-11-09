@@ -12,7 +12,7 @@ client-only
     span.icon
       img.icon_left(src="~/assets/piyo_shogi_icon.png")
     span(v-if="label_p")
-      | ぴよ将棋
+      | {{piyo_shogi_name}}
 </template>
 
 <script>
@@ -25,6 +25,9 @@ export default {
     click_handle() {
       this.ga_click("ぴよ将棋")
     },
+  },
+  computed: {
+    piyo_shogi_name() { return "ぴよ将棋" },
   },
 }
 </script>
