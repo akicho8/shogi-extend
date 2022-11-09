@@ -52,7 +52,7 @@ module Swars
         Battle.create!({
             :key        => @info.key.to_s,
             :rule_key   => @info.rule_info.key,
-            :csa_seq    => @info.csa_seq, # FIXME: 完全なCSAを渡すか？ 時間は別にして渡すか？
+            :csa_seq    => @info.csa_seq, # FIXME: SFEN を渡す。時間は別にする
             :preset_key => @info.preset_info.key,
             :xmode_key  => @info.xmode_info.key,
             :battled_at => @info.battled_at,
