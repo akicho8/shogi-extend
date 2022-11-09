@@ -28,7 +28,7 @@ export class KentoUrlCreator {
   // private
 
   get all_params() {
-    return Gs2.hash_compact_blank({
+    return Gs2.hash_compact({
       ...this.params,
       initpos: this.sfen_info.init_sfen_strip,
       moves: this.moves_space_to_dot_replaced_string,
