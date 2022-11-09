@@ -40,8 +40,8 @@ client-only
 
       .app_buttons_container
         .buttons.is-centered
-          PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="$sound.play_click()")
-          KentoButton(tag="a" :href="kento_app_with_params_url" @click="$sound.play_click()")
+          PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="$sound.play_click()")
+          KentoButton(tag="a" :href="current_kifu_vo.kento_url" @click="$sound.play_click()")
           KifCopyButton(@click="kifu_copy_button_handle")
         .buttons.is-centered(v-if="false")
           b-button(@click="back_handle" icon-left="chevron-left" size="is-small")
@@ -353,22 +353,13 @@ export default {
     //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
     // },
 
-    piyo_shogi_app_with_params_url() {
+    current_kifu_vo() {
       return this.$KifuVo.create({
         kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
         viewpoint: this.sp_viewpoint,
-        ...this.record.piyo_shogi_base_params,
-      }).piyo_url
-    },
-
-    kento_app_with_params_url() {
-      return this.$KifuVo.create({
-        sfen:      this.record.sfen_body,
-        turn:      this.current_turn,
-        viewpoint: this.sp_viewpoint,
-      }).kento_url
+      })
     },
 
     // tweet_url() {

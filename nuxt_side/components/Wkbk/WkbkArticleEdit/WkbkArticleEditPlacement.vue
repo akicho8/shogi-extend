@@ -21,8 +21,8 @@ MainSection.WkbkArticleEditPlacement
               b-button(@click="king_formation_auto_set(false)") 玉回収
 
             .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-              PiyoShogiButton(:href="piyo_shogi_app_with_params_url")
-              KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank")
+              PiyoShogiButton(:href="current_kifu_vo.piyo_url")
+              KentoButton(tag="a" :href="current_kifu_vo.kento_url" target="_blank")
               KifCopyButton(@click="kifu_copy_handle") コピー
 
             .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
@@ -78,19 +78,12 @@ export default {
   },
 
   computed: {
-    piyo_shogi_app_with_params_url() {
+    current_kifu_vo() {
       return this.$KifuVo.create({
         sfen: this.base.article.init_sfen,
         turn: 0,
         viewpoint: this.base.article.viewpoint,
-      }).piyo_url
-    },
-    kento_app_with_params_url() {
-      return this.$KifuVo.create({
-        sfen: this.base.article.init_sfen,
-        turn: 0,
-        viewpoint: this.base.article.viewpoint,
-      }).kento_url
+      })
     },
   },
 }

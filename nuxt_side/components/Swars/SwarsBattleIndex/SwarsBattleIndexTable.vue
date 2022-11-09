@@ -77,14 +77,14 @@ b-table.SwarsBattleIndexTable(
       PiyoShogiButton(
         v-if="base.column_visible_p('piyo_shogi')"
         type="button"
-        :href="base.piyo_shogi_app_with_params_url(row)"
+        :href="base.kifu_vo(row).piyo_url"
         @click="$sound.play_click()"
         )
 
       KentoButton(
         v-if="base.column_visible_p('kento')"
         tag="a"
-        :href="base.kento_app_with_params_url(row)"
+        :href="base.kifu_vo(row).kento_url"
         @click="$sound.play_click()"
         )
 

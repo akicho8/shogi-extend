@@ -45,20 +45,16 @@ export default {
     } else {
       return this.$axios.$get("/w.json", {params: {query: this.$route.params.key, per: 1}}).then(config => {
         this.config = config
-        // this.config.records = []
-
         if (!this.record) {
           this.toast_warn("棋譜が見つかりませんでした")
           return
         }
-
         if (this.external_app_info.key === "piyo_shogi") {
-          location.href = this.piyo_shogi_app_with_params_url
+          location.href = this.current_kifu_vo.piyo_url
         }
         if (this.external_app_info.key === "kento") {
-          location.href = this.kento_app_with_params_url
+          location.href = this.current_kifu_vo.kento_url
         }
-
       })
     }
   },
@@ -89,24 +85,14 @@ export default {
     record() {
       return this.config.records[0]
     },
-    piyo_shogi_app_with_params_url() {
+    current_kifu_vo() {
       if (this.record) {
         return this.$KifuVo.create({
           kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
           sfen: this.record.sfen_body,
           turn: this.record.display_turn,
           viewpoint: this.record.viewpoint,
-          ...this.record.piyo_shogi_base_params,
-        }).piyo_url
-      }
-    },
-    kento_app_with_params_url() {
-      if (this.record) {
-        return this.$KifuVo.create({
-          sfen: this.record.sfen_body,
-          turn: this.record.display_turn,
-          viewpoint: "black",
-        }).kento_url
+        })
       }
     },
   },

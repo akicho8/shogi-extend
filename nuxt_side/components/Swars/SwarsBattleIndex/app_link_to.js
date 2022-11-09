@@ -14,22 +14,13 @@ export const app_link_to = {
       this.$router.push({name: "swars-battles-key", params: { key: row.key }, query: params})
     },
 
-    piyo_shogi_app_with_params_url(record) {
+    kifu_vo(record) {
       return this.$KifuVo.create({
         kif_url: `${this.$config.MY_SITE_URL}${record.show_path}.kif`,
         sfen: record.sfen_body,
         turn: this.scene_info.sp_turn_of(record),
         viewpoint: record.viewpoint,
-        ...record.piyo_shogi_base_params,
-      }).piyo_url
-    },
-
-    kento_app_with_params_url(record) {
-      return this.$KifuVo.create({
-        sfen: record.sfen_body,
-        turn: this.scene_info.sp_turn_of(record),
-        viewpoint: record.viewpoint,
-      }).kento_url
+      })
     },
   },
 }

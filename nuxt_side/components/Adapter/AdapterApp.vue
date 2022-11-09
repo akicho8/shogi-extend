@@ -31,8 +31,8 @@ client-only
             b-field.mt-5
               .control
                 .buttons.is-centered
-                  PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="piyo_shogi_app_with_params_url")
-                  KentoButton(@click.prevent="kento_open_handle" tag="a" :href="kento_app_with_params_url")
+                  PiyoShogiButton(type="button" @click.prevent="piyo_shogi_open_handle" tag="a" :href="current_kifu_vo && current_kifu_vo.piyo_url")
+                  KentoButton(@click.prevent="kento_open_handle" tag="a" :href="current_kifu_vo && current_kifu_vo.kento_url")
                   KifCopyButton(@click="clipboard_open_handle")
 
             b-field.mt-5
@@ -130,10 +130,10 @@ export default {
 
     //////////////////////////////////////////////////////////////////////////////// open_handle 4種
     piyo_shogi_open_handle() {
-      this.record_fetch(() => this.app_open(this.piyo_shogi_app_with_params_url))
+      this.record_fetch(() => this.app_open(this.current_kifu_vo.piyo_url))
     },
     kento_open_handle() {
-      this.record_fetch(() => this.app_open(this.kento_app_with_params_url))
+      this.record_fetch(() => this.app_open(this.current_kifu_vo.kento_url))
     },
     share_board_open_handle() {
       this.share_board_open_handle_by(null)
@@ -375,25 +375,14 @@ export default {
       return max
     },
 
-    piyo_shogi_app_with_params_url() {
+    current_kifu_vo() {
       if (this.record) {
         return this.$KifuVo.create({
-          ...this.record.piyo_shogi_base_params,
           kif_url: `${this.$config.MY_SITE_URL}${this.show_path}.kif`,
           sfen: this.record.sfen_body,
           turn: this.fixed_turn,
           viewpoint: this.record.viewpoint,
-        }).piyo_url
-      }
-    },
-
-    kento_app_with_params_url() {
-      if (this.record) {
-        return this.$KifuVo.create({
-          sfen: this.record.sfen_body,
-          turn: this.fixed_turn,
-          viewpoint: this.record.viewpoint,
-        }).kento_url
+        })
       }
     },
 
