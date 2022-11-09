@@ -41,6 +41,6 @@ export class PiyoShogiUrlCreator {
   }
 
   get allowed_keys() {
-    return ["num", "url"]
+    return ["viewpoint", "num", "url"]
   }
 }
