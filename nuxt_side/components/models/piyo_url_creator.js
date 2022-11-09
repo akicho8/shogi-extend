@@ -1,7 +1,7 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
-export class PiyoShogiUrlCreator {
+export class PiyoUrlCreator {
   static url_for(params) {
     return this.create(params).url
   }
