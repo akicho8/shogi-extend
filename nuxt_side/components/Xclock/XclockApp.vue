@@ -151,6 +151,7 @@ export default {
     resume_handle() {
       this.$sound.play_click()
       this.clock_box.resume_handle()
+      this.behavior_notify("resume")
       this.$sound.stop_all()
     },
     pause_handle() {
@@ -158,6 +159,7 @@ export default {
         this.$sound.stop_all()
         this.$sound.play_click()
         this.clock_box.pause_handle()
+        this.behavior_notify("pause")
 
         if (false) {
           this.$buefy.dialog.confirm({
@@ -181,6 +183,7 @@ export default {
         this.$sound.stop_all()
         this.$sound.play_click()
         this.clock_box.stop_handle()
+        this.behavior_notify("stop")
       }
     },
     play_handle() {
@@ -191,6 +194,7 @@ export default {
         this.ga_click("対局時計●")
         this.say(this.play_talk_message())
         this.clock_box.play_handle()
+        this.behavior_notify("play")
       }
     },
     play_talk_message() {
@@ -274,6 +278,9 @@ export default {
       this.__assert__("initial_main_min" in params, '"initial_main_min" in params')
       params.initial_main_sec = params.initial_main_min * 60
       this.clock_box.rule_set_all(params)
+    },
+    behavior_notify(behavior) {
+      this.remote_notify({emoji: ":目覚まし時計:", subject: "対局時計", body: behavior})
     },
   },
   computed: {
