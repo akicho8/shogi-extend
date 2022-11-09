@@ -1,6 +1,7 @@
 import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Xcontainer } from "shogi-player/components/models/xcontainer.js"
 import { PiyoShogiUrlCreator } from "@/components/models/piyo_shogi_url_creator.js"
+import { KentoUrlCreator } from "@/components/models/kento_url_creator.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
@@ -14,41 +15,12 @@ export class KifuVo {
     this.attributes = attributes
   }
 
-  //////////////////////////////////////////////////////////////////////////////// ぴよ将棋
-
   get piyo_url() {
     return PiyoShogiUrlCreator.url_for(this.attributes)
   }
 
-  //////////////////////////////////////////////////////////////////////////////// KENTO
-
   get kento_url() {
-    Gs2.__assert__(this.attributes.sfen, "sfen is blank")
-
-    const info = SfenParser.parse(this.attributes.sfen)
-    const url = new URL("https://www.kento-shogi.com")
-
-    // initpos は position sfen と moves がない初期局面の sfen
-    url.searchParams.set("initpos", info.init_sfen_strip)
-
-    // 視点も対応してくれるかもしれないので入れとく
-    if (this.attributes.viewpoint) {
-      url.searchParams.set("viewpoint", this.attributes.viewpoint)
-    }
-
-    // moves は別のパラメータでスペースを . に置き換えている(KENTOの独自の工夫)
-    // moves のところだけなので DotSfen.escape は使えない
-    const { moves } = info.attributes
-    if (moves) {
-      url.searchParams.set("moves", moves.replace(/\s+/g, "."))
-    }
-
-    // #n が手数
-    if (this.attributes.turn != null) {
-      url.hash = this.attributes.turn
-    }
-
-    return url.toString()
+    return KentoUrlCreator.url_for(this.attributes)
   }
 
   //////////////////////////////////////////////////////////////////////////////// 局面ペディア
