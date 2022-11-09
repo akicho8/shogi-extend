@@ -37,8 +37,8 @@ export const app_kifu_mail = {
       if (this.debug_mode_p) {
         params.__debug_app_urls__ = {
           share_board_url: this.current_url,
-          piyo_url:        this.piyo_shogi_app_with_params_url,
-          kento_url:       this.kento_app_with_params_url,
+          piyo_url:        this.current_kifu_vo.piyo_url,
+          kento_url:       this.current_kifu_vo.kento_url,
         }
       }
       this.$axios.$post("/api/share_board/kifu_mail.json", params, {progress: false}).then(e => {

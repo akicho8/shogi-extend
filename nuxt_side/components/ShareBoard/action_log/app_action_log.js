@@ -52,13 +52,12 @@ export const app_action_log = {
     ////////////////////////////////////////////////////////////////////////////////
 
     al_factory(params = {}) {
-      params = {
-        ...params
-      }
+      params = {...params}
 
       // BCではなくローカルの場合もあるので復帰用に棋譜を埋める
       params.sfen ??= this.current_sfen
       params.turn ??= this.current_turn
+      params.sp_viewpoint ??= this.sp_viewpoint
 
       // その他
       params.from_user_name ??= this.user_name

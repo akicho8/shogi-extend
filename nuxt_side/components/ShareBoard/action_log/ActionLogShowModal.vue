@@ -13,14 +13,14 @@
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
-        :sp_viewpoint="sp_viewpoint"
+        :sp_viewpoint.sync="sp_viewpoint"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
         @update:turn_offset="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
-      PiyoShogiButton(:href="piyo_shogi_app_with_params_url" @click="base.other_app_click_handle('ぴよ将棋')")
-      KentoButton(tag="a" :href="kento_app_with_params_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
+      PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="base.other_app_click_handle('ぴよ将棋')")
+      KentoButton(tag="a" :href="current_kifu_vo.kento_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
@@ -46,6 +46,11 @@
         :href="kifu_show_url(current_format_type_info)"
         )
 
+    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="base.debug_mode_p")
+      b-button(tag="a" :href="current_url"      target="_blank") 別タブで開く
+      b-button(tag="a" :href="json_debug_url"   target="_blank") json
+      b-button(tag="a" :href="twitter_card_url" target="_blank") png
+
     pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
 
   .modal-card-foot
@@ -69,7 +74,7 @@ export default {
   data() {
     return {
       new_turn: this.action_log.turn,
-      sp_viewpoint: this.base.sp_viewpoint, // メイン将棋盤の視点を初期値とする
+      sp_viewpoint: this.action_log.sp_viewpoint,
     }
   },
   mounted() {

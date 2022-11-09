@@ -13,8 +13,8 @@
       b-button(@click="base.king_formation_auto_set(false)") 玉回収
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      PiyoShogiButton(:href="base.piyo_shogi_app_with_params_url")
-      KentoButton(tag="a" :href="base.kento_app_with_params_url" target="_blank")
+      PiyoShogiButton(:href="base.current_kifu_vo.piyo_url")
+      KentoButton(tag="a" :href="base.current_kifu_vo.kento_url" target="_blank")
       KifCopyButton(@click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3

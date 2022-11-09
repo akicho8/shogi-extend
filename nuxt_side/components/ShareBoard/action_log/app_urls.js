@@ -10,7 +10,7 @@ export const app_urls = {
     // 棋譜コピー
     kifu_copy_handle() {
       this.$sound.play_click()
-      this.general_kifu_copy(this.action_log.sfen, {
+      this.general_kifu_copy(this.new_sfen, {
         to_format: "kif",
         turn: this.new_turn,
         ...this.action_log.player_names_with_title,
@@ -29,7 +29,7 @@ export const app_urls = {
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
       this.__assert__("format_key" in e, '"format_key" in e')
-      return this.base.url_merge({
+      return this.url_merge({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別
         image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
@@ -45,11 +45,7 @@ export const app_urls = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
-      return this.base.url_for({
-        ...this.current_url_params,
-        ...e.to_h_format_and_encode,
-        disposition: "attachment",
-      })
+      return this.url_merge({...e.to_h_format_and_encode, disposition: "attachment"})
     },
 
     // 指定の棋譜をダウンロード
@@ -61,41 +57,35 @@ export const app_urls = {
       }
     },
 
+    url_merge(params = {}) {
+      return this.base.url_for({...this.current_url_params, ...params})
+    },
   },
   computed: {
-    piyo_shogi_app_with_params_url() {
-      return this.$KifuVo.create({
-        sfen: this.action_log.sfen,
-        turn: this.new_turn,
-        viewpoint: this.sp_viewpoint,
-        // ぴよ将棋はパラメータ名がかなり異なる
-        game_name:  this.action_log.player_names_with_title.title,
-        sente_name: this.action_log.player_names_with_title.black,
-        gote_name:  this.action_log.player_names_with_title.white,
-      }).piyo_url
-    },
-    kento_app_with_params_url() {
-      return this.$KifuVo.create({
-        sfen: this.action_log.sfen,
-        turn: this.new_turn,
-        viewpoint: this.sp_viewpoint,
-      }).kento_url
-    },
+    new_sfen()         { return this.action_log.sfen },
+    current_url()      { return this.url_merge({}) },
+    current_kif_url()  { return this.url_merge({format: "kif"}) },
+    json_debug_url()   { return this.url_merge({format: "json"}) },
+    twitter_card_url() { return this.url_merge({format: "png"}) },
+
     current_url_params() {
-      return this.base.pc_url_params_clean({
-        // 必須
-        // body: DotSfen.escape(this.action_log.sfen),
-        xbody: SafeSfen.encode(this.action_log.sfen),
-        // オプション
-        turn: this.new_turn,
-        abstract_viewpoint: this.base.abstract_viewpoint, // メインの盤ではなくプレビュー盤の視点を渡した方がよい(↓追加)
-        image_viewpoint: this.sp_viewpoint,               // abstract_viewpoint より image_viewpoint の方が優先される
-        ...this.action_log.player_names_with_title,       // 面子情報
-      })
+      const params = {
+        xbody: SafeSfen.encode(this.new_sfen),      // プレビュー盤のSFEN
+        turn: this.new_turn,                        // プレビュー盤の手数
+        image_viewpoint: this.sp_viewpoint,         // メインの盤よりプレビュー盤の視点を優先させたいため
+        ...this.base.url_share_params,      // 共有するパラメータ
+        ...this.action_log.player_names_with_title, // 面子情報
+      }
+      return this.base.pc_url_params_clean(params)
     },
-    // 棋譜再生用の棋譜リンク
-    current_url() {
-      return this.base.url_for(this.current_url_params)
+
+    current_kifu_vo() {
+      return this.$KifuVo.create({
+        kif_url: this.current_kif_url,
+        sfen: this.new_sfen,
+        turn: this.new_turn,
+        viewpoint: this.sp_viewpoint,
+      })
     },
   },
 }

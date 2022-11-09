@@ -81,33 +81,30 @@ export const app_urls = {
     // room_code や autoexec は含めない
     current_url_params() {
       const params = {
+        xbody: SafeSfen.encode(this.current_sfen),
+        turn:  this.current_turn,
+        title: this.current_title,
+        ...this.url_share_params,
         ...this.player_names,
-        abstract_viewpoint:   this.abstract_viewpoint,
-        color_theme_key:      this.color_theme_key,
-        title:                this.current_title,
-        turn:                 this.current_turn,
-        xbody:                SafeSfen.encode(this.current_sfen),
       }
       return this.pc_url_params_clean(params)
     },
 
-    // 外部アプリ
-    piyo_shogi_app_with_params_url() {
+    // 履歴にも含める情報
+    url_share_params() {
+      return {
+        abstract_viewpoint: this.abstract_viewpoint,
+        color_theme_key:    this.color_theme_key,
+      }
+    },
+
+    current_kifu_vo() {
       return this.$KifuVo.create({
         kif_url: this.current_kif_url,
         sfen: this.current_sfen,
         turn: this.current_turn,
         viewpoint: this.sp_viewpoint,
-        ...this.player_names_for_piyo,
-      }).piyo_url
-    },
-
-    kento_app_with_params_url() {
-      return this.$KifuVo.create({
-        sfen: this.current_sfen,
-        turn: this.current_turn,
-        viewpoint: this.sp_viewpoint,
-      }).kento_url
+      })
     },
   },
 }
