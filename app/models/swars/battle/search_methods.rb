@@ -206,9 +206,6 @@ module Swars
             if v = query_info.lookup("vs") || query_info.lookup("相手") || query_info.lookup("対戦相手")
               users = Swars::User.where(user_key: v)
               m = current_swars_user.op_memberships.where(user: users)
-              tp m
-              
-              
               s = s.where(id: m.pluck(:battle_id))
               selected = true
             end
