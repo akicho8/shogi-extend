@@ -17,16 +17,12 @@ export class PiyoShogiUrlCreator {
   }
 
   get url() {
-    const usp = new URLSearchParams()
-    _.each(this.allowed_params, (v, k) => usp.set(k, v))
-    return `${this.deep_link_prefix}?${usp}`
+    const url = new URL("piyoshogi://")
+    _.each(this.allowed_params, (v, k) => url.searchParams.set(k, v))
+    return url.toString()
   }
 
   // private
-
-  get allowed_params() {
-    return Gs2.hash_slice(this.all_params, ...this.allowed_keys)
-  }
 
   get all_params() {
     return Gs2.hash_compact({
@@ -36,11 +32,11 @@ export class PiyoShogiUrlCreator {
     })
   }
 
-  get deep_link_prefix() {
-    return "piyoshogi://"
-  }
-
   get allowed_keys() {
     return ["viewpoint", "num", "url"]
+  }
+
+  get allowed_params() {
+    return Gs2.hash_slice(this.all_params, ...this.allowed_keys)
   }
 }
