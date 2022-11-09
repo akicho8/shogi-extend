@@ -272,7 +272,6 @@ export default {
       }
     },
 
-    // いまのところ「局面ペディア」に遷移するときだけ使っている
     other_app_click_handle(app_name) {
       this.sidebar_p = false
       this.$sound.play_click()
@@ -370,10 +369,6 @@ export default {
         turn:      this.current_turn,
         viewpoint: this.sp_viewpoint,
       }).kento_url
-    },
-
-    kpedia_url() {
-      return KifuVo.create({sfen: this.short_sfen}).kpedia_url
     },
 
     // tweet_url() {

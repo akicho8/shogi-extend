@@ -22,36 +22,4 @@ export class KifuVo {
   get kento_url() {
     return KentoUrlCreator.url_for(this.attributes)
   }
-
-  //////////////////////////////////////////////////////////////////////////////// 局面ペディア
-
-  static KYOKUMENPEDIA_URL_PREFIX = "http://kyokumen.jp/positions/"
-
-  // ハイブリッド
-  // "http://kyokumen.jp/positions/lnsgkgsnl/1r5b1/ppppppppp/9/9/7P1/PPPPPPP1P/1B5R1/LNSGKGSNL%20w%20-"
-  get kpedia_url() {
-    if (this.attributes.sfen.includes("moves")) {
-      return this.kpedia_url1
-    } else {
-      return this.kpedia_url2
-    }
-  }
-
-  // 方法1: moves がついた SFEN から変換する場合 (遅い)
-  get kpedia_url1() {
-    const info = SfenParser.parse(this.attributes.sfen)
-    const xcontainer = new Xcontainer()
-    xcontainer.data_source = SfenParser.parse(this.attributes.sfen)
-    xcontainer.current_turn = this.attributes.turn || 0
-    xcontainer.run()
-    return this.constructor.KYOKUMENPEDIA_URL_PREFIX + xcontainer.to_sfen_without_turn
-  }
-
-  // 方法2: moves がない SFEN から変換する場合 (速い)
-  get kpedia_url2() {
-    let s = this.attributes.sfen
-    s = s.replace(/^position sfen /, "")
-    s = s.replace(/\s*\d+$/, "")
-    return this.constructor.KYOKUMENPEDIA_URL_PREFIX + s
-  }
 }

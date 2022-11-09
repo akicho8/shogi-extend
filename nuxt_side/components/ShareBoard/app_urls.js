@@ -109,9 +109,5 @@ export const app_urls = {
         viewpoint: this.sp_viewpoint,
       }).kento_url
     },
-
-    kpedia_url() {
-      return this.$KifuVo.create({sfen: this.short_sfen}).kpedia_url
-    },
   },
 }
