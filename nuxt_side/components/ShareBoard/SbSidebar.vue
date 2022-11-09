@@ -45,11 +45,11 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           //- b-menu-item.is_active_unset(label="ぴよ将棋" :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="$sound.play_click()")
           //- b-menu-item.is_active_unset(label="KENTO"    :href="base.kento_app_with_params_url"      :target="target_default" @click="$sound.play_click()")
           b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))")
-          b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋"         :href="base.sidebar_p && base.piyo_shogi_app_with_params_url" :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || base.debug_mode_p")
-          b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.sidebar_p && base.kento_app_with_params_url"      target="_blank" @click="base.other_app_click_handle('KENTO')")
+          b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋"         :href="base.piyo_shogi_app_with_params_url" :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || base.debug_mode_p")
+          b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.kento_app_with_params_url"      target="_blank" @click="base.other_app_click_handle('KENTO')")
 
         b-menu-list(label="棋譜再生用パーマリンク")
-          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.sidebar_p && base.current_url" @click.prevent="base.current_url_copy_handle" )
+          b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.current_url" @click.prevent="base.current_url_copy_handle" )
           b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_url_short_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
