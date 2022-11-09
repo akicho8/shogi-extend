@@ -5,7 +5,7 @@ module Swars
 
       def initialize(params = {})
         @params = {
-          seconds: default_interval,
+          interval: default_interval,
         }.merge(params)
       end
 
@@ -16,7 +16,7 @@ module Swars
         if Rails.cache.exist?(cache_key)
           return false
         end
-        Rails.cache.write(cache_key, true, expires_in: params[:seconds])
+        Rails.cache.write(cache_key, true, expires_in: params[:interval])
         AllRuleImporter.new(params).run
         true
       end
