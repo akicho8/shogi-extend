@@ -3,34 +3,68 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>ol { display: flex; flex-direction: column; gap: 1rem; }</style>
   </head>
   <body>
-    <h3>ぴよ将棋ディープリンク動作確認用</h3>
-    <ol>
-      <li>
-        ◎<a href="piyoshogi://?num=3&viewpoint=black&game_name=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&sfen=position%20sfen%20lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL%20b%20-%201%20moves%207g7f%203c3d%208h2b+">リンク</a>
-        SFENは読み込める
-      </li>
-      <li>
-        ◎<a href="piyoshogi://?num=3&url=https://www.shogi-extend.com/example_utf_8.kif">リンク</a>
-        引数がないKIFのURLは読み込める
-      </li>
-      <li>
-        ×<a href="piyoshogi://?num=3&url=https://www.shogi-extend.com/share-board.kif?turn=3&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
-        引数があるKIFのURLは読み込めない。「読み込みました」と出るが0手目までしか読み込めていない。おそらく turn や xbody パラメータが url パラメータの値として読み取られていない。(これが正しく読めないのは問題ない)
-      </li>
-      <li>
-        ◎<a href="piyoshogi://?num=3&url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
-        上の問題に対処するため url パラメータに指定する値(URL全体)をエスケープしている<br>
-        iOS 版ではエラーになる。「棋譜が読み込めませんでした 対応しない形式です」と表示される(v4.9.7で直ったのを確認)<br/>
-        Android 版では問題なく読み込める<br/>
-      </li>
-      <li>
-        ◎<a href="piyoshogi://?url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr&num=2">リンク</a>
-        最後がkifで終わらない
-      </li>
-    </ol>
-    <p>ぴよ将棋 iOS版, Android版ともに v4.9.7 で確認</p>
+    <h1 class="title is-5">ぴよ将棋ディープリンク動作確認用</h1>
+    <div class="content">
+      <ol>
+        <li>
+          ◎<a href="piyoshogi://?num=3&game_name=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&sfen=position%20sfen%20lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL%20b%20-%201%20moves%207g7f%203c3d%208h2b+">リンク</a>
+          <ul>
+            <li>SFEN を JavaScript の(過去の方法とされている) encodeURIComponent でエンコードしたものは読み込める</li>
+            <li>
+              スペースは "%20" になる
+              <pre>encodeURIComponent("a b") // => "a%20b"</pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          ×<a href="piyoshogi://?num=3&game_name=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&sfen=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7g7f+3c3d+8h2b%2B">リンク</a>
+          <ul>
+            <li>SFEN を JavaScript で(今は推奨されている) URLSearchParams を使うと「対応しない形式です」と出る</li>
+            <li>
+              スペースは "+" になる
+              <pre>const params = new URLSearchParams("a=1")
+params.append("x", "a b")
+params.toString() // => "x=a+b"</pre>
+            </li>
+          </ul>
+        </li>
+        <li>
+          ◎<a href="piyoshogi://?num=3&url=https://www.shogi-extend.com/example_utf_8.kif">リンク</a>
+          <ul>
+            <li>引数がないKIFのURLは読み込める</li>
+          </ul>
+        </li>
+        <li>
+          ×<a href="piyoshogi://?num=3&url=https://www.shogi-extend.com/share-board.kif?turn=3&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
+          <ul>
+            <li>引数があるKIFのURLは読み込めない</li>
+            <li>「読み込みました」と出るが0手目までしか読み込めていない</li>
+            <li>turn や xbody パラメータが url パラメータの値として読み取られていない</li>
+            <li>エスケープしていないのが問題なので、これが正しく読めないのは問題ない</li>
+          </ul>
+        </li>
+        <li>
+          ◎<a href="piyoshogi://?num=3&url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr">リンク</a>
+          <ul>
+            <li>上の問題に対処するため url パラメータに指定する値(URL全体)をエスケープしている。</li>
+            <li>iOS 版ではエラーになる</li>
+            <li>「棋譜が読み込めませんでした 対応しない形式です」と表示される</li>
+            <li>v4.9.7で直ったのを確認</li>
+            <li>Android 版ではもとから読み込める</li>
+          </ul>
+        </li>
+        <li>
+          ◎<a href="piyoshogi://?url=https%3A%2F%2Fwww.shogi-extend.com%2Fshare-board.kif%3Fturn%3D3%26xbody%3DcG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgN2c3ZiAzYzNkIDhoMmIr&num=2">リンク</a>
+          <ul>
+            <li>最後がkifで終わらなくても読める</li>
+          </ul>
+        </li>
+      </ol>
+      <p>ぴよ将棋 iOS版, Android版ともに v4.9.7 で確認</p>
+    </div>
   </body>
 </html>

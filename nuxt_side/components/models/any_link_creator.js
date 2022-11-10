@@ -30,4 +30,11 @@ export class AnyLinkCreator {
     const compacted_params = Gs2.hash_compact(all_params)
     return Gs2.hash_slice(compacted_params, ...this.allowed_keys)
   }
+
+  // TODO: ぴよ将棋 URLSearchParams に対応したら取る
+  get url_build_for_piyo() {
+    const ary = _.map(this.allowed_params, (v, k) => [k, encodeURIComponent(v)].join("="))
+    const query = ary.join("&")
+    return `${this.base_url}?${query}`
+  }
 }
