@@ -1,6 +1,6 @@
 import SfenTrimModal from "../../SfenTrimModal.vue"
 import AnySourceReadModal from "../../AnySourceReadModal.vue"
-import { KentoVo } from "@/components/models/kento_vo.js"
+import { KentoUrlParser } from "@/components/models/kento_url_parser.js"
 
 export const app_placement = {
   data() {
@@ -29,7 +29,7 @@ export const app_placement = {
                   // this.sp_viewpoint = "black"
                 } else {
                   // moves があるので局面を確定してもらう
-                  let default_sp_turn = KentoVo.create(any_source).turn_guess
+                  let default_sp_turn = KentoUrlParser.create(any_source).turn_guess
                   if (default_sp_turn == null) {
                     default_sp_turn = e.turn_max
                   }

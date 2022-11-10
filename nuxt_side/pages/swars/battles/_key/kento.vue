@@ -12,7 +12,11 @@ export default {
     return { record }
   },
   mounted() {
-    location.href = this.$KifuVo.create({sfen: this.record.sfen_body, turn: this.record.display_turn}).kento_url
+    location.href = this.$KifuVo.create({
+      kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
+      sfen: this.record.sfen_body,
+      turn: this.record.display_turn,
+    }).kento_url
   },
 }
 </script>

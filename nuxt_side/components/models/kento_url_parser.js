@@ -1,5 +1,5 @@
-export class KentoVo {
-  static create(...args) {
+export class KentoUrlParser {
+  static parse(...args) {
     return new this(...args)
   }
 

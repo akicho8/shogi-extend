@@ -13,10 +13,9 @@ export default {
   },
   mounted() {
     location.href = this.$KifuVo.create({
-      path: `/w/${this.record.key}`,
+      kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
       sfen: this.record.sfen_body,
       turn: this.record.display_turn,
-      ...this.record.piyo_shogi_base_params,
     }).piyo_url
   },
 }

@@ -34,4 +34,10 @@ RSpec.describe "将棋ドリル", type: :system do
   it "問題編集" do
     visit2 "/rack/articles/1/edit?_login_by_key=sysop"
   end
+
+  it "問題新規" do
+    login
+    visit2 "/rack/articles/new"
+    assert_text("玉回収")
+  end
 end
