@@ -1,46 +1,29 @@
-import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
+import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
+import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 
-export class KentoSfenLinkCreator {
-  static url_for(params) {
-    return this.create(params).url
-  }
-
-  static create(params) {
-    Gs2.__assert__(Gs2.present_p(params.sfen), "Gs2.present_p(params.sfen)")
-    return new this(params)
-  }
-
-  constructor(params) {
-    this.params = params
-  }
-
-  get url() {
-    const url = new URL("https://www.kento-shogi.com")
-    _.each(this.allowed_params, (v, k) => url.searchParams.set(k, v))
-    if (this.params.turn != null) {
-      url.hash = this.params.turn
-    }
-    return url.toString()
-  }
-
+export class KentoSfenLinkCreator extends AnyLinkCreator {
   // private
 
-  get all_params() {
-    return {
-      ...this.params,
-      initpos: this.sfen_info.init_sfen_strip,
-      moves: this.moves_space_to_dot_replaced_string,
-    }
+  get base_url() {
+    return "https://www.kento-shogi.com"
   }
 
   get allowed_keys() {
     return ["viewpoint", "initpos", "moves"]
   }
 
-  get allowed_params() {
-    return Gs2.hash_compact(Gs2.hash_slice(this.all_params, ...this.allowed_keys))
+  get transform_params() {
+    Gs2.__assert__(Gs2.present_p(this.params.sfen), "Gs2.present_p(this.params.sfen)")
+    return {
+      initpos: this.sfen_info.init_sfen_strip,
+      moves: this.moves_space_to_dot_replaced_string,
+    }
+  }
+
+  get tail_hash() {
+    return this.params.turn
   }
 
   get sfen_info() {

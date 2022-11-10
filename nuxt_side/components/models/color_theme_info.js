@@ -19,8 +19,8 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
   }
 
   thumbnail_url(context) {
-    const url_base = context.$config.MY_SITE_URL + "/share-board.png"
-    const url = new URL(url_base)
+    const base_url = context.$config.MY_SITE_URL + "/share-board.png"
+    const url = new URL(base_url)
     url.searchParams.set("body", SAMPLE_SFEN)
     url.searchParams.set("color_theme_key", this.key)
     url.searchParams.set("width", 1920 * this.constructor.image_scale)
