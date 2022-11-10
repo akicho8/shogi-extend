@@ -29,7 +29,7 @@ export const app_placement = {
                   // this.sp_viewpoint = "black"
                 } else {
                   // moves があるので局面を確定してもらう
-                  let default_sp_turn = KentoUrlParser.create(any_source).turn_guess
+                  let default_sp_turn = KentoUrlParser.parse(any_source).turn_guess
                   if (default_sp_turn == null) {
                     default_sp_turn = e.turn_max
                   }

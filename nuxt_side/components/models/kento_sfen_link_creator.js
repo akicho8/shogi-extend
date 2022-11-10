@@ -2,7 +2,7 @@ import { SfenParser } from "shogi-player/components/models/sfen_parser.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
 
-export class KentoUrlCreator {
+export class KentoSfenLinkCreator {
   static url_for(params) {
     return this.create(params).url
   }
@@ -28,11 +28,11 @@ export class KentoUrlCreator {
   // private
 
   get all_params() {
-    return Gs2.hash_compact({
+    return {
       ...this.params,
       initpos: this.sfen_info.init_sfen_strip,
       moves: this.moves_space_to_dot_replaced_string,
-    })
+    }
   }
 
   get allowed_keys() {
@@ -40,7 +40,7 @@ export class KentoUrlCreator {
   }
 
   get allowed_params() {
-    return Gs2.hash_slice(this.all_params, ...this.allowed_keys)
+    return Gs2.hash_compact(Gs2.hash_slice(this.all_params, ...this.allowed_keys))
   }
 
   get sfen_info() {

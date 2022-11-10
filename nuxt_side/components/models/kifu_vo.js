@@ -1,6 +1,6 @@
 import { PiyoUrlLinkCreator } from "@/components/models/piyo_url_link_creator.js"
 import { PiyoSfenLinkCreator } from "@/components/models/piyo_sfen_link_creator.js"
-import { KentoUrlCreator } from "@/components/models/kento_url_creator.js"
+import { KentoSfenLinkCreator } from "@/components/models/kento_sfen_link_creator.js"
 import { Gs2 } from "@/components/models/gs2.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 
@@ -24,6 +24,6 @@ export class KifuVo {
   }
 
   get kento_url() {
-    return KentoUrlCreator.url_for(this.params)
+    return KentoSfenLinkCreator.url_for(this.params)
   }
 }
