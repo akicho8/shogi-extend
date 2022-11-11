@@ -63,7 +63,7 @@ module Swars
     end
 
     rescue_from "ActiveRecord::Deadlocked" do |exception|
-      SlackAgent.notify_exception(exception)
+      SlackAgent.notify_exception(exception, backtrace_lines_max: 0)
       render json: { message: "データベースが死にそうです" }, status: 500
     end
   end

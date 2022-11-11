@@ -10,7 +10,6 @@ module SlackAgent
   API_REQUEST_COUNT_MAX_PER_SECOND = 3
 
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
-  mattr_accessor(:backtrace_lines_max) { 4 }
 
   # rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
   def notify(params = {})
@@ -64,16 +63,20 @@ module SlackAgent
   # rails r "SlackAgent.notify_exception(Exception.new)"
   # rails r 'SlackAgent.notify_exception((1/0 rescue $!))'
   def notify_exception(error, params = {})
+    params = {
+      backtrace_lines_max: 4,
+    }.merge(params)
+
     Rails.logger.info { error }
     body = []
     if error.message
       body << error.message
     end
     if error.backtrace
-      body += error.backtrace.take(backtrace_lines_max)
+      body += error.backtrace.take(params[:backtrace_lines_max])
     end
-    if params.present?
-      body << params.pretty_inspect
+    if v = params[:data]
+      body << v.pretty_inspect
     end
     body = body.compact.join("\n")
     notify(emoji: ":SOS:", subject: error.class.name, body: body)
