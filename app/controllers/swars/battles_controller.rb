@@ -58,7 +58,7 @@ module Swars
     end
 
     rescue_from "ActiveRecord::RecordNotUnique" do |exception|
-      SlackAgent.notify_exception(exception)
+      SlackAgent.notify_exception(exception, backtrace_lines_max: 0)
       render json: { message: "連打したのでぶっこわれました" }, status: 500
     end
 
