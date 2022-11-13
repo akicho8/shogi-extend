@@ -1,3 +1,5 @@
+require 'git-version-bump/rake-tasks'
+
 if defined?(RSpec)
   # desc "棋譜変換のテスト(KIFU_EXTRACTOR_OUTPUT=1 で expected を生成)"
   RSpec::Core::RakeTask.new("spec:kifu_extractor") do |t|

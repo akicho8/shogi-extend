@@ -191,3 +191,7 @@ gem "sidekiq"
 gem "redis-namespace"
 
 gem "puma_worker_killer"
+
+group :development, :test do
+  gem "git-version-bump", require: false
+end

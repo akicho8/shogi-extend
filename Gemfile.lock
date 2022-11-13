@@ -206,6 +206,7 @@ GEM
     foreman (0.87.2)
     get_process_mem (0.2.7)
       ffi (~> 1.0)
+    git-version-bump (0.17.2)
     gli (2.20.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -519,6 +520,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   foreman
+  git-version-bump
   holiday_jp
   html_format
   image_processing (~> 1.2)
