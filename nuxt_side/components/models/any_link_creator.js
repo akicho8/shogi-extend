@@ -1,6 +1,6 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
-const QueryString = require("qs")
+const QueryString = require("query-string")
 
 export class AnyLinkCreator {
   static url_for(...args) {
@@ -16,15 +16,11 @@ export class AnyLinkCreator {
   }
 
   get url() {
-    return [
-      this.base_url,
-      QueryString.stringify(this.allowed_params, {
-        addQueryPrefix: true,
-        skipNulls: true,
-        format: "RFC3986",
-      }),
-      this.tail_hash,
-    ].join("")
+    return QueryString.stringifyUrl({
+      url: this.base_url,
+      query: this.allowed_params,
+      fragmentIdentifier: this.tail_hash,
+    })
   }
 
   // private

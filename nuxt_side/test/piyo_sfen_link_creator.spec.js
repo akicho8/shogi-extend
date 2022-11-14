@@ -10,7 +10,7 @@ describe("PiyoSfenLinkCreator", () => {
         sente_name: "(sente_name)",
         gote_name: "(gote_name)",
         game_name: "(game_name)",
-      })).toEqual("piyoshogi://?viewpoint=black&num=0&sente_name=%28sente_name%29&gote_name=%28gote_name%29&game_name=%28game_name%29&sfen=position%20sfen%20startpos")
+      })).toEqual("piyoshogi://?game_name=%28game_name%29&gote_name=%28gote_name%29&num=0&sente_name=%28sente_name%29&sfen=position%20sfen%20startpos&viewpoint=black")
     })
   })
 })

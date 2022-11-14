@@ -23,9 +23,7 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
   }
 
   get tail_hash() {
-    if (this.params.turn != null) {
-    return `#${this.params.turn}`
-    }
+    return this.params.turn
   }
 
   get sfen_info() {
