@@ -128,7 +128,7 @@ module Wkbk
     before_validation do
       self.folder_key ||= :private
       self.sequence_key ||= :bookship_shuffle
-      self.key ||= secure_random_urlsafe_base64_token
+      self.key ||= StringUtil.secure_random_urlsafe_base64_token
 
       if Rails.env.test? || Rails.env.development?
         self.title       ||= key

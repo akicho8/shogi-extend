@@ -1,14 +1,6 @@
 module StringUtil
   extend self
 
-  DELEGATE_METHODS = [
-    :hankaku_format,
-    :strip_tags,
-    :script_tag_escape,
-    :double_blank_lines_to_one_line,
-    :secure_random_urlsafe_base64_token,
-  ]
-
   # 半角化
   def hankaku_format(s)
     s = s.gsub(/\p{Blank}+/, " ")

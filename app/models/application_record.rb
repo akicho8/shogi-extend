@@ -133,8 +133,6 @@ class ApplicationRecord < ActiveRecord::Base
     end
   end
 
-  delegate *StringUtil::DELEGATE_METHODS, to: :StringUtil
-
   # "" → nil
   def normalize_blank_to_nil(*keys)
     keys.each do |key|
@@ -158,7 +156,7 @@ class ApplicationRecord < ActiveRecord::Base
     keys.each do |key|
       if will_save_change_to_attribute?(key)
         if v = public_send(key)
-          public_send("#{key}=", hankaku_format(v))
+          public_send("#{key}=", StringUtil.hankaku_format(v))
         end
       end
     end
