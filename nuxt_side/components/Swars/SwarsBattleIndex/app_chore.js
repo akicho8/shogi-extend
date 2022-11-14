@@ -56,35 +56,5 @@ export const app_chore = {
         })
       }
     },
-
-    // 棋譜ダウンロード
-    zip_dl_handle(e) {
-      this.sidebar_p = false
-      this.$sound.play_click()
-
-      this.toast_ok(`${e.body_encode} の ${e.format_key_upcase} をダウンロードしています`)
-
-      const params = {
-        query:          this.query,
-        zip_dl_format_key: e.format_key,
-        body_encode:    e.body_encode,
-        // zip_dl_scope_key:  "latest",
-        sort_column: this.$route.query.sort_column || this.xi.sort_column,
-        sort_order:  this.$route.query.sort_order || this.xi.sort_order,
-      }
-
-      const usp = new URLSearchParams()
-      _.each(params, (v, k) => usp.set(k, v))
-      const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
-      location.href = url
-
-      this.delay_block(3, () => {
-        this.toast_ok(`たぶんダウンロード完了しました`, {
-          onend: () => {
-            this.toast_ok(`もっとたくさんダウンロードしたいときは「古い棋譜を補完」のほうを使ってください`)
-          },
-        })
-      })
-    },
   },
 }
