@@ -44,6 +44,10 @@ module Swars
 
     has_many :search_logs, dependent: :destroy # 明示的に取り込んだ日時の記録
 
+    scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc)              } # 最近使ってくれた人たち順
+    scope :regular_only,  -> { order(search_logs_count: :desc)                                                } # 検索回数が多い人たち順
+    scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].desc).order(updated_at: :desc) } # 段級位が高い人たち順
+
     before_validation do
       if Rails.env.development? || Rails.env.test?
         self.user_key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
@@ -63,60 +67,10 @@ module Swars
       user_key
     end
 
-    concerning :GradeMethods do
-      included do
-        belongs_to :grade # すべてのモードのなかで一番よい段級位
-
-        before_validation do
-          if Rails.env.development? || Rails.env.test?
-            if Grade.count.zero?
-              Swars.setup
-            end
-          end
-
-          self.grade ||= Grade.last
-        end
-      end
-
-      def grade_key=(key)
-        self.grade = Grade.find_by!(key: key)
-      end
-
-      # 指定の grade の方が段位が上であれば設定する
-      def grade_update_if_new(new_grade)
-        if grade
-          if new_grade.priority < grade.priority
-            self.grade = new_grade
-          end
-        else
-          self.grade = grade
-        end
-        save!
-      end
-
-      def grade_key
-        if grade
-          grade.key
-        end
-      end
-
-      def name_with_grade
-        "#{user_key} #{grade.name}"
-      end
+    def user_info(params = {})
+      UserInfo.new(self, params)
     end
 
-    concerning :UserInfoMethods do
-      def user_info(params = {})
-        UserInfo.new(self, params)
-      end
-    end
-
-    concerning :ScopeMethods do
-      included do
-        scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc) }                     # よく使ってくれる人
-        scope :regular_only, -> { order(search_logs_count: :desc) }                                                        # よく使ってくれる人
-        scope :great_only, -> { joins(:grade).order(Swars::Grade.arel_table[:priority].desc).order(:updated_at => :desc) } # すごい人
-      end
-    end
+    include GradeMethods
   end
 end
