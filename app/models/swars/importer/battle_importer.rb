@@ -32,8 +32,10 @@ module Swars
         # 対局者の作成・更新
         @info.memberships.each { |e| user_create_or_update(e) }
 
-        # 対局レコードの作成
-        battle_create
+        # 保存
+        Retryable.retryable(retryable_options) do
+          battle_create!
+        end
       end
 
       private
@@ -48,7 +50,9 @@ module Swars
         user.grade_update_if_new(grade)
       end
 
-      def battle_create
+      def battle_create!
+        # raise ActiveRecord::Deadlocked, @info.key.to_s
+
         Battle.create!({
             :key        => @info.key.to_s,
             :rule_key   => @info.rule_info.key,
@@ -66,6 +70,24 @@ module Swars
               })
           end
         end
+      end
+
+      def retryable_options
+        {
+          :on => ActiveRecord::Deadlocked,
+          :tries => 2,          # 再実行回数ではなく実行回数
+          :ensure => proc { |retries|
+            if retries >= 1
+              SlackAgent.notify(emoji: ":救急:", subject: "再実行回数計#{retries}回", body: @info.key.to_s)
+            end
+          },
+          :exception_cb => proc { |exception|
+            Rails.logger.debug { exception }
+          },
+          :log_method => lambda { |retries, exception|
+            SlackAgent.notify(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
+          },
+        }
       end
     end
   end
