@@ -48,25 +48,25 @@ export const app_otasuke = {
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length < 2) {
           message = "次は部屋のリンクを仲間に伝えよう。リンクは「部屋に入る」の中にあるよ"
-          icon = "play"
+          // icon = "play"
         }
       }
       if (message == null) {
         if (this.ac_room && !this.order_enable_p && this.uniq_member_infos.length >= 2) {
           message = "次は順番を設定しよう"
-          icon = "play"
+          // icon = "play"
         }
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log == null) {
           message = "対局時計を有効にしてから対局しよう"
-          icon = "play"
+          // icon = "play"
         }
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.cc_play_p && this.current_turn >= 1 && this.honpu_log) {
           message = "検討する場合は順番設定も解除しよう"
-          icon = "play"
+          // icon = "play"
         }
       }
 
@@ -80,13 +80,13 @@ export const app_otasuke = {
       if (message == null) {
         if (this.ac_room && this.order_enable_p && !this.clock_box) {
           message = "次は対局時計を設置しよう"
-          icon = "play"
+          // icon = "play"
         }
       }
       if (message == null) {
         if (this.ac_room && this.order_enable_p && this.clock_box && !this.clock_box.play_p) {
           message = "時計をスタートして対局を始めよう"
-          icon = "play"
+          // icon = "play"
         }
       }
       if (message == null) {
