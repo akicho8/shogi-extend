@@ -1,5 +1,6 @@
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
+const QueryString = require("query-string")
 
 export const app_chore = {
   methods: {
@@ -9,16 +10,13 @@ export const app_chore = {
     },
 
     kifu_save_url(row, params = {}) {
-      params = {
-        disposition: "attachment",
-        ...params,
-      }
-      const base_url = this.$config.MY_SITE_URL + row.show_path + "." + "kif"
-      const url = new URL(base_url)
-      _.each(params, (val, key) => {
-        url.searchParams.set(key, val)
+      return QueryString.stringifyUrl({
+        url: this.$config.MY_SITE_URL + row.show_path + "." + "kif",
+        query: {
+          disposition: "attachment",
+          ...params,
+        },
       })
-      return url.toString()
     },
 
     kifu_save_handle(row) {

@@ -113,12 +113,6 @@ export const vue_support = {
       return this.location_url_without_hash().replace(window.location.search, "")
     },
 
-    legacy_url_build(url, params) {
-      const obj = new URL(this.as_full_url(url)) // URL には http から始まるURLしか渡せないので取ってはいけない
-      _.each(params, (v, k) => obj.searchParams.set(k, v))
-      return obj.toString()
-    },
-
     // 通知
     simple_notify(message) {
       this.talk(message)
@@ -134,13 +128,10 @@ export const vue_support = {
 
     // tweet_url_build_from_params({text: "body"})
     tweet_url_build_from_params(params) {
-      const url = new URL("https://twitter.com/intent/tweet") // https://twitter.com/share と何が違う？
-      _.each(params, (v, k) => {
-        if (v) {
-          url.searchParams.set(k, v)
-        }
+      return QueryString.stringifyUrl({
+        url: "https://twitter.com/intent/tweet", // https://twitter.com/share と何が違う？
+        query: params,
       })
-      return url.toString()
     },
 
     // URLとテキストを含める場合に気をつけること

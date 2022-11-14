@@ -1,5 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs2 } from "@/components/models/gs2.js"
+const QueryString = require("query-string")
 
 const SAMPLE_SFEN = "position sfen l+n1g1g1n+l/1ks2r1+r1/1pppp1bpp/p2+b+sp+p2/9/P1P1+SP1PP/1+P+BPP1P2/1BK1GR1+R1/+L+NSG3NL b R2B3G4S5N11L99Pr2b3g4s5n11l99p 1"
 
@@ -19,14 +20,16 @@ export class ColorThemeInfo extends ApplicationMemoryRecord {
   }
 
   thumbnail_url(context) {
-    const base_url = context.$config.MY_SITE_URL + "/share-board.png"
-    const url = new URL(base_url)
-    url.searchParams.set("body", SAMPLE_SFEN)
-    url.searchParams.set("color_theme_key", this.key)
-    url.searchParams.set("width", 1920 * this.constructor.image_scale)
-    url.searchParams.set("height", 1080 * this.constructor.image_scale)
-    url.searchParams.set("color_theme_preview_image_use", "true") // これを取ると実際に生成する
-    return url.toString()
+    return QueryString.stringifyUrl({
+      url: context.$config.MY_SITE_URL + "/share-board.png",
+      query: {
+        body: SAMPLE_SFEN,
+        color_theme_key: this.key,
+        width: 1920 * this.constructor.image_scale,
+        height: 1080 * this.constructor.image_scale,
+        color_theme_preview_image_use: "true", // これを取ると実際に生成する,
+      },
+    })
   }
 
   get introduction() {

@@ -3,6 +3,7 @@ import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 const TinyURL = require("tinyurl")
 import _ from "lodash"
+const QueryString = require("query-string")
 
 export const app_urls = {
   methods: {
@@ -66,9 +67,10 @@ export const app_urls = {
       if (this.present_p(format)) {
         extname = `.${format}`
       }
-      const url = new URL(`${this.$config.MY_SITE_URL}/share-board${extname}`)
-      _.each(params, (v, k) => url.searchParams.set(k, v))
-      return url.toString()
+      return QueryString.stringifyUrl({
+        url: `${this.$config.MY_SITE_URL}/share-board${extname}`,
+        query: params,
+      })
     },
   },
   computed: {

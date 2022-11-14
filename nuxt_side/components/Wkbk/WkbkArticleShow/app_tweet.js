@@ -1,4 +1,5 @@
 import _ from "lodash"
+const QueryString = require("query-string")
 
 export const app_tweet = {
   methods: {
@@ -12,11 +13,10 @@ export const app_tweet = {
       return {}
     },
     current_url() {
-      let url = new URL(this.$config.MY_SITE_URL + `/rack/articles/${this.article.key}`)
-      _.each(this.current_url_params, (v, k) => {
-        url.searchParams.set(k, v)
+      return QueryString.stringifyUrl({
+        url: this.$config.MY_SITE_URL + `/rack/articles/${this.article.key}`,
+        query: this.current_url_params,
       })
-      return url.toString()
     },
     tweet_body() {
       let out = ""

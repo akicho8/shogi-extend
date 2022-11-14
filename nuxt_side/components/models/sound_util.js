@@ -17,6 +17,7 @@ if (process.env.NODE_ENV === "development") {
 
 import { SoundPresetInfo } from "@/components/models/sound_preset_info.js"
 import _ from "lodash"
+const QueryString = require("query-string")
 
 export const SoundUtil = {
   play(key, options = {}) {
@@ -70,8 +71,7 @@ export const SoundUtil = {
       autoplay: true,
       ...options,
     }
-    const url = new URL(location)
-    if (url.searchParams.get("__system_test_now__")) { // this.$route.query.__system_test_now__
+    if (QueryString.parse(location.search)["__system_test_now__"]) {
       options.src = require("@/assets/silent.mp3")
     }
     return new Howl(options)

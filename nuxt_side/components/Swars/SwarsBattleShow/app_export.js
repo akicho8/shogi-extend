@@ -11,6 +11,7 @@
 
 import _ from "lodash"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
+const QueryString = require("query-string")
 
 export const app_export = {
   methods: {
@@ -23,16 +24,13 @@ export const app_export = {
     },
 
     kifu_show_url(e, params = {}) {
-      const base_url = this.$config.MY_SITE_URL + this.record.show_path + "." + e.format_key
-      const url = new URL(base_url)
-      params = {
-        ...params,
-        turn: this.current_turn,
-      }
-      _.each(params, (val, key) => {
-        url.searchParams.set(key, val)
+      return QueryString.stringifyUrl({
+        url: this.$config.MY_SITE_URL + this.record.show_path + "." + e.format_key,
+        query: {
+          ...params,
+          turn: this.current_turn,
+        },
       })
-      return url.toString()
     },
 
     // 指定の棋譜を表示
