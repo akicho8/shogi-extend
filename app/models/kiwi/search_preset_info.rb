@@ -6,7 +6,7 @@ module Kiwi
       { key: "視聴数",   func: -> s, params { s.public_only_with_user(params).order(access_logs_count: :desc)                                  }, },
       { key: "居飛車",   func: -> s, params { s.public_only_with_user(params).tagged_with("居飛車")                                            }, },
       { key: "振り飛車", func: -> s, params { s.public_only_with_user(params).tagged_with("振り飛車")                                          }, },
-      { key: "右玉",     func: -> s, params { s.public_only_with_user(params).tagged_with(::Swars::User::UserInfo.migigyoku_family, any: true) }, },
+      { key: "右玉",     func: -> s, params { s.public_only_with_user(params).tagged_with(::Swars::UserInfo.migigyoku_family, any: true)       }, },
       { key: "履歴",     func: -> s, params { params[:current_user] ? s.merge(params[:current_user].kiwi_access_logs.uniq_histories) : s.none  }, },
       { key: "公開",     func: -> s, params { params[:current_user] ? s.merge(params[:current_user].kiwi_bananas.folder_eq(:public)) : s.none  }, },
       { key: "限定公開", func: -> s, params { params[:current_user] ? s.merge(params[:current_user].kiwi_bananas.folder_eq(:limited)) : s.none }, },
