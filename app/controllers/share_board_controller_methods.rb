@@ -212,7 +212,7 @@ module ShareBoardControllerMethods
     # リアルタイム共有
     attrs = attrs.merge({
         # :room_code => params[:room_code] || "",
-        :connection_id   => ApplicationRecord.secure_random_urlsafe_base64_token,
+        :connection_id   => StringUtil.secure_random_urlsafe_base64_token,
         :session_id      => sb_session_id,
         :session_counter => sb_session_counter,
         :API_VERSION     => API_VERSION,       # これとActionCableで返すバージョンを比較する
@@ -269,7 +269,7 @@ module ShareBoardControllerMethods
 
   def sb_session_id
     if false
-      session[:sb_session_id] ||= ApplicationRecord.secure_random_urlsafe_base64_token
+      session[:sb_session_id] ||= StringUtil.secure_random_urlsafe_base64_token
     else
       Digest::MD5.hexdigest(session.id.to_s)
     end

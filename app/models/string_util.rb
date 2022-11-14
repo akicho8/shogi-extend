@@ -38,15 +38,11 @@ module StringUtil
   # 実際はおおよそ4/3倍なので指定の文字数に足りない場合がある
   # なのでN文字欲しければN文字以上生成させて先頭からN文字拾えばよい
   # わかりやすい名前はARの内部のメソッドとかぶりそうなので注意
-  # rails r 'tp 10.times.collect { ApplicationRecord.secure_random_urlsafe_base64_token }'
+  # rails r 'tp 10.times.collect { StringUtil.secure_random_urlsafe_base64_token }'
   def secure_random_urlsafe_base64_token(length = 11)
-    if false
-      SecureRandom.urlsafe_base64(length).slice(0, length)
-    else
-      v = SecureRandom.urlsafe_base64(length * 2)
-      v = v.gsub(/[-_]/, "")
-      v = v.slice(/[a-z].{#{length-1}}/i)
-      v or raise "must not happen"
-    end
+    s = SecureRandom.urlsafe_base64(length * 2)
+    s = s.gsub(/[-_]/, "")              # 扱いにくい文字は削除する
+    s = s.slice(/[a-z].{#{length-1}}/i) # アルファベットから初まる length 文字
+    s or raise "must not happen"
   end
 end

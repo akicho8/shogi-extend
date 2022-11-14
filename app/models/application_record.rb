@@ -9,8 +9,6 @@ class ApplicationRecord < ActiveRecord::Base
       human_attribute_name(*args)
     end
 
-    delegate *StringUtil::DELEGATE_METHODS, to: :StringUtil
-
     # r = plus_minus_query_parse(["a", "-b", "c", "-d"])
     # r[true]  # => ["a", "c"]
     # r[false] # => ["b", "d"]

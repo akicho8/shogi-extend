@@ -7,7 +7,7 @@ module KifuExtractor
     def resolve
       if v = uri_fetched_content
         v = v.toutf8
-        v = ApplicationRecord.strip_tags(v)
+        v = StringUtil.strip_tags(v)
         v = v.strip
         if v.present?
           if Bioshogi::Parser.accepted_class(v)
