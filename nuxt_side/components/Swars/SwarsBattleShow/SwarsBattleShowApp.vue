@@ -59,11 +59,6 @@ client-only
         p {{record.description}}
         p {{record.turn_max}}手まで (最後は{{record.final_info.name}})
 
-      //- .columns
-      //-   .column.is-half-desktop.is_buttons_column
-      //-     .buttons.is-centered
-      //-       //- PngDlButton(tag="a" :href="png_dl_url" :turn="current_turn")
-
       //-   DebugPre(v-if="development_p")
       //-     | start_turn: {{start_turn}}
       //-     | current_turn: {{current_turn}}
@@ -87,6 +82,7 @@ import { SceneInfo } from "../models/scene_info.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
+const QueryString = require("query-string")
 
 export default {
   name: "SwarsBattleShowApp",
@@ -310,11 +306,14 @@ export default {
     },
 
     og_image() {
-      const params = new URLSearchParams()
-      params.set("turn", this.current_turn)
-      params.set("viewpoint", this.sp_viewpoint)
-      params.set("color_theme_key", this.color_theme_key)
-      return `${this.record.show_path}.png?${params}`
+      return QueryString.stringifyUrl({
+        url: `${this.record.show_path}.png`,
+        query: {
+          turn: this.current_turn,
+          viewpoint: this.sp_viewpoint,
+          color_theme_key: this.color_theme_key,
+        },
+      })
     },
 
     og_title() {
@@ -331,27 +330,11 @@ export default {
     },
 
     permalink_url() {
-      let url = null
-      // if (this.development_p) {
-      //   url = this.$config.MY_NUXT_URL
-      // } else {
-      url = this.$config.MY_SITE_URL
-      // }
-
-      const params = new URLSearchParams()
-      params.set("turn", this.current_turn)
-      params.set("viewpoint", this.sp_viewpoint)
-
-      return `${url}/swars/battles/${this.record.key}?${params}`
+      return QueryString.stringifyUrl({
+        url: `${this.$config.MY_SITE_URL}/swars/battles/${this.record.key}`,
+        query: { turn: this.current_turn, viewpoint: this.sp_viewpoint },
+      })
     },
-
-    // png_dl_url() {
-    //   const params = new URLSearchParams()
-    //   params.set("attachment", true)
-    //   params.set("turn", this.current_turn)
-    //   params.set("viewpoint", this.sp_viewpoint)
-    //   return `${this.$config.MY_SITE_URL}/w/${this.record.key}.png?${params}`
-    // },
 
     current_kifu_vo() {
       return this.$KifuVo.create({

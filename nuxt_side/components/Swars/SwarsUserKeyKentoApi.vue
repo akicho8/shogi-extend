@@ -25,6 +25,8 @@ client-only
 </template>
 
 <script>
+const QueryString = require("query-string")
+
 export default {
   name: "SwarsUserKeyKentoApi",
   methods: {
@@ -50,10 +52,13 @@ export default {
       return `${this.$route.params.key}さん専用の KENTO API 設定手順`
     },
     kento_api_url() {
-      const params = new URLSearchParams()
-      params.set("query", this.$route.params.key)
-      params.set("format_type", "kento")
-      return this.$config.MY_SITE_URL + `/w.json?${params}`
+      return QueryString.stringifyUrl({
+        url: this.$config.MY_SITE_URL + "/w.json",
+        query: {
+          format_type: "kento",
+          query: this.$route.params.key,
+        },
+      })
     },
   },
 }

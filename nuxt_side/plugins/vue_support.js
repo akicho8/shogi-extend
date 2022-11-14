@@ -6,6 +6,7 @@ import { MyMobile   } from "@/components/models/my_mobile.js"
 import twemoji from 'twemoji'
 import _ from "lodash"
 const util = require("util")
+const QueryString = require("query-string")
 
 export const vue_support = {
   methods: {
@@ -160,17 +161,13 @@ export const vue_support = {
       params = {
         ...params,
       }
-
-      if (!params.return_to) {
+      // 戻り先が設定されていなければ今のURLを設定しておく
+      if (params.return_to == null) {
         if (typeof location !== 'undefined') {
           params.return_to = location.href
         }
       }
-
-      const usp = new URLSearchParams()
-      _.each(params, (v, k) => usp.set(k, v))
-
-      return this.$config.MY_SITE_URL + `/login?${usp}`
+      return QueryString.stringifyUrl({url: this.$config.MY_SITE_URL + "/login", query: params})
     },
 
     login_url_jump(params = {}) {

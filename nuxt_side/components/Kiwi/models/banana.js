@@ -1,6 +1,7 @@
 import { Model } from "./model.js"
 import { Lemon } from "./lemon.js"
 import { FolderInfo } from "./folder_info.js"
+const QueryString = require("query-string")
 
 export class Banana extends Model {
   constructor(context, attributes) {
@@ -49,9 +50,10 @@ export class Banana extends Model {
   get lemon_thumbnail_browser_path_with_pos() {
     const path = this.lemon.thumbnail_browser_path
     if (path) {
-      const params = new URLSearchParams()
-      params.set("thumbnail_pos", this.thumbnail_pos)
-      return [path, params].join("?")
+      return QueryString.stringifyUrl({
+        url: path,
+        query: { thumbnail_pos: this.thumbnail_pos },
+      })
     }
   }
 }

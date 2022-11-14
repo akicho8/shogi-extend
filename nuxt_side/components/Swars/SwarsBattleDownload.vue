@@ -72,6 +72,8 @@
 <script>
 import { ls_support_mixin } from "@/components/models/ls_support_mixin.js"
 import { MyMobile } from "@/components/models/my_mobile.js"
+const QueryString = require("query-string")
+
 // import { Dictionary } from "@/components/models/dictionary.js"
 
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
@@ -194,9 +196,7 @@ export default {
         body_encode:       this.body_encode,
       }
 
-      const usp = new URLSearchParams()
-      _.each(params, (v, k) => usp.set(k, v))
-      const url = this.$config.MY_SITE_URL + `/w.zip?${usp}`
+      const url = QueryString.stringifyUrl({url: `${this.$config.MY_SITE_URL}/w.zip`, query: params})
 
       if (false) {
         // この順で実行するとなんと location.href が無かったことにされる

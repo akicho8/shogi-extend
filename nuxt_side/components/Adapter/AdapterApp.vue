@@ -64,6 +64,7 @@ import { app_chore      } from "./app_chore.js"
 import { app_sidebar    } from "./app_sidebar.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
+const QueryString = require("query-string")
 
 import _ from "lodash"
 
@@ -234,17 +235,10 @@ export default {
           params["width"] = 1200
           params["turn"] = this.record.turn_max
         }
-        let url = `${this.$config.MY_SITE_URL}${this.show_path}.${e.format_key}`
-
-        // 最後に変換
-        const p = new URLSearchParams()
-        _.each(params, (v, k) => p.set(k, v))
-        const query = p.toString()
-        if (query) {
-          url += "?" + query
-        }
-
-        return url
+        return QueryString.stringifyUrl({
+          url: `${this.$config.MY_SITE_URL}${this.show_path}.${e.format_key}`,
+          query: params,
+        })
       }
     },
 

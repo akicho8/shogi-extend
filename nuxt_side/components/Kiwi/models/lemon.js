@@ -4,6 +4,7 @@ import { RecipeInfo } from "./recipe_info.js"
 import { StatusInfo } from "./status_info.js"
 import dayjs from "dayjs"
 import _ from "lodash"
+const QueryString = require("query-string")
 
 export class Lemon extends Model {
   get status_info() {
@@ -154,12 +155,9 @@ export class Lemon extends Model {
   }
 
   __url_build(format, params = {}) {
-    // const url_base = this.context.$config.MY_SITE_URL + `/animation-files/${this.id}.${format}`
-    // const url = new URL(url_base)
-    // _.each(params, (v, k) => url.searchParams.set(k, v))
-    // return url.toString()
-    const usp = new URLSearchParams()
-    _.each(params, (v, k) => usp.set(k, v))
-    return `/animation-files/${this.id}.${format}?${usp}`
+    return QueryString.stringifyUrl({
+      url: `/animation-files/${this.id}.${format}`,
+      query: params,
+    })
   }
 }
