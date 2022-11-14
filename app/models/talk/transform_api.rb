@@ -15,7 +15,7 @@ module Talk
       rescue Aws::Errors::NoSuchEndpointError, Aws::Polly::Errors::MovedTemporarily, Seahorse::Client::NetworkingError => error
         # ネットに接続していない場合のエラー
         # Seahorse::Client::NetworkingError (SSL_connect returned=1 errno=0 state=error: certificate verify failed (self signed certificate)):
-        SlackAgent.notify_exception(error)
+        SlackSos.notify_exception(error)
       end
     end
 

@@ -22,7 +22,7 @@ module Api
           URI(url).read.toutf8
         rescue SocketError => error
           Rails.logger.info(error)
-          SlackAgent.notify_exception(error)
+          SlackSos.notify_exception(error)
           ExceptionNotifier.notify_exception(error)
           ""
         end

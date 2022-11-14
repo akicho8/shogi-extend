@@ -1,5 +1,20 @@
-module SlackAgent
-  extend self
+# ▼送信
+# rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
+#
+# ▼キーの削除
+# rails r "SlackAgent.excessive_measure_reset"
+class SlackAgent
+  class << self
+    def notify(params = {})
+      new(params).notify
+    end
+
+    delegate :reset, to: :excessive_measure, prefix: true
+
+    def excessive_measure
+      @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_REQUEST_COUNT_MAX_PER_SECOND)
+    end
+  end
 
   # 1秒間あたりの最大実行数
   # https://api.slack.com/lang/ja-jp/rate-limit
@@ -11,15 +26,16 @@ module SlackAgent
 
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
 
-  # rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
-  def notify(params = {})
-    if ENV["SETUP"]
-      return
-    end
+  attr_reader :params
 
-    if ENV["SLACK_AGENT_DISABLE"].to_s == "true"
-      return
-    end
+  def initialize(params = {})
+    @params = {
+    }.merge(params)
+  end
+
+  def notify(params = {})
+    return if ENV["SETUP"]
+    return if ENV["SLACK_AGENT_DISABLE"].to_s == "true"
 
     if ENV["SLACK_AGENT_RAISE"]
       raise Slack::Web::Api::Errors::SlackError, "(message)"
@@ -28,25 +44,6 @@ module SlackAgent
     if Rails.env.development? && Rails.root.join("RSPEC_ACTIVE").exist?
       return
     end
-
-    wait = excessive_measure.wait_value_for_job
-
-    body = []
-    v = params[:emoji].presence || ":空白:"
-    body << EmojiInfo.lookup(v) || v
-    body << " "
-    body << (Rails.cache.increment(:slack_counter) || 0)
-    body << " "
-    body << "w#{wait}"
-    body << " "
-    body << timestamp
-    if v = params[:subject].presence
-      body << "【#{v}】"
-    end
-    if v = params[:body].presence
-      body << v
-    end
-    body = body.join
 
     api_params = {
       :channel => params[:channel] || default_channel,
@@ -60,39 +57,32 @@ module SlackAgent
     SlackAgentNotifyJob.set(wait: wait).perform_later(api_params)
   end
 
-  # rails r "SlackAgent.notify_exception(Exception.new)"
-  # rails r 'SlackAgent.notify_exception((1/0 rescue $!))'
-  def notify_exception(error, params = {})
-    params = {
-      backtrace_lines_max: 4,
-    }.merge(params)
-
-    Rails.logger.info { error }
-    body = []
-    if error.message
-      body << error.message
-    end
-    if error.backtrace
-      body += error.backtrace.take(params[:backtrace_lines_max])
-    end
-    if v = params[:data]
-      body << v.pretty_inspect
-    end
-    body = body.compact.join("\n")
-    notify(emoji: ":SOS:", subject: error.class.name, body: body)
-  end
-
   private
 
   def timestamp
     Time.current.strftime("%T.%L")
   end
 
-  def excessive_measure
-    @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_REQUEST_COUNT_MAX_PER_SECOND)
+  def wait
+    @wait ||= self.class.excessive_measure.wait_value_for_job
   end
 
-  # キーの削除
-  # rails r "SlackAgent.excessive_measure_reset"
-  delegate :reset, to: :excessive_measure, prefix: true
+  def body
+    av = []
+    v = params[:emoji].presence || ":空白:"
+    av << EmojiInfo.lookup(v) || v
+    av << " "
+    av << (Rails.cache.increment(:slack_counter) || 0)
+    av << " "
+    av << "w#{wait}"
+    av << " "
+    av << timestamp
+    if v = params[:subject].presence
+      av << "【#{v}】"
+    end
+    if v = params[:body].presence
+      av << v
+    end
+    av.join
+  end
 end

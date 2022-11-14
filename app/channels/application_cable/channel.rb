@@ -68,7 +68,7 @@ module ApplicationCable
     rescue_from Exception do |error|
       if Rails.env.development?
         SystemMailer.notify_exception(error)
-        SlackAgent.notify_exception(error)
+        SlackSos.notify_exception(error)
       end
       ExceptionNotifier.notify_exception(error)
     end

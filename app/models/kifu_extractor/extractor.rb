@@ -37,7 +37,7 @@ module KifuExtractor
         info.xcontainer_run_once
         true
       rescue Bioshogi::BioshogiError => error
-        SlackAgent.notify_exception(error)
+        SlackSos.notify_exception(error)
         false
       end
     end
