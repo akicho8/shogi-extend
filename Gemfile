@@ -192,8 +192,6 @@ gem "redis-namespace"
 
 gem "puma_worker_killer"
 
-group :development, :test do
-  gem "git-version-bump", require: false
-end
+gem "git-version-bump", require: false
 
 gem "retryable"
