@@ -73,19 +73,22 @@ module Swars
       end
 
       def retryable_options
+        tries = 2
         {
           :on => ActiveRecord::Deadlocked,
-          :tries => 2,          # 再実行回数ではなく実行回数
+          :tries => tries, # 再実行回数ではなく実行回数
           :ensure => proc { |retries|
             if retries >= 1
-              SlackAgent.notify(emoji: ":救急:", subject: "再実行回数計#{retries}回", body: @info.key.to_s)
+              SlackAgent.notify(emoji: ":救急:", subject: "実行回数計#{retries}回/最大#{tries}", body: @info.key.to_s)
             end
           },
           :exception_cb => proc { |exception|
             Rails.logger.debug { exception }
           },
           :log_method => lambda { |retries, exception|
-            SlackAgent.notify(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
+            if Rails.env.development?
+              SlackAgent.notify(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
+            end
           },
         }
       end
