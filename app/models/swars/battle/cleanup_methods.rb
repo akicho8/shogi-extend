@@ -1,33 +1,42 @@
+# ▼削除対象
+# rails r Swars::Battle.cleanup_scope
+#
+# ▼削除実行
 # rails r Swars::Battle.cleanup
 module Swars
   class Battle
     concern :CleanupMethods do
       included do
-        # 削除対象
-        scope :cleanup_scope, -> (params = {}) {
-          params = {
-            expires_in: 45.days,
-            skip_users: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:battles_destroy_skip_users] : ["DevUser1"],
-          }.merge(params)
+        # 削除対象外のウォーズIDs
+        cattr_accessor(:skip_users) do
+          if Rails.env.production? || Rails.env.staging?
+            Rails.application.credentials[:battles_destroy_skip_users]
+          else
+            ["DevUser1"]
+          end
+        end
 
-          s = all
-          s = s.not_accessed_scope(params[:expires_in])  # アクセスされないまましばらく経過したもの
-          s = s.clearn_reject_scope1
-          s = s.clearn_reject_scope2
-          s = s.user_rejected_scope(params[:skip_users]) # 特定ユーザーは除外
+        # 削除対象
+        scope :cleanup_scope, -> (options = {}) {
+          options = {
+            :expires_in => 45.days,
+            :skip_users => skip_users,
+          }.merge(options)
+
+          s = all                                         # 全員
+          s = s.old_only(options[:expires_in])            # expires_in の期間アクセスされなかったもの
+          s = s.coaching_except                           # 指導対局を除外する
+          s = s.expert_except                             # 十段の対局を除外する
+          s = s.special_user_own_record_except(options[:skip_users]) # 特定のユーザーを除外する
           s
         }
 
-        # アクセスが今から expires_in 秒前より古いもの
-        scope :not_accessed_scope, -> expires_in {
-          where(arel_table[:accessed_at].lteq(expires_in.seconds.ago))
-        }
+        scope :old_only,        -> expires_in { where(arel_table[:accessed_at].lteq(expires_in.seconds.ago)) } # 古いもの
+        scope :coaching_except, -> { where.not(xmode: Xmode.fetch("指導"))       }                             # 指導対局を除く
+        scope :expert_except,   -> { where.not(id: Grade.fetch("十段").battles)  }                             # 十段の対局を除く
 
-        scope :clearn_reject_scope1, -> { where.not(xmode: Xmode.fetch("指導"))       } # 指導対局を除外
-        scope :clearn_reject_scope2, -> { where.not(id: Grade.fetch("十段").battles)  } # 十段の対局を除外
-
-        # 指定ユーザーのバトルを除外したもの
-        scope :user_rejected_scope, proc { |user_keys|
+        # 特定の利用者の対局を除く
+        scope :special_user_own_record_except, proc { |user_keys|
           users = User.where(user_key: user_keys)
           # FIXME: Rails 6.1 からは Battle.xxx は scope を継承されなくなるので unscoped は不要
           if true
@@ -41,57 +50,9 @@ module Swars
 
       class_methods do
         # 参照されていないレコードを消していく
-        #
-        #   ActiveRecord::Base.logger = nil
-        #   Swars::Battle.cleanup(time_limit: nil)
-        #
-        def cleanup(params = {})
-          params = {
-            time_limit: 4.hours,  # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
-            sleep: 0,
-          }.merge(params)
-
-          memo = {}
-          rows = []
-          errors = Hash.new(0)
-          t = Time.current
-          memo["前"] = count
-          cleanup_scope(params).find_in_batches(batch_size: 1000) do |g|
-            row = {}
-            rows << row
-            row["日時"] = Time.current.to_s(:ymdhms)
-            row["個数"] = g.size
-            row["成功"] = 0
-            row["失敗"] = 0
-            if params[:time_limit] && params[:time_limit] <= (Time.current - t)
-              break
-            end
-            g.each do |e|
-              begin
-                if params[:fake_error]
-                  raise ActiveRecord::Deadlocked, "(fake_error)"
-                end
-                e.destroy!
-                row["成功"] += 1
-              rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => invalid
-                row["失敗"] += 1
-                errors["#{invalid.message} (#{invalid.class.name})"] += 1
-              end
-              sleep(params[:sleep])
-            end
-          end
-          memo["後"] = count
-          memo["差"] = memo["後"] - memo["前"]
-          memo["開始"] = t.to_s(:ymdhms)
-          memo["終了"] = Time.current.to_s(:ymdhms)
-
-          body = [
-            memo.to_t,
-            rows.to_t,
-            errors.to_t,
-          ].reject(&:blank?).join("\n")
-
-          SystemMailer.notify(fixed: true, subject: "バトル削除", body: body).deliver_later
+        # rails r 'Swars::Battle.cleanup(time_limit: nil)'
+        def cleanup(options = {})
+          CleanupRunner.new(cleanup_scope(options), options).perform
         end
       end
     end

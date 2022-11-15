@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Battle, type: :model, swars_spec: true do
+  RSpec.describe "対象の削除を実行", type: :model, swars_spec: true do
     def case1(users, attributes = {})
       users = users.collect do |user_key, grade_key|
         User.create!(user_key: user_key, grade: Grade.fetch(grade_key))
@@ -9,53 +9,16 @@ module Swars
       Battle.create_with_members!(users, attributes)
     end
 
-    def cleanup(options = {})
-      options = {
-        time_limit: nil,
-        expires_in: 0,
-      }.merge(options)
-
-      Battle.cleanup_scope(options)
-    end
-
-    it "普通の棋譜は削除される" do
-      case1("user1" => "1級", "user2" => "2級")
-      assert { cleanup.count == 1 }
-    end
-
-    it "十段の棋譜は削除しない" do
-      case1("user1" => "十段", "user2" => "2級")
-      assert { cleanup.count == 0 }
-    end
-
-    it "指導対局は削除しない" do
-      case1({"user1" => "1級", "user2" => "2級"}, xmode: Xmode.fetch("指導"))
-      assert { cleanup.count == 0 }
-    end
-
-    it "古くなったものだけ削除する" do
-      Timecop.freeze("2000-01-01") do
-        case1("user1" => "1級", "user2" => "2級")
-      end
-      Timecop.freeze("2000-01-01 00:00:00") { assert { cleanup(expires_in: 1).count == 0 } }
-      Timecop.freeze("2000-01-01 00:00:01") { assert { cleanup(expires_in: 1).count == 1 } }
-    end
-
-    it "指定ユーザーのバトルは削除しない" do
-      case1("user1" => "1級", "user2" => "2級")
-      assert { cleanup(skip_users: ["user1"]).count == 0 }
-    end
-
-    it "削除実行" do
+    it "すべてが対象になっているので全削除する" do
       case1("user1" => "1級", "user2" => "2級")
       Battle.cleanup(time_limit: nil, expires_in: 0)
       assert { Battle.count == 0 }
     end
+
+    it "user1 は対象外なので削除しない" do
+      case1("user1" => "1級", "user2" => "2級")
+      Battle.cleanup(time_limit: nil, expires_in: 0, skip_users: ["user1"])
+      assert { Battle.count == 1 }
+    end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .....
-# >>
-# >> Finished in 2.34 seconds (files took 3.29 seconds to load)
-# >> 5 examples, 0 failures
-# >>
