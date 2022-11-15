@@ -43,7 +43,6 @@ module Swars
     include CoreMethods
     include BasicMethods
     include HelperMethods
-    include MigrateMethods
     include SearchMethods
   end
 end
