@@ -26,66 +26,30 @@ class ApplicationRecord < ActiveRecord::Base
       }
     end
 
-    # belongs_to :final
-    #
-    # before_validation do
-    #   self.final_id  ||= Final.fetch("投了").id
-    # end
-    #
-    # if Rails.env.development? || Rails.env.test?
-    #   with_options presence: true do
-    #     validates :final_key
-    #   end
-    #
-    #   with_options allow_blank: true do
-    #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
-    #   end
-    # end
-    #
-    # scope :group_by_final_key, -> { joins(:final).group(Final.arel_table[:key]) }
-    # scope :final_eq,     -> v { where(    final: Final.array_from(v)) }
-    # scope :final_not_eq, -> v { where.not(final: Final.array_from(v)) }
-    # scope :final_ex,     proc { |v; s, g|
-    #   s = all
-    #   g = xquery_parse(v)
-    #   if g[true]
-    #     s = s.final_eq(g[true])
-    #   end
-    #   if g[false]
-    #     s = s.final_not_eq(g[false])
-    #   end
-    #   s
-    # }
-    #
-    # def final_key
-    #   self.final&.key
-    # end
-    #
-    # def final_key=(v)
-    #   self.final = Final[v]
-    # end
-    #
-    # def final_info
-    #   if final
-    #     final.pure_info
-    #   end
-    # end
-    #
     def custom_belongs_to(key, options = {})
       ar_model = options[:ar_model]
       st_model = options[:st_model]
-      default = options[:default]
+      default = options[:default] # 投了
 
-      belongs_to key
+      belongs_to key                                              # belongs_to :final
 
       if default
-        before_validation do
-          if !public_send("#{key}_id")
-            public_send("#{key}_id=", ar_model.fetch(default).id)
-          end
-        end
+        before_validation do                                      # before_validation do
+          if !public_send("#{key}_id")                            #   if !final_id
+            public_send("#{key}_id=", ar_model.fetch(default).id) #     self.final_id = Final.fetch("投了").id
+          end                                                     #   end
+        end                                                       # end
       end
 
+      # if Rails.env.development? || Rails.env.test?
+      #   with_options presence: true do
+      #     validates :final_key
+      #   end
+      #
+      #   with_options allow_blank: true do
+      #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
+      #   end
+      # end
       if Rails.env.development? || Rails.env.test?
         with_options presence: true do
           validates "#{key}_id".to_sym
@@ -101,35 +65,40 @@ class ApplicationRecord < ActiveRecord::Base
       scope "s_where_#{key}_key_eq".to_sym, -> v { joins(key).where(ar_model.arel_table[:key].eq(v)) }
 
       # 検索用
-      scope "#{key}_eq".to_sym,     -> v { where(key => ar_model.array_from(v)) }
-      scope "#{key}_not_eq".to_sym, -> v { where.not(key => ar_model.array_from(v)) }
-      scope "#{key}_ex".to_sym, proc { |v; s, g|
-        s = all
-        g = xquery_parse(v)
-        if g[true]
-          s = s.public_send("#{key}_eq", g[true])
-        end
-        if g[false]
-          s = s.public_send("#{key}_not_eq", g[false])
-        end
-        s
-      }
 
-      define_method("#{key}_key=") do |v|
-        public_send("#{key}=", ar_model[v])
-      end
+      scope "#{key}_eq".to_sym, -> v {                 # scope :final_eq, -> v {
+        where(key => ar_model.array_from(v))           #   where(final: Final.array_from(v))
+      }                                                # }
 
-      define_method("#{key}_key") do
-        if record = public_send(key)
-          record.key
-        end
-      end
+      scope "#{key}_not_eq".to_sym, -> v {             # scope :final_not_eq, -> v {
+        where.not(key => ar_model.array_from(v))       #   where.not(final: Final.array_from(v))
+      }                                                # }
 
-      define_method("#{key}_info") do
-        if record = public_send(key)
-          record.pure_info
-        end
-      end
+      scope "#{key}_ex".to_sym, proc { |v; s, g|       # scope :final_ex, proc { |v; s, g|
+        s = all                                        #   s = all
+        g = xquery_parse(v)                            #   g = xquery_parse(v)
+        if g[true]                                     #   if g[true]
+          s = s.public_send("#{key}_eq", g[true])      #     s = s.final_eq(g[true])
+        end                                            #   end
+        if g[false]                                    #   if g[false]
+          s = s.public_send("#{key}_not_eq", g[false]) #     s = s.final_not_eq(g[false])
+        end                                            #   end
+        s                                              #   s
+      }                                                # }
+
+      define_method("#{key}_key=") do |v|              # def final_key=(v)
+        public_send("#{key}=", ar_model[v])            #   self.final = Final[v]
+      end                                              # end
+
+      define_method("#{key}_key") do                   # def final_key
+        public_send(key)&.key                          #   self.final&.key
+      end                                              # end
+
+      define_method("#{key}_info") do                  # def final_info
+        if record = public_send(key)                   #   if final
+          record.pure_info                             #     final.pure_info
+        end                                            #   end
+      end                                              # end
     end
   end
 
