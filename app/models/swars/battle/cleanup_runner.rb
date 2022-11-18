@@ -47,7 +47,9 @@ module Swars
             if params[:fake_error]
               raise ActiveRecord::Deadlocked, "(fake_error)"
             end
-            e.destroy!
+            Retryable.retryable(on: ActiveRecord::Deadlocked) do
+              e.destroy!
+            end
             @group["成功"] += 1
           rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::Deadlocked => invalid
             @group["失敗"] += 1
