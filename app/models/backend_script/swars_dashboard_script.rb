@@ -17,7 +17,7 @@ module BackendScript
       #   s = model.all
       #   s = s.where(model.arel_table[:created_at].gteq(time_begin))
       #   records = s.select([
-      #       "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",                          # 時間→日付変換
+      #       "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",                          # 時間→日付変換
       #       "COUNT(*) AS count_all",                                                        # 履歴数
       #       "COUNT(answer_kind_id = #{Swars::AnswerKind.fetch(:correct).id} or NULL) AS correct_count", # o
       #       "COUNT(answer_kind_id = #{Swars::AnswerKind.fetch(:mistake).id} or NULL) AS mistake_count", # x
@@ -34,7 +34,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
@@ -48,7 +48,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
         # 日付から一発で対応するレコードを求められるようにハッシュ化
@@ -62,7 +62,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク問題作成者数
             "COUNT(*)                              AS count_all",            # 新規問題作成数
           ].join(", ")).group("created_on")                                  # 日付毎
@@ -77,7 +77,7 @@ module BackendScript
         s = model.all
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク人数
             "COUNT(*)                              AS count_all",            # 件数
           ].join(", ")).group("created_on")                                  # 日付毎
@@ -92,7 +92,7 @@ module BackendScript
       #   s = model.all
       #   s = s.where(model.arel_table[:created_at].gteq(time_begin))
       #   records = s.select([
-      #       "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+      #       "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
       #       "COUNT(distinct user_id)               AS unique_user_id_count", # ユニーク問題作成者数
       #       "COUNT(*)                              AS count_all",            # 新規問題作成数
       #     ].join(", ")).group("created_on")                                  # 日付毎

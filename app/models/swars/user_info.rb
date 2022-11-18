@@ -732,7 +732,7 @@ module Swars
       if battle_ids.present?
         # まず日別の対局数を求める
         sql = <<~EOT
-            SELECT DATE(#{DbUtil.tz_adjust('battled_at')}) AS battled_on, COUNT(*) AS count_all
+            SELECT DATE(#{MysqlUtil.tz_adjust('battled_at')}) AS battled_on, COUNT(*) AS count_all
             FROM swars_battles
             WHERE id IN (#{battle_ids.join(', ')})
             GROUP BY battled_on
@@ -756,7 +756,7 @@ module Swars
       # battle_ids = []
       if battle_ids.present?
         # まず日別の対局数を求める
-        battled_at = DbUtil.tz_adjust("battled_at")
+        battled_at = MysqlUtil.tz_adjust("battled_at")
         s = Battle.where(id: battle_ids)
         counts_hash = s.group("HOUR(#{battled_at})").count
         [*4..23, *0..3].collect do |hour|

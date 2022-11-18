@@ -1,4 +1,4 @@
-module DbUtil
+module MysqlUtil
   extend self
 
   def mysql_convert_tz_with_time_zone_validate!

@@ -15,7 +15,7 @@ module BackendScript
         s = s.where(FreeBattle.arel_table[:use_key].eq(:adapter))
         s = s.where(model.arel_table[:created_at].gteq(time_begin))
         records = s.select([
-            "DATE(#{DbUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
+            "DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on",           # 時間→日付変換
             "COUNT(*)                              AS count_all",            # 利用回数
             "COUNT(distinct user_id)               AS count_au",              # 利用者数
           ].join(", ")).group(:created_on)                                   # 日付毎

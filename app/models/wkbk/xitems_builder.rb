@@ -65,11 +65,11 @@ module Wkbk
     #  +------------+---------------------------+---------+---------|
     #
     def answer_log_stat_records
-      DbUtil.mysql_convert_tz_with_time_zone_validate!
+      MysqlUtil.mysql_convert_tz_with_time_zone_validate!
       correct_count = "COUNT(answer_kind_id = #{AnswerKind.correct.id} OR NULL) AS correct_count"
       mistake_count = "COUNT(answer_kind_id = #{AnswerKind.mistake.id} OR NULL) AS mistake_count"
       spent_sec_total = "SUM(spent_sec) AS spent_sec_total"
-      select = "article_id, #{correct_count}, #{mistake_count}, #{spent_sec_total}, MAX(#{DbUtil.tz_adjust(:created_at)}) AS last_answered_at"
+      select = "article_id, #{correct_count}, #{mistake_count}, #{spent_sec_total}, MAX(#{MysqlUtil.tz_adjust(:created_at)}) AS last_answered_at"
       answer_logs.select(select).group("article_id")
     end
 
