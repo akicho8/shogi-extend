@@ -1,6 +1,8 @@
 module Swars
   module Importer
     class BattleImporter
+      CREATE_TRY_COUNT = 3      # デッドロック対策でN回試みる
+
       attr_accessor :params
 
       def initialize(params = {})
@@ -73,13 +75,12 @@ module Swars
       end
 
       def retryable_options
-        tries = 2
         {
           :on => ActiveRecord::Deadlocked,
-          :tries => tries, # 再実行回数ではなく実行回数
+          :tries => CREATE_TRY_COUNT, # 再実行回数ではなく実行回数
           :ensure => proc { |retries|
             if retries >= 1
-              SlackAgent.notify(emoji: ":救急:", subject: "実行回数計#{retries}回/最大#{tries}", body: @info.key.to_s)
+              SlackAgent.notify(emoji: ":救急:", subject: "実行回数計#{retries}回/最大#{CREATE_TRY_COUNT}", body: @info.key.to_s)
             end
           },
           :exception_cb => proc { |exception|
