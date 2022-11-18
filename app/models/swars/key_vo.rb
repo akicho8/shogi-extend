@@ -1,5 +1,8 @@
 module Swars
   class KeyVo
+    class InvalidKey < ArgumentError
+    end
+
     class << self
       def [](value)
         wrap(value)
@@ -63,7 +66,7 @@ module Swars
 
     def validate!
       if invalid?
-        raise ArgumentError, @key.inspect
+        raise InvalidKey, "将棋ウォーズの対局キーではありません: #{@key.inspect}"
       end
     end
 

@@ -52,6 +52,10 @@ module Swars
       render json: { message: exception.message }, status: exception.status
     end
 
+    rescue_from "Swars::KeyVo::InvalidKey" do |exception|
+      render json: { message: exception.message }, status: 404
+    end
+
     rescue_from "Faraday::ConnectionFailed" do |exception|
       SlackSos.notify_exception(exception)
       render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
