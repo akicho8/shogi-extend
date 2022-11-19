@@ -126,9 +126,12 @@ import { app_clock_box_timeout    } from "./clock/app_clock_box_timeout.js"
 import { app_clock_decorator      } from "./clock/app_clock_decorator.js"
 import { app_persistent_cc_params } from "./clock/app_persistent_cc_params.js"
 
-import { app_give_up     } from "./give_up/app_give_up.js"
+import { app_give_up   } from "./give_up/app_give_up.js"
 import { app_honpu     } from "./give_up/app_honpu.js"
 import { app_kifu_mail } from "./give_up/app_kifu_mail.js"
+
+import { app_odai_maker      } from "./fes/app_odai_maker.js"
+import { app_client_vote } from "./fes/app_client_vote.js"
 
 import { app_medal      } from "./medal/app_medal.js"
 import { app_medal_plus } from "./medal/app_medal_plus.js"
@@ -201,6 +204,10 @@ export default {
     app_honpu,
     app_medal,
     app_medal_plus,
+
+    app_odai_maker,
+    app_client_vote,
+
     window_active_detector,
 
     // clock

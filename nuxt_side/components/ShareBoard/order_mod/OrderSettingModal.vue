@@ -15,7 +15,7 @@
   .modal-card-body(@click="!TheSb.order_enable_p && main_switch_handle(true)")
     .has-text-centered.has-text-grey.my-6(v-if="!TheSb.order_enable_p")
       | 右上のスイッチで有効にしよう
-    template(v-if="TheSb.order_enable_p")
+    template(v-if="TheSb.order_enable_p || development_p")
       //- pre {{JSON.stringify(TheSb.new_v.os_change.to_h)}}
       .TeamsContainer
         template(v-if="TheSb.new_v.order_unit.order_state.state_name === 'O1State'")
@@ -29,6 +29,13 @@
         b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
         b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small") 振り駒
         b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small") 先後入替
+
+      hr
+
+      .buttons.is-centered.mb-0.mt-5
+        b-button.mb-0(size="is-small" type="is-primary is-light" @click="odai_modal_handle") お題作成
+        b-button.mb-0(size="is-small" type="is-primary is-light" @click="TheSb.voted_hash_to_order_apply" v-if="TheSb.voted_hash_exist_p") 投票結果を順序に反映する
+
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
@@ -97,6 +104,12 @@ export default {
     test_handle() {
       this.$sound.play_click()
       this.TheSb.tn_notify()
+    },
+
+    odai_modal_handle() {
+      this.$sound.play_click()
+      this.direct_close_handle()
+      this.TheSb.odai_modal_handle()
     },
 
     // シャッフル

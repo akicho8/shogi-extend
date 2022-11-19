@@ -33,6 +33,7 @@ export class O2State extends OxState {
   //   this.users_allocate(["a", "b", "c", "d", "e"])
   // }
 
+  // users を左右に振り分ける
   users_allocate(users) {
     this.teams = [[], []]
     this.cache_clear()
@@ -41,6 +42,12 @@ export class O2State extends OxState {
       const user = users[strategy.user_index]
       this.teams[strategy.team_index].push(user)
     })
+  }
+
+  // o2ではそのまま振り分けることができる
+  users_allocate_from_teams(teams) {
+    this.teams = teams
+    this.cache_clear()
   }
 
   strategy_create(...args) {

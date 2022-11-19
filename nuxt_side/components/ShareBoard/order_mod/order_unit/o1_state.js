@@ -31,6 +31,13 @@ export class O1State extends OxState {
     this.cache_clear()
   }
 
+  // o1では振り分けることができないためフラットにする
+  // users_allocate_from_teams([["a", "b"], ["c", "d"]]) とされても ["a", "b", "c", "d"] 順にする
+  // 2vs2だったら [["a","b"]["c","d"]].transpose が効くが 2vs2 とは限らない
+  users_allocate_from_teams(teams) {
+    this.users_allocate(teams.flat())
+  }
+
   strategy_create(...args) {
     return new O1Strategy(this.users.length, ...args)
   }

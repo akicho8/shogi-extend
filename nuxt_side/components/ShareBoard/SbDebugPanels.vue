@@ -1,5 +1,9 @@
 <template lang="pug">
 .columns.is-multiline.SbDebugPanels
+  .column.is-12
+    SbFesPanel
+  .column.is-12
+    SbOrderPanel
   .column.is-2
     .panel
       .panel-heading
@@ -14,8 +18,6 @@
         b-button(size="is-small" @click="base.medal_add_to_user(base.user_name, -1)") 俺-1
       .panel-block
         pre {{base.medal_counts_hash}}
-  .column.is-12
-    SbOrderPanel
   .column.is-6(v-if="base.clock_box")
     ClockBoxInspector(:clock_box="base.clock_box")
   .column.is-2

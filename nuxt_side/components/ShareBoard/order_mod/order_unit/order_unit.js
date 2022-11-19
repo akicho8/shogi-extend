@@ -7,6 +7,7 @@ import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
 import { Item } from "./item.js"
 import { Gs2 } from "@/components/models/gs2.js"
+import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 export class OrderUnit {
@@ -43,6 +44,7 @@ export class OrderUnit {
   get swap_enable_p()                   { return this.order_state.swap_enable_p                         }
   get error_messages()                  { return this.order_state.error_messages                        }
   users_allocate(users)                 { this.order_state.users_allocate(users)                        }
+  users_allocate_from_teams(teams)      { this.order_state.users_allocate_from_teams(teams)             }
   shuffle_core()                        { this.order_state.shuffle_core()                               }
   swap_run()                            { this.order_state.swap_run()                                   }
   get state_name()                      { return this.order_state.state_name                            }
@@ -57,6 +59,11 @@ export class OrderUnit {
   user_names_allocate(user_names) {
     const users = user_names.map(user_name => Item.create(user_name))
     this.users_allocate(users)
+  }
+
+  user_names_allocate_from_teams(teams) {
+    teams = teams.map(e => e.map(user_name => Item.create(user_name)))
+    this.users_allocate_from_teams(teams)
   }
 
   clear() {
@@ -125,23 +132,35 @@ export class OrderUnit {
   }
 
   // 順番設定モーダル内で使うデータの準備
-  //  1. 空なら全員対局者にする
-  //  2. 空でなければ対局者以外を観戦者にする
   auto_users_set(user_names, options = {}) {
     options = {
       with_shuffle: true,
       ...options,
     }
-    const users = user_names.map(e => Item.create(e))
     if (this.empty_p) {
-      this.users_allocate(users)
+      // 空なら全員対局者にする
+      this.user_names_allocate(user_names)
       if (options.with_shuffle) {
         this.shuffle_core()       // モーダルを最初に開いたときシャッフル済みにしておく(重要)
       }
     } else {
-      const hash = this.name_to_object_hash
-      this.watch_users = users.filter(e => !hash[e.user_name]) // 対局者を除外した残りを観戦者にする
+      // 空でなければ対局者以外を観戦者にする
+      this.no_entry_user_only_watch_users_set(user_names)
     }
+  }
+
+  auto_users_set2(user_names, vote_selected_hash) {
+    const vote_only_user_names = user_names.filter(e => vote_selected_hash[e] != null) // ["a","b","c","d"]        投票者に絞る
+    const group = _.groupBy(vote_only_user_names, e => vote_selected_hash[e])          // {0:["a",b"],1:["c","d"]} 0と1のグループに分ける
+    const teams = Location.values.map(e => group[e.code] ?? [])                        // [["a", "b"], ["c", "d"]]
+    this.user_names_allocate_from_teams(teams)                                         // 登録
+    this.no_entry_user_only_watch_users_set(user_names)                                // 登録してない人は全員観戦者とする
+  }
+
+  // user_names のなかでまだ登録されていない人たちをまとめて観戦者とする
+  no_entry_user_only_watch_users_set(user_names) {
+    const users = user_names.map(e => Item.create(e))
+    this.watch_users = users.filter(e => !this.name_to_object_hash[e.user_name])
   }
 
   state_toggle() {

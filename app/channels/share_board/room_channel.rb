@@ -160,6 +160,21 @@ module ShareBoard
       broadcast(:user_kill_broadcasted, data)
     end
 
+    def fes_odai_share(data)
+      track(data, "お題配送")
+      broadcast(:fes_odai_share_broadcasted, data)
+    end
+
+    def fes_odai_delete(data)
+      track(data, "お題削除")
+      broadcast(:fes_odai_delete_broadcasted, data)
+    end
+
+    def fes_vote_selected_share(data)
+      track(data, "投票選択")
+      broadcast(:fes_vote_selected_share_broadcasted, data)
+    end
+
     private
 
     def room_code
