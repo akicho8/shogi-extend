@@ -980,7 +980,7 @@ module Swars
         s = scope
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
-        s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
+        s = s.where(Battle.arel_table[:turn_max].gteq(14))
         s = s.tagged_with(tag_name, on: :note_tags)
         s.count
       else

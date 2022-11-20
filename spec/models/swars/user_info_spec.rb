@@ -77,8 +77,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(ibisya_csa_seq_generate(49)) == nil }
-        assert { case1(ibisya_csa_seq_generate(50)) == { win: 1, lose: 0 } }
+        assert { case1(ibisya_csa_seq_generate(13)) == nil }
+        assert { case1(ibisya_csa_seq_generate(14)) == { win: 1, lose: 0 } }
       end
     end
 
@@ -97,8 +97,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(furibisya_csa_seq_generate(49)) == nil }
-        assert { case1(furibisya_csa_seq_generate(50)) == { win: 1, lose: 0 } }
+        assert { case1(furibisya_csa_seq_generate(13)) == nil }
+        assert { case1(furibisya_csa_seq_generate(14)) == { win: 1, lose: 0 } }
       end
     end
 
