@@ -2,11 +2,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
-    before do
-      @IBISHA = "+2726FU"
-      @FURIBI = "+2878HI"
-    end
-
     describe "to_hash" do
       before do
         @record = Battle.create!
@@ -61,9 +56,11 @@ module Swars
       end
 
       it "works" do
-        assert { case1([[@IBISHA, 1]]) == [1, 0] }
-        assert { case1([[@FURIBI, 1]]) == [1, 1] }
-        assert { case1([[@FURIBI, 1]]) == [1, 2] }
+        assert { case1([[black_ibisha,    1]]) == [1, 0] }
+        assert { case1([[black_furibisya, 1]]) == [1, 1] }
+        assert { case1([[black_furibisya, 1]]) == [1, 2] }
+      end
+    end
       end
     end
 
