@@ -323,6 +323,8 @@ module Swars
         ################################################################################
 
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
+        { name: "居飛車",                          type1: "win_lose_circle", type2: nil,                      body: ibisya_win_lose_params,     win_lose_click_method_name: "ibisya_win_lose_click_handle", },
+        { name: "振り飛車",                        type1: "win_lose_circle", type2: nil,                      body: furibisya_win_lose_params,  win_lose_click_method_name: "furibisya_win_lose_click_handle", },
 
         ################################################################################
 
@@ -443,6 +445,26 @@ module Swars
       end
       if records.any? { |e| e[:value] > 0 }
         records
+      end
+    end
+
+    def ibisya_win_lose_params
+      win  = ibisya_win_count
+      lose = ibisya_lose_count
+      if (win + lose).nonzero?
+        {
+          judge_counts: { win: win, lose: lose },
+        }
+      end
+    end
+
+    def furibisya_win_lose_params
+      win  = furibisya_win_count
+      lose = furibisya_lose_count
+      if (win + lose).nonzero?
+        {
+          judge_counts: { win: win, lose: lose },
+        }
       end
     end
 
@@ -936,6 +958,33 @@ module Swars
         :info
       when HolidayJp.holiday?(t)
         :danger
+      end
+    end
+
+    ################################################################################ [居飛車, 振り飛車] * 勝敗
+
+    def ibisya_win_count
+      @ibisya_win_count ||= on_note_tags_count(win_scope, "居飛車")
+    end
+    def ibisya_lose_count
+      @ibisya_lose_count ||= on_note_tags_count(lose_scope, "居飛車")
+    end
+    def furibisya_win_count
+      @furibisya_win_count ||= on_note_tags_count(win_scope, "振り飛車")
+    end
+    def furibisya_lose_count
+      @furibisya_lose_count ||= on_note_tags_count(lose_scope, "振り飛車")
+    end
+    def on_note_tags_count(scope, tag_name)
+      if real_count.positive?
+        s = scope
+        s = s.joins(:battle => :final)
+        s = s.where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
+        s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
+        s = s.tagged_with(tag_name, on: :note_tags)
+        s.count
+      else
+        0
       end
     end
   end

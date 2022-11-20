@@ -1,6 +1,14 @@
 module SwarsMedalSupport
   extend self
 
+  def black_ibisha
+    "+2726FU"
+  end
+
+  def black_furibisya
+    "+2878HI"
+  end
+
   # 残り秒数
   def life
     600
@@ -65,6 +73,16 @@ module SwarsMedalSupport
   # 先手は居玉
   def csa_seq_generate6(n)
     [["+2858HI", life], ["-5152OU", life], ["+5828HI", life], ["-5251OU", life]].cycle.take(n)
+  end
+
+  # 先手居飛車でN手の棋譜を生成
+  def ibisya_csa_seq_generate(n)
+    [ [black_ibisha, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
+  end
+
+  # 先手振り飛車でN手の棋譜を生成
+  def furibisya_csa_seq_generate(n)
+    [ [black_furibisya, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
   end
 end
 

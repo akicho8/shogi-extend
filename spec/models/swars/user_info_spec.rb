@@ -61,6 +61,44 @@ module Swars
         assert { case1([[black_furibisya, 1]]) == [1, 2] }
       end
     end
+
+    describe "居飛車 ibisya_win_lose_params" do
+      before do
+        @black = User.create!
+      end
+
+      def case1(csa_seq)
+        Battle.create!(csa_seq: csa_seq) do |e|
+          e.memberships.build(user: @black)
+        end
+        if params = @black.user_info.ibisya_win_lose_params
+          params[:judge_counts]
+        end
+      end
+
+      it "works" do
+        assert { case1(ibisya_csa_seq_generate(49)) == nil }
+        assert { case1(ibisya_csa_seq_generate(50)) == { win: 1, lose: 0 } }
+      end
+    end
+
+    describe "振り飛車 furibisya_win_lose_params" do
+      before do
+        @black = User.create!
+      end
+
+      def case1(csa_seq)
+        Battle.create!(csa_seq: csa_seq) do |e|
+          e.memberships.build(user: @black)
+        end
+        if params = @black.user_info.furibisya_win_lose_params
+          params[:judge_counts]
+        end
+      end
+
+      it "works" do
+        assert { case1(furibisya_csa_seq_generate(49)) == nil }
+        assert { case1(furibisya_csa_seq_generate(50)) == { win: 1, lose: 0 } }
       end
     end
 
