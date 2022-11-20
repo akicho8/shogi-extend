@@ -37,4 +37,21 @@ describe("OrderUnit", () => {
     const order_unit = OrderUnit.create(["a", "b", "c"])
     expect(order_unit.hash).toEqual("cc4ec9d81da1bcfb4795b2617ef14d78")
   })
+  describe("auto_users_set_with_voted_hash", () => {
+    test("両チームに分かれていてcさんは投票していないので観戦者になる", () => {
+      const order_unit = OrderUnit.create()
+      order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {a:0, b:1})
+      expect(order_unit.inspect).toEqual("[黒開始:ab] [白開始:ba] [観:c] [整:true] [替:o] (O2State)")
+    })
+    test("黒に偏っている場合", () => {
+      const order_unit = OrderUnit.create()
+      order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {a:0, b:0})
+      expect(order_unit.inspect).toEqual("[黒開始:a?b?] [白開始:?a?b] [観:c] [整:false] [替:o] (O2State)")
+    })
+    test("誰も投票していない場合", () => {
+      const order_unit = OrderUnit.create()
+      order_unit.auto_users_set_with_voted_hash(["a", "b", "c"], {})
+      expect(order_unit.inspect).toEqual("[黒開始:] [白開始:] [観:a,b,c] [整:false] [替:o] (O2State)")
+    })
+  })
 })

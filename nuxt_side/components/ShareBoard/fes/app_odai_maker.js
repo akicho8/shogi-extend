@@ -4,26 +4,24 @@ import { Odai } from "./odai.js"
 export const app_odai_maker = {
   data() {
     return {
-      odai_src: Odai.create(),
-    }
-  },
-  mounted() {
-    if (this.development_p) {
-      this.odai_src_set()
+      master_odai: Odai.create(),
     }
   },
   methods: {
     odai_src_clear() {
-      this.odai_src = Odai.create()
+      this.master_odai = Odai.create()
     },
-    odai_src_set() {
-      this.odai_src = Odai.from_json({subject: "どっちがお好き？", items: ["マヨネーズ", "ケチャップ"]})
+    odai_src_sample() {
+      this.master_odai = Odai.sample
     },
     odai_maker_handle() {
+      this.master_odai = this.master_odai.dup() // id を更新する
       this.modal_card_open({component: OdaiMakerModal})
     },
   },
   computed: {
-    Odai() { return Odai },
+    Odai()             { return Odai                                                }, // SbFesPanel.vue 用
+    // odai_new_p()       { return !this.odai_persisted_p                              }, // 新しいお題か？
+    // odai_persisted_p() { return this.master_odai.same_content_p(this.received_odai) }, // 同じ内容か？(再送信か？)
   },
 }

@@ -1,17 +1,23 @@
 <template lang="pug">
 .modal-card
   .modal-card-head
-    .modal-card-title お題メーカー
+    .modal-card-title
+      | お題メーカー
+      span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
+        | (ID:{{TheSb.master_odai.unique_code}})
   .modal-card-body
     b-field(label="お題" custom-class="is-small")
-      b-input(v-model="TheSb.odai_src.subject" placeholder="どっちがお好き？" required)
+      b-input(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？")
     b-field(label="選択肢1" custom-class="is-small")
-      b-input(v-model="TheSb.odai_src.items[0]" placeholder="マヨネーズ" required)
+      b-input(v-model="TheSb.master_odai.items[0]" placeholder="マヨネーズ")
     b-field(label="選択肢2" custom-class="is-small")
-      b-input(v-model="TheSb.odai_src.items[1]" placeholder="ケチャップ" required)
+      b-input(v-model="TheSb.master_odai.items[1]" placeholder="ケチャップ")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
-    b-button(@click="submit_handle" type="is-primary") 送信する
+    b-button(@click="submit_handle" type="is-primary")
+      | 送信する
+      //- template(v-if="TheSb.odai_new_p") 送信する
+      //- template(v-if="TheSb.odai_persisted_p") 再送信する
 </template>
 
 <script>
@@ -19,8 +25,10 @@ import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
+const VALIDATION_ON = false
+
 export default {
-  name: "ClientVoteModal",
+  name: "OdaiMakerModal",
   mixins: [support_child],
   inject: ["TheSb"],
   methods: {
@@ -30,11 +38,13 @@ export default {
     },
     submit_handle() {
       this.$sound.play_click()
-      if (this.TheSb.odai_src.invalid_p) {
-        this.toast_warn("ぜんぶ入力してください")
-        return
+      if (VALIDATION_ON) {
+        if (this.TheSb.master_odai.invalid_p) {
+          this.toast_warn("ぜんぶ入力してください")
+          return
+        }
       }
-      this.TheSb.odai_share(this.TheSb.odai_src)
+      this.TheSb.odai_share(this.TheSb.master_odai)
       this.$emit("close")
     },
   },
@@ -46,7 +56,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.ClientVoteModal
+.OdaiMakerModal
   +modal_width(30rem)
 
   .modal-card-body
@@ -57,5 +67,5 @@ export default {
       min-width: 6rem
 
 .STAGE-development
-  .ClientVoteModal
+  .OdaiMakerModal
 </style>

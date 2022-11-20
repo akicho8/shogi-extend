@@ -149,12 +149,19 @@ export class OrderUnit {
     }
   }
 
-  auto_users_set2(user_names, vote_selected_hash) {
-    const vote_only_user_names = user_names.filter(e => vote_selected_hash[e] != null) // ["a","b","c","d"]        投票者に絞る
-    const group = _.groupBy(vote_only_user_names, e => vote_selected_hash[e])          // {0:["a",b"],1:["c","d"]} 0と1のグループに分ける
-    const teams = Location.values.map(e => group[e.code] ?? [])                        // [["a", "b"], ["c", "d"]]
-    this.user_names_allocate_from_teams(teams)                                         // 登録
-    this.no_entry_user_only_watch_users_set(user_names)                                // 登録してない人は全員観戦者とする
+  // 投票結果を考慮してチーム分けを行う
+  // user_names: ["a", "b", "c"]
+  // hash: {a: 0, b: 1}
+  // となっているとき
+  // a → black
+  // b → white
+  // c → 観戦者とする
+  auto_users_set_with_voted_hash(user_names, hash) {
+    const vote_only_user_names = user_names.filter(e => hash[e] != null) // 投票者に絞って a b c d になる
+    const group = _.groupBy(vote_only_user_names, e => hash[e])          // {0:["a",b"],1:["c","d"]} 0と1のグループに分ける
+    const teams = Location.values.map(e => group[e.code] ?? [])          // [["a", "b"], ["c", "d"]]
+    this.user_names_allocate_from_teams(teams)                           // 登録
+    this.no_entry_user_only_watch_users_set(user_names)                  // 登録してない人は全員観戦者とする
   }
 
   // user_names のなかでまだ登録されていない人たちをまとめて観戦者とする
