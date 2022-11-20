@@ -160,12 +160,12 @@ module ShareBoard
       broadcast(:user_kill_broadcasted, data)
     end
 
-    def fes_odai_share(data)
+    def odai_share(data)
       track(data, "お題配送")
       broadcast(:fes_odai_share_broadcasted, data)
     end
 
-    def fes_odai_delete(data)
+    def odai_delete(data)
       track(data, "お題削除")
       broadcast(:fes_odai_delete_broadcasted, data)
     end

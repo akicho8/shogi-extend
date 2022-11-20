@@ -7,9 +7,9 @@
       a.panel-block(href="/share-board?room_code=dev_room&user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_state=to_o2_state&handle_name_validate=false&autoexec=client_vote_sample") 確認用の環境に変更する
       a.panel-block(@click="TheSb.odai_src_clear()") お題クリア
       a.panel-block(@click="TheSb.odai_src_set()") お題の初期値を入力
-      a.panel-block(@click="TheSb.odai_modal_handle()") お題を作成する
-      a.panel-block(@click="TheSb.fes_odai_share(Odai.from_json({subject: '(subject)', items: ['foo', 'bar']}))") 主催者が投票用の項目を配布する
-      a.panel-block(@click="TheSb.fes_odai_delete()") 配送したお題の削除
+      a.panel-block(@click="TheSb.odai_maker_handle()") お題メーカー起動
+      a.panel-block(@click="TheSb.odai_share(TheSb.Odai.from_json({subject: 's', items: ['a', 'b']}))") 主催者が投票用の項目を配布する
+      a.panel-block(@click="TheSb.odai_delete()") 配送したお題の削除
       a.panel-block(@click="TheSb.fes_confirm_test()") クライアントは投票画面を表示して選択する
       a.panel-block(@click="TheSb.client_vote_reset()") 仮データ消去
       a.panel-block(@click="TheSb.client_vote_sample()") 仮データ投入

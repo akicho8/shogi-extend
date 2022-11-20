@@ -19,7 +19,7 @@ export const app_odai_maker = {
     odai_src_set() {
       this.odai_src = Odai.from_json({subject: "どっちがお好き？", items: ["マヨネーズ", "ケチャップ"]})
     },
-    odai_modal_handle() {
+    odai_maker_handle() {
       this.modal_card_open({component: OdaiMakerModal})
     },
   },

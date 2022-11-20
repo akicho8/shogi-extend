@@ -56,6 +56,7 @@ export const app_give_up = {
       if (this.received_from_self(params)) {
         this.cc_stop_share_handle()   // 時計 STOP
         this.order_switch_off_share() // 順番 OFF
+        this.odai_delete()            // 配送したお題の削除
       }
 
       // 各自がポイント+1するのではなく投了ボタンを押した本人が勝った人全員のポイントを+1してbcする、としていたが

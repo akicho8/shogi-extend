@@ -34,7 +34,7 @@ export default {
         this.toast_warn("ぜんぶ入力してください")
         return
       }
-      this.TheSb.fes_odai_share(this.TheSb.odai_src)
+      this.TheSb.odai_share(this.TheSb.odai_src)
       this.$emit("close")
     },
   },

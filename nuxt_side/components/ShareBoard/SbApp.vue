@@ -130,7 +130,7 @@ import { app_give_up   } from "./give_up/app_give_up.js"
 import { app_honpu     } from "./give_up/app_honpu.js"
 import { app_kifu_mail } from "./give_up/app_kifu_mail.js"
 
-import { app_odai_maker      } from "./fes/app_odai_maker.js"
+import { app_odai_maker  } from "./fes/app_odai_maker.js"
 import { app_client_vote } from "./fes/app_client_vote.js"
 
 import { app_medal      } from "./medal/app_medal.js"

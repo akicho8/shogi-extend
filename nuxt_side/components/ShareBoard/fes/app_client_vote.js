@@ -39,11 +39,11 @@ export const app_client_vote = {
     },
 
     // お題を配送する。テストしやすいように odai は引数で受け取ること
-    fes_odai_share(odai) {
+    odai_share(odai) {
       const params = {
         odai: odai, // odai.toJSON() が自動的に呼ばれる
       }
-      this.ac_room_perform("fes_odai_share", params) // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("odai_share", params) // --> app/channels/share_board/room_channel.rb
     },
     fes_odai_share_broadcasted(params) {
       const new_odai = Object.freeze(Odai.from_json(params.odai))
@@ -56,8 +56,8 @@ export const app_client_vote = {
     },
 
     // 配送したお題の削除
-    fes_odai_delete() {
-      this.ac_room_perform("fes_odai_delete") // --> app/channels/share_board/room_channel.rb
+    odai_delete() {
+      this.ac_room_perform("odai_delete") // --> app/channels/share_board/room_channel.rb
     },
     fes_odai_delete_broadcasted(params) {
       this.client_vote_reset()

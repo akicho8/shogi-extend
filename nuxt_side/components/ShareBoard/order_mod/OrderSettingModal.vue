@@ -33,8 +33,9 @@
       hr
 
       .buttons.is-centered.mb-0.mt-5
-        b-button.mb-0(size="is-small" type="is-primary is-light" @click="odai_modal_handle") お題作成
+        b-button.mb-0(size="is-small" type="is-primary is-light" @click="odai_maker_handle") お題作成
         b-button.mb-0(size="is-small" type="is-primary is-light" @click="TheSb.voted_hash_to_order_apply" v-if="TheSb.voted_hash_exist_p") 投票結果を順序に反映する
+        b-button.mb-0(size="is-small" type="is-primary is-light" @click="TheSb.odai_delete" v-if="TheSb.odai_fixed.valid_p") 削除
 
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
@@ -106,10 +107,10 @@ export default {
       this.TheSb.tn_notify()
     },
 
-    odai_modal_handle() {
+    odai_maker_handle() {
       this.$sound.play_click()
       this.direct_close_handle()
-      this.TheSb.odai_modal_handle()
+      this.TheSb.odai_maker_handle()
     },
 
     // シャッフル
