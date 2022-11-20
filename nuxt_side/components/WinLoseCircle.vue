@@ -107,7 +107,11 @@ export default {
   },
 
   computed: {
-    win_lose_clickable_p() { return !!this.click_func },
+    win()           { return this.info.judge_counts.win  },
+    lose()          { return this.info.judge_counts.lose },
+    win_lose_pair() { return [this.win, this.lose]       },
+    total()         { return this.win + this.lose        },
+    rate()          { return this.win / this.total       },
 
     rate_human() {
       if (this.total === 0) {
@@ -116,25 +120,7 @@ export default {
       return Math.floor(this.rate * 100)
     },
 
-    rate() {
-      return this.win / this.total
-    },
-
-    win_lose_pair() {
-      return [this.win, this.lose]
-    },
-
-    total() {
-      return this.win + this.lose
-    },
-
-    win() {
-      return this.info.judge_counts["win"]
-    },
-
-    lose() {
-      return this.info.judge_counts["lose"]
-    },
+    win_lose_clickable_p() { return !!this.click_func           },
   },
 }
 </script>
