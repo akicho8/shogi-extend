@@ -2,11 +2,6 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
-    before do
-      @IBISHA = "+2726FU"
-      @FURIBI = "+2878HI"
-    end
-
     describe "to_hash" do
       before do
         @record = Battle.create!
@@ -61,9 +56,49 @@ module Swars
       end
 
       it "works" do
-        assert { case1([[@IBISHA, 1]]) == [1, 0] }
-        assert { case1([[@FURIBI, 1]]) == [1, 1] }
-        assert { case1([[@FURIBI, 1]]) == [1, 2] }
+        assert { case1([[black_ibisha,    1]]) == [1, 0] }
+        assert { case1([[black_furibisya, 1]]) == [1, 1] }
+        assert { case1([[black_furibisya, 1]]) == [1, 2] }
+      end
+    end
+
+    describe "居飛車 ibisya_win_lose_params" do
+      before do
+        @black = User.create!
+      end
+
+      def case1(csa_seq)
+        Battle.create!(csa_seq: csa_seq) do |e|
+          e.memberships.build(user: @black)
+        end
+        if params = @black.user_info.ibisya_win_lose_params
+          params[:judge_counts]
+        end
+      end
+
+      it "works" do
+        assert { case1(ibisya_csa_seq_generate(13)) == nil }
+        assert { case1(ibisya_csa_seq_generate(14)) == { win: 1, lose: 0 } }
+      end
+    end
+
+    describe "振り飛車 furibisya_win_lose_params" do
+      before do
+        @black = User.create!
+      end
+
+      def case1(csa_seq)
+        Battle.create!(csa_seq: csa_seq) do |e|
+          e.memberships.build(user: @black)
+        end
+        if params = @black.user_info.furibisya_win_lose_params
+          params[:judge_counts]
+        end
+      end
+
+      it "works" do
+        assert { case1(furibisya_csa_seq_generate(13)) == nil }
+        assert { case1(furibisya_csa_seq_generate(14)) == { win: 1, lose: 0 } }
       end
     end
 

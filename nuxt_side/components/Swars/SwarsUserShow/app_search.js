@@ -22,6 +22,16 @@ export const app_search = {
       this.$router.push(this.search_path({'勝敗': judge_key}))
     },
 
+    ibisya_win_lose_click_handle(judge_key) {
+      this.$sound.play_click()
+      this.$router.push(this.search_path({'勝敗': judge_key, tag: "居飛車"}))
+    },
+
+    furibisya_win_lose_click_handle(judge_key) {
+      this.$sound.play_click()
+      this.$router.push(this.search_path({'勝敗': judge_key, tag: "振り飛車"}))
+    },
+
     name_click_handle() {
       this.$sound.play_click()
       this.search_by_user_key_handle()
