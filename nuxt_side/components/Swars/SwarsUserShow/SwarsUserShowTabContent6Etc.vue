@@ -9,7 +9,7 @@
         .columns.is-gapless.is-centered
           .column.is-paddingless.has-text-weight-bold.is-size-1.is-flex.is-justify-content-center
             template(v-if="row.type1 === 'win_lose_circle'")
-              WinLoseCircle(:info="row.body" :click_func="base[row.win_lose_click_method_name]" v-if="row.body")
+              WinLoseCircle(:info="row.body" :click_func="base[row.win_lose_click_method_name]" size="is-small" :narrowed="true" v-if="row.body")
             template(v-if="row.type1 === 'bar'")
               FriendlyBar(:info="row")
             template(v-if="row.type1 === 'pie'")
