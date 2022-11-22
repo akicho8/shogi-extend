@@ -7,11 +7,11 @@
         | (ID:{{TheSb.master_odai.unique_code}})
   .modal-card-body
     b-field(label="お題" custom-class="is-small")
-      b-input(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？")
+      b-input.odai_subject(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？")
     b-field(label="選択肢1" custom-class="is-small")
-      b-input(v-model="TheSb.master_odai.items[0]" placeholder="マヨネーズ")
+      b-input.odai_left(v-model="TheSb.master_odai.items[0]" placeholder="マヨネーズ")
     b-field(label="選択肢2" custom-class="is-small")
-      b-input(v-model="TheSb.master_odai.items[1]" placeholder="ケチャップ")
+      b-input.odai_right(v-model="TheSb.master_odai.items[1]" placeholder="ケチャップ")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary")

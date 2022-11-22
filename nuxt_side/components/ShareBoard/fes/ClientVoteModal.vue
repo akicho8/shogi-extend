@@ -2,17 +2,26 @@
 .modal-card
   .modal-card-head
     .modal-card-title.is-flex-shrink-1
-      | {{TheSb.received_odai.subject}}
-      span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.voted_result.already_vote_p(TheSb.user_name)")
-        | 投票済み
+      | どのチームに参加する？
+      template(v-if="TheSb.voted_result.already_vote_p(TheSb.user_name)")
+        span.mx-1.has-text-grey.has-text-weight-normal
+          | 投票済み
   .modal-card-body
-    .items
-      template(v-for="(e, i) in TheSb.received_odai.items")
-        .item.is_line_break_on.is-clickable(@click="select_handle(e, i)" :class="vote_select_item_class(i)" v-if="present_p(e)")
-          | {{e}}
+    template(v-if="present_p(TheSb.received_odai.subject)")
+      .subject.has-text-centered
+        | {{TheSb.received_odai.subject}}
+    template(v-if="present_p(TheSb.received_odai.items)")
+      .items
+        template(v-for="(e, i) in TheSb.received_odai.items")
+          .item.is_line_break_on.is-clickable.is-unselectable(
+            @click="select_handle(e, i)"
+            :class="vote_select_item_class(i)"
+            v-if="present_p(e)"
+            )
+            | {{e}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") やめとく
-    b-button(@click="submit_handle" type="is-primary") 投票する
+    b-button(@click="submit_handle" type="is-primary") このチームに参加する
 </template>
 
 <script>
@@ -26,9 +35,11 @@ export default {
   inject: ["TheSb"],
   methods: {
     select_handle(name, index) {
-      this.$sound.play_click()
-      this.talk(name)
-      this.TheSb.voted_latest_index = index
+      if (this.TheSb.voted_latest_index !== index) {
+        this.$sound.play_click()
+        this.talk(name)
+        this.TheSb.voted_latest_index = index
+      }
     },
     close_handle() {
       this.$sound.play_click()
@@ -37,7 +48,7 @@ export default {
     submit_handle() {
       this.$sound.play_click()
       if (this.TheSb.voted_latest_index == null) {
-        this.toast_warn("投票してから押してください")
+        this.toast_warn("選択してから投票してください")
         return
       }
       this.$emit("close")
@@ -51,8 +62,6 @@ export default {
       }
     },
   },
-  computed: {
-  },
 }
 </script>
 
@@ -64,6 +73,10 @@ export default {
 
   .modal-card-body
     padding: 20px
+    display: flex
+    justify-content: center
+    flex-direction: column
+    gap: 0.5rem
 
   .modal-card-foot
     .button
@@ -85,7 +98,7 @@ export default {
       &.is_inactive
         border: 3px solid transparent
       &.is_active
-        border: 3px dashed $primary
+        border: 3px solid $primary
 
 .STAGE-development
   .ClientVoteModal

@@ -43,6 +43,7 @@ export class VotedResult {
     return this.hash_value
   }
 
+  // ハッシュを返す (あんまり使うな)
   get to_h() {
     return this.hash_value
   }
