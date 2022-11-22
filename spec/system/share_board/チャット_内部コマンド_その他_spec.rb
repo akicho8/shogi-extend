@@ -51,7 +51,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/header" do
     chat_message_send("/header")
-    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a, c\n☖側: b, d")
+    assert_message_received_o("棋戦: 共有将棋盤\n☗側: a,c\n☖側: b,d")
   end
 
   it "/対局中" do
