@@ -88,7 +88,7 @@ export const app_player_names = {
       })
       return _.reduce(av, (a, list, key) => {
         // 既存パラメータがURLにあっても上書きしたいのですべてのキーを含める
-        a[key] = _.sortBy(list, "index").map(e => e.name).join(", ")
+        a[key] = _.sortBy(list, "index").map(e => e.name).join(",")
         return a
       }, {})
     },
