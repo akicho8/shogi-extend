@@ -26,6 +26,13 @@ export const app_order_new = {
 
       if (this.if_room_is_empty()) { return }
       this.sidebar_p = false
+
+      // this.cc_play_confirm({
+      //   onConfirm: () => {
+      //     this.play_core_handle()
+      //   },
+      // })
+
       this.$sound.play_click()
       this.os_modal_init()
       this.__assert__(this.os_modal_instance == null, "this.os_modal_instance == null")
@@ -41,6 +48,31 @@ export const app_order_new = {
         },
       })
     },
+
+    // cc_play_confirm(params = {}) {
+    //   this.$sound.play_click()
+    //   this.talk("ちょっと待って。先に順番設定をしてください")
+    //   this.dialog_confirm({
+    //     title: "ちょっと待って",
+    //     type: "is-warning",
+    //     iconSize: "is-small",
+    //     hasIcon: true,
+    //     message: `
+    //       <div class="content">
+    //         <p>先に<b>順番設定</b>をしてください</p>
+    //         <p class="mb-0 is-size-7">設定すると有効になるもの:</p>
+    //         <ol class="mt-2">
+    //           <li>手番を知らせる</li>
+    //           <li>手番の人だけ指せる</li>
+    //           <li>指し手の伝達を保証する ← <span class="has-text-danger">重要</span></li>
+    //         </ol>
+    //       </div>
+    //     `,
+    //     confirmText: "無視して開始する",
+    //     focusOn: "cancel",
+    //     ...params,
+    //   })
+    // },
 
     // 順番設定モーダル内で使うデータの準備
     os_modal_init() {

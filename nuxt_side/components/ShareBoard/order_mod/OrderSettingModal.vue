@@ -15,7 +15,7 @@
   .modal-card-body(@click="!TheSb.order_enable_p && main_switch_handle(true)")
     .has-text-centered.has-text-grey.my-6(v-if="!TheSb.order_enable_p")
       | 右上のスイッチで有効にしよう
-    template(v-if="TheSb.order_enable_p")
+    template(v-if="TheSb.order_enable_p || development_p")
       //- pre {{JSON.stringify(TheSb.new_v.os_change.to_h)}}
       .TeamsContainer
         template(v-if="TheSb.new_v.order_unit.order_state.state_name === 'O1State'")
@@ -29,6 +29,19 @@
         b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
         b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small") 振り駒
         b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small") 先後入替
+
+      hr
+
+      .has-text-centered.is-size-7
+        | 投票でチーム分けするとき
+      .buttons.is-centered.mb-0.mt-2
+        b-button.mb-0(size="is-small" @click="odai_maker_handle")
+          | お題ﾒｰｶｰ
+        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="TheSb.voted_result.count > 0")
+          | 順番に反映する({{TheSb.voted_result.count}}/{{TheSb.room_user_names.length}})
+        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="TheSb.received_odai.valid_p && TheSb.debug_mode_p")
+          | 削除
+
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
@@ -172,6 +185,28 @@ export default {
       this.$sound.play_click()
       this.TheSb.new_v.order_unit.state_toggle()
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    odai_maker_handle() {
+      this.$sound.play_click()
+      this.direct_close_handle()
+      this.TheSb.odai_maker_handle()
+      this.TheSb.shared_al_add({label: "お題作成", message: "お題を作成しています"})
+    },
+
+    voted_result_to_order_apply_handle() {
+      this.TheSb.voted_result_to_order_apply()
+      this.TheSb.shared_al_add({label: "結果反映", message: "投票の結果でチーム分けしました"})
+    },
+
+    odai_delete_handle() {
+      this.$sound.play_click()
+      this.TheSb.odai_delete()
+      this.TheSb.shared_al_add({label: "お題削除", message: "お題を削除しました"})
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
     submit_button_color() {

@@ -53,13 +53,19 @@ module SharedMethods
     assert { result == names }
   end
 
-  def __assert_order_team_one(klass, names)
-    result = all(".#{klass} li").collect(&:text).join
-    assert { result == names }
+  # 順番設定画面内の黒白チームの人たち
+  def assert_order_team_one(black, white)
+    __assert_order_dnd_team_one "dnd_black", black
+    __assert_order_dnd_team_one "dnd_white", white
   end
 
-  def assert_order_team_one(black, white)
-    __assert_order_team_one "dnd_black", black
-    __assert_order_team_one "dnd_white", white
+  # 順番設定画面内の観戦者の人たち
+  def assert_order_dnd_watcher(users)
+    __assert_order_dnd_team_one "dnd_watch_users", users
+  end
+
+  def __assert_order_dnd_team_one(klass, names)
+    result = all(".#{klass} li").collect(&:text).join
+    assert { result == names }
   end
 end
