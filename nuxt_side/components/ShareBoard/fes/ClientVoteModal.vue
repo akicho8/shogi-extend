@@ -34,6 +34,7 @@ export default {
   mixins: [support_child],
   inject: ["TheSb"],
   methods: {
+    // 選択
     select_handle(name, index) {
       if (this.TheSb.voted_latest_index !== index) {
         this.$sound.play_click()
@@ -41,10 +42,12 @@ export default {
         this.TheSb.voted_latest_index = index
       }
     },
+    // やめとく
     close_handle() {
       this.$sound.play_click()
       this.$emit("close")
     },
+    // このチームに参加する
     submit_handle() {
       this.$sound.play_click()
       if (this.TheSb.voted_latest_index == null) {
@@ -54,6 +57,7 @@ export default {
       this.$emit("close")
       this.TheSb.vote_select_share()
     },
+    // 選択した方の css クラス
     vote_select_item_class(i) {
       if (i === this.TheSb.voted_latest_index) {
         return "is_active"
