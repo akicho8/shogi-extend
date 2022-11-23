@@ -42,7 +42,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       hamburger_click
       os_modal_handle
-      find(:button, text: "順番に反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
+      find(:button, text: "結果を反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
       assert_order_team_one "", "ab" # 順番に反映した。a も b も右側である "(team_white)" を選択したため偏っている
       assert_order_dnd_watcher "c"   # c は投票しなかったので観戦者になっている
     end

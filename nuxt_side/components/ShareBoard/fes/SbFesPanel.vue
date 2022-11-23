@@ -11,7 +11,7 @@
       a.panel-block(@click="TheSb.odai_share(TheSb.Odai.create({subject: 's', items: ['a', 'b']}))") お題配布
       a.panel-block(@click="TheSb.odai_delete()") お題の削除
       a.panel-block(@click="TheSb.os_modal_handle()") 順番設定
-      a.panel-block(@click="TheSb.voted_result_to_order_apply()") 順番に反映する
+      a.panel-block(@click="TheSb.voted_result_to_order_apply()") 結果を反映する
   .column.is-3
     .panel
       .panel-heading
