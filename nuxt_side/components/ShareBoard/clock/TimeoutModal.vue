@@ -12,7 +12,9 @@
       p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
     template(v-else)
       template(v-if="clock.current.time_recovery_mode_p")
-        p 時計は止まっていないので次の手を指せば続行できます
+        p 緊張感を持って時間内に指しましょう
+        p 本来はここで終局ですが対戦相手が許してくれた場合にのみ次の手を指して対局を続行できます
+        p 続行しない場合は投了してください
       template(v-else)
         p 続行できますが<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
         p もし続行する場合は時計を再設定してください
