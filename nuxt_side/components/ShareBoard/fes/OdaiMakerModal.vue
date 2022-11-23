@@ -7,7 +7,7 @@
         | (ID:{{TheSb.master_odai.unique_code}})
   .modal-card-body
     b-field(label="お題" custom-class="is-small")
-      b-input.odai_subject(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？")
+      b-input.odai_subject(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？" ref="subject_input_tag")
     b-field(label="選択肢1" custom-class="is-small")
       b-input.odai_left(v-model="TheSb.master_odai.items[0]" placeholder="マヨネーズ")
     b-field(label="選択肢2" custom-class="is-small")
@@ -31,6 +31,9 @@ export default {
   name: "OdaiMakerModal",
   mixins: [support_child],
   inject: ["TheSb"],
+  mounted() {
+    this.input_focus()
+  },
   methods: {
     close_handle() {
       this.$sound.play_click()
@@ -47,8 +50,12 @@ export default {
       this.TheSb.odai_share(this.TheSb.master_odai)
       this.$emit("close")
     },
-  },
-  computed: {
+    // お題名が空のときかつデスクトップならフォーカスする
+    input_focus() {
+      if (this.blank_p(this.TheSb.master_odai.subject)) {
+        this.desktop_focus_to(this.$refs.subject_input_tag)
+      }
+    },
   },
 }
 </script>
