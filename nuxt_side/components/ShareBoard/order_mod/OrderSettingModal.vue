@@ -196,6 +196,7 @@ export default {
     },
 
     voted_result_to_order_apply_handle() {
+      this.$sound.play_click()
       this.TheSb.voted_result_to_order_apply()
       this.TheSb.shared_al_add({label: "結果反映", message: "投票の結果でチーム分けしました"})
     },
