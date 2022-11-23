@@ -37,9 +37,9 @@
       .buttons.is-centered.mb-0.mt-2
         b-button.mb-0(size="is-small" @click="odai_maker_handle")
           | お題ﾒｰｶｰ
-        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="TheSb.voted_result.count > 0")
+        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="TheSb.odai_received_p")
           | 結果を反映する({{TheSb.voted_result.count}}/{{TheSb.room_user_names.length}})
-        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="TheSb.received_odai.valid_p && TheSb.debug_mode_p")
+        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="TheSb.odai_received_p && TheSb.debug_mode_p")
           | 削除
 
       hr

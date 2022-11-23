@@ -18,6 +18,7 @@ import { Gs2 } from "@/components/models/gs2.js"
 export const app_client_vote = {
   data() {
     return {
+      odai_received_p: false,              // お題情報を受信したか？
       received_odai: Odai.create(),       // 受信したお題情報
       voted_result: VotedResult.create(), // みんなの投票結果 (新しい received_odai を受けとるとリセットする)
       voted_latest_index: null,           // 自分が最後に選択したもの (投票したとは限らない)
@@ -26,6 +27,7 @@ export const app_client_vote = {
   methods: {
     // 新しいお題を受け取ったときに実行する
     client_vote_reset() {
+      this.odai_received_p = false
       this.received_odai = Odai.create()
       this.voted_result = VotedResult.create()
       this.voted_latest_index = null
@@ -42,6 +44,7 @@ export const app_client_vote = {
         this.debug_alert("新しいお題が届いたので投票結果をリセットする")
         this.client_vote_reset()
       }
+      this.odai_received_p = true
       this.received_odai = new_odai
       this.client_vote_modal_handle()
     },
@@ -87,6 +90,7 @@ export const app_client_vote = {
     // private
 
     client_vote_sample() {
+      this.odai_received_p = true
       this.received_odai = Odai.create({
         subject: "１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０",
         items: [

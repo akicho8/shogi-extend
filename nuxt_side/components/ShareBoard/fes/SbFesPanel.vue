@@ -30,6 +30,7 @@
     .panel.assert_system_variable
       .panel-heading
         | [assert_system_variable]
+      .panel-block odai_received_p:{{TheSb.odai_received_p}}
       .panel-block received_odai.items:{{TheSb.received_odai.items}}
       .panel-block received_odai.subject:{{TheSb.received_odai.subject}}
       .panel-block received_odai.unique_code:{{TheSb.received_odai.unique_code}}
