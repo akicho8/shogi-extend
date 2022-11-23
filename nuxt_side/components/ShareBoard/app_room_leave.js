@@ -20,8 +20,12 @@ export const app_room_leave = {
     // 退室時のエフェクト
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
-      this.$sound.play("room_leave")
-      this.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
+      if (false) {
+        this.$sound.play("room_leave")
+        this.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
+      } else {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`)
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
