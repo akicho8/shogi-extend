@@ -8,16 +8,19 @@
         | 接続切れで
       | {{clock.current.location.flip.name}}の勝ち！
   .modal-card-body
-    template(v-if="timeout_info.key === 'audo_judgement'")
-      p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
+    template(v-if="TheSb.toryo_timing_info.toryo_auto_run")
+      p 終局です
     template(v-else)
-      template(v-if="clock.current.time_recovery_mode_p")
-        p 緊張感を持って時間内に指しましょう
-        p 本来はここで終局ですが対戦相手が許してくれた場合にのみ次の手を指して対局を続行できます
-        p 続行しない場合は投了してください
+      template(v-if="timeout_info.key === 'audo_judgement'")
+        p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
       template(v-else)
-        p 続行できますが<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
-        p もし続行する場合は時計を再設定してください
+        template(v-if="clock.current.time_recovery_mode_p")
+          p 緊張感を持って時間内に指しましょう
+          p 本来は終局ですが対戦相手が許可してくれた場合は次の手を指して対局を続行できます
+          p 続行しない場合は投了してください
+        template(v-else)
+          p 続行できますが<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため時間が回復しません
+          p もし続行する場合は時計を再設定してください
   .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>

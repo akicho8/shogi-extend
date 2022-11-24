@@ -10,6 +10,7 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
       { key: "yomiage_mode_key",     },
       { key: "legal_key", },
       { key: "foul_behavior_key",       },
+      // { key: "toryo_timing_key",       },
       { key: "debug_mode_key",       },
     ]
   }

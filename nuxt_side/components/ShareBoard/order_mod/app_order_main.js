@@ -93,6 +93,7 @@ export const app_order_main = {
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
       this.foul_behavior_key = params.foul_behavior_key
+      this.toryo_timing_key = params.toryo_timing_key
       this.tegoto            = params.tegoto
 
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
@@ -124,6 +125,7 @@ export const app_order_main = {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
         foul_behavior_key: this.foul_behavior_key,
+        toryo_timing_key: this.toryo_timing_key,
         tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }

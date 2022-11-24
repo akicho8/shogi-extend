@@ -47,6 +47,8 @@
         .column.is-12
           SimpleRadioButtons.foul_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="FoulBehaviorInfo" :my_value.sync="TheSb.new_v.foul_behavior_key")
         .column.is-12(v-if="TheSb.debug_mode_p")
+          SimpleRadioButtons.toryo_timing(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="ToryoTimingInfo" :my_value.sync="TheSb.new_v.toryo_timing_key")
+        .column.is-12(v-if="TheSb.debug_mode_p")
           SimpleRadioButtons.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="TheSb.new_v.tegoto")
 
   .modal-card-foot

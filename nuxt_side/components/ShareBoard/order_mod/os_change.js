@@ -32,6 +32,7 @@ export class OsChange {
       this.context.order_unit.hash,
       [
         this.context.foul_behavior_key,
+        this.context.toryo_timing_key,
         this.context.tegoto,
       ]
     ])

@@ -16,6 +16,7 @@ export class ParamInfo extends ParamBase {
       { key: "sp_move_cancel_key",   type: "string",  name: "駒移動キャンセル",              defaults: { development: "is_move_cancel_standard", production: "is_move_cancel_standard",           }, permanent: true,  relation: "SpMoveCancelInfo",    desc: null, after_set: null,                 },
 
       { key: "foul_behavior_key",    type: "string",  name: "反則制限モード",                defaults: { development: null,                      production: "is_foul_behavior_auto",             }, permanent: true,  relation: "FoulBehaviorInfo",    desc: null, after_set: null,                 },
+      { key: "toryo_timing_key",     type: "string",  name: "投了タイミング",                defaults: { development: null,                      production: "is_toryo_timing_lenient",           }, permanent: true,  relation: "ToryoTimingInfo",     desc: null, after_set: null,                 },
       { key: "tegoto",               type: "integer", name: "N手毎交代",                     defaults: { development: null,                      production: 1,                                   }, permanent: false, relation: null,                  desc: null, after_set: null,                 },
 
       { key: "board_width",          type: "float",   name: "盤の大きさ",                    defaults: { development: null,                      production: 80.0,                                }, permanent: true,  relation: null,                  desc: null, after_set: null,                 },
