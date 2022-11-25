@@ -6,7 +6,7 @@
         | 時間切れで
       template(v-if="timeout_info.key === 'audo_judgement'")
         | 接続切れで
-      | {{clock.current.location.flip.name}}の勝ち！
+      | {{current_location.flip.name}}の勝ち！
   .modal-card-body
     template(v-if="TheSb.toryo_timing_info.toryo_auto_run")
       p 終局です
@@ -26,6 +26,7 @@
 
 <script>
 import { TimeoutInfo } from "./timeout_info.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 export default {
   name: "TimeoutModal",
@@ -33,6 +34,17 @@ export default {
     timeout_key: { type: String, required: true, },
   },
   inject: ["TheSb"],
+  data() {
+    return {
+      current_location: null, // モーダル発動時の先後
+    }
+  },
+  created() {
+    // モーダル発動後に指すとモーダル内の先後が変わって勝敗が逆になる表記をしてしまうのを防ぐため保持しておく
+    if (this.clock_running_p) {
+      this.current_location = this.clock.current.location
+    }
+  },
   mounted() {
     if (!this.clock_running_p) {
       this.TheSb.tl_alert("対局時計は設定されていません")
