@@ -1,5 +1,19 @@
 import { Xarray } from "@/components/models/core/xarray.js"
 
+const ARRAY_VALUE1 = [
+  0,
+  1,
+  "",
+  {},
+  {a: 0},
+  [],
+  ["a"],
+  true,
+  false,
+  null,
+  undefined,
+]
+
 describe("Xarray", () => {
   test("ary_each_slice_to_a", () => {
     expect(Xarray.ary_each_slice_to_a(["a", "b", "c", "d"], 2)).toEqual([["a", "b"], ["c", "d"]])
@@ -48,5 +62,11 @@ describe("Xarray", () => {
     const ary = ["a", "b", "c"]
     expect(Xarray.ary_drop(ary, 1)).toEqual(["b", "c"])
     expect(ary).toEqual(["a", "b", "c"])
+  })
+  test("ary_compact", () => {
+    expect(Xarray.ary_compact(ARRAY_VALUE1)).toEqual([0, 1, "", {}, {a: 0}, [], ["a"], true, false])
+  })
+  test("ary_compact_blank", () => {
+    expect(Xarray.ary_compact_blank(ARRAY_VALUE1)).toEqual([0, 1, {a:0}, ["a"], true])
   })
 })

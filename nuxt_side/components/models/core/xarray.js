@@ -1,3 +1,4 @@
+import { Xobject } from "./xobject.js"
 import { Xinteger } from "./xinteger.js"
 import _ from "lodash"
 
@@ -79,5 +80,26 @@ export const Xarray = {
 
   ary_drop(ary, index) {
     return _.drop(ary, index)
+  },
+
+  // {1, null, undefined, ""} => [1, ""]
+  ary_compact(ary) {
+    return _.reduce(ary, (a, val) => {
+      if (val == null) {
+      } else {
+        a.push(val)
+      }
+      return a
+    }, [])
+  },
+
+  // {1, null, undefined, ""} => [1]
+  ary_compact_blank(ary) {
+    return _.reduce(ary, (a, val) => {
+      if (Xobject.present_p(val)) {
+        a.push(val)
+      }
+      return a
+    }, [])
   },
 }
