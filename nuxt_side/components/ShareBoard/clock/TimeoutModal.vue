@@ -15,7 +15,7 @@
         p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
       template(v-else)
         p ルールを守って時間内に指しましょう
-        p 対戦相手が許可してくれた場合は次の手を指してお情けとしての対局を続行できます
+        p 対戦相手がお情けで許可してくれた場合は次の手を指して対局を続行できます
         template(v-if="!clock.current.time_recovery_mode_p")
           p しかし現在の時計の設定では<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため回復しません
           p もし続行する場合は時計を再設定してください
