@@ -6,12 +6,16 @@
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
         | (ID:{{TheSb.master_odai.unique_code}})
   .modal-card-body
-    b-field(label="お題" custom-class="is-small")
-      b-input.odai_subject(v-model="TheSb.master_odai.subject" placeholder="どっちがお好き？" ref="subject_input_tag")
-    b-field(label="選択肢1" custom-class="is-small")
-      b-input.odai_left(v-model="TheSb.master_odai.items[0]" placeholder="マヨネーズ")
-    b-field(label="選択肢2" custom-class="is-small")
-      b-input.odai_right(v-model="TheSb.master_odai.items[1]" placeholder="ケチャップ")
+    b-field(label-position="on-border")
+      template(#label)
+        | お題
+        span.mx-1(class="has-text-grey") 例: どっちがお好き？
+      b-input.odai_subject(v-model="TheSb.master_odai.subject" ref="subject_input_tag")
+    b-field(grouped)
+      b-field(label="選択肢1" label-position="on-border")
+        b-input.odai_left(v-model="TheSb.master_odai.left_value" placeholder="マヨネーズ" expanded)
+      b-field(label="選択肢2" label-position="on-border")
+        b-input.odai_right(v-model="TheSb.master_odai.right_value" placeholder="ケチャップ" expanded)
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary")
@@ -68,6 +72,15 @@ export default {
 
   .modal-card-body
     padding: 20px
+    display: flex
+    flex-direction: column
+    gap: 0.5rem
+    .field.is-grouped
+      gap: 1rem
+      .field
+        flex-shrink: 1
+        width: 100%
+        margin: 0
 
   .modal-card-foot
     .button

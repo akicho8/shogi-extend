@@ -1,5 +1,6 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import _ from "lodash"
+import Vue from "vue"
 
 export class Odai {
   // 開発時用
@@ -72,4 +73,10 @@ export class Odai {
       items: this.items,
     })
   }
+
+  // フォームでマジックナンバーを書きたくないのでエイリアス的なアクセサを用意した
+  set left_value(value) { Vue.set(this.items, 0, value) }
+  get left_value()      { return this.items[0]          }
+  set right_value(value) { Vue.set(this.items, 1, value) }
+  get right_value()      { return this.items[1]          }
 }

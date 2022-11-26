@@ -10,7 +10,7 @@
     template(v-if="present_p(TheSb.received_odai.subject)")
       .subject.has-text-centered
         | {{TheSb.received_odai.subject}}
-    template(v-if="present_p(TheSb.received_odai.items)")
+    template(v-if="present_p(ary_compact_blank(TheSb.received_odai.items))")
       .items
         template(v-for="(e, i) in TheSb.received_odai.items")
           .item.is_line_break_on.is-clickable.is-unselectable(
@@ -19,6 +19,9 @@
             v-if="present_p(e)"
             )
             | {{e}}
+    template(v-else)
+      .has-text-centered
+        | 選択肢がありません
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") やめとく
     b-button(@click="submit_handle" type="is-primary") このチームに参加する
