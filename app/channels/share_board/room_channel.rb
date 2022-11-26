@@ -161,7 +161,7 @@ module ShareBoard
     end
 
     def odai_share(data)
-      track(data, "お題配送")
+      track(data, "お題配送", data["odai"], ":お題:")
       broadcast(:odai_share_broadcasted, data)
     end
 
@@ -171,7 +171,7 @@ module ShareBoard
     end
 
     def vote_select_share(data)
-      track(data, "投票選択")
+      track(data, "投票選択", data["voted_latest_index"], ":お題:")
       broadcast(:vote_select_share_broadcasted, data)
     end
 
