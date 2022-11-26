@@ -8,7 +8,7 @@
         .button(@click="order_unit.sample_set()") 例
         .button(@click="order_unit.clear()") 削除
         .button(@click="order_unit.order_state.demo_set()") デモ
-        .button(@click="order_unit.shuffle_core()") シャッフル
+        .button(@click="order_unit.shuffle_all()") シャッフル
         .button(@click="order_unit.furigoma_core(Math.random() < 0.5)") 振り駒
         .button(@click="order_unit.swap_exec()") 先後反転
         .button(@click="order_unit.dump_and_load()") dump_and_load

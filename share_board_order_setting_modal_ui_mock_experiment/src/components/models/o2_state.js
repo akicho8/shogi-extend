@@ -12,7 +12,7 @@ export class O2State extends OxState {
     this.teams = teams
   }
 
-  shuffle_core() {
+  shuffle_all() {
     this.reset_by_users(Gs2.ary_shuffle(this.teams.flat()))
   }
 

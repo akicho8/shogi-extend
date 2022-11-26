@@ -12,8 +12,8 @@ export class OrderUnit {
     this.order_state.reset_by_users(["a", "b", "c", "d", "e"])
   }
 
-  shuffle_core() {
-    this.order_state.shuffle_core()
+  shuffle_all() {
+    this.order_state.shuffle_all()
   }
 
   furigoma_core(swap_flag) {

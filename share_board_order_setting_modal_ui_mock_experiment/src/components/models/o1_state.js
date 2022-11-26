@@ -12,7 +12,7 @@ export class O1State extends OxState {
     this.users = users
   }
 
-  shuffle_core() {
+  shuffle_all() {
     this.reset_by_users(Gs2.ary_shuffle(this.users))
   }
 

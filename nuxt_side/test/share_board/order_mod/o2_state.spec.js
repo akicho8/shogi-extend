@@ -34,9 +34,9 @@ describe("O2State", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.real_order_users_to_s(1, 0)).toEqual("abcb")
   })
-  test("shuffle_core", () => {
+  test("shuffle_all", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
-    object.shuffle_core()
+    object.shuffle_all()
   })
   test("teams_each_shuffle", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
