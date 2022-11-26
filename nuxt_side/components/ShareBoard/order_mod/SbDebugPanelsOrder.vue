@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.SbOrderPanel
+.SbDebugPanelsOrder.columns.is-multiline
   .column.is-4
     .panel
       .panel-heading
@@ -38,8 +38,10 @@
       .panel-heading
         | [assert_system_variable]
       .panel-block order_enable_p:{{TheSb.order_enable_p}}
-      .panel-block 順序1:{{TheSb.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
-      .panel-block(v-if="TheSb.new_v.order_unit") 順序2:{{TheSb.new_v.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
+      .panel-block
+        | 本順序:{{TheSb.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
+      .panel-block(v-if="TheSb.new_v.order_unit")
+        | 仮順序:{{TheSb.new_v.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
   .column.is-4
     .panel
       .panel-heading
@@ -80,7 +82,7 @@ import { support_child } from "../support_child.js"
 import _ from "lodash"
 
 export default {
-  name: "SbOrderPanel",
+  name: "SbDebugPanelsOrder",
   mixins: [support_child],
   inject: ["TheSb"],
 }
@@ -88,5 +90,5 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.SbOrderPanel
+.SbDebugPanelsOrder
 </style>
