@@ -34,4 +34,13 @@ describe("O2State", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.real_order_users_to_s(1, 0)).toEqual("abcb")
   })
+  test("shuffle_core", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    object.shuffle_core()
+  })
+  test("teams_each_shuffle", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    object.teams_each_shuffle()
+    console.log(object.inspect)
+  })
 })

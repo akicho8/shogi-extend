@@ -17,11 +17,19 @@ export class O2State extends OxState {
     return "O2State"
   }
 
-  shuffle_core() {
+  // 全体シャッフル
+  // users_allocate だけだと3人の場合 2:1 になるため50%の確率で1:2にする
+  shuffle_all() {
     this.users_allocate(Gs2.ary_shuffle(this.teams.flat()))
     if (Gs2.irand(this.teams.length) === 0) {
       this.swap_run()
     }
+  }
+
+  // チーム内シャッフル
+  teams_each_shuffle() {
+    this.teams = this.teams.map(e => Gs2.ary_shuffle(e))
+    this.cache_clear()
   }
 
   swap_run() {

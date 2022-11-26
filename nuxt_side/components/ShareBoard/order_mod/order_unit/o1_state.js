@@ -17,8 +17,12 @@ export class O1State extends OxState {
     return "O1State"
   }
 
-  shuffle_core() {
+  shuffle_all() {
     this.users_allocate(Gs2.ary_shuffle(this.users))
+  }
+
+  teams_each_shuffle() {
+    // チームの概念があやふやなためやらない
   }
 
   swap_run() {

@@ -45,7 +45,8 @@ export class OrderUnit {
   get error_messages()                  { return this.order_state.error_messages                        }
   users_allocate(users)                 { this.order_state.users_allocate(users)                        }
   users_allocate_from_teams(teams)      { this.order_state.users_allocate_from_teams(teams)             }
-  shuffle_core()                        { this.order_state.shuffle_core()                               }
+  shuffle_all()                        { this.order_state.shuffle_all()                               }
+  teams_each_shuffle()                       { this.order_state.teams_each_shuffle()                              }
   swap_run()                            { this.order_state.swap_run()                                   }
   get state_name()                      { return this.order_state.state_name                            }
   cache_clear()                         { this.order_state.cache_clear()                                }
@@ -132,6 +133,7 @@ export class OrderUnit {
   }
 
   // 順番設定モーダル内で使うデータの準備
+  // 空のときだけアロケートしてシャッフルを行う
   auto_users_set(user_names, options = {}) {
     options = {
       with_shuffle: true,
@@ -141,7 +143,7 @@ export class OrderUnit {
       // 空なら全員対局者にする
       this.user_names_allocate(user_names)
       if (options.with_shuffle) {
-        this.shuffle_core()       // モーダルを最初に開いたときシャッフル済みにしておく(重要)
+        this.shuffle_all()       // モーダルを最初に開いたときシャッフル済みにしておく(重要)
       }
     } else {
       // 空でなければ対局者以外を観戦者にする
@@ -162,6 +164,7 @@ export class OrderUnit {
     const teams = Location.values.map(e => group[e.code] ?? [])          // [["a", "b"], ["c", "d"]]
     this.user_names_allocate_from_teams(teams)                           // 登録
     this.no_entry_user_only_watch_users_set(user_names)                  // 登録してない人は全員観戦者とする
+    this.teams_each_shuffle()                                               // チーム内シャッフルしておく
   }
 
   // user_names のなかでまだ登録されていない人たちをまとめて観戦者とする

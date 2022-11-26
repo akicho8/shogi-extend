@@ -54,18 +54,21 @@ module SharedMethods
   end
 
   # 順番設定画面内の黒白チームの人たち
-  def assert_order_team_one(black, white)
-    __assert_order_dnd_team_one "dnd_black", black
-    __assert_order_dnd_team_one "dnd_white", white
+  def assert_order_team_one(black, white, options = {})
+    __assert_order_dnd_team_one("dnd_black", black, options)
+    __assert_order_dnd_team_one("dnd_white", white, options)
   end
 
   # 順番設定画面内の観戦者の人たち
-  def assert_order_dnd_watcher(users)
-    __assert_order_dnd_team_one "dnd_watch_users", users
+  def assert_order_dnd_watcher(users, options = {})
+    __assert_order_dnd_team_one("dnd_watch_users", users, options)
   end
 
-  def __assert_order_dnd_team_one(klass, names)
-    result = all(".#{klass} li").collect(&:text).join
-    assert { result == names }
+  def __assert_order_dnd_team_one(klass, names_str, options)
+    names = all(".#{klass} li").collect(&:text)
+    if options[:sort]
+      names = names.sort
+    end
+    assert { names.join == names_str }
   end
 end

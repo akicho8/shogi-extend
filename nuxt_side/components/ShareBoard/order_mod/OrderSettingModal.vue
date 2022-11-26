@@ -13,8 +13,9 @@
     //- template(v-if="!instance")
     b-switch.main_switch(size="is-small" type="is-primary" v-model="TheSb.order_enable_p" @input="main_switch_handle") 有効
   .modal-card-body(@click="!TheSb.order_enable_p && main_switch_handle(true)")
-    .has-text-centered.has-text-grey.my-6(v-if="!TheSb.order_enable_p")
+    .start_message.has-text-centered.has-text-grey.my-6(v-if="!TheSb.order_enable_p")
       | 右上のスイッチで有効にしよう
+
     template(v-if="TheSb.order_enable_p || development_p")
       //- pre {{JSON.stringify(TheSb.new_v.os_change.to_h)}}
       .TeamsContainer
@@ -25,10 +26,15 @@
           OrderTeamOne.dnd_white(:items.sync="TheSb.new_v.order_unit.order_state.teams[1]" label="☖")
         OrderTeamOne.dnd_watch_users(:items.sync="TheSb.new_v.order_unit.watch_users" label="観戦")
 
-      .buttons.is-centered.mb-0.mt-5
-        b-button.mb-0.shuffle_handle(  @click="shuffle_handle"  size="is-small") シャッフル
-        b-button.mb-0.furigoma_handle( @click="furigoma_handle" size="is-small") 振り駒
-        b-button.mb-0.swap_handle(     @click="swap_handle"     size="is-small") 先後入替
+      .shuffle_and_hurigoma_buttons_container.mt-5
+        b-field.is-marginless
+          .control
+            b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
+          .control
+            b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
+          .control
+            b-button.furigoma_handle(size="is-small" @click="furigoma_handle") 振り駒
+        b-button.swap_handle(size="is-small" @click="swap_handle") 先後入替
 
       hr
 
@@ -114,11 +120,18 @@ export default {
       this.TheSb.tn_notify()
     },
 
-    // シャッフル
-    shuffle_handle() {
+    // 全体シャッフル
+    shuffle_all_handle() {
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.shuffle_core()
-      this.TheSb.shared_al_add({label: "シャッフル", message: "シャッフルしました"})
+      this.TheSb.new_v.order_unit.shuffle_all()
+      this.TheSb.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体シャッフルしました"})
+    },
+
+    // チーム内シャッフル
+    teams_each_shuffle_handle() {
+      this.$sound.play_click()
+      this.TheSb.new_v.order_unit.teams_each_shuffle()
+      this.TheSb.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "チーム内シャッフルしました"})
     },
 
     // 振り駒
@@ -237,8 +250,20 @@ export default {
     justify-content: center
     gap: 6px
 
+  .shuffle_and_hurigoma_buttons_container
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 0.5rem
+
 .STAGE-development
   .OrderSettingModal
     .modal-card-body
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .start_message
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .TeamsContainer
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .shuffle_and_hurigoma_buttons_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

@@ -9,7 +9,7 @@
         .button(@click="order_unit.state_switch_to('to_o1_state')") 1列
         .button(@click="order_unit.state_switch_to('to_o2_state')") 2列
         //- .button(@click="order_unit.order_state.demo_set()") デモ
-        .button(@click="order_unit.shuffle_core()") シャッフル
+        .button(@click="order_unit.shuffle_all()") シャッフル
         .button(@click="order_unit.furigoma_core(Math.random() < 0.5)") 振り駒
         .button(@click="order_unit.swap_run()") 先後反転
         .button(@click="order_unit.dump_and_load()") JSON化して元に戻す(観戦者消滅)
