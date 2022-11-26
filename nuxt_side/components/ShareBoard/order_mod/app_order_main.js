@@ -63,12 +63,7 @@ export const app_order_main = {
         this.toast_ok(message, {toast: true, talk: true, ...params})
       }
       if (this.present_p(params.message)) {
-        this.al_add({
-          ...params,
-          label: "順番 " + (params.order_enable_p ? "ON" : "OFF"),
-          sfen: this.current_sfen, // FIXME: とる
-          turn: this.current_turn,
-        })
+        this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
       this.ac_log("順設受信", `順番${this.order_enable_p ? "ON" : "OFF"}を受信`)
     },
