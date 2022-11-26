@@ -43,4 +43,17 @@ export const Xinteger = {
   lcm(a, b) {
     return a * b / this.gcd(a, b)
   },
+
+  iclamp(value, min, max) {
+    if (max < max) {
+      throw new Error("min argument must be smaller than max argument")
+    }
+    if (value < min) {
+      value = min
+    }
+    if (max < value) {
+      value = max
+    }
+    return value
+  },
 }

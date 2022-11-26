@@ -22,4 +22,8 @@ describe("Xinteger", () => {
   test("lcm", () => {
     expect(Xinteger.lcm(4, 6)).toEqual(12)
   })
+  test("iclamp", () => {
+    expect(Xinteger.iclamp(0, 1, 2)).toEqual(1)
+    expect(Xinteger.iclamp(3, 1, 2)).toEqual(2)
+  })
 })
