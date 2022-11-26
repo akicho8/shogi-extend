@@ -1,6 +1,6 @@
 <template lang="pug">
 b-table.SbTrackLog(
-  :data="base.track_logs"
+  :data="TheSb.track_logs"
   :mobile-cards="false"
   :show-header="false"
   narrowed
@@ -16,12 +16,11 @@ b-table.SbTrackLog(
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
 import dayjs from "dayjs"
 
 export default {
   name: "SbTrackLog",
-  mixins: [support_child],
+  inject: ["TheSb"],
   methods: {
     time_format(t) {
       return dayjs(t).format("HH:mm:ss.SSS")

@@ -1,7 +1,17 @@
+// |---------------------------------------------+---------------------------------------------|
+// | Method                                      | 意味                                        |
+// |---------------------------------------------+---------------------------------------------|
+// | room_create_if_exist_room_code_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
+// | room_setup_modal_handle()                   | モーダル起動                                |
+// | room_create_by(new_room_coe, new_user_name) | モーダル内で入力したものを渡す              |
+// | room_create()                               | 入室                                        |
+// | room_destroy()                              | 退室                                        |
+// |---------------------------------------------+---------------------------------------------|
+
 import _ from "lodash"
 import dayjs from "dayjs"
 import RoomSetupModal from "./RoomSetupModal.vue"
-import { HandleNameValidator } from '@/components/models/handle_name/handle_name_validator.js'
+import { HandleNameValidator } from "@/components/models/handle_name/handle_name_validator.js"
 
 export const app_room_setup = {
   data() {
@@ -12,14 +22,14 @@ export const app_room_setup = {
   },
   mounted() {
     // this.name_setup()
-    this.room_setup_auto()
+    this.room_create_if_exist_room_code_in_url()
   },
   beforeDestroy() {
     this.room_destroy()
   },
   methods: {
     // URLに合言葉の指定があればそのまま部屋に入る
-    room_setup_auto() {
+    room_create_if_exist_room_code_in_url() {
       // URLに合言葉がない場合は何もしない
       if (this.blank_p(this.$route.query.room_code)) {
         return
@@ -46,15 +56,15 @@ export const app_room_setup = {
       })
     },
 
-    room_code_set(room_code, user_name) {
-      this.__assert__(user_name, "user_name")
-      this.__assert__(room_code, "room_code")
+    room_create_by(new_room_coe, new_user_name) {
+      this.__assert__(new_user_name, "new_user_name")
+      this.__assert__(new_room_coe, "new_room_coe")
 
-      room_code = _.trim(room_code)
-      user_name = _.trim(user_name)
+      new_room_coe = _.trim(new_room_coe)
+      new_user_name = _.trim(new_user_name)
 
-      if (this.user_name !== user_name) {
-        this.handle_name_set(user_name)
+      if (this.user_name !== new_user_name) {
+        this.handle_name_set(new_user_name)
       }
 
       if (this.ac_room) {
@@ -62,7 +72,7 @@ export const app_room_setup = {
         return
       }
 
-      this.room_code = room_code
+      this.room_code = new_room_coe
       this.room_create()
       // this.toast_ok("入室しました")
     },
@@ -112,6 +122,7 @@ export const app_room_setup = {
       })
     },
 
+    // 退室
     room_destroy() {
       if (this.ac_room) {
         this.tl_alert("room_destroy")
@@ -140,11 +151,11 @@ export const app_room_setup = {
     },
     ac_room_perform_default_params() {
       const params = {
-        from_connection_id: this.connection_id,     // 送信者識別子
-        from_user_name:     this.user_name,         // 送信者名
+        from_connection_id: this.connection_id,      // 送信者識別子
+        from_user_name:     this.user_name,          // 送信者名
         performed_at:       this.$time.current_ms(), // 実行日時(ms)
-        ua_icon_key:        this.ua_icon_key,       // 端末の種類を表すアイコン文字列
-        ac_events_hash:     this.ac_events_hash,    // イベント数(デバッグ用)
+        ua_icon_key:        this.ua_icon_key,        // 端末の種類を表すアイコン文字列
+        ac_events_hash:     this.ac_events_hash,     // イベント数(デバッグ用)
         debug_mode_p:       this.debug_mode_p,
       }
       if (this.g_current_user) {

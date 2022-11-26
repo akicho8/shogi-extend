@@ -41,6 +41,20 @@ export const app_clock_box = {
   },
 
   methods: {
+    cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_sec = 0, every_plus = 0) {
+      this.cc_params = [
+        {
+          initial_main_min: initial_main_min,
+          initial_read_sec: initial_read_sec,
+          initial_extra_sec: initial_extra_sec,
+          every_plus: every_plus,
+        }
+      ]
+      this.cc_create()
+      this.cc_params_apply()
+      this.clock_box.play_handle()
+    },
+
     cc_setup_by_url_params() {
       [
         "initial_main_min",

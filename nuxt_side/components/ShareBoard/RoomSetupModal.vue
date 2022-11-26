@@ -81,7 +81,7 @@ export default {
         return
       }
 
-      this.base.room_code_set(this.new_room_code, this.new_user_name)
+      this.base.room_create_by(this.new_room_code, this.new_user_name)
       this.room_code_field_lock()
 
       if (ROOM_ENTRY_THEN_MODAL_CLOSE) {
