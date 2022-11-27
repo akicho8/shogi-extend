@@ -189,9 +189,6 @@ import _ from "lodash"
 export default {
   name: "SbDebugPanels",
   inject: ["TheSb"],
-  computed: {
-    Howler() { return window.Howler },
-  },
 }
 </script>
 
