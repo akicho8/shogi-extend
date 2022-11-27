@@ -9,13 +9,13 @@
     b-field(label-position="on-border")
       template(#label)
         | お題
-        span.mx-1(class="has-text-grey") 例: どっちがお好き？
+        span.mx-1(class="has-text-grey") 例: {{example.subject}}
       b-input.odai_subject(v-model="TheSb.master_odai.subject" ref="subject_input_tag")
     b-field(grouped)
       b-field(label="選択肢1" label-position="on-border")
-        b-input.odai_left(v-model="TheSb.master_odai.left_value" placeholder="マヨネーズ" expanded)
+        b-input.odai_left(v-model="TheSb.master_odai.left_value" :placeholder="example.left_value" expanded)
       b-field(label="選択肢2" label-position="on-border")
-        b-input.odai_right(v-model="TheSb.master_odai.right_value" placeholder="ケチャップ" expanded)
+        b-input.odai_right(v-model="TheSb.master_odai.right_value" :placeholder="example.right_value" expanded)
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary")
@@ -59,6 +59,14 @@ export default {
       if (this.blank_p(this.TheSb.master_odai.subject)) {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
+    },
+  },
+  computed: {
+    example() {
+      return _.sample([
+        { subject: "どっちがお好き？",                   left_value: "マヨネーズ",       right_value: "ケチャップ",      },
+        // { subject: "アナタはどっち派？ドラゴンクエスト", left_value: "ガンガンいこうぜ", right_value: "いのちだいじに",  },
+      ])
     },
   },
 }
