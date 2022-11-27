@@ -9,10 +9,13 @@ export const app_room_leave = {
 
       this.delay_block(2.5, () => {
         if (this.received_from_self(params)) {
-          this.tl_add("入室後3秒後", `${this.member_infos.length}人`, params)
+          this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
           if (this.member_infos.length <= 1) {
-            // this.toast_ok("部屋のリンクを仲間に伝えよう")
-            this.room_code_copy_modal_handle()
+            if (this.auto_room_code_copy_modal_p) {
+              this.room_code_copy_modal_handle()
+            } else {
+              this.toast_ok("部屋のリンクを仲間に伝えよう")
+            }
           }
         }
       })
