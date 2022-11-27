@@ -106,12 +106,12 @@ import { app_back_to              } from "./app_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
 import { app_room_setup           } from "./room/app_room_setup.js"
-import { app_room_leave           } from "./room/app_room_leave.js"
+import { app_room_entry_leave           } from "./room/app_room_entry_leave.js"
 import { app_room_board_setup     } from "./room/app_room_board_setup.js"
 import { app_room_active_level    } from "./room/app_room_active_level.js"
 import { app_room_members         } from "./room/app_room_members.js"
 import { app_room_recreate        } from "./room/app_room_recreate.js"
-import { app_room_code_copy        } from "./room/app_room_code_copy.js"
+import { app_room_url_copy        } from "./room/app_room_url_copy.js"
 
 import { app_member_list          } from "./member_list_show/app_member_list.js"
 import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
@@ -202,9 +202,9 @@ export default {
     app_medal_plus,
 
     app_room_recreate,
-    app_room_code_copy,
+    app_room_url_copy,
     app_room_setup,
-    app_room_leave,
+    app_room_entry_leave,
     app_room_board_setup,
     app_room_active_level,
     app_room_members,

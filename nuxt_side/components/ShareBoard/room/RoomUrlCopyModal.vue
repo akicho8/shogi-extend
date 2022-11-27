@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "RoomCodeCopyModal",
+  name: "RoomUrlCopyModal",
   inject: ["TheSb"],
   mounted() {
     this.$sound.play("notification")
@@ -37,7 +37,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.RoomCodeCopyModal
+.RoomUrlCopyModal
   +modal_width(26rem)
   .modal-card-body
     display: flex

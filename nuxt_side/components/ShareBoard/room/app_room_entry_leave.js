@@ -1,4 +1,4 @@
-export const app_room_leave = {
+export const app_room_entry_leave = {
   methods: {
     // 入室時のエフェクト
     room_entry_call(params) {
@@ -11,8 +11,8 @@ export const app_room_leave = {
         if (this.received_from_self(params)) {
           this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
           if (this.member_infos.length <= 1) {
-            if (this.auto_room_code_copy_modal_p) {
-              this.room_code_copy_modal_handle()
+            if (this.auto_room_url_copy_modal_p) {
+              this.room_url_copy_modal_handle()
             } else {
               this.toast_ok("部屋のリンクを仲間に伝えよう")
             }

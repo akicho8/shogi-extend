@@ -6,7 +6,7 @@
   .column.is-12
     SbDebugPanelsOrder
   SbDebugPanelsMedal
-  SbDebugPanelsRoomCodeCopyModal
+  SbDebugPanelsRoomUrlCopyModal
   .column.is-6(v-if="TheSb.clock_box")
     ClockBoxInspector(:clock_box="TheSb.clock_box")
   .column.is-2
