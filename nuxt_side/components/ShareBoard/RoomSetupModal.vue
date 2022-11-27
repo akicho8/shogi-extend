@@ -29,7 +29,7 @@
 import _ from "lodash"
 import { support_child } from "./support_child.js"
 
-const ROOM_ENTRY_THEN_MODAL_CLOSE = false // 入室後にモーダルを閉じるか？ (閉じると「部屋のリンク」がコピーできない)
+const ROOM_ENTRY_THEN_MODAL_CLOSE = true  // 入室後にモーダルを閉じるか？ (閉じると「部屋のリンク」がコピーできない)
 const ROOM_CODE_ALWAYS_SHOW       = true  // 合言葉は表示しっぱなしにするか？
 
 export default {
