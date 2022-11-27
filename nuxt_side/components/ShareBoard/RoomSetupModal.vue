@@ -12,9 +12,9 @@
           .control
             b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(base.ac_room)")
       template(v-else)
-        b-field(:label="label_wrap('合言葉')" label-position="on-border" key="room_code_field_locked_true")
+        b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
           b-input.new_room_code(v-model.trim="new_room_code" :disabled="present_p(base.ac_room)" ref="new_room_code")
-      b-field(:label="label_wrap('ハンドルネーム')" label-position="on-border")
+      b-field(label="ハンドルネーム" label-position="on-border")
         b-input.new_user_name(v-model.trim="new_user_name" :disabled="present_p(base.ac_room)")
 
   .modal-card-foot
@@ -101,14 +101,6 @@ export default {
     // 鍵解除
     room_code_field_unlock() {
       this.room_code_field_locked = false
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    label_wrap(label) {
-      if (this.blank_p(this.base.ac_room)) {
-        return label
-      }
     },
   },
 }
