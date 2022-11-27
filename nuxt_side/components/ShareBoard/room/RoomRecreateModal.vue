@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "RoomRecreateModal",
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .RoomRecreateModal
   +modal_width(26rem)
   .modal-card-body

@@ -27,7 +27,7 @@
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 const ROOM_ENTRY_THEN_MODAL_CLOSE = true  // 入室後にモーダルを閉じるか？ (閉じると「部屋のリンク」がコピーできない)
 const ROOM_CODE_ALWAYS_SHOW       = true  // 合言葉は表示しっぱなしにするか？
@@ -84,6 +84,8 @@ export default {
       this.base.room_create_by(this.new_room_code, this.new_user_name)
       this.room_code_field_lock()
 
+      // if (this.blank_p(this.$route.query.__system_test_now__)) {
+      // }
       if (ROOM_ENTRY_THEN_MODAL_CLOSE) {
         this.$emit("close")
       }
