@@ -46,6 +46,7 @@
     .panel
       .panel-heading
         | その他
+      a.panel-block(@click="TheSb.room_code_copy_modal_handle") 部屋のリンクをコピーするモーダル
       a.panel-block(@click="TheSb.handle_name_modal_handle") ハンドルネーム入力
       a.panel-block(@click="TheSb.handle_name_alert") 順番設定中のハンドルネーム入力
       a.panel-block(@click="TheSb.handle_name_clear_handle") ハンドルネームを空にする

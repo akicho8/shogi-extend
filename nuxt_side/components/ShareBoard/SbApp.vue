@@ -111,6 +111,7 @@ import { app_room_board_setup     } from "./room/app_room_board_setup.js"
 import { app_room_active_level    } from "./room/app_room_active_level.js"
 import { app_room_members         } from "./room/app_room_members.js"
 import { app_room_recreate        } from "./room/app_room_recreate.js"
+import { app_room_code_copy        } from "./room/app_room_code_copy.js"
 
 import { app_member_list          } from "./member_list_show/app_member_list.js"
 import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
@@ -167,15 +168,10 @@ export default {
     app_edit_mode,
     app_yomikomi,
     app_sp,
-    app_room_setup,
     app_devise,
-    app_room_leave,
     app_user_kill,
     app_track_log,
     app_xmatch,
-    app_room_board_setup,
-    app_room_active_level,
-    app_room_members,
     app_member_bc,
     app_net_level,
     app_ping,
@@ -199,12 +195,19 @@ export default {
     app_force_sync,
     app_foul,
     app_board_preset_select,
-    app_room_recreate,
     app_back_to,
     app_give_up,
     app_honpu,
     app_medal,
     app_medal_plus,
+
+    app_room_recreate,
+    app_room_code_copy,
+    app_room_setup,
+    app_room_leave,
+    app_room_board_setup,
+    app_room_active_level,
+    app_room_members,
 
     app_odai_maker,
     app_client_vote,

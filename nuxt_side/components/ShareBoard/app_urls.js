@@ -21,7 +21,7 @@ export const app_urls = {
 
       this.sidebar_p = false
       this.$sound.play_click()
-      this.clipboard_copy({text: this.room_url, success_message: "部屋のリンクをコピーしました"})
+      return this.clipboard_copy({text: this.room_url, success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
