@@ -13,9 +13,9 @@
 
   MainSection(v-if="config")
     .container
-      template(v-if="config.dl_limit_info.dli_over_p")
+      template(v-if="config.limiter.over_p")
         b-notification(type="is-warning" :closable="false")
-          | {{config.dl_limit_info.dli_message}}
+          | {{config.limiter.message}}
 
       .level.has-background-primary-light.py-5.box.is-shadowless
         .level-item.has-text-centered
@@ -88,9 +88,9 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 //   }
 // }
 
-import { ZipDlFormatInfo } from "@/components/models/zip_dl_format_info.js"
-import { BodyEncodeInfo } from "@/components/models/body_encode_info.js"
-import { ZipDlMaxInfo } from "@/components/models/zip_dl_max_info.js"
+import { ZipDlFormatInfo    } from "@/components/models/zip_dl_format_info.js"
+import { BodyEncodeInfo     } from "@/components/models/body_encode_info.js"
+import { ZipDlMaxInfo       } from "@/components/models/zip_dl_max_info.js"
 import { ZipDlStructureInfo } from "@/components/models/zip_dl_structure_info.js"
 
 export default {

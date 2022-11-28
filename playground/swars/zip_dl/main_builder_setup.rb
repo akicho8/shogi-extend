@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../../config/environment', __FILE__)
+require File.expand_path('../../../../config/environment', __FILE__)
 
 t = "2020-11-26".to_time(:local).midnight
 

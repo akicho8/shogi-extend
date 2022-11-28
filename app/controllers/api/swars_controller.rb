@@ -118,11 +118,11 @@ module Api
     # concerning :SwarsUserKeyDirectDownloadMethods do
     #   # GET http://localhost:3000/api/swars/download_config_fetch?query=YamadaTaro
     #   def download_config_fetch
-    #     render json: zip_dl_cop.to_config
+    #     render json: main_builder.as_json
     #   end
     #
-    #   def zip_dl_cop
-    #     @zip_dl_cop ||= Swars::ZipDlCop.new(params.to_unsafe_h.merge({
+    #   def main_builder
+    #     @main_builder ||= Swars::ZipDl::MainBuilder.new(params.to_unsafe_h.merge({
     #           :current_user => current_user,
     #         }))
     #   end

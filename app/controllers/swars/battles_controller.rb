@@ -39,7 +39,7 @@ module Swars
     include ModulableCrud::All
     include BattleControllerBaseMethods
     include BattleControllerSharedMethods
-    include ZipDlMethods
+    include ZipDl::ActionMethods
     include IndexMethods
     include ShowMethods
 

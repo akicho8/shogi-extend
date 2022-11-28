@@ -29,6 +29,8 @@ module Swars
     belongs_to :user,       class_name: "::User"        # ダウンロードしようとしている人
     belongs_to :swars_user, class_name: "::Swars::User" # ダウンロードされようとしている人
 
+    scope :recent_only, -> period { where(arel_table[:created_at].gteq(period.ago)) } # 最近の period 期間のレコードたち
+
     with_options presence: true do
       validates :begin_at
       validates :end_at
