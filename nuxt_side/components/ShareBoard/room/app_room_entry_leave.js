@@ -1,6 +1,6 @@
 export const app_room_entry_leave = {
   methods: {
-    // 入室時のエフェクト
+    // 入室時の通知
     room_entry_call(params) {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
@@ -10,8 +10,8 @@ export const app_room_entry_leave = {
       this.delay_block(2.5, () => {
         if (this.received_from_self(params)) {
           this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
-          if (this.blank_p(this.$route.query.room_code)) {
-            if (this.member_infos.length <= 1) {
+          if (this.blank_p(this.$route.query.room_code)) { // 「部屋に入る」から入室 (部屋のリンクから来ていない場合)
+            if (this.member_infos.length <= 1) {           // 自分だけなら
               if (this.auto_room_url_copy_modal_p) {
                 this.room_url_copy_modal_handle()
               } else {
@@ -23,7 +23,7 @@ export const app_room_entry_leave = {
       })
     },
 
-    // 退室時のエフェクト
+    // 退室時の通知
     room_leave_call(params) {
       this.al_add({...params, label: "退室"})
       if (false) {
