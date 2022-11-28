@@ -17,7 +17,6 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("alice!!")).toEqual("aliceさん")
     expect(HandleNameParser.call_name("中の人")).toEqual("中の人")
     expect(HandleNameParser.call_name("alice.")).toEqual("aliceさん")
-    expect(HandleNameParser.call_name("くっきー")).toEqual("くっきー")
   })
 
   test("ん", () => {
@@ -25,6 +24,13 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("○○ん")).toEqual("○○んさん")
     expect(HandleNameParser.call_name("○○○ん")).toEqual("○○○ん")
     expect(HandleNameParser.call_name("○○○○ん")).toEqual("○○○○ん")
+  })
+
+  test("ー", () => {
+    expect(HandleNameParser.call_name("○ー")).toEqual("○ーさん")
+    expect(HandleNameParser.call_name("○○ー")).toEqual("○○ーさん")
+    expect(HandleNameParser.call_name("○○○ー")).toEqual("○○○ー")
+    expect(HandleNameParser.call_name("○○○○ー")).toEqual("○○○○ー")
   })
 
   test("ちゃん", () => {
