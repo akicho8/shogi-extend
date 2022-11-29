@@ -5,6 +5,18 @@ module Api
     # http://localhost:3000/api/general/any_source_to.txt?any_source=68S&to_format=kif
     # http://localhost:3000/api/general/any_source_to.txt?any_source=68S&to_format=ki2
     def any_source_to
+      # raise request.env.find_all {|k, v| k.to_s.match?(/\A(HTTP|REMOTE|SERVER)/) }.to_h.inspect
+      # raise request.domain         #=> "localhost"
+      info = {
+        "env" => request.env.find_all {|k, v| k.to_s.match?(/\A(HTTP|REMOTE|SERVER)/) }.to_h,
+        "request.referer" => request.referer,
+        "request.headers['Referer']" => request.headers['Referer'],
+        "request.headers['Origin']" => request.headers['Origin'],
+        "request.headers['Host']" => request.headers['Host'],
+        "request.host" => request.host,
+      }
+      # raise info.inspect
+      SlackAgent.notify(subject: "any_source_to", body: info)
       parser = KifuParser.new(params)
       respond_to do |format|
         format.json { render json: parser  }
