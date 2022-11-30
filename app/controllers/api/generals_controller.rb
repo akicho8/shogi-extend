@@ -5,7 +5,6 @@ module Api
     # http://localhost:3000/api/general/any_source_to.txt?any_source=68S&to_format=kif
     # http://localhost:3000/api/general/any_source_to.txt?any_source=68S&to_format=ki2
     def any_source_to
-      api_log!
       parser = KifuParser.new(params)
       respond_to do |format|
         format.json { render json: parser  }

@@ -11,7 +11,7 @@ Rails.application.configure do
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
-        :server_origin                       => "https://shogi-flow.xyz",
+        :my_request_origin                       => "https://shogi-flow.xyz",
         :redis_db_for_xy_master              => 9,    # 符号の鬼のランキング用
         :redis_db_for_sidekiq                => 12,   # sidekiq
         :redis_db_for_share_board            => 15,   # 共有将棋盤
