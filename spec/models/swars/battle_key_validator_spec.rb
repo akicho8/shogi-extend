@@ -25,7 +25,7 @@ module Swars
       end
 
       it "validate!" do
-        expect { BattleKeyValidator.new("xxx") }.to raise_error(BattleKeyValidator::InvalidKey)
+        expect { BattleKeyValidator.new("xxx").validate! }.to raise_error(BattleKeyValidator::InvalidKey)
       end
     end
   end

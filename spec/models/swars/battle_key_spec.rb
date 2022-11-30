@@ -13,10 +13,6 @@ module Swars
       it "wrap" do
         assert { BattleKey.wrap("alice-bob-20130531_010024").kind_of? BattleKey }
       end
-
-      it "generate" do
-        assert { BattleKey.generate.kind_of? BattleKey }
-      end
     end
 
     describe "InstanceMethods" do

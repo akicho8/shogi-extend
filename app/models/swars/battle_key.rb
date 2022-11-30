@@ -11,10 +11,6 @@ module Swars
         end
         new(key)
       end
-
-      def generate(**params)
-        KeyGenerator.generate(**params)
-      end
     end
 
     attr_reader :key

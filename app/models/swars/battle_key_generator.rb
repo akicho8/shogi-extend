@@ -1,10 +1,12 @@
 module Swars
-  module KeyGenerator
-    extend self
+  class BattleKeyGenerator
+    def initialize(seed: 0)
+      @seed = seed
+    end
 
-    def generate(seed: 0)
+    def generate
       base = "2000-01-01".to_time
-      time = base.advance(seconds: seed)
+      time = base.advance(seconds: @seed)
       str = time.strftime("%Y%m%d_%H%M%S")
       key = [:alice, :bob, str].join("-")
       BattleKey.wrap(key)

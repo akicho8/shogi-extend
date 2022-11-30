@@ -46,7 +46,7 @@ module Swars
           memberships[0].op_user ||= memberships[1].user
           memberships[1].op_user ||= memberships[0].user
 
-          self.key ||= KeyGenerator.generate(seed: self.class.count).to_s
+          self.key ||= BattleKeyGenerator.new(seed: self.class.count).generate.to_s
           self.csa_seq ||= []
 
           # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
