@@ -8,12 +8,15 @@ module Api
       # raise request.env.find_all {|k, v| k.to_s.match?(/\A(HTTP|REMOTE|SERVER)/) }.to_h.inspect
       # raise request.domain         #=> "localhost"
       info = {
-        "env" => request.env.find_all {|k, v| k.to_s.match?(/\A(HTTP|REMOTE|SERVER)/) }.to_h,
-        "request.referer" => request.referer,
         "request.headers['Referer']" => request.headers['Referer'],
         "request.headers['Origin']" => request.headers['Origin'],
         "request.headers['Host']" => request.headers['Host'],
-        "request.host" => request.host,
+        "request.referer"    => request.referer,
+        "request.origin"     => request.origin,
+        "request.from"       => request.from,
+        "request.host"       => request.host,
+        "request.user_agent" => request.user_agent,
+        "env" => request.env.find_all {|k, v| k.to_s.match?(/\A(HTTP|REMOTE|SERVER)/) }.to_h,
       }
       # raise info.inspect
       SlackAgent.notify(subject: "any_source_to", body: info)
