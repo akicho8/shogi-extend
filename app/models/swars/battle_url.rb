@@ -32,7 +32,7 @@ module Swars
 
     def key
       if url
-        KeyVo.wrap(URI(url).path.split("/").last)
+        BattleKey.wrap(URI(url).path.split("/").last)
       end
     end
 

@@ -51,8 +51,8 @@ module Swars
 
           # キーは "(先手名)-(後手名)-(日付)" となっているので最後を開始日時とする
           if battled_at.blank?
-            if KeyVo.valid?(key)
-              self.battled_at ||= KeyVo.wrap(key).to_time
+            if BattleKeyValidator.valid?(key)
+              self.battled_at ||= BattleKey.wrap(key).to_time
             end
             self.battled_at ||= Time.current
           end

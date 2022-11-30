@@ -1,29 +1,21 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe KeyVo, type: :model, swars_spec: true do
+  RSpec.describe BattleKey, type: :model, swars_spec: true do
     let(:key) { "alice-bob-20130531_010024" }
-    let(:object) { KeyVo.wrap(key) }
+    let(:object) { BattleKey.wrap(key) }
 
     describe "ClassMethods" do
       it "[]" do
-        assert { KeyVo["alice-bob-20130531_010024"].kind_of? KeyVo }
+        assert { BattleKey["alice-bob-20130531_010024"].kind_of? BattleKey }
       end
 
       it "wrap" do
-        assert { KeyVo.wrap("alice-bob-20130531_010024").kind_of? KeyVo }
-      end
-
-      it "valid?" do
-        assert { KeyVo.valid?("alice-bob-20130531_010024") }
-      end
-
-      it "invalid?" do
-        assert { KeyVo.invalid?("xxx") }
+        assert { BattleKey.wrap("alice-bob-20130531_010024").kind_of? BattleKey }
       end
 
       it "generate" do
-        assert { KeyVo.generate.kind_of? KeyVo }
+        assert { BattleKey.generate.kind_of? BattleKey }
       end
     end
 
@@ -46,18 +38,6 @@ module Swars
 
       it "user_key_at" do
         assert { object.user_key_at(:black) == "alice" }
-      end
-
-      it "valid?" do
-        assert { KeyVo.new(key).valid? }
-      end
-
-      it "invalid?" do
-        assert { KeyVo.new("xxx").invalid? }
-      end
-
-      it "validate!" do
-        expect { KeyVo.wrap("xxx") }.to raise_error(ArgumentError)
       end
     end
   end

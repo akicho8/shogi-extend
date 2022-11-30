@@ -7,7 +7,7 @@ module Swars
       time = base.advance(seconds: seed)
       str = time.strftime("%Y%m%d_%H%M%S")
       key = [:alice, :bob, str].join("-")
-      KeyVo.wrap(key)
+      BattleKey.wrap(key)
     end
   end
 end

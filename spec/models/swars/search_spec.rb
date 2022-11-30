@@ -65,7 +65,7 @@ module Swars
 
     describe "Options" do
       it "primary_record_key" do
-        key = KeyVo.generate
+        key = BattleKey.generate
         black = User.create!
         white = User.create!
         Battle.create_with_members!([black, white], key: key.to_s)

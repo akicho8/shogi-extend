@@ -3,7 +3,7 @@ require "rails_helper"
 module Swars
   module Agent
     RSpec.describe HistoryResult, type: :model, swars_spec: true do
-      let(:key) { KeyVo.wrap("alice-bob-20130531_010024") }
+      let(:key) { BattleKey.wrap("alice-bob-20130531_010024") }
 
       it "取り込んだかに関係なくすべてのキー" do
         res = HistoryResult.new([key])

@@ -1,26 +1,15 @@
 module Swars
-  class KeyVo
-    class InvalidKey < ArgumentError
-    end
-
+  class BattleKey
     class << self
-      def [](value)
-        wrap(value)
+      def [](key)
+        wrap(key)
       end
 
-      def wrap(value)
-        if value.kind_of? self
-          return value
+      def wrap(key)
+        if key.kind_of? self
+          return key
         end
-        new(value).tap(&:validate!)
-      end
-
-      def valid?(value)
-        new(value).valid?
-      end
-
-      def invalid?(value)
-        new(value).invalid?
+        new(key)
       end
 
       def generate(**params)
@@ -31,6 +20,7 @@ module Swars
     attr_reader :key
 
     def initialize(key)
+      BattleKeyValidator.new(key).validate!
       @key = key.dup.freeze
     end
 
@@ -56,20 +46,6 @@ module Swars
       parts[location.code]
     end
 
-    def valid?
-      !!(parts && parts.size == 3 && to_time)
-    end
-
-    def invalid?
-      !valid?
-    end
-
-    def validate!
-      if invalid?
-        raise InvalidKey, "将棋ウォーズの対局キーではありません: #{@key.inspect}"
-      end
-    end
-
     def <=>(other)
       [self.class, key] <=> [other.class, other.key]
     end
@@ -93,9 +69,7 @@ module Swars
     private
 
     def parts
-      if @key.include?("-")
-        @parts ||= @key.split("-")
-      end
+      @parts ||= key.split("-")
     end
   end
 end

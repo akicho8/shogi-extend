@@ -52,7 +52,7 @@ module Swars
       render json: { message: exception.message }, status: exception.status
     end
 
-    rescue_from "Swars::KeyVo::InvalidKey" do |exception|
+    rescue_from "Swars::BattleKeyValidator::InvalidKey" do |exception|
       render json: { message: exception.message }, status: 404
     end
 

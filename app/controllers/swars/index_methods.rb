@@ -276,7 +276,7 @@ module Swars
       @import_errors.collect { |e|
         [
           e[:error].message.strip,
-          KeyVo.wrap(e[:key]).originator_url,
+          BattleKey.wrap(e[:key]).originator_url,
         ].collect { |e| "#{e}\n" }.join
       }.join("\n")
     end

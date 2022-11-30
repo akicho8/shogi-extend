@@ -18,7 +18,7 @@ module Swars
         if params[:SwarsUserNotFound]
           body = ""
         end
-        all_keys = body.scan(/game_id=([\w-]+)/).flatten.collect { |e| KeyVo.wrap(e) }
+        all_keys = body.scan(/game_id=([\w-]+)/).flatten.collect { |e| BattleKey.wrap(e) }
         HistoryResult.new(all_keys)
       end
 

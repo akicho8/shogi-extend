@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Swars
   RSpec.describe BattleUrl, type: :model, swars_spec: true do
-    let(:key) { KeyVo.wrap("alice-bob-20200927_180900") }
+    let(:key) { BattleKey.wrap("alice-bob-20200927_180900") }
     let(:url) { "https://shogiwars.heroz.jp/games/#{key}" }
     let(:text) { "棋譜 #{url}" }
 
