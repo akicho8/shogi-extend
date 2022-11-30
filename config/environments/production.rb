@@ -149,6 +149,7 @@ Rails.application.configure do
   # for AppConfig
   config.to_prepare do
     Rails.application.config.app_config.deep_merge!({
+        :server_origin                 => "https://www.shogi-extend.com",
         :swars_tag_search_function     => false,
         :available_providers           => [:twitter, :google, :github],
         :nanasi_login                  => false,

@@ -1,5 +1,6 @@
 AppConfig.deep_merge!({
-    :app_name                            =>  "SHOGI-EXTEND",
+    :app_name                            => "SHOGI-EXTEND",
+    :server_origin                       => "http://localhost:4000",
 
     :swars_tag_search_function           =>  true,  # タグ検索
 

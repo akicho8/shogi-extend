@@ -4,6 +4,12 @@ module Api
   class ApplicationController < ::ApplicationController
     include ShogiErrorRescueMethods # for bs_error
 
+    before_action do
+      if Rails.env.development? || Rails.env.staging? || params["__SERVER_ENV_SHOW__"]
+        SlackAgent.notify(subject: "API", body: request.env.find_all {|k, v| k.to_s.match?(/^[A-Z]/) }.to_h)
+      end
+    end
+
     def api_login_required
       if !current_user
         render json: { statusCode: 403, message: "ログインしてください" }, status: 403
@@ -27,6 +33,14 @@ module Api
           ""
         end
       end
+    end
+
+    def api_log!
+      if request.origin.to_s == AppConfig[:server_origin]
+        return
+      end
+      agent = request.from || request.origin
+      SlackAgent.notify(subject: "(#{agent}) #{request.request_uri}", body: params, emoji: ":API:")
     end
   end
 end
