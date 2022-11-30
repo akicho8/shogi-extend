@@ -46,30 +46,34 @@ module ShogiErrorRescueMethods
         sleep(0.5)
       end
 
-      body = [error.message, params].join("\n")
-      SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
-      ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
-
-      case
-      when request.format.json?
-        # 400で返すと axios.js のところにjsonの内容を返せないので結局200で返すしかない
-        if params[:__STATUS_200_IF_ERROR__] || true
-          status = 200          # なんでも棋譜変換だけ特別にエラーとせずアプリ内でエラーを表示する
-        else
-          status = 400
-        end
-        render json: as_bs_error(error), status: status
-      when request.format.png?
-        # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
-        send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
-        # when request.format.html?
-        #   # 野良棋譜投稿の場合は滅多に使われないので通知する
-        #   #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
-        #   # で確認できる
-        #   behavior_after_rescue(error_html_build(error))
+      if from_googlebot?
+        render plain: error.message, status: 404
       else
-        # http://localhost:3000/share-board.kif?body=position%20startpos%20moves%205i5e
-        render plain: error.message
+        body = [error.message, params].join("\n")
+        SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
+        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
+
+        case
+        when request.format.json?
+          # 400で返すと axios.js のところにjsonの内容を返せないので結局200で返すしかない
+          if params[:__STATUS_200_IF_ERROR__] || true
+            status = 200          # なんでも棋譜変換だけ特別にエラーとせずアプリ内でエラーを表示する
+          else
+            status = 400
+          end
+          render json: as_bs_error(error), status: status
+        when request.format.png?
+          # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/422
+          send_file Rails.root.join("app/assets/images/fallback.png"), type: Mime[:png], disposition: "inline", status: 422
+          # when request.format.html?
+          #   # 野良棋譜投稿の場合は滅多に使われないので通知する
+          #   #   EXCEPTION_NOTIFICATION_ENABLE=1 foreman s
+          #   # で確認できる
+          #   behavior_after_rescue(error_html_build(error))
+        else
+          # http://localhost:3000/share-board.kif?body=position%20startpos%20moves%205i5e
+          render plain: error.message
+        end
       end
     end
   end
