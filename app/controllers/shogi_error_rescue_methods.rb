@@ -46,7 +46,7 @@ module ShogiErrorRescueMethods
         sleep(0.5)
       end
 
-      if from_googlebot?
+      if from_crawl_bot?
         render plain: error.message, status: 404
       else
         body = [error.message, params].join("\n")

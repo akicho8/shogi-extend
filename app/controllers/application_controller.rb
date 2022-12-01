@@ -63,9 +63,9 @@ class ApplicationController < ActionController::Base
     return_to
   end
 
-  def from_googlebot?
+  def from_crawl_bot?
     if v = request.user_agent
-      v.match?(/Googlebot/i)
+      v.match?(/Googlebot|PetalBot/i)
     end
   end
 

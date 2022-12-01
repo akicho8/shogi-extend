@@ -180,7 +180,7 @@ module BattleControllerSharedMethods
     end
 
     def access_log_create(record)
-      if from_googlebot?
+      if from_crawl_bot?
         return
       end
       record.update_columns(accessed_at: Time.current)

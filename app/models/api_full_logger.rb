@@ -18,7 +18,7 @@ class ApiFullLogger
     if Rails.env.development? || Rails.env.staging? || context.params["__API_LOG_FORCE__"]
       return true
     end
-    if context.from_googlebot?
+    if context.from_crawl_bot?
       return
     end
     if request.origin.to_s == AppConfig[:my_request_origin]
