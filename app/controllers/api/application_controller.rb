@@ -6,7 +6,6 @@ module Api
 
     before_action do
       ApiFullLogger.new(self).perform
-      api_log!
     end
 
     def api_login_required
