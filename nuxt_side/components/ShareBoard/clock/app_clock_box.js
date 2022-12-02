@@ -119,11 +119,33 @@ export const app_clock_box = {
           if (t === 10 || t === 20 || t === 30) {
             this.cc_byoyomi(`${t}秒`)
           }
-          if (t <= 9) {
-            this.cc_byoyomi(t)
+          if (key === "read_sec") {
+            if (t <= this.cc_byoyomi_start_for_read_sec(single_clock)) {
+              this.cc_byoyomi(t)
+            }
+          } else {
+            if (t <= 9) {
+              this.cc_byoyomi(t)
+            }
           }
         },
       })
+    },
+
+    // 秒読み10秒設定のとき毎回9から読み上げると騒いので10秒なら5秒から読み上げる
+    // 同様に5秒なら3秒からとする
+    cc_byoyomi_start_for_read_sec(single_clock) {
+      const sec = single_clock.initial_read_sec
+      if (sec <= 5) {
+        return 3
+      }
+      if (sec <= 10) {
+        return 5
+      }
+      if (sec <= 15) {
+        return 7
+      }
+      return 9
     },
 
     cc_byoyomi(s) {
