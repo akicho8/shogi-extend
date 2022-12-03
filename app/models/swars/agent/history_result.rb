@@ -26,7 +26,7 @@ module Swars
         @new_keys ||= yield_self do
           av = all_keys.collect(&:to_s)
           av = av - Battle.where(key: av).pluck(:key)
-          av.collect { |e| BattleKey.wrap(e) }
+          av.collect { |e| BattleKey.create(e) }
         end
       end
 

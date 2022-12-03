@@ -3,15 +3,15 @@ require "rails_helper"
 module Swars
   RSpec.describe BattleKey, type: :model, swars_spec: true do
     let(:key) { "alice-bob-20130531_010024" }
-    let(:object) { BattleKey.wrap(key) }
+    let(:object) { BattleKey.create(key) }
 
     describe "ClassMethods" do
       it "[]" do
         assert { BattleKey["alice-bob-20130531_010024"].kind_of? BattleKey }
       end
 
-      it "wrap" do
-        assert { BattleKey.wrap("alice-bob-20130531_010024").kind_of? BattleKey }
+      it "create" do
+        assert { BattleKey.create("alice-bob-20130531_010024").kind_of? BattleKey }
       end
     end
 

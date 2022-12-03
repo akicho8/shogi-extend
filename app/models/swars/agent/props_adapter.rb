@@ -29,7 +29,7 @@ module Swars
 
       # 対局KEY
       def key
-        @key ||= options[:key] || BattleKey.wrap(props.fetch("name"))
+        @key ||= options[:key] || BattleKey.create(props.fetch("name"))
       end
 
       # 対局日時

@@ -1,5 +1,7 @@
 module Swars
   class BattleKeyValidator
+    REGEXP = /\w+-\w+-\d+_\d+/
+
     class InvalidKey < ArgumentError
     end
 
@@ -24,7 +26,7 @@ module Swars
     end
 
     def valid?
-      key.to_s.match?(/\A\w+-\w+-\d+_\d+\z/)
+      key.to_s.match?(/\A#{REGEXP}\z/)
     end
 
     def invalid?

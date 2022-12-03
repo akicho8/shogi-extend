@@ -2,10 +2,10 @@ module Swars
   class BattleKey
     class << self
       def [](key)
-        wrap(key)
+        create(key)
       end
 
-      def wrap(key)
+      def create(key)
         if key.kind_of? self
           return key
         end

@@ -80,7 +80,9 @@ module Swars
     def primary_record_key
       @primary_record_key ||= yield_self do
         if query = params[:query].presence
-          BattleUrl.key(query)
+          if battle_url = BattleUrlExtractor.new(query).battle_url
+            battle_url.battle_key
+          end
         end
       end
     end
@@ -276,7 +278,7 @@ module Swars
       @import_errors.collect { |e|
         [
           e[:error].message.strip,
-          BattleKey.wrap(e[:key]).originator_url,
+          BattleKey.create(e[:key]).originator_url,
         ].collect { |e| "#{e}\n" }.join
       }.join("\n")
     end

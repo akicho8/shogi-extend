@@ -2,44 +2,20 @@ require "rails_helper"
 
 module Swars
   RSpec.describe BattleUrl, type: :model, swars_spec: true do
-    let(:key) { BattleKey.wrap("alice-bob-20200927_180900") }
-    let(:url) { "https://shogiwars.heroz.jp/games/#{key}" }
+    let(:battle_key) { BattleKey.create("alice-bob-20200927_180900") }
+    let(:raw_url) { "https://shogiwars.heroz.jp/games/#{battle_key}" }
     let(:text) { "棋譜 #{url}" }
 
-    describe "ClassMethods" do
-      it "valid?" do
-        assert { BattleUrl.valid?(text) }
-      end
-
-      it "invalid?" do
-        assert { BattleUrl.invalid?("xxx") }
-      end
-
-      it "url" do
-        assert { BattleUrl.url(text) == url }
-      end
-
-      it "key" do
-        assert { BattleUrl.key(text) == key }
-      end
-
-      it "user_key" do
-        assert { BattleUrl.user_key(text) == "alice" }
-      end
+    it "battle_key" do
+      assert { BattleUrl.new(raw_url).battle_key == battle_key }
     end
 
-    describe "InstanceMethods" do
-      it "url" do
-        assert { BattleUrl.new(text).url == url }
-      end
+    it "user_key" do
+      assert { BattleUrl.new(raw_url).user_key == "alice" }
+    end
 
-      it "key" do
-        assert { BattleUrl.new(text).key == key }
-      end
-
-      it "user_key" do
-        assert { BattleUrl.new(text).user_key == "alice" }
-      end
+    it "to_s" do
+      assert { BattleUrl.new(raw_url).to_s == raw_url }
     end
   end
 end
