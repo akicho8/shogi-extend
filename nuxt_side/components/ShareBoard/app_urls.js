@@ -95,7 +95,7 @@ export const app_urls = {
     // 履歴にも含める情報
     url_share_params() {
       return {
-        abstract_viewpoint: this.abstract_viewpoint,
+        abstract_viewpoint: this.sp_viewpoint,
         color_theme_key:    this.color_theme_key,
       }
     },
