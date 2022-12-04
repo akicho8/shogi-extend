@@ -16,7 +16,7 @@
       sp_run_mode="view_mode"
       :sp_body="sp_body"
       :sp_turn="sp_turn"
-      :sp_viewpoint.sync="sp_viewpoint"
+      :sp_viewpoint.sync="viewpoint"
       :sp_board_cell_left_click_user_handle="() => true"
       sp_summary="is_summary_off"
       sp_slider="is_slider_on"
@@ -56,7 +56,7 @@ export default {
       // ShogiPlayerのパラメータ
       sp_body:       null,
       sp_turn:       null,
-      sp_viewpoint:  null,
+      viewpoint:  null,
 
       // ShogiPlayerの状態を受けとる用
       short_sfen: null,
@@ -105,7 +105,7 @@ export default {
     silent_reset() {
       this.sp_body      = this.default_sp_body
       this.sp_turn      = this.default_sp_turn
-      this.sp_viewpoint = this.default_sp_viewpoint
+      this.viewpoint = this.default_sp_viewpoint
 
       this.index = this.sp_turn
       this.__assert__(this.present_p(this.sp_body), "this.present_p(this.sp_body)")
@@ -158,7 +158,7 @@ export default {
       this.emit_params = {
         base_sfen: this.base_sfen,    // 開始局面
         moves:     moves,             // 範囲の moves
-        viewpoint: this.sp_viewpoint, // 視点
+        viewpoint: this.viewpoint, // 視点
         full_sfen: this.sp_body,      // moves を含む sfen
       }
       this.clog(this.emit_params)

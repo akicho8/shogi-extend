@@ -77,14 +77,14 @@ class KifuParser
           # Nuxt.js の不具合で :body => core.to_sfen は動かなかったが 2.15.8 で直ったのでそれでもいい
           # :body               => core.to_sfen,
           # :body               => DotSfen.escape(core.to_sfen),
-          :xbody              => SafeSfen.encode(core.to_sfen),
-          :title              => params[:title],
-          :black              => params[:black],
-          :white              => params[:white],
-          :member             => params[:member],
-          :other              => params[:other],
-          :turn               => params[:turn],
-          :abstract_viewpoint => params[:abstract_viewpoint],
+          :xbody     => SafeSfen.encode(core.to_sfen),
+          :title     => params[:title],
+          :black     => params[:black],
+          :white     => params[:white],
+          :member    => params[:member],
+          :other     => params[:other],
+          :turn      => params[:turn],
+          :viewpoint => params[:viewpoint],
         }.compact,
       })
   end

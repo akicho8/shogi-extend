@@ -32,7 +32,6 @@ export const app_urls = {
       return this.url_merge({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別
-        image_viewpoint: this.sp_viewpoint, // abstract_viewpoint より image_viewpoint の方を優先する
       })
     },
 
@@ -72,8 +71,8 @@ export const app_urls = {
       const params = {
         xbody: SafeSfen.encode(this.new_sfen),      // プレビュー盤のSFEN
         turn: this.new_turn,                        // プレビュー盤の手数
-        image_viewpoint: this.sp_viewpoint,         // メインの盤よりプレビュー盤の視点を優先させたいため
-        ...this.base.url_share_params,      // 共有するパラメータ
+        viewpoint: this.viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
+        ...this.base.url_share_params,              // 共有するパラメータ
         ...this.action_log.player_names_with_title, // 面子情報
       }
       return this.base.pc_url_params_clean(params)
@@ -84,7 +83,7 @@ export const app_urls = {
         kif_url: this.current_kif_url,
         sfen: this.new_sfen,
         turn: this.new_turn,
-        viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
       })
     },
   },

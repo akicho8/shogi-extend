@@ -2,8 +2,8 @@
 #
 # url
 #   http://localhost:3000/share-board
-#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=self
-#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&abstract_viewpoint=black
+#   http://localhost:3000/share-board?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&viewpoint=black
+#   http://localhost:3000/share-board.png?body=position+sfen+ln1g1g1nl%2F1ks2r3%2F1pppp1bpp%2Fp3spp2%2F9%2FP1P1SP1PP%2F1P1PP1P2%2F1BK1GR3%2FLNSG3NL+b+-+1&turn=0&title=%E3%83%AA%E3%83%AC%E3%83%BC%E5%B0%86%E6%A3%8B&viewpoint=black
 #
 # ・指したら record を nil に設定している→やめ
 # ・そうするとメニューで「棋譜コピー」したときに record がないためこちらの create を叩きにくる→やめ
@@ -81,38 +81,11 @@ module ShareBoardControllerMethods
     # パラメータで画像が変化するためキャッシュは危険
     # Rails側でレコードを作ってキャッシュするときに見ているのはSFENだけ
     if request.format.png?
-      # if stale?(current_record)
-      # expires_in 3.hours, public: true
-
-      # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-      # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
-
-      # png = current_record.to_dynamic_png(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-      # send_data png, type: Mime[:png], disposition: current_disposition, filename: current_filename
-
-      # ダウンロードの場合
-
-      # リダイレクトしつつ disposition: attachment で返すことはできないので必然的に send_file を使うことになる
-      # if current_disposition == :attachment
-      #   path = current_record.to_real_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-      #   if stale?(last_modified: Pathname(path).mtime, public: true)
-      #     send_file path, type: Mime[:png], disposition: current_disposition, filename: current_filename
-      #   end
-      #   return
-      # end
-
-      # # ブラウザで直接表示
-      # if params[:redirect_to]
-      #   # Slackなどはこちらでもよい
-      #   # redirect_to current_record.to_browser_path(params.merge(turn: initial_turn, viewpoint: image_viewpoint))
-      # else
-      # end
-
       # リダイレクトすると Twitter Card が不安定になり、Card Validator では実際警告が出ているため、
       # Twitter では og:image のパスは直接画像を返さないといけない
       # Developer Tool でキャッシュOFFでリロードすると確認すると2回目が 302 で返され send_file がスキップされていることがわかる
       # params2 = params.slice(*Bioshogi::BinaryFormatter.all_options.keys)
-      params2 = params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: image_viewpoint)
+      params2 = params.merge(recipe_key: :is_recipe_png, turn: initial_turn, viewpoint: viewpoint)
       params2[:color_theme_key] ||= "is_color_theme_real"
       media_builder = MediaBuilder.new(current_record, params2)
       path = media_builder.to_real_path
@@ -159,22 +132,13 @@ module ShareBoardControllerMethods
   # ので、こっちで作るのであってる
   # http://localhost:3000/api/share_board.json?turn=1&title=%E3%81%82%E3%81%84%E3%81%88%E3%81%86%E3%81%8A
   def current_og_image_path
-
-    # if true
-    #   # params[:image_viewpoint] が渡せていないけどこれでいい
-    #   # url_for([:share_board, body: current_record.sfen_body, only_path: false, format: "png", turn: initial_turn, image_viewpoint: image_viewpoint])
-    # else
-    #   # params[:image_viewpoint] をそのまま渡すために params にマージしないといけない
-    #   # url_for([:share_board, params.to_unsafe_h.merge(body: current_record.sfen_body, format: "png")])
-    # end
-
     # ../../nuxt_side/components/ShareBoard/ShareBoardApp.vue の permalink_for と一致させること
     args = params.to_unsafe_h.except(:action, :controller, :format)
     args = args.merge({
-        :turn               => initial_turn,
-        :title              => current_title,
-        :body               => current_record.sfen_body,
-        :abstract_viewpoint => abstract_viewpoint,
+        :turn      => initial_turn,
+        :title     => current_title,
+        :body      => current_record.sfen_body,
+        :viewpoint => viewpoint,
       })
     "/share-board.png?#{args.to_query}"
   end
@@ -200,13 +164,11 @@ module ShareBoardControllerMethods
   end
 
   def current_json
-
     attrs = current_record.as_json(only: [:sfen_body, :turn_max])
     attrs = attrs.merge({
-        :initial_turn       => initial_turn,
-        :board_viewpoint    => board_viewpoint,
-        :abstract_viewpoint => abstract_viewpoint,
-        :title              => current_title,
+        :initial_turn    => initial_turn,
+        :viewpoint       => viewpoint,
+        :title           => current_title,
       })
 
     # リアルタイム共有
@@ -230,36 +192,14 @@ module ShareBoardControllerMethods
     current_record.adjust_turn(v)
   end
 
-  def board_viewpoint
-    if v = params[:board_viewpoint].presence
-      return v
-    end
-    # # 次に指す人の視点で開くなら
-    # if true
-    #   number_of_turns_in_consideration_of_the_frame_dropping.odd?
-    # end
-    abstract_viewpoint_info.board_viewpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
+  def viewpoint_info
+    ViewpointInfo.fetch(viewpoint)
   end
 
-  def image_viewpoint
-    # 視点設定用
-    # ビュー側で確認用画像を表示するため board_viewpoint の結果で画像をflipする
-    if params[:__board_viewpoint_as_image_viewpoint__] == "true"
-      return board_viewpoint
-    end
-
-    if v = params[:image_viewpoint].presence
-      return v
-    end
-    abstract_viewpoint_info.image_viewpoint.call(number_of_turns_in_consideration_of_the_frame_dropping)
-  end
-
-  def abstract_viewpoint_info
-    AbstractViewpointInfo.fetch(abstract_viewpoint)
-  end
-
-  def abstract_viewpoint
-    AbstractViewpointInfo.valid_key(params[:abstract_viewpoint], AbstractViewpointInfo.default_key)
+  def viewpoint
+    key = params[:viewpoint]
+    key ||= params[:abstract_viewpoint] # 誰かがブックマークしているかもしれないため過去のキーも使えるようにしておく
+    ViewpointInfo.valid_key(key, :black)
   end
 
   # 駒落ちを考慮した擬似ターン数

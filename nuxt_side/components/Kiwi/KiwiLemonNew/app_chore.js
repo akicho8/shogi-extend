@@ -20,7 +20,7 @@ export const app_chore = {
             if (e.body) {
               const params = {
                 xbody: SafeSfen.encode(e.body),
-                abstract_viewpoint: this.viewpoint_key,
+                viewpoint: this.viewpoint,
               }
               this.$router.push({name: "share-board", query: params})
             }

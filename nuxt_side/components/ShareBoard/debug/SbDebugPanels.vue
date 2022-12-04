@@ -67,9 +67,9 @@
       .panel-heading
         | 将棋盤
       a.panel-block(@click="TheSb.sp_state_reset") 持ち上げた駒を元に戻す
-      a.panel-block(@click="TheSb.sp_viewpoint = 'black'") ☗視点
-      a.panel-block(@click="TheSb.sp_viewpoint = 'white'") ☖視点
-      .panel-block 現在の視点 {{TheSb.sp_viewpoint}}
+      a.panel-block(@click="TheSb.viewpoint = 'black'") ☗視点
+      a.panel-block(@click="TheSb.viewpoint = 'white'") ☖視点
+      .panel-block 現在の視点 {{TheSb.viewpoint}}
 
   .column.is-2
     .panel
@@ -166,7 +166,7 @@
       .panel-block cc_params:{{TheSb.cc_params_inspect(TheSb.cc_params)}}
       .panel-block next_turn_message:{{TheSb.next_turn_message}}
       .panel-block latest_foul_name:{{TheSb.latest_foul_name}}
-      .panel-block abstract_viewpoint:{{TheSb.abstract_viewpoint}}
+      .panel-block viewpoint:{{TheSb.viewpoint}}
 
   .column.is-6.is-clipped
     .panel

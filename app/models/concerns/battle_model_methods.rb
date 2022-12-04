@@ -320,7 +320,7 @@ module BattleModelMethods
     def share_board_path
       params = {
         body: sfen_body.gsub(/\s+/, "."),
-        abstract_viewpoint: "black",
+        viewpoint: "black",
       }
       "/share-board?#{params.to_query}"
     end

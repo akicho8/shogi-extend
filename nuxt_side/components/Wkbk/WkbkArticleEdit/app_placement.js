@@ -26,7 +26,7 @@ export const app_placement = {
                   // moves がないので確定
                   this.toast_ok("反映しました")
                   this.base_sfen_set(e.body)
-                  // this.sp_viewpoint = "black"
+                  // this.viewpoint = "black"
                 } else {
                   // moves があるので局面を確定してもらう
                   let default_sp_turn = KentoUrlParser.parse(any_source).turn_guess

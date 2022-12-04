@@ -24,7 +24,7 @@ export const app_form = {
       rect_size_key:         null, // 画像サイズ
       rect_width:            null, // w
       rect_height:           null, // h
-      viewpoint_key:         null, // 視点
+      viewpoint:             null, // 視点
       color_theme_key:       null, // 色テーマ
       audio_theme_key:       null, // 曲テーマ
       factory_method_key:    null, // 生成方法
@@ -327,7 +327,7 @@ export const app_form = {
     rect_size_info()      { return RectSizeInfo.fetch(this.rect_size_key) },
     ParamInfo()                { return ParamInfo                                        },
     ViewpointInfo()            { return ViewpointInfo                                    },
-    viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint_key)          },
+    viewpoint_info()           { return ViewpointInfo.fetch(this.viewpoint)          },
     ColorThemeInfo()           { return ColorThemeInfo                                   },
     color_theme_info()         { return ColorThemeInfo.fetch(this.color_theme_key)       },
     FactoryMethodInfo()           { return FactoryMethodInfo                                   },
@@ -368,7 +368,7 @@ export const app_form = {
             turn_embed_key:    this.turn_embed_key,
             page_duration:     this.page_duration,
             end_duration:      this.end_duration,
-            viewpoint:         this.viewpoint_key,
+            viewpoint:         this.viewpoint,
             color_theme_key:   this.color_theme_key,
             audio_theme_key:   this.audio_theme_key,
             piece_font_weight_key:         this.piece_font_weight_key,

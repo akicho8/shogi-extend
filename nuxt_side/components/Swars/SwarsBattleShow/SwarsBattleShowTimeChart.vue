@@ -89,7 +89,7 @@ const CHART_CONFIG_DEFAULT = {
         ticks: {
           fontSize: FONT_SIZE,
           fontColor: TICKS_FONT_COLOR,
-          reverse: false,       // 反転する？ (this.sp_viewpoint を 外から設定して判定する)
+          reverse: false,       // 反転する？ (this.viewpoint を 外から設定して判定する)
 
           stepSize: 30,         // N秒毎の表示
           maxTicksLimit: 7,     // 縦の最大目盛り数
@@ -379,7 +379,7 @@ export default {
 
   props: {
     record:            { required: true, }, // バトル情報
-    sp_viewpoint:      { required: true, }, // 視点
+    viewpoint:      { required: true, }, // 視点
     time_chart_params: { required: true, }, // 表示する内容
   },
 
@@ -431,8 +431,8 @@ export default {
       this.chart_update()
     },
 
-    sp_viewpoint(v, ov) {
-      this.debug_alert(`sp_viewpoint: ${ov} -> ${v}`)
+    viewpoint(v, ov) {
+      this.debug_alert(`viewpoint: ${ov} -> ${v}`)
       this.chart_flip_set()
       this.chart_update()
     },
@@ -570,7 +570,7 @@ export default {
 
     // flip 状態をチャートに反映
     chart_flip_set() {
-      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.sp_viewpoint === "white")
+      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.viewpoint === "white")
     },
 
     // 61 -> 1分1秒

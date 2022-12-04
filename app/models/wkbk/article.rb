@@ -231,9 +231,9 @@ module Wkbk
     def og_image_path
       if persisted?
         v = {}
-        v[:turn]               = 0
-        v[:body]               = init_sfen
-        v[:abstract_viewpoint] = viewpoint
+        v[:turn]      = 0
+        v[:body]      = init_sfen
+        v[:viewpoint] = viewpoint
         "/share-board.png?#{v.to_query}"
       end
     end

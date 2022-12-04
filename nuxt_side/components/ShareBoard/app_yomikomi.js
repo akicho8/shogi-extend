@@ -49,7 +49,7 @@ export const app_yomikomi = {
           this.honpu_log_set()           // 読み込んだ棋譜を本譜とする
           this.honpu_share()             // それを他の人に共有する
 
-          this.sp_viewpoint = "black"
+          this.viewpoint = "black"
           this.ac_log("棋譜読込", e.body)
 
           this.yomikomi_modal_instance.close()

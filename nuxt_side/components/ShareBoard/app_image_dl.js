@@ -23,7 +23,7 @@ export const app_image_dl = {
     image_dl_preview_url(options = {}) {
       return this.url_merge({
         format: "png",
-        abstract_viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
         disposition: "inline",
         ...this.image_size_info.to_params,
         ...options,
