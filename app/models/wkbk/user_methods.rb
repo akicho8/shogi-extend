@@ -15,7 +15,7 @@ module Wkbk
             if e.moves_answer_validate_skip.nil?
               e.moves_answer_validate_skip = true
             end
-            e.title ||= SecureRandom.hex
+            e.title ||= "title"
             e.init_sfen ||= "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1"
             e.moves_answers.build(moves_str: "G*5b")
           end
@@ -26,7 +26,7 @@ module Wkbk
       has_many :wkbk_books, class_name: "Wkbk::Book", dependent: :destroy do
         def create_mock1(attrs = {})
           create!(attrs) do |e|
-            e.title ||= SecureRandom.hex
+            e.title ||= "title"
             e.description ||= SecureRandom.hex
           end
         end

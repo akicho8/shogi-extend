@@ -35,7 +35,7 @@ export const app_sp = {
       // 次の人の視点にする
       if (false) {
         const location = this.current_sfen_info.location_by_offset(e.last_move_info.next_turn_offset)
-        this.sp_viewpoint = location.key
+        this.viewpoint = location.key
       }
     },
 

@@ -99,7 +99,7 @@ export const app_order_main = {
       this.__assert__(this.user_name, "this.user_name")
       const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
       if (location) {
-        this.sp_viewpoint = location.key                     // その視点に変更する
+        this.viewpoint = location.key                     // その視点に変更する
       }
     },
 

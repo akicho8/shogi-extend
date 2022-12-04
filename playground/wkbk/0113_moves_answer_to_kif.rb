@@ -13,8 +13,8 @@ puts Wkbk::Article.first.moves_answers.first.to_kif
 # >> タグ：
 # >> 解説：
 # >> 正解番号：1
-# >> *画像URL：http://localhost:3000/share-board.png?abstract_viewpoint=black&body=position+sfen+7k1%2F9%2F9%2F9%2F9%2F9%2F9%2F9%2F9+b+GSN2r2b3g3s3n4l18p+1+moves+S%2A2c+G%2A2b+N%2A3c+2a1a+G%2A2a+2b2a+3c2a%2B+1a2a+G%2A2b&turn=0
-# >> *共有将棋盤：http://localhost:3000/share-board?abstract_viewpoint=black&body=position+sfen+7k1%2F9%2F9%2F9%2F9%2F9%2F9%2F9%2F9+b+GSN2r2b3g3s3n4l18p+1+moves+S%2A2c+G%2A2b+N%2A3c+2a1a+G%2A2a+2b2a+3c2a%2B+1a2a+G%2A2b&title=%E5%AF%84%E3%81%9B%E3%81%AE%E6%89%8B%E7%AD%8B200+001&turn=0
+# >> *画像URL：http://localhost:3000/share-board.png?viewpoint=black&body=position+sfen+7k1%2F9%2F9%2F9%2F9%2F9%2F9%2F9%2F9+b+GSN2r2b3g3s3n4l18p+1+moves+S%2A2c+G%2A2b+N%2A3c+2a1a+G%2A2a+2b2a+3c2a%2B+1a2a+G%2A2b&turn=0
+# >> *共有将棋盤：http://localhost:3000/share-board?viewpoint=black&body=position+sfen+7k1%2F9%2F9%2F9%2F9%2F9%2F9%2F9%2F9+b+GSN2r2b3g3s3n4l18p+1+moves+S%2A2c+G%2A2b+N%2A3c+2a1a+G%2A2a+2b2a+3c2a%2B+1a2a+G%2A2b&title=%E5%AF%84%E3%81%9B%E3%81%AE%E6%89%8B%E7%AD%8B200+001&turn=0
 # >> 人間向けの解答：▲23銀打 △22金打 ▲33桂打 △11玉 ▲21金打 △同金 ▲同桂成 △同玉 ▲22金打
 # >> 正解作成日時：2021-02-24 21:50
 # >> 後手の持駒：飛二 角二 金三 銀三 桂三 香四 歩十八

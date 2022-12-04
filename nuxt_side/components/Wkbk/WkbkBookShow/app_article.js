@@ -14,7 +14,7 @@ export const app_article = {
 
   computed: {
     // 視点
-    current_sp_viewpoint() {
+    current_viewpoint() {
       if (this.current_exist_p) {
         const on = this.viewpoint_flip_info.key === "flip_on"
         return Location.fetch(this.current_article.viewpoint).flip_if(on).key

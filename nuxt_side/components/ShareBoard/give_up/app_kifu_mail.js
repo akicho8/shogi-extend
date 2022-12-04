@@ -29,7 +29,7 @@ export const app_kifu_mail = {
         source: this.current_sfen,
         turn: this.current_turn,
         title: this.current_title,
-        abstract_viewpoint: this.abstract_viewpoint,
+        viewpoint: this.viewpoint,
         sb_judge_key: options.sb_judge_key,
         ...this.player_names,
       }

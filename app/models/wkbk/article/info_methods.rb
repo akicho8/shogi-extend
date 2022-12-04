@@ -46,12 +46,12 @@ module Wkbk
       end
 
       def share_board_params
-        { body: main_sfen, turn: 0, abstract_viewpoint: viewpoint }
+        { body: main_sfen, turn: 0, viewpoint: viewpoint }
       end
 
       # Twitter画像が表示できる url_for にそのまま渡すパラメータ
       def shared_image_params
-        [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, abstract_viewpoint: viewpoint]
+        [:share_board, body: main_sfen, only_path: false, format: "png", turn: 0, viewpoint: viewpoint]
       end
 
       # 配置 + 1問目

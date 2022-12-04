@@ -36,7 +36,7 @@ module Wkbk
       end
 
       def share_board_params
-        { body: full_sfen, turn: 0, abstract_viewpoint: article.viewpoint }
+        { body: full_sfen, turn: 0, viewpoint: article.viewpoint }
       end
     end
   end

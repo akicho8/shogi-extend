@@ -18,7 +18,7 @@ end
 # >> https://tinyurl.com/2lkn3lly
 # >>
 # >> ▼*再生URLの元
-# >> http://localhost:4000/share-board?abstract_viewpoint=white&black=%28black%29&member=%28member%29&other=%28other%29&title=%28title%29&turn=2&white=%28white%29&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgNmk1aCA0YTViIDRpNGggNmE2Yg
+# >> http://localhost:4000/share-board?viewpoint=white&black=%28black%29&member=%28member%29&other=%28other%29&title=%28title%29&turn=2&white=%28white%29&xbody=cG9zaXRpb24gc2ZlbiBsbnNna2dzbmwvMXI1YjEvcHBwcHBwcHBwLzkvOS85L1BQUFBQUFBQUC8xQjVSMS9MTlNHS0dTTkwgYiAtIDEgbW92ZXMgNmk1aCA0YTViIDRpNGggNmE2Yg
 # >>
 # >> ▼*KENTO
 # >> https://www.kento-shogi.com/?initpos=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1&moves=6i5h.4a5b.4i4h.6a6b
@@ -40,13 +40,13 @@ end
 # >> まで4手で後手の勝ち
 # >>
 # >> ▼*share_board_url
-# >> http://localhost:3000/share-board?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&abstract_viewpoint=black
+# >> http://localhost:3000/share-board?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&viewpoint=black
 # >>
 # >> ▼*share_board_url (TinyUrl)
 # >> https://tinyurl.com/2gy4qmre
 # >>
 # >> ▼*piyo_url
-# >> piyoshogi://?viewpoint=black&num=4&url=http://localhost:3000/share-board.kif?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&abstract_viewpoint=black
+# >> piyoshogi://?viewpoint=black&num=4&url=http://localhost:3000/share-board.kif?body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1.moves.6i5h.4a5b.4i4h.6a6b&turn=4&viewpoint=black
 # >>
 # >> ▼*piyo_url (TinyUrl)
 # >> https://tinyurl.com/2e74fddc

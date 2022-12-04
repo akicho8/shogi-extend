@@ -20,7 +20,7 @@ export const app_source_trim = {
             // moves があるので範囲を確定してもらう
             this.sfen_trim_modal_handle({
               default_sp_body: e.body,                  // KIFやURLから変換後の綺麗なSFEN
-              default_sp_viewpoint: this.viewpoint_key, // 視点
+              default_sp_viewpoint: this.viewpoint, // 視点
               next_jump_to: "last",                     // 終了地点の選択は最後から開始
             })
           }
@@ -35,7 +35,7 @@ export const app_source_trim = {
         component: SfenTrimModal,
         events: {
           "update:apply": e => {
-            this.viewpoint_key = e.viewpoint
+            this.viewpoint = e.viewpoint
             this.body_update_by(e.full_sfen)
             modal_instance.close()
           },
