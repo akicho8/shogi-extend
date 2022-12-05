@@ -31,7 +31,6 @@ module KifuExtractor
       CaseUrlTrustworthyFileSearchInHtml,
       CaseUrlUnknown,
       # Content
-      CaseContentShogimap,
       CaseContentSponichi,
       CaseContentTactic,
       CaseContentPreset,
