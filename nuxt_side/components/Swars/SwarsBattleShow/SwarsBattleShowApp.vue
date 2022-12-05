@@ -21,7 +21,7 @@ client-only
             sp_slider="is_slider_on"
             sp_summary="is_summary_off"
             sp_controller="is_controller_on"
-            :sp_viewpoint.sync="sp_viewpoint"
+            :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
             @update:short_sfen="v => short_sfen = v"
@@ -34,7 +34,7 @@ client-only
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="current_turn"
-        :sp_viewpoint="sp_viewpoint"
+        :sp_viewpoint="viewpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
@@ -68,7 +68,7 @@ client-only
       //-     | record.outbreak_turn: {{record.outbreak_turn}}
       //-     | record.turn_max: {{record.turn_max}}
       //-     | record.turn: {{record.turn}}
-      //-     | sp_viewpoint: {{sp_viewpoint}}
+      //-     | viewpoint: {{viewpoint}}
       DebugPre(v-if="development_p") {{record}}
 </template>
 
@@ -99,7 +99,7 @@ export default {
 
       sp_run_mode: null,       // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
       current_turn: null,      // KENTOに渡すための手番
-      sp_viewpoint: null,     // 視点
+      viewpoint: null,     // 視点
       short_sfen: null,          // BOD タイプの sfen
 
       time_chart_p: false,     // 時間チャートを表示する？
@@ -154,7 +154,7 @@ export default {
 
   // watch: {
   //   current_turn() { this.url_replace() },
-  //   sp_viewpoint() { this.url_replace() },
+  //   viewpoint() { this.url_replace() },
   // },
 
   methods: {
@@ -182,7 +182,7 @@ export default {
       this.$router.replace({query: {
         ...this.$route.query,
         turn: this.current_turn,
-        viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
       }}, () => {}, () => {})
     },
 
@@ -213,7 +213,7 @@ export default {
       this.sp_run_mode = "view_mode"
 
       // 最初の上下反転状態
-      this.sp_viewpoint = this.default_viewpoint
+      this.viewpoint = this.default_viewpoint
 
       // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
       // これは勝手にやらない方がいい？
@@ -310,7 +310,7 @@ export default {
         url: `${this.record.show_path}.png`,
         query: {
           turn: this.current_turn,
-          viewpoint: this.sp_viewpoint,
+          viewpoint: this.viewpoint,
           color_theme_key: this.color_theme_key,
         },
       })
@@ -332,7 +332,7 @@ export default {
     permalink_url() {
       return QueryString.stringifyUrl({
         url: `${this.$config.MY_SITE_URL}/swars/battles/${this.record.key}`,
-        query: { turn: this.current_turn, viewpoint: this.sp_viewpoint },
+        query: { turn: this.current_turn, viewpoint: this.viewpoint },
       })
     },
 
@@ -341,7 +341,7 @@ export default {
         kif_url: `${this.$config.MY_SITE_URL}${this.record.show_path}.kif`,
         sfen:      this.record.sfen_body,
         turn:      this.current_turn,
-        viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
       })
     },
 
@@ -360,7 +360,7 @@ export default {
         title: "将棋ウォーズ棋譜",
         xbody:  SafeSfen.encode(this.record.sfen_body),
         turn:  this.current_turn,
-        abstract_viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
       }
     },
 
@@ -380,7 +380,7 @@ export default {
       return {
         body: this.record.sfen_body,
         turn: this.current_turn,
-        viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
         ...this.player_info_hash,
       }
     }

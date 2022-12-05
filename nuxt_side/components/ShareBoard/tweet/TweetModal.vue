@@ -34,7 +34,7 @@ export default {
     preview_url(options = {}) {
       return this.TheSb.url_merge({
         format: "png",
-        abstract_viewpoint: this.TheSb.abstract_viewpoint,
+        viewpoint: this.TheSb.viewpoint,
         disposition: "inline",
         ...options,
       })
@@ -44,7 +44,6 @@ export default {
     ogp_image_url() {
       return this.preview_url({
         title: "ogp_image",
-        __board_viewpoint_as_image_viewpoint__: false,
       })
     },
   },

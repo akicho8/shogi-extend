@@ -153,7 +153,7 @@ export default {
           query: {
             xbody: SafeSfen.encode(this.record.all_kifs.sfen),
             turn: force_turn ?? this.fixed_turn,
-            abstract_viewpoint: "black",
+            viewpoint: "black",
             // title: "共有将棋盤 (棋譜変換後の確認)",
           },
         })

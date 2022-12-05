@@ -1,5 +1,4 @@
-import AbstractViewpointKeySelectModal from "./AbstractViewpointKeySelectModal.vue"
-import { AbstractViewpointInfo } from "./models/abstract_viewpoint_info.js"
+import { ViewpointInfo } from "./models/viewpoint_info.js"
 
 import _ from "lodash"
 
@@ -39,16 +38,6 @@ export const app_chore = {
       }
     },
 
-    // 視点設定変更
-    abstract_viewpoint_key_select_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.modal_card_open({
-        component: AbstractViewpointKeySelectModal,
-        props: { base: this.base },
-      })
-    },
-
     // タイトル編集
     title_edit_handle() {
       this.sidebar_p = false
@@ -67,7 +56,7 @@ export const app_chore = {
     // 動画作成
     video_new_handle() {
       this.run_or_room_out_confirm(() => {
-        this.$router.push({name: "video-new", query: {body: this.current_sfen, viewpoint_key: this.sp_viewpoint}})
+        this.$router.push({name: "video-new", query: {body: this.current_sfen, viewpoint: this.viewpoint}})
       })
     },
 
@@ -148,8 +137,8 @@ export const app_chore = {
   },
 
   computed: {
-    AbstractViewpointInfo() { return AbstractViewpointInfo },
-    abstract_viewpoint_info() { return this.AbstractViewpointInfo.fetch(this.abstract_viewpoint) },
+    ViewpointInfo() { return ViewpointInfo },
+    viewpoint_info() { return this.ViewpointInfo.fetch(this.viewpoint) },
 
     exit_warning_p() { return this.ac_room },                   // 退出時警告を出すか？
 

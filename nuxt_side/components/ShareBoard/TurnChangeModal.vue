@@ -13,7 +13,7 @@
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
-        :sp_viewpoint="base.sp_viewpoint"
+        :sp_viewpoint="base.viewpoint"
         :sp_body="sfen"
         :sp_turn="turn"
         @update:turn_offset="v => new_turn = v"

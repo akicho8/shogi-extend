@@ -23,7 +23,7 @@ module KifShowMethods
 
   # curl -I http://localhost:3000/x/1.kif?inline=1
   # curl -I http://localhost:3000/x/1.kif?plain=1
-  # http://localhost:3000/share-board.kif?black=alice&white=bob&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&abstract_viewpoint=black&image_viewpoint=black
+  # http://localhost:3000/share-board.kif?black=alice&white=bob&body=position.sfen.lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL.b.-.1&turn=0&viewpoint=black
   # http://localhost:3000/share-board.kif?black=alice&white=bob&other=carol&title=title&body=position.startpos
   def kif_data_send
     # format はあくまで Rails 側での話なので to_format に変換する

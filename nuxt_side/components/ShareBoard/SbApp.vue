@@ -27,7 +27,7 @@ client-only
       p current_turn_self_p: {{current_turn_self_p}}
       p current_turn_user_name: {{current_turn_user_name}}
       p current_turn: {{current_turn}}
-      p sp_viewpoint: {{sp_viewpoint}}
+      p viewpoint: {{viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
       //- p room_code: {{JSON.stringify(room_code)}}
       //- p user_name: {{JSON.stringify(user_name)}}
@@ -35,9 +35,9 @@ client-only
       //- p 手数: {{current_turn}} / {{turn_offset_max}}
       //- p SFEN: {{current_sfen}}
       //- p タイトル: {{current_title}}
-      //- p 視点: {{abstract_viewpoint}}
+      //- p 視点: {{viewpoint}}
       //- p モード: {{sp_run_mode}}
-      //- p 視点: {{sp_viewpoint}}
+      //- p 視点: {{viewpoint}}
       //- p URL: {{current_url}}
       //- p サイドバー {{sidebar_p}}
 
@@ -230,12 +230,11 @@ export default {
   data() {
     return {
       // watch して url に反映するもの
-      current_sfen:       this.config.record.sfen_body,          // 渡している棋譜
-      current_turn:       this.config.record.initial_turn,       // 現在の手数
-      abstract_viewpoint: this.config.record.abstract_viewpoint, // Twitter画像の向き
+      current_sfen: this.config.record.sfen_body,    // 渡している棋譜
+      current_turn: this.config.record.initial_turn, // 現在の手数
+      viewpoint:    this.config.record.viewpoint,    // Twitter画像の向き
 
       // urlには反映しない
-      sp_viewpoint: this.config.record.board_viewpoint, // 反転用
       turn_offset_max: null,                            // 最後の手数
 
       record:          this.config.record, // バリデーション目的だったが自由になったので棋譜コピー用だけのためにある
@@ -264,7 +263,7 @@ export default {
         this.current_sfen,
         this.current_turn,
         this.current_title,
-        this.abstract_viewpoint,
+        this.viewpoint,
         this.room_code,
         this.color_theme_key,
       ], () => {

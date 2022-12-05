@@ -13,7 +13,7 @@
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"
         :sp_view_mode_soldier_movable="false"
-        :sp_viewpoint.sync="sp_viewpoint"
+        :sp_viewpoint.sync="viewpoint"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
         @update:turn_offset="v => new_turn = v"
@@ -74,11 +74,11 @@ export default {
   data() {
     return {
       new_turn: this.action_log.turn,
-      sp_viewpoint: this.action_log.sp_viewpoint,
+      viewpoint: this.action_log.viewpoint,
     }
   },
   mounted() {
-    this.__assert__(this.sp_viewpoint === "white" || this.sp_viewpoint === "black")
+    this.__assert__(this.viewpoint === "white" || this.viewpoint === "black")
     this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
     this.__assert__('turn' in this.action_log, "'turn' in this.action_log")
   },

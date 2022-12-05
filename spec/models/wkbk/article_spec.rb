@@ -148,11 +148,11 @@ module Wkbk
     end
 
     it "share_board_png_url" do
-      assert { article1.share_board_png_url == "http://localhost:3000/share-board.png?abstract_viewpoint=black&body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&turn=0" }
+      assert { article1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&turn=0&viewpoint=black" }
     end
 
     it "share_board_url" do
-      assert { article1.share_board_url == "http://localhost:4000/share-board?abstract_viewpoint=black&body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=#{article1.title}&turn=0" }
+      assert { article1.share_board_url == "http://localhost:4000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=title&turn=0&viewpoint=black"  }
     end
 
     it "mail_body" do

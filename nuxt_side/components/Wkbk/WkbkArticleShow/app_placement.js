@@ -4,7 +4,7 @@ export const app_placement = {
   data() {
     return {
       sp_body:      null, // 配置の現在の状態
-      sp_viewpoint: null, // 配置の視点
+      viewpoint: null, // 配置の視点
     }
   },
 

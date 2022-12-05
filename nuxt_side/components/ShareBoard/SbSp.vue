@@ -3,7 +3,7 @@
   CustomShogiPlayer.is_mobile_vertical_good_style(
     v-bind="sp_bind"
     v-on="sp_hook"
-    :sp_viewpoint.sync="base.sp_viewpoint"
+    :sp_viewpoint.sync="base.viewpoint"
   )
 
   .footer_buttons(v-if="base.edit_mode_p")

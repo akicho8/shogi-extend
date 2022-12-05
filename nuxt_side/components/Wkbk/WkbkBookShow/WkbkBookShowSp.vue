@@ -13,7 +13,7 @@ MainSection.WkbkBookShowSp
           CustomShogiPlayer(
             sp_mobile_vertical="is_mobile_vertical_on"
             :sp_body="base.sfen_flop(base.current_article.init_sfen)"
-            :sp_viewpoint="base.current_sp_viewpoint"
+            :sp_viewpoint="base.current_viewpoint"
             :sp_turn="0"
             sp_run_mode="play_mode"
             sp_summary="is_summary_off"
@@ -48,7 +48,7 @@ MainSection.WkbkBookShowSp
                   sp_run_mode="view_mode"
                   :sp_body="base.sfen_flop(base.current_article.init_sfen_with(e))"
                   :sp_turn="0"
-                  :sp_viewpoint="base.current_sp_viewpoint"
+                  :sp_viewpoint="base.current_viewpoint"
                   sp_summary="is_summary_off"
                   sp_slider="is_slider_off"
                   sp_controller="is_controller_on"

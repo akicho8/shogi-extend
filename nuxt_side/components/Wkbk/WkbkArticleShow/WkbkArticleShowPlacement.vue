@@ -51,7 +51,7 @@ export default {
 
   created() {
     this.base.sp_body      = this.base.article.init_sfen
-    this.base.sp_viewpoint = this.base.viewpoint
+    this.base.viewpoint = this.base.viewpoint
   },
 
   mounted() {

@@ -55,7 +55,7 @@ export const app_urls = {
     },
 
     // ../../../app/controllers/share_boards_controller.rb の current_og_image_path と一致させること
-    // AbstractViewpointKeySelectModal から新しい abstract_viewpoint が渡されるので params で上書きする
+    // AbstractViewpointKeySelectModal から新しい viewpoint が渡されるので params で上書きする
     url_merge(params = {}) {
       return this.url_for({...this.current_url_params, ...params})
     },
@@ -86,6 +86,7 @@ export const app_urls = {
         xbody: SafeSfen.encode(this.current_sfen),
         turn:  this.current_turn,
         title: this.current_title,
+        viewpoint: this.viewpoint,
         ...this.url_share_params,
         ...this.player_names,
       }
@@ -95,8 +96,7 @@ export const app_urls = {
     // 履歴にも含める情報
     url_share_params() {
       return {
-        abstract_viewpoint: this.sp_viewpoint,
-        color_theme_key:    this.color_theme_key,
+        color_theme_key: this.color_theme_key,
       }
     },
 
@@ -105,7 +105,7 @@ export const app_urls = {
         kif_url: this.current_kif_url,
         sfen: this.current_sfen,
         turn: this.current_turn,
-        viewpoint: this.sp_viewpoint,
+        viewpoint: this.viewpoint,
       })
     },
   },

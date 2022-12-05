@@ -1,6 +1,6 @@
 <template lang="pug">
 .KiwiLemonNewFormPro1
-  SimpleRadioButtons.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint_key")
+  SimpleRadioButtons.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint")
 
   .page_duration_field.field_block
     //- b-field(:message="base.page_duration_message" v-if="false")
