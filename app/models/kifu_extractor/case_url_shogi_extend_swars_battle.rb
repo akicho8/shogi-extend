@@ -1,7 +1,7 @@
 # 将棋ウォーズ棋譜検索対局ページURL
 # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/swars/battles/htrns-kinakom0chi-20211217_190002/")'
 module KifuExtractor
-  class CaseUrlShogiExtendSwarsBattle < Extractor
+  class CaseUrlShogiExtendSwarsBattle < Base
     def resolve
       if uri = extracted_uri
         if uri.path

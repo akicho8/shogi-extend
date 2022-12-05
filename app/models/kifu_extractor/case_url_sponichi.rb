@@ -1,7 +1,7 @@
 # スポニチサイト
 # rails r 'puts KifuExtractor.extract("https://www.sponichi.co.jp/entertainment/news/2022/01/18/kiji/20220118c00041S01002000c.html")'
 module KifuExtractor
-  class CaseUrlSponichi < Extractor
+  class CaseUrlSponichi < Base
     include SponichiSupport
 
     def resolve

@@ -5,7 +5,7 @@
 # これをもともとは読み取っていたが利用者が欲しいのは fragment ではなく元の棋譜と思われるため fragment は無視する
 #
 module KifuExtractor
-  class CaseUrlShogidb2Show < Extractor
+  class CaseUrlShogidb2Show < Base
     def resolve
       if uri = extracted_uri
         if uri.to_s.include?("shogidb2.com/games/")

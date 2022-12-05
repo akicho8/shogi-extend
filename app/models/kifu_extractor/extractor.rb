@@ -1,54 +1,68 @@
+# テキストから推測して棋譜を抽出する
+#
+# 使い方
+#
+#   KifuExtractor.extract("https://lishogi.org/ZY2Tyy2d") # => "開始日時：2021/12/06 04:37:40..."
+#
+# 抽出する必要がなければ何も返さない
+#
+#   KifuExtractor.extract("76歩") # => nil
+#
+# Bioshogiの方に入れない？
+#
+#   サイトに依存の泥臭いハードコーディングだらけなのでコアライブラリの方には入れない方針
+#
 module KifuExtractor
   class Extractor
-    delegate *[
-      :url_type?,
-      :extracted_uri,
-      :extracted_kif_uri,
-      :uri_fetched_content,
-    ], to: :item
+    EXTRACTORS = [
+      # Url
+      CaseUrlTrustworthyFile,
+      CaseUrlLishogiEditor,
+      CaseUrlLishogiBattle,
+      CaseUrlKento,
+      CaseUrlShogidb2Show,
+      CaseUrlShogidb2Board,
+      CaseUrlHerozSwarsGames,
+      CaseUrlShogiExtendSwarsBattle,
+      CaseUrlLiveShogiOrJp,
+      CaseUrlOushosen,
+      CaseUrlSponichi,
+      CaseUrlParams,
+      CaseUrlTrustworthyFileSearchInHtml,
+      CaseUrlUnknown,
+      # Content
+      CaseContentShogimap,
+      CaseContentSponichi,
+      CaseContentTactic,
+      CaseContentPreset,
+    ]
+    private_constant :EXTRACTORS
 
-    attr_accessor :body
-    attr_accessor :item
-
-    def initialize(item, options = {})
-      @item = item
-      @options = {
-        url_check_head_lines: 4,
-      }.merge(options)
-
-      @body = nil
+    def initialize(source, options = {})
+      @source = source
+      @options = options
     end
 
-    def resolve
-      raise NotImplementedError, "#{__method__} is not implemented"
+    def extract
+      body = nil
+      EXTRACTORS.each do |e|
+        e = e.new(item, options)
+        e.resolve
+        if e.body
+          body = e.body
+          break
+        end
+      end
+      body
+    end
+
+    def item
+      Item.new(@source)
     end
 
     private
 
-    # 棋譜として読み込めるか？
-    def legal_valid?(str)
-      begin
-        info = Bioshogi::Parser.parse(str, {
-            :skill_monitor_enable           => false,
-            :skill_monitor_technique_enable => false,
-            :candidate_enable               => false,
-            :validate_enable                => false, # 二歩を許可するため
-          })
-        info.xcontainer_run_once
-        true
-      rescue Bioshogi::BioshogiError => error
-        SlackSos.notify_exception(error)
-        false
-      end
-    end
-
-    # uri から取得して人間が書き込んだ問題の多いKIFを綺麗にする
-    # uri は必ず KIF になっていること
-    def human_very_dirty_kif_fetch_and_clean(uri)
-      v = WebAgent.fetch(uri)                  # 元が Shift_JIS なので内部で toutf8 している
-      v = v.gsub(/\\n/, "")                    # なぜか '\n' の「文字」が入っているので削除
-      v = Bioshogi::Parser.source_normalize(v) # 右端の謎の全角スペースなどを削除
-      v = v.remove(/^\*.*\R/)                  # 観戦記者の膨大なコメントを削除
-    end
+    attr_reader :source
+    attr_reader :options
   end
 end

@@ -3,7 +3,7 @@
 # rails r 'puts KifuExtractor.extract("https://example.com/?sfen=68S")'
 # rails r 'puts KifuExtractor.extract("https://example.com/#68S")'
 module KifuExtractor
-  class CaseUrlParams < Extractor
+  class CaseUrlParams < Base
     LOOKUP_PARAM_KEYS = [:text, :content, :contents, :body]
 
     def resolve

@@ -1,7 +1,7 @@
 # 拡張子まで指定されていたら信じるしかなかろう
 # rails r 'puts KifuExtractor.extract("https://www.shogi-extend.com/example_shift_jis.kif")'
 module KifuExtractor
-  class CaseUrlTrustworthyFile < Extractor
+  class CaseUrlTrustworthyFile < Base
     def resolve
       if uri = extracted_kif_uri
         if v = uri_fetched_content

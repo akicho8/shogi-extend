@@ -1,7 +1,7 @@
 # スポニチサイトの中身
 # rails r 'puts KifuExtractor.extract("(１)▲２六歩[13]　(２)△３四歩[35]")'
 module KifuExtractor
-  class CaseContentSponichi < Extractor
+  class CaseContentSponichi < Base
     include SponichiSupport
 
     def resolve
