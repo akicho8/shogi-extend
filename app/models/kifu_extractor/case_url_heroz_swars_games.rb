@@ -6,7 +6,7 @@
 # ・なので行頭から開始していない場合のチェックも必要
 #
 module KifuExtractor
-  class CaseUrlHerozSwarsGames < Extractor
+  class CaseUrlHerozSwarsGames < Base
     def resolve
       if url_type? || swars_battle_url_match?
         if battle_url = Swars::BattleUrlExtractor.new(item.source).battle_url

@@ -1,7 +1,7 @@
 # 王将戦
 # rails r 'puts KifuExtractor.extract("https://mainichi.jp/oshosen-kifu/220109.html")'
 module KifuExtractor
-  class CaseUrlOushosen < Extractor
+  class CaseUrlOushosen < Base
     def resolve
       if uri = extracted_uri
         if uri.to_s.include?("mainichi.jp/oshosen")
