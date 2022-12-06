@@ -91,7 +91,7 @@ class MediaBuilder
         Bioshogi::ImageRenderer,
         Bioshogi::AnimationMp4Builder,
         Bioshogi::AnimationGifBuilder,
-        Bioshogi::AnimationPngBuilder,
+        Bioshogi::AnimationApngBuilder,
         Bioshogi::AnimationZipBuilder,
       ].flat_map { |e| e.default_params.keys }
     end
