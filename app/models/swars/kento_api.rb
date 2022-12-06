@@ -23,20 +23,21 @@ module Swars
   class KentoApi
     KENTO_RECORDS_MAX_DEFAULT = 20
     KENTO_RECORDS_MAX_OF_MAX  = 50
+    CROWL_ENABLED             = false
 
     attr_accessor :controller
 
     def initialize(params = {})
       @params = params
-      @user  = params[:user]
-      @scope = params[:scope] || @user.battles
-      @max   = params[:max]
+      @user   = params[:user]
+      @scope  = params[:scope] || @user.battles
+      @max    = params[:max]
     end
 
     def as_json(*)
-      @counter = Battle.continuity_run_counter("kento")
+      @counter = Battle.continuity_run_counter("kento", interval: 2.seconds)
       import_process
-      if (@counter >= 45 && @counter.pred.modulo(10).zero?) || Rails.env.test?
+      if (@counter >= 20 && @counter.pred.modulo(10).zero?) || Rails.env.test?
         body = [@params[:remote_ip], Time.current.strftime("%H:%M:%S"), @user.key].join(" ")
         SlackAgent.notify(subject: "KENTO API(#{@counter})", body: body)
       end
@@ -74,7 +75,7 @@ module Swars
     def import_process
       # KENTOは連続アクセスしてくるためすべてクロールするのは現実的ではない
       # ウォーズ検索のクロール待ち時間と分けるためIPで判別しようかと思ったがIPはほぼランダムに変わる
-      if @counter == 1
+      if @counter == 1 && CROWL_ENABLED
         # slack_notify(subject: "KENTOアクセス元IP", body: request.remote_ip)
         Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
       end
