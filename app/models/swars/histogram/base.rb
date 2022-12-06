@@ -95,7 +95,7 @@ module Swars
       end
 
       def tactic_info
-        Bioshogi::TacticInfo.fetch_if(tactic_key)
+        Bioshogi::Explain::TacticInfo.fetch_if(tactic_key)
       end
 
       def histogram_name

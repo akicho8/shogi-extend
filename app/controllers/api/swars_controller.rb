@@ -103,7 +103,7 @@ module Api
           }
         end
 
-        json[:tactic_infos] = Bioshogi::TacticInfo.inject({}) do |a, e|
+        json[:tactic_infos] = Bioshogi::Explain::TacticInfo.inject({}) do |a, e|
           a.merge(e.key => {
               :key    => e.key,
               :name   => e.name,

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 1ae7716dc6d6035fa8462dceaf8af8320751457f
+  revision: b5e468966bc649c9ecced9532698cb83bf5d3ee0
   specs:
     bioshogi (0.0.1)
       actionview
@@ -8,7 +8,9 @@ GIT
       color
       memory_record
       table_format
+      thor
       tree_support
+      zeitwerk
 
 GEM
   remote: https://rubygems.org/
@@ -304,7 +306,7 @@ GEM
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7)
-    racc (1.6.0)
+    racc (1.6.1)
     rack (2.2.4)
     rack-cors (1.1.1)
       rack (>= 2.0.0)

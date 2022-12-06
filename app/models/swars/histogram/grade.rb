@@ -109,7 +109,7 @@ module Swars
       end
 
       def xtag_select_names
-        Bioshogi::TacticInfo.all_elements.collect(&:name)
+        Bioshogi::Explain::TacticInfo.all_elements.collect(&:name)
       end
 
       def default_limit
