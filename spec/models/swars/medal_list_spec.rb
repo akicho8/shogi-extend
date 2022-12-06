@@ -61,18 +61,6 @@ module Swars
       end
     end
 
-    describe "deviation_avg" do
-      before do
-        Battle.create!(tactic_key: "アヒル囲い") do |e|
-          e.memberships.build(user: user)
-        end
-      end
-
-      it "works" do
-        assert { user.user_info.medal_list.deviation_avg < 50.0 }
-      end
-    end
-
     describe "win_lose_streak_max_hash" do
       def case1(*list)
         list.each.with_index do |win_or_lose, i|

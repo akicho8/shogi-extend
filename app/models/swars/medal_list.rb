@@ -212,24 +212,6 @@ module Swars
       end
     end
 
-    ################################################################################ レアマン
-
-    # タグの偏差値の平均
-    def deviation_avg
-      if all_tag_count.positive?
-        total = all_tag_names.sum do |key|
-          v = 50.0
-          if e = Bioshogi::TacticInfo.flat_lookup(key)
-            if e = e.distribution_ratio
-              v = e[:deviation]
-            end
-          end
-          v
-        end
-        total.fdiv(all_tag_count)
-      end
-    end
-
     ################################################################################ 1手詰じらしマン
 
     def jirasi_ratio
