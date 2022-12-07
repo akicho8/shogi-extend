@@ -1,8 +1,8 @@
 # http://localhost:3000/api/swars/distribution_ratio
 module Swars
   class DistributionRatio
-    CURRENT_MAX = 10000
-    BATCH_SIZE = Rails.env.development? ? 1 : 1000
+    CURRENT_MAX = 30000
+    BATCH_SIZE = Rails.env.development? ? 1 : 2000
 
     def initialize(options = {})
       @options = {
@@ -16,13 +16,15 @@ module Swars
     end
 
     def to_a
-      sdc = StandardDeviation.new(normalized_counts_hash.values)
+      sd1 = StandardDeviation.new(normalized_counts_hash.values)
+      sd2 = StandardDeviation.new(normalized_counts_hash.values.collect { |e| sd1.appear_ratio(e) }) # 出現率で再度
       normalized_counts_hash.sort_by { |_, count| -count }.collect do |name, count|
         {
-          :name         => name,                                    # 戦型名
-          :count        => count,                                   # 個数
-          :rarity       => sdc.appear_ratio(count),                 # 最大を0としたレア度
-          :rarity_human => (100 - sdc.appear_ratio(count) * 100.0), # 最大を100としたレア度
+          :name            => name,                                    # 戦型名
+          :count           => count,                                   # 個数
+          :rarity          => sd1.appear_ratio(count),                 # 最大を0としたレア度
+          :rarity_diff     => sd2.appear_ratio(count) - sd2.avg,       # レア度の平均との差
+          :rarity_human    => (100 - sd1.appear_ratio(count) * 100.0), # 最大を100としたレア度
         }
       end
     end
