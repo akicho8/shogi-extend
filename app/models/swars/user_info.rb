@@ -315,6 +315,7 @@ module Swars
 
     def etc_list
       list = [
+
         ################################################################################
         { name: "切断逃亡",                            type1: "simple", type2: "numeric_with_unit", unit: "回", body: disconnect_count,              },
         { name: "角不成",                              type1: "simple", type2: "numeric_with_unit", unit: "回", body: kakuhunari_count,              },
@@ -325,6 +326,11 @@ module Swars
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
         { name: "居飛車",                          type1: "win_lose_circle", type2: nil,                      body: ibisya_win_lose_params,     win_lose_click_method_name: "ibisya_win_lose_click_handle", },
         { name: "振り飛車",                        type1: "win_lose_circle", type2: nil,                      body: furibisya_win_lose_params,  win_lose_click_method_name: "furibisya_win_lose_click_handle", },
+
+        ################################################################################
+
+        { name: "メジャー戦法傾倒レベル", type1: "simple", type2: nil, body: major_level,  },
+        { name: "マイナー戦法傾倒レベル", type1: "simple", type2: nil, body: minor_level,  },
 
         ################################################################################
 
@@ -838,6 +844,28 @@ module Swars
           a.merge(e.key => c[e.id] || 0)
         end
       end
+    end
+
+    ################################################################################ メジャー・マイナー戦法
+
+    def major_level
+      if v = major_tactic_tilt_level
+        if v > 0
+          (v * 1000).to_i
+        end
+      end
+    end
+
+    def minor_level
+      if v = major_tactic_tilt_level
+        if v < 0
+          (-v * 1000).to_i
+        end
+      end
+    end
+
+    def major_tactic_tilt_level
+      @major_tactic_tilt_level ||= MajorTacticTiltLevel.new(self).aggregate
     end
 
     private

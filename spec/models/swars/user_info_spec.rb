@@ -479,5 +479,26 @@ module Swars
         assert { case1("飛車不成").user_info.hisyahunari_count >= 1 }
       end
     end
+
+    describe "メジャー戦法傾倒レベル" do
+      def case1(tactic_key)
+        black = User.create!
+        Battle.create!(tactic_key: tactic_key) do |e|
+          e.memberships.build(user: black)
+        end
+        [
+          black.user_info.major_level,
+          black.user_info.minor_level,
+        ]
+      end
+
+      it "棒銀" do
+        assert { case1("棒銀") == [8, nil]  }
+      end
+
+      it "新米長玉" do
+        assert { case1("新米長玉") == [nil, 3] }
+      end
+    end
   end
 end

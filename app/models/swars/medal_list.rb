@@ -217,16 +217,18 @@ module Swars
     # タグの偏差値の平均
     def deviation_avg
       if all_tag_count.positive?
-        total = all_tag_names.sum do |key|
-          v = 50.0
-          if e = Bioshogi::Explain::TacticInfo.flat_lookup(key)
-            if e = e.distribution_ratio
-              v = e[:deviation]
+        @deviation_avg ||= yield_self do
+          total = all_tag_names.sum do |key|
+            v = 0
+            if e = Bioshogi::Explain::TacticInfo.flat_lookup(key)
+              if e = e.distribution_ratio
+                v = e.fetch(:rarity_diff) # レア度の平均との差
+              end
             end
+            v
           end
-          v
+          total.fdiv(all_tag_count)
         end
-        total.fdiv(all_tag_count)
       end
     end
 
