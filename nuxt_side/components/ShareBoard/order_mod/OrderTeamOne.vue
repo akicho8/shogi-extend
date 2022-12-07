@@ -9,6 +9,7 @@
     v-model="current_items"
     @start="start_handle"
     @end="end_handle"
+    :forceFallback="true"
     )
     template(v-for="e in current_items")
       li(:key="e.unique_key")
