@@ -23,7 +23,7 @@ module Swars
           :name            => name,                                    # 戦型名
           :count           => count,                                   # 個数
           :rarity          => sd1.appear_ratio(count),                 # 最大を0としたレア度
-          :rarity_diff     => sd2.appear_ratio(count) - sd2.avg,       # レア度の平均との差
+          :rarity_diff     => sd1.appear_ratio(count) - sd2.avg,       # レア度の平均との差
           :rarity_human    => (100 - sd1.appear_ratio(count) * 100.0), # 最大を100としたレア度
         }
       end
