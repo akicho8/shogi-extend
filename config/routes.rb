@@ -64,8 +64,7 @@ Rails.application.routes.draw do
     UrlProxy.url_for(path)
   }
 
-  get "w",       format: "html", to: redirect(&swars_search_shared_redirect_block)
-  get "w-light", format: "html", to: redirect(&swars_search_shared_redirect_block)
+  get "w", format: "html", to: redirect(&swars_search_shared_redirect_block)
 
   namespace :swars, path: "" do
     resources :battles, path: "w"
