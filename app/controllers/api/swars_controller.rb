@@ -36,6 +36,11 @@
 
 module Api
   class SwarsController < ::Api::ApplicationController
+    # http://localhost:3000/api/swars/distribution_ratio
+    def distribution_ratio
+      render json: Swars::DistributionRatio.new(params.to_unsafe_h.to_options)
+    end
+
     concerning :CrawlReservationMethods do
       # curl -d _method=post http://localhost:3000/api/swars/users/DevUser1/download_set
       # http://localhost:3000/api/swars/users/DevUser1/download_set
