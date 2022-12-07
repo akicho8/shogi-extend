@@ -1,12 +1,15 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: b5e468966bc649c9ecced9532698cb83bf5d3ee0
+  revision: 977a6c5ea35acadf03fdaec2c703fc2fad23f34b
   specs:
     bioshogi (0.0.1)
       actionview
       activesupport
       color
       memory_record
+      rmagick
+      rubyzip
+      systemu
       table_format
       thor
       tree_support
