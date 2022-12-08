@@ -5,7 +5,7 @@ module SwarsMedalSupport
     "+2726FU"
   end
 
-  def black_furibisya
+  def black_furibisha
     "+2878HI"
   end
 
@@ -81,8 +81,8 @@ module SwarsMedalSupport
   end
 
   # 先手振り飛車でN手の棋譜を生成
-  def furibisya_csa_seq_generate(n)
-    [ [black_furibisya, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
+  def furibisha_csa_seq_generate(n)
+    [ [black_furibisha, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
   end
 end
 

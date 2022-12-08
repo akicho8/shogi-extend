@@ -27,7 +27,7 @@ export const app_search = {
       this.$router.push(this.search_path({'勝敗': judge_key, tag: "居飛車"}))
     },
 
-    furibisya_win_lose_click_handle(judge_key) {
+    furibisha_win_lose_click_handle(judge_key) {
       this.$sound.play_click()
       this.$router.push(this.search_path({'勝敗': judge_key, tag: "振り飛車"}))
     },
