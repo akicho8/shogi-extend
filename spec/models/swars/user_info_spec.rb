@@ -480,18 +480,18 @@ module Swars
       end
     end
 
-    describe "王道戦法傾倒レベル" do
+    describe "王道戦法度" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_info.major_tactic_tilt_level_human
+        black.user_info.major_tactic_tilt_level
       end
 
       it "works" do
-        assert { case1("棒銀")     == +8 }
-        assert { case1("新米長玉") == -3 }
+        assert { case1("棒銀")     == [{:name=>"王道", :value=>3}, {:name=>"マイナー", :value=>0}] }
+        assert { case1("新米長玉") == [{:name=>"王道", :value=>0}, {:name=>"マイナー", :value=>1}] }
       end
     end
   end

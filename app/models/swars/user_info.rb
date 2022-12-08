@@ -324,12 +324,9 @@ module Swars
         ################################################################################
 
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
+        { name: "王道戦法度",                      type1: "pie",    type2: nil,                             body: major_tactic_tilt_level, pie_type: "is_pair_values" },
         { name: "居飛車",                          type1: "win_lose_circle", type2: nil,                      body: ibisya_win_lose_params,     win_lose_click_method_name: "ibisya_win_lose_click_handle", },
         { name: "振り飛車",                        type1: "win_lose_circle", type2: nil,                      body: furibisya_win_lose_params,  win_lose_click_method_name: "furibisya_win_lose_click_handle", },
-
-        ################################################################################
-
-        { name: "王道戦法傾倒レベル", type1: "simple", type2: nil, body: major_tactic_tilt_level_human,  },
 
         ################################################################################
 
@@ -845,16 +842,10 @@ module Swars
       end
     end
 
-    ################################################################################ 王道戦法傾倒レベル
-
-    def major_tactic_tilt_level_human
-      if v = major_tactic_tilt_level
-        (v * 1000).to_i
-      end
-    end
+    ################################################################################ 王道戦法度
 
     def major_tactic_tilt_level
-      @major_tactic_tilt_level ||= MajorTacticTiltLevel.new(self).aggregate
+      MajorTacticTiltLevel.new(self).aggregate
     end
 
     private
