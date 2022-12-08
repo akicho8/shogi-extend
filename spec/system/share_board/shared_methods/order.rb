@@ -41,6 +41,8 @@ module SharedMethods
   def drag_to_watch(klass, n)
     a = find(".#{klass} li:nth-child(#{n.next})")
     b = find(".dnd_watch_users ul")
+    # forceFallback: true によって drag_to が動かなくなるため revert した
+    # https://github.com/SortableJS/Vue.Draggable/issues/1156#issuecomment-1340558451
     a.drag_to(b)
   end
 
