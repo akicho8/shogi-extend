@@ -329,8 +329,7 @@ module Swars
 
         ################################################################################
 
-        { name: "メジャー戦法傾倒レベル", type1: "simple", type2: nil, body: major_level,  },
-        { name: "マイナー戦法傾倒レベル", type1: "simple", type2: nil, body: minor_level,  },
+        { name: "王道戦法傾倒レベル", type1: "simple", type2: nil, body: major_tactic_tilt_level_human,  },
 
         ################################################################################
 
@@ -846,21 +845,11 @@ module Swars
       end
     end
 
-    ################################################################################ メジャー・マイナー戦法
+    ################################################################################ 王道戦法傾倒レベル
 
-    def major_level
+    def major_tactic_tilt_level_human
       if v = major_tactic_tilt_level
-        if v > 0
-          (v * 1000).to_i
-        end
-      end
-    end
-
-    def minor_level
-      if v = major_tactic_tilt_level
-        if v < 0
-          (-v * 1000).to_i
-        end
+        (v * 1000).to_i
       end
     end
 

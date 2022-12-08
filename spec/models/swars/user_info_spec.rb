@@ -480,24 +480,18 @@ module Swars
       end
     end
 
-    describe "メジャー戦法傾倒レベル" do
+    describe "王道戦法傾倒レベル" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        [
-          black.user_info.major_level,
-          black.user_info.minor_level,
-        ]
+        black.user_info.major_tactic_tilt_level_human
       end
 
-      it "棒銀" do
-        assert { case1("棒銀") == [8, nil]  }
-      end
-
-      it "新米長玉" do
-        assert { case1("新米長玉") == [nil, 3] }
+      it "works" do
+        assert { case1("棒銀")     == +8 }
+        assert { case1("新米長玉") == -3 }
       end
     end
   end
