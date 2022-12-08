@@ -1,6 +1,6 @@
 module Swars
   class UserInfo
-    class MajorTacticTiltLevel
+    class MajorMinorRatio
       def initialize(user_info)
         @user_info = user_info
       end

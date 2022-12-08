@@ -486,7 +486,7 @@ module Swars
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_info.major_tactic_tilt_level
+        black.user_info.major_minor_ratio
       end
 
       it "works" do

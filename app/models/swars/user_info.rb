@@ -324,7 +324,7 @@ module Swars
         ################################################################################
 
         { name: "派閥",                                type1: "pie",    type2: nil,                             body: formation_info_records,        pie_type: "is_many_values" },
-        { name: "王道戦法度",                      type1: "pie",    type2: nil,                             body: major_tactic_tilt_level, pie_type: "is_pair_values" },
+        { name: "王道戦法度",                      type1: "pie",    type2: nil,                             body: major_minor_ratio, pie_type: "is_pair_values" },
         { name: "居飛車",                          type1: "win_lose_circle", type2: nil,                      body: ibisya_win_lose_params,     win_lose_click_method_name: "ibisya_win_lose_click_handle", },
         { name: "振り飛車",                        type1: "win_lose_circle", type2: nil,                      body: furibisya_win_lose_params,  win_lose_click_method_name: "furibisya_win_lose_click_handle", },
 
@@ -844,8 +844,8 @@ module Swars
 
     ################################################################################ 王道戦法度
 
-    def major_tactic_tilt_level
-      MajorTacticTiltLevel.new(self).aggregate
+    def major_minor_ratio
+      MajorMinorRatio.new(self).aggregate
     end
 
     private
