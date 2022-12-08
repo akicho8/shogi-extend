@@ -36,7 +36,7 @@ module Swars
           tags = [:attack_tags, :defense_tags].flat_map do |e|
             @user_info.ids_scope.tag_counts_on(e, at_least: @user_info.at_least_value)
           end
-          tags = tags.reject { |e| e.name == "居玉" }
+          tags = tags.reject { |e| e.name == "居玉" || e.name == "力戦" || e.name == "相振り飛車" }
         end
       end
     end
