@@ -58,7 +58,7 @@ module Swars
 
     # 出現率平均
     def avg
-      sd1.avg
+      sd2.avg
     end
 
     def meta

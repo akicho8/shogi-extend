@@ -9,7 +9,7 @@ module Swars
         :name           => "2手目△３ニ飛戦法",
         :count          => 1,
         :emission_ratio => 0.5,
-        :diff_from_avg  => 0.4929328621908127,
+        :diff_from_avg  => 0.49646643109540634,
         :rarity_key     => :normal,
       }
       assert { json[:items].first == expected }
