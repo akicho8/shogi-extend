@@ -1,14 +1,14 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserInfo::MajorMinorRatio, type: :model, swars_spec: true do
+  RSpec.describe UserInfo::RarityRatio, type: :model, swars_spec: true do
     describe "王道戦法度" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_info.major_minor_ratio
+        black.user_info.rarity_ratio
       end
 
       it "works" do
