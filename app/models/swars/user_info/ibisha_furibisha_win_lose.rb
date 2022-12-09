@@ -16,8 +16,8 @@ module Swars
       private
 
       def aggregate_for(tag_name)
-        win = on_note_tags_count(@user_info.win_scope, tag_name),
-        lose = on_note_tags_count(@user_info.lose_scope, tag_name),
+        win = on_note_tags_count(@user_info.win_scope, tag_name)
+        lose = on_note_tags_count(@user_info.lose_scope, tag_name)
         if (win + lose).nonzero?
           { judge_counts: { win: win, lose: lose } }
         end
