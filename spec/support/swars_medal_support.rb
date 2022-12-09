@@ -76,7 +76,7 @@ module SwarsMedalSupport
   end
 
   # 先手居飛車でN手の棋譜を生成
-  def ibisya_csa_seq_generate(n)
+  def ibisha_csa_seq_generate(n)
     [ [black_ibisha, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
   end
 

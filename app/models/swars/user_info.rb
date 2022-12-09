@@ -325,7 +325,7 @@ module Swars
 
         { name: "派閥",       type1: "pie",             type2: nil, body: formation_info_records, pie_type: "is_many_values" },
         { name: "王道戦法度", type1: "pie",             type2: nil, body: major_minor_ratio,      pie_type: "is_pair_values" },
-        { name: "居飛車",     type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.ibisya_win_lose_params,     win_lose_click_method_name: "ibisya_win_lose_click_handle", },
+        { name: "居飛車",     type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.ibisha_win_lose_params,     win_lose_click_method_name: "ibisha_win_lose_click_handle", },
         { name: "振り飛車",   type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.furibisha_win_lose_params,  win_lose_click_method_name: "furibisha_win_lose_click_handle", },
 
         ################################################################################
