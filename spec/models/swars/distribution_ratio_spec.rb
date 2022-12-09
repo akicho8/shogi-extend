@@ -6,6 +6,7 @@ module Swars
       Battle.create!
       json = DistributionRatio.new.as_json
       expected = {
+        :index          => 0,
         :name           => "2手目△３ニ飛戦法",
         :count          => 1,
         :emission_ratio => 0.5,

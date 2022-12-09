@@ -18,9 +18,9 @@ module Swars
 
     def to_h
       {
-        :meta           => meta,
-        :emission_ratio => emission_ratio,
-        :items          => items,
+        :meta        => meta,
+        :rarity_info => RarityInfo,
+        :items       => items,
       }
     end
 
@@ -63,47 +63,29 @@ module Swars
 
     def meta
       {
-        :min => min,            # 最低出現率
-        :avg => avg,            # 平均出現率
-        :max => max,            # 最大出現率
-      }
-    end
-
-    # 排出率
-    # この値以下であれば該当する
-    # 例えば value < super_special_rare で SSR に該当する
-    # 上から順番に調べていったとすれば最後の normal のチェックは不要(小数だと正確に比較できない場合があるためチェックするな)
-    def emission_ratio
-      @emission_ratio ||= {
-        :super_special_rare => min + (avg - min) / 2,
-        :super_rate         => avg,
-        :rare               => avg + (max - avg) / 2,
-        :normal             => max,
+        :min => min, # 最低出現率
+        :avg => avg, # 平均出現率
+        :max => max, # 最大出現率
+        :items_total => normalized_counts_hash.count,
       }
     end
 
     def items
-      normalized_counts_hash.sort_by { |_, count| -count }.collect do |name, count|
+      normalized_counts_hash.sort_by { |_, count| -count }.collect.with_index do |(name, count), i|
         v = sd1.appear_ratio(count)
         {
-          :name           => name,          # 戦型名
-          :count          => count,         # 個数
-          :emission_ratio => v,             # 排出率
-          :diff_from_avg  => v - avg,       # 平均出現率との差(つまり0以上であれば王道戦法)
-          :rarity_key     => rarity_key(v), # レア度区分
+          :index          => i,
+          :name           => name,                  # 戦型名
+          :count          => count,                 # 個数
+          :emission_ratio => v,                     # 排出率
+          :diff_from_avg  => v - avg,               # 平均出現率との差(つまり0以上であれば王道戦法)
+          :rarity_key     => rarity_info_of(v).key, # レア度区分
         }
       end
     end
 
-    # 最後の NORMAL は除いてチェック
-    def rarity_key(value)
-      ary = emission_ratio.to_a[0..-2]
-      if found = ary.find { |_, threshold| value <= threshold }
-        key, _ = found
-        key
-      else
-        :normal
-      end
+    def rarity_info_of(value)
+      RarityInfo.find { |e| value <= e.ratio } or raise "must not happen"
     end
 
     def normalized_counts_hash
