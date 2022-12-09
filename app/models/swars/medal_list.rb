@@ -222,7 +222,7 @@ module Swars
             v = 0
             if e = Bioshogi::Explain::TacticInfo.flat_lookup(key)
               if e = e.distribution_ratio
-                v = e.fetch(:rarity_diff) # レア度の平均との差
+                v = e.fetch(:diff_from_avg) # レア度の平均との差
               end
             end
             v

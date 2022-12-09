@@ -6,37 +6,38 @@ module Swars
       end
 
       def aggregate
-        if tags.count > 0
-          counts_hash = Hash.new(0)
+        RarityInfo.reverse_each.collect do |e|
+          { name: e.name_in_player_info, value: counts_hash[e.key] }
+        end
+      end
+
+      def counts_hash
+        @counts_hash ||= yield_self do
+          hv = Hash.new(0)
           tags.each do |e|
-            counts_hash[major_or_minor(e)] += e.count
+            if key = rarity_key_of(e)
+              p e
+              p key
+              hv[key] += e.count
+            end
           end
-          ["王道", "マイナー"].collect do |e|
-            { name: e, value: counts_hash[e] }
-          end
+          hv
         end
       end
 
       private
 
-      def major_or_minor(tag)
-        key = "王道"
+      def rarity_key_of(tag)
         if e = Bioshogi::Explain::TacticInfo.flat_lookup(tag.name)
           if e = e.distribution_ratio
-            if e.fetch(:rarity_diff) < 0
-              key = "マイナー"
-            end
+            e.fetch(:rarity_key).to_sym
           end
         end
-        key
       end
 
       def tags
-        @tags ||= yield_self do
-          tags = [:attack_tags, :defense_tags].flat_map do |e|
-            @user_info.ids_scope.tag_counts_on(e, at_least: @user_info.at_least_value)
-          end
-          tags = tags.reject { |e| e.name == "居玉" || e.name == "力戦" || e.name == "相振り飛車" }
+        @tags ||= [:attack_tags, :defense_tags].flat_map do |e|
+          @user_info.ids_scope.tag_counts_on(e, at_least: @user_info.at_least_value)
         end
       end
     end

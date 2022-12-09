@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 977a6c5ea35acadf03fdaec2c703fc2fad23f34b
+  revision: 1a7aa07bb25bf361ae9aaceb50da7448c359ed14
   specs:
     bioshogi (0.0.1)
       actionview
@@ -267,7 +267,7 @@ GEM
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
     nio4r (2.5.8)
-    nokogiri (1.13.9)
+    nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     oauth (0.5.8)
@@ -302,6 +302,7 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
+    pkg-config (1.5.1)
     power_assert (1.1.7)
     public_suffix (4.0.7)
     puma (5.6.4)
@@ -369,7 +370,8 @@ GEM
       railties (>= 5.0)
     retryable (3.0.5)
     rexml (3.2.5)
-    rmagick (4.2.5)
+    rmagick (5.1.0)
+      pkg-config (~> 1.4)
     rspec (3.11.0)
       rspec-core (~> 3.11.0)
       rspec-expectations (~> 3.11.0)

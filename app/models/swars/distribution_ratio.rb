@@ -20,7 +20,7 @@ module Swars
       {
         :meta        => meta,
         :rarity_info => RarityInfo,
-        :items       => items,
+        :items_hash  => items_hash,
       }
     end
 
@@ -28,7 +28,7 @@ module Swars
 
     # 出現個数
     def ivalues
-      @ivalues ||= normalized_counts_hash.values
+      @ivalues ||= all_counts_hash.values
     end
 
     # 出現率を出すためのもの
@@ -46,14 +46,9 @@ module Swars
       @sd2 ||= StandardDeviation.new(fvalues)
     end
 
-    # 最低出現率
-    def min
-      @min ||= fvalues.min
-    end
-
-    # 最大出現率
-    def max
-      @max ||= fvalues.max
+    # 最低最大出現率
+    def minmax
+      @minmax ||= fvalues.minmax
     end
 
     # 出現率平均
@@ -63,24 +58,23 @@ module Swars
 
     def meta
       {
-        :min => min, # 最低出現率
-        :avg => avg, # 平均出現率
-        :max => max, # 最大出現率
-        :items_total => normalized_counts_hash.count,
+        :minmax      => minmax, # 最低最大出現率
+        :avg         => avg,
+        :items_total => all_counts_hash.count,
+        :ignore_keys => ignore_keys,
       }
     end
 
-    def items
-      normalized_counts_hash.sort_by { |_, count| -count }.collect.with_index do |(name, count), i|
+    def items_hash
+      all_counts_hash.sort_by { |_, count| -count }.each.with_index.inject({}) do |a, ((name, count), i)|
         v = sd1.appear_ratio(count)
-        {
-          :index          => i,
-          :name           => name,                  # 戦型名
-          :count          => count,                 # 個数
-          :emission_ratio => v,                     # 排出率
-          :diff_from_avg  => v - avg,               # 平均出現率との差(つまり0以上であれば王道戦法)
-          :rarity_key     => rarity_info_of(v).key, # レア度区分
-        }
+        a.merge(name => {
+            :index          => i,
+            :count          => count,                 # 個数
+            :emission_ratio => v,                     # 排出率
+            :diff_from_avg  => v - avg,               # 平均出現率との差(つまり0以上であれば王道戦法)
+            :rarity_key     => rarity_info_of(v).key, # レア度区分
+          })
       end
     end
 
@@ -88,14 +82,14 @@ module Swars
       RarityInfo.find { |e| value <= e.ratio } or raise "must not happen"
     end
 
-    def normalized_counts_hash
-      @normalized_counts_hash ||= all_keys.inject({}) { |a, e| a.merge(e => counts_hash[e] || 0) }
+    def all_counts_hash
+      @all_counts_hash ||= all_keys.inject({}) { |a, e| a.merge(e => counts_hash[e]) }.except(*ignore_keys)
     end
 
     # {"棒銀" => 1}
     def counts_hash
       @counts_hash ||= yield_self do
-        hv = {}
+        hv = Hash.new(0)
         i = 0
         Membership.in_batches(of: BATCH_SIZE, order: :desc) do |s|
           if i >= loop_max
@@ -104,10 +98,7 @@ module Swars
           tactic_keys.each do |tactic_key|
             tags = s.tag_counts_on("#{tactic_key}_tags")
             tags.each do |e|
-              if ignore_keys.exclude?(e.name)
-                hv[e.name] ||= 0
-                hv[e.name] += e.count
-              end
+              hv[e.name] += e.count
             end
           end
           i += 1

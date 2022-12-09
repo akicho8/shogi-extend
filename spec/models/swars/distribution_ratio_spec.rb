@@ -7,13 +7,13 @@ module Swars
       json = DistributionRatio.new.as_json
       expected = {
         :index          => 0,
-        :name           => "2手目△３ニ飛戦法",
         :count          => 1,
         :emission_ratio => 0.5,
-        :diff_from_avg  => 0.49646643109540634,
+        :diff_from_avg  => 0.49642857142857144,
         :rarity_key     => :normal,
       }
-      assert { json[:items].first == expected }
+      assert { json[:items_hash]["2手目△３ニ飛戦法"] == expected }
+      assert { json[:items_hash]["居玉"] == nil }
     end
   end
 end

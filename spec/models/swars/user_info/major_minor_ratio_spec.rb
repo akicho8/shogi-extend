@@ -12,8 +12,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1("棒銀")     == [{:name=>"王道", :value=>3}, {:name=>"マイナー", :value=>0}] }
-        assert { case1("新米長玉") == [{:name=>"王道", :value=>0}, {:name=>"マイナー", :value=>1}] }
+        assert { case1("棒銀") == [{:name=>"王道", :value=>2}, {:name=>"準王道", :value=>1}, {:name=>"レア", :value=>0}, {:name=>"超レア", :value=>1}] }
+        assert { case1("新米長玉") == [{:name=>"王道", :value=>0}, {:name=>"準王道", :value=>0}, {:name=>"レア", :value=>0}, {:name=>"超レア", :value=>1}] }
       end
     end
   end
