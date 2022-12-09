@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserInfo::IbishaFuribisyaWinLose, type: :model, swars_spec: true do
+  RSpec.describe UserInfo::IbishaFuribishaWinLose, type: :model, swars_spec: true do
     describe "居飛車 ibisya_win_lose_params" do
       before do
         @black = User.create!

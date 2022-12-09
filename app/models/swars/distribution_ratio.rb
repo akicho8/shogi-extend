@@ -12,25 +12,99 @@ module Swars
 
     def as_json(*)
       Rails.cache.fetch("distribution_ratio", expires_in: Rails.env.production? ? 1.days : 0) do
-        to_a
+        to_h
       end
     end
 
-    def to_a
-      sd1 = StandardDeviation.new(normalized_counts_hash.values)
-      sd2 = StandardDeviation.new(normalized_counts_hash.values.collect { |e| sd1.appear_ratio(e) }) # 出現率で再度
+    def to_h
+      {
+        :meta           => meta,
+        :emission_ratio => emission_ratio,
+        :items          => items,
+      }
+    end
+
+    private
+
+    # 出現個数
+    def ivalues
+      @ivalues ||= normalized_counts_hash.values
+    end
+
+    # 出現率を出すためのもの
+    def sd1
+      @sd1 ||= StandardDeviation.new(ivalues)
+    end
+
+    # 出現率のリスト
+    def fvalues
+      @fvalues ||= ivalues.collect { |e| sd1.appear_ratio(e) }
+    end
+
+    # 出現率で再度
+    def sd2
+      @sd2 ||= StandardDeviation.new(fvalues)
+    end
+
+    # 最低出現率
+    def min
+      @min ||= fvalues.min
+    end
+
+    # 最大出現率
+    def max
+      @max ||= fvalues.max
+    end
+
+    # 出現率平均
+    def avg
+      sd1.avg
+    end
+
+    def meta
+      {
+        :min => min,            # 最低出現率
+        :avg => avg,            # 平均出現率
+        :max => max,            # 最大出現率
+      }
+    end
+
+    # 排出率
+    # この値以下であれば該当する
+    # 例えば value < super_special_rare で SSR に該当する
+    # 上から順番に調べていったとすれば最後の normal のチェックは不要(小数だと正確に比較できない場合があるためチェックするな)
+    def emission_ratio
+      @emission_ratio ||= {
+        :super_special_rare => min + (avg - min) / 2,
+        :super_rate         => avg,
+        :rare               => avg + (max - avg) / 2,
+        :normal             => max,
+      }
+    end
+
+    def items
       normalized_counts_hash.sort_by { |_, count| -count }.collect do |name, count|
+        v = sd1.appear_ratio(count)
         {
-          :name            => name,                                    # 戦型名
-          :count           => count,                                   # 個数
-          :rarity          => sd1.appear_ratio(count),                 # 最大を0としたレア度
-          :rarity_diff     => sd1.appear_ratio(count) - sd2.avg,       # レア度の平均との差
-          :rarity_human    => (100 - sd1.appear_ratio(count) * 100.0), # 最大を100としたレア度
+          :name           => name,          # 戦型名
+          :count          => count,         # 個数
+          :emission_ratio => v,             # 排出率
+          :diff_from_avg  => v - avg,       # 平均出現率との差(つまり0以上であれば王道戦法)
+          :rarity_key     => rarity_key(v), # レア度区分
         }
       end
     end
 
-    private
+    # 最後の NORMAL は除いてチェック
+    def rarity_key(value)
+      ary = emission_ratio.to_a[0..-2]
+      if found = ary.find { |_, threshold| value <= threshold }
+        key, _ = found
+        key
+      else
+        :normal
+      end
+    end
 
     def normalized_counts_hash
       @normalized_counts_hash ||= all_keys.inject({}) { |a, e| a.merge(e => counts_hash[e] || 0) }
@@ -48,8 +122,10 @@ module Swars
           tactic_keys.each do |tactic_key|
             tags = s.tag_counts_on("#{tactic_key}_tags")
             tags.each do |e|
-              hv[e.name] ||= 0
-              hv[e.name] += e.count
+              if ignore_keys.exclude?(e.name)
+                hv[e.name] ||= 0
+                hv[e.name] += e.count
+              end
             end
           end
           i += 1
@@ -69,6 +145,10 @@ module Swars
 
     def tactic_keys
       [:attack, :defense]
+    end
+
+    def ignore_keys
+      ["居玉", "力戦", "相振り飛車"]
     end
   end
 end
