@@ -6,7 +6,7 @@ module Swars
       { key: :super_rate,         name: "SR",  },
       { key: :rare,               name: "R",   },
       { key: :normal,             name: "N",   },
-    end
+    ]
 
     class << self
       def lookup(v)
