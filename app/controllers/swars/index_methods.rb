@@ -20,6 +20,7 @@ module Swars
       if request.format.json?
         if params[:format_type] == "kento"
           if current_swars_user
+            SlackAgent.notify(emoji: ":KENTO:", subject: "KENTO API", body: [current_swars_user.key, request.from, request.origin, request.user_agent].inspect)
             render json: KentoApi.new({
                 :scope => current_index_scope,
                 :user  => current_swars_user,

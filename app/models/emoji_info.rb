@@ -35,6 +35,7 @@ class EmojiInfo
     { key: ":救急:",         raw: "🚑", },
     { key: ":お題:",         raw: "📋", },
     { key: ":API:",          raw: "🅰", },
+    { key: ":KENTO:",        raw: "🌝", },
   ]
 
   def to_s
