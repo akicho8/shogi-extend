@@ -133,7 +133,7 @@ module Swars
       end
 
       it "works" do
-        result = [:"無気力マン", "無気力対局"]
+        result = [:"無気力マン", "無気力な対局をした"]
         assert { case1(19, :TORYO)     == result }
         assert { case1(20, :TORYO)     != result }
         assert { case1(19, :CHECKMATE) == result }
