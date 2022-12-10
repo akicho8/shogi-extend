@@ -324,7 +324,7 @@ module Swars
         ################################################################################
 
         { name: "派閥",       type1: "pie",             type2: nil, body: formation_info_records, pie_type: "is_many_values" },
-        { name: "王道戦法度", type1: "pie",             type2: nil, body: rarity_ratio,      pie_type: "is_many_values" },
+        { name: "戦法スタイル", type1: "pie",             type2: nil, body: rarity_ratio,      pie_type: "is_many_values" },
         { name: "居飛車",     type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.ibisha_win_lose_params,     win_lose_click_method_name: "ibisha_win_lose_click_handle", },
         { name: "振り飛車",   type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.furibisha_win_lose_params,  win_lose_click_method_name: "furibisha_win_lose_click_handle", },
 
@@ -822,7 +822,7 @@ module Swars
       end
     end
 
-    # 王道戦法度
+    # 戦法スタイル
     def rarity_ratio
       RarityRatio.new(self).aggregate
     end
