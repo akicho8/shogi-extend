@@ -2,7 +2,7 @@
 # https://www.shogi-extend.com/api/swars/distribution_ratio
 module Swars
   class DistributionRatio
-    CURRENT_MAX = 30000
+    CURRENT_MAX = 50000
     BATCH_SIZE = Rails.env.development? ? 1 : 2000
 
     def initialize(options = {})

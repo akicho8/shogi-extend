@@ -1,6 +1,8 @@
 module Swars
   class UserInfo
     class RarityRatio
+      OPTIMIZE = true
+
       def initialize(user_info)
         @user_info = user_info
       end
@@ -28,7 +30,15 @@ module Swars
       def rarity_key_of(tag)
         if e = Bioshogi::Explain::TacticInfo.flat_lookup(tag.name)
           if e = e.distribution_ratio
-            e.fetch(:rarity_key).to_sym
+            if OPTIMIZE
+              # O(1)
+              e.fetch(:rarity_key).to_sym
+            else
+              # O(n)
+              emission_ratio = e.fetch(:emission_ratio)
+              rarity_info = RarityInfo.find { |e| emission_ratio <= e.ratio } or raise "must not happen"
+              rarity_info.key
+            end
           end
         end
       end
