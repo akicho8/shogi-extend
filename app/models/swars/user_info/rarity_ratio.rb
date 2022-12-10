@@ -16,8 +16,6 @@ module Swars
           hv = Hash.new(0)
           tags.each do |e|
             if key = rarity_key_of(e)
-              p e
-              p key
               hv[key] += e.count
             end
           end
