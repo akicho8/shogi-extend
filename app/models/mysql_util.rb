@@ -7,7 +7,7 @@ module MysqlUtil
     end
   end
 
-  def tz_adjust(column)
+  def column_tokyo_timezone_cast(column)
     "CONVERT_TZ(#{column}, 'UTC', 'Asia/Tokyo')"
   end
 end

@@ -685,7 +685,7 @@ module Swars
         if battle_ids.present?
           # まず日別の対局数を求める
           sql = <<~EOT
-            SELECT DATE(#{MysqlUtil.tz_adjust('battled_at')}) AS battled_on, COUNT(*) AS count_all
+            SELECT DATE(#{MysqlUtil.column_tokyo_timezone_cast('battled_at')}) AS battled_on, COUNT(*) AS count_all
             FROM swars_battles
             WHERE id IN (#{battle_ids.join(', ')})
             GROUP BY battled_on

@@ -34,7 +34,7 @@ module XyMaster
         end
 
         names_hash = scope.group("entry_name").order("count_all DESC").having("count_all >= #{count_all_gteq}").count
-        result = scope.select("entry_name, DATE(#{MysqlUtil.tz_adjust(:created_at)}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
+        result = scope.select("entry_name, DATE(#{MysqlUtil.column_tokyo_timezone_cast(:created_at)}) AS created_on, MIN(spent_sec) AS spent_sec").group("entry_name, created_on")
 
         names_hash.collect.with_index { |(name, _), i|
           palette = PaletteInfo.fetch(i.modulo(PaletteInfo.count))

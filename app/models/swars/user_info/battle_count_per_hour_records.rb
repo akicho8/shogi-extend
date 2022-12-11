@@ -8,7 +8,7 @@ module Swars
       def to_chart
         ids = @user_info.ids_scope.pluck(:battle_id)
         if ids.present?
-          casted_battled_at = MysqlUtil.tz_adjust("battled_at")
+          casted_battled_at = MysqlUtil.column_tokyo_timezone_cast("battled_at")
           s = Battle.where(id: ids)
           counts_hash = s.group("HOUR(#{casted_battled_at})").count
           hour_range.collect do |hour|
