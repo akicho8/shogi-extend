@@ -1,56 +1,8 @@
 # -*- frozen_string_literal: true -*-
-#
-# id を特定してから all_tag_counts した方が速いのか検証 → 結果:変わらないというか気持ち程度は速くなっている
-#
-#   user1 = Swars::User.create!
-#   user2 = Swars::User.create!
-#   100.times do
-#     battle = Swars::Battle.new
-#     battle.memberships.build(user: user1)
-#     battle.memberships.build(user: user2)
-#     battle.save!
-#   end
-#
-#   p Swars::Battle.count             # => 2529
-#
-#   user = Swars::User.first
-#
-#   s1 = user.memberships
-#   s1 = s1.joins(:battle)
-#   s1 = s1.where(Swars::Battle.arel_table[:win_user_id].not_eq(nil)) # 勝敗が必ずあるもの
-#   s1 = s1.order(Swars::Battle.arel_table[:battled_at].desc)         # 直近のものから取得
-#   s1 = s1.includes(:battle)
-#   s1 = s1.limit(50)
-#
-#   s2 = user.memberships.where(id: s1.ids)
-#
-#   f = -> s { s.all_tag_counts(at_least: 1, order: "count desc") }
-#   f.(s1)                           # => #<ActiveRecord::Relation [#<ActsAsTaggableOn::Tag id: 6, name: "居飛車", taggings_count: 5058>, #<ActsAsTaggableOn::Tag id: 29, name: "居玉", taggings_count: 7587>, #<ActsAsTaggableOn::Tag id: 115, name: "嬉野流", taggings_count: 5058>]>
-#   f.(s2)                           # => #<ActiveRecord::Relation [#<ActsAsTaggableOn::Tag id: 6, name: "居飛車", taggings_count: 5058>, #<ActsAsTaggableOn::Tag id: 29, name: "居玉", taggings_count: 7587>, #<ActsAsTaggableOn::Tag id: 115, name: "嬉野流", taggings_count: 5058>]>
-#
-#   def _; "%7.2f ms" % Benchmark.ms { 2000.times { yield } } end
-#   p _ { f.(s1) } # => "4051.89 ms"
-#   p _ { f.(s2) } # => "3771.33 ms" ← 若干速くなっている
-#   # >> "4051.89 ms"
-#   # >> "3771.33 ms"
 module Swars
   module UserInfo
     class Main
       JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL = true # 勝ち負けのラベルの並びを共通化させるため「投了」がなくても「投了」を含める
-
-      cattr_accessor(:migigyoku_family) {
-        [
-          "矢倉右玉",
-          "右玉",
-          "糸谷流右玉",
-          "羽生流右玉",
-          "角換わり右玉",
-          "雁木右玉",
-          "ツノ銀型右玉",
-          "三段右玉",
-          "清野流岐阜戦法",
-        ]
-      }
 
       attr_accessor :user
       attr_accessor :params
@@ -220,7 +172,7 @@ module Swars
       # all_tag_names_hash_or_zero("居飛車")         # => 1
       # all_tag_names_hash_or_zero("存在しない戦法") # => 0
       def all_tag_names_hash_or_zero(key)
-        all_tag_names_hash[key] || 0
+        all_tag_names_hash[key.to_s] || 0
       end
 
       # all_tag_names_hash["居飛車"]         # => 1
@@ -706,7 +658,7 @@ module Swars
       ################################################################################
 
       def migigyoku_levels
-        total = migigyoku_family.sum { |e| all_tag_names_hash_or_zero(e) }
+        total = Bioshogi::Explain::GroupInfo.fetch("右玉").values.sum { |e| all_tag_names_hash_or_zero(e) }
         if total.positive?
           [
             { name: "右玉",   value: total              },
@@ -716,7 +668,7 @@ module Swars
       end
 
       def migigyoku_kinds
-        list = migigyoku_family.find_all { |e| all_tag_names_hash_or_zero(e).positive? }
+        list = Bioshogi::Explain::GroupInfo.fetch("右玉").values.find_all { |e| all_tag_names_hash_or_zero(e).positive? }
         if list.present?
           list.collect { |e|
             { name: e, value: all_tag_names_hash_or_zero(e) }
