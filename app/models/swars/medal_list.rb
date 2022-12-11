@@ -64,7 +64,7 @@ module Swars
         "居玉勝率"                        => igyoku_win_ratio,
         "アヒル囲い率"                    => all_tag_ratio_for("アヒル囲い"),
         "嬉野流率"                        => all_tag_ratio_for("嬉野流"),
-        "タグ平均偏差値"                  => deviation_avg,
+        "戦法スタイル"                    => rarity_ratio.ratios_hash,
         "1手詰を詰まさないでじらした割合" => jirasi_ratio,
         "絶対投了しない率"                => zettai_toryo_sinai_ratio,
         "大長考または放置率"              => long_think_ratio,
@@ -209,26 +209,6 @@ module Swars
         s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
         s = s.tagged_with("居玉", on: :defense_tags)
         s.count.fdiv(real_count)
-      end
-    end
-
-    ################################################################################ レアマン
-
-    # タグの偏差値の平均
-    def deviation_avg
-      if all_tag_count.positive?
-        @deviation_avg ||= yield_self do
-          total = all_tag_names.sum do |key|
-            v = 0
-            if e = Bioshogi::Explain::TacticInfo.flat_lookup(key)
-              if e = e.distribution_ratio
-                v = e.fetch(:diff_from_avg) # レア度の平均との差
-              end
-            end
-            v
-          end
-          total.fdiv(all_tag_count)
-        end
       end
     end
 

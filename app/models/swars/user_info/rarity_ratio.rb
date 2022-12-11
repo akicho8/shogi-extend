@@ -7,15 +7,42 @@ module Swars
         @user_info = user_info
       end
 
-      def aggregate
+      def to_chart
         RarityInfo.reverse_each.collect do |e|
           { name: e.name_in_player_info, value: counts_hash[e.key] }
         end
       end
 
+      def majority?
+        if ratios_hash
+          (ratios_hash[:normal] + ratios_hash[:rare]) >= 0.5
+        end
+      end
+
+      def minority?
+        if ratios_hash
+          !majority?
+        end
+      end
+
+      private
+
+      # { normal: 0.25, rare: 0.25, ... }
+      def ratios_hash
+        @ratios_hash ||= yield_self do
+          total = counts_hash.values.sum
+          if total.positive?
+            RarityInfo.inject({}) do |a, e|
+              a.merge(e.key => counts_hash[e.key].fdiv(total))
+            end
+          end
+        end
+      end
+
+      # { normal: 5, rare: 5, ... }
       def counts_hash
         @counts_hash ||= yield_self do
-          hv = Hash.new(0)
+          hv = RarityInfo.inject({}) {|a, e| a.merge(e.key => 0) }
           tags.each do |e|
             if key = rarity_key_of(e)
               hv[key] += e.count
@@ -24,8 +51,6 @@ module Swars
           hv
         end
       end
-
-      private
 
       def rarity_key_of(tag)
         if e = Bioshogi::Explain::TacticInfo.flat_lookup(tag.name)
@@ -36,7 +61,8 @@ module Swars
             else
               # O(n)
               emission_ratio = e.fetch(:emission_ratio)
-              rarity_info = RarityInfo.find { |e| emission_ratio <= e.ratio } or raise "must not happen"
+              rarity_info = RarityInfo.find { |e| emission_ratio <= e.ratio }
+              rarity_info or raise "must not happen"
               rarity_info.key
             end
           end
@@ -45,7 +71,7 @@ module Swars
 
       def tags
         @tags ||= [:attack_tags, :defense_tags].flat_map do |e|
-          @user_info.ids_scope.tag_counts_on(e, at_least: @user_info.at_least_value)
+          @user_info.ids_scope.tag_counts_on(e)
         end
       end
     end

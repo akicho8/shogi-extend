@@ -49,7 +49,7 @@ module Swars
         assert { w("羽生流右玉").include?("右玉マン")                       }
         assert { b("アヒル囲い").include?("アヒル上級")                     }
         assert { b("UFO銀").include?("UFOマン")                             }
-        assert { b("裏アヒル囲い").include?("レアマン")                     }
+        assert { b("裏アヒル囲い").include?("レア戦法マン")                     }
         assert { b("カニカニ金").include?("カニ執着マン")                   }
         assert { b("カメレオン戦法").include?("カメレオンマン")             }
         assert { w("ポンポン桂").include?("ポンポンマン")                   }
