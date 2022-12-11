@@ -109,10 +109,10 @@ export class CommandInfo extends ApplicationMemoryRecord {
       },
       {
         desc: "指定の人を退出させる",
-        key: "kill",
-        example: "/kill alice",
+        key: "kick",
+        example: "/kick alice",
         command_fn: (context, args) => {
-          context.user_kill(args[0])
+          context.user_kick(args[0])
         },
       },
       {

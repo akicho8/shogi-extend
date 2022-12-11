@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       find(".message_modal_handle").click
       assert_member_exist("bob")     # bob は部屋にいる
-      chat_message_send("/kill bob") # bob を退出させる
+      chat_message_send("/kick bob") # bob を退出させる
       assert_member_missing("bob")   # bob は退出させられた
     end
   end

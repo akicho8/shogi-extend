@@ -155,9 +155,9 @@ module ShareBoard
       broadcast(:medal_add_to_user_share_broadcasted, data)
     end
 
-    def user_kill(data)
-      track(data, "強制退出", "KILL #{data["killed_user_name"]}")
-      broadcast(:user_kill_broadcasted, data)
+    def user_kick(data)
+      track(data, "強制退出", "KILL #{data["kicked_user_name"]}")
+      broadcast(:user_kick_broadcasted, data)
     end
 
     def odai_share(data)

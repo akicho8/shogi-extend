@@ -80,7 +80,7 @@ import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
 import { app_devise               } from "./app_devise.js"
-import { app_user_kill            } from "./app_user_kill.js"
+import { app_user_kick            } from "./app_user_kick.js"
 import { app_track_log            } from "./app_track_log.js"
 import { app_xmatch               } from "./auto_matching/app_xmatch.js"
 import { app_member_bc            } from "./app_member_bc.js"
@@ -169,7 +169,7 @@ export default {
     app_yomikomi,
     app_sp,
     app_devise,
-    app_user_kill,
+    app_user_kick,
     app_track_log,
     app_xmatch,
     app_member_bc,
