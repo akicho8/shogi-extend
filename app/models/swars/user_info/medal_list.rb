@@ -65,7 +65,7 @@ module Swars
           "居玉勝率"                        => igyoku_win_ratio,
           "アヒル囲い率"                    => all_tag_ratio_for("アヒル囲い"),
           "嬉野流率"                        => all_tag_ratio_for("嬉野流"),
-          "戦法スタイル"                    => user_info.rarity_ratio.ratios_hash,
+          "棋風"                    => user_info.rarity_ratio.ratios_hash,
           "1手詰を詰まさないでじらした割合" => jirasi_ratio,
           "絶対投了しない率"                => zettai_toryo_sinai_ratio,
           "大長考または放置率"              => long_think_ratio,

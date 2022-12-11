@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Swars
   RSpec.describe UserInfo::RarityRatio, type: :model, swars_spec: true do
-    describe "戦法スタイル" do
+    describe "棋風" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
