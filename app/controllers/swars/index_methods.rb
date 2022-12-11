@@ -1,5 +1,3 @@
-require "active_support/core_ext/benchmark"
-
 module Swars
   concern :IndexMethods do
     def index
@@ -22,16 +20,15 @@ module Swars
       if request.format.json?
         if params[:format_type] == "kento"
           if current_swars_user
-            count = current_swars_user.battles.count
-            ms = Benchmark.ms {
-              render json: KentoApi.new({
-                  :scope => current_index_scope,
-                  :user  => current_swars_user,
-                  :max   => params[:limit],
-                })
-            }
-            diff = current_swars_user.battles.count - count
-            SlackAgent.notify(emoji: ":KENTO:", subject: "KENTO API", body: [current_swars_user.key, "+#{diff}", "%7.2f ms" % ms, request.from, request.origin, request.user_agent].inspect)
+            render json: KentoApiResponder.new({
+                :scope         => current_index_scope,
+                :user          => current_swars_user,
+                :max           => params[:limit],
+                :notify_params => {
+                  :referer    => request.referer,
+                  :user_agent => request.user_agent,
+                },
+              })
           end
         end
       end
