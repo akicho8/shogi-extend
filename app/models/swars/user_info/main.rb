@@ -274,8 +274,8 @@ module Swars
 
           { name: "派閥",       type1: "pie",             type2: nil, body: formation_info_records, pie_type: "is_many_values" },
           { name: "戦法スタイル", type1: "pie",             type2: nil, body: rarity_ratio.to_chart,      pie_type: "is_many_values" },
-          { name: "居飛車",     type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.ibisha_win_lose_params,     win_lose_click_method_name: "ibisha_win_lose_click_handle", },
-          { name: "振り飛車",   type1: "win_lose_circle", type2: nil, body: ibisha_furibisha_win_lose.furibisha_win_lose_params,  win_lose_click_method_name: "furibisha_win_lose_click_handle", },
+          { name: "居飛車",     type1: "win_lose_circle", type2: nil, body: ibisha_note_judge_info.to_chart,     win_lose_click_method_name: "ibisha_win_lose_click_handle", },
+          { name: "振り飛車",   type1: "win_lose_circle", type2: nil, body: furibisha_note_judge_info.to_chart,  win_lose_click_method_name: "furibisha_win_lose_click_handle", },
 
           ################################################################################
 
@@ -294,7 +294,7 @@ module Swars
           ################################################################################
 
           { name: "1日の平均対局数",                     type1: "simple", type2: "numeric_with_unit", unit: "局", body: avg_of_avg_battles_count_per_day,              },
-          { name: "対局時間帯",                          type1: "bar",    type2: nil,                             body: battle_count_per_hour_records,  bar_type: "is_default", },
+          { name: "対局時間帯",                          type1: "bar",    type2: nil,                             body: battle_count_per_hour_records.to_chart,  bar_type: "is_default", },
 
           ################################################################################
 
@@ -317,7 +317,7 @@ module Swars
 
           ################################################################################
 
-          { name: "駒の使用率",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
+          { name: "駒の使用率",                        type1: "bar",    type2: nil,                             body: used_piece_counts_records.to_chart, bar_type: "is_default", tategaki_p: true, value_format: "percentage", },
 
           ################################################################################
           { name: "対戦相手との段級差(平均)",           type1: "simple", type2: "raw",                           body: avg_of_grade_diff,             },
@@ -705,55 +705,11 @@ module Swars
       end
 
       def battle_count_per_hour_records
-        battle_ids = ids_scope.pluck(:battle_id)
-        # battle_ids = []
-        if battle_ids.present?
-          # まず日別の対局数を求める
-          battled_at = MysqlUtil.tz_adjust("battled_at")
-          s = Battle.where(id: battle_ids)
-          counts_hash = s.group("HOUR(#{battled_at})").count
-          [*4..23, *0..3].collect do |hour|
-            { name: hour.to_s, value: counts_hash[hour] || 0 }
-          end
-        end
+        @battle_count_per_hour_records ||= BattleCountPerHourRecords.new(self)
       end
 
-      ################################################################################ 駒の使用率
-
       def used_piece_counts_records
-        # if Rails.env.production?
-        #   if params[:with_used_piece_counts]
-        #   else
-        #     return
-        #   end
-        # end
-
-        counts = Hash.new(0)
-        s = ids_scope
-        # s = s.joins(:membership_extra) # SQLで参照しているわけではないので JOIN する必要なし
-        s = s.includes(:membership_extra) # 重要
-        s.each do |e|
-          # e.membership_extra.used_piece_counts # => {"B0"=>7, "G0"=>4, "K0"=>6, "L0"=>6, "N0"=>1, "P0"=>18, "P1"=>1, "R0"=>2, "S0"=>9}
-          if e = e.membership_extra
-            counts.update(e.used_piece_counts) { |_, a, b| a + b } # MySQL で hash を合体できれば置き換える
-          end
-        end
-
-        denominator = counts.values.sum
-        list = []
-
-        if denominator.positive?
-          Bioshogi::Piece.each do |e|
-            list << { name: e.any_name(false), value: counts["#{e.sfen_char}0"].fdiv(denominator) }
-          end
-          Bioshogi::Piece.each do |e|
-            if e.promotable
-              list << { name: e.any_name(true, char_type: :single_char), value: counts["#{e.sfen_char}1"].fdiv(denominator) }
-            end
-          end
-        end
-
-        list
+        @used_piece_counts_records ||= UsedPieceCountsRecords.new(self)
       end
 
       # 対局モードの個数
@@ -776,9 +732,12 @@ module Swars
         @rarity_ratio ||= RarityRatio.new(self)
       end
 
-      # 「居飛車」「振り飛車」での勝敗
-      def ibisha_furibisha_win_lose
-        @ibisha_furibisha_win_lose ||= IbishaFuribishaWinLose.new(self)
+      def ibisha_note_judge_info
+        @ibisha_note_judge_info ||= NoteJudgeInfo.new(self, "居飛車")
+      end
+
+      def furibisha_note_judge_info
+        @furibisha_note_judge_info ||= NoteJudgeInfo.new(self, "振り飛車")
       end
 
       private

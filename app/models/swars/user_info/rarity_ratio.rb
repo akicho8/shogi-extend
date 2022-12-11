@@ -25,8 +25,6 @@ module Swars
         end
       end
 
-      private
-
       # { normal: 0.25, rare: 0.25, ... }
       def ratios_hash
         @ratios_hash ||= yield_self do
@@ -38,6 +36,8 @@ module Swars
           end
         end
       end
+
+      private
 
       # { normal: 5, rare: 5, ... }
       def counts_hash

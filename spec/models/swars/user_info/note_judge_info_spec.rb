@@ -1,8 +1,8 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserInfo::IbishaFuribishaWinLose, type: :model, swars_spec: true do
-    describe "居飛車 ibisha_win_lose_params" do
+  RSpec.describe "居飛車と振り飛車の勝率", type: :model, swars_spec: true do
+    describe "ibisha_note_judge_info" do
       before do
         @black = User.create!
       end
@@ -11,7 +11,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        if params = @black.user_info.ibisha_furibisha_win_lose.ibisha_win_lose_params
+        if params = @black.user_info.ibisha_note_judge_info.to_chart
           params[:judge_counts]
         end
       end
@@ -22,7 +22,7 @@ module Swars
       end
     end
 
-    describe "振り飛車 furibisha_win_lose_params" do
+    describe "furibisha_note_judge_info" do
       before do
         @black = User.create!
       end
@@ -31,7 +31,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        if params = @black.user_info.ibisha_furibisha_win_lose.furibisha_win_lose_params
+        if params = @black.user_info.furibisha_note_judge_info.to_chart
           params[:judge_counts]
         end
       end
