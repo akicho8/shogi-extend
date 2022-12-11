@@ -18,8 +18,6 @@
 # Test
 # spec/models/swars/zip_dl/main_builder_spec.rb
 
-require "active_support/core_ext/benchmark"
-
 module Swars
   module ZipDl
     class MainBuilder

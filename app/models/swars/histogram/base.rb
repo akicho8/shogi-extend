@@ -1,5 +1,3 @@
-require "active_support/core_ext/benchmark"
-
 module Swars
   module Histogram
     # http://localhost:3000/api/swars_histogram.json
