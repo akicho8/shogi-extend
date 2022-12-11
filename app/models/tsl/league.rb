@@ -28,10 +28,10 @@ module Tsl
         league = League.find_or_create_by!(generation: generation)
         scraping = Scraping.new(options.merge(generation: generation))
 
-        Array(scraping.user_explains).each do |user_explain|
-          user = User.find_or_create_by!(name: user_explain[:name])
+        Array(scraping.user_infos).each do |user_info|
+          user = User.find_or_create_by!(name: user_info[:name])
           membership = league.memberships.find_by(user: user) || league.memberships.build(user: user)
-          membership.update!(user_explain.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
+          membership.update!(user_info.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
         end
       end
     end

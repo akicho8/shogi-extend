@@ -1,10 +1,10 @@
 module Swars
-  module UserExplain
+  module UserInfo
     class RarityRatio
       OPTIMIZE = true
 
-      def initialize(user_explain)
-        @user_explain = user_explain
+      def initialize(user_info)
+        @user_info = user_info
       end
 
       def to_chart
@@ -71,7 +71,7 @@ module Swars
 
       def tags
         @tags ||= [:attack_tags, :defense_tags].flat_map do |e|
-          @user_explain.ids_scope.tag_counts_on(e)
+          @user_info.ids_scope.tag_counts_on(e)
         end
       end
     end

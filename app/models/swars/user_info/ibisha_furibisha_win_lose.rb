@@ -1,8 +1,8 @@
 module Swars
-  module UserExplain
+  module UserInfo
     class IbishaFuribishaWinLose
-      def initialize(user_explain)
-        @user_explain = user_explain
+      def initialize(user_info)
+        @user_info = user_info
       end
 
       def ibisha_win_lose_params
@@ -16,8 +16,8 @@ module Swars
       private
 
       def aggregate_for(tag_name)
-        win = on_note_tags_count(@user_explain.win_scope, tag_name)
-        lose = on_note_tags_count(@user_explain.lose_scope, tag_name)
+        win = on_note_tags_count(@user_info.win_scope, tag_name)
+        lose = on_note_tags_count(@user_info.lose_scope, tag_name)
         if (win + lose).nonzero?
           { judge_counts: { win: win, lose: lose } }
         end

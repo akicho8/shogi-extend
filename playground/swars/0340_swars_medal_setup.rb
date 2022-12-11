@@ -36,9 +36,9 @@ Swars::Battle.create! do |e|
   e.memberships.build(user: user2)
 end
 
-tp user1.user_explain.medal_list.to_debug_hash
-tp user1.user_explain.medal_list.to_a
-tp user1.user_explain.to_hash
+tp user1.user_info.medal_list.to_debug_hash
+tp user1.user_info.medal_list.to_a
+tp user1.user_info.to_hash
 
 # >> |---------------------------------+---------------------------------------|
 # >> |    引き分けを除く対象サンプル数 | 3                                     |

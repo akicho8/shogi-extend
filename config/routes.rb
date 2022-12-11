@@ -48,9 +48,9 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://localhost:3000/w?query=DevUser1&user_explain_show=true
+    # http://localhost:3000/w?query=DevUser1&user_info_show=true
     if !path
-      if request.params[:user_explain_show]
+      if request.params[:user_info_show]
         user_key = request.params[:query]
         path = "/swars/users/#{user_key}"
       end

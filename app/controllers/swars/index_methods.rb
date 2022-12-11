@@ -48,7 +48,7 @@ module Swars
           if Rails.env.development?
             SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
           end
-          render json: current_swars_user.user_explain(params.to_unsafe_h.to_options).to_hash.as_json
+          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
         end
       end
     end

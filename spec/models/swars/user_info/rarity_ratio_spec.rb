@@ -1,14 +1,14 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserExplain::RarityRatio, type: :model, swars_spec: true do
+  RSpec.describe UserInfo::RarityRatio, type: :model, swars_spec: true do
     describe "戦法スタイル" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_explain.rarity_ratio
+        black.user_info.rarity_ratio
       end
 
       it "to_chart" do

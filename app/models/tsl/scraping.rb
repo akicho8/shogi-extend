@@ -18,7 +18,7 @@ module Tsl
       @params = params
     end
 
-    def user_explains
+    def user_infos
       if html = html_fetch
         doc = Nokogiri::HTML(html)
         doc.search("tbody tr").take(rows_max).collect do |tr|

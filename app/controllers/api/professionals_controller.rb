@@ -50,7 +50,7 @@ module Api
     end
 
     def rows
-      user_explains_hash = user_explains_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
+      user_infos_hash = user_infos_fetch.inject({}) { |a, e| a.merge(e[:key].downcase => e) }
 
       grade = Swars::Grade.fetch("十段")
 
@@ -67,8 +67,8 @@ module Api
       users = users.collect do |user|
         {}.tap do |row|
           name = user.key
-          if user_explain = user_explains_hash[user.key.downcase]
-            if s = user_explain["名前"].to_s.remove(/\s*\<.*?\>/).presence
+          if user_info = user_infos_hash[user.key.downcase]
+            if s = user_info["名前"].to_s.remove(/\s*\<.*?\>/).presence
               name = s
             end
           end
@@ -83,7 +83,7 @@ module Api
       users
     end
 
-    def user_explains_fetch
+    def user_infos_fetch
       rows = []
       256.times.with_index(1) do |_, page|
         url = "https://shogiwars.heroz.jp/premium/coach_list?page=#{page}"

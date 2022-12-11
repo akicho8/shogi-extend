@@ -12,7 +12,7 @@ Top 20 slowest example groups:
   動画作成
     6.14 seconds average (24.54 seconds / 4 examples) ./spec/system/kiwi/video_new_spec.rb:3
   プレイヤー情報
-    4.62 seconds average (13.86 seconds / 3 examples) ./spec/system/swars/user_explain_show_spec.rb:3
+    4.62 seconds average (13.86 seconds / 3 examples) ./spec/system/swars/user_info_show_spec.rb:3
   将棋ウォーズ棋譜検索
     4.47 seconds average (160.9 seconds / 36 examples) ./spec/system/swars/index_spec.rb:3
   詳細

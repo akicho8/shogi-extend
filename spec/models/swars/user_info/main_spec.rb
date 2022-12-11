@@ -1,11 +1,11 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserExplain::Main, type: :model, swars_spec: true do
+  RSpec.describe UserInfo::Main, type: :model, swars_spec: true do
     describe "to_hash" do
       before do
         @record = Battle.create!
-        @hash = @record.memberships.first.user.user_explain.to_hash.as_json
+        @hash = @record.memberships.first.user.user_info.to_hash.as_json
       end
 
       it "ユーザーのサマリー" do
@@ -40,7 +40,7 @@ module Swars
     end
 
     it "対局数0" do
-      assert { User.create!.user_explain.to_hash }
+      assert { User.create!.user_info.to_hash }
     end
 
     describe "派閥 formation_info_records" do
@@ -52,7 +52,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_explain.formation_info_records.collect { |e| e[:value] }
+        @black.user_info.formation_info_records.collect { |e| e[:value] }
       end
 
       it "works" do
@@ -71,7 +71,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
-        @black.user_explain.avg_win_lose_turn_max.collect { |e| e[:value] }
+        @black.user_info.avg_win_lose_turn_max.collect { |e| e[:value] }
       end
 
       it "works" do
@@ -91,7 +91,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
-        @black.user_explain.avg_of_toryo_turn_max
+        @black.user_info.avg_of_toryo_turn_max
       end
 
       it "works" do
@@ -110,7 +110,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_explain.avg_of_turn_max
+        @black.user_info.avg_of_turn_max
       end
 
       it "works" do
@@ -129,8 +129,8 @@ module Swars
           e.memberships.build(user: @black)
         end
         [
-          @black.user_explain.max_of_think_max,
-          @black.user_explain.avg_of_think_all_avg,
+          @black.user_info.max_of_think_max,
+          @black.user_info.avg_of_think_all_avg,
         ]
       end
 
@@ -152,7 +152,7 @@ module Swars
           e.memberships.build(user: @black)
           e.memberships.build(user: @white)
         end
-        @black.user_explain.avg_of_grade_diff
+        @black.user_info.avg_of_grade_diff
       end
 
       it "works" do
@@ -171,7 +171,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: judge_key)
         end
         [:win, :lose].collect do |key|
-          (@black.user_explain.judge_info_records(key) || []).collect  { |e| [e[:name], e[:value]] }
+          (@black.user_info.judge_info_records(key) || []).collect  { |e| [e[:name], e[:value]] }
         end
       end
 
@@ -192,7 +192,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate5, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_explain.avg_of_think_end_avg
+        @black.user_info.avg_of_think_end_avg
       end
 
       it "works" do
@@ -207,7 +207,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate4(n), rule_key: rule_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_explain.kishin_info_records&.collect { |e| e[:value] }
+        @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
       def case2(grade_key)
@@ -247,7 +247,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate4(n)) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_explain.kishin_info_records_lv2&.collect { |e| e[:value] }
+        @black.user_info.kishin_info_records_lv2&.collect { |e| e[:value] }
       end
 
       it "works" do
@@ -266,10 +266,10 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate2(3, sec), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
         end
-        user_explain = @black.user_explain
+        user_info = @black.user_info
         [
-          user_explain.count_of_checkmate_think_last,
-          user_explain.max_of_checkmate_think_last,
+          user_info.count_of_checkmate_think_last,
+          user_info.max_of_checkmate_think_last,
         ]
       end
 
@@ -289,7 +289,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
-        @black.user_explain.disconnect_count
+        @black.user_info.disconnect_count
       end
 
       it "works" do
@@ -308,10 +308,10 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
-        user_explain = @black.user_explain
+        user_info = @black.user_info
         [
-          user_explain.count_of_timeout_think_last,
-          user_explain.max_of_timeout_think_last,
+          user_info.count_of_timeout_think_last,
+          user_info.max_of_timeout_think_last,
         ]
       end
 
@@ -331,11 +331,11 @@ module Swars
         Battle.create!(csa_seq: csa_seq_generate2(n, sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
-        user_explain = @black.user_explain
+        user_info = @black.user_info
         [
-          user_explain.count_of_toryo_think_last,
-          user_explain.max_of_toryo_think_last,
-          user_explain.avg_of_toryo_think_last,
+          user_info.count_of_toryo_think_last,
+          user_info.max_of_toryo_think_last,
+          user_info.avg_of_toryo_think_last,
         ]
       end
 
@@ -358,14 +358,14 @@ module Swars
         Battle.create!(tactic_key: "糸谷流右玉") do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_explain.migigyoku_levels.collect { |e| e[:value] }
+        @black.user_info.migigyoku_levels.collect { |e| e[:value] }
       end
 
       it "works" do
         assert { case1 == [1, 0] }
         assert { case1 == [2, 0] }
 
-        assert { @black.user_explain.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
+        assert { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
     end
 
@@ -378,7 +378,7 @@ module Swars
         Battle.create!(battled_at: battled_at) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_explain.avg_of_avg_battles_count_per_day
+        @black.user_info.avg_of_avg_battles_count_per_day
       end
 
       it "works" do
@@ -397,7 +397,7 @@ module Swars
         Battle.create!(battled_at: battled_at) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_explain.battle_count_per_hour_records.find_all { |e| e[:value].positive? }
+        @black.user_info.battle_count_per_hour_records.find_all { |e| e[:value].positive? }
       end
 
       it "works" do
@@ -414,7 +414,7 @@ module Swars
 
       def case1
         battle = Battle.create!(csa_seq: csa_seq_generate1(3))
-        battle.memberships.collect { |e| e.user.user_explain.used_piece_counts_records.reject { |e| e[:value].zero? } }
+        battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
       end
 
       it "works" do
@@ -432,11 +432,11 @@ module Swars
       end
 
       it "角不成" do
-        assert { case1("角不成").user_explain.kakuhunari_count >= 1 }
+        assert { case1("角不成").user_info.kakuhunari_count >= 1 }
       end
 
       it "飛車不成" do
-        assert { case1("飛車不成").user_explain.hisyahunari_count >= 1 }
+        assert { case1("飛車不成").user_info.hisyahunari_count >= 1 }
       end
     end
   end

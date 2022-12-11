@@ -1,4 +1,4 @@
 module Swars
-  module UserExplain
+  module UserInfo
   end
 end
