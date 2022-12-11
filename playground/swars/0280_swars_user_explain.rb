@@ -27,4 +27,4 @@ user2 = Swars::User.create!
   battle.save!
 end
 
-tp Swars::User.first.user_info.to_hash
+tp Swars::User.first.user_explain.to_hash

@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../config/environment', __FILE__)
 
-# tp Tsl::Scraping.new(generation: 32).user_infos
+# tp Tsl::Scraping.new(generation: 32).user_explains
 
 Tsl.setup(reset: true)
 
 
 (28..67).each do |generation|
-  Tsl::Scraping.new(generation: generation).user_infos.each do |e|
+  Tsl::Scraping.new(generation: generation).user_explains.each do |e|
     if v = e[:age]
       if v < 10
         p generation

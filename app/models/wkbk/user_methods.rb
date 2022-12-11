@@ -78,7 +78,7 @@ module Wkbk
       # end
     end
 
-    concerning :UserInfoMethods do
+    concerning :UserExplainMethods do
       # rails r "tp User.first.wkbk_info"
 
       # def wkbk_active_articles_count

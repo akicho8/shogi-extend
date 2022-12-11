@@ -66,7 +66,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import chart_mixin from '@/components/models/chart_mixin.js'
 
-// http://localhost:3000/w?query=kinakom0chi&user_info_show=true
+// http://localhost:3000/w?query=kinakom0chi&user_explain_show=true
 export default {
   mixins: [chart_mixin],
 

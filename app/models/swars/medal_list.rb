@@ -2,7 +2,7 @@ module Swars
   class MedalList
     cattr_accessor(:threshold) { 0.7 }
 
-    attr_accessor :user_info
+    attr_accessor :user_explain
 
     delegate *[
       :user,
@@ -23,10 +23,10 @@ module Swars
       :lose_count,
       :turn_max_gteq,
       :xmode_counts,
-    ], to: :user_info
+    ], to: :user_explain
 
-    def initialize(user_info)
-      @user_info = user_info
+    def initialize(user_explain)
+      @user_explain = user_explain
     end
 
     def to_a

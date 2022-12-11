@@ -1,5 +1,5 @@
 # app/models/swars/membership_medal_info.rb
-# app/javascript/user_info_show.vue
+# app/javascript/user_explain_show.vue
 module Swars
   class MedalInfo
     include ApplicationMemoryRecord
@@ -51,7 +51,7 @@ module Swars
       { key: "居玉勝ちマン",       medal_params: { message: "居玉でもそこそこ勝っている",                   method: "raw",  name: "🗿",                type: nil, },          if_cond: proc { (r = igyoku_win_ratio) && r >= 0.3       },},
       { key: "入玉勝ちマン",       medal_params: { message: "入玉で勝った",                                 method: "raw",  name: "🏈",                 type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("入玉") > 0 },},
       { key: "切れ負けマン",       medal_params: { message: "切れ負けが多い",                               method: "raw",  name: "⌛",                 type: nil, },          if_cond: proc { (r = lose_ratio_of("TIMEOUT")) && r >= 0.25 },},
-      { key: "レア戦法マン",       medal_params: { message: "変態戦法の使い手",                             method: "raw",  name: "🍀",                type: nil, },          if_cond: proc { user_info.rarity_ratio.minority? },},
+      { key: "レア戦法マン",       medal_params: { message: "変態戦法の使い手",                             method: "raw",  name: "🍀",                type: nil, },          if_cond: proc { user_explain.rarity_ratio.minority? },},
       { key: "切断マン",           medal_params: { message: "切断の使い手",                                 method: "raw",  name: "💩",                type: nil, },          if_cond: proc { (r = lose_ratio_of("DISCONNECT")) && r > 0 },},
       { key: "角不成マン",         medal_params: { message: "角不成で舐めプした",                           method: "raw",  name: "☠",                 type: nil, },          if_cond: proc { all_tag_ratio_for("角不成") > 0 }           },
       { key: "飛車不成マン",       medal_params: { message: "飛車不成で舐めプした",                         method: "raw",  name: "💀",                type: nil, },          if_cond: proc { all_tag_ratio_for("飛車不成") > 0 }           },

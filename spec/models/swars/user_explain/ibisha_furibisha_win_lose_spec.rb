@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserInfo::IbishaFuribishaWinLose, type: :model, swars_spec: true do
+  RSpec.describe UserExplain::IbishaFuribishaWinLose, type: :model, swars_spec: true do
     describe "居飛車 ibisha_win_lose_params" do
       before do
         @black = User.create!
@@ -11,7 +11,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        if params = @black.user_info.ibisha_furibisha_win_lose.ibisha_win_lose_params
+        if params = @black.user_explain.ibisha_furibisha_win_lose.ibisha_win_lose_params
           params[:judge_counts]
         end
       end
@@ -31,7 +31,7 @@ module Swars
         Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        if params = @black.user_info.ibisha_furibisha_win_lose.furibisha_win_lose_params
+        if params = @black.user_explain.ibisha_furibisha_win_lose.furibisha_win_lose_params
           params[:judge_counts]
         end
       end

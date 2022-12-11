@@ -3,7 +3,7 @@ require File.expand_path('../../../config/environment', __FILE__)
 
 tp Swars::Agent.new(remote_run: true).index_get(gtype: "",  user_key: "kinakom0chi", page_index: 0)
 # >> |-----------------------------------------+------------------------------------------------------------------------------------------------|
-# >> | key                                     | user_infos                                                                                     |
+# >> | key                                     | user_explains                                                                                     |
 # >> |-----------------------------------------+------------------------------------------------------------------------------------------------|
 # >> | kkkkkfff-kinakom0chi-20191229_211058    | [{:user_key=>"kkkkkfff", :grade_key=>"2級"}, {:user_key=>"kinakom0chi", :grade_key=>"2級"}]    |
 # >> | kinakom0chi-yt0007-20191229_205213      | [{:user_key=>"kinakom0chi", :grade_key=>"2級"}, {:user_key=>"yt0007", :grade_key=>"1級"}]      |

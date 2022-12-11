@@ -34,7 +34,7 @@
 #   # >> "4051.89 ms"
 #   # >> "3771.33 ms"
 module Swars
-  module UserInfo
+  module UserExplain
     class Main
       JUDGE_INFO_RECORDS_INCLUDE_EMPTY_LABEL = true # 勝ち負けのラベルの並びを共通化させるため「投了」がなくても「投了」を含める
 

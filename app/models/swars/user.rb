@@ -67,8 +67,8 @@ module Swars
       user_key
     end
 
-    def user_info(params = {})
-      UserInfo::Main.new(self, params)
+    def user_explain(params = {})
+      UserExplain::Main.new(self, params)
     end
 
     include GradeMethods

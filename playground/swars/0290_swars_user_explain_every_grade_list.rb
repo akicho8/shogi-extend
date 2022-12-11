@@ -21,4 +21,4 @@ test("九段", "win")
 test("九段", "win")
 test("九段", "lose")
 
-@user1.user_info.every_grade_list # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}, :appear_ratio=>0.75}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}, :appear_ratio=>0.25}]
+@user1.user_explain.every_grade_list # => [{:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}, :appear_ratio=>0.75}, {:grade_name=>"初段", :judge_counts=>{:win=>1, :lose=>0}, :appear_ratio=>0.25}]
