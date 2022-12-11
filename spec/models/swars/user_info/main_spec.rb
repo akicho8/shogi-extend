@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe Battle, type: :model, swars_spec: true do
+  RSpec.describe UserInfo::Main, type: :model, swars_spec: true do
     describe "to_hash" do
       before do
         @record = Battle.create!

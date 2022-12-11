@@ -1,5 +1,5 @@
 module Swars
-  class UserInfo
+  module UserInfo
     class RarityRatio
       OPTIMIZE = true
 

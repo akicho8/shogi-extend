@@ -1,5 +1,5 @@
 module Swars
-  class UserInfo
+  module UserInfo
     class IbishaFuribishaWinLose
       def initialize(user_info)
         @user_info = user_info

@@ -68,7 +68,7 @@ module Swars
     end
 
     def user_info(params = {})
-      UserInfo.new(self, params)
+      UserInfo::Main.new(self, params)
     end
 
     include GradeMethods
