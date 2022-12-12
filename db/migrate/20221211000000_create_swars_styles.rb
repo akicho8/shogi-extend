@@ -11,7 +11,7 @@ class CreateSwarsStyles < ActiveRecord::Migration[5.1]
 
     change_table :swars_memberships do |t|
       t.remove :style_id rescue nil
-      t.belongs_to :style, null: true, comment: "戦法スタイル"
+      t.belongs_to :style, null: true, comment: "棋風"
     end
   end
 end
