@@ -1,6 +1,6 @@
 <template lang="pug">
 span.SwarsBattleIndexTableCellStyleOne
-  template(v-if="style_key")
+  template(v-if="membership.style_key")
     template(v-if="true")
       //- 同じURLだった場合は移動しない。href があらかじめわかるので別タブで開ける
       nuxt-link(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="$sound.play_click()") {{name}}
@@ -15,17 +15,17 @@ span.SwarsBattleIndexTableCellStyleOne
 <script>
 export default {
   name: "SwarsBattleIndexTableCellStyleOne",
-  props: ["style_key", "search_column_name"],
+  props: ["membership", "search_column_name"],
   inject: ["TheApp"],
   methods: {
   },
   computed: {
     name() {
-      return this.TheApp.StyleInfo.fetch(this.style_key).name
+      return this.TheApp.StyleInfo.fetch(this.membership.style_key).name
     },
     new_query() {
-      const style_pair = [this.search_column_name, this.style_key].join(":")
-      return [this.TheApp.xi.current_swars_user_key, style_pair].join(" ")
+      const style_pair = [this.search_column_name, this.membership.style_key].join(":")
+      return [this.membership.user.key, style_pair].join(" ")
     },
   },
 }
