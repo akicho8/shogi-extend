@@ -395,7 +395,7 @@ module Swars
 
       def case1
         battle = Battle.create!(csa_seq: csa_seq_generate1(3))
-        battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.reject { |e| e[:value].zero? } }
+        battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.to_chart.reject { |e| e[:value].zero? } }
       end
 
       it "works" do

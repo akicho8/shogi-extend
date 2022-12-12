@@ -658,7 +658,7 @@ module Swars
       ################################################################################
 
       def migigyoku_levels
-        total = Bioshogi::Explain::GroupInfo.fetch("右玉").values.sum { |e| all_tag_names_hash_or_zero(e) }
+        total = Bioshogi::Explain::GroupInfo.fetch("右玉").values.collect(&:name).sum { |e| all_tag_names_hash_or_zero(e) }
         if total.positive?
           [
             { name: "右玉",   value: total              },
@@ -668,7 +668,7 @@ module Swars
       end
 
       def migigyoku_kinds
-        list = Bioshogi::Explain::GroupInfo.fetch("右玉").values.find_all { |e| all_tag_names_hash_or_zero(e).positive? }
+        list = Bioshogi::Explain::GroupInfo.fetch("右玉").values.collect(&:name).find_all { |e| all_tag_names_hash_or_zero(e).positive? }
         if list.present?
           list.collect { |e|
             { name: e, value: all_tag_names_hash_or_zero(e) }

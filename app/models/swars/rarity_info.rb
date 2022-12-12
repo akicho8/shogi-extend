@@ -12,22 +12,27 @@ module Swars
     include ApplicationMemoryRecord
     memory_record [
       # 順番は希少なものが先
-      { key: :super_special_rare, name: "SSR", ratio: 0.00005609594650690541, name_in_player_info: "変態",   }, # 個数5個以下
-      { key: :super_rare,         name: "SR",  ratio: 0.0034779486834281355,  name_in_player_info: "準変態", }, # diff_from_avg が - になる最初
-      { key: :rare,               name: "R",   ratio: 0.01057969551120236,    name_in_player_info: "準王道", }, # 上位25件 index:24 の値
-      { key: :normal,             name: "N",   ratio: 1.0,                    name_in_player_info: "王道",   },
+      # キーは直接使うべからず。無くても動くようにする
+      { key: :rarity_key_SSR, name: "SSR", ratio: 0.00005609594650690541, style_key: "変態",   majority: false, }, # 個数5個以下
+      { key: :rarity_key_SR,  name: "SR",  ratio: 0.0034779486834281355,  style_key: "準変態", majority: false, }, # diff_from_avg が - になる最初
+      { key: :rarity_key_R,   name: "R",   ratio: 0.01057969551120236,    style_key: "準王道", majority: true,  }, # 上位25件 index:24 の値
+      { key: :rarity_key_N,   name: "N",   ratio: 1.0,                    style_key: "王道",   majority: true,  },
     ]
 
     class << self
       def lookup(v)
-        super || invert_table[v]
+        super || invert_table[v.to_s]
       end
 
       private
 
       def invert_table
-        @invert_table ||= inject({}) {|a, e| a.merge(e.name => e) }
+        @invert_table ||= inject({}) { |a, e| a.merge(e.name => e, e.style_key => e) }
       end
+    end
+
+    def style_info
+      StyleInfo.fetch(style_key)
     end
   end
 end

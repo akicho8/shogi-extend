@@ -96,6 +96,10 @@ module Api
           { :key => e.key, :name => e.short_name, yomiage: e.name }
         end
 
+        json[:style_infos] = Swars::StyleInfo.collect do |e|
+          { :key => e.key }
+        end
+
         json[:judge_infos] = JudgeInfo.collect do |e|
           { :key => e.name }
         end

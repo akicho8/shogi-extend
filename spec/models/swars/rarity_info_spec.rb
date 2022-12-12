@@ -2,8 +2,8 @@ require "rails_helper"
 
 module Swars
   RSpec.describe RarityInfo, type: :model, swars_spec: true do
-    it "works" do
-      assert { RarityInfo.fetch("SR").key == :super_rare }
+    it "style_info" do
+      assert { RarityInfo.first.style_info }
     end
   end
 end

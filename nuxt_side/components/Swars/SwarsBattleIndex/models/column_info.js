@@ -7,6 +7,7 @@ export class ColumnInfo extends ApplicationMemoryRecord {
       { key: "user_key_right",       name: "相手の名前",       visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "membership_left",      name: "自分",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "membership_right",     name: "相手",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "style_key",            name: "棋風",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "judge_key",            name: "勝敗",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "location_key",         name: "先後",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "final_key",            name: "結末",             visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },

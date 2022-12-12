@@ -52,6 +52,10 @@
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
             .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchCheckbox(:base="base" label1="自分の棋風" :records="xi.style_infos" var_name="my_style_keys")
+            .column.is-6-tablet.is-4-desktop
+              SwarsCustomSearchCheckbox(:base="base" label1="相手の棋風" :records="xi.style_infos" var_name="vs_style_keys")
+            .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
             .column.is-6-tablet.is-4-desktop
               SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
@@ -173,6 +177,8 @@ export default {
       av.push(this.compare_value_as_query("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
+      av.push(this.values_as_query("自分の棋風", this.my_style_keys))
+      av.push(this.values_as_query("相手の棋風", this.vs_style_keys))
       av.push(this.compare_value_as_query("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
       av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
       av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))

@@ -19,7 +19,7 @@ module Swars
           Bioshogi::Piece.each do |e|
             if e.promotable
               list << {
-                :name  => e.any_name(true, char_type: :single_char) # 1文字の漢字にする。例えば「成銀」ではなく「全」,
+                :name  => e.any_name(true, char_type: :single_char), # 1文字の漢字にする。例えば「成銀」ではなく「全」,
                 :value => ratio_of("#{e.sfen_char}1"),
               }
             end

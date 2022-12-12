@@ -10,7 +10,7 @@ module Swars
         :count          => 1,
         :emission_ratio => 0.5,
         :diff_from_avg  => 0.49644128113879005,
-        :rarity_key     => :normal,
+        :rarity_key     => :rarity_key_N,
       }
       assert { json[:items_hash]["2手目△３ニ飛戦法"] == expected }
       assert { json[:items_hash]["居玉"] == nil }

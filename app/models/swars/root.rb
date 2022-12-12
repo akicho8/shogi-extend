@@ -12,6 +12,7 @@ module Swars
 
       [
         Location,
+        Style,
         Preset,
         Judge,
 
@@ -29,6 +30,7 @@ module Swars
     def models
       [
         Location,
+        Style,
         Preset,
         Judge,
         User,

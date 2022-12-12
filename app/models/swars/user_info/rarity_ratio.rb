@@ -9,13 +9,16 @@ module Swars
 
       def to_chart
         RarityInfo.reverse_each.collect do |e|
-          { name: e.name_in_player_info, value: counts_hash[e.key] }
+          { name: e.style_key, value: counts_hash[e.key] }
         end
       end
 
       def majority?
-        if ratios_hash
-          (ratios_hash[:normal] + ratios_hash[:rare]) >= 0.5
+        return instance_variable_get("@majority_p") if instance_variable_defined?("@majority_p")
+        @majority ||= yield_self do
+          if ratios_hash
+            RarityInfo.find_all(&:majority).sum { |e| ratios_hash[e.key] } >= 0.5
+          end
         end
       end
 

@@ -48,6 +48,7 @@ module Swars
 
     custom_belongs_to :judge, ar_model: Judge, st_model: JudgeInfo, default: nil
     custom_belongs_to :grade, ar_model: Grade, st_model: GradeInfo, default: nil
+    custom_belongs_to :style, ar_model: Style, st_model: StyleInfo, default: nil, optional: true
 
     belongs_to :battle                      # 対局
 
@@ -352,6 +353,24 @@ module Swars
       included do
         has_one :membership_extra, dependent: :destroy, autosave: true
         scope :membership_extra_missing, -> { left_joins(:membership_extra).where(membership_extra: {id: nil}) }
+      end
+    end
+
+    concerning :StyleMethos do
+      def style_update(player)
+        infos = []
+        infos += player.skill_set.attack_infos
+        infos += player.skill_set.defense_infos
+        rarity_infos = infos.collect { |e|
+          if e = Bioshogi::Explain::DistributionRatio[e.key]
+            RarityInfo.fetch(e[:rarity_key])
+          end
+        }.compact
+        if rarity_info = rarity_infos.compact.min_by(&:code)
+          self.style = rarity_info.style_info.db_record!
+        else
+          self.style = nil
+        end
       end
     end
   end

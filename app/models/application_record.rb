@@ -27,11 +27,15 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def custom_belongs_to(key, options = {})
+      options = {
+        optional: false,
+      }.merge(options)
+
       ar_model = options[:ar_model]
       st_model = options[:st_model]
       default = options[:default] # 投了
 
-      belongs_to key                                              # belongs_to :final
+      belongs_to key, options.slice(:optional)                                              # belongs_to :final
 
       if default
         before_validation do                                      # before_validation do
@@ -51,10 +55,11 @@ class ApplicationRecord < ActiveRecord::Base
       #   end
       # end
       if Rails.env.development? || Rails.env.test?
-        with_options presence: true do
-          validates "#{key}_id".to_sym
+        if !options[:optional]
+          with_options presence: true do
+            validates "#{key}_id".to_sym
+          end
         end
-
         with_options allow_blank: true do
           validates "#{key}_key".to_sym, inclusion: st_model.keys.collect(&:to_s)
         end

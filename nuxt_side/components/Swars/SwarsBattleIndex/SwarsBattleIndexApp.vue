@@ -92,6 +92,12 @@ export default {
     }
   },
 
+  provide() {
+    return {
+      TheApp: this,
+    }
+  },
+
   // watchQuery: ['query'],
   watch: {
     "$route.query": "$fetch",

@@ -69,6 +69,21 @@ module Swars
             end
           end
 
+          begin
+            if v = query_info.lookup("style") || query_info.lookup("自分の棋風") || query_info.lookup("棋風")
+              m = my_memberships
+              m = m.style_ex(v)
+              s = s.where(id: m.pluck(:battle_id))
+              selected = true
+            end
+            if v = query_info.lookup("vs-style") || query_info.lookup("相手の棋風")
+              m = op_memberships
+              m = m.style_ex(v)
+              s = s.where(id: m.pluck(:battle_id))
+              selected = true
+            end
+          end
+
           if t = query_info.lookup_one("date") || query_info.lookup_one("日付")
             if t = DateRange.parse(t)
               m = my_memberships
@@ -198,6 +213,7 @@ module Swars
               :user     => nil,
               :grade    => nil,
               :location => nil,
+              :style    => nil,
               :judge    => nil,
               :taggings => :tag,
             },
