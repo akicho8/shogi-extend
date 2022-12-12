@@ -22,6 +22,9 @@ export class ParamInfo extends ParamBase {
       { key: "vs_tag_values",              type: "array",   name: "相手タグ",                           defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "vs_tag_values_op",           type: "string",  name: "相手タグ演算子",                     defaults: { development: null, production: "and",  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
 
+      { key: "my_style_keys",              type: "array",  name: "自分の棋風",                          defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "vs_style_keys",              type: "array",  name: "相手の棋風",                          defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+
       { key: "critical_turn_enabled",      type: "boolean", name: "開戦有効",                           defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "critical_turn",              type: "integer", name: "開戦",                               defaults: { development: null, production: 40,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
       { key: "critical_turn_compare",      type: "string",  name: "開戦演算子",                         defaults: { development: null, production: "lteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },

@@ -39,6 +39,12 @@ export const app_search = {
     },
 
     // 検索すべてここで処理する
+    //
+    // ↓この方法だと同じURLだとスルーされるけど href が埋め込める
+    // nuxt-link(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="$sound.play_click()") {{name}}
+    //
+    // ↓この方法だと同じURLでもアクセスする
+    // a(@click="TheApp.interactive_search({query: new_query})") {{name}}
     interactive_search(params) { // private
       this.$sound.play_click()
       if (this.$fetchState.pending) {

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require File.expand_path('../../../config/environment', __FILE__)
+ForeignKey.disabled
 
 Swars::User.destroy_all
 Swars::Battle.destroy_all
@@ -27,18 +28,25 @@ end
   end
 end
 
-# >> |----+----------+----------+-------------------+-------------------+---------------------------+---------------------------|
-# >> | id | user_key | grade_id | last_reception_at | search_logs_count | created_at                | updated_at                |
-# >> |----+----------+----------+-------------------+-------------------+---------------------------+---------------------------|
-# >> | 36 | user1    |       40 |                   |                 0 | 2020-05-05 19:56:17 +0900 | 2020-05-05 19:56:19 +0900 |
-# >> | 37 | user2    |       40 |                   |                 0 | 2020-05-05 19:56:17 +0900 | 2020-05-05 19:56:18 +0900 |
-# >> | 38 | user3    |       40 |                   |                 0 | 2020-05-05 19:56:17 +0900 | 2020-05-05 19:56:19 +0900 |
-# >> |----+----------+----------+-------------------+-------------------+---------------------------+---------------------------|
-# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+------------------+-----------------+--------------------+---------------+----------------|
-# >> | id | battle_id | user_id | grade_id | judge_key | location_key | position | created_at                | updated_at                | grade_diff | think_max | op_user_id | think_last | think_all_avg | think_end_avg | two_serial_max | defense_tag_list | attack_tag_list | technique_tag_list | note_tag_list | other_tag_list |
-# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+------------------+-----------------+--------------------+---------------+----------------|
-# >> | 50 |        25 |      37 |       40 | lose      | white        |        1 | 2020-05-05 19:56:18 +0900 | 2020-05-05 19:56:18 +0900 |          0 |         7 |         36 |          7 |             5 |             5 |                |                  |                 |                    |               |                |
-# >> | 52 |        26 |      37 |       40 | lose      | white        |        1 | 2020-05-05 19:56:18 +0900 | 2020-05-05 19:56:18 +0900 |          0 |         7 |         36 |          7 |             5 |             5 |                |                  |                 |                    |               |                |
-# >> | 58 |        29 |      38 |       40 | lose      | white        |        1 | 2020-05-05 19:56:19 +0900 | 2020-05-05 19:56:19 +0900 |          0 |         7 |         36 |          7 |             5 |             5 |                |                  |                 |                    |               |                |
-# >> | 60 |        30 |      38 |       40 | lose      | white        |        1 | 2020-05-05 19:56:19 +0900 | 2020-05-05 19:56:19 +0900 |          0 |         7 |         36 |          7 |             5 |             5 |                |                  |                 |                    |               |                |
-# >> |----+-----------+---------+----------+-----------+--------------+----------+---------------------------+---------------------------+------------+-----------+------------+------------+---------------+---------------+----------------+------------------+-----------------+--------------------+---------------+----------------|
+# ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/validations.rb:80:in `raise_validation_error': Membershipsが正しくありません (ActiveRecord::RecordInvalid)
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/validations.rb:53:in `save!'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/transactions.rb:302:in `block in save!'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/transactions.rb:354:in `block in with_transaction_returning_status'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:320:in `block in transaction'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:319:in `block in within_new_transaction'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/concurrency/load_interlock_aware_monitor.rb:26:in `block (2 levels) in synchronize'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `handle_interrupt'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/concurrency/load_interlock_aware_monitor.rb:25:in `block in synchronize'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `handle_interrupt'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activesupport-6.1.4/lib/active_support/concurrency/load_interlock_aware_monitor.rb:21:in `synchronize'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/connection_adapters/abstract/transaction.rb:317:in `within_new_transaction'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/connection_adapters/abstract/database_statements.rb:320:in `transaction'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/transactions.rb:350:in `with_transaction_returning_status'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/transactions.rb:302:in `save!'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/suppressor.rb:48:in `save!'
+# ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.1.4/lib/active_record/persistence.rb:55:in `create!'
+# ~> 	from -:13:in `block in <main>'
+# ~> 	from -:12:in `times'
+# ~> 	from -:12:in `<main>'
+# >> ["/Users/ikeda/src/shogi-extend/app/models/swars/membership.rb:362", nil]
+# >> ["/Users/ikeda/src/shogi-extend/app/models/swars/membership.rb:362", nil]

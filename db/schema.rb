@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_10_224516) do
+ActiveRecord::Schema.define(version: 2022_12_11_000000) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -300,6 +300,7 @@ ActiveRecord::Schema.define(version: 2022_12_10_224516) do
     t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
+    t.bigint "style_id", comment: "戦法スタイル"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
@@ -309,6 +310,7 @@ ActiveRecord::Schema.define(version: 2022_12_10_224516) do
     t.index ["location_id"], name: "index_swars_memberships_on_location_id"
     t.index ["op_user_id"], name: "index_swars_memberships_on_op_user_id"
     t.index ["position"], name: "index_swars_memberships_on_position"
+    t.index ["style_id"], name: "index_swars_memberships_on_style_id"
     t.index ["user_id"], name: "index_swars_memberships_on_user_id"
   end
 
@@ -326,6 +328,15 @@ ActiveRecord::Schema.define(version: 2022_12_10_224516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_swars_search_logs_on_user_id"
+  end
+
+  create_table "swars_styles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_swars_styles_on_key", unique: true
+    t.index ["position"], name: "index_swars_styles_on_position"
   end
 
   create_table "swars_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

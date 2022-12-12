@@ -73,6 +73,9 @@ module Swars
           :judge_key    => e.judge_key,
           :medal_params => e.medal_params(params),
         }
+        if e.style
+          hv[:style_key] = e.style.key
+        end
         [:attack, :defense].each do |key|
           hv["#{key}_tag_list"] = e.tag_names_for(key)
         end

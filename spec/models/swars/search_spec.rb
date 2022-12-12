@@ -11,6 +11,12 @@ module Swars
         assert { !Battle.search(current_swars_user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
       end
 
+      it "棋風" do
+        case1("自分の棋風", "準王道", "準変態")
+        case1("相手の棋風", "準変態", "準王道")
+        case1("棋風", "準王道", "準変態") # alias
+      end
+
       it "works" do
         case1("日付", "2000-01-01...2000-01-02", "2001")
         case1("持ち時間", "10分", "3分")

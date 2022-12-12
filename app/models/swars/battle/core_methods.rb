@@ -71,6 +71,8 @@ module Swars
           end
         end
 
+        style_update_all(info)
+
         if AppConfig[:swars_tag_search_function]
           if false
             memberships.each do |e|
@@ -88,6 +90,12 @@ module Swars
 
           other_tag_list.add rule_info.name
           other_tag_list.add final_info.name
+        end
+      end
+
+      def style_update_all(info)
+        info.xcontainer.players.each.with_index do |player, i|
+          memberships[i].style_update(player)
         end
       end
     end
