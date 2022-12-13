@@ -151,12 +151,6 @@ module Swars
       @import_page_max ||= (params[:page_max].presence || 1).to_i
     end
 
-    def swars_tag_search_path(e)
-      if AppConfig[:swars_tag_search_function]
-        url_for([:swars, :battles, query: "tag:#{e}", only_path: true])
-      end
-    end
-
     def current_swars_user
       @current_swars_user ||= User.find_by(user_key: current_swars_user_key)
     end
