@@ -4,7 +4,7 @@ export class XmodeSelectInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "",     name: "すべてのモード", },
-      { key: "通常", name: "通常",           },
+      { key: "野良", name: "野良",           },
       { key: "友達", name: "友達",           },
       { key: "指導", name: "指導",           },
     ]
