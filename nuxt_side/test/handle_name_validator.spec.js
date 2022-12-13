@@ -33,6 +33,7 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("aa")).toEqual(false)
     expect(HandleNameValidator.valid_p("aaa")).toEqual(false)
     expect(HandleNameValidator.valid_p("hoge")).toEqual(false)
+    expect(HandleNameValidator.valid_p("asdf")).toEqual(false)
 
     expect(HandleNameValidator.valid_p("test")).toEqual(false)
     expect(HandleNameValidator.valid_p("テスト")).toEqual(false)
@@ -75,5 +76,13 @@ describe("HandleNameValidator", () => {
   test("絵文字のみはダメ", () => {
     expect(HandleNameValidator.valid_p("🥇")).toEqual(false)
     expect(HandleNameValidator.valid_p("🥇🥇")).toEqual(false)
+  })
+
+  test("段級位のみはダメ", () => {
+    expect(HandleNameValidator.valid_p("初段")).toEqual(false)
+    expect(HandleNameValidator.valid_p("1級")).toEqual(false)
+
+    expect(HandleNameValidator.valid_p("初段の○")).toEqual(true)
+    expect(HandleNameValidator.valid_p("○の初段")).toEqual(true)
   })
 })
