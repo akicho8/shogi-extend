@@ -238,7 +238,7 @@ export default {
     td
       vertical-align: middle
 
-    .is-xmode-通常
+    .is-xmode-野良
     .is-xmode-友達
       background-color: $warning-light
       .tag

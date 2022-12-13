@@ -43,7 +43,7 @@ module Swars
         @rule_info ||= RuleInfo.fetch(rule_key)
       end
 
-      # 通常・友対・指導
+      # 野良・友対・指導
       def xmode_info
         @xmode_info ||= XmodeMagicNumberInfo.by_magic_number(props.fetch("opponent_type")).xmode_info
       end

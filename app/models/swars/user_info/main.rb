@@ -713,7 +713,7 @@ module Swars
       end
 
       # 対局モードの個数
-      # {"通常"=>1, "友達"=>0, "指導"=>0}
+      # {"野良"=>1, "友達"=>0, "指導"=>0}
       def xmode_counts
         @xmode_counts ||= yield_self do
           s = user.memberships

@@ -5,7 +5,7 @@ class ApiFullLogger
 
   def perform
     if enabled?
-      SlackAgent.notify(subject: "API", body: body, emoji: ":API:")
+      SlackAgent.notify(subject: subject, body: body, emoji: ":API:")
     end
   end
 
@@ -24,14 +24,25 @@ class ApiFullLogger
     if request.origin.to_s == AppConfig[:my_request_origin]
       return
     end
-    if Rails.env.production?
-      return
-    end
     true
   end
 
+  def subject
+    "#{request.request_method} #{context.controller_name}##{context.action_name}"
+  end
+
   def body
+    {
+      :env        => env_hash,
+      :from       => request.from,
+      :origin     => request.origin,
+      :user_agent => request.user_agent,
+      :params     => context.params.to_unsafe_h.except(:action, :controller),
+    }.compact
+  end
+
+  def env_hash
     env = request.env.reject { |k, v| k.match?(/HTTP_(?:SEC_|ACCEPT_|COOKIE)/) }
-    env.find_all { |k, v| k.to_s.match?(/^[A-Z]/) }.to_h.to_s
+    env = env.find_all { |k, v| k.to_s.match?(/^[A-Z]/) }.to_h
   end
 end

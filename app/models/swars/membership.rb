@@ -276,20 +276,6 @@ module Swars
     end
 
     concerning :SummaryMethods do
-      def raw_summary_key
-        @raw_summary_key ||= "#{battle.final_info.name}で#{judge_info.name}"
-      end
-
-      def summary_key
-        @summary_key ||= summary_key_translate_hash.fetch(raw_summary_key, raw_summary_key)
-      end
-
-      # def summary_store_to(stat)
-      #   stat[summary_key] ||= []
-      #   stat[summary_key] << self
-      #   stat
-      # end
-
       # 使用時間
       def total_seconds
         @total_seconds ||= sec_list.sum
@@ -298,54 +284,6 @@ module Swars
       # 残した秒数
       def rest_sec
         @rest_sec ||= battle.rule_info.life_time - total_seconds
-      end
-
-      private
-
-      def summary_key_translate_hash
-        @summary_key_translate_hash ||= {
-          "投了で勝ち"     => "投了された",
-          "投了で負け"     => "投了した",
-          "切断で勝ち"     => "切断された",
-          "切断で負け"     => "切断した",
-          "詰みで負け"     => "詰まされた",
-          "詰みで勝ち"     => "詰ました",
-          "時間切れで負け" => "切れ負け",
-          "時間切れで勝ち" => "切れ勝ち",
-        }
-      end
-    end
-
-    concerning :KishinInfoMethods do
-      included do
-        cattr_accessor(:swgod_move_getq)  { 60 } # お互い合わせて何手以上で
-        cattr_accessor(:swgod_last_n)     { 10 } # 最後の片方の手の N 手内に
-        cattr_accessor(:swgod_hand_times) { 5  } # 棋神は1回でN手指される
-        cattr_accessor(:swgod_time_limit) { 9  } # 5手がN秒以内なら
-      end
-
-      def swgod_level1_used?
-        @swgod_level1_used ||= yield_self do
-          if battle.fast_parsed_info.move_infos.size >= swgod_move_getq
-            list = sec_list.last(swgod_last_n)
-            if list.size >= swgod_hand_times
-              list.each_cons(swgod_hand_times).any? { |list| list.sum <= swgod_time_limit }
-            end
-          end
-        end
-      end
-
-      def swgod_10min_winner_used?
-        if battle.rule_info.key == :ten_min || battle.rule_info.key == :ten_sec
-          if judge_info.key == :win
-            swgod_level1_used?
-          end
-        end
-      end
-
-      def winner?
-        # battle.win_user == user
-        judge_info.key == :win
       end
     end
 

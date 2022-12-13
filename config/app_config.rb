@@ -2,8 +2,6 @@ AppConfig.deep_merge!({
     :app_name                            => "SHOGI-EXTEND",
     :my_request_origin                       => "http://localhost:4000",
 
-    :swars_tag_search_function           =>  true,  # タグ検索
-
     :zip_dl_max_default                  =>  50,    # 一括ダウンロードするときの件数(初期値)
     :zip_dl_max_of_max                   =>  50,    # 一括ダウンロードするときの件数(最大)
 

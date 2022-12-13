@@ -39,7 +39,7 @@ module Swars
       end
 
       it "xmode_info" do
-        assert { object.xmode_info == XmodeInfo.fetch("通常") }
+        assert { object.xmode_info == XmodeInfo.fetch("野良") }
       end
 
       it "preset_info" do

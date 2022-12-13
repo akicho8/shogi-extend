@@ -11,7 +11,7 @@ class CreateSwarsXmodes < ActiveRecord::Migration[5.1]
 
     Swars::Xmode.reset_column_information
     Swars::Xmode.setup
-    xmode = Swars::Xmode.fetch("通常")
+    xmode = Swars::Xmode.fetch("野良")
     tp xmode
 
     change_table :swars_battles do |t|

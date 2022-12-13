@@ -44,14 +44,14 @@ module Swars
       response = nil
       sec = Benchmark.realtime { response = to_h }
       diff = @user.battles.count - count
-      emoji = diff.positive? ? ":KENTO_SOME:" : ":KENTO_NONE:"
+      emoji = @crawled ? ":KENTO_SOME:" : ":KENTO_NONE:"
       body = [@user.key, "%+d" % diff, "%.1f s" % sec, *@notify_params.values].compact.inspect
       SlackAgent.notify(subject: "KENTO API", body: body, emoji: emoji)
       response
     end
 
     def to_h
-      Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
+      @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
       {
         "api_version" => "2020-02-02",                     # (required) 固定値
         "api_name"    => "将棋ウォーズ(ID:#{@user.key})",  # (required) 任意のAPI名

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_11_000000) do
+ActiveRecord::Schema.define(version: 2022_12_11_000001) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
@@ -300,7 +300,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000000) do
     t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
-    t.bigint "style_id", comment: "棋風"
+    t.bigint "style_id", comment: "戦法スタイル"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

@@ -1,4 +1,4 @@
-class ApiParamsLogger
+class ApiOnelineLogger
   def initialize(context)
     @context = context
   end
@@ -32,12 +32,9 @@ class ApiParamsLogger
   end
 
   def body
-    agent = request.from || request.origin
-    {
-      "from"       => request.from,
-      "origin"     => request.origin,
-      "params"     => context.params.to_unsafe_h.except(:action, :controller),
-      "user_agent" => request.user_agent,
-    }.compact
+    [
+      request.from || request.origin,
+      context.params.to_unsafe_h.except(:action, :controller).inspect,
+    ].compact.join(" ").truncate(100)
   end
 end

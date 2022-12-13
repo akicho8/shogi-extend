@@ -72,25 +72,6 @@ module Swars
         end
 
         style_update_all(info)
-
-        if AppConfig[:swars_tag_search_function]
-          if false
-            memberships.each do |e|
-              if e.grade.grade_info.key == :"十段"
-                e.note_tag_list.add "指導対局"
-                note_tag_list.add "指導対局"
-              end
-            end
-          end
-
-          other_tag_list.add preset_info.name
-          if preset_info.handicap
-            other_tag_list.add "駒落ち"
-          end
-
-          other_tag_list.add rule_info.name
-          other_tag_list.add final_info.name
-        end
       end
 
       def style_update_all(info)
