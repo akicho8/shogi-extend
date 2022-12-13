@@ -4,10 +4,6 @@ module Api
   class ApplicationController < ::ApplicationController
     include ShogiErrorRescueMethods # for bs_error
 
-    before_action do
-      ApiFullLogger.new(self).perform
-    end
-
     def api_login_required
       if !current_user
         render json: { statusCode: 403, message: "ログインしてください" }, status: 403
@@ -34,7 +30,7 @@ module Api
     end
 
     def api_log!
-      ApiParamsLogger.new(self).perform
+      ApiOnelineLogger.new(self).perform
     end
   end
 end
