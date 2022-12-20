@@ -44,6 +44,12 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("シタシミノアルナマエ")).toEqual(false)
   })
 
+  test("全体一致捨てハン禁止", () => {
+    expect(HandleNameValidator.valid_p("見学")).toEqual(false)
+    expect(HandleNameValidator.valid_p("こんばんわ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("こんばんは")).toEqual(false)
+  })
+
   test("全部数字はダメ", () => {
     expect(HandleNameValidator.valid_p("123")).toEqual(false)
     expect(HandleNameValidator.valid_p("７７７")).toEqual(false)
