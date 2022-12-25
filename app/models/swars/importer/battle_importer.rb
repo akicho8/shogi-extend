@@ -44,7 +44,7 @@ module Swars
       private
 
       def key
-        params[:key]
+        params.fetch(:key)
       end
 
       def user_create_or_update(e)

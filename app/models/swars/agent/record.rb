@@ -19,7 +19,7 @@ module Swars
       private
 
       def key
-        params[:key]
+        params.fetch(:key)
       end
     end
   end
