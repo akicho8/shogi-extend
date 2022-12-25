@@ -7,7 +7,7 @@ RSpec.describe "棋譜用紙", type: :system, swars_spec: true do
     visit2 "/swars/battles/DevUser1-YamadaTaro-20200101_123402/formal-sheet"
     assert_text "YamadaTaro"
     assert_text "記録係"
-    assert_text "後手投了"
+    assert_text "後手時間切れ"
     assert_text "109手で DevUser1 三段の勝ち"
     assert_text "2020年1月1日12時34分"
   end
