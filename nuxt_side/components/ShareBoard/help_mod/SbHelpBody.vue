@@ -163,10 +163,10 @@ HelpContent.SbHelpBody
   //-   h2 盤の色が変わるのは？
   //-   p あなたの手番を知らせている
 
-  article(v-if="false")
+  article(v-if="true")
     h2 N手毎交代とは？
     ul
-      li N回指したら次の仲間に交代する
+      li N回指したら交代する
 
   article
     h2 盤の色や駒を変更するには？

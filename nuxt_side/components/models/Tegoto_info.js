@@ -5,9 +5,9 @@ export class TegotoInfo extends ApplicationMemoryRecord {
   static message = null
   static input_type = "numberinput"
   static min = 1
-  static max = 10
+  static max = 100
   static hint_messages = [
-    "N回指したら次の仲間に交代します",
+    "N回指したら交代します",
   ]
   static get define() {
     return [
