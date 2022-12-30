@@ -166,32 +166,50 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
     describe "ZIPダウンロード" do
       before do
-        user_login
+        @current_user = user_login
       end
 
-      def case_ng(body_encode)
-        get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
-        assert { response.status == 200 }
-        assert { controller.current_scope.count == 1 }
-        assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
-        assert { response.media_type == "application/zip" }
+      describe "ダウンロードしたZIPファイルの内容が正しい" do
+        def case_ng(body_encode)
+          get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
+          assert { response.status == 200 }
+          assert { controller.current_scope.count == 1 }
+          assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
+          assert { response.media_type == "application/zip" }
 
-        Zip::InputStream.open(StringIO.new(response.body)) do |zis|
-          entry = zis.get_next_entry
-          assert { entry.name == "DevUser1/2020-01-01/DevUser1-YamadaTaro-20200101_123401.kif" }
-          assert { entry.time.to_s == "2020-01-01 12:34:01 +0900" } # 奇数秒が入っていること
-          bin = zis.read
-          assert { NKF.guess(bin).to_s == body_encode }
+          Zip::InputStream.open(StringIO.new(response.body)) do |zis|
+            entry = zis.get_next_entry
+            assert { entry.name == "DevUser1/2020-01-01/DevUser1-YamadaTaro-20200101_123401.kif" }
+            assert { entry.time.to_s == "2020-01-01 12:34:01 +0900" } # 奇数秒が入っていること
+            bin = zis.read
+            assert { NKF.guess(bin).to_s == body_encode }
+          end
         end
-      end
 
-      it { case_ng("UTF-8")     }
-      it { case_ng("Shift_JIS") }
+        it { case_ng("UTF-8")     }
+        it { case_ng("Shift_JIS") }
+      end
 
       it "tagとsort_columnが含まれても正しい結果が返る" do
         get :index, params: {query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
         json = JSON.parse(response.body, symbolize_names: true)
         assert { json[:form_params_default] }
+      end
+
+      it "ダウンロード回数制限にひっかかる" do
+        assert { @current_user.swars_zip_dl_logs.empty? }
+
+        def case1(status)
+          get :index, params: { query: "DevUser1", format: "zip" }
+          assert { response.status == status }
+        end
+
+        case1(200)
+        case1(200)
+        case1(200)
+        case1(404)
+
+        assert { response.body.match?(/短時間にダウンロードする棋譜の総数が多すぎます/) }
       end
     end
 

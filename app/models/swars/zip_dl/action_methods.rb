@@ -37,7 +37,7 @@ module Swars
           if main_builder.limiter.over?
             # main_builder.as_json[:limiter]
             slack_notify(subject: "ZIP-DL制限", body: current_user.name)
-            render plain: main_builder.message, status: 404
+            render plain: main_builder.limiter.message, status: 404
             return
           end
 
