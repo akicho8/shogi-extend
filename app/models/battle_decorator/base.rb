@@ -1,6 +1,6 @@
 module BattleDecorator
   class Base
-    def self.personal_clock_format(value)
+    def self.single_clock_format(value)
       m, s = value.divmod(1.minutes)
       if m == 0
         s
@@ -242,9 +242,9 @@ module BattleDecorator
                 if hand_info = hand_info(page_index, x, y, left_or_right)
                   cell[:class] = hand_info[:class]
                   cell[:value] = hand_info[:value]
-                  personal_clock = hand_info[:object].personal_clock
-                  cell[:used_seconds] = self.class.personal_clock_format(personal_clock.used_seconds)
-                  cell[:total_seconds] = self.class.personal_clock_format(personal_clock.total_seconds)
+                  single_clock = hand_info[:object].single_clock
+                  cell[:used_seconds] = self.class.single_clock_format(single_clock.used_seconds)
+                  cell[:total_seconds] = self.class.single_clock_format(single_clock.total_seconds)
                 end
               end
               cell
@@ -308,7 +308,7 @@ module BattleDecorator
     end
 
     def hand_logs
-      @hand_logs ||= heavy_parsed_info.xcontainer.hand_logs
+      @hand_logs ||= heavy_parsed_info.container.hand_logs
     end
 
     def heavy_parsed_info

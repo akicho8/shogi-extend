@@ -92,9 +92,9 @@ module ShogiErrorRescueMethods
 
   def message_prefix_build(e)
     s = []
-    if e.respond_to?(:xcontainer)
-      s << "#{e.xcontainer.turn_info.display_turn.next}手目"
-      s << "#{e.xcontainer.current_player.call_name}番"
+    if e.respond_to?(:container)
+      s << "#{e.container.turn_info.display_turn.next}手目"
+      s << "#{e.container.current_player.call_name}番"
     end
     if e.respond_to?(:input)
       s << "#{e.input.input.values.join}"

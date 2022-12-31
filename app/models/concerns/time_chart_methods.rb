@@ -53,7 +53,7 @@ module TimeChartMethods
     @raw_sec_list[location_info] ||= yield_self do
       c = LocationInfo.count
       pos = preset_info.to_turn_info.current_location(location_info.code).code # 先手後手の順だけど駒落ちなら、後手先手の順になる
-      v = fast_parsed_info.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
+      v = fast_parsed_info.mi.move_infos.find_all.with_index { |e, i| i.modulo(c) == pos }
       v.collect { |e| e[:used_seconds] }
     end
   end

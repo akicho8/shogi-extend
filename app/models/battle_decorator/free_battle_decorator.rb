@@ -1,7 +1,7 @@
 module BattleDecorator
   class FreeBattleDecorator < Base
     def preset_info
-      @preset_info ||= heavy_parsed_info.preset_info
+      @preset_info ||= heavy_parsed_info.formatter.preset_info
     end
 
     def tournament_name
@@ -34,7 +34,7 @@ module BattleDecorator
     end
 
     def strategy_pack_core(location_info)
-      player = heavy_parsed_info.xcontainer.player_at(location_info)
+      player = heavy_parsed_info.container.player_at(location_info)
       sep = " #{params[:separator]} "
       max = params[:strategy_take_max]
       s = nil
@@ -47,7 +47,7 @@ module BattleDecorator
     # "#{battle.turn_max}手" でもよい
     #
     # 自力で作る場合
-    # if location_info = heavy_parsed_info.xcontainer.win_player.location
+    # if location_info = heavy_parsed_info.container.win_player.location
     #   str = player_name_for(location_info)
     # end
     def battle_result_str
@@ -70,11 +70,11 @@ module BattleDecorator
     end
 
     def total_seconds_for(location_info)
-      heavy_parsed_info.xcontainer.player_at(location_info).personal_clock.total_seconds
+      heavy_parsed_info.container.player_at(location_info).single_clock.total_seconds
     end
 
     def normalized_full_tournament_name
-      normalize_str(heavy_parsed_info.header["棋戦"])
+      normalize_str(heavy_parsed_info.formatter.mi.header["棋戦"])
     end
 
     private
@@ -85,7 +85,7 @@ module BattleDecorator
 
     def full_player_name(location_info)
       location_info = LocationInfo[location_info]
-      heavy_parsed_info.header.to_h.values_at(*location_info.call_names).compact.first.to_s
+      heavy_parsed_info.formatter.mi.header.to_h.values_at(*location_info.call_names).compact.first.to_s
     end
 
     def player_name_md(location_info)

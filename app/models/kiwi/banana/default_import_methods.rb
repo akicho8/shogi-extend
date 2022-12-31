@@ -41,10 +41,10 @@ module Kiwi
             # body = "68S"
 
             info = Bioshogi::Parser.parse(body)
-            # versus = "#{info.header["先手"]} vs #{info.header["後手"]}"
+            # versus = "#{info.formatter.mi.header["先手"]} vs #{info.formatter.mi.header["後手"]}"
             versus = "AlphaZero vs elmo"
-            black_white = "先手:#{info.header["先手"]} 後手:#{info.header["後手"]}"
-            judgment_message = info.judgment_message.remove(/^まで/).gsub(/先手|後手/, info.header.to_h)
+            black_white = "先手:#{info.formatter.mi.header["先手"]} 後手:#{info.formatter.mi.header["後手"]}"
+            judgment_message = info.judgment_message.remove(/^まで/).gsub(/先手|後手/, info.formatter.mi.header.to_h)
 
             {
               :key  => params[:key],
@@ -61,15 +61,15 @@ module Kiwi
                   :width           => 1920,
                   :height          => 1080,
                   :main_volume     => 0.8,
-                  :viewpoint       => info.xcontainer.win_player.location.key, # 勝った方の視点にする
+                  :viewpoint       => info.container.win_player.location.key, # 勝った方の視点にする
                 },
               },
               :banana_params => {
                 :folder_key    => "public",
                 :title         => "##{params[:index]} 羽生善治特選 #{versus} 100番勝負 第#{params[:number]}局",
                 :description   => "#{black_white}\n#{judgment_message}",
-                :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.xcontainer.normalized_names_with_alias],
-                :thumbnail_pos => 1 + (info.xcontainer.outbreak_turn || info.xcontainer.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
+                :tag_list      => ["AlphaZero", "elmo", "羽生善治", *info.container.normalized_names_with_alias],
+                :thumbnail_pos => 1 + (info.container.outbreak_turn || info.container.turn_info.turn_offset) # 歩と角以外の交換がある直前の局面
               },
             }
           end

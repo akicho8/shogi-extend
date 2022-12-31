@@ -6,4 +6,4 @@ rspec -t ~share_board_spec
 rspec -t share_board_spec
 rspec -t swars_spec
 rspec -n
-
+rake spec:models SPEC_OPTS='--fail-fast'

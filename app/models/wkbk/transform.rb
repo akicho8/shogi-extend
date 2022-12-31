@@ -7,7 +7,7 @@ module Wkbk
     end
 
     def to_ki2_from(body)
-      parse(body).xcontainer.hand_logs.collect { |e|
+      parse(body).container.hand_logs.collect { |e|
         e.to_ki2({
             :with_location => true,            # 先手後手のマークを入れる
             :force_drop    => true,            # 「打」を省略できるときでも「打」を明示する

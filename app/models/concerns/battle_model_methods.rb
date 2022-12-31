@@ -51,7 +51,7 @@ module BattleModelMethods
 
     if ENV["INTEGRITY_VALIDATE"]
       begin
-        info.xcontainer
+        info.container
       rescue => error
         p error
         puts error
@@ -63,18 +63,18 @@ module BattleModelMethods
       end
     end
 
-    info.xcontainer               # 不整合があるとここで Bioshogi::BioshogiError を投げる
+    info.container               # 不整合があるとここで Bioshogi::BioshogiError を投げる
 
-    self.turn_max = info.xcontainer.turn_info.turn_offset
-    self.critical_turn = info.xcontainer.critical_turn
-    self.outbreak_turn = info.xcontainer.outbreak_turn
-    self.sfen_body = info.xcontainer.to_history_sfen
+    self.turn_max = info.container.turn_info.turn_offset
+    self.critical_turn = info.container.critical_turn
+    self.outbreak_turn = info.container.outbreak_turn
+    self.sfen_body = info.container.to_history_sfen
     self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
 
     preset_key_set(info)
 
     if !battled_at
-      if v = info.header["開始日時"].presence
+      if v = info.formatter.mi.header["開始日時"].presence
         self.battled_at ||= Bioshogi::Parser::TimeParser.new(v).to_time
       end
       self.battled_at ||= fixed_defaut_time
@@ -253,21 +253,21 @@ module BattleModelMethods
     # #
     # def sfen_attrs
     #   @sfen_attrs ||= yield_self do
-    #     xcontainer = heavy_parsed_info.xcontainer
+    #     container = heavy_parsed_info.container
     #
     #     args = {}
-    #     if xcontainer.initial_state_board_sfen != "startpos"
-    #       args[:initpos] = xcontainer.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     if container.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = container.initial_state_board_sfen.remove(/^sfen\s*/)
     #     end
-    #     if xcontainer.hand_logs.present?
-    #       args[:moves] = xcontainer.hand_logs.collect(&:to_sfen).join(".")
+    #     if container.hand_logs.present?
+    #       args[:moves] = container.hand_logs.collect(&:to_sfen).join(".")
     #     end
     #     kent_query = args.to_query
     #
     #     {
-    #       initial_state_board_sfen: xcontainer.initial_state_board_sfen, # => "startpos"
-    #       last_sfen: xcontainer.to_short_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
-    #       moves: xcontainer.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
+    #       initial_state_board_sfen: container.initial_state_board_sfen, # => "startpos"
+    #       last_sfen: container.to_short_sfen,                         # => "sfen lnsgkgsnl/1r5b1/ppppppppp/7s1/9/9/PPPPPPPPP/1B1S3R1/LN1GKGSNL b Ss 3"
+    #       moves: container.hand_logs.collect(&:to_sfen),                # => ["7i6h", "S*2d"]
     #       kent_query: kent_query,
     #     }
     #   }.call
@@ -275,14 +275,14 @@ module BattleModelMethods
     #
     # def kento_app_embed_url
     #   @kento_app_embed_url ||= yield_self do
-    #     xcontainer = heavy_parsed_info.xcontainer
+    #     container = heavy_parsed_info.container
     #
     #     args = {}
-    #     if xcontainer.initial_state_board_sfen != "startpos"
-    #       args[:initpos] = xcontainer.initial_state_board_sfen.remove(/^sfen\s*/)
+    #     if container.initial_state_board_sfen != "startpos"
+    #       args[:initpos] = container.initial_state_board_sfen.remove(/^sfen\s*/)
     #     end
-    #     if xcontainer.hand_logs.present?
-    #       args[:moves] = xcontainer.hand_logs.collect(&:to_sfen).join(".")
+    #     if container.hand_logs.present?
+    #       args[:moves] = container.hand_logs.collect(&:to_sfen).join(".")
     #     end
     #
     #     "https://www.kento-shogi.com/?#{args.to_query}"

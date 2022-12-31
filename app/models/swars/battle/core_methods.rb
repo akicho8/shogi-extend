@@ -33,7 +33,7 @@ module Swars
 
       # 駒の使用頻度を保存
       def membership_extra_build_if_nothing
-        fast_parsed_info.xcontainer.players.each.with_index do |player, i|
+        fast_parsed_info.container.players.each.with_index do |player, i|
           m = memberships[i]
           if !m.membership_extra
             m.build_membership_extra(used_piece_counts: player.used_piece_counts)
@@ -62,7 +62,7 @@ module Swars
 
         # 囲い対決などに使う
         if true
-          info.xcontainer.players.each.with_index do |player, i|
+          info.container.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
                 e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
@@ -75,7 +75,7 @@ module Swars
       end
 
       def style_update_all(info)
-        info.xcontainer.players.each.with_index do |player, i|
+        info.container.players.each.with_index do |player, i|
           memberships[i].style_update(player)
         end
       end

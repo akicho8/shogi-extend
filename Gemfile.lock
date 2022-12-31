@@ -1,13 +1,13 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 2656d1e2db8882a83ac473732eb79049ba76e563
+  revision: a8e30fc02e53381f0625cdf58bc72c439fc5dc46
   specs:
     bioshogi (0.0.1)
       actionview
       activesupport
       color
       memory_record
-      rmagick
+      rmagick (>= 5.0.0)
       rubyzip
       systemu
       table_format
@@ -172,7 +172,7 @@ GEM
     devise-i18n-views (0.3.7)
     diff-lcs (1.5.0)
     docile (1.4.0)
-    erubi (1.11.0)
+    erubi (1.12.0)
     exception_notification (4.5.0)
       actionmailer (>= 5.2, < 8)
       activesupport (>= 5.2, < 8)
@@ -256,7 +256,7 @@ GEM
     method_source (1.0.0)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.0)
+    mini_portile2 (2.8.1)
     minitest (5.16.3)
     msgpack (1.4.5)
     multi_json (1.15.0)
@@ -310,7 +310,7 @@ GEM
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7)
-    racc (1.6.1)
+    racc (1.6.2)
     rack (2.2.4)
     rack-cors (1.1.1)
       rack (>= 2.0.0)

@@ -88,11 +88,11 @@ class MediaBuilder
 
     def formatter_all_option_keys
       @formatter_all_option_keys ||= [
-        Bioshogi::ImageRenderer,
-        Bioshogi::AnimationMp4Builder,
-        Bioshogi::AnimationGifBuilder,
-        Bioshogi::AnimationApngBuilder,
-        Bioshogi::AnimationZipBuilder,
+        Bioshogi::ScreenImage::Renderer,
+        Bioshogi::Formatter::Animation::AnimationMp4Builder,
+        Bioshogi::Formatter::Animation::AnimationGifBuilder,
+        Bioshogi::Formatter::Animation::AnimationApngBuilder,
+        Bioshogi::Formatter::Animation::AnimationZipBuilder,
       ].flat_map { |e| e.default_params.keys }
     end
 
@@ -274,7 +274,7 @@ class MediaBuilder
       :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
       :candidate_enable   => false,
       :validate_enable    => false,
-      :xcontainer_class     => Bioshogi::XcontainerFast,
+      :container_class     => Bioshogi::ContainerFast,
       :turn_limit         => turn,
     }
   end
