@@ -7,7 +7,7 @@ module Kiwi
 
       def thumbnail_build(pos)
         if command = thumbnail_build_command(pos)
-          Bioshogi::SystemSupport.strict_system(command)
+          Bioshogi::Formatter::Animation::SystemSupport.strict_system(command)
         end
       end
 

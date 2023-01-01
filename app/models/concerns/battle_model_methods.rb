@@ -33,7 +33,7 @@ module BattleModelMethods
   end
 
   # def total_seconds
-  #   @total_seconds ||= heavy_parsed_info.move_infos.sum { |e| e[:used_seconds] }
+  #   @total_seconds ||= heavy_parsed_info.mi.move_infos.sum { |e| e[:used_seconds] }
   # end
 
   # 更新方法

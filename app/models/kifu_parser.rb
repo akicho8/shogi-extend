@@ -179,18 +179,18 @@ class KifuParser
 
   def header_update
     if v = params[:title].presence
-      core.header["棋戦"] = v
+      core.mi.header["棋戦"] = v
     end
     core.container.players.each do |e|
       if v = params[e.location.key].presence
-        core.header[e.call_name] = comma_included_str_normalize(v)
+        core.mi.header[e.call_name] = comma_included_str_normalize(v)
       end
     end
     if v = params[:other].presence
-      core.header["観戦"] = comma_included_str_normalize(v)
+      core.mi.header["観戦"] = comma_included_str_normalize(v)
     end
     if v = params[:member].presence
-      core.header["面子"] = comma_included_str_normalize(v)
+      core.mi.header["面子"] = comma_included_str_normalize(v)
     end
   end
 

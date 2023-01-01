@@ -34,7 +34,7 @@ module KifuExtractor
             :candidate_enable               => false,
             :validate_enable                => false, # 二歩を許可するため
           })
-        info.container_run_once
+        info.formatter.container_run_once
         true
       rescue Bioshogi::BioshogiError => error
         SlackSos.notify_exception(error)

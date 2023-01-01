@@ -51,7 +51,7 @@ module BattleDecorator
     #   str = player_name_for(location_info)
     # end
     def battle_result_str
-      str = heavy_parsed_info.judgment_message
+      str = heavy_parsed_info.formatter.judgment_message
       str = str.lines.grep_v(/^\*/).join # KIFの*で始まるコメントを含む場合があるため除外する
       str = str.remove(/^まで/)
 

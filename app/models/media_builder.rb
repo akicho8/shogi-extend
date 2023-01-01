@@ -255,9 +255,9 @@ class MediaBuilder
   end
 
   def to_blob
-    parser = Bioshogi::Parser.parse(record.sfen_body, parser_options)
+    info = Bioshogi::Parser.parse(record.sfen_body, parser_options)
     options = build_options.merge(progress_callback: @options[:progress_callback])
-    parser.public_send(recipe_info.to_method, options)
+    info.public_send(recipe_info.to_method, options)
   end
 
   def force_build
@@ -274,7 +274,7 @@ class MediaBuilder
       :typical_error_case => :embed, # validate_enable しているのでこのオプションは使わない？
       :candidate_enable   => false,
       :validate_enable    => false,
-      :container_class     => Bioshogi::ContainerFast,
+      :container_class     => Bioshogi::Container::Fast,
       :turn_limit         => turn,
     }
   end

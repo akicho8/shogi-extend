@@ -59,7 +59,7 @@ module TimeChartMethods
   end
 
   def raw_sec_list_all
-    @raw_sec_list_all ||= fast_parsed_info.move_infos.find_all.collect { |e| e[:used_seconds] }
+    @raw_sec_list_all ||= fast_parsed_info.mi.move_infos.find_all.collect { |e| e[:used_seconds] }
   end
 
   # location_info の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
