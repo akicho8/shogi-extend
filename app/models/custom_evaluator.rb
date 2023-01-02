@@ -1,4 +1,4 @@
-class CustomEvaluator < Bioshogi::Evaluator::Level4
+class CustomEvaluator < Bioshogi::Ai::Evaluator::Level4
   private
 
   def opening_basic_table

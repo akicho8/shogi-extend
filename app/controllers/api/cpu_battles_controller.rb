@@ -213,7 +213,7 @@ module Api
       end
 
       # CPUの手を指す
-      @container.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutorHuman)
+      @container.execute(@hand.to_sfen, executor_class: Bioshogi::PlayerExecutor::Human)
       @current_sfen = @container.to_history_sfen
       evaluation_value_generation
 
