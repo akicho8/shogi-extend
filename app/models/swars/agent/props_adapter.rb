@@ -55,7 +55,9 @@ module Swars
 
       # 結末
       def final_info
-        FinalInfo.fetch_if(final_key)
+        if final_key
+          FinalInfo.fetch(final_key)
+        end
       end
 
       # 両者
@@ -83,7 +85,7 @@ module Swars
 
       # 対局後か？
       def done?
-        props.has_key?("result")
+        props["result"].present?
       end
 
       # 対局中か？
@@ -190,12 +192,10 @@ module Swars
         end
 
         def final_key
-          if done?
-            if v = result_md
-              v[:final_key] # TORYO 系
-            else
-              props.fetch("result") # OUTE_SENNICHI 系
-            end
+          if v = result_md
+            v[:final_key] # TORYO 系
+          else
+            props["result"] # OUTE_SENNICHI 系
           end
         end
 
