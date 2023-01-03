@@ -86,7 +86,7 @@ export default {
           enabled: true,
           label: "入室日時",
           value: [
-            this.$time.create(this.member_info.room_joined_at).format("hh:mm:ss"),
+            this.$time.create(this.member_info.room_joined_at).format("HH:mm:ss"),
             `(${this.seconds_ago(this.member_info.room_joined_at)})`,
           ].join(" "),
         },
