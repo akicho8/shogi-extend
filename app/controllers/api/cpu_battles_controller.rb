@@ -184,7 +184,7 @@ module Api
 
           # いちばん良いのを選択
           record = @candidate_records.first
-          if record[:score] <= -Bioshogi::SCORE_MAX
+          if record[:score] <= -Bioshogi::Ai::SCORE_MAX
             final_decision(judge_key: :win, message: "CPUが降参しました")
             return
           end
@@ -255,7 +255,7 @@ module Api
     end
 
     def iterative_deepening
-      brain = @container.current_player.brain(diver_class: Bioshogi::Diver::NegaScoutDiver, **evaluator_params)
+      brain = @container.current_player.brain(diver_class: Bioshogi::Ai::Diver::NegaScoutDiver, **evaluator_params)
       time_limit = current_cpu_brain_info.time_limit
 
       begin
@@ -362,7 +362,7 @@ module Api
     def candidate_rows
       @candidate_rows ||= yield_self do
         if @candidate_records.present?
-          Bioshogi::Brain.human_format(@candidate_records.take(5)).collect { |e|
+          Bioshogi::Ai::Brain.human_format(@candidate_records.take(5)).collect { |e|
             e.collect { |key, val|
               if key == "候補手"
                 val = val.to_s    # ビューに as_json の結果が渡ってしまうので文字列にしておく
