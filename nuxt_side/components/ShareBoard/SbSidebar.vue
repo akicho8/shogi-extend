@@ -38,7 +38,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="base.board_preset_select_modal_handle")
           b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="base.room_url_copy_handle")
-          b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production' || true")
+          b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="base.room_recreate_modal_handle" v-if="base.debug_mode_p")
 
         b-menu-list(label="検討")
