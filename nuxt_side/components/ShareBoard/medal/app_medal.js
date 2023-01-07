@@ -43,6 +43,9 @@ export const app_medal = {
 
     // 自分のメダル数を(自分を含めて)みんなに伝える
     acquire_medal_count_share() {
+      if (this.blank_p(this.user_name)) {
+        return
+      }
       this.clog(`acquire_medal_count_share`)
       if (this.ac_room) {
         this.ac_room_perform("acquire_medal_count_share", this.current_xmedal)
