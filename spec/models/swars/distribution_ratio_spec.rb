@@ -14,6 +14,7 @@ module Swars
       }
       assert { json[:items_hash]["2手目△３ニ飛戦法"] == expected }
       assert { json[:items_hash]["居玉"] == nil }
+      assert { json[:meta][:histogram] }
     end
   end
 end

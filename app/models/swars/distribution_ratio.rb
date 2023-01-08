@@ -20,7 +20,7 @@ module Swars
       {
         :meta        => meta,
         :rarity_info => RarityInfo,
-        :items_hash  => items_hash,
+        :items       => items,
       }
     end
 
@@ -62,19 +62,23 @@ module Swars
         :avg         => avg,
         :items_total => all_counts_hash.count,
         :ignore_keys => ignore_keys,
+        :histogram   => histogram,
       }
     end
 
-    def items_hash
-      all_counts_hash.sort_by { |_, count| -count }.each.with_index.inject({}) do |a, ((name, count), i)|
-        v = sd1.appear_ratio(count)
-        a.merge(name => {
+    def items
+      @items ||= yield_self do
+        all_counts_hash.sort_by { |_, count| -count }.each.with_index.collect do |(name, count), i|
+          v = sd1.appear_ratio(count)
+          {
             :index          => i,
+            :name           => name,
             :count          => count,                 # 個数
             :emission_ratio => v,                     # 排出率
             :diff_from_avg  => v - avg,               # 平均出現率との差(つまり0以上であれば王道戦法)
             :rarity_key     => rarity_info_of(v).key, # レア度区分
-          })
+          }
+        end
       end
     end
 
@@ -122,6 +126,25 @@ module Swars
 
     def ignore_keys
       ["居玉", "力戦", "相振り飛車"]
+    end
+
+    # レア度の分布情報を返す
+    def histogram
+      @histogram ||= yield_self do
+        group = items.group_by { |e| e[:rarity_key] }
+        hash = group.transform_values { |e| e.sum { |e| e[:count] } }
+        total = hash.values.sum
+        if total.positive?
+          RarityInfo.collect do |e|
+            count = hash[e.key] || 0
+            {
+              :key   => e.key,
+              :count => count,
+              :rate  => count.fdiv(total),
+            }
+          end
+        end
+      end
     end
   end
 end
