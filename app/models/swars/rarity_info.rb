@@ -13,9 +13,9 @@ module Swars
     memory_record [
       # 順番は希少なものが先
       # キーは直接使うべからず。無くても動くようにする
-      { key: :rarity_key_SSR, name: "SSR", ratio: 0.000559885335483293,  style_key: "変態",   majority: false, }, # 個数50個以下(つまりN個を含めたNの一番上)
+      { key: :rarity_key_SSR, name: "SSR", ratio: 0.0007266304469336195, style_key: "変態",   majority: false, }, # 個数65個以下(つまりN個を含めたNの一番上)
       { key: :rarity_key_SR,  name: "SR",  ratio: 0.0034779486834281355, style_key: "準変態", majority: false, }, # diff_from_avg が - になる最初
-      { key: :rarity_key_R,   name: "R",   ratio: 0.01057969551120236,   style_key: "準王道", majority: true,  }, # 上位25件 index:N-1 の値
+      { key: :rarity_key_R,   name: "R",   ratio: 0.011624015528435332,  style_key: "準王道", majority: true,  }, # 上位25件 index:N-1 の値
       { key: :rarity_key_N,   name: "N",   ratio: 1.0,                   style_key: "王道",   majority: true,  },
     ]
 

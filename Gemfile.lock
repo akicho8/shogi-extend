@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 5e9e81806ca642fe1d2bcb3c8ff55f6f56cefa92
+  revision: 91ecaec7d2613fddc9191dc4b3336f4b257be552
   specs:
     bioshogi (0.0.1)
       actionview
@@ -372,18 +372,18 @@ GEM
     rexml (3.2.5)
     rmagick (5.1.0)
       pkg-config (~> 1.4)
-    rspec (3.11.0)
-      rspec-core (~> 3.11.0)
-      rspec-expectations (~> 3.11.0)
-      rspec-mocks (~> 3.11.0)
-    rspec-core (3.11.0)
-      rspec-support (~> 3.11.0)
-    rspec-expectations (3.11.1)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.0)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.2)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-mocks (3.11.2)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.2)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
+      rspec-support (~> 3.12.0)
     rspec-power_assert (1.1.0)
       power_assert (~> 1.1.0)
       rspec (>= 2.14)
@@ -395,7 +395,7 @@ GEM
       rspec-expectations (~> 3.11)
       rspec-mocks (~> 3.11)
       rspec-support (~> 3.11)
-    rspec-support (3.11.1)
+    rspec-support (3.12.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
