@@ -296,6 +296,9 @@ export const vue_support = {
           folder: "svg",
           ext: ".svg",
           className: "xemoji",
+          // Twemojiが2023年になると表示されなくなる問題に対処する
+          // https://zenn.dev/yhatt/articles/60ce0c3ca79994
+          base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/",
         })
       },
     },
