@@ -1,5 +1,6 @@
-rspec
+rspec spec/system/share_board/**/*_spec.rb
 rspec --only-failures
+rspec
 rspec --only-failures --fail-fast
 SHARE_BOARD_SPEC_SKIP=1 rspec
 rspec -t ~share_board_spec
@@ -7,3 +8,4 @@ rspec -t share_board_spec
 rspec -t swars_spec
 rspec -n
 rake spec:models SPEC_OPTS='--fail-fast'
+
