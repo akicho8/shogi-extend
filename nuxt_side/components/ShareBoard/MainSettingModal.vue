@@ -11,7 +11,9 @@
     .columns.is-centered
       .column
         .notification.is-warning.is-light.is-size-7
-          | <b>*</b> がついているものはブラウザに保存する
+          ul
+            li どれも初期値のままにしといた方がいい
+            li <b>*</b> がついているものはブラウザに保存する
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

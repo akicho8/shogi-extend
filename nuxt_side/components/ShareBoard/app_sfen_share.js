@@ -173,9 +173,10 @@ export const app_sfen_share = {
     },
   },
   computed: {
-    // 時計が設置されてなくて読み上げOFFのときはダメ
-    // 時計が設置されている または 読み上げON はOK
     yomiagable_p() {
+      // 時計が設置されてなくて読み上げOFFのときはダメ
+      // 時計が設置されている または 読み上げON はOK
+
       // // 本番で自分vs自分は読み上げない
       // if (this.self_vs_self_p) {
       //   return false
@@ -187,8 +188,11 @@ export const app_sfen_share = {
       // }
       //
       // return this.clock_box || this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      //
+      // 時計ONなら
       // return this.cc_play_p
-      return true
+
+      return this.yomiage_mode_info.key === "is_yomiage_mode_on"
     },
   },
 }
