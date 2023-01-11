@@ -292,7 +292,11 @@ export const vue_support = {
     xemoji: {
       // https://jp.vuejs.org/v2/guide/custom-directive.html
       inserted(el) {
-        el.innerHTML = twemoji.parse(el.innerHTML, { folder: "svg", ext: ".svg", className: "xemoji" })
+        el.innerHTML = twemoji.parse(el.innerHTML, {
+          folder: "svg",
+          ext: ".svg",
+          className: "xemoji",
+        })
       },
     },
   },
