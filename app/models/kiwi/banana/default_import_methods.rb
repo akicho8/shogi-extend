@@ -41,10 +41,10 @@ module Kiwi
             # body = "68S"
 
             info = Bioshogi::Parser.parse(body)
-            # versus = "#{info.formatter.mi.header["先手"]} vs #{info.formatter.mi.header["後手"]}"
+            # versus = "#{info.formatter.pi.header["先手"]} vs #{info.formatter.pi.header["後手"]}"
             versus = "AlphaZero vs elmo"
-            black_white = "先手:#{info.formatter.mi.header["先手"]} 後手:#{info.formatter.mi.header["後手"]}"
-            judgment_message = info.formatter.judgment_message.remove(/^まで/).gsub(/先手|後手/, info.formatter.mi.header.to_h)
+            black_white = "先手:#{info.formatter.pi.header["先手"]} 後手:#{info.formatter.pi.header["後手"]}"
+            judgment_message = info.formatter.judgment_message.remove(/^まで/).gsub(/先手|後手/, info.formatter.pi.header.to_h)
 
             {
               :key  => params[:key],

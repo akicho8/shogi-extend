@@ -33,7 +33,7 @@ module BattleModelMethods
   end
 
   # def total_seconds
-  #   @total_seconds ||= heavy_parsed_info.mi.move_infos.sum { |e| e[:used_seconds] }
+  #   @total_seconds ||= heavy_parsed_info.pi.move_infos.sum { |e| e[:used_seconds] }
   # end
 
   # 更新方法
@@ -74,7 +74,7 @@ module BattleModelMethods
     preset_key_set(info)
 
     if !battled_at
-      if v = info.formatter.mi.header["開始日時"].presence
+      if v = info.formatter.pi.header["開始日時"].presence
         self.battled_at ||= Bioshogi::Parser::TimeParser.new(v).to_time
       end
       self.battled_at ||= fixed_defaut_time

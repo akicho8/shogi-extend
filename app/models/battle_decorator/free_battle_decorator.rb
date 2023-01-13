@@ -74,7 +74,7 @@ module BattleDecorator
     end
 
     def normalized_full_tournament_name
-      normalize_str(heavy_parsed_info.formatter.mi.header["棋戦"])
+      normalize_str(heavy_parsed_info.formatter.pi.header["棋戦"])
     end
 
     private
@@ -85,7 +85,7 @@ module BattleDecorator
 
     def full_player_name(location_info)
       location_info = LocationInfo[location_info]
-      heavy_parsed_info.formatter.mi.header.to_h.values_at(*location_info.call_names).compact.first.to_s
+      heavy_parsed_info.formatter.pi.header.to_h.values_at(*location_info.call_names).compact.first.to_s
     end
 
     def player_name_md(location_info)
