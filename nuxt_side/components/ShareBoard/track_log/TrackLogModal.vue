@@ -15,7 +15,7 @@
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "TrackLogModal",
