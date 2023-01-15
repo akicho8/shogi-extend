@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { support_child   } from "./support_child.js"
+import { support_child   } from "../support_child.js"
 
 export default {
   name: "SoundResumeModal",
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .SoundResumeModal
   .modal-background
     background-color: hsla(0, 0%, 0%, 0.75)
