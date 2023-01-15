@@ -204,7 +204,7 @@ export const app_room_setup = {
 
     ////////////////////////////////////////////////////////////////////////////////
     ac_events_hash_inc(key) {
-      this.ac_events_hash[key] = (this.ac_events_hash[key] || 0) + 1
+      this.$set(this.ac_events_hash, key, (this.ac_events_hash[key] || 0) + 1)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
