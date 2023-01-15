@@ -1,5 +1,5 @@
 <template lang="pug">
-.MessageMain.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(@click="click_handle")
+.SoundResumeModalInside.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(@click="click_handle")
   .is-size-5.has-text-white.is-unselectable
     | 画面をタップしてください
 </template>
