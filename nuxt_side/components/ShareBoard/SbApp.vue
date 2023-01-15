@@ -79,6 +79,7 @@ import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
+import { app_snt                  } from "./snt/app_snt.js"
 import { app_devise               } from "./app_devise.js"
 import { app_user_kick            } from "./app_user_kick.js"
 import { app_track_log            } from "./track_log/app_track_log.js"
@@ -86,11 +87,11 @@ import { app_xmatch               } from "./auto_matching/app_xmatch.js"
 import { app_member_bc            } from "./app_member_bc.js"
 import { app_image_dl             } from "./app_image_dl.js"
 import { app_update               } from "./app_update.js"
-import { app_sound_bug            } from "./app_sound_bug.js"
-import { app_sound_effect         } from "./app_sound_effect.js"
+import { app_sound_bug            } from "./sound/app_sound_bug.js"
+import { app_sound_effect         } from "./sound/app_sound_effect.js"
+import { app_sound_resume         } from "./sound/app_sound_resume.js"
 import { app_main_setting         } from "./app_main_setting.js"
 import { app_debug                } from "./app_debug.js"
-import { app_sound_resume         } from "./app_sound_resume.js"
 import { app_help                 } from "./help_mod/app_help.js"
 import { app_sidebar              } from "./app_sidebar.js"
 import { app_storage              } from "./app_storage.js"
@@ -100,7 +101,7 @@ import { app_color_theme          } from "./app_color_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
-import { app_foul                 } from "./app_foul.js"
+import { app_foul                 } from "./foul/app_foul.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_back_to              } from "./app_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
@@ -168,6 +169,7 @@ export default {
     app_edit_mode,
     app_yomikomi,
     app_sp,
+    app_snt,
     app_devise,
     app_user_kick,
     app_track_log,

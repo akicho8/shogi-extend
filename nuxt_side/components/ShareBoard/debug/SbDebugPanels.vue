@@ -1,5 +1,10 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  .column.is-2
+    .panel
+      .panel-heading
+        | 千日手指摘
+      a.panel-block(@click="TheSb.snt_modal_handle(true)") 千日手指摘
   SbDebugPanelsBasic
   .column.is-12
     SbFesPanel
