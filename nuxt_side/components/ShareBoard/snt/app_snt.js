@@ -1,11 +1,10 @@
 import SntModal from "./SntModal.vue"
-
-const SNT_MAX = 2
+import { SntModel } from "./snt_model.js"
 
 export const app_snt = {
   data() {
     return {
-      snt_counts_hash: {},
+      snt_obj: SntModel.create(),
       snt_modal_instance: null, // モーダルを表示中ならそのインスタンス
     }
   },
@@ -15,25 +14,11 @@ export const app_snt = {
   },
 
   methods: {
-    // 0手目のときに呼ぶ
-    snt_reset() {
-      this.snt_counts_hash = {}
-    },
-
-    // 同一局面になった回数をカウント
-    snt_update(e) {
-      const key = e.snapshot_hash
-      this.snt_counts_hash[key] = (this.snt_counts_hash[key] ?? 0) + 1
-    },
-
-    // 千日手になった？
-    snt_p(e) {
-      return this.snt_counts_hash[e.snapshot_hash] >= SNT_MAX
-    },
+    //////////////////////////////////////////////////////////////////////////////// private
 
     // モーダル発動
-    snt_modal_handle(snt_p) {
-      if (snt_p) {
+    snt_modal_handle_if(cond) {
+      if (cond) {
         this.$sound.play("lose")  // おおげさに「ちーん」にしておく
         this.snt_modal_close()
         this.snt_modal_instance = this.modal_card_open({

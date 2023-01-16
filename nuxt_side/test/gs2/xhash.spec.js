@@ -15,6 +15,9 @@ const HASH_VALUE1 = {
 }
 
 describe("Xhash", () => {
+  test("hash_count", () => {
+    expect(Xhash.hash_count({a: 1})).toEqual(1)
+  })
   test("hash_compact", () => {
     expect(Xhash.hash_compact(HASH_VALUE1)).toEqual({a: 0, b: 1, c: "", d: {}, e: {a: 0}, f: [], g: ["a"], h: true, i: false})
   })

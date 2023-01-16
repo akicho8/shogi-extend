@@ -23,20 +23,20 @@ export const app_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      this.snt_update(e) // 同一局面になった回数をカウント
+      this.snt_obj.update(e.snapshot_hash) // 同一局面になった回数をカウント
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
         sfen: e.sfen,
         turn: e.turn,
         lmi: {
-          kif_without_from:    lmi.to_kif_without_from,        // "☗7六歩"
-          next_turn_offset:    lmi.next_turn_offset,           // 1
-          player_location_key: lmi.player_location.key,        // "black"
-          yomiage:             lmi.to_yomiage,                 // "ななろくふ"
-          effect_key:          lmi.effect_key,                 // 効果音キー
-          foul_names:          lmi.foul_list.map(e => e.name), // ["駒ワープ", "王手放置"]
-          snt_p:               this.snt_p(e),                  // 千日手か？
+          kif_without_from:    lmi.to_kif_without_from,                   // "☗7六歩"
+          next_turn_offset:    lmi.next_turn_offset,                      // 1
+          player_location_key: lmi.player_location.key,                   // "black"
+          yomiage:             lmi.to_yomiage,                            // "ななろくふ"
+          effect_key:          lmi.effect_key,                            // 効果音キー
+          foul_names:          lmi.foul_list.map(e => e.name),            // ["駒ワープ", "王手放置"]
+          snt_p:               this.snt_obj.available_p(e.snapshot_hash), // 千日手か？
         },
         clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }
@@ -75,7 +75,7 @@ export const app_sfen_share = {
           ...this.sfen_share_params,
         }
         this.foul_modal_handle(params.lmi.foul_names)
-        this.snt_modal_handle(params.lmi.snt_p)     // 千日手であれば表示する
+        this.snt_modal_handle_if(params.lmi.snt_p)     // 千日手であれば表示する
         this.al_add(params)
       }
     },
@@ -117,7 +117,7 @@ export const app_sfen_share = {
 
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
         this.foul_modal_handle(params.lmi.foul_names) // 反則があれば表示する
-        this.snt_modal_handle(params.lmi.snt_p)     // 千日手であれば表示する
+        this.snt_modal_handle_if(params.lmi.snt_p)       // 千日手であれば表示する
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.received_ok_send(params)                 // 受信OKを指し手に通知する

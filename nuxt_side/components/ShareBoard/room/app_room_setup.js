@@ -88,6 +88,7 @@ export const app_room_setup = {
       this.member_infos_init()
       this.member_info_init()
       this.active_level_init()
+      this.snt_obj.reset()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
       this.tl_add("USER", `subscriptions.create ${this.room_code}`)
@@ -131,6 +132,7 @@ export const app_room_setup = {
         this.ac_unsubscribe("ac_room")
         this.tl_add("USER", "unsubscribe")
 
+        this.snt_obj.reset()
         this.member_infos_init()
         this.active_level_init()
         this.active_level_increment_timer.stop()

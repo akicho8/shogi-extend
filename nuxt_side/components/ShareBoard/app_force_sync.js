@@ -146,10 +146,12 @@ export const app_force_sync = {
         silent_notify: false,   // 読み上げないようにする
         ...options,
       }
+      this.snt_obj.reset()
       this.ac_room_perform("force_sync", params) // --> app/channels/share_board/room_channel.rb
     },
     force_sync_broadcasted(params) {
       {
+        this.snt_obj.reset()
         this.receive_xsfen(params)       // これで current_location が更新される
         this.se_force_sync()             // 他者は盤面変化に気付かないため音を出す→自分も含めて音出した方が自分にも親切だった
         if (this.received_from_self(params)) {
