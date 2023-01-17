@@ -1,22 +1,22 @@
-import { SntModel } from "@/components/ShareBoard/snt/snt_model.js"
+import { SennichiteModel } from "@/components/ShareBoard/sennichite/sennichite_model.js"
 import _ from "lodash"
 
-describe("SntModel", () => {
+describe("SennichiteModel", () => {
   describe("ClassMethods", () => {
     test("create", () => {
-      const object = SntModel.create()
+      const object = SennichiteModel.create()
       expect(_.isObject(object)).toEqual(true)
     })
   })
   describe("InstanceMethods", () => {
     test("reset", () => {
-      const object = SntModel.create()
+      const object = SennichiteModel.create()
       object.update("foo")
       object.reset()
       expect(object.counts_hash).toEqual({})
     })
     test("available_p", () => {
-      const object = SntModel.create()
+      const object = SennichiteModel.create()
       object.update("foo")
       expect(object.count).toEqual(1)
       expect(object.keys_count).toEqual(1)

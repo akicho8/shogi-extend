@@ -1,7 +1,7 @@
 import { Gs2 } from "@/components/models/gs2.js"
 import Vue from "vue"
 
-export class SntModel {
+export class SennichiteModel {
   static SNT_TRIGGER_ON_N_TIMES = 4 // N回目の繰り返しで千日手となる
 
   static create(...args) {

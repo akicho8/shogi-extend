@@ -67,7 +67,7 @@ export const app_sp = {
 
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
     user_turn_change(v) {
-      this.snt_obj.reset()
+      this.sennichite_obj.reset()
       this.se_user_turn_change()
       this.user_turn_change_lazy(v)
     },
