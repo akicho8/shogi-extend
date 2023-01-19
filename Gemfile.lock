@@ -213,7 +213,7 @@ GEM
       ffi (~> 1.0)
     git-version-bump (0.17.2)
     gli (2.20.1)
-    globalid (1.0.0)
+    globalid (1.0.1)
       activesupport (>= 5.0)
     hashie (5.0.0)
     holiday_jp (0.8.1)
