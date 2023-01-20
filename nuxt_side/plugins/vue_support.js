@@ -39,7 +39,7 @@ export const vue_support = {
     ////////////////////////////////////////////////////////////////////////////////
 
     ga_click(category) {
-      if (this.$ga) {
+      if (this.$gtag) {
         if (this.$config.STAGE !== "production") {
           category = `(${this.$config.STAGE}) ${category}`
         }
@@ -48,7 +48,7 @@ export const vue_support = {
           this.$buefy.toast.open({message: message, position: "is-top", type: "is-dark", queue: false})
           this.clog(message)
         }
-        this.$ga.event(category, "click")
+        this.$gtag("event", "click", {event_category: category})
       }
     },
 

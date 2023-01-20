@@ -237,19 +237,6 @@ const config = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    // https://github.com/nuxt-community/analytics-module
-    [
-      "@nuxtjs/google-analytics",
-      {
-        id: "UA-109851345-1",
-        // // コメントアウトすると開発環境で確認できる
-        // debug: {
-        //   enabled: true,
-        //   sendHitTask: true,
-        // },
-      },
-    ],
-
     // https://qiita.com/nakazawaken1/items/8f25ce58a27be092f7bc
     // yarn add --dev nuxt-vite
     // たしかに速いがまともにビルドできない
@@ -259,6 +246,29 @@ const config = {
   ** Nuxt.js modules
   */
   modules: [
+    [
+      "@nuxtjs/google-gtag", {
+        id: "G-GXD5LW1M1S",
+        // config: {
+        //   anonymize_ip: true,        // anonymize IP
+        //   send_page_view: false,     // might be necessary to avoid duplicated page track on page reload
+        //   linker: {
+        //     domains: ["domain.com", "domain.org"],
+        //   },
+        // },
+        // debug: true,                 // enable to track in dev mode
+        // disableAutoPageTrack: false, // disable if you don"t want to track each page route with router.afterEach(...).
+        additionalAccounts: [
+          {
+            id: "UA-109851345-1",        // required if you are adding additional accounts
+            // config: {
+            //   send_page_view: false, // optional configurations
+            // },
+          },
+        ],
+      },
+    ],
+
     // Doc: https://buefy.github.io/#/documentation
     // ~/src/shogi-extend/nuxt_side/node_modules/nuxt-buefy/lib/module.js
     [
