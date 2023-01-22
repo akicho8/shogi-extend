@@ -21,3 +21,9 @@ task "my:favicon_generate" do
   system "ln -sfv ../../../nuxt_side/static/apple-touch-icon.png   app/assets/images"
   system "ls -al app/assets/images"
 end
+
+desc "本番環境の直近のログを取得する"
+task "production:log:download" do
+  system "cap production rails:log:download"
+  system "scp i:/var/log/nginx/access.log log/production-nginx.log"
+end
