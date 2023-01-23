@@ -5,9 +5,9 @@
       | 千日手
   .modal-card-body
     p 連続王手の場合は王手していた側の反則負けです
-    p 対局を続行するにはそのまま続けてください
+    p 合意の上、このまま対局を続けてもかまいません
   .modal-card-foot
-    b-button.close_handle(@click="close_handle" type="is-primary") 閉じる
+    b-button.close_handle(@click="close_handle" type="is-primary") OK
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   inject: ["TheSb"],
   data() {
     return {
-      current_location: null, // モーダル発動時の先後
+      current_location: null, // モーダル発動時の先後(未使用)
     }
   },
   created() {

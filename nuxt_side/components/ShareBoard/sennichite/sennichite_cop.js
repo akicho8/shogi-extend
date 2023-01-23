@@ -35,12 +35,14 @@ export class SennichiteCop {
     }
   }
 
+  // キーの数
   // デバッグ用
-  // キーの数であって increment の回数ではないので注意せよ
+  // increment の回数ではないので注意せよ
   get keys_count() {
     return Gs2.hash_count(this.counts_hash)
   }
 
+  // 確認用
   get to_h() {
     return {
       trigger_on_n_times: this.constructor.trigger_on_n_times,
@@ -49,6 +51,7 @@ export class SennichiteCop {
     }
   }
 
+  // デバッグ用
   get inspect() {
     return _.map(this.to_h, (v, k) => `${k}: ${v}`).join(", ")
   }

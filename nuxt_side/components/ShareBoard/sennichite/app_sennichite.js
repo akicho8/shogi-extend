@@ -16,22 +16,26 @@ export const app_sennichite = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// private
 
-    // モーダル発動
+    // 条件に一致していたら発動する
     sennichite_modal_handle_if(cond) {
-      if (cond) {
-        this.$sound.play("lose")  // おおげさに「ちーん」にしておく
-        this.sennichite_modal_close()
-        this.sennichite_modal_instance = this.modal_card_open({
-          component: SennichiteModal,
-          props: {},
-          onCancel: () => {
-            this.$sound.play_click()
-            this.sennichite_modal_close()
-          },
-        })
+      if (cond && this.foul_behavior_info.sennichite_check_p) {
+        this.sennichite_modal_handle()
       }
     },
 
+    // モーダル発動
+    sennichite_modal_handle() {
+      this.$sound.play("lose")  // おおげさに「ちーん」にしておく
+      this.sennichite_modal_close()
+      this.sennichite_modal_instance = this.modal_card_open({
+        component: SennichiteModal,
+        props: {},
+        onCancel: () => {
+          this.$sound.play_click()
+          this.sennichite_modal_close()
+        },
+      })
+    },
     sennichite_modal_close() {
       if (this.sennichite_modal_instance) {
         this.sennichite_modal_instance.close()
