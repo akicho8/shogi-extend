@@ -31,9 +31,9 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
 
         b-menu-list(label="局面操作")
-          b-menu-item.is_active_unset(icon="undo"        label="1手戻す"        @click="base.force_sync_turn_previous_modal_handle")
-          b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す" @click="base.board_init_modal_handle")
-          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"     @click="base.force_sync_modal_handle" v-if="base.quick_sync_info.sidebar_function_show || base.debug_mode_p")
+          b-menu-item.is_active_unset(icon="undo"        label="1手戻す (待った)" @click="base.force_sync_turn_previous_modal_handle")
+          b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す"   @click="base.board_init_modal_handle")
+          b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"       @click="base.force_sync_modal_handle" v-if="base.quick_sync_info.sidebar_function_show || base.debug_mode_p")
 
         b-menu-list(label="対局サポート")
           b-menu-item.is_active_unset(icon="scale-balance"          label="手合割"               @click="base.board_preset_select_modal_handle")

@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     a_block do
       hamburger_click
-      menu_item_click("1手戻す")                        # 「1手戻す」モーダルを開く
+      menu_item_click("1手戻す (待った)")                 # 「1手戻す」モーダルを開く
       find(".apply_button").click                       # 「N手目まで戻る」
       # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
       assert_turn(1)                             # 1手目に戻っている
