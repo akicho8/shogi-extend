@@ -7,7 +7,7 @@
     p 連続王手の場合は王手していた側の反則負けです
     p 対局を続行するにはそのまま続けてください
   .modal-card-foot
-    b-button(@click="close_handle" type="is-primary") 閉じる
+    b-button.close_handle(@click="close_handle" type="is-primary") 閉じる
 </template>
 
 <script>

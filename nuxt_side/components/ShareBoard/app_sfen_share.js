@@ -23,7 +23,7 @@ export const app_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      this.sennichite_obj.update(e.snapshot_hash) // 同一局面になった回数をカウント
+      this.sennichite_cop.update(e.snapshot_hash) // 同一局面になった回数をカウント
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
@@ -36,7 +36,7 @@ export const app_sfen_share = {
           yomiage:             lmi.to_yomiage,                            // "ななろくふ"
           effect_key:          lmi.effect_key,                            // 効果音キー
           foul_names:          lmi.foul_list.map(e => e.name),            // ["駒ワープ", "王手放置"]
-          sennichite_p:               this.sennichite_obj.available_p(e.snapshot_hash), // 千日手か？
+          sennichite_p:        this.sennichite_cop.available_p(e.snapshot_hash), // 千日手か？
         },
         clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }

@@ -7,8 +7,8 @@
   .panel.assert_system_variable
     .panel-heading
       | [assert_system_variable]
-    .panel-block sennichite_obj.keys_count:{{TheSb.sennichite_obj.keys_count}}
-    .panel-block sennichite_obj.count:{{TheSb.sennichite_obj.count}}
+    .panel-block sennichite_cop.keys_count:{{TheSb.sennichite_cop.keys_count}}
+    .panel-block sennichite_cop.count:{{TheSb.sennichite_cop.count}}
 </template>
 
 <script>

@@ -1,10 +1,10 @@
 import SennichiteModal from "./SennichiteModal.vue"
-import { SennichiteModel } from "./sennichite_model.js"
+import { SennichiteCop } from "./sennichite_cop.js"
 
 export const app_sennichite = {
   data() {
     return {
-      sennichite_obj: SennichiteModel.create(),
+      sennichite_cop: SennichiteCop.create(),
       sennichite_modal_instance: null, // モーダルを表示中ならそのインスタンス
     }
   },
