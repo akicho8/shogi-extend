@@ -11,7 +11,7 @@ export class SennichiteCop {
 
   constructor() {
     this.counts_hash = {}
-    this.count = 0
+    this.count = 0           // increment 回数
   }
 
   reset() {
@@ -20,7 +20,7 @@ export class SennichiteCop {
   }
 
   // 同一局面になった回数をカウント
-  update(key) {
+  increment(key) {
     Gs2.__assert__(Gs2.present_p(key), "Gs2.present_p(key)")
     Vue.set(this.counts_hash, key, (this.counts_hash[key] || 0) + 1)
     this.count += 1
@@ -36,6 +36,7 @@ export class SennichiteCop {
   }
 
   // デバッグ用
+  // キーの数であって increment の回数ではないので注意せよ
   get keys_count() {
     return Gs2.hash_count(this.counts_hash)
   }
@@ -43,8 +44,8 @@ export class SennichiteCop {
   get to_h() {
     return {
       trigger_on_n_times: this.constructor.trigger_on_n_times,
-      count:                  this.count,
-      keys_count:             this.keys_count,
+      count:              this.count,
+      keys_count:         this.keys_count,
     }
   }
 

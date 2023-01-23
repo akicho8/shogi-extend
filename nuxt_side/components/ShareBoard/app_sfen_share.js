@@ -23,7 +23,7 @@ export const app_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      this.sennichite_cop.update(e.snapshot_hash) // 同一局面になった回数をカウント
+      this.sennichite_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
