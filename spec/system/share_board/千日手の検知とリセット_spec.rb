@@ -1,37 +1,10 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def black_king_move_up
-    piece_move_o("59", "58", "☗5八玉")
-  end
-  def white_king_move_up
-    piece_move_o("51", "52", "☖5二玉")
-  end
-  def black_king_move_down
-    piece_move_o("58", "59", "☗5八玉")
-  end
-  def white_king_move_down
-    piece_move_o("52", "51", "☖5一玉" )
-  end
-  def king_move_up
-    black_king_move_up
-    white_king_move_up
-  end
-  def king_move_down
-    black_king_move_up
-    white_king_move_up
-  end
-  def king_move_up_down
-    king_move_up
-    king_move_down
-  end
-
-  it "4回目の同一局面でモーダルが発動する" do
+  it "4回目の同一局面で指し手に千日手のラベルついてモーダルが発動して閉じれる" do
     visit_app
-    king_move_up_down
-    king_move_up_down
-    king_move_up_down
-    piece_move_o("59", "58", "☗5八玉")           # 4回目の同一局面でモーダルが発動する
+    sennichite_trigger
+    action_assert_text("千日手")                 # 履歴に「千日手」のテキストが出ている
     assert_selector(".SennichiteModal")          # モーダルが存在する
     find(".SennichiteModal .close_handle").click # 「閉じる」
     assert_no_selector(".SennichiteModal")       # モーダルが閉じた
@@ -66,19 +39,32 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "同期したとき相手もリセットする" do
+    a_block { room_setup("test_room", "alice") }
+    b_block { room_setup("test_room", "bob") }
     a_block do
-      room_setup("test_room", "alice")
-    end
-    b_block do
-      room_setup("test_room", "bob")
-    end
-    a_block do
-
       room_setup("test_room", "alice")
       king_move_up_down
       assert_system_variable("sennichite_cop.count", 4)
       room_leave
       assert_system_variable("sennichite_cop.count", 0)
+    end
+  end
+
+  describe "反則設定が「したら負け」のときだけ発動する" do
+    it "「したら負け」なので発動する" do
+      visit_app(foul_behavior_key: "is_foul_behavior_auto")
+      sennichite_trigger
+      assert_selector(".SennichiteModal")
+    end
+    it "発動しない" do
+      visit_app(foul_behavior_key: "is_foul_behavior_newbie")
+      sennichite_trigger
+      assert_no_selector(".SennichiteModal")
+    end
+    it "発動しない" do
+      visit_app(foul_behavior_key: "is_foul_behavior_throw")
+      sennichite_trigger
+      assert_no_selector(".SennichiteModal")
     end
   end
 end
