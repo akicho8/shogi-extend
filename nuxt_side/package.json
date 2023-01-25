@@ -48,7 +48,8 @@
     "vue": "~2.6",
     "vue-server-renderer": "~2.6",
     "vue-template-compiler": "~2.6",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^2.24.3",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
