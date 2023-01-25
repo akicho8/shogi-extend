@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
+@import "../support.sass"
 
 .SbTrackLog
   .detail-container

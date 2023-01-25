@@ -21,11 +21,11 @@ class AppEntryInfo
       title: "共有将棋盤",
       attention_label: nil,
       og_image_key: %w(share-board-real),
-      description: "仲間内でのリレー将棋や指導対局にどうぞ",
+      description: "VS・リレー将棋・指導対局にどうぞ",
       features: [
         "チャット機能あり",
-        "いろいろな手合割や個別の持ち時間を設定可",
-        "詰将棋の作成や公開にもどうぞ",
+        "手合割や持ち時間を自由に設定可能",
+        "詰将棋や棋譜の共有にもどうぞ",
       ],
     },
     {

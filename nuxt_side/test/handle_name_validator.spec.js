@@ -19,9 +19,12 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("")).toEqual(false)
   })
 
-  test("1文字はダメ", () => {
+  test("特定文字の繰り返しはダメ", () => {
     expect(HandleNameValidator.valid_p("a")).toEqual(false)
-    expect(HandleNameValidator.valid_p("あ")).toEqual(false)
+    expect(HandleNameValidator.valid_p("aa")).toEqual(false)
+    expect(HandleNameValidator.valid_p("ああ")).toEqual(false)
+    expect(HandleNameValidator.valid_p(".")).toEqual(false)
+    expect(HandleNameValidator.valid_p("..")).toEqual(false)
   })
 
   test("明かな捨てハンは禁止", () => {

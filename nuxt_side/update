@@ -8,4 +8,4 @@ ncu /actioncable/ -u
 ncu /pug/ -u
 ncu /shogi-player/ -u
 ncu /js-memory-record/ -u
-yarn
+npm i

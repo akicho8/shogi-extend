@@ -2,6 +2,11 @@ import _ from "lodash"
 import { Xobject } from "./xobject.js"
 
 export const Xhash = {
+  // hash_count({a: 1}) => 1
+  hash_count(hash) {
+    return Object.values(hash).length
+  },
+
   // {a: 1, b: null, c:undefined, d: ""} => {a: 1, d: ""}
   hash_compact(hash) {
     return _.reduce(hash, (a, val, key) => {

@@ -1,11 +1,11 @@
 <template lang="pug">
-.MessageMain.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(@click="click_handle")
+.SoundResumeModalInside.is-flex.is-justify-content-center.is-align-items-center.is-flex-direction-column(@click="click_handle")
   .is-size-5.has-text-white.is-unselectable
     | 画面をタップしてください
 </template>
 
 <script>
-import { support_child   } from "./support_child.js"
+import { support_child   } from "../support_child.js"
 
 export default {
   name: "SoundResumeModal",
@@ -19,7 +19,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .SoundResumeModal
   .modal-background
     background-color: hsla(0, 0%, 0%, 0.75)

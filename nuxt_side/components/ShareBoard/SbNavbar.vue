@@ -19,6 +19,11 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
       | 投了
 
     template(v-if="TheSb.debug_mode_p")
+      b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold
+        b-tag.has-text-weight-bold(rounded)
+          .has-text-primary
+            | {{TheSb.sennichite_cop.count}}
+
       b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="TheSb.tl_modal_handle")
         b-tag.has-text-weight-bold(rounded)
           .has-text-primary

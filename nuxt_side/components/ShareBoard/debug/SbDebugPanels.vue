@@ -1,5 +1,6 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  SbDebugPanelsSennichite
   SbDebugPanelsBasic
   .column.is-12
     SbFesPanel
