@@ -47,7 +47,7 @@ module Swars
         { key: "5連敗",              medal_params: { message: "5連敗した",                                    method: "raw",  name: "🌧",                type: nil, },          if_cond: proc { (5..9).cover?(win_lose_streak_max_hash["lose"]) },},
         { key: "10連敗",             medal_params: { message: "10連敗した",                                   method: "raw",  name: "⛈",                type: nil, },          if_cond: proc { win_lose_streak_max_hash["lose"] >= 10 },},
 
-        { key: "100手勝ちマン",      medal_params: { message: "100手で勝った",                                method: "raw",  name: "💯",                type: nil, },          if_cond: proc { one_hundred_win_rate > 0 },},
+        { key: "100手勝ちマン",      medal_params: { message: "ちょうど100手で勝った",                        method: "raw",  name: "💯",                type: nil, },          if_cond: proc { one_hundred_win_rate > 0 },},
         { key: "波が激しいマン",     medal_params: { message: "勝ち負けの波が激しい",                         method: "raw",  name: "🌊",                type: nil, },          if_cond: proc { win_lose_streak_max_hash["win"] >= 5 && win_lose_streak_max_hash["lose"] >= 5 },},
         { key: "居玉勝ちマン",       medal_params: { message: "居玉でもそこそこ勝っている",                   method: "raw",  name: "🗿",                type: nil, },          if_cond: proc { (r = igyoku_win_ratio) && r >= 0.3       },},
         { key: "入玉勝ちマン",       medal_params: { message: "入玉で勝った",                                 method: "raw",  name: "🏈",                 type: nil, },          if_cond: proc { win_and_all_tag_ratio_for("入玉") > 0 },},
@@ -64,7 +64,7 @@ module Swars
         { key: "無気力マン",         medal_params: { message: "無気力な対局をした",                           method: "raw",  name: "🦥",                type: nil, },          if_cond: proc { (r = hayai_toryo) && r > 0 } },
         { key: "開幕千日手",         medal_params: { message: "開幕千日手をした",                             method: "raw",  name: "❓",                type: nil },           if_cond: proc { (r = start_draw_ratio) && r > 0 } },
         { key: "ただの千日手",       medal_params: { message: "千日手があった",                               method: "raw",  name: "🍌",                type: nil },           if_cond: proc { (r = draw_ratio) && r > 0 } },
-        { key: "友対マン",           medal_params: { message: "友対をした",                                   method: "raw",  name: "👬",                 type: nil, },          if_cond: proc { xmode_counts["友達"] > 0 },},
+        { key: "友対マン",           medal_params: { message: "友達対局をした",                               method: "raw",  name: "👬",                 type: nil, },          if_cond: proc { xmode_counts["友達"] > 0 },},
         { key: "指導受けマン",       medal_params: { message: "指導対局を受けた",                             method: "raw",  name: "🔥",                type: nil, },          if_cond: proc { xmode_counts["指導"] > 0 },},
         { key: "運営支えマン",       medal_params: { message: "将棋ウォーズの運営を支える力がある",           method: "raw",  name: "🧙‍♂️",                type: nil },           if_cond: proc { ai_use_battle_count_lv1 >= 1 } },
       ]
