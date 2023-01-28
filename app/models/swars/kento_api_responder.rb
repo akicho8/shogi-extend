@@ -23,6 +23,7 @@ module Swars
   class KentoApiResponder
     DEFAULT_MAX = 20
     MAX_OF_MAX  = 50
+    BLACK_LIST  = /maruded|Lesser_panda20|Tiffblue|katsudon_kuitai/
 
     def initialize(params = {})
       @user          = params[:user]
@@ -35,6 +36,10 @@ module Swars
     # https://www.shogi-extend.com/w.json?format_type=kento&query=kinakom0chi
     def as_json(*)
       to_h_with_benchmark
+    end
+
+    def black_user?
+      BLACK_LIST.match?(@user.key)
     end
 
     private
@@ -51,7 +56,9 @@ module Swars
     end
 
     def to_h
-      @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
+      unless black_user?
+        @crawled = Swars::Importer::ThrottleImporter.new(user_key: @user.key, page_max: 1).run
+      end
       {
         "api_version" => "2020-02-02",                     # (required) 固定値
         "api_name"    => "将棋ウォーズ(ID:#{@user.key})",  # (required) 任意のAPI名

@@ -9,5 +9,11 @@ module Swars
       json = kento_api_responder.as_json
       assert { json["game_list"].present? }
     end
+
+    it "特定IDは除外する" do
+      user = User.create!(key: "marudedna")
+      kento_api_responder = KentoApiResponder.new(user: user)
+      assert { kento_api_responder.black_user? }
+    end
   end
 end
