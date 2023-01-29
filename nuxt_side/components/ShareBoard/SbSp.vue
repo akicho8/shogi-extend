@@ -1,6 +1,6 @@
 <template lang="pug">
 .SbSp.MainColumn.column(:class="main_column_class")
-  CustomShogiPlayer.is_mobile_vertical_good_style(
+  CustomShogiPlayer(
     v-bind="sp_bind"
     v-on="sp_hook"
     :sp_viewpoint.sync="base.viewpoint"

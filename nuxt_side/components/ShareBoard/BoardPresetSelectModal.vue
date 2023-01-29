@@ -87,8 +87,6 @@ export default {
     --sp_grid_outer_stroke: 0
     --sp_grid_outer_color: hsl(0, 0%, 80%)
     --sp_grid_color:       hsl(0, 0%, 80%)
-    --sp_stand_piece_w: 22px
-    --sp_stand_piece_h: 22px
 
 .STAGE-development
   .BoardPresetSelectModal

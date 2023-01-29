@@ -407,8 +407,6 @@ export default {
     // height: 100vh               // app_buttons_container を画面外にする
 
   .CustomShogiPlayer
-    +mobile
-      --sp_piece_count_gap_bottom: 48%
     +tablet
       max-width: calc(100vmin * 0.65)
     +desktop

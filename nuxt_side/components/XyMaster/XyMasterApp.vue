@@ -567,7 +567,7 @@ export default {
       --sp_grid_star_z_index: -1                                                    // 星を盤の裏に表示
 
   &.is_input_mode_tap
-    --sp_board_piece_rate: 76.6%                // セル内の駒の大きさ
+    --sp_board_piece_size: 0.766                // セル内の駒の大きさ
     .CustomShogiPlayer
       .PieceTextureSelf
         opacity: var(--xy_piece_opacity)        // ゴーストの濃さ

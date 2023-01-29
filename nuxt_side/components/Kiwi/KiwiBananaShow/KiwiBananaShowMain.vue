@@ -3,7 +3,7 @@
   .column.is-12-tablet.is-10-desktop.is-8-widescreen
     .block.CustomShogiPlayerGround(v-show="base.show_mode === 'is_board'")
       .CustomShogiPlayerPosition
-        CustomShogiPlayer.is_mobile_vertical_good_style(
+        CustomShogiPlayer(
           ref="main_sp"
           :sp_body="base.banana.advanced_kif_info.body"
           :sp_turn="base.banana.advanced_kif_info.turn"

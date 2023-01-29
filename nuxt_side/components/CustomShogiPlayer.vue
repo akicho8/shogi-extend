@@ -70,30 +70,18 @@ export default {
         font-weight: bold
 
   +mobile
-    --sp_stand_piece_w:     40px // 駒台のセル(W)
-    --sp_stand_piece_h:     40px // 駒台のセル(H)
-    --sp_piece_box_piece_w: 28px // 駒箱のセル(W)
-    --sp_piece_box_piece_h: 32px // 駒箱のセル(H)
-    --sp_piece_count_gap_right: 40%
     --sp_grid_outer_color: rgba(0, 0, 0, 0.4) // スマホだと少し薄すくる
     --sp_grid_color:       rgba(0, 0, 0, 0.3) // スマホだと少し薄すくる
     --sp_board_radius: 0 // 角丸を取る
 
     // モバイルで縦並びになっているとき駒とコントローラーが重なるのを防ぐ
-    .is_mobile_vertical_on
-      .NavigateBlock
-        margin-top: 14px ! important
-
-  &.is_mobile_vertical_good_style
-    +mobile
-      --sp_stand_piece_w: 40px // 駒台のセル(W) iPhoneXで玉を除く7個の駒が表示できる最大
-      --sp_stand_piece_h: 40px // 駒台のセル(H)
-      --sp_piece_count_gap_bottom: 58%
-      --sp_piece_count_font_size: 8px
+    // .is_mobile_vertical_on
+    //   .NavigateBlock
+    //     margin-top: 14px ! important
 
   // リアル駒は元々gapを考慮して小さめに作られているため100%にしないとかなり小さく見えてしまう
   .is_pi_variant_d
-    --sp_board_piece_rate: 100%
+    --sp_board_piece_size: 1.0
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table
