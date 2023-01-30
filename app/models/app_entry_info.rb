@@ -21,11 +21,11 @@ class AppEntryInfo
       title: "共有将棋盤",
       attention_label: nil,
       og_image_key: %w(share-board-real),
-      description: "VS・リレー将棋・指導対局にどうぞ",
+      description: "ガチVS・仲間内リレー将棋・指導対局にどうぞ",
       features: [
-        "チャット機能あり",
+        "みんなでワイワイ！？ チャット機能あり",
         "手合割や持ち時間を自由に設定可能",
-        "詰将棋や棋譜の共有にもどうぞ",
+        "詰将棋の出題や棋譜の共有にもどうぞ",
       ],
     },
     {
@@ -35,7 +35,7 @@ class AppEntryInfo
       title: "符号の鬼",
       attention_label: nil,
       og_image_key: "xy",
-      description: "符号マスター養成所",
+      description: "脳内将棋マスター養成所",
       features: [
         "100問正解するまでの時間を競う",
         "1分30秒切ったら卒業",
@@ -48,7 +48,7 @@ class AppEntryInfo
       nuxt_link_to: { path: "/adapter" },
       title: "なんでも棋譜変換",
       og_image_key: "adapter",
-      description: "棋譜の差異でお困りの方向け",
+      description: "多種多様な棋譜に悩まされている方向け",
       features: [
         "他のソフトは読めない変則的な棋譜を正規化",
         "KENTOのURLや将棋クエストの棋譜をKIFに変換",
