@@ -2,9 +2,13 @@
 .modal-card
   .modal-card-head
     .modal-card-title 投了
-  .modal-card-body {{message}}
+  .modal-card-body
+    .content
+      p {{message}}
+      p.is-size-7.has-text-grey
+        | 早すぎる投了は反感を買う場合があります
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 考え直す
+    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 諦めない
     b-button.give_up_handle(@click="give_up_handle" type="is-danger") 本当に投了する
 </template>
 
