@@ -42,7 +42,7 @@ HelpContent.SwarsBattleIndexHelpBody
         ul
           li 相手を検索する
       article
-        h2 相手のIDを検索覧に入力するのが面倒
+        h2 相手のIDを検索欄に入力するのが面倒
         ul
           li 相手の名前をタップ→相手の名前をタップ
 
@@ -57,7 +57,7 @@ HelpContent.SwarsBattleIndexHelpBody
   article
     h2 1ヶ月より前のは取り込めないというけど対局URLはわかっている
     ul
-      li そのまま検索覧に放り込む
+      li そのまま検索欄に放り込む
   article
     h2 歯抜けにならないようにするには？
     ul
