@@ -80,6 +80,8 @@
 
 <script>
 import { MyMobile } from "@/components/models/my_mobile.js"
+import dayjs from "dayjs"
+import _ from "lodash"
 
 export default {
   name: "AppEntryInfo",
@@ -96,7 +98,14 @@ export default {
   methods: {
     title_click_handle() {
       this.$sound.play_click()
-      this.toast_ok("SHOGI-EXTEND は将棋の便利ツールを提供するサイトです")
+      const hour = dayjs().hour()
+      if (_.random(0, 1) == 0) {
+        this.toast_ok("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
+      } else {
+        if (hour < 12) {
+          this.talk("おはよう")
+        }
+      }
     },
   },
   computed: {
