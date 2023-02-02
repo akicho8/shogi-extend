@@ -98,14 +98,7 @@ export default {
   methods: {
     title_click_handle() {
       this.$sound.play_click()
-      const hour = dayjs().hour()
-      if (_.random(0, 1) == 0) {
-        this.toast_ok("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
-      } else {
-        if (hour < 12) {
-          this.talk("おはよう")
-        }
-      }
+      this.toast_ok("SHOGI-EXTEND は将棋に関連したツールを提供するWEBサイトです")
     },
   },
   computed: {
