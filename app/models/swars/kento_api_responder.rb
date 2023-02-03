@@ -23,7 +23,7 @@ module Swars
   class KentoApiResponder
     DEFAULT_MAX = 20
     MAX_OF_MAX  = 50
-    BLACK_LIST  = /maruded|Lesser_panda20|Tiffblue|katsudon_kuitai/
+    BLACK_LIST  = /maruded|Lesser_panda20|Tiffblue|katsudon_kuitai|Icy_tail|shogi_priest|champion2020|StaySea|ribako1210|si_kun_YouTuber|karma99/
 
     def initialize(params = {})
       @user          = params[:user]
