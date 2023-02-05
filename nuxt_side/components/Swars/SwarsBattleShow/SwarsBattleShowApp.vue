@@ -34,7 +34,7 @@ client-only
         :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="current_turn"
-        :sp_viewpoint="viewpoint"
+        :viewpoint="viewpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
