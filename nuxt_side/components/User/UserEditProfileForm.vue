@@ -132,7 +132,7 @@ export default {
       align-items: center
       justify-content: center
       .icon
-        filter: drop-shadow(0px 0px 16px rgba(0, 0, 0, 1.0))
+        filter: drop-shadow(0px 0px 16px hsla(0, 0%, 0%, 1.0))
 
   .field
     margin-top: 2rem

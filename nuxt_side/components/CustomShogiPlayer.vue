@@ -70,8 +70,8 @@ export default {
         font-weight: bold
 
   +mobile
-    --sp_grid_outer_color: rgba(0, 0, 0, 0.4) // スマホだと少し薄すくる
-    --sp_grid_color:       rgba(0, 0, 0, 0.3) // スマホだと少し薄すくる
+    --sp_grid_outer_color: hsla(0, 0%, 0%, 0.4) // スマホだと少し薄すくる
+    --sp_grid_color:       hsla(0, 0%, 0%, 0.3) // スマホだと少し薄すくる
     --sp_board_radius: 0 // 角丸を取る
 
     // モバイルで縦並びになっているとき駒とコントローラーが重なるのを防ぐ
