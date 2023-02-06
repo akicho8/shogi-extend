@@ -4,10 +4,10 @@
     .canvas_wrap
       canvas#main_canvas(ref="main_canvas")
   b-field(grouped position="is-centered")
-    b-field
+    b-field.time_chart_variant
       template(v-for="e in TheShow.TimeChartVariantInfo.values")
         b-radio-button(:class="e.key" v-model="TheShow.time_chart_variant_key" :native-value="e.key" size="is-small" @input="time_chart_variant_key_change_handle") {{e.name}}
-    b-field
+    b-field.time_chart_zoom
       template(v-for="e in TheShow.TimeChartZoomInfo.values")
         b-radio-button(:class="e.key" v-model="TheShow.time_chart_zoom_key" :native-value="e.key" size="is-small" @input="zoom_key_change_handle") {{e.name}}
 </template>
@@ -586,6 +586,7 @@ export default {
 
     // チャートの種類を変更したときに呼ぶ
     time_chart_variant_key_change_handle() {
+      this.$sound.play_click()
       this.TheShow.time_chart_zoom_key = "zoom_minus"
       this.chart_setup_all()
       this.chart_create()
@@ -604,8 +605,12 @@ export default {
     .canvas_wrap
       width: 100%
       max-width: 640px
-  label.radio
-    width: 4rem
+  .time_chart_variant
+    label.radio
+      width: 6rem
+  .time_chart_zoom
+    label.radio
+      width: 3rem
 
 .STAGE-development
   .SwarsBattleShowTimeChart
