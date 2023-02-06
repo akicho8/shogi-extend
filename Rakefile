@@ -4,3 +4,7 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+task "p:d" do
+  system %(git push; OPEN=false cap production deploy)
+end
