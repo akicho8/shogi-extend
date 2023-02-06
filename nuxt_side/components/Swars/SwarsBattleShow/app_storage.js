@@ -1,0 +1,14 @@
+import { params_controller } from "@/components/params_controller.js"
+import { ParamInfo } from "./param_info.js"
+
+export const app_storage = {
+  mixins: [params_controller],
+  data() {
+    return {
+      ...ParamInfo.null_value_data_hash,
+    }
+  },
+  computed: {
+    ParamInfo() { return ParamInfo },
+  },
+}

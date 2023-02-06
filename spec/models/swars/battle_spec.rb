@@ -85,8 +85,9 @@ module Swars
         assert { record.raw_sec_list(:white) == [3, 7]    }
       end
 
-      it "time_chart_params: chart.jsに渡すデータ" do
-        assert { record.time_chart_params.has_key?(:datasets) }
+      it "time_chart_params: chart.jsに渡すデータがある" do
+        assert { record.time_chart_params[:tcv_normal].has_key?(:datasets) }
+        assert { record.time_chart_params[:tcv_accretion].has_key?(:datasets) }
       end
 
       describe "投了" do
@@ -105,8 +106,11 @@ module Swars
           assert { record.time_chart_label_max == 6 }
         end
         it "それぞれの時間チャートデータが取れる" do
-          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}] }
+          assert { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}] }
+        end
+        it "累計のデータが取れる" do
+          assert { record.time_chart_xy_list2(:black, true) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 6}, {x: 4, y: nil}, {x: 5, y: 8}, {x: 6, y: nil}] }
         end
       end
 
@@ -122,8 +126,8 @@ module Swars
           assert { record.memberships[1].think_max == 590 }
         end
         it "後手のチャートの最後にそれを追加してある" do
-          assert { record.time_chart_xy_list(:black) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list(:white) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}, {x: 6, y: -590}, {x: 7, y: nil}] }
+          assert { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          assert { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}, {x: 6, y: -590}, {x: 7, y: nil}] }
         end
         it "そのためチャートのラベルは増えている" do
           assert { record.time_chart_label_max == 6 }

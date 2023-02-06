@@ -30,8 +30,8 @@ module Swars
     end
 
     # [{:x=>1, :y=>10 seconds}, {:x=>3, :y=>20 seconds}]
-    def time_chart_xy_list
-      @time_chart_xy_list ||= battle.time_chart_xy_list(location_info)
+    def time_chart_xy_list(accretion)
+      battle.time_chart_xy_list2(location_info, accretion)
     end
   end
 end

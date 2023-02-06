@@ -26,9 +26,16 @@ module TimeChartMethods
   end
 
   def time_chart_params
+    labels = (0..time_chart_label_max).to_a # (1..turn_max) ではなくデータを元に作る
     {
-      labels: (0..time_chart_label_max).to_a, # (1..turn_max) ではなくデータを元に作る
-      datasets: time_chart_datasets,
+      :tcv_normal => {
+        :labels   => labels,
+        :datasets => time_chart_datasets(false),
+      },
+      :tcv_accretion => {
+        :labels   => labels,
+        :datasets => time_chart_datasets(true),
+      },
     }
   end
 
@@ -63,7 +70,30 @@ module TimeChartMethods
   end
 
   # location_info の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
-  def time_chart_xy_list(location_info)
+  def time_chart_xy_list2(location_info, accretion)
+    location_info = LocationInfo.fetch(location_info)
+    list = time_chart_xy_list3(location_info)
+    if accretion
+      acc = 0
+      list = list.collect { |e|
+        if y = e[:y]
+          acc += y
+        end
+        { x: e[:x], y: y ? acc : nil }
+      }
+    end
+    list
+  end
+
+  private
+
+  def time_chart_xy_list3(location_info)
+    @time_chart_xy_list3 ||= {}
+    @time_chart_xy_list3[location_info.key] ||= time_chart_xy_list4(location_info)
+  end
+
+  # location_info の [{:x=>1, :y=>10}, {:x=>3, :y=>20}] を返す
+  def time_chart_xy_list4(location_info)
     # c = LocationInfo.count
     # loc = preset_info.to_turn_info.current_location(location_info.code)
     # time_chart_sec_list_of(location_info).collect.with_index { |e, i| { x: 1 + loc.code + i * c, y: location_info.value_sign * (e || 0) } } # 表示上「1手目」と表記したいので +1
@@ -101,6 +131,7 @@ module TimeChartMethods
       # x, y は予約語。他にも追加していい
       list << { x: x, y: y }
     end
+
     list
   end
 end

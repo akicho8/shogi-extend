@@ -30,11 +30,8 @@ client-only
 
       SwarsBattleShowTimeChart(
         v-if="time_chart_params"
-        :record="record"
-        :time_chart_params="time_chart_params"
         @update:turn="turn_set_from_chart"
         :chart_turn="current_turn"
-        :viewpoint="viewpoint"
         ref="SwarsBattleShowTimeChart"
       )
 
@@ -75,8 +72,10 @@ client-only
 <script>
 import { support_parent  } from "./support_parent.js"
 import { app_chore       } from "./app_chore.js"
+import { app_chart       } from "./app_chart.js"
 import { app_export      } from "./app_export.js"
 import { app_sidebar     } from "./app_sidebar.js"
+import { app_storage     } from "./app_storage.js"
 
 import { SceneInfo } from "../models/scene_info.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
@@ -89,10 +88,11 @@ export default {
   mixins: [
     support_parent,
     app_chore,
+    app_chart,
     app_export,
     app_sidebar,
+    app_storage,
   ],
-
   data() {
     return {
       record: null,            // 属性がたくさん入ってる
@@ -104,6 +104,11 @@ export default {
 
       time_chart_p: false,     // 時間チャートを表示する？
       time_chart_params: null, // 時間チャートのデータ
+    }
+  },
+  provide() {
+    return {
+      TheShow: this,
     }
   },
 

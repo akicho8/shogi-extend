@@ -69,4 +69,24 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
     switch_to_window(window_opened_by { menu_item_click("本家") })
     assert { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
   end
+
+  describe "タイムチャート" do
+    it "すべてのボタンが押せる" do
+      visit2 "/swars/battles/#{@key}"
+      Capybara.find("label", text: "明細", exact_text: true).click
+      Capybara.find("label", text: "累積", exact_text: true).click
+      Capybara.find("label", text: "-", exact_text: true).click
+      Capybara.find("label", text: "+", exact_text: true).click
+    end
+    it "状態はブラウザに保存する" do
+      # 両方をデフォルトでない方にする
+      visit2 "/swars/battles/#{@key}"
+      Capybara.find("label", text: "累積", exact_text: true).click
+      Capybara.find("label", text: "+", exact_text: true).click
+      # リロードして状態が同じになっているか確認する
+      visit2 "/swars/battles/#{@key}"
+      Capybara.assert_selector("label.is-selected", text: "累積", exact_text: true)
+      Capybara.assert_selector("label.is-selected", text: "+", exact_text: true)
+    end
+  end
 end

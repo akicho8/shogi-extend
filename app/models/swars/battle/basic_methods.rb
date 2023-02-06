@@ -104,11 +104,11 @@ module Swars
       end
 
       concerning :TimeChartMethods do
-        def time_chart_datasets
+        def time_chart_datasets(accretion)
           memberships.collect.with_index { |e, i|
             {
-              label: e.user.key,  # グラフの上に出る名前
-              data: e.time_chart_xy_list,
+              :label => e.user.key,  # グラフの上に出る名前
+              :data  => e.time_chart_xy_list(accretion),
             }
           }
         end

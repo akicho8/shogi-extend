@@ -3,13 +3,17 @@
   .canvas_center
     .canvas_wrap
       canvas#main_canvas(ref="main_canvas")
-  b-field.zoom_button(position="is-centered")
-    b-radio-button(v-model="zoom_p" :native-value="false" size="is-small") -
-    b-radio-button(v-model="zoom_p" :native-value="true" size="is-small") +
+  b-field(grouped position="is-centered")
+    b-field
+      template(v-for="e in TheShow.TimeChartVariantInfo.values")
+        b-radio-button(:class="e.key" v-model="TheShow.time_chart_variant_key" :native-value="e.key" size="is-small" @input="time_chart_variant_key_change_handle") {{e.name}}
+    b-field
+      template(v-for="e in TheShow.TimeChartZoomInfo.values")
+        b-radio-button(:class="e.key" v-model="TheShow.time_chart_zoom_key" :native-value="e.key" size="is-small" @input="zoom_key_change_handle") {{e.name}}
 </template>
 
 <script>
-const TOOLTIP_ENABLE = false
+const TOOLTIP_ENABLE = true
 // const TICKS_FONT_COLOR = "rgba(255,255,255,0.75)"
 const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
 const FONT_SIZE = 8
@@ -31,7 +35,7 @@ const CHART_CONFIG_DEFAULT = {
     // responsiveAnimationDuration: 0,
     //
     animation: {
-      duration: 400, // チャートのY座標が反転する時間 (盤が回転する時間に合わせる)
+      duration: 0, // チャートのY座標が反転する時間 (盤が回転する時間に合わせる)
     },
 
     title: {
@@ -89,7 +93,7 @@ const CHART_CONFIG_DEFAULT = {
         ticks: {
           fontSize: FONT_SIZE,
           fontColor: TICKS_FONT_COLOR,
-          reverse: false,       // 反転する？ (this.viewpoint を 外から設定して判定する)
+          reverse: false,       // 反転する？ (this.TheShow.viewpoint を 外から設定して判定する)
 
           stepSize: 30,         // N秒毎の表示
           maxTicksLimit: 7,     // 縦の最大目盛り数
@@ -241,8 +245,8 @@ const CHART_CONFIG_DEFAULT = {
             s = `(${xy_info.x}, ${xy_info.y}) ${s}`
           }
 
-          if (__vm__.record) {
-            if (xy_info.x > __vm__.record.turn_max) {
+          if (__vm__.TheShow.record) {
+            if (xy_info.x > __vm__.TheShow.record.turn_max) {
               return `${s} (時間切れ)`
             }
           }
@@ -376,72 +380,41 @@ export default {
     SwarsBattleShowTimeChartVerticalLine, // 縦線表示機能(コメントアウトでOFF)
     chart_mixin,
   ],
-
-  props: {
-    record:            { required: true, }, // バトル情報
-    viewpoint:      { required: true, }, // 視点
-    time_chart_params: { required: true, }, // 表示する内容
-  },
-
-  data() {
-    return {
-      zoom_p: false,       // 拡大する？
-    }
-  },
-
+  inject: ["TheShow"],
   created() {
-    this.chart_setup(CHART_CONFIG_DEFAULT)
-    this._chart_config.data = this.time_chart_params
-    // this._chart_config.my_custom_background_color = "rgba(0, 0, 0, 0.75)"
-    // this._chart_config.my_custom_background_color = "rgba(#C6E1B8, 0.1)"
-
-    this.chart_flip_set()
-
-    // N手目はdatasets配列のどの要素を見るかすぐにわかるテーブルを作成する
-    // if (this.index_info_hash) {
-    //   this._chart_config.index_info_hash = this.index_info_hash(time_chart_params)
-    // }
-
-    if (this.vline_setup) {
-      this.vline_setup()
-    }
-
+    this.chart_setup_all()
   },
-
   mounted() {
     this.chart_create()
   },
-
   watch: {
-    zoom_p(v) {
-      this.$sound.play_click()
-      if (v) {
-        // 拡大
-        const ticks = this._chart_config.options.scales.yAxes[0].ticks
-        const seconds = 5       // 範囲秒数
-        ticks.min = -seconds
-        ticks.max = +seconds
-        ticks.maxTicksLimit = 12
-        ticks.stepSize = 1
-      } else {
-        // 元に戻す
-        this._chart_config.options.scales.yAxes[0] = Object.assign({}, CHART_CONFIG_DEFAULT.options.scales.yAxes[0])
+    "TheShow.viewpoint": {
+      handler(v, ov) {
+        this.debug_alert(`TheShow.viewpoint: ${ov} -> ${v}`)
         this.chart_flip_set()
-      }
-      this.chart_update()
-    },
-
-    viewpoint(v, ov) {
-      this.debug_alert(`viewpoint: ${ov} -> ${v}`)
-      this.chart_flip_set()
-      this.chart_update()
+        this.chart_update()
+      },
     },
   },
-
-  computed: {
-  },
-
   methods: {
+    chart_setup_all() {
+      this.chart_setup(CHART_CONFIG_DEFAULT)
+      this._chart_config.data = this.TheShow.current_source
+      // this._chart_config.my_custom_background_color = "rgba(0, 0, 0, 0.75)"
+      // this._chart_config.my_custom_background_color = "rgba(#C6E1B8, 0.1)"
+
+      this.chart_flip_set()
+
+      // N手目はdatasets配列のどの要素を見るかすぐにわかるテーブルを作成する
+      // if (this.index_info_hash) {
+      //   this._chart_config.index_info_hash = this.index_info_hash(TheShow.time_chart_params)
+      // }
+
+      if (this.vline_setup) {
+        this.vline_setup()
+      }
+    },
+
     // chart.js の方でイベントフックがあってそっちを使っているので、こっちは使うのをやめた
     //
     // 1. マウスに対応する、Y軸を無視した点の配列ががあればその中央の値の手数を使う
@@ -558,8 +531,8 @@ export default {
     api_board_turn_set(turn) {
       this.$sound.play_click()
 
-      if (turn > this.record.turn_max) {
-        this.$emit("update:turn", this.record.turn_max)
+      if (turn > this.TheShow.record.turn_max) {
+        this.$emit("update:turn", this.TheShow.record.turn_max)
         // this.simple_notify("時間切れ")
         return
       }
@@ -570,7 +543,7 @@ export default {
 
     // flip 状態をチャートに反映
     chart_flip_set() {
-      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.viewpoint === "white")
+      this._chart_config.options.scales.yAxes[0].ticks.reverse = (this.TheShow.viewpoint === "white")
     },
 
     // 61 -> 1分1秒
@@ -591,6 +564,32 @@ export default {
       }
       return s
     },
+
+    // 拡縮を変更したときに呼ぶ
+    zoom_key_change_handle() {
+      this.$sound.play_click()
+      if (this.TheShow.time_chart_zoom_info.key === "zoom_plus") {
+        // 拡大
+        const ticks = this._chart_config.options.scales.yAxes[0].ticks
+        const seconds = 5       // 範囲秒数
+        ticks.min = -seconds
+        ticks.max = +seconds
+        ticks.maxTicksLimit = 12
+        ticks.stepSize = 1
+      } else {
+        // 元に戻す
+        this._chart_config.options.scales.yAxes[0] = Object.assign({}, CHART_CONFIG_DEFAULT.options.scales.yAxes[0])
+        this.chart_flip_set()
+      }
+      this.chart_update()
+    },
+
+    // チャートの種類を変更したときに呼ぶ
+    time_chart_variant_key_change_handle() {
+      this.TheShow.time_chart_zoom_key = "zoom_minus"
+      this.chart_setup_all()
+      this.chart_create()
+    },
   },
 }
 </script>
@@ -605,8 +604,8 @@ export default {
     .canvas_wrap
       width: 100%
       max-width: 640px
-  .zoom_button
-    //- padding: 2rem
+  label.radio
+    width: 4rem
 
 .STAGE-development
   .SwarsBattleShowTimeChart

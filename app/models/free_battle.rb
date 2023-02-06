@@ -258,14 +258,14 @@ class FreeBattle < ApplicationRecord
       @preset_info ||= fast_parsed_info.formatter.preset_info
     end
 
-    def time_chart_datasets
-      LocationInfo.collect do |location_info|
-        {
-          label: location_info.name,
-          data: time_chart_xy_list(location_info),
-        }
-      end
-    end
+    # def time_chart_datasets(accretion)
+    #   LocationInfo.collect do |location_info|
+    #     {
+    #       label: location_info.name,
+    #       data: time_chart_xy_list(location_info, accretion),
+    #     }
+    #   end
+    # end
   end
 
   concerning :HelperMethods do
