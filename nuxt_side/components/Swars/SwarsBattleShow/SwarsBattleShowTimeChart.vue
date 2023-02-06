@@ -607,7 +607,7 @@ export default {
       max-width: 640px
   .time_chart_variant
     label.radio
-      width: 6rem
+      width: 5rem
   .time_chart_zoom
     label.radio
       width: 3rem
