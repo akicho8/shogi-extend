@@ -55,7 +55,7 @@ export default {
       hv.sp_player_info                              = this.base.sp_player_info
       hv.sp_human_side                               = this.base.sp_human_side
       hv.sp_debug_mode                               = "is_debug_mode_off"
-      hv.sp_summary                                  = "is_summary_off"
+      hv.sp_turn_show                                  = "is_turn_show_off"
       hv.sp_play_mode_legal_move_only                = this.base.legal_strict_p
       hv.sp_play_mode_only_own_piece_to_move         = this.base.legal_strict_p
       hv.sp_play_mode_can_not_kill_same_team_soldier = this.base.legal_strict_p

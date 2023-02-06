@@ -19,7 +19,7 @@ client-only
             :sp_body="record.sfen_body"
             :sp_key_event_capture_enabled="true"
             sp_slider="is_slider_on"
-            sp_summary="is_summary_off"
+            sp_turn_show="is_turn_show_off"
             sp_controller="is_controller_on"
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"

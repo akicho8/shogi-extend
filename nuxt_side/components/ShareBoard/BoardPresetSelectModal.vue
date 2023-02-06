@@ -13,7 +13,7 @@
         option(v-for="e in base.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
-        sp_summary="is_summary_off"
+        sp_turn_show="is_turn_show_off"
         sp_run_mode="view_mode"
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_layout="is_horizontal"

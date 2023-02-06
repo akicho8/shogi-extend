@@ -9,7 +9,7 @@
       :sp_body="article.init_sfen"
       :sp_viewpoint="article.viewpoint"
       :sp_turn="0"
-      sp_summary="is_summary_off"
+      sp_turn_show="is_turn_show_off"
       :sp_operation_disabled="true"
       )
 </template>

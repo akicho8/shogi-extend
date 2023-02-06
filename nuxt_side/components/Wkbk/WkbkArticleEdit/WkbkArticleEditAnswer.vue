@@ -12,7 +12,7 @@ MainSection.WkbkArticleEditAnswer
             sp_run_mode="play_mode"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
-            sp_summary="is_summary_off"
+            sp_turn_show="is_turn_show_off"
             @update:turn_offset="base.turn_offset_set"
             @update:play_mode_advanced_full_moves_sfen="base.answer_base_play_mode_advanced_full_moves_sfen_set"
             ref="main_sp"
@@ -38,7 +38,7 @@ MainSection.WkbkArticleEditAnswer
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="-1"
-                  sp_summary="is_summary_off"
+                  sp_turn_show="is_turn_show_off"
                   sp_slider="is_slider_on"
                   sp_controller="is_controller_on"
                   )

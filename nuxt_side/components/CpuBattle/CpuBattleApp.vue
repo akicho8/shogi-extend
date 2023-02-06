@@ -37,7 +37,7 @@
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
               :sp_run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
               :sp_viewpoint.sync="viewpoint"
-              sp_summary="is_summary_off"
+              sp_turn_show="is_turn_show_off"
               @update:play_mode_advanced_full_moves_sfen="play_mode_advanced_full_moves_sfen_set"
               v-bind="free_move_attrs"
               ref="main_sp"

@@ -13,7 +13,7 @@ MainSection.WkbkArticleShowAnswer
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="0"
-                  sp_summary="is_summary_off"
+                  sp_turn_show="is_turn_show_off"
                   sp_slider="is_slider_on"
                   sp_controller="is_controller_on"
                   )
