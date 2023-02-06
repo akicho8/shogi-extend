@@ -17,9 +17,9 @@
         sp_run_mode="view_mode"
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_layout="is_horizontal"
-        sp_pi_variant="is_pi_variant_b"
+        sp_piece_variant="is_piece_variant_b"
         :sp_hidden_if_piece_stand_blank="false"
-        :sp_op_disabled="true"
+        :sp_operation_disabled="true"
         :sp_turn="0"
         :sp_body="base.board_preset_info.sfen"
       )

@@ -39,7 +39,7 @@
                 sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_summary="is_summary_off"
-                sp_pi_variant="is_pi_variant_b"
+                sp_piece_variant="is_piece_variant_b"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_viewpoint="rule_info.viewpoint"
                 :sp_board_piece_back_user_class="sp_board_piece_back_user_class"

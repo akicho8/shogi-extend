@@ -9,7 +9,7 @@
         :sp_turn="base.scene_info.sp_turn_of(e)"
         :sp_body="e.sfen_body"
         :sp_summary="'is_summary_off'"
-        :sp_op_disabled="true"
+        :sp_operation_disabled="true"
         :sp_viewpoint="e.memberships[0].location_key"
       )
 </template>

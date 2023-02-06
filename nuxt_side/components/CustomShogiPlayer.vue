@@ -80,7 +80,7 @@ export default {
     //     margin-top: 14px ! important
 
   // リアル駒は元々gapを考慮して小さめに作られているため100%にしないとかなり小さく見えてしまう
-  .is_pi_variant_d
+  .is_piece_variant_d
     --sp_board_piece_size: 1.0
 
 // bulma の .table のなかにあると td の padding が影響してしまう
