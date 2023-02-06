@@ -16,7 +16,6 @@ MainSection.WkbkBookShowSp
             :sp_viewpoint="base.current_viewpoint"
             :sp_turn="0"
             sp_run_mode="play_mode"
-            sp_turn_show="is_turn_show_off"
             sp_slider="is_slider_off"
             sp_controller="is_controller_on"
             @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
@@ -49,7 +48,6 @@ MainSection.WkbkBookShowSp
                   :sp_body="base.sfen_flop(base.current_article.init_sfen_with(e))"
                   :sp_turn="0"
                   :sp_viewpoint="base.current_viewpoint"
-                  sp_turn_show="is_turn_show_off"
                   sp_slider="is_slider_off"
                   sp_controller="is_controller_on"
                   )

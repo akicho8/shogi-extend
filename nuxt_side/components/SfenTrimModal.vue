@@ -18,7 +18,6 @@
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="viewpoint"
       :sp_board_cell_left_click_user_handle="() => true"
-      sp_turn_show="is_turn_show_off"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
       @update:short_sfen="v => short_sfen = v"

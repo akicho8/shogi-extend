@@ -6,7 +6,6 @@
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
-        sp_turn_show="is_turn_show_off"
         sp_run_mode="view_mode"
         sp_mobile_vertical="is_mobile_vertical_off"
         sp_layout="is_horizontal"

@@ -8,7 +8,6 @@
         :sp_run_mode="'view_mode'"
         :sp_turn="base.scene_info.sp_turn_of(e)"
         :sp_body="e.sfen_body"
-        :sp_turn_show="'is_turn_show_off'"
         :sp_operation_disabled="true"
         :sp_viewpoint="e.memberships[0].location_key"
       )

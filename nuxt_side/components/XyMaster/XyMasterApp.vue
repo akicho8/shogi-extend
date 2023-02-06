@@ -38,7 +38,6 @@
                 sp_run_mode="play_mode"
                 sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
-                sp_turn_show="is_turn_show_off"
                 sp_piece_variant="is_piece_variant_b"
                 :sp_hidden_if_piece_stand_blank="true"
                 :sp_viewpoint="rule_info.viewpoint"

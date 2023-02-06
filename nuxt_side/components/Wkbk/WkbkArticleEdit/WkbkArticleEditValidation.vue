@@ -12,7 +12,6 @@ MainSection.WkbkArticleEditValidation
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            sp_turn_show="is_turn_show_off"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
             @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
