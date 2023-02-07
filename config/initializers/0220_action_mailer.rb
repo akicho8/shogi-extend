@@ -20,8 +20,8 @@ if Rails.env.production? || Rails.env.staging? || Rails.env.development?
       domain: "smtp.gmail.com",
       port: 587,
       authentication: "plain",
-      user_name: "pinpon.ikeda",
-      password: Rails.application.credentials[:gmail_smtp_password],
+      user_name: Rails.application.credentials[:gmail_smtp_user_name],
+      password:  Rails.application.credentials[:gmail_smtp_password],
     }
   end
 end
