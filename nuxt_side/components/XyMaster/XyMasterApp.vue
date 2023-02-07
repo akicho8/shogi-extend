@@ -557,13 +557,13 @@ export default {
       --sp_board_padding: 0                                                         // 盤の隙間なし
       --sp_board_color: hsla(0, 0%, 0%, 0)                                          // 盤の色
       --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                       // 外枠の太さ
-      --sp_grid_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
+      --sp_grid_inner_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
       --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%)) // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
+      --sp_grid_inner_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
       --sp_board_aspect_ratio: 1.0                                                  // 盤を正方形化
-      --sp_grid_star_size: calc(var(--xy_grid_star_size) / 100.0)                   // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
-      --sp_grid_star_z_index: -1                                                    // 星を盤の裏に表示
+      --sp_star_size: calc(var(--xy_grid_star_size) / 100.0)                   // 星の大きさ
+      --sp_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
+      --sp_star_z_index: -1                                                    // 星を盤の裏に表示
 
   &.is_input_mode_tap
     --sp_board_piece_size: 0.766                // セル内の駒の大きさ
