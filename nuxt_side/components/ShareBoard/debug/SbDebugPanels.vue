@@ -76,7 +76,7 @@
     .panel
       .panel-heading
         | 反則指摘
-      a.panel-block(@click="TheSb.foul_accident_handle({name: '二歩'})") 自分
+      a.panel-block(@click="TheSb.ev_error_foul_accident({name: '二歩'})") 自分
       a.panel-block(@click="TheSb.foul_modal_handle(['駒ワープ', '王手放置'])") 全体
 
   .column.is-2

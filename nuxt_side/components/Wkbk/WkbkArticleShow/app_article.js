@@ -9,12 +9,12 @@ export const app_article = {
 
   methods: {
     current_moves() {
-      return this.$refs.WkbkArticleShowAnswer.$refs.main_sp.sp_object().moves_take_turn_offset
+      return this.$refs.WkbkArticleShowAnswer.$refs.main_sp.sp_object().api_moves_take_turn_offset
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    play_mode_advanced_moves_set(moves) {
+    ev_play_mode_next_moves(moves) {
       // if (this.article.moves_answers.length === 0) {
       //   if (this.exam_run_count === 0) {
       //     this.toast_warn("先に正解を作ってください")
@@ -28,7 +28,7 @@ export const app_article = {
       // this.exam_run_count += 1
     },
 
-    // turn_offset_set(v) {
+    // ev_turn_offset_change(v) {
     //   // this.answer_turn_offset = v
     // },
   },

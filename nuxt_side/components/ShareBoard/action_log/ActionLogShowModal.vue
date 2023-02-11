@@ -15,7 +15,7 @@
         :sp_viewpoint.sync="viewpoint"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
-        @update:turn_offset="v => new_turn = v"
+        @ev_turn_offset_change="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
       PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="base.other_app_click_handle('ぴよ将棋')")

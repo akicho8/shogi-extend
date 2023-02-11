@@ -32,13 +32,6 @@ export const app_kifu_copy_buttons = {
       this.general_kifu_copy(this.article.init_sfen_with(moves_answer), {to_format: "kif"})
     },
 
-    // ////////////////////////////////////////////////////////////////////////////////
-    //
-    // // 解答元の指し手の長いSFENを同期取得
-    // answer_base_play_mode_advanced_full_moves_sfen_set(sfen) {
-    //   this.answer_base_sfen = sfen
-    // },
-    //
     // // 解答元の指し手のコピー処理
     // answer_base_kifu_copy_handle() {
     //   this.$sound.play_click()

@@ -93,7 +93,7 @@ export const app_sfen_share = {
 
         // 受信したSFENを盤に反映
         this.receive_xsfen(params)
-        this.se_user_piece_put() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
+        this.ev_play_mode_piece_put() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
       }
 
       // 時計も更新する

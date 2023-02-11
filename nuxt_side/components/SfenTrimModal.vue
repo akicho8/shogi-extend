@@ -20,8 +20,8 @@
       :sp_board_cell_left_click_user_handle="() => true"
       sp_slider="is_slider_on"
       sp_controller="is_controller_on"
-      @update:short_sfen="v => short_sfen = v"
-      @update:turn_offset="turn_offset_set"
+      @ev_short_sfen_change="v => short_sfen = v"
+      @ev_turn_offset_change="ev_turn_offset_change"
       )
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left")
@@ -67,7 +67,7 @@ export default {
     this.begin_setup()
   },
   methods: {
-    turn_offset_set(v) {
+    ev_turn_offset_change(v) {
       this.turn_offset = v
       this.sp_turn = v          // スライダーを動かしたときに右上の値も変化させるため
       if (this.mode === "begin") {

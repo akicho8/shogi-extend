@@ -14,7 +14,7 @@ MainSection.WkbkArticleEditValidation
             :sp_turn="0"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
-            @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
+            @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
 </template>
 

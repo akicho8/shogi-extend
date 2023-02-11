@@ -23,7 +23,7 @@ client-only
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
-            @update:short_sfen="v => short_sfen = v"
+            @ev_short_sfen_change="v => short_sfen = v"
             ref="main_sp"
           )
 

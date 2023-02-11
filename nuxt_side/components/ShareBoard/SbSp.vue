@@ -55,9 +55,9 @@ export default {
       hv.sp_player_info                              = this.base.sp_player_info
       hv.sp_human_side                               = this.base.sp_human_side
       hv.sp_debug_mode                               = "is_debug_mode_off"
-      hv.sp_play_mode_legal_move_only                = this.base.legal_strict_p
-      hv.sp_play_mode_only_own_piece_to_move         = this.base.legal_strict_p
-      hv.sp_play_mode_can_not_kill_same_team_soldier = this.base.legal_strict_p
+      hv.sp_legal_move_only                = this.base.legal_strict_p
+      hv.sp_my_piece_only_move         = this.base.legal_strict_p
+      hv.sp_same_group_kill_disabled = this.base.legal_strict_p
       hv.sp_move_cancel                              = this.base.sp_move_cancel_info.key
       hv.sp_layer                                    = this.sp_layer
       hv.sp_controller                               = this.sp_controller
@@ -69,11 +69,11 @@ export default {
       }
 
       // 反則時の挙動
-      hv.sp_play_mode_foul_check_p = this.base.foul_behavior_info.sp_play_mode_foul_check_p
-      hv.sp_play_mode_foul_break_p = this.base.foul_behavior_info.sp_play_mode_foul_break_p
+      hv.sp_foul_check = this.base.foul_behavior_info.sp_foul_check
+      hv.sp_foul_break = this.base.foul_behavior_info.sp_foul_break
 
       if (false) {
-        hv.sp_bg_variant                             = "is_bg_variant_a"
+        hv.sp_bg_variant = "is_bg_variant_a"
       }
 
       return hv
@@ -109,24 +109,24 @@ export default {
     // 動作を受け取るやつら
     sp_hook() {
       const hv = {}
-      hv["update:play_mode_advanced_full_moves_sfen"] = this.base.play_mode_advanced_full_moves_sfen_set
-      hv["update:edit_mode_short_sfen"]               = this.base.edit_mode_short_sfen_set
-      hv["update:short_sfen"]                         = this.base.short_sfen_set
-      hv["update:turn_offset"]                        = v => this.base.current_turn = v
-      hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
+      hv["ev_play_mode_next"]              = this.base.ev_play_mode_next
+      hv["ev_edit_mode_short_sfen_change"] = this.base.ev_edit_mode_short_sfen_change
+      hv["ev_short_sfen_change"]           = this.base.ev_short_sfen_change
+      hv["ev_turn_offset_change"]          = v => this.base.current_turn = v
+      hv["ev_turn_offset_max_change"]      = v => this.base.turn_offset_max = v
 
-      hv["user_piece_put"]      = this.base.se_user_piece_put      // 意図して指したとき
-      hv["user_viewpoint_flip"] = this.base.se_user_viewpoint_flip // 意図して☗☖をタップして反転させたとき
-      hv["user_turn_change"]    = this.base.user_turn_change       // スライダーを動かしたとき
-      hv["user_piece_lift"]     = this.base.se_user_piece_lift     // 意図して持ち上げた
-      hv["user_piece_cancel"]   = this.base.se_user_piece_cancel   // 意図してキャンセルした
+      hv["ev_play_mode_piece_put"]    = this.base.ev_play_mode_piece_put // 意図して指したとき
+      hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip         // 意図して☗☖をタップして反転させたとき
+      hv["ev_action_turn_change"]          = this.base.ev_action_turn_change               // スライダーを動かしたとき
+      hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift             // 意図して持ち上げた
+      hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel           // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["operation_invalid1"] = this.base.operation_invalid1_handle
-      hv["operation_invalid2"] = this.base.operation_invalid2_handle
+      hv["ev_error_click_but_self_is_not_turn"]    = this.base.ev_error_click_but_self_is_not_turn
+      hv["ev_error_my_turn_but_oside_click"]    = this.base.ev_error_my_turn_but_oside_click
 
       // 反則系
-      hv["foul_accident"] = this.base.foul_accident_handle
+      hv["ev_error_foul_accident"]         = this.base.ev_error_foul_accident
 
       return hv
     },
@@ -142,7 +142,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "shogi-player/components/stylesheets/helper.sass"
+@import "shogi-player/components/stylesheets/global_macro.sass"
 
 .SbSp
   +padding_lr(unset)

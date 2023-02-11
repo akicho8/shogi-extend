@@ -15,7 +15,7 @@
         :sp_viewpoint="base.viewpoint"
         :sp_body="sfen"
         :sp_turn="turn"
-        @update:turn_offset="v => new_turn = v"
+        @ev_turn_offset_change="v => new_turn = v"
       )
 
   .modal-card-foot

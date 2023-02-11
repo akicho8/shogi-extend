@@ -12,8 +12,8 @@ MainSection.WkbkArticleEditAnswer
             sp_run_mode="play_mode"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
-            @update:turn_offset="base.turn_offset_set"
-            @update:play_mode_advanced_full_moves_sfen="base.answer_base_play_mode_advanced_full_moves_sfen_set"
+            @ev_turn_offset_change="base.ev_turn_offset_change"
+            @ev_play_mode_next="base.ev_play_mode_next"
             ref="main_sp"
             )
 
