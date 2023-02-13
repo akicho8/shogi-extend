@@ -114,18 +114,18 @@ export default {
       hv["ev_turn_offset_change"]          = v => this.base.current_turn = v
       hv["ev_turn_offset_max_change"]      = v => this.base.turn_offset_max = v
 
-      hv["ev_play_mode_piece_put"]    = this.base.ev_play_mode_piece_put // 意図して指したとき
-      hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip         // 意図して☗☖をタップして反転させたとき
-      hv["ev_action_turn_change"]          = this.base.ev_action_turn_change               // スライダーを動かしたとき
-      hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift             // 意図して持ち上げた
-      hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel           // 意図してキャンセルした
+      hv["ev_play_mode_piece_put"]         = this.base.ev_play_mode_piece_put   // 意図して指したとき
+      hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip // 意図して☗☖をタップして反転させたとき
+      hv["ev_action_turn_change"]          = this.base.ev_action_turn_change    // スライダーを動かしたとき
+      hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift     // 意図して持ち上げた
+      hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["ev_error_click_but_self_is_not_turn"]    = this.base.ev_error_click_but_self_is_not_turn
+      hv["ev_error_click_but_self_is_not_turn"] = this.base.ev_error_click_but_self_is_not_turn
       hv["ev_error_my_turn_but_oside_click"]    = this.base.ev_error_my_turn_but_oside_click
 
       // 反則系
-      hv["ev_error_foul_accident"]         = this.base.ev_error_foul_accident
+      hv["ev_error_foul_accident"] = this.base.ev_error_foul_accident
 
       return hv
     },
@@ -173,7 +173,7 @@ export default {
 
   // 名前で横幅を取ってしまうと持駒がはみでるので3文字までにする
   .ShogiPlayerGround
-    +IS_VERTICAL
+    +IF_PORTRAIT
       .MembershipLocationPlayerInfoName
         +mobile
           max-width: 3em

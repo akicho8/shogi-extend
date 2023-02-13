@@ -5,7 +5,7 @@ MainSection.WkbkArticleEditPlacement
       .column
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_off"
+            :sp_mobile_portrait="false"
             sp_mode="edit"
             :sp_body="base.article.init_sfen"
             :sp_turn="0"

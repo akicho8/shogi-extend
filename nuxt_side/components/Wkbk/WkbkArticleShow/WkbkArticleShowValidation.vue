@@ -7,7 +7,7 @@ MainSection.WkbkArticleShowValidation
           .has-text-centered(v-if="base.article.direction_message")
             | {{base.article.direction_message}}
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_off"
+            :sp_mobile_portrait="false"
             sp_mode="play"
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"

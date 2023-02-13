@@ -7,7 +7,7 @@
     .sp_container
       CustomShogiPlayer(
         sp_mode="view"
-        sp_mobile_vertical="is_mobile_vertical_off"
+        :sp_mobile_portrait="false"
         sp_layout="is_horizontal"
         sp_slider="is_slider_on"
         sp_controller="is_controller_on"

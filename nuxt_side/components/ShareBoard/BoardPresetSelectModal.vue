@@ -14,10 +14,10 @@
     .sp_container.mt-4
       CustomShogiPlayer(
         sp_mode="view"
-        sp_mobile_vertical="is_mobile_vertical_off"
+        :sp_mobile_portrait="false"
         sp_layout="is_horizontal"
         sp_piece_variant="is_piece_variant_b"
-        :sp_hidden_if_piece_stand_blank="false"
+        :sp_piece_stand_blank_then_hidden="false"
         :sp_operation_disabled="true"
         :sp_turn="0"
         :sp_body="base.board_preset_info.sfen"

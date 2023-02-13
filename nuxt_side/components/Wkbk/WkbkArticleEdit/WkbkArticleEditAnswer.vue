@@ -8,7 +8,7 @@ MainSection.WkbkArticleEditAnswer
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            sp_mobile_vertical="is_mobile_vertical_off"
+            :sp_mobile_portrait="false"
             sp_mode="play"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
@@ -32,7 +32,7 @@ MainSection.WkbkArticleEditAnswer
             b-tab-item(:label="`${i + 1}`" :key="e.moves.join(' ')")
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
-                  sp_mobile_vertical="is_mobile_vertical_off"
+                  :sp_mobile_portrait="false"
                   sp_mode="view"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"

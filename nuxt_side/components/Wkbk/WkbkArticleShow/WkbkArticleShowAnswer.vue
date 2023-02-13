@@ -8,7 +8,7 @@ MainSection.WkbkArticleShowAnswer
             b-tab-item(:label="`${i + 1}`" :key="e.id")
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
-                  sp_mobile_vertical="is_mobile_vertical_off"
+                  :sp_mobile_portrait="false"
                   sp_mode="view"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"

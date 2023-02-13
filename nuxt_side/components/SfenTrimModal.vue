@@ -12,7 +12,7 @@
       b-numberinput(size="is-small" v-model="sp_turn" :min="0" :controls="false")
   .modal-card-body
     CustomShogiPlayer(
-      sp_mobile_vertical="is_mobile_vertical_off"
+      :sp_mobile_portrait="false"
       sp_mode="view"
       :sp_body="sp_body"
       :sp_turn="sp_turn"

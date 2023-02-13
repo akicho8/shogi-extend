@@ -20,7 +20,7 @@ export const app_sound_effect = {
       })
     },
     // スライダーを自分が動かしたときの音
-    ev_action_turn_change() {
+    ev_action_turn_change_se() {
       this.$sound.play_click()
     },
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
