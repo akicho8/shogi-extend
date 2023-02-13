@@ -35,7 +35,7 @@
               :sp_human_side="sp_human_side"
               :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
               :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
-              :sp_run_mode="mode === 'standby' ? 'view_mode' : 'play_mode'"
+              :sp_mode="mode === 'standby' ? 'view' : 'play'"
               :sp_viewpoint.sync="viewpoint"
               @ev_play_mode_next="ev_play_mode_next"
               v-bind="free_move_attrs"
@@ -220,13 +220,13 @@ export default {
 
     free_move_attrs() {
       return {
-        sp_legal_move_only:                false, // play_mode で合法手のみに絞る
-        sp_foul_check:            false, // play_mode で飛角香は駒を跨げない (角ワープ禁止)
-        sp_foul_check:              false, // play_mode で二歩できる
-        sp_piece_auto_promote:                   false, // play_mode で死に駒になるときは自動的に成る
-        sp_foul_check:      false, // play_mode で死に駒になるときは置けないようにする
-        sp_my_piece_only_move:         false, // play_mode では自分手番とき自分の駒しか動かせないようにする
-        sp_same_group_kill_disabled: false, // play_mode では自分の駒で同じ仲間の駒を取れないようにする
+        sp_legal_move_only:                false, // play で合法手のみに絞る
+        sp_foul_check:            false, // play で飛角香は駒を跨げない (角ワープ禁止)
+        sp_foul_check:              false, // play で二歩できる
+        sp_piece_auto_promote:                   false, // play で死に駒になるときは自動的に成る
+        sp_foul_check:      false, // play で死に駒になるときは置けないようにする
+        sp_my_piece_only_move:         false, // play では自分手番とき自分の駒しか動かせないようにする
+        sp_same_group_kill_disabled: false, // play では自分の駒で同じ仲間の駒を取れないようにする
       }
     },
   },
@@ -342,7 +342,7 @@ export default {
     view_mode_set() {
       this.mode = "standby"
 
-      // standby にすると shogi-player を view_mode に切り替える
+      // standby にすると shogi-player を view に切り替える
       // そのとき局面が0手目になってしまうので、最後の局面にする
       this.$nextTick(() => this.$refs.main_sp.sp_object().api_board_turn_set(10000))
       // this.$nextTick(() => this.$refs.main_sp.sp_object().current_turn_set(10000))

@@ -52,7 +52,7 @@ export const app_sp = {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     ev_edit_mode_short_sfen_change(v) {
-      this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
+      this.__assert__(this.sp_mode === "edit", 'this.sp_mode === "edit"')
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
       // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
@@ -149,8 +149,8 @@ export const app_sp = {
     turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
   },
   computed: {
-    play_mode_p() { return this.sp_run_mode === 'play_mode' },
-    edit_mode_p() { return this.sp_run_mode === 'edit_mode' },
+    play_mode_p() { return this.sp_mode === 'play' },
+    edit_mode_p() { return this.sp_mode === 'edit' },
     advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる

@@ -13,7 +13,7 @@
   .modal-card-body
     CustomShogiPlayer(
       sp_mobile_vertical="is_mobile_vertical_off"
-      sp_run_mode="view_mode"
+      sp_mode="view"
       :sp_body="sp_body"
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="viewpoint"

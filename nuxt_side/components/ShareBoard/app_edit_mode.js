@@ -21,7 +21,7 @@ export const app_edit_mode = {
         onConfirm: () => {
           this.$sound.play_click()
           this.shared_al_add({label: "局面編集前"})
-          this.sp_run_mode = "edit_mode"
+          this.sp_mode = "edit"
         },
       })
     },
@@ -35,14 +35,14 @@ export const app_edit_mode = {
         return
       }
       this.edit_mode_sfen = null // 編集モードで動かしたらこれに入る
-      this.sp_run_mode = "edit_mode"
+      this.sp_mode = "edit"
     },
 
     // 編集完了
     play_mode_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      // 編集モードの最後のSFENを play_mode の sfen に戻す
+      // 編集モードの最後のSFENを play の sfen に戻す
       if (this.edit_mode_sfen) {
         this.current_sfen = this.edit_mode_sfen
         this.edit_mode_sfen = null
@@ -50,7 +50,7 @@ export const app_edit_mode = {
         this.honpu_log_set()           // 読み込んだ棋譜を本譜とする
         this.honpu_share()             // それを他の人に共有する
       }
-      this.sp_run_mode = "play_mode"
+      this.sp_mode = "play"
       this.shared_al_add({label: "局面編集後"})
       if (this.ac_room) {
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))

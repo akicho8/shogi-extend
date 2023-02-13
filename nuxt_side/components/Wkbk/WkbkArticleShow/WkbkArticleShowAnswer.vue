@@ -9,7 +9,7 @@ MainSection.WkbkArticleShowAnswer
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
                   sp_mobile_vertical="is_mobile_vertical_off"
-                  sp_run_mode="view_mode"
+                  sp_mode="view"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="0"

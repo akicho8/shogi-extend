@@ -8,7 +8,7 @@ MainSection.WkbkArticleEditValidation
             | {{base.article.direction_message}}
           CustomShogiPlayer(
             sp_mobile_vertical="is_mobile_vertical_off"
-            sp_run_mode="play_mode"
+            sp_mode="play"
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"

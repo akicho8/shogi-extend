@@ -32,10 +32,10 @@
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
               //- 「持ちあげる処理」を無効にするために sp_board_cell_left_click_user_handle で true を返している
-              //- sp_run_mode="play_mode"
+              //- sp_mode="play"
               CustomShogiPlayer(
                 ref="main_sp"
-                sp_run_mode="play_mode"
+                sp_mode="play"
                 sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
                 sp_piece_variant="is_piece_variant_b"

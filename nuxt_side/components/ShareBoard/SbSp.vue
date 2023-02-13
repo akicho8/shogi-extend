@@ -40,28 +40,27 @@ export default {
     // .column に指定するクラス
     main_column_class() {
       const av = []
-      av.push(`is_sb_${this.base.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
+      av.push(`is_sb_mode_${this.base.sp_mode}`) // is_sb_mode_play, is_sb_mode_edit
       return av
     },
 
     // CustomShogiPlayer に全部渡す
     sp_bind() {
       const hv = {}
-      hv.ref                                         = "main_sp"
-      hv["class"]                                    = this.base.sp_class
-      hv.sp_run_mode                                 = this.base.sp_run_mode
-      hv.sp_turn                                     = this.base.current_turn
-      hv.sp_body                                     = this.base.current_sfen
-      hv.sp_player_info                              = this.base.sp_player_info
-      hv.sp_human_side                               = this.base.sp_human_side
-      hv.sp_debug_mode                               = "is_debug_mode_off"
-      hv.sp_legal_move_only                = this.base.legal_strict_p
-      hv.sp_my_piece_only_move         = this.base.legal_strict_p
+      hv.ref                         = "main_sp"
+      hv["class"]                    = this.base.sp_class
+      hv.sp_mode                 = this.base.sp_mode
+      hv.sp_turn                     = this.base.current_turn
+      hv.sp_body                     = this.base.current_sfen
+      hv.sp_player_info              = this.base.sp_player_info
+      hv.sp_human_side               = this.base.sp_human_side
+      hv.sp_legal_move_only          = this.base.legal_strict_p
+      hv.sp_my_piece_only_move       = this.base.legal_strict_p
       hv.sp_same_group_kill_disabled = this.base.legal_strict_p
-      hv.sp_move_cancel                              = this.base.sp_move_cancel_info.key
-      hv.sp_layer                                    = this.sp_layer
-      hv.sp_controller                               = this.sp_controller
-      hv.sp_slider                                   = this.sp_slider
+      hv.lift_cancel_action              = this.base.lift_cancel_action_info.key
+      hv.sp_layer                    = this.sp_layer
+      hv.sp_controller               = this.sp_controller
+      hv.sp_slider                   = this.sp_slider
 
       if (!this.base.edit_mode_p) {
         hv.sp_piece_variant = this.base.appearance_theme_info.sp_piece_variant
@@ -150,9 +149,9 @@ export default {
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
     +padding_tb(unset)
-    &.is_sb_play_mode
+    &.is_sb_mode_play
       max-width: calc(var(--board_width) * 1.0vmin)
-    &.is_sb_edit_mode
+    &.is_sb_mode_edit
       max-width: calc(var(--board_width) * 1.0vmin * 0.75)
 
   // 残り時間の色

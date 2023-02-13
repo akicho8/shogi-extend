@@ -85,10 +85,10 @@ export const app_sfen_share = {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
-        // もし edit_mode に入っている場合は強制的に解除する
+        // もし edit に入っている場合は強制的に解除する
         if (this.edit_mode_p) {
           this.tl_alert("指し手のBCにより編集を解除")
-          this.sp_run_mode = "play_mode"
+          this.sp_mode = "play"
         }
 
         // 受信したSFENを盤に反映

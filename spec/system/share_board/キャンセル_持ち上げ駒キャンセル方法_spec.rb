@@ -6,7 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
     hamburger_click
     menu_item_click("設定")               # モーダルを開く
-    find(selector).click
+    find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
 
     place_click("77")                     # 77を持って
@@ -14,12 +14,12 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "移動元をクリック" do
-    case1(".is_move_cancel_reality")
+    case1("元の位置")
     piece_move_x("27", "26", "☗2六歩")  # キャンセルされていないので別の手が指せない
   end
 
   it "他のセルをクリック" do
-    case1(".is_move_cancel_standard")         # 「他のセルをクリック」選択
+    case1("移動先以外")         # 「他のセルをクリック」選択
     piece_move_o("27", "26", "☗2六歩")    # キャンセルされたので別の手が指せる
   end
 end

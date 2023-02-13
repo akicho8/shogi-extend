@@ -9,7 +9,7 @@ MainSection.WkbkArticleEditAnswer
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
             sp_mobile_vertical="is_mobile_vertical_off"
-            sp_run_mode="play_mode"
+            sp_mode="play"
             sp_slider="is_slider_on"
             sp_controller="is_controller_on"
             @ev_turn_offset_change="base.ev_turn_offset_change"
@@ -33,7 +33,7 @@ MainSection.WkbkArticleEditAnswer
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
                   sp_mobile_vertical="is_mobile_vertical_off"
-                  sp_run_mode="view_mode"
+                  sp_mode="view"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="-1"

@@ -5,7 +5,7 @@
       CustomShogiPlayer(
         :sp_player_info="e.player_info"
         :sp_layout="'is_vertical'"
-        :sp_run_mode="'view_mode'"
+        :sp_mode="'view'"
         :sp_turn="base.scene_info.sp_turn_of(e)"
         :sp_body="e.sfen_body"
         :sp_operation_disabled="true"

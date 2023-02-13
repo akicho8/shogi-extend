@@ -5,7 +5,7 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "yomiage_mode_key",     },
-      { key: "sp_move_cancel_key",   },
+      { key: "lift_cancel_action",   },
       { key: "ctrl_mode_key",        },
       { key: "quick_sync_key",       },
       { key: "legal_key", },

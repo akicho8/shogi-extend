@@ -36,7 +36,7 @@ client-only
       //- p SFEN: {{current_sfen}}
       //- p タイトル: {{current_title}}
       //- p 視点: {{viewpoint}}
-      //- p モード: {{sp_run_mode}}
+      //- p モード: {{sp_mode}}
       //- p 視点: {{viewpoint}}
       //- p URL: {{current_url}}
       //- p サイドバー {{sidebar_p}}
@@ -261,7 +261,7 @@ export default {
     if (this.AppConfig.WATCH_AND_URL_REPLACE) {
       // どれかが変更されたらURLを更新
       this.$watch(() => [
-        this.sp_run_mode,
+        this.sp_mode,
         this.current_sfen,
         this.current_turn,
         this.current_title,

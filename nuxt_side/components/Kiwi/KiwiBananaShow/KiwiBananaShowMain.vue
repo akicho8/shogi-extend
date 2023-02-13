@@ -7,7 +7,7 @@
           ref="main_sp"
           :sp_body="base.banana.advanced_kif_info.body"
           :sp_turn="base.banana.advanced_kif_info.turn"
-          sp_run_mode="view_mode"
+          sp_mode="view"
           sp_controller="is_controller_on"
           sp_slider="is_slider_on"
         )

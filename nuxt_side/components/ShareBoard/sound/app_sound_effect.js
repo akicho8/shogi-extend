@@ -2,13 +2,13 @@ export const app_sound_effect = {
   methods: {
     // 意図して持ち上げた
     ev_action_piece_lift() {
-      if (this.sp_run_mode === "play_mode") {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },
     // 意図してキャンセルした
     ev_action_piece_cancel() {
-      if (this.sp_run_mode === "play_mode") {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },
@@ -30,7 +30,7 @@ export const app_sound_effect = {
     },
     // ☗☖をタップして反転したときの音
     ev_action_viewpoint_flip() {
-      if (this.sp_run_mode === "play_mode") {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },
