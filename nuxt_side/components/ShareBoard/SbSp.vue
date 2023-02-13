@@ -54,7 +54,7 @@ export default {
       hv.sp_body                                     = this.base.current_sfen
       hv.sp_player_info                              = this.base.sp_player_info
       hv.sp_human_side                               = this.base.sp_human_side
-      hv.sp_debug                               = this.base.debug_p
+      hv.sp_debug_mode                               = "is_debug_mode_off"
       hv.sp_legal_move_only                = this.base.legal_strict_p
       hv.sp_my_piece_only_move         = this.base.legal_strict_p
       hv.sp_same_group_kill_disabled = this.base.legal_strict_p
