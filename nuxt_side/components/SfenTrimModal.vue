@@ -12,14 +12,14 @@
       b-numberinput(size="is-small" v-model="sp_turn" :min="0" :controls="false")
   .modal-card-body
     CustomShogiPlayer(
-      :sp_mobile_portrait="false"
+      :sp_mobile_vertical="false"
       sp_mode="view"
       :sp_body="sp_body"
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="viewpoint"
       :sp_board_cell_left_click_user_handle="() => true"
-      sp_slider="is_slider_on"
-      sp_controller="is_controller_on"
+      :sp_slider="true"
+      :sp_controller="true"
       @ev_short_sfen_change="v => short_sfen = v"
       @ev_turn_offset_change="ev_turn_offset_change"
       )

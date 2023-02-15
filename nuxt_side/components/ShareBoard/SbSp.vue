@@ -90,18 +90,18 @@ export default {
     // 対局中にコントローラーは隠す
     sp_controller() {
       if (this.base.controller_disabled_p) {
-        return "is_controller_off"
+        return false
       } else {
-        return "is_controller_on"
+        return true
       }
     },
 
     // 対局中はスライダーも隠す
     sp_slider() {
       if (this.base.controller_disabled_p) {
-        return "is_slider_off"
+        return false
       } else {
-        return "is_slider_on"
+        return true
       }
     },
 
@@ -173,7 +173,7 @@ export default {
 
   // 名前で横幅を取ってしまうと持駒がはみでるので3文字までにする
   .ShogiPlayerGround
-    +IF_PORTRAIT
+    +IF_VERTICAL
       .MembershipLocationPlayerInfoName
         +mobile
           max-width: 3em

@@ -1,9 +1,5 @@
 <template lang="pug">
-ShogiPlayer.CustomShogiPlayer(
-  v-bind="component_params"
-  v-on="$listeners"
-  ref="sp_object"
-  )
+ShogiPlayer.CustomShogiPlayer(v-bind="component_params" v-on="$listeners" ref="sp_object")
 </template>
 
 <script>
@@ -33,7 +29,7 @@ export default {
     },
     default_params() {
       return {
-        sp_layout: "is_horizontal",
+        sp_layout: "horizontal",
         // sp_setting: this.development_p,
         // sp_play_effect_type: this.development_p ? "fw_type_3" : null,
         sp_play_effect_type: null,

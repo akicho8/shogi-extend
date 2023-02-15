@@ -33,8 +33,8 @@
             CustomShogiPlayer(
               :sp_body="sp_body"
               :sp_human_side="sp_human_side"
-              :sp_slider="mode === 'standby' ? 'is_slider_on' : 'is_slider_off'"
-              :sp_controller="mode === 'standby' ? 'is_controller_on' : 'is_controller_off'"
+              :sp_slider="mode === 'standby'"
+              :sp_controller="mode === 'standby'"
               :sp_mode="mode === 'standby' ? 'view' : 'play'"
               :sp_viewpoint.sync="viewpoint"
               @ev_play_mode_next="ev_play_mode_next"

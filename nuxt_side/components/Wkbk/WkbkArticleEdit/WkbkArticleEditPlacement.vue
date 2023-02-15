@@ -5,13 +5,13 @@ MainSection.WkbkArticleEditPlacement
       .column
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
-            :sp_mobile_portrait="false"
+            :sp_mobile_vertical="false"
             sp_mode="edit"
             :sp_body="base.article.init_sfen"
             :sp_turn="0"
             :sp_viewpoint.sync="base.article.viewpoint"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
+            :sp_slider="true"
+            :sp_controller="true"
             @ev_edit_mode_short_sfen_change="base.edit_mode_short_sfen"
             ref="main_sp"
             )

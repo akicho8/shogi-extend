@@ -4,7 +4,7 @@
     .has-text-centered(v-if="article.direction_message")
       | {{article.direction_message}}
     CustomShogiPlayer(
-      :sp_mobile_portrait="false"
+      :sp_mobile_vertical="false"
       sp_mode="view"
       :sp_body="article.init_sfen"
       :sp_viewpoint="article.viewpoint"

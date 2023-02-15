@@ -7,10 +7,10 @@
     .sp_container
       CustomShogiPlayer(
         sp_mode="view"
-        :sp_mobile_portrait="false"
-        sp_layout="is_horizontal"
-        sp_slider="is_slider_on"
-        sp_controller="is_controller_on"
+        :sp_mobile_vertical="false"
+        sp_layout="horizontal"
+        :sp_slider="true"
+        :sp_controller="true"
         :sp_view_mode_soldier_movable="false"
         :sp_viewpoint.sync="viewpoint"
         :sp_turn="action_log.turn"

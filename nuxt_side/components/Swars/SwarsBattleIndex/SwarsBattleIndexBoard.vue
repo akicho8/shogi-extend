@@ -3,9 +3,9 @@
   template(v-for="e in base.xi.records")
     .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="base.show_handle(e)")
       CustomShogiPlayer(
+        sp_mode="view"
+        sp_layout="vertical"
         :sp_player_info="e.player_info"
-        :sp_layout="'is_vertical'"
-        :sp_mode="'view'"
         :sp_turn="base.scene_info.sp_turn_of(e)"
         :sp_body="e.sfen_body"
         :sp_operation_disabled="true"

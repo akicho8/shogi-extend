@@ -12,14 +12,14 @@ client-only
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
             sp_layer="is_layer_off"
-            sp_layout="is_horizontal"
+            sp_layout="horizontal"
             sp_fullheight="is_fullheight_off"
             :sp_mode.sync="sp_mode"
             :sp_turn="sp_turn"
             :sp_body="record.sfen_body"
             :sp_key_event_capture_enabled="true"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
+            :sp_slider="true"
+            :sp_controller="true"
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"

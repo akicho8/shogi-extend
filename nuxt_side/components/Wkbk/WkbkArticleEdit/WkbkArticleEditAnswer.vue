@@ -8,10 +8,10 @@ MainSection.WkbkArticleEditAnswer
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            :sp_mobile_portrait="false"
+            :sp_mobile_vertical="false"
             sp_mode="play"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
+            :sp_slider="true"
+            :sp_controller="true"
             @ev_turn_offset_change="base.ev_turn_offset_change"
             @ev_play_mode_next="base.ev_play_mode_next"
             ref="main_sp"
@@ -32,13 +32,13 @@ MainSection.WkbkArticleEditAnswer
             b-tab-item(:label="`${i + 1}`" :key="e.moves.join(' ')")
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
-                  :sp_mobile_portrait="false"
+                  :sp_mobile_vertical="false"
                   sp_mode="view"
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="-1"
-                  sp_slider="is_slider_on"
-                  sp_controller="is_controller_on"
+                  :sp_slider="true"
+                  :sp_controller="true"
                   )
                 .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
                   PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")

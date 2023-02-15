@@ -7,13 +7,13 @@ MainSection.WkbkArticleEditValidation
           .has-text-centered(v-if="base.article.direction_message")
             | {{base.article.direction_message}}
           CustomShogiPlayer(
-            :sp_mobile_portrait="false"
+            :sp_mobile_vertical="false"
             sp_mode="play"
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
+            :sp_slider="true"
+            :sp_controller="true"
             @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
 </template>
