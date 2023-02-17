@@ -71,7 +71,7 @@ export default {
 
       // 反則時の挙動
       hv.sp_foul_validate = this.base.foul_behavior_info.sp_foul_validate
-      hv.sp_foul_break = this.base.foul_behavior_info.sp_foul_break
+      hv.sp_foul_safeguard = this.base.foul_behavior_info.sp_foul_safeguard
 
       if (false) {
         hv.sp_bg_variant = "a"
