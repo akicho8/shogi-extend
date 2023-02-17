@@ -49,7 +49,9 @@ export default {
       const hv = {}
       hv.ref                         = "main_sp"
       hv["class"]                    = this.base.sp_class
-      hv.sp_mode                 = this.base.sp_mode
+
+      // ここ以降 hv.sp_* = でないとおかしいので注意
+      hv.sp_mode                     = this.base.sp_mode
       hv.sp_turn                     = this.base.current_turn
       hv.sp_body                     = this.base.current_sfen
       hv.sp_player_info              = this.base.sp_player_info
@@ -57,7 +59,7 @@ export default {
       hv.sp_legal_move_only          = this.base.legal_strict_p
       hv.sp_my_piece_only_move       = this.base.legal_strict_p
       hv.sp_same_group_kill_disabled = this.base.legal_strict_p
-      hv.lift_cancel_action              = this.base.lift_cancel_action_info.key
+      hv.sp_lift_cancel_action       = this.base.lift_cancel_action_info.key
       hv.sp_layer                    = this.sp_layer
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
