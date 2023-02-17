@@ -74,7 +74,7 @@ export default {
       hv.sp_foul_break = this.base.foul_behavior_info.sp_foul_break
 
       if (false) {
-        hv.sp_bg_variant = "is_bg_variant_a"
+        hv.sp_bg_variant = "a"
       }
 
       return hv
@@ -82,11 +82,7 @@ export default {
 
     // 開発時だけレイヤーON
     sp_layer() {
-      if (this.development_p) {
-        return "is_layer_on"
-      } else {
-        return "is_layer_off"
-      }
+      return this.development_p
     },
 
     // 対局中にコントローラーは隠す

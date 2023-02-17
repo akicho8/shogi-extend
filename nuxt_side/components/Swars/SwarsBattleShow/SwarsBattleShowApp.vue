@@ -11,13 +11,11 @@ client-only
       .FirstView.is-unselectable
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
-            sp_layer="is_layer_off"
             sp_layout="horizontal"
-            sp_fullheight="is_fullheight_off"
             :sp_mode.sync="sp_mode"
             :sp_turn="sp_turn"
             :sp_body="record.sfen_body"
-            :sp_key_event_capture_enabled="true"
+            :sp_key_event_capture="true"
             :sp_slider="true"
             :sp_controller="true"
             :sp_viewpoint.sync="viewpoint"
