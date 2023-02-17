@@ -58,7 +58,7 @@ export default {
       hv.sp_human_side               = this.base.sp_human_side
       hv.sp_legal_move_only          = this.base.legal_strict_p
       hv.sp_my_piece_only_move       = this.base.legal_strict_p
-      hv.sp_same_group_kill_disabled = this.base.legal_strict_p
+      hv.sp_my_piece_kill_disabled = this.base.legal_strict_p
       hv.sp_lift_cancel_action       = this.base.lift_cancel_action_info.key
       hv.sp_layer                    = this.sp_layer
       hv.sp_controller               = this.sp_controller
@@ -71,7 +71,7 @@ export default {
 
       // 反則時の挙動
       hv.sp_foul_validate = this.base.foul_behavior_info.sp_foul_validate
-      hv.sp_foul_safeguard = this.base.foul_behavior_info.sp_foul_safeguard
+      hv.sp_foul_cancel = this.base.foul_behavior_info.sp_foul_cancel
 
       if (false) {
         hv.sp_bg_variant = "a"
@@ -119,11 +119,11 @@ export default {
       hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["ev_error_click_but_self_is_not_turn"] = this.base.ev_error_click_but_self_is_not_turn
-      hv["ev_error_my_turn_but_oside_click"]    = this.base.ev_error_my_turn_but_oside_click
+      hv["ev_foul_click_but_self_is_not_turn"] = this.base.ev_foul_click_but_self_is_not_turn
+      hv["ev_foul_my_turn_but_oside_click"]    = this.base.ev_foul_my_turn_but_oside_click
 
       // 反則系
-      hv["ev_error_foul_accident"] = this.base.ev_error_foul_accident
+      hv["ev_foul_foul_accident"] = this.base.ev_foul_foul_accident
 
       return hv
     },

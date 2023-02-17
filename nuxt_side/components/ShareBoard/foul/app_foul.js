@@ -15,7 +15,7 @@ export const app_foul = {
   methods: {
     // 初心者モードの反則チェックありだけど反則できないときに反則したときの処理
     // ここは何もしなければ将棋ウォーズのようになる
-    ev_error_foul_accident(attrs) {
+    ev_foul_foul_accident(attrs) {
       this.$sound.play("x")               // 自分だけに軽く知らせる
       this.latest_foul_name = attrs.name // デバッグ用
       this.toast_ng(attrs.name)          // "二歩"

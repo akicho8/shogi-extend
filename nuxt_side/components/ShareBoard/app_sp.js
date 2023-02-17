@@ -87,7 +87,7 @@ export const app_sp = {
     // },
 
     // 手番が違うのに操作しようとした
-    ev_error_click_but_self_is_not_turn() {
+    ev_foul_click_but_self_is_not_turn() {
       this.debug_alert("手番が違うのに操作しようとした")
       if (this.order_enable_p) {
         this.$sound.play("x")
@@ -116,7 +116,7 @@ export const app_sp = {
     },
 
     // 自分が手番だが相手の駒を動かそうとした
-    ev_error_my_turn_but_oside_click() {
+    ev_foul_my_turn_but_oside_click() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.$sound.play("x")
       if (this.development_p) {

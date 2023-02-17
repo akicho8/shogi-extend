@@ -11,7 +11,7 @@
         sp_layout="horizontal"
         sp_slider
         sp_controller
-        :sp_view_mode_soldier_movable="false"
+        :sp_view_mode_piece_movable="false"
         :sp_viewpoint.sync="viewpoint"
         :sp_turn="action_log.turn"
         :sp_body="action_log.sfen"
