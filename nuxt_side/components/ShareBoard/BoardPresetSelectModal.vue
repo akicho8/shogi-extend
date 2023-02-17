@@ -18,7 +18,7 @@
         sp_layout="horizontal"
         sp_piece_variant="b"
         :sp_piece_stand_blank_then_hidden="false"
-        :sp_operation_disabled="true"
+        sp_operation_disabled
         :sp_turn="0"
         :sp_body="base.board_preset_info.sfen"
       )

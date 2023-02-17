@@ -8,7 +8,7 @@
         :sp_player_info="e.player_info"
         :sp_turn="base.scene_info.sp_turn_of(e)"
         :sp_body="e.sfen_body"
-        :sp_operation_disabled="true"
+        sp_operation_disabled
         :sp_viewpoint="e.memberships[0].location_key"
       )
 </template>

@@ -13,8 +13,8 @@ MainSection.WkbkArticleShowAnswer
                   :sp_body="base.article.init_sfen_with(e)"
                   :sp_viewpoint="base.article.viewpoint"
                   :sp_turn="0"
-                  :sp_slider="true"
-                  :sp_controller="true"
+                  sp_slider
+                  sp_controller
                   )
                 .is-flex.is-justify-content-center.mt-4
                   | {{e.moves_human_str}}

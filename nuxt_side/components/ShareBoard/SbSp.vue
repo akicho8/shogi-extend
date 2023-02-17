@@ -70,7 +70,7 @@ export default {
       }
 
       // 反則時の挙動
-      hv.sp_foul_check = this.base.foul_behavior_info.sp_foul_check
+      hv.sp_foul_validate = this.base.foul_behavior_info.sp_foul_validate
       hv.sp_foul_break = this.base.foul_behavior_info.sp_foul_break
 
       if (false) {

@@ -12,8 +12,8 @@ MainSection.WkbkArticleShowValidation
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            :sp_slider="true"
-            :sp_controller="true"
+            sp_slider
+            sp_controller
             @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
 </template>

@@ -15,9 +15,9 @@ client-only
             :sp_mode.sync="sp_mode"
             :sp_turn="sp_turn"
             :sp_body="record.sfen_body"
-            :sp_key_event_capture="true"
-            :sp_slider="true"
-            :sp_controller="true"
+            sp_key_event_capture
+            sp_slider
+            sp_controller
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"

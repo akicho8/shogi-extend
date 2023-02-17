@@ -9,7 +9,7 @@
       :sp_body="article.init_sfen"
       :sp_viewpoint="article.viewpoint"
       :sp_turn="0"
-      :sp_operation_disabled="true"
+      sp_operation_disabled
       )
 </template>
 

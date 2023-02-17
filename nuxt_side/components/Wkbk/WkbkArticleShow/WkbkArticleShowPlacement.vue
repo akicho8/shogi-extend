@@ -10,8 +10,8 @@ MainSection.WkbkArticleShowPlacement
             :sp_body="base.article.init_sfen"
             :sp_turn="0"
             :sp_viewpoint.sync="base.viewpoint"
-            :sp_slider="true"
-            :sp_controller="true"
+            sp_slider
+            sp_controller
             @ev_edit_mode_short_sfen_change="base.edit_mode_short_sfen"
             ref="main_sp"
             )

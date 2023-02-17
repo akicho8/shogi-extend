@@ -15,7 +15,7 @@ MainSection.WkbkBookShowSp
             :sp_viewpoint="base.current_viewpoint"
             :sp_turn="0"
             sp_mode="play"
-            :sp_controller="true"
+            sp_controller
             @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
           //- .buttons.is-centered.answer_create_handle
@@ -46,7 +46,7 @@ MainSection.WkbkBookShowSp
                   :sp_body="base.sfen_flop(base.current_article.init_sfen_with(e))"
                   :sp_turn="0"
                   :sp_viewpoint="base.current_viewpoint"
-                  :sp_controller="true"
+                  sp_controller
                   )
                 .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
                   PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")

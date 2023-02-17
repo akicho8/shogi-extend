@@ -8,8 +8,8 @@
           :sp_body="base.banana.advanced_kif_info.body"
           :sp_turn="base.banana.advanced_kif_info.turn"
           sp_mode="view"
-          :sp_controller="true"
-          :sp_slider="true"
+          sp_controller
+          sp_slider
         )
     .block(v-show="base.show_mode === 'is_video'")
       template(v-if="content_type")

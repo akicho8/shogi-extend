@@ -9,8 +9,8 @@
         sp_mode="view"
         :sp_mobile_vertical="false"
         sp_layout="horizontal"
-        :sp_slider="true"
-        :sp_controller="true"
+        sp_slider
+        sp_controller
         :sp_view_mode_soldier_movable="false"
         :sp_viewpoint="base.viewpoint"
         :sp_body="sfen"

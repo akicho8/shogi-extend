@@ -18,8 +18,8 @@
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="viewpoint"
       :sp_board_cell_left_click_user_handle="() => true"
-      :sp_slider="true"
-      :sp_controller="true"
+      sp_slider
+      sp_controller
       @ev_short_sfen_change="v => short_sfen = v"
       @ev_turn_offset_change="ev_turn_offset_change"
       )
