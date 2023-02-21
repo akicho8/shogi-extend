@@ -23,7 +23,7 @@ module SharedMethods
   end
 
   # 4 * 3 + 1 手目
-  def sennichite_trigger
+  def perpetual_trigger
     king_move_up_down
     king_move_up_down
     king_move_up_down

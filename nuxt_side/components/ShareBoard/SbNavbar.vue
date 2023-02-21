@@ -22,7 +22,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
       b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold
         b-tag.has-text-weight-bold(rounded)
           .has-text-primary
-            | {{TheSb.sennichite_cop.count}}
+            | {{TheSb.perpetual_cop.count}}
 
       b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold(@click="TheSb.tl_modal_handle")
         b-tag.has-text-weight-bold(rounded)

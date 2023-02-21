@@ -2,7 +2,7 @@ import { Gs2 } from "@/components/models/gs2.js"
 import Vue from "vue"
 import _ from "lodash"
 
-export class SennichiteCop {
+export class PerpetualCop {
   static trigger_on_n_times = 4 // N回目の繰り返しで千日手となる
 
   static create(...args) {

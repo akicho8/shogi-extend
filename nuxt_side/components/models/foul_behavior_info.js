@@ -15,9 +15,9 @@ export class FoulBehaviorInfo extends ApplicationMemoryRecord {
       // | 上級者向け     |       |       | 反則かどうかは人が判断する                       |        |
       // |----------------+-------+-------+--------------------------------------------------+--------|
       // 千日手は shogi-player の中から判定するのが難しいためシンプルに is_foul_behavior_auto の場合のみ有効とする
-      { key: "is_foul_behavior_auto",   name: "したら負け", message: "自動的に指摘する(待ったで続行可能)", sp_foul_validate: true,  sp_foul_cancel: false, sennichite_check_p: true,  environment: ["development", "staging", "production"], },
-      { key: "is_foul_behavior_newbie", name: "できない",   message: "初心者向け(ウォーズ風)",             sp_foul_validate: true,  sp_foul_cancel: true,  sennichite_check_p: false, environment: ["development", "staging", "production"], },
-      { key: "is_foul_behavior_throw",  name: "関与しない", message: "リアル対面対局と同じ",               sp_foul_validate: false, sp_foul_cancel: false, sennichite_check_p: false, environment: ["development", "staging", "production"], },
+      { key: "is_foul_behavior_auto",   name: "したら負け", message: "自動的に指摘する(待ったで続行可能)", sp_foul_validate: true,  sp_foul_cancel: false, perpetual_check_p: true,  environment: ["development", "staging", "production"], },
+      { key: "is_foul_behavior_newbie", name: "できない",   message: "初心者向け(ウォーズ風)",             sp_foul_validate: true,  sp_foul_cancel: true,  perpetual_check_p: false, environment: ["development", "staging", "production"], },
+      { key: "is_foul_behavior_throw",  name: "関与しない", message: "リアル対面対局と同じ",               sp_foul_validate: false, sp_foul_cancel: false, perpetual_check_p: false, environment: ["development", "staging", "production"], },
     ]
   }
 }

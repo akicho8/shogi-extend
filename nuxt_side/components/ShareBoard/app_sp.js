@@ -69,7 +69,7 @@ export const app_sp = {
 
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
     ev_action_turn_change(v) {
-      this.sennichite_cop.reset()
+      this.perpetual_cop.reset()
       this.ev_action_turn_change_se()
       this.ev_action_turn_change_lazy(v)
     },

@@ -79,7 +79,7 @@ import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
-import { app_sennichite                  } from "./sennichite/app_sennichite.js"
+import { app_perpetual                  } from "./perpetual/app_perpetual.js"
 import { app_devise               } from "./app_devise.js"
 import { app_user_kick            } from "./app_user_kick.js"
 import { app_track_log            } from "./track_log/app_track_log.js"
@@ -169,7 +169,7 @@ export default {
     app_edit_mode,
     app_yomikomi,
     app_sp,
-    app_sennichite,
+    app_perpetual,
     app_devise,
     app_user_kick,
     app_track_log,
