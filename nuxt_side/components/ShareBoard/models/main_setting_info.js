@@ -10,7 +10,7 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
       { key: "quick_sync_key",       },
       { key: "legal_key", },
       { key: "foul_behavior_key",       },
-      // { key: "toryo_timing_key",       },
+      // { key: "resign_timing_key",       },
       { key: "debug_mode_key",       },
     ]
   }

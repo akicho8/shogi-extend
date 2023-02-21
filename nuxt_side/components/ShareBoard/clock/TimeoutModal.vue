@@ -8,7 +8,7 @@
         | 接続切れで
       | {{current_location.flip.name}}の勝ち！
   .modal-card-body
-    template(v-if="TheSb.toryo_timing_info.toryo_auto_run")
+    template(v-if="TheSb.resign_timing_info.resign_auto_run")
       p 終局です
     template(v-else)
       template(v-if="timeout_info.key === 'audo_judgement'")
