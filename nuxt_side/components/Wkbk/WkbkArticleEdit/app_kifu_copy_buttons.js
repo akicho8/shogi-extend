@@ -35,7 +35,7 @@ export const app_kifu_copy_buttons = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 解答元の指し手の長いSFENを同期取得
-    ev_play_mode_next(e) {
+    ev_play_mode_move(e) {
       this.answer_base_sfen = e.sfen
     },
 

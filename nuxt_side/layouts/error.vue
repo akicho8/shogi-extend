@@ -81,7 +81,7 @@ export default {
             return `正しく処理できません`
           } else if (this.error.statusCode === 413) {
             // nginx の client_max_body_size の値が 10m なのに関係している
-            return `ファイルが大きすぎるようです。動画作成の登録時にこれが出た場合は画像やBGMのサイズを合計で10MB以内にしてみてください`
+            return `ファイルサイズが大きすぎます。動画作成の場合は画像やBGMのサイズを合計で10MB以内にしてみてください`
           } else if (this.error.statusCode === 503) {
             return ""
           } else {

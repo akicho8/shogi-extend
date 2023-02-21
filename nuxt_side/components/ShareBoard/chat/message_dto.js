@@ -33,7 +33,7 @@ export class MessageDto {
   // 発言したときに toast にぶっこむ
   get toast_params() {
     return {
-      container: ".MainBoard",
+      container: ".ShogiPlayer .BoardBase",
       position: "is-top",
       message: this.toast_message,
       type: this.toast_type,

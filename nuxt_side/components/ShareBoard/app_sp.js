@@ -16,7 +16,9 @@ export const app_sp = {
 
     // 操作モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
-    ev_play_mode_next(e) {
+    ev_play_mode_move(e) {
+      this.se_piece_move()
+
       // sfen と turn を同時に更新すること
       // そうしないと computed が二度走ってしまう
       this.current_sfen = e.sfen

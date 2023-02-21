@@ -13,7 +13,7 @@ MainSection.WkbkArticleEditAnswer
             sp_slider
             sp_controller
             @ev_turn_offset_change="base.ev_turn_offset_change"
-            @ev_play_mode_next="base.ev_play_mode_next"
+            @ev_play_mode_move="base.ev_play_mode_move"
             ref="main_sp"
             )
 

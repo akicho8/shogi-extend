@@ -13,7 +13,7 @@ export const app_sound_effect = {
       }
     },
     // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
-    ev_play_mode_piece_put() {
+    se_piece_move() {
       this.$nextTick(() => {
         this.$sound.play("piece_put")
         this.$beat.call_short()

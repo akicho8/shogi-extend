@@ -37,7 +37,7 @@
               :sp_controller="mode === 'standby'"
               :sp_mode="mode === 'standby' ? 'view' : 'play'"
               :sp_viewpoint.sync="viewpoint"
-              @ev_play_mode_next="ev_play_mode_next"
+              @ev_play_mode_move="ev_play_mode_move"
               v-bind="free_move_attrs"
               ref="main_sp"
             )
@@ -320,7 +320,7 @@ export default {
     // 1手実行
     one_hand_exec() {
       const sfen = this.$refs.main_sp.sp_object().play_mode_full_moves_sfen
-      this.ev_play_mode_next({sfen})
+      this.ev_play_mode_move({sfen})
     },
 
     // 待った
@@ -364,7 +364,7 @@ export default {
       this.post_apply({candidate_sfen: this.sp_body})
     },
 
-    ev_play_mode_next(e) {
+    ev_play_mode_move(e) {
       if (this.mode === "standby") {
         return
       }
