@@ -18,7 +18,7 @@ export const app_perpetual = {
 
     // 条件に一致していたら発動する
     perpetual_modal_handle_if(cond) {
-      if (cond && this.foul_behavior_info.perpetual_check_p) {
+      if (cond && this.illegal_behavior_info.perpetual_check_p) {
         this.perpetual_modal_handle()
       }
     },

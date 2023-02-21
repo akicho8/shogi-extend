@@ -92,7 +92,7 @@ module ShareBoard
       user_names = []
       # user_names = data["order_unit"]["order_state"].collect { |e| e["user_name"] }.join(" → ")
       # user_names = data["order_unit"]["order_state"] # 動的にかわる
-      config = ["foul_behavior_key", "resign_timing_key"].collect { |e| data[e] }.join(" ")
+      config = ["illegal_behavior_key", "resign_timing_key"].collect { |e| data[e] }.join(" ")
       message = "オーダー配布 #{user_names} (#{config})"
       track(data, "順番設定", message, ":順番設定:")
       broadcast(:new_order_share_broadcasted, data)

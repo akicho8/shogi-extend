@@ -12,7 +12,7 @@
     .panel-block perpetual_cop.keys_count:{{TheSb.perpetual_cop.keys_count}}
     .panel-block perpetual_cop.count:{{TheSb.perpetual_cop.count}}
     .panel-block perpetual_cop.available_p:{{TheSb.perpetual_cop.available_p('x')}}
-    .panel-block perpetual_check_p:{{TheSb.foul_behavior_info.perpetual_check_p}}
+    .panel-block perpetual_check_p:{{TheSb.illegal_behavior_info.perpetual_check_p}}
 </template>
 
 <script>

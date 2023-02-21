@@ -101,7 +101,7 @@ import { app_color_theme          } from "./app_color_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
-import { app_foul                 } from "./foul/app_foul.js"
+import { app_illegal                 } from "./illegal/app_illegal.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_back_to              } from "./app_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
@@ -195,7 +195,7 @@ export default {
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
-    app_foul,
+    app_illegal,
     app_board_preset_select,
     app_back_to,
     app_give_up,

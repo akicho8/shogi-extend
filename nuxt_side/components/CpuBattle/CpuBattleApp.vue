@@ -221,10 +221,10 @@ export default {
     free_move_attrs() {
       return {
         sp_legal_move_only:          false, // play で合法手のみに絞る
-        sp_foul_validate:            false, // play で飛角香は駒を跨げない (角ワープ禁止)
-        sp_foul_validate:            false, // play で二歩できる
+        sp_illegal_validate:            false, // play で飛角香は駒を跨げない (角ワープ禁止)
+        sp_illegal_validate:            false, // play で二歩できる
         sp_piece_auto_promote:       false, // play で死に駒になるときは自動的に成る
-        sp_foul_validate:            false, // play で死に駒になるときは置けないようにする
+        sp_illegal_validate:            false, // play で死に駒になるときは置けないようにする
         sp_my_piece_only_move:     false, // play では自分手番とき自分の駒しか動かせないようにする
         sp_my_piece_kill_disabled: false, // play では自分の駒で同じ仲間の駒を取れないようにする
       }

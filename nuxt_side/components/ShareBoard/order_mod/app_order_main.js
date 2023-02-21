@@ -87,7 +87,7 @@ export const app_order_main = {
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
-      this.foul_behavior_key = params.foul_behavior_key
+      this.illegal_behavior_key = params.illegal_behavior_key
       this.resign_timing_key = params.resign_timing_key
       this.tegoto            = params.tegoto
 
@@ -119,7 +119,7 @@ export const app_order_main = {
       return {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
-        foul_behavior_key: this.foul_behavior_key,
+        illegal_behavior_key: this.illegal_behavior_key,
         resign_timing_key: this.resign_timing_key,
         tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる

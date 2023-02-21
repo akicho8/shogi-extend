@@ -9,7 +9,7 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
       { key: "ctrl_mode_key",        },
       { key: "quick_sync_key",       },
       { key: "legal_key", },
-      { key: "foul_behavior_key",       },
+      { key: "illegal_behavior_key",       },
       // { key: "resign_timing_key",       },
       { key: "debug_mode_key",       },
     ]

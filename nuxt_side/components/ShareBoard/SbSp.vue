@@ -70,8 +70,8 @@ export default {
       }
 
       // 反則時の挙動
-      hv.sp_foul_validate = this.base.foul_behavior_info.sp_foul_validate
-      hv.sp_foul_cancel = this.base.foul_behavior_info.sp_foul_cancel
+      hv.sp_illegal_validate = this.base.illegal_behavior_info.sp_illegal_validate
+      hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
 
       if (false) {
         hv.sp_bg_variant = "a"
@@ -118,11 +118,11 @@ export default {
       hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["ev_foul_click_but_self_is_not_turn"] = this.base.ev_foul_click_but_self_is_not_turn
-      hv["ev_foul_my_turn_but_oside_click"]    = this.base.ev_foul_my_turn_but_oside_click
+      hv["ev_illegal_click_but_self_is_not_turn"] = this.base.ev_illegal_click_but_self_is_not_turn
+      hv["ev_illegal_my_turn_but_oside_click"]    = this.base.ev_illegal_my_turn_but_oside_click
 
       // 反則系
-      hv["ev_foul_foul_accident"] = this.base.ev_foul_foul_accident
+      hv["ev_illegal_illegal_accident"] = this.base.ev_illegal_illegal_accident
 
       return hv
     },
