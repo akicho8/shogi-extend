@@ -24,7 +24,7 @@
     "buefy": "^0.9.22",
     "chart.js": "^2.9.4",
     "chartjs-plugin-datalabels": "1.0.0",
-    "fabric": "^4.2.0",
+    "fabric": "^5.3.0",
     "howler": "^2.2.3",
     "js-base64": "^3.7.2",
     "js-memory-record": "^0.0.24",
