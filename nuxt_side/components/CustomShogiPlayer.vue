@@ -30,9 +30,6 @@ export default {
     default_params() {
       return {
         sp_layout: "horizontal",
-        // sp_setting: this.development_p,
-        // sp_play_effect_type: this.development_p ? "fw_type_3" : null,
-        sp_play_effect_type: null,
       }
     },
   },
