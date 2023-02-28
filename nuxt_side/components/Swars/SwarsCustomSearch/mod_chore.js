@@ -1,7 +1,7 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 
-export const app_chore = {
+export const mod_chore = {
   methods: {
     // 戻る
     back_click_handle() {

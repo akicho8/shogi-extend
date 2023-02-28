@@ -1,4 +1,4 @@
-export const app_search = {
+export const mod_search = {
   data() {
     return {
     }

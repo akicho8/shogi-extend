@@ -2,7 +2,7 @@ import { params_controller } from "@/components/params_controller.js"
 import { ParamInfo } from "./models/param_info.js"
 import dayjs from "dayjs"
 
-export const app_storage = {
+export const mod_storage = {
   mixins: [params_controller],
   data() {
     return {
