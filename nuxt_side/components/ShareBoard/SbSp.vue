@@ -66,7 +66,7 @@ export default {
 
       if (!this.base.edit_mode_p) {
         hv.sp_piece_variant = this.base.appearance_theme_info.sp_piece_variant
-        hv.sp_bg_variant = this.base.appearance_theme_info.sp_bg_variant
+        hv.sp_board_variant = this.base.appearance_theme_info.sp_board_variant
       }
 
       // 反則時の挙動
@@ -74,7 +74,7 @@ export default {
       hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
 
       if (false) {
-        hv.sp_bg_variant = "normal"
+        hv.sp_board_variant = "normal"
       }
 
       return hv
