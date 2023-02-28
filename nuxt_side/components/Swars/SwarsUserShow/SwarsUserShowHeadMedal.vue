@@ -1,6 +1,6 @@
 <template lang="pug">
-.SwarsUserShowHeadMedal(v-if="base.info.medal_list.length >= 1")
-  .one_element(v-for="e in base.info.medal_list" @click="base.medal_click_handle(e)" :class="{'is-clickable': e.message}")
+.SwarsUserShowHeadMedal(v-if="TheApp.info.medal_list.length >= 1")
+  .one_element(v-for="e in TheApp.info.medal_list" @click="TheApp.medal_click_handle(e)" :class="{'is-clickable': e.message}")
     template(v-if="false")
     b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
     XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.name")

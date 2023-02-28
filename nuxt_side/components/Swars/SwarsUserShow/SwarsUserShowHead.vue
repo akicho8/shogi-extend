@@ -2,14 +2,14 @@
 .SwarsUserShowHead
   // 名前
   .is-flex.is-justify-content-center.mt-2
-    .user_key.has-text-weight-bold.is-clickable(@click="base.name_click_handle")
-      | {{base.info.user.key}}
+    .user_key.has-text-weight-bold.is-clickable(@click="TheApp.name_click_handle")
+      | {{TheApp.info.user.key}}
 
   // 段級位
   .is-flex.rule_container
-    template(v-for="(row, key) in base.info.rules_hash")
-      template(v-if="blank_p(base.rule) || base.rule === row.rule_name")
-        nuxt-link.rule_one.is-clickable(tag="span" :to="base.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
+    template(v-for="(row, key) in TheApp.info.rules_hash")
+      template(v-if="blank_p(TheApp.rule) || TheApp.rule === row.rule_name")
+        nuxt-link.rule_one.is-clickable(tag="span" :to="TheApp.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
           span.rule_name.is-size-7.has-text-grey
             | {{row.rule_name}}
           span.grade_name.is-size-5
@@ -20,17 +20,17 @@
                 | ？
 
   // 勝率
-  WinLoseCircle(:info="base.info" :click_func="base.win_lose_click_handle")
+  WinLoseCircle(:info="TheApp.info" :click_func="TheApp.win_lose_click_handle")
 
   // 勝敗列挙
   .ox_container.has-text-centered.is_line_break_on
-    template(v-for="judge_key in base.info.judge_keys")
+    template(v-for="judge_key in TheApp.info.judge_keys")
       span.has-text-danger(v-if="judge_key === 'win'")
         b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
       span.has-text-success(v-if="judge_key === 'lose'")
         b-icon(icon="close" size="is-small" type="is-success")
 
-  SwarsUserShowHeadMedal(:base="base")
+  SwarsUserShowHeadMedal
 </template>
 
 <script>

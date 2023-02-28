@@ -1,6 +1,6 @@
 <template lang="pug">
-.SwarsUserShowTabContent6Etc.boxes(v-if="base.tab_index === 6")
-  template(v-for="(row, i) in base.info.etc_list")
+.SwarsUserShowTabContent6Etc.boxes(v-if="TheApp.tab_index === 6")
+  template(v-for="(row, i) in TheApp.info.etc_list")
     template(v-if="present_p(row.body) || development_p")
       .box.one_box.two_column
         .columns.is-mobile.is-gapless.is-marginless
@@ -9,7 +9,7 @@
         .columns.is-gapless.is-centered
           .column.is-paddingless.has-text-weight-bold.is-size-1.is-flex.is-justify-content-center
             template(v-if="row.type1 === 'win_lose_circle'")
-              WinLoseCircle(:info="row.body" :click_func="base[row.win_lose_click_method_name]" size="is-small" v-if="row.body")
+              WinLoseCircle(:info="row.body" :click_func="TheApp[row.win_lose_click_method_name]" size="is-small" v-if="row.body")
             template(v-if="row.type1 === 'bar'")
               FriendlyBar(:info="row")
             template(v-if="row.type1 === 'pie'")
