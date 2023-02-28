@@ -38,9 +38,9 @@
 
 <script>
 import { support_parent   } from "./support_parent.js"
-import { app_storage      } from "./app_storage.js"
-import { app_search       } from "./app_search.js"
-import { app_support      } from "./app_support.js"
+import { mod_storage      } from "./mod_storage.js"
+import { mod_search       } from "./mod_search.js"
+import { mod_chore      } from "./mod_chore.js"
 
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
@@ -53,9 +53,9 @@ export default {
   name: "SwarsUserShowApp",
   mixins: [
     support_parent,
-    app_storage,
-    app_search,
-    app_support,
+    mod_storage,
+    mod_search,
+    mod_chore,
   ],
 
   data() {
