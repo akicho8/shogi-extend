@@ -49,7 +49,7 @@ export default {
     --sp_board_radius: 0 // 角丸を取る
 
   // リアル駒は小さめに作られているため100%にする
-  .is_piece_variant_d
+  .is_piece_variant_portella
     --sp_board_piece_size: 1.0
 
 // bulma の .table のなかにあると td の padding が影響してしまう

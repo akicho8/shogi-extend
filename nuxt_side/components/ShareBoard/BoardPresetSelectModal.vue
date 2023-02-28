@@ -16,7 +16,7 @@
         sp_mode="view"
         :sp_mobile_vertical="false"
         sp_layout="horizontal"
-        sp_piece_variant="b"
+        sp_piece_variant="paper"
         :sp_piece_stand_blank_then_hidden="false"
         sp_operation_disabled
         :sp_turn="0"

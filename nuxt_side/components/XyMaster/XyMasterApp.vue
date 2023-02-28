@@ -38,7 +38,7 @@
                 sp_mode="play"
                 sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
-                sp_piece_variant="b"
+                sp_piece_variant="paper"
                 sp_piece_stand_blank_then_hidden
                 :sp_viewpoint="rule_info.viewpoint"
                 :sp_board_cell_class_fn="sp_board_cell_class_fn"

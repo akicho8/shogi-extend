@@ -74,7 +74,7 @@ export default {
       hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
 
       if (false) {
-        hv.sp_bg_variant = "a"
+        hv.sp_bg_variant = "normal"
       }
 
       return hv
