@@ -1,7 +1,0 @@
-#!/bin/sh
-ssh i 'sudo touch               /etc/mackerel-agent/mackerel-agent.conf'
-ssh i 'sudo chown deploy:deploy /etc/mackerel-agent/mackerel-agent.conf'
-scp mackerel-agent.conf i:/etc/mackerel-agent
-ssh i 'mackerel-agent configtest'
-ssh i 'sudo systemctl restart mackerel-agent'
-ssh i 'sudo systemctl status mackerel-agent'
