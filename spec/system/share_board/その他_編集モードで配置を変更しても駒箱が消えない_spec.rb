@@ -5,9 +5,9 @@ RSpec.describe type: :system, share_board_spec: true do
     visit_app
     hamburger_click
     menu_item_click("局面編集")
-    find(".EditToolBlock .dropdown:nth-of-type(2)").click # 左から2つ目の dropdown をクリック
-    menu_item_sub_menu_click("駒箱に駒を一式生成")
+    find(".ShogiPlayer .ToolBelt .EditToolInfo").click    # 左から2つ目の dropdown をクリック
+    menu_item_sub_menu_click("駒箱: セット")
     piece_move("77", "76")                                # 駒移動で edit の sfen の emit が飛ぶ
-    assert_selector(".PieceBox .PieceTap")                # でも駒箱に駒は消えていない
+    assert_selector(".PieceBox .PieceTap")                # でも駒箱の駒は消えていない
   end
 end

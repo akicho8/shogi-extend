@@ -74,7 +74,7 @@ export default {
       hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
 
       if (false) {
-        hv.sp_board_variant = "normal"
+        hv.sp_board_variant = "wood_normal"
       }
 
       return hv

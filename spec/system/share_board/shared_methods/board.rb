@@ -28,7 +28,7 @@ module SharedMethods
 
   # 向き
   def assert_viewpoint(location_key)
-    assert_selector(".CustomShogiPlayer .is_viewpoint_#{location_key}")
+    assert_selector(".CustomShogiPlayer.is_viewpoint_#{location_key}")
   end
 
   # 駒移動できる
