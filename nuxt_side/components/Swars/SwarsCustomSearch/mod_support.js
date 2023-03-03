@@ -1,4 +1,4 @@
-export const app_support = {
+export const mod_support = {
   methods: {
   },
   computed: {

@@ -6,9 +6,9 @@ export class AppearanceThemeInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_appearance_theme_a", name: "ライト", navbar_type: "is-primary", sp_bg_variant: "is_bg_variant_none", sp_pi_variant: "is_pi_variant_a" },
-      { key: "is_appearance_theme_b", name: "ダーク", navbar_type: "is-black",   sp_bg_variant: "is_bg_variant_none", sp_pi_variant: "is_pi_variant_a" },
-      { key: "is_appearance_theme_c", name: "リアル", navbar_type: "is-black",   sp_bg_variant: "is_bg_variant_a",    sp_pi_variant: "is_pi_variant_d" },
+      { key: "is_appearance_theme_a", name: "ライト", navbar_type: "is-primary", sp_board_variant: "none",   sp_piece_variant: "nureyon",  },
+      { key: "is_appearance_theme_b", name: "ダーク", navbar_type: "is-black",   sp_board_variant: "none",   sp_piece_variant: "nureyon",  },
+      { key: "is_appearance_theme_c", name: "リアル", navbar_type: "is-black",   sp_board_variant: "wood_normal", sp_piece_variant: "portella", },
     ]
   }
 

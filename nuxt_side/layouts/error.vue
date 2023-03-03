@@ -79,6 +79,11 @@ export default {
             return `権限がありません`
           } else if (this.error.statusCode === 400) {
             return `正しく処理できません`
+          } else if (this.error.statusCode === 413) {
+            // nginx の client_max_body_size の値が 10m なのに関係している
+            return `ファイルサイズが大きすぎます。動画作成の場合は画像やBGMのサイズを合計で10MB以内にしてみてください`
+          } else if (this.error.statusCode === 502) {
+            return `メモリ不足でサーバーが死にました。10秒ほど待つと復活するかもしれません`
           } else if (this.error.statusCode === 503) {
             return ""
           } else {

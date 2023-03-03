@@ -1,15 +1,15 @@
 <template lang="pug">
-.SwarsUserShowTabContent0Day.boxes(v-if="base.tab_index === 0")
-  template(v-for="(row, i) in base.info.every_day_list")
+.SwarsUserShowTabContent0Day.boxes(v-if="TheApp.tab_index === 0")
+  template(v-for="(row, i) in TheApp.info.every_day_list")
     nuxt-link.box.one_box.two_column(
       :key="`every_day_list/${i}`"
-      :to="base.date_search_path(row)"
+      :to="TheApp.date_search_path(row)"
       @click.native="$sound.play_click()"
       )
       .columns.is-mobile.is-gapless.is-marginless
         .column.is-paddingless.one_box_title
           | {{$time.format_md_or_ymd(row.battled_on) + " "}}
-          .ml-1(:class="base.battled_on_to_css_class(row)")
+          .ml-1(:class="TheApp.battled_on_to_css_class(row)")
             | {{$time.format_wday_name(row.battled_on)}}
       .columns.is-mobile.is-gapless
         .column.is-paddingless

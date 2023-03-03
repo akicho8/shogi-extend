@@ -1,6 +1,6 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
-  SbDebugPanelsSennichite
+  SbDebugPanelsPerpetual
   SbDebugPanelsBasic
   .column.is-12
     SbFesPanel
@@ -76,8 +76,8 @@
     .panel
       .panel-heading
         | 反則指摘
-      a.panel-block(@click="TheSb.foul_accident_handle({name: '二歩'})") 自分
-      a.panel-block(@click="TheSb.foul_modal_handle(['駒ワープ', '王手放置'])") 全体
+      a.panel-block(@click="TheSb.ev_illegal_illegal_accident({name: '二歩'})") 自分
+      a.panel-block(@click="TheSb.illegal_modal_handle(['駒ワープ', '王手放置'])") 全体
 
   .column.is-2
     .panel
@@ -166,7 +166,7 @@
       .panel-block current_title:{{TheSb.current_title}}
       .panel-block cc_params:{{TheSb.cc_params_inspect(TheSb.cc_params)}}
       .panel-block next_turn_message:{{TheSb.next_turn_message}}
-      .panel-block latest_foul_name:{{TheSb.latest_foul_name}}
+      .panel-block latest_illegal_name:{{TheSb.latest_illegal_name}}
       .panel-block viewpoint:{{TheSb.viewpoint}}
 
   .column.is-6.is-clipped

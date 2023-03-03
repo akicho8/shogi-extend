@@ -23,7 +23,7 @@ export const app_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      this.sennichite_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
+      this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
@@ -35,8 +35,8 @@ export const app_sfen_share = {
           player_location_key: lmi.player_location.key,                   // "black"
           yomiage:             lmi.to_yomiage,                            // "ななろくふ"
           effect_key:          lmi.effect_key,                            // 効果音キー
-          foul_names:          lmi.foul_list.map(e => e.name),            // ["駒ワープ", "王手放置"]
-          sennichite_p:        this.sennichite_cop.available_p(e.snapshot_hash), // 千日手か？
+          illegal_names:          lmi.illegal_list.map(e => e.name),            // ["駒ワープ", "王手放置"]
+          perpetual_p:        this.perpetual_cop.available_p(e.snapshot_hash), // 千日手か？
         },
         clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }
@@ -74,8 +74,8 @@ export const app_sfen_share = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_share_params,
         }
-        this.foul_modal_handle(params.lmi.foul_names)
-        this.sennichite_modal_handle_if(params.lmi.sennichite_p)     // 千日手であれば表示する
+        this.illegal_modal_handle(params.lmi.illegal_names)
+        this.perpetual_modal_handle_if(params.lmi.perpetual_p)     // 千日手であれば表示する
         this.al_add(params)
       }
     },
@@ -85,15 +85,15 @@ export const app_sfen_share = {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
-        // もし edit_mode に入っている場合は強制的に解除する
+        // もし edit に入っている場合は強制的に解除する
         if (this.edit_mode_p) {
           this.tl_alert("指し手のBCにより編集を解除")
-          this.sp_run_mode = "play_mode"
+          this.sp_mode = "play"
         }
 
         // 受信したSFENを盤に反映
         this.receive_xsfen(params)
-        this.se_user_piece_put() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
+        this.se_piece_move() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
       }
 
       // 時計も更新する
@@ -116,8 +116,8 @@ export const app_sfen_share = {
         }
 
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
-        this.foul_modal_handle(params.lmi.foul_names) // 反則があれば表示する
-        this.sennichite_modal_handle_if(params.lmi.sennichite_p)       // 千日手であれば表示する
+        this.illegal_modal_handle(params.lmi.illegal_names) // 反則があれば表示する
+        this.perpetual_modal_handle_if(params.lmi.perpetual_p)       // 千日手であれば表示する
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.received_ok_send(params)                 // 受信OKを指し手に通知する
@@ -149,7 +149,7 @@ export const app_sfen_share = {
     },
     next_turn_call(params) {
       this.next_turn_message = null
-      if (this.blank_p(params.lmi.foul_names)) {                  // 反則がなかった場合
+      if (this.blank_p(params.lmi.illegal_names)) {                  // 反則がなかった場合
         if (this.yomiagable_p) {
           this.talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
             onend: () => this.talk(params.lmi.yomiage, {          // 「7 6 ふー！」

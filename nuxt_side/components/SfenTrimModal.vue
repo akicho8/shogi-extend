@@ -12,17 +12,16 @@
       b-numberinput(size="is-small" v-model="sp_turn" :min="0" :controls="false")
   .modal-card-body
     CustomShogiPlayer(
-      sp_mobile_vertical="is_mobile_vertical_off"
-      sp_run_mode="view_mode"
+      :sp_mobile_vertical="false"
+      sp_mode="view"
       :sp_body="sp_body"
       :sp_turn="sp_turn"
       :sp_viewpoint.sync="viewpoint"
       :sp_board_cell_left_click_user_handle="() => true"
-      sp_summary="is_summary_off"
-      sp_slider="is_slider_on"
-      sp_controller="is_controller_on"
-      @update:short_sfen="v => short_sfen = v"
-      @update:turn_offset="turn_offset_set"
+      sp_slider
+      sp_controller
+      @ev_short_sfen_change="v => short_sfen = v"
+      @ev_turn_offset_change="ev_turn_offset_change"
       )
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left")
@@ -68,7 +67,7 @@ export default {
     this.begin_setup()
   },
   methods: {
-    turn_offset_set(v) {
+    ev_turn_offset_change(v) {
       this.turn_offset = v
       this.sp_turn = v          // スライダーを動かしたときに右上の値も変化させるため
       if (this.mode === "begin") {

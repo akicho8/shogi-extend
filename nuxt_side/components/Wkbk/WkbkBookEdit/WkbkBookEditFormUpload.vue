@@ -45,7 +45,7 @@ export default {
       flex-direction: column
 
       .icon
-        filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 1.0))
+        filter: drop-shadow(0px 0px 12px hsla(0, 0%, 0%, 1.0))
 
     // "1200x630 推奨"
     .position_top_left
@@ -71,5 +71,5 @@ export default {
         background-color: change_color($black, $alpha: 0.6)
         border-radius: 3px
         .icon
-          filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 1.0))
+          filter: drop-shadow(0px 0px 12px hsla(0, 0%, 0%, 1.0))
 </style>

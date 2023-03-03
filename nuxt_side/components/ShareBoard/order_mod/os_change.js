@@ -31,8 +31,8 @@ export class OsChange {
     const str = JSON.stringify([
       this.context.order_unit.hash,
       [
-        this.context.foul_behavior_key,
-        this.context.toryo_timing_key,
+        this.context.illegal_behavior_key,
+        this.context.resign_timing_key,
         this.context.tegoto,
       ]
     ])

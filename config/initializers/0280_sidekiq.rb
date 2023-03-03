@@ -88,3 +88,21 @@ if defined? AppConfig
     require 'sidekiq/testing/inline'
   end
 end
+
+#
+# Mackerel
+#
+# [deploy@ik1-413-38753 ~]$ sudo mackerel-plugin-sidekiq -db 5 -redis-namespace shogi_web_production_sidekiq
+# sidekiq.ProcessedANDFailed.processed    4.645161        1677370785
+# sidekiq.ProcessedANDFailed.failed       0.000000        1677370785
+# sidekiq.Stats.busy      0       1677370785
+# sidekiq.Stats.enqueued  0       1677370785
+# sidekiq.Stats.schedule  0       1677370785
+# sidekiq.Stats.retry     0       1677370785
+# sidekiq.Stats.dead      0       1677370785
+# sidekiq.QueueLatency.active_storage_purge       0.000000        1677370785
+# sidekiq.QueueLatency.kiwi_lemon_only    0.000000        1677370785
+# sidekiq.QueueLatency.default    0.000000        1677370785
+# sidekiq.QueueLatency.mailers    0.000000        1677370785
+# sidekiq.QueueLatency.active_storage_analysis    0.000000        1677370785
+#

@@ -15,6 +15,8 @@
     template(slot="end")
       //- NavbarItemLogin
       //- NavbarItemProfileLink
+      template(v-if="development_p")
+        b-navbar-item.has-text-weight-bold(@click="my_modal_handle") モーダル版
       NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
@@ -88,11 +90,12 @@ import _ from "lodash"
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
-import { app_chore      } from "./app_chore.js"
-import { app_support    } from "./app_support.js"
-import { app_search     } from "./app_search.js"
-import { app_storage    } from "./app_storage.js"
-import { app_sidebar    } from "./app_sidebar.js"
+import { mod_chore      } from "./mod_chore.js"
+import { mod_modal      } from "./mod_modal.js"
+import { mod_support    } from "./mod_support.js"
+import { mod_search     } from "./mod_search.js"
+import { mod_storage    } from "./mod_storage.js"
+import { mod_sidebar    } from "./mod_sidebar.js"
 
 import { CompareInfo    } from "./models/compare_info.js"
 import { LogicalInfo    } from "./models/logical_info.js"
@@ -103,11 +106,12 @@ export default {
   name: "SwarsCustomSearchApp",
   mixins: [
     support_parent,
-    app_search,
-    app_chore,
-    app_support,
-    app_storage,
-    app_sidebar,
+    mod_search,
+    mod_chore,
+    mod_modal,
+    mod_support,
+    mod_storage,
+    mod_sidebar,
   ],
   props: {
     xi: { type: Object,  required: true, },

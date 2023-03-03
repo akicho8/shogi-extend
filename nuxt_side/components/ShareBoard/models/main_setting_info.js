@@ -5,12 +5,12 @@ export class MainSettingInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "yomiage_mode_key",     },
-      { key: "sp_move_cancel_key",   },
+      { key: "lift_cancel_action",   },
       { key: "ctrl_mode_key",        },
       { key: "quick_sync_key",       },
       { key: "legal_key", },
-      { key: "foul_behavior_key",       },
-      // { key: "toryo_timing_key",       },
+      { key: "illegal_behavior_key",       },
+      // { key: "resign_timing_key",       },
       { key: "debug_mode_key",       },
     ]
   }

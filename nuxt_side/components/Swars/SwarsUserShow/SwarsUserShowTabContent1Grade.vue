@@ -1,9 +1,9 @@
 <template lang="pug">
-.SwarsUserShowTabContent1Grade.boxes(v-if="base.tab_index === 1")
-  template(v-for="(row, i) in base.info.every_grade_list")
+.SwarsUserShowTabContent1Grade.boxes(v-if="TheApp.tab_index === 1")
+  template(v-for="(row, i) in TheApp.info.every_grade_list")
     nuxt-link.box.one_box.two_column(
       :key="`every_grade_list/${i}`"
-      :to="base.vs_grade_search_path(row)"
+      :to="TheApp.vs_grade_search_path(row)"
       @click.native="$sound.play_click()"
       )
       .columns.is-mobile.is-gapless.is-marginless

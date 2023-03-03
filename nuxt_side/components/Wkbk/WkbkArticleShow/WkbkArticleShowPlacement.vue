@@ -5,14 +5,14 @@ MainSection.WkbkArticleShowPlacement
       .column
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_off"
-            sp_run_mode="edit_mode"
+            :sp_mobile_vertical="false"
+            sp_mode="edit"
             :sp_body="base.article.init_sfen"
             :sp_turn="0"
             :sp_viewpoint.sync="base.viewpoint"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
-            @update:edit_mode_short_sfen="base.edit_mode_short_sfen"
+            sp_slider
+            sp_controller
+            @ev_edit_mode_short_sfen_change="base.edit_mode_short_sfen"
             ref="main_sp"
             )
           .footer_buttons

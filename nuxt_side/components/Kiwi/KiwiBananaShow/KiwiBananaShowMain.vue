@@ -7,10 +7,9 @@
           ref="main_sp"
           :sp_body="base.banana.advanced_kif_info.body"
           :sp_turn="base.banana.advanced_kif_info.turn"
-          sp_run_mode="view_mode"
-          sp_summary="is_summary_off"
-          sp_controller="is_controller_on"
-          sp_slider="is_slider_on"
+          sp_mode="view"
+          sp_controller
+          sp_slider
         )
     .block(v-show="base.show_mode === 'is_video'")
       template(v-if="content_type")

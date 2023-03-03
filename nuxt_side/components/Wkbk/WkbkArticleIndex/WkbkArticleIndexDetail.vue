@@ -4,13 +4,12 @@
     .has-text-centered(v-if="article.direction_message")
       | {{article.direction_message}}
     CustomShogiPlayer(
-      sp_mobile_vertical="is_mobile_vertical_off"
-      sp_run_mode="view_mode"
+      :sp_mobile_vertical="false"
+      sp_mode="view"
       :sp_body="article.init_sfen"
       :sp_viewpoint="article.viewpoint"
       :sp_turn="0"
-      sp_summary="is_summary_off"
-      :sp_op_disabled="true"
+      sp_operation_disabled
       )
 </template>
 

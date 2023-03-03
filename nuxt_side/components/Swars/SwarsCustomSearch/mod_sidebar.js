@@ -1,4 +1,4 @@
-export const app_sidebar = {
+export const mod_sidebar = {
   data() {
     return {
       sidebar_p: false,

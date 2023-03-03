@@ -40,41 +40,41 @@ export default {
     // .column に指定するクラス
     main_column_class() {
       const av = []
-      av.push(`is_sb_${this.base.sp_run_mode}`) // is_sb_play_mode, is_sb_edit_mode
+      av.push(`is_sb_mode_${this.base.sp_mode}`) // is_sb_mode_play, is_sb_mode_edit
       return av
     },
 
     // CustomShogiPlayer に全部渡す
     sp_bind() {
       const hv = {}
-      hv.ref                                         = "main_sp"
-      hv["class"]                                    = this.base.sp_class
-      hv.sp_run_mode                                 = this.base.sp_run_mode
-      hv.sp_turn                                     = this.base.current_turn
-      hv.sp_body                                     = this.base.current_sfen
-      hv.sp_player_info                              = this.base.sp_player_info
-      hv.sp_human_side                               = this.base.sp_human_side
-      hv.sp_debug_mode                               = "is_debug_mode_off"
-      hv.sp_summary                                  = "is_summary_off"
-      hv.sp_play_mode_legal_move_only                = this.base.legal_strict_p
-      hv.sp_play_mode_only_own_piece_to_move         = this.base.legal_strict_p
-      hv.sp_play_mode_can_not_kill_same_team_soldier = this.base.legal_strict_p
-      hv.sp_move_cancel                              = this.base.sp_move_cancel_info.key
-      hv.sp_layer                                    = this.sp_layer
-      hv.sp_controller                               = this.sp_controller
-      hv.sp_slider                                   = this.sp_slider
+      hv.ref                         = "main_sp"
+      hv["class"]                    = this.base.sp_class
+
+      // ここ以降 hv.sp_* = でないとおかしいので注意
+      hv.sp_mode                     = this.base.sp_mode
+      hv.sp_turn                     = this.base.current_turn
+      hv.sp_body                     = this.base.current_sfen
+      hv.sp_player_info              = this.base.sp_player_info
+      hv.sp_human_side               = this.base.sp_human_side
+      hv.sp_legal_move_only          = this.base.legal_strict_p
+      hv.sp_my_piece_only_move       = this.base.legal_strict_p
+      hv.sp_my_piece_kill_disabled = this.base.legal_strict_p
+      hv.sp_lift_cancel_action       = this.base.lift_cancel_action_info.key
+      hv.sp_layer                    = this.sp_layer
+      hv.sp_controller               = this.sp_controller
+      hv.sp_slider                   = this.sp_slider
 
       if (!this.base.edit_mode_p) {
-        hv.sp_pi_variant = this.base.appearance_theme_info.sp_pi_variant
-        hv.sp_bg_variant = this.base.appearance_theme_info.sp_bg_variant
+        hv.sp_piece_variant = this.base.appearance_theme_info.sp_piece_variant
+        hv.sp_board_variant = this.base.appearance_theme_info.sp_board_variant
       }
 
       // 反則時の挙動
-      hv.sp_play_mode_foul_check_p = this.base.foul_behavior_info.sp_play_mode_foul_check_p
-      hv.sp_play_mode_foul_break_p = this.base.foul_behavior_info.sp_play_mode_foul_break_p
+      hv.sp_illegal_validate = this.base.illegal_behavior_info.sp_illegal_validate
+      hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
 
       if (false) {
-        hv.sp_bg_variant                             = "is_bg_variant_a"
+        hv.sp_board_variant = "wood_normal"
       }
 
       return hv
@@ -82,52 +82,47 @@ export default {
 
     // 開発時だけレイヤーON
     sp_layer() {
-      if (this.development_p) {
-        return "is_layer_on"
-      } else {
-        return "is_layer_off"
-      }
+      return this.development_p
     },
 
     // 対局中にコントローラーは隠す
     sp_controller() {
       if (this.base.controller_disabled_p) {
-        return "is_controller_off"
+        return false
       } else {
-        return "is_controller_on"
+        return true
       }
     },
 
     // 対局中はスライダーも隠す
     sp_slider() {
       if (this.base.controller_disabled_p) {
-        return "is_slider_off"
+        return false
       } else {
-        return "is_slider_on"
+        return true
       }
     },
 
     // 動作を受け取るやつら
     sp_hook() {
       const hv = {}
-      hv["update:play_mode_advanced_full_moves_sfen"] = this.base.play_mode_advanced_full_moves_sfen_set
-      hv["update:edit_mode_short_sfen"]               = this.base.edit_mode_short_sfen_set
-      hv["update:short_sfen"]                         = this.base.short_sfen_set
-      hv["update:turn_offset"]                        = v => this.base.current_turn = v
-      hv["update:turn_offset_max"]                    = v => this.base.turn_offset_max = v
+      hv["ev_play_mode_move"]              = this.base.ev_play_mode_move
+      hv["ev_edit_mode_short_sfen_change"] = this.base.ev_edit_mode_short_sfen_change
+      hv["ev_short_sfen_change"]           = this.base.ev_short_sfen_change
+      hv["ev_turn_offset_change"]          = v => this.base.current_turn = v
+      hv["ev_turn_offset_max_change"]      = v => this.base.turn_offset_max = v
 
-      hv["user_piece_put"]      = this.base.se_user_piece_put      // 意図して指したとき
-      hv["user_viewpoint_flip"] = this.base.se_user_viewpoint_flip // 意図して☗☖をタップして反転させたとき
-      hv["user_turn_change"]    = this.base.user_turn_change       // スライダーを動かしたとき
-      hv["user_piece_lift"]     = this.base.se_user_piece_lift     // 意図して持ち上げた
-      hv["user_piece_cancel"]   = this.base.se_user_piece_cancel   // 意図してキャンセルした
+      hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip // 意図して☗☖をタップして反転させたとき
+      hv["ev_action_turn_change"]          = this.base.ev_action_turn_change    // スライダーを動かしたとき
+      hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift     // 意図して持ち上げた
+      hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
 
       // 手番 or 先後違い系
-      hv["operation_invalid1"] = this.base.operation_invalid1_handle
-      hv["operation_invalid2"] = this.base.operation_invalid2_handle
+      hv["ev_illegal_click_but_self_is_not_turn"] = this.base.ev_illegal_click_but_self_is_not_turn
+      hv["ev_illegal_my_turn_but_oside_click"]    = this.base.ev_illegal_my_turn_but_oside_click
 
       // 反則系
-      hv["foul_accident"] = this.base.foul_accident_handle
+      hv["ev_illegal_illegal_accident"] = this.base.ev_illegal_illegal_accident
 
       return hv
     },
@@ -143,7 +138,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "shogi-player/components/stylesheets/helper.sass"
+@import "shogi-player/components/stylesheets/global_macro.sass"
 
 .SbSp
   +padding_lr(unset)
@@ -151,9 +146,9 @@ export default {
   // デスクトップ以上では大きさは動的に変更できる
   +desktop
     +padding_tb(unset)
-    &.is_sb_play_mode
+    &.is_sb_mode_play
       max-width: calc(var(--board_width) * 1.0vmin)
-    &.is_sb_edit_mode
+    &.is_sb_mode_edit
       max-width: calc(var(--board_width) * 1.0vmin * 0.75)
 
   // 残り時間の色
@@ -175,7 +170,7 @@ export default {
 
   // 名前で横幅を取ってしまうと持駒がはみでるので3文字までにする
   .ShogiPlayerGround
-    +IS_VERTICAL
+    +IF_VERTICAL
       .MembershipLocationPlayerInfoName
         +mobile
           max-width: 3em

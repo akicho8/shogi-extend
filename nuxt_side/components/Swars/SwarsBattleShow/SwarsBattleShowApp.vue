@@ -11,20 +11,17 @@ client-only
       .FirstView.is-unselectable
         .CustomShogiPlayerWrap
           CustomShogiPlayer(
-            sp_layer="is_layer_off"
-            sp_layout="is_horizontal"
-            sp_fullheight="is_fullheight_off"
-            :sp_run_mode.sync="sp_run_mode"
+            sp_layout="horizontal"
+            :sp_mode.sync="sp_mode"
             :sp_turn="sp_turn"
             :sp_body="record.sfen_body"
-            :sp_key_event_capture_enabled="true"
-            sp_slider="is_slider_on"
-            sp_summary="is_summary_off"
-            sp_controller="is_controller_on"
+            sp_key_event_capture
+            sp_slider
+            sp_controller
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
             @update:sp_turn="real_turn_set"
-            @update:short_sfen="v => short_sfen = v"
+            @ev_short_sfen_change="v => short_sfen = v"
             ref="main_sp"
           )
 
@@ -97,7 +94,7 @@ export default {
     return {
       record: null,            // 属性がたくさん入ってる
 
-      sp_run_mode: null,       // shogi-player の現在のモード。再生モード(view_mode)と継盤モード(play_mode)を切り替える用
+      sp_mode: null,       // shogi-player の現在のモード。再生モード(view)と継盤モード(play)を切り替える用
       current_turn: null,      // KENTOに渡すための手番
       viewpoint: null,     // 視点
       short_sfen: null,          // BOD タイプの sfen
@@ -215,16 +212,16 @@ export default {
       this.current_turn = this.sp_turn
 
       // 継盤解除
-      this.sp_run_mode = "view_mode"
+      this.sp_mode = "view"
 
       // 最初の上下反転状態
       this.viewpoint = this.default_viewpoint
 
-      // 指し手がない棋譜の場合は再生モード(view_mode)に意味がないため継盤モード(play_mode)で開始する
+      // 指し手がない棋譜の場合は再生モード(view)に意味がないため継盤モード(play)で開始する
       // これは勝手にやらない方がいい？
       if (true) {
         if (this.record.turn_max === 0) {
-          this.sp_run_mode = "play_mode"
+          this.sp_mode = "play"
         }
       }
 

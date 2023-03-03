@@ -7,15 +7,14 @@ MainSection.WkbkArticleShowValidation
           .has-text-centered(v-if="base.article.direction_message")
             | {{base.article.direction_message}}
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_off"
-            sp_run_mode="play_mode"
+            :sp_mobile_vertical="false"
+            sp_mode="play"
             :sp_body="base.article.init_sfen"
             :sp_viewpoint="base.article.viewpoint"
             :sp_turn="0"
-            sp_summary="is_summary_off"
-            sp_slider="is_slider_on"
-            sp_controller="is_controller_on"
-            @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
+            sp_slider
+            sp_controller
+            @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
 </template>
 

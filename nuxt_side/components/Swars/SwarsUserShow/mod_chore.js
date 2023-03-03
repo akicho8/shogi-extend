@@ -1,4 +1,4 @@
-export const app_support = {
+export const mod_chore = {
   methods: {
     medal_click_handle(medal) {
       const message = medal.message

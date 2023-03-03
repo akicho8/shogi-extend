@@ -16,7 +16,9 @@ export const app_sp = {
 
     // 操作モードで指したときmovesあり棋譜(URLに反映する)
     // 局面0で1手指したとき last_move_info.next_turn_offset は 1
-    play_mode_advanced_full_moves_sfen_set(e) {
+    ev_play_mode_move(e) {
+      this.se_piece_move()
+
       // sfen と turn を同時に更新すること
       // そうしないと computed が二度走ってしまう
       this.current_sfen = e.sfen
@@ -40,7 +42,7 @@ export const app_sp = {
     },
 
     // デバッグ用
-    short_sfen_set(sfen) {
+    ev_short_sfen_change(sfen) {
       this.short_sfen = sfen
       // if (this.development_p) {
       //   this.$buefy.toast.open("short_sfen")
@@ -51,8 +53,8 @@ export const app_sp = {
     // ・常に更新するが、URLにはすぐには反映しない→やっぱり反映する
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
-    edit_mode_short_sfen_set(v) {
-      this.__assert__(this.sp_run_mode === "edit_mode", 'this.sp_run_mode === "edit_mode"')
+    ev_edit_mode_short_sfen_change(v) {
+      this.__assert__(this.sp_mode === "edit", 'this.sp_mode === "edit"')
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
       // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
@@ -66,14 +68,14 @@ export const app_sp = {
     },
 
     // ユーザーがコントローラやスライダーで手数を変更した瞬間
-    user_turn_change(v) {
-      this.sennichite_cop.reset()
-      this.se_user_turn_change()
-      this.user_turn_change_lazy(v)
+    ev_action_turn_change(v) {
+      this.perpetual_cop.reset()
+      this.ev_action_turn_change_se()
+      this.ev_action_turn_change_lazy(v)
     },
 
     // ユーザーがコントローラやスライダーで操作し終わったら転送する
-    user_turn_change_lazy: _.debounce(function(v) {
+    ev_action_turn_change_lazy: _.debounce(function(v) {
       if (this.ac_room) {
         // https://twitter.com/Sushikuine_24/status/1522370383131062272
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が${v}手目に変更しました`, {silent_notify: true}))
@@ -87,7 +89,7 @@ export const app_sp = {
     // },
 
     // 手番が違うのに操作しようとした
-    operation_invalid1_handle() {
+    ev_illegal_click_but_self_is_not_turn() {
       this.debug_alert("手番が違うのに操作しようとした")
       if (this.order_enable_p) {
         this.$sound.play("x")
@@ -116,7 +118,7 @@ export const app_sp = {
     },
 
     // 自分が手番だが相手の駒を動かそうとした
-    operation_invalid2_handle() {
+    ev_illegal_my_turn_but_oside_click() {
       this.debug_alert("自分が手番だが相手の駒を動かそうとした")
       this.$sound.play("x")
       if (this.development_p) {
@@ -149,8 +151,8 @@ export const app_sp = {
     turn_to_location(turn) { return this.current_sfen_info.location_by_offset(turn) },
   },
   computed: {
-    play_mode_p() { return this.sp_run_mode === 'play_mode' },
-    edit_mode_p() { return this.sp_run_mode === 'edit_mode' },
+    play_mode_p() { return this.sp_mode === 'play' },
+    edit_mode_p() { return this.sp_mode === 'edit' },
     advanced_p()  { return this.current_turn > this.config.record.initial_turn }, // 最初に表示した手数より進めたか？
 
     // current_sfen_attrs() {      // 指し手の情報なので turn は指した手の turn を入れる

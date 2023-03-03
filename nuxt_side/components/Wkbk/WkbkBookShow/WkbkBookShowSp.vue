@@ -11,15 +11,12 @@ MainSection.WkbkBookShowSp
               | {{base.current_article.direction_message}}
 
           CustomShogiPlayer(
-            sp_mobile_vertical="is_mobile_vertical_on"
             :sp_body="base.sfen_flop(base.current_article.init_sfen)"
             :sp_viewpoint="base.current_viewpoint"
             :sp_turn="0"
-            sp_run_mode="play_mode"
-            sp_summary="is_summary_off"
-            sp_slider="is_slider_off"
-            sp_controller="is_controller_on"
-            @update:play_mode_advanced_moves="base.play_mode_advanced_moves_set"
+            sp_mode="play"
+            sp_controller
+            @play_mode_next_moves="base.ev_play_mode_next_moves"
             )
           //- .buttons.is-centered.answer_create_handle
           //-   b-button(@click="base.answer_create_handle" :type="{'is-primary': base.answer_turn_offset >= 1}" size="is-small")
@@ -44,14 +41,12 @@ MainSection.WkbkBookShowSp
             b-tab-item(:label="`${i + 1}`")
               .CustomShogiPlayerWrap
                 CustomShogiPlayer(
-                  sp_mobile_vertical="is_mobile_vertical_off"
-                  sp_run_mode="view_mode"
+                  :sp_mobile_vertical="false"
+                  sp_mode="view"
                   :sp_body="base.sfen_flop(base.current_article.init_sfen_with(e))"
                   :sp_turn="0"
                   :sp_viewpoint="base.current_viewpoint"
-                  sp_summary="is_summary_off"
-                  sp_slider="is_slider_off"
-                  sp_controller="is_controller_on"
+                  sp_controller
                   )
                 .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
                   PiyoShogiButton.mb-0(:href="base.answers_piyo_shogi_app_with_params_url(e)")

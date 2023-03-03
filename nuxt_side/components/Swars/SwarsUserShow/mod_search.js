@@ -1,6 +1,6 @@
 import _ from "lodash"
 
-export const app_search = {
+export const mod_search = {
   methods: {
     // 棋譜検索URL
     search_path(append_params = {}) {

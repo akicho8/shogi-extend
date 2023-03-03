@@ -17,7 +17,7 @@ export const app_chore = {
     },
 
     // 最後に押したところに色をつける
-    sp_board_piece_back_user_class(place) {
+    sp_board_cell_class_fn(place) {
       if (this.tap_mode_p) {
         if (this.mode === "is_mode_run") {
           if (this.tapped_place) {

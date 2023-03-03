@@ -6,17 +6,16 @@
   .modal-card-body
     .sp_container
       CustomShogiPlayer(
-        sp_summary="is_summary_off"
-        sp_run_mode="view_mode"
-        sp_mobile_vertical="is_mobile_vertical_off"
-        sp_layout="is_horizontal"
-        sp_slider="is_slider_on"
-        sp_controller="is_controller_on"
-        :sp_view_mode_soldier_movable="false"
+        sp_mode="view"
+        :sp_mobile_vertical="false"
+        sp_layout="horizontal"
+        sp_slider
+        sp_controller
+        :sp_view_mode_piece_movable="false"
         :sp_viewpoint="base.viewpoint"
         :sp_body="sfen"
         :sp_turn="turn"
-        @update:turn_offset="v => new_turn = v"
+        @ev_turn_offset_change="v => new_turn = v"
       )
 
   .modal-card-foot

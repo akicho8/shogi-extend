@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "SennichiteModal",
+  name: "PerpetualModal",
   inject: ["TheSb"],
   data() {
     return {
@@ -25,7 +25,7 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.sennichite_modal_close()
+      this.TheSb.perpetual_modal_close()
       this.$emit("close")
     },
   },
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SennichiteModal
+.PerpetualModal
   +modal_max_width(25rem)
   .modal-card-body
     p:not(:first-child)

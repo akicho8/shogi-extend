@@ -34,6 +34,10 @@ module Swars
       assert { grade.battles == [battle] }
       assert { Battle.where.not(id: grade.battles).count == 0 } # 十段を除外する例
     end
+
+    it "10000級が存在する" do
+      assert { Grade.fetch("10000級") }
+    end
   end
 end
 # >> Run options: exclude {:slow_spec=>true}

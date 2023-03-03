@@ -36,7 +36,7 @@ client-only
       //- p SFEN: {{current_sfen}}
       //- p タイトル: {{current_title}}
       //- p 視点: {{viewpoint}}
-      //- p モード: {{sp_run_mode}}
+      //- p モード: {{sp_mode}}
       //- p 視点: {{viewpoint}}
       //- p URL: {{current_url}}
       //- p サイドバー {{sidebar_p}}
@@ -79,7 +79,7 @@ import { app_urls                 } from "./app_urls.js"
 import { app_edit_mode            } from "./app_edit_mode.js"
 import { app_yomikomi             } from "./app_yomikomi.js"
 import { app_sp                   } from "./app_sp.js"
-import { app_sennichite                  } from "./sennichite/app_sennichite.js"
+import { app_perpetual                  } from "./perpetual/app_perpetual.js"
 import { app_devise               } from "./app_devise.js"
 import { app_user_kick            } from "./app_user_kick.js"
 import { app_track_log            } from "./track_log/app_track_log.js"
@@ -101,7 +101,7 @@ import { app_color_theme          } from "./app_color_theme.js"
 import { app_sfen_share           } from "./app_sfen_share.js"
 import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
 import { app_force_sync           } from "./app_force_sync.js"
-import { app_foul                 } from "./foul/app_foul.js"
+import { app_illegal                 } from "./illegal/app_illegal.js"
 import { app_board_preset_select  } from "./app_board_preset_select.js"
 import { app_back_to              } from "./app_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
@@ -169,7 +169,7 @@ export default {
     app_edit_mode,
     app_yomikomi,
     app_sp,
-    app_sennichite,
+    app_perpetual,
     app_devise,
     app_user_kick,
     app_track_log,
@@ -195,7 +195,7 @@ export default {
     app_sfen_share,
     app_sfen_share_retry,
     app_force_sync,
-    app_foul,
+    app_illegal,
     app_board_preset_select,
     app_back_to,
     app_give_up,
@@ -261,7 +261,7 @@ export default {
     if (this.AppConfig.WATCH_AND_URL_REPLACE) {
       // どれかが変更されたらURLを更新
       this.$watch(() => [
-        this.sp_run_mode,
+        this.sp_mode,
         this.current_sfen,
         this.current_turn,
         this.current_title,

@@ -1,26 +1,26 @@
 export const app_sound_effect = {
   methods: {
     // 意図して持ち上げた
-    se_user_piece_lift() {
-      if (this.sp_run_mode === "play_mode") {
+    ev_action_piece_lift() {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },
     // 意図してキャンセルした
-    se_user_piece_cancel() {
-      if (this.sp_run_mode === "play_mode") {
+    ev_action_piece_cancel() {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },
     // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
-    se_user_piece_put() {
+    se_piece_move() {
       this.$nextTick(() => {
         this.$sound.play("piece_put")
         this.$beat.call_short()
       })
     },
     // スライダーを自分が動かしたときの音
-    se_user_turn_change() {
+    ev_action_turn_change_se() {
       this.$sound.play_click()
     },
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
@@ -29,8 +29,8 @@ export const app_sound_effect = {
       this.$beat.call_short()
     },
     // ☗☖をタップして反転したときの音
-    se_user_viewpoint_flip() {
-      if (this.sp_run_mode === "play_mode") {
+    ev_action_viewpoint_flip() {
+      if (this.sp_mode === "play") {
         this.$sound.play_click()
       }
     },

@@ -15,8 +15,8 @@
     //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error" :key="info.onetime_key")
       PageCloseButton(@click="back_handle" position="is_absolute")
-      SwarsUserShowDropdownMenu(:base="base")
-      SwarsUserShowHead(:base="base")
+      SwarsUserShowDropdownMenu
+      SwarsUserShowHead
       b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()")
         b-tab-item(label="日付")
         b-tab-item(label="段級")
@@ -25,22 +25,22 @@
         b-tab-item(label="囲い")
         b-tab-item(label="対囲")
         b-tab-item(label="他")
-      SwarsUserShowTabContent0Day(:base="base")
-      SwarsUserShowTabContent1Grade(:base="base")
-      SwarsUserShowTabContent2MyAttack(:base="base")
-      SwarsUserShowTabContent3VsAttack(:base="base")
-      SwarsUserShowTabContent4MyDefense(:base="base")
-      SwarsUserShowTabContent5VsDefense(:base="base")
-      SwarsUserShowTabContent6Etc(:base="base")
+      SwarsUserShowTabContent0Day
+      SwarsUserShowTabContent1Grade
+      SwarsUserShowTabContent2MyAttack
+      SwarsUserShowTabContent3VsAttack
+      SwarsUserShowTabContent4MyDefense
+      SwarsUserShowTabContent5VsDefense
+      SwarsUserShowTabContent6Etc
 
     DebugPre(v-if="development_p") {{$route.query.info}}
 </template>
 
 <script>
 import { support_parent   } from "./support_parent.js"
-import { app_storage      } from "./app_storage.js"
-import { app_search       } from "./app_search.js"
-import { app_support      } from "./app_support.js"
+import { mod_storage      } from "./mod_storage.js"
+import { mod_search       } from "./mod_search.js"
+import { mod_chore      } from "./mod_chore.js"
 
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
@@ -53,10 +53,14 @@ export default {
   name: "SwarsUserShowApp",
   mixins: [
     support_parent,
-    app_storage,
-    app_search,
-    app_support,
+    mod_storage,
+    mod_search,
+    mod_chore,
   ],
+
+  provide() {
+    return { TheApp: this }
+  },
 
   data() {
     return {
@@ -120,7 +124,6 @@ export default {
   },
 
   computed: {
-    base()            { return this             },
     ParamInfo()       { return ParamInfo        },
     RuleSelectInfo()  { return RuleSelectInfo   },
     SampleMaxInfo()   { return SampleMaxInfo    },

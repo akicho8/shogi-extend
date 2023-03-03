@@ -32,20 +32,19 @@
             .CustomShogiPlayerWrap
               XyMasterCountdown(:base="base")
               //- 「持ちあげる処理」を無効にするために sp_board_cell_left_click_user_handle で true を返している
-              //- sp_run_mode="play_mode"
+              //- sp_mode="play"
               CustomShogiPlayer(
                 ref="main_sp"
-                sp_run_mode="play_mode"
+                sp_mode="play"
                 sp_human_side="none"
                 sp_body="position sfen 9/9/9/9/9/9/9/9/9 b - 1"
-                sp_summary="is_summary_off"
-                sp_pi_variant="is_pi_variant_b"
-                :sp_hidden_if_piece_stand_blank="true"
+                sp_piece_variant="paper"
+                sp_piece_stand_blank_then_hidden
                 :sp_viewpoint="rule_info.viewpoint"
-                :sp_board_piece_back_user_class="sp_board_piece_back_user_class"
-                :sp_board_cell_pointerdown_user_handle="sp_board_cell_pointerdown_user_handle"
-                :sp_board_cell_left_click_user_handle="sp_board_cell_left_click_user_handle"
+                :sp_board_cell_class_fn="sp_board_cell_class_fn"
+                @ev_action_board_cell_pointerdown="ev_action_board_cell_pointerdown"
               )
+              //- :sp_board_cell_left_click_user_handle="sp_board_cell_left_click_user_handle"
 
             .time_container.is-family-monospace.is-size-3
               | {{time_format}}
@@ -185,20 +184,20 @@ export default {
   },
 
   methods: {
-    // こっちは prevent.stop されてないので自分で呼ぶ
-    sp_board_cell_pointerdown_user_handle(place, event) {
+    // // こっちは prevent.stop されてないので自分で呼ぶ
+    ev_action_board_cell_pointerdown(place, event) {
       if (this.tap_detect_key === "pointerdown") {
         this.cell_tap_handle(place, event)
       }
       return true               // break
     },
 
-    sp_board_cell_left_click_user_handle(place, event) {
-      if (this.tap_detect_key === "click") {
-        this.cell_tap_handle(place, event)
-      }
-      return true               // break
-    },
+    // sp_board_cell_left_click_user_handle(place, event) {
+    //   if (this.tap_detect_key === "click") {
+    //     this.cell_tap_handle(place, event)
+    //   }
+    //   return true               // break
+    // },
 
     cell_tap_handle(place, event) {
       if (this.mode === "is_mode_run") {
@@ -558,13 +557,13 @@ export default {
       --sp_board_padding: 0                                                         // 盤の隙間なし
       --sp_board_color: hsla(0, 0%, 0%, 0)                                          // 盤の色
       --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                       // 外枠の太さ
-      --sp_grid_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
+      --sp_grid_inner_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
       --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%)) // グリッド外枠色
-      --sp_grid_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
+      --sp_grid_inner_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
       --sp_board_aspect_ratio: 1.0                                                  // 盤を正方形化
-      --sp_grid_star_size: calc(var(--xy_grid_star_size) / 100.0)                   // 星の大きさ
-      --sp_grid_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
-      --sp_grid_star_z_index: -1                                                    // 星を盤の裏に表示
+      --sp_star_size: calc(var(--xy_grid_star_size) / 100.0)                   // 星の大きさ
+      --sp_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
+      --sp_star_z_index: -1                                                    // 星を盤の裏に表示
 
   &.is_input_mode_tap
     --sp_board_piece_size: 0.766                // セル内の駒の大きさ

@@ -14,8 +14,8 @@
 
 <script>
 const TOOLTIP_ENABLE = true
-// const TICKS_FONT_COLOR = "rgba(255,255,255,0.75)"
-const TICKS_FONT_COLOR = "rgba(0, 0, 0, 0.75)"
+// const TICKS_FONT_COLOR = "hsla(0, 0%, 100%, 0.75)"
+const TICKS_FONT_COLOR = "hsla(0, 0%, 0%, 0.75)"
 const FONT_SIZE = 8
 
 const CHART_CONFIG_DEFAULT = {
@@ -332,7 +332,7 @@ const CHART_CONFIG_DEFAULT = {
       //   width: 375
       //   height: 187
       //   aspectRatio: 1.618
-      //   options: {defaultColor: "rgba(0,0,0,0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
+      //   options: {defaultColor: "hsla(0, 0%, 0%, 0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
       //   _bufferedRender: false
       //   _layers: (4) [{…}, {…}, {…}, {…}]
       //   chart: Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}
@@ -400,7 +400,7 @@ export default {
     chart_setup_all() {
       this.chart_setup(CHART_CONFIG_DEFAULT)
       this._chart_config.data = this.TheShow.current_source
-      // this._chart_config.my_custom_background_color = "rgba(0, 0, 0, 0.75)"
+      // this._chart_config.my_custom_background_color = "hsla(0, 0%, 0%, 0.75)"
       // this._chart_config.my_custom_background_color = "rgba(#C6E1B8, 0.1)"
 
       this.chart_flip_set()
@@ -439,7 +439,7 @@ export default {
         // width: 375
         // height: 187
         // aspectRatio: 1.618
-        // options: {defaultColor: "rgba(0,0,0,0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
+        // options: {defaultColor: "hsla(0, 0%, 0%, 0.1)", defaultFontColor: "#666", defaultFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif", defaultFontSize: 12, defaultFontStyle: "normal", …}
         // _bufferedRender: false
         // _layers: (4) [{…}, {…}, {…}, {…}]
         // : Chart {id: 0, ctx: CanvasRenderingContext2D, canvas: canvas#main_canvas.chartjs-render-monitor, config: {…}, width: 375, …}

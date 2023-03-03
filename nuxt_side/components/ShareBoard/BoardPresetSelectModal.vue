@@ -13,13 +13,12 @@
         option(v-for="e in base.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
-        sp_summary="is_summary_off"
-        sp_run_mode="view_mode"
-        sp_mobile_vertical="is_mobile_vertical_off"
-        sp_layout="is_horizontal"
-        sp_pi_variant="is_pi_variant_b"
-        :sp_hidden_if_piece_stand_blank="false"
-        :sp_op_disabled="true"
+        sp_mode="view"
+        :sp_mobile_vertical="false"
+        sp_layout="horizontal"
+        sp_piece_variant="paper"
+        :sp_piece_stand_blank_then_hidden="false"
+        sp_operation_disabled
         :sp_turn="0"
         :sp_body="base.board_preset_info.sfen"
       )
@@ -86,7 +85,7 @@ export default {
     --sp_board_color: transparent
     --sp_grid_outer_stroke: 0
     --sp_grid_outer_color: hsl(0, 0%, 80%)
-    --sp_grid_color:       hsl(0, 0%, 80%)
+    --sp_grid_inner_color:       hsl(0, 0%, 80%)
 
 .STAGE-development
   .BoardPresetSelectModal

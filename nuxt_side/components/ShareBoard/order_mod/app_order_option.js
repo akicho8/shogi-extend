@@ -1,15 +1,15 @@
 import { TegotoInfo       } from "@/components/models/tegoto_info.js"
-import { FoulBehaviorInfo } from "@/components/models/foul_behavior_info.js"
-import { ToryoTimingInfo } from "@/components/models/toryo_timing_info.js"
+import { IllegalBehaviorInfo } from "@/components/models/illegal_behavior_info.js"
+import { ResignTimingInfo } from "@/components/models/resign_timing_info.js"
 
 export const app_order_option = {
   computed: {
     TegotoInfo()         { return TegotoInfo                                      },
 
-    FoulBehaviorInfo()   { return FoulBehaviorInfo                                },
-    foul_behavior_info() { return FoulBehaviorInfo.fetch(this.foul_behavior_key)  },
+    IllegalBehaviorInfo()   { return IllegalBehaviorInfo                                },
+    illegal_behavior_info() { return IllegalBehaviorInfo.fetch(this.illegal_behavior_key)  },
 
-    ToryoTimingInfo()   { return ToryoTimingInfo                                },
-    toryo_timing_info() { return ToryoTimingInfo.fetch(this.toryo_timing_key)  },
+    ResignTimingInfo()   { return ResignTimingInfo                                },
+    resign_timing_info() { return ResignTimingInfo.fetch(this.resign_timing_key)  },
   },
 }

@@ -13,9 +13,9 @@
 
 <script>
 export default {
-  name: "FoulModal",
+  name: "IllegalModal",
   props: {
-    foul_names: { type: Array,  required: true, },
+    illegal_names: { type: Array,  required: true, },
   },
   inject: ["TheSb"],
   data() {
@@ -29,20 +29,20 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.foul_modal_close()
+      this.TheSb.illegal_modal_close()
       this.$emit("close")
     },
   },
   computed: {
     reason() {
-      return this.foul_names.join("と")
+      return this.illegal_names.join("と")
     },
   },
 }
 </script>
 
 <style lang="sass">
-.FoulModal
+.IllegalModal
   +modal_max_width(25rem)
   .modal-card-body
     p:not(:first-child)
