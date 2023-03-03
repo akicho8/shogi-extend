@@ -1,16 +1,7 @@
 .SbApp
   .MainSection.section
     +tablet
-      --sb_gap: 0.75rem
-      padding: var(--sb_gap)
-    +desktop
-      --sb_gap: 1.5rem
-    .SbSp
-      // 盤の下を上の隙間と同じぐらい空ける
-      .CustomShogiPlayer
-        .NavigateBlock
-          +tablet
-            margin-top: var(--sb_gap)
+      padding: 0.75rem
 
   // タッチ端末では縦並びになるので上のマージンを調整する
   +touch
