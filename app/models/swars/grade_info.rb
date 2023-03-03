@@ -42,6 +42,7 @@ module Swars
       { key: "28級", visualize: false, select_option: false, },
       { key: "29級", visualize: false, select_option: false, },
       { key: "30級", visualize: false, select_option: false, },
+      { key: "10000級", visualize: false, select_option: false, },
     ]
 
     class << self
