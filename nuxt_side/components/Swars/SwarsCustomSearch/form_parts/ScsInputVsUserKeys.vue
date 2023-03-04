@@ -1,12 +1,12 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputVsUserKeys(custom-class="is-small")
+b-field.field_block.ScsInputVsUserKeys(custom-class="is-small")
   template(#label)
-    | 対戦相手({{base.vs_user_keys.length}})
+    | 対戦相手({{TheApp.vs_user_keys.length}})
     span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
       | 改行で確定
   b-taginput(
-    :size="base.input_element_size"
-    v-model="base.vs_user_keys"
+    :size="TheApp.input_element_size"
+    v-model="TheApp.vs_user_keys"
     :data="filtered_keys"
     autocomplete
     open-on-focus
@@ -27,10 +27,10 @@ b-field.field_block.SwarsCustomSearchInputVsUserKeys(custom-class="is-small")
 const VS_USERS_ARRAY_SIZE_MAX = 20
 
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SwarsCustomSearchInputVsUserKeys",
+  name: "ScsInputVsUserKeys",
   mixins: [
     support_child,
   ],
@@ -45,10 +45,10 @@ export default {
   methods: {
     typing_handle(text) {
       text = this.str_normalize_for_ac(text)
-      this.filtered_keys = this.base.remember_vs_user_keys.filter(e => {
+      this.filtered_keys = this.TheApp.remember_vs_user_keys.filter(e => {
         // 1. vs_user_keys にまだ含まれていないものかつ (すでに入力した名前を補完に出さないようにするため)
         // 2. マッチするものに絞る
-        return !this.base.vs_user_keys.includes(e) && this.str_normalize_for_ac(e).indexOf(text) >= 0
+        return !this.TheApp.vs_user_keys.includes(e) && this.str_normalize_for_ac(e).indexOf(text) >= 0
       })
     },
     add_handle(key) {
@@ -62,10 +62,10 @@ export default {
     remember_update(key) {
       let av = this.str_to_tags(key)
       if (this.present_p(av)) {
-        av = [...av, ...this.base.remember_vs_user_keys]
+        av = [...av, ...this.TheApp.remember_vs_user_keys]
         av = _.uniq(av)
         av = _.take(av, VS_USERS_ARRAY_SIZE_MAX)
-        this.base.remember_vs_user_keys = av
+        this.TheApp.remember_vs_user_keys = av
       }
     },
   },
@@ -73,6 +73,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsCustomSearchInputVsUserKeys
+@import "../support.sass"
+.ScsInputVsUserKeys
 </style>

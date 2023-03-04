@@ -1,15 +1,15 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
+b-field.field_block.ScsInputNumber(custom-class="is-small")
   template(#label)
     | {{label}}
     template(v-if="present_p(message)")
       span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
         | {{message}}
   b-field(grouped)
-    b-switch(v-model="xxx_enabled" @input="switch_handle" :size="base.input_element_size")
+    b-switch(v-model="xxx_enabled" @input="switch_handle" :size="TheApp.input_element_size")
     template(v-if="true")
       b-numberinput.ml-2(
-        :size="base.input_element_size"
+        :size="TheApp.input_element_size"
         exponential
         controls-position="compact"
         v-model="xxx_value"
@@ -19,16 +19,16 @@ b-field.field_block.SwarsCustomSearchInputNumber(custom-class="is-small")
         :disabled="!xxx_enabled"
         expanded
         )
-      b-select(v-model="xxx_compare" @input="$sound.play_click()" :disabled="!xxx_enabled" :size="base.input_element_size")
-        option(v-for="e in base.CompareInfo.values" :value="e.key") {{e.name}}
+      b-select(v-model="xxx_compare" @input="$sound.play_click()" :disabled="!xxx_enabled" :size="TheApp.input_element_size")
+        option(v-for="e in TheApp.CompareInfo.values" :value="e.key") {{e.name}}
 </template>
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SwarsCustomSearchInputNumber",
+  name: "ScsInputNumber",
   mixins: [
     support_child,
   ],
@@ -51,24 +51,24 @@ export default {
   },
   computed: {
     xxx_compare: {
-      set(v) { this.base.$data[this.xxx_compare_var] = v    },
-      get()  { return this.base.$data[this.xxx_compare_var] },
+      set(v) { this.TheApp.$data[this.xxx_compare_var] = v    },
+      get()  { return this.TheApp.$data[this.xxx_compare_var] },
     },
     xxx_enabled: {
-      set(v) { this.base.$data[this.xxx_enabled_var] = v    },
-      get()  { return this.base.$data[this.xxx_enabled_var] },
+      set(v) { this.TheApp.$data[this.xxx_enabled_var] = v    },
+      get()  { return this.TheApp.$data[this.xxx_enabled_var] },
     },
     xxx_value: {
-      set(v) { this.base.$data[this.xxx_value_var] = v    },
-      get()  { return this.base.$data[this.xxx_value_var] },
+      set(v) { this.TheApp.$data[this.xxx_value_var] = v    },
+      get()  { return this.TheApp.$data[this.xxx_value_var] },
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsCustomSearchInputNumber
+@import "../support.sass"
+.ScsInputNumber
   .logical_block
     a:not(:first-child)
       margin-left: 0.25em

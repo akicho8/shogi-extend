@@ -40,7 +40,8 @@
 import { support_parent   } from "./support_parent.js"
 import { mod_storage      } from "./mod_storage.js"
 import { mod_search       } from "./mod_search.js"
-import { mod_chore      } from "./mod_chore.js"
+import { mod_chore        } from "./mod_chore.js"
+import { mod_scs_modal    } from "./mod_scs_modal.js"
 
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
@@ -56,6 +57,7 @@ export default {
     mod_storage,
     mod_search,
     mod_chore,
+    mod_scs_modal,
   ],
 
   provide() {
@@ -73,6 +75,7 @@ export default {
     tab_index() {
       this.url_replace()
     },
+    "$route.query": "$fetch",
   },
 
   // http://localhost:4000/swars/users/DevUser1
@@ -81,7 +84,7 @@ export default {
   // fetch({error}) とすると $fetchState がつくられなくなる謎の罠あり
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get("/w.json", {params: this.api_params}).then(e => {
+    return this.$axios.$get("/w.json", {params: this.axios_get_params}).then(e => {
       this.info = e
       this.url_replace() // URLを書き換えてからではなくfetchしたあとでURLを置換する
     })
@@ -105,7 +108,7 @@ export default {
       this.$router.replace({
         name: "swars-users-key",
         params: this.$route.params,
-        query: this.url_params,
+        query: this.url_query,
       }).catch(err => {})
     },
 
@@ -129,7 +132,7 @@ export default {
     SampleMaxInfo()   { return SampleMaxInfo    },
     XmodeSelectInfo() { return XmodeSelectInfo  },
 
-    url_params() {
+    url_query() {
       return this.hash_compact({
         tab_index:  this.tab_index,
         rule:       this.rule,
@@ -138,10 +141,10 @@ export default {
       })
     },
 
-    api_params() {
+    axios_get_params() {
       return {
-        ...this.url_params,
-        query: this.$route.params.key,
+        ...this.url_query,
+        query: this.ary_compact([this.$route.params.key, this.$route.query.query]).join(" "),
         debug: this.$route.query.debug,
         format_type: "user",
       }

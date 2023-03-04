@@ -73,6 +73,14 @@ module Swars
 
       def current_scope
         s = user.memberships
+
+        # if v = params[:query].presence
+        #   raise v.inspect
+        #   scope = Battle.search(current_swars_user: user, query_info: QueryInfo.parse(v))
+        #   battle_ids = scope.collect(&:id)
+        #   s = s.joins(:battle).where(battle_id: battle_ids)
+        # end
+
         s = win_lose_only_condition_add(s)
       end
 
@@ -158,6 +166,7 @@ module Swars
       # 必須の条件
       def condition_add(s)
         s = s.joins(:battle)
+
         s = s.merge(Battle.newest_order)  # 直近のものから取得
         if v = params[:rule].presence
           s = s.merge(Battle.rule_eq(v))
@@ -165,6 +174,7 @@ module Swars
         if v = params[:xmode].presence
           s = s.merge(Battle.xmode_eq(v))
         end
+
         s = s.limit(sample_max)
         s
       end

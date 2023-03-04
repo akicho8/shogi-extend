@@ -5,109 +5,45 @@
     p user_key: {{short_inspect(user_key)}}
     p vs_user_keys: {{short_inspect(vs_user_keys)}}
 
-  SwarsCustomSearchSidebar(:base="base")
+  ScsSidebar()
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
-      b-navbar-item(@click="base.back_click_handle")
+      b-navbar-item(@click="back_click_handle")
         b-icon(icon="chevron-left")
       b-navbar-item.has-text-weight-bold(@click="title_click_handle") カスタム検索
     template(slot="end")
       //- NavbarItemLogin
       //- NavbarItemProfileLink
       template(v-if="development_p")
-        b-navbar-item.has-text-weight-bold(@click="my_modal_handle") モーダル版
+        b-navbar-item.has-text-weight-bold(@click="scs_modal_handle") モーダル版
       NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
     .container.is-fluid
       .columns.form_block.is-variable.is-0
         .column.is-12
-          b-field.field_block.new_query_field(label="")
-            b-field(grouped)
-              b-input.new_query_input(v-model.trim="new_query" readonly expanded autocomplete="off")
-              p.control
-                b-button.has-text-weight-bold(@click="search_click_handle" type="is-primary")
-                  | 検索
-          .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
-            .column.is-6-tablet.is-4-desktop
-              b-field.field_block(custom-class="is-small")
-                template(#label)
-                  | 対象のウォーズID
-                  span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
-                    | 必須
-                b-input(v-model.trim="user_key" placeholder="itoshinTV" :size="base.input_element_size")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="持ち時間"   :records="xi.rule_infos"  var_name="rule_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="勝敗"       :records="xi.judge_infos"  var_name="judge_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="結末"       :records="xi.final_infos"  var_name="final_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="先後"       :records="xi.location_infos"  var_name="location_keys" last_only_if_full)
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="相手の棋力" :records="xi.grade_infos" var_name="grade_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="grade_diff_message")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputTag(:base="base" label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputTag(:base="base" label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="自分の棋風" :records="xi.style_infos" var_name="my_style_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="相手の棋風" :records="xi.style_infos" var_name="vs_style_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="対局モード" :records="xi.xmode_infos" var_name="xmode_keys")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchCheckbox(:base="base" label1="手合割"     :records="xi.preset_infos"  var_name="preset_keys")
-            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-               SwarsCustomSearchInputDate(:base="base")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputVsUserKeys(:base="base")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_max)")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_avg)")
-            .column.is-6-tablet.is-4-desktop
-              SwarsCustomSearchInputNumber(:base="base" label="最終思考" xxx_enabled_var="my_think_last_enabled"      xxx_value_var="my_think_last"      xxx_compare_var="my_think_last_compare" :min="0" :max="60*10" :message="scs_time_format(my_think_last)")
-            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-              SwarsCustomSearchInputNumber(:base="base" label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="scs_time_format(my_mid_think_avg)")
-            .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-              SwarsCustomSearchInputNumber(:base="base" label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
-
-      SwarsCustomSearchDebugPanels(:base="base" v-if="development_p")
+          ScsFormAll
+      ScsDebugPanels(v-if="development_p")
 </template>
 
 <script>
-import _ from "lodash"
-import dayjs from "dayjs"
-
-import { support_parent } from "./support_parent.js"
-import { mod_chore      } from "./mod_chore.js"
-import { mod_modal      } from "./mod_modal.js"
-import { mod_support    } from "./mod_support.js"
-import { mod_search     } from "./mod_search.js"
-import { mod_storage    } from "./mod_storage.js"
-import { mod_sidebar    } from "./mod_sidebar.js"
-
-import { CompareInfo    } from "./models/compare_info.js"
-import { LogicalInfo    } from "./models/logical_info.js"
-
-import { ParamInfo      } from "./models/param_info.js"
+import { support_parent    } from "./support_parent.js"
+import { mod_chore         } from "./mod_chore.js"
+import { mod_query_builder } from "./mod_query_builder.js"
+import { mod_modal         } from "./mod_modal.js"
+import { mod_support       } from "./mod_support.js"
+import { mod_form          } from "./mod_form.js"
+import { mod_storage       } from "./mod_storage.js"
+import { mod_sidebar       } from "./mod_sidebar.js"
 
 export default {
   name: "SwarsCustomSearchApp",
   mixins: [
     support_parent,
-    mod_search,
+    mod_form,
     mod_chore,
+    mod_query_builder,
     mod_modal,
     mod_support,
     mod_storage,
@@ -116,8 +52,9 @@ export default {
   props: {
     xi: { type: Object,  required: true, },
   },
-  data() {
+  provide() {
     return {
+      TheApp: this,
     }
   },
   methods: {
@@ -126,97 +63,8 @@ export default {
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
-
-    // xxx:1,2 形式
-    values_as_query(key, values) {
-      let v = this.presence(values)
-      if (v) {
-        return [key, ":", v.join(",")].join("")
-      }
-    },
-
-    // xxx:>=1 形式
-    compare_value_as_query(key, enabled, compare, value) {
-      if (enabled) {
-        return `${key}:${compare.value}${value}`
-      }
-    },
-
-    // xxx:2022-01-01..2022-01-02 形式
-    date_range_as_query(key, range) {
-      if (this.presence(range)) {
-        const str = range.map(e => dayjs(e).format("YYYY-MM-DD")).join("..")
-        return `${key}:${str}`
-      }
-    },
   },
-
   computed: {
-    base() { return this },
-
-    input_element_size() { return "" },
-
-    LogicalInfo()                     { return LogicalInfo                                        },
-    CompareInfo()                     { return CompareInfo                                        },
-    critical_turn_compare_info()      { return CompareInfo.fetch(this.critical_turn_compare)      },
-    outbreak_turn_compare_info()      { return CompareInfo.fetch(this.outbreak_turn_compare)      },
-    turn_max_compare_info()           { return CompareInfo.fetch(this.turn_max_compare)           },
-    grade_diff_compare_info()         { return CompareInfo.fetch(this.grade_diff_compare)         },
-    my_think_max_compare_info()       { return CompareInfo.fetch(this.my_think_max_compare)       },
-    my_think_avg_compare_info()       { return CompareInfo.fetch(this.my_think_avg_compare)       },
-    my_think_last_compare_info()      { return CompareInfo.fetch(this.my_think_last_compare)      },
-    my_mid_think_avg_compare_info()   { return CompareInfo.fetch(this.my_mid_think_avg_compare)   },
-    my_mid_machine_gun_compare_info() { return CompareInfo.fetch(this.my_mid_machine_gun_compare) },
-
-    new_query() {
-      let av = []
-
-      // フォームと順番を合わせること
-      av.push(this.user_key)
-      av.push(this.values_as_query("持ち時間", this.rule_keys))
-      av.push(this.values_as_query("勝敗", this.judge_keys))
-      av.push(this.values_as_query("結末", this.final_keys))
-      av.push(this.values_as_query("先後", this.location_keys))
-      av.push(this.values_as_query("相手の棋力", this.grade_keys))
-      av.push(this.compare_value_as_query("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
-      av.push(this.values_as_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
-      av.push(this.values_as_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
-      av.push(this.values_as_query("自分の棋風", this.my_style_keys))
-      av.push(this.values_as_query("相手の棋風", this.vs_style_keys))
-      av.push(this.compare_value_as_query("手数", this.turn_max_enabled, this.turn_max_compare_info, this.turn_max))
-      av.push(this.compare_value_as_query("中盤", this.outbreak_turn_enabled, this.outbreak_turn_compare_info, this.outbreak_turn))
-      av.push(this.compare_value_as_query("開戦", this.critical_turn_enabled, this.critical_turn_compare_info, this.critical_turn))
-      av.push(this.values_as_query("対局モード", this.xmode_keys))
-      av.push(this.values_as_query("手合割", this.preset_keys))
-      av.push(this.date_range_as_query("日付", this.battled_at_range))
-      av.push(this.values_as_query("対戦相手", this.vs_user_keys))
-      av.push(this.compare_value_as_query("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
-      av.push(this.compare_value_as_query("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
-      av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
-      av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
-      av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
-
-      let str = av.join(" ")
-      str = this.str_squish(str)
-      return str
-    },
-
-    grade_diff_message() {
-      let v = this.grade_diff
-      let x = Math.abs(v)
-      if (x === 1) {
-        x = "やや"
-      }
-      let s = ""
-      if (v > 0) {
-        s = `相手は自分より${x}強い`
-      } else if (v < 0) {
-        s = `相手は自分より${x}弱い`
-      } else {
-        s = "相手は好敵手"
-      }
-      return s
-    },
   },
 }
 </script>
@@ -235,38 +83,4 @@ export default {
   .container
     +mobile
       padding: 0
-
-  .field_block
-    &:hover
-      +desktop
-        background-color: $primary-light
-
-  .new_query_field
-    position: sticky
-    top: 0
-    z-index: 10 /* 適当 */
-    background-color: $white
-    padding-top: 1.2rem
-    padding-bottom: 1.2rem
-    &:hover
-      background-color: unset
-    input, textarea
-      border: 0
-      background-color: $primary-light
-
-  +mobile
-    .field_block
-      padding: 0.5rem 0
-    .new_query_field
-      padding: 0.75rem 0
-
-.STAGE-development
-  .SwarsCustomSearchApp
-    .columns
-      .columns
-        .column
-          border: 1px dashed change_color($primary, $alpha: 0.5)
-          background-color: change_color($danger, $alpha: 0.1)
-    .field_block
-      border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

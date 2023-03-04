@@ -6,6 +6,10 @@ DotsMenuButton.SwarsUserShowDropdownMenu
     b-icon(icon="magnify" size="is-small")
     span 棋譜検索
 
+  b-dropdown-item(@click="TheApp.scs_modal_handle" v-if="development_p")
+    b-icon(icon="magnify" size="is-small")
+    span カスタム検索
+
   b-dropdown-item(separator)
 
   b-dropdown-item(@click="TheApp.update_handle({try_fetch: true})" v-if="development_p")

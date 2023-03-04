@@ -1,14 +1,14 @@
 <template lang="pug">
-b-field.field_block.SwarsCustomSearchInputTag(custom-class="is-small")
+b-field.field_block.ScsInputTag(custom-class="is-small")
   template(#label)
     | {{label}}({{current_tags.length}})
     span.mx-1(class="has-text-grey has-text-weight-normal is-italic is-size-7")
       span.logical_block.mx-1
-        template(v-for="e in base.LogicalInfo.values")
+        template(v-for="e in TheApp.LogicalInfo.values")
           a(@click="op_click_handle(e)" :class="e.css_class(current_op)")
             | {{e.name}}
   b-taginput(
-    :size="base.input_element_size"
+    :size="TheApp.input_element_size"
     v-model="current_tags"
     :data="filtered_tags"
     autocomplete
@@ -30,10 +30,10 @@ b-field.field_block.SwarsCustomSearchInputTag(custom-class="is-small")
 
 <script>
 import _ from "lodash"
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SwarsCustomSearchInputTag",
+  name: "ScsInputTag",
   mixins: [
     support_child,
   ],
@@ -54,7 +54,7 @@ export default {
     typing_handle(text) {
       text = this.str_normalize_for_ac(text)
       const av = []
-      _.each(this.base.xi.tactic_infos, (e, _) => {
+      _.each(this.TheApp.xi.tactic_infos, (e, _) => {
         const values = e.values.filter(e => this.str_normalize_for_ac(e).indexOf(text) >= 0)
         if (values.length >= 1) {
           av.push({name: `── ${e.name} ──`, values: values})
@@ -79,20 +79,20 @@ export default {
   },
   computed: {
     current_tags: {
-      set(v) { this.base.$data[this.tags_var] = v    },
-      get()  { return this.base.$data[this.tags_var] },
+      set(v) { this.TheApp.$data[this.tags_var] = v    },
+      get()  { return this.TheApp.$data[this.tags_var] },
     },
     current_op: {
-      set(v) { this.base.$data[this.op_var] = v    },
-      get()  { return this.base.$data[this.op_var] },
+      set(v) { this.TheApp.$data[this.op_var] = v    },
+      get()  { return this.TheApp.$data[this.op_var] },
     },
   },
 }
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsCustomSearchInputTag
+@import "../support.sass"
+.ScsInputTag
   .logical_block
     a:not(:first-child)
       margin-left: 0.25em

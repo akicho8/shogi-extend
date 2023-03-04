@@ -1,8 +1,8 @@
 import _ from "lodash"
 import dayjs from "dayjs"
-import ScsModal from "./ScsModal.vue"
+import ScsModal from "../SwarsCustomSearch/ScsModal.vue"
 
-export const mod_modal = {
+export const mod_scs_modal = {
   data() {
     return {
       // $scs_modal_instance: null,
@@ -13,7 +13,7 @@ export const mod_modal = {
   },
   methods: {
     scs_modal_handle() {
-      // this.sidebar_p = false
+      this.sidebar_p = false
       this.$sound.play_click()
       this.scs_modal_close()
       this.$scs_modal_instance = this.modal_card_open({

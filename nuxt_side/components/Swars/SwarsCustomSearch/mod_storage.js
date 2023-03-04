@@ -12,6 +12,7 @@ export const mod_storage = {
   methods: {
     // localStorage → URL引数 を順に反映したあとで呼ばれるところ
     pc_mounted() {
+      this.$debug.trace("mod_storage", "pc_mounted")
       // b-datepicker に渡すデータは Date 型でないとだめなので最後に変換しておく
       this.clog(this.battled_at_range)
       this.battled_at_range = this.battled_at_range.map(e => dayjs(e).toDate())

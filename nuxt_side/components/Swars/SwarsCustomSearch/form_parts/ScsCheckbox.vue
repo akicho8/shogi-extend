@@ -1,10 +1,10 @@
 <template lang="pug">
-b-field.field_block.is_scroll_x.SwarsCustomSearchCheckbox(custom-class="is-small" :label="label1")
+b-field.field_block.is_scroll_x.ScsCheckbox(custom-class="is-small" :label="label1")
   template(v-for="e in records")
     b-checkbox-button(
-      :size="base.input_element_size"
+      :size="TheApp.input_element_size"
       expanded
-      v-model="base.$data[var_name]"
+      v-model="TheApp.$data[var_name]"
       :native-value="e.key"
       @input="av => checked_handle(av, e)"
       )
@@ -12,10 +12,10 @@ b-field.field_block.is_scroll_x.SwarsCustomSearchCheckbox(custom-class="is-small
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
-  name: "SwarsCustomSearchCheckbox",
+  name: "ScsCheckbox",
   mixins: [
     support_child,
   ],
@@ -35,7 +35,7 @@ export default {
 
         if (this.last_only_if_full) {
           if (this.records.every(e => av.includes(e.key))) {
-            this.base.$data[this.var_name] = [e.key]
+            this.TheApp.$data[this.var_name] = [e.key]
           }
         }
       }
@@ -47,6 +47,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./support.sass"
-.SwarsCustomSearchCheckbox
+@import "../support.sass"
+.ScsCheckbox
 </style>
