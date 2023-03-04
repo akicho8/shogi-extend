@@ -44,39 +44,6 @@ module BattleControllerSharedMethods
     def query_info
       @query_info ||= QueryInfo.parse(current_query)
     end
-
-    def current_scope
-      @current_scope ||= yield_self do
-        s = current_model.all
-        s = tag_scope_add(s)
-
-        if v = query_info.lookup_one(:date)
-          v = v.to_time.midnight
-          s = s.where(battled_at: v...v.tomorrow)
-        end
-
-        if v = query_info.lookup(:ids)
-          s = s.where(id: v)
-        end
-        s
-      end
-    end
-
-    def tag_scope_add(s)
-      if v = query_info.lookup(:tag)
-        s = s.tagged_with(v)
-      end
-
-      if v = query_info.lookup(:or_tag)
-        s = s.tagged_with(v, any: true)
-      end
-
-      if v = query_info.lookup(:exclude_tag)
-        s = s.tagged_with(v, exclude: true)
-      end
-
-      s
-    end
   end
 
   concerning :ShowMethods do
