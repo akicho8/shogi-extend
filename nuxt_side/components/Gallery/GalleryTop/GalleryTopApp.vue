@@ -37,7 +37,7 @@ const TOTAL_ITEMS = 12
 
 import { ColumnSizeInfo } from "../../models/column_size_info.js"
 import { support_parent } from "./support_parent.js"
-import { app_storage    } from "./app_storage.js"
+import { mod_storage    } from "./mod_storage.js"
 
 import { ParamInfo } from "./models/param_info.js"
 
@@ -48,7 +48,7 @@ export default {
   mixins: [
     support_parent,
     simple_patination_methods,
-    app_storage,
+    mod_storage,
   ],
   data() {
     return {

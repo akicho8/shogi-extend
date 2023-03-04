@@ -48,18 +48,18 @@
 import _ from "lodash"
 
 import { support_parent  } from "./support_parent.js"
-import { app_chore       } from "./app_chore.js"
-import { app_help       } from "./app_help.js"
-import { app_default_key       } from "./app_default_key.js"
-import { app_columns     } from "./app_columns.js"
-import { app_link_to        } from "./app_link_to.js"
-import { app_search      } from "./app_search.js"
-import { app_complement_user_keys      } from "./app_complement_user_keys.js"
-import { app_tiresome      } from "./app_tiresome.js"
-import { app_per         } from "./app_per.js"
-import { app_sidebar     } from "./app_sidebar.js"
-import { app_storage     } from "./app_storage.js"
-import { app_vs_user     } from "./app_vs_user.js"
+import { mod_chore       } from "./mod_chore.js"
+import { mod_help       } from "./mod_help.js"
+import { mod_default_key       } from "./mod_default_key.js"
+import { mod_columns     } from "./mod_columns.js"
+import { mod_link_to        } from "./mod_link_to.js"
+import { mod_search      } from "./mod_search.js"
+import { mod_complement_user_keys      } from "./mod_complement_user_keys.js"
+import { mod_tiresome      } from "./mod_tiresome.js"
+import { mod_per         } from "./mod_per.js"
+import { mod_sidebar     } from "./mod_sidebar.js"
+import { mod_storage     } from "./mod_storage.js"
+import { mod_vs_user     } from "./mod_vs_user.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
@@ -72,18 +72,18 @@ export default {
   name: "SwarsBattleIndexApp",
   mixins: [
     support_parent,
-    app_link_to,
-    app_search,
-    app_complement_user_keys,
-    app_tiresome,
-    app_per,
-    app_columns,
-    app_sidebar,
-    app_chore,
-    app_help,
-    app_default_key,
-    app_storage,
-    app_vs_user,
+    mod_link_to,
+    mod_search,
+    mod_complement_user_keys,
+    mod_tiresome,
+    mod_per,
+    mod_columns,
+    mod_sidebar,
+    mod_chore,
+    mod_help,
+    mod_default_key,
+    mod_storage,
+    mod_vs_user,
   ],
 
   data() {

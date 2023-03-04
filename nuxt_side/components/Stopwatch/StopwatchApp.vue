@@ -87,11 +87,11 @@ const TITLE_DEFAULT = "詰将棋用ストップウォッチ"
 import _ from "lodash"
 import dayjs from "dayjs"
 
-import app_storage_legacy from './app_storage_legacy.js'
-import app_memento_list from './app_memento_list.js'
+import mod_storage_legacy from './mod_storage_legacy.js'
+import mod_memento_list from './mod_memento_list.js'
 import { support_parent } from './support_parent.js'
-import { app_keyboard } from './app_keyboard.js'
-import { app_sidebar } from './app_sidebar.js'
+import { mod_keyboard } from './mod_keyboard.js'
+import { mod_sidebar } from './mod_sidebar.js'
 import { IntervalRunner } from '@/components/models/interval_runner.js'
 
 import PermalinkModal from './PermalinkModal.vue'
@@ -112,11 +112,11 @@ class AnswerInfo extends ApplicationMemoryRecord {
 export default {
   name: "StopwatchApp",
   mixins: [
-    app_storage_legacy,
-    app_memento_list,
+    mod_storage_legacy,
+    mod_memento_list,
     support_parent,
-    app_keyboard,
-    app_sidebar,
+    mod_keyboard,
+    mod_sidebar,
   ],
   data() {
     return {

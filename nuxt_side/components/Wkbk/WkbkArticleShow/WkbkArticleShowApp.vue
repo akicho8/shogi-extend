@@ -44,15 +44,15 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
-import { app_placement  } from "./app_placement.js"
-import { app_tabs       } from "./app_tabs.js"
-import { app_answer     } from "./app_answer.js"
-import { app_article    } from "./app_article.js"
-import { app_storage    } from "./app_storage.js"
-import { app_sidebar    } from "./app_sidebar.js"
-import { app_tweet    } from "./app_tweet.js"
-import { app_support    } from "./app_support.js"
-import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
+import { mod_placement  } from "./mod_placement.js"
+import { mod_tabs       } from "./mod_tabs.js"
+import { mod_answer     } from "./mod_answer.js"
+import { mod_article    } from "./mod_article.js"
+import { mod_storage    } from "./mod_storage.js"
+import { mod_sidebar    } from "./mod_sidebar.js"
+import { mod_tweet    } from "./mod_tweet.js"
+import { mod_support    } from "./mod_support.js"
+import { mod_kifu_copy_buttons } from "./mod_kifu_copy_buttons.js"
 
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
@@ -62,15 +62,15 @@ export default {
   name: "WkbkArticleShowApp",
   mixins: [
     support_parent,
-    app_placement,
-    app_tabs,
-    app_answer,
-    app_article,
-    app_storage,
-    app_sidebar,
-    app_tweet,
-    app_support,
-    app_kifu_copy_buttons,
+    mod_placement,
+    mod_tabs,
+    mod_answer,
+    mod_article,
+    mod_storage,
+    mod_sidebar,
+    mod_tweet,
+    mod_support,
+    mod_kifu_copy_buttons,
   ],
 
   data() {

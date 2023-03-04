@@ -26,10 +26,10 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import dayjs from "dayjs"
 
 import { support_parent } from "./support_parent.js"
-import { app_table } from "./app_table.js"
-import { app_upload } from "./app_upload.js"
-import { app_book_delete } from "./app_book_delete.js"
-import { app_storage } from "./app_storage.js"
+import { mod_table } from "./mod_table.js"
+import { mod_upload } from "./mod_upload.js"
+import { mod_book_delete } from "./mod_book_delete.js"
+import { mod_storage } from "./mod_storage.js"
 
 import { Book       } from "../models/book.js"
 import { SequenceInfo } from "../models/sequence_info.js"
@@ -38,10 +38,10 @@ export default {
   name: "WkbkBookEditApp",
   mixins: [
     support_parent,
-    app_table,
-    app_upload,
-    app_book_delete,
-    app_storage,
+    mod_table,
+    mod_upload,
+    mod_book_delete,
+    mod_storage,
   ],
 
   data() {

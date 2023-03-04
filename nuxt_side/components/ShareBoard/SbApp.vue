@@ -62,86 +62,86 @@ import { Location                 } from "shogi-player/components/models/locatio
 import { FormatTypeInfo           } from "@/components/models/format_type_info.js"
 import { autoexec_methods         } from "@/components/models/autoexec_methods.js"
 
-import { AppConfig                } from "./models/app_config.js"
+import { AppConfig                } from "./models/mod_config.js"
 
 import { support_parent           } from "./support_parent.js"
 
-import { app_xtitle               } from "./app_xtitle.js"
-import { app_action_log           } from "./action_log/app_action_log.js"
-import { app_turn_notify          } from "./app_turn_notify.js"
-import { app_otasuke              } from "./app_otasuke.js"
-import { app_order_main           } from "./order_mod/app_order_main.js"
-import { app_battle_session       } from "./app_battle_session.js"
-import { app_chore                } from "./app_chore.js"
-import { app_guardian             } from "./app_guardian.js"
-import { app_handle_name          } from "./app_handle_name.js"
-import { app_urls                 } from "./app_urls.js"
-import { app_edit_mode            } from "./app_edit_mode.js"
-import { app_yomikomi             } from "./app_yomikomi.js"
-import { app_sp                   } from "./app_sp.js"
-import { app_perpetual                  } from "./perpetual/app_perpetual.js"
-import { app_devise               } from "./app_devise.js"
-import { app_user_kick            } from "./app_user_kick.js"
-import { app_track_log            } from "./track_log/app_track_log.js"
-import { app_xmatch               } from "./auto_matching/app_xmatch.js"
-import { app_member_bc            } from "./app_member_bc.js"
-import { app_image_dl             } from "./app_image_dl.js"
-import { app_update               } from "./app_update.js"
-import { app_sound_bug            } from "./sound/app_sound_bug.js"
-import { app_sound_effect         } from "./sound/app_sound_effect.js"
-import { app_sound_resume         } from "./sound/app_sound_resume.js"
-import { app_main_setting         } from "./app_main_setting.js"
-import { app_debug                } from "./app_debug.js"
-import { app_help                 } from "./help_mod/app_help.js"
-import { app_sidebar              } from "./app_sidebar.js"
-import { app_storage              } from "./app_storage.js"
-import { app_export               } from "./app_export.js"
-import { app_player_names         } from "./app_player_names.js"
-import { app_color_theme          } from "./app_color_theme.js"
-import { app_sfen_share           } from "./app_sfen_share.js"
-import { app_sfen_share_retry     } from "./app_sfen_share_retry.js"
-import { app_force_sync           } from "./app_force_sync.js"
-import { app_illegal                 } from "./illegal/app_illegal.js"
-import { app_board_preset_select  } from "./app_board_preset_select.js"
-import { app_back_to              } from "./app_back_to.js"
+import { mod_xtitle               } from "./mod_xtitle.js"
+import { mod_action_log           } from "./action_log/mod_action_log.js"
+import { mod_turn_notify          } from "./mod_turn_notify.js"
+import { mod_otasuke              } from "./mod_otasuke.js"
+import { mod_order_main           } from "./order_mod/mod_order_main.js"
+import { mod_battle_session       } from "./mod_battle_session.js"
+import { mod_chore                } from "./mod_chore.js"
+import { mod_guardian             } from "./mod_guardian.js"
+import { mod_handle_name          } from "./mod_handle_name.js"
+import { mod_urls                 } from "./mod_urls.js"
+import { mod_edit_mode            } from "./mod_edit_mode.js"
+import { mod_yomikomi             } from "./mod_yomikomi.js"
+import { mod_sp                   } from "./mod_sp.js"
+import { mod_perpetual                  } from "./perpetual/mod_perpetual.js"
+import { mod_devise               } from "./mod_devise.js"
+import { mod_user_kick            } from "./mod_user_kick.js"
+import { mod_track_log            } from "./track_log/mod_track_log.js"
+import { mod_xmatch               } from "./auto_matching/mod_xmatch.js"
+import { mod_member_bc            } from "./mod_member_bc.js"
+import { mod_image_dl             } from "./mod_image_dl.js"
+import { mod_update               } from "./mod_update.js"
+import { mod_sound_bug            } from "./sound/mod_sound_bug.js"
+import { mod_sound_effect         } from "./sound/mod_sound_effect.js"
+import { mod_sound_resume         } from "./sound/mod_sound_resume.js"
+import { mod_main_setting         } from "./mod_main_setting.js"
+import { mod_debug                } from "./mod_debug.js"
+import { mod_help                 } from "./help_mod/mod_help.js"
+import { mod_sidebar              } from "./mod_sidebar.js"
+import { mod_storage              } from "./mod_storage.js"
+import { mod_export               } from "./mod_export.js"
+import { mod_player_names         } from "./mod_player_names.js"
+import { mod_color_theme          } from "./mod_color_theme.js"
+import { mod_sfen_share           } from "./mod_sfen_share.js"
+import { mod_sfen_share_retry     } from "./mod_sfen_share_retry.js"
+import { mod_force_sync           } from "./mod_force_sync.js"
+import { mod_illegal                 } from "./illegal/mod_illegal.js"
+import { mod_board_preset_select  } from "./mod_board_preset_select.js"
+import { mod_back_to              } from "./mod_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
 
-import { app_room_setup           } from "./room/app_room_setup.js"
-import { app_room_entry_leave           } from "./room/app_room_entry_leave.js"
-import { app_room_board_setup     } from "./room/app_room_board_setup.js"
-import { app_room_active_level    } from "./room/app_room_active_level.js"
-import { app_room_members         } from "./room/app_room_members.js"
-import { app_room_recreate        } from "./room/app_room_recreate.js"
-import { app_room_url_copy        } from "./room/app_room_url_copy.js"
+import { mod_room_setup           } from "./room/mod_room_setup.js"
+import { mod_room_entry_leave           } from "./room/mod_room_entry_leave.js"
+import { mod_room_board_setup     } from "./room/mod_room_board_setup.js"
+import { mod_room_active_level    } from "./room/mod_room_active_level.js"
+import { mod_room_members         } from "./room/mod_room_members.js"
+import { mod_room_recreate        } from "./room/mod_room_recreate.js"
+import { mod_room_url_copy        } from "./room/mod_room_url_copy.js"
 
-import { app_member_list          } from "./member_list_show/app_member_list.js"
-import { app_member_info_modal    } from "./member_list_show/app_member_info_modal.js"
-import { app_ping                 } from "./member_list_show/app_ping.js"
-import { app_net_level            } from "./member_list_show/app_net_level.js"
+import { mod_member_list          } from "./member_list_show/mod_member_list.js"
+import { mod_member_info_modal    } from "./member_list_show/mod_member_info_modal.js"
+import { mod_ping                 } from "./member_list_show/mod_ping.js"
+import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
-import { app_message      } from "./chat/app_message.js"
-import { app_message_logs } from "./chat/app_message_logs.js"
+import { mod_message      } from "./chat/mod_message.js"
+import { mod_message_logs } from "./chat/mod_message_logs.js"
 
-import { app_console      } from "./console/app_console.js"
+import { mod_console      } from "./console/mod_console.js"
 
-import { app_clock_box            } from "./clock/app_clock_box.js"
-import { app_clock_box_timeout    } from "./clock/app_clock_box_timeout.js"
-import { app_clock_decorator      } from "./clock/app_clock_decorator.js"
-import { app_persistent_cc_params } from "./clock/app_persistent_cc_params.js"
+import { mod_clock_box            } from "./clock/mod_clock_box.js"
+import { mod_clock_box_timeout    } from "./clock/mod_clock_box_timeout.js"
+import { mod_clock_decorator      } from "./clock/mod_clock_decorator.js"
+import { mod_persistent_cc_params } from "./clock/mod_persistent_cc_params.js"
 
-import { app_give_up   } from "./give_up/app_give_up.js"
-import { app_honpu     } from "./give_up/app_honpu.js"
-import { app_kifu_mail } from "./give_up/app_kifu_mail.js"
+import { mod_give_up   } from "./give_up/mod_give_up.js"
+import { mod_honpu     } from "./give_up/mod_honpu.js"
+import { mod_kifu_mail } from "./give_up/mod_kifu_mail.js"
 
-import { app_odai_maker  } from "./fes/app_odai_maker.js"
-import { app_client_vote } from "./fes/app_client_vote.js"
+import { mod_odai_maker  } from "./fes/mod_odai_maker.js"
+import { mod_client_vote } from "./fes/mod_client_vote.js"
 
-import { app_medal      } from "./medal/app_medal.js"
-import { app_medal_plus } from "./medal/app_medal_plus.js"
+import { mod_medal      } from "./medal/mod_medal.js"
+import { mod_medal_plus } from "./medal/mod_medal_plus.js"
 
-import { app_appearance_theme } from "./appearance_theme/app_appearance_theme.js"
+import { mod_appearance_theme } from "./appearance_theme/mod_appearance_theme.js"
 
-import { app_tweet } from "./tweet/app_tweet.js"
+import { mod_tweet } from "./tweet/mod_tweet.js"
 
 export default {
   name: "SbApp",
@@ -149,77 +149,77 @@ export default {
     // どう見ても mixins の使い方を間違えている
     support_parent,
     autoexec_methods,
-    app_xtitle,
-    app_action_log,
-    app_message,
-    app_message_logs,
-    app_console,
-    app_persistent_cc_params,
-    app_turn_notify,
-    app_otasuke,
-    app_order_main,
-    app_member_list,
-    app_battle_session,
-    app_chore,
-    app_kifu_mail,
-    app_guardian,
-    app_handle_name,
-    app_member_info_modal,
-    app_urls,
-    app_edit_mode,
-    app_yomikomi,
-    app_sp,
-    app_perpetual,
-    app_devise,
-    app_user_kick,
-    app_track_log,
-    app_xmatch,
-    app_member_bc,
-    app_net_level,
-    app_ping,
-    app_tweet,
-    app_image_dl,
-    app_update,
-    app_sound_bug,
-    app_sound_effect,
-    app_main_setting,
-    app_debug,
-    app_sound_resume,
-    app_help,
-    app_sidebar,
-    app_storage,
-    app_export,
-    app_player_names,
-    app_color_theme,
-    app_appearance_theme,
-    app_sfen_share,
-    app_sfen_share_retry,
-    app_force_sync,
-    app_illegal,
-    app_board_preset_select,
-    app_back_to,
-    app_give_up,
-    app_honpu,
-    app_medal,
-    app_medal_plus,
+    mod_xtitle,
+    mod_action_log,
+    mod_message,
+    mod_message_logs,
+    mod_console,
+    mod_persistent_cc_params,
+    mod_turn_notify,
+    mod_otasuke,
+    mod_order_main,
+    mod_member_list,
+    mod_battle_session,
+    mod_chore,
+    mod_kifu_mail,
+    mod_guardian,
+    mod_handle_name,
+    mod_member_info_modal,
+    mod_urls,
+    mod_edit_mode,
+    mod_yomikomi,
+    mod_sp,
+    mod_perpetual,
+    mod_devise,
+    mod_user_kick,
+    mod_track_log,
+    mod_xmatch,
+    mod_member_bc,
+    mod_net_level,
+    mod_ping,
+    mod_tweet,
+    mod_image_dl,
+    mod_update,
+    mod_sound_bug,
+    mod_sound_effect,
+    mod_main_setting,
+    mod_debug,
+    mod_sound_resume,
+    mod_help,
+    mod_sidebar,
+    mod_storage,
+    mod_export,
+    mod_player_names,
+    mod_color_theme,
+    mod_appearance_theme,
+    mod_sfen_share,
+    mod_sfen_share_retry,
+    mod_force_sync,
+    mod_illegal,
+    mod_board_preset_select,
+    mod_back_to,
+    mod_give_up,
+    mod_honpu,
+    mod_medal,
+    mod_medal_plus,
 
-    app_room_recreate,
-    app_room_url_copy,
-    app_room_setup,
-    app_room_entry_leave,
-    app_room_board_setup,
-    app_room_active_level,
-    app_room_members,
+    mod_room_recreate,
+    mod_room_url_copy,
+    mod_room_setup,
+    mod_room_entry_leave,
+    mod_room_board_setup,
+    mod_room_active_level,
+    mod_room_members,
 
-    app_odai_maker,
-    app_client_vote,
+    mod_odai_maker,
+    mod_client_vote,
 
     window_active_detector,
 
     // clock
-    app_clock_box,
-    app_clock_box_timeout,
-    app_clock_decorator,
+    mod_clock_box,
+    mod_clock_box_timeout,
+    mod_clock_decorator,
   ],
   props: {
     config: { type: Object, required: true },

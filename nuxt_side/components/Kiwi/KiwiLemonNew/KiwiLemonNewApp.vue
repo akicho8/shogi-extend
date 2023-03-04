@@ -38,23 +38,23 @@ client-only
 
 <script>
 import { support_parent       } from "./support_parent.js"
-import { app_chore            } from "./app_chore.js"
-import { app_review           } from "./app_review.js"
-import { app_sidebar          } from "./app_sidebar.js"
-import { app_storage          } from "./app_storage.js"
-import { app_lemon_room     } from "./app_lemon_room.js"
-import { app_queue_all        } from "./app_queue_all.js"
-import { app_queue_self       } from "./app_queue_self.js"
-import { app_admin       } from "./app_admin.js"
-import { app_form             } from "./app_form.js"
-import { app_zombie_kill      } from "./app_zombie_kill.js"
-import { app_probe_show       } from "./app_probe_show.js"
-import { app_my_skelton       } from "./app_my_skelton.js"
-import { app_color_select     } from "./app_color_select.js"
-import { app_audio_select     } from "./app_audio_select.js"
-import { app_compute_from_bpm } from "./app_compute_from_bpm.js"
-import { app_source_trim      } from "./app_source_trim.js"
-import { app_help             } from "./app_help.js"
+import { mod_chore            } from "./mod_chore.js"
+import { mod_review           } from "./mod_review.js"
+import { mod_sidebar          } from "./mod_sidebar.js"
+import { mod_storage          } from "./mod_storage.js"
+import { mod_lemon_room     } from "./mod_lemon_room.js"
+import { mod_queue_all        } from "./mod_queue_all.js"
+import { mod_queue_self       } from "./mod_queue_self.js"
+import { mod_admin       } from "./mod_admin.js"
+import { mod_form             } from "./mod_form.js"
+import { mod_zombie_kill      } from "./mod_zombie_kill.js"
+import { mod_probe_show       } from "./mod_probe_show.js"
+import { mod_my_skelton       } from "./mod_my_skelton.js"
+import { mod_color_select     } from "./mod_color_select.js"
+import { mod_audio_select     } from "./mod_audio_select.js"
+import { mod_compute_from_bpm } from "./mod_compute_from_bpm.js"
+import { mod_source_trim      } from "./mod_source_trim.js"
+import { mod_help             } from "./mod_help.js"
 
 import { Lemon } from "../models/lemon.js"
 
@@ -64,23 +64,23 @@ export default {
   name: "KiwiLemonNewApp",
   mixins: [
     support_parent,
-    app_chore,
-    app_review,
-    app_sidebar,
-    app_storage,
-    app_lemon_room,
-    app_queue_all,
-    app_queue_self,
-    app_admin,
-    app_form,
-    app_zombie_kill,
-    app_probe_show,
-    app_my_skelton,
-    app_color_select,
-    app_audio_select,
-    app_compute_from_bpm,
-    app_source_trim,
-    app_help,
+    mod_chore,
+    mod_review,
+    mod_sidebar,
+    mod_storage,
+    mod_lemon_room,
+    mod_queue_all,
+    mod_queue_self,
+    mod_admin,
+    mod_form,
+    mod_zombie_kill,
+    mod_probe_show,
+    mod_my_skelton,
+    mod_color_select,
+    mod_audio_select,
+    mod_compute_from_bpm,
+    mod_source_trim,
+    mod_help,
   ],
 
   data() {

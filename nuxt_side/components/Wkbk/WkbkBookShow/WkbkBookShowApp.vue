@@ -43,20 +43,20 @@ import { Book           } from "../models/book.js"
 
 import { support_parent } from "./support_parent.js"
 
-import { app_xitems            } from "./app_xitems.js"
-import { app_article           } from "./app_article.js"
-import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
-import { app_mode              } from "./app_mode.js"
-import { app_support           } from "./app_support.js"
-import { app_tweet_recent      } from "./app_tweet_recent.js"
-import { app_tweet_stat        } from "./app_tweet_stat.js"
-import { app_sidebar           } from "./app_sidebar.js"
-import { app_op                } from "./app_op.js"
-import { app_table             } from "./app_table.js"
-import { app_keyboard          } from "./app_keyboard.js"
-import { app_storage           } from "./app_storage.js"
-import { app_kb_shortcut_modal } from "./app_kb_shortcut_modal.js"
-import { app_interval_counter  } from "./app_interval_counter.js"
+import { mod_xitems            } from "./mod_xitems.js"
+import { mod_article           } from "./mod_article.js"
+import { mod_kifu_copy_buttons } from "./mod_kifu_copy_buttons.js"
+import { mod_mode              } from "./mod_mode.js"
+import { mod_support           } from "./mod_support.js"
+import { mod_tweet_recent      } from "./mod_tweet_recent.js"
+import { mod_tweet_stat        } from "./mod_tweet_stat.js"
+import { mod_sidebar           } from "./mod_sidebar.js"
+import { mod_op                } from "./mod_op.js"
+import { mod_table             } from "./mod_table.js"
+import { mod_keyboard          } from "./mod_keyboard.js"
+import { mod_storage           } from "./mod_storage.js"
+import { mod_kb_shortcut_modal } from "./mod_kb_shortcut_modal.js"
+import { mod_interval_counter  } from "./mod_interval_counter.js"
 
 import _ from "lodash"
 
@@ -64,20 +64,20 @@ export default {
   name: "WkbkBookShowApp",
   mixins: [
     support_parent,
-    app_xitems,
-    app_article,
-    app_kifu_copy_buttons,
-    app_mode,
-    app_support,
-    app_tweet_recent,
-    app_tweet_stat,
-    app_sidebar,
-    app_op,
-    app_table,
-    app_keyboard,
-    app_storage,
-    app_kb_shortcut_modal,
-    app_interval_counter,
+    mod_xitems,
+    mod_article,
+    mod_kifu_copy_buttons,
+    mod_mode,
+    mod_support,
+    mod_tweet_recent,
+    mod_tweet_stat,
+    mod_sidebar,
+    mod_op,
+    mod_table,
+    mod_keyboard,
+    mod_storage,
+    mod_kb_shortcut_modal,
+    mod_interval_counter,
   ],
 
   data() {

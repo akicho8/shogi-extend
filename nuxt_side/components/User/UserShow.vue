@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import { app_sidebar } from "./app_sidebar.js"
+import { mod_sidebar } from "./mod_sidebar.js"
 
 export default {
   name: "UserShow",
-  mixins: [app_sidebar],
+  mixins: [mod_sidebar],
   data() {
     return {
       record: null,

@@ -22,19 +22,19 @@
 import { Banana        } from "../models/banana.js"
 
 import { support_parent } from "./support_parent.js"
-import { app_table      } from "./app_table.js"
-import { app_storage    } from "./app_storage.js"
-import { app_columns    } from "./app_columns.js"
-import { app_sidebar    } from "./app_sidebar.js"
+import { mod_table      } from "./mod_table.js"
+import { mod_storage    } from "./mod_storage.js"
+import { mod_columns    } from "./mod_columns.js"
+import { mod_sidebar    } from "./mod_sidebar.js"
 
 export default {
   name: "KiwiBananaIndexApp",
   mixins: [
     support_parent,
-    app_table,
-    app_storage,
-    app_columns,
-    app_sidebar,
+    mod_table,
+    mod_storage,
+    mod_columns,
+    mod_sidebar,
   ],
 
   data() {

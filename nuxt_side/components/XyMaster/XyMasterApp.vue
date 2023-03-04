@@ -76,18 +76,18 @@ import { IntervalCounter } from '@/components/models/interval_counter.js'
 import { IntervalFrame   } from '@/components/models/interval_frame.js'
 
 import { support_parent  } from "./support_parent.js"
-import { app_chart       } from "./app_chart.js"
-import { app_debug       } from "./app_debug.js"
-import { app_help        } from "./app_help.js"
-import { app_keyboard    } from "./app_keyboard.js"
-import { app_play_break        } from "./app_play_break.js"
-import { app_ranking     } from "./app_ranking.js"
-import { app_sidebar     } from "./app_sidebar.js"
-import { app_storage     } from "./app_storage.js"
-import { app_style       } from "./app_style.js"
-import { app_tap_detect  } from "./app_tap_detect.js"
-import { app_tweet       } from "./app_tweet.js"
-import { app_chore       } from "./app_chore.js"
+import { mod_chart       } from "./mod_chart.js"
+import { mod_debug       } from "./mod_debug.js"
+import { mod_help        } from "./mod_help.js"
+import { mod_keyboard    } from "./mod_keyboard.js"
+import { mod_play_break        } from "./mod_play_break.js"
+import { mod_ranking     } from "./mod_ranking.js"
+import { mod_sidebar     } from "./mod_sidebar.js"
+import { mod_storage     } from "./mod_storage.js"
+import { mod_style       } from "./mod_style.js"
+import { mod_tap_detect  } from "./mod_tap_detect.js"
+import { mod_tweet       } from "./mod_tweet.js"
+import { mod_chore       } from "./mod_chore.js"
 
 import { RuleInfo       } from "./models/rule_info.js"
 import { ScopeInfo      } from "./models/scope_info.js"
@@ -102,18 +102,18 @@ export default {
   name: "XyMasterApp",
   mixins: [
     support_parent,
-    app_chart,
-    app_debug,
-    app_help,
-    app_keyboard,
-    app_play_break,
-    app_ranking,
-    app_sidebar,
-    app_storage,
-    app_style,
-    app_tap_detect,
-    app_tweet,
-    app_chore,
+    mod_chart,
+    mod_debug,
+    mod_help,
+    mod_keyboard,
+    mod_play_break,
+    mod_ranking,
+    mod_sidebar,
+    mod_storage,
+    mod_style,
+    mod_tap_detect,
+    mod_tweet,
+    mod_chore,
   ],
   props: {
     config: { type: Object, required: true },

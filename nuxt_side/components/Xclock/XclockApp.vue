@@ -72,14 +72,14 @@ import { support      } from "./support.js"
 
 import { mouse_cursor_hidden_mixin         } from "../models/mouse_cursor_hidden_mixin.js"
 import { mobile_screen_adjust_mixin } from "../models/mobile_screen_adjust_mixin.js"
-import { app_keyboard_shortcut    } from "./app_keyboard_shortcut.js"
+import { mod_keyboard_shortcut    } from "./mod_keyboard_shortcut.js"
 
 export default {
   name: "XclockApp",
   mixins: [
     support,
     mouse_cursor_hidden_mixin,
-    app_keyboard_shortcut,
+    mod_keyboard_shortcut,
     mobile_screen_adjust_mixin,
   ],
   data() {

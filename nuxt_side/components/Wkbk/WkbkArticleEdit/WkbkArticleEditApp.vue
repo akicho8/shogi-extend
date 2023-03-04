@@ -48,13 +48,13 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import dayjs from "dayjs"
 
 import { support_parent        } from "./support_parent.js"
-import { app_placement         } from "./app_placement.js"
-import { app_tabs              } from "./app_tabs.js"
-import { app_answer            } from "./app_answer.js"
-import { app_article           } from "./app_article.js"
-import { app_storage           } from "./app_storage.js"
-import { app_article_delete    } from "./app_article_delete.js"
-import { app_kifu_copy_buttons } from "./app_kifu_copy_buttons.js"
+import { mod_placement         } from "./mod_placement.js"
+import { mod_tabs              } from "./mod_tabs.js"
+import { mod_answer            } from "./mod_answer.js"
+import { mod_article           } from "./mod_article.js"
+import { mod_storage           } from "./mod_storage.js"
+import { mod_article_delete    } from "./mod_article_delete.js"
+import { mod_kifu_copy_buttons } from "./mod_kifu_copy_buttons.js"
 
 import { Article     } from "../models/article.js"
 import { Book        } from "../models/book.js"
@@ -64,13 +64,13 @@ export default {
   name: "WkbkArticleEditApp",
   mixins: [
     support_parent,
-    app_placement,
-    app_tabs,
-    app_answer,
-    app_article,
-    app_storage,
-    app_article_delete,
-    app_kifu_copy_buttons,
+    mod_placement,
+    mod_tabs,
+    mod_answer,
+    mod_article,
+    mod_storage,
+    mod_article_delete,
+    mod_kifu_copy_buttons,
   ],
 
   data() {

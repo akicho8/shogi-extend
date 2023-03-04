@@ -1,0 +1,26 @@
+import _ from "lodash"
+import dayjs from "dayjs"
+import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
+
+export const mod_link_to = {
+  methods: {
+    show_handle(row) {
+      this.$sound.play_click()
+      const params = {}
+      params.viewpoint = row.memberships[0].location_key
+      if (this.layout_info.key === "is_layout_board") {
+        params.scene_key = this.scene_info.key
+      }
+      this.$router.push({name: "swars-battles-key", params: { key: row.key }, query: params})
+    },
+
+    kifu_vo(record) {
+      return this.$KifuVo.create({
+        kif_url: `${this.$config.MY_SITE_URL}${record.show_path}.kif`,
+        sfen: record.sfen_body,
+        turn: this.scene_info.sp_turn_of(record),
+        viewpoint: record.viewpoint,
+      })
+    },
+  },
+}

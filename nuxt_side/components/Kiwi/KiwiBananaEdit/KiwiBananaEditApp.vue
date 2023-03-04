@@ -24,8 +24,8 @@ client-only
 import dayjs from "dayjs"
 
 import { support_parent  } from "./support_parent.js"
-import { app_banana_delete } from "./app_banana_delete.js"
-import { app_storage     } from "./app_storage.js"
+import { mod_banana_delete } from "./mod_banana_delete.js"
+import { mod_storage     } from "./mod_storage.js"
 
 import { Banana       } from "../models/banana.js"
 
@@ -33,8 +33,8 @@ export default {
   name: "KiwiBananaEditApp",
   mixins: [
     support_parent,
-    app_banana_delete,
-    app_storage,
+    mod_banana_delete,
+    mod_storage,
   ],
 
   data() {

@@ -18,11 +18,11 @@
 
 <script>
 import { PiyoShogiTypeInfo } from "../models/piyo_shogi_type_info.js"
-import { app_storage } from "./app_storage.js"
+import { mod_storage } from "./mod_storage.js"
 
 export default {
   name: "UserEditPiyoShogi",
-  mixins: [app_storage],
+  mixins: [mod_storage],
   data() {
     return {
       new_piyo_shogi_type_key: null,

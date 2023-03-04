@@ -23,12 +23,12 @@ import { Book           } from "../models/book.js"
 import { XpageInfo } from "../../models/xpage_info.js"
 
 import { support_parent } from "./support_parent.js"
-import { app_table      } from "./app_table.js"
-import { app_tabs       } from "./app_tabs.js"
-import { app_storage    } from "./app_storage.js"
-import { app_columns    } from "./app_columns.js"
-import { app_sidebar    } from "./app_sidebar.js"
-import { app_search     } from "./app_search.js"
+import { mod_table      } from "./mod_table.js"
+import { mod_tabs       } from "./mod_tabs.js"
+import { mod_storage    } from "./mod_storage.js"
+import { mod_columns    } from "./mod_columns.js"
+import { mod_sidebar    } from "./mod_sidebar.js"
+import { mod_search     } from "./mod_search.js"
 
 import _ from "lodash"
 
@@ -36,12 +36,12 @@ export default {
   name: "WkbkTopApp",
   mixins: [
     support_parent,
-    app_table,
-    app_tabs,
-    app_storage,
-    app_columns,
-    app_sidebar,
-    app_search,
+    mod_table,
+    mod_tabs,
+    mod_storage,
+    mod_columns,
+    mod_sidebar,
+    mod_search,
   ],
 
   data() {

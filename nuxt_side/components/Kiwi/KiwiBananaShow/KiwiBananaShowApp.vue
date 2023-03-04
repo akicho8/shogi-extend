@@ -22,14 +22,14 @@ client-only
 import { Banana             } from "../models/banana.js"
 
 import { support_parent   } from "./support_parent.js"
-import { app_board         } from "./app_board.js"
-import { app_support      } from "./app_support.js"
-import { app_sidebar      } from "./app_sidebar.js"
-import { app_op           } from "./app_op.js"
-import { app_table        } from "./app_table.js"
-import { app_storage      } from "./app_storage.js"
-import { app_banana_message } from "./app_banana_message.js"
-import { app_banana_room    } from "./app_banana_room.js"
+import { mod_board         } from "./mod_board.js"
+import { mod_support      } from "./mod_support.js"
+import { mod_sidebar      } from "./mod_sidebar.js"
+import { mod_op           } from "./mod_op.js"
+import { mod_table        } from "./mod_table.js"
+import { mod_storage      } from "./mod_storage.js"
+import { mod_banana_message } from "./mod_banana_message.js"
+import { mod_banana_room    } from "./mod_banana_room.js"
 
 import _ from "lodash"
 
@@ -37,14 +37,14 @@ export default {
   name: "KiwiBananaShowApp",
   mixins: [
     support_parent,
-    app_board,
-    app_support,
-    app_sidebar,
-    app_op,
-    app_table,
-    app_storage,
-    app_banana_message,
-    app_banana_room,
+    mod_board,
+    mod_support,
+    mod_sidebar,
+    mod_op,
+    mod_table,
+    mod_storage,
+    mod_banana_message,
+    mod_banana_room,
   ],
 
   data() {

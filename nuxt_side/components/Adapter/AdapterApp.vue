@@ -60,8 +60,8 @@ client-only
 const AUTO_APP_TO = true
 
 import { support_parent } from "./support_parent.js"
-import { app_chore      } from "./app_chore.js"
-import { app_sidebar    } from "./app_sidebar.js"
+import { mod_chore      } from "./mod_chore.js"
+import { mod_sidebar    } from "./mod_sidebar.js"
 import { FormatTypeInfo } from "@/components/models/format_type_info.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 const QueryString = require("query-string")
@@ -72,8 +72,8 @@ export default {
   name: "AdapterApp",
   mixins: [
     support_parent,
-    app_chore,
-    app_sidebar,
+    mod_chore,
+    mod_sidebar,
   ],
 
   data() {

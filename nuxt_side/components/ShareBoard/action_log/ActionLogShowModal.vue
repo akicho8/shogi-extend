@@ -59,13 +59,13 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { app_urls } from "./app_urls.js"
+import { mod_urls } from "./mod_urls.js"
 
 export default {
   name: "ActionLogShowModal",
   mixins: [
     support_child,
-    app_urls,
+    mod_urls,
   ],
   props: {
     action_log: { type: Object, required: true, },

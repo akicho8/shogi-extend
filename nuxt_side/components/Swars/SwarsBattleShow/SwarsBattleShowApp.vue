@@ -68,11 +68,11 @@ client-only
 
 <script>
 import { support_parent  } from "./support_parent.js"
-import { app_chore       } from "./app_chore.js"
-import { app_chart       } from "./app_chart.js"
-import { app_export      } from "./app_export.js"
-import { app_sidebar     } from "./app_sidebar.js"
-import { app_storage     } from "./app_storage.js"
+import { mod_chore       } from "./mod_chore.js"
+import { mod_chart       } from "./mod_chart.js"
+import { mod_export      } from "./mod_export.js"
+import { mod_sidebar     } from "./mod_sidebar.js"
+import { mod_storage     } from "./mod_storage.js"
 
 import { SceneInfo } from "../models/scene_info.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
@@ -84,11 +84,11 @@ export default {
   name: "SwarsBattleShowApp",
   mixins: [
     support_parent,
-    app_chore,
-    app_chart,
-    app_export,
-    app_sidebar,
-    app_storage,
+    mod_chore,
+    mod_chart,
+    mod_export,
+    mod_sidebar,
+    mod_storage,
   ],
   data() {
     return {
