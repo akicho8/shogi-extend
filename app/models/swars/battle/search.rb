@@ -14,7 +14,7 @@ module Swars
           s = s.where(id: v)
         end
 
-        if v = params[:primary_record_key] # バトルが指定されている
+        if v = params[:main_battle_key] # バトルが指定されている
           s = s.where(key: v.to_s)
         end
 

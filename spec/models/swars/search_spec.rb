@@ -70,7 +70,7 @@ module Swars
     end
 
     describe "Options" do
-      it "primary_record_key" do
+      it "main_battle_key" do
         key = BattleKeyGenerator.new.generate
         black = User.create!
         white = User.create!
@@ -78,7 +78,7 @@ module Swars
         battles = Battle.search({
             :query_info         => QueryInfo.parse(""),
             :current_swars_user => black,
-            :primary_record_key => key,
+            :main_battle_key => key,
           })
         assert { battles.exists? }
       end

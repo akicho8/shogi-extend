@@ -80,9 +80,9 @@ module Swars
       }.merge(super)
     end
 
-    # 検索窓に将棋ウォーズへ棋譜URLが指定されたときの対局キー
-    def primary_record_key
-      @primary_record_key ||= yield_self do
+    # 検索窓に棋譜URLが指定されたときの対局キー
+    def main_battle_key
+      @main_battle_key ||= yield_self do
         if query = params[:query].presence
           if battle_url = BattleUrlExtractor.new(query).battle_url
             battle_url.battle_key
@@ -92,8 +92,8 @@ module Swars
     end
 
     def import_process_any
-      if primary_record_key
-        Swars::Importer::BattleImporter.new(key: primary_record_key).run
+      if main_battle_key
+        Swars::Importer::BattleImporter.new(key: main_battle_key).run
       else
         many_import_process
       end
@@ -177,7 +177,7 @@ module Swars
       @current_scope ||= current_model.search(params.merge({
             :query_info         => query_info,
             :current_swars_user => current_swars_user,
-            :primary_record_key => primary_record_key,
+            :main_battle_key => main_battle_key,
           }))
     end
 
@@ -191,11 +191,11 @@ module Swars
       end
     end
 
-    # primary_record_key に対応するレコード
+    # main_battle_key に対応するレコード
     def primary_record
       @primary_record ||= yield_self do
-        if primary_record_key
-          Swars::Battle.find_by(key: primary_record_key)
+        if main_battle_key
+          Swars::Battle.find_by(key: main_battle_key)
         end
       end
     end
@@ -225,7 +225,7 @@ module Swars
         end
       end
 
-      current_swars_user || primary_record_key || query_info.lookup(:ids)
+      current_swars_user || main_battle_key || query_info.lookup(:ids)
     end
 
     def x_delete_process
