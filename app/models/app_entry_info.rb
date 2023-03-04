@@ -23,7 +23,7 @@ class AppEntryInfo
       og_image_key: %w(share-board-real),
       description: "ガチVS・仲間内リレー将棋・指導対局にどうぞ",
       features: [
-        "喧嘩上等！チャット機能あり",
+        "チャット機能あり",
         "手合割や持ち時間を自由に設定可能",
         "詰将棋の出題や棋譜の共有にもどうぞ",
       ],
