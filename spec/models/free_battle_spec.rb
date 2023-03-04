@@ -73,11 +73,6 @@ RSpec.describe FreeBattle, type: :model do
     assert { ki2_record.raw_sec_list(:white) == [ nil, nil]  }
   end
 
-  # it "time_chart_params" do
-  #   assert { record.time_chart_params.has_key?(:datasets) }
-  #   assert { ki2_record.time_chart_params.has_key?(:datasets) }
-  # end
-
   describe "Twitterカード" do
     describe "to_twitter_card_params" do
       it "works" do
