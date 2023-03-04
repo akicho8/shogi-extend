@@ -166,7 +166,7 @@ module Swars
     # http://localhost:3000/w.json?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     # http://localhost:4000/swars/search?query=https://shogiwars.heroz.jp/games/alice-bob-20200101_123403
     def current_swars_user_key
-      @current_swars_user_key ||= query_info.swars_user_key_extractor.extract
+      @current_swars_user_key ||= params[:user_key].presence || query_info.swars_user_key_extractor.extract
     end
 
     def exclude_column_names
@@ -184,7 +184,7 @@ module Swars
     def current_index_scope
       @current_index_scope ||= yield_self do
         s = current_scope
-        if !primary_key_like?
+        if !primary_key_exist?
           s = s.none
         end
         s
@@ -218,7 +218,7 @@ module Swars
 
     private
 
-    def primary_key_like?
+    def primary_key_exist?
       if Rails.env.development?
         if params[:all]
           return true
