@@ -37,7 +37,7 @@ chdir APP_ROOT do
   system! "rm -f tmp/caching-dev.txt"
   system! 'rails dev:cache'
 
-  system! 'saferenum -x playground'
+  system! 'saferenum -x inspection'
   system! 'fd -tx -e rb -E bin -x chmod -v a-x'
 
   # system! 'saferenum -x -b 1000 config/app_data/free_battles'

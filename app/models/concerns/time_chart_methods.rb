@@ -16,7 +16,7 @@
 # record.memberships[1].time_chart_xy_list  # => [{:x=>2, :y=>-3 seconds}, {:x=>4, :y=>-7 seconds}, {:x=>6, :y=>-10 minutes and 10 seconds}]
 # record.time_chart_label_max               # => 6
 #
-# playground/0260_swars_battle_time_chart.rb
+# inspection/0260_swars_battle_time_chart.rb
 #
 module TimeChartMethods
   extend ActiveSupport::Concern
