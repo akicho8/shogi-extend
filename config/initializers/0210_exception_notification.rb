@@ -9,6 +9,12 @@ if Rails.env.production? || Rails.env.staging? || ENV["EXCEPTION_NOTIFICATION_EN
         # "Slack::Web::Api::Errors::TooManyRequestsError",
       ],
 
+      # 将棋MAPのフォームで入力されたSFENをバックスペースで1文字消すたびに変換APIが呼ばれるせいで
+      # 大量のエラー通知が来て GMail と Slack API が死ぬ対策
+      ignore_if: -> (env, exception) {
+        env["HTTP_ORIGIN"] == "https://shogimap.com"
+      },
+
       email: {
         :email_prefix         => "[shogi-extend-#{Rails.env}] ",
         :sender_address       => "pinpon.ikeda@gmail.com",
