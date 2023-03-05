@@ -129,14 +129,13 @@ after "deploy:finished", :rails_cache_clear do
   end
 end
 
-desc "デプロイ後に確認したいURLを全部開いておく"
+desc "デプロイ後に確認したいURLを全部開いておく(OPEN=true のときのみ)"
 after "deploy:finished", :open_urls
 task :open_urls do
   # Array(fetch(:open_urls)).reverse.each do |url|
   #   system("open #{url}")
   # end
-  if ENV["OPEN"] == "false"
-  else
+  if ENV["OPEN"]
     system "web -o -e #{fetch(:stage)}"
   end
 end
