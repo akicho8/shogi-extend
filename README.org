@@ -2,4 +2,4 @@
 
 https://www.shogi-extend.com/
 
-[[https://raw.github.com/akicho8/shogi-extend/master/doc/montage_for_doc.png]]
+[[https://raw.github.com/akicho8/shogi-extend/main/nuxt_side/static/ogp/application.png]]
