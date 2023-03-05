@@ -1,10 +1,10 @@
 <template lang="pug">
 .XyMasterApp(:class="[mode, rule_info.input_mode]" :style="component_style")
-  XyMasterSidebar(:base="base")
-  XyMasterNavbar(:base="base")
+  XyMasterSidebar
+  XyMasterNavbar
   MainSection
     PageCloseButton(@click="stop_handle" position="is_absolute" v-if="is_mode_active")
-    XyMasterRestart(:base="base" v-if="is_mode_active")
+    XyMasterRestart(v-if="is_mode_active")
     .container
       .columns
         .column
@@ -30,7 +30,7 @@
                   | {{kanji_human(next_place)}}
 
             .CustomShogiPlayerWrap
-              XyMasterCountdown(:base="base")
+              XyMasterCountdown
               //- 「持ちあげる処理」を無効にするために sp_board_cell_left_click_user_handle で true を返している
               //- sp_mode="play"
               CustomShogiPlayer(
@@ -54,13 +54,13 @@
               | {{summary}}
             TweetButton.mt-3(:body="tweet_body" @after_click="$sound.play_click()")
 
-        XyMasterRanking(:base="base")
+        XyMasterRanking
 
-      XyMasterChart(:base="base" ref="XyMasterChart")
+      XyMasterChart(ref="XyMasterChart")
 
   .section(v-if="development_p")
     .container.is-fluid
-      XyMasterDebugPanels(:base="base")
+      XyMasterDebugPanels
 </template>
 
 <script>
@@ -117,6 +117,11 @@ export default {
   ],
   props: {
     config: { type: Object, required: true },
+  },
+  provide() {
+    return {
+      TheApp: this,
+    }
   },
   data() {
     return {
@@ -459,8 +464,6 @@ export default {
   },
 
   computed: {
-    base()              { return this                                                         },
-
     GhostPresetInfo()   { return GhostPresetInfo                                              },
     ghost_preset_info() { return this.GhostPresetInfo.fetch(this.ghost_preset_key)            },
 

@@ -1,6 +1,6 @@
 <template lang="pug">
 b-button.XyMasterRestart(
-  @click="base.restart_handle"
+  @click="TheApp.restart_handle"
   size="is-medium"
   icon-left="restart"
   type="is-text"

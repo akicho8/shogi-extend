@@ -1,7 +1,7 @@
 <template lang="pug">
-.XyMasterCountdown(@click.prevent.stop.capture v-if="base.mode === 'is_mode_ready'")
+.XyMasterCountdown(@click.prevent.stop.capture v-if="TheApp.mode === 'is_mode_ready'")
   .contdown_value
-    | {{base.countdown}}
+    | {{TheApp.countdown}}
 </template>
 
 <script>

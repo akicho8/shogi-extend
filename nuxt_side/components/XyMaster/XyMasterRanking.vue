@@ -1,21 +1,21 @@
 <template lang="pug">
-.column.is-5.XyMasterRanking(v-if="base.is_mode_idol && base.time_records_hash")
+.column.is-5.XyMasterRanking(v-if="TheApp.is_mode_idol && TheApp.time_records_hash")
   b-field.scope_info_field
-    template(v-for="e in base.ScopeInfo.values")
-      b-radio-button(v-model="base.scope_key" :native-value="e.key" @input="$sound.play_click()")
+    template(v-for="e in TheApp.ScopeInfo.values")
+      b-radio-button(v-model="TheApp.scope_key" :native-value="e.key" @input="$sound.play_click()")
         | {{e.name}}
 
-  b-tabs(v-model="base.current_rule_index" expanded @input="$sound.play_click()")
-    template(v-for="e in base.RuleInfo.values")
+  b-tabs(v-model="TheApp.current_rule_index" expanded @input="$sound.play_click()")
+    template(v-for="e in TheApp.RuleInfo.values")
       b-tab-item(:label="e.name" :value="e.key")
         b-table(
-          :data="base.time_records_hash[e.key]"
+          :data="TheApp.time_records_hash[e.key]"
           :paginated="true"
-          :per-page="base.config.per_page"
-          :current-page.sync="base.current_pages[base.current_rule_index]"
+          :per-page="TheApp.config.per_page"
+          :current-page.sync="TheApp.current_pages[TheApp.current_rule_index]"
           :pagination-simple="false"
           :mobile-cards="false"
-          :row-class="(row, index) => row.id === (base.time_record && base.time_record.id) && 'is-selected'"
+          :row-class="(row, index) => row.id === (TheApp.time_record && TheApp.time_record.id) && 'is-selected'"
           :narrowed="true"
           default-sort-direction="desc"
           )
@@ -27,12 +27,12 @@
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
             XemojiWrap(:str="str_truncate(row.entry_name || '？？？', {length: 12})")
 
-          b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{base.time_format_from_msec(row.spent_sec)}}
+          b-table-column(v-slot="{row}" field="spent_sec"  label="タイム" sortable cell-class="spent_sec") {{TheApp.time_format_from_msec(row.spent_sec)}}
           b-table-column(v-slot="{row}" field="x_count"    label="X" sortable numeric centered) {{row.x_count}}
-          b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!base.curent_scope.date_show_p") {{base.time_default_format(row.created_at)}}
+          b-table-column(v-slot="{row}" field="created_at" label="日付" :visible="!!TheApp.curent_scope.date_show_p") {{TheApp.time_default_format(row.created_at)}}
 
   .has-text-centered-mobile
-    b-switch(v-model="base.entry_name_uniq_p" @input="$sound.play_click()") プレイヤー別順位
+    b-switch(v-model="TheApp.entry_name_uniq_p" @input="$sound.play_click()") プレイヤー別順位
 </template>
 
 <script>

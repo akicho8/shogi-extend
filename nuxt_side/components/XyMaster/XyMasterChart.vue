@@ -1,31 +1,31 @@
 <template lang="pug">
-.XyMasterChart.columns.is-centered(v-show="base.is_mode_idol")
+.XyMasterChart.columns.is-centered(v-show="TheApp.is_mode_idol")
   .column.chart_box_container
     .columns
       template(v-if="development_p")
         .column
           .has-text-centered
             b-field.is-inline-flex
-              b-button(@click="base.chart_data_get_and_show" size="is-small")
+              b-button(@click="TheApp.chart_data_get_and_show" size="is-small")
                 | 更新
       .column
         .has-text-centered
           b-field.is-inline-flex
-            template(v-for="e in base.RuleInfo.values")
-              b-radio-button(v-model="base.chart_rule_key" :native-value="e.key" size="is-small" @input="$sound.play_click()")
+            template(v-for="e in TheApp.RuleInfo.values")
+              b-radio-button(v-model="TheApp.chart_rule_key" :native-value="e.key" size="is-small" @input="$sound.play_click()")
                 | {{e.name}}
       .column
         .has-text-centered
           b-field.is-inline-flex
-            template(v-for="e in base.ChartScopeInfo.values")
-              b-radio-button(v-model="base.chart_scope_key" :native-value="e.key" size="is-small" @input="$sound.play_click()")
+            template(v-for="e in TheApp.ChartScopeInfo.values")
+              b-radio-button(v-model="TheApp.chart_scope_key" :native-value="e.key" size="is-small" @input="$sound.play_click()")
                 | {{e.name}}
     .columns.is-centered
       .column.is-half
         canvas#main_canvas(ref="main_canvas")
-        template(v-if="base.config.count_all_gteq > 1")
+        template(v-if="TheApp.config.count_all_gteq > 1")
           .has-text-centered
-            | {{base.config.count_all_gteq}}回以上やるとチャートに登場します
+            | {{TheApp.config.count_all_gteq}}回以上やるとチャートに登場します
 </template>
 
 <script>

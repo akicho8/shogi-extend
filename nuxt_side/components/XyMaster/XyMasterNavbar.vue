@@ -1,12 +1,12 @@
 <template lang="pug">
-MainNavbar.XyMasterNavbar(v-if="base.is_mode_idol")
+MainNavbar.XyMasterNavbar(v-if="TheApp.is_mode_idol")
   template(slot="brand")
     NavbarItemHome
     b-navbar-item.has-text-weight-bold(tag="nuxt-link" :to="{name: 'xy'}") 符号の鬼
   template(slot="end")
     NavbarItemLogin
     NavbarItemProfileLink
-    NavbarItemSidebarOpen(@click="base.sidebar_toggle")
+    NavbarItemSidebarOpen(@click="TheApp.sidebar_toggle")
 </template>
 
 <script>
