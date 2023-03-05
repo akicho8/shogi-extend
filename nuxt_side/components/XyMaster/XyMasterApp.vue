@@ -459,30 +459,30 @@ export default {
   },
 
   computed: {
-    base()           { return this           },
+    base()              { return this                                                         },
 
-    GhostPresetInfo()      { return GhostPresetInfo      },
-    ghost_preset_info() { return this.GhostPresetInfo.fetch(this.ghost_preset_key) },
+    GhostPresetInfo()   { return GhostPresetInfo                                              },
+    ghost_preset_info() { return this.GhostPresetInfo.fetch(this.ghost_preset_key)            },
 
-    ScopeInfo()      { return ScopeInfo      },
-    curent_scope() { return ScopeInfo.fetch(this.scope_key) },
+    ScopeInfo()         { return ScopeInfo                                                    },
+    curent_scope()      { return ScopeInfo.fetch(this.scope_key)                              },
 
-    RuleInfo()       { return RuleInfo       },
-    rule_info() { return RuleInfo.fetch(this.rule_key) },
+    RuleInfo()          { return RuleInfo                                                     },
+    rule_info()         { return RuleInfo.fetch(this.rule_key)                                },
 
-    ChartScopeInfo() { return ChartScopeInfo },
-    DIMENSION()      { return 9              }, // 盤面の辺サイズ
+    ChartScopeInfo()    { return ChartScopeInfo                                               },
+    DIMENSION()         { return 9                                                            }, // 盤面の辺サイズ
 
-    is_mode_idol()   { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
-    is_mode_active() { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
-    countdown()      { return COUNTDOWN_MAX - this.countdown_counter },
+    is_mode_idol()      { return this.mode === 'is_mode_stop' || this.mode === 'is_mode_goal' },
+    is_mode_active()    { return this.mode === 'is_mode_run' || this.mode === 'is_mode_ready' },
+    countdown()         { return COUNTDOWN_MAX - this.countdown_counter                       },
 
-    NEXT_IF_X()      { return this.$route.query.NEXT_IF_X || NEXT_IF_X },
+    NEXT_IF_X()         { return this.$route.query.NEXT_IF_X || NEXT_IF_X                     },
 
-    tap_mode_p() { return this.rule_info.input_mode === "is_input_mode_tap" },
-    kb_mode_p()  { return this.rule_info.input_mode === "is_input_mode_kb"  },
+    tap_mode_p()        { return this.rule_info.input_mode === "is_input_mode_tap"            },
+    kb_mode_p()         { return this.rule_info.input_mode === "is_input_mode_kb"             },
 
-    current_rank() { return this.time_record.rank_info[this.scope_key].rank },
+    current_rank()      { return this.time_record.rank_info[this.scope_key].rank              },
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -493,7 +493,6 @@ export default {
         return "rule100"
       }
     },
-
   },
 }
 </script>
@@ -554,25 +553,25 @@ export default {
         width: calc(100vmin * 0.50)
 
     .CustomShogiPlayer
-      --sp_board_padding: 0                                                         // 盤の隙間なし
-      --sp_board_color: hsla(0, 0%, 0%, 0)                                          // 盤の色
-      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                       // 外枠の太さ
+      --sp_board_padding: 0                                                               // 盤の隙間なし
+      --sp_board_color: hsla(0, 0%, 0%, 0)                                                // 盤の色
+      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                             // 外枠の太さ
       --sp_grid_inner_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%)) // グリッド外枠色
+      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%))       // グリッド外枠色
       --sp_grid_inner_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
-      --sp_board_aspect_ratio: 1.0                                                  // 盤を正方形化
-      --sp_star_size: calc(var(--xy_grid_star_size) / 100.0)                   // 星の大きさ
-      --sp_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))  // 星の色
-      --sp_star_z_index: -1                                                    // 星を盤の裏に表示
+      --sp_board_aspect_ratio: 1.0                                                        // 盤を正方形化
+      --sp_star_size: calc(var(--xy_grid_star_size) / 100.0)                              // 星の大きさ
+      --sp_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))             // 星の色
+      --sp_star_z_index: -1                                                               // 星を盤の裏に表示(重要)
 
   &.is_input_mode_tap
-    --sp_board_piece_size: 0.766                // セル内の駒の大きさ
+    --sp_board_piece_size: 0.766                                                          // セル内の駒の大きさ
     .CustomShogiPlayer
       .PieceTextureSelf
-        opacity: var(--xy_piece_opacity)        // ゴーストの濃さ
+        opacity: var(--xy_piece_opacity)                                                  // ゴーストの濃さ
 
-    .is_tapped_cell                             // 直前に押されたセル
-      background-color: $primary !important     // 青くする(詳細度で負けるため!importantが必要)
+    .is_tapped_cell                                                                       // 直前に押されたセル
+      background-color: $primary !important                                               // 青くする(詳細度で負けるため!importantが必要)
 
   .tweet_box_container
     display: flex
