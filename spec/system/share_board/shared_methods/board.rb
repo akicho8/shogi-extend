@@ -69,6 +69,6 @@ module SharedMethods
 
   # location_key 色の piece_key が盤上にある
   def assert_soldier_exist(location_key, piece_key, promoted)
-    assert_selector ".ShogiPlayer .BoardBase .PieceTextureSelf.location_#{location_key}.promoted_#{promoted}.piece_name.piece_#{piece_key}"
+    assert_selector ".ShogiPlayer .MainBoard .PieceTextureSelf.location_#{location_key}.promoted_#{promoted}.piece_name.piece_#{piece_key}"
   end
 end
