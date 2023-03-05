@@ -35,7 +35,7 @@ module Api
         user,
         user.profile,
         user.avatar_blob, # ← 上で user.save! しちゃったせいで saved_changes? は常に false になっとるっぽい
-      ]
+      ].compact
       saved_changes_p = changed_records.any?(&:saved_changes?) || params[:croped_image]
       if saved_changes_p
         xnotice = Xnotice.add("変更しました", type: "is-success")
