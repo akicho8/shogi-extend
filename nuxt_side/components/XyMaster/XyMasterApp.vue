@@ -573,7 +573,6 @@ export default {
 
     .is_tapped_cell                             // 直前に押されたセル
       background-color: $primary !important     // 青くする(詳細度で負けるため!importantが必要)
-      --sp_piece_invert: 1.0                    // 駒の色を反転(この設定はもうない)
 
   .tweet_box_container
     display: flex
