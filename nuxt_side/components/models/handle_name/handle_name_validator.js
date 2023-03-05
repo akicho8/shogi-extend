@@ -27,19 +27,19 @@ export class HandleNameValidator {
     "捨てハンでない",
   ]
 
-  static create(source) {
-    return new this(source)
+  static create(source, options = {}) {
+    return new this(source, options)
   }
 
   static valid_message(source, options = {}) {
     return this.create(source, options).valid_message
   }
 
-  static valid_p(source, options) {
+  static valid_p(source, options = {}) {
     return this.create(source, options).valid_p
   }
 
-  static invalid_p(source, options) {
+  static invalid_p(source, options = {}) {
     return this.create(source, options).invalid_p
   }
 
