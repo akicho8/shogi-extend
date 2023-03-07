@@ -570,7 +570,7 @@ export default {
   &.is_input_mode_tap
     --sp_board_piece_size: 0.766                                                          // セル内の駒の大きさ
     .CustomShogiPlayer
-      .PieceTextureSelf
+      .PieceTexture
         opacity: var(--xy_piece_opacity)                                                  // ゴーストの濃さ
 
     .is_tapped_cell                                                                       // 直前に押されたセル
