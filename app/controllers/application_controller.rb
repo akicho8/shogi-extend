@@ -64,9 +64,18 @@ class ApplicationController < ActionController::Base
   end
 
   def from_crawl_bot?
-    if v = request.user_agent
-      v.match?(/Googlebot/i)
+    if request.from_crawler?
+      return true
     end
+
+    # https://github.com/woothee/woothee/issues/75
+    if v = request.user_agent
+      if v.match?(/HeadlessChrome/i)
+        return true
+      end
+    end
+
+    false
   end
 
   concerning :ChoreMethods do

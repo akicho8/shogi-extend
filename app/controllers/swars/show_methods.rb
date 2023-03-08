@@ -6,8 +6,7 @@ module Swars
       @current_record ||= yield_self do
         if key = params[:id].presence
           key = BattleKey.create(key)
-          if request.from_crawler?
-          else
+          if !from_crawl_bot?
             Importer::BattleImporter.new(key: key, SwarsBattleNotFound: params[:SwarsBattleNotFound]).run
           end
           current_scope.find_by!(key: key.to_s)

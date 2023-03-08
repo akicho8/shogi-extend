@@ -68,7 +68,7 @@ module Swars
     #   3. 人間であること
     #
     def import_enable?
-      current_swars_user_key && params[:page].blank? && !request.from_crawler?
+      current_swars_user_key && params[:page].blank? && !from_crawl_bot?
     end
 
     def js_index_options
