@@ -7,7 +7,7 @@ module Swars
         if key = params[:id].presence
           key = BattleKey.create(key)
           if !from_crawl_bot?
-            Importer::BattleImporter.new(key: key, SwarsBattleNotFound: params[:SwarsBattleNotFound]).run
+            Importer::BattleImporter.new(key: key, SwarsBattleNotFound: params[:SwarsBattleNotFound]).run # すでにあるならskipしている
           end
           current_scope.find_by!(key: key.to_s)
         else
