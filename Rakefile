@@ -9,7 +9,7 @@ task "p:d" do
   system %(git push; OPEN=false cap production deploy)
 end
 
-task :t, => :test_all
+task :t => :test_all
 desc "[t] test_all"
 task :test_all do
   system <<~EOT
