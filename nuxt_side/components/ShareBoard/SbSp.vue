@@ -138,7 +138,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-@import "shogi-player/components/stylesheets/global_macro.sass"
+@import "shogi-player/components/support.sass"
 
 .SbSp
   +padding_lr(unset)
