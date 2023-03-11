@@ -1,17 +1,22 @@
 <template lang="pug">
-.modal-card
-  .modal-card-head
-    .modal-card-title
-      | 抽出条件
-  .modal-card-body
-    p {{$route.query}}
-    p {{$route.params}}
-
-    b-loading(:active="$fetchState.pending")
-    ScsFormAll(v-if="!$fetchState.pending")
-  .modal-card-foot
-    b-button.close_click_handle.has-text-weight-normal(@click="close_click_handle" icon-left="chevron-left")
-    b-button.submit_click_handle(@click="submit_click_handle" type="is-primary") 実行
+.ScsModalInner
+  b-loading(:active="$fetchState.pending")
+  .modal-card(v-if="!$fetchState.pending")
+    .modal-card-head
+      .modal-card-title
+        | {{new_query_without_user_key || "条件なし"}}
+    .modal-card-body
+      ScsFormAll(
+        :new_query_field_show="false"
+        :user_key_field_show="false"
+      )
+      .buttons.is-centered.mb-0.are-small(v-if="development_p")
+        b-button.mb-0(@click="form_reset_handle") オプション類を外す
+        b-button.mb-0(@click="all_reset_handle") 完全リセット
+        b-button.mb-0(@click="parmalink_handle") パーマリンク化
+    .modal-card-foot
+      b-button.close_click_handle.has-text-weight-normal(@click="close_click_handle" icon-left="chevron-left")
+      b-button.submit_click_handle(@click="submit_click_handle" type="is-primary") 絞り込む
 </template>
 
 <script>
@@ -36,9 +41,6 @@ export default {
     mod_storage,
     mod_sidebar,
   ],
-  // props: {
-  //   xi: { type: Object,  required: true, },
-  // },
   provide() {
     return {
       TheApp: this,
@@ -51,18 +53,8 @@ export default {
   },
   fetchOnServer: false,
   fetch() {
-    const params = {
-      ...this.$route.params,
-      ...this.$route.query,
-    }
-    this.$route.query.user_key = this.$route.params.key
-
-    // {"key"=>"YamadaTaro", "tab_index"=>"0", "rule"=>"", "sample_max"=>"100", "xmode"=>""}
-    return this.$axios.$get("/api/swars/custom_search_setup.json", {params: {}}).then(e => {
-      this.xi = e
-    })
+    return this.$axios.$get("/api/swars/custom_search_setup", {params: {}}).then(e => this.xi = e)
   },
-
   methods: {
     close_click_handle() {
       this.$sound.play_click()
@@ -70,12 +62,18 @@ export default {
     },
     submit_click_handle() {
       this.$emit("close")
-      this.$router.push({name: "swars-users-key", params: {key: this.$route.params.key}, query: {query: this.new_query}})
+      this.$router.push({
+        name: "swars-users-key",
+        params: {
+          key: this.$route.params.key,
+        },
+        query: {
+          query: this.new_query_without_user_key,
+        },
+      })
     },
     search_click_handle() {
-      // this.$sound.play_click()
-      // this.remote_notify({subject: "カスタム検索", body: this.new_query})
-      // this.$router.push({name: "swars-search", query: {query: this.new_query}})
+      alert("new_query_field_show = false としているため呼ばれない")
     },
   },
 }
@@ -84,7 +82,9 @@ export default {
 <style lang="sass">
 @import "support.sass"
 .ScsModal
-  // +modal_width(320px)
-  // .modal-card-body
-  //   padding: 1.5rem
+  .modal-card-body
+    padding: 0 1.5rem
+  .modal-card-foot
+    .button
+      min-width: 10rem
 </style>

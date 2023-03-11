@@ -74,53 +74,7 @@ module Api
     concerning :CustomSearchMethods do
       # curl http://localhost:3000/api/swars/custom_search_setup
       def custom_search_setup
-        json = {}
-
-        json[:xmode_infos] = Swars::XmodeInfo.collect do |e|
-          { :key => e.key, :yomiage => e.long_name }
-        end
-
-        json[:rule_infos] = Swars::RuleInfo.collect do |e|
-          { :key => e.name, :yomiage => e.long_name }
-        end
-
-        json[:final_infos] = Swars::FinalInfo.collect do |e|
-          { :key => e.name }
-        end
-
-        json[:preset_infos] = Swars::SwPresetInfo.collect do |e|
-          { :key => e.key }
-        end
-
-        json[:grade_infos] = Swars::GradeInfo.find_all(&:select_option).reverse.collect do |e|
-          { :key => e.key, :name => e.short_name, yomiage: e.name }
-        end
-
-        json[:style_infos] = Swars::StyleInfo.collect do |e|
-          { :key => e.key }
-        end
-
-        json[:judge_infos] = JudgeInfo.collect do |e|
-          { :key => e.name }
-        end
-
-        json[:location_infos] = LocationInfo.collect do |e|
-          {
-            :key     => e.name,
-            :name    => "#{e.pentagon_mark} #{e.equality_name}",
-            :yomiage => "#{e.equality_name}または#{e.handicap_name}",
-          }
-        end
-
-        json[:tactic_infos] = Bioshogi::Explain::TacticInfo.inject({}) do |a, e|
-          a.merge(e.key => {
-              :key    => e.key,
-              :name   => e.name,
-              :values => e.model.collect(&:name).uniq, # uniq はキーが異なっても名前が同じものがある場合があるため
-            })
-        end
-
-        render json: json
+        render json: Swars::CustomSearchSetup.new.call
       end
     end
 
@@ -136,5 +90,13 @@ module Api
     #         }))
     #   end
     # end
+
+    # プレイヤー情報
+    concerning :UserInfoMethods do
+      # http://localhost:3000/api/swars/user_info?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
+      def user_info
+        render json: Swars::User.find_by!(user_key: params[:user_key]).user_info(params.to_unsafe_h.to_options)
+      end
+    end
   end
 end

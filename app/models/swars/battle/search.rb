@@ -6,8 +6,25 @@ module Swars
         @params = params
       end
 
-      # FIXME: 分割する
-      def perform
+      def call
+        scope.includes({
+            :win_user => nil,
+            :xmode    => nil,
+            :rule     => nil,
+            :final    => nil,
+            :preset   => nil,
+            :memberships => {
+              :user     => nil,
+              :grade    => nil,
+              :location => nil,
+              :style    => nil,
+              :judge    => nil,
+              :taggings => :tag,
+            },
+          })
+      end
+
+      def scope
         s = all
 
         if v = query_info.lookup(:ids)
@@ -50,22 +67,22 @@ module Swars
           end
         end
 
-        if current_swars_user
-          selected = false
+        if user
+          @selected = false
 
           begin
             if v = query_info.lookup("judge") || query_info.lookup("勝敗")
               m = my_memberships
               m = m.judge_ex(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
 
             if v = query_info.lookup("location") || query_info.lookup("先後")
               m = my_memberships
               m = m.location_ex(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
           end
 
@@ -74,13 +91,13 @@ module Swars
               m = my_memberships
               m = m.style_ex(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
             if v = query_info.lookup("vs-style") || query_info.lookup("相手の棋風")
               m = op_memberships
               m = m.style_ex(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
           end
 
@@ -89,7 +106,7 @@ module Swars
               m = my_memberships
               s = s.where(id: m.pluck(:battle_id))
               s = s.where(battled_at: t)
-              selected = true
+              @selected = true
             end
           end
 
@@ -98,21 +115,21 @@ module Swars
               m = my_memberships
               m = m.tagged_with(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
 
             if v = query_info.lookup("or-tag") || query_info.lookup("any-tag")
               m = my_memberships
               m = m.tagged_with(v, any: true)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
 
             if v = query_info.lookup("-tag") || query_info.lookup("exclude-tag")
               m = my_memberships
               m = m.tagged_with(v, exclude: true)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
           end
 
@@ -121,21 +138,21 @@ module Swars
               m = sampled_memberships(query_info, op_memberships)
               m = m.tagged_with(v)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
 
             if v = query_info.lookup("vs-or-tag") || query_info.lookup("vs-any-tag")
               m = sampled_memberships(query_info, op_memberships)
               m = m.tagged_with(v, any: true)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
 
             if v = query_info.lookup("-vs-tag") || query_info.lookup("vs-exclude-tag")
               m = sampled_memberships(query_info, op_memberships)
               m = m.tagged_with(v, exclude: true)
               s = s.where(id: m.pluck(:battle_id))
-              selected = true
+              @selected = true
             end
           end
 
@@ -144,80 +161,63 @@ module Swars
             m = sampled_memberships(query_info, op_memberships)
             m = m.where(grade: v)
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("vs-grade-diff") || query_info.lookup_op("力差") || query_info.lookup_op("棋力差")
             m = my_memberships
             m = m.where(Membership.arel_table[:grade_diff].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("最大思考")
             m = my_memberships
             m = m.where(Membership.arel_table[:think_max].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("最終思考")
             m = my_memberships
             m = m.where(Membership.arel_table[:think_last].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("平均思考")
             m = my_memberships
             m = m.where(Membership.arel_table[:think_all_avg].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("中盤以降の平均思考")
             m = my_memberships
             m = m.where(Membership.arel_table[:obt_think_avg].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if e = query_info.lookup_op("中盤以降の最大連続即指し回数")
             m = my_memberships
             m = m.where(Membership.arel_table[:obt_auto_max].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
           if v = query_info.lookup("vs") || query_info.lookup("相手") || query_info.lookup("対戦相手")
             users = User.where(user_key: v)
             m = op_memberships.where(user: users)
             s = s.where(id: m.pluck(:battle_id))
-            selected = true
+            @selected = true
           end
 
-          # なんでこんなんいるんだっけ？
-          if !selected
-            s = s.joins(:memberships).merge(Membership.where(user_id: current_swars_user.id))
+          # 絞り込めていないときだけ自分の対局で絞る
+          unless @selected
+            s = s.joins(:memberships).merge(Membership.where(user_id: user.id))
           end
         end
-
-        # preload でもいい
-        s = s.includes({
-            :win_user => nil,
-            :xmode    => nil,
-            :rule     => nil,
-            :final    => nil,
-            :preset   => nil,
-            :memberships => {
-              :user     => nil,
-              :grade    => nil,
-              :location => nil,
-              :style    => nil,
-              :judge    => nil,
-              :taggings => :tag,
-            },
-          })
 
         s
       end
@@ -250,16 +250,16 @@ module Swars
         params[:query_info]
       end
 
-      def current_swars_user
-        params[:current_swars_user]
+      def user
+        params[:user]
       end
 
       def my_memberships
-        @my_memberships ||= current_swars_user.memberships
+        @my_memberships ||= user.memberships
       end
 
       def op_memberships
-        @op_memberships ||= current_swars_user.op_memberships
+        @op_memberships ||= user.op_memberships
       end
     end
   end

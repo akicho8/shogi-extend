@@ -14,7 +14,7 @@ export const Xobject = {
 
   presence(value) {
     if (this.blank_p(value)) {
-      return null
+      return undefined          // null だとURLのパラメータが消えないため undefined にする
     }
     return value
   },

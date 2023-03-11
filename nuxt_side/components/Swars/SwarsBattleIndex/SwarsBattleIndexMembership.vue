@@ -3,7 +3,7 @@
   .icon_with_name
     template(v-if="has_medal && membership.medal_params")
       MembershipMedal(:params="membership.medal_params" )
-    SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key")
+    SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="base.user_info_query")
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
   b-taglist(v-if="base.column_visible_p('attack_tag_list') || base.column_visible_p('defense_tag_list')")

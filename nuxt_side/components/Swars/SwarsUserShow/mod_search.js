@@ -1,36 +1,32 @@
 import _ from "lodash"
+import { Gs2 } from "../../models/gs2.js"
 
 export const mod_search = {
   methods: {
-    // 棋譜検索URL
-    search_path(append_params = {}) {
-      let params = {}
-      if (this.present_p(this.rule)) {
-        params["持ち時間"] = this.rule
-      }
-      if (this.present_p(this.xmode)) {
-        params["モード"] = this.xmode
-      }
-      params = {...params, ...append_params}
-      let queries = _.map(params, (value, key) => `${key}:${value}`)
-      const query = [this.info.user.key, ...queries].join(" ")
-      return {name: 'swars-search', query: {query: query}}
+    // 棋譜検索
+    search_path(params = {}) {
+      const query = Gs2.ary_compact_blank([
+        this.info.user.key,
+        Gs2.query_str_merge(this.$route.query.query, params),
+      ]).join(" ")
+      return {name: "swars-search", query: {query: query}}
     },
 
-    win_lose_click_handle(judge_key) {
-      this.$sound.play_click()
-      this.$router.push(this.search_path({'勝敗': judge_key}))
+    // WinLoseCircle から呼ばれるシリーズ
+    win_lose_click_handle(judge_info) {
+      this.win_lose_click_shared_handle(judge_info)
     },
-
-    ibisha_win_lose_click_handle(judge_key) {
-      this.$sound.play_click()
-      this.$router.push(this.search_path({'勝敗': judge_key, tag: "居飛車"}))
+    ibisha_win_lose_click_handle(judge_info) {
+      this.win_lose_click_shared_handle(judge_info, {tag: "居飛車"})
     },
-
-    furibisha_win_lose_click_handle(judge_key) {
-      this.$sound.play_click()
-      this.$router.push(this.search_path({'勝敗': judge_key, tag: "振り飛車"}))
+    furibisha_win_lose_click_handle(judge_info) {
+      this.win_lose_click_shared_handle(judge_info, {tag: "振り飛車"})
     },
+    win_lose_click_shared_handle(judge_info, params = {}) {
+      this.$sound.play_click()
+      this.$router.push(this.search_path({"勝敗": judge_info.name, ...params}))
+    },
+    ////////////////////////////////////////////////////////////////////////////////
 
     name_click_handle() {
       this.$sound.play_click()

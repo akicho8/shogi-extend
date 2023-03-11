@@ -64,8 +64,6 @@ export default {
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
   },
-  computed: {
-  },
 }
 </script>
 

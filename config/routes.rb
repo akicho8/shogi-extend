@@ -111,11 +111,12 @@ Rails.application.routes.draw do
     get "tsl_league_all(.:format)",    to: "etc#tsl_league_all"
     get "tsl_league_newest(.:format)", to: "etc#tsl_league_newest"
 
-    post "swars/download_set(.:format)",                  to: "swars#download_set"
-    post "swars/crawler_run(.:format)",                   to: "swars#crawler_run"
-    get "swars/download_config_fetch(.:format)",          to: "swars#download_config_fetch"
-    get "swars/custom_search_setup(.:format)",            to: "swars#custom_search_setup"
-    get "swars/distribution_ratio(.:format)", to: "swars#distribution_ratio"
+    post "swars/download_set(.:format)",         to: "swars#download_set"
+    post "swars/crawler_run(.:format)",          to: "swars#crawler_run"
+    get "swars/download_config_fetch(.:format)", to: "swars#download_config_fetch"
+    get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
+    get "swars/distribution_ratio(.:format)",    to: "swars#distribution_ratio"
+    get "swars/user_info(.:format)",             to: "swars#user_info"
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 

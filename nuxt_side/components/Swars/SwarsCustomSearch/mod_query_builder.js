@@ -1,3 +1,5 @@
+import dayjs from "dayjs"
+
 import { CompareInfo    } from "./models/compare_info.js"
 import { LogicalInfo    } from "./models/logical_info.js"
 import { ParamInfo      } from "./models/param_info.js"
@@ -43,10 +45,16 @@ export const mod_query_builder = {
     my_mid_machine_gun_compare_info() { return CompareInfo.fetch(this.my_mid_machine_gun_compare) },
 
     new_query() {
-      let av = []
+      return this.str_squish([this.user_key, ...this.query_key_value_ary].join(" "))
+    },
 
-      // フォームと順番を合わせること
-      av.push(this.user_key)
+    new_query_without_user_key() {
+      return this.presence(this.str_squish(this.query_key_value_ary.join(" ")))
+    },
+
+    // フォームと順番を合わせること
+    query_key_value_ary() {
+      let av = []
       av.push(this.values_as_query("持ち時間", this.rule_keys))
       av.push(this.values_as_query("勝敗", this.judge_keys))
       av.push(this.values_as_query("結末", this.final_keys))
@@ -69,10 +77,7 @@ export const mod_query_builder = {
       av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
       av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
       av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
-
-      let str = av.join(" ")
-      str = this.str_squish(str)
-      return str
+      return av
     },
   },
 }
