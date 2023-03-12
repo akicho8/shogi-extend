@@ -64,10 +64,16 @@ class ApplicationController < ActionController::Base
   end
 
   def from_crawl_bot?
+    # テスト中は常に PC 扱いする
+    if SystemTest.active?
+      return false
+    end
+
     if request.from_crawler?
       return true
     end
 
+    # system test の場合は PC として扱いたいが production でもこれでクロールしてくるやつがいるためクローラー扱いとする
     # https://github.com/woothee/woothee/issues/75
     if v = request.user_agent
       if v.match?(/HeadlessChrome/i)

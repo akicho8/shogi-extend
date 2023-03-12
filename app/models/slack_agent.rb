@@ -41,7 +41,7 @@ class SlackAgent
       raise Slack::Web::Api::Errors::SlackError, "(message)"
     end
 
-    if Rails.env.development? && Rails.root.join("RSPEC_ACTIVE").exist?
+    if Rails.env.development? && SystemTest.active?
       return
     end
 
