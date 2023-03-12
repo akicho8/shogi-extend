@@ -6,8 +6,10 @@ module Swars
         @params = params
         @q = params[:query_info]
         @user = params[:user]
-        @my = @user.memberships
-        @op = @user.op_memberships
+        if @user
+          @my = @user.memberships
+          @op = @user.op_memberships
+        end
       end
 
       def call
