@@ -14,9 +14,9 @@ desc "[t] test_all"
 task :test_all do
   system <<~EOT
 
-  k -x "Google Chrome"
-  k -x "chromedriver"
-  k -x "shogi-extend"
+  # k -x "Google Chrome"
+  # k -x "chromedriver"
+  # k -x "shogi-extend"
 
   tmux kill-window -t start
   tmux new-window -n start
