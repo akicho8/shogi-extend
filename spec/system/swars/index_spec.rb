@@ -128,10 +128,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   describe "ACTION" do
     it "プレイヤー情報" do
-      visit2 "/swars/search", query: "YamadaTaro"
+      visit2 "/swars/search", query: "YamadaTaro 持ち時間:10分"
       hamburger_click
       find(".swars_users_key_handle").click
-      assert_current_path "/swars/users/YamadaTaro/", ignore_query: true
+      assert_current_path "/swars/users/YamadaTaro/?query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86&tab_index=0"
     end
   end
 

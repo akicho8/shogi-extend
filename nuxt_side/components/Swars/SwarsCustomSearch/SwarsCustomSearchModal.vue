@@ -6,7 +6,7 @@
       .modal-card-title
         | {{new_query_without_user_key || "条件なし"}}
     .modal-card-body
-      ScsFormAll(
+      SwarsCustomSearchFormAll(
         :new_query_field_show="false"
         :user_key_field_show="false"
       )
@@ -23,20 +23,18 @@
 import { support_parent    } from "./support_parent.js"
 import { mod_chore         } from "./mod_chore.js"
 import { mod_query_builder } from "./mod_query_builder.js"
-import { mod_modal         } from "./mod_modal.js"
 import { mod_support       } from "./mod_support.js"
 import { mod_form          } from "./mod_form.js"
 import { mod_storage       } from "./mod_storage.js"
 import { mod_sidebar       } from "./mod_sidebar.js"
 
 export default {
-  name: "ScsModal",
+  name: "SwarsCustomSearchModal",
   mixins: [
     support_parent,
     mod_form,
     mod_chore,
     mod_query_builder,
-    mod_modal,
     mod_support,
     mod_storage,
     mod_sidebar,
@@ -61,13 +59,15 @@ export default {
       this.$emit("close")
     },
     submit_click_handle() {
+      this.$sound.play_click()
       this.$emit("close")
       this.$router.push({
         name: "swars-users-key",
         params: {
-          key: this.$route.params.key,
+          ...this.$route.params,
         },
         query: {
+          ...this.$route.query,
           query: this.new_query_without_user_key,
         },
       })
@@ -81,7 +81,7 @@ export default {
 
 <style lang="sass">
 @import "support.sass"
-.ScsModal
+.SwarsCustomSearchModal
   .modal-card-body
     padding: 0 1.5rem
   .modal-card-foot

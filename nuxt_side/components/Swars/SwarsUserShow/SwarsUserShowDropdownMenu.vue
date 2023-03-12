@@ -6,7 +6,7 @@ DotsMenuButton.SwarsUserShowDropdownMenu
   //-   b-icon(icon="magnify" size="is-small")
   //-   span 棋譜検索
 
-  b-dropdown-item(@click="TheApp.scs_modal_handle")
+  b-dropdown-item(@click="TheApp.filter_modal_handle")
     b-icon(icon="filter-outline" size="is-small")
     span 絞り込み
 

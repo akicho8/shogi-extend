@@ -1,5 +1,5 @@
 <template lang="pug">
-.columns.is-multiline.ScsDebugPanels.is-centered
+.columns.is-multiline.SwarsCustomSearchDebugPanels.is-centered
   .column.is-4
     .panel
       .panel-heading
@@ -36,12 +36,12 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ScsDebugPanels",
+  name: "SwarsCustomSearchDebugPanels",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "./support.sass"
-.ScsDebugPanels
+.SwarsCustomSearchDebugPanels
 </style>

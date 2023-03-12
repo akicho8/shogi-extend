@@ -1,5 +1,5 @@
 <template lang="pug">
-.ScsFormAll.form_block
+.SwarsCustomSearchFormAll.form_block
   b-field.field_block.new_query_field(label="" v-if="new_query_field_show")
     b-field(grouped)
       b-input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off")
@@ -88,7 +88,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ScsFormAll",
+  name: "SwarsCustomSearchFormAll",
   mixins: [support_child],
   props: {
     new_query_field_show: { type: Boolean, required: false, default: true, },
@@ -101,7 +101,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.ScsFormAll
+.SwarsCustomSearchFormAll
   +bulma_columns_vertical_minus_margin_clear
 
   .field_block
@@ -129,7 +129,7 @@ export default {
       padding: 0.5rem 0
 
 .STAGE-development-x
-  .ScsFormAll
+  .SwarsCustomSearchFormAll
     .columns
       .column
         border: 1px dashed change_color($primary, $alpha: 0.5)
