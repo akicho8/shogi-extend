@@ -23,6 +23,7 @@ export class MessageDto {
     this.from_connection_id = params.from_connection_id                    // null なら bot 等
     this.from_user_name     = params.from_user_name                        // null なら名前を表示しなくなる
     this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null は守護獣
+    this.primary_emoji    = params.primary_emoji                       // 優先する絵文字
     this.performed_at       = params.performed_at ?? TimeUtil.current_ms() // unique_key 生成用だけに利用
 
     this.unique_key = this.unique_key_generate()
@@ -43,7 +44,7 @@ export class MessageDto {
 
   // 表示するときのメッセージは加工しておく
   get auto_linked_message() {
-    return Gs2.auto_link(this.message)
+    return Gs2.auto_link(this.message, {mention: false}) // `@alice` をリンクにしないようにする
   }
 
   // 表示するときの色

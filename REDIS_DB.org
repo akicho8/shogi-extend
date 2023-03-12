@@ -1,38 +1,38 @@
 ※development, test は production と同じ
-|------+----+------------------------+------------+--------------------------+---|
-| host | db |                        | env        | 検索キーワード           |   |
-|------+----+------------------------+------------+--------------------------+---|
-| ik1  |  0 |                        |            |                          |   |
-|      |  1 | Rails.cache            | production | redis_cache_store        |   |
-|      |  2 | 符号の鬼のランキング用 | production | redis_db_for_xy_master   |   |
-|      |  3 |                        |            |                          |   |
-|      |  4 |                        |            |                          |   |
-|      |  5 | sidekiq                | production | redis_db_for_sidekiq     |   |
-|      |  6 | ActionCable            | production | cable.yml                |   |
-|      |  7 |                        |            |                          |   |
-|      |  8 | 共有将棋盤             | production | redis_db_for_share_board |   |
-|      |  9 |                        |            |                          |   |
-|      | 10 |                        |            |                          |   |
-|      | 11 |                        |            |                          |   |
-|      | 12 |                        |            |                          |   |
-|      | 13 |                        |            |                          |   |
-|      | 14 |                        |            |                          |   |
-|      | 15 |                        |            |                          |   |
-|------+----+------------------------+------------+--------------------------+---|
-| tk2  |  0 |                        |            |                          |   |
-|      |  1 |                        |            |                          |   |
-|      |  2 |                        |            |                          |   |
-|      |  3 |                        |            |                          |   |
-|      |  4 |                        |            |                          |   |
-|      |  5 |                        |            |                          |   |
-|      |  6 |                        |            |                          |   |
-|      |  7 |                        |            |                          |   |
-|      |  8 | Rails.cache            | staging    | redis_cache_store        |   |
-|      |  9 | 符号の鬼のランキング用 | staging    | redis_db_for_xy_master   |   |
-|      | 10 |                        |            |                          |   |
-|      | 11 |                        |            |                          |   |
-|      | 12 | sidekiq                | staging    | redis_db_for_sidekiq     |   |
-|      | 13 | ActionCable            | staging    | cable.yml                |   |
-|      | 14 |                        |            |                          |   |
-|      | 15 | 共有将棋盤             | staging    | redis_db_for_share_board |   |
-|------+----+------------------------+------------+--------------------------+---|
+|------+----+------------------------+------------+--------------------------------|
+| host | db |                        | env        | 検索キーワード                 |
+|------+----+------------------------+------------+--------------------------------|
+| ik1  |  0 |                        |            |                                |
+|      |  1 | Rails.cache            | production | redis_cache_store              |
+|      |  2 | 符号の鬼のランキング用 | production | redis_db_for_xy_master         |
+|      |  3 |                        |            |                                |
+|      |  4 |                        |            |                                |
+|      |  5 | sidekiq                | production | redis_db_for_sidekiq           |
+|      |  6 | ActionCable            | production | cable.yml                      |
+|      |  7 | 共有将棋盤チャット     | production | redis_db_for_share_board_chat  |
+|      |  8 | 共有将棋盤ロビー       | production | redis_db_for_share_board_lobby |
+|      |  9 |                        |            |                                |
+|      | 10 |                        |            |                                |
+|      | 11 |                        |            |                                |
+|      | 12 |                        |            |                                |
+|      | 13 |                        |            |                                |
+|      | 14 |                        |            |                                |
+|      | 15 |                        |            |                                |
+|------+----+------------------------+------------+--------------------------------|
+| tk2  |  0 |                        |            |                                |
+|      |  1 |                        |            |                                |
+|      |  2 |                        |            |                                |
+|      |  3 |                        |            |                                |
+|      |  4 |                        |            |                                |
+|      |  5 |                        |            |                                |
+|      |  6 |                        |            |                                |
+|      |  7 |                        |            |                                |
+|      |  8 | Rails.cache            | staging    | redis_cache_store              |
+|      |  9 | 符号の鬼のランキング用 | staging    | redis_db_for_xy_master         |
+|      | 10 |                        |            |                                |
+|      | 11 |                        |            |                                |
+|      | 12 | sidekiq                | staging    | redis_db_for_sidekiq           |
+|      | 13 | ActionCable            | staging    | cable.yml                      |
+|      | 14 | 共有将棋盤チャット     | staging    | redis_db_for_share_board_chat  |
+|      | 15 | 共有将棋盤ロビー       | staging    | redis_db_for_share_board_lobby |
+|------+----+------------------------+------------+--------------------------------|

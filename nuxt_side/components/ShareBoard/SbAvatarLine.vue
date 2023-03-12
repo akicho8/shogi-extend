@@ -7,14 +7,13 @@
     template(v-if="replace_icon")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
 
-    template(v-else)
-      // 自分プロフィール画像があるなら優先して表示する
-      template(v-if="info.from_avatar_path")
-        img.avatar_img.flex_item(:src="info.from_avatar_path")
+    // 自分プロフィール画像があるなら優先して表示する
+    template(v-else-if="info.from_avatar_path")
+      img.avatar_img.flex_item(:src="info.from_avatar_path")
 
-      // 自分プロフィール画像がないなら守護獣表示
-      template(v-if="info.from_avatar_path == null")
-        XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian")
+    // 自分プロフィール画像がないなら守護獣表示
+    template(v-else)
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian2")
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
@@ -39,6 +38,7 @@ export default {
   },
   computed: {
     default_guardian() { return this.TheSb.guardian_from_str(this.info.from_user_name) },
+    default_guardian2() { return this.info.primary_emoji || this.default_guardian },
     medal_decorator()  { return this.TheSb.medal_decorator_by_name(this.info.from_user_name)  },
   },
 }

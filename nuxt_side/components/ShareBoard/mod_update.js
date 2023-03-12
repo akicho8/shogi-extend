@@ -12,6 +12,9 @@ export const mod_update = {
       if (this.app_update_now) {
         return
       }
+      if (new_api_version == null) {
+        return
+      }
       if (new_api_version === this.API_VERSION) {
         // this.tl_alert("VERSION OK")
       } else {

@@ -66,9 +66,9 @@ class XmatchRuleInfo
     raise ArgumentError, data.inspect if data["performed_at"].blank?
 
     other_rule_delete(data) # 他のルールを選択している場合はいったん削除する
-    redis.multi do
-      redis.hset(redis_key, data["from_connection_id"], data.to_json) # 初回なら true
-      redis.expire(redis_key, data["xmatch_redis_ttl"])
+    redis.multi do |e|
+      e.hset(redis_key, data["from_connection_id"], data.to_json) # 初回なら true
+      e.expire(redis_key, data["xmatch_redis_ttl"])
     end
 
     h = {}

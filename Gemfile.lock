@@ -220,6 +220,9 @@ GEM
     html_format (0.0.9)
       actionpack
       activesupport
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -396,6 +399,8 @@ GEM
       rspec-mocks (~> 3.11)
       rspec-support (~> 3.11)
     rspec-support (3.12.0)
+    ruby-openai (3.5.0)
+      httparty (>= 0.18.1)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
@@ -561,6 +566,7 @@ DEPENDENCIES
   rspec-power_assert
   rspec-rails
   rspec-support
+  ruby-openai
   rubyzip (~> 2.3.0)
   sass-rails (>= 6)
   selenium-webdriver

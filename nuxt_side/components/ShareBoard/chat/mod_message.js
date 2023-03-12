@@ -41,6 +41,8 @@ export const mod_message = {
 
     // 受信
     message_share_broadcasted(params) {
+      // console.log(params)
+
       const message_dto = MessageDto.create(params)
       this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.message_share_received_p(params)) {    // 見てもいいなら

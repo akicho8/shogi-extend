@@ -195,3 +195,6 @@ gem "puma_worker_killer"
 gem "git-version-bump", require: false
 
 gem "retryable"
+
+# ChatGPT
+gem "ruby-openai", require: "openai"

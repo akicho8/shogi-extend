@@ -31,9 +31,9 @@ module ApplicationCable
         }.merge(options)
 
         # https://qiita.com/shiozaki/items/b746dc4bb5e1e87c0528
-        values = redis.multi do
-          redis.incr(key)
-          redis.expire(key, options[:expires_in])
+        values = redis.multi do |e|
+          e.incr(key)
+          e.expire(key, options[:expires_in])
         end
 
         counter = values.first

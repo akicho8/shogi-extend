@@ -2,7 +2,7 @@ module ShareBoard
   class LobbyChannel < ApplicationCable::Channel
     class << self
       def redis_db_index
-        AppConfig.fetch(:redis_db_for_share_board)
+        AppConfig.fetch(:redis_db_for_share_board_lobby)
       end
     end
 

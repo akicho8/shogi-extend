@@ -37,6 +37,7 @@ class EmojiInfo
     { key: ":API:",          raw: "🅰", },
     { key: ":KENTO_SOME:",   raw: "🌝", },
     { key: ":KENTO_NONE:",   raw: "🌚", },
+    { key: ":ChatGPT:",      raw: "🤖", },
   ]
 
   def to_s
