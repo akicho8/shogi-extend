@@ -16,6 +16,7 @@ import { Xhtml      } from "./core/xhtml.js"
 import { Xtime      } from "./core/xtime.js"
 import { Xaratio    } from "./core/xaratio.js"
 import { Xbase64    } from "./core/xbase64.js"
+import { Xquery     } from "./core/xquery.js"
 
 export const Gs2 = {
   ...Xassertion,
@@ -35,4 +36,5 @@ export const Gs2 = {
   ...Xtime,
   ...Xaratio,
   ...Xbase64,
+  ...Xquery,
 }

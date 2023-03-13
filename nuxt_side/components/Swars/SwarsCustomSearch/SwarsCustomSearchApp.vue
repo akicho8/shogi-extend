@@ -5,7 +5,7 @@
     p user_key: {{short_inspect(user_key)}}
     p vs_user_keys: {{short_inspect(vs_user_keys)}}
 
-  ScsSidebar()
+  SwarsCustomSearchSidebar()
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
@@ -16,22 +16,22 @@
       //- NavbarItemLogin
       //- NavbarItemProfileLink
       template(v-if="development_p")
-        b-navbar-item.has-text-weight-bold(@click="scs_modal_handle") モーダル版
+        b-navbar-item.has-text-weight-bold(@click="filter_modal_handle") モーダル版
       NavbarItemSidebarOpen(@click="sidebar_toggle")
 
   MainSection
     .container.is-fluid
       .columns.form_block.is-variable.is-0
         .column.is-12
-          ScsFormAll
-      ScsDebugPanels(v-if="development_p")
+          SwarsCustomSearchFormAll
+      SwarsCustomSearchDebugPanels(v-if="development_p")
 </template>
 
 <script>
 import { support_parent    } from "./support_parent.js"
 import { mod_chore         } from "./mod_chore.js"
 import { mod_query_builder } from "./mod_query_builder.js"
-import { mod_modal         } from "./mod_modal.js"
+import { mod_filter_modal         } from "./mod_filter_modal.js"
 import { mod_support       } from "./mod_support.js"
 import { mod_form          } from "./mod_form.js"
 import { mod_storage       } from "./mod_storage.js"
@@ -44,7 +44,7 @@ export default {
     mod_form,
     mod_chore,
     mod_query_builder,
-    mod_modal,
+    mod_filter_modal,
     mod_support,
     mod_storage,
     mod_sidebar,
@@ -63,8 +63,6 @@ export default {
       this.remote_notify({subject: "カスタム検索", body: this.new_query})
       this.$router.push({name: "swars-search", query: {query: this.new_query}})
     },
-  },
-  computed: {
   },
 }
 </script>

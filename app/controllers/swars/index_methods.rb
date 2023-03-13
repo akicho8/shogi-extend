@@ -34,10 +34,11 @@ module Swars
       end
     end
 
-    # http://localhost:3000/w.json?query=YamadaTaro&format_type=user
+    # http://localhost:3000/w.json?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86&format_type=user
     def case_player_info
       if request.format.json?
         if params[:format_type] == "user"
+          raise "must not happen"
           if !current_swars_user
             render json: {}, status: :not_found
             return
@@ -45,10 +46,7 @@ module Swars
           if params[:try_fetch] == "true"
             import_process_any
           end
-          if Rails.env.development?
-            SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{current_swars_user.key.inspect}")
-          end
-          render json: current_swars_user.user_info(params.to_unsafe_h.to_options).to_hash.as_json
+          render json: current_swars_user.user_info(params.to_unsafe_h.to_options)
         end
       end
     end
@@ -175,8 +173,8 @@ module Swars
 
     def current_scope
       @current_scope ||= current_model.search(params.merge({
-            :query_info         => query_info,
-            :current_swars_user => current_swars_user,
+            :user            => current_swars_user,
+            :query_info      => query_info,
             :main_battle_key => main_battle_key,
           }))
     end

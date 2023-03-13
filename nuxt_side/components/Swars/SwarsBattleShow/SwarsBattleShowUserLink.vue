@@ -1,6 +1,6 @@
 <template lang="pug">
 nuxt-link.SwarsBattleShowUserLink(
-  :to="{name: 'swars-users-key', params: {key: membership.user.key}}"
+  :to="{name: 'swars-users-key', params: {key: membership.user.key}, query: {query: query}}"
   @click.native.stop="$sound.play_click()"
   :class="css_class"
   )
@@ -11,7 +11,7 @@ nuxt-link.SwarsBattleShowUserLink(
 </template>
 
 <script>
-import { JudgeInfo } from "../models/judge_info.js"
+import { JudgeInfo } from "../../models/judge_info.js"
 
 export default {
   props: {
@@ -19,6 +19,7 @@ export default {
     with_user_key: { default: true  },
     with_location:     { default: false },
     with_judge:    { default: false },
+    query:         { default: undefined }, // null にしてはいけない。null なら URL が "query=" になってしまう 
   },
   computed: {
     JudgeInfo()  { return JudgeInfo },

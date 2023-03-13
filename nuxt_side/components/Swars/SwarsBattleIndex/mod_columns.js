@@ -1,5 +1,5 @@
 import { ColumnInfo } from "./models/column_info.js"
-import { JudgeInfo } from "../models/judge_info.js"
+import { JudgeInfo } from "../../models/judge_info.js"
 import { StyleInfo } from "../models/style_info.js"
 import { Location } from "shogi-player/components/models/location.js"
 

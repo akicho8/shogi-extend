@@ -3,9 +3,14 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 export class SampleMaxInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
-      { name: "最大50件",  value: 50,  },
-      { name: "最大100件", value: 100, },
-      { name: "最大200件", value: 200, },
+      { value: 0,   environment: ["development"],                          },
+      { value: 1,   environment: ["development"],                          },
+      { value: 50,  environment: ["development", "staging", "production"], },
+      { value: 100, environment: ["development", "staging", "production"], },
+      { value: 200, environment: ["development", "staging", "production"], },
     ]
+  }
+  get name() {
+    return `最大${this.value}件`
   }
 }

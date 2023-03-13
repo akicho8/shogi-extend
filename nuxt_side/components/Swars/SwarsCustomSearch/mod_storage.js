@@ -21,6 +21,10 @@ export const mod_storage = {
   },
 
   computed: {
+    // 「カスタム検索」と「絞り込み」で共通化するため
+    // これを取ると個別の値になる
+    ls_storage_key() { return "swars_custom_search" },
+
     ParamInfo() { return ParamInfo },
   },
 }

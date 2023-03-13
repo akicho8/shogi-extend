@@ -3,13 +3,9 @@
   client-only
     DebugBox(v-if="development_p")
       p tab_index: {{pretty_inspect(tab_index)}}
-      p rule: {{pretty_inspect(rule)}}
       p sample_max: {{pretty_inspect(sample_max)}}
-      p xmode: {{pretty_inspect(xmode)}}
       p query.tab_index: {{pretty_inspect($route.query.tab_index)}}
-      p query.rule: {{pretty_inspect($route.query.rule)}}
       p query.sample_max: {{pretty_inspect($route.query.sample_max)}}
-      p query.xmode: {{pretty_inspect($route.query.xmode)}}
 
     b-loading(:active="$fetchState.pending")
     //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
@@ -32,6 +28,7 @@
       SwarsUserShowTabContent4MyDefense
       SwarsUserShowTabContent5VsDefense
       SwarsUserShowTabContent6Etc
+    SwarsUserShowFooter
 
     DebugPre(v-if="development_p") {{$route.query.info}}
 </template>
@@ -41,11 +38,11 @@ import { support_parent   } from "./support_parent.js"
 import { mod_storage      } from "./mod_storage.js"
 import { mod_search       } from "./mod_search.js"
 import { mod_chore        } from "./mod_chore.js"
-import { mod_scs_modal    } from "./mod_scs_modal.js"
+import { mod_filter_modal    } from "./mod_filter_modal.js"
 
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
-import { XmodeSelectInfo } from "./models/xmode_select_info.js"
+import { XmodeSelectInfo  } from "./models/xmode_select_info.js"
 import { ParamInfo        } from "./models/param_info.js"
 
 import _ from "lodash"
@@ -57,7 +54,7 @@ export default {
     mod_storage,
     mod_search,
     mod_chore,
-    mod_scs_modal,
+    mod_filter_modal,
   ],
 
   provide() {
@@ -73,21 +70,16 @@ export default {
   watch: {
     // tab_index だけは update_handle に渡さないので変更に合わせてURLを書き換える
     tab_index() {
-      this.url_replace()
+      this.$router.replace({query: { ...this.$route.query, tab_index: this.tab_index }}).catch(err => {})
     },
-    "$route.query": "$fetch",
+
+    // query が変化したら再度APIからとってくる
+    "$route.query.query": "$fetch",
   },
 
-  // http://localhost:4000/swars/users/DevUser1
-  // http://localhost:3000/w.json?query=DevUser1&format_type=user
-  // http://localhost:3000/w.json?query=foo&format_type=user
-  // fetch({error}) とすると $fetchState がつくられなくなる謎の罠あり
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get("/w.json", {params: this.axios_get_params}).then(e => {
-      this.info = e
-      this.url_replace() // URLを書き換えてからではなくfetchしたあとでURLを置換する
-    })
+    return this.$axios.$get("/api/swars/user_info", {params: this.axios_get_params}).then(e => this.info = e)
   },
 
   mounted() {
@@ -102,20 +94,9 @@ export default {
       this.$fetch()
     },
 
-    // URLを書き換えるだけ
-    // 絶対に watch してはいけない
-    url_replace() {
-      this.$router.replace({
-        name: "swars-users-key",
-        params: this.$route.params,
-        query: this.url_query,
-      }).catch(err => {})
-    },
-
     // 検索に戻る
     back_handle() {
-      this.$sound.play_click()
-      this.back_to({name: "swars-search", query: {query: this.$route.params.key}})
+      this.name_click_handle()
     },
 
     // 日付のスタイル
@@ -132,21 +113,11 @@ export default {
     SampleMaxInfo()   { return SampleMaxInfo    },
     XmodeSelectInfo() { return XmodeSelectInfo  },
 
-    url_query() {
-      return this.hash_compact({
-        tab_index:  this.tab_index,
-        rule:       this.rule,
-        sample_max: this.sample_max,
-        xmode:      this.xmode,
-      })
-    },
-
     axios_get_params() {
       return {
-        ...this.url_query,
-        query: this.ary_compact([this.$route.params.key, this.$route.query.query]).join(" "),
-        debug: this.$route.query.debug,
-        format_type: "user",
+        user_key: this.$route.params.key, // ウォーズID
+        sample_max: this.sample_max,      // localStorage から取得している
+        ...this.$route.query,             // 必要なのは query, debug
       }
     },
   },

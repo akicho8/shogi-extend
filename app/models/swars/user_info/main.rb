@@ -19,6 +19,10 @@ module Swars
       def initialize(user, params = {})
         @user = user
         @params = default_params.merge(params)
+
+        if Rails.env.development?
+          SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{user.key.inspect}")
+        end
       end
 
       # http://localhost:3000/w.json?query=kinakom0chi&format_type=user
@@ -63,6 +67,10 @@ module Swars
         end
       end
 
+      def as_json(*)
+        to_hash
+      end
+
       def judge_counts
         @judge_counts ||= judge_counts_wrap(ids_scope.s_group_judge_key.count)
       end
@@ -76,7 +84,7 @@ module Swars
 
         # if v = params[:query].presence
         #   raise v.inspect
-        #   scope = Battle.search(current_swars_user: user, query_info: QueryInfo.parse(v))
+        #   scope = Battle.search(user: user, query_info: QueryInfo.parse(v))
         #   battle_ids = scope.collect(&:id)
         #   s = s.joins(:battle).where(battle_id: battle_ids)
         # end
@@ -166,17 +174,20 @@ module Swars
       # 必須の条件
       def condition_add(s)
         s = s.joins(:battle)
-
         s = s.merge(Battle.newest_order)  # 直近のものから取得
-        if v = params[:rule].presence
-          s = s.merge(Battle.rule_eq(v))
+        if filtered_battle_ids
+          s = s.where(:battle => filtered_battle_ids)
         end
-        if v = params[:xmode].presence
-          s = s.merge(Battle.xmode_eq(v))
-        end
-
         s = s.limit(sample_max)
         s
+      end
+
+      def filtered_battle_ids
+        @filtered_battle_ids ||= yield_self do
+          if query = params[:query]
+            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids
+          end
+        end
       end
 
       # all_tag_names_hash_or_zero("居飛車")         # => 1

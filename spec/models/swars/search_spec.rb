@@ -7,8 +7,8 @@ module Swars
         black = User.create!
         white = User.create!(key: options[:white_key])
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq])
-        assert {  Battle.search(current_swars_user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
-        assert { !Battle.search(current_swars_user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
+        assert {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
+        assert { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
       end
 
       it "棋風" do
@@ -55,7 +55,7 @@ module Swars
         Battle.create_with_members!(users, preset_key: "角落ち", csa_seq: csa_seq)
         Battle.create_with_members!(users, preset_key: "飛車落ち", csa_seq: csa_seq)
         query_info = QueryInfo.parse("手合割:#{value}")
-        scope = Battle.search(current_swars_user: white, query_info: query_info)
+        scope = Battle.search(user: white, query_info: query_info)
         scope.collect { |e| e.preset_key }
       end
 
@@ -77,7 +77,7 @@ module Swars
         Battle.create_with_members!([black, white], key: key.to_s)
         battles = Battle.search({
             :query_info         => QueryInfo.parse(""),
-            :current_swars_user => black,
+            :user => black,
             :main_battle_key => key,
           })
         assert { battles.exists? }

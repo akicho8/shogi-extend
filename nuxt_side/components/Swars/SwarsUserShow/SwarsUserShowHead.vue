@@ -8,16 +8,15 @@
   // 段級位
   .is-flex.rule_container
     template(v-for="(row, key) in TheApp.info.rules_hash")
-      template(v-if="blank_p(TheApp.rule) || TheApp.rule === row.rule_name")
-        nuxt-link.rule_one.is-clickable(tag="span" :to="TheApp.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
-          span.rule_name.is-size-7.has-text-grey
-            | {{row.rule_name}}
-          span.grade_name.is-size-5
-            template(v-if="row.grade_name")
-              | {{row.grade_name}}
-            template(v-else)
-              span.has-text-grey-lighter
-                | ？
+      nuxt-link.rule_one.is-clickable(tag="span" :to="TheApp.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
+        span.rule_name.is-size-7.has-text-grey
+          | {{row.rule_name}}
+        span.grade_name.is-size-5
+          template(v-if="row.grade_name")
+            | {{row.grade_name}}
+          template(v-else)
+            span.has-text-grey-lighter
+              | ？
 
   // 勝率
   WinLoseCircle(:info="TheApp.info" :click_func="TheApp.win_lose_click_handle")

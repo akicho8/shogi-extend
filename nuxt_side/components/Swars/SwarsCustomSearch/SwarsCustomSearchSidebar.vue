@@ -1,5 +1,5 @@
 <template lang="pug">
-b-sidebar.is-unselectable.ScsSidebar(fullheight right overlay v-model="TheApp.sidebar_p")
+b-sidebar.is-unselectable.SwarsCustomSearchSidebar(fullheight right overlay v-model="TheApp.sidebar_p")
   .mx-4.my-4
     .is-flex.is-justify-content-start.is-align-items-center
       NavbarItemSidebarClose(@click="TheApp.sidebar_toggle")
@@ -15,18 +15,18 @@ b-sidebar.is-unselectable.ScsSidebar(fullheight right overlay v-model="TheApp.si
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ScsSidebar",
+  name: "SwarsCustomSearchSidebar",
   mixins: [support_child],
 }
 </script>
 
 <style lang="sass">
 @import "./support.sass"
-.ScsSidebar
+.SwarsCustomSearchSidebar
   .menu-label:not(:first-child)
     margin-top: 2em
 .STAGE-development
-  .ScsSidebar
+  .SwarsCustomSearchSidebar
     ul, li
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

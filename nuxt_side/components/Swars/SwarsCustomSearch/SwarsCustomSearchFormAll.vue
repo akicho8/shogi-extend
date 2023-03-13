@@ -1,61 +1,85 @@
 <template lang="pug">
-.ScsFormAll.form_block
-  b-field.field_block.new_query_field(label="")
+.SwarsCustomSearchFormAll.form_block
+  b-field.field_block.new_query_field(label="" v-if="new_query_field_show")
     b-field(grouped)
-      b-input.new_query_input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off")
+      b-input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off")
       p.control
         b-button.has-text-weight-bold(@click="TheApp.search_click_handle" type="is-primary")
           | 検索
+
   .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
-    .column.is-6-tablet.is-4-desktop
+
+    .column.is-6-tablet.is-4-desktop(v-if="user_key_field_show")
       b-field.field_block(custom-class="is-small")
         template(#label)
           | 対象のウォーズID
           span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
             | 必須
         b-input(v-model.trim="TheApp.user_key" placeholder="itoshinTV" :size="TheApp.input_element_size")
+
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="持ち時間"   :records="TheApp.xi.rule_infos"  var_name="rule_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="勝敗"       :records="TheApp.xi.judge_infos"  var_name="judge_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="結末"       :records="TheApp.xi.final_infos"  var_name="final_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="先後"       :records="TheApp.xi.location_infos"  var_name="location_keys" last_only_if_full)
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="相手の棋力" :records="TheApp.xi.grade_infos" var_name="grade_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputNumber(label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="TheApp.grade_diff_message")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputTag(label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputTag(label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="自分の棋風" :records="TheApp.xi.style_infos" var_name="my_style_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsCheckbox(label1="相手の棋風" :records="TheApp.xi.style_infos" var_name="vs_style_keys")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputNumber(label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputNumber(label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
-    .column.is-6-tablet.is-4-desktop
-      ScsInputNumber(label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="対局モード" :records="TheApp.xi.xmode_infos" var_name="xmode_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="勝敗"       :records="TheApp.xi.judge_infos"  var_name="judge_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="結末"       :records="TheApp.xi.final_infos"  var_name="final_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="先後"       :records="TheApp.xi.location_infos"  var_name="location_keys" last_only_if_full)
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="相手の棋力" :records="TheApp.xi.grade_infos" var_name="grade_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputNumber(label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="TheApp.grade_diff_message")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputTag(label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputTag(label="相手タグ" tags_var="vs_tag_values" op_var="vs_tag_values_op")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="自分の棋風" :records="TheApp.xi.style_infos" var_name="my_style_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="相手の棋風" :records="TheApp.xi.style_infos" var_name="vs_style_keys")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputNumber(label="手数" xxx_enabled_var="turn_max_enabled"      xxx_value_var="turn_max"      xxx_compare_var="turn_max_compare")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputNumber(label="中盤" xxx_enabled_var="outbreak_turn_enabled" xxx_value_var="outbreak_turn" xxx_compare_var="outbreak_turn_compare")
+
+    .column.is-6-tablet.is-4-desktop
+      ScsInputNumber(label="開戦" xxx_enabled_var="critical_turn_enabled" xxx_value_var="critical_turn" xxx_compare_var="critical_turn_compare")
+
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="手合割"     :records="TheApp.xi.preset_infos"  var_name="preset_keys")
+
     .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
        ScsInputDate()
+
     .column.is-6-tablet.is-4-desktop
       ScsInputVsUserKeys()
+
     .column.is-6-tablet.is-4-desktop
       ScsInputNumber(label="最大思考" xxx_enabled_var="my_think_max_enabled"      xxx_value_var="my_think_max"      xxx_compare_var="my_think_max_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_think_max)")
+
     .column.is-6-tablet.is-4-desktop
       ScsInputNumber(label="平均思考" xxx_enabled_var="my_think_avg_enabled"      xxx_value_var="my_think_avg"      xxx_compare_var="my_think_avg_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_think_avg)")
+
     .column.is-6-tablet.is-4-desktop
       ScsInputNumber(label="最終思考" xxx_enabled_var="my_think_last_enabled"      xxx_value_var="my_think_last"      xxx_compare_var="my_think_last_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_think_last)")
+
     .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
       ScsInputNumber(label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_mid_think_avg)")
+
     .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
       ScsInputNumber(label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
 </template>
@@ -64,8 +88,12 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "ScsFormAll",
+  name: "SwarsCustomSearchFormAll",
   mixins: [support_child],
+  props: {
+    new_query_field_show: { type: Boolean, required: false, default: true, },
+    user_key_field_show:  { type: Boolean, required: false, default: true, },
+  },
   methods: {},
   computed: {},
 }
@@ -73,7 +101,7 @@ export default {
 
 <style lang="sass">
 @import "./support.sass"
-.ScsFormAll
+.SwarsCustomSearchFormAll
   +bulma_columns_vertical_minus_margin_clear
 
   .field_block
@@ -98,10 +126,10 @@ export default {
     .field_block
       padding: 0.5rem 0
     .new_query_field
-      padding: 0.75rem 0
+      padding: 0.5rem 0
 
-.STAGE-development
-  .ScsFormAll
+.STAGE-development-x
+  .SwarsCustomSearchFormAll
     .columns
       .column
         border: 1px dashed change_color($primary, $alpha: 0.5)

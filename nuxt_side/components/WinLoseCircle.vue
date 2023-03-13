@@ -26,6 +26,7 @@
 
 <script>
 import { PaletteInfo } from "@/components/models/palette_info.js"
+import { JudgeInfo } from "./models/judge_info.js"
 
 const CHART_CONFIG_DEFAULT = {
   type: 'doughnut',
@@ -101,7 +102,7 @@ export default {
   methods: {
     click_handle(judge_key) {
       if (this.click_func) {
-        this.click_func(judge_key)
+        this.click_func(JudgeInfo.fetch(judge_key))
       }
     }
   },
