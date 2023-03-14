@@ -9,4 +9,7 @@ describe("Xrand", () => {
   test("irand_range", () => {
     expect(Xrand.irand_range(5, 5)).toEqual(5)
   })
+  test("dice_roll", () => {
+    expect(Xrand.dice_roll(1)).toEqual(1)
+  })
 })

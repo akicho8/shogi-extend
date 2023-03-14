@@ -17,4 +17,9 @@ export const Xrand = {
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1) + min)
   },
+
+  // さいころを振る
+  dice_roll(max = 6) {
+    return this.irand_range(1, max)
+  },
 }

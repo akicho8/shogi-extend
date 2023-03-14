@@ -32,7 +32,7 @@
             b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
           .control
             b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
-        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" :icon-left="dice_icon") 振り駒
+        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" :icon-left="dice.to_icon") 振り駒
         b-button.swap_handle(size="is-small" @click="swap_handle")
           .is-inline-flex.is-align-items-center
             | ☗
@@ -73,6 +73,7 @@ import { support_child } from "../support_child.js"
 import { Gs2           } from "@/components/models/gs2.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
+import { Dice          } from "@/components/models/dice.js"
 import _ from "lodash"
 
 export default {
@@ -81,6 +82,11 @@ export default {
   provide() {
     return {
       TheOSM: this,
+    }
+  },
+  data() {
+    return {
+      dice: new Dice(),
     }
   },
   inject: ["TheSb"],
@@ -152,6 +158,7 @@ export default {
       Gs2.__assert__(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.TheSb.shared_al_add({label: furigoma_pack.piece_names, message: message})
+      this.dice.roll()
     },
 
     // 先後入替
@@ -235,10 +242,6 @@ export default {
       if (this.TheSb.new_v.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
-    },
-    dice_icon() {
-      const n = Gs2.irand_range(1, 6)
-      return `dice-${n}-outline`
     },
   },
 }
