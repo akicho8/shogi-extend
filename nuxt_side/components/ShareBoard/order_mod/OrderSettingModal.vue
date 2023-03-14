@@ -32,9 +32,12 @@
             b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
           .control
             b-button.teams_each_shuffle_handle(size="is-small" @click="teams_each_shuffle_handle") ﾁｰﾑ内ｼｬｯﾌﾙ
-          .control
-            b-button.furigoma_handle(size="is-small" @click="furigoma_handle") 振り駒
-        b-button.swap_handle(size="is-small" @click="swap_handle") 先後入替
+        b-button.furigoma_handle(size="is-small" @click="furigoma_handle" :icon-left="dice_icon") 振り駒
+        b-button.swap_handle(size="is-small" @click="swap_handle")
+          .is-inline-flex.is-align-items-center
+            | ☗
+            b-icon(icon="swap-horizontal")
+            | ☖
 
       hr
 
@@ -233,6 +236,10 @@ export default {
         return "is-primary"
       }
     },
+    dice_icon() {
+      const n = Gs2.irand_range(1, 6)
+      return `dice-${n}-outline`
+    },
   },
 }
 </script>
@@ -255,6 +262,17 @@ export default {
     align-items: center
     justify-content: center
     gap: 0.5rem
+
+  .furigoma_handle
+    .icon
+      scale: 1.5
+      color: $grey
+
+  .swap_handle
+    .icon
+      margin: 0 0.1rem ! important
+      scale: 0.75
+      color: $grey
 
 .STAGE-development
   .OrderSettingModal
