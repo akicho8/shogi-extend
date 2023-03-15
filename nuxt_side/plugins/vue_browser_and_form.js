@@ -81,8 +81,12 @@ export const vue_browser_and_form = {
   computed: {
     // スマホ → _self
     //    PC  → _blank
+    //
+    // だったがスマホから別タブにならないのが使いにくいという意見があったため
+    // PCで別タブの方がよいならスマホでも同様にする
+    //
     target_default() {
-      return MyMobile.mobile_p ? "_self" : "_blank"
+      return "_blank"
     },
   },
 }
