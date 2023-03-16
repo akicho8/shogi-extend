@@ -114,13 +114,15 @@ module ShareBoard
       end
       if false
         text = GptaiSimple.new(data["message"]).call
-        ShareBoard::Messenger.new(room_code, from_user_name: "GPT", message_scope_key: data["message_scope_key"]).call(text)
+        ShareBoard::Messenger.new(room_code: room_code, from_user_name: "GPT", message_scope_key: data["message_scope_key"]).call(text)
       end
-      if true
-        ShareBoard::Responder.new(room_code, data).call
+      if false
+        ShareBoard::Responder.new(data.merge(room_code: room_code)).call
         # message = data["message"]
         # text = GptaiSimple.new(data["message"]).call
         # ShareBoard::Messenger.new(room_code, from_user_name: "GPT", message_scope_key: data["message_scope_key"]).call(text)
+      else
+        ShareBoard::ChatGptBroadcastJob.perform_later(data.merge(room_code: room_code))
       end
     end
 
