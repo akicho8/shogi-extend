@@ -4,7 +4,7 @@
     template(v-for="e in TheSb.message_logs")
       template(v-if="TheSb.message_share_received_p(e)")
         SbAvatarLine(:info="e" :key="e.unique_key")
-          XemojiWrap.flex_item.is_line_break_on.message_body(:class="e.message_class" :str="e.auto_linked_message")
+          XemojiWrap.flex_item.message_body(:class="e.message_class" :str="e.auto_linked_message")
 </template>
 
 <script>
@@ -19,17 +19,25 @@ export default {
 
 .SbMessageLog
   position: relative
-  height: 10rem
+  +mobile
+    height: 10rem
+  +tablet
+    height: 12rem
+  +desktop
+    height: 14rem
   margin-bottom: 1rem
 
   .scroll_block
     @extend %overlay
     padding: 0
     .SbAvatarLine
-      padding: 0.2rem 0
+      align-items: flex-start   // オーバーライドして全体を上に揃える
+      line-height: 1.4          // 1.4 ぐらいがちょうどよい
+      padding: 0.2rem 0         // 発言毎の隙間
       .message_body
-        flex-shrink: 1
-        // line-height: 1.1  // 発言が1行のとき名前と発言がずれるので設定しない方が良い
+        white-space: normal     // 発言は改行させる
+        word-break: break-all
+        flex-shrink: 1          // 縮んでよしとする
         pre
           padding: 0.5rem
           border-radius: 4px

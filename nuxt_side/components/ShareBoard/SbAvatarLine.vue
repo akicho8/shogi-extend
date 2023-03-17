@@ -2,7 +2,7 @@
 // 外側で必ず key を指定すること
 .SbAvatarLine(v-bind="$attrs" v-on="$listeners")
   // すべて名前が入力されていないとだめ
-  template(v-if="info.from_user_name")
+  .name_block(v-if="info.from_user_name")
     // replace_icon が最優先
     template(v-if="replace_icon")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
@@ -48,32 +48,34 @@ export default {
 @import "./support.sass"
 
 .SbAvatarLine
-  width: 100%
+  line-height: 1.75  // 以下共通とする
+
+  // width: 100%
   display: flex
+  // align-items: flex-start
   align-items: center
   justify-content: flex-start
   gap: 0.25rem
-  line-height: 1.75
 
   .flex_item
-    // 基本横1行の設定とする
-    flex-shrink: 0  // 縮小禁止 = テキストが折り返し抑制 (発言などの場合はオーバーライドして1にすること)
+    white-space: nowrap // 上書きする場合もある
 
-    &.avatar_img
-      display: block // inlineだと余計な隙間が生まれるため念のためblockにしておく
-      width: 24px
-      height: 24px
-      border-radius: 100%
-    &.user_guardian
-      .xemoji
-        width: 24px
-        height: 24px
-    &.user_name
-      // color: $primary
+  .name_block
+    flex-shrink: 0
+    display: flex
+    align-items: center
+    gap: 0.25rem
 
-.SbApp.debug_mode_p
+  .avatar_img, .xemoji
+    width: 24px
+    height: 24px
+
+  .avatar_img
+    display: block           // inlineだと余計な隙間が生まれるため念のためblockにしておく
+    border-radius: 100%      // 丸める
+
+.STAGE-development, .SbApp.debug_mode_p
   .SbAvatarLine
-    // flex-wrap: wrap
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .flex_item
       border: 1px dashed change_color($danger, $alpha: 0.5)

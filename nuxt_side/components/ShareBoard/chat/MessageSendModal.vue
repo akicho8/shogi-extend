@@ -78,7 +78,8 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .MessageSendModal
-  +modal_width(24rem)
+  +modal_width(32rem)
+
   .modal-card-body
     padding: 1.0rem
   .modal-card-foot
