@@ -121,6 +121,7 @@ import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
 import { mod_message      } from "./chat/mod_message.js"
 import { mod_message_logs } from "./chat/mod_message_logs.js"
+import { mod_chatgpt     } from "./chat/mod_chatgpt.js"
 
 import { mod_console      } from "./console/mod_console.js"
 
@@ -153,6 +154,7 @@ export default {
     mod_action_log,
     mod_message,
     mod_message_logs,
+    mod_chatgpt,
     mod_console,
     mod_persistent_cc_params,
     mod_turn_notify,

@@ -217,6 +217,16 @@ module ShareBoard
       end
     end
 
+    describe "ChatGPTに発言を促す" do
+      before do
+        subscribe(room_code: room_code)
+      end
+      it "works" do
+        data = data_factory("message" => "", "message_scope_key" => "is_message_scope_public")
+        subscription.gpt_speak(data)
+      end
+    end
+
     describe "投了" do
       before do
         subscribe(room_code: room_code)

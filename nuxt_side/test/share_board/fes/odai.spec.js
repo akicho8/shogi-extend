@@ -9,6 +9,9 @@ describe("Odai", () => {
     })
   })
   describe("InstanceMethods", () => {
+    test("oneline_message", () => {
+      expect(Odai.sample.to_s).toEqual("マヨネーズとケチャップ、どっちがお好き？")
+    })
     test("valid_p", () => {
       const object = Odai.create()
       expect(object.valid_p).toEqual(false)

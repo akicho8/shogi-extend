@@ -1,5 +1,5 @@
 module ShareBoard
-  class ChatGptBroadcastJob < ApplicationJob
+  class Responder1Job < ApplicationJob
     queue_as :default
 
     def perform(params)
@@ -20,7 +20,7 @@ module ShareBoard
       #   "action"=>"message_share",
       #   :room_code=>"dev_room",
       # }
-      ShareBoard::Responder.new(params).call
+      ShareBoard::Responder1.new(params).call
     end
   end
 end

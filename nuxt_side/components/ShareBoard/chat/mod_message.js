@@ -29,6 +29,10 @@ export const mod_message = {
       if (this.console_command_run(params) === "break") {
         return
       }
+      params = {
+        message_scope_key: this.message_scope_info.key,
+        ...params,
+      }
       if (this.ac_room) {
         this.ac_room_perform("message_share", params) // --> app/channels/share_board/room_channel.rb
       } else {

@@ -19,6 +19,15 @@ export class Odai {
     this.items       = params.items ?? ["", ""]
   }
 
+  // 一行の文章にする
+  get to_s() {
+    return [
+      this.items.join("と"),
+      "、",
+      Gs2.presence(this.subject) ?? "どっちが好き？",
+    ].join("")
+  }
+
   // すべて入力されているか？
   get valid_p() {
     return [this.subject, ...this.items].every(e => Gs2.present_p(e))

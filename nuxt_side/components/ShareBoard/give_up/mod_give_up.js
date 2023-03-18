@@ -67,6 +67,9 @@ export const mod_give_up = {
       }
       // }
 
+      // 励ます
+      this.gpt_case_give_up(params)
+
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
       if (this.g_current_user) {

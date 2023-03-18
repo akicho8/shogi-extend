@@ -268,6 +268,7 @@ export const mod_clock_box = {
       } else if (cc_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_info.with_talk})
       }
+      this.gpt_case_clock(params)
     },
     __cc_receive_message(params) {
       const cc_info = CcInfo.fetch(params.cc_key)

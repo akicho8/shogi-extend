@@ -6,6 +6,7 @@
 // | /send               |
 // | /var                |
 // | /debug              |
+// | /gpt message        |
 // | /medal-team black 1 |
 // | /medal-user alice 1 |
 // | /header             |
@@ -73,6 +74,14 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/debug on",
         command_fn: (context, args) => {
           context.debug_mode_set_any(args[0])
+        },
+      },
+      {
+        desc: "GPT に発言促す",
+        key: "gpt",
+        example: "/gpt message",
+        command_fn: (context, args) => {
+          context.gpt_speak({message: args[0]})
         },
       },
       {

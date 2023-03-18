@@ -10,7 +10,7 @@ module ShareBoard
       Rails.logger.debug { @topic.to_t }
 
       if @topic.present?
-        SlackAgent.notify(subject: "ChatGPT", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT:")
+        SlackAgent.notify(subject: "ChatGPT", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT_IN:")
       end
 
       client = OpenAI::Client.new
@@ -29,14 +29,14 @@ module ShareBoard
       Rails.logger.debug { response.pretty_inspect }
 
       if error_message = response.dig("error", "message")
-        SlackAgent.notify(subject: "ChatGPT", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT:")
+        SlackAgent.notify(subject: "ChatGPT", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
         return
       end
 
       text = response.dig("choices", 0, "message", "content")
 
       if text
-        SlackAgent.notify(subject: "ChatGPT", body: "#{seconds} #{text.inspect}", emoji: ":ChatGPT:")
+        SlackAgent.notify(subject: "ChatGPT", body: "#{seconds} #{text.inspect}", emoji: ":ChatGPT_OUT:")
       end
 
       text

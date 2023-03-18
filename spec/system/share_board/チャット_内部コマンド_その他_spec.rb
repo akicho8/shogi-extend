@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   before do
     visit_app({
         :room_code            => :test_room,
-        :user_name      => "a",
+        :user_name            => "a",
         :fixed_member_names   => "a,b,c,d",
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => "false",
@@ -42,6 +42,11 @@ RSpec.describe type: :system, share_board_spec: true do
     chat_message_send("/var debug_mode_p")
     assert_message_received_o("false")
     chat_message_send("/debug")
+  end
+
+  it "/gpt" do
+    chat_message_send("/gpt こんにちは")
+    assert_message_latest_from("GPT", wait: 30)
   end
 
   it "/send" do

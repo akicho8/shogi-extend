@@ -107,23 +107,12 @@ module ShareBoard
         emoji = ":観戦チャット:"
       end
       track(data, action, data["message"], emoji)
-      if false
-        broadcast(:message_share_broadcasted, data)
-      else
-        ShareBoard::ChatMessageBroadcastJob.perform_later(room_code, data)
-      end
-      if false
-        text = GptaiSimple.new(data["message"]).call
-        ShareBoard::Messenger.new(room_code: room_code, from_user_name: "GPT", message_scope_key: data["message_scope_key"]).call(text)
-      end
-      if false
-        ShareBoard::Responder.new(data.merge(room_code: room_code)).call
-        # message = data["message"]
-        # text = GptaiSimple.new(data["message"]).call
-        # ShareBoard::Messenger.new(room_code, from_user_name: "GPT", message_scope_key: data["message_scope_key"]).call(text)
-      else
-        ShareBoard::ChatGptBroadcastJob.perform_later(data.merge(room_code: room_code))
-      end
+      ShareBoard::ChatMessageBroadcastJob.perform_later(room_code, data)
+      ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code))
+    end
+
+    def gpt_speak(data)
+      ShareBoard::Responder2Job.perform_later(data.merge(room_code: room_code))
     end
 
     def give_up_share(data)

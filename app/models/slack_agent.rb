@@ -64,6 +64,8 @@ class SlackAgent
   end
 
   def wait
+    return 0
+
     @wait ||= self.class.excessive_measure.wait_value_for_job
   end
 

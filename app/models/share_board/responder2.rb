@@ -1,9 +1,7 @@
 # ▼発言を返す
-# rails r 'ShareBoard::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
+# rails r 'ShareBoard::Responder2.new(message: "励まして").call'
 module ShareBoard
-  class Responder
-    MATCH_REGEXP = /\s*@gpt\b\s*|\A\?\s*/i
-
+  class Responder2
     attr_accessor :params
 
     delegate :logger, to: :Rails
@@ -15,16 +13,17 @@ module ShareBoard
     end
 
     def call
-      history << user_message
-      if user_raw_message.match?(MATCH_REGEXP)
-        topic = history.to_topic
-        topic.unshift(system_message)
-        text = ChatGptClient.new(topic).call
-        if text
-          history << Message.new(:assistant, text)
-          logger.debug { history.to_topic.to_t }
-          messanger.call(text)
-        end
+      if user_raw_message.present?
+        history << user_message
+      end
+      topic = history.to_topic
+      topic.unshift(system_message)
+      text = ChatGptClient.new(topic).call
+      if text
+        history << Message.new(:assistant, text)
+        logger.debug { history.to_topic.to_t }
+        SystemMailer.notify(fixed: true, subject: "ChatGPT 返答記録 (#{room_code})", body: history.to_topic.to_t).deliver_later
+        messanger.call(text)
       end
     end
 
@@ -43,7 +42,7 @@ module ShareBoard
     end
 
     def user_message
-      Message.new(:user, user_raw_message.remove(MATCH_REGEXP))
+      Message.new(:user, user_raw_message)
     end
 
     def user_raw_message
@@ -60,10 +59,12 @@ module ShareBoard
 
     def system_raw_message
       "
-あなたは将棋が大好きで現在は将棋ウォーズ4級ですが将来はプロ棋士を目指しています。
+あなたは将棋が好きで将棋ウォーズでよく遊んでいます。
+現在はまだ4級ですが将来はプロ棋士を目指しています。
 あなたは菅井竜也先生に憧れています。
-あなたはウィットに富んだ会話のキャッチボールが得意です。
-なるべく短い言葉で簡潔に話してください。
+一人称は「小生」です。
+堅苦しい言葉を使わず、友達のような感覚で会話してください。
+発言は80文字以内にしてください。
 "
     end
 

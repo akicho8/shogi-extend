@@ -117,12 +117,14 @@ export const mod_sfen_share = {
 
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
         this.illegal_modal_handle(params.lmi.illegal_names) // 反則があれば表示する
+        this.gpt_case_illegal(params)            // 反則した人を励ます
         this.perpetual_modal_handle_if(params.lmi.perpetual_p)       // 千日手であれば表示する
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.received_ok_send(params)                 // 受信OKを指し手に通知する
       }
 
+      this.gpt_case_turn(params)
       this.al_add(params)
     },
     from_user_name_valid(params) {

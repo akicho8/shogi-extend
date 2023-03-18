@@ -7,6 +7,11 @@ module SharedMethods
     end
   end
 
+  # 最後に送信した人の名前
+  def assert_message_latest_from(name, options = {})
+    assert_selector(".MessageSendModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))
+  end
+
   # message を受信した
   def assert_message_received_o(message, options = {})
     within(".MessageSendModal") do
@@ -30,4 +35,5 @@ module SharedMethods
       find(".send_handle").click                     # 送信
     end
   end
+
 end
