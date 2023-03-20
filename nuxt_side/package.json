@@ -26,7 +26,6 @@
     "chartjs-plugin-datalabels": "1.0.0",
     "dayjs": "^1.11.7",
     "fabric": "^4.2.0",
-    "file-loader": "^6.2.0",
     "howler": "^2.2.3",
     "js-base64": "^3.7.2",
     "js-memory-record": "^0.0.26",
