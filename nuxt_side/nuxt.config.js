@@ -70,6 +70,9 @@ const config = {
 // export default {
   // debug: true,
 
+  // Nuxt の target と mode と ssr と各 npm コマンドについて
+  // https://zenn.dev/kurosame/articles/52e96b724380d2
+
   // https://ja.nuxtjs.org/guides/configuration-glossary/configuration-ssr/
   //
   //   mode は DEPRECATED なので下に置き換え
