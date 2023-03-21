@@ -389,7 +389,24 @@ const config = {
         transformAssetUrls: {
           audio: "src"
         }
-      }
+      },
+
+      // https://www.suzunatsu.com/post/node-sass-to-dart-sass/
+      sass: {
+        implementation: require('node-sass'),
+        // implementation: require('sass'),
+        // sassOptions: {
+        //   fiber: require('fibers'),
+        // },
+      },
+      scss: {
+        implementation: require('node-sass'),
+        // implementation: require('sass'),
+        // sassOptions: {
+        //   fiber: require('fibers'),
+        // },
+      },
+
     },
 
     // これを入れないと shogi-player で wav が読めない
@@ -411,6 +428,7 @@ const config = {
         loader: "raw-loader",
         // exclude: /(node_modules)/,
       })
+
     },
 
     babel: {
@@ -442,8 +460,7 @@ const config = {
     // },
 
     // 注意: なぜか ../.postcssrc.yml を見ているため
-    
-    
+
     // ↓これを書くとろくなことにならない
     // postcss: {
     //   postcssOptions: {

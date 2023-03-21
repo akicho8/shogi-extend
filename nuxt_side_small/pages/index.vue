@@ -1,5 +1,6 @@
 <template lang="pug">
-p {{a}}
+.MyApp
+  | {{a}}
 </template>
 
 <script>
@@ -14,3 +15,9 @@ export default {
   },
 }
 </script>
+
+<style lang="sass">
+.MyApp
+  color: blue
+  .foo
+</style>

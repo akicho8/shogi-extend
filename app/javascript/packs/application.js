@@ -20,7 +20,7 @@ import "modulable_crud.js"
 
 // async を使うと regeneratorRuntime is not defined になる対策
 // よくわからんが .babelrc に書くのではなダメだった
-import "babel-polyfill"
+// import "babel-polyfill"
 
 // import Vue from "vue/dist/vue.esm" // esm版はvueのtemplateをパースできる
 // window.Vue = Vue

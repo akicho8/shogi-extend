@@ -8,6 +8,25 @@ export default {
       ],
     },
 
+    loaders: {
+      // https://www.suzunatsu.com/post/node-sass-to-dart-sass/
+      sass: {
+        // implementation: 'node-sass',
+        implementation: require('node-sass'),
+        // sassOptions: {
+        //   fiber: require('fibers'),
+        // },
+      },
+      scss: {
+        // implementation: 'node-sass',
+        implementation: require('node-sass'),
+        // sassOptions: {
+        //   fiber: require('fibers'),
+        // },
+      },
+
+    },
+
     // postcss: {
     //   postcssOptions: {
     //     // キーとしてプラグイン名を、値として引数を追加します

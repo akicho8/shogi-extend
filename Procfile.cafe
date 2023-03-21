@@ -1,4 +1,4 @@
 web: bundle exec bin/rails server -p $PORT
-webpack-dev-server: bundle exec bin/webpack-dev-server
+webpack-dev-server: NODE_OPTIONS="--openssl-legacy-provider" bundle exec bin/webpack-dev-server
 sidekiq: sidekiq
 nuxt_side: (cd nuxt_side && npm run clean && nuxt dev -p 4000 --dotenv .env.cafe)
