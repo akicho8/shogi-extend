@@ -2,22 +2,22 @@ require "rails_helper"
 
 RSpec.describe DateRange, type: :model do
   it "works" do
-    assert { DateRange.parse("2000-01-01").to_s              == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
-    assert { DateRange.parse("2000-01").to_s                 == "2000-01-01 00:00:00 +0900...2000-02-01 00:00:00 +0900" }
-    assert { DateRange.parse("2000").to_s                    == "2000-01-01 00:00:00 +0900...2001-01-01 00:00:00 +0900" }
-    assert { DateRange.parse("") rescue $!.class             == ArgumentError                                           }
-    assert { DateRange.parse("xx") rescue $!.class           == ArgumentError                                           }
+    is_asserted_by { DateRange.parse("2000-01-01").to_s              == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000-01").to_s                 == "2000-01-01 00:00:00 +0900...2000-02-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000").to_s                    == "2000-01-01 00:00:00 +0900...2001-01-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("") rescue $!.class             == ArgumentError                                           }
+    is_asserted_by { DateRange.parse("xx") rescue $!.class           == ArgumentError                                           }
 
-    assert { DateRange.parse("2000-01-01..2000-01-01").to_s  == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
-    assert { DateRange.parse("2000-01-01...2000-01-02").to_s == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
-    assert { DateRange.parse("2000..2001").to_s              == "2000-01-01 00:00:00 +0900...2002-01-01 00:00:00 +0900" }
-    assert { DateRange.parse("2000...2002").to_s             == "2000-01-01 00:00:00 +0900...2002-01-01 00:00:00 +0900" }
-    assert { DateRange.parse("2000...").to_s                 == "2000-01-01 00:00:00 +0900...9999-01-01 00:00:00 +0900" }
-    assert { DateRange.parse("...2000").to_s                 == "1000-01-01 00:00:00 +0900...2000-01-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000-01-01..2000-01-01").to_s  == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000-01-01...2000-01-02").to_s == "2000-01-01 00:00:00 +0900...2000-01-02 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000..2001").to_s              == "2000-01-01 00:00:00 +0900...2002-01-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000...2002").to_s             == "2000-01-01 00:00:00 +0900...2002-01-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("2000...").to_s                 == "2000-01-01 00:00:00 +0900...9999-01-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("...2000").to_s                 == "1000-01-01 00:00:00 +0900...2000-01-01 00:00:00 +0900" }
   end
 
   it "数字っぽいものだけ見ている" do
-    assert { DateRange.parse("２０００年１月").to_s == "2000-01-01 00:00:00 +0900...2000-02-01 00:00:00 +0900" }
+    is_asserted_by { DateRange.parse("２０００年１月").to_s == "2000-01-01 00:00:00 +0900...2000-02-01 00:00:00 +0900" }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

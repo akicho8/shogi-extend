@@ -75,6 +75,7 @@ chdir APP_ROOT do
 
   puts "\n== Testing =="
   system! "rm -fr doc/images *.png"
+  system 'RAILS_ENV=test rails assets:precompile' # ← なぜ必要？
   system 'SLACK_AGENT_DISABLE=true rails spec'
 
   system! "say 'セットアップ完了'"

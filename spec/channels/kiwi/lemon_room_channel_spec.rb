@@ -11,14 +11,14 @@ module Kiwi
     describe "接続" do
       it "works" do
         subscribe
-        assert { subscription.confirmed? }
+        is_asserted_by { subscription.confirmed? }
       end
     end
 
     describe "切断" do
       it "works" do
         subscribe
-        assert { subscription.confirmed? }
+        is_asserted_by { subscription.confirmed? }
         unsubscribe
       end
     end

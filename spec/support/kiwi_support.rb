@@ -10,9 +10,9 @@ module KiwiSupport
       Kiwi::Folder.setup
     end
 
-    let(:user1) { User.create!(name: "user1", email: "user1@localhost", confirmed_at: Time.current) }
-    let(:user2) { User.create!(name: "user2", email: "user2@localhost", confirmed_at: Time.current) }
-    let(:user3) { User.create!(name: "user3", email: "user3@localhost", confirmed_at: Time.current) }
+    let(:user1) { ::User.create!(name: "user1", email: "user1@localhost", confirmed_at: Time.current) }
+    let(:user2) { ::User.create!(name: "user2", email: "user2@localhost", confirmed_at: Time.current) }
+    let(:user3) { ::User.create!(name: "user3", email: "user3@localhost", confirmed_at: Time.current) }
 
     let(:mp4_params1) { Kiwi::Lemon::PARAMS_EXAMPLE_MP4 }
     let(:gif_params1) { Kiwi::Lemon::PARAMS_EXAMPLE_GIF }

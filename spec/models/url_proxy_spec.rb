@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe UrlProxy do
   it "to_share_board_url" do
-    assert { UrlProxy.full_url_for({path: "/", query: { body: "a b+" }}) == "http://localhost:4000/?body=a+b%2B" }
+    is_asserted_by { UrlProxy.full_url_for({path: "/", query: { body: "a b+" }}) == "http://localhost:4000/?body=a+b%2B" }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

@@ -45,14 +45,14 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "ERROR" do
     def case_ng(params)
       get :index, params: { query: "DevUser1", x_destroy_all: true, throttle_cache_clear: true, format: :json, **params }
-      assert { response.status != 200 }
+      is_asserted_by { response.status != 200 }
     end
 
     def case_ok(params)
       get :index, params: { query: "DevUser1", x_destroy_all: true, throttle_cache_clear: true, format: :json, **params }
-      assert { response.status == 200 }
+      is_asserted_by { response.status == 200 }
       json = JSON.parse(response.body, symbolize_names: true)
-      assert { json[:xnotice][:infos][0][:message] }
+      is_asserted_by { json[:xnotice][:infos][0][:message] }
     end
 
     it "本家の構造が変わった" do
@@ -75,7 +75,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "並び替え" do
     def case_ng(sort_column)
       get :index, params: { query: "DevUser1", sort_column: sort_column }
-      assert { response.status == 200 }
+      is_asserted_by { response.status == 200 }
     end
 
     it "works" do
@@ -90,7 +90,7 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
 
     it "membership内カラムで並び替えかつ存在しないIDときエラーにならない" do
       get :index, params: {query: "__unknown__", sort_column: "membership.judge_id" }
-      assert { response.status == 200 }
+      is_asserted_by { response.status == 200 }
     end
   end
 
@@ -98,42 +98,42 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "詳細検索" do
     it "vs" do
       get :index, params: {query: "YamadaTaro vs:DevUser1"}
-      assert { controller.current_scope.count == 1 }
+      is_asserted_by { controller.current_scope.count == 1 }
     end
 
     it "judge" do
       get :index, params: {query: "DevUser1 judge:win"}
-      assert { controller.current_scope.count == 1 }
+      is_asserted_by { controller.current_scope.count == 1 }
     end
 
     it "vs-grade" do
       get :index, params: {query: "DevUser1 vs-grade:四段"}
-      assert { controller.current_scope.count == 1 }
+      is_asserted_by { controller.current_scope.count == 1 }
     end
 
     it "turn_max:>=500" do
       get :index, params: {query: "DevUser1 turn_max:>=500"}
-      assert { controller.current_scope.count == 0 }
-      assert { response.status == 200 }
+      is_asserted_by { controller.current_scope.count == 0 }
+      is_asserted_by { response.status == 200 }
     end
 
     it "turn_max:<=500" do
       get :index, params: {query: "DevUser1 turn_max:<=500"}
-      assert { controller.current_scope.count == 1 }
-      assert { response.status == 200 }
+      is_asserted_by { controller.current_scope.count == 1 }
+      is_asserted_by { response.status == 200 }
     end
 
     describe "手合割" do
       it "平手" do
         get :index, params: {query: "DevUser1 手合割:平手"}
-        assert { controller.current_scope.count == 1 }
-        assert { response.status == 200 }
+        is_asserted_by { controller.current_scope.count == 1 }
+        is_asserted_by { response.status == 200 }
       end
 
       it "駒落ち" do
         get :index, params: {query: "DevUser1 手合割:-平手"}
-        assert { controller.current_scope.count == 0 }
-        assert { response.status == 200 }
+        is_asserted_by { controller.current_scope.count == 0 }
+        is_asserted_by { response.status == 200 }
       end
     end
   end
@@ -141,26 +141,26 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
   describe "index" do
     it "index" do
       get :index
-      assert { response.status == 200 }
+      is_asserted_by { response.status == 200 }
     end
 
     it "index + query" do
       get :index, params: {query: "DevUser1"}
-      assert { response.status == 200 }
-      assert { assigns(:current_records).size == 1 }
-      assert { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
+      is_asserted_by { response.status == 200 }
+      is_asserted_by { assigns(:current_records).size == 1 }
+      is_asserted_by { assigns(:current_records).first.tournament_name == "将棋ウォーズ(10分)" }
     end
 
     describe "ウォーズの対局キーが含まれるURLで検索" do
       it "レコードあり" do
         get :index, params: {query: "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401?tw=1"}
-        assert { controller.current_scope.count == 1 }
-        assert { response.status == 200 }
+        is_asserted_by { controller.current_scope.count == 1 }
+        is_asserted_by { response.status == 200 }
       end
       it "レコードなし" do
         get :index, params: {query: "https://kif-pona.heroz.jp/games/xxx-yyy-20200129_220847?tw=1"}
-        assert { controller.current_scope.count == 0 }
-        assert { response.status == 200 }
+        is_asserted_by { controller.current_scope.count == 0 }
+        is_asserted_by { response.status == 200 }
       end
     end
 
@@ -172,17 +172,17 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       describe "ダウンロードしたZIPファイルの内容が正しい" do
         def case_ng(body_encode)
           get :index, params: { query: "DevUser1", format: "zip", body_encode: body_encode}
-          assert { response.status == 200 }
-          assert { controller.current_scope.count == 1 }
-          assert { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
-          assert { response.media_type == "application/zip" }
+          is_asserted_by { response.status == 200 }
+          is_asserted_by { controller.current_scope.count == 1 }
+          is_asserted_by { response["Content-Disposition"].match?(/shogiwars.*.zip/) }
+          is_asserted_by { response.media_type == "application/zip" }
 
           Zip::InputStream.open(StringIO.new(response.body)) do |zis|
             entry = zis.get_next_entry
-            assert { entry.name == "DevUser1/2020-01-01/DevUser1-YamadaTaro-20200101_123401.kif" }
-            assert { entry.time.to_s == "2020-01-01 12:34:01 +0900" } # 奇数秒が入っていること
+            is_asserted_by { entry.name == "DevUser1/2020-01-01/DevUser1-YamadaTaro-20200101_123401.kif" }
+            is_asserted_by { entry.time.to_s == "2020-01-01 12:34:01 +0900" } # 奇数秒が入っていること
             bin = zis.read
-            assert { NKF.guess(bin).to_s == body_encode }
+            is_asserted_by { NKF.guess(bin).to_s == body_encode }
           end
         end
 
@@ -193,15 +193,15 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
       it "tagとsort_columnが含まれても正しい結果が返る" do
         get :index, params: {query: "YamadaTaro tag:対振り持久戦", sort_column: "membership.grade_diff", sort_order: "desc", download_config_fetch: "true", format: "json" }
         json = JSON.parse(response.body, symbolize_names: true)
-        assert { json[:form_params_default] }
+        is_asserted_by { json[:form_params_default] }
       end
 
       it "ダウンロード回数制限にひっかかる" do
-        assert { @current_user.swars_zip_dl_logs.empty? }
+        is_asserted_by { @current_user.swars_zip_dl_logs.empty? }
 
         def case1(status)
           get :index, params: { query: "DevUser1", format: "zip" }
-          assert { response.status == status }
+          is_asserted_by { response.status == status }
         end
 
         case1(200)
@@ -209,22 +209,22 @@ RSpec.describe Swars::BattlesController, type: :controller, swars_spec: true do
         case1(200)
         case1(404)
 
-        assert { response.body.match?(/短時間にダウンロードする棋譜の総数が多すぎます/) }
+        is_asserted_by { response.body.match?(/短時間にダウンロードする棋譜の総数が多すぎます/) }
       end
     end
 
     it "KENTO棋譜リストAPI" do
       get :index, params: { query: "DevUser1", format: "json", format_type: "kento" }
-      assert { response.status == 200 }
+      is_asserted_by { response.status == 200 }
 
       body = JSON.parse(response.body)
-      assert { body["api_version"]                       == "2020-02-02"                                                  }
-      assert { body["api_name"]                          == "将棋ウォーズ(ID:DevUser1)"                                   }
-      assert { body["game_list"].size                    == 1                                                             }
-      assert { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
-      assert { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.kif" }
-      assert { body["game_list"][0]["display_name"]      == "DevUser1 三段 vs YamadaTaro 四段"                           }
-      assert { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
+      is_asserted_by { body["api_version"]                       == "2020-02-02"                                                  }
+      is_asserted_by { body["api_name"]                          == "将棋ウォーズ(ID:DevUser1)"                                   }
+      is_asserted_by { body["game_list"].size                    == 1                                                             }
+      is_asserted_by { body["game_list"][0]["tag"]               == ["将棋ウォーズ(10分)", "勝ち"]                                }
+      is_asserted_by { body["game_list"][0]["kifu_url"]          == "http://localhost:3000/w/DevUser1-YamadaTaro-20200101_123401.kif" }
+      is_asserted_by { body["game_list"][0]["display_name"]      == "DevUser1 三段 vs YamadaTaro 四段"                           }
+      is_asserted_by { body["game_list"][0]["display_timestamp"] == 1577849641                                                    }
     end
   end
 
@@ -253,40 +253,40 @@ EOT
 
     it "PNG画像が見れる" do
       get :show, params: { id: record.to_param, format: "png", width: "", turn: 999 }
-      assert { response.status == 302 }
+      is_asserted_by { response.status == 302 }
     end
 
     describe "KIF 表示/DL" do
       it "表示(UTF-8)" do
         get :show, params: { id: record.to_param, format: "kif" }
-        assert { response.media_type == "text/plain" }
-        assert { response.body.encoding == Encoding::UTF_8 }
-        assert { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
-        assert { response.header["Content-Disposition"] == nil }
+        is_asserted_by { response.media_type == "text/plain" }
+        is_asserted_by { response.body.encoding == Encoding::UTF_8 }
+        is_asserted_by { response.header["Content-Type"] == "text/plain; charset=UTF-8" }
+        is_asserted_by { response.header["Content-Disposition"] == nil }
       end
 
       it "表示(Shift_JIS)" do
         get :show, params: { id: record.to_param, format: "kif", body_encode: "Shift_JIS" }
-        assert { response.media_type == "text/plain" }
-        assert { response.body.encoding == Encoding::Shift_JIS }
-        assert { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
-        assert { response.header["Content-Disposition"] == nil }
+        is_asserted_by { response.media_type == "text/plain" }
+        is_asserted_by { response.body.encoding == Encoding::Shift_JIS }
+        is_asserted_by { response.header["Content-Type"] == "text/plain; charset=Shift_JIS" }
+        is_asserted_by { response.header["Content-Disposition"] == nil }
       end
 
       it "ダウンロード(Shift_JIS)" do
         get :show, params: { id: record.to_param, format: "kif", body_encode: "Shift_JIS", attachment: "true" }
-        assert { response.media_type == "text/plain" }
-        assert { response.body.encoding == Encoding::Shift_JIS }
-        assert { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
-        assert { response.header["Content-Disposition"].include?("attachment") }
+        is_asserted_by { response.media_type == "text/plain" }
+        is_asserted_by { response.body.encoding == Encoding::Shift_JIS }
+        is_asserted_by { response.header["Content-Type"] == "text/plain; charset=shift_jis" } # なぜかダウンロードのときだけ小文字に変換される
+        is_asserted_by { response.header["Content-Disposition"].include?("attachment") }
       end
     end
 
     it "本家で対局が見つからない" do
       get :show, params: { id: "alice-bob-20200101_123403", format: :json, x_destroy_all: true, throttle_cache_clear: true, SwarsBattleNotFound: true }
-      assert { response.status != 200 }
+      is_asserted_by { response.status != 200 }
       # json = JSON.parse(response.body, symbolize_names: true)
-      # assert { json[:xnotice][:infos][0][:message] }
+      # is_asserted_by { json[:xnotice][:infos][0][:message] }
     end
   end
 end

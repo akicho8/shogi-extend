@@ -12,8 +12,8 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.all_tag_ratio_for("新嬉野流")           == 1.0 }
-        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
+        is_asserted_by { user.user_info.medal_list.all_tag_ratio_for("新嬉野流")           == 1.0 }
+        is_asserted_by { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
       end
     end
 
@@ -25,13 +25,13 @@ module Swars
       end
 
       it "works" do
-        assert { case1 == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
+        is_asserted_by { case1 == {"振り飛車"=>1.0, "2手目△３ニ飛戦法"=>1.0} }
       end
     end
 
     describe "レコードが0件" do
       it "works" do
-        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
+        is_asserted_by { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
       end
     end
 
@@ -41,7 +41,7 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.to_a }
+        is_asserted_by { user.user_info.medal_list.to_a }
       end
     end
 
@@ -56,8 +56,8 @@ module Swars
       end
 
       it "works" do
-        assert { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
-        assert { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
+        is_asserted_by { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
+        is_asserted_by { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
       end
     end
 
@@ -72,8 +72,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1 == {"win" => 0, "lose" => 0 } }
-        assert { case1("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
+        is_asserted_by { case1 == {"win" => 0, "lose" => 0 } }
+        is_asserted_by { case1("win", "lose", "win", "win") == {"win" => 2, "lose" => 1 } }
       end
     end
 
@@ -93,7 +93,7 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.75},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.25}] }
+        is_asserted_by { user.user_info.every_grade_list == [{grade_name: "九段", judge_counts: {win: 2, lose: 1}, appear_ratio: 0.75},{grade_name: "初段", judge_counts: {win: 1, lose: 0}, appear_ratio: 0.25}] }
       end
     end
   end

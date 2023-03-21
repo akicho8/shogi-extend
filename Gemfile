@@ -1,13 +1,13 @@
 source "https://rubygems.org"
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+# git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.5"
+ruby "3.2.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 6.1.4"
+gem "rails", "~> 6"
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3"
-gem "mysql2", ">= 0.4.4"
+gem "mysql2", ">= 0.5.5"
 # Use Puma as the app server
 gem "puma", "~> 5.0"
 # Use SCSS for stylesheets
@@ -148,7 +148,6 @@ gem "slack-ruby-client"
 # エラー通知
 gem "exception_notification"
 gem "slack-notifier"
-# gem "psych", "~> 3.1"   # Psych::BadAlias: Unknown alias: default 対策
 
 # devise
 gem "devise"
@@ -193,3 +192,5 @@ gem "retryable"
 
 # ChatGPT
 gem "ruby-openai", require: "openai"
+
+gem "psych", "~> 3" # Psych::BadAlias: Unknown alias: default 対策 ← 新しい Rails では不要 ← 嘘だった

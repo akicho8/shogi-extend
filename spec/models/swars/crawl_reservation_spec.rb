@@ -42,17 +42,17 @@ module Swars
           :target_user_key => battle_user.key,
         })
 
-      assert { record.persisted? }
-      assert { record.to_zip     }
+      is_asserted_by { record.persisted? }
+      is_asserted_by { record.to_zip     }
 
       Zip::InputStream.open(record.to_zip) do |zis|
         entry = zis.get_next_entry
-        assert { entry.name == "user1/UTF-8/alice-bob-20000101_000000.kif" }
-        assert { NKF.guess(zis.read).to_s == "UTF-8" }
+        is_asserted_by { entry.name == "user1/UTF-8/alice-bob-20000101_000000.kif" }
+        is_asserted_by { NKF.guess(zis.read).to_s == "UTF-8" }
 
         entry = zis.get_next_entry
-        assert { entry.name == "user1/Shift_JIS/alice-bob-20000101_000000.kif" }
-        assert { NKF.guess(zis.read).to_s == "Shift_JIS" }
+        is_asserted_by { entry.name == "user1/Shift_JIS/alice-bob-20000101_000000.kif" }
+        is_asserted_by { NKF.guess(zis.read).to_s == "Shift_JIS" }
       end
     end
   end

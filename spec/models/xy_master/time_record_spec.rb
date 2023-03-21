@@ -46,10 +46,10 @@ module XyMaster
         RuleInfo.redis.flushdb
         RuleInfo[:rule100].aggregate
 
-        assert { build(scope_key: "scope_all",   entry_name_uniq_p: "false") == [1, 1, 2, 2, 3, 3] }
-        assert { build(scope_key: "scope_all",   entry_name_uniq_p: "true")  == [1, 1]             }
-        assert { build(scope_key: "scope_today", entry_name_uniq_p: "false") == [2, 2, 3, 3]       }
-        assert { build(scope_key: "scope_today", entry_name_uniq_p: "true")  == [2, 2]             }
+        is_asserted_by { build(scope_key: "scope_all",   entry_name_uniq_p: "false") == [1, 1, 2, 2, 3, 3] }
+        is_asserted_by { build(scope_key: "scope_all",   entry_name_uniq_p: "true")  == [1, 1]             }
+        is_asserted_by { build(scope_key: "scope_today", entry_name_uniq_p: "false") == [2, 2, 3, 3]       }
+        is_asserted_by { build(scope_key: "scope_today", entry_name_uniq_p: "true")  == [2, 2]             }
       end
     end
 
@@ -60,13 +60,13 @@ module XyMaster
       TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 40, x_count: 0)
       RuleInfo.rebuild
       r = TimeRecord.last
-      assert { r.rank(scope_key: "scope_all", entry_name_uniq_p: "true") == 2 } # 全体だと40は2位
+      is_asserted_by { r.rank(scope_key: "scope_all", entry_name_uniq_p: "true") == 2 } # 全体だと40は2位
     end
 
     it "自己ベスト更新" do
-      assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
-      assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
-      assert { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
+      is_asserted_by { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.333, x_count: 0).best_update_info == nil                       }
+      is_asserted_by { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.334, x_count: 0).best_update_info == nil                       }
+      is_asserted_by { TimeRecord.create!(rule_key: "rule100t", entry_name: "x", spent_sec: 100.332, x_count: 0).best_update_info == {updated_spent_sec: 0.001 }  }
     end
 
     def build(*args)

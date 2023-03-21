@@ -38,7 +38,7 @@ module Tsl
     end
 
     it "works" do
-      assert { record.valid? }
+      is_asserted_by { record.valid? }
     end
   end
 end

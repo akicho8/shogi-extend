@@ -7,21 +7,21 @@ module Swars
 
     describe "ClassMethods" do
       it "valid?" do
-        assert { BattleKeyValidator.valid?("alice-bob-20130531_010024") }
+        is_asserted_by { BattleKeyValidator.valid?("alice-bob-20130531_010024") }
       end
 
       it "invalid?" do
-        assert { BattleKeyValidator.invalid?("xxx") }
+        is_asserted_by { BattleKeyValidator.invalid?("xxx") }
       end
     end
 
     describe "InstanceMethods" do
       it "valid?" do
-        assert { BattleKeyValidator.new(key).valid? }
+        is_asserted_by { BattleKeyValidator.new(key).valid? }
       end
 
       it "invalid?" do
-        assert { BattleKeyValidator.new("xxx").invalid? }
+        is_asserted_by { BattleKeyValidator.new("xxx").invalid? }
       end
 
       it "validate!" do

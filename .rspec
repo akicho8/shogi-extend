@@ -1,4 +1,5 @@
 --color
---require spec_helper
---require rspec-power_assert
 --format documentation
+
+-r spec_helper
+-r rspec-power_assert

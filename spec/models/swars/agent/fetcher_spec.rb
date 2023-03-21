@@ -6,11 +6,11 @@ module Swars
       let(:url) { "https://shogiwars.heroz.jp/games/history?user_id=kinakom0chi" }
 
       it "development" do
-        assert { Fetcher.new.fetch(:history, url).include?("YamadaTaro 対局履歴") }
+        is_asserted_by { Fetcher.new.fetch(:history, url).include?("YamadaTaro 対局履歴") }
       end
 
       it "production" do
-        assert { Fetcher.new(remote_run: true).fetch(:record, url).include?("kinakom0chi 対局履歴") }
+        is_asserted_by { Fetcher.new(remote_run: true).fetch(:record, url).include?("kinakom0chi 対局履歴") }
       end
     end
   end

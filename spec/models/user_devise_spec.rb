@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
   it "create! のときに confirmed_at を設定するとメール認証が飛ばない" do
     perform_enqueued_jobs do
       User.create!(email: "alice@example.com", confirmed_at: Time.current)
-      assert { ActionMailer::Base.deliveries.count == 0 }
+      is_asserted_by { ActionMailer::Base.deliveries.count == 0 }
     end
   end
 
@@ -14,9 +14,9 @@ RSpec.describe User, type: :model do
     user = User.create!(email: "alice@example.com", confirmed_at: Time.current)
     user.email = "new@example.com"
     user.save!
-    assert { user.email == "alice@example.com"           }
-    assert { user.unconfirmed_email == "new@example.com" }
-    assert { ActionMailer::Base.deliveries.count == 1    }
+    is_asserted_by { user.email == "alice@example.com"           }
+    is_asserted_by { user.unconfirmed_email == "new@example.com" }
+    is_asserted_by { ActionMailer::Base.deliveries.count == 1    }
   end
 
   it "email を確実に更新するときは skip_reconfirmation! を実行する" do
@@ -24,13 +24,13 @@ RSpec.describe User, type: :model do
     user.email = "new@example.com"
     user.skip_reconfirmation!
     user.save!
-    assert { user.email == "new@example.com" }
-    assert { ActionMailer::Base.deliveries.count == 0 }
+    is_asserted_by { user.email == "new@example.com" }
+    is_asserted_by { ActionMailer::Base.deliveries.count == 0 }
   end
 
   it "emailが重複したときのエラーメッセージが利用者向けの案内になっている" do
     User.create!(email: "alice@example.com", confirmed_at: Time.current)
     user = User.create(email: "alice@example.com", confirmed_at: Time.current)
-    assert { user.errors.full_messages.join.include?("メールアドレスとパスワードでログインしてください") }
+    is_asserted_by { user.errors.full_messages.join.include?("メールアドレスとパスワードでログインしてください") }
   end
 end

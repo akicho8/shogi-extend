@@ -23,31 +23,31 @@ module Swars
       let(:object) { PropsAdapter.new(root_props) }
 
       it "to_h" do
-        assert { object.to_h }
+        is_asserted_by { object.to_h }
       end
 
       it "key" do
-        assert { object.key.to_s == "alice-bob-20000101_112233" }
+        is_asserted_by { object.key.to_s == "alice-bob-20000101_112233" }
       end
 
       it "battled_at" do
-        assert { object.battled_at == "2000-01-01 11:22:33".to_time }
+        is_asserted_by { object.battled_at == "2000-01-01 11:22:33".to_time }
       end
 
       it "rule_info" do
-        assert { object.rule_info == RuleInfo.fetch(:ten_min) }
+        is_asserted_by { object.rule_info == RuleInfo.fetch(:ten_min) }
       end
 
       it "xmode_info" do
-        assert { object.xmode_info == XmodeInfo.fetch("野良") }
+        is_asserted_by { object.xmode_info == XmodeInfo.fetch("野良") }
       end
 
       it "preset_info" do
-        assert { object.preset_info == PresetInfo.fetch("平手") }
+        is_asserted_by { object.preset_info == PresetInfo.fetch("平手") }
       end
 
       it "final_info" do
-        assert { object.final_info == FinalInfo.fetch("投了") }
+        is_asserted_by { object.final_info == FinalInfo.fetch("投了") }
       end
 
       it "memberships" do
@@ -63,31 +63,31 @@ module Swars
             :judge_info => JudgeInfo.fetch(:lose),
           },
         ]
-        assert { object.memberships == expected }
+        is_asserted_by { object.memberships == expected }
       end
 
       it "winner_location" do
-        assert { object.winner_location == Bioshogi::Location.fetch(:black) }
+        is_asserted_by { object.winner_location == Bioshogi::Location.fetch(:black) }
       end
 
       it "done?" do
-        assert { object.done? }
+        is_asserted_by { object.done? }
       end
 
       it "battling?" do
-        assert { !object.battling? }
+        is_asserted_by { !object.battling? }
       end
 
       it "csa_seq" do
-        assert { object.csa_seq[0] == ["+7776FU", 591] }
+        is_asserted_by { object.csa_seq[0] == ["+7776FU", 591] }
       end
 
       it "valid?" do
-        assert { object.valid? }
+        is_asserted_by { object.valid? }
       end
 
       it "invalid?" do
-        assert { !object.invalid? }
+        is_asserted_by { !object.invalid? }
       end
     end
   end

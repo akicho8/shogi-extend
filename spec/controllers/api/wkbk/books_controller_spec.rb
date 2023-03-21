@@ -29,31 +29,31 @@ require "rails_helper"
 RSpec.describe Api::Wkbk::BooksController, type: :controller do
   include WkbkSupportMethods
   [
-    { get: [ :index, params: {                 }, ],               status: 200, },
-    { get: [ :show,  params: { book_key: 1,    }, ],               status: 200, },
-    { get: [ :show,  params: { book_key: 2,    }, ],               status: 403, },
-    { get: [ :show,  params: { book_key: :x,   }, ],               status: 404, },
-    { get: [ :edit,  params: { book_key: 2,    }, ], user: :sysop, status: 200, },
-    { get: [ :show,  params: { book_key: 4,    }, ], user: :sysop, status: 403, },
-    { get: [ :edit,  params: {                 }, ],               status: 403, },
-    { get: [ :edit,  params: {                 }, ], user: :sysop, status: 200, },
-    { get: [ :edit,  params: {                 }, ],               status: 403, },
-    { get: [ :edit,  params: {                 }, ], user: :sysop, status: 200, },
-    { get: [ :edit,  params: { book_key: 1,    }, ],               status: 403, },
-    { get: [ :edit,  params: { book_key: 2,    }, ],               status: 403, },
-    { get: [ :edit,  params: { book_key: 3,    }, ],               status: 403, },
-    { get: [ :edit,  params: { book_key: 4,    }, ],               status: 403, },
-    { get: [ :edit,  params: { book_key: 1,    }, ], user: :sysop, status: 200, },
-    { get: [ :edit,  params: { book_key: 2,    }, ], user: :sysop, status: 200, },
-    { get: [ :edit,  params: { book_key: 3,    }, ], user: :sysop, status: 404, },
-    { get: [ :edit,  params: { book_key: 4,    }, ], user: :sysop, status: 404, },
+    { action: :index, params: {                 },               status: 200, },
+    { action: :show,  params: { book_key: 1,    },               status: 200, },
+    { action: :show,  params: { book_key: 2,    },               status: 403, },
+    { action: :show,  params: { book_key: :x,   },               status: 404, },
+    { action: :edit,  params: { book_key: 2,    }, user: :sysop, status: 200, },
+    { action: :show,  params: { book_key: 4,    }, user: :sysop, status: 403, },
+    { action: :edit,  params: {                 },               status: 403, },
+    { action: :edit,  params: {                 }, user: :sysop, status: 200, },
+    { action: :edit,  params: {                 },               status: 403, },
+    { action: :edit,  params: {                 }, user: :sysop, status: 200, },
+    { action: :edit,  params: { book_key: 1,    },               status: 403, },
+    { action: :edit,  params: { book_key: 2,    },               status: 403, },
+    { action: :edit,  params: { book_key: 3,    },               status: 403, },
+    { action: :edit,  params: { book_key: 4,    },               status: 403, },
+    { action: :edit,  params: { book_key: 1,    }, user: :sysop, status: 200, },
+    { action: :edit,  params: { book_key: 2,    }, user: :sysop, status: 200, },
+    { action: :edit,  params: { book_key: 3,    }, user: :sysop, status: 404, },
+    { action: :edit,  params: { book_key: 4,    }, user: :sysop, status: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]
         user_login(User.sysop)
       end
-      get *e[:get]
-      assert { response.status == e[:status] }
+      get e[:action], params: e[:params]
+      is_asserted_by { response.status == e[:status] }
     end
   end
 end

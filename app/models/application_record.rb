@@ -35,7 +35,7 @@ class ApplicationRecord < ActiveRecord::Base
       st_model = options[:st_model]
       default = options[:default] # 投了
 
-      belongs_to key, options.slice(:optional)                                              # belongs_to :final
+      belongs_to key, **options.slice(:optional)                                              # belongs_to :final
 
       if default
         before_validation do                                      # before_validation do

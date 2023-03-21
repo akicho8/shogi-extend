@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe KifuMailAdapter, type: :model do
   it "works" do
     object = KifuMailAdapter.new(KifuMailAdapter.mock_params)
-    assert { object.subject == "(title) 棋譜" }
-    assert { object.body }
-    assert { object.attachment_filename == "20000101000000_title.kif" }
-    assert { object.attachment_body }
-    assert { object.mail_to_address }
+    is_asserted_by { object.subject == "(title) 棋譜" }
+    is_asserted_by { object.body }
+    is_asserted_by { object.attachment_filename == "20000101000000_title.kif" }
+    is_asserted_by { object.attachment_body }
+    is_asserted_by { object.mail_to_address }
     puts object.body if $0 == __FILE__
   end
 end

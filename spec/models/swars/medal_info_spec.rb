@@ -30,46 +30,46 @@ module Swars
       end
 
       it "works" do
-        assert { b("角不成").include?("角不成マン")     }
-        assert { b("飛車不成").include?("飛車不成マン") }
+        is_asserted_by { b("角不成").include?("角不成マン")     }
+        is_asserted_by { b("飛車不成").include?("飛車不成マン") }
         # プレイヤー情報だけにあるもの
-        assert { b("棒銀").include?("居飛車党")                             }
-        assert { b("早石田").include?("振り飛車党")                         }
-        assert { b("棒銀", "早石田").include?("オールラウンダー")           }
-        assert { b("ロケット").include?("ロケットマン")                     }
-        assert { b("遠見の角").include?("遠見の角マン")                     }
-        assert { b("屋敷流二枚銀").include?("屋敷マン")                     }
-        assert { b("屋敷流二枚銀棒銀型").include?("屋敷マン")               }
-        assert { b("嬉野流").include?("嬉野マン")                           }
-        assert { w("パックマン戦法").include?("パックマン野郎")             }
-        assert { b("耀龍四間飛車").include?("耀龍マン")                     }
-        assert { b("耀龍ひねり飛車").include?("耀龍マン")                   }
-        assert { w("右玉").include?("右玉マン")                             }
-        assert { b("糸谷流右玉").include?("右玉マン")                       }
-        assert { w("羽生流右玉").include?("右玉マン")                       }
-        assert { b("アヒル囲い").include?("アヒル上級")                     }
-        assert { b("UFO銀").include?("UFOマン")                             }
-        assert { b("裏アヒル囲い").include?("レア戦法マン")                     }
-        assert { b("カニカニ金").include?("カニ執着マン")                   }
-        assert { b("カメレオン戦法").include?("カメレオンマン")             }
-        assert { w("ポンポン桂").include?("ポンポンマン")                   }
-        assert { w("右四間飛車左美濃").include?("右四間飛車マン")           }
-        assert { b("ダイヤモンド美濃").include?("ダイヤマン")               }
-        assert { b("チョコレート囲い").include?("チョコレートマン")         }
-        assert { b("幽霊角").include?("幽霊角マン")                         }
-        assert { b("極限早繰り銀").include?("極限早繰りマン")               }
-        assert { b("坊主美濃").include?("坊主マン")                         }
-        assert { b("ツノ銀中飛車").include?("中飛車マン")                   }
-        assert { b("居飛穴音無しの構え").include?("音無しマン")             }
-        assert { b("筋違い角").include?("筋違い角おじさん")                 }
-        assert { b("いちご囲い").include?("スイーツマン")                   }
-        assert { b("背水の陣").include?("背水マン")                         }
-        assert { b("エルモ囲い").include?("エルモマン")                     }
-        assert { w("銀冠の小部屋").include?("小部屋マン")                   }
-        assert { w("レグスペ").include?("レグスペマン")                     }
-        assert { b("入玉").include?("入玉勝ちマン")                         }
-        assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
-        assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン")    }
+        is_asserted_by { b("棒銀").include?("居飛車党")                             }
+        is_asserted_by { b("早石田").include?("振り飛車党")                         }
+        is_asserted_by { b("棒銀", "早石田").include?("オールラウンダー")           }
+        is_asserted_by { b("ロケット").include?("ロケットマン")                     }
+        is_asserted_by { b("遠見の角").include?("遠見の角マン")                     }
+        is_asserted_by { b("屋敷流二枚銀").include?("屋敷マン")                     }
+        is_asserted_by { b("屋敷流二枚銀棒銀型").include?("屋敷マン")               }
+        is_asserted_by { b("嬉野流").include?("嬉野マン")                           }
+        is_asserted_by { w("パックマン戦法").include?("パックマン野郎")             }
+        is_asserted_by { b("耀龍四間飛車").include?("耀龍マン")                     }
+        is_asserted_by { b("耀龍ひねり飛車").include?("耀龍マン")                   }
+        is_asserted_by { w("右玉").include?("右玉マン")                             }
+        is_asserted_by { b("糸谷流右玉").include?("右玉マン")                       }
+        is_asserted_by { w("羽生流右玉").include?("右玉マン")                       }
+        is_asserted_by { b("アヒル囲い").include?("アヒル上級")                     }
+        is_asserted_by { b("UFO銀").include?("UFOマン")                             }
+        is_asserted_by { b("裏アヒル囲い").include?("レア戦法マン")                     }
+        is_asserted_by { b("カニカニ金").include?("カニ執着マン")                   }
+        is_asserted_by { b("カメレオン戦法").include?("カメレオンマン")             }
+        is_asserted_by { w("ポンポン桂").include?("ポンポンマン")                   }
+        is_asserted_by { w("右四間飛車左美濃").include?("右四間飛車マン")           }
+        is_asserted_by { b("ダイヤモンド美濃").include?("ダイヤマン")               }
+        is_asserted_by { b("チョコレート囲い").include?("チョコレートマン")         }
+        is_asserted_by { b("幽霊角").include?("幽霊角マン")                         }
+        is_asserted_by { b("極限早繰り銀").include?("極限早繰りマン")               }
+        is_asserted_by { b("坊主美濃").include?("坊主マン")                         }
+        is_asserted_by { b("ツノ銀中飛車").include?("中飛車マン")                   }
+        is_asserted_by { b("居飛穴音無しの構え").include?("音無しマン")             }
+        is_asserted_by { b("筋違い角").include?("筋違い角おじさん")                 }
+        is_asserted_by { b("いちご囲い").include?("スイーツマン")                   }
+        is_asserted_by { b("背水の陣").include?("背水マン")                         }
+        is_asserted_by { b("エルモ囲い").include?("エルモマン")                     }
+        is_asserted_by { w("銀冠の小部屋").include?("小部屋マン")                   }
+        is_asserted_by { w("レグスペ").include?("レグスペマン")                     }
+        is_asserted_by { b("入玉").include?("入玉勝ちマン")                         }
+        is_asserted_by { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
+        is_asserted_by { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン")    }
       end
     end
 
@@ -85,8 +85,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(13) == false }
-        assert { case1(14) == true  }
+        is_asserted_by { case1(13) == false }
+        is_asserted_by { case1(14) == true  }
       end
     end
 
@@ -98,7 +98,7 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"居玉勝ちマン") }
+        is_asserted_by { user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"居玉勝ちマン") }
       end
     end
 
@@ -114,8 +114,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(13) == false }
-        assert { case1(14) == true  }
+        is_asserted_by { case1(13) == false }
+        is_asserted_by { case1(14) == true  }
       end
     end
 
@@ -130,7 +130,7 @@ module Swars
       end
 
       it "works" do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
+        is_asserted_by { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
       end
     end
 
@@ -146,7 +146,7 @@ module Swars
       end
 
       it "works" do
-        assert { case1.include?(:"相手退席待ちマン") }
+        is_asserted_by { case1.include?(:"相手退席待ちマン") }
       end
     end
 
@@ -162,9 +162,9 @@ module Swars
       end
 
       it "works" do
-        assert { !case1(13) }
-        assert { case1(14) }
-        assert { case1(15) }
+        is_asserted_by { !case1(13) }
+        is_asserted_by { case1(14) }
+        is_asserted_by { case1(15) }
       end
     end
 
@@ -183,9 +183,9 @@ module Swars
       end
 
       it "works" do
-        assert { test(2.5).include?(:"長考マン")   }
-        assert { test(2.5).exclude?(:"大長考マン") }
-        assert { test(3.0).include?(:"大長考マン") }
+        is_asserted_by { test(2.5).include?(:"長考マン")   }
+        is_asserted_by { test(2.5).exclude?(:"大長考マン") }
+        is_asserted_by { test(3.0).include?(:"大長考マン") }
       end
     end
 
@@ -218,7 +218,7 @@ module Swars
       end
 
       it "works" do
-        assert { test(20).include?(:"運営支えマン") }
+        is_asserted_by { test(20).include?(:"運営支えマン") }
       end
     end
 
@@ -235,11 +235,11 @@ module Swars
 
       it "works" do
         result = [:"居飛車党", :"無気力マン"]
-        assert { case1(19, :TORYO) == result }
-        assert { case1(19, :CHECKMATE) == result }
-        assert { case1(20, :CHECKMATE) != result }
-        assert { case1(19, :TIMEOUT) != result }
-        assert { case1(20, :TIMEOUT) != result }
+        is_asserted_by { case1(19, :TORYO) == result }
+        is_asserted_by { case1(19, :CHECKMATE) == result }
+        is_asserted_by { case1(20, :CHECKMATE) != result }
+        is_asserted_by { case1(19, :TIMEOUT) != result }
+        is_asserted_by { case1(20, :TIMEOUT) != result }
       end
     end
 
@@ -253,11 +253,11 @@ module Swars
       end
 
       it "友対マン" do
-        assert { case1("友達").include?(:"友対マン") }
+        is_asserted_by { case1("友達").include?(:"友対マン") }
       end
 
       it "指導受けマン" do
-        assert { case1("指導").include?(:"指導受けマン") }
+        is_asserted_by { case1("指導").include?(:"指導受けマン") }
       end
     end
   end

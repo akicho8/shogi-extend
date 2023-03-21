@@ -6,10 +6,10 @@ RSpec.describe StandardDeviation do
   end
 
   it "works" do
-    assert { sdc.sd                 == 0.816496580927726  }
-    assert { sdc.avg                == 2.0                }
-    assert { sdc.sum                == 6                  }
-    assert { sdc.deviation_score(2) == 50.0               }
-    assert { sdc.appear_ratio(2)    == 0.3333333333333333 }
+    is_asserted_by { sdc.sd                 == 0.816496580927726  }
+    is_asserted_by { sdc.avg                == 2.0                }
+    is_asserted_by { sdc.sum                == 6                  }
+    is_asserted_by { sdc.deviation_score(2) == 50.0               }
+    is_asserted_by { sdc.appear_ratio(2)    == 0.3333333333333333 }
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe ScriptsController, type: :controller do
     FrontendScript.bundle_scripts.each do |e|
       it e.script_name do
         get :show, params: { id: e.key }
-        assert { response.status == 200 }
+        is_asserted_by { response.status == 200 }
       end
     end
   end

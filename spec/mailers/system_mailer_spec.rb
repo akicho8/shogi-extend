@@ -6,9 +6,9 @@ RSpec.describe SystemMailer, type: :mailer do
       SystemMailer.notify(fixed: true, subject: "(subject)")
     end
     it "works" do
-      assert { mail.from    == ["shogi.extend@gmail.com"]       }
-      assert { mail.to      == ["shogi.extend@gmail.com"]       }
-      assert { mail.subject == "[test] (subject)" }
+      is_asserted_by { mail.from    == ["shogi.extend@gmail.com"]       }
+      is_asserted_by { mail.to      == ["shogi.extend@gmail.com"]       }
+      is_asserted_by { mail.subject == "[test] (subject)" }
     end
   end
 end

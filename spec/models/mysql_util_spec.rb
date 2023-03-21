@@ -6,6 +6,6 @@ RSpec.describe MysqlUtil, type: :model do
   end
 
   it "column_tokyo_timezone_cast!" do
-    assert { MysqlUtil.column_tokyo_timezone_cast("foo") == "CONVERT_TZ(foo, 'UTC', 'Asia/Tokyo')" }
+    is_asserted_by { MysqlUtil.column_tokyo_timezone_cast("foo") == "CONVERT_TZ(foo, 'UTC', 'Asia/Tokyo')" }
   end
 end

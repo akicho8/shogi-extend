@@ -5,22 +5,22 @@ module Talk
     it "to_browser_path" do
       Timecop.return do
         obj = Main.new(source_text: "あ")
-        assert { obj.to_browser_path.match?(%r{\A/system/talk/../../.{32}\.mp3\z}) }
-        assert { obj.to_real_path.to_s.match?(/public/) }
+        is_asserted_by { obj.to_browser_path.match?(%r{\A/system/talk/../../.{32}\.mp3\z}) }
+        is_asserted_by { obj.to_real_path.to_s.match?(/public/) }
       end
     end
 
     it "as_json" do
       Timecop.return do
         obj = Main.new(source_text: "こんにちは")
-        assert { obj.as_json }
+        is_asserted_by { obj.as_json }
       end
     end
 
     it "キャッシュOFFで生成" do
       Timecop.return do
         obj = Main.new(source_text: "こんにちは", disk_cache_enable: false)
-        assert { obj.as_json }
+        is_asserted_by { obj.as_json }
       end
     end
 

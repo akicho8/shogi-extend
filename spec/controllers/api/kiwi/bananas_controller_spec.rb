@@ -49,38 +49,38 @@ RSpec.describe Api::Kiwi::BananasController, type: :controller, kiwi: true do
   end
 
   [
-    { get: [ :index, params: {                            }, ],                 status: 200, }, # トップは誰でも見れる
+    { action:  :index, params: {                            },                  status: 200, }, # トップは誰でも見れる
 
-    { get: [ :show,  params: { banana_key: "alice-public",  }, ], login: "alice", status: 200, }, # 自分のなので見れる
-    { get: [ :show,  params: { banana_key: "alice-private", }, ], login: "alice", status: 200, }, # 自分のなので見れる
-    { get: [ :show,  params: { banana_key: "bob-public",    }, ], login: "alice", status: 200, }, # 他者のpublicなので見れる
-    { get: [ :show,  params: { banana_key: "bob-private",   }, ], login: "alice", status: 403, }, # 他者のprivateなので見れない
+    { action:  :show,  params: { banana_key: "alice-public",  },  login: "alice", status: 200, }, # 自分のなので見れる
+    { action:  :show,  params: { banana_key: "alice-private", },  login: "alice", status: 200, }, # 自分のなので見れる
+    { action:  :show,  params: { banana_key: "bob-public",    },  login: "alice", status: 200, }, # 他者のpublicなので見れる
+    { action:  :show,  params: { banana_key: "bob-private",   },  login: "alice", status: 403, }, # 他者のprivateなので見れない
 
-    { get: [ :edit,  params: {                            }, ], login: "alice", status: 200, }, # 新規なのでキーはない
-    { get: [ :edit,  params: { banana_key: "alice-public",  }, ], login: "alice", status: 200, }, # 自分のなので編集できる
-    { get: [ :edit,  params: { banana_key: "alice-private", }, ], login: "alice", status: 200, }, # 自分のなので編集できる
+    { action:  :edit,  params: {                            },  login: "alice", status: 200, }, # 新規なのでキーはない
+    { action:  :edit,  params: { banana_key: "alice-public",  },  login: "alice", status: 200, }, # 自分のなので編集できる
+    { action:  :edit,  params: { banana_key: "alice-private", },  login: "alice", status: 200, }, # 自分のなので編集できる
 
-    { get: [ :show,  params: { banana_key: "alice-private", }, ],                 status: 403, }, # private はログインしてないから見れない
-    { get: [ :show,  params: { banana_key: "bob-private",   }, ], login: "alice", status: 403, }, # ログインしていてもオーナーが違うの見れない
+    { action:  :show,  params: { banana_key: "alice-private", },                  status: 403, }, # private はログインしてないから見れない
+    { action:  :show,  params: { banana_key: "bob-private",   },  login: "alice", status: 403, }, # ログインしていてもオーナーが違うの見れない
 
-    { get: [ :show,  params: { banana_key: :x,              }, ],                 status: 404, }, # 対象の動画がない
+    { action:  :show,  params: { banana_key: :x,              },                  status: 404, }, # 対象の動画がない
 
-    { get: [ :edit,  params: { banana_key: "bob-public",    }, ], login: "alice", status: 404, }, # 他者の編集ページには行けない
-    { get: [ :edit,  params: { banana_key: "bob-private",   }, ], login: "alice", status: 404, }, # 他者の編集ページには行けない
+    { action:  :edit,  params: { banana_key: "bob-public",    },  login: "alice", status: 404, }, # 他者の編集ページには行けない
+    { action:  :edit,  params: { banana_key: "bob-private",   },  login: "alice", status: 404, }, # 他者の編集ページには行けない
 
     # 権限に関わらずログインしていないので編集には行けない
-    { get: [ :edit,  params: {                            }, ],                 status: 403, },
-    { get: [ :edit,  params: { banana_key: "alice-public",  }, ],                 status: 403, },
-    { get: [ :edit,  params: { banana_key: "alice-private", }, ],                 status: 403, },
-    { get: [ :edit,  params: { banana_key: "bob-public",    }, ],                 status: 403, },
-    { get: [ :edit,  params: { banana_key: "bob-private",   }, ],                 status: 403, },
+    { action:  :edit,  params: {                            },                  status: 403, },
+    { action:  :edit,  params: { banana_key: "alice-public",  },                  status: 403, },
+    { action:  :edit,  params: { banana_key: "alice-private", },                  status: 403, },
+    { action:  :edit,  params: { banana_key: "bob-public",    },                  status: 403, },
+    { action:  :edit,  params: { banana_key: "bob-private",   },                  status: 403, },
   ].each do |e|
     it "アクセス制限" do
       if e[:login]
         user_login(User.find_by!(key: e[:login]))
       end
-      get *e[:get]
-      assert { response.status == e[:status] }
+      get e[:action], params: e[:params]
+      is_asserted_by { response.status == e[:status] }
     end
   end
 end

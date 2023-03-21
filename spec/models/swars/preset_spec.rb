@@ -19,12 +19,12 @@ module Swars
   RSpec.describe "手合割", type: :model, swars_spec: true do
     it "works" do
       battle = Battle.create!
-      assert { battle.preset_info.name == "平手" }
+      is_asserted_by { battle.preset_info.name == "平手" }
     end
 
     it "scope" do
-      assert { Battle.preset_eq("平手") }
-      assert { Battle.preset_not_eq("平手") }
+      is_asserted_by { Battle.preset_eq("平手") }
+      is_asserted_by { Battle.preset_not_eq("平手") }
     end
   end
 end

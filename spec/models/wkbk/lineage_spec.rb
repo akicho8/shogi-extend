@@ -21,7 +21,7 @@ module Wkbk
 
     it "works" do
       Wkbk::Lineage.all.collect(&:key) # => ["詰将棋", "実戦詰め筋", "手筋", "必死", "必死逃れ", "定跡", "秘密"]
-      assert { Lineage.all.count >= 1 }
+      is_asserted_by { Lineage.all.count >= 1 }
     end
   end
 end

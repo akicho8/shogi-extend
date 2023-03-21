@@ -7,13 +7,13 @@ module Swars
       Battle.create_with_members!([user])
       kento_api_responder = KentoApiResponder.new(user: user)
       json = kento_api_responder.as_json
-      assert { json["game_list"].present? }
+      is_asserted_by { json["game_list"].present? }
     end
 
     it "特定IDは除外する" do
       user = User.create!(key: "marudedna")
       kento_api_responder = KentoApiResponder.new(user: user)
-      assert { kento_api_responder.black_user? }
+      is_asserted_by { kento_api_responder.black_user? }
     end
   end
 end

@@ -8,7 +8,7 @@ RSpec.describe UserMailer, type: :mailer do
     let(:user1) { User.create! }
 
     it "works" do
-      assert { UserMailer.user_created(user1) }
+      is_asserted_by { UserMailer.user_created(user1) }
     end
   end
 end

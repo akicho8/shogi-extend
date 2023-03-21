@@ -52,7 +52,7 @@ module SharedMethods
 
   def assert_order_setting_members(names)
     result = all(".TeamsContainer tbody .user_name").collect(&:text)
-    assert { result == names }
+    is_asserted_by { result == names }
   end
 
   # 順番設定画面内の黒白チームの人たち
@@ -71,6 +71,6 @@ module SharedMethods
     if options[:sort]
       names = names.sort
     end
-    assert { names.join == names_str }
+    is_asserted_by { names.join == names_str }
   end
 end

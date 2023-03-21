@@ -1,3 +1,9 @@
+rake spec:controllers SPEC_OPTS='--fail-fast'
+rake spec:controllers SPEC_OPTS='--fail-fast --only-failures'
+
+rake spec:models SPEC_OPTS='--fail-fast'
+rake spec:models SPEC_OPTS='--only-failures --fail-fast'
+
 rspec spec/system/share_board/**/*_spec.rb
 rspec --only-failures
 rspec
@@ -7,5 +13,4 @@ rspec -t ~share_board_spec
 rspec -t share_board_spec
 rspec -t swars_spec
 rspec -n
-rake spec:models SPEC_OPTS='--fail-fast'
 

@@ -3,7 +3,7 @@ require "rails_helper"
 module Tsl
   RSpec.describe NameNormalizer, type: :model do
     it "works" do
-      assert { NameNormalizer.normalize("小髙") == "小高" }
+      is_asserted_by { NameNormalizer.normalize("小髙") == "小高" }
     end
   end
 end

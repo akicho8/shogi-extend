@@ -58,5 +58,17 @@ module ShogiWeb
     # ↑となるため development 以外では使わないけど仕方なく指定
     #
     config.eager_load_paths += ["#{Rails.root}/spec/mailers/previews"]
+
+    # Psych::DisallowedClass:
+    #   Tried to load unspecified class: ActiveSupport::TimeWithZone
+    #
+    # Psych::DisallowedClass:
+    #   Tried to load unspecified class: ActiveSupport::HashWithIndifferentAccess
+    #
+    # https://stackoverflow.com/questions/74312283/tried-to-load-unspecified-class-activesupporttimewithzone-psychdisallowed
+    # config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, ActiveSupport::Duration]
+    #
+    # https://zenn.dev/hatsu0412/scraps/4b1db3dd725a86
+    config.active_record.use_yaml_unsafe_load = true
   end
 end

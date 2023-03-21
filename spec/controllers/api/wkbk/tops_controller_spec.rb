@@ -30,12 +30,12 @@ RSpec.describe Api::Wkbk::TopsController, type: :controller do
   it "index" do
     user_login(User.sysop)
     get :index
-    assert { response.status == 200 }
+    is_asserted_by { response.status == 200 }
   end
 
   it "sitemap" do
     get :sitemap
-    assert { response.status == 200 }
+    is_asserted_by { response.status == 200 }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}

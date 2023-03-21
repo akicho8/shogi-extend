@@ -16,12 +16,12 @@ RSpec.describe ShareBoard::Responder1 do
     # | assistant | \n\nI am sorry, I need more context to understand what you mean by "gptさんこんにちは". Could you please provide more information? |
     # |-----------+---------------------------------------------------------------------------------------------------------------------|
 
-    assert { history.to_topic.count == 2 } # 自分の発言と ChatGPT の発言で合わせて2つある
+    is_asserted_by { history.to_topic.count == 2 } # 自分の発言と ChatGPT の発言で合わせて2つある
 
-    assert { history.to_topic[0].role    == "user" }
-    assert { history.to_topic[0].content == "こんにちは"   }
+    is_asserted_by { history.to_topic[0].role    == "user" }
+    is_asserted_by { history.to_topic[0].content == "こんにちは"   }
 
-    assert { history.to_topic[1].role == "assistant"  }
-    assert { history.to_topic[1].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
+    is_asserted_by { history.to_topic[1].role == "assistant"  }
+    is_asserted_by { history.to_topic[1].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
   end
 end

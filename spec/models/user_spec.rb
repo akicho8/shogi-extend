@@ -39,23 +39,23 @@ RSpec.describe User, type: :model do
   include ActiveJob::TestHelper
 
   it "ログイン名に絵文字が含まれていてもDBが死なない" do
-    assert { User.create!(name: "a🦐b").name == "a🦐b" }
+    is_asserted_by { User.create!(name: "a🦐b").name == "a🦐b" }
   end
 
   describe "リレーション" do
     it "works" do
       user = User.create!
-      assert { user.free_battles.to_a }
+      is_asserted_by { user.free_battles.to_a }
       user.destroy!
     end
   end
 
   # it "email_valid?" do
-  #   assert { User.create!(email: "alice@localhost").email_valid? == false }
-  #   assert { User.create!(email: "alice@localhost").email_valid? == true  }
+  #   is_asserted_by { User.create!(email: "alice@localhost").email_valid? == false }
+  #   is_asserted_by { User.create!(email: "alice@localhost").email_valid? == true  }
   # end
 
   it "info" do
-    assert { User.create!.info }
+    is_asserted_by { User.create!.info }
   end
 end

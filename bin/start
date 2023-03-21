@@ -1,6 +1,6 @@
 #!/bin/sh
 # export NODE_OPTIONS="--max-old-space-size=2048"
-export NODE_OPTIONS="--max-old-space-size=8192"
+# export NODE_OPTIONS="--max-old-space-size=8192"
 rm log/*.log >/dev/null
 sudo kill -9 $(sudo lsof -t -i:3000) >/dev/null 2>&1
 sudo kill -9 $(sudo lsof -t -i:4000) >/dev/null 2>&1

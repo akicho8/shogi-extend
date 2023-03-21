@@ -4,7 +4,7 @@ RSpec.describe MediaBuilder, type: :model do
   describe "to_browser_path" do
     it "works" do
       obj = MediaBuilder.new(FreeBattle.create!)
-      assert { obj.to_browser_path.match?(/system.*x-files.*png/) }
+      is_asserted_by { obj.to_browser_path.match?(/system.*x-files.*png/) }
     end
   end
 
@@ -14,12 +14,12 @@ RSpec.describe MediaBuilder, type: :model do
       obj.build_options
     end
     it "works" do
-      assert { case1({})                 == {width: 1200, height:  630} }
-      assert { case1("width" => "")      == {width: 1200, height:  630} }
-      assert { case1("width" => "800")   == {width:  800, height:  630} }
-      assert { case1("height" => "9999") == {width: 1200, height: 4096} }
-      assert { case1("other" => "12.34") == {width: 1200, height:  630} }
-      assert { case1("other" => "true")  == {width: 1200, height:  630} }
+      is_asserted_by { case1({})                 == {width: 1200, height:  630} }
+      is_asserted_by { case1("width" => "")      == {width: 1200, height:  630} }
+      is_asserted_by { case1("width" => "800")   == {width:  800, height:  630} }
+      is_asserted_by { case1("height" => "9999") == {width: 1200, height: 4096} }
+      is_asserted_by { case1("other" => "12.34") == {width: 1200, height:  630} }
+      is_asserted_by { case1("other" => "true")  == {width: 1200, height:  630} }
     end
   end
 
@@ -29,13 +29,13 @@ RSpec.describe MediaBuilder, type: :model do
       obj.turn
     end
     it "works" do
-      assert { case1("turn" =>  0)   == 0 }
-      assert { case1("turn" => "0")  == 0 }
-      assert { case1("turn" => "1")  == 1 }
-      assert { case1("turn" => -1)   == 5 }
-      assert { case1("turn" => -2)   == 4 }
-      assert { case1("turn" => "-1") == 5 }
-      assert { case1("turn" => "99") == 5 }
+      is_asserted_by { case1("turn" =>  0)   == 0 }
+      is_asserted_by { case1("turn" => "0")  == 0 }
+      is_asserted_by { case1("turn" => "1")  == 1 }
+      is_asserted_by { case1("turn" => -1)   == 5 }
+      is_asserted_by { case1("turn" => -2)   == 4 }
+      is_asserted_by { case1("turn" => "-1") == 5 }
+      is_asserted_by { case1("turn" => "99") == 5 }
     end
   end
 
@@ -43,9 +43,9 @@ RSpec.describe MediaBuilder, type: :model do
     it "works" do
       obj = MediaBuilder.new(FreeBattle.create!)
       path = obj.to_real_path
-      assert { path.exist? }
+      is_asserted_by { path.exist? }
       obj.cache_delete
-      assert { !path.exist? }
+      is_asserted_by { !path.exist? }
     end
   end
 end

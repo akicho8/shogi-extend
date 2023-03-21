@@ -42,7 +42,7 @@ module Swars
     end
 
     it "KIFの直リンクがモデルから取れる" do
-      assert { record.kif_url == "http://localhost:3000/w/alice-bob-20000101_000000.kif" }
+      is_asserted_by { record.kif_url == "http://localhost:3000/w/alice-bob-20000101_000000.kif" }
     end
 
     it "keyの重複はDBでのみチェックする" do
@@ -56,38 +56,38 @@ module Swars
           record.to_twitter_card_params
         end
         it "works" do
-          assert { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
-          assert { value[:url]         == nil                                                        }
-          assert { value[:image]       == "http://localhost:3000/w/alice-bob-20000101_000000.png?turn=5&viewpoint=black" }
-          assert { value[:description] == "新嬉野流 vs 2手目△３ニ飛戦法"                                   }
+          is_asserted_by { value[:title]       == "将棋ウォーズ(10分) user1 30級 vs user2 30級"              }
+          is_asserted_by { value[:url]         == nil                                                        }
+          is_asserted_by { value[:image]       == "http://localhost:3000/w/alice-bob-20000101_000000.png?turn=5&viewpoint=black" }
+          is_asserted_by { value[:description] == "新嬉野流 vs 2手目△３ニ飛戦法"                                   }
         end
         it "turnを変更できる" do
-          assert { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
+          is_asserted_by { record.to_twitter_card_params(turn: 0)[:image].include?("turn=0") }
         end
       end
 
       it "title" do
-        assert { record.title == "user1 30級 vs user2 30級" }
+        is_asserted_by { record.title == "user1 30級 vs user2 30級" }
       end
 
       it "description" do
-        assert { record.description == "新嬉野流 vs 2手目△３ニ飛戦法" }
+        is_asserted_by { record.description == "新嬉野流 vs 2手目△３ニ飛戦法" }
       end
     end
 
     describe "時間チャート" do
       it "raw_sec_list_all: 消費時間" do
-        assert { record.raw_sec_list_all == [1, 3, 5, 7, 2] }
+        is_asserted_by { record.raw_sec_list_all == [1, 3, 5, 7, 2] }
       end
 
       it "raw_sec_list: それぞれの消費時間" do
-        assert { record.raw_sec_list(:black) == [1, 5, 2] }
-        assert { record.raw_sec_list(:white) == [3, 7]    }
+        is_asserted_by { record.raw_sec_list(:black) == [1, 5, 2] }
+        is_asserted_by { record.raw_sec_list(:white) == [3, 7]    }
       end
 
       it "time_chart_params: chart.jsに渡すデータがある" do
-        assert { record.time_chart_params[:tcv_normal].has_key?(:datasets) }
-        assert { record.time_chart_params[:tcv_accretion].has_key?(:datasets) }
+        is_asserted_by { record.time_chart_params[:tcv_normal].has_key?(:datasets) }
+        is_asserted_by { record.time_chart_params[:tcv_accretion].has_key?(:datasets) }
       end
 
       describe "投了" do
@@ -96,21 +96,21 @@ module Swars
         end
 
         it "後手は時間切れでないので放置時間は無し" do
-          assert { record.memberships[1].leave_alone_seconds == nil }
+          is_asserted_by { record.memberships[1].leave_alone_seconds == nil }
         end
         it "それぞれの最大考慮時間が取れる" do
-          assert { record.memberships[0].think_max == 5 }
-          assert { record.memberships[1].think_max == 7 }
+          is_asserted_by { record.memberships[0].think_max == 5 }
+          is_asserted_by { record.memberships[1].think_max == 7 }
         end
         it "ラベルの最大" do
-          assert { record.time_chart_label_max == 6 }
+          is_asserted_by { record.time_chart_label_max == 6 }
         end
         it "それぞれの時間チャートデータが取れる" do
-          assert { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}] }
+          is_asserted_by { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          is_asserted_by { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}] }
         end
         it "累計のデータが取れる" do
-          assert { record.time_chart_xy_list2(:black, true) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 6}, {x: 4, y: nil}, {x: 5, y: 8}, {x: 6, y: nil}] }
+          is_asserted_by { record.time_chart_xy_list2(:black, true) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 6}, {x: 4, y: nil}, {x: 5, y: 8}, {x: 6, y: nil}] }
         end
       end
 
@@ -120,17 +120,17 @@ module Swars
         end
 
         it "後手の手番で時間切れなので残り秒数が取得できる" do
-          assert { record.memberships[1].leave_alone_seconds == 590 }
+          is_asserted_by { record.memberships[1].leave_alone_seconds == 590 }
         end
         it "後手の最大考慮時間は100ではなく500になっている" do
-          assert { record.memberships[1].think_max == 590 }
+          is_asserted_by { record.memberships[1].think_max == 590 }
         end
         it "後手のチャートの最後にそれを追加してある" do
-          assert { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
-          assert { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}, {x: 6, y: -590}, {x: 7, y: nil}] }
+          is_asserted_by { record.time_chart_xy_list2(:black, false) == [{x: 0, y: nil}, {x: 1, y: 1}, {x: 2, y: nil}, {x: 3, y: 5}, {x: 4, y: nil}, {x: 5, y: 2}, {x: 6, y: nil}] }
+          is_asserted_by { record.time_chart_xy_list2(:white, false) == [{x: 0, y: nil}, {x: 1, y: nil}, {x: 2, y: -3}, {x: 3, y: nil}, {x: 4, y: -7}, {x: 5, y: nil}, {x: 6, y: -590}, {x: 7, y: nil}] }
         end
         it "そのためチャートのラベルは増えている" do
-          assert { record.time_chart_label_max == 6 }
+          is_asserted_by { record.time_chart_label_max == 6 }
         end
       end
 
@@ -139,8 +139,8 @@ module Swars
           Swars::Battle.create!(csa_seq: [])
         end
         it "データがないときは0" do
-          assert { record.memberships[0].think_max == 0 }
-          assert { record.memberships[1].think_max == 0 }
+          is_asserted_by { record.memberships[0].think_max == 0 }
+          is_asserted_by { record.memberships[1].think_max == 0 }
         end
       end
     end
@@ -151,8 +151,8 @@ module Swars
       end
       it "works" do
         # "相居飛車" タグを除去している
-        assert { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車"] }
-        assert { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
+        is_asserted_by { record.memberships[0].note_tag_list == ["入玉", "相入玉", "居飛車"] }
+        is_asserted_by { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
     end
   end

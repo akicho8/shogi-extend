@@ -3,7 +3,7 @@ require "rails_helper"
 module Swars
   RSpec.describe RarityInfo, type: :model, swars_spec: true do
     it "style_info" do
-      assert { RarityInfo.first.style_info }
+      is_asserted_by { RarityInfo.first.style_info }
     end
   end
 end

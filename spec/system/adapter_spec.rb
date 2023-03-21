@@ -17,7 +17,7 @@ RSpec.describe "なんでも棋譜変換", type: :system do
   it "bodyパラメータで棋譜を渡せる" do
     visit2 "/adapter", :body => "(foo)"
     value = find("textarea").value
-    assert { value == "(foo)" }
+    is_asserted_by { value == "(foo)" }
   end
 
   describe "エラー" do

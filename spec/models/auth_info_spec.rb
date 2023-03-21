@@ -31,16 +31,16 @@ RSpec.describe AuthInfo, type: :model do
     perform_enqueued_jobs do
       user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
     end
-    assert { ActionMailer::Base.deliveries.count == 1 }
-    # assert { user.email == "sns@example.com" }
-    # assert { user.unconfirmed_email.blank? }
+    is_asserted_by { ActionMailer::Base.deliveries.count == 1 }
+    # is_asserted_by { user.email == "sns@example.com" }
+    # is_asserted_by { user.unconfirmed_email.blank? }
     # tp ActionMailer::Base.deliveries.collect { |e| {subject: e.subject, from: e.from, to: e.to} }
   end
 
   it "正しいメールアドレスのときはSNS連携しても更新しない" do
     user = User.create!(email: "alice@example.com")
     user.auth_infos.create!(provider: "twitter", uid: SecureRandom.hex, auth: auth)
-    assert { user.email == "alice@example.com" }
+    is_asserted_by { user.email == "alice@example.com" }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}
