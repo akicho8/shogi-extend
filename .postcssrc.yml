@@ -1,0 +1,4 @@
+plugins:
+  postcss-import: {}
+  # ↓これを有効にすると nuxt_side 側がめちゃくちゃになる
+  # postcss-cssnext: {}

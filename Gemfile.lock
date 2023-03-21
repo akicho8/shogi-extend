@@ -373,7 +373,7 @@ GEM
       railties (>= 5.0)
     retryable (3.0.5)
     rexml (3.2.5)
-    rmagick (5.1.0)
+    rmagick (5.2.0)
       pkg-config (~> 1.4)
     rspec (3.12.0)
       rspec-core (~> 3.12.0)
