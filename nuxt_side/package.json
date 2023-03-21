@@ -4,6 +4,9 @@
   "description": "将棋に関連するツールを提供するサイトです",
   "author": "akicho8",
   "private": true,
+  "browserslist": [
+    "> 2%, not dead"
+  ],
   "scripts": {
     "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
@@ -13,8 +16,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@babel/cli": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/proxy": "^2.0.1",

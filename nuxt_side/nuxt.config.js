@@ -413,27 +413,27 @@ const config = {
       })
     },
 
-    babel: {
-      // ↓よくわかっていない
-      // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
-      // https://qiita.com/hiroyukiwk/items/b283ef5312b289be6ce8
-      plugins: [
-        ["@babel/plugin-proposal-private-methods",            { loose: true }],
-        ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
-      ],
-
-      // 【超注意】
-      // テンプレートメソッドパターン動かなくなる原因はこれ
-      // super 経由で呼ぶメソッドが親子を跨げなくなる
-      //
-      // presets({ isServer }, [preset, options]) {
-      //   options.loose = true
-      // },
-
-      // nuxt generateの際に「[BABEL] Note: The code generator has deoptimised the styling of」のメッセージ
-      // https://qiita.com/someone7140/items/5acfc94c63f16115ac99
-      compact: false,
-    },
+    // babel: {
+    //   // ↓よくわかっていない
+    //   // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
+    //   // https://qiita.com/hiroyukiwk/items/b283ef5312b289be6ce8
+    //   plugins: [
+    //     ["@babel/plugin-proposal-private-methods",            { loose: true }],
+    //     ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+    //   ],
+    //
+    //   // 【超注意】
+    //   // テンプレートメソッドパターン動かなくなる原因はこれ
+    //   // super 経由で呼ぶメソッドが親子を跨げなくなる
+    //   //
+    //   // presets({ isServer }, [preset, options]) {
+    //   //   options.loose = true
+    //   // },
+    //
+    //   // nuxt generateの際に「[BABEL] Note: The code generator has deoptimised the styling of」のメッセージ
+    //   // https://qiita.com/someone7140/items/5acfc94c63f16115ac99
+    //   compact: false,
+    // },
   },
 
   // https://nuxtjs.org/guide/runtime-config
