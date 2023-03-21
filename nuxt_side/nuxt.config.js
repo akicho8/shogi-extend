@@ -413,6 +413,12 @@ const config = {
       })
     },
 
+    babel: {
+      plugins: [
+        "@babel/plugin-proposal-logical-assignment-operators",
+      ],
+    },
+
     // babel: {
     //   // ↓よくわかっていない
     //   // 【Nuxt.js】新規作成時Babelで大量のWARNが出てくるときの解消法
