@@ -1,10 +1,23 @@
 ################################################################################ nuxt_side
 
-# cap staging nuxt_side:deploy
-
 after "deploy:updated", "nuxt_side:deploy"
 
 namespace :nuxt_side do
+  # cap staging nuxt_side:doctor
+  desc "環境確認"
+  task :doctor do
+    on roles(:web) do |host|
+      within "#{release_path}/nuxt_side" do
+        execute :pwd
+        execute :env, "| grep ENV"
+        execute :env, "| grep PATH"
+        execute :node, "-v"
+        execute :nodenv, "versions"
+      end
+    end
+  end
+
+  # cap staging nuxt_side:deploy
   desc "Nuxt側のアップロード"
   task :deploy do
     if false
