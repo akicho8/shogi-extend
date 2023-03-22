@@ -15,3 +15,6 @@ export PATH=".bin:$PATH"
 
 # for logrtate
 export PATH="/usr/sbin:$PATH"
+
+# gcc 4.8.5 -> 11.2.1 を固定化する
+source scl_source enable devtoolset-11
