@@ -29,17 +29,19 @@ task :test_all do
   EOT
 end
 
-namespace :spec do
-  desc "core (--fail-fast)"
-  RSpec::Core::RakeTask.new(:core) do |t|
-    t.pattern = "spec/models/**/*_spec.rb"
-    t.rspec_opts = "-f p --fail-fast"
-  end
+if defined? RSpec
+  namespace :spec do
+    desc "core (--fail-fast)"
+    RSpec::Core::RakeTask.new(:core) do |t|
+      t.pattern = "spec/models/**/*_spec.rb"
+      t.rspec_opts = "-f p --fail-fast"
+    end
 
-  desc "corec (--fail-fast --only-failures)"
-  RSpec::Core::RakeTask.new(:corec) do |t|
-    t.pattern = "spec/models/**/*_spec.rb"
-    t.rspec_opts = "-f p --fail-fast --only-failures"
+    desc "corec (--fail-fast --only-failures)"
+    RSpec::Core::RakeTask.new(:corec) do |t|
+      t.pattern = "spec/models/**/*_spec.rb"
+      t.rspec_opts = "-f p --fail-fast --only-failures"
+    end
   end
 end
 
