@@ -1,4 +1,5 @@
 if ENV["REMOTE_BUILD"] != "1"
+  # cap staging deploy:assets:precompile
   # cap production deploy:assets:precompile
 
   # 元のタスクの内容は消しておく
@@ -31,13 +32,9 @@ if ENV["REMOTE_BUILD"] != "1"
         # devDependencies が対象にならないので --production=false の引数をつけとくといい
         execute :yarn
 
-        # 環境変数 STAGE, NODE_ENV, RAILS_ENV を有効にしておく
-        with stage: fetch(:stage), rails_env: fetch(:rails_env), node_env: fetch(:rails_env) do
-          # sh -c で実行しているのはデプロイ先の rbenv 関連プレフィクスをつけたくないため
-          # このあたりちょっとややこしい
-          execute :sh, "-c 'pwd && env | grep ENV'"
-          execute :sh, "-c 'bundle exec rails -t assets:precompile'"
-        end
+        # sh -c で実行しているのはデプロイ先の rbenv 関連プレフィクスをつけたくないため
+        # このあたりちょっとややこしい
+        execute :sh, "-c 'RAILS_ENV=production bundle exec rails -t assets:precompile'"
       end
 
       # public/{assets,packs} をデプロイ先に転送
