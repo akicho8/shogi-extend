@@ -275,6 +275,7 @@ GEM
       net-protocol
     net-ssh (7.1.0)
     nio4r (2.5.8)
+    nkf (0.1.2)
     nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -312,6 +313,9 @@ GEM
     orm_adapter (0.5.0)
     pkg-config (1.5.1)
     power_assert (2.0.3)
+    pp (0.4.0)
+      prettyprint
+    prettyprint (0.1.1)
     psych (3.3.4)
     public_suffix (4.0.7)
     puma (5.6.4)
@@ -546,13 +550,16 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   kaminari
   listen (~> 3.3)
+  matrix
   memory_record
   mysql2 (>= 0.5.5)
+  nkf
   nokogiri
   omniauth-github
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   omniauth-twitter
+  pp
   psych (~> 3)
   puma (~> 5.0)
   puma_worker_killer

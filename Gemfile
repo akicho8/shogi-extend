@@ -194,3 +194,8 @@ gem "retryable"
 gem "ruby-openai", require: "openai"
 
 gem "psych", "~> 3" # Psych::BadAlias: Unknown alias: default 対策 ← 新しい Rails では不要 ← 嘘だった
+
+# 標準かgemか不安定なので gem 化されているものはそっちから入れる
+gem "pp"
+gem "nkf"
+gem "matrix"
