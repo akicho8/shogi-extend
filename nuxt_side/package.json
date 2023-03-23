@@ -7,6 +7,9 @@
   "browserslist": [
     "> 2%, not dead"
   ],
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
