@@ -16,11 +16,11 @@ Time::DATE_FORMATS.update({
     :battle_time => proc { |time|
       case
       when time >= 1.days.ago
-        time.to_s(:battle_short)
+        time.to_fs(:battle_short)
       when time.year == Time.current.year
-        time.to_s(:battle_medium)
+        time.to_fs(:battle_medium)
       else
-        time.to_s(:battle_long)
+        time.to_fs(:battle_long)
       end
     },
 
@@ -34,7 +34,7 @@ Time::DATE_FORMATS.update({
       case
         # when time >= Time.current.midnight
         # when time >= 1.days.ago
-        #   time.to_s(:battle_short)
+        #   time.to_fs(:battle_short)
       when t < 1.minute then "#{t.div(1.second)}秒#{suffix}"
       when t < 1.hour   then "#{t.div(1.minute)}分#{suffix}"
       when t < 1.day    then "#{t.div(1.hour)}時間#{suffix}"
@@ -46,7 +46,7 @@ Time::DATE_FORMATS.update({
     },
 
     :battle_time_detail => proc { |time|
-      "#{time.to_s(:ymdhm)} (#{time.to_s(:battle_time)})"
+      "#{time.to_fs(:ymdhm)} (#{time.to_fs(:battle_time)})"
     },
 
     #
@@ -64,8 +64,8 @@ Time::DATE_FORMATS.update({
     # },
 
     # # "12:34 (56分前)"
-    # :gmail_show_like   => proc {|time| "#{time.to_s(:gmail_index_like)} (#{time.to_s(:distance)})"},
-    # :gmail_show_like2  => proc {|time| " #{time.to_s(:gmail_show_like)} "},
+    # :gmail_show_like   => proc {|time| "#{time.to_fs(:gmail_index_like)} (#{time.to_fs(:distance)})"},
+    # :gmail_show_like2  => proc {|time| " #{time.to_fs(:gmail_show_like)} "},
     #
     # :last_access   => proc {|time|
     #   t = (Time.current.to_i - time.to_i).abs
@@ -85,7 +85,7 @@ Time::DATE_FORMATS.update({
     #   else                        "#{t / 1.day.to_i}日前"
     #   end
     # },
-    # :gmail_show_like3s  => proc {|time| " #{time.to_s(:last_access)} "},
+    # :gmail_show_like3s  => proc {|time| " #{time.to_fs(:last_access)} "},
   })
 
 # strftime("%J") で日本語の曜日表示

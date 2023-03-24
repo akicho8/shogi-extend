@@ -51,7 +51,7 @@ module ShareBoardControllerMethods
     #
     if params[:format].blank? || request.format.html?
       query = params.permit!.to_h.except(:controller, :action, :format).to_query.presence
-      redirect_to UrlProxy.url_for(["/share-board", query].compact.join("?"))
+      redirect_to UrlProxy.url_for(["/share-board", query].compact.join("?")), allow_other_host: true
       return
     end
 

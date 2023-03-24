@@ -9,7 +9,7 @@ module FormBox
       def default
         if s = super.presence
           Date::DATE_FORMATS[:date_picker_format] ||= "%Y/%m/%d" # ハイフン区切りは datepicker でパースできないため
-          Date.parse(s.to_s, false).to_s(:date_picker_format)
+          Date.parse(s.to_s, false).to_fs(:date_picker_format)
         end
       end
     end

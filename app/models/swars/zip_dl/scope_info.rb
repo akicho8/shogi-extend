@@ -9,7 +9,7 @@ module Swars
           message: -> context {
             if context.current_user
               if context.continue_begin_at
-                time = context.continue_begin_at.to_s(:battle_medium)
+                time = context.continue_begin_at.to_fs(:battle_medium)
                 # "#{time} 以降を日時昇順で最大#{zip_dl_max}件取得する (推奨)"
                 "#{time} 以降を日時昇順で取得する (推奨)"
               else

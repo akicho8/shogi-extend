@@ -304,12 +304,12 @@ module Kiwi
           e["所有"] = user.name
           e["投入"] = "計#{user.kiwi_lemons.count}回"
           e["状況"] = status_key
-          e["投入"] = created_at&.to_s(:ymdhms)
-          e["開始"] = process_begin_at&.to_s(:ymdhms)
-          e["成功"] = successed_at&.to_s(:ymdhms)
+          e["投入"] = created_at&.to_fs(:ymdhms)
+          e["開始"] = process_begin_at&.to_fs(:ymdhms)
+          e["成功"] = successed_at&.to_fs(:ymdhms)
           e["所要"] = processed_total_seconds ? "#{processed_total_seconds}秒" : ""
-          e["失敗"] = errored_at&.to_s(:ymdhms)
-          e["終了"] = process_end_at&.to_s(:ymdhms)
+          e["失敗"] = errored_at&.to_fs(:ymdhms)
+          e["終了"] = process_end_at&.to_fs(:ymdhms)
         end
       end
 

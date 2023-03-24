@@ -9,7 +9,7 @@ module FormBox
       def default
         if s = super.presence
           Time::DATE_FORMATS[:datetime_picker_format] ||= "%Y/%m/%d %R"
-          Time.zone.parse(s.to_s).to_s(:datetime_picker_format)
+          Time.zone.parse(s.to_s).to_fs(:datetime_picker_format)
         end
       end
     end

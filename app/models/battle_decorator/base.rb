@@ -87,7 +87,7 @@ module BattleDecorator
     def begin_at_s
       if battle_begin_at_available?
         if v = battle_begin_at
-          v.to_s(:ja_ad_format)
+          v.to_fs(:ja_ad_format)
         end
       end
     end
@@ -95,7 +95,7 @@ module BattleDecorator
     def end_at_s
       if battle_begin_at_available?
         if v = battle_end_at
-          v.to_s(:ja_ad_format)
+          v.to_fs(:ja_ad_format)
         end
       end
     end

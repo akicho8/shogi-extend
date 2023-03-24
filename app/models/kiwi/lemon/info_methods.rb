@@ -5,7 +5,7 @@ module Kiwi
         {
           "ID"       => id,
           "投稿者"   => user.name,
-          "作成日時" => created_at.to_s(:ymdhm),
+          "作成日時" => created_at.to_fs(:ymdhm),
         }
       end
     end

@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_11_000002) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_123144) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -28,8 +27,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -43,7 +42,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "app_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "subject", null: false
     t.string "body", limit: 8192, null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
   end
 
   create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -58,8 +57,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "cpu_battle_records", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", comment: "ログインしているならそのユーザー"
     t.string "judge_key", null: false, comment: "結果"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["judge_key"], name: "index_cpu_battle_records_on_judge_key"
     t.index ["user_id"], name: "index_cpu_battle_records_on_user_id"
   end
@@ -71,9 +70,9 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.text "sfen_body", null: false, comment: "SFEN形式"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
-    t.datetime "battled_at", null: false, comment: "対局開始日時"
+    t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
     t.string "use_key", null: false
-    t.datetime "accessed_at", null: false, comment: "最終参照日時"
+    t.datetime "accessed_at", precision: nil, null: false, comment: "最終参照日時"
     t.bigint "user_id"
     t.text "description", null: false
     t.string "sfen_hash", null: false
@@ -81,8 +80,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.integer "critical_turn", comment: "開戦"
     t.integer "outbreak_turn", comment: "中盤"
     t.integer "image_turn", comment: "???"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "preset_id", comment: "手合割"
     t.index ["accessed_at"], name: "index_free_battles_on_accessed_at"
     t.index ["battled_at"], name: "index_free_battles_on_battled_at"
@@ -99,8 +98,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "judges", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_judges_on_key", unique: true
     t.index ["position"], name: "index_judges_on_position"
   end
@@ -108,7 +107,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "kiwi_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", comment: "参照者"
     t.bigint "banana_id", null: false, comment: "動画"
-    t.datetime "created_at", null: false, comment: "記録日時"
+    t.datetime "created_at", precision: nil, null: false, comment: "記録日時"
     t.index ["banana_id"], name: "index_kiwi_access_logs_on_banana_id"
     t.index ["user_id"], name: "index_kiwi_access_logs_on_user_id"
   end
@@ -118,9 +117,9 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "banana_id", null: false, comment: "動画"
     t.string "body", limit: 512, null: false, comment: "発言"
     t.integer "position", null: false, comment: "番号"
-    t.datetime "deleted_at", comment: "削除日時"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at", precision: nil, comment: "削除日時"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["banana_id", "position"], name: "index_kiwi_banana_messages_on_banana_id_and_position", unique: true
     t.index ["banana_id"], name: "index_kiwi_banana_messages_on_banana_id"
     t.index ["position"], name: "index_kiwi_banana_messages_on_position"
@@ -137,8 +136,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.float "thumbnail_pos", null: false, comment: "サムネ位置"
     t.integer "banana_messages_count", default: 0, null: false, comment: "コメント数"
     t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["access_logs_count"], name: "index_kiwi_bananas_on_access_logs_count"
     t.index ["banana_messages_count"], name: "index_kiwi_bananas_on_banana_messages_count"
     t.index ["folder_id"], name: "index_kiwi_bananas_on_folder_id"
@@ -151,8 +150,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "key", null: false
     t.integer "position", null: false
     t.integer "bananas_count", default: 0, null: false, comment: "問題集数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_kiwi_folders_on_key", unique: true
     t.index ["position"], name: "index_kiwi_folders_on_position"
   end
@@ -162,18 +161,18 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "recordable_type", null: false
     t.bigint "recordable_id", null: false, comment: "対象レコード"
     t.text "all_params", null: false, comment: "変換パラメータ全部入り"
-    t.datetime "process_begin_at", comment: "処理開始日時"
-    t.datetime "process_end_at", comment: "処理終了日時"
-    t.datetime "successed_at", comment: "成功日時"
-    t.datetime "errored_at", comment: "エラー日時"
+    t.datetime "process_begin_at", precision: nil, comment: "処理開始日時"
+    t.datetime "process_end_at", precision: nil, comment: "処理終了日時"
+    t.datetime "successed_at", precision: nil, comment: "成功日時"
+    t.datetime "errored_at", precision: nil, comment: "エラー日時"
     t.text "error_message", comment: "エラーメッセージ"
     t.string "content_type", comment: "コンテンツタイプ"
     t.integer "file_size", comment: "ファイルサイズ"
     t.text "ffprobe_info", comment: "変換パラメータ"
     t.string "browser_path", comment: "生成したファイルへのパス"
     t.string "filename_human", comment: "ダウンロードファイル名"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_kiwi_lemons_on_created_at"
     t.index ["errored_at"], name: "index_kiwi_lemons_on_errored_at"
     t.index ["process_begin_at"], name: "index_kiwi_lemons_on_process_begin_at"
@@ -186,8 +185,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "locations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_locations_on_key", unique: true
     t.index ["position"], name: "index_locations_on_position"
   end
@@ -195,8 +194,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "presets", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_presets_on_key", unique: true
     t.index ["position"], name: "index_presets_on_position"
   end
@@ -205,27 +204,27 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "user_id", null: false, comment: "ユーザー"
     t.string "description", limit: 512, null: false, comment: "自己紹介"
     t.string "twitter_key", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false, comment: "対局識別子"
-    t.datetime "battled_at", null: false, comment: "対局開始日時"
+    t.datetime "battled_at", precision: nil, null: false, comment: "対局開始日時"
     t.text "csa_seq", null: false, comment: "棋譜の断片"
     t.bigint "win_user_id", comment: "勝者(ショートカット用)"
     t.integer "turn_max", null: false, comment: "手数"
     t.text "meta_info", null: false, comment: "棋譜メタ情報"
-    t.datetime "accessed_at", null: false, comment: "最終参照日時"
+    t.datetime "accessed_at", precision: nil, null: false, comment: "最終参照日時"
     t.text "sfen_body", null: false
     t.string "sfen_hash", null: false
     t.integer "start_turn", comment: "???"
     t.integer "critical_turn", comment: "開戦"
     t.integer "outbreak_turn", comment: "中盤"
     t.integer "image_turn", comment: "???"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "xmode_id", null: false, comment: "対局モード"
     t.bigint "preset_id", null: false, comment: "手合割"
     t.bigint "rule_id", null: false, comment: "持ち時間"
@@ -249,9 +248,9 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "target_user_key", null: false, comment: "対象者"
     t.string "to_email", null: false, comment: "完了通知先メールアドレス"
     t.string "attachment_mode", null: false, comment: "ZIPファイル添付の有無"
-    t.datetime "processed_at", comment: "処理完了日時"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "processed_at", precision: nil, comment: "処理完了日時"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["attachment_mode"], name: "index_swars_crawl_reservations_on_attachment_mode"
     t.index ["user_id"], name: "index_swars_crawl_reservations_on_user_id"
   end
@@ -259,8 +258,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_finals", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_finals_on_key", unique: true
     t.index ["position"], name: "index_swars_finals_on_position"
   end
@@ -268,8 +267,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_grades", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "priority", null: false, comment: "優劣"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_grades_on_key", unique: true
     t.index ["priority"], name: "index_swars_grades_on_priority"
   end
@@ -277,8 +276,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_membership_extras", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "membership_id", null: false, comment: "対局情報"
     t.json "used_piece_counts", null: false, comment: "駒の使用頻度"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["membership_id"], name: "index_swars_membership_extras_on_membership_id", unique: true
   end
 
@@ -289,8 +288,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "grade_id", null: false, comment: "対局時の段級"
     t.integer "position", comment: "手番の順序"
     t.integer "grade_diff", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "think_all_avg", comment: "指し手の平均秒数(全体)"
     t.integer "think_end_avg", comment: "指し手の平均秒数(最後5手)"
     t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
@@ -317,24 +316,24 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_rules_on_key", unique: true
     t.index ["position"], name: "index_swars_rules_on_position"
   end
 
   create_table "swars_search_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "プレイヤー"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_swars_search_logs_on_user_id"
   end
 
   create_table "swars_styles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_styles_on_key", unique: true
     t.index ["position"], name: "index_swars_styles_on_position"
   end
@@ -342,10 +341,10 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "user_key", null: false, comment: "対局者名"
     t.bigint "grade_id", null: false, comment: "最高段級"
-    t.datetime "last_reception_at", comment: "受容日時"
+    t.datetime "last_reception_at", precision: nil, comment: "受容日時"
     t.integer "search_logs_count", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
     t.index ["updated_at"], name: "index_swars_users_on_updated_at"
@@ -355,8 +354,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "swars_xmodes", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", comment: "順序"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_swars_xmodes_on_key", unique: true
     t.index ["position"], name: "index_swars_xmodes_on_position"
   end
@@ -366,10 +365,10 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "swars_user_id", null: false, comment: "対象者"
     t.string "query", null: false, comment: "クエリ全体(予備)"
     t.integer "dl_count", null: false, comment: "ダウンロード数(記録用)"
-    t.datetime "begin_at", null: false, comment: "スコープ(開始・記録用)"
-    t.datetime "end_at", null: false, comment: "スコープ(終了)"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "begin_at", precision: nil, null: false, comment: "スコープ(開始・記録用)"
+    t.datetime "end_at", precision: nil, null: false, comment: "スコープ(終了)"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["created_at"], name: "index_swars_zip_dl_logs_on_created_at"
     t.index ["end_at"], name: "index_swars_zip_dl_logs_on_end_at"
     t.index ["swars_user_id"], name: "index_swars_zip_dl_logs_on_swars_user_id"
@@ -383,7 +382,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "tagger_type"
     t.integer "tagger_id"
     t.string "context", limit: 128
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["context"], name: "index_taggings_on_context"
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
@@ -403,8 +402,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
 
   create_table "tsl_leagues", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.integer "generation", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["generation"], name: "index_tsl_leagues_on_generation"
   end
 
@@ -419,8 +418,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "ox", null: false
     t.integer "previous_runner_up_count", null: false, comment: "これまでの次点回数"
     t.integer "seat_count", null: false, comment: "これまでの在籍数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["league_id", "user_id"], name: "index_tsl_memberships_on_league_id_and_user_id", unique: true
     t.index ["league_id"], name: "index_tsl_memberships_on_league_id"
     t.index ["lose"], name: "index_tsl_memberships_on_lose"
@@ -438,8 +437,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.integer "memberships_count", default: 0
     t.integer "runner_up_count", null: false, comment: "次点個数"
     t.integer "level_up_generation", comment: "プロになった世代"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["level_up_generation"], name: "index_tsl_users_on_level_up_generation"
     t.index ["name"], name: "index_tsl_users_on_name", unique: true
   end
@@ -449,26 +448,26 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "name", null: false, comment: "名前"
     t.string "user_agent", null: false, comment: "ブラウザ情報"
     t.string "race_key", null: false, comment: "種族"
-    t.datetime "name_input_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "name_input_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "email", null: false
     t.string "encrypted_password", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["key"], name: "index_users_on_key", unique: true
@@ -480,7 +479,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "wkbk_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", comment: "参照者"
     t.bigint "book_id", null: false, comment: "問題集"
-    t.datetime "created_at", null: false, comment: "記録日時"
+    t.datetime "created_at", precision: nil, null: false, comment: "記録日時"
     t.index ["book_id"], name: "index_wkbk_access_logs_on_book_id"
     t.index ["user_id"], name: "index_wkbk_access_logs_on_user_id"
   end
@@ -488,8 +487,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "wkbk_answer_kinds", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_wkbk_answer_kinds_on_key", unique: true
     t.index ["position"], name: "index_wkbk_answer_kinds_on_position"
   end
@@ -500,7 +499,7 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "book_id", null: false, comment: "対戦部屋"
     t.bigint "user_id", null: false, comment: "自分"
     t.integer "spent_sec", null: false, comment: "使用時間"
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["answer_kind_id"], name: "index_wkbk_answer_logs_on_answer_kind_id"
     t.index ["article_id"], name: "index_wkbk_answer_logs_on_article_id"
     t.index ["book_id"], name: "index_wkbk_answer_logs_on_book_id"
@@ -524,8 +523,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.integer "moves_answers_count", default: 0, null: false, comment: "解答数"
     t.integer "difficulty", null: false, comment: "難易度"
     t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["difficulty"], name: "index_wkbk_articles_on_difficulty"
     t.index ["folder_id"], name: "index_wkbk_articles_on_folder_id"
     t.index ["init_sfen"], name: "index_wkbk_articles_on_init_sfen"
@@ -544,8 +543,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.text "description", null: false, comment: "説明"
     t.integer "bookships_count", default: 0, null: false, comment: "記事数"
     t.integer "answer_logs_count", default: 0, null: false, comment: "解答数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
     t.index ["access_logs_count"], name: "index_wkbk_books_on_access_logs_count"
     t.index ["folder_id"], name: "index_wkbk_books_on_folder_id"
@@ -559,8 +558,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.bigint "book_id", null: false, comment: "問題集"
     t.bigint "article_id", null: false, comment: "問題"
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_wkbk_bookships_on_article_id"
     t.index ["book_id", "article_id"], name: "index_wkbk_bookships_on_book_id_and_article_id", unique: true
     t.index ["book_id"], name: "index_wkbk_bookships_on_book_id"
@@ -573,8 +572,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.integer "position", null: false
     t.integer "books_count", default: 0, null: false, comment: "問題集数"
     t.integer "articles_count", default: 0, null: false, comment: "問題数"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_wkbk_folders_on_key", unique: true
     t.index ["position"], name: "index_wkbk_folders_on_position"
   end
@@ -582,8 +581,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "wkbk_lineages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_wkbk_lineages_on_key", unique: true
     t.index ["position"], name: "index_wkbk_lineages_on_position"
   end
@@ -594,8 +593,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.text "moves_str", comment: "連続した指し手"
     t.text "moves_human_str", comment: "人間向け指し手"
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_wkbk_moves_answers_on_article_id"
     t.index ["moves_count"], name: "index_wkbk_moves_answers_on_moves_count"
     t.index ["position"], name: "index_wkbk_moves_answers_on_position"
@@ -604,8 +603,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "wkbk_sequences", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key"], name: "index_wkbk_sequences_on_key", unique: true
     t.index ["position"], name: "index_wkbk_sequences_on_position"
   end
@@ -613,16 +612,16 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
   create_table "xsettings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "var_key", null: false
     t.text "var_value"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["var_key"], name: "index_xsettings_on_var_key", unique: true
   end
 
   create_table "xy_master_rules", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "key", null: false
     t.integer "position", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["position"], name: "index_xy_master_rules_on_position"
   end
 
@@ -633,8 +632,8 @@ ActiveRecord::Schema.define(version: 2022_12_11_000002) do
     t.string "summary"
     t.integer "x_count", null: false
     t.float "spent_sec", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["entry_name"], name: "index_xy_master_time_records_on_entry_name"
     t.index ["rule_id"], name: "index_xy_master_time_records_on_rule_id"
     t.index ["user_id"], name: "index_xy_master_time_records_on_user_id"

@@ -10,7 +10,7 @@ module Wkbk
           "URL"      => page_url,
           "公開設定" => folder.name,
           "出題順序" => sequence.pure_info.name,
-          "作成日時" => created_at.to_s(:ymdhm),
+          "作成日時" => created_at.to_fs(:ymdhm),
           "説明"     => description.presence.to_s.squish,
         }
       end

@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   skip_forgery_protection :if => proc { request.format.json? || Rails.env.development? }
 
   before_action do
-    ActiveStorage::Current.host = request.base_url
+    # https://github.com/rails/rails/commit/0591de55af5cb1fa249237772309e94b07a640c2
+    ActiveStorage::Current.url_options = { host: request.base_url }
   end
 
   before_action do

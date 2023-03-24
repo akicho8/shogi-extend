@@ -26,7 +26,7 @@ module BackendScript
         current = now.midnight - i.days
         date = current.to_date
         row = {}
-        row["日付"]     = h.tag.span(current.to_s(:ymd_j), :class => holiday_sunday_saturday_class(current))
+        row["日付"]     = h.tag.span(current.to_fs(:ymd_j), :class => holiday_sunday_saturday_class(current))
         row["変換数"]   = lemon_hash[date]&.count_all
         row["変換人数"] = lemon_hash[date]&.unique_user_id_count
         row["失敗"]     = lemon_hash[date]&.errored_count

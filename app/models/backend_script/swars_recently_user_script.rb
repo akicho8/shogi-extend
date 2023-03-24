@@ -8,7 +8,7 @@ module BackendScript
         {
           "ウォーズID" => e.name_with_grade,
           "回数"       => e.search_logs_count,
-          "最終利用"   => e.last_reception_at&.to_s(:distance),
+          "最終利用"   => e.last_reception_at&.to_fs(:distance),
         }
       end
     end

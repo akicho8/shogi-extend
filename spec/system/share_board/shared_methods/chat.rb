@@ -35,5 +35,4 @@ module SharedMethods
       find(".send_handle").click                     # 送信
     end
   end
-
 end
