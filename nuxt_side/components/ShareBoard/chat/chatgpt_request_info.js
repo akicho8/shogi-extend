@@ -27,7 +27,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         key: "局面にコメントする",
         command_fn: (context, params) => {
           if (params.turn === 20) {
-            const message = `現在は${params.turn}手目です。面白おかしく戦型予想してください`
+            const message = `現在は${params.turn}手目です。面白おかしく戦型や囲いを評価してください`
             context.gpt_speak({message: message})
             return
           }

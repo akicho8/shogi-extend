@@ -19,7 +19,7 @@ export default {
   inject: ["TheSb"],
   mounted() {
     this.$sound.play("notification")
-    this.talk("部屋のリンクをコピーしますか？")
+    this.talk2("部屋のリンクをコピーしますか？")
   },
   methods: {
     close_handle() {

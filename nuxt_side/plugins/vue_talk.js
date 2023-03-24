@@ -32,6 +32,7 @@ export const vue_talk = {
       }
       const params = {
         source_text: message,
+        data: options.data,     // ログに出すため
       }
       return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
         if (e.browser_path == null) {

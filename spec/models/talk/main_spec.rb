@@ -17,7 +17,7 @@ module Talk
       end
     end
 
-    it "キャッシュOFFで生成" do
+    it "キャッシュOFFなら必ず生成する" do
       Timecop.return do
         obj = Main.new(source_text: "こんにちは", disk_cache_enable: false)
         is_asserted_by { obj.as_json }

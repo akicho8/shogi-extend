@@ -1,3 +1,7 @@
+# 読み上げやすい文字列に変換する
+#
+#   YomiageNormalizer.new("手番w").to_s # => "てばんわら"
+#
 module Talk
   class YomiageNormalizer
     # 基本的に AWS の読み方に任せているが看過できないものはここで変換する

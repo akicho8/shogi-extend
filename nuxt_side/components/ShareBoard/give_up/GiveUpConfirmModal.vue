@@ -22,7 +22,7 @@ export default {
   mixins: [support_child],
   inject: ["TheSb"],
   mounted() {
-    this.talk(this.message)
+    this.talk2(this.message)
   },
   methods: {
     give_up_handle() {

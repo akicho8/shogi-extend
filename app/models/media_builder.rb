@@ -260,7 +260,7 @@ class MediaBuilder
     info.public_send(recipe_info.to_method, options)
   end
 
-  def force_build
+  def force_build_core
     real_path.dirname.mkpath
     real_path.binwrite(to_blob)
     Pathname("#{real_path}.rb").write(build_options.pretty_inspect) # 同じディレクトリにどのようなオプションで生成したかを吐いておく

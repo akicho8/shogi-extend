@@ -3,10 +3,6 @@
 module SystemFileMethods
   extend ActiveSupport::Concern
 
-  included do
-    delegate :logger, to: "Rails"
-  end
-
   class_methods do
     delegate :logger, to: "Rails"
 
@@ -39,6 +35,10 @@ module SystemFileMethods
     end
   end
 
+  included do
+    delegate :logger, to: "self.class"
+  end
+
   attr_accessor :params
   attr_accessor :options
 
@@ -48,6 +48,10 @@ module SystemFileMethods
     end
     @params = self.class.default_params.merge(params.to_options)
     @options = self.class.default_options.merge(options.to_options)
+  end
+
+  def call
+    as_json
   end
 
   def as_json(*)
@@ -85,10 +89,25 @@ module SystemFileMethods
 
   def not_exist_then_build
     if @options[:disk_cache_enable] && file_exist?
+      log! "[already_existd]"
       return
     end
+    force_build_wrap
+  end
 
-    force_build
+  def force_build_wrap
+    begin
+      counter = Rails.cache.increment(unique_key)
+      log! "[再入:#{counter}][begin]" # もし2になっていたらAPI実行中に同じAPIが再度呼ばれていて危険
+      ms = "%.2f ms" % Benchmark.ms { force_build_core }
+      log! "[再入:#{counter}][end][#{ms}]"
+    ensure
+      Rails.cache.decrement(unique_key)
+    end
+  end
+
+  def force_build_core
+    raise NotImplementedError, "#{__method__} is not implemented"
   end
 
   def real_path
@@ -146,5 +165,10 @@ module SystemFileMethods
 
   def dir_parts
     unique_key.match(/(.{2})(.{2})/).captures
+  end
+
+  def log!(str)
+    time = Time.now.strftime("%F %T %L")
+    logger.info "[talk_mp3][#{time}][#{Process.pid}][#{unique_key}][#{params[:data]}]#{str}"
   end
 end

@@ -52,7 +52,7 @@ export const mod_order_new = {
 
     // cc_play_confirm(params = {}) {
     //   this.$sound.play_click()
-    //   this.talk("ちょっと待って。先に順番設定をしてください")
+    //   this.talk2("ちょっと待って。先に順番設定をしてください")
     //   this.dialog_confirm({
     //     title: "ちょっと待って",
     //     type: "is-warning",
@@ -106,7 +106,7 @@ export const mod_order_new = {
     // 閉じる
     os_modal_close_confirm(params = {}) {
       this.$sound.play_click()
-      this.talk("変更を適用せずに閉じようとしています")
+      this.talk2("変更を適用せずに閉じようとしています")
       this.dialog_confirm({
         title: "ちょっと待って",
         type: "is-warning",

@@ -1,6 +1,9 @@
 # ▼使い方
 # render json: Talk.create(source_text: "こんにちは")
 #
+# ▼テスト
+# rails r 'Talk::Main.cache_delete_all'; rails r 'Talk.create(source_text: "こんにちは").call'
+#
 # ▼キャッシュ削除 (development)
 # rails r 'Talk::Main.cache_delete_all'
 #
@@ -39,7 +42,7 @@ module Talk
       [api_params[:voice_id], api_params[:sample_rate], source_text].join(":")
     end
 
-    def force_build
+    def force_build_core
       real_path.dirname.mkpath
       TransformApi.new.call(api_params.merge(text: normalized_text, response_target: real_path.to_s))
     end
