@@ -23,14 +23,18 @@ export const mod_chatgpt = {
     gpt_case_illegal(params) {
       if (this.received_from_self(params)) {
         if (this.present_p(params.lmi.illegal_names)) {
-          ChatgptRequestInfo.fetch("反則した人を励ます").command_fn(this, params)
+          if (this.cc_play_p) {
+            ChatgptRequestInfo.fetch("反則した人を励ます").command_fn(this, params)
+          }
         }
       }
     },
 
     gpt_case_turn(params) {
       if (this.received_from_self(params)) {
-        ChatgptRequestInfo.fetch("局面にコメントする").command_fn(this, params)
+        if (this.cc_play_p) {
+          ChatgptRequestInfo.fetch("局面にコメントする").command_fn(this, params)
+        }
       }
     },
 
