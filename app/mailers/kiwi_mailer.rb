@@ -51,9 +51,9 @@ class KiwiMailer < ApplicationMailer
     body << ""
 
     body << "▼その他"
-    body << "登録: #{lemon.created_at&.to_s(:ymdhms)}"
-    body << "開始: #{lemon.process_begin_at&.to_s(:ymdhms)}"
-    body << "完了: #{lemon.process_end_at&.to_s(:ymdhms)}"
+    body << "登録: #{lemon.created_at&.to_fs(:ymdhms)}"
+    body << "開始: #{lemon.process_begin_at&.to_fs(:ymdhms)}"
+    body << "完了: #{lemon.process_end_at&.to_fs(:ymdhms)}"
     body << "失敗: #{lemon.error_message}" if lemon.errored_at
     body << ""
 

@@ -22,8 +22,8 @@ module Swars
 
         memo["後"]   = all.count
         memo["差"]   = memo["後"] - memo["前"]
-        memo["開始"] = @start_time.to_s(:ymdhms)
-        memo["終了"] = Time.current.to_s(:ymdhms)
+        memo["開始"] = @start_time.to_fs(:ymdhms)
+        memo["終了"] = Time.current.to_fs(:ymdhms)
 
         SystemMailer.notify(fixed: true, subject: "バトル削除", body: body).deliver_later
       end
@@ -35,7 +35,7 @@ module Swars
 
       def one_group(records)
         @group = {}
-        @group["日時"] = Time.current.to_s(:ymdhms)
+        @group["日時"] = Time.current.to_fs(:ymdhms)
         @group["個数"] = records.size
         @group["成功"] = 0
         @group["失敗"] = 0

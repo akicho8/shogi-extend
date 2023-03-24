@@ -22,8 +22,8 @@ module BackendScript
         "対象"     => record.target_user_key,
         "通知先"   => record.to_email,
         "添付"     => record.attachment_mode,
-        "登録日時" => record.created_at.to_s(:ymdhm),
-        "完了日時" => record.processed_at&.to_s(:ymdhm),
+        "登録日時" => record.created_at.to_fs(:ymdhm),
+        "完了日時" => record.processed_at&.to_fs(:ymdhm),
       }
     end
   end

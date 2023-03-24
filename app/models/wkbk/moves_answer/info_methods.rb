@@ -7,7 +7,7 @@ module Wkbk
             "正解番号"       => position.next,
             "正解手数"       => moves_count,
             "人間向けの解答" => moves_human_str,
-            "正解作成日時"   => created_at.to_s(:ymdhm),
+            "正解作成日時"   => created_at.to_fs(:ymdhm),
             "*画像URL"       => share_board_png_url,
             "*共有将棋盤URL" => share_board_url,
           })

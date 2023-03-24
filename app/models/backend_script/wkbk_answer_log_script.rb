@@ -25,7 +25,7 @@ module BackendScript
         "問題"   => article_link_to(record.article),
         "時間"   => record.spent_sec,
         "解答"   => record.answer_kind.mark,
-        "日時"   => record.created_at.to_s(:distance),
+        "日時"   => record.created_at.to_fs(:distance),
       }
     end
   end

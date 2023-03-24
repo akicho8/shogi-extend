@@ -57,7 +57,7 @@ module Swars
 
       def report_for(user_key)
         row = {
-          "日時"       => Time.current.to_s(:ymdhms),
+          "日時"       => Time.current.to_fs(:ymdhms),
           "ID"         => nil,
           "ユーザー名" => user_key,
           "段級"       => nil,
@@ -74,7 +74,7 @@ module Swars
           row["ID"]         = user.id
           row["段級"]       = user.grade.name
           row["前"]         = user.battles.count
-          row["最終検索"]   = user.last_reception_at&.to_s(:battle_time)
+          row["最終検索"]   = user.last_reception_at&.to_fs(:battle_time)
           row["検索回数"]   = user.search_logs.count
         end
 
@@ -92,7 +92,7 @@ module Swars
         if user = lookup(user_key)
           row["後"] = user.battles.count
           if battle = user.battles.order(:battled_at).last
-            row["最終対局"] = battle.battled_at.to_s(:battle_time_detail)
+            row["最終対局"] = battle.battled_at.to_fs(:battle_time_detail)
           end
         end
 

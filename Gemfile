@@ -4,7 +4,7 @@ source "https://rubygems.org"
 ruby "3.2.1"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 6"
+gem "rails", "~> 7"
 # Use sqlite3 as the database for Active Record
 # gem "sqlite3"
 gem "mysql2", ">= 0.5.5"
@@ -47,7 +47,7 @@ group :development do
   gem "rack-mini-profiler", "~> 2.0"
   gem "listen", "~> 3.3"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
+  gem "spring", ">= 4" # https://qiita.com/kanon_ayuayu/items/e5d330d1bbda68a3c82a
 end
 
 group :test do

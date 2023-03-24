@@ -106,7 +106,7 @@ module BackendScript
         date = current.to_date
         range = "2000-01-01".to_time ... current.tomorrow
         row = {}
-        row["日付"]           = h.tag.span(current.to_s(:ymd_j), :class => holiday_sunday_saturday_class(current))
+        row["日付"]           = h.tag.span(current.to_fs(:ymd_j), :class => holiday_sunday_saturday_class(current))
         row["新規バトル数"]   = battle_hash[date]&.count_all
         row["新規ユーザー数"] = user_hash[date]&.count_all
         row["検索数"]         = search_hash[date]&.count_all

@@ -58,7 +58,7 @@ module XyMaster
         # datasets: 1.times.collect { |i|
         #   {
         #     label: wl.name,
-        #     data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.midnight.to_s(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
+        #     data: memberships.find_all { |e| e.judge_key.to_sym == wl.key }.collect { |e| { t: e.battle.battled_at.midnight.to_fs(:ymdhms), y: e.battle.battled_at.hour * 1.minute + e.battle.battled_at.min } },
         #     backgroundColor: wl.palette.background_color,
         #     borderColor: wl.palette.border_color,
         #     pointRadius: 4,           # 点半径

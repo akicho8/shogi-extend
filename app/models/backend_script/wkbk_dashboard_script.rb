@@ -56,7 +56,7 @@ module BackendScript
       current_length.times.collect do |i|
         date = now - i
         row = {}
-        row["日付"]           = h.tag.span(date.to_time.to_s(:ymd_j), :class => holiday_sunday_saturday_class(date))
+        row["日付"]           = h.tag.span(date.to_time.to_fs(:ymd_j), :class => holiday_sunday_saturday_class(date))
         row["o"]              = answer_log_hash[date]&.correct_count
         row["x"]              = answer_log_hash[date]&.mistake_count
         row["ox"]             = answer_log_hash[date]&.count_all

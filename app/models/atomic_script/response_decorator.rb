@@ -12,7 +12,7 @@ module AtomicScript
 
     def time_label
       if self[:time]
-        self[:time].to_time.to_s(:exec_distance)
+        self[:time].to_time.to_fs(:exec_distance)
       end
     end
 

@@ -18,7 +18,7 @@ module Swars
       def render_header
         @lines << ["N+", @battle.memberships.first.name_with_grade].join
         @lines << ["N-", @battle.memberships.second.name_with_grade].join
-        @lines << ["$START_TIME", @battle.battled_at.to_s(:csa_ymdhms)] * ":"
+        @lines << ["$START_TIME", @battle.battled_at.to_fs(:csa_ymdhms)] * ":"
         @lines << ["$EVENT", "#{event_title}(#{event_types.join(' ')})"] * ":"
         @lines << ["$TIME_LIMIT", @battle.rule_info.csa_time_limit] * ":"
         if @battle.preset_info.handicap

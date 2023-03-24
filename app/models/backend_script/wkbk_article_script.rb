@@ -28,7 +28,7 @@ module BackendScript
         "解数"     => record.moves_answers.count,
         "難易度"   => record.difficulty,
         "種類"     => record.lineage.name,
-        "作成日時" => record.created_at.to_s(:distance),
+        "作成日時" => record.created_at.to_fs(:distance),
       }
     end
   end
