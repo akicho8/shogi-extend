@@ -1,11 +1,12 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 86c3f4446c6f86d62588caa079b62f069fb1f3db
+  revision: efcd8454c3e977cf185e018aa8460b29eb2dcffe
   specs:
     bioshogi (0.0.1)
       actionview
       activesupport
       color
+      faraday
       memory_record
       rmagick (>= 5.0.0)
       rubyzip
