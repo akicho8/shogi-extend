@@ -70,8 +70,8 @@ export const mod_message = {
 
     // ログ用の追加データとして data に名前を入れておく
     // 直接 talk を使うべからず
-    talk2(message) {
-      return this.talk(message, {data: this.user_name})
+    talk2(message, options) {
+      return this.talk(message, {data: this.user_name, ...options})
     },
   },
 
