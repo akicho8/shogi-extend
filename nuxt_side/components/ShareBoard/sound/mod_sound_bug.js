@@ -27,7 +27,7 @@ export const mod_sound_bug = {
       }
     },
     sound_bug_callback(counter) {
-      this.talk2(`${counter}.${this.irand(99999)}`)
+      this.talk(`${counter}.${this.irand(99999)}`)
     },
   },
 }
