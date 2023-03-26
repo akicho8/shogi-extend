@@ -61,7 +61,7 @@ export const mod_client_vote = {
     // お題に投票する
     client_vote_modal_handle() {
       this.$sound.play("notification")
-      this.delay_block(1.0, () => this.talk(this.received_odai.subject))
+      this.delay_block(1.0, () => this.talk2(this.received_odai.subject))
       this.modal_card_open({
         component: ClientVoteModal,
         canCancel: [],

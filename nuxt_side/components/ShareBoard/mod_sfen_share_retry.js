@@ -67,7 +67,7 @@ export const mod_sfen_share_retry = {
       const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がないので再送しますか？`
       const message2 = `<span class="has-text-grey is-size-7 mx-1">${this.retry_check_delay}秒後に再度確認します</span>`
       const message3 = `${message1}${message2}`
-      // this.talk(message1)
+      // this.talk2(message1)
 
       this.retry_confirm_close()
       this.retry_confirm_instance = this.dialog_confirm({

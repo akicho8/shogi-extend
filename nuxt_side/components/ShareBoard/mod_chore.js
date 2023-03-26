@@ -93,7 +93,7 @@ export const mod_chore = {
 
     room_out_confirm_dialog(block = () => {}) {
       const message = "本当に退室してもよいですか？"
-      this.talk(message)
+      this.talk2(message)
       this.dialog_confirm({
         title: "退室",
         message: message,
@@ -113,7 +113,7 @@ export const mod_chore = {
 
     exit_confirm_modal_for_clock_works(block = () => {}) {
       const message = "時計が動いていますが本当に終了してもよいですか？"
-      this.talk(message)
+      this.talk2(message)
       this.dialog_confirm({
         title: "確認",
         message: message,

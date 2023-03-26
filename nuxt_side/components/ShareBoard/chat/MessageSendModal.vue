@@ -44,7 +44,7 @@ export default {
     },
     change_handle(key) {
       this.$sound.play_click()
-      this.talk(this.TheSb.MessageScopeInfo.fetch(key).name)
+      this.TheSb.talk2(this.TheSb.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
       if (this.keyboard_enter_p(e)) {

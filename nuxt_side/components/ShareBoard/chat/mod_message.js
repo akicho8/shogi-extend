@@ -51,7 +51,7 @@ export const mod_message = {
       this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.message_share_received_p(params)) {    // 見てもいいなら
         this.$buefy.toast.open(message_dto.toast_params) // 表示
-        this.talk(message_dto.message)                 // しゃべる
+        this.talk2(message_dto.message)                 // しゃべる
       }
     },
 
@@ -68,10 +68,11 @@ export const mod_message = {
       return exec
     },
 
-    // // ログ用の追加データとして data に名前を入れておく
-    // talk(message) {
-    //   return this.talk(message, {data: this.user_name})
-    // },
+    // ログ用の追加データとして data に名前を入れておく
+    // 直接 talk を使うべからず
+    talk2(message) {
+      return this.talk(message, {data: this.user_name})
+    },
   },
 
   computed: {

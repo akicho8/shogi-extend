@@ -149,7 +149,7 @@ export const mod_clock_box = {
     },
 
     cc_byoyomi(s) {
-      this.talk(s, {rate: BYOYOMI_TALK_PITCH})
+      this.talk2(s, {rate: BYOYOMI_TALK_PITCH})
     },
 
     cc_destroy() {
@@ -335,7 +335,7 @@ export const mod_clock_box = {
 
     cc_play_confirm(params = {}) {
       this.$sound.play_click()
-      this.talk("ちょっと待って。先に順番設定をしてください")
+      this.talk2("ちょっと待って。先に順番設定をしてください")
       this.dialog_confirm({
         title: "ちょっと待って",
         type: "is-warning",
