@@ -68,10 +68,10 @@ export const mod_message = {
       return exec
     },
 
-    // ログ用の追加データとして data に名前を入れておく
-    talk(message) {
-      return this.talk(message, {data: this.user_name})
-    },
+    // // ログ用の追加データとして data に名前を入れておく
+    // talk(message) {
+    //   return this.talk(message, {data: this.user_name})
+    // },
   },
 
   computed: {
