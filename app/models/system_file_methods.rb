@@ -96,13 +96,15 @@ module SystemFileMethods
   end
 
   def force_build_wrap
-    begin
-      counter = Rails.cache.increment(unique_key)
-      log! "[再入:#{counter}][begin]" # もし2になっていたらAPI実行中に同じAPIが再度呼ばれていて危険
-      ms = "%.2f ms" % Benchmark.ms { force_build_core }
-      log! "[再入:#{counter}][end][#{ms}]"
-    ensure
-      Rails.cache.decrement(unique_key)
+    ApiExclusiveControl.new(unique_key).call do
+      begin
+        counter = Rails.cache.increment(unique_key)
+        log! "[再入:#{counter}][begin]" # もし2になっていたらAPI実行中に同じAPIが再度呼ばれていて危険
+        ms = "%.2f ms" % Benchmark.ms { force_build_core }
+        log! "[再入:#{counter}][end][#{ms}]"
+      ensure
+        Rails.cache.decrement(unique_key)
+      end
     end
   end
 

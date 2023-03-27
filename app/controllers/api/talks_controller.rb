@@ -8,5 +8,19 @@ module Api
     def create
       render json: Talk.create(params.to_unsafe_h.symbolize_keys)
     end
+
+    # 音声はおまけなのでアプリを止めてはいけない
+    rescue_from *[
+      # Aws Polly 関連で直接エラーになった場合
+      Aws::Errors::NoSuchEndpointError,
+      Aws::Polly::Errors::MovedTemporarily,
+      Seahorse::Client::NetworkingError,
+
+      # 排他制御された側がタイムアウトした場合
+      ApiExclusiveControl::AecTimeoutError,
+    ] do |exception|
+      render json: {}           # browser_path がなければフロント側は何もしない
+    end
+
   end
 end
