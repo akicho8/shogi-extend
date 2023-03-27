@@ -32,16 +32,12 @@ end
 desc "test:retry"
 task "test:retry" do
   system <<~EOT
-  sleep 180
   rake
-
-  rspec --only-failures
-  sleep 120
-
-  rspec --only-failures
-  sleep 120
-
-  rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
   EOT
 end
 
