@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe type: :system, share_board_spec: true do
+RSpec.describe "順番設定_設定後は手番通知されるOFFにすると手番通知されない", type: :system, share_board_spec: true do
   it "works" do
     a_block do
       room_setup("test_room", "alice")          # aliceが部屋を作る

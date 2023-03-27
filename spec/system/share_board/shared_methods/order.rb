@@ -5,27 +5,24 @@ module SharedMethods
 
   # 順番設定と対局時計の右上の有効をトグルする
   def os_switch_toggle
-    # 本当は find(:checkbox, "有効", exact: true).click と書きたいがなぜか動かない
-    find("label", :class => "main_switch", text: "有効", exact_text: true).click
+    Capybara.find(".modal .main_switch").click
   end
 
   def order_set_on
-    order_modal_main_switch_click(true)
+    hamburger_click
+    os_modal_handle                        # 「順番設定」モーダルを開く
+    os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
+    action_first_assert_text("順番 ON", wait: 5)
+    apply_button                           # 明示的に適用する
+    modal_close_handle                     # 閉じる (ヘッダーに置いている)
   end
 
   def order_set_off
-    order_modal_main_switch_click(false)
-  end
-
-  def order_modal_main_switch_click(enabled)
     hamburger_click
     os_modal_handle                        # 「順番設定」モーダルを開く
-    os_switch_toggle                         # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    action_log_row_of(0).assert_text("順番 #{enabled ? 'ON' : 'OFF'}")
-    if enabled
-      apply_button                          # 明示的に適用する
-    end
-    modal_close_handle                      # 閉じる (ヘッダーに置いている)
+    os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
+    action_first_assert_text("順番 OFF", wait: 5)
+    modal_close_handle                     # 閉じる (ヘッダーに置いている)
   end
 
   def apply_button

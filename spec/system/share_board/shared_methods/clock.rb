@@ -41,7 +41,6 @@ module SharedMethods
   def clock_open
     hamburger_click
     cc_modal_handle             # 「対局時計」モーダルを開く
-
     assert_clock_off            # 時計はまだ設置されていない
     clock_switch_toggle          # 設置する
     assert_clock_on             # 時計が設置された

@@ -12,7 +12,7 @@
             template(v-if="e.label && e.label_type")
               b-tag.flex_item(:type="e.label_type" size="is-small") {{e.label}}
             template(v-else)
-              .flex_item {{e.label}}
+              .flex_item.action_label1 {{e.label}}
 
           template(v-if="e.lmi")
             .flex_item {{e.lmi.next_turn_offset}}
