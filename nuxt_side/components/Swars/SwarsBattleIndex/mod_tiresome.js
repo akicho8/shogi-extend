@@ -63,27 +63,26 @@ export const mod_tiresome = {
     tiresome_alert_handle() {
       this.$sound.play_click()
 
-      // this.delay_block(1, () => {
-      //   this.$sound.stop_all()
-      //   this.talk("ウォーズIDを毎回入力する必要はありません")
-      // })
+      this.delay_block(1, () => {
+        this.$sound.stop_all()
+        this.talk("ところでウォーズID毎回入力するの不便じゃない？")
+      })
 
       const subject = `ウォーズID記憶案内 ${this.xi.current_swars_user_key}`
       this.dialog_confirm({
         canCancel: ["button"],
         // hasIcon: true,
         type: "is-info",
-        title: "😐 ウォーズIDを記憶させよう",
+        title: "😐 ところでウォーズID毎回入力するの不便じゃない？",
         message: `
-          <div class="content">
+          <div class="">
             <ul class="mt-0">
-              <li>ウォーズIDを毎回入力する必要はありません</li>
-              <li>右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で次から入力の手間を省けます</li>
-              <li>ぴよ将棋から来ている方には得におすすめです</li>
+              <li>右上の<b>≡</b>から<b>ウォーズIDを記憶する</b>で入力の手間が省けますよ</li>
+              <li>設定してもあとから<b>すぐ元に戻せる</b>ので安心してください</li>
             </ul>
           </div>`,
         confirmText: "やってみる",
-        cancelText: "不便なまま生きる",
+        cancelText: "💣 不便なまま生きる",
         onConfirm: () => {
           this.$sound.play("o")
           this.tiresome_modal_selected = "yes"

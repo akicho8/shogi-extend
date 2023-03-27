@@ -11,31 +11,31 @@ client-only
         b-notification(:closable="false")
           .content
             ul.mt-0
-              li 記憶すると毎回入力しなくてよくなる
-              li ぴよ将棋から来ている方におすすめ
-              li あとから解除できる
+              li 記憶すると毎回入力しなくてよくなります
+              li ぴよ将棋から来ている方におすすめです
+              li <b>あとから解除できます</b>
 
         template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
           .has-text-centered
             | {{old_key}} を忘れて {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
-            b-button.set_handle(@click="set_handle") 覚える
+            b-button.set_handle(type="is-primary" @click="set_handle") 覚える
 
         template(v-if="blank_p(old_key) && present_p(new_key)")
           .has-text-centered
             | {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
-            b-button.set_handle(@click="set_handle") 覚える
+            b-button.set_handle(type="is-primary" @click="set_handle") 覚える
 
         template(v-if="old_key")
           .has-text-centered
             | {{old_key}} を忘れますか？
           .buttons.is-centered.mt-3
-            b-button.unset_handle(@click="unset_handle") 忘れる
+            b-button.unset_handle(type="is-danger" @click="unset_handle") 忘れる
 </template>
 
 <script>
-const AFTER_REDIRECT = true
+const AFTER_REDIRECT = false
 
 import { MyLocalStorage } from "@/components/models/my_local_storage.js"
 
@@ -65,7 +65,7 @@ export default {
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
       this.remote_notify({subject: `ウォーズID記憶消去 ${this.new_key}`, body: "忘れました"})
-      this.toast_ok("忘れました")
+      this.toast_ng("忘れました")
       if (AFTER_REDIRECT) {
         this.$router.push({name: "swars-search"})
       }
