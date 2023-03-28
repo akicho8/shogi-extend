@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: efcd8454c3e977cf185e018aa8460b29eb2dcffe
+  revision: 79918b6886227cd56778ed169d40793ec9725893
+  branch: main
   specs:
     bioshogi (0.0.1)
       actionview
@@ -176,7 +177,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faraday (1.10.0)
+    faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -192,8 +193,8 @@ GEM
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.0.3)
-      multipart-post (>= 1.2, < 3)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
@@ -261,7 +262,7 @@ GEM
     msgpack (1.4.5)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    multipart-post (2.1.1)
+    multipart-post (2.3.0)
     mysql2 (0.5.5)
     net-imap (0.3.4)
       date
