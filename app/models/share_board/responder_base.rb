@@ -2,7 +2,8 @@
 # rails r 'ShareBoard::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
 module ShareBoard
   class ResponderBase
-    MATCH_REGEXP = /\A\s*@gpt(?!\w+)\s*/i
+    GPT_NAME     = "gpt"
+    MATCH_REGEXP = /\A\s*@#{GPT_NAME}(?!\w+)\s*|\s*[>＞]\s*#{GPT_NAME}\s*\z/i
 
     attr_accessor :params
 
