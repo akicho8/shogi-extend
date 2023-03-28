@@ -30,7 +30,7 @@
 #   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][4][none:true]
 #
 class ExclusiveAccess
-  class AecTimeoutError < Timeout::Error; end
+  class TimeoutError < Timeout::Error; end
 
   def initialize(key, options = {})
     @key = key
@@ -76,7 +76,7 @@ class ExclusiveAccess
       sleep(interval)
     end
     if timeout
-      raise AecTimeoutError, "key: #{key}"
+      raise TimeoutError, "key: #{key}"
     end
   end
 
