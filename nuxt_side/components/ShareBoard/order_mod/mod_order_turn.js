@@ -42,7 +42,7 @@ export const mod_order_turn = {
     user_name_to_initial_turn(user_name) {
       Gs2.__assert_kind_of_string__(user_name)
       if (this.order_enable_p) {
-        Gs2.__assert__(user_name)
+        Gs2.__assert__(user_name, "user_name")
         const turns = this.name_to_turns_hash[user_name]
         if (turns) {
           return turns[0]

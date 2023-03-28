@@ -29,16 +29,18 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
       {
         key: "対局を盛り上げる",
         command_fn: (context, params) => {
-          const teams = Location.values.map(location => {
-            const members = context.visible_member_groups[location.key] || []
-            const names = members.map(e => context.user_call_name(e.from_user_name))
-            const names_str = names.join("と")
-            // return `${names_str}の${location.name}チーム`
-            // return `${names_str}チーム`
-            return `${names_str}`
-          }).join("対")
-          const message = `${teams}の対局が開始されました。短い言葉で盛り上げてください`
-          context.gpt_speak({message: message})
+          if (context.order_enable_p) {
+            const teams = Location.values.map(location => {
+              const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
+              const names = members.map(e => context.user_call_name(e.from_user_name))
+              const names_str = names.join("と")
+              // return `${names_str}の${location.name}チーム`
+              // return `${names_str}チーム`
+              return `${names_str}`
+            }).join("対")
+            const message = `${teams}の対局が開始されました。短い言葉で盛り上げてください`
+            context.gpt_speak({message: message})
+          }
         },
       },
       {

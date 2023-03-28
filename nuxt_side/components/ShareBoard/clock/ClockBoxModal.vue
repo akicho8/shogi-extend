@@ -101,7 +101,7 @@ export default {
       this.play_core_handle()
     },
     play_core_handle() {
-      this.__assert__(!this.clock_box)
+      this.__assert__(!this.clock_box, "!this.clock_box")
       this.$sound.play_click()
       this.TheSb.cc_params_apply()
       this.TheSb.cc_play_handle()

@@ -83,7 +83,7 @@ export const mod_order_main = {
     },
 
     order_copy_from_bc(params) {
-      this.__assert__(params.order_unit)
+      this.__assert__(params.order_unit, "params.order_unit")
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
@@ -200,7 +200,7 @@ export const mod_order_main = {
     // 順番設定 ON のときのみ有効
     // { black: [...], white: [...], other: [...] }
     visible_member_groups() {
-      this.__assert__(this.order_enable_p)
+      this.__assert__(this.order_enable_p, "チーム別のメンバー情報を取得するときは順番設定が有効になっていること")
       return _.groupBy(this.visible_member_infos, e => {
         const location = this.user_name_to_initial_location(e.from_user_name)
         if (location) {
