@@ -1,11 +1,21 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { Gs2 } from "../../models/gs2.js"
 import { Odai } from "../fes/odai.js"
+import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 export class ChatgptRequestInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
+      {
+        key: "参加者にあいさつする",
+        command_fn: (context, params) => {
+          const name = context.user_call_name(params.from_user_name)
+          const message = `${name}に短い言葉で元気よくあいさつしてください`
+          if (context.$route.query.__system_test_now__) { return }
+          context.gpt_speak({message: message})
+        },
+      },
       {
         key: "お題に答える",
         command_fn: (context, params) => {
@@ -19,7 +29,15 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
       {
         key: "対局を盛り上げる",
         command_fn: (context, params) => {
-          const message = `対局が開始されたので短い言葉で盛り上げてください`
+          const teams = Location.values.map(location => {
+            const members = context.visible_member_groups[location.key] || []
+            const names = members.map(e => context.user_call_name(e.from_user_name))
+            const names_str = names.join("と")
+            // return `${names_str}の${location.name}チーム`
+            // return `${names_str}チーム`
+            return `${names_str}`
+          }).join("対")
+          const message = `${teams}の対局が開始されました。短い言葉で盛り上げてください`
           context.gpt_speak({message: message})
         },
       },
@@ -27,17 +45,17 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         key: "局面にコメントする",
         command_fn: (context, params) => {
           if (params.turn === 20) {
-            const message = `現在は${params.turn}手目です。面白おかしく戦型や囲いを評価してください`
+            const message = `現在は${params.turn}手目です。面白おかしく戦型や囲いを短い言葉で評価してください`
             context.gpt_speak({message: message})
             return
           }
           if (params.turn === 50) {
-            const message = `現在は${params.turn}手目です。中盤戦を面白おかしく盛り上げてください`
+            const message = `現在は${params.turn}手目です。中盤戦を面白おかしく短い言葉で盛り上げてください`
             context.gpt_speak({message: message})
             return
           }
-          if (params.turn === 100) {
-            const message = `現在は${params.turn}手目です。終盤戦を熱く盛り上げてください`
+          if (params.turn === 80) {
+            const message = `現在は${params.turn}手目です。終盤戦を短い言葉で熱く盛り上げてください`
             context.gpt_speak({message: message})
             return
           }
@@ -67,7 +85,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             return
           }
           if (context.one_vs_one_p) {
-            const message = "対局が終わったところです。短い言葉で両者を労ってください"
+            const message = "対局が終わったところです。両者を短い言葉で労ってください"
             context.gpt_speak({message: message})
             return
           }
@@ -80,7 +98,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             if (names.length >= 2) {
               messages.push(`とくに${name}の活躍が目立ちました`)
             }
-            messages.push("熱い言葉で両者を労ってください")
+            messages.push("短い言葉で熱く両者を労ってください")
             context.gpt_speak({message: messages.join("。")})
             return
           }

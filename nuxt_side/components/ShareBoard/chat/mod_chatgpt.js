@@ -10,9 +10,22 @@ export const mod_chatgpt = {
       }
       params.message ??= ""                             // null チェックをかわすため
       this.ac_room_perform("gpt_speak", params)         // --> app/channels/share_board/room_channel.rb
+
+      // 確認のため
+      if (!this.$route.query.__system_test_now__ || true) {
+        if (this.debug_mode_p) {
+          this.local_bot_say(params.message)
+        }
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
+
+    gpt_case_hello(params) {
+      if (this.received_from_self(params)) {
+        ChatgptRequestInfo.fetch("参加者にあいさつする").command_fn(this, params)
+      }
+    },
 
     gpt_case_odai(params) {
       if (this.received_from_self(params)) {
