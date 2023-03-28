@@ -6,7 +6,7 @@
 #   process2 = false
 #
 #   key = SecureRandom.hex
-#   obj = ApiExclusiveControl.new(key)
+#   obj = ExclusiveAccess.new(key)
 #   obj.redis.flushdb
 #
 #   thread = Thread.start do
@@ -21,15 +21,15 @@
 #   process1                        # => true
 #   process2                        # => false
 #
-#   # >> [ApiExclusiveControl][talk_mp3][1][権利を獲得したのでAPIを実行する]
-#   # >> [ApiExclusiveControl][talk_mp3][2][権利がないためAPI実行完了待ち]
-#   # >> [ApiExclusiveControl][talk_mp3][814ad31dcca4992da98369e95f38b91a][0][none:false]
-#   # >> [ApiExclusiveControl][talk_mp3][814ad31dcca4992da98369e95f38b91a][1][none:false]
-#   # >> [ApiExclusiveControl][talk_mp3][814ad31dcca4992da98369e95f38b91a][2][none:false]
-#   # >> [ApiExclusiveControl][talk_mp3][814ad31dcca4992da98369e95f38b91a][3][none:false]
-#   # >> [ApiExclusiveControl][talk_mp3][814ad31dcca4992da98369e95f38b91a][4][none:true]
+#   # >> [ExclusiveAccess][talk_mp3][1][権利を獲得したのでAPIを実行する]
+#   # >> [ExclusiveAccess][talk_mp3][2][権利がないためAPI実行完了待ち]
+#   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][0][none:false]
+#   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][1][none:false]
+#   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][2][none:false]
+#   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][3][none:false]
+#   # >> [ExclusiveAccess][talk_mp3][814ad31dcca4992da98369e95f38b91a][4][none:true]
 #
-class ApiExclusiveControl
+class ExclusiveAccess
   class AecTimeoutError < Timeout::Error; end
 
   def initialize(key, options = {})
@@ -47,16 +47,16 @@ class ApiExclusiveControl
   def call(&block)
     count = count_next
     if count == 1
-      Rails.logger.debug { "[ApiExclusiveControl][talk_mp3][#{count}][権利を獲得したのでAPIを実行する]" }
+      Rails.logger.debug { "[ExclusiveAccess][talk_mp3][#{count}][権利を獲得したのでAPIを実行する]" }
       api_call(&block)
     else
-      Rails.logger.debug { "[ApiExclusiveControl][talk_mp3][#{count}][権利がないためAPI実行完了待ち]" }
+      Rails.logger.debug { "[ExclusiveAccess][talk_mp3][#{count}][権利がないためAPI実行完了待ち]" }
       wait_until_currently_running_process_complete
     end
   end
 
   def redis
-    @redis ||= Redis.new(db: AppConfig[:redis_db_for_api_exclusive_control])
+    @redis ||= Redis.new(db: AppConfig[:redis_db_for_exclusive_access])
   end
 
   private
@@ -68,7 +68,7 @@ class ApiExclusiveControl
     timeout = true
     loop_count.times do |i|
       v = process_none?
-      Rails.logger.debug { "[ApiExclusiveControl][talk_mp3][#{key}][#{i}][none:#{v}]" }
+      Rails.logger.debug { "[ExclusiveAccess][talk_mp3][#{key}][#{i}][none:#{v}]" }
       if v
         timeout = false
         break

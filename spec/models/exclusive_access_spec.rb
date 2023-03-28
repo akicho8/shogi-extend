@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe ApiExclusiveControl do
+RSpec.describe ExclusiveAccess do
   it "works" do
     process1 = false
     process2 = false
 
-    obj = ApiExclusiveControl.new("key1")
+    obj = ExclusiveAccess.new("key1")
     obj.redis.flushdb
 
     thread = Thread.start do

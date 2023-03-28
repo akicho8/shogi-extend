@@ -17,7 +17,7 @@ module Api
       Seahorse::Client::NetworkingError,
 
       # 排他制御された側がタイムアウトした場合
-      ApiExclusiveControl::AecTimeoutError,
+      ExclusiveAccess::AecTimeoutError,
     ] do |exception|
       render json: {}           # browser_path がなければフロント側は何もしない
     end

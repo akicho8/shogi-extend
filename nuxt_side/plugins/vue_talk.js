@@ -36,7 +36,7 @@ export const vue_talk = {
       }
       return this.$axios.$post("/api/talk", params, {progress: false}).then(e => {
         if (e.browser_path == null) {
-          // ApiExclusiveControl::AecTimeoutError のときここにくる
+          // ExclusiveAccess::AecTimeoutError のときここにくる
           return Promise.reject("browser_path is blank")
         }
         this.talk_play(e, options) // onend にフックできればいいので戻値不要

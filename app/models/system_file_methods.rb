@@ -96,7 +96,7 @@ module SystemFileMethods
   end
 
   def force_build_wrap
-    ApiExclusiveControl.new(unique_key).call do
+    ExclusiveAccess.new(unique_key).call do
       begin
         counter = Rails.cache.increment(unique_key)
         log! "[再入:#{counter}][begin]" # もし2になっていたらAPI実行中に同じAPIが再度呼ばれていて危険
