@@ -1,4 +1,4 @@
-import { Xhash } from "@/components/models/core/xhash.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const vue_dialog = {
   methods: {
@@ -58,7 +58,7 @@ export const vue_dialog = {
         if (this.development_p) {
           this.clog(message)
         }
-        const h = Xhash.hash_extract_self(params, "toast", "talk")
+        const h = Gs.hash_extract_self(params, "toast", "talk")
         if (h.toast) {
           this.$buefy.toast.open({...params, message: message})
         }

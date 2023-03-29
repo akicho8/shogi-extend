@@ -1,14 +1,13 @@
 import { HandleNameParser } from "@/components/models/handle_name/handle_name_parser.js"
-import { Xassertion } from "./core/xassertion.js"
 
-export const Gs3 = {
-  as_full_url(path) {
-    if (!path.match(/^http/)) {
-      Xassertion.__assert__(__NUXT__, "__NUXT__")
-      path = __NUXT__.config.MY_SITE_URL + path
-    }
-    return path
-  },
+export const AppHelper = {
+  // as_full_url(path) {
+  //   if (!path.match(/^http/)) {
+  //     Gs.__assert__(__NUXT__, "__NUXT__")
+  //     path = __NUXT__.config.MY_SITE_URL + path
+  //   }
+  //   return path
+  // },
 
   user_call_name(str) {
     return HandleNameParser.call_name(str)

@@ -6,7 +6,7 @@
 import { O1State } from "./o1_state.js"
 import { O2State } from "./o2_state.js"
 import { Item } from "./item.js"
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -87,7 +87,7 @@ export class OrderUnit {
   }
 
   state_switch_to(method) {
-    Gs2.__assert__(this.order_state[method], "this.order_state[method]")
+    Gs.__assert__(this.order_state[method], "this.order_state[method]")
     this.order_state = this.order_state[method]
   }
 
@@ -97,7 +97,7 @@ export class OrderUnit {
   }
   set attributes(v) {
     // this.watch_users = v.watch_users
-    // const klass = Gs2.str_constantize(v.state_name)
+    // const klass = Gs.str_constantize(v.state_name)
     const klass = this.state_class_hash[v.state_name]
     const order_state = new klass()
     order_state.attributes = v
@@ -118,7 +118,7 @@ export class OrderUnit {
   }
 
   get valid_p() {
-    return Gs2.blank_p(this.order_state.error_messages)
+    return Gs.blank_p(this.order_state.error_messages)
   }
 
   get invalid_p() {

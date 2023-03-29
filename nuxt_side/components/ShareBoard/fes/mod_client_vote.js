@@ -13,7 +13,7 @@ import ClientVoteModal from "./ClientVoteModal.vue"
 import { OrderUnit } from "../order_mod/order_unit/order_unit.js"
 import { Odai } from "./odai.js"
 import { VotedResult } from "./voted_result.js"
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_client_vote = {
   data() {
@@ -83,8 +83,8 @@ export const mod_client_vote = {
 
     // 順番設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を順番設定に適用する
     voted_result_to_order_apply() {
-      Gs2.__assert__(this.present_p(this.new_v), "this.present_p(this.new_v)")
-      Gs2.__assert__(this.present_p(this.new_v.order_unit), "this.present_p(this.new_v.order_unit)")
+      Gs.__assert__(this.present_p(this.new_v), "this.present_p(this.new_v)")
+      Gs.__assert__(this.present_p(this.new_v.order_unit), "this.present_p(this.new_v.order_unit)")
       this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.voted_result.to_h)
     },
 

@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
-import { Gs2 } from "../../models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { Odai } from "../fes/odai.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"

@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 const QueryString = require("query-string")
 
@@ -27,7 +27,7 @@ export class AnyLinkCreator {
 
   get allowed_params() {
     const all_params = {...this.params, ...this.transform_params}
-    const compacted_params = Gs2.hash_compact(all_params)
-    return Gs2.hash_slice(compacted_params, ...this.allowed_keys)
+    const compacted_params = Gs.hash_compact(all_params)
+    return Gs.hash_slice(compacted_params, ...this.allowed_keys)
   }
 }

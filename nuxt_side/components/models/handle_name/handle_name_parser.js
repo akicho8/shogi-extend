@@ -1,8 +1,6 @@
 import _ from "lodash"
 const NodeEmoji = require("node-emoji")
-import { Xassertion } from "@/components/models/core/xassertion.js"
-import { Xobject } from "@/components/models/core/xobject.js"
-import { Xenumerate } from "@/components/models/core/xenumerate.js"
+import { Gs } from "@/components/models/gs.js"
 
 const CLEAN_TRY_COUNT = 2
 
@@ -23,7 +21,7 @@ export class HandleNameParser {
   }
 
   constructor(source, options = {}) {
-    Xassertion.__assert__(Xobject.present_p(source), "this.present_p(source) in HandleNameParser")
+    Gs.__assert__(Gs.present_p(source), "this.present_p(source) in HandleNameParser")
     this.source = source
     this.options = options
   }
@@ -38,7 +36,7 @@ export class HandleNameParser {
     s = s.replace(new RegExp(`[${this.constructor.DELETE_CHAR}]`, "g"), "")                     // "ali。ce"         → "alice"
 
     // 削除したい文字が連続する場合があるため数回洗浄する
-    Xenumerate.n_times(CLEAN_TRY_COUNT, () => {
+    Gs.n_times(CLEAN_TRY_COUNT, () => {
       s = s.replace(new RegExp(`(.+?)[${this.constructor.DELETE_SUFFIX_CHARS}]+$`), "$1")         // "alice!"          → "alice"
       s = s.replace(new RegExp(`(.+?)(${this.constructor.DELETE_SUFFIX_WORD.join('|')})$`), "$1") // "aliceだよ"       → "alice"
       s = s.replace(/(.+)\(.*\)$/, "$1")                                                          // "alice123(xxx)"   → "alice123"

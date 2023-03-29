@@ -68,7 +68,7 @@ import { ParamInfo   } from "./models/param_info.js"
 import { SceneInfo } from "../models/scene_info.js"
 import { LayoutInfo } from "./models/layout_info.js"
 
-import { Gs2 } from "../../models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "SwarsBattleIndexApp",
@@ -219,7 +219,7 @@ export default {
     LayoutInfo()     { return LayoutInfo                         },
     layout_info()    { return LayoutInfo.fetch(this.layout_key) },
 
-    user_info_query() { return Gs2.presence(Gs2.query_compact(this.query)) },
+    user_info_query() { return Gs.presence(Gs.query_compact(this.query)) },
   },
 }
 </script>

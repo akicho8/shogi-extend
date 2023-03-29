@@ -1,6 +1,6 @@
 // チャット内コマンドでのメダル操作(なくてもよい)
 
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
@@ -28,7 +28,7 @@ export const mod_medal_plus = {
       this.medal_add_to_user_share(user_name, plus)
     },
     medal_add_to_user_share(user_name, plus) {
-      this.clog(`medal_add_to_user_share(${Gs2.i(user_name)}, ${Gs2.i(plus)})`)
+      this.clog(`medal_add_to_user_share(${Gs.i(user_name)}, ${Gs.i(plus)})`)
       const params = {
         medal_user_name: user_name, // 誰に
         acquire_medal_plus: plus,   // これだけ加算する

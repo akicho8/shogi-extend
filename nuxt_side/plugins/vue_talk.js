@@ -9,7 +9,7 @@ const HOWL_TALK_OPTIONS_DEFAULT = {
 }
 
 import { SoundUtil } from "@/components/models/sound_util.js"
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const vue_talk = {
   methods: {

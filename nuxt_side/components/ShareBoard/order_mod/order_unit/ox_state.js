@@ -1,6 +1,6 @@
 // O1State, O2State の共通部分
 
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 const MD5 = require("md5.js")
 
 export class OxState {
@@ -43,7 +43,7 @@ export class OxState {
   // null を含む
   real_order_users(tegoto, scolor) {
     return this.memoize(`real_order_users/${tegoto}/${scolor}`, () => {
-      return Gs2.n_times_collect(this.round_size * tegoto, i => {
+      return Gs.n_times_collect(this.round_size * tegoto, i => {
         return this.turn_to_item(i, tegoto, scolor)
       })
     })

@@ -1,13 +1,13 @@
 import _ from "lodash"
-import { Gs2 } from "../../models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_search = {
   methods: {
     // 棋譜検索
     search_path(params = {}) {
-      const query = Gs2.ary_compact_blank([
+      const query = Gs.ary_compact_blank([
         this.info.user.key,
-        Gs2.query_str_merge(this.$route.query.query, params),
+        Gs.query_str_merge(this.$route.query.query, params),
       ]).join(" ")
       return {name: "swars-search", query: {query: query}}
     },
