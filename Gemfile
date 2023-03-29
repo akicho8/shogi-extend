@@ -182,7 +182,6 @@ gem "diff-lcs"
 
 # ActiveJob
 gem "sidekiq" # sidekiq timeout brpop の警告がでまくるのが Sidekiq 6.5.6 で直っている
-gem "redis-namespace"
 
 gem "puma_worker_killer"
 

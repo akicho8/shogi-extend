@@ -32,8 +32,7 @@ if defined? AppConfig
   # tp({redis_db_for_sidekiq: redis_db_for_sidekiq})
 
   redis_options = {
-    :url       => "redis://localhost:6379/#{redis_db_for_sidekiq}",
-    :namespace => "shogi_web_#{Rails.env}_sidekiq",
+    :url => "redis://localhost:6379/#{redis_db_for_sidekiq}",
   }
 
   # default_worker_options = {
@@ -92,7 +91,7 @@ end
 #
 # Mackerel
 #
-# [deploy@ik1-413-38753 ~]$ sudo mackerel-plugin-sidekiq -db 5 -redis-namespace shogi_web_production_sidekiq
+# [deploy@ik1-413-38753 ~]$ sudo mackerel-plugin-sidekiq -db 5
 # sidekiq.ProcessedANDFailed.processed    4.645161        1677370785
 # sidekiq.ProcessedANDFailed.failed       0.000000        1677370785
 # sidekiq.Stats.busy      0       1677370785

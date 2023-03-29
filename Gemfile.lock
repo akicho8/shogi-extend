@@ -379,8 +379,6 @@ GEM
     redis (4.8.1)
     redis-client (0.14.0)
       connection_pool
-    redis-namespace (1.8.1)
-      redis (>= 3.0.4)
     regexp_parser (2.5.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -575,7 +573,6 @@ DEPENDENCIES
   rails-controller-testing
   rails_autolink
   redis (~> 4.0)
-  redis-namespace
   retryable
   rmagick
   rspec
