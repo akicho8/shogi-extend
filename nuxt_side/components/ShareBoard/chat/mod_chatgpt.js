@@ -21,15 +21,24 @@ export const mod_chatgpt = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    gpt_speak_for(key, params) {
+      const message = ChatgptRequestInfo.fetch(key).command_fn(this, params)
+      if (message != null) {
+        this.gpt_speak({message: message})
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     gpt_case_hello(params) {
       if (this.received_from_self(params)) {
-        ChatgptRequestInfo.fetch("参加者にあいさつする").command_fn(this, params)
+        this.gpt_speak_for("参加者にあいさつする", params)
       }
     },
 
     gpt_case_odai(params) {
       if (this.received_from_self(params)) {
-        ChatgptRequestInfo.fetch("お題に答える").command_fn(this, params)
+        this.gpt_speak_for("お題に答える", params)
       }
     },
 
@@ -37,7 +46,7 @@ export const mod_chatgpt = {
       if (this.received_from_self(params)) {
         if (this.present_p(params.lmi.illegal_names)) {
           if (this.cc_play_p) {
-            ChatgptRequestInfo.fetch("反則した人を励ます").command_fn(this, params)
+            this.gpt_speak_for("反則した人を励ます", params)
           }
         }
       }
@@ -46,7 +55,7 @@ export const mod_chatgpt = {
     gpt_case_turn(params) {
       if (this.received_from_self(params)) {
         if (this.cc_play_p) {
-          ChatgptRequestInfo.fetch("局面にコメントする").command_fn(this, params)
+          this.gpt_speak_for("局面にコメントする", params)
         }
       }
     },
@@ -55,17 +64,17 @@ export const mod_chatgpt = {
       if (this.received_from_self(params)) {
         const cc_info = CcInfo.fetch(params.cc_key)
         if (cc_info.key === "ck_start") {
-          ChatgptRequestInfo.fetch("対局を盛り上げる").command_fn(this, params)
+          this.gpt_speak_for("対局を盛り上げる", params)
         }
         if (cc_info.key === "ck_timeout") {
-          ChatgptRequestInfo.fetch("時間切れで負けた人を励ます").command_fn(this, params)
+          this.gpt_speak_for("時間切れで負けた人を励ます", params)
         }
       }
     },
 
     gpt_case_give_up(params) {
       if (this.received_from_self(params)) {
-        ChatgptRequestInfo.fetch("見応えのある対局だったと褒める").command_fn(this, params)
+        this.gpt_speak_for("見応えのある対局だったと褒める", params)
       }
     },
   },

@@ -11,9 +11,8 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         key: "参加者にあいさつする",
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
-          const message = `${name}に短い言葉で元気よくあいさつしてください`
           if (context.$route.query.__system_test_now__) { return }
-          context.gpt_speak({message: message})
+          return `${name}に短い言葉で元気よくあいさつしてください`
         },
       },
       {
@@ -23,7 +22,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
           if (odai.invalid_p) {
             return
           }
-          context.gpt_speak({message: odai.to_s})
+          return odai.to_s
         },
       },
       {
@@ -38,8 +37,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
               // return `${names_str}チーム`
               return `${names_str}`
             }).join("対")
-            const message = `${teams}の対局が開始されました。短い言葉で盛り上げてください`
-            context.gpt_speak({message: message})
+            return `${teams}の対局が開始されました。短い言葉で盛り上げてください`
           }
         },
       },
@@ -47,19 +45,13 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         key: "局面にコメントする",
         command_fn: (context, params) => {
           if (params.turn === 20) {
-            const message = `現在は${params.turn}手目です。面白おかしく戦型や囲いを短い言葉で評価してください`
-            context.gpt_speak({message: message})
-            return
+            return `現在は${params.turn}手目です。面白おかしく戦型や囲いを短い言葉で評価してください`
           }
           if (params.turn === 50) {
-            const message = `現在は${params.turn}手目です。中盤戦を面白おかしく短い言葉で盛り上げてください`
-            context.gpt_speak({message: message})
-            return
+            return `現在は${params.turn}手目です。中盤戦を面白おかしく短い言葉で盛り上げてください`
           }
           if (params.turn === 80) {
-            const message = `現在は${params.turn}手目です。終盤戦を短い言葉で熱く盛り上げてください`
-            context.gpt_speak({message: message})
-            return
+            return `現在は${params.turn}手目です。終盤戦を短い言葉で熱く盛り上げてください`
           }
         },
       },
@@ -68,16 +60,14 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           const illegal_names = params.lmi.illegal_names.join("と")
           const name = context.user_call_name(params.from_user_name)
-          const message = `反則の${illegal_names}をしてしまい落ち込んでいる${name}を短かい言葉で励ましてください`
-          context.gpt_speak({message: message})
+          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を短かい言葉で励ましてください`
         },
       },
       {
         key: "時間切れで負けた人を励ます",
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
-          const message = `時間切れで負けた${name}を短い言葉で励ましてください`
-          context.gpt_speak({message: message})
+          return `時間切れで負けた${name}を短い言葉で励ましてください`
         },
       },
       {
@@ -87,9 +77,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             return
           }
           if (context.one_vs_one_p) {
-            const message = "対局が終わったところです。両者を短い言葉で労ってください"
-            context.gpt_speak({message: message})
-            return
+            return "対局が終わったところです。両者を短い言葉で労ってください"
           }
           if (context.many_vs_many_p) {
             const members = context.visible_member_groups[params.win_location_key]
@@ -101,8 +89,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
               messages.push(`とくに${name}の活躍が目立ちました`)
             }
             messages.push("短い言葉で熱く両者を労ってください")
-            context.gpt_speak({message: messages.join("。")})
-            return
+            return messages.join("。")
           }
         },
       },
