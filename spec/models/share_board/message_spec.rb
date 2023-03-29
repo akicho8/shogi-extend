@@ -2,12 +2,12 @@ require "rails_helper"
 
 RSpec.describe ShareBoard::Message do
   it "to_h" do
-    object = ShareBoard::Message.new("user", "a/b/c")
+    object = ShareBoard::Message.new(:user, "a/b/c")
     is_asserted_by { object.to_h == { role: "user", content: "a/b/c" } }
   end
 
   it "to_gpt" do
-    object = ShareBoard::Message.new("user", "a/b/c")
+    object = ShareBoard::Message.new(:user, "a/b/c")
     is_asserted_by { object.to_gpt == { role: "user", content: "a/b/c" } }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe ShareBoard::Message do
   # end
 
   it "to_json" do
-    object = ShareBoard::Message.new("user", "a/b/c")
+    object = ShareBoard::Message.new(:user, "a/b/c")
     is_asserted_by { JSON.parse(object.to_json) == {"role"=>"user", "content"=>"a/b/c"} }
   end
 
