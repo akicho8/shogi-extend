@@ -50,7 +50,7 @@ module ShareBoard
     end
 
     def to_topic
-      av = to_a.collect { |e| Message.new(e[:role], e[:content]) }
+      av = to_a.collect { |e| Message.new(e[:role].to_sym, e[:content]) }
       Topic[*av]
     end
 
