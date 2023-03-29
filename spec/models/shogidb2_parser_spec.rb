@@ -111,7 +111,7 @@ RSpec.describe Shogidb2Parser, type: :model do
       ],
     }
 
-    is_asserted_by { Shogidb2Parser.parse(json_params).squish == <<~EOT.squish }
+    assert2 { Shogidb2Parser.parse(json_params).squish == <<~EOT.squish }
       V2.2
       N+Yss1000k
       N-Shin_LesserKai_1_0_0

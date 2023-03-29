@@ -7,11 +7,11 @@ module Swars
     let(:text) { "棋譜 #{raw_url}" }
 
     it "valid?" do
-      is_asserted_by { BattleUrlValidator.new(raw_url).valid? }
+      assert2 { BattleUrlValidator.new(raw_url).valid? }
     end
 
     it "invalid?" do
-      is_asserted_by { BattleUrlValidator.new(text).invalid? }
+      assert2 { BattleUrlValidator.new(text).invalid? }
     end
 
     it "validate!" do

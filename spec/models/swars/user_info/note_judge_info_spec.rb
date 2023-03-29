@@ -17,8 +17,8 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(ibisha_csa_seq_generate(13)) == nil }
-        is_asserted_by { case1(ibisha_csa_seq_generate(14)) == { win: 1, lose: 0 } }
+        assert2 { case1(ibisha_csa_seq_generate(13)) == nil }
+        assert2 { case1(ibisha_csa_seq_generate(14)) == { win: 1, lose: 0 } }
       end
     end
 
@@ -37,8 +37,8 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(furibisha_csa_seq_generate(13)) == nil }
-        is_asserted_by { case1(furibisha_csa_seq_generate(14)) == { win: 1, lose: 0 } }
+        assert2 { case1(furibisha_csa_seq_generate(13)) == nil }
+        assert2 { case1(furibisha_csa_seq_generate(14)) == { win: 1, lose: 0 } }
       end
     end
   end

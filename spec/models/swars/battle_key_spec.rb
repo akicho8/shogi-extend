@@ -7,33 +7,33 @@ module Swars
 
     describe "ClassMethods" do
       it "[]" do
-        is_asserted_by { BattleKey["alice-bob-20130531_010024"].kind_of? BattleKey }
+        assert2 { BattleKey["alice-bob-20130531_010024"].kind_of? BattleKey }
       end
 
       it "create" do
-        is_asserted_by { BattleKey.create("alice-bob-20130531_010024").kind_of? BattleKey }
+        assert2 { BattleKey.create("alice-bob-20130531_010024").kind_of? BattleKey }
       end
     end
 
     describe "InstanceMethods" do
       it "to_s" do
-        is_asserted_by { object.to_s == key }
+        assert2 { object.to_s == key }
       end
 
       it "originator_url" do
-        is_asserted_by { object.originator_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024?locale=ja" }
+        assert2 { object.originator_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024?locale=ja" }
       end
 
       it "to_time" do
-        is_asserted_by { object.to_time == "2013-05-31 01:00:24".to_time }
+        assert2 { object.to_time == "2013-05-31 01:00:24".to_time }
       end
 
       it "user_keys" do
-        is_asserted_by { object.user_keys == ["alice", "bob"] }
+        assert2 { object.user_keys == ["alice", "bob"] }
       end
 
       it "user_key_at" do
-        is_asserted_by { object.user_key_at(:black) == "alice" }
+        assert2 { object.user_key_at(:black) == "alice" }
       end
     end
   end

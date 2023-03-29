@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe ShareBoardsController, type: :controller do
   it "HTMLの要求はNuxt側にリダイレクト" do
     get :show, params: { }
-    is_asserted_by { response.status == 302 }
+    assert2 { response.status == 302 }
   end
 
   # cd ~/src/shogi-extend/ && BROWSER_DEBUG=1 rspec ~/src/shogi-extend/spec/controllers/share_boards_controller_spec.rb -e '基本「58玉」'
   describe "基本「58玉」" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5h", turn:1, title: "(title)", format: format }
-      is_asserted_by { response.status == status }
+      assert2 { response.status == status }
     end
     it "works" do
       test("png", 200)
@@ -24,7 +24,7 @@ RSpec.describe ShareBoardsController, type: :controller do
   describe "エラーの場合" do
     def test(format, status)
       get :show, params: { body: "position startpos moves 5i5e", format: format }
-      is_asserted_by { response.status == status }
+      assert2 { response.status == status }
     end
     it "works" do
       test("png", 200)
@@ -38,42 +38,42 @@ RSpec.describe ShareBoardsController, type: :controller do
     end
     it "works" do
       test("png")
-      is_asserted_by { response.status == 422 }
+      assert2 { response.status == 422 }
     end
   end
 
   it "IDではなく棋譜がキーになっている" do
     FreeBattle.destroy_all
     2.times { get :show, params: { body: "position startpos moves 7g7f", format: "json" } }
-    is_asserted_by { FreeBattle.count == 1 }
+    assert2 { FreeBattle.count == 1 }
   end
 
   it "Twitterカードに戦法名が出る" do
     get :show, params: { body: "68銀", format: "json" }
-    is_asserted_by { controller.twitter_card_options[:description] == "☗嬉野流 vs ☖その他" }
+    assert2 { controller.twitter_card_options[:description] == "☗嬉野流 vs ☖その他" }
   end
 
   it "Twitterカード用の画像パス" do
     get :show, params: { body: "68銀", viewpoint: "white", format: "json" }
-    is_asserted_by { controller.current_og_image_path == "/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1&viewpoint=white" }
+    assert2 { controller.current_og_image_path == "/share-board.png?body=position+sfen+lnsgkgsnl%2F1r5b1%2Fppppppppp%2F9%2F9%2F9%2FPPPPPPPPP%2F1B5R1%2FLNSGKGSNL+b+-+1+moves+7i6h&title=%E5%85%B1%E6%9C%89%E5%B0%86%E6%A3%8B%E7%9B%A4&turn=1&viewpoint=white" }
   end
 
   it "viewpoint の値がおかしいときにエラーにしない" do
     get :show, params: { body: "68銀", viewpoint: "xxxx", format: "json" }
-    is_asserted_by { response.status == 200 }
+    assert2 { response.status == 200 }
   end
 
   it "配色テーマのサムネイル画像" do
     # http://localhost:3000/share-board.png?color_theme_key=is_color_theme_real&color_theme_preview_image_use=true
     get :show, params: { color_theme_preview_image_use: "true", format: "png" }
-    is_asserted_by { response.media_type == "image/png" }
-    is_asserted_by { response["Content-Disposition"].match?(/is_color_theme_real/) }
-    is_asserted_by { response.status == 200 }
+    assert2 { response.media_type == "image/png" }
+    assert2 { response["Content-Disposition"].match?(/is_color_theme_real/) }
+    assert2 { response.status == 200 }
   end
 
   it "KIF等に変換するときに追加情報をヘッダに入れる" do
     # http://localhost:3000/share-board.kif?black=alice&white=bob&other=carol&title=title&body=position.startpos
     get :show, params: { black: "alice", format: "kif", body: "position startpos" }
-    is_asserted_by { response.body.include?("先手：alice") }
+    assert2 { response.body.include?("先手：alice") }
   end
 end

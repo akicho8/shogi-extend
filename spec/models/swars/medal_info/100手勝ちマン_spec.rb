@@ -11,9 +11,9 @@ module Swars
     end
 
     it "works" do
-      is_asserted_by { case1(99)  == false }
-      is_asserted_by { case1(100) == true  }
-      is_asserted_by { case1(101) == false }
+      assert2 { case1(99)  == false }
+      assert2 { case1(100) == true  }
+      assert2 { case1(101) == false }
     end
   end
 end

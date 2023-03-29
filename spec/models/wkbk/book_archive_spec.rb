@@ -16,7 +16,7 @@ module Wkbk
 
       Zip::InputStream.open(book_archive.to_zip) do |zis|
         entry = zis.get_next_entry
-        is_asserted_by { entry.name == "_book_/001__article_/1.kif" }
+        assert2 { entry.name == "_book_/001__article_/1.kif" }
       end
     end
   end

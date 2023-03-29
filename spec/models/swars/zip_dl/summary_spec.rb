@@ -7,7 +7,7 @@ module Swars
 
       it "works" do
         main_builder = MainBuilder.new(base_params)
-        is_asserted_by { main_builder.to_summary }
+        assert2 { main_builder.to_summary }
       end
     end
   end

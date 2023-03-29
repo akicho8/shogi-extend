@@ -17,7 +17,7 @@ module SharedMethods
 
   def clock_box_values_eq(expected)
     result = clock_box_values   # 必ず変数に入れないと power_assert が死ぬ
-    is_asserted_by { result == expected }
+    assert2 { result == expected }
   end
 
   def assert_clock_active_black
@@ -78,7 +78,7 @@ module SharedMethods
 
   def cc_form_block_eq(n, values)
     result = Capybara.within(cc_at(n)) { clock_box_values }
-    is_asserted_by { result == values }
+    assert2 { result == values }
   end
 
   def cc_in(n, &block)
@@ -95,6 +95,6 @@ module SharedMethods
 
   def assert_white_read_sec(second)
     v = find(".is_white .read_sec").text.to_i
-    is_asserted_by { v == second || v == second.pred }
+    assert2 { v == second || v == second.pred }
   end
 end

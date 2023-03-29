@@ -43,14 +43,14 @@ RSpec.describe UsersController, type: :controller do
   describe "show" do
     it "works" do
       get :show, params: { id: @current_user.id }
-      is_asserted_by { response.status == 200 }
+      assert2 { response.status == 200 }
     end
   end
 
   describe "edit" do
     it "works" do
       get :edit, params: { id: @current_user.id }
-      is_asserted_by { response.status == 200 }
+      assert2 { response.status == 200 }
     end
   end
 
@@ -59,11 +59,11 @@ RSpec.describe UsersController, type: :controller do
       name = SecureRandom.hex
       user = { name: name, avatar: fixture_file_upload("spec/files/rails.png", "image/png") }
       put :update, params: { id: @current_user.id, user: user }
-      is_asserted_by { response.status == 302 }
+      assert2 { response.status == 302 }
 
       @current_user.reload
-      is_asserted_by { @current_user.name == name                        }
-      is_asserted_by { @current_user.avatar.filename.to_s == "rails.png" }
+      assert2 { @current_user.name == name                        }
+      assert2 { @current_user.avatar.filename.to_s == "rails.png" }
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe ExclusiveAccess do
     sleep(0.5)                      # 上のスレッドが先に実行されるように少し待つ
     obj.call { process2 = true }    # このブロックは排他制御されるため呼ばれない
     thread.join
-    is_asserted_by { process1 == true }
-    is_asserted_by { process2 == false }
+    assert2 { process1 == true }
+    assert2 { process2 == false }
   end
 end

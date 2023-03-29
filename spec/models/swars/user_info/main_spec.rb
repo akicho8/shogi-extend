@@ -9,13 +9,13 @@ module Swars
       end
 
       it "ユーザーのサマリー" do
-        is_asserted_by { @hash["user"]         == {"key" => "user1"} }
-        is_asserted_by { @hash["rules_hash"]   == {"ten_min" => {"rule_name" => "10分", "grade_name" => "30級"}, "three_min" => {"rule_name" => "3分", "grade_name" => nil}, "ten_sec" => {"rule_name" => "10秒", "grade_name" => nil}} }
-        is_asserted_by { @hash["judge_counts"] == {"win" => 1, "lose" => 0} }
+        assert2 { @hash["user"]         == {"key" => "user1"} }
+        assert2 { @hash["rules_hash"]   == {"ten_min" => {"rule_name" => "10分", "grade_name" => "30級"}, "three_min" => {"rule_name" => "3分", "grade_name" => nil}, "ten_sec" => {"rule_name" => "10秒", "grade_name" => nil}} }
+        assert2 { @hash["judge_counts"] == {"win" => 1, "lose" => 0} }
       end
 
       it "勝ち負け" do
-        is_asserted_by { @hash["judge_keys"]   == ["win"] }
+        assert2 { @hash["judge_keys"]   == ["win"] }
       end
 
       it "各タブの情報" do
@@ -26,21 +26,21 @@ module Swars
         @hash["every_my_defense_list"] # => []
         @hash["every_vs_defense_list"] # => []
 
-        is_asserted_by { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=> nil}] }
-        is_asserted_by { @hash["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
-        is_asserted_by { @hash["every_my_attack_list"] == [{"tag"=>{"name"=>"新嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-        is_asserted_by { @hash["every_vs_attack_list"] == [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
-        is_asserted_by { @hash["every_my_defense_list"] == [] }
-        is_asserted_by { @hash["every_vs_defense_list"] == [] }
+        assert2 { @hash["every_day_list"] == [{"battled_on"=>"2000-01-01", "day_type"=>"info", "judge_counts"=>{"win"=>1, "lose"=>0}, "all_tags"=> nil}] }
+        assert2 { @hash["every_grade_list"] == [{"grade_name"=>"30級", "judge_counts"=>{"win"=>1, "lose"=>0}, "appear_ratio"=>1.0}] }
+        assert2 { @hash["every_my_attack_list"] == [{"tag"=>{"name"=>"新嬉野流", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert2 { @hash["every_vs_attack_list"] == [{"tag"=>{"name"=>"2手目△３ニ飛戦法", "count"=>1}, "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert2 { @hash["every_my_defense_list"] == [] }
+        assert2 { @hash["every_vs_defense_list"] == [] }
       end
 
       it "メダル" do
-        is_asserted_by { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流で勝った", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
+        assert2 { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "tag", "name" => "居", "type" => "is-light"}, {"message" => "嬉野流で勝った", "method" => "tag", "name" => "嬉", "type" => "is-light"}] }
       end
     end
 
     it "対局数0" do
-      is_asserted_by { User.create!.user_info.to_hash }
+      assert2 { User.create!.user_info.to_hash }
     end
 
     describe "派閥 formation_info_records" do
@@ -56,9 +56,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1([[black_ibisha,    1]]) == [1, 0] }
-        is_asserted_by { case1([[black_furibisha, 1]]) == [1, 1] }
-        is_asserted_by { case1([[black_furibisha, 1]]) == [1, 2] }
+        assert2 { case1([[black_ibisha,    1]]) == [1, 0] }
+        assert2 { case1([[black_furibisha, 1]]) == [1, 1] }
+        assert2 { case1([[black_furibisha, 1]]) == [1, 2] }
       end
     end
 
@@ -75,10 +75,10 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(:win,  10) == [10,  0] }
-        is_asserted_by { case1(:win,  90) == [50,  0] }
-        is_asserted_by { case1(:lose, 10) == [50, 10] }
-        is_asserted_by { case1(:lose, 40) == [50, 25] }
+        assert2 { case1(:win,  10) == [10,  0] }
+        assert2 { case1(:win,  90) == [50,  0] }
+        assert2 { case1(:lose, 10) == [50, 10] }
+        assert2 { case1(:lose, 40) == [50, 25] }
       end
     end
 
@@ -95,9 +95,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(2, :TORYO, :lose)      == 2 }
-        is_asserted_by { case1(8, :TORYO, :lose)      == 5 }
-        is_asserted_by { case1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
+        assert2 { case1(2, :TORYO, :lose)      == 2 }
+        assert2 { case1(8, :TORYO, :lose)      == 5 }
+        assert2 { case1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない
       end
     end
 
@@ -114,8 +114,8 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(10) == 10 }
-        is_asserted_by { case1(90) == 50 }
+        assert2 { case1(10) == 10 }
+        assert2 { case1(90) == 50 }
       end
     end
 
@@ -135,7 +135,7 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1 ==  [200, 150.0] }
+        assert2 { case1 ==  [200, 150.0] }
       end
     end
 
@@ -156,8 +156,8 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1("二段", "三段") == 1.0 }
-        is_asserted_by { case1("二段", "四段") == 1.5 }
+        assert2 { case1("二段", "三段") == 1.0 }
+        assert2 { case1("二段", "四段") == 1.5 }
       end
     end
 
@@ -176,10 +176,10 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], []] }
-        is_asserted_by { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], []] }
-        is_asserted_by { case1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
-        is_asserted_by { case1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
+        assert2 { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 1]], []] }
+        assert2 { case1(:CHECKMATE,  :win ) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], []] }
+        assert2 { case1(:TORYO,      :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0]]] }
+        assert2 { case1(:DISCONNECT, :lose) == [[["投了", 0], ["時間切れ", 0], ["詰み", 2]], [["投了", 1], ["時間切れ", 0], ["詰み", 0], ["切断", 1]]] }
       end
     end
 
@@ -196,9 +196,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1("DISCONNECT") == nil  } # CHECKMATE専用
-        is_asserted_by { case1("CHECKMATE") == 150.0 }
-        is_asserted_by { case1("CHECKMATE") == 150.0 } # 平均なので変化してない
+        assert2 { case1("DISCONNECT") == nil  } # CHECKMATE専用
+        assert2 { case1("CHECKMATE") == 150.0 }
+        assert2 { case1("CHECKMATE") == 150.0 } # 平均なので変化してない
       end
     end
 
@@ -212,24 +212,24 @@ module Swars
 
       def case2(grade_key)
         @black = User.create!(grade_key: grade_key)
-        is_asserted_by { case1(:three_min, 11) == nil }
+        assert2 { case1(:three_min, 11) == nil }
       end
 
       it "3分 五段以上" do
         @black = User.create!(grade_key: "五段")
-        is_asserted_by { case1(:three_min, 10) == nil    }
-        is_asserted_by { case1(:three_min, 11) == [1, 1] }
-        is_asserted_by { case1(:three_min, 11) == [2, 1] }
+        assert2 { case1(:three_min, 10) == nil    }
+        assert2 { case1(:three_min, 11) == [1, 1] }
+        assert2 { case1(:three_min, 11) == [2, 1] }
       end
 
       it "10分 1級 判定あり" do
         @black = User.create!(grade_key: "1級")
-        is_asserted_by { case1(:ten_min, 11) == [1, 0] }
+        assert2 { case1(:ten_min, 11) == [1, 0] }
       end
 
       it "10秒 1級 判定あり" do
         @black = User.create!(grade_key: "1級")
-        is_asserted_by { case1(:ten_sec, 11) == [1, 0] }
+        assert2 { case1(:ten_sec, 11) == [1, 0] }
       end
 
       describe "3分の判定スルー" do
@@ -251,9 +251,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(10) == nil    }
-        is_asserted_by { case1(11) == [1, 1] }
-        is_asserted_by { case1(12) == [2, 1] }
+        assert2 { case1(10) == nil    }
+        assert2 { case1(11) == [1, 1] }
+        assert2 { case1(12) == [2, 1] }
       end
     end
 
@@ -274,9 +274,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(400) == [[{name: "6分", value: 1}], 400] }
-        is_asserted_by { case1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
-        is_asserted_by { case1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
+        assert2 { case1(400) == [[{name: "6分", value: 1}], 400] }
+        assert2 { case1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
+        assert2 { case1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
       end
     end
 
@@ -293,9 +293,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(13) == nil }
-        is_asserted_by { case1(14) == 1 }
-        is_asserted_by { case1(14) == 2 }
+        assert2 { case1(13) == nil }
+        assert2 { case1(14) == 1 }
+        assert2 { case1(14) == 2 }
       end
     end
 
@@ -316,9 +316,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(13) == [nil, nil] }
-        is_asserted_by { case1(14) == [[{name: "10分", value: 1}], 600] }
-        is_asserted_by { case1(15) == [[{name: "10分", value: 2}], 600] }
+        assert2 { case1(13) == [nil, nil] }
+        assert2 { case1(14) == [[{name: "10分", value: 1}], 600] }
+        assert2 { case1(15) == [[{name: "10分", value: 2}], 600] }
       end
     end
 
@@ -340,12 +340,12 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
-        is_asserted_by { case1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
-        is_asserted_by { case1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
-        is_asserted_by { case1(15, 59) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}], 59, 22.25] }
-        is_asserted_by { case1(15, 60) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 1}], 60, 29.8] }
-        is_asserted_by { case1(15, 61) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 2}], 61, 35.0] }
+        assert2 { case1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
+        assert2 { case1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
+        assert2 { case1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }
+        assert2 { case1(15, 59) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}], 59, 22.25] }
+        assert2 { case1(15, 60) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 1}], 60, 29.8] }
+        assert2 { case1(15, 61) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}, {name: "50秒", value: 1}, {name: "1分", value: 2}], 61, 35.0] }
       end
     end
 
@@ -362,10 +362,10 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1 == [1, 0] }
-        is_asserted_by { case1 == [2, 0] }
+        assert2 { case1 == [1, 0] }
+        assert2 { case1 == [2, 0] }
 
-        is_asserted_by { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
+        assert2 { @black.user_info.migigyoku_kinds == [{name: "糸谷流右玉", value: 2}] }
       end
     end
 
@@ -382,9 +382,9 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1("2000-01-01") == 1.0 }
-        is_asserted_by { case1("2000-01-01") == 2.0 }
-        is_asserted_by { case1("2000-01-02") == 1.5 }
+        assert2 { case1("2000-01-01") == 1.0 }
+        assert2 { case1("2000-01-01") == 2.0 }
+        assert2 { case1("2000-01-02") == 1.5 }
       end
     end
 
@@ -399,7 +399,7 @@ module Swars
       end
 
       it "works" do
-        is_asserted_by { case1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
+        assert2 { case1 == [[{:name=>"玉", :value=>1.0}], [{:name=>"玉", :value=>1.0}]] }
       end
     end
 
@@ -413,11 +413,11 @@ module Swars
       end
 
       it "角不成" do
-        is_asserted_by { case1("角不成").user_info.kakuhunari_count >= 1 }
+        assert2 { case1("角不成").user_info.kakuhunari_count >= 1 }
       end
 
       it "飛車不成" do
-        is_asserted_by { case1("飛車不成").user_info.hisyahunari_count >= 1 }
+        assert2 { case1("飛車不成").user_info.hisyahunari_count >= 1 }
       end
     end
   end

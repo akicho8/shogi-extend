@@ -18,12 +18,12 @@ require "rails_helper"
 module Swars
   RSpec.describe Xmode, type: :model, swars_spec: true do
     it "name" do
-      is_asserted_by { Xmode.fetch("野良").name == "野良" }
-      is_asserted_by { Xmode.fetch("友達").name == "友達" }
+      assert2 { Xmode.fetch("野良").name == "野良" }
+      assert2 { Xmode.fetch("友達").name == "友達" }
     end
 
     it "alias" do
-      is_asserted_by { Xmode.fetch("通常").name == "野良" }
+      assert2 { Xmode.fetch("通常").name == "野良" }
     end
 
     it "relation" do
@@ -31,10 +31,10 @@ module Swars
       user1 = User.create!(user_key: "user1")
       user2 = User.create!(user_key: "user2")
       battle = Battle.create_with_members!([user1, user2], xmode: xmode)
-      is_asserted_by { battle.xmode == xmode }
+      assert2 { battle.xmode == xmode }
 
-      is_asserted_by { xmode.battles == [battle] }
-      is_asserted_by { xmode.memberships == battle.memberships }
+      assert2 { xmode.battles == [battle] }
+      assert2 { xmode.memberships == battle.memberships }
     end
   end
 end

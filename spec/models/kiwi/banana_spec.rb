@@ -40,33 +40,33 @@ module Kiwi
 
       lemon1.thumbnail_clean    # テストが不安定になるので最初に消しておく
       # # この時点でサムネは作らない
-      is_asserted_by { lemon1.thumbnail_real_path.exist? == false }
+      assert2 { lemon1.thumbnail_real_path.exist? == false }
       tp lemon1 if $0 == "-"
 
       # 動画ライブラリ登録 (フォーム初期値)
       banana1 = user1.kiwi_bananas.build(lemon: lemon1) # => #<Kiwi::Banana id: nil, key: nil, user_id: 21, folder_id: nil, lemon_id: 21, title: nil, description: nil, thumbnail_pos: nil, banana_messages_count: 0, access_logs_count: 0, created_at: nil, updated_at: nil, tag_list: nil>
       banana1.form_values_default_assign
       tp banana1.attributes if $0 == "-"           # => {"id"=>nil, "key"=>nil, "user_id"=>21, "folder_id"=>nil, "lemon_id"=>21, "title"=>"(cover_text)", "description"=>"(description1)\n(description2)", "thumbnail_pos"=>0.0, "banana_messages_count"=>0, "access_logs_count"=>0, "created_at"=>nil, "updated_at"=>nil, "tag_list"=>["居飛車", "相居飛車"]}
-      is_asserted_by { banana1.thumbnail_pos == 0 }
-      is_asserted_by { banana1.title == "(cover_text)" }
-      is_asserted_by { banana1.description == "(description1)\n(description2)" }
-      is_asserted_by { banana1.tag_list == ["居飛車", "相居飛車"] }
+      assert2 { banana1.thumbnail_pos == 0 }
+      assert2 { banana1.title == "(cover_text)" }
+      assert2 { banana1.description == "(description1)\n(description2)" }
+      assert2 { banana1.tag_list == ["居飛車", "相居飛車"] }
 
       # 確認のためにあれば削除しておく
       lemon1.thumbnail_clean
-      is_asserted_by { !lemon1.thumbnail_real_path.exist? }
+      assert2 { !lemon1.thumbnail_real_path.exist? }
 
       # 登録実行
       # サムネ位置が nil -> 0.5 になることでサムネ作成される
       banana1 = user1.kiwi_bananas.create!(lemon: lemon1, title: "タイトル#{user1.kiwi_bananas.count.next}" * 4, description: "description" * 4, tag_list: %w(居飛車 嬉野流 右玉), thumbnail_pos: 0.5)
-      is_asserted_by { banana1.thumbnail_pos == 0.5 }
-      is_asserted_by { lemon1.real_path.exist? }
-      is_asserted_by { lemon1.browser_path }
-      is_asserted_by { lemon1.browser_url  }
-      is_asserted_by { lemon1.thumbnail_real_path.exist? }
-      is_asserted_by { lemon1.thumbnail_browser_path }
-      is_asserted_by { lemon1.thumbnail_browser_path_if_exist }
-      is_asserted_by { banana1.og_meta[:og_image] == lemon1.thumbnail_browser_path }
+      assert2 { banana1.thumbnail_pos == 0.5 }
+      assert2 { lemon1.real_path.exist? }
+      assert2 { lemon1.browser_path }
+      assert2 { lemon1.browser_url  }
+      assert2 { lemon1.thumbnail_real_path.exist? }
+      assert2 { lemon1.thumbnail_browser_path }
+      assert2 { lemon1.thumbnail_browser_path_if_exist }
+      assert2 { banana1.og_meta[:og_image] == lemon1.thumbnail_browser_path }
 
       tp banana1 if $0 == "-" # => #<Kiwi::Banana id: 20, key: "FIJOSUQRFOl", user_id: 21, folder_id: 63, lemon_id: 21, title: "タイトル1タイトル1タイトル1タイトル1", description: "descriptiondescriptiondescriptiondescription", thumbnail_pos: 0.5, banana_messages_count: 0, access_logs_count: 0, created_at: "2000-01-01 00:00:00.000000000 +0900", updated_at: "2000-01-01 00:00:00.000000000 +0900", tag_list: ["居飛車", "嬉野流", "右玉"]>
 
@@ -84,7 +84,7 @@ module Kiwi
       free_battle1 = user1.free_battles.create!(kifu_body: gif_params1[:body], use_key: "kiwi_lemon")
       lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: gif_params1[:all_params])
       lemon1.main_process
-      is_asserted_by { lemon1.og_image_path == lemon1.browser_path }
+      assert2 { lemon1.og_image_path == lemon1.browser_path }
     end
 
     describe "検索" do
@@ -97,43 +97,43 @@ module Kiwi
       end
 
       it "ユーザー名で検索できる" do
-        is_asserted_by { Banana.general_search(query: "(alice)").present? }
+        assert2 { Banana.general_search(query: "(alice)").present? }
       end
 
       it "説明を検索できる" do
-        is_asserted_by { Banana.general_search(query: "(description)").present? }
-        is_asserted_by { Banana.general_search(query: "unknown").blank? }
+        assert2 { Banana.general_search(query: "(description)").present? }
+        assert2 { Banana.general_search(query: "unknown").blank? }
       end
 
       it "カタカナをひらがなで検索できる" do
-        is_asserted_by { Banana.general_search(query: "あ").present? }
-        is_asserted_by { Banana.general_search(query: "ん").blank? }
+        assert2 { Banana.general_search(query: "あ").present? }
+        assert2 { Banana.general_search(query: "ん").blank? }
       end
 
       it "タグ検索できる" do
-        is_asserted_by { Banana.general_search(tag: "a").present?   }
-        is_asserted_by { Banana.general_search(tag: "b").present?   }
-        is_asserted_by { Banana.general_search(tag: "a,b").present? }
-        is_asserted_by { Banana.general_search(tag: "c").blank?     }
+        assert2 { Banana.general_search(tag: "a").present?   }
+        assert2 { Banana.general_search(tag: "b").present?   }
+        assert2 { Banana.general_search(tag: "a,b").present? }
+        assert2 { Banana.general_search(tag: "c").blank?     }
       end
 
       it "公開設定" do
-        is_asserted_by { Banana.general_search(current_user: @user, search_preset_key: "公開").present? }
-        is_asserted_by { Banana.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
-        is_asserted_by { Banana.general_search(current_user: @user, search_preset_key: "非公開").blank? }
+        assert2 { Banana.general_search(current_user: @user, search_preset_key: "公開").present? }
+        assert2 { Banana.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
+        assert2 { Banana.general_search(current_user: @user, search_preset_key: "非公開").blank? }
       end
 
       it "戦法" do
-        is_asserted_by { Banana.general_search(search_preset_key: "居飛車").blank? }
-        is_asserted_by { Banana.general_search(search_preset_key: "右玉").blank? }
+        assert2 { Banana.general_search(search_preset_key: "居飛車").blank? }
+        assert2 { Banana.general_search(search_preset_key: "右玉").blank? }
       end
 
       it "join問題が起きない" do
-        is_asserted_by { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
+        assert2 { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
       end
 
       it "履歴" do
-        is_asserted_by { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
+        assert2 { Banana.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
       end
     end
 
@@ -143,19 +143,19 @@ module Kiwi
         banana1
       end
       it "Banana を削除しても Lemon は削除されない" do
-        is_asserted_by { @model_group.diff { banana1.destroy! } == [0, 0, -1] }
+        assert2 { @model_group.diff { banana1.destroy! } == [0, 0, -1] }
       end
       it "Lemon を削除すると Banana も連動して削除する" do
-        is_asserted_by { @model_group.diff { banana1.lemon.destroy! } == [0, -1, -1] }
+        assert2 { @model_group.diff { banana1.lemon.destroy! } == [0, -1, -1] }
       end
       it "User を削除すると Lemon も Banana も連動して削除する" do
-        is_asserted_by { @model_group.diff { banana1.user.destroy! } == [-1, -1, -1] }
+        assert2 { @model_group.diff { banana1.user.destroy! } == [-1, -1, -1] }
       end
     end
 
     it "update_from_action" do
       banana1.update_from_action({})
-      is_asserted_by { banana1.saved_changes? == false }
+      assert2 { banana1.saved_changes? == false }
     end
   end
 end

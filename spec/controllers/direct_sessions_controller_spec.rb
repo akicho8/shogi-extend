@@ -3,12 +3,12 @@ require "rails_helper"
 RSpec.describe DirectSessionsController, type: :controller do
   it "create" do
     post :create
-    is_asserted_by { response.status == 302 }
+    assert2 { response.status == 302 }
   end
 
   it "destroy" do
     delete :destroy
-    is_asserted_by { response.status == 302 }
+    assert2 { response.status == 302 }
   end
 end
 # >> Run options: exclude {:slow_spec=>true}

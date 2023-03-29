@@ -8,17 +8,17 @@ RSpec.describe Api::SessionsController, type: :controller do
 
   it "auth_user_fetch" do
     get :auth_user_fetch, params: {}
-    is_asserted_by { response.status == 200 }
+    assert2 { response.status == 200 }
   end
 
   it "auth_user_logout" do
     post :auth_user_logout, params: {}
-    is_asserted_by { response.status == 200 }
+    assert2 { response.status == 200 }
   end
 
   it "auth_user_destroy" do
     post :auth_user_destroy, params: {}
-    is_asserted_by { response.status == 200 }
-    is_asserted_by { User.where(id: @user.id).none? }
+    assert2 { response.status == 200 }
+    assert2 { User.where(id: @user.id).none? }
   end
 end

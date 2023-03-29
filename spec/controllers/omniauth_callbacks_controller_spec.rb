@@ -25,24 +25,24 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      is_asserted_by { record.name == "alice" }
+      assert2 { record.name == "alice" }
     end
 
     it "プロフィール画像を登録している" do
-      is_asserted_by { record.avatar }
+      assert2 { record.avatar }
     end
 
     it "メールアドレスを取得している" do
-      is_asserted_by { record.email == "alice@localhost" }
+      assert2 { record.email == "alice@localhost" }
     end
 
     it "どっかにリダイレクトする" do
-      is_asserted_by { response.status == 302 }
+      assert2 { response.status == 302 }
     end
 
     it "メール" do
-      is_asserted_by { ActionMailer::Base.deliveries.count == 1 }
-      is_asserted_by { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
+      assert2 { ActionMailer::Base.deliveries.count == 1 }
+      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
     end
   end
 
@@ -68,28 +68,28 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      is_asserted_by { record.name == "alice" }
+      assert2 { record.name == "alice" }
     end
 
     it "プロフィール画像を登録している" do
-      is_asserted_by { record.avatar }
+      assert2 { record.avatar }
     end
 
     it "メールアドレスはダミーを入れてある" do
-      is_asserted_by { record.email.match?(/@localhost/) }
+      assert2 { record.email.match?(/@localhost/) }
     end
 
     it "ツイッターアカウント" do
-      is_asserted_by { record.twitter_key == "nickname_is_twitter_account" }
+      assert2 { record.twitter_key == "nickname_is_twitter_account" }
     end
 
     it "どっかにリダイレクトする" do
-      is_asserted_by { response.status == 302 }
+      assert2 { response.status == 302 }
     end
 
     it "メール" do
-      is_asserted_by { ActionMailer::Base.deliveries.count == 1 }
-      is_asserted_by { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
+      assert2 { ActionMailer::Base.deliveries.count == 1 }
+      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
     end
   end
 
@@ -113,28 +113,28 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      is_asserted_by { record.name == "Yamada Taro" }
+      assert2 { record.name == "Yamada Taro" }
     end
 
     it "プロフィール画像を登録している" do
-      is_asserted_by { record.avatar }
+      assert2 { record.avatar }
     end
 
     it "メールアドレスがある" do
-      is_asserted_by { record.email == "alice@localhost" }
+      assert2 { record.email == "alice@localhost" }
     end
 
     it "ツイッターアカウント" do
-      is_asserted_by { record.twitter_key.blank? }
+      assert2 { record.twitter_key.blank? }
     end
 
     it "どっかにリダイレクトする" do
-      is_asserted_by { response.status == 302 }
+      assert2 { response.status == 302 }
     end
 
     it "メール" do
-      is_asserted_by { ActionMailer::Base.deliveries.count == 1 }
-      is_asserted_by { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
+      assert2 { ActionMailer::Base.deliveries.count == 1 }
+      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
     end
   end
 end

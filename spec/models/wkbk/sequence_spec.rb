@@ -33,18 +33,18 @@ module Wkbk
         end
         describe "文字列として" do
           it "昇順" do
-            is_asserted_by { case1(%w(1 10 2), :article_title_asc)  === %w(1 10 2) }
+            assert2 { case1(%w(1 10 2), :article_title_asc)  === %w(1 10 2) }
           end
           it "降順" do
-            is_asserted_by { case1(%w(1 10 2), :article_title_desc) === %w(2 10 1) }
+            assert2 { case1(%w(1 10 2), :article_title_desc) === %w(2 10 1) }
           end
         end
         describe "数値として" do
           it "昇順" do
-            is_asserted_by { case1(%w(1 10 2), :article_title_number_asc)  === %w(1 2 10) }
+            assert2 { case1(%w(1 10 2), :article_title_number_asc)  === %w(1 2 10) }
           end
           it "降順" do
-            is_asserted_by { case1(%w(1 10 2), :article_title_number_desc) === %w(10 2 1) }
+            assert2 { case1(%w(1 10 2), :article_title_number_desc) === %w(10 2 1) }
           end
         end
       end

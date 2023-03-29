@@ -37,19 +37,19 @@ module Wkbk
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     it "valid?" do
-      is_asserted_by { article1.valid? }
+      assert2 { article1.valid? }
     end
 
     it "sorted" do
-      is_asserted_by { Article.sorted(sort_column: "id",         sort_order: "asc") }
-      is_asserted_by { Article.sorted(sort_column: "user.id",    sort_order: "asc") }
-      is_asserted_by { Article.sorted(sort_column: "books.id",   sort_order: "asc") }
-      is_asserted_by { Article.sorted(sort_column: "lineage.id", sort_order: "asc") }
-      is_asserted_by { Article.sorted(sort_column: "folder.id",  sort_order: "asc") }
+      assert2 { Article.sorted(sort_column: "id",         sort_order: "asc") }
+      assert2 { Article.sorted(sort_column: "user.id",    sort_order: "asc") }
+      assert2 { Article.sorted(sort_column: "books.id",   sort_order: "asc") }
+      assert2 { Article.sorted(sort_column: "lineage.id", sort_order: "asc") }
+      assert2 { Article.sorted(sort_column: "folder.id",  sort_order: "asc") }
     end
 
     it "tweet_body" do
-      is_asserted_by { article1.tweet_body }
+      assert2 { article1.tweet_body }
     end
 
     describe "update_from_action" do
@@ -71,120 +71,120 @@ module Wkbk
           article.update_from_action(params)
         end
 
-        is_asserted_by { article.persisted? }
-        is_asserted_by { article.tag_list == ["tag1", "tag2", "tag3"] }
-        is_asserted_by { article.turn_max == 1 }
-        is_asserted_by { article.book_keys == ["book1"] }
+        assert2 { article.persisted? }
+        assert2 { article.tag_list == ["tag1", "tag2", "tag3"] }
+        assert2 { article.turn_max == 1 }
+        assert2 { article.book_keys == ["book1"] }
 
         # 開発者に通知
         mail = ActionMailer::Base.deliveries.last
-        is_asserted_by { mail.to   == ["shogi.extend@gmail.com"] }
-        is_asserted_by { mail.subject.include?("作成") }
+        assert2 { mail.to   == ["shogi.extend@gmail.com"] }
+        assert2 { mail.subject.include?("作成") }
         # puts mail.body
 
         # 同じ2つ目を作る→失敗
         article = user1.wkbk_articles.build
         proc { article.update_from_action(params) }.should raise_error(ActiveRecord::RecordInvalid)
-        is_asserted_by { article.persisted? == false }
-        is_asserted_by { article.turn_max == 0 }
+        assert2 { article.persisted? == false }
+        assert2 { article.turn_max == 0 }
       end
     end
 
     describe "入力補正" do
       it "works" do
         article1.update!(description: " ａ１　　\n　　ｚ\n ")
-        is_asserted_by { article1.description == "a1\nz" }
+        assert2 { article1.description == "a1\nz" }
       end
     end
 
     describe "属性" do
       it "works" do
-        is_asserted_by { article1.lineage.name }
+        assert2 { article1.lineage.name }
       end
     end
 
     # describe "所在" do
     #   it "works" do
     #     article1.update!(source_about_key: "unknown") # => true
-    #     is_asserted_by { article1.source_about_key == "unknown"   }
-    #     is_asserted_by { article1.source_about.name == "作者不詳" }
+    #     assert2 { article1.source_about_key == "unknown"   }
+    #     assert2 { article1.source_about.name == "作者不詳" }
     #   end
     # end
 
     # describe "フォルダ" do
     #   it "初期値" do
-    #     is_asserted_by { article1.folder_key == :public }
+    #     assert2 { article1.folder_key == :public }
     #   end
     #   it "移動方法1" do
     #     user1.wkbk_private_box.articles << article1
-    #     is_asserted_by { article1.folder.class == Wkbk::PrivateBox }
+    #     assert2 { article1.folder.class == Wkbk::PrivateBox }
     #   end
     #   it "移動方法2(フォーム用)" do
     #     article1.folder_key = :private
-    #     is_asserted_by { article1.folder_key == :private }
+    #     assert2 { article1.folder_key == :private }
     #   end
     # end
 
     it "init_sfen" do
       article1.init_sfen = "position sfen 9/9/9/9/9/9/9/9/9 b - 1"
-      is_asserted_by { article1.read_attribute(:init_sfen) == "9/9/9/9/9/9/9/9/9 b - 1" }
-      is_asserted_by { article1.init_sfen == "position sfen 9/9/9/9/9/9/9/9/9 b - 1" }
+      assert2 { article1.read_attribute(:init_sfen) == "9/9/9/9/9/9/9/9/9 b - 1" }
+      assert2 { article1.init_sfen == "position sfen 9/9/9/9/9/9/9/9/9 b - 1" }
     end
 
     it "main_sfen" do
-      is_asserted_by { article1.main_sfen == "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b" }
+      assert2 { article1.main_sfen == "position sfen 4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l18p 1 moves G*5b" }
     end
 
     it "info" do
-      is_asserted_by { article1.info }
+      assert2 { article1.info }
     end
 
     it "to_kif" do
-      is_asserted_by { article1.to_kif }
+      assert2 { article1.to_kif }
     end
 
     it "page_url" do
-      is_asserted_by { article1.page_url == "http://localhost:4000/rack/articles/#{article1.key}" }
+      assert2 { article1.page_url == "http://localhost:4000/rack/articles/#{article1.key}" }
     end
 
     it "share_board_png_url" do
-      is_asserted_by { article1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&turn=0&viewpoint=black" }
+      assert2 { article1.share_board_png_url == "http://localhost:3000/share-board.png?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&turn=0&viewpoint=black" }
     end
 
     it "share_board_url" do
-      is_asserted_by { article1.share_board_url == "http://localhost:4000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=title&turn=0&viewpoint=black"  }
+      assert2 { article1.share_board_url == "http://localhost:4000/share-board?body=position+sfen+4k4%2F9%2F4G4%2F9%2F9%2F9%2F9%2F9%2F9+b+G2r2b2g4s4n4l18p+1+moves+G%2A5b&title=title&turn=0&viewpoint=black"  }
     end
 
     it "mail_body" do
-      is_asserted_by { article1.mail_body }
+      assert2 { article1.mail_body }
     end
 
     it "mail_subject" do
-      is_asserted_by { article1.mail_subject }
+      assert2 { article1.mail_subject }
     end
 
     # it "公開フォルダに移動させたタイミングで投稿通知" do
     #   article1.update!(folder_key: "private")
     #   Wkbk::LobbyMessage.destroy_all
     #
-    #   is_asserted_by { Wkbk::LobbyMessage.count == 0 }
+    #   assert2 { Wkbk::LobbyMessage.count == 0 }
     #
     #   article1.update_from_action(folder_key: "public")
-    #   is_asserted_by { Wkbk::LobbyMessage.count == 1 }
+    #   assert2 { Wkbk::LobbyMessage.count == 1 }
     #
     #   article1.update_from_action(folder_key: "private")
-    #   is_asserted_by { Wkbk::LobbyMessage.count == 1 }
+    #   assert2 { Wkbk::LobbyMessage.count == 1 }
     # end
 
     # it "message_users" do
     #   article1.messages.create!(user: user1, body: "(body)")
-    #   is_asserted_by { article1.message_users == [user1] }
+    #   assert2 { article1.message_users == [user1] }
     # end
 
     it "turn_max" do
-      is_asserted_by { article1.turn_max == 1 }
+      assert2 { article1.turn_max == 1 }
       article1.moves_answers.create!("moves_str" => "G*5b 5a5b")
-      is_asserted_by { article1.turn_max == 2 }
+      assert2 { article1.turn_max == 2 }
     end
 
     it "destroy" do
@@ -205,9 +205,9 @@ module Wkbk
         article = @user.wkbk_articles.build
         article.default_assign_from_source_article(source_article: source_article)
         article.moves_answer_validate_skip = true
-        is_asserted_by { article.title == "xxxのコピー" }
-        is_asserted_by { article.valid? }
-        is_asserted_by { article.save }
+        assert2 { article.title == "xxxのコピー" }
+        assert2 { article.valid? }
+        assert2 { article.save }
       end
     end
   end

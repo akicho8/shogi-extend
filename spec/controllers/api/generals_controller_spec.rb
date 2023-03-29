@@ -9,15 +9,15 @@ RSpec.describe Api::GeneralsController, type: :controller do
 
     describe "デバッグ用にGETでも受け付ける" do
       it "works" do
-        is_asserted_by { case1(:get, :sfen, "68銀")[:turn_max]  }
+        assert2 { case1(:get, :sfen, "68銀")[:turn_max]  }
       end
     end
 
     it "各種フォーマットに変換する" do
-      is_asserted_by { case1(:post, :sfen, "68銀")[:body].include?("7i6h")          }
-      is_asserted_by { case1(:post, :csa, "68銀")[:body].include?("+7968GI")        }
-      is_asserted_by { case1(:post, :kif, "68銀")[:body].include?("嬉野流")         }
-      is_asserted_by { case1(:post, :ki2, "58金(49)")[:body].include?("▲５八金右") }
+      assert2 { case1(:post, :sfen, "68銀")[:body].include?("7i6h")          }
+      assert2 { case1(:post, :csa, "68銀")[:body].include?("+7968GI")        }
+      assert2 { case1(:post, :kif, "68銀")[:body].include?("嬉野流")         }
+      assert2 { case1(:post, :ki2, "58金(49)")[:body].include?("▲５八金右") }
     end
   end
 end

@@ -5,19 +5,19 @@ module Talk
     it "タグを除去している" do
       str = "A<b>B</b>C > D <br><br/>"
       obj = YomiageNormalizer.new(str)
-      is_asserted_by { obj.to_s == "ABC D" }
+      assert2 { obj.to_s == "ABC D" }
     end
 
     it "長いURLは適度に省略する" do
       str = "●https://www.xxx-yyy.com/path?x=1●"
       obj = YomiageNormalizer.new(str)
-      is_asserted_by { obj.to_s == "●xxx yyy com●" }
+      assert2 { obj.to_s == "●xxx yyy com●" }
     end
 
     it "語尾の草" do
       str = "●wｗ"
       obj = YomiageNormalizer.new(str)
-      is_asserted_by { obj.to_s == "●わらわら" }
+      assert2 { obj.to_s == "●わらわら" }
     end
   end
 end

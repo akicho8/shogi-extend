@@ -39,7 +39,7 @@ module Swars
   RSpec.describe User, type: :model, swars_spec: true do
     it "ユーザー名は大小文字を区別する" do
       User.create!(key: "ALICE")
-      is_asserted_by { User.new(key: "alice").valid? }
+      assert2 { User.new(key: "alice").valid? }
     end
   end
 end

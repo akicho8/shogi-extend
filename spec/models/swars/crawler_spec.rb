@@ -17,7 +17,7 @@ module Swars
     end
 
     it "model_name" do
-      is_asserted_by { Crawler::RegularCrawler.model_name.human }
+      assert2 { Crawler::RegularCrawler.model_name.human }
     end
   end
 end

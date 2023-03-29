@@ -10,7 +10,7 @@ RSpec.describe BattleDecorator, type: :model do
     end
 
     it "as_json" do
-      is_asserted_by { @decorator.as_json }
+      assert2 { @decorator.as_json }
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe BattleDecorator, type: :model do
     end
 
     it "as_json" do
-      is_asserted_by { @decorator.as_json }
+      assert2 { @decorator.as_json }
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe BattleDecorator, type: :model do
     it "対局者を配列で取得する" do
       battle = FreeBattle.create!(kifu_body: "先手：alice, bob")
       decorator = battle.mini_battle_decorator
-      is_asserted_by { decorator.player_names_for(:black) == ["alice", "bob"] }
+      assert2 { decorator.player_names_for(:black) == ["alice", "bob"] }
     end
   end
 end

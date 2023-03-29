@@ -12,13 +12,13 @@ module Swars
     it "すべてが対象になっているので全削除する" do
       case1("user1" => "1級", "user2" => "2級")
       Battle.cleanup(time_limit: nil, expires_in: 0)
-      is_asserted_by { Battle.count == 0 }
+      assert2 { Battle.count == 0 }
     end
 
     it "user1 は対象外なので削除しない" do
       case1("user1" => "1級", "user2" => "2級")
       Battle.cleanup(time_limit: nil, expires_in: 0, skip_users: ["user1"])
-      is_asserted_by { Battle.count == 1 }
+      assert2 { Battle.count == 1 }
     end
   end
 end

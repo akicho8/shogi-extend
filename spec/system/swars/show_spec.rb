@@ -46,8 +46,8 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       FileUtils.rm_f(file)
       menu_item_click("BOD #1")
       sleep(1) # 0.03 秒かかるため余裕を見て待つ
-      is_asserted_by { file.exist? }
-      is_asserted_by { file.read.include?("手数＝1") }
+      assert2 { file.exist? }
+      assert2 { file.read.include?("手数＝1") }
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
     visit2 "/swars/battles/#{@key}"
     hamburger_click
     switch_to_window(window_opened_by { menu_item_click("本家") })
-    is_asserted_by { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
+    assert2 { current_url == "https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401" }
   end
 
   describe "タイムチャート" do

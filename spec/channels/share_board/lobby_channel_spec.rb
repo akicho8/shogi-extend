@@ -11,14 +11,14 @@ module ShareBoard
     describe "接続" do
       it "works" do
         subscribe
-        is_asserted_by { subscription.confirmed? }
+        assert2 { subscription.confirmed? }
       end
     end
 
     describe "切断" do
       it "works" do
         subscribe
-        is_asserted_by { subscription.confirmed? }
+        assert2 { subscription.confirmed? }
         unsubscribe
       end
     end

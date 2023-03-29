@@ -23,23 +23,23 @@ module Kiwi
     include KiwiSupport
 
     it "ログインユーザーのアクセス" do
-      is_asserted_by { access_log1.user }
-      is_asserted_by { access_log1.banana }
+      assert2 { access_log1.user }
+      assert2 { access_log1.banana }
 
-      is_asserted_by { access_log1.user.kiwi_access_logs == [access_log1] }
-      is_asserted_by { access_log1.user.kiwi_access_bananas == [banana1]      }
-      is_asserted_by { access_log1.user.kiwi_access_logs.uniq_histories == [banana1] }
+      assert2 { access_log1.user.kiwi_access_logs == [access_log1] }
+      assert2 { access_log1.user.kiwi_access_bananas == [banana1]      }
+      assert2 { access_log1.user.kiwi_access_logs.uniq_histories == [banana1] }
 
-      is_asserted_by { access_log1.banana.access_logs == [access_log1]      }
-      is_asserted_by { access_log1.banana.access_logs_count == 1            }
-      is_asserted_by { access_log1.banana.access_log_users == [user1]       }
+      assert2 { access_log1.banana.access_logs == [access_log1]      }
+      assert2 { access_log1.banana.access_logs_count == 1            }
+      assert2 { access_log1.banana.access_log_users == [user1]       }
 
-      is_asserted_by { access_log1.banana.access_logs == [access_log1]      }
-      is_asserted_by { access_log1.banana.access_log_users == [user1]       }
+      assert2 { access_log1.banana.access_logs == [access_log1]      }
+      assert2 { access_log1.banana.access_log_users == [user1]       }
     end
 
     it "非ログインユーザーのアクセス" do
-      is_asserted_by { access_log1 = banana1.access_logs.create! }
+      assert2 { access_log1 = banana1.access_logs.create! }
     end
   end
 end

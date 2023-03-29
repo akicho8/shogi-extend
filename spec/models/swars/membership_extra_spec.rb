@@ -21,19 +21,19 @@ module Swars
     let(:membership) { battle.memberships[0] }
 
     it "relation" do
-      is_asserted_by { membership.membership_extra }
-      is_asserted_by { membership.membership_extra.membership }
+      assert2 { membership.membership_extra }
+      assert2 { membership.membership_extra.membership }
     end
 
     it "駒の使用頻度が正しい" do
-      is_asserted_by { membership.membership_extra.used_piece_counts == {"S0" => 2, "P0" => 1} }
+      assert2 { membership.membership_extra.used_piece_counts == {"S0" => 2, "P0" => 1} }
     end
 
     it "membership_extraを持っていないレコードもremakeで生やせる" do
       membership.membership_extra.destroy! # わざと消す
       Battle.find(battle.id).remake        # 作り直す
-      is_asserted_by { Battle.find(battle.id).memberships[0].membership_extra }
-      is_asserted_by { Battle.find(battle.id).memberships[0].membership_extra.used_piece_counts.present? }
+      assert2 { Battle.find(battle.id).memberships[0].membership_extra }
+      assert2 { Battle.find(battle.id).memberships[0].membership_extra.used_piece_counts.present? }
     end
   end
 end

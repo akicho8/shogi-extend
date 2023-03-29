@@ -14,34 +14,34 @@ module Swars
     end
 
     it "連勝" do
-      is_asserted_by { case1(:win).exclude?("5連勝")  }
-      is_asserted_by { case1(:win).exclude?("5連勝")  }
-      is_asserted_by { case1(:win).exclude?("5連勝")  }
-      is_asserted_by { case1(:win).exclude?("5連勝")  }
-      is_asserted_by { case1(:win).include?("5連勝")  }
-      is_asserted_by { case1(:win).include?("5連勝")  }
-      is_asserted_by { case1(:win).include?("5連勝")  }
-      is_asserted_by { case1(:win).include?("5連勝")  }
-      is_asserted_by { case1(:win).include?("5連勝")  }
-      is_asserted_by { case1(:win).include?("10連勝") }
+      assert2 { case1(:win).exclude?("5連勝")  }
+      assert2 { case1(:win).exclude?("5連勝")  }
+      assert2 { case1(:win).exclude?("5連勝")  }
+      assert2 { case1(:win).exclude?("5連勝")  }
+      assert2 { case1(:win).include?("5連勝")  }
+      assert2 { case1(:win).include?("5連勝")  }
+      assert2 { case1(:win).include?("5連勝")  }
+      assert2 { case1(:win).include?("5連勝")  }
+      assert2 { case1(:win).include?("5連勝")  }
+      assert2 { case1(:win).include?("10連勝") }
     end
 
     it "連敗" do
-      is_asserted_by { case1(:lose).exclude?("5連敗")  }
-      is_asserted_by { case1(:lose).exclude?("5連敗")  }
-      is_asserted_by { case1(:lose).exclude?("5連敗")  }
-      is_asserted_by { case1(:lose).exclude?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("5連敗")  }
-      is_asserted_by { case1(:lose).include?("10連敗") }
+      assert2 { case1(:lose).exclude?("5連敗")  }
+      assert2 { case1(:lose).exclude?("5連敗")  }
+      assert2 { case1(:lose).exclude?("5連敗")  }
+      assert2 { case1(:lose).exclude?("5連敗")  }
+      assert2 { case1(:lose).include?("5連敗")  }
+      assert2 { case1(:lose).include?("5連敗")  }
+      assert2 { case1(:lose).include?("5連敗")  }
+      assert2 { case1(:lose).include?("5連敗")  }
+      assert2 { case1(:lose).include?("5連敗")  }
+      assert2 { case1(:lose).include?("10連敗") }
     end
 
     it "波が激しいマン" do
-      is_asserted_by { case1(:win,  5).exclude?("波が激しいマン") }
-      is_asserted_by { case1(:lose, 5).include?("波が激しいマン") }
+      assert2 { case1(:win,  5).exclude?("波が激しいマン") }
+      assert2 { case1(:lose, 5).include?("波が激しいマン") }
     end
   end
 end
