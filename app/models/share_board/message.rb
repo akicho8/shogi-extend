@@ -5,7 +5,7 @@ module ShareBoard
 
     def initialize(role, content)
       unless [:system, :user, :assistant].include?(role)
-        raise ArgumentError, role.inspect
+        raise TypeError, role.inspect
       end
 
       @role = role

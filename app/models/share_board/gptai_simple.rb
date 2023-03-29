@@ -16,7 +16,7 @@ module ShareBoard
     end
 
     def topic
-      Topic[*@options[:topic], Message.new("user", @user_text)]
+      Topic[*@options[:topic], Message.new(:user, @user_text)]
     end
   end
 end

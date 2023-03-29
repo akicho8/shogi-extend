@@ -18,10 +18,10 @@ RSpec.describe ShareBoard::Responder1 do
 
     assert2 { history.to_topic.count == 2 } # 自分の発言と ChatGPT の発言で合わせて2つある
 
-    assert2 { history.to_topic[0].role    == "user" }
+    assert2 { history.to_topic[0].role    == :user }
     assert2 { history.to_topic[0].content == "こんにちは"   }
 
-    assert2 { history.to_topic[1].role == "assistant"  }
+    assert2 { history.to_topic[1].role == :assistant  }
     assert2 { history.to_topic[1].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
   end
 end
