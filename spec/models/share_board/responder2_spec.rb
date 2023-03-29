@@ -13,4 +13,13 @@ RSpec.describe ShareBoard::Responder2 do
     is_asserted_by { history.to_topic[0].role == "assistant"  }
     is_asserted_by { history.to_topic[0].content.match?(/\p{Hiragana}/) } # system を入れているため日本語で返ってきている
   end
+
+  it "一人称を把握している" do
+    history = ShareBoard::MessageHistory.new
+    history.clear
+
+    object = ShareBoard::Responder2.new(message: "あなたの一人称は何ですか？")
+    object.call
+    assert { history.to_topic[1].content.match?(/小生/) }
+  end
 end
