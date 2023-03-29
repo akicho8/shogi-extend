@@ -377,6 +377,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.8.1)
+    redis-client (0.14.0)
+      connection_pool
     redis-namespace (1.8.1)
       redis (>= 3.0.4)
     regexp_parser (2.5.0)
@@ -432,10 +434,11 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
-    sidekiq (6.5.8)
-      connection_pool (>= 2.2.5, < 3)
-      rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
+    sidekiq (7.0.7)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -586,7 +589,7 @@ DEPENDENCIES
   rubyzip (~> 2.3.0)
   sass-rails (>= 6)
   selenium-webdriver
-  sidekiq (~> 6)
+  sidekiq
   slack-notifier
   slack-ruby-client
   slackistrano
