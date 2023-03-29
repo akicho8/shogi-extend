@@ -22,6 +22,7 @@ module ShareBoard
             model: "gpt-3.5-turbo",
             messages: @topic.to_gpt_messages,
             # max_tokens: 0, # わざとエラーを出す場合
+            temperature: 1.5,
           })
       end
 
