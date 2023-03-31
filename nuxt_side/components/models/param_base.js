@@ -1,5 +1,5 @@
 import { ApplicationMemoryRecord } from "./application_memory_record.js"
-import { Gs } from "./gs.js"
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export class ParamBase extends ApplicationMemoryRecord {

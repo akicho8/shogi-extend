@@ -1,12 +1,12 @@
-import { Xbase64 } from "@/components/models/core/xbase64.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const SafeSfen = {
   encode(sfen) {
-    return Xbase64.urlsafe_encode64(sfen)
+    return Gs.urlsafe_encode64(sfen)
   },
 
   // Rails側と合わせていれているがまだどこでも使っていない
   decode(bin) {
-    return Xbase64.urlsafe_decode64(bin)
+    return Gs.urlsafe_decode64(bin)
   },
 }

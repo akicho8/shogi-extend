@@ -1,5 +1,6 @@
 // 汎用コード
-import { Gs         } from "@/components/models/gs.js"
+import { Gs        } from "@/components/models/gs.js"
+import { AppHelper        } from "@/components/models/app_helper.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
 
@@ -11,6 +12,7 @@ const QueryString = require("query-string")
 export const vue_support = {
   methods: {
     ...Gs,
+    ...AppHelper,
     ...SpUtil,
 
     ua_icon_key_get() {

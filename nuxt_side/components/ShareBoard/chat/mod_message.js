@@ -2,7 +2,7 @@
 
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageDto } from "./message_dto.js"
 

@@ -1,9 +1,9 @@
-import { Gs2 } from '@/components/models/gs2.js'
+import { Gs } from '@/components/models/gs.js'
 const MD5 = require("md5.js")
 
 export class OsChange {
   constructor(context) {
-    Gs2.__assert_kind_of_hash__(context)
+    Gs.__assert_kind_of_hash__(context)
     this.context = context
     this.original_hash = this.current_hash
   }

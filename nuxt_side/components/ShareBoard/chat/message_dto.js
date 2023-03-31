@@ -8,7 +8,7 @@
 // | message_class       |
 // |---------------------|
 
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
 
@@ -44,7 +44,7 @@ export class MessageDto {
 
   // 表示するときのメッセージは加工しておく
   get auto_linked_message() {
-    return Gs2.auto_link(this.message, {mention: false}) // `@alice` をリンクにしないようにする
+    return Gs.auto_link(this.message, {mention: false}) // `@alice` をリンクにしないようにする
   }
 
   // 表示するときの色
@@ -60,7 +60,7 @@ export class MessageDto {
   // private
 
   get toast_message() {
-    const name = Gs2.presence(this.from_user_name) ?? "？"
+    const name = Gs.presence(this.from_user_name) ?? "？"
     return `${name}: ${this.message}`
   }
 
@@ -75,6 +75,6 @@ export class MessageDto {
       this.from_connection_id,
       this.performed_at,
     ].join("/")
-    return Gs2.str_to_md5(str)
+    return Gs.str_to_md5(str)
   }
 }

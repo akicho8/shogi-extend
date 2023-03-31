@@ -10,7 +10,7 @@
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { Gs } from "../gs.js"
+import { Gs } from "@/components/models/gs.js"
 import { parse as TwitterEmojiParser } from "twemoji-parser"
 import { HandleNameNgWordList } from "./handle_name_ng_word_list.js"
 

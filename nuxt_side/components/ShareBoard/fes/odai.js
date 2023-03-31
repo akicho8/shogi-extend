@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import Vue from "vue"
 
@@ -24,13 +24,13 @@ export class Odai {
     return [
       this.items.join("と"),
       "、",
-      Gs2.presence(this.subject) ?? "どっちが好き？",
+      Gs.presence(this.subject) ?? "どっちが好き？",
     ].join("")
   }
 
   // すべて入力されているか？
   get valid_p() {
-    return [this.subject, ...this.items].every(e => Gs2.present_p(e))
+    return [this.subject, ...this.items].every(e => Gs.present_p(e))
   }
 
   // どれかがまだ入力されていない？
@@ -41,7 +41,7 @@ export class Odai {
   // 内容のハッシュ
   // 入力前の状態と初期化した状態が同じハッシュになってしまうため使いづらい
   get content_hash() {
-    return Gs2.str_to_md5([this.subject, ...this.items].join("/"))
+    return Gs.str_to_md5([this.subject, ...this.items].join("/"))
   }
 
   // コンテンツの内容が同じか？ (再送信の表示に使いたい)
@@ -59,7 +59,7 @@ export class Odai {
 
   // すべて空？ (つまり初期値の状態？)
   get empty_p() {
-    return Gs2.blank_p(this.subject) && this.items.every(e => Gs2.blank_p(e))
+    return Gs.blank_p(this.subject) && this.items.every(e => Gs.blank_p(e))
   }
 
   get attributes() {

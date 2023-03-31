@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
 import _ from "lodash"
 
@@ -14,7 +14,7 @@ export class PiyoUrlLinkCreator extends AnyLinkCreator {
   }
 
   get transform_params() {
-    Gs2.__assert__(Gs2.present_p(this.params.kif_url), "Gs2.present_p(this.params.kif_url)")
+    Gs.__assert__(Gs.present_p(this.params.kif_url), "Gs.present_p(this.params.kif_url)")
 
     return {
       num: this.params.turn,

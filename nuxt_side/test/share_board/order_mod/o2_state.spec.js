@@ -41,6 +41,5 @@ describe("O2State", () => {
   test("teams_each_shuffle", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     object.teams_each_shuffle()
-    console.log(object.inspect)
   })
 })

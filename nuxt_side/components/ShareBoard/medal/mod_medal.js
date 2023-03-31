@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { MedalDecorator } from "./medal_decorator.js"
 
@@ -63,9 +63,9 @@ export const mod_medal = {
       this.receive_xmedal(params)
     },
     receive_xmedal(params) {
-      this.clog(`receive_xmedal(${Gs2.i(params)})`)
-      Gs2.__assert__(this.present_p(params.medal_user_name), "this.present_p(params.medal_user_name)")
-      Gs2.__assert__(this.present_p(params.acquire_medal_count), "this.present_p(params.acquire_medal_count)")
+      this.clog(`receive_xmedal(${Gs.i(params)})`)
+      Gs.__assert__(this.present_p(params.medal_user_name), "this.present_p(params.medal_user_name)")
+      Gs.__assert__(this.present_p(params.acquire_medal_count), "this.present_p(params.acquire_medal_count)")
       this.$set(this.medal_counts_hash, params.medal_user_name, params.acquire_medal_count) // これで画面に星の数が反映される
     },
 

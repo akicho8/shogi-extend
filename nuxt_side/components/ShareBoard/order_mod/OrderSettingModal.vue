@@ -70,7 +70,7 @@
 const SHUFFLE_MAX = 8
 
 import { support_child } from "../support_child.js"
-import { Gs2           } from "@/components/models/gs2.js"
+import { Gs           } from "@/components/models/gs.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
 import { Dice          } from "@/components/models/dice.js"
@@ -155,7 +155,7 @@ export default {
       this.$sound.play_click()
       this.TheSb.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.TheSb.new_v.order_unit.first_user(this.TheSb.start_color)
-      Gs2.__assert__(user != null, "user != null")
+      Gs.__assert__(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.TheSb.shared_al_add({label: furigoma_pack.piece_names, message: message})
       this.dice.roll()
@@ -172,7 +172,7 @@ export default {
     // 反映時のエラーの内容は new_v.order_unit に任せる
     invalid_case1() {
       const messages = this.TheSb.new_v.order_unit.error_messages
-      if (Gs2.present_p(messages)) {
+      if (Gs.present_p(messages)) {
         this.$sound.play("x")
         messages.forEach(e => this.toast_warn(e))
         return true

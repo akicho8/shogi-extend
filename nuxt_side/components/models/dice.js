@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 
 export class Dice {
   constructor() {
@@ -6,7 +6,7 @@ export class Dice {
   }
 
   roll() {
-    return this.value = Gs2.dice_roll()
+    return this.value = Gs.dice_roll()
   }
 
   get to_icon() {

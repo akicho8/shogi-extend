@@ -1,4 +1,4 @@
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import { AnyLinkCreator } from "@/components/models/any_link_creator.js"
 import _ from "lodash"
 

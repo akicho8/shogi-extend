@@ -1,6 +1,6 @@
 // 確認方法: README_kifu_mail.org
 
-import { Gs2 } from "@/components/models/gs2.js"
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export const mod_kifu_mail = {
@@ -18,7 +18,7 @@ export const mod_kifu_mail = {
     },
     // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
-      Gs2.__assert__(this.g_current_user, "this.g_current_user")
+      Gs.__assert__(this.g_current_user, "this.g_current_user")
       options = {
         silent: false,     // true: 何も表示しない
         sb_judge_key: "none", // 勝ち負け (win, lose, none)
