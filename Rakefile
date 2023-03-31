@@ -41,6 +41,17 @@ task "test:retry" do
   EOT
 end
 
+desc "test:retry2"
+task "test:retry2" do
+  system <<~EOT
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  sleep 120; rspec --only-failures
+  EOT
+end
+
 if defined? RSpec
   namespace :spec do
     desc "core (--fail-fast)"

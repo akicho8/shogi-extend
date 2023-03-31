@@ -1,2 +1,2 @@
 import { Beetleshine } from "./beetleshine/beetleshine.js"
-module.exports.Gs = Beetleshine
+export const Gs = Beetleshine
