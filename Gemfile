@@ -181,8 +181,7 @@ gem "diff-lcs"
 # gem "hiredis"
 
 # ActiveJob
-gem "sidekiq", "~> 6" # sidekiq timeout brpop の警告がでまくるのが Sidekiq 6.5.6 で直っているので 6 内で最新にする
-# 7 にすると staging と production で You are connecting to Redis 6.0.5, Sidekiq requires Redis 6.2.0 or greater のエラーになる
+gem "sidekiq", "~> 7" # Redis 6.2.0 以上が必要
 
 gem "puma_worker_killer"
 
