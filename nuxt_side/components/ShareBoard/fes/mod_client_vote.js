@@ -85,7 +85,8 @@ export const mod_client_vote = {
     voted_result_to_order_apply() {
       Gs.__assert__(this.$gs.present_p(this.new_v), "this.$gs.present_p(this.new_v)")
       Gs.__assert__(this.$gs.present_p(this.new_v.order_unit), "this.$gs.present_p(this.new_v.order_unit)")
-      this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.voted_result.to_h)
+      this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.voted_result.to_h) // 反映
+      this.new_v.order_unit.teams_each_shuffle() // チーム内シャッフル実行
     },
 
     // private
