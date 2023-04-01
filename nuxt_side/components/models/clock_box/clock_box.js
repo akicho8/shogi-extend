@@ -6,6 +6,7 @@ const HUMAN_STATUS_LABELS = {
 
 import { SingleClock } from "./single_clock.js"
 import { Location } from "shogi-player/components/models/location.js"
+import { Gs } from "@/components/models/gs.js"
 
 export class ClockBox {
   constructor(params = {}) {
@@ -69,7 +70,7 @@ export class ClockBox {
 
   // 切り替え
   clock_switch() {
-    this.__assert__(this.turn != null, "this.turn != null")
+    Gs.__assert__(this.turn != null, "this.turn != null")
     this.turn += 1
     this.switch_count += 1
     this.elapsed_sec = 0
@@ -167,7 +168,7 @@ export class ClockBox {
   ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
-    this.__assert__(v != null, "v != null")
+    Gs.__assert__(v != null, "v != null")
     return v % Location.values.length
   }
 
@@ -300,14 +301,6 @@ export class ClockBox {
 
     if (v.timer) {
       this.timer_start()
-    }
-  }
-
-  __assert__(value, message = null) {
-    if (!value) {
-      console.error(value)
-      alert(message || "must not happen")
-      debugger
     }
   }
 }

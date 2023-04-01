@@ -10,7 +10,7 @@ export const mod_query_builder = {
 
     // xxx:1,2 形式
     values_as_query(key, values) {
-      let v = this.presence(values)
+      let v = this.$gs.presence(values)
       if (v) {
         return [key, ":", v.join(",")].join("")
       }
@@ -25,7 +25,7 @@ export const mod_query_builder = {
 
     // xxx:2022-01-01..2022-01-02 形式
     date_range_as_query(key, range) {
-      if (this.presence(range)) {
+      if (this.$gs.presence(range)) {
         const str = range.map(e => dayjs(e).format("YYYY-MM-DD")).join("..")
         return `${key}:${str}`
       }
@@ -45,11 +45,11 @@ export const mod_query_builder = {
     my_mid_machine_gun_compare_info() { return CompareInfo.fetch(this.my_mid_machine_gun_compare) },
 
     new_query() {
-      return this.str_squish([this.user_key, ...this.query_key_value_ary].join(" "))
+      return this.$gs.str_squish([this.user_key, ...this.query_key_value_ary].join(" "))
     },
 
     new_query_without_user_key() {
-      return this.presence(this.str_squish(this.query_key_value_ary.join(" ")))
+      return this.$gs.presence(this.$gs.str_squish(this.query_key_value_ary.join(" ")))
     },
 
     // フォームと順番を合わせること

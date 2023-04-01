@@ -25,13 +25,13 @@
       .panel-heading
         | 保持する変数値
       .panel-block
-        pre {{pretty_inspect(base.pc_attributes)}}
+        pre {{$gs.pretty_inspect(base.pc_attributes)}}
   .column.is-4
     .panel
       .panel-heading
         | 保持する変数の初期値
       .panel-block
-        pre {{pretty_inspect(base.ls_default)}}
+        pre {{$gs.pretty_inspect(base.ls_default)}}
 
   .column.is-6
     .panel

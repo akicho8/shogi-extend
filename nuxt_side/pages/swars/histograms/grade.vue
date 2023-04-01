@@ -45,9 +45,9 @@ client-only
               hoverable
               )
               b-table-column(v-slot="{row}" field="grade.priority"  label="棋力" sortable) {{row.grade.key}}
-              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{floatx100_percentage(row.ratio, 2)}} %
+              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{$gs.floatx100_percentage(row.ratio, 2)}} %
               b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
-              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{number_round(row.deviation_score)}}
+              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{$gs.number_round(row.deviation_score)}}
         SwarsHistogramProcessedSec(:xi="xi")
 
     DebugPrint(v-if="development_p")
@@ -82,7 +82,7 @@ export default {
     return this.$axios.$get("/api/swars_histogram.json", {params}).then(xi => {
       this.xi = xi
 
-      if (this.present_p(this.$route.query) && this.development_p) {
+      if (this.$gs.present_p(this.$route.query) && this.development_p) {
         const body = [
           ...Object.values(this.$route.query),
           this.xi.sample_count,
@@ -92,7 +92,7 @@ export default {
         this.remote_notify({emoji: ":CHART:", subject: "棋力分布", body: body})
       }
 
-      if (this.present_p(this.$route.query) && this.development_p) {
+      if (this.$gs.present_p(this.$route.query) && this.development_p) {
         if (this.xi.real_total_count === 0) {
           this.toast_warn("なんも見つかりませんでした")
         }
@@ -102,7 +102,7 @@ export default {
   methods: {
     router_push(params) {
       params = {...this.url_params, ...params}
-      params = this.hash_compact(params)
+      params = this.$gs.hash_compact(params)
       this.$router.push({name: "swars-histograms-grade", query: params})
       this.$fetch()
     },

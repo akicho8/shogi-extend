@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsUserShowTabContent6Etc.boxes(v-if="TheApp.tab_index === 6")
   template(v-for="(row, i) in TheApp.info.etc_list")
-    template(v-if="present_p(row.body) || development_p")
+    template(v-if="$gs.present_p(row.body) || development_p")
       .box.one_box.two_column
         .columns.is-mobile.is-gapless.is-marginless
           .column.is-paddingless.has-text-weight-bold.is-size-5.is-flex.is-justify-content-center

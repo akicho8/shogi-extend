@@ -9,7 +9,7 @@ export const mod_tiresome = {
 
   mounted() {
     this.$debug.trace("mod_tiresome", "mounted")
-    this.mounted_then_query_present_p = this.present_p(this.$route.query.query)
+    this.mounted_then_query_present_p = this.$gs.present_p(this.$route.query.query)
   },
 
   methods: {
@@ -63,7 +63,7 @@ export const mod_tiresome = {
     tiresome_alert_handle() {
       this.$sound.play_click()
 
-      this.delay_block(1, () => {
+      this.$gs.delay_block(1, () => {
         this.$sound.stop_all()
         this.talk("ところでウォーズID毎回入力するの不便じゃない？")
       })
@@ -136,7 +136,7 @@ export const mod_tiresome = {
     url_prams_without_query_exist_p() {
       const t = {...this.$route.query}
       delete t.query
-      return this.present_p(t)
+      return this.$gs.present_p(t)
     },
   },
 }

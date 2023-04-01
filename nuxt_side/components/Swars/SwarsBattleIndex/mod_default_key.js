@@ -7,7 +7,7 @@ export const mod_default_key = {
     }
   },
   mounted() {
-    this.mounted_then_swars_search_default_key_present_p = this.present_p(this.swars_search_default_key_get())
+    this.mounted_then_swars_search_default_key_present_p = this.$gs.present_p(this.swars_search_default_key_get())
   },
   methods: {
     // 記憶済みウォーズID取得

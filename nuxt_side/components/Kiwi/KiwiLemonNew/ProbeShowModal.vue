@@ -8,13 +8,13 @@
     //- b-tabs(expanded type="is-boxed" v-model="list_tab_index" @input="$sound.play_click()")
     //-   b-tab-item(label="a")
     //-     template(v-if="record.ffprobe_info")
-    //-       | {{pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
+    //-       | {{$gs.pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
     //-     template(v-else)
     //-       | ?
     //-   b-tab-item(label="b")
     //-     | あああああああああああああああああああああああ
     template(v-if="record.ffprobe_info")
-      | {{pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
+      | {{$gs.pretty_inspect(record.ffprobe_info.pretty_format.streams[0])}}
     template(v-else)
       | ?
 
@@ -51,7 +51,7 @@ export default {
     //   this.base.ml_add_test()
     // },
     // submit_handle() {
-    //   if (this.present_p(this.base.message_body2)) {
+    //   if (this.$gs.present_p(this.base.message_body2)) {
     //     this.$sound.play_click()
     //     this.base.message_share({message: this.base.message_body2})
     //     this.base.message_body2 = ""

@@ -17,8 +17,8 @@ export const mod_vs_user = {
 
     // 入力値 str を正規化して再検索
     vs_user_research_handle(str) {
-      const av = this.str_to_tags(str)
-      if (this.present_p(av)) {
+      const av = this.$gs.str_to_tags(str)
+      if (this.$gs.present_p(av)) {
         str = "vs:" + av.join(",")
       } else {
         str = null
@@ -30,8 +30,8 @@ export const mod_vs_user = {
 
     // 入力値 str を正規化して補完リストとして localStorage に入れておく
     vs_user_keys_remember(str) {
-      let av = this.str_to_tags(str)
-      if (this.present_p(av)) {
+      let av = this.$gs.str_to_tags(str)
+      if (this.$gs.present_p(av)) {
         av = [...av, ...this.remember_vs_user_keys]
         av = _.uniq(av)
         av = _.take(av, VS_USERS_ARRAY_SIZE_MAX)

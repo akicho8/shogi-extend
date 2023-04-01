@@ -7,7 +7,7 @@ export const mod_guardian = {
   methods: {
     // 指定番号の守護獣URL取得
     guardian_url_base_index(index) {
-      return this.ary_cycle_at(this.guardian_list, index)
+      return this.$gs.ary_cycle_at(this.guardian_list, index)
     },
 
     // 文字列から守護獣に変換
@@ -16,8 +16,8 @@ export const mod_guardian = {
       //   return _.sample(this.guardian_list)
       // }
       const pepper = dayjs().format(PEPPER_DATE_FORMAT)
-      const hash_number = this.str_to_hash_number([pepper, str].join("-"))
-      return this.ary_cycle_at(this.guardian_list, hash_number)
+      const hash_number = this.$gs.str_to_hash_number([pepper, str].join("-"))
+      return this.$gs.ary_cycle_at(this.guardian_list, hash_number)
     },
   },
   computed: {

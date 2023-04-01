@@ -1,5 +1,5 @@
 // 汎用コード
-import { Gs        } from "@/components/models/gs.js"
+// import { Gs        } from "@/components/models/gs.js"
 import { AppHelper        } from "@/components/models/app_helper.js"
 import { SpUtil     } from "@/components/models/sp_util.js"
 import { MyMobile   } from "@/components/models/my_mobile.js"
@@ -11,7 +11,7 @@ const QueryString = require("query-string")
 
 export const vue_support = {
   methods: {
-    ...Gs,
+    // ...Gs,
     ...AppHelper,
     ...SpUtil,
 
@@ -191,7 +191,7 @@ export const vue_support = {
         return true
       }
       // http://localhost:4000/video/new?__nuxt_login_required_force=name
-      if (this.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
+      if (this.$gs.blank_p(this.g_current_user.name) || this.$route.query.__nuxt_login_required_force === "name") {
         // なぜか名前が空の人がいる
         this.toast_warn("名前を設定してください")
         this.$router.push({name: "settings-profile"})

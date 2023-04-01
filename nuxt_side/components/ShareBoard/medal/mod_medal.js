@@ -13,7 +13,7 @@ export const mod_medal = {
     // これは this.user_name を設定した直後に自動的に呼ぶ
     medal_write() {
       this.clog(`medal_write()`)
-      if (this.present_p(this.user_name)) {
+      if (this.$gs.present_p(this.user_name)) {
         this.receive_xmedal(this.current_xmedal)
       }
     },
@@ -43,7 +43,7 @@ export const mod_medal = {
 
     // 自分のメダル数を(自分を含めて)みんなに伝える
     acquire_medal_count_share() {
-      if (this.blank_p(this.user_name)) {
+      if (this.$gs.blank_p(this.user_name)) {
         return
       }
       this.clog(`acquire_medal_count_share`)
@@ -64,8 +64,8 @@ export const mod_medal = {
     },
     receive_xmedal(params) {
       this.clog(`receive_xmedal(${Gs.i(params)})`)
-      Gs.__assert__(this.present_p(params.medal_user_name), "this.present_p(params.medal_user_name)")
-      Gs.__assert__(this.present_p(params.acquire_medal_count), "this.present_p(params.acquire_medal_count)")
+      Gs.__assert__(this.$gs.present_p(params.medal_user_name), "this.$gs.present_p(params.medal_user_name)")
+      Gs.__assert__(this.$gs.present_p(params.acquire_medal_count), "this.$gs.present_p(params.acquire_medal_count)")
       this.$set(this.medal_counts_hash, params.medal_user_name, params.acquire_medal_count) // これで画面に星の数が反映される
     },
 

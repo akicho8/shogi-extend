@@ -4,18 +4,18 @@
     .modal-card-title
       | 部屋に入る
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="TheSb.ac_room && false") 入室中
-    b-button(@click="TheSb.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="present_p(TheSb.ac_room)") 部屋のリンク
+    b-button(@click="TheSb.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="$gs.present_p(TheSb.ac_room)") 部屋のリンク
   .modal-card-body
     template(v-if="true || !TheSb.ac_room")
       template(v-if="room_code_field_locked")
         b-field(key="room_code_field_locked_false")
           .control
-            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="present_p(TheSb.ac_room)")
+            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="$gs.present_p(TheSb.ac_room)")
       template(v-else)
         b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
-          b-input.new_room_code(v-model.trim="new_room_code" :disabled="present_p(TheSb.ac_room)" ref="new_room_code")
+          b-input.new_room_code(v-model.trim="new_room_code" :disabled="$gs.present_p(TheSb.ac_room)" ref="new_room_code")
       b-field(label="ハンドルネーム" label-position="on-border")
-        b-input.new_user_name(v-model.trim="new_user_name" :disabled="present_p(TheSb.ac_room)")
+        b-input.new_user_name(v-model.trim="new_user_name" :disabled="$gs.present_p(TheSb.ac_room)")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
@@ -73,7 +73,7 @@ export default {
       this.new_room_code = _.trim(this.new_room_code)
       this.new_user_name = _.trim(this.new_user_name)
 
-      if (this.blank_p(this.new_room_code)) {
+      if (this.$gs.blank_p(this.new_room_code)) {
         this.toast_warn("合言葉を入力してください")
         return
       }
@@ -97,7 +97,7 @@ export default {
       if (ROOM_CODE_ALWAYS_SHOW) {
         return
       }
-      this.room_code_field_locked = this.present_p(this.TheSb.room_code)
+      this.room_code_field_locked = this.$gs.present_p(this.TheSb.room_code)
     },
     // 鍵解除
     room_code_field_unlock() {

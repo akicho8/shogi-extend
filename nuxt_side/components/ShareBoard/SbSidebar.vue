@@ -3,7 +3,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
   .mx-4.my-4
     .is-flex.is-justify-content-space-between.is-align-items-center
       NavbarItemSidebarClose(@click="base.sidebar_toggle")
-      template(v-if="blank_p(base.ac_room) || !base.self_is_member_p")
+      template(v-if="$gs.blank_p(base.ac_room) || !base.self_is_member_p")
         NavbarItemLogin(component="a")
         NavbarItemProfileLink(component="a" :click_fn="base.profile_click_handle")
     .mt-4
@@ -69,7 +69,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="account-edit" label="ハンドルネーム変更"          @click="base.handle_name_modal_handle")
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
-          b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="blank_p(base.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="$sound.play_click()" v-if="development_p")
       AppearanceUi.mt-5
       .box.mt-5

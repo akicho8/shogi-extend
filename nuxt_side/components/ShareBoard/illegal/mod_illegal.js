@@ -24,7 +24,7 @@ export const mod_illegal = {
     // 一般モードの反則チェックありで自動的に指摘するときの処理
     // 反則モーダル発動
     illegal_modal_handle(illegal_names) {
-      if (this.present_p(illegal_names)) {
+      if (this.$gs.present_p(illegal_names)) {
         this.$sound.play("lose") // おおげさに「ちーん」にしておく
         // const str = params.lmi.illegal_names.join("と")
         // this.toast_ng(`${str}の反則です`)

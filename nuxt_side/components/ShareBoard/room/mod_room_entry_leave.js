@@ -5,12 +5,12 @@ export const mod_room_entry_leave = {
       this.tl_add("入室直前の人数", `${this.member_infos.length}人`, params)
       this.al_add({...params, label: "入室"})
       this.$sound.play("room_entry")
-      this.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
+      this.$gs.delay_block(0.75, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が入室しました`))
 
-      this.delay_block(2.5, () => {
+      this.$gs.delay_block(2.5, () => {
         if (this.received_from_self(params)) {
           this.tl_add("入室後2.5秒後", `${this.member_infos.length}人`, params)
-          if (this.blank_p(this.$route.query.room_code)) { // 「部屋に入る」から入室 (部屋のリンクから来ていない場合)
+          if (this.$gs.blank_p(this.$route.query.room_code)) { // 「部屋に入る」から入室 (部屋のリンクから来ていない場合)
             if (this.member_infos.length <= 1) {           // 自分だけなら
               if (this.auto_room_url_copy_modal_p) {
                 this.room_url_copy_modal_handle()
@@ -28,7 +28,7 @@ export const mod_room_entry_leave = {
       this.al_add({...params, label: "退室"})
       if (false) {
         this.$sound.play("room_leave")
-        this.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
+        this.$gs.delay_block(0.25, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`))
       } else {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が退室しました`)
       }

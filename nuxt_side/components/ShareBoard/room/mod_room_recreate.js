@@ -35,7 +35,7 @@ export const mod_room_recreate = {
         this.room_creating_busy += 1
         const loading = this.$buefy.loading.open()
         // this.toast_ok("退室しました", {duration: this.ROOM_DESTROY_AFTER_DELAY_SEC * 1000})
-        this.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
+        this.$gs.delay_block(this.ROOM_DESTROY_AFTER_DELAY_SEC, () => {
           if (APP_RELOAD_IF_RECREATE) {
             this.force_reload()
           } else {

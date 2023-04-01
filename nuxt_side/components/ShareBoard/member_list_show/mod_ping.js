@@ -41,7 +41,7 @@ export const mod_ping = {
     ping_command_broadcasted(params) {
       if (params.to_connection_id === this.connection_id) {
         const now = this.$time.current_ms()
-        this.delay_block(this.PONG_DELAY, () => this.pong_command(params))
+        this.$gs.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         const gap = now - params.ping_at
         this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${gap}ms`)
       }
@@ -62,7 +62,7 @@ export const mod_ping = {
         this.ping_done()
         const now = this.$time.current_ms()
         const gap = now - params.ping_at
-        const sec = this.number_floor(gap / 1000, 3)
+        const sec = this.$gs.number_floor(gap / 1000, 3)
         if (this.development_p) {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {talk: false})
         }
@@ -77,7 +77,7 @@ export const mod_ping = {
     ping_callback_set(e) {
       this.ping_success = false
       this.ping_callback_stop()
-      this.ping_runner_id = this.delay_block(this.PING_OK_SEC, () => {
+      this.ping_runner_id = this.$gs.delay_block(this.PING_OK_SEC, () => {
         if (!this.ping_success) {
           this.toast_ok(`${this.user_call_name(e.from_user_name)}の霊圧が消えました`)
         }
@@ -88,7 +88,7 @@ export const mod_ping = {
     // 途中でやめる
     ping_callback_stop() {
       if (this.ping_runner_id) {
-        this.delay_stop(this.ping_runner_id)
+        this.$gs.delay_stop(this.ping_runner_id)
         this.ping_runner_id = null
       }
     },
@@ -106,7 +106,7 @@ export const mod_ping = {
 
     // PING実行中？
     ping_running_p() {
-      return this.present_p(this.ping_runner_id)
+      return this.$gs.present_p(this.ping_runner_id)
     },
   },
 }

@@ -21,7 +21,7 @@ export const mod_chore = {
 
     kifu_save_handle(row) {
       this.$sound.play_click()
-      this.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+      this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
     },
 
     home_bookmark_handle() {

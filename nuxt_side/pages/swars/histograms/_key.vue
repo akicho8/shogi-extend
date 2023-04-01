@@ -25,10 +25,10 @@ client-only
               b-table-column(v-slot="{row}" field="name"            label="名前" sortable) {{row.name}}
               b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable)
                 template(v-if="row.ratio")
-                  | {{floatx100_percentage(row.ratio, 3)}} %
+                  | {{$gs.floatx100_percentage(row.ratio, 3)}} %
               //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="!!development_p")
               //-   template(v-if="row.deviation_score")
-              //-     | {{number_floor(row.deviation_score, 3)}}
+              //-     | {{$gs.number_floor(row.deviation_score, 3)}}
               b-table-column(v-slot="{row}" field="count"           label="数" numeric sortable) {{row.count}}
         SwarsHistogramProcessedSec(:xi="xi")
 

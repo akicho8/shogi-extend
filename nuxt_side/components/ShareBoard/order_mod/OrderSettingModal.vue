@@ -197,7 +197,7 @@ export default {
         return
       }
       this.TheSb.new_order_share("反映")
-      this.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.TheSb.cc_next_message())
+      this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.TheSb.cc_next_message())
     },
 
     hint_handle(model) {

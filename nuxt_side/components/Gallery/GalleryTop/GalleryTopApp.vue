@@ -85,7 +85,7 @@ export default {
       params = { per: this.per, ...params }
       this.ParamInfo.values.forEach(e => {
         const v = params[e.key]
-        if (this.blank_p(v) || v === e.default) {
+        if (this.$gs.blank_p(v) || v === e.default) {
           delete params[e.key]
         }
       })
@@ -122,7 +122,7 @@ export default {
   //
   // fetchOnServer: false,
   // fetch() {
-  //   // this.__assert__(this.search_preset_key, "this.search_preset_key")
+  //   // this.$gs.__assert__(this.search_preset_key, "this.search_preset_key")
   //   this.query       = this.$route.query.query
   //   // this.search_preset_key = this.$route.query.search_preset_key ?? this.search_preset_key ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
   //   this.search_preset_key = this.$route.query.search_preset_key
@@ -158,7 +158,7 @@ export default {
   // methods: {
   //   router_push(params) {
   //     params = {...this.url_params, ...params}
-  //     params = this.hash_compact_blank(params)
+  //     params = this.$gs.hash_compact_blank(params)
   //     this.$router.push({name: "video", query: params})
   //   },
   // },

@@ -33,7 +33,7 @@ export default {
     //   this.base.ml_add_test()
     // },
     // submit_handle() {
-    //   if (this.present_p(this.base.message_body2)) {
+    //   if (this.$gs.present_p(this.base.message_body2)) {
     //     this.$sound.play_click()
     //     this.base.message_share({message: this.base.message_body2})
     //     this.base.message_body2 = ""

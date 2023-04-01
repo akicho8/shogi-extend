@@ -37,7 +37,7 @@ export const mod_sfen_share_retry = {
         if (this.order_enable_p && this.order_unit.valid_p) {
           if (this.RETRY_DELAY >= 0) {
             this.retry_delay_cancel()
-            this.retry_delay_id = this.delay_block(this.retry_check_delay, () => {
+            this.retry_delay_id = this.$gs.delay_block(this.retry_check_delay, () => {
               if (this.send_success_p) {
                 // 相手から応答があった
                 // this.x_retry_count = 0  // 失敗回数リセット
@@ -52,7 +52,7 @@ export const mod_sfen_share_retry = {
     },
     retry_delay_cancel() {
       if (this.retry_delay_id) {
-        this.delay_stop(this.retry_delay_id)
+        this.$gs.delay_stop(this.retry_delay_id)
         this.retry_delay_id = null
       }
     },
@@ -113,7 +113,7 @@ export const mod_sfen_share_retry = {
       if (RETRY_FUNCTION) {
         if (this.order_enable_p) {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
-          this.__assert__(params.x_retry_count != null, "params.x_retry_count != null")
+          this.$gs.__assert__(params.x_retry_count != null, "params.x_retry_count != null")
           if (params.x_retry_count >= 1) {
             const message = `次の手番の${this.user_call_name(params.next_user_name)}の反応がないので${this.user_call_name(params.from_user_name)}が再送しました(${params.x_retry_count}回目)`
             this.toast_warn(message, {duration: 1000 * RETRY_TOAST_SEC, talk: false})
@@ -139,7 +139,7 @@ export const mod_sfen_share_retry = {
       if (params.to_connection_id === this.connection_id) {       // いろんな人に届くため送信元の確認
         if (this.sequence_codes.includes(params.sequence_code)) { // 最近送ったものなら
           if (this.SEND_SUCCESS_DELAY >= 0) {
-            this.delay_block(this.SEND_SUCCESS_DELAY, () => {     // デバッグ用のウェイト
+            this.$gs.delay_block(this.SEND_SUCCESS_DELAY, () => {     // デバッグ用のウェイト
               this.send_success_p = true                          // 送信成功とする
               this.retry_confirm_close()                          // 4秒後の場合ダイアログがすでに出ているので消す
               this.tl_alert("送信OK")

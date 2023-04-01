@@ -11,7 +11,7 @@
         @keydown.native.enter="apply_handle"
         placeholder="ウォーズIDを入力(複数指定可)"
         )
-    b-taglist(v-if="present_p(base.remember_vs_user_keys)")
+    b-taglist(v-if="$gs.present_p(base.remember_vs_user_keys)")
       template(v-for="str in base.remember_vs_user_keys")
         b-tag.is-clickable(@click.native="toggle_handle(str)" :type="{'is-primary': input_list.includes(str)}")
           | {{str}}
@@ -44,7 +44,7 @@ export default {
     },
     toggle_handle(str) {
       this.$sound.play_click()
-      this.input_body = this.tags_str_toggle(this.input_body, str)
+      this.input_body = this.$gs.tags_str_toggle(this.input_body, str)
       if (this.input_body.length >= 1) {
         this.input_body += " "
       }
@@ -61,7 +61,7 @@ export default {
     },
   },
   computed: {
-    input_list() { return this.str_to_tags(this.input_body) },
+    input_list() { return this.$gs.str_to_tags(this.input_body) },
   },
 }
 </script>

@@ -25,8 +25,8 @@ export const mod_order_main = {
   methods: {
     os_setup() {
       // 引数があればその順番にする
-      if (this.present_p(this.fixed_order_names)) {
-        this.os_setup_by_names(this.str_to_words(this.fixed_order_names))
+      if (this.$gs.present_p(this.fixed_order_names)) {
+        this.os_setup_by_names(this.$gs.str_to_words(this.fixed_order_names))
       }
       // 1列か2列かを確定する。初期値は2列
       this.order_unit.state_switch_to(this.fixed_order_state)
@@ -62,7 +62,7 @@ export const mod_order_main = {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`
         this.toast_ok(message, {toast: true, talk: true, ...params})
       }
-      if (this.present_p(params.message)) {
+      if (this.$gs.present_p(params.message)) {
         this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
       this.ac_log("順設受信", `順番${this.order_enable_p ? "ON" : "OFF"}を受信`)
@@ -72,9 +72,9 @@ export const mod_order_main = {
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
     receive_xorder(params) {
-      this.__assert__(this.present_p(params), "this.present_p(params)")
-      this.__assert__("order_enable_p" in params, '"order_enable_p" in params')
-      this.__assert__("order_unit" in params, '"order_unit" in params')
+      this.$gs.__assert__(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      this.$gs.__assert__("order_enable_p" in params, '"order_enable_p" in params')
+      this.$gs.__assert__("order_unit" in params, '"order_unit" in params')
 
       this.tl_alert("順番設定パラメータを先代から受信")
 
@@ -83,7 +83,7 @@ export const mod_order_main = {
     },
 
     order_copy_from_bc(params) {
-      this.__assert__(params.order_unit, "params.order_unit")
+      this.$gs.__assert__(params.order_unit, "params.order_unit")
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
@@ -96,7 +96,7 @@ export const mod_order_main = {
 
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_set_by_self_location() {
-      this.__assert__(this.user_name, "this.user_name")
+      this.$gs.__assert__(this.user_name, "this.user_name")
       const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
       if (location) {
         this.viewpoint = location.key                     // その視点に変更する
@@ -200,7 +200,7 @@ export const mod_order_main = {
     // 順番設定 ON のときのみ有効
     // { black: [...], white: [...], other: [...] }
     visible_member_groups() {
-      this.__assert__(this.order_enable_p, "チーム別のメンバー情報を取得するときは順番設定が有効になっていること")
+      this.$gs.__assert__(this.order_enable_p, "チーム別のメンバー情報を取得するときは順番設定が有効になっていること")
       return _.groupBy(this.visible_member_infos, e => {
         const location = this.user_name_to_initial_location(e.from_user_name)
         if (location) {

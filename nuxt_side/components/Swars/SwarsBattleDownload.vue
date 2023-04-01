@@ -210,7 +210,7 @@ export default {
 
       if (false) {
         this.loading_p = true
-        this.delay_block(3, () => {
+        this.$gs.delay_block(3, () => {
           this.loading_p = false
           this.$fetch()
 

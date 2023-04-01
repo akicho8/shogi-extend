@@ -5,7 +5,7 @@
       .level-item.has-text-centered
         div
           .heading 実行時間(秒)
-          .title {{number_floor(xi.processed_sec, 3)}}
+          .title {{$gs.number_floor(xi.processed_sec, 3)}}
 </template>
 
 <script>

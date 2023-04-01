@@ -88,8 +88,8 @@ export const mod_xmatch = {
     //////////////////////////////////////////////////////////////////////////////// ActionCable
 
     lobby_create() {
-      // this.__assert__(this.user_name, "this.user_name")
-      this.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
+      // this.$gs.__assert__(this.user_name, "this.user_name")
+      this.$gs.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
 
       this.tl_add("XMATCH", `subscriptions.create`)
       this.ac_lobby = this.ac_subscription_create({channel: "ShareBoard::LobbyChannel"}, {
@@ -114,7 +114,7 @@ export const mod_xmatch = {
     // perform のラッパーで共通のパラメータを入れる
     ac_lobby_perform(action, params = {}) {
       if (this.ac_lobby) {
-        // this.__assert__(this.g_current_user, "this.g_current_user")
+        // this.$gs.__assert__(this.g_current_user, "this.g_current_user")
         params = {
           from_connection_id: this.connection_id,      // 送信者識別子
           from_user_name:     this.user_name,          // 送信者名
@@ -138,7 +138,7 @@ export const mod_xmatch = {
 
     //////////////////////////////////////////////////////////////////////////////// ルール選択
     rule_select(e) {
-      this.__assert__(this.present_p(this.user_name), "this.present_p(this.user_name)")
+      this.$gs.__assert__(this.$gs.present_p(this.user_name), "this.$gs.present_p(this.user_name)")
 
       this.ac_lobby_perform("rule_select", {
         xmatch_rule_key: e.key,                     // 選択したルール
@@ -161,11 +161,11 @@ export const mod_xmatch = {
       // this.$sound.play_random(["dog1", "dog2", "dog3"])
       this.$beat.call_middle()
       const xmatch_rule_info = XmatchRuleInfo.fetch(params.xmatch_rule_key)
-      this.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
+      this.$gs.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.$sound.play_click()
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
-        this.__assert__(params.members, "params.members")
+        this.$gs.__assert__(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
           this.xmatch_establishment(params)
         }
@@ -216,7 +216,7 @@ export const mod_xmatch = {
       this.room_create()
     },
     xmatch_setup5_call(params) {
-      this.delay_block(START_TOAST_DELAY, () => {
+      this.$gs.delay_block(START_TOAST_DELAY, () => {
         this.toast_ok(`${this.user_call_name(this.current_turn_user_name)}から開始してください`)
       })
     },

@@ -27,7 +27,7 @@ export const mod_net_level = {
     member_net_level(e) {
       const v = this.member_disconnected_count_per_min(e)
       const found = NetLevelInfo.values.find(e => v >= e.threshold)
-      this.__assert__(found, "found")
+      this.$gs.__assert__(found, "found")
       return found.name
     },
   },

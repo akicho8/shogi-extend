@@ -16,7 +16,7 @@ export const mod_console = {
         let str = params.message
         str = str.replace(/^./, "")
         str = str.trim()
-        const args = this.str_split(str)
+        const args = this.$gs.str_split(str)
         const command = args.shift()
         const info = CommandInfo.lookup(command)
         if (info == null) {
@@ -47,7 +47,7 @@ export const mod_console = {
       if (info.preformat) {
         value = `<pre>${value}</pre>`
       } else {
-        value = this.str_simple_format(value)
+        value = this.$gs.str_simple_format(value)
       }
       return value
     },
