@@ -23,8 +23,8 @@ export class VotedResult {
 
   // user_name さんが index を選択する (新しいオブジェクトを返す)
   post(user_name, index) {
-    Gs.__assert__(Gs.present_p(user_name), "Gs.present_p(user_name)")
-    Gs.__assert__(Gs.present_p(index), "Gs.present_p(index)")
+    Gs.assert(Gs.present_p(user_name), "Gs.present_p(user_name)")
+    Gs.assert(Gs.present_p(index), "Gs.present_p(index)")
     return this.merge({[user_name]: index})
   }
 

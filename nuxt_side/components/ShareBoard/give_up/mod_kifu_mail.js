@@ -18,7 +18,7 @@ export const mod_kifu_mail = {
     },
     // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
-      Gs.__assert__(this.g_current_user, "this.g_current_user")
+      Gs.assert(this.g_current_user, "this.g_current_user")
       options = {
         silent: false,     // true: 何も表示しない
         sb_judge_key: "none", // 勝ち負け (win, lose, none)

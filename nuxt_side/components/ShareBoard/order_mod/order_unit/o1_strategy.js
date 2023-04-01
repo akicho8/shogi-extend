@@ -3,11 +3,11 @@ import { Location } from "shogi-player/components/models/location.js"
 
 export class O1Strategy {
   constructor(size, turn, tegoto, scolor) {
-    Gs.__assert__(size != null, "size != null")
-    Gs.__assert__(turn != null, "turn != null")
-    Gs.__assert__(tegoto != null, "tegoto != null")
-    Gs.__assert__(scolor != null, "scolor != null")
-    Gs.__assert__(tegoto >= 1, "tegoto >= 1")
+    Gs.assert(size != null, "size != null")
+    Gs.assert(turn != null, "turn != null")
+    Gs.assert(tegoto != null, "tegoto != null")
+    Gs.assert(scolor != null, "scolor != null")
+    Gs.assert(tegoto >= 1, "tegoto >= 1")
 
     this.size = size          // ユーザーはN人いる
     this.turn = turn          // N手目

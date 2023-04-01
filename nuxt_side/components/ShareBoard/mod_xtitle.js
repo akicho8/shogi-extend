@@ -18,8 +18,8 @@ export const mod_xtitle = {
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
     receive_xtitle(params) {
-      this.$gs.__assert__(this.$gs.present_p(params), "this.$gs.present_p(params)")
-      this.$gs.__assert__("title" in params, '"title" in params')
+      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      this.$gs.assert("title" in params, '"title" in params')
       this.current_title = params.title
       this.ac_log("タイ変更", `タイトル "${this.current_title}" を受信`)
     },

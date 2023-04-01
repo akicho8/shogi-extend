@@ -275,7 +275,7 @@ export default {
     },
     rule_set(params) {
       params = {...params}
-      this.$gs.__assert__("initial_main_min" in params, '"initial_main_min" in params')
+      this.$gs.assert("initial_main_min" in params, '"initial_main_min" in params')
       params.initial_main_sec = params.initial_main_min * 60
       this.clock_box.rule_set_all(params)
     },

@@ -50,7 +50,7 @@ export default {
             // loop: true, // ループにすると stop フェイドアウトが効かなくなる
             onplay: () => {
               this.state = "play"
-              this.$gs.__assert__(this.fadeout_id == null, "this.fadeout_id == null")
+              this.$gs.assert(this.fadeout_id == null, "this.fadeout_id == null")
               this.fadeout_id = this.$gs.delay_block(this.play_duration, () => {
                 // 面倒なことに現状のボリュームからではなく開始時のボリュームを指定しないといけない
                 // なので 1.0 ではなく this.volume を指定する

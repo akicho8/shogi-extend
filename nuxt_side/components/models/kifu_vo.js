@@ -9,9 +9,9 @@ export class KifuVo {
   }
 
   constructor(params) {
-    Gs.__assert__(params, "params")
-    Gs.__assert__(Gs.blank_p(params.path), "Gs.blank_p(params.path)")
-    Gs.__assert__(params["sfen"] || params["kif_url"], 'params["sfen"] || params["kif_url"]')
+    Gs.assert(params, "params")
+    Gs.assert(Gs.blank_p(params.path), "Gs.blank_p(params.path)")
+    Gs.assert(params["sfen"] || params["kif_url"], 'params["sfen"] || params["kif_url"]')
     this.params = params
   }
 

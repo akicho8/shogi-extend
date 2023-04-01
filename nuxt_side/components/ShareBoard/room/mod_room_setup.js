@@ -57,8 +57,8 @@ export const mod_room_setup = {
     },
 
     room_create_by(new_room_coe, new_user_name) {
-      this.$gs.__assert__(new_user_name, "new_user_name")
-      this.$gs.__assert__(new_room_coe, "new_room_coe")
+      this.$gs.assert(new_user_name, "new_user_name")
+      this.$gs.assert(new_room_coe, "new_room_coe")
 
       new_room_coe = _.trim(new_room_coe)
       new_user_name = _.trim(new_user_name)
@@ -79,9 +79,9 @@ export const mod_room_setup = {
 
     room_create() {
       this.tl_alert("room_create")
-      this.$gs.__assert__(this.user_name, "this.user_name")
-      this.$gs.__assert__(this.room_code, "this.room_code")
-      this.$gs.__assert__(this.ac_room == null, "this.ac_room == null")
+      this.$gs.assert(this.user_name, "this.user_name")
+      this.$gs.assert(this.room_code, "this.room_code")
+      this.$gs.assert(this.ac_room == null, "this.ac_room == null")
 
       this.ga_click(`共有将棋盤 [${this.room_code}] 入室`)
 
@@ -178,9 +178,9 @@ export const mod_room_setup = {
 
     ////////////////////////////////////////////////////////////////////////////////
     receive_xsfen(params) {
-      this.$gs.__assert__(this.$gs.present_p(params), "this.$gs.present_p(params)")
-      this.$gs.__assert__("sfen" in params, '"sfen" in params')
-      this.$gs.__assert__("turn" in params, '"turn" in params')
+      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      this.$gs.assert("sfen" in params, '"sfen" in params')
+      this.$gs.assert("turn" in params, '"turn" in params')
 
       this.current_sfen = params.sfen
       this.current_turn = params.turn

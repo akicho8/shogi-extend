@@ -60,7 +60,7 @@ export default {
 
   // fetchOnServer: false,
   fetch() {
-    // this.$gs.__assert__(this.scope, "this.scope")
+    // this.$gs.assert(this.scope, "this.scope")
     this.query       = this.$route.query.query
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.search_preset_key = this.$route.query.search_preset_key

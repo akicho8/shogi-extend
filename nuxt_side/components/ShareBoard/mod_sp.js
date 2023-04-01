@@ -54,7 +54,7 @@ export const mod_sp = {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     ev_edit_mode_short_sfen_change(v) {
-      this.$gs.__assert__(this.sp_mode === "edit", 'this.sp_mode === "edit"')
+      this.$gs.assert(this.sp_mode === "edit", 'this.sp_mode === "edit"')
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
       // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
