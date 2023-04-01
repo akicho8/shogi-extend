@@ -1,3 +1,6 @@
+# Sidekiq 7の新機能・変更点
+# https://qiita.com/ryohashimoto/items/489c5395dbdc2ce3dbb7
+
 # run sidekiq worker
 #  $ sidekiq -C config/sidekiq.yml
 #
