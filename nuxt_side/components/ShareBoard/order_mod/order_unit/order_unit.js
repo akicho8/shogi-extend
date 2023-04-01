@@ -164,7 +164,6 @@ export class OrderUnit {
     const teams = Location.values.map(e => group[e.code] ?? [])          // [["a", "b"], ["c", "d"]]
     this.user_names_allocate_from_teams(teams)                           // 登録
     this.no_entry_user_only_watch_users_set(user_names)                  // 登録してない人は全員観戦者とする
-    this.teams_each_shuffle()                                               // チーム内シャッフルしておく
   }
 
   // user_names のなかでまだ登録されていない人たちをまとめて観戦者とする
