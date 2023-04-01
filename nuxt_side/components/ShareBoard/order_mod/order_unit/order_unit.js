@@ -87,7 +87,7 @@ export class OrderUnit {
   }
 
   state_switch_to(method) {
-    Gs.__assert__(this.order_state[method], "this.order_state[method]")
+    Gs.assert(this.order_state[method], "this.order_state[method]")
     this.order_state = this.order_state[method]
   }
 

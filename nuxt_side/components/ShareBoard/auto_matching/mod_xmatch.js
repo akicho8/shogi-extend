@@ -88,8 +88,8 @@ export const mod_xmatch = {
     //////////////////////////////////////////////////////////////////////////////// ActionCable
 
     lobby_create() {
-      // this.$gs.__assert__(this.user_name, "this.user_name")
-      this.$gs.__assert__(this.ac_lobby == null, "this.ac_lobby == null")
+      // this.$gs.assert(this.user_name, "this.user_name")
+      this.$gs.assert(this.ac_lobby == null, "this.ac_lobby == null")
 
       this.tl_add("XMATCH", `subscriptions.create`)
       this.ac_lobby = this.ac_subscription_create({channel: "ShareBoard::LobbyChannel"}, {
@@ -114,7 +114,7 @@ export const mod_xmatch = {
     // perform のラッパーで共通のパラメータを入れる
     ac_lobby_perform(action, params = {}) {
       if (this.ac_lobby) {
-        // this.$gs.__assert__(this.g_current_user, "this.g_current_user")
+        // this.$gs.assert(this.g_current_user, "this.g_current_user")
         params = {
           from_connection_id: this.connection_id,      // 送信者識別子
           from_user_name:     this.user_name,          // 送信者名
@@ -138,7 +138,7 @@ export const mod_xmatch = {
 
     //////////////////////////////////////////////////////////////////////////////// ルール選択
     rule_select(e) {
-      this.$gs.__assert__(this.$gs.present_p(this.user_name), "this.$gs.present_p(this.user_name)")
+      this.$gs.assert(this.$gs.present_p(this.user_name), "this.$gs.present_p(this.user_name)")
 
       this.ac_lobby_perform("rule_select", {
         xmatch_rule_key: e.key,                     // 選択したルール
@@ -165,7 +165,7 @@ export const mod_xmatch = {
       // this.$sound.play_click()
       // 合言葉がある場合マッチングが成立している
       if (params.room_code) {
-        this.$gs.__assert__(params.members, "params.members")
+        this.$gs.assert(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
           this.xmatch_establishment(params)
         }

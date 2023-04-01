@@ -15,7 +15,7 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
   }
 
   get transform_params() {
-    Gs.__assert__(Gs.present_p(this.params.sfen), "Gs.present_p(this.params.sfen)")
+    Gs.assert(Gs.present_p(this.params.sfen), "Gs.present_p(this.params.sfen)")
     return {
       initpos: this.sfen_info.init_sfen_strip,
       moves: this.moves_space_to_dot_replaced_string,

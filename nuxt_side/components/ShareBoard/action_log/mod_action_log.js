@@ -124,8 +124,8 @@ export const mod_action_log = {
     },
 
     action_log_jump(e) {
-      this.$gs.__assert__('sfen' in e, "'sfen' in e")
-      this.$gs.__assert__('turn' in e, "'turn' in e")
+      this.$gs.assert('sfen' in e, "'sfen' in e")
+      this.$gs.assert('turn' in e, "'turn' in e")
 
       if (SAME_SFEN_THEN_RETURN) {
         if (this.current_sfen === e.sfen && this.current_turn === e.turn) {

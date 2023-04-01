@@ -184,7 +184,7 @@ export default {
   },
   methods: {
     select_handle(row) {
-      this.$gs.__assert__(row.index != null, "row.index != null")
+      this.$gs.assert(row.index != null, "row.index != null")
       if (this.base.current_index != row.index) {
         this.$sound.play_click()
         this.base.current_index = row.index

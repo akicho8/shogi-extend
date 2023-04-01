@@ -70,7 +70,7 @@ export class ClockBox {
 
   // 切り替え
   clock_switch() {
-    Gs.__assert__(this.turn != null, "this.turn != null")
+    Gs.assert(this.turn != null, "this.turn != null")
     this.turn += 1
     this.switch_count += 1
     this.elapsed_sec = 0
@@ -168,7 +168,7 @@ export class ClockBox {
   ////////////////////////////////////////////////////////////////////////////////
 
   turn_wrap(v) {
-    Gs.__assert__(v != null, "v != null")
+    Gs.assert(v != null, "v != null")
     return v % Location.values.length
   }
 

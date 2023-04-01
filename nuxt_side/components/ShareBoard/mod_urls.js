@@ -11,7 +11,7 @@ export const mod_urls = {
     room_url_copy_handle() {
       if (this.if_room_is_empty()) { return }
 
-      this.$gs.__assert__(this.$gs.present_p(this.room_code), "this.$gs.present_p(this.room_code)")
+      this.$gs.assert(this.$gs.present_p(this.room_code), "this.$gs.present_p(this.room_code)")
       if (this.$gs.blank_p(this.room_code)) {
         // ここは通らないはず
         this.$sound.play_click()

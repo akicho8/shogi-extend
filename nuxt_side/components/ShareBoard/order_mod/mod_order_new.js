@@ -36,14 +36,14 @@ export const mod_order_new = {
 
       this.$sound.play_click()
       this.os_modal_init()
-      this.$gs.__assert__(this.os_modal_instance == null, "this.os_modal_instance == null")
+      this.$gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
       this.os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
         props: { },
         canCancel: [],
         // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
         onCancel: () => {
-          this.$gs.__assert__(false, "must not happen")
+          this.$gs.assert(false, "must not happen")
           this.$sound.play_click()
           this.os_modal_close()
         },
@@ -122,7 +122,7 @@ export const mod_order_new = {
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
     new_order_share(message) {
-      this.$gs.__assert__(this.new_v.order_unit, "this.new_v.order_unit")
+      this.$gs.assert(this.new_v.order_unit, "this.new_v.order_unit")
       const params = {
         order_unit:        this.new_v.order_unit.attributes,
         //

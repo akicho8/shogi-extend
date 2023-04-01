@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     click_handle() {
-      this.$gs.__assert__(this.body, "this.body")
+      this.$gs.assert(this.body, "this.body")
       this.tweet_window_popup({text: this.body})
       this.$emit("after_click")
     },

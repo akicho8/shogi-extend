@@ -77,9 +77,9 @@ export default {
     }
   },
   mounted() {
-    this.$gs.__assert__(this.viewpoint === "white" || this.viewpoint === "black")
-    this.$gs.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
-    this.$gs.__assert__('turn' in this.action_log, "'turn' in this.action_log")
+    this.$gs.assert(this.viewpoint === "white" || this.viewpoint === "black")
+    this.$gs.assert('sfen' in this.action_log, "'sfen' in this.action_log")
+    this.$gs.assert('turn' in this.action_log, "'turn' in this.action_log")
   },
   methods: {
     close_handle() {

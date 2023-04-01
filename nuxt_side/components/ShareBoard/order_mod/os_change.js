@@ -3,7 +3,7 @@ const MD5 = require("md5.js")
 
 export class OsChange {
   constructor(context) {
-    Gs.__assert_kind_of_hash__(context)
+    Gs.assert_kind_of_hash(context)
     this.context = context
     this.original_hash = this.current_hash
   }

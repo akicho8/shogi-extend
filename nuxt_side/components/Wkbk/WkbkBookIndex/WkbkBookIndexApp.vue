@@ -79,7 +79,7 @@ export default {
   // fetchOnServer: false,
   fetch() {
     // console.log("[fetch]")
-    // this.$gs.__assert__(this.scope, "this.scope")
+    // this.$gs.assert(this.scope, "this.scope")
 
     // this.scope       = this.$route.query.scope ?? this.scope ?? "everyone" // 引数 -> localStorageの値 -> 初期値 の順で決定
     this.page        = this.$route.query.page

@@ -15,10 +15,10 @@ export const mod_sfen_share = {
       const lmi = e.last_move_info
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
-      this.$gs.__assert__(this.current_sfen, "this.current_sfen")
+      this.$gs.assert(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
-        this.$gs.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        this.$gs.__assert__(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
+        this.$gs.assert(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
+        this.$gs.assert(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく

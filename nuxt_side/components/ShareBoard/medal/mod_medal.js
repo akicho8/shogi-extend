@@ -64,8 +64,8 @@ export const mod_medal = {
     },
     receive_xmedal(params) {
       this.clog(`receive_xmedal(${Gs.i(params)})`)
-      Gs.__assert__(this.$gs.present_p(params.medal_user_name), "this.$gs.present_p(params.medal_user_name)")
-      Gs.__assert__(this.$gs.present_p(params.acquire_medal_count), "this.$gs.present_p(params.acquire_medal_count)")
+      Gs.assert(this.$gs.present_p(params.medal_user_name), "this.$gs.present_p(params.medal_user_name)")
+      Gs.assert(this.$gs.present_p(params.acquire_medal_count), "this.$gs.present_p(params.acquire_medal_count)")
       this.$set(this.medal_counts_hash, params.medal_user_name, params.acquire_medal_count) // これで画面に星の数が反映される
     },
 

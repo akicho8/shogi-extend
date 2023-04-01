@@ -57,7 +57,7 @@ export const mod_review = {
 
     banana_show_handle(record) {
       this.$sound.play_click()
-      this.$gs.__assert__(record.banana, "record.banana")
+      this.$gs.assert(record.banana, "record.banana")
       this.$router.push({name: 'video-watch-banana_key', params: {banana_key: record.banana.key}})
     },
 

@@ -285,9 +285,9 @@ export default {
         }
         if (e.record) {
           this.record = e.record
-          this.$gs.__assert__(this.record.display_turn != null, "this.record.display_turn != null")
-          this.$gs.__assert__(this.record.turn_max != null, "this.record.turn_max != null")
-          this.$gs.__assert__(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
+          this.$gs.assert(this.record.display_turn != null, "this.record.display_turn != null")
+          this.$gs.assert(this.record.turn_max != null, "this.record.turn_max != null")
+          this.$gs.assert(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
           callback()
         }
       // }).catch(e => {

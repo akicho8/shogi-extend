@@ -58,7 +58,7 @@ export const mod_xitems = {
     },
 
     goal_check() {
-      this.$gs.__assert__(!this.current_xitem)
+      this.$gs.assert(!this.current_xitem)
       this.mode_set("standby")
       this.$sound.play("win")
       this.re_ox_stop()

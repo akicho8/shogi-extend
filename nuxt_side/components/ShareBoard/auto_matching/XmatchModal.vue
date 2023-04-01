@@ -99,7 +99,7 @@ export default {
 
     // 指定ルールにエントリーした人数
     entry_count(e) {
-      this.$gs.__assert__(this.base.xmatch_rules_members, "this.base.xmatch_rules_members")
+      this.$gs.assert(this.base.xmatch_rules_members, "this.base.xmatch_rules_members")
       return this.base.xmatch_rules_members[e.key].length
     },
 

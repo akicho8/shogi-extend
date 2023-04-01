@@ -14,7 +14,7 @@ export class PiyoUrlLinkCreator extends AnyLinkCreator {
   }
 
   get transform_params() {
-    Gs.__assert__(Gs.present_p(this.params.kif_url), "Gs.present_p(this.params.kif_url)")
+    Gs.assert(Gs.present_p(this.params.kif_url), "Gs.present_p(this.params.kif_url)")
 
     return {
       num: this.params.turn,

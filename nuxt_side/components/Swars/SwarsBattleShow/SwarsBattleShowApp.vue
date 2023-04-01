@@ -239,7 +239,7 @@ export default {
     // 開始局面
     // turn sp_turn critical_turn の順に見る
     sp_turn_of(record) {
-      this.$gs.__assert__(record, "record")
+      this.$gs.assert(record, "record")
 
       const turn = this.$route.query.turn
       if (turn != null) {

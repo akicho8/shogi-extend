@@ -155,7 +155,7 @@ export default {
       this.$sound.play_click()
       this.TheSb.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
       const user = this.TheSb.new_v.order_unit.first_user(this.TheSb.start_color)
-      Gs.__assert__(user != null, "user != null")
+      Gs.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
       this.TheSb.shared_al_add({label: furigoma_pack.piece_names, message: message})
       this.dice.roll()

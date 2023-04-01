@@ -138,8 +138,8 @@ export const vue_dialog = {
     //////////////////////////////////////////////////////////////////////////////// modal
 
     modal_card_open(params) {
-      this.$gs.__assert__(this.$gs.present_p(params.component), "this.$gs.present_p(params.component)")
-      this.$gs.__assert__(this.$gs.present_p(params.component.name), "this.$gs.present_p(params.component.name)")
+      this.$gs.assert(this.$gs.present_p(params.component), "this.$gs.present_p(params.component)")
+      this.$gs.assert(this.$gs.present_p(params.component.name), "this.$gs.present_p(params.component.name)")
       return this.$buefy.modal.open({
         width: "", // width ではなく max-width に設定される
         customClass: `BasicModal ${params.component.name}`,

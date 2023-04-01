@@ -14,7 +14,7 @@ export default {
   methods: {
     sp_object() {
       const v = this.$refs.sp_object
-      this.$gs.__assert__(v)
+      this.$gs.assert(v)
       return v
     },
   },
