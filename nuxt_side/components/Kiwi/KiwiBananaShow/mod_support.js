@@ -27,7 +27,7 @@ export const mod_support = {
     },
     download_handle() {
       this.$sound.play_click()
-      this.delay_block(1, () => this.toast_ok("ダウンロードしました"))
+      this.$gs.delay_block(1, () => this.toast_ok("ダウンロードしました"))
     },
   },
 }

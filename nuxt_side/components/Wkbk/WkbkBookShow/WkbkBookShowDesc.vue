@@ -7,7 +7,7 @@
       | {{base.book.user.name}}
   .modal-card-body
     .content
-      p(v-html="simple_format(auto_link(base.book.description))")
+      p(v-html="$gs.simple_format($gs.auto_link(base.book.description))")
   .modal-card-foot
     b-button(type="is-primary" @click="submit_handle") 閉じる
 </template>

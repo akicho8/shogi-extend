@@ -56,7 +56,7 @@ export default {
     },
     // お題名が空のときかつデスクトップならフォーカスする
     input_focus() {
-      if (this.blank_p(this.TheSb.master_odai.subject)) {
+      if (this.$gs.blank_p(this.TheSb.master_odai.subject)) {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
     },

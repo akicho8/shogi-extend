@@ -31,11 +31,11 @@ export const mod_room_setup = {
     // URLに合言葉の指定があればそのまま部屋に入る
     room_create_if_exist_room_code_in_url() {
       // URLに合言葉がない場合は何もしない
-      if (this.blank_p(this.$route.query.room_code)) {
+      if (this.$gs.blank_p(this.$route.query.room_code)) {
         return
       }
       // 合言葉が復元できたとしても元々空であれば何もしない
-      if (this.blank_p(this.room_code)) {
+      if (this.$gs.blank_p(this.room_code)) {
         return
       }
       // 名前が未入力または不正な場合はモーダルを表示する
@@ -57,8 +57,8 @@ export const mod_room_setup = {
     },
 
     room_create_by(new_room_coe, new_user_name) {
-      this.__assert__(new_user_name, "new_user_name")
-      this.__assert__(new_room_coe, "new_room_coe")
+      this.$gs.__assert__(new_user_name, "new_user_name")
+      this.$gs.__assert__(new_room_coe, "new_room_coe")
 
       new_room_coe = _.trim(new_room_coe)
       new_user_name = _.trim(new_user_name)
@@ -79,9 +79,9 @@ export const mod_room_setup = {
 
     room_create() {
       this.tl_alert("room_create")
-      this.__assert__(this.user_name, "this.user_name")
-      this.__assert__(this.room_code, "this.room_code")
-      this.__assert__(this.ac_room == null, "this.ac_room == null")
+      this.$gs.__assert__(this.user_name, "this.user_name")
+      this.$gs.__assert__(this.room_code, "this.room_code")
+      this.$gs.__assert__(this.ac_room == null, "this.ac_room == null")
 
       this.ga_click(`共有将棋盤 [${this.room_code}] 入室`)
 
@@ -178,9 +178,9 @@ export const mod_room_setup = {
 
     ////////////////////////////////////////////////////////////////////////////////
     receive_xsfen(params) {
-      this.__assert__(this.present_p(params), "this.present_p(params)")
-      this.__assert__("sfen" in params, '"sfen" in params')
-      this.__assert__("turn" in params, '"turn" in params')
+      this.$gs.__assert__(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      this.$gs.__assert__("sfen" in params, '"sfen" in params')
+      this.$gs.__assert__("turn" in params, '"turn" in params')
 
       this.current_sfen = params.sfen
       this.current_turn = params.turn
@@ -211,7 +211,7 @@ export const mod_room_setup = {
 
     ////////////////////////////////////////////////////////////////////////////////
     if_room_is_empty() {
-      if (this.blank_p(this.ac_room)) {
+      if (this.$gs.blank_p(this.ac_room)) {
         this.$sound.play_click()
         this.toast_warn("まず部屋を立てよう")
         return true
@@ -224,6 +224,6 @@ export const mod_room_setup = {
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
     // 合言葉と名前が入力済みなので共有可能か？
-    connectable_p() { return this.present_p(this.room_code) && this.present_p(this.user_name) },
+    connectable_p() { return this.$gs.present_p(this.room_code) && this.$gs.present_p(this.user_name) },
   },
 }

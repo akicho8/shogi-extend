@@ -19,7 +19,7 @@
   //-   li: ExternalLink(beep href="https://www.beiz.jp/") BEIZ Graphics
   //-   //- li: ExternalLink(beep href="https://www.pakutaso.com/") ぱくたそ
 
-  template(v-if="present_p(photo_author_info)")
+  template(v-if="$gs.present_p(photo_author_info)")
     .section_title BACKGROUND TEXTURE
     ul
       template(v-for="(list, author) in photo_author_info")
@@ -28,7 +28,7 @@
             | Photo by {{author}}
           .xxx_items
             template(v-for="e in list")
-              .is-size-7.is_line_break_on(v-html="auto_link(e.photo_url, {truncate: 140})" @click="$sound.play_click()")
+              .is-size-7.is_line_break_on(v-html="$gs.auto_link(e.photo_url, {truncate: 140})" @click="$sound.play_click()")
 
   template(v-if="false")
     .section_title BOT TEXTURE
@@ -52,7 +52,7 @@
           .xxx_items
             .xxx_item(v-for="record in list")
               ExternalLink.is-block(beep :href="record.source_url") {{record.name}}
-              //- .is_line_break_on.is-size-7(v-html="auto_link(record.source_url, {truncate: 140})" @click="$sound.play_click()")
+              //- .is_line_break_on.is-size-7(v-html="$gs.auto_link(record.source_url, {truncate: 140})" @click="$sound.play_click()")
 
   .section_title PROGRAM
   ul

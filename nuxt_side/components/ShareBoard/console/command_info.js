@@ -56,7 +56,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         key: "send",
         example: "/send func_add a b c",
         command_fn: (context, args) => {
-          return context[args[0]](...context.ary_drop(args, 1))
+          return context[args[0]](...context.$gs.ary_drop(args, 1))
         },
       },
       {
@@ -139,13 +139,13 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/対局中",
         preformat: true,
         command_fn: (context, args) => {
-          if (context.blank_p(context.room_code)) {
+          if (context.$gs.blank_p(context.room_code)) {
             context.room_code = "test_room"
           }
-          if (context.blank_p(context.user_name)) {
+          if (context.$gs.blank_p(context.user_name)) {
             context.user_name = "alice"
           }
-          if (context.blank_p(context.ac_room)) {
+          if (context.$gs.blank_p(context.ac_room)) {
             context.room_create()
           }
           context.os_setup_by_names(["alice"])
@@ -154,7 +154,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
           //   context.order_unit.state_switch_to("to_o1_state")
           //   context.order_switch_share({order_enable_p: true})
           // }
-          // if (context.blank_p(context.clock_box)) {
+          // if (context.$gs.blank_p(context.clock_box)) {
           context.cc_params = [{ initial_main_min: 60, initial_read_sec: 15, initial_extra_sec: 10, every_plus: 5 }]
           context.cc_create()
           context.cc_params_apply()

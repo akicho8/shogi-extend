@@ -285,9 +285,9 @@ export default {
         }
         if (e.record) {
           this.record = e.record
-          this.__assert__(this.record.display_turn != null, "this.record.display_turn != null")
-          this.__assert__(this.record.turn_max != null, "this.record.turn_max != null")
-          this.__assert__(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
+          this.$gs.__assert__(this.record.display_turn != null, "this.record.display_turn != null")
+          this.$gs.__assert__(this.record.turn_max != null, "this.record.turn_max != null")
+          this.$gs.__assert__(this.record.piyo_shogi_base_params != null, "this.record.piyo_shogi_base_params != null")
           callback()
         }
       // }).catch(e => {
@@ -307,7 +307,7 @@ export default {
 
     app_runner() {
       const body = this.$route.query.body
-      if (this.present_p(body)) {
+      if (this.$gs.present_p(body)) {
         this.input_text = body
         this.change_counter += 1
 

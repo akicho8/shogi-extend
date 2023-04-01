@@ -50,7 +50,7 @@
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
-    pre.mt-4(v-if="base.debug_mode_p") {{pretty_inspect(action_log)}}
+    pre.mt-4(v-if="base.debug_mode_p") {{$gs.pretty_inspect(action_log)}}
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") キャンセル
@@ -77,9 +77,9 @@ export default {
     }
   },
   mounted() {
-    this.__assert__(this.viewpoint === "white" || this.viewpoint === "black")
-    this.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
-    this.__assert__('turn' in this.action_log, "'turn' in this.action_log")
+    this.$gs.__assert__(this.viewpoint === "white" || this.viewpoint === "black")
+    this.$gs.__assert__('sfen' in this.action_log, "'sfen' in this.action_log")
+    this.$gs.__assert__('turn' in this.action_log, "'turn' in this.action_log")
   },
   methods: {
     close_handle() {

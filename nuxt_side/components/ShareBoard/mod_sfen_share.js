@@ -15,10 +15,10 @@ export const mod_sfen_share = {
       const lmi = e.last_move_info
 
       this.tl_add("SP", lmi.to_kif_without_from, lmi)
-      this.__assert__(this.current_sfen, "this.current_sfen")
+      this.$gs.__assert__(this.current_sfen, "this.current_sfen")
       if (this.development_p) {
-        this.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
-        this.__assert__(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
+        this.$gs.__assert__(e.sfen === this.current_sfen, "e.sfen === this.current_sfen")
+        this.$gs.__assert__(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
@@ -151,7 +151,7 @@ export const mod_sfen_share = {
     },
     next_turn_call(params) {
       this.next_turn_message = null
-      if (this.blank_p(params.lmi.illegal_names)) {                  // 反則がなかった場合
+      if (this.$gs.blank_p(params.lmi.illegal_names)) {                  // 反則がなかった場合
         if (this.yomiagable_p) {
           this.talk2(this.user_call_name(params.from_user_name), { // 「aliceさん」
             onend: () => this.talk2(params.lmi.yomiage, {          // 「7 6 ふー！」

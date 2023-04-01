@@ -36,7 +36,7 @@ export const params_controller = {
   },
   beforeMount() {
     this.clog(`[params_controller] begin`)
-    this.__assert__(this.ParamInfo, "this.ParamInfo")
+    this.$gs.__assert__(this.ParamInfo, "this.ParamInfo")
     this.ls_setup()                                  // 1. 変数(すべてnull)に必要なぶんだけ localStorage から復帰する
     this.pc_data_set_by_query_or_default()           // 2. query があれば「上書き」する。また null の変数には初期値を設定する
     this.pc_restore_default_value_if_invalid_value() // 3. 不正な値を初期値に戻す
@@ -55,15 +55,15 @@ export const params_controller = {
     pc_data_set_by_query_or_default() {
       this.ParamInfo.values.forEach(e => {
         let v = this.$route.query[e.key]
-        if (this.present_p(v)) {
+        if (this.$gs.present_p(v)) {
           if (e.type === "integer") {
             v = Math.trunc(Number(v))
           } else if (e.type === "float") {
             v = Number(v)
           } else if (e.type === "array") {
-            v = this.str_to_words(v)
+            v = this.$gs.str_to_words(v)
           } else if (e.type === "boolean") {
-            v = this.str_to_boolean(v)
+            v = this.$gs.str_to_boolean(v)
           } else if (e.type === "json") {
             v = JSON.parse(v)
           } else if (e.type === "string") {
@@ -127,10 +127,10 @@ export const params_controller = {
         const value = this.$data[e.key]
         if (e.relation) {
           if (this[e.relation].lookup(value)) {
-            this.clog(`[設定値][OK] this.${e.key} は ${this.short_inspect(value)} のままで良い`)
+            this.clog(`[設定値][OK] this.${e.key} は ${this.$gs.short_inspect(value)} のままで良い`)
           } else {
             this.$data[e.key] = e.default_for(this)
-            this.clog(`[設定値][NG] this.${e.key} の ${this.short_inspect(value)} を ${this.short_inspect(e.default_for(this))} に変更`)
+            this.clog(`[設定値][NG] this.${e.key} の ${this.$gs.short_inspect(value)} を ${this.$gs.short_inspect(e.default_for(this))} に変更`)
           }
         }
       })
@@ -149,7 +149,7 @@ export const params_controller = {
       const hv = {...params}
       this.ParamInfo.values.forEach(e => {
         const v = hv[e.key]
-        if (this.blank_p(v) || v === e.default_for(this)) {
+        if (this.$gs.blank_p(v) || v === e.default_for(this)) {
           delete hv[e.key]
         }
       })

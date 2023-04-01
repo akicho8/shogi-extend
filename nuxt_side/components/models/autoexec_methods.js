@@ -6,7 +6,7 @@ export const autoexec_methods = {
         if (s) {
           s.split(/[,\s]+/).forEach(e => {
             const func = this[e]
-            this.__assert__(this.present_p(func), `存在しないメソッドです : ${e}`)
+            this.$gs.__assert__(this.$gs.present_p(func), `存在しないメソッドです : ${e}`)
             func()
           })
         }

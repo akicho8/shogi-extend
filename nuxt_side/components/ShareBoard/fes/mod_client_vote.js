@@ -61,7 +61,7 @@ export const mod_client_vote = {
     // お題に投票する
     client_vote_modal_handle() {
       this.$sound.play("notification")
-      this.delay_block(1.0, () => this.talk2(this.received_odai.subject))
+      this.$gs.delay_block(1.0, () => this.talk2(this.received_odai.subject))
       this.modal_card_open({
         component: ClientVoteModal,
         canCancel: [],
@@ -83,8 +83,8 @@ export const mod_client_vote = {
 
     // 順番設定画面でホスト側(別にホストの人でなくてもいいが)が投票結果を順番設定に適用する
     voted_result_to_order_apply() {
-      Gs.__assert__(this.present_p(this.new_v), "this.present_p(this.new_v)")
-      Gs.__assert__(this.present_p(this.new_v.order_unit), "this.present_p(this.new_v.order_unit)")
+      Gs.__assert__(this.$gs.present_p(this.new_v), "this.$gs.present_p(this.new_v)")
+      Gs.__assert__(this.$gs.present_p(this.new_v.order_unit), "this.$gs.present_p(this.new_v.order_unit)")
       this.new_v.order_unit.auto_users_set_with_voted_hash(this.room_user_names, this.voted_result.to_h)
     },
 

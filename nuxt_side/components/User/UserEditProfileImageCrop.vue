@@ -152,7 +152,7 @@ export default {
       this.$sound.play_click()
 
       // http://fabricjs.com/docs/fabric.Canvas.html#toDataURL
-      this.__assert__(this.fcanvas, "this.fcanvas")
+      this.$gs.__assert__(this.fcanvas, "this.fcanvas")
       this.base.croped_image = this.fcanvas.toDataURL({
         top:    CANVAS_PADDING,
         left:   CANVAS_PADDING,
@@ -184,10 +184,10 @@ export default {
     // そもそも自分で解放する必要はないのかもしれない
     fabric_destroy() {
       // http://fabricjs.com/docs/fabric.Canvas.html#getObjects
-      this.__assert__(this.fcanvas.getObjects().length >= 1, "[fabric] オブジェクトが生成されていないのに解放しようとしている")
+      this.$gs.__assert__(this.fcanvas.getObjects().length >= 1, "[fabric] オブジェクトが生成されていないのに解放しようとしている")
       // http://fabricjs.com/docs/fabric.StaticCanvas.html#dispose
       this.fcanvas.dispose()
-      this.__assert__(this.fcanvas.getObjects().length === 0, "[fabric] オブジェクトが解放できていない")
+      this.$gs.__assert__(this.fcanvas.getObjects().length === 0, "[fabric] オブジェクトが解放できていない")
     },
   },
   computed: {

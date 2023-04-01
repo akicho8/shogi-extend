@@ -101,7 +101,7 @@ export default {
       this.play_core_handle()
     },
     play_core_handle() {
-      this.__assert__(!this.clock_box, "!this.clock_box")
+      this.$gs.__assert__(!this.clock_box, "!this.clock_box")
       this.$sound.play_click()
       this.TheSb.cc_params_apply()
       this.TheSb.cc_play_handle()
@@ -115,7 +115,7 @@ export default {
       this.TheSb.cc_pause_handle()
       this.TheSb.clock_box_share("ck_pause")
       if (this.TheSb.ac_room && this.TheSb.order_enable_p) {
-        this.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。誰でも駒を動かせるようになります", {duration: 1000 * 10}))
+        this.$gs.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください。誰でも駒を動かせるようになります", {duration: 1000 * 10}))
       }
     },
     stop_handle() {

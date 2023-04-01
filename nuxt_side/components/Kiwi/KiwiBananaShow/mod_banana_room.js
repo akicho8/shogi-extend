@@ -14,7 +14,7 @@ export const mod_banana_room = {
   },
   methods: {
     banana_room_create() {
-      this.__assert__(this.ac_banana_room == null, "this.ac_banana_room == null")
+      this.$gs.__assert__(this.ac_banana_room == null, "this.ac_banana_room == null")
       // alert(this.banana.id)
       this.ac_banana_room = this.ac_subscription_create({channel: "Kiwi::BananaRoomChannel", banana_id: this.banana.id}, {
         connected: e => {

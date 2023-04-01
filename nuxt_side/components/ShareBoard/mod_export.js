@@ -17,7 +17,7 @@ export const mod_export = {
 
     // 指定の棋譜をコピー
     kifu_copy_handle(e) {
-      this.__assert__("format_key" in e, '"format_key" in e')
+      this.$gs.__assert__("format_key" in e, '"format_key" in e')
       this.sidebar_p = false
       this.$sound.play_click()
       this.general_kifu_copy(this.current_sfen, {
@@ -33,7 +33,7 @@ export const mod_export = {
 
     // 指定の棋譜への直リンURL
     kifu_show_url(e) {
-      this.__assert__("format_key" in e, '"format_key" in e')
+      this.$gs.__assert__("format_key" in e, '"format_key" in e')
       return this.url_merge({
         format: e.format_key,
         body_encode: "auto",    // 文字コード自動判別
@@ -50,7 +50,7 @@ export const mod_export = {
 
     // 指定の棋譜のダウンロードURL
     kifu_download_url(e) {
-      this.__assert__("format_key" in e, '"format_key" in e')
+      this.$gs.__assert__("format_key" in e, '"format_key" in e')
       return this.url_merge({
         ...e.to_h_format_and_encode,
         disposition: "attachment",

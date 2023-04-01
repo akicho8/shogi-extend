@@ -25,7 +25,7 @@ export default {
       this.$nuxt.error({statusCode: 400, message: this.bs_error.message}) // "400 Bad Request"
       return
     }
-    if (this.blank_p(this.$route.query)) {
+    if (this.$gs.blank_p(this.$route.query)) {
       this.ga_click("共有将棋盤")
     } else {
       this.ga_click("共有将棋盤●")

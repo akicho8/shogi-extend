@@ -11,19 +11,19 @@
       .panel-heading
         | 保持する変数値
       .panel-block
-        pre {{pretty_inspect(TheApp.pc_attributes)}}
+        pre {{$gs.pretty_inspect(TheApp.pc_attributes)}}
   .column.is-4
     .panel
       .panel-heading
         | 保持する変数の初期値
       .panel-block
-        pre {{pretty_inspect(TheApp.ls_default)}}
+        pre {{$gs.pretty_inspect(TheApp.ls_default)}}
   .column.is-4
     .panel
       .panel-heading
         | $route.query
       .panel-block
-        pre {{pretty_inspect(TheApp.$route.query)}}
+        pre {{$gs.pretty_inspect(TheApp.$route.query)}}
   .column.is-6
     .panel
       .panel-heading

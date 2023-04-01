@@ -15,13 +15,13 @@ client-only
               li ぴよ将棋から来ている方におすすめです
               li <b>あとから解除できます</b>
 
-        template(v-if="present_p(old_key) && present_p(new_key) && old_key != new_key")
+        template(v-if="$gs.present_p(old_key) && $gs.present_p(new_key) && old_key != new_key")
           .has-text-centered
             | {{old_key}} を忘れて {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3
             b-button.set_handle(type="is-primary" @click="set_handle") 覚える
 
-        template(v-if="blank_p(old_key) && present_p(new_key)")
+        template(v-if="$gs.blank_p(old_key) && $gs.present_p(new_key)")
           .has-text-centered
             | {{new_key}} を覚えますか？
           .buttons.is-centered.mt-3

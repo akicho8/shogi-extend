@@ -44,7 +44,7 @@ export const mod_chatgpt = {
 
     gpt_case_illegal(params) {
       if (this.received_from_self(params)) {
-        if (this.present_p(params.lmi.illegal_names)) {
+        if (this.$gs.present_p(params.lmi.illegal_names)) {
           if (this.cc_play_p) {
             this.gpt_speak_for("反則した人を励ます", params)
           }

@@ -52,7 +52,7 @@ export default {
       }
     },
     send_handle() {
-      if (this.blank_p(this.TheSb.message_body)) {
+      if (this.$gs.blank_p(this.TheSb.message_body)) {
         if (this.TheSb.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
           this.close_handle()
           return

@@ -57,7 +57,7 @@ export const mod_tweet = {
     },
 
     rate_per() {
-      return this.floatx100_percentage(this.rate)
+      return this.$gs.floatx100_percentage(this.rate)
     },
 
     rate() {

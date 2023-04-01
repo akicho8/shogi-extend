@@ -1,7 +1,7 @@
 <template lang="pug">
 b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
   template(#label)
-    span(:class="{'is-clickable': present_p(hint_str)}" @click="label_click_handle")
+    span(:class="{'is-clickable': $gs.present_p(hint_str)}" @click="label_click_handle")
       | {{label}}
       template(v-if="permanent_mark_append")
         span.has-text-primary
@@ -66,7 +66,7 @@ export default {
       this.$emit("user_input", this.real_model)
     },
     label_click_handle(e) {
-      if (this.present_p(this.hint_str)) {
+      if (this.$gs.present_p(this.hint_str)) {
         this.$sound.stop_all()
         this.$sound.play_click()
         this.toast_ok(this.hint_str, {duration: 1000 * this.duration_sec})

@@ -5,19 +5,19 @@
       .panel-heading
         | $data
       .panel-block
-        pre {{pretty_inspect(base.$data)}}
+        pre {{$gs.pretty_inspect(base.$data)}}
   .column.is-4
     .panel
       .panel-heading
         | $config
       .panel-block
-        pre {{pretty_inspect($config)}}
+        pre {{$gs.pretty_inspect($config)}}
   .column.is-4
     .panel
       .panel-heading
         | pagination
       .panel-block
-        pre {{pretty_inspect(base.pagination_info)}}
+        pre {{$gs.pretty_inspect(base.pagination_info)}}
 </template>
 
 <script>

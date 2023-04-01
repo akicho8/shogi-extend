@@ -35,7 +35,7 @@ export const mod_track_log = {
       this.tl_add("(test)", `message${this.track_logs.length}`)
     },
     tl_alert(message) {
-      if (this.debug_mode_p && this.present_p(message)) {
+      if (this.debug_mode_p && this.$gs.present_p(message)) {
         if (this.$route.query.__system_test_now__) {
         } else {
           this.debug_alert_core(message)

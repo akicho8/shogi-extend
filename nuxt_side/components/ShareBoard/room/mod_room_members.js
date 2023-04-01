@@ -178,14 +178,14 @@ export const mod_room_members = {
     // 固定されるメンバーたち
     fixed_member_names() {
       if (this.fixed_member_names_p) {
-        return this.str_to_words(this.$route.query.fixed_member_names)
+        return this.$gs.str_to_words(this.$route.query.fixed_member_names)
       }
     },
 
     // 一番上にいる人は自分か？
     // つまり最古参メンバーか？
     current_member_is_leader_p() {
-      if (this.present_p(this.member_infos)) {
+      if (this.$gs.present_p(this.member_infos)) {
         return this.member_infos[0].from_connection_id === this.connection_id
       }
     },

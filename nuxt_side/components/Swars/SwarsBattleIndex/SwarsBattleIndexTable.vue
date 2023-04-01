@@ -1,6 +1,6 @@
 <template lang="pug">
 b-table.SwarsBattleIndexTable(
-  v-if="$route.query.query || present_p(base.xi.records)"
+  v-if="$route.query.query || $gs.present_p(base.xi.records)"
 
   :total        = "base.xi.total"
   :current-page = "base.xi.page"

@@ -51,7 +51,7 @@ export const mod_export = {
       if (typeof window !== 'undefined') {
         this.sidebar_close()
         window.location.href = this.kifu_download_url(e)
-        this.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
+        this.$gs.delay_block(1, () => this.toast_ok(`たぶんダウンロードしました`))
       }
     },
 

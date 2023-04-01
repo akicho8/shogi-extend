@@ -11,8 +11,8 @@ export const mod_urls = {
     room_url_copy_handle() {
       if (this.if_room_is_empty()) { return }
 
-      this.__assert__(this.present_p(this.room_code), "this.present_p(this.room_code)")
-      if (this.blank_p(this.room_code)) {
+      this.$gs.__assert__(this.$gs.present_p(this.room_code), "this.$gs.present_p(this.room_code)")
+      if (this.$gs.blank_p(this.room_code)) {
         // ここは通らないはず
         this.$sound.play_click()
         this.toast_warn("まだ合言葉を設定してません")
@@ -62,9 +62,9 @@ export const mod_urls = {
 
     url_for(params) {
       params = {...params}
-      const format = this.hash_delete(params, "format")
+      const format = this.$gs.hash_delete(params, "format")
       let extname = ""
-      if (this.present_p(format)) {
+      if (this.$gs.present_p(format)) {
         extname = `.${format}`
       }
       return QueryString.stringifyUrl({

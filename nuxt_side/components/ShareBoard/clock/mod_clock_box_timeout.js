@@ -36,7 +36,7 @@ export const mod_clock_box_timeout = {
       this.tl_alert("当事者は自分で起動してBC")
       this.timeout_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.cc_timeout_bc_delay}秒後にBC`)
-      this.delay_block(this.cc_timeout_bc_delay, () => {
+      this.$gs.delay_block(this.cc_timeout_bc_delay, () => {
         this.clock_box_share("ck_timeout") // その上で、時間切れをBCする
       })
     },
@@ -52,7 +52,7 @@ export const mod_clock_box_timeout = {
         this.al_add({from_user_name: this.current_turn_user_name, label: `←時間切れ？最大${this.cc_auto_timeout_delay}秒待ち`})
         this.tl_alert("審議中")
         this.cc_auto_timeout_delay_stop()
-        this.cc_auto_timeout_delay_id = this.delay_block(this.cc_auto_timeout_delay, () => this.timeout_modal_handle("audo_judgement"))
+        this.cc_auto_timeout_delay_id = this.$gs.delay_block(this.cc_auto_timeout_delay, () => this.timeout_modal_handle("audo_judgement"))
         this.tl_add("TIME_LIMIT", `他者側 自己判断で${this.cc_auto_timeout_delay}秒後にmodal表示予約 (ID:${this.cc_auto_timeout_delay_id})`)
       }
     },
@@ -60,7 +60,7 @@ export const mod_clock_box_timeout = {
     // 表示予約キャンセル
     cc_auto_timeout_delay_stop() {
       if (this.cc_auto_timeout_delay_id) {
-        this.delay_stop(this.cc_auto_timeout_delay_id)
+        this.$gs.delay_stop(this.cc_auto_timeout_delay_id)
         this.cc_auto_timeout_delay_id = null
       }
     },
@@ -80,7 +80,7 @@ export const mod_clock_box_timeout = {
 
     // 時間切れモーダル発動
     timeout_modal_handle(timeout_key) {
-      this.__assert__(this.present_p(this.clock_box), "this.present_p(this.clock_box)")
+      this.$gs.__assert__(this.$gs.present_p(this.clock_box), "this.$gs.present_p(this.clock_box)")
 
       this.tl_alert("時間切れモーダル起動完了")
       this.$sound.play("lose")         // ちーん

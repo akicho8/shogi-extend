@@ -117,17 +117,17 @@ export default {
 
     let params = {...this.$route.query}
 
-    if (this.blank_p(params.query)) {
+    if (this.$gs.blank_p(params.query)) {
       params.query = this.swars_search_default_key_get()
     }
 
-    // if (this.blank_p(params.per)) {
+    // if (this.$gs.blank_p(params.per)) {
     //   if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
     //     params.per = this.per_info.per
     //   }
     // }
 
-    if (this.blank_p(params.per)) {
+    if (this.$gs.blank_p(params.per)) {
       // if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
       params.per = this.per_info.per
       // }

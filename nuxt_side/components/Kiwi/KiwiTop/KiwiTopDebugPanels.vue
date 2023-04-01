@@ -5,7 +5,7 @@
       .panel-heading
         | $data
       .panel-block
-        pre {{pretty_inspect(base.$data)}}
+        pre {{$gs.pretty_inspect(base.$data)}}
 </template>
 
 <script>
