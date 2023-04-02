@@ -218,9 +218,10 @@ Rails.application.routes.draw do
     # 共有将棋盤用API
     resource :share_board, only: [:show, :create] do
       post :kifu_mail
-      if Rails.env.development?
-        get :kifu_mail
-      end
+      get :kifu_mail if Rails.env.development?
+      post :battle_create
+      get :battle_create if Rails.env.development?
+      get :dashboard
     end
   end
 

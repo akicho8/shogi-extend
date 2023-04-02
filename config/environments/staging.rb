@@ -14,6 +14,7 @@ Rails.application.configure do
         :my_request_origin              => "https://shogi-flow.xyz",
         :redis_db_for_xy_master         => 9,    # 符号の鬼のランキング用
         :redis_db_for_exclusive_access        => 10,   # ExclusiveAccess
+        :redis_db_for_share_board_room  => 11,   # 共有将棋盤ROOM
         :redis_db_for_sidekiq           => 12,   # sidekiq
         :redis_db_for_share_board_chat  => 14,   # 共有将棋盤チャット
         :redis_db_for_share_board_lobby => 15,   # 共有将棋盤ロビー

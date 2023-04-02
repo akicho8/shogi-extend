@@ -1,4 +1,5 @@
 import GiveUpConfirmModal from "./GiveUpConfirmModal.vue"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_give_up = {
   methods: {
@@ -17,6 +18,7 @@ export const mod_give_up = {
         return
       }
       this.give_up_direct_run()
+      this.battle_save_run()
     },
 
     // そのまま実行
@@ -29,21 +31,7 @@ export const mod_give_up = {
 
     // 投了トリガーを配る
     give_up_share() {
-      const params = {}
-      if (this.AppConfig.TORYO_THEN_CURRENT_LOCATION_IS_LOSE) {
-        // 方法1: 投了ボタンが押されたときの手番のチームを負けとする
-        // 誰が投了したかに関係なく、投了時点の手番のチームが負けで、その相手が勝ちとする
-        // これは二歩したとき手番が相手に移動しているため、そこで投了すると逆になってしまうので却下
-        params.win_location_key = this.current_location.flip.key
-      } else {
-        // 方法2: 投了ボタンを押した人を負けとする
-        // デメリットとしては代わりに押してあげることができない
-        if (this.my_location) {                               // 自分が対局者なら
-          params.win_location_key = this.my_location.flip.key // 自分が投了したので相手色の勝ち
-        } else {
-          // 普通の遷移ではここに来ないが来た場合は観戦者が押したことになる
-        }
-      }
+      const params = { win_location_key: this.give_up_win_location_key }
       this.ac_room_perform("give_up_share", params) // --> app/channels/share_board/room_channel.rb
     },
     give_up_share_broadcasted(params) {
@@ -105,6 +93,22 @@ export const mod_give_up = {
     give_up_button_show_p() {
       // return this.self_is_member_p && this.cc_play_p
       return this.self_is_member_p
+    },
+
+    // 投了ボタンを押した瞬間の勝った側を返す
+    give_up_win_location_key() {
+      const params = {}
+      if (this.AppConfig.TORYO_THEN_CURRENT_LOCATION_IS_LOSE) {
+        // 方法1: 投了ボタンが押されたときの手番のチームを負けとする
+        // 誰が投了したかに関係なく、投了時点の手番のチームが負けで、その相手が勝ちとする
+        // これは二歩したとき手番が相手に移動しているため、そこで投了すると逆になってしまうので却下
+        return this.current_location.flip.key
+      } else {
+        Gs.__assert__(this.my_location, "観戦者が投了した (普通の遷移ではここに来ない)")
+        // 方法2: 投了ボタンを押した人を負けとする
+        // デメリットとしては代わりに押してあげることができない
+        return this.my_location.flip.key // 自分が投了したので相手色の勝ち
+      }
     },
   },
 }

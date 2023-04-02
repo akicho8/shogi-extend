@@ -1,5 +1,4 @@
 import { ViewpointInfo } from "./models/viewpoint_info.js"
-
 import _ from "lodash"
 
 export const mod_chore = {
@@ -146,6 +145,6 @@ export const mod_chore = {
     // ・対局メンバーではない
     home_display_p() {
       return !this.self_is_member_p
-    }
+    },
   },
 }

@@ -133,6 +133,7 @@ import { mod_persistent_cc_params } from "./clock/mod_persistent_cc_params.js"
 import { mod_give_up   } from "./give_up/mod_give_up.js"
 import { mod_honpu     } from "./give_up/mod_honpu.js"
 import { mod_kifu_mail } from "./give_up/mod_kifu_mail.js"
+import { mod_battle_save } from "./give_up/mod_battle_save.js"
 
 import { mod_odai_maker  } from "./fes/mod_odai_maker.js"
 import { mod_client_vote } from "./fes/mod_client_vote.js"
@@ -143,6 +144,8 @@ import { mod_medal_plus } from "./medal/mod_medal_plus.js"
 import { mod_appearance_theme } from "./appearance_theme/mod_appearance_theme.js"
 
 import { mod_tweet } from "./tweet/mod_tweet.js"
+
+import { mod_dashboard } from "./dashboard/mod_dashboard.js"
 
 export default {
   name: "SbApp",
@@ -164,6 +167,7 @@ export default {
     mod_battle_session,
     mod_chore,
     mod_kifu_mail,
+    mod_battle_save,
     mod_guardian,
     mod_handle_name,
     mod_member_info_modal,
@@ -180,6 +184,7 @@ export default {
     mod_net_level,
     mod_ping,
     mod_tweet,
+    mod_dashboard,
     mod_image_dl,
     mod_update,
     mod_sound_bug,

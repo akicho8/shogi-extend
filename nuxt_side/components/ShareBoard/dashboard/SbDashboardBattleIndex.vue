@@ -1,0 +1,77 @@
+<template lang="pug">
+.SbDashboardBattleIndex.box
+  .title 対局履歴
+  b-table(
+    :data="TheDb.info.battles"
+    :mobile-cards="false"
+    )
+    // ☗☖
+    template(v-for="location in Location.values")
+      b-table-column(v-slot="{row}" :label="location.name" :key="location.key")
+        .memberships(:class="judge_key_of(row, location)")
+          template(v-for="m in memberships_of(row, location)")
+            span {{m.user.name}}
+    // 日時
+    b-table-column(v-slot="{row}" field="created_at" label="日時" sortable centered :width="1")
+      | {{$time.format_row(row.created_at)}}
+
+    // 棋譜
+    b-table-column(v-slot="{row}" centered)
+      a(:href="sb_path(row)" target="_blank") 棋譜
+</template>
+
+<script>
+const QueryString = require("query-string")
+import { SafeSfen } from "@/components/models/safe_sfen.js"
+import { Location } from "shogi-player/components/models/location.js"
+import _ from "lodash"
+
+export default {
+  name: "SbDashboardBody",
+  inject: ["TheDb"],
+  methods: {
+    sb_path(row) {
+      return QueryString.stringifyUrl({
+        url: `/share-board`,
+        query: {
+          xbody: SafeSfen.encode(row.sfen),
+          ...this.black_white(row),
+        },
+      })
+    },
+    // {black: 'a,b', white: 'c,d'}
+    black_white(row) {
+      return Location.values.reduce((a, e) => {
+        return {...a, [e.key]: row[e.key].map(e => e.user.name).join(",")}
+      }, {})
+    },
+    memberships_of(row, location) {
+      // return row.memberships.filter(e => e.location.key === location.key)
+      return row[location.key]
+    },
+    judge_key_of(row, location) {
+      if (row.win_location.key === location.key) {
+        return 'is_win'
+      } else {
+        return 'is_lose'
+      }
+    },
+  },
+  computed: {
+    Location() { return Location },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../support.sass"
+.SbDashboardBattleIndex
+  .memberships
+    white-space: normal
+    display: flex
+    flex-wrap: wrap
+    gap: 0.5rem
+    line-height: 1.0
+    &.is_win
+      font-weight: bold
+</style>

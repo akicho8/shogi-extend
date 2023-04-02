@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_123144) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_26_000000) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -207,6 +207,81 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_123144) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
+  end
+
+  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "code", null: false, comment: "部屋識別子"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["code"], name: "index_rooms_on_code", unique: true
+  end
+
+  create_table "share_board_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.string "key", null: false, comment: "対局識別子"
+    t.string "title", null: false, comment: "タイトル"
+    t.text "sfen", null: false
+    t.integer "turn", null: false, comment: "手数"
+    t.bigint "win_location_id", null: false, comment: "勝利側"
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["key"], name: "index_share_board_battles_on_key", unique: true
+    t.index ["position"], name: "index_share_board_battles_on_position"
+    t.index ["room_id"], name: "index_share_board_battles_on_room_id"
+    t.index ["turn"], name: "index_share_board_battles_on_turn"
+    t.index ["win_location_id"], name: "index_share_board_battles_on_win_location_id"
+  end
+
+  create_table "share_board_memberships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "battle_id", null: false, comment: "対局"
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.bigint "judge_id", null: false, comment: "勝・敗・引き分け"
+    t.bigint "location_id", null: false, comment: "▲△"
+    t.integer "position", comment: "順序"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["battle_id"], name: "index_share_board_memberships_on_battle_id"
+    t.index ["judge_id"], name: "index_share_board_memberships_on_judge_id"
+    t.index ["location_id"], name: "index_share_board_memberships_on_location_id"
+    t.index ["position"], name: "index_share_board_memberships_on_position"
+    t.index ["user_id"], name: "index_share_board_memberships_on_user_id"
+  end
+
+  create_table "share_board_rooms", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false, comment: "部屋識別子"
+    t.integer "battles_count", default: 0
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["key"], name: "index_share_board_rooms_on_key", unique: true
+  end
+
+  create_table "share_board_roomships", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.bigint "user_id", null: false, comment: "対局者"
+    t.integer "win_count", null: false, comment: "勝数"
+    t.integer "lose_count", null: false, comment: "負数"
+    t.integer "battles_count", null: false, comment: "対局数"
+    t.float "win_rate", null: false, comment: "勝率"
+    t.integer "score", null: false, comment: "スコア"
+    t.integer "rank", null: false, comment: "順位"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["lose_count"], name: "index_share_board_roomships_on_lose_count"
+    t.index ["rank"], name: "index_share_board_roomships_on_rank"
+    t.index ["room_id"], name: "index_share_board_roomships_on_room_id"
+    t.index ["score"], name: "index_share_board_roomships_on_score"
+    t.index ["user_id"], name: "index_share_board_roomships_on_user_id"
+    t.index ["win_count"], name: "index_share_board_roomships_on_win_count"
+    t.index ["win_rate"], name: "index_share_board_roomships_on_win_rate"
+  end
+
+  create_table "share_board_users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "name", null: false, comment: "対局者名"
+    t.integer "memberships_count", default: 0
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["name"], name: "index_share_board_users_on_name", unique: true
   end
 
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

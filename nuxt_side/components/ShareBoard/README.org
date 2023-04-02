@@ -175,3 +175,7 @@
 ** 自分は a で部屋に abcdef いて順番が abcd で順番設定を開く
 
    http://localhost:4000/share-board?room_code=dev_room&user_name=a&fixed_member_names=a,b,c,d,e&fixed_order_state=to_o1_state&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=os_modal_handle
+
+** 自分は a で部屋に abcd がいて順番が abcd で a が棋譜をサーバーに記録する
+
+   http://localhost:4000/share-board?room_code=dev_room&user_name=a&fixed_member_names=a,b,c,d&fixed_order_names=a,b,c,d&handle_name_validate=false&autoexec=battle_save_run

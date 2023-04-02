@@ -1,5 +1,18 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  SbDebugPanelsDashboard
+  .column.is-2
+    .panel
+      .panel-heading
+        | 投了
+      a.panel-block(@click="TheSb.give_up_confirm_handle") 投了確認ボタン
+      a.panel-block(@click="TheSb.give_up_run_from_modal") 投了ボタン(バリデーションあり)
+      a.panel-block(@click="TheSb.give_up_direct_run") 投了実処理
+  .column.is-2
+    .panel
+      .panel-heading
+        | 保存
+      a.panel-block(@click="TheSb.battle_save_run") 対局保存
   SbDebugPanelsPerpetual
   SbDebugPanelsBasic
   .column.is-12
@@ -86,13 +99,6 @@
       a.panel-block(@click="TheSb.cc_params_load") ロード
       a.panel-block(@click="TheSb.cc_params_save") 保存
       a.panel-block(@click="TheSb.cc_params_reset") リセット
-  .column.is-2
-    .panel
-      .panel-heading
-        | 投了
-      a.panel-block(@click="TheSb.give_up_confirm_handle") 投了確認ボタン
-      a.panel-block(@click="TheSb.give_up_run_from_modal") 投了ボタン(バリデーションあり)
-      a.panel-block(@click="TheSb.give_up_direct_run") 投了実処理
   .column.is-2
     .panel
       .panel-heading
