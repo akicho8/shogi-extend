@@ -14,28 +14,7 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import "modulable_crud.js"
-
-//////////////////////////////////////////////////////////////////////////////// Vue
-
-// async を使うと regeneratorRuntime is not defined になる対策
-// よくわからんが .babelrc に書くのではなダメだった
-// import "babel-polyfill"
-
-// import Vue from "vue/dist/vue.esm" // esm版はvueのtemplateをパースできる
-// window.Vue = Vue
-
 //////////////////////////////////////////////////////////////////////////////// Buefy
 
 import "stylesheets/application.sass"
 import "bulma_burger.js"
-
-// import Buefy from "buefy"
-
-// import "buefy/src/scss/buefy-build.scss" // これか
-// import 'buefy/dist/buefy.css'            // これを入れると buefy の初期値に戻ってしまうので注意
-// Vue.use(Buefy, {
-//   // https://buefy.org/documentation/constructor-options/
-//   defaultTooltipType: "is-dark", // デフォルトは背景が明るいため黒くしておく
-//   defaultTooltipAnimated: true,   // ←効いてなくね？
-// })
