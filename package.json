@@ -2,7 +2,6 @@
   "name": "shogi-extend",
   "private": true,
   "dependencies": {
-    "@rails/actioncable": "^7.0.4-3",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.4",
