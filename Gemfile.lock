@@ -556,7 +556,7 @@ DEPENDENCIES
   holiday_jp
   html_format
   image_processing (~> 1.2)
-  jbuilder (~> 2.7)
+  jbuilder
   kaminari
   listen (~> 3.3)
   matrix
@@ -575,7 +575,7 @@ DEPENDENCIES
   rack-cors
   rack-mini-profiler (~> 2.0)
   rack-user_agent
-  rails (~> 7)
+  rails (~> 7.0.4, >= 7.0.4.3)
   rails-controller-testing
   rails_autolink
   redis (~> 4.0)
