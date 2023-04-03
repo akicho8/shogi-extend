@@ -76,9 +76,6 @@
               ExternalLink(href="https://github.com/akicho8/SKK-JISYO.shogi" beep) 将棋用語辞書
             li
               ExternalLink(href="https://github.com/akicho8/shogi-mode" beep) shogi-mode.el
-      .columns.powered_by
-        .column
-          | Powered by <a href="https://www.ruby-lang.org/">Ruby 3.2.1</a>
 </template>
 
 <script>
@@ -150,13 +147,4 @@ export default {
 
   .box
     padding-bottom: 2rem
-
-  .powered_by
-    text-align: center
-    color: $grey
-    a
-      color: inherit
-    +mobile
-      margin-top: 1rem ! important
-      text-align: left
 </style>
