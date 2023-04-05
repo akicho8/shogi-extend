@@ -42,8 +42,11 @@ export default {
   data() {
     return {
       volumes: SoundPresetInfo.values.reduce((a, e) => ({...a, [e.key]: e.volume}), {}),
-      main_volume: Howler.volume(),
+      main_volume: null,
     }
+  },
+  beforeMount() {
+    this.main_volume = Howler.volume()
   },
   watch: {
     main_volume(v) { Howler.volume(v) },
