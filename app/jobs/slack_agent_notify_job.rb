@@ -8,9 +8,6 @@ class SlackAgentNotifyJob < ApplicationJob
 
   # EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
   def perform(params)
-    Slack::Web::Client.new.tap do |client|
-      client.chat_postMessage(params)
-      # raise ::Faraday::Error, "(fake)"
-    end
+    SlackAgent.api_call(params)
   end
 end

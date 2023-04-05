@@ -5,6 +5,17 @@
 # rails r "SlackAgent.excessive_measure_reset"
 class SlackAgent
   class << self
+    def api_call(params)
+      if true
+        Slack::Web::Client.new.tap do |client|
+          client.chat_postMessage(params)
+          # raise ::Faraday::Error, "(fake)"
+        end
+      else
+        AppLog.notify(body: params[:text])
+      end
+    end
+
     def notify(params = {})
       new(params).notify
     end
