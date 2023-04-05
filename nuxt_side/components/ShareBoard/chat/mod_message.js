@@ -50,6 +50,7 @@ export const mod_message = {
       const message_dto = MessageDto.create(params)
       this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.message_share_received_p(params)) {    // 見てもいいなら
+        this.$sound.play("patxu")
         this.$buefy.toast.open(message_dto.toast_params) // 表示
         this.talk2(message_dto.message)                 // しゃべる
       }
