@@ -6,8 +6,24 @@ export class LiftCancelActionInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "standard", name: "移動先以外", type: "is-primary", message: "将棋ウォーズやぴよ将棋はこれ。右クリックやESCキーでもキャンセルできる",                                                                                                                           },
-      { key: "reality",  name: "元の位置",   type: "is-primary", message: "従来の方法。リアルで指すのと同様に元の位置に戻す。そうしてほしかった。しかし、有名アプリの影響で順応できない者が多かったため、仕方なく初期値を変更した。右クリックやESCキーでもキャンセルできる", },
+      {
+        key: "standard",
+        name: "移動先以外",
+        type: "is-primary",
+        message: "将棋ウォーズ・ぴよ将棋に準拠する",
+      },
+      {
+        key: "reality",
+        name: "元の位置",
+        type: "is-primary",
+        message: "リアル風。元の位置に戻す",
+      },
+      {
+        key: "rehold",
+        name: "持ち替え",
+        type: "is-primary",
+        message: "lishogi準拠。離さず持ち替える",
+      },
     ]
   }
 }
