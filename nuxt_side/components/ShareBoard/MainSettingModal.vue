@@ -7,7 +7,14 @@
     .columns.is-multiline
       template(v-for="m in MainSettingInfo.values")
         .column.is-half-tablet
-          SimpleRadioButtons(:base="base" :model_name="m.param_info.relation" :var_name="m.key" :permanent_mark_append="m.param_info.permanent")
+          SimpleRadioButtons(
+            :base="base"
+            :model_name="m.param_info.relation"
+            :var_name="m.key"
+            :permanent_mark_append="m.param_info.permanent"
+            custom-class="is-small"
+            element_size="is-small"
+            )
     .columns.is-centered
       .column
         .notification.is-warning.is-light.is-size-7
