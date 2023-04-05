@@ -1,7 +1,7 @@
 module BackendScript
   class AppLogScript < ::BackendScript::Base
     self.category = "その他"
-    self.script_name = "アラートログ"
+    self.script_name = "アプリログ"
 
     private
 
