@@ -1,5 +1,7 @@
 import { ChatgptRequestInfo } from "./chatgpt_request_info.js"
 import { CcInfo             } from "../clock/cc_info.js"
+import dayjs from "dayjs"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_chatgpt = {
   methods: {
@@ -32,7 +34,13 @@ export const mod_chatgpt = {
 
     gpt_case_hello(params) {
       if (this.received_from_self(params)) {
-        this.gpt_speak_for("参加者にあいさつする", params)
+        const ymd = dayjs().format("YYYY-MM-DD")
+        if (this.gpt_hello_ymd !== ymd) {
+          this.gpt_hello_ymd = ymd
+          this.gpt_speak_for("参加者にあいさつする", params)
+        } else {
+          this.debug_alert("本日はもう挨拶しました")
+        }
       }
     },
 

@@ -39,6 +39,7 @@ export class ParamInfo extends ParamBase {
       { key: "acquire_medal_count",        type: "integer", name: "メダル保持数",                  defaults: { development: null,                      production: 0,                                   }, permanent: false, relation: null,                  desc: null, after_set: null,                 },
 
       { key: "persistent_cc_params",       type: "json",    name: "対局時計",                      defaults: { development: null,                      production: c => c.CcRuleInfo.default_cc_params, }, permanent: true,  relation: null,                  desc: null, after_set: c => c.persistent_cc_params_array_wrap(), },
+      { key: "gpt_hello_ymd",                       type: "string",  name: "GPTの挨拶記憶",                 defaults: { development: null,                      production: "",                                  }, permanent: true,  relation: null,                  desc: null, after_set: null, },
     ]
   }
 }
