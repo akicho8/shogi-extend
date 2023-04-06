@@ -2,10 +2,8 @@
 .SbDashboardBody
   b-loading(:active="$fetchState.pending")
   .BoxItems
-    .BoxItem
-      SbDashboardUserRanking(v-if="info")
-    .BoxItem
-      SbDashboardBattleIndex(v-if="info")
+    SbDashboardUserRanking(v-if="info")
+    SbDashboardBattleIndex(v-if="info")
   pre(v-if="development_p && false") {{info}}
 </template>
 
@@ -45,13 +43,10 @@ export default {
     font-size: $size-5
   .BoxItems
     display: flex
-    flex-wrap: wrap
+    align-items: center
+    flex-direction: column
     gap: 1rem
-    .BoxItem
-      flex-basis: 100%
-      display: flex
-      justify-content: center
-      .box
-        width: unquote("min(640px, 100%)")
-        margin: 0
+    .box
+      width: unquote("min(640px, 100%)")
+      margin: 0
 </style>

@@ -64,7 +64,10 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="base.kifu_mail_handle")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(icon="cog-outline" tag="nuxt-link" label="集計結果" :to="{name: 'share-board-room_code-dashboard', params: {room_code: base.room_code}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="cog-outline" label="集計結果" @click="base.general_dashboard_modal_handle" :disabled="$gs.blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="cog-outline" tag="nuxt-link" label="集計結果(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_code: base.room_code}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="cog-outline" label="集計結果(hrefで別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
+
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="base.title_edit_handle")
           b-menu-item.is_active_unset(icon="account-edit" label="ハンドルネーム変更"          @click="base.handle_name_modal_handle")
@@ -72,7 +75,6 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="help" tag="nuxt-link" :to="{name: 'experiment-OrderUiTest'}" label="手番検証" @click.native="$sound.play_click()" v-if="development_p")
-          b-menu-item.is_active_unset(icon="cog-outline" label="集計結果(別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
       AppearanceUi.mt-5
       .box.mt-5
         b-field(label="音が出なくなったとき用")

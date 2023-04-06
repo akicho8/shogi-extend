@@ -30,7 +30,8 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbDashboardModal
-  +modal_max_width(600px)
+  +modal_width_auto
+  // +modal_max_width(640px)
   .modal-card-body
     padding: 1rem
     // background-color: $grey-darker

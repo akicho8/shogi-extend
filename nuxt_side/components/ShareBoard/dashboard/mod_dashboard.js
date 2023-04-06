@@ -11,15 +11,13 @@ export const mod_dashboard = {
         props: { base: this.base },
       })
     },
-    dashboard_link_click_handle() {
-    },
   },
 
   computed: {
     dashboard_url() {
       return QueryString.stringifyUrl({
-        url: `/share-board/${this.room_code}/dashboard`,
-        query: {},
+        url: `/share-board/dashboard`,
+        query: {room_code: this.room_code},
       })
     },
   },

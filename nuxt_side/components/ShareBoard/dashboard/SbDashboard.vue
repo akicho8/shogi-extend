@@ -17,7 +17,7 @@ export default {
   name: "SbDashboard",
   mixins: [support_child],
   computed: {
-    room_code() { return this.$route.params.room_code },
+    room_code() { return this.$route.query.room_code },
   },
 }
 </script>
