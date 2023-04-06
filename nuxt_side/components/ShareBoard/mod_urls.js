@@ -35,7 +35,9 @@ export const mod_urls = {
     async current_url_short_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
+      this.debug_alert(this.current_url)
       const url = await TinyURL.shorten(this.current_url)
+      this.debug_alert(url)
       this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})
     },
 
