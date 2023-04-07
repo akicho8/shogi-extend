@@ -1,300 +1,298 @@
 require "rails_helper"
 
-module ShareBoard
-  RSpec.describe RoomChannel, type: :channel, share_board_spec: true do
-    let(:user1)     { User.create!     }
-    let(:room_code) { SecureRandom.hex }
+RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true do
+  let(:user1)     { User.create!     }
+  let(:room_code) { SecureRandom.hex }
 
+  before do
+    stub_connection(current_user: user1, once_uuid: "(uuid)")
+  end
+
+  describe "接続" do
+    it "works" do
+      subscribe(room_code: room_code)
+      assert2 { subscription.confirmed? }
+    end
+  end
+
+  describe "切断" do
+    it "works" do
+      subscribe(room_code: room_code)
+      assert2 { subscription.confirmed? }
+      unsubscribe
+    end
+  end
+
+  # nuxt_side/components/ShareBoard/app_room.js の ac_room_perform に合わせる
+  def data_factory(params = {})
+    {
+      "from_connection_id" => SecureRandom.hex,
+      "from_user_name" => "alice",
+      "performed_at"   => Time.current.to_i,
+      "ac_events_hash" => {},
+      "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
+      "debug_mode_p"   => true,
+    }.merge(params)
+  end
+
+  describe "局面配布" do
     before do
-      stub_connection(current_user: user1, once_uuid: "(uuid)")
+      subscribe(room_code: room_code)
     end
-
-    describe "接続" do
-      it "works" do
-        subscribe(room_code: room_code)
-        assert2 { subscription.confirmed? }
-      end
+    it "works" do
+      data = data_factory("sfen" => "(sfen)", "turn" => 0, message: "(message)")
+      expect {
+        subscription.force_sync(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "force_sync_broadcasted", bc_params: data)
     end
+  end
 
-    describe "切断" do
-      it "works" do
-        subscribe(room_code: room_code)
-        assert2 { subscription.confirmed? }
-        unsubscribe
-      end
+  describe "本譜配布" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    # nuxt_side/components/ShareBoard/app_room.js の ac_room_perform に合わせる
-    def data_factory(params = {})
-      {
-        "from_connection_id" => SecureRandom.hex,
-        "from_user_name" => "alice",
-        "performed_at"   => Time.current.to_i,
-        "ac_events_hash" => {},
-        "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
-        "debug_mode_p"   => true,
-      }.merge(params)
+    it "works" do
+      data = data_factory("sfen" => "(sfen)", "turn" => 0)
+      expect {
+        subscription.honpu_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "honpu_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "局面配布" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("sfen" => "(sfen)", "turn" => 0, message: "(message)")
-        expect {
-          subscription.force_sync(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "force_sync_broadcasted", bc_params: data)
-      end
+  describe "指し手送信" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "本譜配布" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("sfen" => "(sfen)", "turn" => 0)
-        expect {
-          subscription.honpu_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "honpu_share_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory({
+          "sfen"              => "(sfen)",
+          "turn_offset"       => 1,
+          # "last_location_key" => "white",
+          "sequence_code"     => 1,
+          "next_user_name"    => "bob",
+          "lmi" => {
+            "kif_without_from"    => "☗7六歩",
+            "next_turn_offset"    => 1,
+            "player_location_key" => "black",
+            "yomiage"             => "ななろくふ",
+          },
+        })
+      expect {
+        subscription.sfen_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "sfen_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "指し手送信" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory({
-            "sfen"              => "(sfen)",
-            "turn_offset"       => 1,
-            # "last_location_key" => "white",
-            "sequence_code"     => 1,
-            "next_user_name"    => "bob",
-            "lmi" => {
-              "kif_without_from"    => "☗7六歩",
-              "next_turn_offset"    => 1,
-              "player_location_key" => "black",
-              "yomiage"             => "ななろくふ",
-            },
-          })
-        expect {
-          subscription.sfen_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "sfen_share_broadcasted", bc_params: data)
-      end
+  describe "指し手受信" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "指し手受信" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
-        expect {
-          subscription.received_ok(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "received_ok_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
+      expect {
+        subscription.received_ok(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "received_ok_broadcasted", bc_params: data)
     end
+  end
 
-    describe "指手不達" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("x_retry_count" => 1)
-        expect {
-          subscription.sfen_share_not_reach(data)
-        }.to raise_error(RoomChannel::SfenNotReachError, /指手不達.*1回目/)
-      end
+  describe "指手不達" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "タイトル共有" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("title" => "(title)")
-        expect {
-          subscription.title_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "title_share_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory("x_retry_count" => 1)
+      expect {
+        subscription.sfen_share_not_reach(data)
+      }.to raise_error(ShareBoard::RoomChannel::SfenNotReachError, /指手不達.*1回目/)
     end
+  end
 
-    describe "情報要求" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory
-        expect {
-          subscription.setup_info_request(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_request_broadcasted", bc_params: data)
-      end
+  describe "タイトル共有" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "情報送信" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory
-        expect {
-          subscription.setup_info_send(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_send_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory("title" => "(title)")
+      expect {
+        subscription.title_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "title_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "対局時計の共有" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory({
-            "cc_key" => "ck_start",
-            "cc_params" => [
-              { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
-              { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
-            ],
-            "current_url" => SecureRandom.hex,
-          })
-        expect {
-          subscription.clock_box_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "clock_box_share_broadcasted", bc_params: data)
-      end
+  describe "情報要求" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "生存通知" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory
-        expect {
-          subscription.member_info_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "member_info_share_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.setup_info_request(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_request_broadcasted", bc_params: data)
     end
+  end
 
-    describe "順番機能" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("order_enable_p" => true)
-        expect {
-          subscription.order_switch_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "order_switch_share_broadcasted", bc_params: data)
-      end
+  describe "情報送信" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "順番設定" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory({
-            "order_unit" => [
-              # FIXME
-              { "user_name" => "alice", },
-              { "user_name" => "bob",   },
-            ],
-          })
-        expect {
-          subscription.new_order_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "new_order_share_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.setup_info_send(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_send_broadcasted", bc_params: data)
     end
+  end
 
-    describe "メッセージ" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("message" => "(message)", "message_scope_key" => "is_message_scope_private")
-        expect {
-          subscription.message_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "message_share_broadcasted", bc_params: data)
-      end
+  describe "対局時計の共有" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "ChatGPTに発言を促す" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("message" => "", "message_scope_key" => "is_message_scope_public")
-        subscription.gpt_speak(data)
-      end
+    it "works" do
+      data = data_factory({
+          "cc_key" => "ck_start",
+          "cc_params" => [
+            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
+            { "initial_main_min"  => 0, "initial_read_sec"  => 1, "initial_extra_sec" => 2, "every_plus" => 3 },
+          ],
+          "current_url" => SecureRandom.hex,
+        })
+      expect {
+        subscription.clock_box_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "clock_box_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "投了" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory
-        expect {
-          subscription.give_up_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "give_up_share_broadcasted", bc_params: data)
-      end
+  describe "生存通知" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "ログ記録" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("subject" => "(subject)", "body" => "body")
-        subscription.ac_log(data)
-      end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.member_info_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "member_info_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "エラー発動確認" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("key_has_nil" => nil)
-        expect {
-          subscription.fake_error(data)
-        }.to raise_error(ArgumentError)
-      end
+  describe "順番機能" do
+    before do
+      subscribe(room_code: room_code)
     end
-
-    describe "共有アクションログ" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("label" => "(label)", message: "(message)")
-        expect {
-          subscription.shared_al_add(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_al_add_broadcasted", bc_params: data)
-      end
+    it "works" do
+      data = data_factory("order_enable_p" => true)
+      expect {
+        subscription.order_switch_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "order_switch_share_broadcasted", bc_params: data)
     end
+  end
 
-    describe "メダル" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("medal_counts_hash" => {"alice" => 1})
-        expect {
-          subscription.acquire_medal_count_share(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
-      end
+  describe "順番設定" do
+    before do
+      subscribe(room_code: room_code)
     end
+    it "works" do
+      data = data_factory({
+          "order_unit" => [
+            # FIXME
+            { "user_name" => "alice", },
+            { "user_name" => "bob",   },
+          ],
+        })
+      expect {
+        subscription.new_order_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "new_order_share_broadcasted", bc_params: data)
+    end
+  end
 
-    describe "強制退室" do
-      before do
-        subscribe(room_code: room_code)
-      end
-      it "works" do
-        data = data_factory("kicked_user_name" => "(kicked_user_name)")
-        expect {
-          subscription.user_kick(data)
-        }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "user_kick_broadcasted", bc_params: data)
-      end
+  describe "メッセージ" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("message" => "(message)", "message_scope_key" => "is_message_scope_private")
+      expect {
+        subscription.message_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "message_share_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "ChatGPTに発言を促す" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("message" => "", "message_scope_key" => "is_message_scope_public")
+      subscription.gpt_speak(data)
+    end
+  end
+
+  describe "投了" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.give_up_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "give_up_share_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "ログ記録" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("subject" => "(subject)", "body" => "body")
+      subscription.ac_log(data)
+    end
+  end
+
+  describe "エラー発動確認" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("key_has_nil" => nil)
+      expect {
+        subscription.fake_error(data)
+      }.to raise_error(ArgumentError)
+    end
+  end
+
+  describe "共有アクションログ" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("label" => "(label)", message: "(message)")
+      expect {
+        subscription.shared_al_add(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_al_add_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "メダル" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("medal_counts_hash" => {"alice" => 1})
+      expect {
+        subscription.acquire_medal_count_share(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "強制退室" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory("kicked_user_name" => "(kicked_user_name)")
+      expect {
+        subscription.user_kick(data)
+      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "user_kick_broadcasted", bc_params: data)
     end
   end
 end
