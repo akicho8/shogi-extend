@@ -71,7 +71,6 @@ export default {
     display: flex
     flex-wrap: wrap
     gap: 0.5rem
-    line-height: 1.0
     &.is_win
       font-weight: bold
 </style>
