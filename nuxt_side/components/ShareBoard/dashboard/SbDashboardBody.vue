@@ -4,7 +4,8 @@
   .BoxItems
     SbDashboardUserRanking(v-if="info")
     SbDashboardBattleIndex(v-if="info")
-  pre(v-if="development_p && false") {{info}}
+    .box(v-if="development_p")
+      pre {{info}}
 </template>
 
 <script>
@@ -37,6 +38,9 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbDashboardBody
+  pre
+    white-space: pre-wrap
+    word-break: break-all
   .title
     margin-top: 0rem
     margin-bottom: 0.5rem

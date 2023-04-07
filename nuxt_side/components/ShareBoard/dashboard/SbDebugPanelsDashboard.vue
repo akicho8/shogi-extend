@@ -2,7 +2,7 @@
 .SbDebugPanelsDashboard.column.is-3
   .panel
     .panel-heading
-      | 集計結果
+      | 部屋の情報
     a.panel-block(@click="TheSb.general_dashboard_modal_handle") モーダル版
     a.panel-block(:href="TheSb.dashboard_url") LINK
   .panel.assert_system_variable

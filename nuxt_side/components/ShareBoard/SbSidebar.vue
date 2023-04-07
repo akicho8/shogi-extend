@@ -40,6 +40,9 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="base.room_url_copy_handle")
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="base.room_recreate_modal_handle" v-if="base.debug_mode_p")
+          b-menu-item.is_active_unset(icon="home" label="部屋の情報" @click="base.general_dashboard_modal_handle" :disabled="$gs.blank_p(base.ac_room)")
+          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="部屋の情報(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_code: base.room_code}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="trophy" label="部屋の情報(hrefで別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
 
         b-menu-list(label="検討")
           b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))")
@@ -64,9 +67,6 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="base.kifu_mail_handle")
 
         b-menu-list(label="その他")
-          b-menu-item.is_active_unset(icon="cog-outline" label="集計結果" @click="base.general_dashboard_modal_handle" :disabled="$gs.blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(icon="cog-outline" tag="nuxt-link" label="集計結果(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_code: base.room_code}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
-          b-menu-item.is_active_unset(icon="cog-outline" label="集計結果(hrefで別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
 
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="base.title_edit_handle")

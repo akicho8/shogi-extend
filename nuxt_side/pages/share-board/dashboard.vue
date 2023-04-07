@@ -8,7 +8,7 @@ export default {
   computed: {
     meta() {
       return {
-        title: ["集計結果", "共有将棋盤"],
+        title: ["部屋の情報", "共有将棋盤"],
         description: "",
         og_image_key: "share-board",
       }

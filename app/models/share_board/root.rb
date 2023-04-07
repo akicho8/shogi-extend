@@ -14,6 +14,8 @@ module ShareBoard
         Room,
         User,
         Battle,
+        Judge,
+        Location,
       ].each do |e|
         e.setup(options)
       end

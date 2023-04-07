@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      | 集計結果
+      | 部屋の情報
     b-tooltip(position="is-left" label="パーマリンク")
       a.permalink(:href="base.dashboard_url" target="_blank")
         b-icon(icon="link")
@@ -30,8 +30,8 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbDashboardModal
-  +modal_width_auto
-  // +modal_max_width(640px)
+  // +modal_width_auto
+  +modal_max_width(640px)
   .modal-card-body
     padding: 1rem
     // background-color: $grey-darker

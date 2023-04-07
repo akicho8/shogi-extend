@@ -21,7 +21,7 @@ module ShareBoard
     private
 
     def room
-      Room.find_or_create_by!(key: room_code)
+      @room ||= Room.find_or_create_by!(key: room_code)
     end
 
     def room_code

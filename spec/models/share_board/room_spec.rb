@@ -1,0 +1,40 @@
+require "rails_helper"
+
+RSpec.describe ShareBoard::Room do
+  it "works" do
+    room = ShareBoard::Room.create!
+    room.redis_clear
+
+    2.times do |i|
+      room.battles.create! do |e|
+        e.memberships.build([
+            { user_name: "alice", location_key: "black", judge_key: "win",  },
+            { user_name: "bob",   location_key: "white", judge_key: "lose", },
+            { user_name: "carol", location_key: "black", judge_key: "win",  },
+          ])
+      end
+    end
+
+    room.reload
+    assert2 { room.roomships.collect(&:rank) === [1, 1, 3] }
+    tp room.roomships if $0 == __FILE__
+  end
+end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >>
+# >> ShareBoard::Room
+# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
+# >> | id | room_id | user_id | win_count | lose_count | battles_count | win_rate | score | rank | created_at                | updated_at                |
+# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
+# >> |  1 |       2 |       1 |         2 |          0 |             2 |      1.0 |     2 |    1 | 2023-04-06 22:12:34 +0900 | 2023-04-06 22:12:34 +0900 |
+# >> |  3 |       2 |       3 |         2 |          0 |             2 |      1.0 |     2 |    1 | 2023-04-06 22:12:34 +0900 | 2023-04-06 22:12:34 +0900 |
+# >> |  2 |       2 |       2 |         0 |          2 |             2 |      0.0 |     0 |    3 | 2023-04-06 22:12:34 +0900 | 2023-04-06 22:12:34 +0900 |
+# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
+# >>   works
+# >>
+# >> Top 1 slowest examples (0.66183 seconds, 30.3% of total time):
+# >>   ShareBoard::Room works
+# >>     0.66183 seconds -:4
+# >>
+# >> Finished in 2.18 seconds (files took 3.63 seconds to load)
+# >> 1 example, 0 failures

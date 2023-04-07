@@ -1,15 +1,17 @@
 module ShareBoard
   class Dashboard
-
     def initialize(params)
       @params = params
     end
 
     # GET http://localhost:3000/api/share_board/dashboard?room_code=dev_room
+    # GET http://localhost:3000/api/share_board/dashboard?room_code=xxx
     def call
-
-      room = Room.fetch(@params[:room_code])
+      room = Room.find_or_initialize_by(key: @params[:room_code])
       room.as_json({
+          only: [
+            :key,
+          ],
           include: {
             roomships: {
               only: [
@@ -42,7 +44,6 @@ module ShareBoard
                 },
                 black: MEMBERSHIP_STRUCT_TYPE1,
                 white: MEMBERSHIP_STRUCT_TYPE1,
-                # memberships: MEMBERSHIP_STRUCT_TYPE1,
               },
             },
           },
@@ -52,27 +53,13 @@ module ShareBoard
     private
 
     MEMBERSHIP_STRUCT_TYPE1 = {
-      # only: [
-      #   :position,
-      # ],
       include: {
         user: {
           only: [
             :name,
           ],
         },
-        # judge: {
-        #   only: [
-        #     :key,
-        #   ],
-        # },
-        # location: {
-        #   only: [
-        #     :key,
-        #   ],
-        # },
       },
     }
-
   end
 end
