@@ -46,15 +46,15 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         key: "局面にコメントする",
         command_fn: (context, params) => {
           // `${params.turn}手目`
-          if (params.turn === 20) {
-            return `序盤戦を50文字以内で盛り上げてください`
-          }
-          if (params.turn === 45) {
-            return `中盤戦を50文字以内で盛り上げてください`
-          }
-          if (params.turn === 80) {
-            return `終盤戦を50文字以内で盛り上げてください`
-          }
+          // if (params.turn === 20) {
+          //   return `序盤戦を50文字以内で盛り上げてください`
+          // }
+          // if (params.turn === 45) {
+          //   return `中盤戦を50文字以内で盛り上げてください`
+          // }
+          // if (params.turn === 80) {
+          //   return `終盤戦を50文字以内で盛り上げてください`
+          // }
         },
       },
       {
