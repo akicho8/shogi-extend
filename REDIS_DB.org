@@ -1,38 +1,40 @@
-※development, test は production と同じ
-|------+----+------------------------+------------+--------------------------------|
-| host | db |                        | env        | 検索キーワード                 |
-|------+----+------------------------+------------+--------------------------------|
-| ik1  |  0 |                        |            |                                |
-|      |  1 | Rails.cache            | production | redis_cache_store              |
-|      |  2 | 符号の鬼のランキング用 | production | redis_db_for_xy_master         |
-|      |  3 | ExclusiveAccess        | production | redis_db_for_exclusive_access  |
-|      |  4 | 共有将棋盤ランキング   |            | redis_db_for_share_board_room  |
-|      |  5 | sidekiq                | production | redis_db_for_sidekiq           |
-|      |  6 | ActionCable            | production | cable.yml                      |
-|      |  7 | 共有将棋盤チャット     | production | redis_db_for_share_board_chat  |
-|      |  8 | 共有将棋盤ロビー       | production | redis_db_for_share_board_lobby |
-|      |  9 |                        |            |                                |
-|      | 10 |                        |            |                                |
-|      | 11 |                        |            |                                |
-|      | 12 |                        |            |                                |
-|      | 13 |                        |            |                                |
-|      | 14 |                        |            |                                |
-|      | 15 |                        |            |                                |
-|------+----+------------------------+------------+--------------------------------|
-| tk2  |  0 |                        |            |                                |
-|      |  1 |                        |            |                                |
-|      |  2 |                        |            |                                |
-|      |  3 |                        |            |                                |
-|      |  4 |                        |            |                                |
-|      |  5 |                        |            |                                |
-|      |  6 |                        |            |                                |
-|      |  7 |                        |            |                                |
-|      |  8 | Rails.cache            | staging    | redis_cache_store              |
-|      |  9 | 符号の鬼のランキング用 | staging    | redis_db_for_xy_master         |
-|      | 10 | ExclusiveAccess        | production | redis_db_for_exclusive_access  |
-|      | 11 | 共有将棋盤ランキング   |            | redis_db_for_share_board_room  |
-|      | 12 | sidekiq                | staging    | redis_db_for_sidekiq           |
-|      | 13 | ActionCable            | staging    | cable.yml                      |
-|      | 14 | 共有将棋盤チャット     | staging    | redis_db_for_share_board_chat  |
-|      | 15 | 共有将棋盤ロビー       | staging    | redis_db_for_share_board_lobby |
-|------+----+------------------------+------------+--------------------------------|
+development, test は production と同じ
+tk2 も ik1 に合わせるようにした
+
+|------+----+------------------------+--------------------------------|
+| host | db |                        | 検索キーワード                 |
+|------+----+------------------------+--------------------------------|
+| ik1  |  0 |                        |                                |
+|      |  1 | Rails.cache            | redis_cache_store              |
+|      |  2 | 符号の鬼のランキング用 | redis_db_for_xy_master         |
+|      |  3 | ExclusiveAccess        | redis_db_for_exclusive_access  |
+|      |  4 | 共有将棋盤ランキング   | redis_db_for_share_board_room  |
+|      |  5 | sidekiq                | redis_db_for_sidekiq           |
+|      |  6 | ActionCable            | redis_db_for_actioncable       |
+|      |  7 | 共有将棋盤チャット     | redis_db_for_share_board_chat  |
+|      |  8 | 共有将棋盤ロビー       | redis_db_for_share_board_lobby |
+|      |  9 |                        |                                |
+|      | 10 |                        |                                |
+|      | 11 |                        |                                |
+|      | 12 |                        |                                |
+|      | 13 |                        |                                |
+|      | 14 |                        |                                |
+|      | 15 |                        |                                |
+|------+----+------------------------+--------------------------------|
+| tk2  |  0 |                        |                                |
+|      |  1 |                        |                                |
+|      |  2 |                        |                                |
+|      |  3 |                        |                                |
+|      |  4 |                        |                                |
+|      |  5 |                        |                                |
+|      |  6 |                        |                                |
+|      |  7 |                        |                                |
+|      |  8 |                        |                                |
+|      |  9 |                        |                                |
+|      | 10 |                        |                                |
+|      | 11 |                        |                                |
+|      | 12 |                        |                                |
+|      | 13 |                        |                                |
+|      | 14 |                        |                                |
+|      | 15 |                        |                                |
+|------+----+------------------------+--------------------------------|

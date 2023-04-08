@@ -11,10 +11,12 @@ AppConfig.deep_merge!({
     :bot_email                           =>  "shogi.extend+bot@gmail.com",
 
     ################################################################################ redis
+    :redis_db_for_rails_cache       => 1,    # Rails.cache
     :redis_db_for_xy_master         => 2,    # 符号の鬼のランキング用
     :redis_db_for_exclusive_access  => 3,    # ExclusiveAccess
     :redis_db_for_share_board_room  => 4,    # 共有将棋盤ROOM
     :redis_db_for_sidekiq           => 5,    # sidekiq
+    :redis_db_for_actioncable       => 6,    # ActionCable
     :redis_db_for_share_board_chat  => 7,    # 共有将棋盤チャット
     :redis_db_for_share_board_lobby => 8,    # 共有将棋盤ロビー
 

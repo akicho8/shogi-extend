@@ -123,7 +123,7 @@ Rails.application.configure do
   Rails.application.routes.default_url_options.update(protocol: "https", host: "www.shogi-extend.com")
 
   # ################################################################################ cache_store
-  config.cache_store = :redis_cache_store, { db: 1 } # Redis.new
+  config.cache_store = :redis_cache_store, { db: AppConfig.fetch(:redis_db_for_rails_cache) }
 
   # ################################################################################ ActionCable
   # ActionCable.server.config.disable_request_forgery_protection = true
