@@ -8,10 +8,10 @@ tk2 も ik1 に合わせるようにした
 |      |  1 | Rails.cache            | redis_cache_store              |
 |      |  2 | 符号の鬼のランキング用 | redis_db_for_xy_master         |
 |      |  3 | ExclusiveAccess        | redis_db_for_exclusive_access  |
-|      |  4 | 共有将棋盤ランキング   | redis_db_for_share_board_room  |
-|      |  5 | sidekiq                | redis_db_for_sidekiq           |
-|      |  6 | ActionCable            | redis_db_for_actioncable       |
-|      |  7 | 共有将棋盤チャット     | redis_db_for_share_board_chat  |
+|      |  4 | sidekiq                | redis_db_for_sidekiq           |
+|      |  5 | ActionCable            | redis_db_for_actioncable       |
+|      |  6 | 共有将棋盤ランキング   | redis_db_for_share_board_room  |
+|      |  7 | 共有将棋盤ChatGPT     | redis_db_for_share_board_gpt   |
 |      |  8 | 共有将棋盤ロビー       | redis_db_for_share_board_lobby |
 |      |  9 |                        |                                |
 |      | 10 |                        |                                |
