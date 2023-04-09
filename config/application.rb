@@ -10,7 +10,7 @@ module ShogiWeb
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     # https://qiita.com/SoarTec-lab/items/9832bb89402e452b20bb
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # https://railsguides.jp/configuring.html#config-add-autoload-paths-to-load-path
     # $LOAD_PATHに自動読み込みのパスを追加すべきかどうかを指定します。
