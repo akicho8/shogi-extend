@@ -14,7 +14,7 @@ MainSection.WkbkArticleShowValidation
             :sp_turn="0"
             sp_slider
             sp_controller
-            @play_mode_next_moves="base.ev_play_mode_next_moves"
+            @ev_play_mode_next_moves="base.ev_play_mode_next_moves"
             )
 </template>
 

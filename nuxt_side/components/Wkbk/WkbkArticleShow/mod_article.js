@@ -9,7 +9,7 @@ export const mod_article = {
 
   methods: {
     current_moves() {
-      return this.$refs.WkbkArticleShowAnswer.$refs.main_sp.sp_object().api_moves_take_turn_offset
+      return this.$refs.WkbkArticleShowAnswer.$refs.main_sp.sp_object().api_moves_take_turn_offset()
     },
 
     ////////////////////////////////////////////////////////////////////////////////

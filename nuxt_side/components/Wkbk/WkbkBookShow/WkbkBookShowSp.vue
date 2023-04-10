@@ -16,7 +16,7 @@ MainSection.WkbkBookShowSp
             :sp_turn="0"
             sp_mode="play"
             sp_controller
-            @play_mode_next_moves="base.ev_play_mode_next_moves"
+            @ev_play_mode_next_moves="base.ev_play_mode_next_moves"
             )
           //- .buttons.is-centered.answer_create_handle
           //-   b-button(@click="base.answer_create_handle" :type="{'is-primary': base.answer_turn_offset >= 1}" size="is-small")

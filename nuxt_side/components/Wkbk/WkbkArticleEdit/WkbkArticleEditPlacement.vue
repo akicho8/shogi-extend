@@ -12,7 +12,7 @@ MainSection.WkbkArticleEditPlacement
             :sp_viewpoint.sync="base.article.viewpoint"
             sp_slider
             sp_controller
-            @ev_edit_mode_short_sfen_change="base.edit_mode_short_sfen"
+            @ev_edit_mode_short_sfen_change="base.ev_edit_mode_short_sfen_change"
             ref="main_sp"
             )
           .footer_buttons

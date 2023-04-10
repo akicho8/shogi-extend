@@ -10,7 +10,7 @@ export const mod_placement = {
 
   methods: {
     // 配置で駒を動かしたときのフック。article.init_sfen は変更しないようにする
-    edit_mode_short_sfen(sfen) {
+    ev_edit_mode_short_sfen_change(sfen) {
       this.sp_body = sfen
     },
 

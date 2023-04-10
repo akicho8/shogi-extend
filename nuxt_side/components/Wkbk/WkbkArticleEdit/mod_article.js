@@ -9,7 +9,7 @@ export const mod_article = {
 
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
-    edit_mode_short_sfen(sfen) {
+    ev_edit_mode_short_sfen_change(sfen) {
       if (this.article.init_sfen !== sfen) {
         if (this.article.moves_answers.length >= 1) {
           this.toast_ok("元の配置を変更したので正解を削除しました")
@@ -25,7 +25,7 @@ export const mod_article = {
     },
 
     current_moves() {
-      return this.$refs.WkbkArticleEditAnswer.$refs.main_sp.sp_object().api_moves_take_turn_offset
+      return this.$refs.WkbkArticleEditAnswer.$refs.main_sp.sp_object().api_moves_take_turn_offset()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
