@@ -34,7 +34,12 @@ module ShareBoard
     end
 
     def battle_columns
-      [:sfen, :turn, :title]
+      [
+        :sfen,
+        :turn,
+        :title,
+        :win_location_key,
+      ]
     end
 
     def memberships

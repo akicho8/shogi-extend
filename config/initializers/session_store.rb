@@ -9,4 +9,4 @@ if Rails.env.development?
   options[:domain] = ENV["DOMAIN"] || "localhost"
 end
 
-Rails.application.config.session_store(:cookie_store, options)
+Rails.application.config.session_store(:cookie_store, **options)

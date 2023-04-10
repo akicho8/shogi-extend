@@ -3,7 +3,7 @@ module ShareBoard
     belongs_to :room, touch: true, counter_cache: true
     acts_as_list top_of_list: 0, scope: :room
 
-    belongs_to :win_location, class_name: "Location"
+    custom_belongs_to :win_location, class_name: "Location", ar_model: Location, st_model: LocationInfo, default: :black
 
     has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
 
@@ -13,7 +13,6 @@ module ShareBoard
 
     before_validation on: :create do
       self.key ||= SecureRandom.hex
-      self.win_location ||= Location.fetch(:black)
       self.sfen ||= "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1 moves 7g7f 3c3d 8h2b+ 3a2b"
       self.turn ||= Bioshogi::Parser.parse(sfen).container.turn_info.turn_offset
       self.title ||= ""

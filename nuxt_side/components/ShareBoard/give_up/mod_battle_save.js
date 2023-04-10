@@ -5,11 +5,12 @@ export const mod_battle_save = {
   methods: {
     battle_save_run() {
       const params = {
-        room_code:    this.room_code,
-        title:       this.current_title,
-        sfen:        this.current_sfen,
-        turn:        this.current_turn,
-        memberships: this.battle_memberships
+        room_code:        this.room_code,
+        title:            this.current_title,
+        sfen:             this.current_sfen,
+        turn:             this.current_turn,
+        memberships:      this.battle_memberships,
+        win_location_key: this.give_up_win_location_key,
       }
       this.$axios.$post("/api/share_board/battle_create.json", params, {progress: false}).then(e => {
         if (this.debug_mode_p) {
