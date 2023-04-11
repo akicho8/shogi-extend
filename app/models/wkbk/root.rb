@@ -4,6 +4,7 @@ module Wkbk
       name.underscore.gsub("/", "_") + "_"
     end
 
+    # rails r "Wkbk.setup(force: true); tp Wkbk.info"
     def setup(options = {})
       if options[:force]
         destroy_all

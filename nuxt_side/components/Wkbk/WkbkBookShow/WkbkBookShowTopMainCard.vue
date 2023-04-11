@@ -36,7 +36,7 @@
       //- .card-footer-item
       //-   b-button.has-text-weight-bold(type="is-primary" @click="base.play_start")
       //-     | START
-      .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white(@click="base.play_start")
+      .card-footer-item.has-text-weight-bold.is-clickable.has-background-primary.has-text-white.play_start_handle(@click="base.play_start")
         | START
       //- nuxt-link.card-footer-item(:to="{name: 'rack-articles-new', query: {book_key: base.book.key}}"        @click.native="$sound.play_click()" v-if="base.owner_p") 問題追加
       //- nuxt-link.card-footer-item(:to="{name: 'rack-books-book_key-edit', params: {book_key: base.book.key}}" @click.native="$sound.play_click()" v-if="base.owner_p") 編集

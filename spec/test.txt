@@ -963,4 +963,5 @@ example_id                                                                      
 ./spec/system/wkbk/wkbk_spec.rb[1:6]                                             | passed  | 4.46 seconds    |
 ./spec/system/wkbk/wkbk_spec.rb[1:7]                                             | passed  | 3.04 seconds    |
 ./spec/system/wkbk/wkbk_spec.rb[1:8]                                             | passed  | 4.59 seconds    |
+./spec/system/wkbk/問題作成_spec.rb[1:1]                                             | passed  | 28.67 seconds   |
 ./spec/system/退会_spec.rb[1:1]                                                    | passed  | 5.36 seconds    |

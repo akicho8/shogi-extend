@@ -6,7 +6,7 @@
         WkbkBookEditFormUpload(:base="base")
 
       b-field(label="タイトル" label-position="on-border")
-        b-input(v-model.trim="base.book.title" required :maxlength="100" placeholder="問題集について説明するタイトルを追加しましょう")
+        b-input.book_title(v-model.trim="base.book.title" required :maxlength="100" placeholder="問題集について説明するタイトルを追加しましょう")
 
       b-field(label="説明" label-position="on-border")
         b-input(v-model.trim="base.book.description" type="textarea" rows="5" :maxlength="5000" placeholder="解答者に向けて問題集の内容を紹介しましょう")

@@ -3,7 +3,7 @@ MainSection.WkbkArticleEditForm
   .container
     .columns
       .column
-        b-field(label="タイトル" label-position="on-border")
+        b-field.article_title(label="タイトル" label-position="on-border")
           b-input(v-model.trim="base.article.title" :maxlength="100" placeholder="空でもかまいません")
 
         b-field(label="解説" label-position="on-border")
