@@ -16,6 +16,7 @@ MainSection.WkbkBookShowSp
             :sp_turn="0"
             sp_mode="play"
             sp_controller
+            :sp_mobile_vertical="false"
             @ev_play_mode_next_moves="base.ev_play_mode_next_moves"
             )
           //- .buttons.is-centered.answer_create_handle
