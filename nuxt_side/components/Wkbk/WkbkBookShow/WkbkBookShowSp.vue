@@ -83,7 +83,7 @@ export default {
     //     margin-top: $wkbk_share_gap
     .CustomShogiPlayerWrap
       +mobile
-        margin-top: 0rem
+        margin-top: 0.5rem
       +tablet
         margin-top: 2.5rem
 
