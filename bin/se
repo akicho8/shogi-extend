@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require "#{__dir__}/../config/environment"
+require "thor"
+
+class App < Thor
+  desc "say -r 合言葉 -n 名前 -m 発言", "共有将棋盤のチャットで発言する"
+  method_option :room_code,      type: :string, default: "dev_room",   aliases: "-r", desc: "合言葉"
+  method_option :message,        type: :string, default: "OK",         aliases: "-m", desc: "メッセージ"
+  method_option :from_user_name, type: :string, default: "運営ボット", aliases: "-n", desc: "名前"
+  def say
+    ShareBoard::Broadcaster.new(options[:room_code]).call("message_share_broadcasted", {
+        :message        => options[:message],
+        :from_user_name => options[:from_user_name],
+      })
+  end
+
+  start
+end

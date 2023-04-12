@@ -2,6 +2,7 @@
 
 # ▼メッセージ送信
 # rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK")'
+# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK", from_user_name: "運営")'
 
 module ShareBoard
   class Broadcaster
