@@ -32,6 +32,14 @@ task :v do
   end
 end
 
+task :se do
+  on roles(:all) do
+    within current_path do
+      execute "bin/se", ENV["COMMAND"]
+    end
+  end
+end
+
 namespace :rails do
   desc "Run Rails console"
   task :console2 do

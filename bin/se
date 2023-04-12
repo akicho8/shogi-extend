@@ -6,12 +6,25 @@ class App < Thor
   desc "say -r 合言葉 -n 名前 -m 発言", "共有将棋盤のチャットで発言する"
   method_option :room_code,      type: :string, default: "dev_room",   aliases: "-r", desc: "合言葉"
   method_option :message,        type: :string, default: "OK",         aliases: "-m", desc: "メッセージ"
-  method_option :from_user_name, type: :string, default: "運営ボット", aliases: "-n", desc: "名前"
+  method_option :from_user_name, type: :string, default: "GPT",        aliases: "-n", desc: "名前"
   def say
     ShareBoard::Broadcaster.new(options[:room_code]).call("message_share_broadcasted", {
         :message        => options[:message],
         :from_user_name => options[:from_user_name],
+        :primary_emoji  => "🤖",
       })
+  end
+
+  desc "gpt -r 合言葉", "共有将棋盤にいるGPTに対して発言を促す"
+  method_option :room_code, type: :string, default: "dev_room", aliases: "-r", desc: "合言葉"
+  method_option :message,   type: :string, default: nil,        aliases: "-m", desc: "メッセージ"
+  def gpt
+    ShareBoard::Responder2.new(room_code: options[:room_code], message: options[:message]).call
+  end
+
+  desc "about", "情報"
+  def about
+    p Rails.env
   end
 
   start

@@ -1,5 +1,5 @@
 # ▼発言を返す
-# rails r 'ShareBoard::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
+# rails r 'ShareBoard::Responder1.new(message: "@gpt 将棋ウォーズの棋力は？").call'
 module ShareBoard
   class Responder1 < ResponderBase
     def call
