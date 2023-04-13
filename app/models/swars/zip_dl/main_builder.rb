@@ -13,7 +13,7 @@
 # app/models/swars/zip_dl/action_methods.rb
 #
 # Experiment
-# inspection/swars/zip_dl/main_builder.rb
+# experiment/swars/zip_dl/main_builder.rb
 #
 # Test
 # spec/models/swars/zip_dl/main_builder_spec.rb

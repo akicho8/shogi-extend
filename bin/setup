@@ -36,7 +36,7 @@ FileUtils.chdir APP_ROOT do
   system! "rm -f tmp/caching-dev.txt"
   system! "bin/rails dev:cache"
 
-  system! "saferenum -x inspection"
+  system! "saferenum -x experiment"
   system! "fd -tx -e rb -E bin -x chmod -v a-x"
 
   # system! "saferenum -x -b 1000 config/app_data/free_battles"

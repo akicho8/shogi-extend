@@ -12,10 +12,10 @@ http://localhost:4000/share-board?room_code=dev_room&user_name=a&fixed_member_na
 http://localhost:4000/share-board/dev_room/dashboard
 
 ~/src/shogi-extend/app/models/share_board/battle.rb
-~/src/shogi-extend/inspection/share_board/battle.rb
+~/src/shogi-extend/experiment/share_board/battle.rb
 
 ~/src/shogi-extend/app/models/share_board/room.rb
-~/src/shogi-extend/inspection/share_board/room.rb
+~/src/shogi-extend/experiment/share_board/room.rb
 
 ~/src/shogi-extend/app/models/share_board.rb
 ~/src/shogi-extend/app/models/share_board/battle_create.rb
@@ -30,7 +30,7 @@ http://localhost:4000/share-board/dev_room/dashboard
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/debug/SbDebugPanels.vue
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/give_up/mod_give_up.js
 ~/src/shogi-extend/db/migrate/20230326000000_create_share_board.rb
-~/src/shogi-extend/inspection/share_board/
+~/src/shogi-extend/experiment/share_board/
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/dashboard/
 ~/src/shogi-extend/nuxt_side/components/ShareBoard/give_up/mod_battle_save.js
 ~/src/shogi-extend/nuxt_side/pages/share-board/_room_code/
