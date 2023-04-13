@@ -70,7 +70,7 @@ module FormBox
         o = {}
         # if !params[:inline]
         # o[:class] = "label col-md-#{params[:left_width]}"
-        o[:class] = "label"
+        o[:class] = "label is-small"
         # end
         o
       end
