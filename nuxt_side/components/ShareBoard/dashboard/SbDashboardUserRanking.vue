@@ -37,8 +37,6 @@ export default {
       return value.toFixed(3)
     },
   },
-  computed: {
-  },
 }
 </script>
 

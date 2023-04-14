@@ -14,9 +14,11 @@
         template(v-for="e in TheSb.MessageScopeInfo.values")
           b-dropdown-item(:key="e.key" :class="e.key" :value="e.key" v-text="e.name")
   .modal-card-body
-    SbMessageLog(ref="SbMessageLog")
-    b-field
-      b-input(v-model="TheSb.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
+    .body_inner
+      .SbMessageLogWrapper
+        SbMessageLog(ref="SbMessageLog")
+      b-field.InputField
+        b-input(v-model="TheSb.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
     b-button.send_handle(:class="TheSb.message_scope_info.class" :key="TheSb.message_scope_info.key" @click="send_handle" :icon-left="TheSb.message_scope_info.icon" :type="TheSb.message_scope_info.type") {{TheSb.message_scope_info.label}}
@@ -80,13 +82,42 @@ export default {
 .MessageSendModal
   +modal_width(32rem)
 
-  .modal-card-body
-    padding: 1.0rem
-  .modal-card-foot
-    .button
-      min-width: 6rem
-  .modal-card-title
-    line-height: 1.0
+  .modal-card
+    overflow: scroll
+    resize: both
+
+    +mobile
+      height: 29rem
+    +tablet
+      height: 30rem
+    +desktop
+      height: 31rem
+
+    .modal-card-head
+      .modal-card-title
+        line-height: 1.0
+    .modal-card-body
+      padding: 1.0rem
+      .body_inner
+        width: 100%
+        height: 100%
+
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-direction: column
+        gap: 1rem
+
+        .SbMessageLogWrapper
+          flex-grow: 1          // 残りの領域にめいっぱい広げる
+          width: 100%
+          position: relative
+        .InputField
+          width: 100%
+
+    .modal-card-foot
+      .button
+        min-width: 6rem
 
   .be_quiet_icon
     height: 100%
