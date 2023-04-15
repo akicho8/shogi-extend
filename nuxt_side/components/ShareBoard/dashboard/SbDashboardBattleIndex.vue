@@ -68,9 +68,12 @@ export default {
 .SbDashboardBattleIndex
   .memberships
     white-space: normal
+    word-break: break-all
+
     display: flex
     flex-wrap: wrap
     gap: 0.5rem
+
     &.is_win
       font-weight: bold
 </style>
