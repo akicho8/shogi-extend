@@ -94,24 +94,28 @@ b-table.SwarsBattleIndexTable(
       KifCopyButton.kif_copy(
         v-if="base.column_visible_p('kif_copy')"
         @click="base.kifu_copy_handle(row, {format: 'kif'})"
+        title="KIF をクリップボードにコピーする"
         )
 
       KifCopyButton.ki2_copy(
         v-if="base.column_visible_p('ki2_copy')"
         @click="base.kifu_copy_handle(row, {format: 'ki2'})"
         name="KI2"
+        title="KI2 をクリップボードにコピーする"
         )
 
       a.button.kif_save_as_utf8(
         v-if="base.column_visible_p('kif_save_as_utf8')"
         :href="base.kifu_save_url(row, {body_encode: 'UTF-8'})"
         @click="base.kifu_save_handle(row)"
+        title="KIF を UTF-8 でファイルに保存する"
         ) 保存
 
       a.button.kif_save_as_shiftjis(
         v-if="base.column_visible_p('kif_save_as_shiftjis')"
         :href="base.kifu_save_url(row, {body_encode: 'Shift_JIS'})"
         @click="base.kifu_save_handle(row)"
+        title="KIF を Shift_JIS でファイルに保存する"
         ) 保存
 
       ShowButton(

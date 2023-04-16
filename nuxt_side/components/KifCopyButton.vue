@@ -1,11 +1,11 @@
 <template lang="pug">
   b-button.KifCopyButton.is-small(
-    title="棋譜をクリップボードにコピーする"
+    :title="title"
     v-bind="$attrs"
     v-on="$listeners"
     @click="click_handle"
+    v-text="name"
     )
-    | {{name}}
 </template>
 
 <script>
@@ -13,7 +13,8 @@
 export default {
   name: "KifCopyButton",
   props: {
-    name: { type: String, default: "コピー", },
+    name:  { type: String, default: "コピー",                           },
+    title: { type: String, default: "棋譜をクリップボードにコピーする", },
   },
   methods: {
     click_handle() {
