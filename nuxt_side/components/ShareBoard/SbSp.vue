@@ -69,9 +69,15 @@ export default {
         hv.sp_board_variant = this.base.appearance_theme_info.sp_board_variant
       }
 
-      // 反則時の挙動
-      hv.sp_illegal_validate = this.base.illegal_behavior_info.sp_illegal_validate
-      hv.sp_illegal_cancel = this.base.illegal_behavior_info.sp_illegal_cancel
+      if (this.base.order_enable_p || this.base.cc_play_p) {
+        // 反則時の挙動
+        hv.sp_illegal_validate = this.base.illegal_behavior_info.sp_illegal_validate
+        hv.sp_illegal_cancel   = this.base.illegal_behavior_info.sp_illegal_cancel
+      } else {
+        // 検討中
+        hv.sp_illegal_validate = true // 反則を検知する
+        hv.sp_illegal_cancel   = true // が、キャンセルする
+      }
 
       if (false) {
         hv.sp_board_variant = "wood_normal"
