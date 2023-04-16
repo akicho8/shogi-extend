@@ -91,9 +91,15 @@ b-table.SwarsBattleIndexTable(
         @click="$sound.play_click()"
         )
 
-      KifCopyButton(
+      KifCopyButton.kif_copy(
         v-if="base.column_visible_p('kif_copy')"
-        @click="base.kifu_copy_handle(row)"
+        @click="base.kifu_copy_handle(row, {format: 'kif'})"
+        )
+
+      KifCopyButton.ki2_copy(
+        v-if="base.column_visible_p('ki2_copy')"
+        @click="base.kifu_copy_handle(row, {format: 'ki2'})"
+        name="KI2"
         )
 
       a.button.kif_save_as_utf8(

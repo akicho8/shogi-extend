@@ -910,7 +910,7 @@ example_id                                                                      
 ./spec/system/swars/index_spec.rb[1:2:5:1]                                       | passed  | 9.48 seconds    |
 ./spec/system/swars/index_spec.rb[1:3:1]                                         | passed  | 2.73 seconds    |
 ./spec/system/swars/index_spec.rb[1:3:2]                                         | passed  | 4.18 seconds    |
-./spec/system/swars/index_spec.rb[1:3:3]                                         | passed  | 4.08 seconds    |
+./spec/system/swars/index_spec.rb[1:3:3]                                         | failed  | 8.6 seconds     |
 ./spec/system/swars/index_spec.rb[1:3:4]                                         | passed  | 3.09 seconds    |
 ./spec/system/swars/index_spec.rb[1:4:1]                                         | passed  | 3.11 seconds    |
 ./spec/system/swars/index_spec.rb[1:5:1:1]                                       | passed  | 2.83 seconds    |
@@ -934,6 +934,7 @@ example_id                                                                      
 ./spec/system/swars/index_spec.rb[1:8:3:2]                                       | passed  | 3.43 seconds    |
 ./spec/system/swars/index_spec.rb[1:8:4:1]                                       | passed  | 4.23 seconds    |
 ./spec/system/swars/index_spec.rb[1:9:1]                                         | passed  | 5.28 seconds    |
+./spec/system/swars/index_spec.rb[1:10:1]                                        | failed  | 6.14 seconds    |
 ./spec/system/swars/show_spec.rb[1:1:1]                                          | passed  | 7.35 seconds    |
 ./spec/system/swars/show_spec.rb[1:2:1]                                          | passed  | 8.12 seconds    |
 ./spec/system/swars/show_spec.rb[1:2:2]                                          | passed  | 3.93 seconds    |

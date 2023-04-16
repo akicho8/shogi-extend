@@ -115,9 +115,10 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       assert2 { current_url.start_with?("https://www.kento-shogi.com/") }
     end
 
-    it "コピー" do
-      first(".KifCopyButton").click
-      assert_text("コピーしました")
+    it "KIF形式の棋譜コピー" do
+      table_in { first(".kif_copy").click }
+      assert_text "コピーしました"
+      assert2 { Clipboard.read.match?(/^手数/) }
     end
 
     it "詳細" do
@@ -368,6 +369,19 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       find(".sidebar_close_handle").click
       table_in { first(".kif_save_as_utf8").click }
       assert_text "たぶんダウンロードしました"
+    end
+  end
+
+  describe "KI2形式の棋譜コピー" do
+    it "works" do
+      visit2 "/swars/search", query: "YamadaTaro"
+      hamburger_click
+      column_toggle_menu_open
+      menu_item_sub_menu_click("コピー (KI2)")
+      find(".sidebar_close_handle").click
+      table_in { first(".ki2_copy").click }
+      assert_text "コピーしました"
+      assert2 { Clipboard.read.match?(/^▲/) }
     end
   end
 

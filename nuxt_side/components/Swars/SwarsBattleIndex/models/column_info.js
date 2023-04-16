@@ -22,7 +22,8 @@ export class ColumnInfo extends ApplicationMemoryRecord {
 
       { key: "piyo_shogi",           name: "ぴよ将棋",         visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
       { key: "kento",                name: "KENTO",            visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
-      { key: "kif_copy",             name: "コピー",           visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "kif_copy",             name: "コピー (KIF)",     visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
+      { key: "ki2_copy",             name: "コピー (KI2)",     visible: false,  operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
       { key: "kif_save_as_utf8",     name: "保存 (UTF-8)",     visible: false,  operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
       { key: "kif_save_as_shiftjis", name: "保存 (Shift_JIS)", visible: false,  operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
       { key: "show",                 name: "詳細",             visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },

@@ -4,9 +4,13 @@ const QueryString = require("query-string")
 
 export const mod_chore = {
   methods: {
-    kifu_copy_handle(row) {
+    kifu_copy_handle(row, options = {}) {
+      options = {
+        format: "kif",
+        ...options,
+      }
       this.$sound.play_click()
-      this.kif_clipboard_copy_from_url(`${row.show_path}.kif`)
+      this.kif_clipboard_copy_from_url(`${row.show_path}.${options.format}`)
     },
 
     kifu_save_url(row, params = {}) {
