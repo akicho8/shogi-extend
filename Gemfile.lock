@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 1b14df96f7e23bbae6cefe66e6b8f8fdbf49003d
+  revision: 594837bceb4578e28687d8f824b69b813ead2dc1
   branch: main
   specs:
     bioshogi (0.0.1)
@@ -10,7 +10,7 @@ GIT
       faraday
       memory_record
       rmagick (>= 5.0.0)
-      rubyzip
+      rubyzip (~> 2.3.0)
       systemu
       table_format
       thor
