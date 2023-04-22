@@ -6,6 +6,7 @@
     :paginated="false"
     :per-page="10"
     :mobile-cards="false"
+    default-sort-direction="desc"
     )
     b-table-column(v-slot="{row}" field="rank" label="順位" sortable numeric centered :width="1")
       | {{row.rank}}
