@@ -7,7 +7,7 @@
     )
     // ☗☖
     template(v-for="location in Location.values")
-      b-table-column(v-slot="{row}" :label="location.name" :key="location.key")
+      b-table-column(v-slot="{row}" :label="location.name" :key="location.key" cell-class="memberships_cell")
         .memberships(:class="judge_key_of(row, location)")
           template(v-for="m in memberships_of(row, location)")
             span {{m.user.name}}
@@ -66,14 +66,18 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbDashboardBattleIndex
-  .memberships
-    white-space: normal
-    word-break: break-all
+  .memberships_cell
+    font-size: $size-7
+    vertical-align: middle
 
-    display: flex
-    flex-wrap: wrap
-    gap: 0.5rem
+    .memberships
+      white-space: normal
+      word-break: break-all
 
-    &.is_win
-      font-weight: bold
+      display: flex
+      flex-wrap: wrap
+      gap: 0.5rem
+
+      &.is_win
+        font-weight: bold
 </style>
