@@ -17,7 +17,8 @@
     b-table-column(v-slot="{row}" field="lose_count" label="負" sortable numeric centered :width="1")
       | {{row.lose_count}}
     b-table-column(v-slot="{row}" field="win_rate" label="勝率" sortable numeric centered :width="1")
-      | {{win_rate_cast(row.win_rate)}}
+      span(:class="{'has-text-weight-bold': win_rate_good_p(row.win_rate)}")
+        | {{win_rate_cast(row.win_rate)}}
     b-table-column(v-slot="{row}" field="battles_count" label="対局数" sortable numeric centered :width="1" :visible="development_p")
       | {{row.battles_count}}
     b-table-column(v-slot="{row}" field="score" label="点数" sortable numeric centered :width="1" :visible="development_p")
@@ -36,6 +37,9 @@ export default {
   methods: {
     win_rate_cast(value) {
       return value.toFixed(3)
+    },
+    win_rate_good_p(value) {
+      return value >= 0.5
     },
   },
 }
