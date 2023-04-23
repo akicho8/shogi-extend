@@ -12,6 +12,11 @@ module Swars
           m.judge_key == "lose" && m.battle.turn_max >= 14 && m.battle.final_info.key == :DISCONNECT
         },
       },
+
+      # ・「10分」または「10秒」のルールまたは「五段以上」である
+      # ・手数50手以上の対局である
+      # ・対局に勝っている
+      # ・1秒または2秒の指し手が10連続以上続く
       {
         key: "運営支えマン",
         message: "将棋ウォーズの運営を支える力がある",
