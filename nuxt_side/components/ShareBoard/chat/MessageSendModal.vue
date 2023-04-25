@@ -79,13 +79,11 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+
 .MessageSendModal
   +modal_width(32rem)
 
   .modal-card
-    overflow: scroll
-    resize: both
-
     +mobile
       height: 29rem
     +tablet
@@ -124,4 +122,11 @@ export default {
     .xemoji
       height: 1.6em
       width: unset
+
+// Windows ではデザインが崩れるため開発環境でのみ有効化する
+.STAGE-development
+  .MessageSendModal
+    .modal-card
+      overflow: scroll
+      resize: both
 </style>
