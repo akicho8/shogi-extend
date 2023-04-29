@@ -1,34 +1,34 @@
 .title.is-4= current_record.new_record? ? "作成" : "設定"
 hr
-.columns
-  .column
-    = form_with(model: current_record) do |form|
-      = render partial: "error_messages", locals: {form: form}
-      = render partial: "form", locals: {form: form}
-      .field
-        .control
-          =<> form.submit(name: :_submit, class: "button is-primary has-text-weight-bold")
 
-  - if current_record.persisted?
-    .column.is-half
-      .box
-        .title.is-6
-          | アカウント連携
-        .content
-          - SocialMediaInfo.each do |e|
-            p
-              - if auth_info = current_record.auth_infos.find_by(provider: e.key)
-                = "#{e.name} アカウントと連携済み"
-                = " - "
-                = link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put)
-              - else
-                = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: ["button", "is-outlined", "has-background-#{e.key}", "has-text-white", "has-text-weight-bold"]) do
-                  span(class="icon is-medium")
-                    i(class="fab fa-#{e.key}")
-                  span
-                    = "#{e.name} アカウントと連携する"
-          small
-            | 連携を行うと安全かつ簡単にログインできるようになります
+.block
+  = form_with(model: current_record) do |form|
+    = render partial: "error_messages", locals: {form: form}
+    = render partial: "form", locals: {form: form}
+    .field
+      .control
+        =<> form.submit(name: :_submit, class: "button is-primary has-text-weight-bold")
+
+- if current_record.persisted?
+  .block
+    .box
+      .title.is-6
+        | アカウント連携
+      .content
+        - SocialMediaInfo.each do |e|
+          p
+            - if auth_info = current_record.auth_infos.find_by(provider: e.key)
+              = "#{e.name} アカウントと連携済み"
+              = " - "
+              = link_to("取り消す", [current_record, command: :social_disconnect, provider: e.key], method: :put)
+            - else
+              = link_to([current_record, command: :social_connect, provider: e.key], method: :put, class: "button") do
+                span(class="icon is-medium")
+                  i(class="fab fa-#{e.key}")
+                span
+                  = "#{e.name} アカウントと連携する"
+        small
+          | 連携を行うと安全かつ簡単にログインできるようになります
 - if false
   hr
   = link_to("ロビーに戻る", [:colosseum, :battles], class: "button")
