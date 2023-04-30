@@ -24,6 +24,7 @@
 # | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
 # | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
 # | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# | style_id       | Style          | integer(8) |             |                   | K          |
 # |----------------+----------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------

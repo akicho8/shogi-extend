@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Battle (share_board_battles as ShareBoard::Battle)
+#
+# |-----------------+--------------+-------------+-------------+------+-------|
+# | name            | desc         | type        | opts        | refs | index |
+# |-----------------+--------------+-------------+-------------+------+-------|
+# | id              | ID           | integer(8)  | NOT NULL PK |      |       |
+# | room_id         | Room         | integer(8)  | NOT NULL    |      | B     |
+# | key             | キー         | string(255) | NOT NULL    |      | A!    |
+# | title           | タイトル     | string(255) | NOT NULL    |      |       |
+# | sfen            | Sfen         | text(65535) | NOT NULL    |      |       |
+# | turn            | Turn         | integer(4)  | NOT NULL    |      | C     |
+# | win_location_id | Win location | integer(8)  | NOT NULL    |      | D     |
+# | position        | 順序         | integer(4)  |             |      | E     |
+# | created_at      | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時     | datetime    | NOT NULL    |      |       |
+# |-----------------+--------------+-------------+-------------+------+-------|
+
 module ShareBoard
   class Battle < ApplicationRecord
     belongs_to :room, touch: true, counter_cache: true

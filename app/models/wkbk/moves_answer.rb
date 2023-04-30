@@ -15,6 +15,10 @@
 # | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
 # | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
 # |-----------------+-----------------+-------------+-------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+#--------------------------------------------------------------------------------
 
 module Wkbk
   class MovesAnswer < ApplicationRecord

@@ -1,3 +1,28 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Roomship (share_board_roomships as ShareBoard::Roomship)
+#
+# |---------------+---------------+------------+-------------+------------+-------|
+# | name          | desc          | type       | opts        | refs       | index |
+# |---------------+---------------+------------+-------------+------------+-------|
+# | id            | ID            | integer(8) | NOT NULL PK |            |       |
+# | room_id       | Room          | integer(8) | NOT NULL    |            | A     |
+# | user_id       | User          | integer(8) | NOT NULL    | => User#id | B     |
+# | win_count     | Win count     | integer(4) | NOT NULL    |            | C     |
+# | lose_count    | Lose count    | integer(4) | NOT NULL    |            | D     |
+# | battles_count | Battles count | integer(4) | NOT NULL    |            |       |
+# | win_rate      | Win rate      | float(24)  | NOT NULL    |            | E     |
+# | score         | Score         | integer(4) | NOT NULL    |            | F     |
+# | rank          | Rank          | integer(4) | NOT NULL    |            | G     |
+# | created_at    | 作成日時      | datetime   | NOT NULL    |            |       |
+# | updated_at    | 更新日時      | datetime   | NOT NULL    |            |       |
+# |---------------+---------------+------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
 module ShareBoard
   class Roomship < ApplicationRecord
     belongs_to :user # 対局者

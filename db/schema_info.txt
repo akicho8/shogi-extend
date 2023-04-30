@@ -2,160 +2,21 @@
 
 # == Schema Information ==
 #
-# 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
+# Time record (xy_master_time_records as XyMaster::TimeRecord)
 #
-# |---------------+------------------+-------------+-------------+-------------------+-------|
-# | name          | desc             | type        | opts        | refs              | index |
-# |---------------+------------------+-------------+-------------+-------------------+-------|
-# | id            | ID               | integer(8)  | NOT NULL PK |                   |       |
-# | key           | 対局ユニークキー | string(255) | NOT NULL    |                   | A!    |
-# | battled_at    | 対局日時         | datetime    | NOT NULL    |                   | B     |
-# | csa_seq       | 棋譜             | text(65535) | NOT NULL    |                   |       |
-# | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | C     |
-# | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | D     |
-# | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
-# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   | E     |
-# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
-# | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
-# | start_turn    | 開始局面         | integer(4)  |             |                   | F     |
-# | critical_turn | 開戦             | integer(4)  |             |                   | G     |
-# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | H     |
-# | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
-# | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
-# | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
-# | xmode_id      | Xmode            | integer(8)  | NOT NULL    |                   | I     |
-# | preset_id     | Preset           | integer(8)  | NOT NULL    | => Preset#id      | J     |
-# | rule_id       | Rule             | integer(8)  | NOT NULL    |                   | K     |
-# | final_id      | Final            | integer(8)  | NOT NULL    |                   | L     |
-# |---------------+------------------+-------------+-------------+-------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# Preset.has_many :swars_battles
-# 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Preset (presets as Preset)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Rule (swars_rules as Swars::Rule)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Final (swars_finals as Swars::Final)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Xmode (swars_xmodes as Swars::Xmode)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 将棋ウォーズユーザー (swars_users as Swars::User)
-#
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | name              | desc              | type        | opts        | refs | index |
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | user_key          | User key          | string(255) | NOT NULL    |      | A!    |
-# | grade_id          | Grade             | integer(8)  | NOT NULL    |      | B     |
-# | last_reception_at | Last reception at | datetime    |             |      | C     |
-# | search_logs_count | Search logs count | integer(4)  | DEFAULT(0)  |      |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
-# |-------------------+-------------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# ユーザー (users as User)
-#
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | name                   | desc                       | type        | opts                | refs | index |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
-# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
-# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
-# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
-# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
-# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
-# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
-# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
-# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
-# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
-# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
-# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
-# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
-# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
-# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
-# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
-# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
-# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-
-# == Schema Information ==
-#
-# Banana message (kiwi_banana_messages as Kiwi::BananaMessage)
-#
-# |------------+----------+-------------+-------------+--------------+-------|
-# | name       | desc     | type        | opts        | refs         | index |
-# |------------+----------+-------------+-------------+--------------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | B     |
-# | banana_id  | Banana   | integer(8)  | NOT NULL    |              | A! C  |
-# | body       | 内容     | string(512) | NOT NULL    |              |       |
-# | position   | 順序     | integer(4)  | NOT NULL    |              | A! D  |
-# | deleted_at | 削除日時 | datetime    |             |              |       |
-# | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
-# |------------+----------+-------------+-------------+--------------+-------|
+# |------------+------------+-------------+-------------+--------------+-------|
+# | name       | desc       | type        | opts        | refs         | index |
+# |------------+------------+-------------+-------------+--------------+-------|
+# | id         | ID         | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User       | integer(8)  |             | => ::User#id | A     |
+# | rule_id    | Rule       | integer(8)  | NOT NULL    |              | B     |
+# | entry_name | Entry name | string(255) | NOT NULL    |              | C     |
+# | summary    | Summary    | string(255) |             |              |       |
+# | x_count    | X count    | integer(4)  | NOT NULL    |              |       |
+# | spent_sec  | Spent sec  | float(24)   | NOT NULL    |              |       |
+# | created_at | 作成日時   | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時   | datetime    | NOT NULL    |              |       |
+# |------------+------------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -163,90 +24,17 @@
 
 # == Schema Information ==
 #
-# 動画 (kiwi_lemons as Kiwi::Lemon)
+# Rule (xy_master_rules as XyMaster::Rule)
 #
-# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
-# | name             | desc                     | type        | opts        | refs                       | index |
-# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
-# | id               | ID                       | integer(8)  | NOT NULL PK |                            |       |
-# | user_id          | 所有者                   | integer(8)  | NOT NULL    | => User#id                 | A     |
-# | recordable_type  | 棋譜情報(クラス名)       | string(255) | NOT NULL    | SpecificModel(polymorphic) | B     |
-# | recordable_id    | 棋譜情報                 | integer(8)  | NOT NULL    | => (recordable_type)#id    | B     |
-# | all_params       | 変換用全パラメータ       | text(65535) | NOT NULL    |                            |       |
-# | process_begin_at | 開始日時                 | datetime    |             |                            | C     |
-# | process_end_at   | 終了日時(失敗時も入る)   | datetime    |             |                            | D     |
-# | successed_at     | 正常終了日時             | datetime    |             |                            | E     |
-# | errored_at       | 失敗終了日時             | datetime    |             |                            | F     |
-# | error_message    | エラー文言               | text(65535) |             |                            |       |
-# | content_type     | 動画タイプ               | string(255) |             |                            |       |
-# | file_size        | 動画サイズ               | integer(4)  |             |                            |       |
-# | ffprobe_info     | ffprobeの内容            | text(65535) |             |                            |       |
-# | browser_path     | 動画WEBパス              | string(255) |             |                            |       |
-# | filename_human   | 動画の人間向けファイル名 | string(255) |             |                            |       |
-# | created_at       | 作成日時                 | datetime    | NOT NULL    |                            | G     |
-# | updated_at       | 更新日時                 | datetime    | NOT NULL    |                            |       |
-# |------------------+--------------------------+-------------+-------------+----------------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# ライブラリ (kiwi_bananas as Kiwi::Banana)
-#
-# |-----------------------+----------------+-------------+---------------------+--------------+-------|
-# | name                  | desc           | type        | opts                | refs         | index |
-# |-----------------------+----------------+-------------+---------------------+--------------+-------|
-# | id                    | ID             | integer(8)  | NOT NULL PK         |              |       |
-# | key                   | キー           | string(255) | NOT NULL            |              | A!    |
-# | user_id               | 所有者         | integer(8)  | NOT NULL            | => ::User#id | C     |
-# | folder_id             | 公開設定       | integer(8)  | NOT NULL            |              | D     |
-# | lemon_id              | 動画ファイル   | integer(8)  | NOT NULL            |              | B!    |
-# | title                 | タイトル       | string(100) | NOT NULL            |              |       |
-# | description           | 説明           | text(65535) | NOT NULL            |              |       |
-# | thumbnail_pos         | サムネ位置(秒) | float(24)   | NOT NULL            |              |       |
-# | banana_messages_count | コメント数     | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
-# | access_logs_count     | アクセス数     | integer(4)  | DEFAULT(0) NOT NULL |              | F     |
-# | created_at            | 作成日時       | datetime    | NOT NULL            |              |       |
-# | updated_at            | 更新日時       | datetime    | NOT NULL            |              |       |
-# |-----------------------+----------------+-------------+---------------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Folder (kiwi_folders as Kiwi::Folder)
-#
-# |---------------+---------------+-------------+---------------------+------+-------|
-# | name          | desc          | type        | opts                | refs | index |
-# |---------------+---------------+-------------+---------------------+------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK         |      |       |
-# | key           | キー          | string(255) | NOT NULL            |      | A!    |
-# | position      | 順序          | integer(4)  | NOT NULL            |      | B     |
-# | bananas_count | Bananas count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL            |      |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL            |      |       |
-# |---------------+---------------+-------------+---------------------+------+-------|
-
-# == Schema Information ==
-#
-# Access log (kiwi_access_logs as Kiwi::AccessLog)
-#
-# |------------+----------+------------+-------------+--------------+-------|
-# | name       | desc     | type       | opts        | refs         | index |
-# |------------+----------+------------+-------------+--------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8) |             | => ::User#id | A     |
-# | banana_id  | Banana   | integer(8) | NOT NULL    |              | B     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
-# |------------+----------+------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |      | A     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -264,17 +52,292 @@
 
 # == Schema Information ==
 #
-# Judge (judges as Judge)
+# Sequence (wkbk_sequences as Wkbk::Sequence)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
 # |------------+----------+-------------+-------------+------+-------|
 # | id         | ID       | integer(8)  | NOT NULL PK |      |       |
 # | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  |             |      | B     |
+# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
 # | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
 # | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
 # |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)
+#
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
+# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
+# | moves_str       | 指し手          | text(65535) |             |      |       |
+# | moves_human_str | Moves human str | text(65535) |             |      |       |
+# | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)
+#
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | name            | desc            | type        | opts        | refs | index |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
+# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
+# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
+# | moves_str       | 指し手          | text(65535) |             |      |       |
+# | moves_human_str | Moves human str | text(65535) |             |      |       |
+# | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
+# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
+# |-----------------+-----------------+-------------+-------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::MovesAnswer モデルに belongs_to :article を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Lineage (wkbk_lineages as Wkbk::Lineage)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Folder (wkbk_folders as Wkbk::Folder)
+#
+# |----------------+----------------+-------------+---------------------+------+-------|
+# | name           | desc           | type        | opts                | refs | index |
+# |----------------+----------------+-------------+---------------------+------+-------|
+# | id             | ID             | integer(8)  | NOT NULL PK         |      |       |
+# | key            | キー           | string(255) | NOT NULL            |      | A!    |
+# | position       | 順序           | integer(4)  | NOT NULL            |      | B     |
+# | books_count    | Books count    | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | articles_count | Articles count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at     | 作成日時       | datetime    | NOT NULL            |      |       |
+# | updated_at     | 更新日時       | datetime    | NOT NULL            |      |       |
+# |----------------+----------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# Bookship (wkbk_bookships as Wkbk::Bookship)
+#
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | B     |
+# | book_id    | Book     | integer(8) | NOT NULL    |              | A! C  |
+# | article_id | Article  | integer(8) | NOT NULL    |              | A! D  |
+# | position   | 順序     | integer(4) | NOT NULL    |              | E     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Book (wkbk_books as Wkbk::Book)
+#
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | name              | desc              | type        | opts                | refs | index |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK         |      |       |
+# | key               | キー              | string(255) | NOT NULL            |      | A!    |
+# | user_id           | User              | integer(8)  | NOT NULL            |      | B     |
+# | folder_id         | Folder            | integer(8)  | NOT NULL            |      | C     |
+# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |      | D     |
+# | title             | タイトル          | string(100) | NOT NULL            |      |       |
+# | description       | 説明              | text(65535) | NOT NULL            |      |       |
+# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL            |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL            |      |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |      | E     |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Book (wkbk_books as Wkbk::Book)
+#
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | name              | desc              | type        | opts                | refs | index |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK         |      |       |
+# | key               | キー              | string(255) | NOT NULL            |      | A!    |
+# | user_id           | User              | integer(8)  | NOT NULL            |      | B     |
+# | folder_id         | Folder            | integer(8)  | NOT NULL            |      | C     |
+# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |      | D     |
+# | title             | タイトル          | string(100) | NOT NULL            |      |       |
+# | description       | 説明              | text(65535) | NOT NULL            |      |       |
+# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL            |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL            |      |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |      | E     |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Article (wkbk_articles as Wkbk::Article)
+#
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | name                | desc                | type        | opts                | refs | index |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
+# | key                 | キー                | string(255) | NOT NULL            |      | A!    |
+# | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
+# | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
+# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
+# | init_sfen           | Init sfen           | string(255) | NOT NULL            |      | E     |
+# | viewpoint           | Viewpoint           | string(255) | NOT NULL            |      |       |
+# | title               | タイトル            | string(100) | NOT NULL            |      |       |
+# | description         | 説明                | text(65535) | NOT NULL            |      |       |
+# | direction_message   | Direction message   | string(100) | NOT NULL            |      |       |
+# | turn_max            | 手数                | integer(4)  | NOT NULL            |      | F     |
+# | mate_skip           | Mate skip           | boolean     | NOT NULL            |      |       |
+# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | difficulty          | Difficulty          | integer(4)  | NOT NULL            |      | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Article (wkbk_articles as Wkbk::Article)
+#
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | name                | desc                | type        | opts                | refs | index |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK         |      |       |
+# | key                 | キー                | string(255) | NOT NULL            |      | A!    |
+# | user_id             | User                | integer(8)  | NOT NULL            |      | B     |
+# | folder_id           | Folder              | integer(8)  | NOT NULL            |      | C     |
+# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |      | D     |
+# | init_sfen           | Init sfen           | string(255) | NOT NULL            |      | E     |
+# | viewpoint           | Viewpoint           | string(255) | NOT NULL            |      |       |
+# | title               | タイトル            | string(100) | NOT NULL            |      |       |
+# | description         | 説明                | text(65535) | NOT NULL            |      |       |
+# | direction_message   | Direction message   | string(100) | NOT NULL            |      |       |
+# | turn_max            | 手数                | integer(4)  | NOT NULL            |      | F     |
+# | mate_skip           | Mate skip           | boolean     | NOT NULL            |      |       |
+# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | difficulty          | Difficulty          | integer(4)  | NOT NULL            |      | G     |
+# | answer_logs_count   | Answer logs count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL            |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL            |      |       |
+# |---------------------+---------------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :lineage を追加してください
+# [Warning: Need to add relation] Wkbk::Article モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Answer log (wkbk_answer_logs as Wkbk::AnswerLog)
+#
+# |----------------+-------------+------------+-------------+--------------+-------|
+# | name           | desc        | type       | opts        | refs         | index |
+# |----------------+-------------+------------+-------------+--------------+-------|
+# | id             | ID          | integer(8) | NOT NULL PK |              |       |
+# | article_id     | Article     | integer(8) | NOT NULL    |              | A     |
+# | answer_kind_id | Answer kind | integer(8) | NOT NULL    |              | B     |
+# | book_id        | Book        | integer(8) | NOT NULL    |              | C     |
+# | user_id        | User        | integer(8) | NOT NULL    | => ::User#id | D     |
+# | spent_sec      | Spent sec   | integer(4) | NOT NULL    |              | E     |
+# | created_at     | 作成日時    | datetime   | NOT NULL    |              | F     |
+# |----------------+-------------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Answer kind (wkbk_answer_kinds as Wkbk::AnswerKind)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Access log (wkbk_access_logs as Wkbk::AccessLog)
+#
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8) |             | => ::User#id | A     |
+# | book_id    | Book     | integer(8) | NOT NULL    |              | B     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# User (tsl_users as Tsl::User)
+#
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | name                | desc                | type        | opts        | refs | index |
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
+# | name                | Name                | string(255) | NOT NULL    |      | A!    |
+# | first_age           | First age           | integer(4)  |             |      |       |
+# | last_age            | Last age            | integer(4)  |             |      |       |
+# | memberships_count   | Memberships count   | integer(4)  | DEFAULT(0)  |      |       |
+# | runner_up_count     | Runner up count     | integer(4)  | NOT NULL    |      |       |
+# | level_up_generation | Level up generation | integer(4)  |             |      | B     |
+# | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
+# |---------------------+---------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -317,35 +380,39 @@
 
 # == Schema Information ==
 #
-# User (tsl_users as Tsl::User)
+# Zip dl log (swars_zip_dl_logs as Swars::ZipDlLog)
 #
-# |---------------------+---------------------+-------------+-------------+------+-------|
-# | name                | desc                | type        | opts        | refs | index |
-# |---------------------+---------------------+-------------+-------------+------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
-# | name                | Name                | string(255) | NOT NULL    |      | A!    |
-# | first_age           | First age           | integer(4)  |             |      |       |
-# | last_age            | Last age            | integer(4)  |             |      |       |
-# | memberships_count   | Memberships count   | integer(4)  | DEFAULT(0)  |      |       |
-# | runner_up_count     | Runner up count     | integer(4)  | NOT NULL    |      |       |
-# | level_up_generation | Level up generation | integer(4)  |             |      | B     |
-# | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
-# |---------------------+---------------------+-------------+-------------+------+-------|
+# |---------------+------------+-------------+-------------+---------------------+-------|
+# | name          | desc       | type        | opts        | refs                | index |
+# |---------------+------------+-------------+-------------+---------------------+-------|
+# | id            | ID         | integer(8)  | NOT NULL PK |                     |       |
+# | user_id       | User       | integer(8)  | NOT NULL    | => ::User#id        | A     |
+# | swars_user_id | Swars user | integer(8)  | NOT NULL    | => ::Swars::User#id | B     |
+# | query         | Query      | string(255) | NOT NULL    |                     |       |
+# | dl_count      | Dl count   | integer(4)  | NOT NULL    |                     |       |
+# | begin_at      | Begin at   | datetime    | NOT NULL    |                     |       |
+# | end_at        | End at     | datetime    | NOT NULL    |                     | C     |
+# | created_at    | 作成日時   | datetime    | NOT NULL    |                     | D     |
+# | updated_at    | 更新日時   | datetime    | NOT NULL    |                     |       |
+# |---------------+------------+-------------+-------------+---------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+# 【警告:リレーション欠如】::Swars::Userモデルで has_many :swars/zip_dl_logs されていません
+#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# Auth info (auth_infos as AuthInfo)
+# Search log (swars_search_logs as Swars::SearchLog)
 #
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | name      | desc         | type        | opts        | refs       | index |
-# |-----------+--------------+-------------+-------------+------------+-------|
-# | id        | ID           | integer(8)  | NOT NULL PK |            |       |
-# | user_id   | User         | integer(8)  | NOT NULL    | => User#id | B     |
-# | provider  | Provider     | string(255) | NOT NULL    |            | A!    |
-# | uid       | Uid          | string(255) | NOT NULL    |            | A!    |
-# | meta_info | 棋譜ヘッダー | text(65535) |             |            |       |
-# |-----------+--------------+-------------+-------------+------------+-------|
+# |------------+----------+------------+-------------+------------+-------|
+# | name       | desc     | type       | opts        | refs       | index |
+# |------------+----------+------------+-------------+------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |            |       |
+# | user_id    | User     | integer(8) | NOT NULL    | => User#id | A     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |            |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |            |       |
+# |------------+----------+------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -353,194 +420,21 @@
 
 # == Schema Information ==
 #
-# Answer kind (wkbk_answer_kinds as Wkbk::AnswerKind)
+# Membership extra (swars_membership_extras as Swars::MembershipExtra)
 #
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
+# |-------------------+-------------------+------------+-------------+------+-------|
+# | name              | desc              | type       | opts        | refs | index |
+# |-------------------+-------------------+------------+-------------+------+-------|
+# | id                | ID                | integer(8) | NOT NULL PK |      |       |
+# | membership_id     | Membership        | integer(8) | NOT NULL    |      | A!    |
+# | used_piece_counts | Used piece counts | json       | NOT NULL    |      |       |
+# | created_at        | 作成日時          | datetime   | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime   | NOT NULL    |      |       |
+# |-------------------+-------------------+------------+-------------+------+-------|
 
 # == Schema Information ==
 #
-# Article (wkbk_articles as Wkbk::Article)
-#
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | name                | desc                | type        | opts                | refs         | index |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-# | id                  | ID                  | integer(8)  | NOT NULL PK         |              |       |
-# | key                 | キー                | string(255) | NOT NULL            |              | A!    |
-# | user_id             | User                | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id           | Folder              | integer(8)  | NOT NULL            |              | C     |
-# | lineage_id          | Lineage             | integer(8)  | NOT NULL            |              | D     |
-# | init_sfen           | Init sfen           | string(255) | NOT NULL            |              | E     |
-# | viewpoint           | Viewpoint           | string(255) | NOT NULL            |              |       |
-# | title               | タイトル            | string(100) | NOT NULL            |              |       |
-# | description         | 説明                | text(65535) | NOT NULL            |              |       |
-# | direction_message   | Direction message   | string(100) | NOT NULL            |              |       |
-# | turn_max            | 手数                | integer(4)  | NOT NULL            |              | F     |
-# | mate_skip           | Mate skip           | boolean     | NOT NULL            |              |       |
-# | moves_answers_count | Moves answers count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | difficulty          | Difficulty          | integer(4)  | NOT NULL            |              | G     |
-# | answer_logs_count   | Answer logs count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | created_at          | 作成日時            | datetime    | NOT NULL            |              |       |
-# | updated_at          | 更新日時            | datetime    | NOT NULL            |              |       |
-# |---------------------+---------------------+-------------+---------------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Lineage (wkbk_lineages as Wkbk::Lineage)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# 指し手 (wkbk_moves_answers as Wkbk::MovesAnswer)
-#
-# |-----------------+-----------------+-------------+-------------+------+-------|
-# | name            | desc            | type        | opts        | refs | index |
-# |-----------------+-----------------+-------------+-------------+------+-------|
-# | id              | ID              | integer(8)  | NOT NULL PK |      |       |
-# | article_id      | Article         | integer(8)  | NOT NULL    |      | A     |
-# | moves_count     | Moves count     | integer(4)  | NOT NULL    |      | B     |
-# | moves_str       | 指し手          | text(65535) |             |      |       |
-# | moves_human_str | Moves human str | text(65535) |             |      |       |
-# | position        | 順序            | integer(4)  | NOT NULL    |      | C     |
-# | created_at      | 作成日時        | datetime    | NOT NULL    |      |       |
-# | updated_at      | 更新日時        | datetime    | NOT NULL    |      |       |
-# |-----------------+-----------------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Book (wkbk_books as Wkbk::Book)
-#
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
-# | name              | desc              | type        | opts                | refs         | index |
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK         |              |       |
-# | key               | キー              | string(255) | NOT NULL            |              | A!    |
-# | user_id           | User              | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id         | Folder            | integer(8)  | NOT NULL            |              | C     |
-# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |              | D     |
-# | title             | タイトル          | string(100) | NOT NULL            |              |       |
-# | description       | 説明              | text(65535) | NOT NULL            |              |       |
-# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
-# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Folder (wkbk_folders as Wkbk::Folder)
-#
-# |----------------+----------------+-------------+---------------------+------+-------|
-# | name           | desc           | type        | opts                | refs | index |
-# |----------------+----------------+-------------+---------------------+------+-------|
-# | id             | ID             | integer(8)  | NOT NULL PK         |      |       |
-# | key            | キー           | string(255) | NOT NULL            |      | A!    |
-# | position       | 順序           | integer(4)  | NOT NULL            |      | B     |
-# | books_count    | Books count    | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | articles_count | Articles count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | created_at     | 作成日時       | datetime    | NOT NULL            |      |       |
-# | updated_at     | 更新日時       | datetime    | NOT NULL            |      |       |
-# |----------------+----------------+-------------+---------------------+------+-------|
-
-# == Schema Information ==
-#
-# Sequence (wkbk_sequences as Wkbk::Sequence)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | position   | 順序     | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Bookship (wkbk_bookships as Wkbk::Bookship)
-#
-# |------------+----------+------------+-------------+--------------+-------|
-# | name       | desc     | type       | opts        | refs         | index |
-# |------------+----------+------------+-------------+--------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8) | NOT NULL    | => ::User#id | B     |
-# | book_id    | Book     | integer(8) | NOT NULL    |              | A! C  |
-# | article_id | Article  | integer(8) | NOT NULL    |              | A! D  |
-# | position   | 順序     | integer(4) | NOT NULL    |              | E     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |              |       |
-# |------------+----------+------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Access log (wkbk_access_logs as Wkbk::AccessLog)
-#
-# |------------+----------+------------+-------------+--------------+-------|
-# | name       | desc     | type       | opts        | refs         | index |
-# |------------+----------+------------+-------------+--------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |              |       |
-# | user_id    | User     | integer(8) |             | => ::User#id | A     |
-# | book_id    | Book     | integer(8) | NOT NULL    |              | B     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
-# |------------+----------+------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Answer log (wkbk_answer_logs as Wkbk::AnswerLog)
-#
-# |----------------+-------------+------------+-------------+--------------+-------|
-# | name           | desc        | type       | opts        | refs         | index |
-# |----------------+-------------+------------+-------------+--------------+-------|
-# | id             | ID          | integer(8) | NOT NULL PK |              |       |
-# | article_id     | Article     | integer(8) | NOT NULL    |              | A     |
-# | answer_kind_id | Answer kind | integer(8) | NOT NULL    |              | B     |
-# | book_id        | Book        | integer(8) | NOT NULL    |              | C     |
-# | user_id        | User        | integer(8) | NOT NULL    | => ::User#id | D     |
-# | spent_sec      | Spent sec   | integer(4) | NOT NULL    |              | E     |
-# | created_at     | 作成日時    | datetime   | NOT NULL    |              | F     |
-# |----------------+-------------+------------+-------------+--------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Location (locations as Location)
+# Style (swars_styles as Swars::Style)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |
@@ -577,6 +471,7 @@
 # | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
 # | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
 # | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# | style_id       | Style          | integer(8) |             |                   | K          |
 # |----------------+----------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -584,57 +479,6 @@
 # Location.has_many :swars_memberships
 # Swars::User.has_many :op_memberships, foreign_key: :op_user_id
 # User.has_one :profile
-#--------------------------------------------------------------------------------
-
-# == Schema Information ==
-#
-# Membership extra (swars_membership_extras as Swars::MembershipExtra)
-#
-# |-------------------+-------------------+------------+-------------+------+-------|
-# | name              | desc              | type       | opts        | refs | index |
-# |-------------------+-------------------+------------+-------------+------+-------|
-# | id                | ID                | integer(8) | NOT NULL PK |      |       |
-# | membership_id     | Membership        | integer(8) | NOT NULL    |      | A!    |
-# | used_piece_counts | Used piece counts | json       | NOT NULL    |      |       |
-# | created_at        | 作成日時          | datetime   | NOT NULL    |      |       |
-# | updated_at        | 更新日時          | datetime   | NOT NULL    |      |       |
-# |-------------------+-------------------+------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Grade (swars_grades as Swars::Grade)
-#
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      | A!    |
-# | priority   | 優先度   | integer(4)  | NOT NULL    |      | B     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
-
-# == Schema Information ==
-#
-# Zip dl log (swars_zip_dl_logs as Swars::ZipDlLog)
-#
-# |---------------+------------+-------------+-------------+---------------------+-------|
-# | name          | desc       | type        | opts        | refs                | index |
-# |---------------+------------+-------------+-------------+---------------------+-------|
-# | id            | ID         | integer(8)  | NOT NULL PK |                     |       |
-# | user_id       | User       | integer(8)  | NOT NULL    | => ::User#id        | A     |
-# | swars_user_id | Swars user | integer(8)  | NOT NULL    | => ::Swars::User#id | B     |
-# | query         | Query      | string(255) | NOT NULL    |                     |       |
-# | dl_count      | Dl count   | integer(4)  | NOT NULL    |                     |       |
-# | begin_at      | Begin at   | datetime    | NOT NULL    |                     |       |
-# | end_at        | End at     | datetime    | NOT NULL    |                     | C     |
-# | created_at    | 作成日時   | datetime    | NOT NULL    |                     | D     |
-# | updated_at    | 更新日時   | datetime    | NOT NULL    |                     |       |
-# |---------------+------------+-------------+-------------+---------------------+-------|
-#
-#- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
-# 【警告:リレーション欠如】::Swars::Userモデルで has_many :swars/zip_dl_logs されていません
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -660,16 +504,37 @@
 
 # == Schema Information ==
 #
-# Search log (swars_search_logs as Swars::SearchLog)
+# User (share_board_users as ShareBoard::User)
 #
-# |------------+----------+------------+-------------+------------+-------|
-# | name       | desc     | type       | opts        | refs       | index |
-# |------------+----------+------------+-------------+------------+-------|
-# | id         | ID       | integer(8) | NOT NULL PK |            |       |
-# | user_id    | User     | integer(8) | NOT NULL    | => User#id | A     |
-# | created_at | 作成日時 | datetime   | NOT NULL    |            |       |
-# | updated_at | 更新日時 | datetime   | NOT NULL    |            |       |
-# |------------+----------+------------+-------------+------------+-------|
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | name              | desc              | type        | opts        | refs | index |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
+# | name              | Name              | string(255) | NOT NULL    |      | A!    |
+# | memberships_count | Memberships count | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Roomship (share_board_roomships as ShareBoard::Roomship)
+#
+# |---------------+---------------+------------+-------------+------------+-------|
+# | name          | desc          | type       | opts        | refs       | index |
+# |---------------+---------------+------------+-------------+------------+-------|
+# | id            | ID            | integer(8) | NOT NULL PK |            |       |
+# | room_id       | Room          | integer(8) | NOT NULL    |            | A     |
+# | user_id       | User          | integer(8) | NOT NULL    | => User#id | B     |
+# | win_count     | Win count     | integer(4) | NOT NULL    |            | C     |
+# | lose_count    | Lose count    | integer(4) | NOT NULL    |            | D     |
+# | battles_count | Battles count | integer(4) | NOT NULL    |            |       |
+# | win_rate      | Win rate      | float(24)  | NOT NULL    |            | E     |
+# | score         | Score         | integer(4) | NOT NULL    |            | F     |
+# | rank          | Rank          | integer(4) | NOT NULL    |            | G     |
+# | created_at    | 作成日時      | datetime   | NOT NULL    |            |       |
+# | updated_at    | 更新日時      | datetime   | NOT NULL    |            |       |
+# |---------------+---------------+------------+-------------+------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
@@ -677,52 +542,59 @@
 
 # == Schema Information ==
 #
-# App log (app_logs as AppLog)
+# Room (share_board_rooms as ShareBoard::Room)
 #
-# |------------+----------+--------------+-------------+------+-------|
-# | name       | desc     | type         | opts        | refs | index |
-# |------------+----------+--------------+-------------+------+-------|
-# | id         | ID       | integer(8)   | NOT NULL PK |      |       |
-# | subject    | 件名     | string(255)  | NOT NULL    |      |       |
-# | body       | 内容     | string(8192) | NOT NULL    |      |       |
-# | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
-# |------------+----------+--------------+-------------+------+-------|
+# |---------------+---------------+-------------+-------------+------+-------|
+# | name          | desc          | type        | opts        | refs | index |
+# |---------------+---------------+-------------+-------------+------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK |      |       |
+# | key           | キー          | string(255) | NOT NULL    |      | A!    |
+# | battles_count | Battles count | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL    |      |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL    |      |       |
+# |---------------+---------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
-# Time record (xy_master_time_records as XyMaster::TimeRecord)
+# Membership (share_board_memberships as ShareBoard::Membership)
 #
-# |------------+------------+-------------+-------------+--------------+-------|
-# | name       | desc       | type        | opts        | refs         | index |
-# |------------+------------+-------------+-------------+--------------+-------|
-# | id         | ID         | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User       | integer(8)  |             | => ::User#id | A     |
-# | rule_id    | Rule       | integer(8)  | NOT NULL    |              | B     |
-# | entry_name | Entry name | string(255) | NOT NULL    |              | C     |
-# | summary    | Summary    | string(255) |             |              |       |
-# | x_count    | X count    | integer(4)  | NOT NULL    |              |       |
-# | spent_sec  | Spent sec  | float(24)   | NOT NULL    |              |       |
-# | created_at | 作成日時   | datetime    | NOT NULL    |              |       |
-# | updated_at | 更新日時   | datetime    | NOT NULL    |              |       |
-# |------------+------------+-------------+-------------+--------------+-------|
+# |-------------+----------+------------+-------------+----------------+-------|
+# | name        | desc     | type       | opts        | refs           | index |
+# |-------------+----------+------------+-------------+----------------+-------|
+# | id          | ID       | integer(8) | NOT NULL PK |                |       |
+# | battle_id   | Battle   | integer(8) | NOT NULL    |                | A     |
+# | user_id     | User     | integer(8) | NOT NULL    | => User#id     | B     |
+# | judge_id    | Judge    | integer(8) | NOT NULL    | => Judge#id    | C     |
+# | location_id | Location | integer(8) | NOT NULL    | => Location#id | D     |
+# | position    | 順序     | integer(4) |             |                | E     |
+# | created_at  | 作成日時 | datetime   | NOT NULL    |                |       |
+# | updated_at  | 更新日時 | datetime   | NOT NULL    |                |       |
+# |-------------+----------+------------+-------------+----------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
+# Judge.has_many :swars_memberships
+# Location.has_many :swars_memberships
 # User.has_one :profile
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
-# Rule (xy_master_rules as XyMaster::Rule)
+# Battle (share_board_battles as ShareBoard::Battle)
 #
-# |------------+----------+-------------+-------------+------+-------|
-# | name       | desc     | type        | opts        | refs | index |
-# |------------+----------+-------------+-------------+------+-------|
-# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
-# | key        | キー     | string(255) | NOT NULL    |      |       |
-# | position   | 順序     | integer(4)  | NOT NULL    |      | A     |
-# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
-# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
-# |------------+----------+-------------+-------------+------+-------|
+# |-----------------+--------------+-------------+-------------+------+-------|
+# | name            | desc         | type        | opts        | refs | index |
+# |-----------------+--------------+-------------+-------------+------+-------|
+# | id              | ID           | integer(8)  | NOT NULL PK |      |       |
+# | room_id         | Room         | integer(8)  | NOT NULL    |      | B     |
+# | key             | キー         | string(255) | NOT NULL    |      | A!    |
+# | title           | タイトル     | string(255) | NOT NULL    |      |       |
+# | sfen            | Sfen         | text(65535) | NOT NULL    |      |       |
+# | turn            | Turn         | integer(4)  | NOT NULL    |      | C     |
+# | win_location_id | Win location | integer(8)  | NOT NULL    |      | D     |
+# | position        | 順序         | integer(4)  |             |      | E     |
+# | created_at      | 作成日時     | datetime    | NOT NULL    |      |       |
+# | updated_at      | 更新日時     | datetime    | NOT NULL    |      |       |
+# |-----------------+--------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -745,21 +617,198 @@
 
 # == Schema Information ==
 #
-# Cpu battle record (cpu_battle_records as CpuBattleRecord)
+# Location (locations as Location)
 #
-# |------------+-----------+-------------+-------------+--------------+-------|
-# | name       | desc      | type        | opts        | refs         | index |
-# |------------+-----------+-------------+-------------+--------------+-------|
-# | id         | ID        | integer(8)  | NOT NULL PK |              |       |
-# | user_id    | User      | integer(8)  |             | => ::User#id | A     |
-# | judge_key  | Judge key | string(255) | NOT NULL    |              | B     |
-# | created_at | 作成日時  | datetime    | NOT NULL    |              |       |
-# | updated_at | 更新日時  | datetime    | NOT NULL    |              |       |
-# |------------+-----------+-------------+-------------+--------------+-------|
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 動画 (kiwi_lemons as Kiwi::Lemon)
+#
+# |------------------+--------------------------+-------------+-------------+------+-------|
+# | name             | desc                     | type        | opts        | refs | index |
+# |------------------+--------------------------+-------------+-------------+------+-------|
+# | id               | ID                       | integer(8)  | NOT NULL PK |      |       |
+# | user_id          | 所有者                   | integer(8)  | NOT NULL    |      | A     |
+# | recordable_type  | 棋譜情報(クラス名)       | string(255) | NOT NULL    |      | B     |
+# | recordable_id    | 棋譜情報                 | integer(8)  | NOT NULL    |      | B     |
+# | all_params       | 変換用全パラメータ       | text(65535) | NOT NULL    |      |       |
+# | process_begin_at | 開始日時                 | datetime    |             |      | C     |
+# | process_end_at   | 終了日時(失敗時も入る)   | datetime    |             |      | D     |
+# | successed_at     | 正常終了日時             | datetime    |             |      | E     |
+# | errored_at       | 失敗終了日時             | datetime    |             |      | F     |
+# | error_message    | エラー文言               | text(65535) |             |      |       |
+# | content_type     | 動画タイプ               | string(255) |             |      |       |
+# | file_size        | 動画サイズ               | integer(4)  |             |      |       |
+# | ffprobe_info     | ffprobeの内容            | text(65535) |             |      |       |
+# | browser_path     | 動画WEBパス              | string(255) |             |      |       |
+# | filename_human   | 動画の人間向けファイル名 | string(255) |             |      |       |
+# | created_at       | 作成日時                 | datetime    | NOT NULL    |      | G     |
+# | updated_at       | 更新日時                 | datetime    | NOT NULL    |      |       |
+# |------------------+--------------------------+-------------+-------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# 動画 (kiwi_lemons as Kiwi::Lemon)
+#
+# |------------------+--------------------------+-------------+-------------+------+-------|
+# | name             | desc                     | type        | opts        | refs | index |
+# |------------------+--------------------------+-------------+-------------+------+-------|
+# | id               | ID                       | integer(8)  | NOT NULL PK |      |       |
+# | user_id          | 所有者                   | integer(8)  | NOT NULL    |      | A     |
+# | recordable_type  | 棋譜情報(クラス名)       | string(255) | NOT NULL    |      | B     |
+# | recordable_id    | 棋譜情報                 | integer(8)  | NOT NULL    |      | B     |
+# | all_params       | 変換用全パラメータ       | text(65535) | NOT NULL    |      |       |
+# | process_begin_at | 開始日時                 | datetime    |             |      | C     |
+# | process_end_at   | 終了日時(失敗時も入る)   | datetime    |             |      | D     |
+# | successed_at     | 正常終了日時             | datetime    |             |      | E     |
+# | errored_at       | 失敗終了日時             | datetime    |             |      | F     |
+# | error_message    | エラー文言               | text(65535) |             |      |       |
+# | content_type     | 動画タイプ               | string(255) |             |      |       |
+# | file_size        | 動画サイズ               | integer(4)  |             |      |       |
+# | ffprobe_info     | ffprobeの内容            | text(65535) |             |      |       |
+# | browser_path     | 動画WEBパス              | string(255) |             |      |       |
+# | filename_human   | 動画の人間向けファイル名 | string(255) |             |      |       |
+# | created_at       | 作成日時                 | datetime    | NOT NULL    |      | G     |
+# | updated_at       | 更新日時                 | datetime    | NOT NULL    |      |       |
+# |------------------+--------------------------+-------------+-------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :recordable, polymorphic: true を追加してください
+# [Warning: Need to add relation] Kiwi::Lemon モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Folder (kiwi_folders as Kiwi::Folder)
+#
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | name          | desc          | type        | opts                | refs | index |
+# |---------------+---------------+-------------+---------------------+------+-------|
+# | id            | ID            | integer(8)  | NOT NULL PK         |      |       |
+# | key           | キー          | string(255) | NOT NULL            |      | A!    |
+# | position      | 順序          | integer(4)  | NOT NULL            |      | B     |
+# | bananas_count | Bananas count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at    | 作成日時      | datetime    | NOT NULL            |      |       |
+# | updated_at    | 更新日時      | datetime    | NOT NULL            |      |       |
+# |---------------+---------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# Banana message (kiwi_banana_messages as Kiwi::BananaMessage)
+#
+# |------------+----------+-------------+-------------+--------------+-------|
+# | name       | desc     | type        | opts        | refs         | index |
+# |------------+----------+-------------+-------------+--------------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8)  | NOT NULL    | => ::User#id | B     |
+# | banana_id  | Banana   | integer(8)  | NOT NULL    |              | A! C  |
+# | body       | 内容     | string(512) | NOT NULL    |              |       |
+# | position   | 順序     | integer(4)  | NOT NULL    |              | A! D  |
+# | deleted_at | 削除日時 | datetime    |             |              |       |
+# | created_at | 作成日時 | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |              |       |
+# |------------+----------+-------------+-------------+--------------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
 # User.has_one :profile
 #--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# ライブラリ (kiwi_bananas as Kiwi::Banana)
+#
+# |-----------------------+----------------+-------------+---------------------+------+-------|
+# | name                  | desc           | type        | opts                | refs | index |
+# |-----------------------+----------------+-------------+---------------------+------+-------|
+# | id                    | ID             | integer(8)  | NOT NULL PK         |      |       |
+# | key                   | キー           | string(255) | NOT NULL            |      | A!    |
+# | user_id               | 所有者         | integer(8)  | NOT NULL            |      | C     |
+# | folder_id             | 公開設定       | integer(8)  | NOT NULL            |      | D     |
+# | lemon_id              | 動画ファイル   | integer(8)  | NOT NULL            |      | B!    |
+# | title                 | タイトル       | string(100) | NOT NULL            |      |       |
+# | description           | 説明           | text(65535) | NOT NULL            |      |       |
+# | thumbnail_pos         | サムネ位置(秒) | float(24)   | NOT NULL            |      |       |
+# | banana_messages_count | コメント数     | integer(4)  | DEFAULT(0) NOT NULL |      | E     |
+# | access_logs_count     | アクセス数     | integer(4)  | DEFAULT(0) NOT NULL |      | F     |
+# | created_at            | 作成日時       | datetime    | NOT NULL            |      |       |
+# | updated_at            | 更新日時       | datetime    | NOT NULL            |      |       |
+# |-----------------------+----------------+-------------+---------------------+------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :folder を追加してください
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :lemon を追加してください
+# [Warning: Need to add relation] Kiwi::Banana モデルに belongs_to :user を追加してください
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# ライブラリ (kiwi_bananas as Kiwi::Banana)
+#
+# |-----------------------+----------------+-------------+---------------------+--------------+-------|
+# | name                  | desc           | type        | opts                | refs         | index |
+# |-----------------------+----------------+-------------+---------------------+--------------+-------|
+# | id                    | ID             | integer(8)  | NOT NULL PK         |              |       |
+# | key                   | キー           | string(255) | NOT NULL            |              | A!    |
+# | user_id               | 所有者         | integer(8)  | NOT NULL            | => ::User#id | C     |
+# | folder_id             | 公開設定       | integer(8)  | NOT NULL            |              | D     |
+# | lemon_id              | 動画ファイル   | integer(8)  | NOT NULL            |              | B!    |
+# | title                 | タイトル       | string(100) | NOT NULL            |              |       |
+# | description           | 説明           | text(65535) | NOT NULL            |              |       |
+# | thumbnail_pos         | サムネ位置(秒) | float(24)   | NOT NULL            |              |       |
+# | banana_messages_count | コメント数     | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
+# | access_logs_count     | アクセス数     | integer(4)  | DEFAULT(0) NOT NULL |              | F     |
+# | created_at            | 作成日時       | datetime    | NOT NULL            |              |       |
+# | updated_at            | 更新日時       | datetime    | NOT NULL            |              |       |
+# |-----------------------+----------------+-------------+---------------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Access log (kiwi_access_logs as Kiwi::AccessLog)
+#
+# |------------+----------+------------+-------------+--------------+-------|
+# | name       | desc     | type       | opts        | refs         | index |
+# |------------+----------+------------+-------------+--------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |              |       |
+# | user_id    | User     | integer(8) |             | => ::User#id | A     |
+# | banana_id  | Banana   | integer(8) | NOT NULL    |              | B     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |              |       |
+# |------------+----------+------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Judge (judges as Judge)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -793,5 +842,208 @@
 #- Remarks ----------------------------------------------------------------------
 # Preset.has_many :swars_battles
 # User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Cpu battle record (cpu_battle_records as CpuBattleRecord)
+#
+# |------------+-----------+-------------+-------------+--------------+-------|
+# | name       | desc      | type        | opts        | refs         | index |
+# |------------+-----------+-------------+-------------+--------------+-------|
+# | id         | ID        | integer(8)  | NOT NULL PK |              |       |
+# | user_id    | User      | integer(8)  |             | => ::User#id | A     |
+# | judge_key  | Judge key | string(255) | NOT NULL    |              | B     |
+# | created_at | 作成日時  | datetime    | NOT NULL    |              |       |
+# | updated_at | 更新日時  | datetime    | NOT NULL    |              |       |
+# |------------+-----------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Auth info (auth_infos as AuthInfo)
+#
+# |-----------+--------------+-------------+-------------+------------+-------|
+# | name      | desc         | type        | opts        | refs       | index |
+# |-----------+--------------+-------------+-------------+------------+-------|
+# | id        | ID           | integer(8)  | NOT NULL PK |            |       |
+# | user_id   | User         | integer(8)  | NOT NULL    | => User#id | B     |
+# | provider  | Provider     | string(255) | NOT NULL    |            | A!    |
+# | uid       | Uid          | string(255) | NOT NULL    |            | A!    |
+# | meta_info | 棋譜ヘッダー | text(65535) |             |            |       |
+# |-----------+--------------+-------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# App log (app_logs as AppLog)
+#
+# |------------+----------+--------------+-------------+------+-------|
+# | name       | desc     | type         | opts        | refs | index |
+# |------------+----------+--------------+-------------+------+-------|
+# | id         | ID       | integer(8)   | NOT NULL PK |      |       |
+# | subject    | 件名     | string(255)  | NOT NULL    |      |       |
+# | body       | 内容     | string(8192) | NOT NULL    |      |       |
+# | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
+# |------------+----------+--------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# ユーザー (users as User)
+#
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+# | name                   | desc                       | type        | opts                | refs | index |
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
+# | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
+# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
+# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
+# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
+# | name_input_at          | Name input at              | datetime    |                     |      |       |
+# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
+# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
+# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
+# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
+# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
+# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
+# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
+# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
+# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
+# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
+# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
+# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
+# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
+# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
+# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
+# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
+# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
+# |------------------------+----------------------------+-------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# Grade (swars_grades as Swars::Grade)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | priority   | 優先度   | integer(4)  | NOT NULL    |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 将棋ウォーズユーザー (swars_users as Swars::User)
+#
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | name              | desc              | type        | opts        | refs | index |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
+# | user_key          | User key          | string(255) | NOT NULL    |      | A!    |
+# | grade_id          | Grade             | integer(8)  | NOT NULL    |      | B     |
+# | last_reception_at | Last reception at | datetime    |             |      | C     |
+# | search_logs_count | Search logs count | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
+# |-------------------+-------------------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Xmode (swars_xmodes as Swars::Xmode)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Final (swars_finals as Swars::Final)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Rule (swars_rules as Swars::Rule)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Preset (presets as Preset)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# 将棋ウォーズ対戦情報 (swars_battles as Swars::Battle)
+#
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | name          | desc             | type        | opts        | refs              | index |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+# | id            | ID               | integer(8)  | NOT NULL PK |                   |       |
+# | key           | 対局ユニークキー | string(255) | NOT NULL    |                   | A!    |
+# | battled_at    | 対局日時         | datetime    | NOT NULL    |                   | B     |
+# | csa_seq       | 棋譜             | text(65535) | NOT NULL    |                   |       |
+# | win_user_id   | 勝者             | integer(8)  |             | => Swars::User#id | C     |
+# | turn_max      | 手数             | integer(4)  | NOT NULL    |                   | D     |
+# | meta_info     | メタ情報         | text(65535) | NOT NULL    |                   |       |
+# | accessed_at   | 最終アクセス日時 | datetime    | NOT NULL    |                   | E     |
+# | sfen_body     | SFEN形式棋譜     | text(65535) | NOT NULL    |                   |       |
+# | sfen_hash     | Sfen hash        | string(255) | NOT NULL    |                   |       |
+# | start_turn    | 開始局面         | integer(4)  |             |                   | F     |
+# | critical_turn | 開戦             | integer(4)  |             |                   | G     |
+# | outbreak_turn | Outbreak turn    | integer(4)  |             |                   | H     |
+# | image_turn    | OGP画像の局面    | integer(4)  |             |                   |       |
+# | created_at    | 作成日時         | datetime    | NOT NULL    |                   |       |
+# | updated_at    | 更新日時         | datetime    | NOT NULL    |                   |       |
+# | xmode_id      | Xmode            | integer(8)  | NOT NULL    |                   | I     |
+# | preset_id     | Preset           | integer(8)  | NOT NULL    | => Preset#id      | J     |
+# | rule_id       | Rule             | integer(8)  | NOT NULL    |                   | K     |
+# | final_id      | Final            | integer(8)  | NOT NULL    |                   | L     |
+# |---------------+------------------+-------------+-------------+-------------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# Preset.has_many :swars_battles
+# 【警告:リレーション欠如】Swars::Userモデルで has_many :swars/battles されていません
 #--------------------------------------------------------------------------------
 

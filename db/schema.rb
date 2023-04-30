@@ -209,13 +209,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_000001) do
     t.index ["user_id"], name: "index_profiles_on_user_id", unique: true
   end
 
-  create_table "rooms", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "code", null: false, comment: "部屋識別子"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["code"], name: "index_rooms_on_code", unique: true
-  end
-
   create_table "share_board_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "部屋"
     t.string "key", null: false, comment: "対局識別子"
@@ -374,7 +367,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_26_000001) do
     t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
-    t.bigint "style_id", comment: "戦法スタイル"
+    t.bigint "style_id", comment: "棋風"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

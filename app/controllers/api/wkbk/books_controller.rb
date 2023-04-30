@@ -3,25 +3,26 @@
 #
 # Book (wkbk_books as Wkbk::Book)
 #
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
-# | name              | desc              | type        | opts                | refs         | index |
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK         |              |       |
-# | key               | キー              | string(255) | NOT NULL            |              | A!    |
-# | user_id           | User              | integer(8)  | NOT NULL            | => ::User#id | B     |
-# | folder_id         | Folder            | integer(8)  | NOT NULL            |              | C     |
-# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |              | D     |
-# | title             | タイトル          | string(100) | NOT NULL            |              |       |
-# | description       | 説明              | text(65535) | NOT NULL            |              |       |
-# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |              |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL            |              |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL            |              |       |
-# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |              | E     |
-# |-------------------+-------------------+-------------+---------------------+--------------+-------|
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | name              | desc              | type        | opts                | refs | index |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
+# | id                | ID                | integer(8)  | NOT NULL PK         |      |       |
+# | key               | キー              | string(255) | NOT NULL            |      | A!    |
+# | user_id           | User              | integer(8)  | NOT NULL            |      | B     |
+# | folder_id         | Folder            | integer(8)  | NOT NULL            |      | C     |
+# | sequence_id       | Sequence          | integer(8)  | NOT NULL            |      | D     |
+# | title             | タイトル          | string(100) | NOT NULL            |      |       |
+# | description       | 説明              | text(65535) | NOT NULL            |      |       |
+# | bookships_count   | Bookships count   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | answer_logs_count | Answer logs count | integer(4)  | DEFAULT(0) NOT NULL |      |       |
+# | created_at        | 作成日時          | datetime    | NOT NULL            |      |       |
+# | updated_at        | 更新日時          | datetime    | NOT NULL            |      |       |
+# | access_logs_count | Access logs count | integer(4)  | DEFAULT(0) NOT NULL |      | E     |
+# |-------------------+-------------------+-------------+---------------------+------+-------|
 #
 #- Remarks ----------------------------------------------------------------------
-# User.has_one :profile
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :sequence を追加してください
+# [Warning: Need to add relation] Wkbk::Book モデルに belongs_to :user を追加してください
 #--------------------------------------------------------------------------------
 
 module Api
