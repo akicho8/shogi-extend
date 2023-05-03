@@ -19,7 +19,7 @@
         template(v-if="!clock.current.time_recovery_mode_p")
           p しかし現在の時計の設定では<b>秒読み</b>や<b>1手毎加算</b>の値がもともと0のため回復しません
           p もし続行する場合は時計を再設定してください
-        p 続行しない場合は投了しましょう
+        p 続行しない場合は左上から投了しましょう
   .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>

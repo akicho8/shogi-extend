@@ -6,7 +6,7 @@
   .modal-card-body
     p ルールを守りましょう
     p 対戦相手がお情けで許可してくれた場合は「1手戻す」で指し直して対局を続行できます
-    p 反則を受け入れる場合は投了しましょう
+    p 反則を受け入れる場合は左上から投了しましょう
   .modal-card-foot
     b-button(@click="close_handle" type="is-primary") 閉じる
 </template>
