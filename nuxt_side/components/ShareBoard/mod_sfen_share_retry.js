@@ -64,15 +64,17 @@ export const mod_sfen_share_retry = {
       this.sfen_share_not_reach()
 
       const next_user_name = this.turn_to_user_name(this.sfen_share_params.turn)
-      const message1 = `次の手番の${this.user_call_name(next_user_name)}の反応がないので再送しますか？`
-      const message2 = `<span class="has-text-grey is-size-7 mx-1">${this.retry_check_delay}秒後に再度確認します</span>`
-      const message3 = `${message1}${message2}`
-      // this.talk2(message1)
-
+      const message = `
+        次の手番の${this.user_call_name(next_user_name)}の通信状況が悪いため再送してください
+        <ul class="has-text-grey is-size-7 mx-1 mt-2">
+          <li>再送しないと対局を続けられません</li>
+          <li>${this.retry_check_delay}秒後に再度確認します</li>
+        </ul>
+      `
       this.retry_confirm_close()
       this.retry_confirm_instance = this.dialog_confirm({
         title: `同期失敗 ${this.x_retry_count}回目`,
-        message: message3,
+        message: message,
         cancelText: "諦める",
         confirmText: "再送する",
         hasIcon: true,
