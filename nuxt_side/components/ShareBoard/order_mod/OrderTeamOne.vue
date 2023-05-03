@@ -70,7 +70,15 @@ export default {
       border-radius: 2px
       padding: 0.25rem 0.75rem
       cursor: move
-      // overflow: hidden で切ったと右のパッディングがなくなるため li に直接テキストを入れない
+      box-shadow: 0px 0px 4px hsl(0, 0%, 90%) // 動かせると感じてもらいたいため少し浮いているように見せる
+      animation: shake_up 0.05s ease-in-out 0s infinite alternate
+      @keyframes shake_up
+        0%
+          transform: rotateZ(-2deg)
+        100%
+          transform: rotateZ(2deg)
+
+      // overflow: hidden で切ったとき右のパッディングがなくなるため li に直接テキストを入れない
       .text
         line-height: 2.5
         overflow: hidden
