@@ -161,7 +161,7 @@ export default {
   .CustomShogiPlayer
     .MembershipLocationPlayerInfo
       &.read_sec_60, &.extra_sec_60
-        background-color: change_color($green, $saturation: 50%, $lightness: 80%) !important
+        background-color: $white
         color: $black !important
       &.read_sec_20, &.extra_sec_20
         background-color: change_color($yellow, $saturation: 50%, $lightness: 80%) !important
