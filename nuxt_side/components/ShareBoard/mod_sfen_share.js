@@ -161,7 +161,7 @@ export const mod_sfen_share = {
                     if (this.user_name === params.next_user_name) {
                       this.tn_notify()
                     }
-                    this.next_turn_message = `次は、${this.user_call_name(params.next_user_name)}の手番です`
+                    this.next_turn_message = `${this.next_turn_message_prefix(params)}${this.user_call_name(params.next_user_name)}の手番です`
                     this.toast_ok(this.next_turn_message)
                   }
                 }
@@ -169,6 +169,14 @@ export const mod_sfen_share = {
             }),
           })
         }
+      }
+    },
+
+    next_turn_message_prefix(params) {
+      if (params.from_user_name === params.next_user_name) {
+        return "次も、"
+      } else {
+        return "次は、"
       }
     },
 
