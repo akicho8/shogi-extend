@@ -38,7 +38,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       menu_item_sub_menu_click("棋譜コピー")
       Clipboard.write("")
       menu_item_click("BOD #1")
-      Clipboard.read.include?("手数＝1")
+      assert_clipboard("手数＝1")
     end
     it "棋譜ダウンロード" do
       menu_item_sub_menu_click("棋譜ダウンロード")

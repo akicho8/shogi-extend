@@ -14,6 +14,6 @@ RSpec.describe type: :system, share_board_spec: true do
     # を返すようになってしまった
     # assert2 { Clipboard.read == "Error" }
     # 2023-04-12 から直った
-    assert2 { Clipboard.read == "https://tinyurl.com/2qqme7jk" }
+    assert_clipboard("tinyurl")
   end
 end

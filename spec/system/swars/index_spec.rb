@@ -118,7 +118,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
     it "KIF形式の棋譜コピー" do
       table_in { first(".kif_copy").click }
       assert_text "コピーしました"
-      assert2 { Clipboard.read.match?(/^手数/) }
+      assert_clipboard(/^手数/)
     end
 
     it "詳細" do
@@ -381,7 +381,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       find(".sidebar_close_handle").click
       table_in { first(".ki2_copy").click }
       assert_text "コピーしました"
-      assert2 { Clipboard.read.match?(/^▲/) }
+      assert_clipboard(/^▲/)
     end
   end
 

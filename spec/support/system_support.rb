@@ -177,19 +177,12 @@ if true
       first(:xpath, "//*[text()='#{text}']").click
     end
 
-    # user としてログインした状態にする
-    # しかしこの方法はタブを2つ開いても二人を別々にログインした状態で維持にするのが難しい
-    def login_as(user)
-      visit2("http://localhost:3000/", _user_id: user.id)
-    end
-
-    # こちらを推奨
     def login_by(key)
       visit2("http://localhost:3000/", _login_by_key: key)
     end
 
     def login
-      login_as(User.sysop)
+      login_by("sysop")
     end
 
     def logout
