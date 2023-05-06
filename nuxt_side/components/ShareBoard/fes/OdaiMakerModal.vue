@@ -5,6 +5,7 @@
       | お題メーカー
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
         | (ID:{{TheSb.master_odai.unique_code}})
+    b-button(@click="TheSb.odai_src_random_handle" size="is-small") ﾗﾝﾀﾞﾑ
   .modal-card-body
     b-field(label-position="on-border")
       template(#label)
