@@ -18,15 +18,20 @@ export const mod_give_up = {
         return
       }
       this.give_up_direct_run()
-      this.battle_save_run()
     },
 
     // そのまま実行
     // 投了メッセージをカスタマイズしたくなるが結局チャットでもみんな「負けました」としか言わないので固定で良い
     // 必要ないところをこだわって複雑にしてはいけない
+    // 処理順序重要
     give_up_direct_run() {
+      this.give_up_messsage_post() // 発言は何も影響ないので最初に行う
+      this.battle_save_run()       // 順番設定がある状態で対局を保存する
+      this.give_up_share()         // 最後に順番設定を解除する
+    },
+
+    give_up_messsage_post() {
       this.message_share({message: "負けました", message_scope_key: "is_message_scope_public"})
-      this.give_up_share()
     },
 
     // 投了トリガーを配る

@@ -6,6 +6,7 @@ module ShareBoard
 
     # GET http://localhost:3000/api/share_board/dashboard?room_code=dev_room
     # GET http://localhost:3000/api/share_board/dashboard?room_code=xxx
+    # GET https://www.shogi-extend.com/api/share_board/dashboard?room_code=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def call
       room = Room.find_or_initialize_by(key: @params[:room_code])
       room.as_json({
