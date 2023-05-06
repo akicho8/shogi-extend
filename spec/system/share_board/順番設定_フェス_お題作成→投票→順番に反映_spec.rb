@@ -22,7 +22,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".odai_subject input").set("(odai_subject)")       # 題名を記入
       find(".odai_left input").set("(team_black)")            # 選択肢1
       find(".odai_right input").set("(team_white)")           # 選択肢2
-      find(:button, text: "送信する", exact_text: true).click
+      find(:button, text: "出題する", exact_text: true).click
     end
     a_block do
       find(:button, text: "このチームに参加する", exact_text: true).click # 選択せずに決定した

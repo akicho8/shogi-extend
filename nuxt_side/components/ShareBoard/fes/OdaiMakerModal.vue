@@ -19,7 +19,7 @@
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary")
-      | 送信する
+      | 出題する
       //- template(v-if="TheSb.odai_new_p") 送信する
       //- template(v-if="TheSb.odai_persisted_p") 再送信する
 </template>
