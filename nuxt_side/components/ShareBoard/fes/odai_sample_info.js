@@ -72,13 +72,39 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "将棋道場で待ったされたとき",     left_value: "許す",             right_value: "許さない",             },
       { subject: "将棋ウォーズの棋神はぶっちゃけ", left_value: "アリ",             right_value: "ナシ",                 },
 
-      // 適当
+      // ゲーム
+      { subject: "スト2といえば",                  left_value: "リュウ",           right_value: "ザンギエフ",           },
+      { subject: "スト2どっちが強い？",            left_value: "ガイル",           right_value: "ダルシム",             },
+      { subject: "テトリスはどっちを開ける？",     left_value: "右",               right_value: "左",                   },
+
+      // 映画
+      { subject: "どっちがお好み？",               left_value: "天空の城ラピュタ", right_value: "風の谷のナウシカ",     },
+      { subject: "どっちがお好み？",               left_value: "コクリコ坂から",   right_value: "耳をすませば",         },
+      { subject: "どっちがお好み？",               left_value: "紅の豚",           right_value: "風立ちぬ",             },
+
+      // 食べ物
+      { subject: "ラーメンに白飯は",               left_value: "アリ",             right_value: "ナシ",                 },
+
+      // スポーツ
       { subject: "卓球するなら",                   left_value: "ペン",             right_value: "シェーク",             },
+
+      // その他
       { subject: "左利きに",                       left_value: "あこがれる",       right_value: "あこがれない",         },
       { subject: "早起きは",                       left_value: "得",               right_value: "損",                   },
+      { subject: "飛行機に乗ったことが",           left_value: "ある",             right_value: "ない",                 },
+      { subject: "中型二輪免許を",                 left_value: "持っている",       right_value: "持っていない",         },
+      { subject: "大型二輪免許を",                 left_value: "持っている",       right_value: "持っていない",         },
+      { subject: "男がAT限定免許",                 left_value: "恥ずかしい",       right_value: "恥ずかしくない",       },
       { subject: "熱帯魚を飼うなら",               left_value: "ネオンテトラ",     right_value: "グッピー",             },
       { subject: "彼岸花のイメージは",             left_value: "不吉",             right_value: "情熱",                 },
       { subject: "アナタはどっち派？",             left_value: "断捨離",           right_value: "コレクター",           },
+      { subject: "老後の認知症",                   left_value: "不安",             right_value: "自分はならない",       },
+      { subject: "食品添加物の欄を",               left_value: "必ず見る",         right_value: "見ない",               },
+      { subject: "方言「とらげる」の意味が",       left_value: "わかる",           right_value: "わからない",           },
+      { subject: "方言「もんげー」の意味が",       left_value: "わかる",           right_value: "わからない",           },
+      { subject: "方言「さし」の意味が",           left_value: "わかる",           right_value: "わからない",           },
+      { subject: "蛍光灯買うなら",                 left_value: "昼光色",           right_value: "昼白色",               },
+      { subject: "1000円札を拾った！交番に",       left_value: "届けない",         right_value: "届ける",               },
     ]
   }
 

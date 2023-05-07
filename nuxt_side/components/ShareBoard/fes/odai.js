@@ -22,9 +22,9 @@ export class Odai {
   // 一行の文章にする
   get to_s() {
     return [
-      this.items.join("と"),
-      "、",
       Gs.presence(this.subject) ?? "どっちが好き？",
+      "？",
+      this.items.map(e => `${e}`).join("または"),
     ].join("")
   }
 
