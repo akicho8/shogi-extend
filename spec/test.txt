@@ -962,7 +962,7 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_バリデーション_2列_対戦相手がいない_spec.rb[1:1]                   | passed  | 5.03 seconds    |
 ./spec/system/share_board/順番設定_バリデーション_1列_対戦相手がいない_spec.rb[1:1]                      | passed  | 7.97 seconds    |
 ./spec/system/share_board/順番設定_バリデーション_2列_対戦相手がいない_spec.rb[1:1]                      | passed  | 5.03 seconds    |
-./spec/system/share_board/順番設定_フェス_お題作成→投票→順番に反映_spec.rb[1:1]                        | passed  | 26.44 seconds   |
+./spec/system/share_board/順番設定_フェス_お題作成→投票→順番に反映_spec.rb[1:1]                        | passed  | 52.04 seconds   |
 ./spec/system/share_board/順番設定_下のわかりにくいオプションの説明_spec.rb[1:1]                        | passed  | 7.89 seconds    |
 ./spec/system/share_board/順番設定_下のわかりにくいオプションの説明_spec.rb[1:1]                         | passed  | 9.99 seconds    |
 ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新するがドラッグ中なので同期しない_spec.rb[1:1] | pending | 0.00002 seconds |

@@ -19,9 +19,9 @@ RSpec.describe type: :system, share_board_spec: true do
       os_modal_handle                                         # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
-      find(".odai_subject input").set("(odai_subject)")       # 題名を記入
-      find(".odai_left input").set("(team_black)")            # 選択肢1
-      find(".odai_right input").set("(team_white)")           # 選択肢2
+      within(".odai_subject") { find(:fillable_field).set("(odai_subject)") } # 題名を記入
+      within(".odai_left")    { find(:fillable_field).set("(team_black)")   } # 選択肢1
+      within(".odai_right")   { find(:fillable_field).set("(team_white)")   } # 選択肢2
       find(:button, text: "出題する", exact_text: true).click
     end
     a_block do
