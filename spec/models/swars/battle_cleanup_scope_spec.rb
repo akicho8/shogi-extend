@@ -10,11 +10,6 @@ module Swars
     end
 
     def cleanup_scope(options = {})
-      options = {
-        :time_limit => nil,
-        :expires_in => 0,
-      }.merge(options)
-
       Battle.cleanup_scope(options)
     end
 

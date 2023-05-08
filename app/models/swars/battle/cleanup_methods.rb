@@ -19,7 +19,7 @@ module Swars
         # 削除対象
         scope :cleanup_scope, -> (options = {}) {
           options = {
-            :expires_in => 45.days,
+            :expires_in => 0.days,
             :skip_users => skip_users,
           }.merge(options)
 
@@ -51,8 +51,8 @@ module Swars
       class_methods do
         # 参照されていないレコードを消していく
         # rails r 'Swars::Battle.cleanup(time_limit: nil)'
-        def cleanup(options = {})
-          CleanupRunner.new(cleanup_scope(options), options).perform
+        def cleanup(...)
+          Cleanup.new(...).call
         end
       end
     end
