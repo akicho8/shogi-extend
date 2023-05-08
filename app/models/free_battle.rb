@@ -45,27 +45,17 @@ class FreeBattle < ApplicationRecord
       super
     end
 
-    def cleanup(params = {})
-      params = {
-        expires_in: 8.weeks,
-      }.merge(params)
-
-      s = all
-      s = s.where(arel_table[:use_key].eq_any(["adapter", "share_board"]))
-      s = s.where(arel_table[:accessed_at].lteq(params[:expires_in].ago))
-      s.find_in_batches(batch_size: 100) do |g|
-        begin
-          g.each(&:destroy!)
-        rescue ActiveRecord::Deadlocked => error
-          puts error
-        end
-      end
+    def cleanup(...)
+      Cleanup.new(...).call
     end
   end
 
   has_secure_token :key
 
   belongs_to :user, required: false
+
+  scope :old_only,        -> expires_in { where(arel_table[:accessed_at].lteq(expires_in.seconds.ago)) } # 古いもの
+  scope :deleteable_only, -> { where(arel_table[:use_key].eq_any(["adapter", "share_board"])) }          # 削除していいもの
 
   class << self
     def generate_unique_secure_token(*)
@@ -230,6 +220,17 @@ class FreeBattle < ApplicationRecord
         end
       end
     end
+  end
+
+  def info
+    {
+      "id"       => id,
+      "key"      => key,
+      "オーナー" => user&.name,
+      "use_key"  => use_key,
+      "作成"     => created_at.to_fs(:ymd),
+      "参照"     => accessed_at.to_fs(:ymd),
+    }
   end
 
   concerning :UseInfoMethods do

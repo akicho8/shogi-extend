@@ -35,9 +35,6 @@ every("5 3 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
-    "Swars::Battle.cleanup",    # 30分かかる
-    "FreeBattle.cleanup",
-
     # %(SlackAgent.notify(subject: "CRON", body: "obt_auto_max update")),
     # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.notify(subject: "obt_auto_max", body: i) }',
 
@@ -53,9 +50,12 @@ every("5 3 * * *") do
     "Tsl::League.setup",
 
     "Kiwi::Lemon.background_job_for_cron",   # 動画変換。job時間が 0...0 ならcronで実行する
-    "Kiwi::Lemon.cleanup(execute: false)",   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
 
+    # 削除シリーズ
+    "Kiwi::Lemon.cleanup(execute: false)",   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     "XfilesCleanup.new.call(execute: false)", # public/system/x-files 以下の古い png と rb を削除する
+    "FreeBattle.cleanup(execute: false)",
+    "Swars::Battle.cleanup",                 # 30分かかる
 
     %(SlackAgent.notify(subject: "CRON", body: "end")),
   ].join(";")
