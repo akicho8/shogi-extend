@@ -282,6 +282,7 @@ example_id                                                                      
 ./spec/models/free_battle_spec.rb[1:7:1]                                             | passed  | 0.42824 seconds |
 ./spec/models/free_battle_spec.rb[1:8:1]                                             | passed  | 0.82962 seconds |
 ./spec/models/free_battle_spec.rb[1:9:1]                                             | passed  | 0.59052 seconds |
+./spec/models/free_space_spec.rb[1:1]                                                | passed  | 0.22009 seconds |
 ./spec/models/frontend_script/wkbk_app_script/put_api_spec.rb[1:1]                   | passed  | 0.80468 seconds |
 ./spec/models/judge_info_spec.rb[1:1]                                                | passed  | 0.31384 seconds |
 ./spec/models/judge_info_spec.rb[1:2]                                                | passed  | 0.36916 seconds |

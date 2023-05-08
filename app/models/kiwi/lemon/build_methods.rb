@@ -338,11 +338,15 @@ module Kiwi
       end
 
       def main_file_clean
-        if v = real_path
-          logger.info("rm -f #{v}")
-          FileUtils.rm_f(v)
-          FileUtils.rm_f("#{v}.rb")
+        if real_path
+          FileUtils.rm_f(related_output_files)
           self.browser_path = nil
+        end
+      end
+
+      def related_output_files
+        if v = real_path
+          [v, "#{v}.rb"]
         end
       end
 
@@ -438,7 +442,7 @@ module Kiwi
       # 生成ファイルにリンクする
       def symlink_real_path_to_human_path(rename: false)
         self.filename_human = filename_human_build
-        old = media_builder.real_path                   # 生成ファイル ~/src/shogi-extend/public/system/x-files/3e/3d/3e3dae2e6ad07d51fe12e171ebb337b6.mp4
+        old = media_builder.real_path               # 生成ファイル ~/src/shogi-extend/public/system/x-files/3e/3d/3e3dae2e6ad07d51fe12e171ebb337b6.mp4
         new = old.dirname + filename_human          # 人間向け参照 ~/src/shogi-extend/public/system/x-files/3e/3d/2_20210824130750_1024x768_8s.mp4
         if rename
           FileUtils.mv(old, new)

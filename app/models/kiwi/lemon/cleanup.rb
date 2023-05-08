@@ -1,3 +1,4 @@
+# public/system/x-files 以下の、ライブラリ登録されていないLemonのレコードに結びついた mp4 を削除する
 # rails r Kiwi::Lemon.cleanup
 
 module Kiwi
@@ -5,41 +6,44 @@ module Kiwi
     class Cleanup
       def initialize(options = {})
         @options = {
-          execute: false,
-          expires_in: Rails.env.production? ? 30.days : 0.days,
+          :execute    => false,
+          :expires_in => Rails.env.production? ? 30.days : 0.days,
         }.merge(options)
       end
 
       def call
         @scope = Lemon.single_only.old_only(@options[:expires_in])
-        @table = @scope.collect(&:info).to_t
-        @free_info = df_block do
+        @count = @scope.count
+        @target_records_t = @scope.collect(&:info).to_t
+        @target_files = @scope.flat_map { |e| e.related_output_files || [] }
+        @free_changes = FreeSpace.new.call do
           if @options[:execute]
             @scope.destroy_all
           end
         end
-        SystemMailer.notify(fixed: true, subject: "動画削除 #{df_run}", body: body).deliver_later
+        SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
       end
 
       private
 
-      def df_block
-        av = []
-        av << df_run
-        yield
-        av << df_run
-        av
-      end
-
-      def df_run
-        `df -H /`.lines.last.strip
+      def subject
+        [
+          "動画削除",
+          "#{@count}個",
+          @free_changes.join("→"),
+        ].join(" ")
       end
 
       def body
         [
-          @free_info.to_t,
-          @table,
+          "▼オプション",
           @options.to_t,
+          "",
+          "▼削除したレコード",
+          @target_records_t,
+          "",
+          "▼削除したファイル",
+          @target_files.to_t,
         ].compact.collect(&:strip).join("\n")
       end
     end
