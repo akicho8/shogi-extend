@@ -7,6 +7,7 @@ module Kiwi
         has_one :banana, dependent: :destroy      # アーカイブしたときに結びつく
 
         scope :single_only,      -> { left_joins(:banana).where(banana: {id: nil})                } # Bananaと結びついていないもの
+        scope :old_only,         -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
         scope :standby_only,     -> { where(process_begin_at: nil)                                } # 未処理
         scope :done_only,        -> { where.not(process_end_at: nil)                              } # 処理済み(失敗しても入る)

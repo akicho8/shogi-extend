@@ -357,6 +357,7 @@ example_id                                                                      
 ./spec/models/kiwi/lemon_spec.rb[1:11]                                               | passed  | 1.51 seconds    |
 ./spec/models/kiwi/lemon_spec.rb[1:12]                                               | passed  | 7.05 seconds    |
 ./spec/models/kiwi/lemon_spec.rb[1:13]                                               | passed  | 0.81689 seconds |
+./spec/models/kiwi/lemon_spec.rb[1:14]                                               | passed  | 4.42 seconds    |
 ./spec/models/location_info_spec.rb[1:1]                                             | passed  | 0.51109 seconds |
 ./spec/models/location_info_spec.rb[1:2]                                             | passed  | 0.53971 seconds |
 ./spec/models/mini_image_spec.rb[1:1]                                                | passed  | 0.51309 seconds |

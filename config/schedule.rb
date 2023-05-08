@@ -53,6 +53,7 @@ every("5 3 * * *") do
     "Tsl::League.setup",
 
     "Kiwi::Lemon.background_job_for_cron", # 動画変換。job時間が 0...0 ならcronで実行する
+    "Kiwi::Lemon.cleanup(execute: true)",  # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
 
     %(SlackAgent.notify(subject: "CRON", body: "end")),
   ].join(";")

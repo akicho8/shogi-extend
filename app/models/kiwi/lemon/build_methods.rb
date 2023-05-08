@@ -2,6 +2,11 @@ module Kiwi
   class Lemon
     concern :BuildMethods do
       class_methods do
+        # rails r Kiwi::Lemon.cleanup
+        def cleanup(...)
+          Cleanup.new(...).call
+        end
+
         # Queueに入っている数
         # rails r 'p Kiwi::Lemon.sidekiq_queue_count'
         # cap production rails:runner CODE='p Kiwi::Lemon.sidekiq_queue_count'
@@ -334,6 +339,7 @@ module Kiwi
 
       def main_file_clean
         if v = real_path
+          logger.info("rm -f #{v}")
           FileUtils.rm_f(v)
           FileUtils.rm_f("#{v}.rb")
           self.browser_path = nil

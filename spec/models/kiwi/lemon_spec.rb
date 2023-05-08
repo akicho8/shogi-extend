@@ -112,5 +112,14 @@ module Kiwi
     it "tag_list" do
       assert2 { lemon1.tag_list == ["居飛車", "相居飛車"] }
     end
+
+    it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do
+      lemon1.main_process
+      lemon1.reload
+      assert2 { lemon1.real_path.exist? }
+      Lemon.cleanup(expires_in: 0, execute: true)
+      assert2 { !lemon1.real_path.exist? }
+      assert2 { !Lemon.exists?(lemon1.id) }
+    end
   end
 end
