@@ -53,7 +53,7 @@ every("5 3 * * *") do
 
     # 削除シリーズ
     "Kiwi::Lemon.cleanup(execute: false)",   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
-    "XfilesCleanup.new.call(execute: false)", # public/system/x-files 以下の古い png と rb を削除する
+    "XfilesCleanup.new(execute: false).call", # public/system/x-files 以下の古い png と rb を削除する
     "FreeBattle.cleanup(execute: false)",
     "Swars::Battle.cleanup",                 # 30分かかる
 
