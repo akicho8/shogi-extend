@@ -26,9 +26,9 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, text: "ﾗﾝﾀﾞﾑ", exact_text: true).click    # ランダム入力
 
       # 入力がある
-      within(".odai_subject") { assert_selector(:fillable_field, with: ".+") }
-      within(".odai_left")    { assert_selector(:fillable_field, with: ".+") }
-      within(".odai_right")   { assert_selector(:fillable_field, with: ".+") }
+      within(".odai_subject") { assert_selector(:fillable_field, with: /.+/) }
+      within(".odai_left")    { assert_selector(:fillable_field, with: /.+/) }
+      within(".odai_right")   { assert_selector(:fillable_field, with: /.+/) }
     end
   end
 end
