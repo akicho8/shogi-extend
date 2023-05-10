@@ -58,6 +58,7 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "どっちを読みたい？",             left_value: "芥川賞",                   right_value: "直木賞",                   },
       { subject: "どっちを読みたい？",             left_value: "伊坂幸太郎",               right_value: "奥田英郎",                 },
       { subject: "どっちを読みたい？",             left_value: "東野圭吾",                 right_value: "伊坂幸太郎",               },
+      { subject: "どっちを読みたい？",             left_value: "歌野晶午",                 right_value: "東野圭吾",                 },
       { subject: "どっちを読みたい？",             left_value: "松本清張",                 right_value: "横山秀夫",                 },
       { subject: "自転車は？",                     left_value: "ロードバイク派",           right_value: "クロスバイク派",           },
 
@@ -118,6 +119,7 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "どっちがお好み？",               left_value: "赤味噌",                   right_value: "白味噌",                   },
       { subject: "どっちがお好み？",               left_value: "りんご",                   right_value: "梨",                       },
       { subject: "どっちがお好み？",               left_value: "そば",                     right_value: "スパゲッティ",             },
+      { subject: "どっちがお好み？",               left_value: "そば",                     right_value: "うどん",                   },
       { subject: "どっちがお好み？",               left_value: "たい焼き",                 right_value: "今川焼き",                 },
       { subject: "どっちがお好み？",               left_value: "プリン",                   right_value: "茶碗蒸し",                 },
       { subject: "どっちがお好み？",               left_value: "じゃがいも",               right_value: "さつまいも",               },
@@ -127,9 +129,12 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
 
       // スポーツ
       { subject: "卓球するなら？",                 left_value: "ペン",                     right_value: "シェーク",                 },
+      { subject: "卓球するなら？",                 left_value: "ドライブマン",             right_value: "カットマン",               },
 
       // ゲーム
+      { subject: "どっちがお好み？",               left_value: "Life is Strange",          right_value: "Detroit: Become Human",    },
       { subject: "どっちがお好み？",               left_value: "スプラトゥーン",           right_value: "マリオカート",             },
+      { subject: "どっちがお好み？",               left_value: "スプラトゥーン",           right_value: "スマブラ",                 },
       { subject: "RPGと言えば？",                  left_value: "FF",                       right_value: "ドラクエ",                 },
       { subject: "レースゲームするなら？",         left_value: "グランツーリスモ",         right_value: "リッジレーサー",           },
       { subject: "レースゲームするなら？",         left_value: "グランツーリスモ",         right_value: "マリオカート",             },
@@ -137,7 +142,7 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "ゲームやるなら？",               left_value: "夢工場ドキドキパニック",   right_value: "スーパーマリオブラザーズ", },
       { subject: "ゲームやるなら？",               left_value: "いっき",                   right_value: "スペランカー",             },
       { subject: "落ちゲーやるなら？",             left_value: "ぷよぷよ",                 right_value: "テトリス",                 },
-      { subject: "ゲームやるなら？",               left_value: "アイスクライマー",         right_value: "マリオブラザーズ",         },
+      { subject: "ゲームやるなら？",               left_value: "アイスクライマー",         right_value: "レッキングクルー",         },
       { subject: "ゲームやるなら？",               left_value: "たけしの挑戦状",           right_value: "バンゲリングベイ",         },
       { subject: "ゲームやるなら？",               left_value: "ロードランナー",           right_value: "ボンバーマン",             },
       { subject: "STGやるなら？",                  left_value: "ゼビウス",                 right_value: "ツインビー",               },
@@ -163,10 +168,7 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "夏の植物と言えば？",             left_value: "あさがお",                 right_value: "ひまわり",                 },
       { subject: "アナタはどっち派？",             left_value: "断捨離",                   right_value: "コレクター",               },
       { subject: "認知症は？",                     left_value: "こわい",                   right_value: "気にしてない",             },
-      { subject: "食品添加物を",                   left_value: "なるべく避ける",           right_value: "気にしたことがない",       },
-      { subject: "方言「とらげる」の意味は？",     left_value: "わかる",                   right_value: "わからない",               },
-      { subject: "方言「もんげー」の意味は？",     left_value: "わかる",                   right_value: "わからない",               },
-      { subject: "方言「さし」の意味は？",         left_value: "わかる",                   right_value: "わからない",               },
+      { subject: "食品添加物は？",                 left_value: "なるべく避ける",           right_value: "気にしたことがない",       },
       { subject: "蛍光灯買うなら？",               left_value: "昼光色",                   right_value: "昼白色",                   },
       { subject: "1000円札を拾った！交番に",       left_value: "届けない",                 right_value: "届ける",                   },
       { subject: "B'zの短パンは？",                left_value: "アリ",                     right_value: "ナシ",                     },
