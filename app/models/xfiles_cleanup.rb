@@ -1,5 +1,4 @@
-# public/system/x-files 以下の古いファイルを削除する
-# ただし "_" を含むファイルは削除しない
+# public/system/x-files 以下の読み出しがない "_" をファイル名に含まないファイルを削除する
 # rails r XfilesCleanup.new.call
 
 class XfilesCleanup
@@ -23,7 +22,7 @@ class XfilesCleanup
 
   def file_process(file)
     if file.file?
-      if file.mtime <= @options[:expires_in].seconds.ago
+      if file.atime <= @options[:expires_in].seconds.ago
         if file.basename.to_s.include?("_") # 2_20210824130750_1024x768_8s.png のようなファイルは除く
           @skip_files << file_info(file)
         else
@@ -57,6 +56,6 @@ class XfilesCleanup
   end
 
   def file_info(file)
-    { file: file, updated_at: file.mtime.strftime("%F %T") }
+    { file: file, accessed_at: file.atime.strftime("%F %T") }
   end
 end
