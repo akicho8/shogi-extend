@@ -30,7 +30,7 @@ module Swars
       },
       {
         key: "1手詰じらしマン",
-        message: -> m { "1手詰を#{m.think_last_s}焦らし歪んだ優越感に浸った" },
+        message: -> m { "1手詰を#{m.think_last_s}焦らして歪んだ優越感に浸った" },
         medal_params: "😈",
         if_cond: -> m {
           (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t &&
