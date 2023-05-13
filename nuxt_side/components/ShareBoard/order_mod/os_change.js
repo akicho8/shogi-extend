@@ -32,7 +32,7 @@ export class OsChange {
       this.context.order_unit.hash,
       [
         this.context.illegal_behavior_key,
-        this.context.resign_timing_key,
+        this.context.auto_resign_key,
         this.context.tegoto,
       ]
     ])

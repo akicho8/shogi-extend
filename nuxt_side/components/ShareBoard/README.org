@@ -64,27 +64,27 @@
 
 * URLパラメータ
 
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
-  | key                         | desc                                                    | Example                                                                                   |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
-  | user_name             | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&user_name=alice                       |
-  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                           |
-  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                           |
-  | fixed_order_state           | 順番設定方法                                            |                                                                                           |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
-  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                       |
-  | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                           |
+  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
+  | key                         | desc                                                    | Example                                                                             |
+  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
+  | user_name                   | localStorage に関係なくこの名前にする                   | http://localhost:4000/share-board?room_code=a&user_name=alice                       |
+  | fixed_member_names          | 部屋にいるメンバーの名前たち                            |                                                                                     |
+  | fixed_order_names           | 順番設定した名前たち                                    |                                                                                     |
+  | fixed_order_state           | 順番設定方法                                            |                                                                                     |
+  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
+  | default_user_name           | localStorage が空のときの user_name 初期値              | http://localhost:4000/share-board?room_code=a&default_user_name=bob                 |
+  | handle_name_validate        | false ならバリデーションを飛ばす                        |                                                                                     |
   | SEND_SUCCESS_DELAY          | SFEN受信OKの返信までの時間 (-1でスキップ)               | http://localhost:4000/share-board?room_code=a&user_name=alice&SEND_SUCCESS_DELAY=-1 |
-  | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                           |
-  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                           |
-  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                           |
-  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                           |
-  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                           |
-  | clock_auto_start      | true なら即開始                                         |                                                                                           |
-  | xmatch_auth_key             |                                                         |                                                                                           |
-  | xmatch_wait_max             |                                                         |                                                                                           |
-  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                           |
-  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------------|
+  | RETRY_DELAY                 | SFEN送信後N秒待ってから返答をチェックする(-1でスキップ) |                                                                                     |
+  | clock_box.initial_main_min  | 持ち時間(分)                                            |                                                                                     |
+  | clock_box.initial_read_sec  | 秒読み(秒)                                              |                                                                                     |
+  | clock_box.initial_extra_sec | 猶予(秒)                                                |                                                                                     |
+  | clock_box.every_plus        | 1手毎加算(秒)                                           |                                                                                     |
+  | clock_auto_start            | true なら即開始                                         |                                                                                     |
+  | xmatch_auth_key             |                                                         |                                                                                     |
+  | xmatch_wait_max             |                                                         |                                                                                     |
+  | auto_close_p                | 何でも自動で閉じるか？                                  |                                                                                     |
+  |-----------------------------+---------------------------------------------------------+-------------------------------------------------------------------------------------|
 
 * 開発用URL
 
@@ -183,4 +183,3 @@
 ** 順番設定で「ありす」「ぼぶ」「きゃろる」としているけど「ぼぶ」は退室した状態
 
    http://localhost:4000/share-board?room_code=dev_room&user_name=ありす&fixed_member_names=ありす,きゃろる&fixed_order_names=ありす,ぼぶ,きゃろる&autoexec=os_modal_handle
-
