@@ -27,7 +27,6 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 every("5 3 * * *") do
   runner [
     %(SlackAgent.notify(subject: "CRON", body: "begin")),
-    %(MediaBuilder.old_media_file_clean(keep: 3, execute: true)),
 
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",
@@ -52,11 +51,13 @@ every("5 3 * * *") do
     "Kiwi::Lemon.background_job_for_cron",   # 動画変換。job時間が 0...0 ならcronで実行する
 
     # 削除シリーズ
-    "Kiwi::Lemon.cleanup(execute: false)",   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
-    "XfilesCleanup.new(execute: false).call", # public/system/x-files 以下の古い png と rb を削除する
-    "FreeBattle.cleanup(execute: false)",
-    "Swars::Battle.cleanup(execute: false)",  # 30分かかる
+    %(Kiwi::Lemon.cleanup(execute: true)),   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
+    %(XfilesCleanup.new(execute: true).call), # public/system/x-files 以下の古い png と rb を削除する
+    %(FreeBattle.cleanup(execute: true)),
+    %(Swars::Battle.cleanup(execute: true)),  # 30分かかる
+    %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
 
+    # 通知
     %(SlackAgent.notify(subject: "CRON", body: "end")),
   ].join(";")
 end
