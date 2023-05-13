@@ -5,7 +5,7 @@
       | お題メーカー
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
         | (ID:{{TheSb.master_odai.unique_code}})
-    a(@click="odai_src_random_handle")
+    a.odai_src_random_handle(@click="odai_src_random_handle")
       b-icon(:icon="dice.to_icon")
   .modal-card-body
     b-field(label-position="on-border")
