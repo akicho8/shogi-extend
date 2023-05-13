@@ -11,7 +11,14 @@ export const mod_give_up = {
       })
     },
 
-    // 投了ボタンを押したときの処理
+    // 自分が生きていて時間切れしたとき自動投了モードなら投了する
+    auto_resign_then_give_up() {
+      if (this.auto_resign_info.key === "is_auto_resign_on") {
+        this.give_up_run_from_modal()
+      }
+    },
+
+    // 最終投了ボタンを押したときの処理
     give_up_run_from_modal() {
       if (!this.give_up_button_show_p) {
         this.toast_ng("投了確認を出している間に投了できなくなりました")

@@ -34,6 +34,7 @@ export const mod_clock_box_timeout = {
     // 当事者は自分で起動してBC
     cc_timeout_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
+      this.auto_resign_then_give_up() // 自動投了なら投了する
       this.timeout_modal_handle("self_notification")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.cc_timeout_bc_delay}秒後にBC`)
       this.$gs.delay_block(this.cc_timeout_bc_delay, () => {
@@ -80,6 +81,7 @@ export const mod_clock_box_timeout = {
 
     // 時間切れモーダル発動
     timeout_modal_handle(timeout_key) {
+      this.$gs.assert(this.$gs.present_p(timeout_key), "this.$gs.present_p(timeout_key)")
       this.$gs.assert(this.$gs.present_p(this.clock_box), "this.$gs.present_p(this.clock_box)")
 
       this.tl_alert("時間切れモーダル起動完了")
