@@ -42,7 +42,7 @@
       hr
 
       .has-text-centered.is-size-7
-        | 投票でチーム分けするなら
+        | 投票でﾁｰﾑ分けするなら
       .buttons.is-centered.mb-0.mt-2
         b-button.mb-0(size="is-small" @click="odai_maker_handle")
           | お題ﾒｰｶｰ
