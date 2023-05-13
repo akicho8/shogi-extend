@@ -54,7 +54,10 @@ export const mod_chatgpt = {
       if (this.received_from_self(params)) {
         if (this.$gs.present_p(params.lmi.illegal_names)) {
           if (this.cc_play_p) {
-            this.gpt_speak_for("反則した人を励ます", params)
+            // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
+            if (this.auto_resign_info.key === "is_auto_resign_off") {
+              this.gpt_speak_for("反則した人を励ます", params)
+            }
           }
         }
       }
@@ -75,7 +78,10 @@ export const mod_chatgpt = {
           this.gpt_speak_for("対局を盛り上げる", params)
         }
         if (cc_info.key === "ck_timeout") {
-          this.gpt_speak_for("時間切れで負けた人を励ます", params)
+          // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
+          if (this.auto_resign_info.key === "is_auto_resign_off") {
+            this.gpt_speak_for("時間切れで負けた人を励ます", params)
+          }
         }
       }
     },

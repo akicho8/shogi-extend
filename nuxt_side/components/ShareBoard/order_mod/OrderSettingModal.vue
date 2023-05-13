@@ -55,8 +55,8 @@
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
           SimpleRadioButtons.illegal_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :my_value.sync="TheSb.new_v.illegal_behavior_key")
-        .column.is-12(v-if="TheSb.debug_mode_p")
-          SimpleRadioButtons.resign_timing(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="ResignTimingInfo" :my_value.sync="TheSb.new_v.resign_timing_key")
+        .column.is-12(v-if="TheSb.debug_mode_p || true")
+          SimpleRadioButtons.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :my_value.sync="TheSb.new_v.auto_resign_key")
         .column.is-12
           SimpleRadioButtons.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="TheSb.new_v.tegoto")
 

@@ -284,7 +284,13 @@ export class ClockBox {
 
   set attributes(v) {
     this.timer_stop()
+    this.attributes_copy_from(v)
+    if (v.timer) {
+      this.timer_start()
+    }
+  }
 
+  attributes_copy_from(v) {
     Object.assign(this.params, v.params)
 
     this.turn          = v.turn
@@ -298,9 +304,12 @@ export class ClockBox {
     this.speed         = v.speed
 
     v.single_clocks.forEach((e, i) => this.single_clocks[i].attributes = e)
+  }
 
-    if (v.timer) {
-      this.timer_start()
-    }
+  // 内容をコピーした動作していない新しいインスタンスを返す
+  get duplicate() {
+    const instance = new this.constructor()
+    instance.attributes_copy_from(this.attributes)
+    return instance
   }
 }

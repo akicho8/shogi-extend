@@ -88,7 +88,7 @@ export const mod_order_main = {
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
 
       this.illegal_behavior_key = params.illegal_behavior_key
-      this.resign_timing_key = params.resign_timing_key
+      this.auto_resign_key = params.auto_resign_key
       this.tegoto            = params.tegoto
 
       this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
@@ -120,7 +120,7 @@ export const mod_order_main = {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,
         illegal_behavior_key: this.illegal_behavior_key,
-        resign_timing_key: this.resign_timing_key,
+        auto_resign_key: this.auto_resign_key,
         tegoto:            this.tegoto,
         __nil_check_skip_keys__: "order_unit", // 最初の状態で ordered_members は null なので nil チェックにひっかかる
       }

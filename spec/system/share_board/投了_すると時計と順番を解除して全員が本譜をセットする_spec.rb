@@ -25,10 +25,4 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_honpu_link_exist                         # 本譜のリンクがある
     end
   end
-
-  # 順番OFF 時計STOP
-  def assert_order_off_and_clock_stop
-    assert_system_variable("order_enable_p", "false")
-    assert_system_variable("clock_box.current_status", "stop")
-  end
 end

@@ -937,6 +937,10 @@ example_id                                                                      
 ./spec/system/share_board/本譜_通常時に引数に棋譜があると本譜とする_spec.rb[1:1]                         | passed  | 4.36 seconds    |
 ./spec/system/share_board/本譜_通常時に引数に棋譜があると本譜とする_spec.rb[1:2]                         | passed  | 3.79 seconds    |
 ./spec/system/share_board/本譜_通常時に引数に棋譜があると本譜とする_spec.rb[1:3]                         | passed  | 3.7 seconds     |
+./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb[1:1]                             | passed  | 20.29 seconds   |
+./spec/system/share_board/自動投了_有効なら反則時に投了する_spec.rb[1:2]                             | unknown |                 |
+./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb[1:1]                           | passed  | 20.38 seconds   |
+./spec/system/share_board/自動投了_有効なら時間切れ時に投了する_spec.rb[1:2]                           | passed  | 21.94 seconds   |
 ./spec/system/share_board/補助機能_KI2棋譜コピー_spec.rb[1:1]                                | passed  | 1.4 seconds     |
 ./spec/system/share_board/補助機能_KI2棋譜コピー_spec.rb[1:1]                                 | passed  | 6.97 seconds    |
 ./spec/system/share_board/補助機能_スタイル_spec.rb[1:1]                                     | passed  | 5.22 seconds    |

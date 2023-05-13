@@ -1,6 +1,20 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  .column.is-2
+    .panel
+      .panel-heading
+        | 時間切れ
+      a.panel-block(@click="TheSb.cc_time_zero_callback") 最初のコールバック
+      a.panel-block(@click="TheSb.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC
+      a.panel-block(@click="TheSb.cc_delayed_timeout_modal") 他者は数秒後発動
+      a.panel-block(@click="TheSb.timeout_modal_handle_if_not_exist") 受信
+      a.panel-block(@click="TheSb.cc_auto_timeout_delay_stop") 数秒後発動キャンセル
+      a.panel-block(@click="TheSb.timeout_modal_handle('self_notification')") モーダル(自首)
+      a.panel-block(@click="TheSb.timeout_modal_handle('audo_judgement')") モーダル(判定)
+      a.panel-block(@click="TheSb.timeout_modal_close") 閉じる
+
   SbDebugPanelsDashboard
+
   .column.is-2
     .panel
       .panel-heading
@@ -45,18 +59,6 @@
         | system_test
       a.panel-block(@click="TheSb.setup_info_request") [入室時の情報要求]
 
-  .column.is-2
-    .panel
-      .panel-heading
-        | 時間切れ
-      a.panel-block(@click="TheSb.cc_time_zero_callback") 最初のコールバック
-      a.panel-block(@click="TheSb.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC
-      a.panel-block(@click="TheSb.cc_delayed_timeout_modal") 他者は数秒後発動
-      a.panel-block(@click="TheSb.timeout_modal_handle_if_not_exist") 受信
-      a.panel-block(@click="TheSb.cc_auto_timeout_delay_stop") 数秒後発動キャンセル
-      a.panel-block(@click="TheSb.timeout_modal_handle('self_notification')") モーダル(自首)
-      a.panel-block(@click="TheSb.timeout_modal_handle('audo_judgement')") モーダル(判定)
-      a.panel-block(@click="TheSb.timeout_modal_close") 閉じる
   .column.is-2
     .panel
       .panel-heading
