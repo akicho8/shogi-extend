@@ -5,7 +5,8 @@
       | お題メーカー
       span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
         | (ID:{{TheSb.master_odai.unique_code}})
-    b-button(@click="TheSb.odai_src_random_handle" size="is-small") ﾗﾝﾀﾞﾑ
+    a(@click="odai_src_random_handle")
+      b-icon(:icon="dice.to_icon")
   .modal-card-body
     b-field(label-position="on-border")
       template(#label)
@@ -29,6 +30,7 @@
 import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
+import { Dice } from "@/components/models/dice.js"
 
 const VALIDATION_ON = false
 
@@ -36,6 +38,11 @@ export default {
   name: "OdaiMakerModal",
   mixins: [support_child],
   inject: ["TheSb"],
+  data() {
+    return {
+      dice: new Dice(),
+    }
+  },
   mounted() {
     this.input_focus()
   },
@@ -60,6 +67,10 @@ export default {
       if (this.$gs.blank_p(this.TheSb.master_odai.subject)) {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
+    },
+    odai_src_random_handle() {
+      this.dice.roll()
+      this.TheSb.odai_src_random_handle()
     },
   },
   computed: {
