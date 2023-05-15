@@ -1,5 +1,6 @@
 # public/system/x-files 以下の読み出しがない "_" をファイル名に含まないファイルを削除する
 # rails r XfilesCleanup.new.call
+# XfilesCleanup.new(expires_in: 300.days)
 
 class XfilesCleanup
   def initialize(options = {})
@@ -18,6 +19,15 @@ class XfilesCleanup
     SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
   end
 
+  def subject
+    [
+      "x-files 以下削除",
+      "#{@target_files.size}個",
+      @free_changes.join("→"),
+      "(除#{@skip_files.size}個)",
+    ].join(" ")
+  end
+
   private
 
   def file_process(file)
@@ -26,20 +36,11 @@ class XfilesCleanup
         if file.basename.to_s.include?("_") # 2_20210824130750_1024x768_8s.png のようなファイルは除く
           @skip_files << file_info(file)
         else
-          FileUtils.rm_f(file, noop: !@options[:execute])
           @target_files << file_info(file)
+          FileUtils.rm_f(file, noop: !@options[:execute], verbose: Rails.env.development?)
         end
       end
     end
-  end
-
-  def subject
-    [
-      "x-files 以下削除",
-      "#{@target_files.size}個",
-      @free_changes.join("→"),
-      "(除#{@skip_files.size}個)",
-    ].join(" ")
   end
 
   def body
