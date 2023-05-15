@@ -19,21 +19,7 @@ class SlackAgent
     def notify(params = {})
       new(params).notify
     end
-
-    delegate :reset, to: :excessive_measure, prefix: true
-
-    def excessive_measure
-      @excessive_measure ||= ExcessiveMeasure.new(key: "SlackAgentNotifyJob", run_per_second: API_REQUEST_COUNT_MAX_PER_SECOND)
-    end
   end
-
-  # 1秒間あたりの最大実行数
-  # https://api.slack.com/lang/ja-jp/rate-limit
-  # ↑を見ても具体的な値はわからなかった
-  # が、実感として約10回/秒が頻発すると TooManyRequestsError になる
-  # 対策として最初は1回/秒にしていたけど共有将棋盤を利用時に待ち状態が途切れずに18分待つジョブも生まれた
-  # (もちろんその間に TooManyRequestsError にはならなかった)
-  API_REQUEST_COUNT_MAX_PER_SECOND = 3
 
   mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
 
@@ -65,7 +51,7 @@ class SlackAgent
       return api_params
     end
 
-    SlackAgentNotifyJob.set(wait: wait).perform_later(api_params)
+    SlackAgentNotifyJob.perform_later(api_params)
   end
 
   private
@@ -74,20 +60,12 @@ class SlackAgent
     Time.current.strftime("%T.%L")
   end
 
-  def wait
-    return 0
-
-    @wait ||= self.class.excessive_measure.wait_value_for_job
-  end
-
   def body
     av = []
     v = params[:emoji].presence || ":空白:"
     av << EmojiInfo.lookup(v) || v
     av << " "
     av << (Rails.cache.increment(:slack_counter) || 0)
-    av << " "
-    av << "w#{wait}"
     av << " "
     av << timestamp
     if v = params[:subject].presence
