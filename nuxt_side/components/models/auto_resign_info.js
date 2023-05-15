@@ -7,8 +7,8 @@ export class AutoResignInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "is_auto_resign_on",  name: "する",   message: "時間切れや反則は即負け (推奨)",       environment: ["development", "staging", "production"], },
-      { key: "is_auto_resign_off", name: "しない", message: "投了ボタンは当事者が押す (接待向け)", environment: ["development", "staging", "production"], },
+      { key: "is_auto_resign_on",  name: "する",   message: "時間切れや反則は即負け (推奨)",     environment: ["development", "staging", "production"], },
+      { key: "is_auto_resign_off", name: "しない", message: "投了は本人が任意で行う (接待向け)", environment: ["development", "staging", "production"], },
     ]
   }
 }
