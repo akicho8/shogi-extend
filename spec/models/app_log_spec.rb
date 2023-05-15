@@ -16,52 +16,51 @@ require "rails_helper"
 
 RSpec.describe AppLog, type: :model do
   let(:instance)       { FactoryBot.create(:app_log)         }
-  let(:user)           { FactoryBot.create(:user)              }
+  let(:user)           { FactoryBot.create(:user)            }
   let(:default_attrs)  { FactoryBot.attributes_for(:app_log) }
 
   it "バリデーションが正しい" do
     instance.valid?
-    instance.errors.to_hash.should == {}
+    assert2 { instance.errors.blank? }
   end
 
   describe "作成系" do
     it "作成できる" do
-      app_log = described_class.create(default_attrs)
-      app_log.errors.to_hash.should == {}
+      app_log = AppLog.create(default_attrs)
+      assert2 { instance.errors.blank? }
     end
   end
 
   describe "更新系" do
     it "更新できる" do
       instance.update(default_attrs)
-      instance.errors.to_hash.should == {}
+      assert2 { instance.errors.blank? }
     end
   end
 
   describe "削除系" do
-    before {instance}
+    before { instance }
     it "削除できる" do
-      proc {
-        instance.destroy
-      }.should change(described_class, :count).by(-1)
+      proc { instance.destroy! }.should change(AppLog, :count).by(-1)
     end
   end
 
   describe "アプリ依存のインタフェース" do
     it "汎用" do
       record = AppLog.notify(subject: "xxx")
-      record.subject.should == "xxx"
+      assert2 { record.subject == "xxx" }
     end
   end
 
   describe "メール通知対応" do
     it "works" do
-      proc { AppLog.notify(mail_notify: true) }.should change(ActionMailer::Base.deliveries, :size).by(1)
+      AppLog.notify(mail_notify: true)
+      assert2 { ActionMailer::Base.deliveries.count == 1 }
     end
     it "toオプション" do
       AppLog.notify(to: "xxx@xxx", mail_notify: true)
       mail = ActionMailer::Base.deliveries.last
-      mail.to.should == ["xxx@xxx"]
+      assert2 { mail.to == ["xxx@xxx"] }
     end
   end
 
