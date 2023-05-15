@@ -6,13 +6,9 @@
 class SlackAgent
   class << self
     def api_call(params)
-      if false
-        Slack::Web::Client.new.tap do |client|
-          client.chat_postMessage(params)
-          # raise ::Faraday::Error, "(fake)"
-        end
-      else
-        AppLog.notify(body: params[:text])
+      Slack::Web::Client.new.tap do |client|
+        client.chat_postMessage(params)
+        # raise ::Faraday::Error, "(fake)"
       end
     end
 
