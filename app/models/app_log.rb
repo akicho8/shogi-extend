@@ -65,7 +65,7 @@ class AppLog < ApplicationRecord
     end
 
     def slack_notify(params)
-      SlackAgent.notify(params)
+      SlackSender.notify(params)
     end
   end
 
@@ -105,7 +105,7 @@ class AppLog < ApplicationRecord
   #   #   SystemMailer.notify(params).deliver_later
   #   # end
   #   # if slack_notify
-  #   #   SlackAgent.notify(emoji: emoji, subject: subject, body: body)
+  #   #   SlackSender.notify(emoji: emoji, subject: subject, body: body)
   #   # end
   # end
 

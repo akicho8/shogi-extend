@@ -2,8 +2,8 @@
 # rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
 #
 # ▼キーの削除
-# rails r "SlackAgent.excessive_measure_reset"
-class SlackAgent
+# rails r "SlackSender.excessive_measure_reset"
+class SlackSender
   class << self
     def api_call(params)
       Slack::Web::Client.new.tap do |client|
@@ -47,7 +47,7 @@ class SlackAgent
       return api_params
     end
 
-    SlackAgentNotifyJob.perform_later(api_params)
+    SlackSenderNotifyJob.perform_later(api_params)
   end
 
   private
