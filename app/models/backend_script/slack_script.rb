@@ -16,7 +16,7 @@ module BackendScript
 
     def script_body
       if submitted?
-        h.slack_notify(subject: "admin", body: current_message)
+        SlackAgent.notify(subject: "admin", body: current_message)
       end
     end
 

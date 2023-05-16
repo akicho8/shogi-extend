@@ -76,5 +76,10 @@ module XyMaster
       end
       v.collect { |e | e["spent_sec"] }
     end
+
+    it "app_logging" do
+      record = TimeRecord.create!(rule_key: "rule100", entry_name: "a", spent_sec: 1, x_count: 0)
+      record.app_logging
+    end
   end
 end

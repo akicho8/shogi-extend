@@ -127,16 +127,16 @@ module Swars
         second = Benchmark.realtime do
           aggregate_core
         end
-        slack_notify(second)
+        app_logging(second)
       end
 
-      def slack_notify(second)
+      def app_logging(second)
         subject = "#{histogram_name}分布"
-        body = { :ms => "%.1f s" % second }.merge(slack_notify_params)
+        body = { :ms => "%.1f s" % second }.merge(report_params)
         AppLog.info(subject: subject, body: body)
       end
 
-      def slack_notify_params
+      def report_params
         {
           :current_max  => current_max,
           :BATCH_SIZE   => BATCH_SIZE,

@@ -55,7 +55,7 @@ module Api
         end
 
         @time_record = ::XyMaster::TimeRecord.create!(record_params.merge(user: current_user))
-        @time_record.slack_notify
+        @time_record.app_logging
         render json: result_attributes
       end
 
@@ -63,7 +63,7 @@ module Api
         id = record_params[:id]
         @time_record = ::XyMaster::TimeRecord.find(id)
         @time_record.update!(entry_name: record_params[:entry_name])
-        @time_record.slack_notify
+        @time_record.app_logging
         render json: result_attributes
       end
 

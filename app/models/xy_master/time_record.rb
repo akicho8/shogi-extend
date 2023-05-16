@@ -100,7 +100,7 @@ module XyMaster
       "%d:%02d.%d" % [spent_sec / 60, spent_sec % 60, (spent_sec % 1) * 10**ACCURACY]
     end
 
-    def slack_notify
+    def app_logging
       rank = rank(scope_key: :scope_all)
       AppLog.info(subject: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
     end
