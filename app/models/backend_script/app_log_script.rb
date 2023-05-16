@@ -9,7 +9,7 @@ module BackendScript
     def form_parts
       [
         {
-          :label   => "曖昧検索",
+          :label   => "検索",
           :key     => :query,
           :type    => :string,
           :default => current_query,
@@ -18,7 +18,11 @@ module BackendScript
     end
 
     def script_body
-      s = AppLog.order(:created_at, :id).reverse_order
+      s = AppLog.order(:created_at, :id)
+      if params[:reverse]
+      else
+        s = s.reverse_order
+      end
       if q = current_query
         s = s.search(q)
       end
