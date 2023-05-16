@@ -11,6 +11,7 @@ class FreeSpace
   end
 
   def call(&block)
+    AppLog.trace(["#{__FILE__}:#{__LINE__}", __method__, ])
     if block
       av = []
       begin

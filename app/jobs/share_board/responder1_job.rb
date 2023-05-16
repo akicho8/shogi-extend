@@ -3,7 +3,7 @@ module ShareBoard
     queue_as :default
 
     def perform(params)
-      # SlackAgent.notify(body: params.inspect)
+      # AppLog.info(body: params.inspect)
       # {
       #   "from_connection_id"=>"espq1cQtyB3",
       #   "from_user_name"=>"alice",

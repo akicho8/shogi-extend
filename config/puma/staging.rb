@@ -100,7 +100,7 @@ if false
       # config.pre_term = -> (worker) {
       #   puts "Worker #{worker.inspect} being killed"
       #   SystemMailer.notify(fixed: true, subject: "再起動", body: worker.inspect).deliver_now
-      #   SlackAgent.notify(subject: "puma再起動", body: worker.inspect)
+      #   AppLog.info(subject: "puma再起動", body: worker.inspect)
       # }
 
       config.pre_term         = -> (worker) { puts "Worker #{worker.inspect} being killed"                    }

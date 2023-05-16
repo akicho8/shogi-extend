@@ -33,14 +33,14 @@ module Wkbk
         blob = CardGenerator.to_blob(body: title)
         io = StringIO.new(blob)
         avatar.attach(io: io, filename: "#{SecureRandom.hex}.png")
-        # SlackAgent.notify(subject: self.class.name, body: "カード画像更新(#{title})")
+        # AppLog.info(subject: self.class.name, body: "カード画像更新(#{title})")
       end
 
       # アップロードした base64 のあれをあれする
       # nil なら元のを消す
       def new_file_src=(v)
         if v
-          # SlackAgent.notify(subject: self.class.name, body: "カード画像更新(#{title})")
+          # AppLog.info(subject: self.class.name, body: "カード画像更新(#{title})")
           avatar.attach(io: DataUri.new(v).stream, filename: "#{SecureRandom.hex}.png")
         else
           # if avatar.attached?

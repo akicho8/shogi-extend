@@ -5,7 +5,7 @@ class ApiOnelineLogger
 
   def perform
     if enabled?
-      SlackAgent.notify(subject: subject, body: body, emoji: ":API:")
+      AppLog.info(subject: subject, body: body, emoji: ":API:")
     end
   end
 

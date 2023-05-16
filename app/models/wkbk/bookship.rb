@@ -58,10 +58,10 @@ module Wkbk
 
     if Rails.env.development? && false
       after_create do
-        SlackAgent.notify(subject: "問題集に問題追加", body: "#{user.name}が#{book.title}に#{article.title}を追加")
+        AppLog.info(subject: "問題集に問題追加", body: "#{user.name}が#{book.title}に#{article.title}を追加")
       end
       before_destroy do
-        SlackAgent.notify(subject: "問題集から問題除去", body: "#{user.name}が#{book.title}から#{article.title}を除去")
+        AppLog.info(subject: "問題集から問題除去", body: "#{user.name}が#{book.title}から#{article.title}を除去")
       end
     end
   end

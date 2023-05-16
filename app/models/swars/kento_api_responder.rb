@@ -51,7 +51,7 @@ module Swars
       diff = @user.battles.count - count
       emoji = @crawled ? ":KENTO_SOME:" : ":KENTO_NONE:"
       body = [@user.key, "%+d" % diff, "%.1f s" % sec, *@notify_params.values].compact.inspect
-      SlackAgent.notify(subject: "KENTO API", body: body, emoji: emoji)
+      AppLog.info(subject: "KENTO API", body: body, emoji: emoji)
       response
     end
 

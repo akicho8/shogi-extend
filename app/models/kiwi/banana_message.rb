@@ -59,7 +59,7 @@ module Kiwi
       s << body
       s << banana.page_url
       s = s.join(" ").squish
-      SlackAgent.notify(emoji: ":コメント:", subject: "動画コメント", body: s)
+      AppLog.info(emoji: ":コメント:", subject: "動画コメント", body: s)
     end
 
     # 関係者

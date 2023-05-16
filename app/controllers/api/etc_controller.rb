@@ -75,7 +75,7 @@ module Api
         subject = subject.compact.join(" | ")
         hv[:subject] = subject
       end
-      SlackAgent.notify(hv)
+      AppLog.info(hv)
       render json: { :message => "OK" }
     end
 

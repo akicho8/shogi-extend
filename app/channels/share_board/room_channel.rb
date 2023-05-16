@@ -216,7 +216,7 @@ module ShareBoard
       end
       body = body.join(" ").squish
 
-      SlackAgent.notify(subject: subject, body: body, emoji: emoji)
+      AppLog.info(subject: subject, body: body, emoji: emoji)
     end
 
     def subscribed_track(action)
@@ -225,7 +225,7 @@ module ShareBoard
       else
         body = "User 不明"
       end
-      SlackAgent.notify(subject: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
+      AppLog.info(subject: "共有将棋盤 [#{room_code}] #{action}", body: "#{body}")
     end
 
     def sfen_share_track_body(data)

@@ -52,10 +52,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Google の場合なぜか auth.info.name にメールアドレスが入っている
     if !user
       if Rails.env.development? || Rails.env.staging?
-        SlackAgent.notify(subject: "omniauth", body: auth.as_json)
+        AppLog.info(subject: "omniauth", body: auth.as_json)
       end
 
-      SlackAgent.notify(subject: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
+      AppLog.info(subject: "認証", body: "#{user_name} #{auth.info.email} (#{auth.provider}) #{auth.info.image}")
 
       user = User.create do |e|
         e.email         = auth.info.email # Twitterの場合は空文字列 (TODO: 空なのは認証していないってことなのでは？)
@@ -73,7 +73,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             user.avatar = {io: io, filename: filename, content_type: "image/png"}
             user.save
           else
-            SlackAgent.notify(subject: "auth.info.image is blank")
+            AppLog.info(subject: "auth.info.image is blank")
           end
         end
       rescue => error
@@ -82,7 +82,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if user.invalid?
-      SlackAgent.notify(subject: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
+      AppLog.info(subject: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
       # SystemMailer.notify(subject: "ユーザー作成失敗", body: user.attributes).deliver_later
     end
 

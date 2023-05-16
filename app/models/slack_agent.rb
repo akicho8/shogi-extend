@@ -1,5 +1,5 @@
 # ▼送信
-# rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
+# rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
 #
 # ▼キーの削除
 # rails r "SlackAgent.excessive_measure_reset"
@@ -13,7 +13,7 @@ class SlackAgent
     end
 
     def notify(params = {})
-      new(params).notify
+      new(params).call
     end
   end
 
@@ -26,7 +26,7 @@ class SlackAgent
     }.merge(params)
   end
 
-  def notify(params = {})
+  def call
     return if ENV["SETUP"]
     return if ENV["SLACK_AGENT_DISABLE"].to_s == "true"
 
@@ -66,6 +66,8 @@ class SlackAgent
     av << timestamp
     if v = params[:subject].presence
       av << "【#{v}】"
+    else
+      av << " "
     end
     if v = params[:body].presence
       av << v

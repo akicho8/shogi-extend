@@ -1,7 +1,7 @@
 module ShareBoard
   class Topic < Array
     def debug_log!
-      SlackAgent.notify(subject: "topic", body: to_t)
+      AppLog.info(subject: "topic", body: to_t)
     end
 
     def to_gpt_messages

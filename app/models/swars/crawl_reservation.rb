@@ -95,7 +95,7 @@ module Swars
       end
 
       sec = "%.2f s" % (Time.current - t)
-      SlackAgent.notify(subject: "ZIP #{sec}", body: zip_filename)
+      AppLog.info(subject: "ZIP #{sec}", body: zip_filename)
 
       io
     end
@@ -132,7 +132,7 @@ module Swars
         body << "(要ZIP添付)"
       end
       body = body.join(" ")
-      SlackAgent.notify(emoji: ":目覚まし時計:", subject: "棋譜取得予約", body: body)
+      AppLog.info(emoji: ":目覚まし時計:", subject: "棋譜取得予約", body: body)
     end
 
     private

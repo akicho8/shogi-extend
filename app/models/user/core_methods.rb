@@ -51,7 +51,7 @@ class User
 
       after_create_commit do
         if Rails.env.production? || Rails.env.staging?
-          SlackAgent.notify(subject: "ユーザー登録", body: attributes.slice("id", "name", "email"))
+          AppLog.info(subject: "ユーザー登録", body: attributes.slice("id", "name", "email"))
         end
       end
     end

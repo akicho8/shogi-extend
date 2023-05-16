@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
     end
 
     def slack_notify(params = {})
-      SlackAgent.notify(params)
+      AppLog.info(params)
     end
 
     private

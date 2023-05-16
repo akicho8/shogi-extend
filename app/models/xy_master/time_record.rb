@@ -102,7 +102,7 @@ module XyMaster
 
     def slack_notify
       rank = rank(scope_key: :scope_all)
-      SlackAgent.notify(subject: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
+      AppLog.info(subject: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
     end
 
     def rank_info

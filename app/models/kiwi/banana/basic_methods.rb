@@ -174,7 +174,7 @@ module Kiwi
         if saved_changes?
           subject = "動画ライブラリ#{human_name_when_save}"
           body = [user.name, title, page_url].join(" ")
-          SlackAgent.notify(subject: subject, body: body)
+          AppLog.info(subject: subject, body: body)
 
           subject = "#{user.name}さんが動画ライブラリ「#{title}」を#{human_name_when_save}しました"
           body = info.to_t

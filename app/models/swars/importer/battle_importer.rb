@@ -82,7 +82,7 @@ module Swars
           :tries => CREATE_TRY_COUNT, # 再実行回数ではなく実行回数
           :ensure => proc { |retries|
             if retries >= 1
-              SlackAgent.notify(emoji: ":救急:", subject: "実行回数計#{retries}回/最大#{CREATE_TRY_COUNT}", body: @info.key.to_s)
+              AppLog.info(emoji: ":救急:", subject: "実行回数計#{retries}回/最大#{CREATE_TRY_COUNT}", body: @info.key.to_s)
             end
           },
           :exception_cb => proc { |exception|
@@ -90,7 +90,7 @@ module Swars
           },
           :log_method => lambda { |retries, exception|
             if Rails.env.development?
-              SlackAgent.notify(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
+              AppLog.info(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
             end
           },
         }

@@ -19,7 +19,7 @@ class SlackSos
   end
 
   def notify
-    SlackAgent.notify(emoji: ":SOS:", subject: exception.class.name, body: body)
+    AppLog.info(emoji: ":SOS:", subject: exception.class.name, body: body)
   end
 
   private

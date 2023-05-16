@@ -6,7 +6,7 @@ class SlackAgentNotifyJob < ApplicationJob
     ExceptionNotifier.notify_exception(error, data: {slack: job}, notifiers: [:email])
   end
 
-  # EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'SlackAgent.notify(subject: "(subject)", body: "(body)")'
+  # EXCEPTION_NOTIFICATION_ENABLE=1 rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
   def perform(params)
     SlackAgent.api_call(params)
   end

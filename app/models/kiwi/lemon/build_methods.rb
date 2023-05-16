@@ -34,7 +34,7 @@ module Kiwi
             background_job_kick(options)
           end
           if options[:notify]
-            AppLog.notify(subject: "background_job_kick_if_period", body: background_job_kick_active?(options).to_s, slack_notify: true, mail_notify: false)
+            AppLog.notice(subject: "background_job_kick_if_period", body: background_job_kick_active?(options).to_s)
           end
         end
 
@@ -100,7 +100,7 @@ module Kiwi
         # cap production rails:runner CODE="Kiwi::Lemon.background_job(id:[14])"
         def background_job_kick(options = {})
           if sidekiq_task_count.nonzero?
-            SlackAgent.notify(subject: "background_job_kick", body: "すでに実行中またはキューで待っているのでキャンセル")
+            AppLog.info(subject: "background_job_kick", body: "すでに実行中またはキューで待っているのでキャンセル")
             return
           end
           KiwiLemonSingleJob.perform_later(options)
@@ -110,7 +110,7 @@ module Kiwi
         # cron のなかでも呼べる
         # cap staging rails:runner CODE="Kiwi::Lemon.background_job"
         def background_job(options = {})
-          # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "開始")
+          # AppLog.info(subject: "動画作成 - Sidekiq", body: "開始")
           if id = options[:id]
             find(id).each(&:main_process)
           else
@@ -118,7 +118,7 @@ module Kiwi
               e.main_process
             end
           end
-          # SlackAgent.notify(subject: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
+          # AppLog.info(subject: "動画作成 - Sidekiq", body: "終了 変換数:#{count}")
         end
 
         # ゾンビを成仏させる
@@ -150,7 +150,7 @@ module Kiwi
                 e.save!
                 logger.info("ゾンビ #{e.id} をエラーとする")
 
-                SlackAgent.notify(subject: "ゾンビ発見", body: "#{e.id} #{min}m #{e.user.name}")
+                AppLog.info(subject: "ゾンビ発見", body: "#{e.id} #{min}m #{e.user.name}")
 
                 e.user.kiwi_my_lemons_singlecast
                 e.user.kiwi_done_lemon_singlecast(e)
@@ -375,7 +375,7 @@ module Kiwi
         body << browser_url
         body = body.reject(&:blank?).join(" ")
 
-        SlackAgent.notify(emoji: ":動画:", subject: subject, body: body)
+        AppLog.info(emoji: ":動画:", subject: subject, body: body)
       end
 
       # rails r 'Kiwi::Lemon.first.end_notify'
@@ -436,7 +436,7 @@ module Kiwi
       def debug_track(name, body = nil)
         subject = "動画作成 #{name} #{status_key}"
         body = [id, user.name, body].compact.join(" ")
-        SlackAgent.notify(subject: subject, body: body)
+        AppLog.info(subject: subject, body: body)
       end
 
       # 生成ファイルにリンクする

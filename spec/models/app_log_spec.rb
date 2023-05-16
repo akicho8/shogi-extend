@@ -47,24 +47,24 @@ RSpec.describe AppLog, type: :model do
 
   describe "アプリ依存のインタフェース" do
     it "汎用" do
-      record = AppLog.notify(subject: "xxx")
+      record = AppLog.info(subject: "xxx")
       assert2 { record.subject == "xxx" }
     end
   end
 
   describe "メール通知対応" do
     it "works" do
-      AppLog.notify(mail_notify: true)
+      AppLog.info(mail_notify: true)
       assert2 { ActionMailer::Base.deliveries.count == 1 }
     end
     it "toオプション" do
-      AppLog.notify(to: "xxx@xxx", mail_notify: true)
+      AppLog.info(to: "xxx@xxx", mail_notify: true)
       mail = ActionMailer::Base.deliveries.last
       assert2 { mail.to == ["xxx@xxx"] }
     end
   end
 
   it "Slack通知" do
-    AppLog.notify(slack_notify: true)
+    AppLog.info(slack_notify: true)
   end
 end

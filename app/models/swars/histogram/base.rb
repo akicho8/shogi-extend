@@ -133,7 +133,7 @@ module Swars
       def slack_notify(second)
         subject = "#{histogram_name}分布"
         body = { :ms => "%.1f s" % second }.merge(slack_notify_params)
-        SlackAgent.notify(subject: subject, body: body)
+        AppLog.info(subject: subject, body: body)
       end
 
       def slack_notify_params

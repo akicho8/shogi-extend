@@ -20,7 +20,7 @@ module ShogiErrorRescueMethods
     # http://localhost:4000/adapter?body=68S+active_record_value_too_long
     rescue_from "ActiveRecord::ValueTooLong" do |error|
       body = [error.message, params].join("\n")
-      SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
+      AppLog.info(subject: error.class.name, body: body, channel: "#adapter_error")
       ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
       message = []
       message << "棋譜データがでかすぎです。"
@@ -50,7 +50,7 @@ module ShogiErrorRescueMethods
 
       unless from_crawl_bot?
         body = [error.message, params].join("\n")
-        SlackAgent.notify(subject: error.class.name, body: body, channel: "#adapter_error")
+        AppLog.info(subject: error.class.name, body: body, channel: "#adapter_error")
         ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
       end
 

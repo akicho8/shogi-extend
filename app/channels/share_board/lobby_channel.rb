@@ -49,10 +49,10 @@ module ShareBoard
     def track(data, action, body)
       key = "自動マッチング #{action}"
       if Rails.env.development? && false
-        SlackAgent.notify(subject: key, body: data)
+        AppLog.info(subject: key, body: data)
       end
       prefix = data["from_user_name"] + ":"
-      SlackAgent.notify(subject: key, body: ":#{data["ua_icon_key"]}: #{prefix} #{body}")
+      AppLog.info(subject: key, body: ":#{data["ua_icon_key"]}: #{prefix} #{body}")
     end
 
     def notify(action)
@@ -61,7 +61,7 @@ module ShareBoard
       else
         body = "(未ログイン)"
       end
-      SlackAgent.notify(subject: "自動マッチング #{action}", body: body)
+      AppLog.info(subject: "自動マッチング #{action}", body: body)
     end
   end
 end

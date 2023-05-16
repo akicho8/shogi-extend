@@ -21,7 +21,7 @@ module Swars
         @params = default_params.merge(params)
 
         if Rails.env.development?
-          SlackAgent.notify(subject: "プレイヤー情報", body: "参照 #{user.key.inspect}")
+          AppLog.info(subject: "プレイヤー情報", body: "参照 #{user.key.inspect}")
         end
       end
 

@@ -2,6 +2,7 @@ module BackendScript
   class AppLogScript < ::BackendScript::Base
     self.category = "その他"
     self.script_name = "アプリログ"
+    self.column_wrapper_enable = false
 
     private
 
@@ -18,8 +19,8 @@ module BackendScript
 
     def script_body
       s = AppLog.order(:created_at, :id).reverse_order
-      if current_query
-        s = s.where(["body like ?", "%#{current_query}%"])
+      if q = current_query
+        s = s.search(q)
       end
       s = page_scope(s)
       rows = s.collect(&method(:row_build))
@@ -30,10 +31,12 @@ module BackendScript
 
     def row_build(app_log)
       {
-        "ID"   => app_log.id, # script_link_to(app_log.id, :id => "ar_search", :model => current_model.name,:record_id => app_log.id),
-        "題名" => app_log.subject,
-        "本文" => app_log.body,
-        "日時" => app_log.created_at.to_s,
+        "ID"       => app_log.id, # script_link_to(app_log.id, :id => "ar_search", :model => current_model.name, :record_id => app_log.id),
+        "作成日時" => app_log.created_at.to_fs(:ymdhms),
+        "Level"    => app_log.level,
+        "絵"       => app_log.real_emoji,
+        "題"       => app_log.subject,
+        "本文"     => app_log.body,
       }
     end
 

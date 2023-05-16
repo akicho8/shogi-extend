@@ -26,7 +26,7 @@ job_type :runner,  "cd :path && bin/rails runner -e :environment ':task' :output
 
 every("5 3 * * *") do
   runner [
-    %(SlackAgent.notify(subject: "CRON", body: "begin")),
+    %(AppLog.info(subject: "CRON", body: "begin")),
 
     # "ActiveRecord::Base.logger = nil",
     "Swars::Crawler::ExpertCrawler.run",
@@ -34,12 +34,12 @@ every("5 3 * * *") do
     # "Swars::Crawler::RegularCrawler.run",
     # "Swars::Crawler::RecentlyCrawler.run",
 
-    # %(SlackAgent.notify(subject: "CRON", body: "obt_auto_max update")),
-    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; SlackAgent.notify(subject: "obt_auto_max", body: i) }',
+    # %(AppLog.info(subject: "CRON", body: "obt_auto_max update")),
+    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(obt_auto_max: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; AppLog.info(subject: "obt_auto_max", body: i) }',
 
-    # %(SlackAgent.notify(subject: "CRON", body: "耀龍四間飛車 update begin")),
+    # %(AppLog.info(subject: "CRON", body: "耀龍四間飛車 update begin")),
     # %(ActsAsTaggableOn::Tag.find_by(name: "耀龍四間飛車").taggings.where(taggable_type: "Swars::Membership").order(id: :desc).in_batches.each_record{|e|e.taggable.battle.remake rescue nil}),
-    # %(SlackAgent.notify(subject: "CRON", body: "耀龍四間飛車 update end")),
+    # %(AppLog.info(subject: "CRON", body: "耀龍四間飛車 update end")),
 
     # 全部0件
     # "Swars::Membership.where(:op_user => nil).find_each{|e|e.save!}",
@@ -58,7 +58,7 @@ every("5 3 * * *") do
     %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
 
     # 通知
-    %(SlackAgent.notify(subject: "CRON", body: "end")),
+    %(AppLog.info(subject: "CRON", body: "end")),
   ].join(";")
 end
 
@@ -95,8 +95,8 @@ end
 # if @environment == "production"
 #   every("15 1 31 12 *") do
 #     runner [
-#       "SlackAgent.notify(subject: 'Question', body: 'start')",
-#       "SlackAgent.notify(subject: 'Question', body: 'end')",
+#       "AppLog.info(subject: 'Question', body: 'start')",
+#       "AppLog.info(subject: 'Question', body: 'end')",
 #     ].join(";")
 #   end
 # end

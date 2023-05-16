@@ -3,6 +3,6 @@ class SidekiqDoctorJob < ApplicationJob
 
   def perform(params)
     body = eval(params[:code]) rescue $!
-    AppLog.notify(subject: "sidekiq", body: body.inspect)
+    AppLog.info(subject: "sidekiq", body: body.inspect)
   end
 end

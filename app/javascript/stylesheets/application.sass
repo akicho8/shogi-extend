@@ -27,3 +27,16 @@
 .header_avatar_image
   vertical-align: middle
   border-radius: 50%
+
+////////////////////////////////////////////////////////////////////////////// for app/models/atomic_script/columns_colum_methods.rb
+
+.is_scroll_x
+  overflow-x: auto
+  overscroll-behavior-x: none
+
+// http://localhost:3000/admin/script/app-log で「題名」が途中で改行されるのを防ぐ
+.table.html_format_type_array_of_hash
+  thead
+    th
+      white-space: nowrap
+      
