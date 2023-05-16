@@ -139,9 +139,7 @@ module Swars
         end
         current_swars_user.search_logs.create!
 
-        if Rails.env.development?
-          slack_notify(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
-        end
+        AppLog.debug(subject: "検索", body: "#{current_swars_user_key} #{hit_count}件")
       end
     end
 

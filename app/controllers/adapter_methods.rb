@@ -22,7 +22,7 @@ module AdapterMethods
   #   # 自動的に飛ばすとそれが正規の方法だと思う人がでてくる問題ありか……？
   #   if current_input_text.lines.count <= 2
   #     if url = Swars::BattleUrl.url(current_input_text)
-  #       slack_notify(subject: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
+  #       AppLog.info(subject: "なんでも棋譜変換にウォーズの対局URL入力した方を検知", body: current_input_text)
   #       if Rails.env.development?
   #         flash[:warning] = "ウォーズの対局URLはこちらに入力してください"
   #       end
@@ -41,6 +41,6 @@ module AdapterMethods
     else
       channel = "#adapter_success"
     end
-    slack_notify(subject: "変換#{current_record.turn_max}手", body: body, channel: channel)
+    AppLog.info(subject: "変換#{current_record.turn_max}手", body: body, channel: channel)
   end
 end

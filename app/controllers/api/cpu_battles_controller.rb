@@ -268,7 +268,7 @@ module Api
     end
 
     def logging(title, body = nil)
-      slack_notify(subject: "CPU対戦 - #{title}", body: [logging_body_prefix, body].join)
+      AppLog.info(subject: "CPU対戦 - #{title}", body: [logging_body_prefix, body].join)
     end
 
     def logging_body_prefix

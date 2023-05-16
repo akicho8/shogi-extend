@@ -89,15 +89,10 @@ class ApplicationController < ActionController::Base
     included do
       add_flash_types *FlashInfo.all_keys
       helper_method :submitted?
-      helper_method :slack_notify
     end
 
     def submitted?(name)
       params.key?(name)
-    end
-
-    def slack_notify(params = {})
-      AppLog.info(params)
     end
 
     private
@@ -126,7 +121,7 @@ class ApplicationController < ActionController::Base
         retv = name.present? && password == Rails.application.credentials[:admin_password]
         if Rails.env.production? || Rails.env.test?
           Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
-            slack_notify(subject: "管理画面ログイン", body: [retv, name, password].inspect)
+            AppLog.critical(subject: "管理画面ログイン", body: [retv, name, password].inspect)
             nil
           end
         end

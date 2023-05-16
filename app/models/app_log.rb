@@ -11,6 +11,12 @@
 # | body       | 内容     | string(8192) | NOT NULL    |      |       |
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
+#
+
+# 管理画面
+# app/models/backend_script/app_log_script.rb
+#
+#
 
 # rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
 # rails r 'AppLog.info(subject: "(subject)", body: "(body)", slack_notify: true)'
