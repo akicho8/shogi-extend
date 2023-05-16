@@ -1120,7 +1120,7 @@ example_id                                                                      
 ./spec/models/share_board/responder_base_spec.rb[1:1]                                | passed  | 0.3313 seconds  |
 ./spec/models/share_board/room_spec.rb[1:1]                                          | passed  | 0.45081 seconds |
 ./spec/models/shogidb2_parser_spec.rb[1:1]                                           | passed  | 0.17643 seconds |
-./spec/models/slack_sender_spec.rb[1:1]                                               | passed  | 0.19131 seconds |
+./spec/models/slack_sender_spec.rb[1:1]                                              | passed  | 0.25864 seconds |
 ./spec/models/slack_sos_spec.rb[1:1]                                                 | passed  | 0.16631 seconds |
 ./spec/models/standard_deviation_spec.rb[1:1]                                        | passed  | 0.31388 seconds |
 ./spec/models/string_util_spec.rb[1:1]                                               | passed  | 0.16523 seconds |

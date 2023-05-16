@@ -65,7 +65,7 @@ class AppLog < ApplicationRecord
     end
 
     def slack_notify(params)
-      SlackSender.notify(params)
+      SlackSender.call(params)
     end
   end
 
@@ -92,22 +92,6 @@ class AppLog < ApplicationRecord
       public_send("#{key}=", str)
     end
   end
-
-  # after_create_commit do
-  #   # if mail_notify
-  #   #   params = { emoji: emoji, subject: subject, body: body }
-  #   #   if attachments
-  #   #     params[:attachments] = attachments
-  #   #   end
-  #   #   if to
-  #   #     params[:to] = to
-  #   #   end
-  #   #   SystemMailer.notify(params).deliver_later
-  #   # end
-  #   # if slack_notify
-  #   #   SlackSender.notify(emoji: emoji, subject: subject, body: body)
-  #   # end
-  # end
 
   def real_emoji
     EmojiInfo.lookup(emoji) || emoji

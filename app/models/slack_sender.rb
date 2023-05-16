@@ -12,7 +12,7 @@ class SlackSender
       end
     end
 
-    def notify(params = {})
+    def call(params = {})
       new(params).call
     end
   end
