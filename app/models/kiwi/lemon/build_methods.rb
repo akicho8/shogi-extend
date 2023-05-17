@@ -258,7 +258,7 @@ module Kiwi
             self.errored_at = Time.current
             self.error_message = error.message
             SlackSos.notify_exception(error)
-            SystemMailer.notify_exception(error, all_params)
+            SystemMailer.notify_exception(error, {data: all_params})
           else
             logger.info("success")
             reload # zombie_kill で errored_at を更新されたとき、これを入れないと、変化したことがわからず nil で上書きできない

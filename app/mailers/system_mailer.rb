@@ -7,15 +7,7 @@ class SystemMailer < ApplicationMailer
     # rails r "p SystemMailer.notify_exception((1/0 rescue $!))"
     #
     def notify_exception(error, params = {})
-      body = []
-      if params.present?
-        body << params.pretty_inspect
-      end
-      if error.backtrace
-        body << error.backtrace.take(4).join("\n")
-      end
-      body = body.join("\n") + "\n"
-      notify(subject: "#{error.message} (#{error.class.name})", body: body).deliver_later
+      notify(ErrorInfo.new(error, params).to_h).deliver_later
     end
   end
 
@@ -31,6 +23,13 @@ class SystemMailer < ApplicationMailer
 
     params = params.merge(subject: subject)
     params = params_normalize_if_fixed(params)
+
+    if hv = params[:attachments]
+      hv.each do |k, v|
+        attachments[k] = v
+      end
+    end
+
     mail(params)
   end
 end

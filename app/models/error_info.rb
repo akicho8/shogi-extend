@@ -1,4 +1,11 @@
-class ErrorTextBuilder
+# エラーを通知しやすい形式に変換する
+#
+#  obj = ErrorInfo.new(((1 / 0) rescue $!), data: "(data)", backtrace_lines_max: 1)
+#  hv = obj.to_h
+#  hv[:emoji] # => ":SOS:"
+#  hv[:subject] # => "divided by 0 (ZeroDivisionError)"
+#
+class ErrorInfo
   def initialize(exception, options = {})
     @exception = exception
     @options = {

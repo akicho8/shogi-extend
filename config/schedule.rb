@@ -56,6 +56,7 @@ every("5 3 * * *") do
     %(FreeBattle.cleanup(execute: true)),
     %(Swars::Battle.cleanup(execute: true)),  # 30分かかる
     %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
+    %(AppLog.cleanup(execute: true)),
 
     # 通知
     %(AppLog.info(subject: "CRON", body: "end")),

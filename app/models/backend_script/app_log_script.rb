@@ -38,7 +38,7 @@ module BackendScript
         "ID"       => app_log.id, # script_link_to(app_log.id, :id => "ar_search", :model => current_model.name, :record_id => app_log.id),
         "作成日時" => app_log.created_at.to_fs(:ymdhms),
         "Level"    => app_log.level,
-        "絵"       => app_log.real_emoji,
+        "絵"       => app_log.emoji,
         "題"       => app_log.subject,
         "本文"     => app_log.body,
       }

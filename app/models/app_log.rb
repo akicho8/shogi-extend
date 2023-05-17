@@ -37,7 +37,7 @@ class AppLog < ApplicationRecord
       define_method(e.key) do |body = nil, **params|
         if e.available_environments.include?(Rails.env.to_sym)
           if true
-            params = params.deep_symbolize_keys # dup
+            params = params.symbolize_keys # dup
             if body
               if params.has_key?(:body)
                 raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
@@ -45,23 +45,24 @@ class AppLog < ApplicationRecord
               params = params.merge(body: body)
             end
             if params[:body].kind_of?(Exception)
-              params.update(ErrorTextBuilder.new(params[:body]).to_h)
+              params.update(ErrorInfo.new(params[:body]).to_h)
             end
           end
           attributes = e.to_app_log_attributes.merge(params)
-          create!(attributes)
-          if e.mail_notify
+          record = create!(attributes.slice(:level, :emoji, :subject, :body))
+          if attributes[:mail_notify]
             mail_notify(attributes)
           end
-          if e.slack_notify
+          if attributes[:slack_notify]
             slack_notify(attributes)
           end
+          record
         end
       end
     end
 
     def mail_notify(params)
-      SystemMailer.notify(params).deliver_later
+      SystemMailer.notify({fixed: true}.merge(params)).deliver_later
     end
 
     def slack_notify(params)
@@ -76,14 +77,9 @@ class AppLog < ApplicationRecord
 
   scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
-  attr_accessor :mail_notify
-  attr_accessor :slack_notify
-  attr_accessor :attachments
-  attr_accessor :to
-
   before_validation on: :create do
     self.level ||= :debug
-    self.emoji ||= ""
+    self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
 
     [:subject, :body].each do |key|
       str = public_send(key).to_s
@@ -91,9 +87,5 @@ class AppLog < ApplicationRecord
       str = str.first(max)
       public_send("#{key}=", str)
     end
-  end
-
-  def real_emoji
-    EmojiInfo.lookup(emoji) || emoji
   end
 end

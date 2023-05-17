@@ -15,56 +15,51 @@
 require "rails_helper"
 
 RSpec.describe AppLog, type: :model do
-  let(:instance)       { FactoryBot.create(:app_log)         }
-  let(:user)           { FactoryBot.create(:user)            }
-  let(:default_attrs)  { FactoryBot.attributes_for(:app_log) }
-
-  it "バリデーションが正しい" do
-    instance.valid?
-    assert2 { instance.errors.blank? }
+  it "空でも作成できる" do
+    assert2 { AppLog.debug }
   end
 
-  describe "作成系" do
-    it "作成できる" do
-      app_log = AppLog.create(default_attrs)
-      assert2 { instance.errors.blank? }
-    end
+  it "記録できることを優先するので題名が長すぎたらtruncateする" do
+    assert2 { AppLog.debug(subject: "x" * 256).subject.size == 255 }
   end
 
-  describe "更新系" do
-    it "更新できる" do
-      instance.update(default_attrs)
-      assert2 { instance.errors.blank? }
-    end
+  it "本文は第一引数にそのまま書いてもよい" do
+    assert2 { AppLog.debug(body: "a", subject: "b").body == "a" }
+    assert2 { AppLog.debug("a", subject: "b").body       == "a" }
+    assert2 { AppLog.debug("a").body                     == "a" }
   end
 
-  describe "削除系" do
-    before { instance }
-    it "削除できる" do
-      proc { instance.destroy! }.should change(AppLog, :count).by(-1)
-    end
+  it "擬似絵文字は検索しやすくするために実際の絵文字に変換してDBに入る" do
+    assert2 { AppLog.debug(emoji: ":SOS:").emoji == "🆘" }
   end
 
-  describe "アプリ依存のインタフェース" do
-    it "汎用" do
-      record = AppLog.info(subject: "xxx")
-      assert2 { record.subject == "xxx" }
-    end
-  end
-
-  describe "メール通知対応" do
-    it "works" do
-      AppLog.info(mail_notify: true)
+  describe "メール送信" do
+    it "ログレベルが高いとメール送信する" do
+      AppLog.alert
       assert2 { ActionMailer::Base.deliveries.count == 1 }
     end
-    it "toオプション" do
-      AppLog.info(to: "xxx@xxx", mail_notify: true)
+
+    it "ログレベルが引くくてもmail_notifyオプションをつけるとメール送信する" do
+      AppLog.debug
+      assert2 { ActionMailer::Base.deliveries.count == 0 }
+      AppLog.debug(mail_notify: true)
+      assert2 { ActionMailer::Base.deliveries.count == 1 }
+    end
+
+    it "送信先を変更したり添付ファイルを付与できる" do
+      AppLog.alert(to: "xxx@xxx", attachments: {"a" => "b"})
       mail = ActionMailer::Base.deliveries.last
       assert2 { mail.to == ["xxx@xxx"] }
+      assert2 { mail.attachments["a"] }
     end
   end
 
   it "Slack通知" do
+    raise "ここからつづき"
     AppLog.info(slack_notify: true)
+  end
+
+  describe "エラーを渡せる" do
+    raise "ここも"
   end
 end
