@@ -49,7 +49,7 @@ if defined? AppConfig
   # 表側 (WEBの方)
   Sidekiq.configure_client do |config|
     config.redis = redis_options
-    config.logger = Rails.logger
+    # config.logger = Rails.logger
 
     # config.default_worker_options = default_worker_options
 
@@ -62,7 +62,7 @@ if defined? AppConfig
   # 裏側 (バックグラウンドで動いている側)
   Sidekiq.configure_server do |config|
     config.redis = redis_options
-    config.logger = Rails.logger
+    # config.logger = Rails.logger
     # config.default_worker_options = default_worker_options # これ重要
 
     #== sidekiq-failures setting

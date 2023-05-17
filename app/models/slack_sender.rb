@@ -1,8 +1,9 @@
-# ▼送信
-# rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
+# Slack への送信
 #
-# ▼キーの削除
-# rails r "SlackSender.excessive_measure_reset"
+# 送信
+# rails r 'SlackSender.call'
+# rails r 'SlackSender.call(subject: "a", body: "b")'
+#
 class SlackSender
   class << self
     def api_call(params)
@@ -17,7 +18,8 @@ class SlackSender
     end
   end
 
-  mattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
+  cattr_accessor(:default_channel) { "#shogi-extend-#{Rails.env}" }
+  cattr_accessor(:deliveries) { [] }
 
   attr_reader :params
 
@@ -38,12 +40,8 @@ class SlackSender
       return
     end
 
-    api_params = {
-      :channel => params[:channel] || default_channel,
-      :text    => body,
-    }
-
     if Rails.env.test?
+      deliveries << api_params
       return api_params
     end
 
@@ -51,6 +49,13 @@ class SlackSender
   end
 
   private
+
+  def api_params
+    {
+      :channel => params[:channel] || default_channel,
+      :text    => body,
+    }
+  end
 
   def timestamp
     Time.current.strftime("%T.%L")

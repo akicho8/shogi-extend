@@ -11,52 +11,67 @@
 # | body       | 内容     | string(8192) | NOT NULL    |      |       |
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
-#
-
 # 管理画面
 # app/models/backend_script/app_log_script.rb
 #
+# ログレベル
+# ./log_level_info.rb
 #
-
-# rails r 'AppLog.info(subject: "(subject)", body: "(body)")'
-# rails r 'AppLog.info(subject: "(subject)", body: "(body)", slack_notify: true)'
-# rails r 'AppLog.info(subject: "(subject)", body: "(body)", slack_notify: true, mail_notify: true)'
-
+# 引数はなんでもいける
+# AppLog.info(subject: "xxx", body: "xxx")
+# AppLog.info(subject: "xxx", body: "xxx", slack_notify: true)
+# AppLog.info(subject: "xxx", body: "xxx", slack_notify: true, mail_notify: true)
+# AppLog.info("xxx", mail_notify: true)
+# AppLog.info(Exception.new, emoji: "🧡")
+# AppLog.info(body: Exception.new, emoji: "🧡")
+#
 class AppLog < ApplicationRecord
+  EXCEPTION_SUPPORT = true
+
   # AppLog.cleanup
   def self.cleanup(...)
     Cleanup.new(...).call
   end
 
-  def self.notify(params)
-    debug(params)
+  def self.notify(...)
+    info(...)
   end
 
   class << self
     LogLevelInfo.each do |e|
       define_method(e.key) do |body = nil, **params|
         if e.available_environments.include?(Rails.env.to_sym)
-          if true
-            params = params.symbolize_keys # dup
-            if body
-              if params.has_key?(:body)
-                raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
-              end
-              params = params.merge(body: body)
-            end
-            if params[:body].kind_of?(Exception)
-              params.update(ErrorInfo.new(params[:body]).to_h)
-            end
+          call_with_log_level(e, body, params)
+        end
+      end
+    end
+
+    private
+
+    def call_with_log_level(log_level_info, body, params)
+      if true
+        params = params.symbolize_keys # dup
+        if body
+          if params.has_key?(:body)
+            raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
           end
-          attributes = e.to_app_log_attributes.merge(params)
-          record = create!(attributes.slice(:level, :emoji, :subject, :body))
-          if attributes[:mail_notify]
-            mail_notify(attributes)
+          params = params.merge(body: body)
+        end
+        if EXCEPTION_SUPPORT
+          if params[:body].kind_of?(Exception)
+            exception = params.delete(:body)
+            default = ErrorInfo.new(exception).to_h
+            params = default.merge(params)
           end
-          if attributes[:slack_notify]
-            slack_notify(attributes)
-          end
-          record
+        end
+      end
+      attrs = log_level_info.to_app_log_attributes.merge(params)
+      create!(attrs.slice(:level, :emoji, :subject, :body)).tap do
+        if attrs[:mail_notify]
+          mail_notify(attrs)
+        end
+        if attrs[:slack_notify]
+          slack_notify(attrs)
         end
       end
     end
@@ -80,6 +95,7 @@ class AppLog < ApplicationRecord
   before_validation on: :create do
     self.level ||= :debug
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
+    self.process_id ||= Process.pid
 
     [:subject, :body].each do |key|
       str = public_send(key).to_s
