@@ -15,12 +15,12 @@
 class CreateAppLogs < ActiveRecord::Migration[6.0]
   def up
     create_table :app_logs, force: true do |t|
-      t.string :level,       null: false
-      t.string :emoji,       null: false
-      t.string :subject,     null: false
-      t.string :body,        null: false
-      t.integer :process_id, null: false
-      t.timestamps           null: false
+      t.string :level,        null: false
+      t.string :emoji,        null: false
+      t.string :subject,      null: false
+      t.string :body,         null: false
+      t.integer :process_id,  null: false
+      t.datetime :created_at, null: false
     end
   end
 end

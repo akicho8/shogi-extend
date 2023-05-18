@@ -41,15 +41,15 @@ RSpec.describe AppLog, type: :model do
     assert2 { AppLog.debug(emoji: ":SOS:").emoji == "🆘" }
   end
 
-  describe "エラーを渡せる" do
-    it "エラーを渡せる" do
+  describe "例外オブジェクトを渡せる" do
+    it "それだけを渡すとsubjectやbodyに展開する" do
       app_log = AppLog.debug(Exception.new("foo"))
       assert2 { app_log.emoji == "🆘"                }
       assert2 { app_log.subject == "foo (Exception)" }
       assert2 { app_log.body == "foo"                }
     end
 
-    it "他のパラメータの方が強い" do
+    it "展開しても明示的に指定したオプションの方を優先する" do
       app_log = AppLog.debug(Exception.new("foo"), subject: "(subject)")
       assert2 { app_log.subject == "(subject)" }
     end

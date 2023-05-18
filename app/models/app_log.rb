@@ -11,13 +11,14 @@
 # | body       | 内容     | string(8192) | NOT NULL    |      |       |
 # | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
 # |------------+----------+--------------+-------------+------+-------|
-# 管理画面
-# app/models/backend_script/app_log_script.rb
 #
-# ログレベル
-# ./log_level_info.rb
+# ▼管理画面
+# AppLogScript
 #
-# 引数はなんでもいける
+# ▼ログレベル
+# LogLevelInfo
+#
+# ▼実行例
 # AppLog.info(subject: "xxx", body: "xxx")
 # AppLog.info(subject: "xxx", body: "xxx", slack_notify: true)
 # AppLog.info(subject: "xxx", body: "xxx", slack_notify: true, mail_notify: true)
@@ -28,16 +29,11 @@
 class AppLog < ApplicationRecord
   EXCEPTION_SUPPORT = true
 
-  # AppLog.cleanup
-  def self.cleanup(...)
-    Cleanup.new(...).call
-  end
-
-  def self.notify(...)
-    info(...)
-  end
-
   class << self
+    def self.cleanup(...)
+      Cleanup.new(...).call
+    end
+
     LogLevelInfo.each do |e|
       define_method(e.key) do |body = nil, **params|
         if e.available_environments.include?(Rails.env.to_sym)
@@ -51,12 +47,15 @@ class AppLog < ApplicationRecord
     def call_with_log_level(log_level_info, body, params)
       if true
         params = params.symbolize_keys # dup
+
+        if body && params.has_key?(:body)
+          raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
+        end
+
         if body
-          if params.has_key?(:body)
-            raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
-          end
           params = params.merge(body: body)
         end
+
         if EXCEPTION_SUPPORT
           if params[:body].kind_of?(Exception)
             exception = params.delete(:body)
@@ -65,6 +64,7 @@ class AppLog < ApplicationRecord
           end
         end
       end
+
       attrs = log_level_info.to_app_log_attributes.merge(params)
       create!(attrs.slice(:level, :emoji, :subject, :body)).tap do
         if attrs[:mail_notify]

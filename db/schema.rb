@@ -45,8 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_000000) do
     t.string "subject", null: false
     t.string "body", null: false
     t.integer "process_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
   end
 
   create_table "auth_infos", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
