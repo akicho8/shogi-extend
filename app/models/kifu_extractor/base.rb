@@ -37,7 +37,7 @@ module KifuExtractor
         info.formatter.container_run_once
         true
       rescue Bioshogi::BioshogiError => error
-        SlackSos.notify_exception(error)
+        AppLog.critical(error)
         false
       end
     end

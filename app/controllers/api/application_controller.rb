@@ -21,9 +21,7 @@ module Api
         begin
           URI(url).read.toutf8
         rescue SocketError => error
-          Rails.logger.info(error)
-          SlackSos.notify_exception(error)
-          ExceptionNotifier.notify_exception(error)
+          AppLog.critical(error)
           ""
         end
       end

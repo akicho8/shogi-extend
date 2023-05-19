@@ -257,7 +257,7 @@ module Kiwi
             logger.info("#{error.message} (#{error.class.name})")
             self.errored_at = Time.current
             self.error_message = error.message
-            SlackSos.notify_exception(error)
+            AppLog.critical(error)
             SystemMailer.notify_exception(error, {data: all_params})
           else
             logger.info("success")

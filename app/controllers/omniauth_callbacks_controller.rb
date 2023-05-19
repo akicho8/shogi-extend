@@ -77,7 +77,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
         end
       rescue => error
-        SlackSos.notify_exception(error)
+        AppLog.critical(error)
       end
     end
 

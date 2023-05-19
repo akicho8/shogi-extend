@@ -2,7 +2,7 @@ module Swars
   concern :ExceptionCatch do
     included do
       rescue_from "Swars::Agent::BaseError" do |exception|
-        SlackSos.notify_exception(exception)
+        AppLog.critical(exception)
         render json: { message: exception.message }, status: exception.status
       end
 
@@ -11,17 +11,17 @@ module Swars
       end
 
       rescue_from "Faraday::ConnectionFailed" do |exception|
-        SlackSos.notify_exception(exception)
+        AppLog.critical(exception)
         render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
       end
 
       rescue_from "ActiveRecord::RecordNotUnique" do |exception|
-        SlackSos.notify_exception(exception, backtrace_lines_max: 0)
+        AppLog.critical(exception)
         render json: { message: "連打したのでぶっこわれました" }, status: 500
       end
 
       rescue_from "ActiveRecord::Deadlocked" do |exception|
-        SlackSos.notify_exception(exception, backtrace_lines_max: 0)
+        AppLog.critical(exception)
         render json: { message: "データベースが死にそうです" }, status: 500
       end
     end

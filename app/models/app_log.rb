@@ -59,7 +59,7 @@ class AppLog < ApplicationRecord
         if EXCEPTION_SUPPORT
           if params[:body].kind_of?(Exception)
             exception = params.delete(:body)
-            default = ErrorInfo.new(exception).to_h
+            default = ErrorInfo.new(exception, params).to_h
             params = default.merge(params)
           end
         end

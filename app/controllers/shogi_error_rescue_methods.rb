@@ -20,8 +20,7 @@ module ShogiErrorRescueMethods
     # http://localhost:4000/adapter?body=68S+active_record_value_too_long
     rescue_from "ActiveRecord::ValueTooLong" do |error|
       body = [error.message, params].join("\n")
-      AppLog.info(subject: error.class.name, body: body, channel: "#adapter_error")
-      ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
+      AppLog.critical(error)
       message = []
       message << "棋譜データがでかすぎです。"
       message << "KIF形式であればSFEN形式に変換してみてください。"
@@ -49,8 +48,7 @@ module ShogiErrorRescueMethods
       # render plain: error.message, status: 404
 
       unless from_crawl_bot?
-        body = [error.message, params].join("\n")
-        AppLog.info(subject: error.class.name, body: body, channel: "#adapter_error")
+        AppLog.critical(error, data: params)
         ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
       end
 

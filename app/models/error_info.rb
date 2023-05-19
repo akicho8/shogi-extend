@@ -36,11 +36,11 @@ class ErrorInfo
       av << @exception.message
     end
     if @exception.backtrace
-      av += @exception.backtrace.take(@options[:backtrace_lines_max])
+      av << @exception.backtrace.take(@options[:backtrace_lines_max])
     end
     if v = @options[:data]
       av << v.pretty_inspect
     end
-    av.compact.join("\n")
+    av.compact.join("\n\n")
   end
 end

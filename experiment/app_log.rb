@@ -2,7 +2,7 @@ require File.expand_path('../../config/environment', __FILE__)
 Rails.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 AppLog.destroy_all
 
-# # SlackSos.notify_exception(Exception.new)
+# # AppLog.critical(Exception.new)
 # # tp AppLog.debug("OK")
 # tp LogLevelInfo
 # AppLog.info(mail_notify: true)

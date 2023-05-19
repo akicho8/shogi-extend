@@ -53,6 +53,11 @@ RSpec.describe AppLog, type: :model do
       app_log = AppLog.debug(Exception.new("foo"), subject: "(subject)")
       assert2 { app_log.subject == "(subject)" }
     end
+
+    it "dataオプションを渡せる" do
+      app_log = AppLog.debug(Exception.new("foo"), data: "bar")
+      assert2 { app_log.body == %(foo\n\n"bar"\n) }
+    end
   end
 
   it "プロセスIDを記録する" do

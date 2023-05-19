@@ -66,11 +66,7 @@ module ApplicationCable
 
     # ArgumentError を拾うため
     rescue_from Exception do |error|
-      if Rails.env.development?
-        AppLog.error(error)
-        SlackSos.notify_exception(error)
-      end
-      ExceptionNotifier.notify_exception(error)
+      AppLog.critical(error)
     end
   end
 end

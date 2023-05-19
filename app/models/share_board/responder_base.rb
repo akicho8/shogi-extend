@@ -29,9 +29,7 @@ module ShareBoard
       rescue Net::ReadTimeout => error
         # 例外をスルーしてしまうと Sidekiq がリトライを繰り返すことになるため例外は潰しておく
         # あとで送信できたとしても会話が食い違うので一度目で失敗したらリトライは不要
-        Rails.logger.info(error)
-        SlackSos.notify_exception(error)
-        ExceptionNotifier.notify_exception(error)
+        AppLog.critical(error)
       end
     end
 
