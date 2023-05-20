@@ -15,11 +15,12 @@ export class O1Strategy {
     this.scolor = scolor      // 開始 0 or 1
   }
 
-  // 色番号
+  // チームのインデックスを返す
   get team_index() {
     return Gs.imodulo(this.turn, Location.count)
   }
 
+  // チーム内のインデックスを返す
   // この位置の奴が現在のプレイヤー
   get user_index() {
     if (this.size === 0) {

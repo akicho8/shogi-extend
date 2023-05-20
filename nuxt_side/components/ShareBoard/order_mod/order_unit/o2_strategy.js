@@ -26,6 +26,7 @@ export class O2Strategy {
   }
 
   // チーム内のインデックスを返す
+  // この位置の奴が現在のプレイヤー
   get user_index() {
     Gs.assert(this.tegoto >= 1, "this.tegoto >= 1")
     const index = Gs.idiv(this.turn, this.sizes.length * this.tegoto)
