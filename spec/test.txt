@@ -1127,7 +1127,6 @@ example_id                                                                      
 ./spec/models/share_board/room_spec.rb[1:1]                                          | passed  | 0.45081 seconds |
 ./spec/models/shogidb2_parser_spec.rb[1:1]                                           | passed  | 0.17643 seconds |
 ./spec/models/slack_sender_spec.rb[1:1]                                              | passed  | 0.23477 seconds |
-./spec/models/slack_sos_spec.rb[1:1]                                                 | passed  | 0.16631 seconds |
 ./spec/models/standard_deviation_spec.rb[1:1]                                        | passed  | 0.31388 seconds |
 ./spec/models/string_util_spec.rb[1:1]                                               | passed  | 0.16523 seconds |
 ./spec/models/string_util_spec.rb[1:2]                                               | passed  | 0.16566 seconds |
@@ -1708,7 +1707,11 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新すると片方のモーダルにも同期する_spec.rb[1:1]       | passed  | 16.27 seconds   |
 ./spec/system/share_board/順番設定_初めて順番設定をすると対局者になっている_spec.rb[1:1]                     | passed  | 17.84 seconds   |
 ./spec/system/share_board/順番設定_同じ人が続けて指す場合の通知は「も」になる_spec.rb[1:1]                  | passed  | 2.01 seconds    |
+<<<<<<< HEAD
 ./spec/system/share_board/順番設定_同じ人が続けて指す場合の通知は「も」になる_spec.rb[1:1]                    | passed  | 6.12 seconds    |
+=======
+./spec/system/share_board/順番設定_同じ人が続けて指す場合の通知は「も」になる_spec.rb[1:1]                    | passed  | 38.36 seconds   |
+>>>>>>> c3e56ba28 ([fix] [share-board] 続けて指す場合に「次も」と発言しないのを修正する)
 ./spec/system/share_board/順番設定_更新を押さずに閉じたら確認する_spec.rb[1:1]                        | passed  | 3.04 seconds    |
 ./spec/system/share_board/順番設定_更新を押さずに閉じたら確認する_spec.rb[1:1]                          | passed  | 12.37 seconds   |
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:1]          | passed  | 2.92 seconds    |
