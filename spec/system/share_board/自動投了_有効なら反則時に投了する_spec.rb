@@ -12,6 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :clock_auto_start     => "true",
         :auto_resign_key      => auto_resign_key,
       })
+    debugger
     piece_move_o("88", "55", "☗5五角")
     assert_selector(".IllegalModal")
   end
