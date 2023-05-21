@@ -85,7 +85,11 @@ export default {
 
   .modal-card
     +mobile
-      height: 29rem
+      // height: 29rem
+      @supports(height: 100svh)
+        height: 50svh
+      @supports not(height: 100svh)
+        height: 50vh
     +tablet
       height: 30rem
     +desktop
