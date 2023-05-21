@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
         retv = name.present? && password == Rails.application.credentials[:admin_password]
         if Rails.env.production? || Rails.env.test?
           Rails.cache.fetch(__method__, :expires_in => 30.minutes) do
-            AppLog.critical(subject: "管理画面ログイン", body: [retv, name, password].inspect)
+            AppLog.important(subject: "管理画面ログイン", body: [retv, name, password].inspect)
             nil
           end
         end

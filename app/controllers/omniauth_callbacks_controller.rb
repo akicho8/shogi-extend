@@ -82,8 +82,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     if user.invalid?
-      AppLog.info(subject: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
-      # SystemMailer.notify(subject: "ユーザー作成失敗", body: user.attributes).deliver_later
+      AppLog.error(subject: "ユーザー作成失敗", body: [user.errors.full_messages, user.attributes, auth].as_json)
     end
 
     # ユーザーのメールアドレスが空だったり初期値なら設定する

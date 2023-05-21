@@ -257,8 +257,7 @@ module Kiwi
             logger.info("#{error.message} (#{error.class.name})")
             self.errored_at = Time.current
             self.error_message = error.message
-            AppLog.critical(error)
-            SystemMailer.notify_exception(error, {data: all_params})
+            AppLog.critical(error, data: all_params)
           else
             logger.info("success")
             reload # zombie_kill で errored_at を更新されたとき、これを入れないと、変化したことがわからず nil で上書きできない
@@ -360,7 +359,7 @@ module Kiwi
         subject << status_key
         subject = subject.join(" ")
 
-        SystemMailer.notify(fixed: true, emoji: ":動画:", subject: subject, body: mail_body).deliver_later
+        AppLog.important(emoji: ":動画:", subject: subject, body: mail_body)
 
         subject = []
         subject << "動画作成"
@@ -375,7 +374,7 @@ module Kiwi
         body << browser_url
         body = body.reject(&:blank?).join(" ")
 
-        AppLog.info(emoji: ":動画:", subject: subject, body: body)
+        AppLog.important(emoji: ":動画:", subject: subject, body: body)
       end
 
       # rails r 'Kiwi::Lemon.first.end_notify'

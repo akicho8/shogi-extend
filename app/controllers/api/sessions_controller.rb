@@ -46,8 +46,7 @@ module Api
         subject << params.to_unsafe_h.slice(:fake).inspect
       end
       subject = subject.join(" ")
-
-      SystemMailer.notify(fixed: true, subject: subject, body: current_user.info.to_t).deliver_later
+      AppLog.important(subject: subject, body: current_user.info.to_t)
     end
   end
 end

@@ -25,7 +25,7 @@ module Swars
         @rows.clear
         perform
         if params[:system_notify]
-          SystemMailer.notify(fixed: true, subject: subject, body: mail_body).deliver_later
+          AppLog.important(subject: subject, body: mail_body)
         end
         if Rails.env.development?
           puts params.to_t

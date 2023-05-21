@@ -31,7 +31,7 @@ module Swars
         memo["終了"] = Time.current.to_fs(:ymdhms)
         memo["空き"] = @free_changes.join(" → ")
 
-        SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
+        AppLog.important(subject: subject, body: body)
       end
 
       private

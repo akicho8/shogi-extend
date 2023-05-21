@@ -345,7 +345,7 @@ class FreeBattle < ApplicationRecord
 
         body = body.join("\n")
 
-        SystemMailer.notify(fixed: true, subject: subject, body: body, emoji: emoji).deliver_later
+        AppLog.important(subject: subject, body: body, emoji: emoji)
       end
     end
   end

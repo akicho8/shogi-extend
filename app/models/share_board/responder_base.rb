@@ -23,7 +23,7 @@ module ShareBoard
         if text
           history << Message.new(:assistant, text)
           logger.debug { history.to_topic.to_t }
-          SystemMailer.notify(fixed: true, subject: "ChatGPT 返答記録 (#{room_code})", body: history.to_topic.to_t).deliver_later
+          AppLog.important(subject: "ChatGPT 返答記録 (#{room_code})", body: history.to_topic.to_t)
           messanger.call(text)
         end
       rescue Net::ReadTimeout => error

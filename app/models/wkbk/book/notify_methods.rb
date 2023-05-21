@@ -3,7 +3,7 @@ module Wkbk
     concern :NotifyMethods do
       # rails r 'Wkbk::Book.first.notify'
       def notify
-        SystemMailer.notify(fixed: true, emoji: ":問題集:", subject: mail_subject, body: mail_body).deliver_later
+        AppLog.important(emoji: ":問題集:", subject: mail_subject, body: mail_body)
       end
 
       def status_name

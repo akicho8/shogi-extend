@@ -260,8 +260,7 @@ module Swars
     # http://localhost:3000/w?query=DevUser1&bs_error_capture_fake=true&throttle_cache_clear=true
     def import_error_message_build
       if @import_errors.present?
-        subject = "【ウォーズ棋譜不整合】"
-        SystemMailer.notify(fixed: true, subject: subject, body: error_message_body).deliver_later
+        AppLog.error(subject: "【ウォーズ棋譜不整合】", body: error_message_body)
 
         body = error_message_body.gsub(/\R/, "<br>")
         @xnotice.add(body, type: "is-danger", method: :dialog, title: "棋譜の不整合")

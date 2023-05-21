@@ -16,7 +16,7 @@ class XfilesCleanup
     @free_changes = FreeSpace.new.call do
       MediaBuilder.output_root_dir.find(&method(:file_process))
     end
-    SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
+    AppLog.important(subject: subject, body: body)
   end
 
   def subject

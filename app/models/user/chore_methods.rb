@@ -62,7 +62,7 @@ class User
       }.join
       body = info.to_t + body
 
-      SystemMailer.notify(fixed: true, subject: "【プロフィール変更】#{name}", body: body).deliver_later
+      AppLog.important(subject: "【プロフィール変更】#{name}", body: body)
     end
   end
 end

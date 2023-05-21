@@ -21,7 +21,7 @@ module Kiwi
             @scope.destroy_all
           end
         end
-        SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
+        AppLog.important(subject: subject, body: body)
       end
 
       private

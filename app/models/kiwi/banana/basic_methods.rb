@@ -178,7 +178,7 @@ module Kiwi
 
           subject = "#{user.name}さんが動画ライブラリ「#{title}」を#{human_name_when_save}しました"
           body = info.to_t
-          SystemMailer.notify(fixed: true, subject: subject, body: body).deliver_later
+          AppLog.important(subject: subject, body: body)
         end
       end
 

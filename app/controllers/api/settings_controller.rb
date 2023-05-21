@@ -20,13 +20,6 @@ module Api
         return
       end
 
-      # if user.saved_change_to_attribute?(:name_input_at)
-      # if v = user.saved_change_to_attribute(:name)
-      #   pair = v.join("→")
-      #   SystemMailer.notify(fixed: true, subject: "【名前変更】#{pair}", body: user.info.to_t).deliver_later
-      # end
-      # end
-
       # 変更したかもしれないレコードたち
 
       user.change_notify

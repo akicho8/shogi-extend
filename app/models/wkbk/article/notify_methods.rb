@@ -2,7 +2,7 @@ module Wkbk
   class Article
     concern :NotifyMethods do
       def notify
-        SystemMailer.notify(fixed: true, emoji: ":問題:", subject: mail_subject, body: mail_body).deliver_later
+        AppLog.important(emoji: ":問題:", subject: mail_subject, body: mail_body)
       end
 
       def status_name
