@@ -146,6 +146,7 @@ export const vue_dialog = {
         parent: this,
         trapFocus: true,
         hasModalCard: true,
+        scroll: "keep",
         animation: "",
         canCancel: ["outside", "escape"],
         onCancel: () => this.$sound.play_click(),
