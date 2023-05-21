@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 402726351f0bb7e1b76fe8c04903c6b0d43eae71
+  revision: 7e171aabaecdb110e2bc27d42fda76e2f1312d18
   branch: main
   specs:
     bioshogi (0.0.1)
@@ -245,9 +245,9 @@ GEM
     listen (3.6.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.20.0)
+    loofah (2.21.3)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
+      nokogiri (>= 1.12.0)
     mail (2.8.1)
       mini_mime (>= 0.1.1)
       net-imap
@@ -281,8 +281,8 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.5.9)
     nkf (0.1.2)
-    nokogiri (1.14.3)
-      mini_portile2 (~> 2.8.0)
+    nokogiri (1.15.1)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth (0.5.8)
     oauth2 (1.4.9)
@@ -484,7 +484,7 @@ GEM
       activesupport
     temple (0.10.0)
     test-prof (1.0.7)
-    thor (1.2.1)
+    thor (1.2.2)
     tilt (2.1.0)
     timecop (0.9.6)
     timeout (0.3.2)
