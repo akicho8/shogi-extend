@@ -15,12 +15,12 @@ input::-webkit-calendar-picker-indicator
   display: none
 
 //////// スクロールするとヘッダーの上の白が見えてダサいためヘッダーと同じ色を html に適用する
-// 
+//
 // html
 //   background-color: $primary
 // body
 //   background-color: $white
-//  
+//
 // ↑これを設定すると弊害がでる。スタイルエディタで背景が白くなってしまう
 
 //////// Chrome の input(type="search") で出現する × を消す
@@ -170,3 +170,12 @@ a.no-decoration
   display: inline
   font-weight: bold
   color: $primary
+
+// スクロールしすぎるとリロードしてしまうのを禁止する
+// https://developer.mozilla.org/ja/docs/Web/CSS/overscroll-behavior
+//
+// https://ics.media/entry/221024/
+// > ブラウザごとにoverscroll-behaviorプロパティを指定するルートの要素が異なります。
+// > ChromeやEdgeなどChromium系のブラウザでは、body要素を指定して、SafariやFirefoxではhtml要素に指定することで動作します。
+html, body
+  overscroll-behavior-y: none
