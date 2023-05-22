@@ -105,6 +105,7 @@ import { mod_illegal                 } from "./illegal/mod_illegal.js"
 import { mod_board_preset_select  } from "./mod_board_preset_select.js"
 import { mod_back_to              } from "./mod_back_to.js"
 import { window_active_detector   } from "./window_active_detector.js"
+import { browser_slide_lock       } from "./browser_slide_lock.js"
 
 import { mod_room_setup           } from "./room/mod_room_setup.js"
 import { mod_room_entry_leave           } from "./room/mod_room_entry_leave.js"
@@ -222,6 +223,7 @@ export default {
     mod_client_vote,
 
     window_active_detector,
+    browser_slide_lock,
 
     // clock
     mod_clock_box,
