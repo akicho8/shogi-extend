@@ -457,9 +457,9 @@ GEM
       websocket-driver
     slackistrano (4.0.1)
       capistrano (>= 3.8.1)
-    slim (5.1.0)
+    slim (5.1.1)
       temple (~> 0.10.0)
-      tilt (>= 2.0.6, < 2.2)
+      tilt (>= 2.1.0)
     slim-rails (3.6.2)
       actionpack (>= 3.1)
       railties (>= 3.1)
@@ -482,7 +482,7 @@ GEM
     systemu (2.6.5)
     table_format (0.0.15)
       activesupport
-    temple (0.10.0)
+    temple (0.10.1)
     test-prof (1.0.7)
     thor (1.2.2)
     tilt (2.1.0)
