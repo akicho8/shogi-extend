@@ -49,6 +49,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
         "localhost:4000",
         "0.0.0.0:4000",
         "10.0.1.2:4000",        # スマホを 10.0.1.2:4000 で見ているとき、これを設定するとしゃべるようになる
+        "10.0.1.16:4000",       # ikemac2023
       ]
       resource "*", {
         headers: :any,
