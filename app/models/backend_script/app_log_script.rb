@@ -46,7 +46,7 @@ module BackendScript
         "Level"    => app_log.level,
         "絵"       => app_log.emoji,
         "題"       => app_log.subject,
-        "本文"     => app_log.body,
+        "本文"     => h.auto_link(app_log.body),
       }
     end
 
