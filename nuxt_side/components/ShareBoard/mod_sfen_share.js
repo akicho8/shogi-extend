@@ -118,6 +118,7 @@ export const mod_sfen_share = {
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
         this.illegal_then_give_up(params)             // 自分が反則した場合は投了する
         this.illegal_modal_handle(params.lmi.illegal_names) // 反則があれば表示する
+        this.illegal_logging(params)                  // 反則の状態を記録する
         this.gpt_case_illegal(params)            // 反則した人を励ます
         this.perpetual_modal_handle_if(params.lmi.perpetual_p)       // 千日手であれば表示する
         this.from_user_toast(params)                  // 誰が操作したかを表示する
@@ -215,6 +216,22 @@ export const mod_sfen_share = {
       if (this.received_from_self(params)) {
         if (this.$gs.present_p(params.lmi.illegal_names)) {
           this.auto_resign_then_give_up()
+        }
+      }
+    },
+
+    // 反則の状態を記録する
+    illegal_logging(params) {
+      if (this.received_from_self(params)) {
+        if (this.$gs.present_p(params.lmi.illegal_names)) {
+          if (this.cc_play_p) {
+            const body = [
+              params.from_user_name,
+              params.lmi.illegal_names,
+              this.current_url,
+            ]
+            this.ac_log("反則発動", this.$gs.short_inspect(body))
+          }
         }
       }
     },
