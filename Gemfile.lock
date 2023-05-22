@@ -151,7 +151,7 @@ GEM
       simplecov (>= 0.15, < 0.22)
     color (1.8)
     concurrent-ruby (1.2.2)
-    connection_pool (2.4.0)
+    connection_pool (2.4.1)
     crass (1.0.6)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
