@@ -9,7 +9,7 @@ class ErrorInfo
   def initialize(exception, options = {})
     @exception = exception
     @options = {
-      :backtrace_lines_max => 4,
+      :backtrace_lines_max => 8,
     }.merge(options)
   end
 
@@ -33,13 +33,22 @@ class ErrorInfo
   def body
     av = []
     if @exception.message
-      av << @exception.message
+      av << [
+        "[MESSAGE]",
+        @exception.message.rstrip,
+      ].join("\n")
     end
     if @exception.backtrace
-      av << @exception.backtrace.take(@options[:backtrace_lines_max])
+      av << [
+        "[BACKTRACE]",
+        *@exception.backtrace.take(@options[:backtrace_lines_max]),
+      ].join("\n")
     end
     if v = @options[:data]
-      av << v.pretty_inspect
+      av << [
+        "[DATA]",
+        v.pretty_inspect.rstrip,
+      ].join("\n")
     end
     av.compact.join("\n\n")
   end
