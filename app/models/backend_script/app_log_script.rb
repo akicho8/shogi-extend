@@ -18,24 +18,30 @@ module BackendScript
     end
 
     def script_body
-      s = AppLog.order(:created_at, :id)
-      if params[:reverse]
+      if id = params[:app_log_id]
+        attrs = AppLog.find(id).attributes.clone
+        attrs["body"] = h.tag.pre(attrs["body"], style: "font-family:monospace")
+        attrs.to_html
       else
-        s = s.reverse_order
+        s = AppLog.order(:created_at, :id)
+        if params[:reverse]
+        else
+          s = s.reverse_order
+        end
+        if q = current_query
+          s = s.search(q)
+        end
+        s = page_scope(s)
+        rows = s.collect(&method(:row_build))
+        out = "".html_safe
+        out << rows.to_html
+        out << basic_paginate(s)
       end
-      if q = current_query
-        s = s.search(q)
-      end
-      s = page_scope(s)
-      rows = s.collect(&method(:row_build))
-      out = "".html_safe
-      out << rows.to_html
-      out << basic_paginate(s)
     end
 
     def row_build(app_log)
       {
-        "ID"       => app_log.id, # script_link_to(app_log.id, :id => "ar_search", :model => current_model.name, :record_id => app_log.id),
+        "ID"       => script_link_to(app_log.id, :app_log_id => app_log.id),
         "作成日時" => app_log.created_at.to_fs(:ymdhms),
         "Level"    => app_log.level,
         "絵"       => app_log.emoji,
