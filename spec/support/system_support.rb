@@ -119,8 +119,9 @@ RSpec.configure do |config|
 
     # driven_by :headless_chrome
 
+    # driven = ENV["BROWSER_DEBUG"] ? :selenium_chrome : :selenium_chrome_headless
+    # driven_by :selenium, using: driven, screen_size: [1400, 1400]
     # driven_by :selenium_chrome
-    driven_by ENV["BROWSER_DEBUG"] ? :selenium_chrome : :selenium_chrome_headless
 
     # ↑ この書き方だと次のコードが実行され、resize_to になっていないのでスクリーンショットを撮ったときのサイズが変わらない
     # driver.browser.manage.window.size = Selenium::WebDriver::Dimension.new(*@screen_size)
@@ -130,6 +131,13 @@ RSpec.configure do |config|
     # height = Capybara.page.execute_script("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);")
     # p height
     # Capybara.current_session.driver.browser.manage.window.resize_to(1680, 1050)
+
+    # 書き方が変わって現在はこれ
+    # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
+    # これにしてテストが落ちなくなったところもある
+    # 前の書き方だとサイズが効いていなかったと思われる
+    driven = ENV["BROWSER_DEBUG"] ? :chrome : :headless_chrome
+    driven_by :selenium, using: driven # screen_size: [1400, 1400]
   end
 end
 
