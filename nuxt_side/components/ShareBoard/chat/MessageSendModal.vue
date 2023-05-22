@@ -87,9 +87,9 @@ export default {
     +mobile
       // height: 29rem
       @supports(height: 100svh)
-        height: 50svh
+        height: 75svh
       @supports not(height: 100svh)
-        height: 50vh
+        height: 75vh
     +tablet
       height: 30rem
     +desktop
