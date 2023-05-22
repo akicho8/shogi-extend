@@ -24,10 +24,11 @@ class ErrorInfo
   private
 
   def subject
-    [
-      @exception.message.to_s.lines.first,
-      "(#{@exception.class.name})"
-    ].compact.join(" ")
+    # [
+    #   @exception.message.to_s.lines.first,
+    #   "(#{@exception.class.name})"
+    # ].compact.join(" ")
+    @exception.class.name
   end
 
   def body
