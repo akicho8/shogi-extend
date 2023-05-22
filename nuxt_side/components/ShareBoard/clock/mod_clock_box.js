@@ -268,6 +268,7 @@ export const mod_clock_box = {
       } else if (cc_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_info.with_talk})
       }
+      this.cc_timeout_logging(params)
       this.gpt_case_clock(params)
     },
     __cc_receive_message(params) {
@@ -382,6 +383,20 @@ export const mod_clock_box = {
 
     cc_params_debug(label, params) {
       this.tl_add("CC初期値", `${label}: ${this.cc_params_inspect(params)}`)
+    },
+
+    // 時間切れの状態を記録する → ck_timeout のログとかぶっているので不要
+    cc_timeout_logging(params) {
+      // if (this.received_from_self(params)) {
+      //   const cc_info = CcInfo.fetch(params.cc_key)
+      //   if (cc_info.key === "ck_timeout") {
+      //     const body = [
+      //       params.from_user_name,
+      //       this.current_url,
+      //     ]
+      //     this.ac_log("時間切れ", this.$gs.short_inspect(body))
+      //   }
+      // }
     },
   },
 
