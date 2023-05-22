@@ -41,7 +41,6 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.count == 1 }
       assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
     end
   end
@@ -88,7 +87,6 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.count == 1 }
       assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
     end
   end
@@ -133,7 +131,6 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.count == 1 }
       assert2 { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
     end
   end

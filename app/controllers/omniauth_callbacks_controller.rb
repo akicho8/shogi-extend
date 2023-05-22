@@ -77,7 +77,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
           end
         end
       rescue => error
-        AppLog.critical(error)
+        AppLog.error(error)
       end
     end
 

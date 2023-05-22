@@ -16,6 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
       })
     sleep(initial_read_sec)
     assert_timeout_modal_exist
+    timeout_modal_close
   end
 
   it "無効だと順番設定は解除されていない" do

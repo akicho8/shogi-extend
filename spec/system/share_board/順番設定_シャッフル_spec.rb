@@ -1,7 +1,7 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
-  def case1
+  def case1(button_name)
     visit_app({
         :room_code            => :test_room,
         :user_name            => "1",
@@ -11,21 +11,18 @@ RSpec.describe type: :system, share_board_spec: true do
         :handle_name_validate => "false",
         :autoexec             => "os_modal_handle",
       })
-  end
-
-  it "全体シャッフル" do
-    case1
+    os_modal_close
     assert_system_variable("仮順序", "12345678")
-    find(:button, text: "全体ｼｬｯﾌﾙ", exact_text: true).click
-    assert_text("1さんが全体シャッフルしました", wait: 30)
+    os_modal_open
+    find(:button, text: button_name, exact_text: true).click
+    assert_text("1さんが#{button_name}しました", wait: 5)
+    os_modal_close
+    os_modal_close_force
     assert_no_system_variable("仮順序", "12345678")
   end
 
-  it "チーム内シャッフル" do
-    case1
-    assert_system_variable("仮順序", "12345678")
-    find(:button, text: "ﾁｰﾑ内ｼｬｯﾌﾙ", exact_text: true).click
-    assert_text("1さんがチーム内シャッフルしました", wait: 30)
-    assert_no_system_variable("仮順序", "12345678")
+  it "works" do
+    case1("全体ｼｬｯﾌﾙ")
+    case1("ﾁｰﾑ内ｼｬｯﾌﾙ")
   end
 end

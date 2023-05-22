@@ -129,18 +129,18 @@ export default {
       this.TheSb.tn_notify()
     },
 
-    // 全体シャッフル
+    // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.$sound.play_click()
       this.TheSb.new_v.order_unit.shuffle_all()
-      this.TheSb.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体シャッフルしました"})
+      this.TheSb.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.$sound.play_click()
       this.TheSb.new_v.order_unit.teams_each_shuffle()
-      this.TheSb.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "チーム内シャッフルしました"})
+      this.TheSb.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
     // 振り駒

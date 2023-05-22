@@ -9,26 +9,37 @@ module SharedMethods
     find(".os_modal_handle").click
   end
 
+  def os_modal_open
+    hamburger_click
+    os_modal_handle
+  end
+
+  def os_modal_close
+    find(".OrderSettingModal button", text: "閉じる", exact_text: true).click
+  end
+
+  def os_modal_close_force
+    find("button", text: "確定せずに閉じる", exact_text: true).click
+  end
+
   # 順番設定と対局時計の右上の有効をトグルする
   def os_switch_toggle
     Capybara.find(".modal .main_switch").click
   end
 
   def order_set_on
-    hamburger_click
-    os_modal_handle                        # 「順番設定」モーダルを開く
+    os_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     action_first_assert_text("順番 ON", wait: 5)
     apply_button                           # 明示的に適用する
-    modal_close_handle                     # 閉じる (ヘッダーに置いている)
+    os_modal_close
   end
 
   def order_set_off
-    hamburger_click
-    os_modal_handle                        # 「順番設定」モーダルを開く
+    os_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
     action_first_assert_text("順番 OFF", wait: 5)
-    modal_close_handle                     # 閉じる (ヘッダーに置いている)
+    os_modal_close
   end
 
   def apply_button

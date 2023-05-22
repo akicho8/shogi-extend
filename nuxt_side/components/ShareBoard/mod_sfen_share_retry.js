@@ -25,7 +25,7 @@ export const mod_sfen_share_retry = {
   },
   methods: {
     sequence_code_embed() {
-      if (RETRY_FUNCTION) {
+      if (this.RETRY_FUNCTION) {
         this.sequence_code += 1
         this.sequence_codes.push(this.sequence_code)
         this.sequence_codes = _.takeRight(this.sequence_codes, SEQUENCE_CODES_MAX)
@@ -33,7 +33,7 @@ export const mod_sfen_share_retry = {
       }
     },
     sfen_share_callback_set() {
-      if (RETRY_FUNCTION) {
+      if (this.RETRY_FUNCTION) {
         if (this.order_enable_p && this.order_unit.valid_p) {
           if (this.RETRY_DELAY >= 0) {
             this.retry_delay_cancel()
@@ -112,7 +112,7 @@ export const mod_sfen_share_retry = {
 
     // 指し手を受信した次に人が sfen_share_broadcasted のなかで呼ぶ
     received_ok_send(params) {
-      if (RETRY_FUNCTION) {
+      if (this.RETRY_FUNCTION) {
         if (this.order_enable_p) {
           // 何で何回も指しているのかわからないので再送していることを伝える(自分も含めて)
           this.$gs.assert(params.x_retry_count != null, "params.x_retry_count != null")
@@ -154,9 +154,10 @@ export const mod_sfen_share_retry = {
   },
 
   computed: {
-    RETRY_DELAY() { return parseFloat(this.$route.query.RETRY_DELAY || RETRY_DELAY) },
-    SEND_SUCCESS_DELAY()  { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY || SEND_SUCCESS_DELAY) },
-
+    RETRY_FUNCTION()     { return String(this.$route.query.RETRY_FUNCTION ?? RETRY_FUNCTION) === "true"  },
+    RETRY_DELAY()        { return parseFloat(this.$route.query.RETRY_DELAY ?? RETRY_DELAY)               },
+    SEND_SUCCESS_DELAY() { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY ?? SEND_SUCCESS_DELAY) },
+    
     retry_check_delay() {
       let v = this.RETRY_DELAY + this.x_retry_count
       if (v > RETRY_DELAY_MAX) {

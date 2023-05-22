@@ -11,10 +11,11 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o1_state",
         :clock_auto_start     => "true",
         :auto_resign_key      => auto_resign_key,
+        :RETRY_FUNCTION       => "false",
       })
-    debugger
     piece_move_o("88", "55", "☗5五角")
     assert_selector(".IllegalModal")
+    find(".IllegalModal button", text: "閉じる", exact_text: true).click
   end
 
   it "無効だと順番設定は解除されていない" do

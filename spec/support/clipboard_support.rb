@@ -3,6 +3,7 @@ module ClipboardSupport
 
   included do
     before do
+      ENV["CLIPBOARD_CHECK"] ||= "off"
     end
   end
 
