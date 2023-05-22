@@ -177,5 +177,8 @@ a.no-decoration
 // https://ics.media/entry/221024/
 // > ブラウザごとにoverscroll-behaviorプロパティを指定するルートの要素が異なります。
 // > ChromeやEdgeなどChromium系のブラウザでは、body要素を指定して、SafariやFirefoxではhtml要素に指定することで動作します。
+//
+// y だけにしないとPCのブラウザで左フリックで戻れなくなる
+//
 html, body
-  overscroll-behavior: none
+  overscroll-behavior-y: none
