@@ -156,11 +156,11 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "ゲームやるなら？",               left_value: "アマガミ",                 right_value: "キミキス",                 },
 
       // その他
-      { subject: "どっちに入りたい？",             left_value: "ホロライブ",               right_value: "にじさんじ",               },
+      { subject: "事務所入るなら？",               left_value: "ホロライブ",               right_value: "にじさんじ",               },
       { subject: "左利きに？",                     left_value: "あこがれる",               right_value: "あこがれない",             },
       { subject: "早起きは？",                     left_value: "得",                       right_value: "損",                       },
       { subject: "飛行機に乗ったこと",             left_value: "ある",                     right_value: "ない",                     },
-      { subject: "中型二輪免許を",                 left_value: "持っている",               right_value: "持っていない",             },
+      { subject: "普通二輪免許を",                 left_value: "持っている",               right_value: "持っていない",             },
       { subject: "大型二輪免許を",                 left_value: "持っている",               right_value: "持っていない",             },
       { subject: "男がAT限定免許",                 left_value: "恥ずかしい",               right_value: "恥ずかしくない",           },
       { subject: "熱帯魚を飼うなら？",             left_value: "ネオンテトラ",             right_value: "グッピー",                 },
@@ -170,10 +170,8 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "認知症は？",                     left_value: "こわい",                   right_value: "気にしてない",             },
       { subject: "食品添加物は？",                 left_value: "なるべく避ける",           right_value: "気にしたことがない",       },
       { subject: "蛍光灯買うなら？",               left_value: "昼光色",                   right_value: "昼白色",                   },
-      { subject: "1000円札を拾った！交番に",       left_value: "届けない",                 right_value: "届ける",                   },
-      { subject: "B'zの短パンは？",                left_value: "アリ",                     right_value: "ナシ",                     },
     ]
-                                                                                                                                    }
+  }
 
   static get sample() {
     return Gs.ary_sample(this.values)?.to_odai
