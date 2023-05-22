@@ -15,8 +15,8 @@ module Swars
         render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
       end
 
-      rescue_from "ActiveRecord::RecordNotUnique" do |exception|
-        AppLog.critical(exception)
+      rescue_from "ActiveRecord::RecordNotUnique" do |exception| # 中身は「Mysql2::Error: Duplicate entry」
+        AppLog.info(exception)
         render json: { message: "連打したのでぶっこわれました" }, status: 500
       end
 

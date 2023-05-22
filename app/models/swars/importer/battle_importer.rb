@@ -89,9 +89,7 @@ module Swars
             Rails.logger.debug { exception }
           },
           :log_method => lambda { |retries, exception|
-            if Rails.env.development?
-              AppLog.info(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
-            end
+            AppLog.debug(emoji: ":救急:", subject: "再実行 ##{retries}", body: @info.key.to_s)
           },
         }
       end
