@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "4回目の同一局面で指し手に千日手のラベルついてモーダルが発動して閉じれる" do
     visit_app
     perpetual_trigger
-    action_assert_text("千日手")                 # 履歴に「千日手」のテキストが出ている
+    assert_action_text("千日手")                 # 履歴に「千日手」のテキストが出ている
     assert_selector(".PerpetualModal")          # モーダルが存在する
     find(".PerpetualModal .close_handle").click # 「閉じる」
     assert_no_selector(".PerpetualModal")       # モーダルが閉じた

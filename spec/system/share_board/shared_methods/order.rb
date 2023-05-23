@@ -30,16 +30,16 @@ module SharedMethods
   def order_set_on
     os_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    action_first_assert_text("順番 ON", wait: 5)
     apply_button                           # 明示的に適用する
     os_modal_close
+    assert_action_text("順番 ON")
   end
 
   def order_set_off
     os_modal_open
     os_switch_toggle                       # 有効スイッチをクリック (最初なので同時に適用を押したの同じで内容も送信←やめた)
-    action_first_assert_text("順番 OFF", wait: 5)
     os_modal_close
+    assert_action_text("順番 OFF")
   end
 
   def apply_button

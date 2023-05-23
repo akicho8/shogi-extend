@@ -1,11 +1,6 @@
 module SharedMethods
-  # 最初の行に完全一致のテキストがあること
-  def action_first_assert_text(text, options = {})
-    assert_selector(".SbActionLog .SbAvatarLine:first-child .action_label1", {text: text, exact_text: true, **options})
-  end
-
   # 完全一致のテキストがあること
-  def action_assert_text(text)
+  def assert_action_text(text)
     within(".SbActionLog") do
       assert_selector(:element, text: text, exact_text: true)
     end

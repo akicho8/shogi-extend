@@ -915,7 +915,7 @@ example_id                                                                      
 ./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                  | passed  | 10.77 seconds         |
 ./spec/system/share_board/対局時計_個別設定_片方を変更したとき片方は連動しない_spec.rb[1:1]                   | passed  | 23.09 seconds         |
 ./spec/system/share_board/対局時計_初期値永続化_spec.rb[1:1]                                   | passed  | 12.68 seconds         |
-./spec/system/share_board/対局時計_基本_spec.rb[1:1]                                       | failed  | 0.04221 seconds       |
+./spec/system/share_board/対局時計_基本_spec.rb[1:1]                                       | passed  | 38.56 seconds         |
 ./spec/system/share_board/対局時計_指し手の消費秒数を表示_spec.rb[1:1]                              | passed  | 12.36 seconds         |
 ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb[1:1]                     | passed  | 23.59 seconds         |
 ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb[1:1]                      | failed  | 0.03756 seconds       |
@@ -990,7 +990,7 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新すると片方のモーダルにも同期する_spec.rb[1:1]    | passed  | 15.56 seconds         |
 ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新するがドラッグ中なので同期しない_spec.rb[1:1]       | pending | 0.00015 seconds       |
 ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新すると片方のモーダルにも同期する_spec.rb[1:1]       | passed  | 18.52 seconds         |
-./spec/system/share_board/順番設定_初めて順番設定をすると対局者になっている_spec.rb[1:1]                     | failed  | 0.04194 seconds       |
+./spec/system/share_board/順番設定_初めて順番設定をすると対局者になっている_spec.rb[1:1]                     | passed  | 22.91 seconds         |
 ./spec/system/share_board/順番設定_更新を押さずに閉じたら確認する_spec.rb[1:1]                        | passed  | 3.04 seconds          |
 ./spec/system/share_board/順番設定_更新を押さずに閉じたら確認する_spec.rb[1:1]                          | passed  | 8.12 seconds          |
 ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb[1:1]          | passed  | 2.92 seconds          |
@@ -1001,11 +1001,11 @@ example_id                                                                      
 ./spec/system/share_board/順番設定_有効にした後はハンドルネームを変更させない_spec.rb[1:1]                    | passed  | 7.01 seconds          |
 ./spec/system/share_board/順番設定_正確なチーム分けかつ自分チームに2人以上いたとき続けて指す場合は「次も」になる_spec.rb[1:1]  | passed  | 19.26 seconds         |
 ./spec/system/share_board/順番設定_補助機能_先後入替_spec.rb[1:1]                                | passed  | 6.77 seconds          |
-./spec/system/share_board/順番設定_補助機能_手番通知_spec.rb[1:1]                                | failed  | 0.03606 seconds       |
+./spec/system/share_board/順番設定_補助機能_手番通知_spec.rb[1:1]                                | passed  | 26.94 seconds         |
 ./spec/system/share_board/順番設定_補助機能_振り駒_spec.rb[1:1]                                 | passed  | 9.56 seconds          |
 ./spec/system/share_board/順番設定_補助機能_振り駒_spec.rb[1:2]                                 | passed  | 7.38 seconds          |
 ./spec/system/share_board/順番設定_設定後に時計設置を促す_spec.rb[1:1]                              | passed  | 7.92 seconds          |
-./spec/system/share_board/順番設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb[1:1]               | failed  | 0.03448 seconds       |
+./spec/system/share_board/順番設定_設定後は手番通知されるOFFにすると手番通知されない_spec.rb[1:1]               | passed  | 23.75 seconds         |
 ./spec/system/sitemap_spec.rb[1:1]                                                   | passed  | 0.89796 seconds       |
 ./spec/system/stopwatch_spec.rb[1:1]                                                 | passed  | 2.47 seconds          |
 ./spec/system/swars/custom_search_spec.rb[1:1]                                       | passed  | 4.4 seconds           |
