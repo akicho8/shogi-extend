@@ -53,9 +53,5 @@ export const mod_lemon_room = {
       }
       return params
     },
-
-    ac_log(subject = "", body = "") {
-      this.ac_lemon_room_perform("ac_log", { subject, body })
-    },
   },
 }

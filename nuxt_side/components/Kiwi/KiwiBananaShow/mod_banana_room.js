@@ -54,10 +54,6 @@ export const mod_banana_room = {
       return params
     },
 
-    ac_log(subject = "", body = "") {
-      this.ac_banana_room_perform("ac_log", { subject, body })
-    },
-
     kiwi_banana_message_pong_singlecast(data) {
       this.debug_alert(`singlecast: ${data.pong}`)
     },
