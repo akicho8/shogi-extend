@@ -19,6 +19,13 @@ if Rails.env.production? || Rails.env.staging? || ENV["EXCEPTION_NOTIFICATION_EN
         :email_prefix         => "[shogi-extend-#{Rails.env}] ",
         :sender_address       => "pinpon.ikeda@gmail.com",
         :exception_recipients => %w{pinpon.ikeda@gmail.com},
+        #
+        # Sidekiq では実行できない問題
+        #
+        # 本当は Sidekiq で送信したいので↓とすると
+        # Exception のインスタンスをシリアライズできずに Sidekiq が死ぬ
+        #
+        # :deliver_with         => :deliver_later,
       },
 
       # slack-notifier gem があれば反応する
