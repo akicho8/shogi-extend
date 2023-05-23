@@ -248,7 +248,7 @@ module Swars
         :page_max                => import_page_max,
         :throttle_cache_clear    => params[:throttle_cache_clear],
         :bs_error_capture_fake   => params[:bs_error_capture_fake],
-        :bs_error_capture_block        => -> error { @import_errors << error },
+        :bs_error_capture_block  => -> error { @import_errors << error },
         :SwarsFormatIncompatible => params[:SwarsFormatIncompatible],
         :RaiseConnectionFailed   => params[:RaiseConnectionFailed],
         :SwarsUserNotFound       => params[:SwarsUserNotFound],
@@ -260,7 +260,7 @@ module Swars
     # http://localhost:3000/w?query=DevUser1&bs_error_capture_fake=true&throttle_cache_clear=true
     def import_error_message_build
       if @import_errors.present?
-        AppLog.error(subject: "【ウォーズ棋譜不整合】", body: error_message_body)
+        AppLog.error(subject: "ウォーズ棋譜不整合", body: error_message_body)
 
         body = error_message_body.gsub(/\R/, "<br>")
         @xnotice.add(body, type: "is-danger", method: :dialog, title: "棋譜の不整合")
