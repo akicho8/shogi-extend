@@ -30,7 +30,7 @@
 class AppLog < ApplicationRecord
   EXCEPTION_SUPPORT = true
   EXCEPTION_NOTIFIER_USE = false
-  LOG_LEVEL_DEFAULT = :info
+  LEVEL_DEFAULT = :info
 
   class << self
     def cleanup(...)
@@ -38,8 +38,8 @@ class AppLog < ApplicationRecord
     end
 
     # AppLog.call("x")
-    # AppLog.call("x", log_level: "debug")
-    # AppLog.call(body: "x", log_level: "debug")
+    # AppLog.call("x", level: "debug")
+    # AppLog.call(body: "x", level: "debug")
     def call(body = nil, **params)
       if Rails.env.test? || Rails.env.development?
         if params.keys.first.kind_of? String
@@ -47,8 +47,8 @@ class AppLog < ApplicationRecord
         end
       end
 
-      log_level_info = LogLevelInfo.fetch(params[:log_level].presence || LOG_LEVEL_DEFAULT)
-      if log_level_info.available_environments.exclude?(Rails.env.to_sym)
+      level_info = LogLevelInfo.fetch(params[:level].presence || LEVEL_DEFAULT)
+      if level_info.available_environments.exclude?(Rails.env.to_sym)
         return
       end
 
@@ -86,7 +86,7 @@ class AppLog < ApplicationRecord
         end
       end
 
-      attrs = log_level_info.to_app_log_attributes.merge(params)
+      attrs = level_info.to_app_log_attributes.merge(params)
       if attrs[:mail_notify]
         mail_notify(attrs)
       end
@@ -102,7 +102,7 @@ class AppLog < ApplicationRecord
     # AppLog.info("x")
     LogLevelInfo.keys.each do |key|
       define_method(key) do |body = nil, **params|
-        call(body, **{log_level: key}.merge(params))
+        call(body, **{level: key}.merge(params))
       end
     end
 
@@ -125,7 +125,7 @@ class AppLog < ApplicationRecord
   scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
   before_validation on: :create do
-    self.level ||= LOG_LEVEL_DEFAULT
+    self.level ||= LEVEL_DEFAULT
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
     self.process_id ||= Process.pid
 

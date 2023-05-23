@@ -19,7 +19,6 @@ class LogLevelInfo
 
   def to_app_log_attributes
     {
-      :level        => key,
       :database     => database,
       :mail_notify  => mail_notify,
       :slack_notify => slack_notify,

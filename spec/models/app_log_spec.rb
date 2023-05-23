@@ -25,8 +25,8 @@ RSpec.describe AppLog, type: :model do
 
   it "ログレベルを自分で渡す場合" do
     assert2 { AppLog.call("x").body == "x" }
-    assert2 { AppLog.call("x", log_level: "debug").body == "x" }
-    assert2 { AppLog.call(body: "x", log_level: "debug").body == "x" }
+    assert2 { AppLog.call("x", level: "debug").body == "x" }
+    assert2 { AppLog.call(body: "x", level: "debug").body == "x" }
   end
 
   it "Hashはそのまま渡せないので注意する" do
@@ -56,7 +56,6 @@ RSpec.describe AppLog, type: :model do
   describe "例外オブジェクトを渡せる" do
     it "それだけを渡すとsubjectやbodyに展開する" do
       app_log = AppLog.debug(Exception.new("foo"))
-      tp app_log
       assert2 { app_log.emoji == "🆘"                }
       assert2 { app_log.subject == "Exception" }
       assert2 { app_log.body == "[MESSAGE]\nfoo" }
