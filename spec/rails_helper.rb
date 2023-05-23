@@ -10,6 +10,9 @@ require 'rspec/rails'
 
 require 'test_prof/recipes/rspec/let_it_be'
 
+require "tempfile"              # for capture
+require "active_support/testing/stream"
+
 # require "action_cable/testing/rspec"
 # require 'sidekiq/testing/inline'
 
@@ -70,4 +73,6 @@ RSpec.configure do |config|
   # テストの中で使う便利メソッド
   # config.include Module.new {
   # }
+
+  config.include ActiveSupport::Testing::Stream
 end
