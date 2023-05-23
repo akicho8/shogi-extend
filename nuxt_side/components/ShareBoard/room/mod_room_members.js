@@ -117,7 +117,7 @@ export const mod_room_members = {
           // 個数変化なし
         } else {
           // 個数変化あり
-          this.ac_log("仲間一覧", this.member_infos.map(e => e.from_user_name))
+          this.ac_log({subject: "仲間一覧", body: this.member_infos.map(e => e.from_user_name)})
         }
       }
     },

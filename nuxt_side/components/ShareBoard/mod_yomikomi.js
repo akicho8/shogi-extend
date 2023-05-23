@@ -50,7 +50,7 @@ export const mod_yomikomi = {
           this.honpu_share()             // それを他の人に共有する
 
           this.viewpoint = "black"
-          this.ac_log("棋譜読込", e.body)
+          this.ac_log({subject: "棋譜読込", body: e.body})
 
           this.yomikomi_modal_instance.close()
 

@@ -10,7 +10,7 @@ export const mod_otasuke = {
       if (_.isArray(message)) {
         message = _.sample(message)
       }
-      this.ac_log("おたすけ", message)
+      this.ac_log({subject: "おたすけ", body: message})
       this.toast_ok(message, {duration: 3 * 1000})
     },
   },

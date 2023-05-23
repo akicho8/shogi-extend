@@ -186,13 +186,13 @@ export const mod_room_setup = {
       this.current_turn = params.turn
 
       if (this.debug_mode_p) {
-        this.ac_log("局面受信", `${params.turn}手目の局面を受信`)
+        this.ac_log({subject: "局面受信", body: `${params.turn}手目の局面を受信`})
       }
     },
 
-    ////////////////////////////////////////////////////////////////////////////////
-    ac_log(subject = "", body = "") {
-      this.ac_room_perform("ac_log", { subject, body })
+    // this.ac_log({subject: "a", body: "b", emoji: "c", level: "critical"})
+    ac_log(params = {}) {
+      this.ac_room_perform("ac_log", params)
     },
 
     ////////////////////////////////////////////////////////////////////////////////

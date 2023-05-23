@@ -230,7 +230,7 @@ export const mod_sfen_share = {
               params.lmi.illegal_names,
               this.current_url,
             ]
-            this.ac_log("反則発動", this.$gs.short_inspect(body))
+            this.ac_log({subject: "反則発動", body: this.$gs.short_inspect(body)})
           }
         }
       }

@@ -65,7 +65,7 @@ export const mod_order_main = {
       if (this.$gs.present_p(params.message)) {
         this.al_add({...params, label: "順番 " + (params.order_enable_p ? "ON" : "OFF")})
       }
-      this.ac_log("順設受信", `順番${this.order_enable_p ? "ON" : "OFF"}を受信`)
+      this.ac_log({subject: "順設受信", body: `順番${this.order_enable_p ? "ON" : "OFF"}を受信`})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +91,7 @@ export const mod_order_main = {
       this.auto_resign_key = params.auto_resign_key
       this.tegoto            = params.tegoto
 
-      this.ac_log("順情受信", `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`)
+      this.ac_log({subject: "順情受信", body: `オーダー受信 ${this.ordered_member_names_oneline} (順番${this.order_enable_p ? "ON" : "OFF"})`})
     },
 
     // 自分の場所を調べて正面をその視点にする

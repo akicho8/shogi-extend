@@ -15,7 +15,7 @@ export const mod_devise = {
       if (this.ua_notify_count === 0) {
         this.ua_notify_count += 1
         if (typeof window !== 'undefined') {
-          this.ac_log("端末情報", window.navigator.userAgent || "")
+          this.ac_log({subject: "端末情報", body: window.navigator.userAgent || ""})
         }
       }
     },

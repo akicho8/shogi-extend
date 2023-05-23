@@ -25,7 +25,7 @@ export const mod_force_sync = {
           },
         })
       } else {
-        this.ac_log("盤面起動", "初期配置に戻す")
+        this.ac_log({subject: "盤面起動", body: "初期配置に戻す"})
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
@@ -56,7 +56,7 @@ export const mod_force_sync = {
           },
         })
       } else {
-        this.ac_log("盤面起動", "1手戻す")
+        this.ac_log({subject: "盤面起動", body: "1手戻す"})
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
@@ -83,18 +83,18 @@ export const mod_force_sync = {
     ////////////////////////////////////////////////////////////////////////////////
 
     force_sync_direct() {
-      this.ac_log("局面操作", `直接${this.current_turn}手目`)
+      this.ac_log({subject: "局面操作", body: `直接${this.current_turn}手目`})
       this.force_sync(`${this.user_call_name(this.user_name)}が現在の局面(${this.current_turn}手目)の局面を転送しました`)
     },
 
     force_sync_turn_zero() {
-      this.ac_log("局面操作", "初期配置に戻す")
+      this.ac_log({subject: "局面操作", body: "初期配置に戻す"})
       this.current_turn = 0
       this.force_sync(`${this.user_call_name(this.user_name)}が初期配置に戻しました`)
     },
 
     force_sync_turn_previous() {
-      this.ac_log("局面操作", "1手戻す")
+      this.ac_log({subject: "局面操作", body: "1手戻す"})
       if (this.current_turn >= 1) {
         this.current_turn -= 1
       }
@@ -104,7 +104,7 @@ export const mod_force_sync = {
     force_sync_handicap() {
       this.current_turn = 0
       this.current_sfen = this.board_preset_info.sfen
-      this.ac_log("駒落適用", this.board_preset_info.name)
+      this.ac_log({subject: "駒落適用", body: this.board_preset_info.name})
       this.force_sync(`${this.user_call_name(this.user_name)}が${this.board_preset_info.name}に変更しました`)
     },
 

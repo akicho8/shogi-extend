@@ -80,7 +80,7 @@ export const mod_room_board_setup = {
           this.clog("要求した情報を受信した")
           this.clog(`先輩度比較: 相手(${params.active_level}) > 自分(${this.active_level}) --> ${params.active_level > this.active_level}`)
           if (params.active_level > this.active_level) {
-            this.ac_log("情報設定", `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`)
+            this.ac_log({subject: "情報設定", body: `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`})
             this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
             this.receive_xtitle(params.xtitle)

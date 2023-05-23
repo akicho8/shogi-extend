@@ -78,6 +78,9 @@
       a.panel-block(@click="TheSb.cc_next_message") 順番設定後に時計設置を促す
       a.panel-block(@click="TheSb.tn_notify") 牛
       a.panel-block(@click="TheSb.kifu_mail_handle") 棋譜メール
+      a.panel-block(@click="TheSb.ac_log({subject: 'ac_log', body: 'b', emoji: ':SOS:', level: 'critical'})") ac_log
+      a.panel-block(@click="app_log({subject: 'app_log', body: 'b', emoji: ':SOS:', level: 'critical'})") app_log
+
   .column.is-2
     .panel
       .panel-heading

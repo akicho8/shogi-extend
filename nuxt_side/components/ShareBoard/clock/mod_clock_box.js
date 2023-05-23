@@ -394,7 +394,7 @@ export const mod_clock_box = {
       //       params.from_user_name,
       //       this.current_url,
       //     ]
-      //     this.ac_log("時間切れ", this.$gs.short_inspect(body))
+      //     this.ac_log({subject: "時間切れ", body: this.$gs.short_inspect(body)})
       //   }
       // }
     },

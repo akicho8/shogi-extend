@@ -25,7 +25,7 @@ export const mod_chore = {
 
       if (this.debug_mode_p) {
         this.tl_add("画面焦点", focus_p ? "ON" : "OFF")
-        this.ac_log("画面焦点", focus_p ? "ON" : "OFF")
+        this.ac_log({subject: "画面焦点", body: focus_p ? "ON" : "OFF"})
       }
 
       // インターバル実行の再スタートで即座にメンバー情報を反映する
@@ -100,11 +100,11 @@ export const mod_chore = {
         focusOn: "cancel",
         onCancel: () => {
           this.$sound.play_click()
-          this.ac_log("退室", "キャンセル")
+          this.ac_log({subject: "退室", body: "キャンセル"})
         },
         onConfirm: () => {
           this.$sound.play_click()
-          this.ac_log("退室", "実行")
+          this.ac_log({subject: "退室", body: "実行"})
           block()
         },
       })

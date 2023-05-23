@@ -43,7 +43,7 @@ export const mod_ping = {
         const now = this.$time.current_ms()
         this.$gs.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         const gap = now - params.ping_at
-        this.ac_log("PING", `${params.from_user_name} → ${this.user_name} ${gap}ms`)
+        this.ac_log({subject: "PING", body: `${params.from_user_name} → ${this.user_name} ${gap}ms`})
       }
     },
     pong_command(params) {
@@ -67,7 +67,7 @@ export const mod_ping = {
           this.toast_ok(`${this.user_call_name(params.from_user_name)}の反応速度は${gap}ミリ秒です`, {talk: false})
         }
         this.toast_ok(`応答速度: ${sec}秒`, {talk: false, duration: 1000})
-        this.ac_log("PONG", `${this.user_name} ← ${params.from_user_name} ${gap}ms`)
+        this.ac_log({subject: "PONG", body: `${this.user_name} ← ${params.from_user_name} ${gap}ms`})
       }
     },
 
