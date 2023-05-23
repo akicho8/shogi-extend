@@ -63,8 +63,8 @@ module Api
       }
     end
 
-    # http://localhost:3000/api/remote_notify.json
-    def remote_notify
+    # http://localhost:3000/api/app_log_call.json
+    def app_log_call
       hv = params.to_unsafe_h.to_options
       if true
         subject = []

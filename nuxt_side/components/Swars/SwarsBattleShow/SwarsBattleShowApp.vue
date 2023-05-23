@@ -274,7 +274,7 @@ export default {
       this.sidebar_p = false
       this.$sound.play_click()
       this.ga_click(app_name)
-      this.remote_notify({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
+      this.app_log_call({emoji: ":外部アプリ:", subject: "将棋ウォーズ棋譜検索→詳細→サイドバー", body: app_name})
     },
   },
 

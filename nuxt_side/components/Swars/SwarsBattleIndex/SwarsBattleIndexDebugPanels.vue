@@ -18,7 +18,8 @@
       a.panel-block(@click="base.tiresome_alert_check") ウォーズIDを記憶するダイアログ発動チェック
       a.panel-block(@click="base.tiresome_count_increment") 自力入力した回数++
       a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを記憶するダイアログ発動
-      a.panel-block(@click="remote_notify") remote_notify
+      a.panel-block(@click="app_log_call({level: 'debug'})") app_log_call({level: 'debug'})
+      a.panel-block(@click="app_log_call('xxx')") app_log_call('xxx')
 
   .column.is-4
     .panel

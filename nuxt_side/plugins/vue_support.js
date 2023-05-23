@@ -262,8 +262,13 @@ export const vue_support = {
       return e.keyCode === 13
     },
 
-    remote_notify(params = {}) {
-      return this.$axios.$post("/api/remote_notify.json", params, {progress: false})
+    // this.app_log_call({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
+    // this.app_log_call("(body)")
+    app_log_call(params = {}) {
+      if (typeof params === "string") {
+        params = { body: params }
+      }
+      return this.$axios.$post("/api/app_log_call.json", params, {progress: false})
     },
   },
 
