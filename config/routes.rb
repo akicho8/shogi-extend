@@ -104,7 +104,7 @@ Rails.application.routes.draw do
     match "echo(.:format)",  to: "etc#echo",  via: :all, format: nil
     match "sleep(.:format)", to: "etc#sleep", via: :all, format: nil
 
-    post "app_log_call(.:format)", to: "etc#app_log_call"
+    post "app_log(.:format)", to: "etc#app_log"
 
     get "tsl_user_all(.:format)",      to: "etc#tsl_user_all"
     get "tsl_user_newest(.:format)",   to: "etc#tsl_user_newest"

@@ -6,7 +6,7 @@ export const mod_per = {
     per_set_handle(info) {
       this.per_key = info.key
       this.talk(info.per)
-      this.app_log_call({subject: "件数", body: info.per})
+      this.app_log({subject: "件数", body: info.per})
       this.page_change_or_sort_handle({per: info.per})
     },
   },

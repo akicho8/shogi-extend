@@ -86,12 +86,12 @@ export const mod_tiresome = {
         onConfirm: () => {
           this.$sound.play("o")
           this.tiresome_modal_selected = "yes"
-          this.app_log_call({emoji: ":CHECK:", subject: subject, body: `やってみる`})
+          this.app_log({emoji: ":CHECK:", subject: subject, body: `やってみる`})
         },
         onCancel: () => {
           this.$sound.play("x")
           this.tiresome_modal_selected = "no"
-          this.app_log_call({emoji: ":X:", subject: subject, body: `不便なまま生きる`})
+          this.app_log({emoji: ":X:", subject: subject, body: `不便なまま生きる`})
         },
       })
     },

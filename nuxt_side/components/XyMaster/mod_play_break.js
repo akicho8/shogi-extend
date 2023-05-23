@@ -9,7 +9,7 @@ export const mod_play_break = {
 
     time_over_alert() {
       this.toast_ok("時間切れ")
-      this.app_log_call({subject: "符号の鬼", body: "時間切れ"})
+      this.app_log({subject: "符号の鬼", body: "時間切れ"})
     },
 
     too_many_miss_check() {
@@ -21,7 +21,7 @@ export const mod_play_break = {
 
     too_many_miss_alert() {
       this.toast_ok("ミスが多すぎるので終了")
-      this.app_log_call({subject: "符号の鬼", body: "ミスが多すぎるので終了"})
+      this.app_log({subject: "符号の鬼", body: "ミスが多すぎるので終了"})
     },
   },
 }

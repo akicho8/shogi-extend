@@ -280,7 +280,7 @@ export default {
       this.clock_box.rule_set_all(params)
     },
     behavior_notify(behavior) {
-      this.app_log_call({emoji: ":目覚まし時計:", subject: "対局時計単体", body: behavior})
+      this.app_log({emoji: ":目覚まし時計:", subject: "対局時計単体", body: behavior})
     },
   },
   computed: {

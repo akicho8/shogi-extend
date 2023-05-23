@@ -89,7 +89,7 @@ export default {
           this.xi.real_total_count,
           location.href,
         ].join(" ")
-        this.app_log_call({emoji: ":CHART:", subject: "棋力分布", body: body})
+        this.app_log({emoji: ":CHART:", subject: "棋力分布", body: body})
       }
 
       if (this.$gs.present_p(this.$route.query) && this.development_p) {

@@ -63,8 +63,8 @@ module Api
       }
     end
 
-    # http://localhost:3000/api/app_log_call.json
-    def app_log_call
+    # http://localhost:3000/api/app_log.json
+    def app_log
       hv = params.to_unsafe_h.to_options
       if true
         subject = []

@@ -45,7 +45,7 @@ export const mod_urls = {
       this.sidebar_p = false
       this.$sound.play_click()
       this.ga_click(app_name)
-      this.app_log_call({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
+      this.app_log({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 
       this.shared_al_add({
         label: `${app_name}起動`,

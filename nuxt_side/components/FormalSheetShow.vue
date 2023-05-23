@@ -246,7 +246,7 @@ export default {
         body.push("vs")
         body.push(this.new_info.player_name_for_white)
         body = body.join(" ")
-        this.app_log_call({emoji: ":プリンタ:", subject: "棋譜用紙印刷実行", body: body})
+        this.app_log({emoji: ":プリンタ:", subject: "棋譜用紙印刷実行", body: body})
       }
 
       window.print()

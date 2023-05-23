@@ -262,13 +262,13 @@ export const vue_support = {
       return e.keyCode === 13
     },
 
-    // this.app_log_call({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
-    // this.app_log_call("(body)")
-    app_log_call(params = {}) {
+    // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
+    // this.app_log("(body)")
+    app_log(params = {}) {
       if (typeof params === "string") {
         params = { body: params }
       }
-      return this.$axios.$post("/api/app_log_call.json", params, {progress: false})
+      return this.$axios.$post("/api/app_log.json", params, {progress: false})
     },
   },
 

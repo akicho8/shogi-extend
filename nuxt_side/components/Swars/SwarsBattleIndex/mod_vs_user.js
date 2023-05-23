@@ -24,7 +24,7 @@ export const mod_vs_user = {
         str = null
       }
       const new_query = _.compact([this.xi.current_swars_user_key, str]).join(" ")
-      this.app_log_call({subject: "相手で絞る", body: new_query})
+      this.app_log({subject: "相手で絞る", body: new_query})
       this.$router.push({name: "swars-search", query: {query: new_query}})
     },
 
