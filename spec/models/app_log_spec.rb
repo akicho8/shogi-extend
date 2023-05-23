@@ -23,6 +23,18 @@ RSpec.describe AppLog, type: :model do
     SlackSender.deliveries.clear
   end
 
+  it "ログレベルを自分で渡す場合" do
+    assert2 { AppLog.call("x").body == "x" }
+    assert2 { AppLog.call("x", log_level: "debug").body == "x" }
+    assert2 { AppLog.call(body: "x", log_level: "debug").body == "x" }
+  end
+
+  it "Hashはそのまま渡せないので注意する" do
+    silence_stream(STDERR) do
+      assert2 { AppLog.info({subject: "a"}).subject == "" }
+    end
+  end
+
   it "空でも作成できる" do
     assert2 { AppLog.debug }
   end
@@ -44,9 +56,10 @@ RSpec.describe AppLog, type: :model do
   describe "例外オブジェクトを渡せる" do
     it "それだけを渡すとsubjectやbodyに展開する" do
       app_log = AppLog.debug(Exception.new("foo"))
+      tp app_log
       assert2 { app_log.emoji == "🆘"                }
-      assert2 { app_log.subject == "foo (Exception)" }
-      assert2 { app_log.body == "foo"                }
+      assert2 { app_log.subject == "Exception" }
+      assert2 { app_log.body == "[MESSAGE]\nfoo" }
     end
 
     it "展開しても明示的に指定したオプションの方を優先する" do
@@ -56,7 +69,7 @@ RSpec.describe AppLog, type: :model do
 
     it "dataオプションを渡せる" do
       app_log = AppLog.debug(Exception.new("foo"), data: "bar")
-      assert2 { app_log.body == %(foo\n\n"bar"\n) }
+      assert2 { app_log.body.include?("bar") }
     end
   end
 

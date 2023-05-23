@@ -75,7 +75,7 @@ module Api
         subject = subject.compact.join(" | ")
         hv[:subject] = subject
       end
-      AppLog.info(hv)
+      AppLog.info(**hv)
       render json: { :message => "OK" }
     end
 

@@ -25,56 +25,88 @@
 # AppLog.info("xxx", mail_notify: true)
 # AppLog.info(Exception.new, emoji: "🧡")
 # AppLog.info(body: Exception.new, emoji: "🧡")
+# AppLog.call("xxx")
 #
 class AppLog < ApplicationRecord
   EXCEPTION_SUPPORT = true
+  EXCEPTION_NOTIFIER_USE = false
+  LOG_LEVEL_DEFAULT = :info
 
   class << self
-    def self.cleanup(...)
+    def cleanup(...)
       Cleanup.new(...).call
     end
 
-    LogLevelInfo.each do |e|
-      define_method(e.key) do |body = nil, **params|
-        if e.available_environments.include?(Rails.env.to_sym)
-          call_with_log_level(e, body, params)
+    # AppLog.call("x")
+    # AppLog.call("x", log_level: "debug")
+    # AppLog.call(body: "x", log_level: "debug")
+    def call(body = nil, **params)
+      if Rails.env.test? || Rails.env.development?
+        if params.keys.first.kind_of? String
+          raise ArgumentError, params.inspect
         end
       end
-    end
 
-    private
+      log_level_info = LogLevelInfo.fetch(params[:log_level].presence || LOG_LEVEL_DEFAULT)
+      if log_level_info.available_environments.exclude?(Rails.env.to_sym)
+        return
+      end
 
-    def call_with_log_level(log_level_info, body, params)
-      if true
-        params = params.symbolize_keys # dup
+      if body && params.has_key?(:body)
+        raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
+      end
 
-        if body && params.has_key?(:body)
-          raise ArgumentError, %(#{name}.#{__method__}("...", body: "...") 形式は受け付けません)
+      if body.kind_of?(Hash)
+        warn <<~EOT
+        #{name}.#{__method__}(params)
+        は、
+        #{name}.#{__method__}(**params)
+        または、
+        #{name}.#{__method__}(body: params)
+        の間違いなので書き直せ
+        EOT
+      end
+
+      if body
+        params = params.merge(body: body)
+      end
+
+      if EXCEPTION_NOTIFIER_USE
+        v = params[:exception] || params[:body]
+        if v.kind_of?(Exception)
+          ExceptionNotifier.notify_exception(v, data: params[:data])
         end
+      end
 
-        if body
-          params = params.merge(body: body)
-        end
-
-        if EXCEPTION_SUPPORT
-          if params[:body].kind_of?(Exception)
-            exception = params.delete(:body)
-            default = ErrorInfo.new(exception, params).to_h
-            params = default.merge(params)
-          end
+      if EXCEPTION_SUPPORT
+        if params[:body].kind_of?(Exception)
+          exception = params.delete(:body)
+          default = ErrorInfo.new(exception, params).to_h
+          params = default.merge(params)
         end
       end
 
       attrs = log_level_info.to_app_log_attributes.merge(params)
-      create!(attrs.slice(:level, :emoji, :subject, :body)).tap do
-        if attrs[:mail_notify]
-          mail_notify(attrs)
-        end
-        if attrs[:slack_notify]
-          slack_notify(attrs)
-        end
+      if attrs[:mail_notify]
+        mail_notify(attrs)
+      end
+      if attrs[:slack_notify]
+        slack_notify(attrs)
+      end
+      if attrs[:database]
+        create!(attrs.slice(:level, :emoji, :subject, :body))
       end
     end
+
+    # AppLog.debug("x")
+    # AppLog.info("x")
+    LogLevelInfo.keys.each do |key|
+      define_method(key) do |body = nil, **params|
+        call(body, **{log_level: key}.merge(params))
+      end
+    end
+
+    private
 
     def mail_notify(params)
       SystemMailer.notify({fixed: true}.merge(params)).deliver_later
@@ -93,7 +125,7 @@ class AppLog < ApplicationRecord
   scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
   before_validation on: :create do
-    self.level ||= :debug
+    self.level ||= LOG_LEVEL_DEFAULT
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
     self.process_id ||= Process.pid
 
