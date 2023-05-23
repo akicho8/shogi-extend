@@ -1,8 +1,9 @@
 require "rails_helper"
 
 RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true do
-  let(:user1)     { User.create!     }
-  let(:room_code) { SecureRandom.hex }
+  let(:user1)       { User.create!                            }
+  let(:room_code)   { SecureRandom.hex                        }
+  let(:channel_key) { "share_board/room_channel/#{room_code}" }
 
   before do
     stub_connection(current_user: user1, once_uuid: "(uuid)")
@@ -35,6 +36,18 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     }.merge(params)
   end
 
+  describe "部屋退出" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.room_leave(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "room_leave_broadcasted", bc_params: data)
+    end
+  end
+
   describe "局面配布" do
     before do
       subscribe(room_code: room_code)
@@ -43,7 +56,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("sfen" => "(sfen)", "turn" => 0, message: "(message)")
       expect {
         subscription.force_sync(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "force_sync_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "force_sync_broadcasted", bc_params: data)
     end
   end
 
@@ -55,7 +68,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("sfen" => "(sfen)", "turn" => 0)
       expect {
         subscription.honpu_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "honpu_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "honpu_share_broadcasted", bc_params: data)
     end
   end
 
@@ -81,7 +94,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
         })
       expect {
         subscription.sfen_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "sfen_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "sfen_share_broadcasted", bc_params: data)
     end
   end
 
@@ -93,7 +106,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
       expect {
         subscription.received_ok(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "received_ok_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "received_ok_broadcasted", bc_params: data)
     end
   end
 
@@ -117,7 +130,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("title" => "(title)")
       expect {
         subscription.title_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "title_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "title_share_broadcasted", bc_params: data)
     end
   end
 
@@ -129,7 +142,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory
       expect {
         subscription.setup_info_request(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_request_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "setup_info_request_broadcasted", bc_params: data)
     end
   end
 
@@ -141,7 +154,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory
       expect {
         subscription.setup_info_send(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "setup_info_send_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "setup_info_send_broadcasted", bc_params: data)
     end
   end
 
@@ -160,7 +173,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
         })
       expect {
         subscription.clock_box_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "clock_box_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "clock_box_share_broadcasted", bc_params: data)
     end
   end
 
@@ -172,7 +185,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory
       expect {
         subscription.member_info_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "member_info_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "member_info_share_broadcasted", bc_params: data)
     end
   end
 
@@ -184,7 +197,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("order_enable_p" => true)
       expect {
         subscription.order_switch_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "order_switch_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "order_switch_share_broadcasted", bc_params: data)
     end
   end
 
@@ -202,7 +215,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
         })
       expect {
         subscription.new_order_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "new_order_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "new_order_share_broadcasted", bc_params: data)
     end
   end
 
@@ -214,7 +227,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("message" => "(message)", "message_scope_key" => "is_message_scope_private")
       expect {
         subscription.message_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "message_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "message_share_broadcasted", bc_params: data)
     end
   end
 
@@ -228,7 +241,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "投了" do
+  describe "投了発動" do
     before do
       subscribe(room_code: room_code)
     end
@@ -236,7 +249,31 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory
       expect {
         subscription.give_up_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "give_up_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "give_up_share_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "PING" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.ping_command(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "ping_command_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "PONG" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "works" do
+      data = data_factory
+      expect {
+        subscription.pong_command(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "pong_command_broadcasted", bc_params: data)
     end
   end
 
@@ -270,7 +307,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("label" => "(label)", message: "(message)")
       expect {
         subscription.shared_al_add(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "shared_al_add_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "shared_al_add_broadcasted", bc_params: data)
     end
   end
 
@@ -278,11 +315,17 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     before do
       subscribe(room_code: room_code)
     end
-    it "works" do
+    it "個数共有" do
       data = data_factory("medal_counts_hash" => {"alice" => 1})
       expect {
         subscription.acquire_medal_count_share(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "acquire_medal_count_share_broadcasted", bc_params: data)
+    end
+    it "個数加算" do
+      data = data_factory("medal_user_name" => "alice", "acquire_medal_plus" => 1)
+      expect {
+        subscription.medal_add_to_user_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "medal_add_to_user_share_broadcasted", bc_params: data)
     end
   end
 
@@ -294,7 +337,31 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       data = data_factory("kicked_user_name" => "(kicked_user_name)")
       expect {
         subscription.user_kick(data)
-      }.to have_broadcasted_to("share_board/room_channel/#{room_code}").with(bc_action: "user_kick_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "user_kick_broadcasted", bc_params: data)
+    end
+  end
+
+  describe "お題" do
+    before do
+      subscribe(room_code: room_code)
+    end
+    it "配送" do
+      data = data_factory("odai" => "xxx")
+      expect {
+        subscription.odai_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "odai_share_broadcasted", bc_params: data)
+    end
+    it "削除" do
+      data = data_factory
+      expect {
+        subscription.odai_delete(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "odai_delete_broadcasted", bc_params: data)
+    end
+    it "投票" do
+      data = data_factory("voted_latest_index" => 0)
+      expect {
+        subscription.vote_select_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "vote_select_share_broadcasted", bc_params: data)
     end
   end
 end

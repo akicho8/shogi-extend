@@ -19,7 +19,7 @@ module ShareBoard
     def call(bc_action, bc_params = {})
       bc_params = default_params.merge(bc_params)
       validate!(bc_params)
-      ActionCable.server.broadcast(broadcast_to, {bc_action: bc_action, bc_params: bc_params})
+      ActionCable.server.broadcast(broadcast_to, { bc_action: bc_action, bc_params: bc_params })
     end
 
     private

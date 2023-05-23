@@ -67,7 +67,9 @@ module ShareBoard
     end
 
     def clock_box_share(data)
-      values = data["cc_params"].collect { |e| e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus") }
+      values = data["cc_params"].collect do |e|
+        e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
+      end
       url = data["current_url"]
       message = [data["cc_key"], values.inspect, url].compact.join(" ")
       track(data, subject: "対局時計", body: message, emoji: ":対局時計:")
@@ -76,8 +78,12 @@ module ShareBoard
 
     def member_info_share(data)
       if data["debug_mode_p"]
-        message = "#{data['alive_notice_count']}回目 LV:#{data['active_level']} (#{data['from_connection_id']})"
-        track(data, subject: "生存通知", body: message)
+        body = [
+          "#{data['alive_notice_count']}回目",
+          "LV:#{data['active_level']}",
+          "(#{data['from_connection_id']})",
+        ].join(" ")
+        track(data, subject: "生存通知", body: body)
       end
       broadcast(:member_info_share_broadcasted, data)
     end
@@ -121,12 +127,12 @@ module ShareBoard
     end
 
     def ping_command(data)
-      # track(data, subject: "PING", data["start_at"])
+      # track(data, subject: "PING", body: data["start_at"])
       broadcast(:ping_command_broadcasted, data)
     end
 
     def pong_command(data)
-      # track(data, subject: "PONG", data["start_at"])
+      # track(data, subject: "PONG", body: data["start_at"])
       broadcast(:pong_command_broadcasted, data)
     end
 
@@ -186,15 +192,8 @@ module ShareBoard
       params["room_code"].presence
     end
 
-    def broadcast(bc_action, bc_params)
-      if v = bc_params.find_all { |k, v| v.nil? }.presence
-        v = v.to_h.except(*Array(bc_params["__nil_check_skip_keys__"]))
-        if v.present?
-          raise ArgumentError, "値が nil のキーがある : #{v.inspect}"
-        end
-      end
-      bc_params = bc_params.merge("API_VERSION" => ShareBoardControllerMethods::API_VERSION)
-      ActionCable.server.broadcast("share_board/room_channel/#{room_code}", {bc_action: bc_action, bc_params: bc_params})
+    def broadcast(...)
+      Broadcaster.new(room_code).call(...)
     end
 
     def track(data, **options)
@@ -207,7 +206,7 @@ module ShareBoard
       subject = subject.join(" ")
 
       body = []
-      body << ":#{data["ua_icon_key"]}:"
+      body << [":", data["ua_icon_key"], ":"].join # FIXME: Slackを使っていないので入れる意味がない
       body << ac_event_str(data)
       body << data["from_user_name"]
       if v = data["active_level"]
