@@ -16,7 +16,7 @@ class SystemMailer < ApplicationMailer
   def notify(params = {})
     subject = []
     if v = params[:emoji]
-      subject << EmojiInfo.lookup(v) || v
+      subject << (EmojiInfo.lookup(v) || v)
     end
     subject << app_name_prepend(params[:subject])
     subject = subject.join

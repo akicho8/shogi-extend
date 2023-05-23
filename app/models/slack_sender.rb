@@ -64,7 +64,7 @@ class SlackSender
   def body
     av = []
     v = params[:emoji].presence || ":空白:"
-    av << EmojiInfo.lookup(v) || v
+    av << (EmojiInfo.lookup(v) || v)
     av << " "
     av << (Rails.cache.increment(:slack_counter) || 0)
     av << " "
