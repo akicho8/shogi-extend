@@ -20,23 +20,24 @@ module BackendScript
     def script_body
       if id = params[:app_log_id]
         attrs = AppLog.find(id).attributes.clone
-        attrs["body"] = h.tag.pre(attrs["body"], style: "font-family:monospace")
-        attrs.to_html
-      else
-        s = AppLog.order(:created_at, :id)
-        if params[:reverse]
-        else
-          s = s.reverse_order
-        end
-        if q = current_query
-          s = s.search(q)
-        end
-        s = page_scope(s)
-        rows = s.collect(&method(:row_build))
-        out = "".html_safe
-        out << rows.to_html
-        out << basic_paginate(s)
+        body = attrs.delete("body")
+        attrs["body"] = h.tag.pre(body, style: "font-family:monospace")
+        return attrs.to_html
       end
+
+      s = AppLog.order(:created_at, :id)
+      if params[:reverse]
+      else
+        s = s.reverse_order
+      end
+      if q = current_query
+        s = s.search(q)
+      end
+      s = page_scope(s)
+      rows = s.collect(&method(:row_build))
+      out = "".html_safe
+      out << rows.to_html
+      out << basic_paginate(s)
     end
 
     def row_build(app_log)
