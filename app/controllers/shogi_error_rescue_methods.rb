@@ -48,8 +48,7 @@ module ShogiErrorRescueMethods
       # render plain: error.message, status: 404
 
       unless from_crawl_bot?
-        AppLog.critical(error, data: params.to_unsafe_h)
-        ExceptionNotifier.notify_exception(error, env: request.env, data: {params: params.to_unsafe_h})
+        AppLog.critical(error, data: RequestInfo.new(self).to_s)
       end
 
       case

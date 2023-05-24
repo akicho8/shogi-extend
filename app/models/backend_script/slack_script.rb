@@ -1,5 +1,7 @@
 module BackendScript
   class SlackScript < ::BackendScript::Base
+    include AtomicScript::PostRedirectMethods
+
     self.category = "ツール"
     self.script_name = "Slack通知"
 

@@ -15,7 +15,7 @@ module TinyUrl
       end
       resp.body
     rescue => error
-      ExceptionNotifier.notify_exception(error)
+      AppLog.error(error)
       nil
     end
   end

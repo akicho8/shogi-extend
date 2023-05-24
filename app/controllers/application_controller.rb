@@ -21,6 +21,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # http://localhost:3000/?test_request_info=1
+  if Rails.env.development? || Rails.env.test?
+    before_action do
+      if params[:test_request_info]
+        AppLog.critical(((1 / 0) rescue $!), data: RequestInfo.new(self).to_s)
+      end
+    end
+  end
+
   # http://localhost:3000/?force_error=1
   # https://www.shogi-extend.com/?force_error=1
   prepend_before_action do

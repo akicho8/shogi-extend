@@ -14,7 +14,7 @@ module Swars
 
       def initialize(params = {})
         @params = {
-          system_notify: true,
+          notify: true,
           sleep: (Rails.env.production? || Rails.env.staging?) ? 2 : 0,
         }.merge(default_params, params)
 
@@ -24,7 +24,7 @@ module Swars
       def run
         @rows.clear
         perform
-        if params[:system_notify]
+        if params[:notify]
           AppLog.important(subject: subject, body: mail_body)
         end
         if Rails.env.development?
@@ -85,8 +85,8 @@ module Swars
           end
           yield
         rescue => error
-          ExceptionNotifier.notify_exception(error, data: { user_key: user_key })
-          row["エラー"] = error.inspect
+          AppLog.error(error, data: {user_key: user_key})
+          row["エラー"] = "#{error.message} (#{error.class.name})"
         end
 
         if user = lookup(user_key)

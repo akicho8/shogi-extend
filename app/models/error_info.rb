@@ -46,9 +46,12 @@ class ErrorInfo
       ].join("\n")
     end
     if v = @options[:data]
+      unless v.kind_of?(String)
+        v = v.pretty_inspect
+      end
       av << [
         "[DATA]",
-        v.pretty_inspect.rstrip,
+        v.rstrip,
       ].join("\n")
     end
     av.compact.join("\n\n")
