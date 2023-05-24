@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => "false",
       })
-    find(".message_modal_handle").click
+    chat_modal_open
   end
 
   it "/ping" do
@@ -61,6 +61,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/対局中" do
     chat_message_send("/対局中")
+    chat_modal_close
     assert_clock_on
     assert_order_on
   end

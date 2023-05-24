@@ -47,7 +47,12 @@ export const vue_support = {
         }
         if (this.development_p) {
           const message = `GA: ${category}`
-          this.$buefy.toast.open({message: message, position: "is-top", type: "is-dark", queue: false})
+          const params = {message: message, position: "is-top", type: "is-dark", queue: false}
+          if (this.$route.query.__system_test_now__) {
+            // Capybara の assert_text が toast 要素だけにマッチしてしまうため表示しない
+          } else {
+            this.$buefy.toast.open(params)
+          }
           this.clog(message)
         }
         this.$gtag("event", "click", {event_category: category})

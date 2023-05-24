@@ -32,6 +32,7 @@ RSpec.describe type: :system, share_board_spec: true do
       a_block do
         visit_app(room_code: :test_room, user_name: "alice")
         clock_open
+        clock_modal_close
         assert_text("clock_box:true")
       end
       b_block do

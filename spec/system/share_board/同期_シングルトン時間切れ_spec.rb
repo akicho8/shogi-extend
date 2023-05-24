@@ -10,7 +10,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
         "room_code"                => "test_room",
-        "user_name"          => user_name,
+        "user_name"                => user_name,
         "fixed_member_names"       => "alice,bob",
         "fixed_order_names"        => "alice,bob",
         "RETRY_DELAY"              => -1,
@@ -27,8 +27,9 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       sleep(@initial_read_sec)
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
-        assert_text("当事者は自分で起動してBC")
         assert_timeout_modal_exist
+        timeout_modal_close
+        assert_text("当事者は自分で起動してBC")
         assert_text("BC受信時にはすでにモーダル起動済み")
       end
     end
@@ -44,9 +45,10 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block do
       sleep(@initial_read_sec)
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
+        assert_timeout_modal_exist
+        timeout_modal_close
         assert_text("BC受信によってモーダル起動開始")
         assert_text("時間切れ予約キャンセル")
-        assert_timeout_modal_exist
       end
     end
     a_block { assert_timeout_modal_exist }
@@ -61,8 +63,9 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block do
       sleep(@initial_read_sec)
       Capybara.using_wait_time(@CC_TIME_LIMIT_BC_DELAY * 2) do
-        assert_text("BC受信時にはすでにモーダル起動済み")
         assert_timeout_modal_exist
+        timeout_modal_close
+        assert_text("BC受信時にはすでにモーダル起動済み")
       end
     end
     a_block { assert_timeout_modal_exist }

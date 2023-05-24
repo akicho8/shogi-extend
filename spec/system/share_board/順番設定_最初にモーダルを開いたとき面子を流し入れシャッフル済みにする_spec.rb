@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(shuffle_first)
     visit_app({
         :room_code            => :test_room,
-        :user_name      => "1",
+        :user_name            => "1",
         :fixed_member_names   => "1,2,3,4,5,6,7,8",
         :fixed_order_state    => "to_o2_state",
         :handle_name_validate => "false",
@@ -12,6 +12,8 @@ RSpec.describe type: :system, share_board_spec: true do
         :shuffle_first        => shuffle_first,
       })
     os_switch_toggle
+    os_modal_close
+    os_modal_close_force
   end
 
   it "無効" do

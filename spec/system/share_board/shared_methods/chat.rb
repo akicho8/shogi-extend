@@ -1,4 +1,12 @@
 module SharedMethods
+  def chat_modal_open
+    find(".message_modal_handle").click
+  end
+
+  def chat_modal_close
+    find(".MessageSendModal .close_handle").click
+  end
+
   # message を送信する
   def chat_message_send(message)
     within(".MessageSendModal") do
