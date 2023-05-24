@@ -7,7 +7,7 @@ export class UaIconInfo extends ApplicationMemoryRecord {
       { key: "tablet",           name: "Tablet",  },
       { key: "iphone",           name: "iPhone",  },
       { key: "windows",          name: "Windows", },
-      { key: "desktop_computer", name: "Mac",     },
+      { key: "mac", name: "Mac",     },
     ]
   }
 }

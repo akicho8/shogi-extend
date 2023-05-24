@@ -32,7 +32,7 @@ export const vue_support = {
           if (ua.indexOf("windows") >= 0) {
             return "windows"
           } else {
-            return "desktop_computer"
+            return "mac"
           }
         }
       }

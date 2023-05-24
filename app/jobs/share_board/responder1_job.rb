@@ -8,7 +8,7 @@ module ShareBoard
       #   "from_connection_id"=>"espq1cQtyB3",
       #   "from_user_name"=>"alice",
       #   "performed_at"=>1678970689204,
-      #   "ua_icon_key"=>"desktop_computer",
+      #   "ua_icon_key"=>"mac",
       #   "ac_events_hash"=>{"initialized"=>1,
       #     "connected"=>2,
       #     "received"=>16,
