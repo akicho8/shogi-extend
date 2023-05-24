@@ -68,7 +68,7 @@ export const mod_tiresome = {
         this.talk("ところでウォーズID毎回入力するの不便じゃない？")
       })
 
-      const subject = `ウォーズID記憶案内 ${this.xi.current_swars_user_key}`
+      const subject = `ウォーズID記憶案内 [${this.xi.current_swars_user_key}]`
       this.dialog_confirm({
         canCancel: ["button"],
         // hasIcon: true,
