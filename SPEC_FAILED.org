@@ -1,0 +1,15 @@
+rspec ./spec/system/share_board/その他_自動マッチング_spec.rb:4 # {:type=>:system, :share_board_spec=>true} 飛vs角を1vs1
+rspec ./spec/system/share_board/その他_自動マッチング_spec.rb:40 # {:type=>:system, :share_board_spec=>true} 自分vs自分 平手
+rspec ./spec/system/share_board/チャット_内部コマンド_その他_spec.rb:62 # {:type=>:system, :share_board_spec=>true} /対局中
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:20 # {:type=>:system, :share_board_spec=>true} /medal-user
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:34 # {:type=>:system, :share_board_spec=>true} /medal-team
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:44 # {:type=>:system, :share_board_spec=>true} /medal-self
+rspec ./spec/system/share_board/チャット_内部コマンド_強制退室_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:23 # {:type=>:system, :share_board_spec=>true} 当事者側(自分は即座に起動してBC)
+rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:38 # {:type=>:system, :share_board_spec=>true} 他者側(予約するがBCの方が速いのでキャンセルされる)
+rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:55 # {:type=>:system, :share_board_spec=>true} 他者側(予約待ち0なので他者側で即発動)
+rspec ./spec/system/share_board/同期_後から部屋に入ると古参からさまざまな情報を受け取って同期する_spec.rb:31 # {:type=>:system, :share_board_spec=>true} 時計 works
+rspec ./spec/system/share_board/順番設定_二人で順番設定を開いていて一方が更新すると片方のモーダルにも同期する_spec.rb:16 # {:type=>:system, :share_board_spec=>true} wo
+rks
+rspec ./spec/system/share_board/順番設定_最初にモーダルを開いたとき面子を流し入れシャッフル済みにする_spec.rb:17 # {:type=>:system, :share_board_spec=>true} 無効
+rspec ./spec/system/swars/show_spec.rb:17 # 詳細 HTML works
