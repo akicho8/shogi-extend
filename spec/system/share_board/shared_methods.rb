@@ -74,6 +74,10 @@ module SharedMethods
     find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
   end
 
+  def xmatch_modal_close
+    find(".XmatchModal .close_handle").click
+  end
+
   # 時間切れモーダルが存在する
   def assert_timeout_modal_exist
     assert_selector(".TimeoutModal")

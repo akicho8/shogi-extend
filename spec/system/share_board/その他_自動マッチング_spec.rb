@@ -26,11 +26,13 @@ RSpec.describe type: :system, share_board_spec: true do
     # 開発環境では performed_at で並び換えているので必ず alice, bob の順になる
     # app/models/xmatch_rule_info.rb
     a_block do
+      xmatch_modal_close
       assert_viewpoint(:black)                         # alice, bob の順で alice は先手なので▲の向きになっている
       assert_member_status("alice", :is_turn_active)   # 1人目(alice)に丸がついている
       assert_member_status("bob", :is_turn_standby)    # 2人目(bob)は待機中
     end
     b_block do
+      xmatch_modal_close
       assert_viewpoint(:white)                         # alice, bob の順で bob は後手なので△の向きになっている
       assert_member_status("alice", :is_turn_active)   # 1人目(alice)に丸がついている
       assert_member_status("bob", :is_turn_standby)    # 2人目(bob)は待機中
@@ -44,6 +46,7 @@ RSpec.describe type: :system, share_board_spec: true do
       hamburger_click
       menu_item_click("自動マッチング")          # モーダルを開く
       find(".rule_self_05_00_00_5").click         # 自分vs自分
+      xmatch_modal_close
 
       assert_viewpoint(:black)                         # 平手の初手なので▲視点
       assert_member_status("alice", :is_turn_active) # 1人目(alice)に丸がついている
@@ -60,6 +63,8 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
 
       sleep(@xmatch_wait_max)
+      xmatch_modal_close
+
       assert_text("時間内に集まらなかった")
     end
   end
