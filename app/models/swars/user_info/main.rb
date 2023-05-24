@@ -19,10 +19,7 @@ module Swars
       def initialize(user, params = {})
         @user = user
         @params = default_params.merge(params)
-
-        if Rails.env.development?
-          AppLog.info(subject: "プレイヤー情報", body: "参照 #{user.key.inspect}")
-        end
+        AppLog.info(emoji: ":参照:", subject: "プレイヤー情報参照", body: [user.key, params[:query]])
       end
 
       # http://localhost:3000/w.json?query=kinakom0chi&format_type=user

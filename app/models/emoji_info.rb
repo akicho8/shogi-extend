@@ -40,6 +40,8 @@ class EmojiInfo
     { key: ":ChatGPT_IN:",   raw: "⬅", },
     { key: ":ChatGPT_OUT:",  raw: "🤖", },
     { key: ":ChatGPT_ERR:",  raw: "🤯", },
+    { key: ":絞込:",         raw: "🔍", },
+    { key: ":参照:",         raw: "🪪", },
   ]
 
   def to_s
