@@ -1,0 +1,7 @@
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:20 # {:type=>:system, :share_board_spec=>true} /medal-user
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:34 # {:type=>:system, :share_board_spec=>true} /medal-team
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:44 # {:type=>:system, :share_board_spec=>true} /medal-self
+rspec ./spec/system/share_board/チャット_内部コマンド_強制退室_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb:57 # {:type=>:system, :share_board_spec=>true} 他者側(予約待ち0なので他者側で即発動)
+rspec ./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb:15 # {:type=>:system, :share_board_spec=>true} works
+rspec ./spec/system/swars/index_spec.rb:301 # 将棋ウォーズ棋譜検索 一歩進んだ使い方 ウォーズIDを記憶する 検索初期値を解除したので引数なしで来たときは検索できない
