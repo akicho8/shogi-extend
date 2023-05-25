@@ -843,11 +843,11 @@ example_id                                                                      
 ./spec/system/share_board/チャット_内部コマンド_その他_spec.rb[1:8]                               | passed  | 4.62 seconds    |
 ./spec/system/share_board/チャット_内部コマンド_その他_spec.rb[1:9]                               | passed  | 5.16 seconds    |
 ./spec/system/share_board/チャット_内部コマンド_その他_spec.rb[1:10]                              | passed  | 5.25 seconds    |
-./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:1]                               | failed  | 21.94 seconds   |
-./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:2]                               | failed  | 25.36 seconds   |
-./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:3]                               | failed  | 21.89 seconds   |
-./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:4]                               | passed  | 10.92 seconds   |
-./spec/system/share_board/チャット_内部コマンド_強制退室_spec.rb[1:1]                              | failed  | 12.71 seconds   |
+./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:1]                               | passed  | 18.41 seconds   |
+./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:2]                               | passed  | 15.93 seconds   |
+./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:3]                               | passed  | 15.57 seconds   |
+./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb[1:4]                               | passed  | 15 seconds      |
+./spec/system/share_board/チャット_内部コマンド_強制退室_spec.rb[1:1]                              | passed  | 16.98 seconds   |
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:1]                        | passed  | 20.46 seconds   |
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:2]                        | passed  | 24.94 seconds   |
 ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb[1:3]                        | passed  | 1.69 seconds    |
@@ -898,9 +898,9 @@ example_id                                                                      
 ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:1]                                | passed  | 22.67 seconds   |
 ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:2]                                | passed  | 23.95 seconds   |
 ./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:3]                                | passed  | 26.57 seconds   |
-./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:1]                                 | passed  | 19.98 seconds   |
-./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:2]                                 | passed  | 24.15 seconds   |
-./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:3]                                 | failed  | 29.42 seconds   |
+./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:1]                                 | passed  | 27.12 seconds   |
+./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:2]                                 | passed  | 30.59 seconds   |
+./spec/system/share_board/同期_シングルトン時間切れ_spec.rb[1:3]                                 | passed  | 31.45 seconds   |
 ./spec/system/share_board/同期_タイトルを編集して共有する_spec.rb[1:1]                              | passed  | 16.69 seconds   |
 ./spec/system/share_board/同期_メンバーの並び_先輩であっても入り直すと後輩になる_spec.rb[1:1]               | passed  | 27.06 seconds   |
 ./spec/system/share_board/同期_メンバーの並び_先輩であっても入り直すと後輩になる_spec.rb[1:1]                  | passed  | 24.07 seconds   |
@@ -942,7 +942,7 @@ example_id                                                                      
 ./spec/system/share_board/局面編集_部屋を立てている場合は警告が出る_spec.rb[1:2]                         | passed  | 15.61 seconds   |
 ./spec/system/share_board/局面転送時に時計の手番調整_spec.rb[1:1]                                 | passed  | 29.02 seconds   |
 ./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb[1:1]                  | passed  | 16.39 seconds   |
-./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb[1:1]                   | failed  | 13.21 seconds   |
+./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb[1:1]                   | passed  | 19.34 seconds   |
 ./spec/system/share_board/投了_ボタンは順番設定していれば表示する_spec.rb[1:1]                        | passed  | 1.75 seconds    |
 ./spec/system/share_board/投了_ボタンは順番設定していれば表示する_spec.rb[1:1]                          | passed  | 4.67 seconds    |
 ./spec/system/share_board/投了_ランキングに反映する_spec.rb[1:1]                                | passed  | 17.15 seconds   |
@@ -1056,7 +1056,7 @@ example_id                                                                      
 ./spec/system/swars/index_spec.rb[1:7:2:1]                                           | passed  | 2.45 seconds    |
 ./spec/system/swars/index_spec.rb[1:7:2:2]                                           | passed  | 5.24 seconds    |
 ./spec/system/swars/index_spec.rb[1:8:1:1]                                           | passed  | 6.06 seconds    |
-./spec/system/swars/index_spec.rb[1:8:1:2]                                           | failed  | 6.19 seconds    |
+./spec/system/swars/index_spec.rb[1:8:1:2]                                           | passed  | 12.77 seconds   |
 ./spec/system/swars/index_spec.rb[1:8:2:1]                                           | passed  | 2.86 seconds    |
 ./spec/system/swars/index_spec.rb[1:8:3:1]                                           | passed  | 2.91 seconds    |
 ./spec/system/swars/index_spec.rb[1:8:3:2]                                           | passed  | 2.89 seconds    |

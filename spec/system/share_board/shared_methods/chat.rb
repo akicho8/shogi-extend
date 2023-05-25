@@ -15,6 +15,13 @@ module SharedMethods
     end
   end
 
+  # 開いて送信して閉じる
+  def chat_message_send2(message)
+    chat_modal_open
+    chat_message_send(message)
+    chat_modal_close
+  end
+
   # 最後に送信した人の名前
   def assert_message_latest_from(name, options = {})
     assert_selector(".MessageSendModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))

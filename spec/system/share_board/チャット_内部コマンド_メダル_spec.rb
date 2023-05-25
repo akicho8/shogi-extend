@@ -4,12 +4,11 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(user_name)
     visit_app({
         :room_code            => :test_room,
-        :user_name      => user_name,
+        :user_name            => user_name,
         :fixed_member_names   => "a,b",
         :fixed_order_names    => "a,b",
         :handle_name_validate => "false",
       })
-    find(".message_modal_handle").click
   end
 
   before do
@@ -19,10 +18,10 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/medal-user" do
     a_block do
-      chat_message_send("/medal-user b +2")
+      chat_message_send2("/medal-user b +2")
       assert_member_has_text("b", "⭐⭐")
 
-      chat_message_send("/medal-user b -1")
+      chat_message_send2("/medal-user b -1")
       assert_member_has_text("b", "⭐")
     end
 
@@ -33,7 +32,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/medal-team" do
     a_block do
-      chat_message_send("/medal-team white +1")
+      chat_message_send2("/medal-team white +1")
       assert_member_has_text("b", "⭐")
     end
     b_block do
@@ -43,7 +42,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/medal-self" do
     a_block do
-      chat_message_send("/medal-self 1")
+      chat_message_send2("/medal-self 1")
       assert_member_has_text("a", "⭐")
     end
     b_block do
@@ -53,6 +52,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "/medal" do
     a_block do
+      chat_modal_open
       chat_message_send("/medal")
       assert_message_received_o('{"a":0,"b":0}') # a は b の個数を受信しているの重要
     end

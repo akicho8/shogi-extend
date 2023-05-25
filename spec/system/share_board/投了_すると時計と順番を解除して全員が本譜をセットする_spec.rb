@@ -8,7 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_member_names          => "alice,bob",
         :fixed_order_names           => "alice,bob",
         "clock_box.initial_main_min" => 60,
-        :clock_auto_start       => true,
       })
   end
 
@@ -16,13 +15,14 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block { case1("alice") }
     b_block { case1("bob")   }
     a_block do
+      clock_start
       give_up_run
-      assert_order_off_and_clock_stop                 # 順番がOFFになり、時計はSTOPになる
-      assert_honpu_link_exist                         # 本譜のリンクがある
+      assert_order_off_and_clock_stop # 順番がOFFになり、時計はSTOPになる
+      assert_honpu_link_exist         # 本譜のリンクがある
     end
     b_block do
-      assert_order_off_and_clock_stop                 # bob 側も同様の状態になっている
-      assert_honpu_link_exist                         # 本譜のリンクがある
+      assert_order_off_and_clock_stop # bob 側も同様の状態になっている
+      assert_honpu_link_exist         # 本譜のリンクがある
     end
   end
 end
