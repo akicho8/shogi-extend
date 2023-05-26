@@ -67,4 +67,22 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_no_selector(".IllegalModal")
     end
   end
+
+  it "千日手は判定が特殊だけど最後は二歩と同じ扱いになるので千日手のときも自動投了になる" do
+    visit_app({
+        :room_code            => :test_room,
+        :user_name            => "a",
+        :fixed_member_names   => "a",
+        :fixed_order_names    => "a",
+        :handle_name_validate => "false",
+        :fixed_order_state    => "to_o1_state",
+        :clock_auto_start     => "true",
+        :auto_resign_key      => "is_auto_resign_on",
+        :RETRY_FUNCTION       => "false",
+      })
+    perpetual_trigger
+    assert_selector(".IllegalModal", text: "千日手で☖の勝ち！")
+    illegal_modal_close
+    assert_order_off  # 自動投了が有効だったため順番設定がOFFになっている
+  end
 end
