@@ -1,2 +1,5 @@
+rspec ./spec/models/share_board/responder2_spec.rb:17 # ShareBoard::Responder2 一人称を把握している
 rspec ./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb:38 # {:type=>:system, :share_board_spec=>true} 操作履歴モーダル内の補助機能
+rspec ./spec/system/share_board/チャット_ChatGPTが常駐している_spec.rb:15 # {:type=>:system, :share_board_spec=>true} @gpt
 rspec ./spec/system/swars/index_spec.rb:301 # 将棋ウォーズ棋譜検索 一歩進んだ使い方 ウォーズIDを記憶する 検索初期値を解除したので引数なしで来たときは検索できない
+rspec ./spec/system/swars/show_spec.rb:17 # 詳細 HTML works
