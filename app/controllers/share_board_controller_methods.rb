@@ -18,7 +18,7 @@
 #
 
 module ShareBoardControllerMethods
-  API_VERSION = 49
+  API_VERSION = 50
 
   extend ActiveSupport::Concern
 
