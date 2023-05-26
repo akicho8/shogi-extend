@@ -17,8 +17,9 @@
           template(v-if="e.lmi")
             .flex_item {{e.lmi.next_turn_offset}}
             .flex_item {{e.lmi.kif_without_from}}
-            template(v-for="e in e.lmi.illegal_names")
-              b-tag.flex_item(type="is-danger" size="is-small") {{e}}
+
+          template(v-for="e in e.illegal_names")
+            b-tag.flex_item(type="is-danger" size="is-small") {{e}}
 
           .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
           .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{e.dispay_time}}

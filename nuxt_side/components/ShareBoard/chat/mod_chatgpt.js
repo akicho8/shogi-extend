@@ -52,7 +52,7 @@ export const mod_chatgpt = {
 
     gpt_case_illegal(params) {
       if (this.received_from_self(params)) {
-        if (this.$gs.present_p(params.lmi.illegal_names)) {
+        if (this.$gs.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
             // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
             if (this.auto_resign_info.key === "is_auto_resign_off") {

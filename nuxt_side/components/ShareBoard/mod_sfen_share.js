@@ -23,7 +23,7 @@ export const mod_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      const illegal_names =  lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
+      const illegal_names = lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
 
       if (this.illegal_behavior_info.perpetual_check_p) {
         this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
@@ -44,8 +44,8 @@ export const mod_sfen_share = {
           player_location_key: lmi.player_location.key,                   // "black"
           yomiage:             lmi.to_yomiage,                            // "ななろくふ"
           effect_key:          lmi.effect_key,                            // 効果音キー
-          illegal_names:       illegal_names,             // ["駒ワープ", "王手放置", "千日手"]
         },
+        illegal_names: illegal_names, // ["駒ワープ", "王手放置", "千日手"]
         clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }
 
@@ -82,7 +82,7 @@ export const mod_sfen_share = {
           ...this.ac_room_perform_default_params(), // これがなくても動くがアバターが守護獣になってしまう。from_avatar_path 等を埋め込むことでプロフィール画像が出る
           ...this.sfen_share_params,
         }
-        this.illegal_modal_handle(params.lmi.illegal_names)
+        this.illegal_modal_handle(params.illegal_names)
         this.al_add(params)
       }
     },
@@ -125,7 +125,7 @@ export const mod_sfen_share = {
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
 
         this.illegal_then_give_up(params)             // 自分が反則した場合は投了する
-        this.illegal_modal_handle(params.lmi.illegal_names) // 反則があれば表示する
+        this.illegal_modal_handle(params.illegal_names) // 反則があれば表示する
         this.illegal_logging(params)                  // 反則の状態を記録する
         this.gpt_case_illegal(params)                 // 反則した人を励ます
 
@@ -161,7 +161,7 @@ export const mod_sfen_share = {
     },
     next_turn_call(params) {
       this.next_turn_message = null
-      if (this.$gs.blank_p(params.lmi.illegal_names)) {            // 反則がなかった場合
+      if (this.$gs.blank_p(params.illegal_names)) {            // 反則がなかった場合
         if (this.yomiagable_p) {
           this.talk2(this.user_call_name(params.from_user_name), { // 「aliceさん」
             onend: () => this.talk2(params.lmi.yomiage, {          // 「7 6 ふー！」
@@ -222,7 +222,7 @@ export const mod_sfen_share = {
     // 自分が反則した場合に自動投了が有効なら投了する
     illegal_then_give_up(params) {
       if (this.received_from_self(params)) {
-        if (this.$gs.present_p(params.lmi.illegal_names)) {
+        if (this.$gs.present_p(params.illegal_names)) {
           this.auto_resign_then_give_up()
         }
       }
@@ -231,11 +231,11 @@ export const mod_sfen_share = {
     // 反則の状態を記録する
     illegal_logging(params) {
       if (this.received_from_self(params)) {
-        if (this.$gs.present_p(params.lmi.illegal_names)) {
+        if (this.$gs.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
             const body = [
               params.from_user_name,
-              params.lmi.illegal_names,
+              params.illegal_names,
               this.current_url,
             ]
             this.ac_log({subject: "反則発動", body: this.$gs.short_inspect(body)})

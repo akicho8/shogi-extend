@@ -60,7 +60,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
       {
         key: "反則した人を励ます",
         command_fn: (context, params) => {
-          const illegal_names = params.lmi.illegal_names.join("と")
+          const illegal_names = params.illegal_names.join("と")
           const name = context.user_call_name(params.from_user_name)
           return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を50文字以内で励ましてください`
         },

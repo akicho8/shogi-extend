@@ -255,7 +255,7 @@ module ShareBoard
       if v = data["elapsed_sec"]
         s << "#{-v}秒"
       end
-      if v = lmi["illegal_names"].presence
+      if v = data["illegal_names"].presence
         s << "反則:#{v}"
       end
       s.join(" ")

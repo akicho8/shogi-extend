@@ -26,7 +26,7 @@ export const mod_illegal = {
     illegal_modal_handle(illegal_names) {
       if (this.$gs.present_p(illegal_names)) {
         this.$sound.play("lose") // おおげさに「ちーん」にしておく
-        // const str = params.lmi.illegal_names.join("と")
+        // const str = params.illegal_names.join("と")
         // this.toast_ng(`${str}の反則です`)
         // this.tl_alert("反則モーダル起動完了")
         // this.$sound.play("lose")         // ちーん

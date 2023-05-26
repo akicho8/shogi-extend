@@ -84,12 +84,12 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
           "sequence_code"     => 1,
           "next_user_name"    => "bob",
           "elapsed_sec"       => 1,
+          "illegal_names"     => ["二歩", "千日手"],
           "lmi" => {
             "kif_without_from"    => "☗7六歩",
             "next_turn_offset"    => 1,
             "player_location_key" => "black",
             "yomiage"             => "ななろくふ",
-            "illegal_names"       => "二歩",
           },
         })
       expect {
