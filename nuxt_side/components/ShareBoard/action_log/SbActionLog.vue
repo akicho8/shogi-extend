@@ -19,8 +19,6 @@
             .flex_item {{e.lmi.kif_without_from}}
             template(v-for="e in e.lmi.illegal_names")
               b-tag.flex_item(type="is-danger" size="is-small") {{e}}
-            template(v-if="e.lmi.perpetual_p")
-              b-tag.flex_item(type="is-danger" size="is-small") 千日手
 
           .flex_item.is-size-7(v-if="'elapsed_sec' in e") {{-e.elapsed_sec}}秒
           .flex_item.is-size-7.time_format(v-if="e.performed_at && development_p") {{e.dispay_time}}
