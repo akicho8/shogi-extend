@@ -69,11 +69,10 @@ module Api
       if true
         subject = []
         if current_user
-          subject << "#{current_user.id} #{current_user.name}"
+          subject << "[#{current_user.id}][#{current_user.name}]"
         end
         subject << hv[:subject]
-        subject = subject.compact.join(" | ")
-        hv[:subject] = subject
+        hv[:subject] = subject.compact.join(" ")
       end
       AppLog.call(**hv)
       render json: { :message => "OK" }

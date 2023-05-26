@@ -68,7 +68,7 @@ export const mod_tiresome = {
         this.talk("ところでウォーズID毎回入力するの不便じゃない？")
       })
 
-      const subject = `ウォーズID記憶案内 [${this.xi.current_swars_user_key}]`
+      const subject = "ウォーズID記憶案内"
       this.dialog_confirm({
         canCancel: ["button"],
         // hasIcon: true,
@@ -88,12 +88,12 @@ export const mod_tiresome = {
         onConfirm: () => {
           this.$sound.play("o")
           this.tiresome_modal_selected = "yes"
-          this.app_log({emoji: ":CHECK:", subject: subject, body: `やってみる`})
+          this.app_log({emoji: ":CHECK:", subject: subject, body: `[${this.xi.current_swars_user_key}] やってみる`})
         },
         onCancel: () => {
           this.$sound.play("x")
           this.tiresome_modal_selected = "no"
-          this.app_log({emoji: ":X:", subject: subject, body: `不便なまま生きる`})
+          this.app_log({emoji: ":X:", subject: subject, body: `[${this.xi.current_swars_user_key}] 不便なまま生きる`})
         },
       })
     },

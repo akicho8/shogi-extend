@@ -54,7 +54,7 @@ export default {
       this.$sound.play_click()
       MyLocalStorage.set("swars_search_default_key", this.new_key)
       this.old_key = MyLocalStorage.get("swars_search_default_key")
-      this.app_log({emoji: ":得:", subject: `ウォーズID記憶設定 ${this.new_key}`, body: "覚えました"})
+      this.app_log({emoji: ":得:", subject: "ウォーズID記憶設定", body: `[${this.new_key}] 覚えました`})
       this.toast_ok("覚えました")
       if (AFTER_REDIRECT) {
         this.$router.push({name: "swars-search"})
@@ -64,7 +64,7 @@ export default {
       this.$sound.play_click()
       MyLocalStorage.remove("swars_search_default_key")
       this.old_key = MyLocalStorage.get("swars_search_default_key")
-      this.app_log({subject: `ウォーズID記憶消去 ${this.new_key}`, body: "忘れました"})
+      this.app_log({emoji: ":損:", subject: "ウォーズID記憶消去", body: `${this.new_key}忘れました`})
       this.toast_ng("忘れました")
       if (AFTER_REDIRECT) {
         this.$router.push({name: "swars-search"})

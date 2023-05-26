@@ -42,7 +42,7 @@ module BackendScript
 
     def row_build(app_log)
       {
-        "ID"       => script_link_to(app_log.id, :app_log_id => app_log.id),
+        "ID"       => script_link_to(app_log.id, :app_log_id => app_log.id, :target => "_blank"),
         "作成日時" => app_log.created_at.to_fs(:ymdhms),
         "Level"    => app_log.level,
         "絵"       => app_log.emoji,
