@@ -4,10 +4,10 @@ RSpec.describe type: :system, share_board_spec: true do
   it "4回目の同一局面で指し手に千日手のラベルついてモーダルが発動して閉じれる" do
     visit_app
     perpetual_trigger
-    assert_action_text("千日手")                 # 履歴に「千日手」のテキストが出ている
-    assert_selector(".PerpetualModal")          # モーダルが存在する
-    find(".PerpetualModal .close_handle").click # 「閉じる」
-    assert_no_selector(".PerpetualModal")       # モーダルが閉じた
+    assert_action_text("千日手")              # 履歴に「千日手」のテキストが出ている
+    assert_selector(".IllegalModal")          # モーダルが存在する
+    illegal_modal_close
+    assert_no_selector(".IllegalModal")       # モーダルが閉じた
   end
 
   it "スライダーで2手目から1手目に戻しただけで千日手情報をリセットする" do
@@ -54,17 +54,17 @@ RSpec.describe type: :system, share_board_spec: true do
     it "「したら負け」なので発動する" do
       visit_app(illegal_behavior_key: "is_illegal_behavior_auto")
       perpetual_trigger
-      assert_selector(".PerpetualModal")
+      assert_selector(".IllegalModal")
     end
     it "発動しない" do
       visit_app(illegal_behavior_key: "is_illegal_behavior_newbie")
       perpetual_trigger
-      assert_no_selector(".PerpetualModal")
+      assert_no_selector(".IllegalModal")
     end
     it "発動しない" do
       visit_app(illegal_behavior_key: "is_illegal_behavior_throw")
       perpetual_trigger
-      assert_no_selector(".PerpetualModal")
+      assert_no_selector(".IllegalModal")
     end
   end
 end

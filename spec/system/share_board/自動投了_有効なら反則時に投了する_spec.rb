@@ -15,7 +15,7 @@ RSpec.describe type: :system, share_board_spec: true do
       })
     piece_move_o("88", "55", "☗5五角")
     assert_selector(".IllegalModal")
-    find(".IllegalModal button", text: "閉じる", exact_text: true).click
+    illegal_modal_close
   end
 
   it "無効だと順番設定は解除されていない" do

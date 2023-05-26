@@ -23,7 +23,16 @@ export const mod_sfen_share = {
 
       this.x_retry_count = 0    // 着手したので再送回数を0にしておく
 
-      this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
+      const illegal_names =  lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
+
+      if (this.illegal_behavior_info.perpetual_check_p) {
+        this.perpetual_cop.increment(e.snapshot_hash) // 同一局面になった回数をカウント
+        // 反則名を配列を作る
+        // sp から ["駒ワープ", "王手放置"] などがくるのでそれに「千日手」を追加する
+        if (this.perpetual_cop.available_p(e.snapshot_hash)) {    // 千日手か？
+          illegal_names.push("千日手")                            // ["駒ワープ", "王手放置", "千日手"]
+        }
+      }
 
       // last_move_info の内容を簡潔したものを共有する (そのまま共有すればよくないか？)
       this.sfen_share_params = {
@@ -35,8 +44,7 @@ export const mod_sfen_share = {
           player_location_key: lmi.player_location.key,                   // "black"
           yomiage:             lmi.to_yomiage,                            // "ななろくふ"
           effect_key:          lmi.effect_key,                            // 効果音キー
-          illegal_names:          lmi.illegal_list.map(e => e.name),            // ["駒ワープ", "王手放置"]
-          perpetual_p:        this.perpetual_cop.available_p(e.snapshot_hash), // 千日手か？
+          illegal_names:       illegal_names,             // ["駒ワープ", "王手放置", "千日手"]
         },
         clock_box_params: this.clock_box_share_params_factory("ck_silent"), // 指し手と合わせて時計の情報も送る
       }
@@ -75,7 +83,6 @@ export const mod_sfen_share = {
           ...this.sfen_share_params,
         }
         this.illegal_modal_handle(params.lmi.illegal_names)
-        this.perpetual_modal_handle_if(params.lmi.perpetual_p)     // 千日手であれば表示する
         this.al_add(params)
       }
     },
@@ -116,11 +123,12 @@ export const mod_sfen_share = {
         }
 
         this.from_user_name_valid(params)             // 指し手制限をしていないとき別の人が指したかチェックする
+
         this.illegal_then_give_up(params)             // 自分が反則した場合は投了する
         this.illegal_modal_handle(params.lmi.illegal_names) // 反則があれば表示する
         this.illegal_logging(params)                  // 反則の状態を記録する
-        this.gpt_case_illegal(params)            // 反則した人を励ます
-        this.perpetual_modal_handle_if(params.lmi.perpetual_p)       // 千日手であれば表示する
+        this.gpt_case_illegal(params)                 // 反則した人を励ます
+
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.received_ok_send(params)                 // 受信OKを指し手に通知する

@@ -5,7 +5,6 @@
       | 千日手指摘
     a.panel-block(@click="TheSb.perpetual_cop.increment('x')") 同局面カウント +1
     a.panel-block(@click="TheSb.perpetual_cop.reset()") リセット
-    a.panel-block(@click="TheSb.perpetual_modal_handle()") 千日手指摘
   .panel.assert_system_variable
     .panel-heading
       | [assert_system_variable]
