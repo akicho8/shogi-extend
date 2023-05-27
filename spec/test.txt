@@ -921,10 +921,10 @@ example_id                                                                      
 ./spec/system/share_board/同期_順番設定OFF状態で共有した場合_spec.rb[1:1]                          | passed  | 21.28 seconds   |
 ./spec/system/share_board/同期_順番設定OFF状態で共有した場合_spec.rb[1:1]                           | passed  | 18.43 seconds   |
 ./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                 | passed  | 2.22 seconds    |
-./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                  | passed  | 5.84 seconds    |
+./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                  | passed  | 19.26 seconds   |
 ./spec/system/share_board/対局時計_個別設定_片方を変更したとき片方は連動しない_spec.rb[1:1]                   | passed  | 38.36 seconds   |
-./spec/system/share_board/対局時計_初期値永続化_spec.rb[1:1]                                   | passed  | 10.13 seconds   |
-./spec/system/share_board/対局時計_基本_spec.rb[1:1]                                       | passed  | 39.11 seconds   |
+./spec/system/share_board/対局時計_初期値永続化_spec.rb[1:1]                                   | passed  | 6.17 seconds    |
+./spec/system/share_board/対局時計_基本_spec.rb[1:1]                                       | passed  | 38.36 seconds   |
 ./spec/system/share_board/対局時計_指し手の消費秒数を表示_spec.rb[1:1]                              | passed  | 11.66 seconds   |
 ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb[1:1]                     | passed  | 23.59 seconds   |
 ./spec/system/share_board/対局時計_時計の初回PLAYで手番の人に通知する_spec.rb[1:1]                      | passed  | 21.19 seconds   |
@@ -941,7 +941,7 @@ example_id                                                                      
 ./spec/system/share_board/局面編集_部屋を立てている場合は警告が出る_spec.rb[1:2]                        | passed  | 15.78 seconds   |
 ./spec/system/share_board/局面編集_部屋を立てている場合は警告が出る_spec.rb[1:1]                         | passed  | 7.28 seconds    |
 ./spec/system/share_board/局面編集_部屋を立てている場合は警告が出る_spec.rb[1:2]                         | passed  | 14.09 seconds   |
-./spec/system/share_board/局面転送時に時計の手番調整_spec.rb[1:1]                                 | passed  | 23.31 seconds   |
+./spec/system/share_board/局面転送時に時計の手番調整_spec.rb[1:1]                                 | passed  | 26.18 seconds   |
 ./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb[1:1]                  | passed  | 16.39 seconds   |
 ./spec/system/share_board/投了_すると時計と順番を解除して全員が本譜をセットする_spec.rb[1:1]                   | passed  | 15.95 seconds   |
 ./spec/system/share_board/投了_ボタンは順番設定していれば表示する_spec.rb[1:1]                        | passed  | 1.75 seconds    |
