@@ -922,7 +922,7 @@ example_id                                                                      
 ./spec/system/share_board/同期_順番設定OFF状態で共有した場合_spec.rb[1:1]                           | passed  | 18.43 seconds         |
 ./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                 | passed  | 2.22 seconds          |
 ./spec/system/share_board/対局時計_プリセット適用_spec.rb[1:1]                                  | passed  | 5.84 seconds          |
-./spec/system/share_board/対局時計_個別設定_片方を変更したとき片方は連動しない_spec.rb[1:1]                   | passed  | 19.95 seconds         |
+./spec/system/share_board/対局時計_個別設定_片方を変更したとき片方は連動しない_spec.rb[1:1]                   | passed  | 38.36 seconds         |
 ./spec/system/share_board/対局時計_初期値永続化_spec.rb[1:1]                                   | passed  | 10.13 seconds         |
 ./spec/system/share_board/対局時計_基本_spec.rb[1:1]                                       | passed  | 39.11 seconds         |
 ./spec/system/share_board/対局時計_指し手の消費秒数を表示_spec.rb[1:1]                              | passed  | 11.66 seconds         |

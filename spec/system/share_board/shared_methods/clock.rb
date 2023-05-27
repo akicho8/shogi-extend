@@ -1,22 +1,33 @@
 module SharedMethods
-  def clock_box_set(initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
-    find(".initial_main_min input").set(initial_main_min)   # 持ち時間(分)
-    find(".initial_read_sec input").set(initial_read_sec)   # 秒読み
-    find(".initial_extra_sec input").set(initial_extra_sec) # 猶予(秒)
-    find(".every_plus input").set(every_plus)               # 1手毎加算(秒)
+  # ".ClockBoxInputTable td:nth-child(2) .initial_main_min input" → ☗ 持ち時間(分)
+  # ".ClockBoxInputTable td:nth-child(3) .initial_main_min input" → ☖ 持ち時間(分)
+  def cc_white_black_to_nth_child(location_key)
+    { black: 2, white: 3 }.fetch(location_key)
   end
 
-  def clock_box_values
+  def cc_selector(location_key, input_class)
+    index = cc_white_black_to_nth_child(location_key)
+    ".ClockBoxInputTable td:nth-child(#{index}) .#{input_class} input"
+  end
+
+  def clock_box_set(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
+    find(cc_selector(location_key, :initial_main_min)).set(initial_main_min)      # 持ち時間(分)
+    find(cc_selector(location_key, :initial_read_sec)).set(initial_read_sec)      # 秒読み
+    find(cc_selector(location_key, :initial_extra_sec)).set(initial_extra_sec)    # 猶予(秒)
+    find(cc_selector(location_key, :every_plus)).set(every_plus)                  # 1手毎加算(秒)
+  end
+
+  def clock_box_values(location_key)
     [
-      find(".initial_main_min input").value,
-      find(".initial_read_sec input").value,
-      find(".initial_extra_sec input").value,
-      find(".every_plus input").value,
+      find(cc_selector(location_key, :initial_main_min)).value,
+      find(cc_selector(location_key, :initial_read_sec)).value,
+      find(cc_selector(location_key, :initial_extra_sec)).value,
+      find(cc_selector(location_key, :every_plus)).value,
     ].collect(&:to_i)
   end
 
-  def clock_box_values_eq(expected)
-    result = clock_box_values   # 必ず変数に入れないと power_assert が死ぬ
+  def clock_box_values_eq(location_key, expected)
+    result = clock_box_values(location_key)   # 必ず変数に入れないと power_assert が死ぬ
     assert2 { result == expected }
   end
 
@@ -76,25 +87,12 @@ module SharedMethods
     ].zip(values).to_h
   end
 
-  def cc_at(n)
-    ".cc_form_block:nth-child(#{n})"
-  end
-
-  def cc_form_block_eq(n, values)
-    result = Capybara.within(cc_at(n)) { clock_box_values }
-    assert2 { result == values }
-  end
-
-  def cc_in(n, &block)
-    Capybara.within(cc_at(n), &block)
-  end
-
   def cc_modal_handle
     find(".cc_modal_handle").click
   end
 
   def clock_switch_toggle
-    find("label", class: "main_switch", text: "設置", exact_text: true).click
+    find("label", :class => "main_switch", text: "設置", exact_text: true).click
   end
 
   def assert_white_read_sec(second)
@@ -102,3 +100,4 @@ module SharedMethods
     assert2 { v == second || v == second.pred }
   end
 end
+

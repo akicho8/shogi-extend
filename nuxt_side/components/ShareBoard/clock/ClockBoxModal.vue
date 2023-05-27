@@ -38,19 +38,7 @@
               .active_bar(:class="[instance.timer_to_css_class, {is_active: e.active_p}]")
 
       .forms_block(v-if="!instance.pause_or_play_p")
-        template(v-for="(e, i) in TheSb.cc_params")
-          .cc_form_block
-            .location_mark(v-if="TheSb.cc_unique_p")
-              | {{Location.fetch(i).name}}
-            b-field(horizontal label="持ち時間(分)" custom-class="is-small")
-              b-numberinput.initial_main_min(expanded controls-position="compact"  v-model="e.initial_main_min"  :min="0" :max="60*6"  :exponential="true")
-            b-field(horizontal label="秒読み" custom-class="is-small")
-              b-numberinput.initial_read_sec(expanded controls-position="compact"  v-model="e.initial_read_sec"  :min="0" :max="60*60" :exponential="true")
-            b-field(horizontal label="猶予(秒)" custom-class="is-small")
-              b-numberinput.initial_extra_sec(expanded controls-position="compact" v-model="e.initial_extra_sec" :min="0" :max="60*60" :exponential="true")
-            b-field(horizontal label="1手毎加算(秒)" custom-class="is-small")
-              b-numberinput.every_plus(expanded controls-position="compact"        v-model="e.every_plus"        :min="0" :max="60*60" :exponential="true")
-
+        ClockBoxInputTable
         b-switch.cc_unique_mode_set_handle.mt-5(:value="TheSb.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
 
   .modal-card-foot
@@ -73,7 +61,6 @@
 
 <script>
 import { support_child } from "../support_child.js"
-import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 export default {
@@ -154,7 +141,6 @@ export default {
     },
   },
   computed: {
-    Location() { return Location },
     instance() { return this.TheSb.clock_box },
     clock_box_p: {
       get()  { return !!this.instance },
@@ -169,7 +155,7 @@ export default {
 
 .STAGE-development
   .ClockBoxModal
-    .modal-card-body, .field, .location_mark
+    .modal-card-body, .field
       border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .ClockBoxModal
@@ -202,20 +188,4 @@ export default {
             opacity: 1.0
           100%
             opacity: 0.0
-
-  .forms_block
-    .cc_form_block:not(:first-child)
-      .location_mark
-        margin-top: 1.5rem
-
-    +tablet
-      .cc_form_block
-        .field
-          align-items: center
-          .field-label.is-small
-            padding-top: 0
-            margin-right: 1rem
-            .label
-              white-space: nowrap
-              width: 6rem
 </style>
