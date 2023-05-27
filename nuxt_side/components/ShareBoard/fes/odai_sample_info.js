@@ -60,7 +60,7 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "どっちを読みたい？",             left_value: "東野圭吾",                 right_value: "伊坂幸太郎",               },
       { subject: "どっちを読みたい？",             left_value: "歌野晶午",                 right_value: "東野圭吾",                 },
       { subject: "どっちを読みたい？",             left_value: "松本清張",                 right_value: "横山秀夫",                 },
-      { subject: "自転車は？",                     left_value: "ロードバイク派",           right_value: "クロスバイク派",           },
+      { subject: "自転車乗るなら？",               left_value: "ロードバイク",             right_value: "クロスバイク",             },
 
       { subject: "読書するなら？",                 left_value: "ミステリー小説",           right_value: "ノンフィクション小説",     },
       { subject: "AIがこれ以上進化すると？",       left_value: "心配",                     right_value: "平気",                     },
@@ -68,15 +68,15 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
 
       // 将棋編
       { subject: "三間飛車のイメージは？",         left_value: "職人",                     right_value: "陰湿",                     },
-      { subject: "アヒル戦法に対して一言",         left_value: "好き",                     right_value: "まじめにやれ",             },
+      // { subject: "アヒル戦法に対して一言",         left_value: "好き",                     right_value: "まじめにやれ",             },
       { subject: "将棋漫画といえば？",             left_value: "月下の棋士",               right_value: "ハチワンダイバー",         },
       { subject: "将棋の勉強をするなら？",         left_value: "詰将棋",                   right_value: "次の一手",                 },
-      { subject: "玉の早逃げ八手の得は？",         left_value: "本当",                     right_value: "ウソ",                     },
-      { subject: "将棋道場で待ったされたとき",     left_value: "許す",                     right_value: "許さない",                 },
-      { subject: "将棋ウォーズの棋神はぶっちゃけ", left_value: "アリ",                     right_value: "ナシ",                     },
+      // { subject: "玉の早逃げ八手の得は？",         left_value: "本当",                     right_value: "ウソ",                     },
+      // { subject: "将棋道場で待ったされたとき",     left_value: "許す",                     right_value: "許さない",                 },
+      // { subject: "将棋ウォーズの棋神はぶっちゃけ", left_value: "アリ",                     right_value: "ナシ",                     },
 
       // ゲーム
-      { subject: "スト2といえば？",                left_value: "リュウ",                   right_value: "ザンギエフ",               },
+      { subject: "スト2といえば？",                left_value: "リュウ",                   right_value: "春麗",                     },
       { subject: "スト2どっちが強い？",            left_value: "ガイル",                   right_value: "ダルシム",                 },
       { subject: "テトリスはどっちを開ける？",     left_value: "右",                       right_value: "左",                       },
 
@@ -88,9 +88,9 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "アニメどっちが好き？",           left_value: "僕は友達が少ない",         right_value: "とらドラ",                 },
 
       // 映画
-      { subject: "どっちがお好み？",               left_value: "天空の城ラピュタ",         right_value: "風の谷のナウシカ",         },
-      { subject: "どっちがお好み？",               left_value: "コクリコ坂から",           right_value: "耳をすませば",             },
-      { subject: "どっちがお好み？",               left_value: "紅の豚",                   right_value: "風立ちぬ",                 },
+      { subject: "ジブリ作品どっちがお好み？",     left_value: "天空の城ラピュタ",         right_value: "風の谷のナウシカ",         },
+      { subject: "ジブリ作品どっちがお好み？",     left_value: "コクリコ坂から",           right_value: "耳をすませば",             },
+      { subject: "ジブリ作品どっちがお好み？",     left_value: "紅の豚",                   right_value: "風立ちぬ",                 },
       { subject: "どっちがお好み？",               left_value: "君の名は",                 right_value: "天気の子",                 },
       { subject: "どっちがお好み？",               left_value: "シックスセンス",           right_value: "トップガン",               },
       { subject: "どっちがお好み？",               left_value: "ロードオブザリング",       right_value: "タイタニック",             },
@@ -108,8 +108,8 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "どっちがお好み？",               left_value: "あんぱん",                 right_value: "クリームパン",             },
       { subject: "どっちがお好み？",               left_value: "グラタン",                 right_value: "シチュー",                 },
       { subject: "どっちがお好み？",               left_value: "オムレツ",                 right_value: "カレー",                   },
-      { subject: "どっちがお好み？",               left_value: "チーズバーガー",           right_value: "フィッシュバーガー",       },
       { subject: "どっちがお好み？",               left_value: "シュークリーム",           right_value: "エクレア",                 },
+      { subject: "どっちがお好み？",               left_value: "じゃがいも",               right_value: "さつまいも",               },
       { subject: "どっちがお好み？",               left_value: "麻婆豆腐",                 right_value: "回鍋肉",                   },
       { subject: "どっちがお好み？",               left_value: "キャロットケーキ",         right_value: "チーズケーキ",             },
       { subject: "どっちがお好み？",               left_value: "カリフラワー",             right_value: "ブロッコリー",             },
@@ -160,8 +160,6 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "左利きに？",                     left_value: "あこがれる",               right_value: "あこがれない",             },
       { subject: "早起きは？",                     left_value: "得",                       right_value: "損",                       },
       { subject: "飛行機に乗ったこと",             left_value: "ある",                     right_value: "ない",                     },
-      { subject: "普通二輪免許を",                 left_value: "持っている",               right_value: "持っていない",             },
-      { subject: "大型二輪免許を",                 left_value: "持っている",               right_value: "持っていない",             },
       { subject: "男がAT限定免許",                 left_value: "恥ずかしい",               right_value: "恥ずかしくない",           },
       { subject: "熱帯魚を飼うなら？",             left_value: "ネオンテトラ",             right_value: "グッピー",                 },
       { subject: "彼岸花のイメージは？",           left_value: "不吉",                     right_value: "情熱",                     },
@@ -169,7 +167,6 @@ export class OdaiSampleInfo extends ApplicationMemoryRecord {
       { subject: "アナタはどっち派？",             left_value: "断捨離",                   right_value: "コレクター",               },
       { subject: "認知症は？",                     left_value: "こわい",                   right_value: "気にしてない",             },
       { subject: "食品添加物は？",                 left_value: "なるべく避ける",           right_value: "気にしたことがない",       },
-      { subject: "蛍光灯買うなら？",               left_value: "昼光色",                   right_value: "昼白色",                   },
     ]
   }
 
