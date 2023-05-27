@@ -1,5 +1,5 @@
 <template lang="pug">
-table.ClockBoxInputTable
+table.ClockBoxInputTable(:class="{cc_unique_p: TheSb.cc_unique_p}")
   thead
     tr
       th
@@ -54,6 +54,11 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
+.STAGE-development
+  .ClockBoxInputTable
+    td, th
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+
 .ClockBoxInputTable
   width: 100%
   th
@@ -71,5 +76,11 @@ export default {
       text-align: right
       padding: 0 0.5rem
     td
+      width: 100%
       padding: 0.25rem
+
+  &.cc_unique_p
+    tbody
+      td
+        width: 50%
 </style>
