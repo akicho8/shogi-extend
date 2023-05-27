@@ -1,23 +1,24 @@
 <template lang="pug">
 MainNavbar.SbNavbar(v-bind="component_attrs")
   template(slot="brand")
-    b-navbar-item(@click.native="TheSb.exit_handle" v-if="TheSb.home_display_p")
-      b-icon(icon="home")
+    template(v-if="TheSb.home_display_p")
+      b-navbar-item(@click.native="TheSb.exit_handle" v-if="TheSb.home_display_p")
+        b-icon(icon="home")
 
-    b-navbar-item.has-text-weight-bold.title_navbar_item(@click="TheSb.title_edit_handle")
-      template(v-if="TheSb.edit_mode_p")
-        span.current_title.is_truncate.is-hidden-mobile
-          span 編集モード
-      template(v-if="TheSb.play_mode_p")
-        span.current_title.is_truncate.is-hidden-mobile
-          | {{TheSb.current_title}}
-        span.mx-1
-          | \#{{TheSb.current_turn}}
+      b-navbar-item.has-text-weight-bold.title_navbar_item(@click="TheSb.title_edit_handle")
+        template(v-if="TheSb.edit_mode_p")
+          span.current_title.is_truncate.is-hidden-mobile
+            span 編集モード
+        template(v-if="TheSb.play_mode_p")
+          span.current_title.is_truncate.is-hidden-mobile
+            | {{TheSb.current_title}}
+          span.mx-1
+            | \#{{TheSb.current_turn}}
 
-  template(slot="start")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.give_up_confirm_handle(@click="TheSb.give_up_confirm_handle" v-if="TheSb.give_up_button_show_p")
       | 投了
 
+  template(slot="start")
     template(v-if="TheSb.debug_mode_p")
       b-navbar-item.px_5_if_tablet.is-unselectable.has-text-weight-bold
         b-tag.has-text-weight-bold(rounded)
