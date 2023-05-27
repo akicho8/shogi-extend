@@ -10,6 +10,10 @@ module Swars
         render json: { message: exception.message }, status: 404
       end
 
+      rescue_from "ActiveRecord::RecordNotFound" do |error|
+        render json: { message: "対応するデータが見つかりません" }, status: 404
+      end
+
       rescue_from "Faraday::ConnectionFailed" do |exception|
         AppLog.critical(exception)
         render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
