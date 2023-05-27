@@ -102,7 +102,7 @@ module XyMaster
 
     def app_logging
       rank = rank(scope_key: :scope_all)
-      AppLog.info(subject: "符号", body: "[#{rank}位][#{entry_name}] #{summary}")
+      AppLog.info(subject: "符号の鬼", body: "[#{rank}位][#{entry_name}] #{summary}")
     end
 
     def rank_info

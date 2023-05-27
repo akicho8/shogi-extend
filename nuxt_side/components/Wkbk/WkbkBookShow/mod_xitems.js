@@ -14,6 +14,7 @@ export const mod_xitems = {
   methods: {
     play_start() {
       this.$sound.play("start")
+      this.app_log({emoji: ":問題集:", subject: "将棋ドリル問題集", body: `[START] ${this.book.title}`})
       this.mode_set("running")
 
       // 範囲外なら0に戻す

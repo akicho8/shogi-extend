@@ -315,7 +315,7 @@ class FreeBattle < ApplicationRecord
           subject << params[:current_user].name
         end
         if turn_max
-          subject << "手数#{turn_max}"
+          subject << "[手数:#{turn_max}]"
         end
         if error
           subject << error.class.name
