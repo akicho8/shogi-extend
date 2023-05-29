@@ -18,13 +18,15 @@ module Swars
     def initialize(key)
       BattleKeyValidator.new(key).validate!
       @key = key.dup.freeze
+      @cache = {}
+      freeze
     end
 
     def to_s
       key
     end
 
-    def originator_url
+    def to_battle_url
       q = { locale: "ja" }
       "https://shogiwars.heroz.jp/games/#{self}?#{q.to_query}"
     end
@@ -65,7 +67,7 @@ module Swars
     private
 
     def parts
-      @parts ||= key.split("-")
+      @cache[:parts] ||= key.split("-")
     end
   end
 end

@@ -6,6 +6,7 @@ module Swars
     def initialize(url)
       BattleUrlValidator.new(url).validate!
       @url = url
+      freeze
     end
 
     def battle_key

@@ -20,8 +20,8 @@ module Swars
         assert2 { object.to_s == key }
       end
 
-      it "originator_url" do
-        assert2 { object.originator_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024?locale=ja" }
+      it "to_battle_url" do
+        assert2 { object.to_battle_url == "https://shogiwars.heroz.jp/games/alice-bob-20130531_010024?locale=ja" }
       end
 
       it "to_time" do

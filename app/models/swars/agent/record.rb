@@ -3,9 +3,9 @@ module Swars
     class Record < Base
       def fetch
         if params[:verbose]
-          puts "[fetch][record] #{key.originator_url}"
+          puts "[fetch][record] #{key.to_battle_url}"
         end
-        html = fetcher.fetch(:record, key.originator_url)
+        html = fetcher.fetch(:record, key.to_battle_url)
         if !html || params[:SwarsBattleNotFound]
           raise SwarsBattleNotFound
         end
