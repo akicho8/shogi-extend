@@ -24,6 +24,7 @@ module KifuExtractor
       CaseUrlShogidb2Board,
       CaseUrlHerozSwarsGames,
       CaseUrlShogiQuestUrl,
+      CaseUrlKishinAnalytics,
       CaseUrlShogiExtendSwarsBattle,
       CaseUrlLiveShogiOrJp,
       CaseUrlOushosen,

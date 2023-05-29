@@ -108,7 +108,7 @@ export default {
       if (s) {
         const count = (s.match(/\r/g) || 0) + 1
         if (count <= 2) {
-          if (s.match(/https.*heroz.jp.*/)) {
+          if (s.includes("shogiwars.heroz.jp/games/")) {
             this.toast_ok("将棋ウォーズのURLは将棋ウォーズ棋譜検索の検索欄に入力しても読み込めます")
           }
           if (s.includes("/kifu.questgames.net/shogi/games/")) {
