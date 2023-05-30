@@ -9,7 +9,7 @@ class AppEntryInfo
       og_image_key: "swars-search",
       description: "他のアプリで検討したいときにどうぞ",
       features: [
-        "ぴよ将棋や KENTO にすぐ開ける",
+        "ぴよ将棋や KENTO ですぐ開ける",
         "他のソフトにはコピーして張り付け (CTRL+V)",
         "プレイヤー戦力分析機能あり",
       ],
