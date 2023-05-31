@@ -46,7 +46,8 @@ RSpec.describe AppLog, type: :model do
     end
 
     it "記録できることを優先するので題名や本文が長すぎたらtruncateする" do
-      assert2 { AppLog.debug(subject: "x" * 256).subject.size == 255 }
+      assert2 { AppLog.debug(subject: "🍄" * 300).subject.size == 255 }
+      assert2 { AppLog.debug(body: "🍄" * 70000).body.size == 16383 }
     end
 
     it "本文は第一引数に書ける" do

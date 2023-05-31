@@ -128,12 +128,8 @@ class AppLog < ApplicationRecord
     self.level ||= LEVEL_DEFAULT
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
     self.process_id ||= Process.pid
-
-    [:subject, :body].each do |key|
-      str = public_send(key).to_s
-      max = self.class.columns_hash[key.to_s].limit
-      str = str.first(max)
-      public_send("#{key}=", str)
-    end
+    
+    normalize_blank_to_empty_string :subject, :body
+    # truncate :subject, :body
   end
 end

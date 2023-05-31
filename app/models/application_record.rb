@@ -105,6 +105,30 @@ class ApplicationRecord < ActiveRecord::Base
         end                                            #   end
       end                                              # end
     end
+
+    def truncate(*colum_names, **options)
+      before_validation(options) do
+        truncate(*colum_names)
+      end
+    end
+  end
+
+  def truncate(*colum_names)
+    colum_names.each do |colum_name|
+      column = self.class.columns_hash[colum_name.to_s]
+      if max = column.limit
+        if self.class.connection.adapter_name == "Mysql2"
+          if column.type == :text
+            max = max / "🍄".bytesize
+          end
+        end
+        str = public_send(colum_name)
+        if str.size > max
+          str = str.first(max)
+          public_send("#{colum_name}=", str)
+        end
+      end
+    end
   end
 
   # "" → nil
