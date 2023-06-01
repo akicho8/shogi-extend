@@ -128,8 +128,8 @@ class AppLog < ApplicationRecord
     self.level ||= LEVEL_DEFAULT
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
     self.process_id ||= Process.pid
-    
+
     normalize_blank_to_empty_string :subject, :body
-    # truncate :subject, :body
+    truncate :subject, :body
   end
 end

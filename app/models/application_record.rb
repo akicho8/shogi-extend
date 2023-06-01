@@ -122,10 +122,11 @@ class ApplicationRecord < ActiveRecord::Base
             max = max / "🍄".bytesize
           end
         end
-        str = public_send(colum_name)
-        if str.size > max
-          str = str.first(max)
-          public_send("#{colum_name}=", str)
+        if str = public_send(colum_name)
+          if str.size > max
+            str = str.first(max)
+            public_send("#{colum_name}=", str)
+          end
         end
       end
     end
