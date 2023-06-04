@@ -4,9 +4,17 @@
 #  FreeSpace.new.call    # => "80%"
 #
 class FreeSpace
+  cattr_accessor(:base_command) {
+    if RUBY_PLATFORM.include?("darwin")
+      "gdf"
+    else
+      "df"
+    end
+  }
+
   def initialize(options = {})
     @options = {
-      :command => "df --o=pcent / | tail -1",
+      :command => "#{base_command} --o=pcent / | tail -1",
     }.merge(options)
   end
 
