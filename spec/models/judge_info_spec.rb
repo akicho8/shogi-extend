@@ -10,6 +10,7 @@ RSpec.describe JudgeInfo do
     win = JudgeInfo.fetch(:win)
     assert2 { JudgeInfo["勝ち"] == win }
     assert2 { JudgeInfo["○"]   == win }
+    assert2 { JudgeInfo["勝"]   == win }
   end
 
   it "winをWinと入力する人がいる対策" do
