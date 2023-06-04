@@ -59,8 +59,11 @@ DROP TABLE IF EXISTS `app_logs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_logs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `level` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `emoji` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `subject` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `body` varchar(8192) COLLATE utf8mb4_bin NOT NULL,
+  `body` text COLLATE utf8mb4_bin NOT NULL,
+  `process_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -1050,7 +1053,6 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20211027075600'),
 ('20211107165600'),
 ('20211127151200'),
-('20211204153100'),
 ('20220416082500'),
 ('20220501110000'),
 ('20220501120000'),
@@ -1069,6 +1071,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20221211000002'),
 ('20230324123144'),
 ('20230326000000'),
-('20230326000001');
+('20230326000001'),
+('20230515000001');
 
 
