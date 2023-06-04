@@ -44,9 +44,19 @@ class AppLog
         "▼オプション",
         @options.to_t,
         "",
+        "▼情報",
+        report.to_t,
+        "",
         "▼エラー",
-        @errors.to_t,
+        @errors.to_t.presence || "なし",
       ].compact.collect(&:strip).join("\n")
+    end
+
+    def report
+      {
+        "全体個数"   => @total,
+        "削除対象数" => @count,
+      }
     end
   end
 end

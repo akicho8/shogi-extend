@@ -50,7 +50,7 @@ class FreeBattle
         @target_records_t,
         "",
         "▼エラー",
-        @errors.to_t,
+        @errors.to_t.presence || "なし",
       ].compact.collect(&:strip).join("\n")
     end
   end
