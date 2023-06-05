@@ -4,8 +4,8 @@ require "fileutils"
 # path to your application root.
 APP_ROOT = File.expand_path("..", __dir__)
 
-def system!(*args)
-  system(*args) || abort("\n== Command #{args} failed ==")
+def system!(...)
+  system(...) || abort("== Command #{args} failed ==")
 end
 
 FileUtils.chdir APP_ROOT do
@@ -13,16 +13,18 @@ FileUtils.chdir APP_ROOT do
   # This script is idempotent, so that you can run it at any time and get an expectable outcome.
   # Add necessary setup steps to this file.
 
+  system! "bin/setup-node.sh"
+  system! "bin/setup-nuxt.sh"
+
   puts "== Installing dependencies =="
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 
   # Install JavaScript dependencies if using Yarn
   system("bin/yarn")
-  system("cd nuxt_side && npm i")
   # system("cd error_page_app && npm i")
 
-  # puts "\n== Copying sample files =="
+  # puts "== Copying sample files =="
   # unless File.exist?("config/database.yml")
   #   FileUtils.cp "config/database.yml.sample", "config/database.yml"
   # end
@@ -41,7 +43,7 @@ FileUtils.chdir APP_ROOT do
 
   # system! "saferenum -x -b 1000 config/app_data/free_battles"
 
-  puts "\n== Preparing database =="
+  puts "== Preparing database =="
   # system! "bin/rails db:setup"
   # system! "bin/rails db:environment:set RAILS_ENV=development"
   system! "bin/rails db:drop:_unsafe"
@@ -51,29 +53,22 @@ FileUtils.chdir APP_ROOT do
   system! "SETUP=1 rails db:seed"
   system! "bin/rails aam"
 
-  puts "\n== Removing old logs and tempfiles =="
+  puts "== Removing old logs and tempfiles =="
   system! "bin/rails log:clear"
   system! "bin/rails tmp:clear"
   system! "rm -fr tmp/storage"
   # system! "bin/rails webpacker:clobber"
 
-  # puts "\n== Production log download =="
-  # system! "cap production access_log:download"
-  # system! "cap production cron_log:download"
-  # system! "cap production error_log:download"
-  # system! "cap production mail_log:download"
-  # system! "cap production rails:log:download"
-
-  puts "\n== time_record redis clear =="
+  puts "== time_record redis clear =="
   system! "bin/rails r XyMaster::TimeRecord.delete_all"
   system! "bin/rails r XyMaster::RuleInfo.redis.flushdb"
 
-  puts "\n== Restarting application server =="
+  puts "== Restarting application server =="
   system! "bin/rails restart"
 
   system! "say テスト実行"
 
-  puts "\n== Testing =="
+  puts "== Testing =="
   system! "rm -fr doc/images *.png"
   system "RAILS_ENV=test rails assets:precompile" # ← なぜ必要？
   system "SLACK_AGENT_DISABLE=true rails spec"
