@@ -13,4 +13,5 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewFormOption
+  __css_keep__: 0
 </style>

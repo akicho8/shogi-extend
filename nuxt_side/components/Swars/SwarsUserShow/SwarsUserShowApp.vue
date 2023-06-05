@@ -148,6 +148,7 @@ export default {
       padding: 0.75rem
 
       .vs_mark
+        __css_keep__: 0
       .vs_name
         margin-left: 0.5rem
 

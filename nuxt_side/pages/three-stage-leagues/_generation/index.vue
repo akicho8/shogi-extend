@@ -25,4 +25,5 @@ export default {
 
 <style lang="sass">
 .three-stage-league-generation
+  __css_keep__: 0
 </style>

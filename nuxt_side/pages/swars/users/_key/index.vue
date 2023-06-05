@@ -20,4 +20,5 @@ export default {
 
 <style lang="sass">
 .swars-users-key
+  __css_keep__: 0
 </style>

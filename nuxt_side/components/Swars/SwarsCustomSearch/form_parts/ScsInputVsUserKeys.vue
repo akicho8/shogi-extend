@@ -75,4 +75,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .ScsInputVsUserKeys
+  __css_keep__: 0
 </style>

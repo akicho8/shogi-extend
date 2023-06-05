@@ -29,4 +29,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkBookIndexNavbar
+  __css_keep__: 0
 </style>

@@ -15,4 +15,5 @@ export default {
 
 <style lang="sass">
 .SwarsBattleIndexTableCellStyleBoth
+  __css_keep__: 0
 </style>

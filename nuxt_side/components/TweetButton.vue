@@ -30,4 +30,5 @@ export default {
 
 <style lang="sass">
 .TweetButton
+  __css_keep__: 0
 </style>

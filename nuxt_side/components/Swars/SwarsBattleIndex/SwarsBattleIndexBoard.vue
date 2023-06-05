@@ -24,4 +24,5 @@ export default {
 
 <style lang="sass">
 .SwarsBattleIndexBoard
+  __css_keep__: 0
 </style>

@@ -61,6 +61,7 @@ export default {
     position: relative
     right: -1rem
   .is_type2-raw
+    __css_keep__: 0
   .unit
     margin: 0 0.5rem
     color: $grey-light

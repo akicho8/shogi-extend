@@ -21,4 +21,5 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .XyMasterNavbar
+  __css_keep__: 0
 </style>

@@ -32,4 +32,5 @@ export default {
 
 <style lang="sass">
 .page-vs
+  __css_keep__: 0
 </style>

@@ -409,6 +409,7 @@ export default {
               margin-left: 1rem
               margin-right: 1rem
               &:not(:first-child)
+                __css_keep__: 0
             label
               margin-bottom: 0
             .b-numberinput
@@ -445,7 +446,7 @@ export default {
     opacity: 0.25
 
 =xray($level)
-  $color: hsla((360 / 8) * $level, 50%, 50%, 1.0)
+  $color: hsla(calc(360 / 8 * $level), 50%, 50%, 1.0)
   border: 2px solid $color
 
 .STAGE-development

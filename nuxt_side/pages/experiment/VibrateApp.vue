@@ -38,4 +38,5 @@ export default {
 
 <style lang="sass">
 .VibrateApp
+  __css_keep__: 0
 </style>

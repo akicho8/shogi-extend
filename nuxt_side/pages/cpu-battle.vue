@@ -25,4 +25,5 @@ export default {
 
 <style lang="sass">
 .cpu-battle
+  __css_keep__: 0
 </style>

@@ -32,4 +32,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkArticleEditNavbar
+  __css_keep__: 0
 </style>

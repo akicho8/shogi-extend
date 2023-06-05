@@ -74,4 +74,5 @@ export default {
 
 <style lang="sass">
 .ClockBoxInspector
+  __css_keep__: 0
 </style>

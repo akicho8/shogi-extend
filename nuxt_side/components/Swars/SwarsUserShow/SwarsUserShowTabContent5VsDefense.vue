@@ -30,4 +30,5 @@ export default {
 
 <style lang="sass">
 .SwarsUserShowTabContent5VsDefense
+  __css_keep__: 0
 </style>

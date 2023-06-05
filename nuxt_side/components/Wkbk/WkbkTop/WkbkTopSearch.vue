@@ -22,4 +22,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkTopSearch
+  __css_keep__: 0
 </style>

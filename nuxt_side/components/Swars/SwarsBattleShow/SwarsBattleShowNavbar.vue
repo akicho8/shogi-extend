@@ -22,4 +22,5 @@ export default {
 
 <style lang="sass">
 .SwarsBattleShowNavbar
+  __css_keep__: 0
 </style>

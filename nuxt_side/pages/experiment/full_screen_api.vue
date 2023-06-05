@@ -56,4 +56,5 @@ export default {
 
 <style lang="sass">
 .full_screen_api
+  __css_keep__: 0
 </style>

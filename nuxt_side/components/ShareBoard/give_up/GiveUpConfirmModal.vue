@@ -62,6 +62,7 @@ export default {
 
 .STAGE-development
   .GiveUpConfirmModal
+    __css_keep__: 0
 
 .GiveUpConfirmModal
   +modal_width(30rem)

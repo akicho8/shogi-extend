@@ -26,4 +26,5 @@ export default {
 <style lang="sass">
 @import "../all_support.sass"
 .KiwiBananaEditDebugPanels
+  __css_keep__: 0
 </style>

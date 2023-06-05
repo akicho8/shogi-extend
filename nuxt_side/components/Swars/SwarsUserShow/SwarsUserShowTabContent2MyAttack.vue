@@ -29,4 +29,5 @@ export default {
 
 <style lang="sass">
 .SwarsUserShowTabContent2MyAttack
+  __css_keep__: 0
 </style>
