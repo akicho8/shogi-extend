@@ -63,9 +63,13 @@ export default {
 .SbMemberOne
   &.SbAvatarLine
     &.is_window_blur
+      __css_keep__: 0
     &.is_disconnect
+      __css_keep__: 0
     &.is_self
+      __css_keep__: 0
     &.is_turn_standby
+      __css_keep__: 0
     &.is_turn_active
       font-weight: bold
 </style>

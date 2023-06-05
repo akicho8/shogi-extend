@@ -40,4 +40,5 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewDebugPanels
+  __css_keep__: 0
 </style>

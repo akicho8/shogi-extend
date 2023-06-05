@@ -69,4 +69,5 @@ export default {
 
 <style lang="sass">
 .store_test
+  __css_keep__: 0
 </style>

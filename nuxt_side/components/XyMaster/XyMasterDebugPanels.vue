@@ -44,4 +44,5 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .XyMasterDebugPanels
+  __css_keep__: 0
 </style>

@@ -243,6 +243,7 @@ export default {
       vertical-align: middle
 
     .is-xmode-野良
+      __css_keep__: 0
     .is-xmode-友達
       background-color: $warning-light
       .tag

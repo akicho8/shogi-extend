@@ -77,6 +77,7 @@ export default {
         font-size: $size-7
         color: $grey
         .audio_desc_item
+          __css_keep__: 0
 
     .media-content
       align-items: center       // 「カスタム」の文字を縦中央へ

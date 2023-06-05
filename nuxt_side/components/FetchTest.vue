@@ -27,4 +27,5 @@ name: "FetchTest",
 
 <style lang="sass">
 .FetchTest
+  __css_keep__: 0
 </style>

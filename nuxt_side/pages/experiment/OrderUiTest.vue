@@ -11,4 +11,5 @@ export default {
 
 <style lang="sass">
 .OrderUiTest
+  __css_keep__: 0
 </style>

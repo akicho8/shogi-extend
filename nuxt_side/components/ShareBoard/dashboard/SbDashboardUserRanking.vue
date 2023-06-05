@@ -48,4 +48,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .SbDashboardUserRanking
+  __css_keep__: 0
 </style>

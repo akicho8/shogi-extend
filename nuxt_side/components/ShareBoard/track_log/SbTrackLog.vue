@@ -37,7 +37,9 @@ export default {
     padding: 0
 
   .cell_created_at
+    __css_keep__: 0
   .cell_section
+    __css_keep__: 0
   .cell_message
     width: 100%
     white-space: normal

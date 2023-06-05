@@ -20,4 +20,5 @@ export default {
 
 <style lang="sass">
 .KiwiLemonNewFormDebug
+  __css_keep__: 0
 </style>

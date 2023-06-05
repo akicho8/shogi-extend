@@ -23,4 +23,5 @@ export default {
 
 <style lang="sass">
 .three-stage-league-player
+  __css_keep__: 0
 </style>

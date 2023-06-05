@@ -78,4 +78,5 @@ export default {
 
 <style lang="sass">
 .experiment-users-id
+  __css_keep__: 0
 </style>

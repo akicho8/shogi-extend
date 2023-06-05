@@ -73,4 +73,5 @@ export default {
 <style lang="sass">
 @import "./support.sass"
 .SwarsBattleIndexDebugPanels
+  __css_keep__: 0
 </style>

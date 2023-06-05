@@ -38,11 +38,12 @@
           &.is_body
             thead
               tr
+                __css_keep__: 0
 
             tbody
               td.td_kifu_data
                 padding: 0 0.2em
-                width: 100% / (4 * 3)
+                width: calc(100% / (4 * 3))
 
             .td_spend_times
               @extend %cell_slash

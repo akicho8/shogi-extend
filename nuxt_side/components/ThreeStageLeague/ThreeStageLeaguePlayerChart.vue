@@ -194,4 +194,5 @@ export default {
 
 <style lang="sass">
 .ThreeStageLeaguePlayerChart
+  __css_keep__: 0
 </style>

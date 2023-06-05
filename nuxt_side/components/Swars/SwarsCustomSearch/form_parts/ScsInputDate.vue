@@ -41,4 +41,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .ScsInputDate
+  __css_keep__: 0
 </style>

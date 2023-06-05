@@ -62,6 +62,7 @@ export default {
       padding: 0 0.5rem
       font-weight: bold
       .rule_name
+        __css_keep__: 0
       .grade_name
         margin-left: 0.2rem
 

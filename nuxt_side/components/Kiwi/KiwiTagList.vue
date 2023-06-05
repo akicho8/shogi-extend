@@ -39,4 +39,5 @@ export default {
 <style lang="sass">
 @import "./all_support.sass"
 .KiwiTagList
+  __css_keep__: 0
 </style>

@@ -55,6 +55,7 @@ export default {
 @import "../support.sass"
 .STAGE-development
   .WkbkBookShowTopMainCard
+    __css_keep__: 0
 
 .WkbkBookShowTopMainCard
   .card-image

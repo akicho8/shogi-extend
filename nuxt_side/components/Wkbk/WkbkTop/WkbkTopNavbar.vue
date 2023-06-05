@@ -37,4 +37,5 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .WkbkTopNavbar
+  __css_keep__: 0
 </style>
