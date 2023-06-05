@@ -45,7 +45,7 @@ namespace :rails do
   task :console2 do
     run_interactively primary(:app) do
       within current_path do
-        # as user: :foobar do
+        # as user: :alice do
         execute(:rails, :console)
         # end
       end
