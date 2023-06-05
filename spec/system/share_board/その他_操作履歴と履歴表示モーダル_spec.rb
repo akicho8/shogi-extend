@@ -43,14 +43,14 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(1)
       action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
+      find(".KifCopyButton").click                    # 「コピー」
+      assert_text("棋譜コピー")
+
       find(".KentoButton").click                      # 「KENTO」
       assert_text("KENTO起動")
 
       find(".PiyoShogiButton").click                  # 「ぴよ将棋」
       assert_text("ぴよ将棋起動")
-
-      find(".KifCopyButton").click                    # 「コピー」
-      assert_text("棋譜コピー")
 
       find(".current_url_copy_handle").click # 「リンク」
       assert_text("棋譜再生用のURLをコピー")
