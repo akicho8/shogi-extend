@@ -391,22 +391,31 @@ const config = {
         }
       },
 
+      // sass を使う
+      //
+      // ・node-sass と sass が一緒に入っていれば sass の方を使う
+      // ・けど明示的に指定している
+      // ・fibers は node16 以上では動かない
+      // ・初回のビルドは node-sass より10倍ほど遅い
+      // ・hardSource を有効にすると2度目はそれほど気にならないほど速い
+      //
+      // https://stackoverflow.com/a/57401587/9944769
+      // https://v2.nuxt.com/docs/configuration-glossary/configuration-build/#loaders-sass-and-loaders-scss
       // https://www.suzunatsu.com/post/node-sass-to-dart-sass/
       sass: {
-        implementation: require('node-sass'),
-        // implementation: require('sass'),
+        // implementation: require("node-sass"),
+        implementation: require("sass"),
         // sassOptions: {
-        //   fiber: require('fibers'),
+        //   fiber: require("fibers"),
         // },
       },
       scss: {
-        implementation: require('node-sass'),
-        // implementation: require('sass'),
+        // implementation: require("node-sass"),
+        implementation: require("sass"),
         // sassOptions: {
-        //   fiber: require('fibers'),
+        //   // fiber: require("fibers"),
         // },
       },
-
     },
 
     // これを入れないと shogi-player で wav が読めない
