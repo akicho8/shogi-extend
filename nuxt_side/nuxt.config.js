@@ -352,14 +352,16 @@ const config = {
   build: {
     // Nuxt.jsのビルドを高速化してみる
     // https://tech.contracts.co.jp/entry/2020/12/14/161147
-    parallel: DEVELOPMENT_P,
-    cache: DEVELOPMENT_P,
+    // parallel: DEVELOPMENT_P,
+    // cache: DEVELOPMENT_P,
+    // hardSource: DEVELOPMENT_P,
     hardSource: DEVELOPMENT_P,
 
     // https://ja.nuxtjs.org/api/configuration-build#extractcss
     extractCSS: PRODUCTION_P, // htmlファイルにスタイルが吐かれるのを防ぐ。trueにするとHMRが効かないので注意
 
     // これは一体なんなんだ……？
+    // https://qiita.com/soarflat/items/1b5aa7163c087a91877d
     optimization: {
       splitChunks: {
         cacheGroups: {
