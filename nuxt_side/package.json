@@ -48,7 +48,7 @@
     "sass": "^1.62.1",
     "sass-loader": "^10.4.1",
     "secure-ls": "^1.2.6",
-    "shogi-player": "^1.1.3",
+    "shogi-player": "^1.1.5",
     "strict-uri-encode": "^2.0.0",
     "tinyurl": "^1.1.7",
     "twemoji": "^13.1.0",
