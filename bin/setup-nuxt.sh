@@ -8,11 +8,11 @@ ncu /howl/ -u
 ncu /buefy/ -u
 ncu /bulma/ -u
 ncu /actioncable/ -u
-ncu /pug/ -u
 ncu /shogi-player/ -u
 ncu /js-memory-record/ -u
 
 # 更新するとやばいもの
 # ncu /chart/ -u
+# ncu /pug/ -u
 
 npm i
