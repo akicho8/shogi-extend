@@ -43,23 +43,29 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(1)
       action_log_row_of(0).click                      # 初手(76歩)の行をクリックしてモーダル起動
 
-      find(".KifCopyButton").click                    # 「コピー」
-      assert_text("棋譜コピー")
+      # ウィンドウが開きまくるけど page はそのままなので
+      #  window = current_window
+      #  find(...).click
+      #  switch_to_window(window)
+      # とする必要はない
 
-      find(".KentoButton").click                      # 「KENTO」
-      assert_text("KENTO起動")
+      find(".KifCopyButton").click           # 「コピー」
+      assert_action_text("棋譜コピー")
 
-      find(".PiyoShogiButton").click                  # 「ぴよ将棋」
-      assert_text("ぴよ将棋起動")
+      find(".KentoButton").click             # 「KENTO」
+      assert_action_text("KENTO起動")
+
+      find(".PiyoShogiButton").click         # 「ぴよ将棋」
+      assert_action_text("ぴよ将棋起動")
 
       find(".current_url_copy_handle").click # 「リンク」
-      assert_text("棋譜再生用のURLをコピー")
+      assert_action_text("棋譜URLコピー")
 
-      find(".kifu_download_handle").click             # 「ダウンロード」
-      assert_text("棋譜ダウンロード")
+      find(".kifu_download_handle").click    # 「ダウンロード」
+      assert_action_text("棋譜ダウンロード")
 
-      find(".kifu_show_handle").click                 # 「棋譜表示」
-      assert_text("棋譜表示")
+      find(".kifu_show_handle").click        # 「棋譜表示」
+      assert_action_text("棋譜表示")
     end
   end
 
