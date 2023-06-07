@@ -785,9 +785,9 @@ example_id                                                                      
 ./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:1]                            | passed  | 20.58 seconds   |
 ./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:2]                            | passed  | 16.95 seconds   |
 ./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:3]                            | passed  | 10.93 seconds   |
-./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:1]                             | passed  | 20.32 seconds   |
-./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:2]                             | passed  | 24.07 seconds   |
-./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:3]                             | passed  | 10.4 seconds    |
+./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:1]                             | passed  | 58.71 seconds   |
+./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:2]                             | passed  | 33.09 seconds   |
+./spec/system/share_board/その他_操作履歴と履歴表示モーダル_spec.rb[1:3]                             | passed  | 21.13 seconds   |
 ./spec/system/share_board/その他_棋譜に対局者名を含める_spec.rb[1:1]                               | passed  | 6.09 seconds    |
 ./spec/system/share_board/その他_棋譜に対局者名を含める_spec.rb[1:2]                               | passed  | 27.75 seconds   |
 ./spec/system/share_board/その他_棋譜に対局者名を含める_spec.rb[1:3]                               | passed  | 6.92 seconds    |
