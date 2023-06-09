@@ -81,11 +81,11 @@ export default {
 
   .CustomShogiPlayer
     width: 16rem
-    --sp_board_padding: 0
-    --sp_board_color: transparent
-    --sp_grid_outer_stroke: 0
-    --sp_grid_outer_color: hsl(0, 0%, 80%)
-    --sp_grid_inner_color:       hsl(0, 0%, 80%)
+    +setvar(sp_board_padding, 0)
+    +setvar(sp_board_color, transparent)
+    +setvar(sp_grid_outer_stroke, 0)
+    +setvar(sp_grid_outer_color, hsl(0, 0%, 80%))
+    +setvar(sp_grid_inner_color, hsl(0, 0%, 80%))
 
 .STAGE-development
   .BoardPresetSelectModal

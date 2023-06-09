@@ -41,16 +41,16 @@ export default {
   width: 100%   // ←これいる？
 
   &.is_mode_edit
-    --sp_board_color: hsla(149.57,38.12%,35.49%,0.53)
+    +setvar(sp_board_color, hsla(149.57,38.12%,35.49%,0.53))
 
   +mobile
-    --sp_grid_outer_color: hsla(0, 0%, 0%, 0.4) // スマホだと少し薄すくる
-    --sp_grid_inner_color: hsla(0, 0%, 0%, 0.3) // スマホだと少し薄すくる
-    --sp_board_radius: 0 // 角丸を取る
+    +setvar(sp_grid_outer_color, hsla(0, 0%, 0%, 0.4)) // スマホだと少し薄すくる
+    +setvar(sp_grid_inner_color, hsla(0, 0%, 0%, 0.3)) // スマホだと少し薄すくる
+    +setvar(sp_board_radius, 0)                        // 角丸を取る
 
   // リアル駒は小さめに作られているため100%にする
   .is_piece_variant_portella
-    --sp_board_piece_size: 1.0
+    +setvar(sp_board_piece_size, 1.0)
 
 // bulma の .table のなかにあると td の padding が影響してしまう
 .table
