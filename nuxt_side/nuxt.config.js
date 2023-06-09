@@ -405,15 +405,15 @@ const config = {
       // https://v2.nuxt.com/docs/configuration-glossary/configuration-build/#loaders-sass-and-loaders-scss
       // https://www.suzunatsu.com/post/node-sass-to-dart-sass/
       sass: {
-        // implementation: require("node-sass"),
-        implementation: require("sass"),
+        implementation: require("node-sass"),
+        // implementation: require("sass"),
         // sassOptions: {
         //   fiber: require("fibers"),
         // },
       },
       scss: {
-        // implementation: require("node-sass"),
-        implementation: require("sass"),
+        implementation: require("node-sass"),
+        // implementation: require("sass"),
         // sassOptions: {
         //   // fiber: require("fibers"),
         // },
