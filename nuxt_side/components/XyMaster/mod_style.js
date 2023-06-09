@@ -20,7 +20,7 @@ export const mod_style = {
         "--xy_grid_stroke":    this.xy_grid_stroke,
         "--xy_grid_color":     this.xy_grid_color,
         "--xy_grid_star_size": this.xy_grid_star_size,
-        "--xy_piece_opacity":    this.xy_piece_opacity,
+        "--xy_piece_opacity":  this.xy_piece_opacity,
       }
     },
   },

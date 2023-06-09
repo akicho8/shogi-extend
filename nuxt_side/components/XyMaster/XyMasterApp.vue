@@ -556,19 +556,19 @@ export default {
         width: calc(100vmin * 0.50)
 
     .CustomShogiPlayer
-      --sp_board_padding: 0                                                               // 盤の隙間なし
-      --sp_board_color: hsla(0, 0%, 0%, 0)                                                // 盤の色
-      --sp_grid_outer_stroke: calc(var(--xy_grid_stroke) + 1)                             // 外枠の太さ
-      --sp_grid_inner_stroke: var(--xy_grid_stroke)                                       // グリッド太さ
-      --sp_grid_outer_color: hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%))       // グリッド外枠色
-      --sp_grid_inner_color:       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%)) // グリッド色
-      --sp_board_aspect_ratio: 1.0                                                        // 盤を正方形化
-      --sp_star_size: calc(var(--xy_grid_star_size) / 100.0)                              // 星の大きさ
-      --sp_star_color: hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%))             // 星の色
-      --sp_star_z_index: -1                                                               // 星を盤の裏に表示(重要)
+      +setvar(sp_board_padding, 0)                                                               // 盤の隙間なし
+      +setvar(sp_board_color, hsla(0, 0%, 0%, 0))                                                // 盤の色
+      +setvar(sp_grid_outer_stroke, calc(var(--xy_grid_stroke) + 1))                             // 外枠の太さ
+      +setvar(sp_grid_inner_stroke, var(--xy_grid_stroke))                                       // グリッド太さ
+      +setvar(sp_grid_outer_color, hsl(0, 0%, calc((64.0 - var(--xy_grid_color)) * 1.0%)))       // グリッド外枠色
+      +setvar(sp_grid_inner_color,       hsl(0, 0%, calc((73.0 - var(--xy_grid_color)) * 1.0%))) // グリッド色
+      +setvar(sp_board_aspect_ratio, 1.0)                                                        // 盤を正方形化
+      +setvar(sp_star_size, calc(var(--xy_grid_star_size) / 100.0))                              // 星の大きさ
+      +setvar(sp_star_color, hsl(0, 0%, calc((50.0 - var(--xy_grid_color)) * 1.0%)))             // 星の色
+      +setvar(sp_star_z_index, -1)                                                               // 星を盤の裏に表示(重要)
 
   &.is_input_mode_tap
-    --sp_board_piece_size: 0.766                                                          // セル内の駒の大きさ
+    +setvar(sp_board_piece_size, 0.766)                                                          // セル内の駒の大きさ
     .CustomShogiPlayer
       .PieceTexture
         opacity: var(--xy_piece_opacity)                                                  // ゴーストの濃さ

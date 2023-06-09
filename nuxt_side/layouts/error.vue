@@ -110,8 +110,8 @@ export default {
 
   min-height: 100vh
 
-  --balloon-bg-color: white
-  --balloon-fg-color: transparent
+  +setvar(balloon-bg-color, white)
+  +setvar(balloon-fg-color, transparent)
 
   display: flex
   flex-direction: column
