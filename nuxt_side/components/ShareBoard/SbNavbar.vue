@@ -15,7 +15,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
           span.mx-1
             | \#{{TheSb.current_turn}}
 
-    b-navbar-item.has-text-weight-bold.px_5_if_tablet.give_up_confirm_handle(@click="TheSb.give_up_confirm_handle" v-if="TheSb.give_up_button_show_p")
+    b-navbar-item.has-text-weight-bold.px_5_if_tablet.give_up_modal_open(@click="TheSb.give_up_modal_open" v-if="TheSb.give_up_button_show_p")
       | 投了
 
   template(slot="start")

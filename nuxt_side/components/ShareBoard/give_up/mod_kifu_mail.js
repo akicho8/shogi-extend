@@ -1,3 +1,4 @@
+// 投了時の棋譜送信
 // 確認方法: README_kifu_mail.org
 
 import { Gs } from "@/components/models/gs.js"

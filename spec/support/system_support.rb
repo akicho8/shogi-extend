@@ -136,7 +136,7 @@ RSpec.configure do |config|
     # https://qiita.com/jnchito/items/c7e6e7abf83598a6516d
     # これにしてテストが落ちなくなったところもある
     # 前の書き方だとサイズが効いていなかったと思われる
-    driven = ENV["BROWSER_DEBUG"] ? :chrome : :headless_chrome
+    driven = ENV["BROWSER_DEBUG"].to_s.in?(["1", "true"]) ? :chrome : :headless_chrome
     driven_by :selenium, using: driven # screen_size: [1400, 1400]
   end
 end

@@ -8,6 +8,7 @@ export const mod_help = {
       this.modal_card_open({
         component: SwarsBattleIndexHelpModal,
         props: { base: this.base },
+        onCancel: () => { this.kb_shortcut_modal_close() },
       })
     },
   },

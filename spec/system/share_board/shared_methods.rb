@@ -114,14 +114,30 @@ module SharedMethods
     assert_selector("a", text: "本譜", exact_text: true, wait: 30)
   end
 
+  # 「投了」を押してモーダルを表示する
+  def give_up_modal_open
+    find("a", text: "投了", exact_text: true, wait: 10).click
+    assert_give_up_modal
+  end
+
   def give_up_run
-    find("a", text: "投了", exact_text: true, wait: 30).click # bob は手番ではないがヘッダーの「投了」ボタンを押す
+    give_up_modal_open
     find(:button, "本当に投了する").click                     # モーダルが表示されるので本当に投了する
   end
 
   # 投了ボタンがある
   def assert_give_up_button
     assert_selector("a", text: "投了", exact_text: true)
+  end
+
+  # 投了モーダルがある
+  def assert_give_up_modal
+    assert_selector(".GiveUpModal")
+  end
+
+  # 投了モーダルがない
+  def assert_no_give_up_modal
+    assert_no_selector(".GiveUpModal")
   end
 end
 

@@ -2,6 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title 投了
+    a.cc_time_zero_callback(@click="TheSb.cc_time_zero_callback" v-if="TheSb.debug_mode_p") 時間切れ
   .modal-card-body
     .content
       p {{message}}
@@ -18,7 +19,7 @@ import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 
 export default {
-  name: "GiveUpConfirmModal",
+  name: "GiveUpModal",
   mixins: [support_child],
   inject: ["TheSb"],
   mounted() {
@@ -32,11 +33,11 @@ export default {
         this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
         return
       }
-      this.TheSb.give_up_run_from_modal()
+      this.TheSb.give_up_direct_run_with_valid()
     },
     close_handle() {
       this.$sound.play_click()
-      this.$emit("close")
+      this.TheSb.give_up_modal_close()
     },
   },
   computed: {
@@ -61,10 +62,10 @@ export default {
 @import "../support.sass"
 
 .STAGE-development
-  .GiveUpConfirmModal
+  .GiveUpModal
     __css_keep__: 0
 
-.GiveUpConfirmModal
+.GiveUpModal
   +modal_width(30rem)
 
   .modal-card-body

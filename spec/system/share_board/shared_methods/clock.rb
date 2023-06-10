@@ -99,5 +99,10 @@ module SharedMethods
     v = find(".is_white .read_sec").text.to_i
     assert2 { v == second || v == second.pred }
   end
-end
 
+  # 強制的に時間切れにする
+  # モーダルがポップアップしていると押せないので注意
+  def cc_time_zero_callback
+    find(".cc_time_zero_callback").click
+  end
+end

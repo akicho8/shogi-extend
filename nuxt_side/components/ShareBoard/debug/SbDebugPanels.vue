@@ -4,7 +4,7 @@
     .panel
       .panel-heading
         | 時間切れ
-      a.panel-block(@click="TheSb.cc_time_zero_callback") 最初のコールバック
+      a.panel-block.cc_time_zero_callback(@click="TheSb.cc_time_zero_callback") 最初のコールバック
       a.panel-block(@click="TheSb.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC
       a.panel-block(@click="TheSb.cc_delayed_timeout_modal") 他者は数秒後発動
       a.panel-block(@click="TheSb.timeout_modal_handle_if_not_exist") 受信
@@ -19,8 +19,8 @@
     .panel
       .panel-heading
         | 投了
-      a.panel-block(@click="TheSb.give_up_confirm_handle") 投了確認ボタン
-      a.panel-block(@click="TheSb.give_up_run_from_modal") 投了ボタン(バリデーションあり)
+      a.panel-block(@click="TheSb.give_up_modal_open") 投了確認ボタン
+      a.panel-block(@click="TheSb.give_up_direct_run_with_valid") 投了ボタン(バリデーションあり)
       a.panel-block(@click="TheSb.give_up_direct_run") 投了実処理
   .column.is-2
     .panel
