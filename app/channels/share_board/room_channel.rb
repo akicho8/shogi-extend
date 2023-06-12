@@ -208,7 +208,7 @@ module ShareBoard
       body = []
       body << [":", data["ua_icon_key"], ":"].join # FIXME: Slackを使っていないので入れる意味がない
       body << ac_event_str(data)
-      body << data["from_user_name"]
+      body << data["from_user_name"].inspect
       if v = data["active_level"]
         body << v.to_s + ":"
       end

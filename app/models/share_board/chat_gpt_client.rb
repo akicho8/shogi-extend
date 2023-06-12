@@ -10,7 +10,7 @@ module ShareBoard
       Rails.logger.debug { @topic.to_t }
 
       if @topic.present?
-        AppLog.info(subject: "ChatGPT", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT_IN:")
+        AppLog.info(subject: "チャット (GPT)", body: "[入力] #{@topic.last.content}", emoji: ":ChatGPT_IN:")
       end
 
       client = OpenAI::Client.new
@@ -30,14 +30,14 @@ module ShareBoard
       Rails.logger.debug { response.pretty_inspect }
 
       if error_message = response.dig("error", "message")
-        AppLog.info(subject: "ChatGPT", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
+        AppLog.info(subject: "チャット (GPT)", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
         return
       end
 
       text = response.dig("choices", 0, "message", "content")
 
       if text
-        AppLog.info(subject: "ChatGPT", body: "#{seconds} #{text.inspect}", emoji: ":ChatGPT_OUT:")
+        AppLog.info(subject: "チャット (GPT)", body: "#{seconds} #{text.inspect}", emoji: ":ChatGPT_OUT:")
       end
 
       text
