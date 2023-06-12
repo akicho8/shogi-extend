@@ -18,7 +18,7 @@
     "generate": "nuxt generate",
     "test": "jest"
   },
-  "dependencies": {
+  "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/google-gtag": "^1.0.4",
