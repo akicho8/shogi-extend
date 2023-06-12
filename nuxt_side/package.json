@@ -11,7 +11,6 @@
     "node": "16.x"
   },
   "scripts": {
-    "postinstall": "patch-package",
     "clean": "rm -rf node_modules/.cache/hard-source",
     "dev": "nuxt dev -p 4000",
     "build": "nuxt build",
@@ -45,7 +44,6 @@
     "node-sass": "^8.0.0",
     "nuxt": "^2.16.3",
     "nuxt-buefy": "^0.4.25",
-    "patch-package": "^7.0.0",
     "pattern.css": "^1.0.0",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
