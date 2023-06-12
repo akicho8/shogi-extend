@@ -493,6 +493,9 @@ const config = {
     //     },
     //   },
     // },
+
+    // https://github.com/webpack-contrib/postcss-loader/issues/405
+    postcss: null,
   },
 
   // https://nuxtjs.org/guide/runtime-config
