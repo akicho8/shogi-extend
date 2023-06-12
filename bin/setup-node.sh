@@ -3,6 +3,7 @@
 nodenv install -s
 
 npm i -g npm
+npm i -g pnpm
 npm i -g yarn
 npm i -g npm-check-updates
 
