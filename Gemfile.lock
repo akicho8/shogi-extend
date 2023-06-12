@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 4ab372ac6baa62f0ca9f21935754065fe12dee6d
+  revision: ed27c30a9eeb4fa9816de00eaa7e7d688a360c59
   branch: main
   specs:
     bioshogi (0.0.1)
@@ -221,7 +221,7 @@ GEM
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    i18n (1.14.0)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -329,7 +329,7 @@ GEM
     puma_worker_killer (0.3.1)
       get_process_mem (~> 0.2)
       puma (>= 2.7)
-    racc (1.6.2)
+    racc (1.7.0)
     rack (2.2.7)
     rack-cors (2.0.1)
       rack (>= 2.0.0)
