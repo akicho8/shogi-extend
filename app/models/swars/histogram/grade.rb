@@ -24,8 +24,9 @@ module Swars
       # すべてキャッシュ対象
       def to_h
         super.merge({
-            :rule_key => params[:rule_key].presence,
-            :xtag     => params[:xtag].presence,
+            :rule_key  => params[:rule_key].presence,
+            :xtag      => params[:xtag].presence,
+            "標準偏差" => @standard_deviation,
           })
       end
 
@@ -79,15 +80,31 @@ module Swars
       def records
         @records ||= yield_self do
           aggregate_run
-          sdc = StandardDeviation.new(@counts_hash.values)
-          current_grades.collect do |grade|
+
+          # sdc = StandardDeviation.new(@counts_hash.values)
+          # :ratio => sdc.appear_ratio(count),
+
+          list = current_grades.collect do |grade|
             count = @counts_hash.fetch(grade.id, 0)
             {
-              :grade => grade.as_json(only: [:id, :key, :priority]),
-              :count => count,
-              :ratio => sdc.appear_ratio(count),
+              "階級" => grade.key,
+              "度数" => count,
             }
           end
+
+          if Rails.env.development?
+            list = list.collect { |e| e.merge("度数" => categoy_data_for_development[e["階級"]] || 0) }
+          end
+
+          frequency_total = list.sum { |e| e["度数"] }                                               # => 48014
+          list = list.collect { |e| e.merge("相対度数" => e["度数"].fdiv(frequency_total) ) }
+          list = list.collect.with_index { |e, i| e.merge("階級値" => -i) }
+          score_total = list.sum { |e| e["度数"] * e["階級値"] }                                     # => 378281
+          score_average = score_total.fdiv(frequency_total)                                          # => 7.878556254425792
+          variance = list.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / frequency_total # => 5.099197349097279
+          @standard_deviation = Math.sqrt(variance)                                                  # => 2.258140241237749
+          list = list.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(@standard_deviation) ) }
+          list = list.collect { |e| e.merge("偏差値" => (e["基準値"] * 10 + 50)) }
         end
       end
 
@@ -95,11 +112,11 @@ module Swars
         e = records.reverse
         {
           data: {
-            labels: e.collect { |e| e[:grade]["key"][0] },
+            labels: e.collect { |e| e["階級"][0] },
             datasets: [
               {
                 label: nil,
-                data: e.collect { |e| e[:count] },
+                data: e.collect { |e| e["度数"] },
               },
             ],
           },
@@ -150,11 +167,27 @@ module Swars
         @rule_info ||= RuleInfo.lookup(params[:rule_key])
       end
 
-      def slack_notify_params
+      def categoy_data_for_development
         {
-          "種類" => rule_info ? rule_info.name : "",
-          "タグ" => xtag ? xtag.join(" ") : "",
-        }.merge(super)
+          "九段" => 22,
+          "八段" => 39,
+          "七段" => 141,
+          "六段" => 444,
+          "五段" => 549,
+          "四段" => 1163,
+          "三段" => 2927,
+          "二段" => 5032,
+          "初段" => 7843,
+          "1級" =>  9562,
+          "2級" =>  8249,
+          "3級" =>  5650,
+          "4級" =>  3149,
+          "5級" =>  1743,
+          "6級" =>  754,
+          "7級" =>  353,
+          "8級" =>  153,
+          "9級" =>  92,
+        }
       end
     end
   end

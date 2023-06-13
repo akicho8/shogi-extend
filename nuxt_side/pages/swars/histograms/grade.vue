@@ -44,10 +44,23 @@ client-only
               :mobile-cards="false"
               hoverable
               )
-              b-table-column(v-slot="{row}" field="grade.priority"  label="棋力" sortable) {{row.grade.key}}
-              b-table-column(v-slot="{row}" field="ratio"           label="割合" numeric sortable) {{$gs.floatx100_percentage(row.ratio, 2)}} %
-              b-table-column(v-slot="{row}" field="count"           label="人数" numeric sortable) {{row.count}}
-              //- b-table-column(v-slot="{row}" field="deviation_score" label="偏差値" numeric sortable :visible="development_p") {{$gs.number_round(row.deviation_score)}}
+              b-table-column(v-slot="{row}" field="階級値"   label="棋力" sortable) {{row["階級"]}}
+              b-table-column(v-slot="{row}" field="count"    label="人数" numeric sortable) {{row["度数"]}}
+              b-table-column(v-slot="{row}" field="相対度数" label="割合" numeric sortable)
+                | {{$gs.floatx100_percentage(row["相対度数"] ?? 0, 2)}} %
+              b-table-column(v-slot="{row}" field="基準値"   label="基準値" numeric sortable)
+                template(v-if="row['基準値']")
+                  | {{$gs.number_round_s(row["基準値"], 2)}}
+              b-table-column(v-slot="{row}" field="偏差値"   label="偏差値" numeric sortable)
+                template(v-if="row['偏差値']")
+                  | {{$gs.number_round_s(row["偏差値"])}}
+        .columns.is-vcentered.is-multiline.xform_block(v-if="xi['標準偏差']")
+          .column
+            nav.level.is-mobile
+              .level-item.has-text-centered
+                div
+                  .heading 標準偏差
+                  .title {{$gs.number_round_s(xi["標準偏差"], 2)}}
         SwarsHistogramProcessedSec(:xi="xi")
 
     DebugPrint(v-if="development_p")

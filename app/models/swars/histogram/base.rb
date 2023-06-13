@@ -40,7 +40,7 @@ module Swars
           :max_list            => max_list,
           :records             => records,
           :custom_chart_params => custom_chart_params,
-          :real_total_count    => records.sum { |e| e[:count] },
+          :real_total_count    => records.sum { |e| e[:count] || e["度数"] },
         }
       end
 
