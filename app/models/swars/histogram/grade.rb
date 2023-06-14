@@ -26,6 +26,7 @@ module Swars
         super.merge({
             :rule_key  => params[:rule_key].presence,
             :xtag      => params[:xtag].presence,
+            "平均"     => @score_average,
             "標準偏差" => @standard_deviation,
           })
       end
@@ -98,12 +99,13 @@ module Swars
 
           frequency_total = list.sum { |e| e["度数"] }                                               # => 48014
           list = list.collect { |e| e.merge("相対度数" => e["度数"].fdiv(frequency_total) ) }
+          t = 0; list = list.collect { |e| t += e["相対度数"]; e.merge("上位" => t) }
           list = list.collect.with_index { |e, i| e.merge("階級値" => -i) }
           score_total = list.sum { |e| e["度数"] * e["階級値"] }                                     # => 378281
-          score_average = score_total.fdiv(frequency_total)                                          # => 7.878556254425792
-          variance = list.sum { |e| (e["階級値"] - score_average)**2 * e["度数"] } / frequency_total # => 5.099197349097279
+          @score_average = score_total.fdiv(frequency_total)                                          # => 7.878556254425792
+          variance = list.sum { |e| (e["階級値"] - @score_average)**2 * e["度数"] } / frequency_total # => 5.099197349097279
           @standard_deviation = Math.sqrt(variance)                                                  # => 2.258140241237749
-          list = list.collect { |e| e.merge("基準値" => (e["階級値"] - score_average).fdiv(@standard_deviation) ) }
+          list = list.collect { |e| e.merge("基準値" => (e["階級値"] - @score_average).fdiv(@standard_deviation) ) }
           list = list.collect { |e| e.merge("偏差値" => (e["基準値"] * 10 + 50)) }
         end
       end
