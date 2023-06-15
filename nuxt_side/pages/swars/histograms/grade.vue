@@ -50,9 +50,9 @@ client-only
                 | {{$gs.floatx100_percentage(row["相対度数"] ?? 0, 2)}} %
               b-table-column(v-slot="{row}" field="階級値" label="階級値" numeric sortable :visible="development_p")
                 | {{$gs.number_round_s(row["階級値"])}}
-              b-table-column(v-slot="{row}" field="上位"   label="上位" numeric sortable)
-                template(v-if="row['上位']")
-                  | {{$gs.floatx100_percentage(row["上位"] ?? 0, 2)}} %
+              b-table-column(v-slot="{row}" field="累計相対度数"   label="上位" numeric sortable)
+                template(v-if="row['累計相対度数']")
+                  | {{$gs.floatx100_percentage(row["累計相対度数"] ?? 0, 2)}} %
               b-table-column(v-slot="{row}" field="基準値"   label="基準値" numeric sortable :visible="development_p")
                 template(v-if="row['基準値']")
                   | {{$gs.number_round_s(row["基準値"], 2)}}
@@ -68,8 +68,16 @@ client-only
                   .title {{$gs.number_round_s(xi["平均"], 2)}}
               .level-item.has-text-centered
                 div
+                  .heading 分散
+                  .title {{$gs.number_round_s(xi["分散"], 2)}}
+              .level-item.has-text-centered
+                div
                   .heading 標準偏差
                   .title {{$gs.number_round_s(xi["標準偏差"], 2)}}
+              .level-item.has-text-centered
+                div
+                  .heading 基準値平均
+                  .title {{$gs.number_round_s(xi["基準値平均"], 2)}}
         SwarsHistogramProcessedSec(:xi="xi")
 
     DebugPrint(v-if="development_p")
