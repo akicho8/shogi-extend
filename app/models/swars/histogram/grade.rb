@@ -117,7 +117,7 @@ module Swars
         e = records.reverse
         {
           data: {
-            labels: e.collect { |e| e["階級"][0] },
+            labels: e.collect { |e| e["階級"].remove(/[段級]/) },
             datasets: [
               {
                 label: nil,
