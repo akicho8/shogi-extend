@@ -70,12 +70,16 @@ module Swars
     end
 
     def js_index_options
-      {
+      hv = {
         :xnotice                => @xnotice,
         :import_enable_p        => import_enable?,
         :current_swars_user_key => current_swars_user&.key,
         :viewpoint              => current_viewpoint,
-      }.merge(super)
+      }
+      if params[:stat] || Rails.env.development? || Rails.env.test?
+        hv[:stat] = Battle.stat
+      end
+      hv.merge(super)
     end
 
     # 検索窓に棋譜URLが指定されたときの対局キー

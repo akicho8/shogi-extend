@@ -41,6 +41,9 @@
 
           SwarsBattleIndexBoard(:base="base" v-if="layout_info.key === 'is_layout_board'")
           SwarsBattleIndexTable(:base="base" v-if="layout_info.key === 'is_layout_table'")
+          template(v-if="xi && xi.stat")
+            pre.box.mb-0.mt-4.is-size-7.has-background-white-ter.is-shadowless
+              | {{xi.stat}}
       SwarsBattleIndexDebugPanels(:base="base" v-if="development_p")
 </template>
 
