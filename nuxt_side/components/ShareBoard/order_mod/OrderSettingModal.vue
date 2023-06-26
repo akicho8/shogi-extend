@@ -54,11 +54,11 @@
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
-          SimpleRadioButtons.illegal_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :my_value.sync="TheSb.new_v.illegal_behavior_key")
+          SimpleRadioButtons.illegal_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="TheSb.new_v.illegal_behavior_key")
         .column.is-12(v-if="TheSb.debug_mode_p || true")
-          SimpleRadioButtons.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :my_value.sync="TheSb.new_v.auto_resign_key")
+          SimpleRadioButtons.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
         .column.is-12
-          SimpleRadioButtons.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :my_value.sync="TheSb.new_v.tegoto")
+          SimpleRadioButtons.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :sync_value.sync="TheSb.new_v.tegoto")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

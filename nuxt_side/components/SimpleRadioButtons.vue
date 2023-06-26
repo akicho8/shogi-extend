@@ -33,27 +33,29 @@ b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
 </template>
 
 <script>
+// 使い方
+//  SimpleRadioButtons.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
 export default {
   name: "SimpleRadioButtons",
   props: {
-    base:         { type: Object, required: true,  },
-    model_name:   { type: String, required: true,  },
-    var_name:     { type: String, required: false, }, // DEPRECATION
-    element_size: { type: String, required: false, },
+    base:                  { type: Object, required: true,  },
+    model_name:            { type: String, required: true,  },
+    var_name:              { type: String, required: false, }, // DEPRECATION
+    element_size:          { type: String, required: false, },
     permanent_mark_append: { type: Boolean, default: false, required: false, },
-    my_value:     { required: false, },
+    sync_value:            { required: false, },
   },
   data() {
     return {
-      current_my_value: this.my_value,
+      current_my_value: this.sync_value,
     }
   },
   watch: {
-    my_value() {
-      this.current_my_value = this.my_value
+    sync_value() {
+      this.current_my_value = this.sync_value
     },
     current_my_value() {
-      this.$emit("update:my_value", this.current_my_value)
+      this.$emit("update:sync_value", this.current_my_value)
     },
   },
   methods: {
