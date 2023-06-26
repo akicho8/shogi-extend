@@ -4,6 +4,10 @@
     .modal-card-title
       | 設定
   .modal-card-body
+    //- b-tabs(type="is-boxed" expanded size="is-small" v-model="main_tab_index" position="is-centered")
+    //-   b-tab-item(label="日付")
+    //-   b-tab-item(label="戦法")
+
     .columns.is-multiline
       template(v-for="m in GeneralSettingInfo.values")
         .column.is-half-tablet
@@ -46,7 +50,7 @@ export default {
 </script>
 
 <style lang="sass">
-@import "support.sass"
+@import "../support.sass"
 .GeneralSettingModal
   +modal_max_width(800px)
   .modal-card-body

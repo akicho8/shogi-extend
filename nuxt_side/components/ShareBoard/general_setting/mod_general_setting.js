@@ -1,10 +1,10 @@
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { CtrlModeInfo         } from "./models/ctrl_mode_info.js"
-import { QuickSyncInfo        } from "./models/quick_sync_info.js"
-import { YomiageModeInfo      } from "./models/yomiage_mode_info.js"
-import { LiftCancelActionInfo } from "./models/lift_cancel_action_info.js"
-import { LegalInfo            } from "./models/legal_info.js"
+import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
+import { QuickSyncInfo        } from "../models/quick_sync_info.js"
+import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
+import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
+import { LegalInfo            } from "../models/legal_info.js"
 
 export const mod_general_setting = {
   methods: {
