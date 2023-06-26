@@ -1,18 +1,18 @@
-import MainSettingModal from "./MainSettingModal.vue"
+import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { CtrlModeInfo       } from "./models/ctrl_mode_info.js"
-import { QuickSyncInfo      } from "./models/quick_sync_info.js"
-import { YomiageModeInfo    } from "./models/yomiage_mode_info.js"
-import { LiftCancelActionInfo   } from "./models/lift_cancel_action_info.js"
-import { LegalInfo } from "./models/legal_info.js"
+import { CtrlModeInfo         } from "./models/ctrl_mode_info.js"
+import { QuickSyncInfo        } from "./models/quick_sync_info.js"
+import { YomiageModeInfo      } from "./models/yomiage_mode_info.js"
+import { LiftCancelActionInfo } from "./models/lift_cancel_action_info.js"
+import { LegalInfo            } from "./models/legal_info.js"
 
-export const mod_main_setting = {
+export const mod_general_setting = {
   methods: {
     general_setting_modal_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
       this.modal_card_open({
-        component: MainSettingModal,
+        component: GeneralSettingModal,
         props: { base: this.base },
       })
     },

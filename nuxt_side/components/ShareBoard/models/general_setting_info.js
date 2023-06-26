@@ -1,7 +1,7 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 import { ParamInfo } from "./param_info.js"
 
-export class MainSettingInfo extends ApplicationMemoryRecord {
+export class GeneralSettingInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "yomiage_mode_key",     },

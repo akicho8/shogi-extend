@@ -90,7 +90,7 @@ import { mod_update               } from "./mod_update.js"
 import { mod_sound_bug            } from "./sound/mod_sound_bug.js"
 import { mod_sound_effect         } from "./sound/mod_sound_effect.js"
 import { mod_sound_resume         } from "./sound/mod_sound_resume.js"
-import { mod_main_setting         } from "./mod_main_setting.js"
+import { mod_general_setting         } from "./general_setting/mod_general_setting.js"
 import { mod_debug                } from "./mod_debug.js"
 import { mod_help                 } from "./help_mod/mod_help.js"
 import { mod_sidebar              } from "./mod_sidebar.js"
@@ -190,7 +190,7 @@ export default {
     mod_update,
     mod_sound_bug,
     mod_sound_effect,
-    mod_main_setting,
+    mod_general_setting,
     mod_debug,
     mod_sound_resume,
     mod_help,

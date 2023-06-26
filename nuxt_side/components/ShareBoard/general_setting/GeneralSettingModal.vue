@@ -5,7 +5,7 @@
       | 設定
   .modal-card-body
     .columns.is-multiline
-      template(v-for="m in MainSettingInfo.values")
+      template(v-for="m in GeneralSettingInfo.values")
         .column.is-half-tablet
           SimpleRadioButtons(
             :base="base"
@@ -27,11 +27,11 @@
 </template>
 
 <script>
-import { support_child   } from "./support_child.js"
-import { MainSettingInfo } from "./models/main_setting_info.js"
+import { support_child   } from "../support_child.js"
+import { GeneralSettingInfo } from "../models/general_setting_info.js"
 
 export default {
-  name: "MainSettingModal",
+  name: "GeneralSettingModal",
   mixins: [support_child],
   methods: {
     close_handle() {
@@ -40,14 +40,14 @@ export default {
     },
   },
   computed: {
-    MainSettingInfo() { return MainSettingInfo },
+    GeneralSettingInfo() { return GeneralSettingInfo },
   },
 }
 </script>
 
 <style lang="sass">
 @import "support.sass"
-.MainSettingModal
+.GeneralSettingModal
   +modal_max_width(800px)
   .modal-card-body
     padding: 1.75rem
