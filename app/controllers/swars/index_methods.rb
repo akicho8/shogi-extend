@@ -76,8 +76,10 @@ module Swars
         :current_swars_user_key => current_swars_user&.key,
         :viewpoint              => current_viewpoint,
       }
-      if params[:stat] || Rails.env.development? || Rails.env.test?
-        hv[:stat] = Battle.stat
+      if Rails.env.development? || Rails.env.test?
+        if params[:stat]
+          hv[:stat] = Battle.stat
+        end
       end
       hv.merge(super)
     end
