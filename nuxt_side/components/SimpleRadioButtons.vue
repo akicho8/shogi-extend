@@ -1,5 +1,9 @@
 <template lang="pug">
-b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
+b-field.SimpleRadioButtons(
+  :message="field_message"
+  v-bind="$attrs"
+  :class="{'is_scroll_x': buttons_p}"
+  )
   template(#label)
     span(:class="{'is-clickable': $gs.present_p(hint_str)}" @click="label_click_handle")
       | {{label}}
@@ -15,6 +19,17 @@ b-field.is_scroll_x.SimpleRadioButtons(:message="field_message" v-bind="$attrs")
       :min="real_model.min"
       :max="real_model.max"
       :exponential="true"
+      @input="input_handle"
+      )
+  template(v-else-if="real_model.input_type === 'slider'")
+    b-slider(
+      :indicator="true"
+      :tooltip="false"
+      :size="element_size"
+      controls-position="compact"
+      v-model="real_value"
+      :min="real_model.min"
+      :max="real_model.max"
       @input="input_handle"
       )
   template(v-else)
@@ -61,8 +76,7 @@ export default {
   methods: {
     input_handle(e) {
       this.$sound.play_click()
-      if (this.real_model.input_type === 'numberinput') {
-      } else {
+      if (this.buttons_p) {
         this.talk(this.current.talk_message || this.current.name)
       }
       this.$emit("user_input", this.real_model)
@@ -76,14 +90,15 @@ export default {
     },
   },
   computed: {
-    real_model() { return this.base[this.model_name]                     },
-    current()    { return this.real_model.fetch(this.real_value)         },
-    label()      { return this.real_model.field_label                    },
-    hint_str()   { return (this.real_model.hint_messages || []).join("") },
-    current()    { return this.real_model.fetch(this.real_value)         },
+    real_model() { return this.base[this.model_name]                                                              },
+    numeric_p()  { return this.real_model.input_type === 'numberinput' || this.real_model.input_type === 'slider' },
+    buttons_p()  { return !this.numeric_p                                                                         },
+    current()    { return this.real_model.fetch(this.real_value)                                                  },
+    label()      { return this.real_model.field_label                                                             },
+    hint_str()   { return (this.real_model.hint_messages || []).join("")                                          },
     field_message() {
       let str = null
-      if (this.real_model.input_type === 'numberinput') {
+      if (this.numeric_p) {
         // current は参照できない
       } else {
         str = str ?? this.current.message
@@ -115,4 +130,13 @@ export default {
 </script>
 
 <style lang="sass">
+.SimpleRadioButtons
+  .column
+    z-index: 0
+  .b-slider
+    .b-slider-thumb-wrapper.has-indicator .b-slider-thumb
+      padding: 10px 6px
+      font-size: 10px
+    .b-slider-thumb-wrapper .b-slider-thumb
+      transform: unset // 掴んでも拡大させない
 </style>
