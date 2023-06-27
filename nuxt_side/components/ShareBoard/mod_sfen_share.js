@@ -270,7 +270,6 @@ export const mod_sfen_share = {
       // return this.cc_play_p
 
       return this.yomiage_mode_info.key === "is_yomiage_mode_on"
-      // return this.foo_active_p
     },
   },
 }

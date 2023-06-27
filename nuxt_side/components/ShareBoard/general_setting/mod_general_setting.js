@@ -1,6 +1,6 @@
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { FooVolumeInfo        } from "../models/foo_volume_info.js"
+import { Foo1VolumeInfo        } from "../models/foo1_volume_info.js"
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
@@ -19,7 +19,7 @@ export const mod_general_setting = {
     },
   },
   computed: {
-    FooVolumeInfo()           { return FooVolumeInfo                                             },
+    Foo1VolumeInfo()           { return Foo1VolumeInfo                                             },
 
     CtrlModeInfo()            { return CtrlModeInfo                                             },
     ctrl_mode_info()          { return this.CtrlModeInfo.fetch(this.ctrl_mode_key)              },
