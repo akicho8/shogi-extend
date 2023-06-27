@@ -8,8 +8,7 @@ b-field.SimpleRadioButtons(
     span(:class="{'is-clickable': $gs.present_p(hint_str)}" @click="label_click_handle")
       | {{label}}
       template(v-if="permanent_mark_append")
-        span.has-text-primary
-          | *
+        span.has-text-danger ＊
 
   template(v-if="real_model.input_type === 'numberinput'")
     b-numberinput(
