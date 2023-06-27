@@ -130,7 +130,7 @@ export const mod_sfen_share = {
         this.gpt_case_illegal(params)                 // 反則した人を励ます
 
         this.from_user_toast(params)                  // 誰が操作したかを表示する
-        this.next_turn_call(params)                   // 反則がないときだけ指し手と次の人を通知する
+        this.sfen_shared_after_notice(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.received_ok_send(params)                 // 受信OKを指し手に通知する
       }
 
@@ -159,25 +159,30 @@ export const mod_sfen_share = {
       // this.toast_ok(`${params.from_user_name} ${params.lmi.kif_without_from}`, options)
       // }
     },
-    next_turn_call(params) {
+
+    sfen_shared_after_notice(params) {
       this.next_turn_message = null
-      if (this.$gs.blank_p(params.illegal_names)) {            // 反則がなかった場合
+      if (this.$gs.blank_p(params.illegal_names)) {                // 反則がなかった場合
         if (this.yomiagable_p) {
           this.talk2(this.user_call_name(params.from_user_name), { // 「aliceさん」
             onend: () => this.talk2(params.lmi.yomiage, {          // 「7 6 ふー！」
-              onend: () => {                                       // 「次は〜」
-                if (params.next_user_name) {                       // 順番設定しているときだけ入っている
-                  if (this.next_notify_p) {
-                    if (this.user_name === params.next_user_name) {
-                      this.tn_notify()
-                    }
-                    this.next_turn_message = `${this.next_turn_message_prefix(params)}${this.user_call_name(params.next_user_name)}の手番です`
-                    this.toast_ok(this.next_turn_message)
-                  }
-                }
-              },
+              onend: () => this.next_turn_call(params),            // 「次は〜」
             }),
           })
+        } else {
+          this.next_turn_call(params) // 「次は〜」
+        }
+      }
+    },
+
+    next_turn_call(params) {
+      if (params.next_user_name) {                       // 順番設定しているときだけ入っている
+        if (this.next_notify_p) {
+          if (this.user_name === params.next_user_name) {
+            this.tn_notify()
+          }
+          this.next_turn_message = `${this.next_turn_message_prefix(params)}${this.user_call_name(params.next_user_name)}の手番です`
+          this.toast_ok(this.next_turn_message)
         }
       }
     },
@@ -265,6 +270,7 @@ export const mod_sfen_share = {
       // return this.cc_play_p
 
       return this.yomiage_mode_info.key === "is_yomiage_mode_on"
+      // return this.foo_active_p
     },
   },
 }

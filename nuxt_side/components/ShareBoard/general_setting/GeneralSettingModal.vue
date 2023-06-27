@@ -11,14 +11,25 @@
     .columns.is-multiline
       template(v-for="m in GeneralSettingInfo.values")
         .column.is-half-tablet
-          SimpleRadioButtons(
-            :base="base"
-            :model_name="m.param_info.relation"
-            :var_name="m.key"
-            :permanent_mark_append="m.param_info.permanent"
-            custom-class="is-small"
-            element_size="is-small"
-            )
+          template(v-if="m.ui_component == 'VolumeController'")
+            VolumeController(
+              :base="TheSb"
+              :model_name="m.param_info.relation"
+              :sync_volume.sync="TheSb.$data[m.key]"
+              :sync_active.sync="TheSb.$data[m.active_var_name]"
+              :permanent_mark_append="m.param_info.permanent"
+              custom-class="is-small"
+              element_size="is-small"
+              )
+          template(v-else)
+            SimpleRadioButtons(
+              :base="TheSb"
+              :model_name="m.param_info.relation"
+              :sync_value.sync="TheSb.$data[m.key]"
+              :permanent_mark_append="m.param_info.permanent"
+              custom-class="is-small"
+              element_size="is-small"
+              )
     .columns.is-centered
       .column
         .notification.is-warning.is-light.is-size-7
@@ -31,12 +42,11 @@
 </template>
 
 <script>
-import { support_child   } from "../support_child.js"
-import { GeneralSettingInfo } from "../models/general_setting_info.js"
+import { GeneralSettingInfo } from "./general_setting_info.js"
 
 export default {
   name: "GeneralSettingModal",
-  mixins: [support_child],
+  inject: ["TheSb"],
   methods: {
     close_handle() {
       this.$sound.play_click()
@@ -54,7 +64,15 @@ export default {
 .GeneralSettingModal
   +modal_max_width(800px)
   .modal-card-body
+    z-index: 0
     padding: 1.75rem
     .field:not(:first-child)
       margin-top: 1.25rem
+.STAGE-development
+  .GeneralSettingModal
+    .columns
+      .column
+        border: 1px dashed change_color($primary, $alpha: 0.5)
+    .field
+        border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>
