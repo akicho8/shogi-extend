@@ -22,6 +22,7 @@ b-field.SimpleRadioButtons(
       )
   template(v-else-if="real_model.input_type === 'slider'")
     b-slider(
+      lazy
       :indicator="true"
       :tooltip="false"
       :size="element_size"
@@ -29,7 +30,7 @@ b-field.SimpleRadioButtons(
       v-model="real_value"
       :min="real_model.min"
       :max="real_model.max"
-      @input="input_handle"
+      @change="input_handle"
       )
   template(v-else)
     template(v-for="e in real_model.values")
@@ -130,8 +131,6 @@ export default {
 
 <style lang="sass">
 .SimpleRadioButtons
-  .column
-    z-index: 0
   .b-slider
     .b-slider-thumb-wrapper.has-indicator .b-slider-thumb
       padding: 10px 6px

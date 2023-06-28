@@ -4,59 +4,43 @@
     .modal-card-title
       | 設定
   .modal-card-body
-    //- b-tabs(type="is-boxed" expanded size="is-small" v-model="main_tab_index" position="is-centered")
-    //-   b-tab-item(label="日付")
-    //-   b-tab-item(label="戦法")
-
-    .columns.is-multiline
-      template(v-for="m in GeneralSettingInfo.values")
-        .column.is-half-tablet
-          template(v-if="m.ui_component == 'VolumeController'")
-            VolumeController(
-              :base="TheSb"
-              :model_name="m.param_info.relation"
-              :sync_volume.sync="TheSb.$data[m.key]"
-              :sync_active.sync="TheSb.$data[m.active_var_name]"
-              :permanent_mark_append="m.param_info.permanent"
-              custom-class="is-small"
-              element_size="is-small"
-              )
-          template(v-else)
-            SimpleRadioButtons(
-              :base="TheSb"
-              :model_name="m.param_info.relation"
-              :sync_value.sync="TheSb.$data[m.key]"
-              :permanent_mark_append="m.param_info.permanent"
-              custom-class="is-small"
-              element_size="is-small"
-              )
-    .columns.is-centered
-      .column
-        .notification.is-warning.is-light.is-size-7
-          ul
-            li どれも初期値のままにしといた方がいい
-            li
-              span.has-text-danger ＊
-              | がついているものはブラウザに保存する
+    b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="$sound.play_click()")
+      template(v-for="e in TheSb.SettingCategoryInfo.values")
+        b-tab-item(:label="e.name")
+    .tab_content
+      .columns.form_block.is-multiline.is-variable.is-0(:key="TheSb.setting_category_info.key")
+        template(v-for="item in TheSb.setting_category_info.list.values")
+          .column(:class="item.column_class || 'is-12-tablet'")
+            SimpleRadioButtonsWrapper(:item="item")
+    .notification.is-warning.is-light.is-size-7.mt-3
+      ul
+        li どれも初期値のままにしといた方がいい
+        li
+          span.has-text-danger ＊
+          | がついているものはブラウザに保存する
+        li 反則などは順番設定で他者から上書きされるのでここで設定してもあんま意味ない
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>
 
 <script>
-import { GeneralSettingInfo } from "./general_setting_info.js"
-
 export default {
   name: "GeneralSettingModal",
   inject: ["TheSb"],
+  data() {
+    return {
+      tab_index: this.TheSb.setting_category_info.code,
+    }
+  },
+  watch: {
+    tab_index(v) { this.TheSb.setting_category_key = this.TheSb.SettingCategoryInfo.fetch(v).key },
+  },
   methods: {
     close_handle() {
       this.$sound.play_click()
       this.$emit("close")
     },
-  },
-  computed: {
-    GeneralSettingInfo() { return GeneralSettingInfo },
   },
 }
 </script>
@@ -64,17 +48,30 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 .GeneralSettingModal
-  +modal_max_width(800px)
+  +modal_width(800px)
+  +modal_height(700px)
+  +bulma_columns_vertical_minus_margin_clear
+
+  // .modal-card
+  //   overflow: hidden
+  // .modal-card-body
+  //   overflow: hidden
+
   .modal-card-body
-    z-index: 0
-    padding: 1.75rem
-    .field:not(:first-child)
+    padding: 1rem
+    .b-tabs, .tab-content
+      padding: 0
+    .b-tabs
+      margin-top: 0
+      margin-bottom: 0
+    .tab_content
       margin-top: 1.25rem
+
 .STAGE-development
   .GeneralSettingModal
-    .columns
-      .column
-        border: 1px dashed change_color($primary, $alpha: 0.5)
-    .field
-        border: 1px dashed change_color($danger, $alpha: 0.5)
+    // .columns
+    //   .column
+    //     border: 1px dashed change_color($primary, $alpha: 0.5)
+    // .field
+    //     border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>

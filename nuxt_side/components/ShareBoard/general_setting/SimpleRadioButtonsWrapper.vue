@@ -1,0 +1,24 @@
+<template lang="pug">
+SimpleRadioButtons.SimpleRadioButtonsWrapper.field_block(
+  :base="TheSb"
+  :model_name="item.param_info.relation || item.param_info.input_attrs"
+  :sync_value.sync="TheSb.$data[item.key]"
+  :permanent_mark_append="item.param_info.permanent"
+  custom-class="is-small"
+  element_size="is-small"
+  )
+</template>
+
+<script>
+export default {
+  name: "SimpleRadioButtonsWrapper",
+  inject: ["TheSb"],
+  props: {
+    item: { type: Object, required: true },
+  },
+}
+</script>
+
+<style lang="sass">
+@import "../support.sass"
+</style>

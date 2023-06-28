@@ -4,8 +4,8 @@ export class Foo1VolumeInfo extends ApplicationMemoryRecord {
   static field_label = "読み上げ音量"
   static field_message = ""
   static input_type = "slider"
-  static min = 1
-  static max = 10
+  static min = 0
+  static max = 100
   static get define() {
     return [
     ]
