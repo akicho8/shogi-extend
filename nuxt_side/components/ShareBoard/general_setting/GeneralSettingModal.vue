@@ -69,9 +69,8 @@ export default {
 
 .STAGE-development
   .GeneralSettingModal
-    // .columns
-    //   .column
-    //     border: 1px dashed change_color($primary, $alpha: 0.5)
-    // .field
-    //     border: 1px dashed change_color($danger, $alpha: 0.5)
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .field, .notification
+      border: 1px dashed change_color($danger, $alpha: 0.5)
 </style>

@@ -15,9 +15,31 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       // | 上級者向け     |       |       | 反則かどうかは人が判断する                       |        |
       // |----------------+-------+-------+--------------------------------------------------+--------|
       // 千日手は shogi-player の中から判定するのが難しいためシンプルに is_illegal_behavior_auto の場合のみ有効とする
-      { key: "is_illegal_behavior_auto",   name: "したら負け", message: "基本はこれ (推奨)",           sp_illegal_validate: true,  sp_illegal_cancel: false, perpetual_check_p: true,  environment: ["development", "staging", "production"], },
-      { key: "is_illegal_behavior_newbie", name: "できない",   message: "初心者向け (将棋ウォーズ風)", sp_illegal_validate: true,  sp_illegal_cancel: true,  perpetual_check_p: false, environment: ["development", "staging", "production"], },
-      { key: "is_illegal_behavior_throw",  name: "関与しない", message: "リアル対面対局と同じ",        sp_illegal_validate: false, sp_illegal_cancel: false, perpetual_check_p: false, environment: ["development", "staging", "production"], },
+      {
+        key: "is_illegal_behavior_auto",
+        name: "したら負け",
+        message: "基本はこれ (推奨)",
+        sp_illegal_validate: true,
+        sp_illegal_cancel: false,
+        perpetual_check_p: true,
+        environment: ["development", "staging", "production"],
+      }, {
+        key: "is_illegal_behavior_newbie",
+        name: "できない",
+        message: "初心者向け (将棋ウォーズ風)",
+        sp_illegal_validate: true,
+        sp_illegal_cancel: true,
+        perpetual_check_p: false,
+        environment: ["development", "staging", "production"],
+      }, {
+        key: "is_illegal_behavior_throw",
+        name: "関与しない",
+        message: "リアル対面対局と同じ。反則に気づかないまま対局が進んでしまう場合がある",
+        sp_illegal_validate: false,
+        sp_illegal_cancel: false,
+        perpetual_check_p: false,
+        environment: ["development", "staging", "production"],
+      },
     ]
   }
 }

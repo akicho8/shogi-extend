@@ -10,19 +10,19 @@ export class LiftCancelActionInfo extends ApplicationMemoryRecord {
         key: "standard",
         name: "移動先以外",
         type: "is-primary",
-        message: "将棋ウォーズ・ぴよ将棋に準拠する",
+        message: "「将棋ウォーズ」や「ぴよ将棋」に準拠する",
       },
       {
         key: "reality",
         name: "元の位置",
         type: "is-primary",
-        message: "リアル風。元の位置に戻す",
+        message: "リアルと同じで元のセルに戻したら離す",
       },
       {
         key: "rehold",
         name: "持ち替え",
         type: "is-primary",
-        message: "lishogi準拠。離さず持ち替える",
+        message: "「lishogi」に準拠する。離すことができない。別の駒をタップすればそのまま持ち替える",
       },
     ]
   }

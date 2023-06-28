@@ -15,6 +15,8 @@ export const mod_turn_notify = {
   computed: {
     // tn_notify を呼ぶ条件
     // 「牛」と「次は○○」の発動条件
-    next_notify_p() { return this.many_vs_many_p || this.development_p },
+    next_notify_p() {
+      return (this.many_vs_many_p || this.development_p) && this.next_turn_call_info.key === "is_next_turn_call_on"
+    },
   },
 }
