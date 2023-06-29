@@ -148,7 +148,7 @@ export const mod_clock_box = {
       return 9
     },
 
-    // "9"..."1" の読み上げ
+    // 9〜1 の読み上げ
     cc_byoyomi(t) {
       if (t <= this.byoyomi_mode_info.byoyomi) {
         this.cc_yomiage(t)
@@ -163,7 +163,7 @@ export const mod_clock_box = {
     },
 
     cc_yomiage(s) {
-      this.talk2(s, {rate: BYOYOMI_TALK_PITCH})
+      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.foo1_volume_rate})
     },
 
     cc_destroy() {

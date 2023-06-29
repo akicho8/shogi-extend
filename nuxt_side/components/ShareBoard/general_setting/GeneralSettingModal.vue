@@ -18,7 +18,7 @@
         li
           span.has-text-danger ＊
           | がついているものはブラウザに保存する
-        li 反則などは順番設定で他者から上書きされるのでここで設定してもあんま意味ない
+        li 「反則」は順番設定後の共有で他者から上書きされるのでここで設定してもあんま意味ない
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

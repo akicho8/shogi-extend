@@ -24,6 +24,7 @@ export const mod_general_setting = {
   },
   computed: {
     Foo1VolumeInfo()          { return Foo1VolumeInfo                                            },
+    foo1_volume_rate()        { return this.foo1_volume / this.Foo1VolumeInfo.max                },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
     setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },

@@ -52,6 +52,7 @@ export const vue_talk = {
         ...HOWL_TALK_OPTIONS_DEFAULT,
         ...options,
       }
+      Gs.assert(options.volume != null, "options.volume != null")
       SoundUtil.play_now(options) // 戻値不要
     },
   },

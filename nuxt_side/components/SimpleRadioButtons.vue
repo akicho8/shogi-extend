@@ -76,6 +76,9 @@ export default {
   methods: {
     input_handle(e) {
       this.$sound.play_click()
+      if (this.real_model.input_handle_callback) {
+        this.real_model.input_handle_callback(this, e)
+      }
       if (this.buttons_p) {
         this.talk(this.current.talk_message || this.current.name)
       }
@@ -90,12 +93,13 @@ export default {
     },
   },
   computed: {
-    real_model() { return this.base[this.model_name]                                                              },
-    numeric_p()  { return this.real_model.input_type === 'numberinput' || this.real_model.input_type === 'slider' },
-    buttons_p()  { return !this.numeric_p                                                                         },
-    current()    { return this.real_model.fetch(this.real_value)                                                  },
-    label()      { return this.real_model.field_label                                                             },
-    hint_str()   { return (this.real_model.hint_messages || []).join("")                                          },
+    real_model() { return this.base[this.model_name]                                    },
+    numeric_p()  { return this.real_model.input_type === 'numberinput' || this.slider_p },
+    buttons_p()  { return !this.numeric_p                                               },
+    slider_p()   { return this.real_model.input_type === 'slider'                       },
+    current()    { return this.real_model.fetch(this.real_value)                        },
+    label()      { return this.real_model.field_label                                   },
+    hint_str()   { return (this.real_model.hint_messages || []).join("")                },
     field_message() {
       let str = null
       if (this.numeric_p) {
