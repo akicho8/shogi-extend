@@ -26,7 +26,9 @@ export const mod_chatgpt = {
     gpt_speak_for(key, params) {
       const message = ChatgptRequestInfo.fetch(key).command_fn(this, params)
       if (message != null) {
-        this.gpt_speak({message: message})
+        if (this.gpt_mode_info.key === "gpt_mode_on") {
+          this.gpt_speak({message: message})
+        }
       }
     },
 

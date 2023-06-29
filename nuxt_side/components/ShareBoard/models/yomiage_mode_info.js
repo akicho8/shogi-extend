@@ -7,7 +7,7 @@ export class YomiageModeInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       { key: "is_yomiage_mode_on",  name: "する",   type: "is-primary", message: null, },
-      { key: "is_yomiage_mode_off", name: "しない", type: "is-warning", message: null, },
+      { key: "is_yomiage_mode_off", name: "しない", type: "is-primary", message: null, },
     ]
   }
 }
