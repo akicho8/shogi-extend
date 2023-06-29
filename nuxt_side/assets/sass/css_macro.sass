@@ -2,7 +2,7 @@
 
 =setvar($key, $val)
   --#{$key}: #{$val}
-    
+
 =padding_lr($v)
   padding-left: $v
   padding-right: $v
@@ -69,6 +69,11 @@
 
 =modal_height($height)
   +tablet
+    .modal-card, .modal-content
+      height: $height
+
+=modal_height_if_mobile($height)
+  +mobile
     .modal-card, .modal-content
       height: $height
 
