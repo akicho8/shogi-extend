@@ -15,4 +15,4 @@ ncu /js-memory-record/ -u
 # ncu /chart/ -u
 # ncu /pug/ -u
 
-npm i
+pnpm i
