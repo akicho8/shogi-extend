@@ -4,7 +4,8 @@ import { Foo1VolumeInfo       } from "../models/foo1_volume_info.js"
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
-import { GptModeInfo      } from "../models/gpt_mode_info.js"
+import { GptModeInfo          } from "../models/gpt_mode_info.js"
+import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
 import { NextTurnCallInfo      } from "../models/next_turn_call_info.js"
 import { LiftCancelActionInfo } from "../models/lift_cancel_action_info.js"
 import { LegalInfo            } from "../models/legal_info.js"
@@ -36,11 +37,14 @@ export const mod_general_setting = {
     YomiageModeInfo()         { return YomiageModeInfo                                           },
     yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },
 
-    GptModeInfo()         { return GptModeInfo                                           },
-    gpt_mode_info()       { return this.GptModeInfo.fetch(this.gpt_mode_key)         },
-    
-    NextTurnCallInfo()         { return NextTurnCallInfo                                           },
-    next_turn_call_info()       { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)         },
+    GptModeInfo()             { return GptModeInfo                                               },
+    gpt_mode_info()           { return this.GptModeInfo.fetch(this.gpt_mode_key)                 },
+
+    ByoyomiModeInfo()         { return ByoyomiModeInfo                                           },
+    byoyomi_mode_info()       { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)         },
+
+    NextTurnCallInfo()        { return NextTurnCallInfo                                          },
+    next_turn_call_info()     { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)      },
 
     LiftCancelActionInfo()    { return LiftCancelActionInfo                                      },
     lift_cancel_action_info() { return this.LiftCancelActionInfo.fetch(this.lift_cancel_action)  },

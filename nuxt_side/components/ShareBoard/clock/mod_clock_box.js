@@ -113,11 +113,11 @@ export const mod_clock_box = {
         second_decriment_hook: (single_clock, key, t, m, s) => {
           if (1 <= m && m <= 10) {
             if (s === 0) {
-              this.cc_byoyomi(`${m}分`)
+              this.cc_minute_yomi(`${m}分`)
             }
           }
           if (t === 10 || t === 20 || t === 30) {
-            this.cc_byoyomi(`${t}秒`)
+            this.cc_minute_yomi(`${t}秒`)
           }
           if (key === "read_sec") {
             if (t <= this.cc_byoyomi_start_for_read_sec(single_clock)) {
@@ -148,7 +148,21 @@ export const mod_clock_box = {
       return 9
     },
 
-    cc_byoyomi(s) {
+    // "9"..."1" の読み上げ
+    cc_byoyomi(t) {
+      if (t <= this.byoyomi_mode_info.byoyomi) {
+        this.cc_yomiage(t)
+      }
+    },
+
+    // "n分" や "30秒" の読み上げ
+    cc_minute_yomi(s) {
+      if (this.byoyomi_mode_info.minute_yomi) {
+        this.cc_yomiage(s)
+      }
+    },
+
+    cc_yomiage(s) {
       this.talk2(s, {rate: BYOYOMI_TALK_PITCH})
     },
 
