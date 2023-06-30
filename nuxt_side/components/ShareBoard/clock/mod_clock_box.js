@@ -151,19 +151,19 @@ export const mod_clock_box = {
     // 9〜1 の読み上げ
     cc_byoyomi(t) {
       if (t <= this.byoyomi_mode_info.byoyomi) {
-        this.cc_yomiage(t)
+        this.cc_talk(t)
       }
     },
 
     // "n分" や "30秒" の読み上げ
     cc_minute_yomi(s) {
       if (this.byoyomi_mode_info.minute_yomi) {
-        this.cc_yomiage(s)
+        this.cc_talk(s)
       }
     },
 
-    cc_yomiage(s) {
-      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.foo1_volume_rate})
+    cc_talk(s) {
+      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.clock_volume_rate})
     },
 
     cc_destroy() {

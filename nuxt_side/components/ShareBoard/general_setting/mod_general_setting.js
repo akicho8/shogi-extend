@@ -1,6 +1,7 @@
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
-import { Foo1VolumeInfo       } from "../models/foo1_volume_info.js"
+import { ClockVolumeInfo       } from "../models/clock_volume_info.js"
+import { TalkVolumeInfo       } from "../models/talk_volume_info.js"
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
@@ -22,9 +23,18 @@ export const mod_general_setting = {
       })
     },
   },
+  beforeDestroy() {
+    this.talk_volume_reset()
+  },
+  watch: {
+    talk_volume_rate(v) { this.g_talk_volume_rate = v },
+  },
   computed: {
-    Foo1VolumeInfo()          { return Foo1VolumeInfo                                            },
-    foo1_volume_rate()        { return this.foo1_volume / this.Foo1VolumeInfo.max                },
+    ClockVolumeInfo()         { return ClockVolumeInfo                                           },
+    clock_volume_rate()       { return this.clock_volume / this.ClockVolumeInfo.max              },
+
+    TalkVolumeInfo()          { return TalkVolumeInfo                                            },
+    talk_volume_rate()        { return this.talk_volume / this.TalkVolumeInfo.max                },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
     setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },

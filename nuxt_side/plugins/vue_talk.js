@@ -4,7 +4,7 @@
 const MESSAGE_LENGTH_MAX = 140
 
 const HOWL_TALK_OPTIONS_DEFAULT = {
-  volume: 0.5,
+  volume: 0.5,   // ~/src/shogi-extend/nuxt_side/components/ShareBoard/models/talk_volume_info.js の音量と合わせる
   rate: 1.5,
 }
 
@@ -12,6 +12,12 @@ import { SoundUtil } from "@/components/models/sound_util.js"
 import { Gs } from "@/components/models/gs.js"
 
 export const vue_talk = {
+  data() {
+    return {
+      g_talk_volume_rate: HOWL_TALK_OPTIONS_DEFAULT.volume,
+    }
+  },
+
   methods: {
     // しゃべる
     // ・タブが見えているときだけの条件を入れてはいけない
@@ -43,6 +49,11 @@ export const vue_talk = {
       })
     },
 
+    // 音量を元に戻す
+    talk_volume_reset() {
+      this.g_talk_volume_rate = HOWL_TALK_OPTIONS_DEFAULT.volume
+    },
+
     // private
 
     talk_play(e, options = {}) {
@@ -50,6 +61,7 @@ export const vue_talk = {
       options = {
         src: e.browser_path,
         ...HOWL_TALK_OPTIONS_DEFAULT,
+        volume: this.g_talk_volume_rate,
         ...options,
       }
       Gs.assert(options.volume != null, "options.volume != null")

@@ -49,10 +49,10 @@ export const mod_message = {
 
       const message_dto = MessageDto.create(params)
       this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
-      if (this.message_share_received_p(params)) {    // 見てもいいなら
-        this.$sound.play("patxu")
+      if (this.message_share_received_p(params)) {       // 見てもいいなら
+        this.$sound.play("patxu")                        // 「パッ」
         this.$buefy.toast.open(message_dto.toast_params) // 表示
-        this.talk2(message_dto.message)                 // しゃべる
+        this.talk2(message_dto.message)                  // しゃべる
       }
     },
 
@@ -72,7 +72,11 @@ export const mod_message = {
     // ログ用の追加データとして data に名前を入れておく
     // 直接 talk を使うべからず
     talk2(message, options = {}) {
-      return this.talk(message, {data: this.user_name, ...options})
+      return this.talk(message, {
+        data: this.user_name,
+        // volume: this.talk_volume_rate,
+        ...options,
+      })
     },
   },
 
