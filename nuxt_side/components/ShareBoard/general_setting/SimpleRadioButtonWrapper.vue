@@ -1,5 +1,5 @@
 <template lang="pug">
-SimpleRadioButtons.SimpleRadioButtonsWrapper.field_block(
+SimpleRadioButton.SimpleRadioButtonWrapper.field_block(
   :base="TheSb"
   :model_name="item.param_info.relation || item.param_info.input_attrs"
   :sync_value.sync="TheSb.$data[item.key]"
@@ -11,7 +11,7 @@ SimpleRadioButtons.SimpleRadioButtonsWrapper.field_block(
 
 <script>
 export default {
-  name: "SimpleRadioButtonsWrapper",
+  name: "SimpleRadioButtonWrapper",
   inject: ["TheSb"],
   props: {
     item: { type: Object, required: true },

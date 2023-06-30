@@ -5,8 +5,9 @@ export class TalkVolumeInfo extends ApplicationMemoryRecord {
   static field_label = "おしゃべり音量"
   static field_message = ""
   static input_type = "slider"
-  static min = 0
-  static max = 20
+  static min = 0.0
+  static step = 0.05
+  static max = 1.0
 
   static input_handle_callback(context, value) {
     const app = context.base

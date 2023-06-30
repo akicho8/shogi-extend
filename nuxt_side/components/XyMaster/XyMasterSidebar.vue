@@ -21,7 +21,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="TheA
 
         hr
 
-        SimpleRadioButtons(:base="TheApp" model_name="GhostPresetInfo" var_name="ghost_preset_key" custom-class="is-small")
+        SimpleRadioButton(:base="TheApp" model_name="GhostPresetInfo" var_name="ghost_preset_key" custom-class="is-small")
 
         b-field(custom-class="is-small" label="ゴーストの濃さ")
           b-slider(v-bind="slider_attrs" v-model="TheApp.xy_piece_opacity" :min="0" :max="1.0" :step="0.001")
@@ -32,7 +32,7 @@ b-sidebar.is-unselectable.XyMasterSidebar(fullheight right overlay v-model="TheA
 
       .box(v-if="development_p")
         .title.is-5 操作感
-        SimpleRadioButtons.x-field_block(:base="TheApp" model_name="TapDetectInfo" var_name="tap_detect_key")
+        SimpleRadioButton.x-field_block(:base="TheApp" model_name="TapDetectInfo" var_name="tap_detect_key")
 </template>
 
 <script>

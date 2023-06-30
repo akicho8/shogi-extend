@@ -1,5 +1,5 @@
 <template lang="pug">
-b-field.SimpleRadioButtons(
+b-field.SimpleRadioButton(
   :message="field_message"
   v-bind="$attrs"
   :class="{'is_scroll_x': buttons_p}"
@@ -49,9 +49,9 @@ b-field.SimpleRadioButtons(
 
 <script>
 // 使い方
-//  SimpleRadioButtons.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
+//  SimpleRadioButton.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
 export default {
-  name: "SimpleRadioButtons",
+  name: "SimpleRadioButton",
   props: {
     base:                  { type: Object, required: true,  },
     model_name:            { type: String, required: true,  },
@@ -134,7 +134,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SimpleRadioButtons
+.SimpleRadioButton
   .b-slider
     .b-slider-thumb-wrapper.has-indicator .b-slider-thumb
       padding: 10px 6px

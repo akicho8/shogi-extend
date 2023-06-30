@@ -21,7 +21,7 @@ client-only
         //- .is-4-tablet.is-5-desktop.is-6-widescreen.is-7-fullhd
         .columns.is-multiline.is-variable.is-0-mobile
           .column(v-if="development_p || true")
-            SimpleRadioButtons.xfield_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key")
+            SimpleRadioButton.xfield_block(:base="base" model_name="RuleSelectInfo" var_name="rule_key" custom-class="is-small" v-if="rule_key")
           .column(v-if="development_p || true")
             //- https://buefy.org/documentation/field#combining-addons-and-groups
             b-field.xfield_block(label="戦法等" custom-class="is-small")

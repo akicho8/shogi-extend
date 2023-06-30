@@ -24,11 +24,11 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
       .box.mt-5
         .title.is-5 設定
 
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ArticleTitleDisplayInfo" var_name="article_title_display_key")
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="MovesMatchInfo"          var_name="moves_match_key"          )
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="CorrectBehaviorInfo"     var_name="correct_behavior_key"     )
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="ViewpointFlipInfo"       var_name="viewpoint_flip_key"       )
-        SimpleRadioButtons(:base="base" custom-class="is-small" model_name="SoldierFlopInfo"         var_name="soldier_flop_key"         )
+        SimpleRadioButton(:base="base" custom-class="is-small" model_name="ArticleTitleDisplayInfo" var_name="article_title_display_key")
+        SimpleRadioButton(:base="base" custom-class="is-small" model_name="MovesMatchInfo"          var_name="moves_match_key"          )
+        SimpleRadioButton(:base="base" custom-class="is-small" model_name="CorrectBehaviorInfo"     var_name="correct_behavior_key"     )
+        SimpleRadioButton(:base="base" custom-class="is-small" model_name="ViewpointFlipInfo"       var_name="viewpoint_flip_key"       )
+        SimpleRadioButton(:base="base" custom-class="is-small" model_name="SoldierFlopInfo"         var_name="soldier_flop_key"         )
 </template>
 
 <script>

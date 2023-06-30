@@ -11,7 +11,7 @@
       .columns.form_block.is-multiline.is-variable.is-0(:key="TheSb.setting_category_info.key")
         template(v-for="item in TheSb.setting_category_info.list.values")
           .column(:class="item.column_class || 'is-12-tablet'")
-            SimpleRadioButtonsWrapper(:item="item")
+            SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
       ul
         li どれも初期値のままにしといた方がいい

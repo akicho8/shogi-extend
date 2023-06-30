@@ -1,6 +1,6 @@
 <template lang="pug">
 .KiwiLemonNewFormPro1
-  SimpleRadioButtons.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint")
+  SimpleRadioButton.field_block(:base="base" model_name="ViewpointInfo" var_name="viewpoint")
 
   .page_duration_field.field_block
     //- b-field(:message="base.page_duration_message" v-if="false")
@@ -49,11 +49,11 @@
       b-input(key="input-page_duration" v-model.number="base.page_duration")
 
 
-  SimpleRadioButtons.field_block(:base="base" model_name="TurnEmbedInfo" var_name="turn_embed_key")
-  SimpleRadioButtons.field_block(:base="base" model_name="PieceFontWeightInfo" var_name="piece_font_weight_key")
+  SimpleRadioButton.field_block(:base="base" model_name="TurnEmbedInfo" var_name="turn_embed_key")
+  SimpleRadioButton.field_block(:base="base" model_name="PieceFontWeightInfo" var_name="piece_font_weight_key")
 
-  //- SimpleRadioButtons(:base="base" model_name="RectSizeInfo" var_name="rect_size_key")
-  // SimpleRadioButtons(:base="base" model_name="RecipeInfo" var_name="recipe_key")
+  //- SimpleRadioButton(:base="base" model_name="RectSizeInfo" var_name="rect_size_key")
+  // SimpleRadioButton(:base="base" model_name="RecipeInfo" var_name="recipe_key")
 
   //- b-collapse(:open="false" position="is-bottom")
   //-   template(#trigger="props")
