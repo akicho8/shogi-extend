@@ -163,7 +163,7 @@ export const mod_clock_box = {
     },
 
     cc_talk(s) {
-      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.clock_volume_rate})
+      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.clock_volume})
     },
 
     cc_destroy() {

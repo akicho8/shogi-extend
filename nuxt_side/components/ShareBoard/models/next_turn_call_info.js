@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export class NextTurnCallInfo extends ApplicationMemoryRecord {
   static field_label = "手番の通達"
-  static field_message = "3人以上で対局しているとき「次は○○さんの手番です」と声で伝えるかどうか。リレー将棋では手番に気づかない場合があるので基本、有効にしておこう"
+  static field_message = "3人以上で対局しているとき「次は○○さんの手番です」と声で伝えるか？"
 
   static get define() {
     return [

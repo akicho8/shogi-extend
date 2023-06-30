@@ -74,7 +74,7 @@ export const mod_message = {
     talk2(message, options = {}) {
       return this.talk(message, {
         data: this.user_name,
-        // volume: this.talk_volume_rate,
+        // volume: this.talk_volume,
         ...options,
       })
     },

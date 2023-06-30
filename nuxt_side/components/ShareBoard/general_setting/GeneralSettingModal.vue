@@ -14,11 +14,9 @@
             SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
       ul
-        li どれも初期値のままにしといた方がいい
         li
           span.has-text-danger ＊
           | がついているものはブラウザに保存する
-        li 「反則」は順番設定後の共有で他者から上書きされるのでここで設定してもあんま意味ない
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

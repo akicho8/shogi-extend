@@ -14,7 +14,7 @@ import { Gs } from "@/components/models/gs.js"
 export const vue_talk = {
   data() {
     return {
-      g_talk_volume_rate: HOWL_TALK_OPTIONS_DEFAULT.volume,
+      g_talk_volume: HOWL_TALK_OPTIONS_DEFAULT.volume,
     }
   },
 
@@ -51,7 +51,7 @@ export const vue_talk = {
 
     // 音量を元に戻す
     talk_volume_reset() {
-      this.g_talk_volume_rate = HOWL_TALK_OPTIONS_DEFAULT.volume
+      this.g_talk_volume = HOWL_TALK_OPTIONS_DEFAULT.volume
     },
 
     // private
@@ -61,7 +61,7 @@ export const vue_talk = {
       options = {
         src: e.browser_path,
         ...HOWL_TALK_OPTIONS_DEFAULT,
-        volume: this.g_talk_volume_rate,
+        volume: this.g_talk_volume,
         ...options,
       }
       Gs.assert(options.volume != null, "options.volume != null")

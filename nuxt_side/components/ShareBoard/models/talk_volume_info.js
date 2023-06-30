@@ -6,7 +6,7 @@ export class TalkVolumeInfo extends ApplicationMemoryRecord {
   static field_message = ""
   static input_type = "slider"
   static min = 0.0
-  static step = 0.05
+  static step = 0.1
   static max = 1.0
 
   static input_handle_callback(context, value) {

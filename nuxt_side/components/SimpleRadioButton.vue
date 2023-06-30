@@ -17,6 +17,7 @@ b-field.SimpleRadioButton(
       v-model="real_value"
       :min="real_model.min"
       :max="real_model.max"
+      :step="real_model.step ?? 1"
       :exponential="true"
       @input="input_handle"
       )
@@ -30,6 +31,7 @@ b-field.SimpleRadioButton(
       v-model="real_value"
       :min="real_model.min"
       :max="real_model.max"
+      :step="real_model.step ?? 1"
       @change="input_handle"
       )
   template(v-else)

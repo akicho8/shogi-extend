@@ -27,14 +27,12 @@ export const mod_general_setting = {
     this.talk_volume_reset()
   },
   watch: {
-    talk_volume_rate(v) { this.g_talk_volume_rate = v },
+    talk_volume(v) { this.g_talk_volume = v },
   },
   computed: {
     ClockVolumeInfo()         { return ClockVolumeInfo                                           },
-    clock_volume_rate()       { return this.clock_volume / this.ClockVolumeInfo.max              },
 
     TalkVolumeInfo()          { return TalkVolumeInfo                                            },
-    talk_volume_rate()        { return this.talk_volume / this.TalkVolumeInfo.max                },
 
     SettingCategoryInfo()     { return SettingCategoryInfo                                       },
     setting_category_info()   { return this.SettingCategoryInfo.fetch(this.setting_category_key) },
