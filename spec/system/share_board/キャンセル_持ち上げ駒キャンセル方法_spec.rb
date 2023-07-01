@@ -6,6 +6,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
     hamburger_click
     menu_item_click("設定")               # モーダルを開く
+    find("a", text: "その他", exact_text: true).click      # 「その他」タブ
     find(:label, text: selector, exact_text: true).click
     find(".close_handle").click           # 閉じる
 
