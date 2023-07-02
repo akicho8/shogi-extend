@@ -125,6 +125,12 @@ export default {
     // if (this.nuxt_login_required()) { return }
   },
 
+  provide() {
+    return {
+      TheApp: this,
+    }
+  },
+
   computed: {
     base()    { return this },
     meta()    { return this.book?.og_meta },
