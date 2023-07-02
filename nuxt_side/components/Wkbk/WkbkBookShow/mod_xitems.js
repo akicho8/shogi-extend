@@ -66,7 +66,7 @@ export const mod_xitems = {
     },
 
     ev_play_mode_next_moves(moves) {
-      if (this.soldier_flop_info.key === "flip_on") {
+      if (this.soldier_flop_info.key === "flop_on") {
         moves = MoveHash.line_flop(moves.join(" ")).split(/\s+/)
       }
 

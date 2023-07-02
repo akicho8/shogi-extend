@@ -5,7 +5,7 @@ export const mod_article = {
   methods: {
     // 盤上の駒の左右反転
     sfen_flop(sfen) {
-      if (this.soldier_flop_info.key === "flip_on") {
+      if (this.soldier_flop_info.key === "flop_on") {
         sfen = SfenParser.sfen_flop(sfen)
       }
       return sfen
