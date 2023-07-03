@@ -96,9 +96,9 @@ export default {
   },
   computed: {
     real_model() { return this.base[this.model_name]                                    },
-    numeric_p()  { return this.real_model.input_type === 'numberinput' || this.slider_p },
+    numeric_p()  { return this.real_model.input_type === "numberinput" || this.slider_p },
     buttons_p()  { return !this.numeric_p                                               },
-    slider_p()   { return this.real_model.input_type === 'slider'                       },
+    slider_p()   { return this.real_model.input_type === "slider"                       },
     current()    { return this.real_model.fetch(this.real_value)                        },
     label()      { return this.real_model.field_label                                   },
     hint_str()   { return (this.real_model.hint_messages || []).join("")                },

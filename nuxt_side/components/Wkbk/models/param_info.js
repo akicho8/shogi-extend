@@ -9,6 +9,8 @@ export class ParamInfo extends ParamBase {
       { key: "viewpoint_flip_key",        type: "string",  name: "視点を反転",                 defaults: { development: null, production: "flip_off",              }, permanent: true,  relation: "ViewpointFlipInfo",        input_attrs: null, desc: null, after_set: null, },
       { key: "soldier_flop_key",          type: "string",  name: "盤上の駒を左右反転",         defaults: { development: null, production: "flop_off",              }, permanent: true,  relation: "SoldierFlopInfo",          input_attrs: null, desc: null, after_set: null, },
       { key: "appearance_theme_key",      type: "string",  name: "外観",                       defaults: { development: null, production: "is_appearance_theme_a", }, permanent: true,  relation: "AppearanceThemeInfo",      input_attrs: null, desc: null, after_set: null, },
+      { key: "time_limit_func_key",       type: "string",  name: "時間制限",                   defaults: { development: null, production: "time_limit_func_off",   }, permanent: true,  relation: "TimeLimitFuncInfo",        input_attrs: null, desc: null, after_set: null, },
+      { key: "time_limit_sec",            type: "integer", name: "制限秒数",                   defaults: { development: null, production: 30,                      }, permanent: true,  relation: null,                       input_attrs: null, desc: null, after_set: null, },
     ]
   }
 }

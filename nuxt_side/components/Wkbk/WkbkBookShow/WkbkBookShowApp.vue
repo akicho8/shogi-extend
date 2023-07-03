@@ -58,6 +58,7 @@ import { mod_keyboard          } from "./mod_keyboard.js"
 import { mod_storage           } from "./mod_storage.js"
 import { mod_kb_shortcut_modal } from "./mod_kb_shortcut_modal.js"
 import { mod_interval_counter  } from "./mod_interval_counter.js"
+import { mod_time_limit        } from "./mod_time_limit.js"
 import { mod_appearance_theme  } from "./appearance_theme/mod_appearance_theme.js"
 
 import _ from "lodash"
@@ -80,6 +81,7 @@ export default {
     mod_storage,
     mod_kb_shortcut_modal,
     mod_interval_counter,
+    mod_time_limit,
     mod_appearance_theme,
   ],
 
