@@ -15,8 +15,12 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
+
 .WkbkBookShowOxButtons
   .button
+    &.is-outlined
+      background-color: $white
+
     +mobile
       min-width: 46%
     +tablet

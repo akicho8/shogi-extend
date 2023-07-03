@@ -1,7 +1,8 @@
 <template lang="pug">
 client-only
-  .WkbkBookShowApp
+  .WkbkBookShowApp(:style="component_style" :class="component_class")
     DebugBox(v-if="development_p")
+      p appearance_theme_key: {{appearance_theme_key}}
       p re_total_sec: {{re_total_sec}}
       p mode: {{mode}}
       template(v-if="interval_counter")
@@ -57,6 +58,7 @@ import { mod_keyboard          } from "./mod_keyboard.js"
 import { mod_storage           } from "./mod_storage.js"
 import { mod_kb_shortcut_modal } from "./mod_kb_shortcut_modal.js"
 import { mod_interval_counter  } from "./mod_interval_counter.js"
+import { mod_appearance_theme  } from "./appearance_theme/mod_appearance_theme.js"
 
 import _ from "lodash"
 
@@ -78,6 +80,7 @@ export default {
     mod_storage,
     mod_kb_shortcut_modal,
     mod_interval_counter,
+    mod_appearance_theme,
   ],
 
   data() {
@@ -152,12 +155,39 @@ export default {
   //   }
   // }
 
+    // いちばん外側に設定するタグのstyleでグローバル的なものを指定する
+    component_style() {
+      if (this.pc_standby_ok >= 1) {
+        return {
+          // "--board_width": this.board_width,
+          ...this.appearance_theme_info.to_style,
+        }
+      }
+    },
+
+    // いちばん外側に設定するタグのclassでグローバル的なものを指定する
+    component_class() {
+      if (this.pc_standby_ok >= 1) {
+        return {
+          [`is_mode_${this.mode}`]: true,
+          [this.appearance_theme_info.key]: true,
+        }
+        // hv.debug_mode_p        = this.debug_mode_p
+        // hv.order_enable_p      = this.order_enable_p
+        // hv.current_turn_self_p = this.current_turn_self_p
+        // hv.edit_mode_p         = this.edit_mode_p
+        // hv.normal_mode_p       = !this.edit_mode_p
+      }
+    },
   },
 }
 </script>
 
 <style lang="sass">
 @import "../support.sass"
+@import "./appearance_theme/appearance_theme.sass"
+@import "./layout.sass"
+
 .STAGE-development
   .WkbkBookShowApp
     .container

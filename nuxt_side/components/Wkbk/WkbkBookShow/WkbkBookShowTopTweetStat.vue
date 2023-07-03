@@ -1,6 +1,6 @@
 <template lang="pug">
 .WkbkBookShowTopTweetStat
-  nav.panel.is-twitter.mb-0
+  nav.panel.is-twitter.mb-0.has-background-white
     .panel-heading
       | 総合成績
     .panel-block.panel_body.is-justify-content-center

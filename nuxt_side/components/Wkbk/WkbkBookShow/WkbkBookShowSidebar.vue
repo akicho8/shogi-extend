@@ -28,6 +28,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
         SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="CorrectBehaviorInfo"     :sync_value.sync="TheApp.correct_behavior_key"     )
         SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="ViewpointFlipInfo"       :sync_value.sync="TheApp.viewpoint_flip_key"       )
         SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="SoldierFlopInfo"         :sync_value.sync="TheApp.soldier_flop_key"         )
+        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="AppearanceThemeInfo"     :sync_value.sync="TheApp.appearance_theme_key"     )
 </template>
 
 <script>
@@ -49,7 +50,7 @@ export default {
 @import "../support.sass"
 .WkbkBookShowSidebar
   .sidebar-content
-    width: unset
+    width: 20rem
   .dropdown-menu
     min-width: 0
     a:focus
@@ -58,5 +59,5 @@ export default {
     margin-top: 2em
 
   .field:not(:first-child)
-    margin-top: 2rem
+    margin-top: 1.25rem
 </style>
