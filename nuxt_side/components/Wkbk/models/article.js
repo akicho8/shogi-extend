@@ -56,6 +56,11 @@ export class Article extends ModelBase {
     return Math.max(...this.moves_answers.map(e => e.moves_count))
   }
 
+  // 答えの配列を返す
+  get list_of_moves() {
+    return this.moves_answers.map(e => e.moves)
+  }
+
   // public
 
   // 解答のSFENの配列を返す

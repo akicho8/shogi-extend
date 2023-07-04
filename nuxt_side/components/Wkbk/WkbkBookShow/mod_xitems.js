@@ -1,5 +1,6 @@
 import { Location   } from "shogi-player/components/models/location.js"
 import { MoveHash } from 'shogi-player/components/models/move_hash.js'
+import { NextHandFinder } from "./next_hand_finder.js"
 
 export const mod_xitems = {
   data() {
@@ -8,6 +9,7 @@ export const mod_xitems = {
       answer_tab_index: 0,  // 解答タブ
       // saved_xitems: null, // 最初の状態を xitems を保存しておく
       description_open_p: null,
+      // current_sfen: null,
     }
   },
 
@@ -26,6 +28,8 @@ export const mod_xitems = {
       this.description_open_p = this.mobile_p
       this.re_ox_start()
       if (this.current_xitem) {
+        // this.current_sfen = this.sfen_flop(this.current_init_sfen)
+        // this.current_sfen = "position sfen 4p4/9/9/9/9/9/9/9/4P4 b - 1 moves 5i5h 5a5b"
         this.journal_next_init()
       } else {
         this.goal_check()
@@ -77,7 +81,10 @@ export const mod_xitems = {
         success = this.current_article.moves_first_valid_p(moves)
       }
 
-      if (success) {
+      if (!success) {
+        // 不正解または途中
+        next_hand_auto_move(moves)
+      } else {
         // 正解
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
@@ -85,26 +92,47 @@ export const mod_xitems = {
           this.toast_ok("正解")
           this.$sound.play("o")
         }
-      } else {
-        // 不正解
       }
+    },
+
+    // 自分の手番であれば次の手を自動的に指す
+    next_hand_auto_move(moves) {
+      this.$gs.delay_block(0.1, () => {
+        const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
+        if (new_moves) {
+          const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")
+          this.sp_sfen_set(new_sfen)
+        }
+      })
     },
 
     description_open_handle() {
       this.$sound.play_click()
       this.description_open_p = !this.description_open_p
     },
+
+    //////////////////////////////////////////////////////////////////////////////// 命令型APIを直接実行する
+
+    sp_sfen_set(sfen) {
+      this.sp_object()?.api_sfen_or_kif_set(sfen, {turn: -1})
+    },
+
+    // computed 側にすると動かなくなるので注意
+    sp_object() {
+      return this.$refs?.WkbkBookShowSp?.$refs?.main_sp?.sp_object()
+    },
   },
 
   computed: {
-    xitems()          { return this.book.xitems                    }, // 問題配列
-    rest_count()      { return this.max_count - this.current_index }, // 残り問題数
-    max_count()       { return this.xitems.length                  }, // 問題数
-    goal_p()          { return this.rest_count <= 0                }, // 全問問いた？
-    current_exist_p() { return !!this.xitems[this.current_index]   }, // 現在の問題が存在する？
-    current_xitem()   { return this.xitems[this.current_index]     }, // 現在の問題
-    current_article() { return this.current_xitem.article          }, // 現在の問題のマスター
-    current_article_edit_p() { return this.owner_p                 }, // この問題を編集できるのはこの問題集のオーナーとする
+    xitems()                 { return this.book.xitems                               }, // 問題配列
+    rest_count()             { return this.max_count - this.current_index            }, // 残り問題数
+    max_count()              { return this.xitems.length                             }, // 問題数
+    goal_p()                 { return this.rest_count <= 0                           }, // 全問問いた？
+    current_exist_p()        { return !!this.xitems[this.current_index]              }, // 現在の問題が存在する？
+    current_xitem()          { return this.xitems[this.current_index]                }, // 現在の問題
+    current_article()        { return this.current_xitem.article                     }, // 現在の問題のマスター
+    current_article_edit_p() { return this.owner_p                                   }, // この問題を編集できるのはこの問題集のオーナーとする
+    current_init_sfen()      { return this.sfen_flop(this.current_article.init_sfen) }, // 現在の問題の初期配置
 
     current_index_human: {
       get()  { return this.current_index + 1 },

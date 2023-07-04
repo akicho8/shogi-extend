@@ -31,11 +31,13 @@ client-only
         template(v-if="base.current_article.invisible_p")
           WkbkBookShowAccessBlock(:base="base")
         template(v-else)
-          WkbkBookShowSp(:base="base")
+          WkbkBookShowSp(:base="base" ref="WkbkBookShowSp")
       template(v-if="is_goal_p")
         WkbkBookShowGoal(:base="base")
 
-    DebugPre(v-if="development_p")
+    DebugPre(v-if="!$fetchState.pending && !$fetchState.error && development_p")
+      | {{base.current_article}}
+      |
       | {{$data}}
 </template>
 
