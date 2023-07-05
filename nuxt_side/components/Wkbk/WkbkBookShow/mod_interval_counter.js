@@ -19,6 +19,7 @@ export const mod_interval_counter = {
     interval_counter_callback() {
       if (this.interval_counter_countable_p) {
         this.current_spent_sec += 1
+        this.timeout_then_mistake()
       }
     },
     interval_counter_pause(v) {

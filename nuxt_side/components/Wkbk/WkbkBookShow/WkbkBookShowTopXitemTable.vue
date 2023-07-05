@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.panel.mb-0.WkbkBookShowTopXitemTable
+nav.panel.mb-0.WkbkBookShowTopXitemTable.has-background-white
   .panel-heading
     | 問題リスト
   .panel-block.op_buttons

@@ -126,7 +126,9 @@ export const params_controller = {
       this.ParamInfo.values.forEach(e => {
         const value = this.$data[e.key]
         if (e.relation) {
-          if (this[e.relation].lookup(value)) {
+          const model = this[e.relation]
+          this.$gs.assert(model, `${this.$gs.short_inspect(e.relation)} に対応するモデルが見つからない`)
+          if (model.lookup(value)) {
             this.clog(`[設定値][OK] this.${e.key} は ${this.$gs.short_inspect(value)} のままで良い`)
           } else {
             this.$data[e.key] = e.default_for(this)

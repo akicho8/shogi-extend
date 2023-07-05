@@ -5,4 +5,5 @@ export const support_child = {
   props: {
     base: { type: Object, required: true },
   },
+  inject: ["TheApp"],
 }

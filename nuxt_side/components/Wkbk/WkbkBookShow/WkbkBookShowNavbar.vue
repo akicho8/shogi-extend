@@ -1,5 +1,5 @@
 <template lang="pug">
-MainNavbar.WkbkBookShowNavbar(:spaced="false" centered wrapper-class="container is-fluid px-0")
+MainNavbar.WkbkBookShowNavbar(v-bind="component_attrs")
   template(v-if="base.book")
     template(slot="brand")
       template(v-if="base.is_standby_p")
@@ -59,6 +59,45 @@ import { support_child } from "./support_child.js"
 export default {
   name: "WkbkBookShowNavbar",
   mixins: [support_child],
+  computed: {
+    component_attrs() {
+      const hv = {}
+
+      hv.centered = true
+      hv["wrapper-class"] = "container is-fluid px-0"
+
+      // hv.transparent = true
+      hv.type = this.TheApp.appearance_theme_info.navbar_type
+
+      hv.spaced = false
+
+      // if (this.TheApp.edit_mode_p) {
+      //   hv.type = "is-dark"
+      // } else {
+      //   if (this.TheApp.order_enable_p) {
+      //     // hv.transparent = true
+      //     // hv.type = ""
+      //   } else {
+      //   }
+      //   // hv.type = "is-primary"
+      //   // hv.type = "is-primary"
+      //   if (this.TheApp.AppConfig.NAVBAR_COLOR_CHANGE) {
+      //     if (this.TheApp.clock_box) {
+      //       if (this.TheApp.clock_box.play_p) {
+      //         const rest = this.TheApp.clock_box.current.rest
+      //         if (rest <= 10) {
+      //           hv.type = "is-danger"
+      //         } else if (rest <= 20) {
+      //           hv.type = "is-warning"
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+
+      return hv
+    },
+  },
 }
 </script>
 

@@ -85,7 +85,7 @@
     .panel
       .panel-heading
         | 将棋盤
-      a.panel-block(@click="TheSb.sp_state_reset") 持ち上げた駒を元に戻す
+      a.panel-block(@click="TheSb.sp_lifted_piece_cancel") 持ち上げた駒を元に戻す
       a.panel-block(@click="TheSb.viewpoint = 'black'") ☗視点
       a.panel-block(@click="TheSb.viewpoint = 'white'") ☖視点
       .panel-block 現在の視点 {{TheSb.viewpoint}}

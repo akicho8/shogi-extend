@@ -2,7 +2,7 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export class TegotoInfo extends ApplicationMemoryRecord {
   static field_label = "N手毎交代"
-  static message = null
+  static field_message = null
   static input_type = "numberinput"
   static min = 1
   static max = 100
