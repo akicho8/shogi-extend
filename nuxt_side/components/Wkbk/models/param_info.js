@@ -11,6 +11,7 @@ export class ParamInfo extends ParamBase {
       { key: "appearance_theme_key",      type: "string",  name: "外観",                       defaults: { development: null, production: "is_appearance_theme_a", }, permanent: true,  relation: "AppearanceThemeInfo",      input_attrs: null, desc: null, after_set: null, },
       { key: "time_limit_func_key",       type: "string",  name: "時間制限",                   defaults: { development: null, production: "time_limit_func_off",   }, permanent: true,  relation: "TimeLimitFuncInfo",        input_attrs: null, desc: null, after_set: null, },
       { key: "time_limit_sec",            type: "integer", name: "制限秒数",                   defaults: { development: null, production: 30,                      }, permanent: true,  relation: null,                       input_attrs: null, desc: null, after_set: null, },
+      { key: "auto_move_key",             type: "string",  name: "自動応手",                   defaults: { development: null, production: "auto_move_on",          }, permanent: true,  relation: "AutoMoveInfo",             input_attrs: null, desc: null, after_set: null, },
     ]
   }
 }

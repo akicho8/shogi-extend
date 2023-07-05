@@ -85,7 +85,9 @@ export const mod_xitems = {
 
       if (!success) {
         // 不正解または途中
-        this.next_hand_auto_move(moves)
+        if (this.auto_move_info.key === "auto_move_on") {
+          this.next_hand_auto_move(moves)
+        }
       } else {
         // 正解
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {

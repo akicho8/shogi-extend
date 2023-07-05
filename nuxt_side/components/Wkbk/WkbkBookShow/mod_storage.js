@@ -8,6 +8,7 @@ import { MovesMatchInfo          } from "../models/moves_match_info.js"
 import { CorrectBehaviorInfo     } from "../models/correct_behavior_info.js"
 import { ViewpointFlipInfo       } from "../models/viewpoint_flip_info.js"
 import { SoldierFlopInfo         } from "../models/soldier_flop_info.js"
+import { AutoMoveInfo         } from "../models/auto_move_info.js"
 
 export const mod_storage = {
   mixins: [params_controller],
@@ -37,5 +38,8 @@ export const mod_storage = {
 
     SoldierFlopInfo()            { return SoldierFlopInfo                                               },
     soldier_flop_info()          { return SoldierFlopInfo.fetch(this.soldier_flop_key)                  },
+
+    AutoMoveInfo()            { return AutoMoveInfo                                               },
+    auto_move_info()          { return AutoMoveInfo.fetch(this.auto_move_key)                  },
   },
 }
