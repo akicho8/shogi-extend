@@ -5,8 +5,8 @@ export class TimeLimitFuncInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "time_limit_func_off", name: "しない", },
       { key: "time_limit_func_on",  name: "する",   },
+      { key: "time_limit_func_off", name: "しない", },
     ]
   }
 }

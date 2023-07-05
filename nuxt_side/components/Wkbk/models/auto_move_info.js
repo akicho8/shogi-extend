@@ -5,8 +5,8 @@ export class AutoMoveInfo extends ApplicationMemoryRecord {
 
   static get define() {
     return [
-      { key: "auto_move_off", name: "しない", },
       { key: "auto_move_on",  name: "する",   },
+      { key: "auto_move_off", name: "しない", },
     ]
   }
 }
