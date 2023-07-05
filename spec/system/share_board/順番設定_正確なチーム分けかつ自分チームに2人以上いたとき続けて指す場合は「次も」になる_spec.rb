@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b,c",
         :fixed_order_state    => "to_o2_state", # [[a,c], [b]] のチーム分けになる
         :handle_name_validate => "false",
-        :tegoto               => 2,
+        :change_per               => 2,
       })
   end
 

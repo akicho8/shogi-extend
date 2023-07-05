@@ -2,10 +2,10 @@ import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 import { Location } from "../../../../nuxt_side/node_modules/shogi-player/components/models/location.js"
 
 export class O1Strategy {
-  constructor(size, turn, tegoto, scolor) {
+  constructor(size, turn, change_per, scolor) {
     this.size = size          // ユーザーはN人いる
     this.turn = turn          // N手目
-    this.tegoto = tegoto      // N手毎
+    this.change_per = change_per      // N手毎
     this.scolor = scolor        // 開始
   }
 
@@ -17,13 +17,13 @@ export class O1Strategy {
     if (this.size === 0) {
       return null
     }
-    const step = Gs2.idiv(this.turn, Location.count * this.tegoto) * Location.count
+    const step = Gs2.idiv(this.turn, Location.count * this.change_per) * Location.count
     const index = step + this.team_index
     return Gs2.imodulo(index, this.size)
   }
 
   // デバッグ用
   get to_a() {
-    return [this.size, this.turn, this.tegoto, this.scolor, this.team_index, this.user_index]
+    return [this.size, this.turn, this.change_per, this.scolor, this.team_index, this.user_index]
   }
 }

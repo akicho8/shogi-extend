@@ -1,6 +1,6 @@
 import { ApplicationMemoryRecord } from "@/components/models/application_memory_record.js"
 
-export class TegotoInfo extends ApplicationMemoryRecord {
+export class ChangePerInfo extends ApplicationMemoryRecord {
   static field_label = "N手毎交代"
   static field_message = null
   static input_type = "numberinput"

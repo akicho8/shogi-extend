@@ -1,10 +1,10 @@
 import { Gs2 } from "../../../../nuxt_side/components/models/gs2.js"
 
 export class O2Strategy {
-  constructor(sizes, turn, tegoto, scolor) {
+  constructor(sizes, turn, change_per, scolor) {
     this.sizes = sizes
     this.turn = turn          // N手目
-    this.tegoto = tegoto      // N手毎
+    this.change_per = change_per      // N手毎
     this.scolor = scolor        // 開始
   }
 
@@ -15,7 +15,7 @@ export class O2Strategy {
 
   // チーム内のインデックスを返す
   get user_index() {
-    const index = Gs2.idiv(this.turn, this.sizes.length * this.tegoto)
+    const index = Gs2.idiv(this.turn, this.sizes.length * this.change_per)
     const length = this.sizes[this.team_index]
     if (length === 0) {
       return null
@@ -25,6 +25,6 @@ export class O2Strategy {
 
   // デバッグ用
   get to_a() {
-    return [this.sizes, this.turn, this.tegoto, this.scolor, this.team_index, this.user_index]
+    return [this.sizes, this.turn, this.change_per, this.scolor, this.team_index, this.user_index]
   }
 }

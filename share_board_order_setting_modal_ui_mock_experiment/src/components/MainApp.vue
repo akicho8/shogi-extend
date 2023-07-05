@@ -14,7 +14,7 @@
         .button(@click="order_unit.dump_and_load()") dump_and_load
 
       b-field(label="N手毎" custom-class="is-small")
-        b-input(type="number" v-model.number="tegoto" :min="1" max="5")
+        b-input(type="number" v-model.number="change_per" :min="1" max="5")
       b-field(label="開始" custom-class="is-small")
         b-input(type="number" v-model.number="scolor" :min="0" max="1")
   .columns
@@ -32,7 +32,7 @@
       p
         | turn(-9..9):
         template(v-for="turn in turn_test_range")
-          | {{order_unit.current_user_by_turn(turn, tegoto, scolor)}}
+          | {{order_unit.current_user_by_turn(turn, change_per, scolor)}}
   .columns
     .column
       pre
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       order_unit: new OrderUnit(),
-      tegoto: 1,
+      change_per: 1,
       scolor: 1,
     }
   },

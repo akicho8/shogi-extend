@@ -190,7 +190,7 @@ export const mod_sfen_share = {
     next_turn_message_prefix(params) {
       this.$gs.assert(this.order_unit, "this.order_unit")
 
-      // console.log(this.tegoto)                                             // => 2
+      // console.log(this.change_per)                                             // => 2
       // console.log(params.lmi.next_turn_offset)                             // => 1
       // console.log(params.from_user_name)                                   // => alice
       // console.log(params.next_user_name)                                   // => bob

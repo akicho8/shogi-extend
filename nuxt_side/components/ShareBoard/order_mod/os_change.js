@@ -33,7 +33,7 @@ export class OsChange {
       [
         this.context.illegal_behavior_key,
         this.context.auto_resign_key,
-        this.context.tegoto,
+        this.context.change_per,
       ]
     ])
     return new MD5().update(str).digest("hex")

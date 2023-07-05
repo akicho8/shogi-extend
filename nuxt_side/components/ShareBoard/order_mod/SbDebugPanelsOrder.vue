@@ -39,9 +39,9 @@
         | [assert_system_variable]
       .panel-block order_enable_p:{{TheSb.order_enable_p}}
       .panel-block
-        | 本順序:{{TheSb.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
+        | 本順序:{{TheSb.order_unit.real_order_users_to_s(TheSb.change_per, TheSb.start_color)}}
       .panel-block(v-if="TheSb.new_v.order_unit")
-        | 仮順序:{{TheSb.new_v.order_unit.real_order_users_to_s(TheSb.tegoto, TheSb.start_color)}}
+        | 仮順序:{{TheSb.new_v.order_unit.real_order_users_to_s(TheSb.change_per, TheSb.start_color)}}
   .column.is-4
     .panel
       .panel-heading

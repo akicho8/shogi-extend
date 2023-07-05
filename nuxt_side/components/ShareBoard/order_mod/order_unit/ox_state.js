@@ -41,17 +41,17 @@ export class OxState {
 
   // turn 0 から開始したときのユーザーたち
   // null を含む
-  real_order_users(tegoto, scolor) {
-    return this.memoize(`real_order_users/${tegoto}/${scolor}`, () => {
-      return Gs.n_times_collect(this.round_size * tegoto, i => {
-        return this.turn_to_item(i, tegoto, scolor)
+  real_order_users(change_per, scolor) {
+    return this.memoize(`real_order_users/${change_per}/${scolor}`, () => {
+      return Gs.n_times_collect(this.round_size * change_per, i => {
+        return this.turn_to_item(i, change_per, scolor)
       })
     })
   }
 
   // 1手毎としたときの約一周したときの名前を順番に並べた文字列
-  real_order_users_to_s(tegoto, scolor) {
-    return this.real_order_users(tegoto, scolor).map(e => e ? e.to_s : "?").join("")
+  real_order_users_to_s(change_per, scolor) {
+    return this.real_order_users(change_per, scolor).map(e => e ? e.to_s : "?").join("")
   }
 
   // 名前から順番を知るためのハッシュ

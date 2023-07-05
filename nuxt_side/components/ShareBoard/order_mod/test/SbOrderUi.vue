@@ -15,15 +15,15 @@
         .button(@click="order_unit.dump_and_load()") JSON化して元に戻す(観戦者消滅)
     .column.is-4
       b-field(grouped)
-        b-field(:label="`${tegoto}手毎`")
-          b-radio-button(v-model="tegoto" :native-value="1") 1
-          b-radio-button(v-model="tegoto" :native-value="2") 2
+        b-field(:label="`${change_per}手毎`")
+          b-radio-button(v-model="change_per" :native-value="1") 1
+          b-radio-button(v-model="change_per" :native-value="2") 2
         b-field(:label="`${start_color}から`")
           b-radio-button(v-model="start_color" :native-value="0") ☗
           b-radio-button(v-model="start_color" :native-value="1") ☖
 
       //- b-field(label="N手毎" custom-class="is-small")
-      //-   b-input(type="number" v-model.number="tegoto" :min="1" max="5")
+      //-   b-input(type="number" v-model.number="change_per" :min="1" max="5")
       //- b-field(label="開始" custom-class="is-small")
       //-   b-input(type="number" v-model.number="start_color" :min="0" max="1")
     .column(v-if="order_unit.order_state.state_name === 'O1State'")
@@ -38,7 +38,7 @@
     .column.is-12
       p 一周するまでのおおまかな手数(1手毎換算): {{order_unit.round_size}}
       p ☗開始かつ1手毎で1周(重複なし): {{order_unit.order_state.black_start_order_uniq_users.map(e => e ? e.to_s : '?').join('')}}
-      p 実際の順: {{order_unit.order_state.real_order_users(tegoto, start_color).map(e => e ? e.to_s : '?').join('')}}
+      p 実際の順: {{order_unit.order_state.real_order_users(change_per, start_color).map(e => e ? e.to_s : '?').join('')}}
       p 0〜49: {{turn_test_range}}
       p inspect: {{order_unit.inspect}}
       p name_to_object_hash: {{order_unit.name_to_object_hash}}
@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       order_unit: new OrderUnit(),
-      tegoto: 1,
+      change_per: 1,
       start_color: 0,
       os_dnd_count: 0,
     }
@@ -130,7 +130,7 @@ export default {
   computed: {
     turn_test_range() {
       return Gs.n_times_collect(50, turn => {
-        const item = this.order_unit.turn_to_item(turn, this.tegoto, this.start_color)
+        const item = this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
         return item ? item.to_s : "?"
       }).join("")
     },

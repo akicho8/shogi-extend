@@ -3,7 +3,7 @@
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | Method                                   | Description                |                                   |
 // |------------------------------------------+----------------------------+-----------------------------------|
-// | turn_to_item(turn)                       | 手数 → ユーザー情報       | tegoto, start_color 依存          |
+// | turn_to_item(turn)                       | 手数 → ユーザー情報       | change_per, start_color 依存          |
 // | turn_to_user_name(turn)                  | 手数 → ユーザー名         | 同上                              |
 // |------------------------------------------+----------------------------+-----------------------------------|
 // | user_name_to_initial_turn(user_name)     | 名前 → 手数               | 平手・駒落ちに関係なく最初の人は0 |
@@ -24,7 +24,7 @@ export const mod_order_turn = {
     turn_to_item(turn) {
       Gs.assert_kind_of_integer(turn)
       if (this.order_enable_p) {
-        return this.order_unit.turn_to_item(turn, this.tegoto, this.start_color)
+        return this.order_unit.turn_to_item(turn, this.change_per, this.start_color)
       }
     },
 

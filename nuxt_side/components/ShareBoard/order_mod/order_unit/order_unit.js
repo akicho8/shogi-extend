@@ -34,8 +34,8 @@ export class OrderUnit {
 
   get black_start_order_uniq_users()    { return this.order_state.black_start_order_uniq_users          }
   first_user(scolor)                    { return this.order_state.first_user(scolor)                    }
-  real_order_users(tegoto, scolor)      { return this.order_state.real_order_users(tegoto, scolor)      }
-  real_order_users_to_s(tegoto, scolor) { return this.order_state.real_order_users_to_s(tegoto, scolor) }
+  real_order_users(change_per, scolor)      { return this.order_state.real_order_users(change_per, scolor)      }
+  real_order_users_to_s(change_per, scolor) { return this.order_state.real_order_users_to_s(change_per, scolor) }
   name_to_turns_hash(scolor)            { return this.order_state.name_to_turns_hash(scolor)            }
   get name_to_object_hash()             { return this.order_state.name_to_object_hash                   }
   get hash()                            { return this.order_state.hash                                  }
@@ -82,8 +82,8 @@ export class OrderUnit {
     }
   }
 
-  turn_to_item(turn, tegoto, scolor) {
-    return this.order_state.turn_to_item(turn, tegoto, scolor)
+  turn_to_item(turn, change_per, scolor) {
+    return this.order_state.turn_to_item(turn, change_per, scolor)
   }
 
   state_switch_to(method) {

@@ -58,7 +58,7 @@
         .column.is-12(v-if="TheSb.debug_mode_p || true")
           SimpleRadioButton.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
         .column.is-12
-          SimpleRadioButton.tegoto(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="TegotoInfo" :sync_value.sync="TheSb.new_v.tegoto")
+          SimpleRadioButton.change_per(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="TheSb.new_v.change_per")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる

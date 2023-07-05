@@ -2,20 +2,20 @@ import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
 export class O2Strategy {
-  constructor(sizes, turn, tegoto, scolor) {
+  constructor(sizes, turn, change_per, scolor) {
     // このようなチェックを自力で行うのであれば TypeScript にした方がいいのかもしれない
     Gs.assert(sizes != null, "sizes != null")
     Gs.assert(turn != null, "turn != null")
-    Gs.assert(tegoto != null, "tegoto != null")
+    Gs.assert(change_per != null, "change_per != null")
     Gs.assert(scolor != null, "scolor != null")
 
-    Gs.assert(tegoto >= 1, "tegoto >= 1")
+    Gs.assert(change_per >= 1, "change_per >= 1")
     Gs.assert(_.isArray(sizes), "_.isArray(sizes)")
     Gs.assert(sizes.length == 2, "sizes.length == 2")
 
     this.sizes  = sizes  // [2, 3] のような形式
     this.turn   = turn   // N手目
-    this.tegoto = tegoto // N手毎
+    this.change_per = change_per // N手毎
     this.scolor = scolor // 開始
   }
 
@@ -28,8 +28,8 @@ export class O2Strategy {
   // チーム内のインデックスを返す
   // この位置の奴が現在のプレイヤー
   get user_index() {
-    Gs.assert(this.tegoto >= 1, "this.tegoto >= 1")
-    const index = Gs.idiv(this.turn, this.sizes.length * this.tegoto)
+    Gs.assert(this.change_per >= 1, "this.change_per >= 1")
+    const index = Gs.idiv(this.turn, this.sizes.length * this.change_per)
     const length = this.sizes[this.team_index]
     if (length === 0) {
       return null
@@ -40,6 +40,6 @@ export class O2Strategy {
 
   // デバッグ用
   get to_a() {
-    return [this.sizes, this.turn, this.tegoto, this.scolor, this.team_index, this.user_index]
+    return [this.sizes, this.turn, this.change_per, this.scolor, this.team_index, this.user_index]
   }
 }
