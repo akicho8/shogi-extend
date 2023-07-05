@@ -4,7 +4,7 @@ export class TimeLimitSecInfo extends ApplicationMemoryRecord {
   static field_label = "制限秒数"
   static field_message = ""
   static input_type = "numberinput"
-  static min = 0
+  static min = 1
   static step = 1
   static max = 60 * 60
 
