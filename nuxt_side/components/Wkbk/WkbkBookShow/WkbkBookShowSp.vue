@@ -10,8 +10,8 @@ MainSection.WkbkBookShowSp
             span.ml-1(v-if="base.current_article.direction_message")
               | {{base.current_article.direction_message}}
 
-          p {{base.current_sfen}}
-          p {{base.current_init_sfen}}
+          //- p {{base.current_sfen}}
+          //- p {{base.current_init_sfen}}
           CustomShogiPlayer(
             ref="main_sp"
             v-bind="sp_bind"

@@ -36,7 +36,7 @@ client-only
         WkbkBookShowGoal(:base="base")
 
     DebugPre(v-if="!$fetchState.pending && !$fetchState.error && development_p")
-      | {{base.current_article}}
+      | {{base.current_exist_p && base.current_article}}
       |
       | {{$data}}
 </template>

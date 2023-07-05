@@ -132,8 +132,8 @@ export const mod_sp = {
     },
 
     // 持駒を元に戻す(デバッグ用)
-    sp_state_reset() {
-      return this.sp_call(e => e.state_reset())
+    sp_lifted_piece_cancel() {
+      return this.sp_call(e => e.api_lifted_piece_cancel())
     },
 
     // 駒箱調整

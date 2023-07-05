@@ -2,6 +2,8 @@ import { Location   } from "shogi-player/components/models/location.js"
 import { MoveHash } from 'shogi-player/components/models/move_hash.js'
 import { NextHandFinder } from "./next_hand_finder.js"
 
+const NEXT_HAND_DELAY = 0.1
+
 export const mod_xitems = {
   data() {
     return {
@@ -83,7 +85,7 @@ export const mod_xitems = {
 
       if (!success) {
         // 不正解または途中
-        next_hand_auto_move(moves)
+        this.next_hand_auto_move(moves)
       } else {
         // 正解
         if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
@@ -97,7 +99,7 @@ export const mod_xitems = {
 
     // 自分の手番であれば次の手を自動的に指す
     next_hand_auto_move(moves) {
-      this.$gs.delay_block(0.1, () => {
+      this.$gs.delay_block(NEXT_HAND_DELAY, () => {
         const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
         if (new_moves) {
           const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")
@@ -114,7 +116,17 @@ export const mod_xitems = {
     //////////////////////////////////////////////////////////////////////////////// 命令型APIを直接実行する
 
     sp_sfen_set(sfen) {
-      this.sp_object()?.api_sfen_or_kif_set(sfen, {turn: -1})
+      const r = this.sp_object()
+      if (r) {
+        r.api_lifted_piece_cancel()
+        r.api_sfen_or_kif_set(sfen, {turn: -1})
+        r.api_play_mode_setup()
+        // r.init_sfen = r.xcontainer.data_source.init_sfen
+        // r.moves     = r.xcontainer.data_source.moves
+        // // this.xcontainer_setup(this.sp_turn)
+        // // if (this.play_p) {
+        // //   this.play_mode_setup_from("view")
+      }
     },
 
     // computed 側にすると動かなくなるので注意
