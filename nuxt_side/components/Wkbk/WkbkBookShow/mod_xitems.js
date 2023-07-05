@@ -2,7 +2,7 @@ import { Location   } from "shogi-player/components/models/location.js"
 import { MoveHash } from 'shogi-player/components/models/move_hash.js'
 import { NextHandFinder } from "./next_hand_finder.js"
 
-const NEXT_HAND_DELAY = 0.1
+const NEXT_HAND_DELAY = 0 // 0超は危険。次の問題に入ったあとで前の問題の応手が発動してしまう場合がある
 
 export const mod_xitems = {
   data() {
@@ -101,13 +101,13 @@ export const mod_xitems = {
 
     // 自分の手番であれば次の手を自動的に指す
     next_hand_auto_move(moves) {
-      this.$gs.delay_block(NEXT_HAND_DELAY, () => {
-        const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
-        if (new_moves) {
-          const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")
-          this.sp_sfen_set(new_sfen)
-        }
-      })
+      // this.$gs.delay_block(NEXT_HAND_DELAY, () => {
+      const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
+      if (new_moves) {
+        const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")
+        this.sp_sfen_set(new_sfen)
+      }
+      // })
     },
 
     description_open_handle() {
