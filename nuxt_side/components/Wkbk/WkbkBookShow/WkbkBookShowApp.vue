@@ -56,7 +56,7 @@ import { mod_tweet_stat        } from "./mod_tweet_stat.js"
 import { mod_sidebar           } from "./mod_sidebar.js"
 import { mod_op                } from "./mod_op.js"
 import { mod_table             } from "./mod_table.js"
-import { mod_keyboard          } from "./mod_keyboard.js"
+import { mod_shortcut          } from "./mod_shortcut.js"
 import { mod_storage           } from "./mod_storage.js"
 import { mod_kb_shortcut_modal } from "./mod_kb_shortcut_modal.js"
 import { mod_interval_counter  } from "./mod_interval_counter.js"
@@ -80,7 +80,7 @@ export default {
     mod_sidebar,
     mod_op,
     mod_table,
-    mod_keyboard,
+    mod_shortcut,
     mod_storage,
     mod_kb_shortcut_modal,
     mod_interval_counter,
