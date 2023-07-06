@@ -9,7 +9,7 @@ export const mod_turn_notify = {
       this.tn_counter += 1
       this.debug_alert("(通知効果音)")
       this.$sound.play("notification")
-      this.$beat.call_long()
+      this.beat_call("long")
     },
   },
   computed: {

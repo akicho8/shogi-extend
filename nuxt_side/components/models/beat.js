@@ -1,4 +1,8 @@
 export const Beat = {
+  call(type) {
+    this[`call_${type}`]()
+  },
+
   call_short() {
     this.call_custom(10)
   },

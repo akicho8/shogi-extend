@@ -8,6 +8,7 @@ export class SettingCategoryLevel1 extends SettingCategoryBase {
       { key: "next_turn_call_key",   },
       { key: "gpt_mode_key",         },
       { key: "send_trigger_key",     },
+      { key: "vibration_mode_key",     },
     ]
   }
 }

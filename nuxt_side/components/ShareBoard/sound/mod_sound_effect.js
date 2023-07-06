@@ -16,7 +16,7 @@ export const mod_sound_effect = {
     se_piece_move() {
       this.$nextTick(() => {
         this.$sound.play("piece_put")
-        this.$beat.call_short()
+        this.beat_call("short")
       })
     },
     // スライダーを自分が動かしたときの音
@@ -26,12 +26,20 @@ export const mod_sound_effect = {
     // スライダーを動かして数秒立って同期したときの音(自分にも伝えている)
     se_force_sync() {
       this.$sound.play("piece_put")
-      this.$beat.call_short()
+      this.beat_call("short")
     },
     // ☗☖をタップして反転したときの音
     ev_action_viewpoint_flip() {
       if (this.sp_mode === "play") {
         this.$sound.play_click()
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    beat_call(type) {
+      if (this.vibration_mode_info.key === "vibration_mode_on") {
+        this.$beat.call(type)
       }
     },
   },

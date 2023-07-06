@@ -221,7 +221,7 @@ export const mod_sfen_share = {
     // エフェクトのタイミングがずれないようにローカルでは自分側だけで実行する
     // ブロードキャストは相手側だけで実行する
     fast_sound_effect_func(params) {
-      this.$beat.call_short()
+      this.beat_call("short")
     },
 
     // 自分が反則した場合に自動投了が有効なら投了する
