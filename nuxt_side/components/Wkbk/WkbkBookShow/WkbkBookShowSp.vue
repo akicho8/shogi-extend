@@ -15,6 +15,7 @@ MainSection.WkbkBookShowSp
           CustomShogiPlayer(
             ref="main_sp"
             v-bind="sp_bind"
+            v-on="sp_hook"
             :sp_body="base.current_init_sfen"
             :sp_viewpoint="base.current_viewpoint"
             :sp_turn="-1"
@@ -128,29 +129,38 @@ export default {
     //   }
     // },
     //
-    // // 動作を受け取るやつら
-    // sp_hook() {
-    //   const hv = {}
-    //   hv["ev_play_mode_move"]              = this.base.ev_play_mode_move
-    //   hv["ev_edit_mode_short_sfen_change"] = this.base.ev_edit_mode_short_sfen_change
-    //   hv["ev_short_sfen_change"]           = this.base.ev_short_sfen_change
-    //   hv["ev_turn_offset_change"]          = v => this.base.current_turn = v
-    //   hv["ev_turn_offset_max_change"]      = v => this.base.turn_offset_max = v
-    //
-    //   hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip // 意図して☗☖をタップして反転させたとき
-    //   hv["ev_action_turn_change"]          = this.base.ev_action_turn_change    // スライダーを動かしたとき
-    //   hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift     // 意図して持ち上げた
-    //   hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
-    //
-    //   // 手番 or 先後違い系
-    //   hv["ev_illegal_click_but_self_is_not_turn"] = this.base.ev_illegal_click_but_self_is_not_turn
-    //   hv["ev_illegal_my_turn_but_oside_click"]    = this.base.ev_illegal_my_turn_but_oside_click
-    //
-    //   // 反則系
-    //   hv["ev_illegal_illegal_accident"] = this.base.ev_illegal_illegal_accident
-    //
-    //   return hv
-    // },
+
+    // 動作を受け取るやつら
+    sp_hook() {
+      const hv = {}
+
+      hv.ev_action_piece_lift     = this.TheApp.ev_action_piece_lift     // 意図して持ち上げた
+      hv.ev_action_piece_cancel   = this.TheApp.ev_action_piece_cancel   // 意図してキャンセルした
+      hv.ev_play_mode_move        = this.TheApp.ev_play_mode_move        // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
+      hv.ev_action_turn_change = this.TheApp.ev_action_turn_change // スライダーを自分が動かしたときの音
+      hv.ev_action_viewpoint_flip = this.TheApp.ev_action_viewpoint_flip // ☗☖をタップして反転したときの音
+
+      // hv["ev_play_mode_move"]              = this.base.ev_play_mode_move
+      // hv["ev_edit_mode_short_sfen_change"] = this.base.ev_edit_mode_short_sfen_change
+      // hv["ev_short_sfen_change"]           = this.base.ev_short_sfen_change
+      // hv["ev_turn_offset_change"]          = v => this.base.current_turn = v
+      // hv["ev_turn_offset_max_change"]      = v => this.base.turn_offset_max = v
+      //
+      // hv["ev_action_viewpoint_flip"]       = this.base.ev_action_viewpoint_flip // 意図して☗☖をタップして反転させたとき
+      // hv["ev_action_turn_change"]          = this.base.ev_action_turn_change    // スライダーを動かしたとき
+      // hv["ev_action_piece_lift"]           = this.base.ev_action_piece_lift     // 意図して持ち上げた
+      // hv["ev_action_piece_cancel"]         = this.base.ev_action_piece_cancel   // 意図してキャンセルした
+      //
+      // // 手番 or 先後違い系
+      // hv["ev_illegal_click_but_self_is_not_turn"] = this.base.ev_illegal_click_but_self_is_not_turn
+      // hv["ev_illegal_my_turn_but_oside_click"]    = this.base.ev_illegal_my_turn_but_oside_click
+      //
+      // // 反則系
+      // hv["ev_illegal_illegal_accident"] = this.base.ev_illegal_illegal_accident
+
+      return hv
+    },
+
     // tweet_button_type() {
     //   if (this.base.advanced_p) {
     //     return "is-twitter"
