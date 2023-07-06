@@ -14,7 +14,7 @@ export const mod_medal = {
     medal_write() {
       this.clog(`medal_write()`)
       if (this.$gs.present_p(this.user_name)) {
-        this.receive_xmedal(this.current_xmedal)
+        this.medal_share_data_receive(this.medal_share_data)
       }
     },
 
@@ -48,11 +48,11 @@ export const mod_medal = {
       }
       this.clog(`acquire_medal_count_share`)
       if (this.ac_room) {
-        this.ac_room_perform("acquire_medal_count_share", this.current_xmedal)
+        this.ac_room_perform("acquire_medal_count_share", this.medal_share_data)
       } else {
         this.acquire_medal_count_share_broadcasted({
           ...this.ac_room_perform_default_params(),
-          ...this.current_xmedal,
+          ...this.medal_share_data,
         })
       }
     },
@@ -60,10 +60,10 @@ export const mod_medal = {
       if (this.received_from_self(params)) {
       } else {
       }
-      this.receive_xmedal(params)
+      this.medal_share_data_receive(params)
     },
-    receive_xmedal(params) {
-      this.clog(`receive_xmedal(${Gs.i(params)})`)
+    medal_share_data_receive(params) {
+      this.clog(`medal_share_data_receive(${Gs.i(params)})`)
       Gs.assert(this.$gs.present_p(params.medal_user_name), "this.$gs.present_p(params.medal_user_name)")
       Gs.assert(this.$gs.present_p(params.acquire_medal_count), "this.$gs.present_p(params.acquire_medal_count)")
       this.$set(this.medal_counts_hash, params.medal_user_name, params.acquire_medal_count) // これで画面に星の数が反映される
@@ -76,7 +76,7 @@ export const mod_medal = {
   },
   computed: {
     // 部屋に入ったときや更新するときはこれを送る
-    current_xmedal() {
+    medal_share_data() {
       return {
         medal_user_name: this.user_name,               // 誰が
         acquire_medal_count: this.acquire_medal_count, // 何個持っている

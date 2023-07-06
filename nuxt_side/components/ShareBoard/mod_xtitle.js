@@ -6,18 +6,18 @@ export const mod_xtitle = {
   },
   methods: {
     title_share() {
-      this.ac_room_perform("title_share", this.current_xtitle)
+      this.ac_room_perform("title_share", this.title_share_data)
     },
     title_share_broadcasted(params) {
       if (this.received_from_self(params)) {
         // 自分から自分へ
       } else {
       }
-      this.receive_xtitle(params)
+      this.title_share_data_receive(params)
       this.al_add({...params, label: "タイトル変更"})
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
-    receive_xtitle(params) {
+    title_share_data_receive(params) {
       this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
       this.$gs.assert("title" in params, '"title" in params')
       this.current_title = params.title
@@ -25,7 +25,7 @@ export const mod_xtitle = {
     },
   },
   computed: {
-    current_xtitle() { return { title: this.current_title } },
+    title_share_data() { return { title: this.current_title } },
     page_title() {
       if (this.current_turn === 0) {
         return this.current_title

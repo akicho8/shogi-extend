@@ -99,7 +99,7 @@ export const mod_sfen_share = {
         }
 
         // 受信したSFENを盤に反映
-        this.receive_xsfen(params)
+        this.sfen_share_data_receive(params)
         this.se_piece_move() // 次のフレームで指した音を出す(すぐに鳴らすと音がフライングしてしまう)
       }
 

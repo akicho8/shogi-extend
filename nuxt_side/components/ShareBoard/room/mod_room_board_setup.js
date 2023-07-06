@@ -61,12 +61,7 @@ export const mod_room_board_setup = {
       params = {
         ...params,                  // 送り先 to_connection_id, to_user_name
         ////////////////////////////////////////////////////////////////////////////////
-        xtitle:  this.current_xtitle,    // タイトル
-        xmedal:  this.current_xmedal,    // スコア情報
-        xsfen:   this.current_xsfen,     // 棋譜と現在の局面(手数)
-        xorder:  this.current_xorder,    // 順番設定
-        xclock:  this.current_xclock,    // 対局時計
-        xhonpu:  this.current_xhonpu,    // 本譜
+        shared_data_all: this.shared_data_all,
         ////////////////////////////////////////////////////////////////////////////////
         active_level: this.active_level,      // 先輩度(高い方が信憑性のある情報)
       }
@@ -84,12 +79,7 @@ export const mod_room_board_setup = {
             this.ac_log({subject: "情報設定", body: `${params.from_user_name}の情報を利用 (${this.active_level} < ${params.active_level})`})
             this.tl_alert("最新の状態を共有してもらった")
             this.active_level = params.active_level
-            this.receive_xtitle(params.xtitle)
-            this.receive_xmedal(params.xmedal)
-            this.receive_xsfen(params.xsfen)
-            this.receive_xorder(params.xorder)
-            this.receive_xclock(params.xclock)
-            this.receive_xhonpu(params.xhonpu)
+            this.share_data_receive(params.shared_data_all)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

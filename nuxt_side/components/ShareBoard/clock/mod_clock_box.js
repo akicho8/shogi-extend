@@ -247,7 +247,7 @@ export const mod_clock_box = {
         cc_key: cc_info.key,
         talk: true,
         ...params,
-        ...this.current_xclock,
+        ...this.clock_share_data,
       }
       if (cc_info.with_url) {
         params.current_url = this.current_url // 棋譜再現URLをログに出すため
@@ -265,7 +265,7 @@ export const mod_clock_box = {
       this.tl_alert("時計同期")
       if (this.received_from_self(params)) {
       } else {
-        this.receive_xclock(params)
+        this.clock_share_data_receive(params)
       }
       this.__cc_action_log_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
@@ -303,7 +303,7 @@ export const mod_clock_box = {
     },
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
-    receive_xclock(params) {
+    clock_share_data_receive(params) {
       this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
       this.tl_add("時計", `${this.user_name} は時計情報を受信して反映した`, params)
       if (params.clock_box_attributes == null) {
@@ -424,7 +424,7 @@ export const mod_clock_box = {
     cc_common_p()  { return this.cc_params.length == 1                 }, // 共通設定か？
 
     // 共有する時計情報
-    current_xclock() {
+    clock_share_data() {
       const params = {}
       params.cc_params = this.cc_params
       if (this.clock_box) {

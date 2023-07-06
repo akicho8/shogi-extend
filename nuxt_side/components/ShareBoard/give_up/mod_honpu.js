@@ -38,25 +38,19 @@ export const mod_honpu = {
     // 本譜の共有
     honpu_share() {
       if (this.honpu_log) {
-        const params = {
-          honpu_log: this.honpu_log,
-        }
-        this.ac_room_perform("honpu_share", params) // --> app/channels/share_board/room_channel.rb
+        this.ac_room_perform("honpu_share", this.honpu_share_data) // --> app/channels/share_board/room_channel.rb
       }
     },
     honpu_share_broadcasted(params) {
       // 相手側で本譜とする
       if (this.received_from_self(params)) {
       } else {
-        this.honpu_log = params.honpu_log
+        this.honpu_share_data_receive(params)
       }
     },
 
-    receive_xhonpu(params) {
-      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
-      this.$gs.assert("honpu_log" in params, '"honpu_log" in params')
+    honpu_share_data_receive(params) {
       this.honpu_log = params.honpu_log
-      this.ac_log({subject: "本譜受信", body: params.honpu_log})
     },
   },
 
@@ -69,6 +63,10 @@ export const mod_honpu = {
       return this.honpu_log && !this.order_enable_p && !this.cc_play_p
     },
 
-    current_xhonpu() { return { honpu_log: this.honpu_log } },
+    honpu_share_data() {
+      return {
+        honpu_log: this.honpu_log
+      }
+    },
   },
 }

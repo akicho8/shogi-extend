@@ -71,7 +71,7 @@ export const mod_order_main = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 後から参加したときリクエストに答えてパラメータを送ってくれた人から受信した内容を反映する
-    receive_xorder(params) {
+    order_share_data_receive(params) {
       this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
       this.$gs.assert("order_enable_p" in params, '"order_enable_p" in params')
       this.$gs.assert("order_unit" in params, '"order_unit" in params')
@@ -115,7 +115,7 @@ export const mod_order_main = {
 
   computed: {
     // あとから接続した人に伝える内容
-    current_xorder() {
+    order_share_data() {
       return {
         order_enable_p:    this.order_enable_p,
         order_unit:        this.order_unit ? this.order_unit.attributes : null,

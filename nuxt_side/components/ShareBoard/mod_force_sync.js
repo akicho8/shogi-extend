@@ -152,7 +152,7 @@ export const mod_force_sync = {
     force_sync_broadcasted(params) {
       {
         this.perpetual_cop.reset()
-        this.receive_xsfen(params)       // これで current_location が更新される
+        this.sfen_share_data_receive(params)       // これで current_location が更新される
         this.se_force_sync()             // 他者は盤面変化に気付かないため音を出す→自分も含めて音出した方が自分にも親切だった
         if (this.received_from_self(params)) {
         } else {

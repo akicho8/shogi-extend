@@ -177,7 +177,7 @@ export const mod_room_setup = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    receive_xsfen(params) {
+    sfen_share_data_receive(params) {
       this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
       this.$gs.assert("sfen" in params, '"sfen" in params')
       this.$gs.assert("turn" in params, '"turn" in params')

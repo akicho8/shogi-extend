@@ -134,9 +134,9 @@
   .column.is-3
     .panel
       .panel-heading
-        | current_xclock
+        | clock_share_data
       .panel-block
-        pre {{JSON.stringify(TheSb.current_xclock, null, 4)}}
+        pre {{JSON.stringify(TheSb.clock_share_data, null, 4)}}
   .column.is-3
     .panel
       .panel-heading
