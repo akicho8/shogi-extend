@@ -66,6 +66,7 @@ export const mod_room_board_setup = {
         xsfen:   this.current_xsfen,     // 棋譜と現在の局面(手数)
         xorder:  this.current_xorder,    // 順番設定
         xclock:  this.current_xclock,    // 対局時計
+        xhonpu:  this.current_xhonpu,    // 本譜
         ////////////////////////////////////////////////////////////////////////////////
         active_level: this.active_level,      // 先輩度(高い方が信憑性のある情報)
       }
@@ -88,6 +89,7 @@ export const mod_room_board_setup = {
             this.receive_xsfen(params.xsfen)
             this.receive_xorder(params.xorder)
             this.receive_xclock(params.xclock)
+            this.receive_xhonpu(params.xhonpu)
           } else {
             this.clog("自分より新参の情報なので反映しない")
           }

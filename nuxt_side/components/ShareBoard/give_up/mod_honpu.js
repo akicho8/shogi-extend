@@ -51,6 +51,13 @@ export const mod_honpu = {
         this.honpu_log = params.honpu_log
       }
     },
+
+    receive_xhonpu(params) {
+      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      this.$gs.assert("honpu_log" in params, '"honpu_log" in params')
+      this.honpu_log = params.honpu_log
+      this.ac_log({subject: "本譜受信", body: params.honpu_log})
+    },
   },
 
   computed: {
@@ -61,5 +68,7 @@ export const mod_honpu = {
     honpu_button_show_p() {
       return this.honpu_log && !this.order_enable_p && !this.cc_play_p
     },
+
+    current_xhonpu() { return { honpu_log: this.honpu_log } },
   },
 }
