@@ -19,9 +19,9 @@ class NextHandFinder
       when :last
         v = av.last
       when :most_short
-        v = av.sort_by { |e| e[:distance] }.first
+        v = most_short_or_most_long(av, :first)
       when :most_long
-        v = av.sort_by { |e| e[:distance] }.last
+        v = most_short_or_most_long(av, :last)
       when :random
         v = av.sample
       else
@@ -33,12 +33,15 @@ class NextHandFinder
 
   private
 
+  def most_short_or_most_long(av, method)
+    distance = av.sort_by { |e| e[:distance] }.public_send(method)[:distance]
+    av.find_all { |e| e[:distance] == distance }.sample
+  end
+
   def next_hand(moves)
-    unless index = @inputs.find_index.with_index { |e, i| moves[i] != e } # 異なる要素を探す
-      # 異なる要素がなかった = 途中まで正解していた
+    if moves.take(@inputs.size) == @inputs # 途中まで正解していたか？
       size = @inputs.size.next
       if size <= moves.size              # その次の手があるか？
-        found = moves.take(size)         # あるなら1手進めた手をまでを取得する
         {
           :next     => moves.take(size), # 入力が ["a"] なら ["a", "b"]
           :distance => moves.size,       # 7手詰なら7
@@ -61,4 +64,4 @@ NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :first).call      # =>
 NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :last).call       # => ["a", "y"]
 NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :most_short).call # => ["a", "x"]
 NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :most_long).call  # => ["a", "y"]
-NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :random).call     # => ["a", "x"]
+NextHandFinder.new([%w(a x), %w(a y z)], %w(a), behavior: :random).call     # => ["a", "y"]

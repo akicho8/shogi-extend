@@ -30,8 +30,8 @@ devDependencies:
     specifier: ^7.0.5
     version: 7.0.5
   beetleshine:
-    specifier: ^0.0.9
-    version: 0.0.9
+    specifier: ^0.0.14
+    version: 0.0.14
   big.js:
     specifier: ^6.1.1
     version: 6.1.1
@@ -3966,6 +3966,17 @@ packages:
       tweetnacl: 0.14.5
     dev: true
     optional: true
+
+  /beetleshine@0.0.14:
+    resolution: {integrity: sha512-fsdzvnUoxyns+rLMv9ZSkplx8CEjE7qUx7OdDoz3e7Jh6Q38HuGewIUVuM5ll1uNk+Zqk6YK/9eXpoW4K8e7tg==}
+    dependencies:
+      autolinker: 4.0.0
+      extsprintf: 1.4.1
+      js-base64: 3.7.5
+      lodash: 4.17.21
+      md5.js: 1.3.5
+      striptags: 3.2.0
+    dev: true
 
   /beetleshine@0.0.9:
     resolution: {integrity: sha512-vKrjjRdXibHv4SvmuzmTCoGZukb2aVBV9Oevn9em/Ht0A2oRKtqU8ME6AYgBSMjrgDrAh8+YaPQgCeIeIu7kLg==}
@@ -12410,7 +12421,7 @@ packages:
     dependencies:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
-      extsprintf: 1.3.0
+      extsprintf: 1.4.1
     dev: true
     optional: true
 
