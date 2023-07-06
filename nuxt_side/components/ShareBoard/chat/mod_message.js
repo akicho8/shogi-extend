@@ -2,6 +2,7 @@
 
 import MessageSendModal from "./MessageSendModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
+import { SendTriggerInfo } from "../models/send_trigger_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageDto } from "./message_dto.js"
@@ -78,11 +79,23 @@ export const mod_message = {
         ...options,
       })
     },
+
+    send_trigger_p(e) {
+      if (this.send_trigger_info.key === "send_trigger_enter") {
+        return this.keyboard_enter_p(e)
+      }
+      if (this.send_trigger_info.key === "send_trigger_meta_enter") {
+        return this.keyboard_enter_p(e) && this.keyboard_meta_p(e)
+      }
+    },
   },
 
   computed: {
     MessageScopeInfo()   { return MessageScopeInfo                                    },
     message_scope_info() { return this.MessageScopeInfo.fetch(this.message_scope_key) },
+
+    SendTriggerInfo()   { return SendTriggerInfo                                    },
+    send_trigger_info() { return this.SendTriggerInfo.fetch(this.send_trigger_key) },
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {

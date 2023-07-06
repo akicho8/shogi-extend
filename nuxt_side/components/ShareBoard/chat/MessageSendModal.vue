@@ -49,7 +49,7 @@ export default {
       this.TheSb.talk2(this.TheSb.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
-      if (this.keyboard_enter_p(e)) {
+      if (this.TheSb.send_trigger_p(e)) {
         this.send_handle()
       }
     },

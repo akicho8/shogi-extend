@@ -266,6 +266,9 @@ export const vue_support = {
       this.debug_alert(e.keyCode)
       return e.keyCode === 13
     },
+    keyboard_meta_p(e) {
+      return e.shiftKey | e.ctrlKey | e.altKey | e.metaKey
+    },
 
     // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
     // this.app_log("(body)")
