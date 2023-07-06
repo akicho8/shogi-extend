@@ -90,7 +90,7 @@ export const mod_xitems = {
         }
       } else {
         // 正解
-        if (this.correct_behavior_info.key === this.CorrectBehaviorInfo.fetch("go_to_next").key) {
+        if (this.correct_behavior_info.key === "correct_behavior_next") {
           this.next_handle(this.AnswerKindInfo.fetch("correct"))
         } else {
           this.toast_ok("正解")
