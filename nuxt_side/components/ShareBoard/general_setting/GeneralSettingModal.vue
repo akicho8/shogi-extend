@@ -4,7 +4,7 @@
     .modal-card-title
       | 設定
   .modal-card-body
-    b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="$sound.play_click()")
+    b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle")
       template(v-for="e in TheSb.SettingCategoryInfo.values")
         b-tab-item(:label="e.name")
     .tab_content
@@ -38,6 +38,10 @@ export default {
     close_handle() {
       this.$sound.play_click()
       this.$emit("close")
+    },
+    input_handle(index) {
+      this.$sound.play_click()
+      this.TheSb.talk2(this.TheSb.SettingCategoryInfo.fetch(index).name)
     },
   },
 }
