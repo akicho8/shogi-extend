@@ -266,9 +266,21 @@ export const vue_support = {
       this.debug_alert(e.keyCode)
       return e.keyCode === 13
     },
+
     keyboard_meta_p(e) {
-      return e.shiftKey | e.ctrlKey | e.altKey | e.metaKey
+      return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey
     },
+
+    keyboard_single_p(e, key) {
+      return !this.keyboard_meta_p(e) && e.key === key
+    },
+
+    focus_on_input_tag_p() {
+      const dom = document.activeElement
+      return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     // this.app_log({level: "info", emoji: ":SOS:", subject: "(subject)", body: "(body)"})
     // this.app_log("(body)")

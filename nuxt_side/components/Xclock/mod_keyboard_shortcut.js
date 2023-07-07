@@ -39,12 +39,5 @@ export const mod_keyboard_shortcut = {
         e.preventDefault()
       }
     },
-
-    focus_on_input_tag_p() {
-      const dom = document.activeElement
-      if (dom.tagName === "TEXTAREA" || dom.tagName === "INPUT") {
-        return true
-      }
-    },
   },
 }

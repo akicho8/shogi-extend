@@ -45,9 +45,5 @@ export const mod_keyboard = {
         e.preventDefault()
       }
     },
-    focus_on_input_tag_p() {
-      const dom = document.activeElement
-      return dom.tagName === "TEXTAREA" || dom.tagName === "INPUT"
-    },
   },
 }
