@@ -36,8 +36,7 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
-      this.$emit("close")
+      this.TheSb.general_setting_modal_close_handle()
     },
     input_handle(index) {
       this.$sound.play_click()

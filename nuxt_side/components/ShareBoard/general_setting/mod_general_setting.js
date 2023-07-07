@@ -1,3 +1,5 @@
+import { general_setting_modal } from "./general_setting_modal.js"
+
 import GeneralSettingModal from "./GeneralSettingModal.vue"
 
 import { ClockVolumeInfo       } from "../models/clock_volume_info.js"
@@ -14,16 +16,7 @@ import { LegalInfo            } from "../models/legal_info.js"
 import { SettingCategoryInfo  } from "./setting_category_info.js"
 
 export const mod_general_setting = {
-  methods: {
-    general_setting_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.modal_card_open({
-        component: GeneralSettingModal,
-        props: { },
-      })
-    },
-  },
+  mixins: [general_setting_modal],
   beforeDestroy() {
     this.talk_volume_reset()
   },
@@ -53,8 +46,8 @@ export const mod_general_setting = {
     ByoyomiModeInfo()         { return ByoyomiModeInfo                                           },
     byoyomi_mode_info()       { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)         },
 
-    VibrationModeInfo()         { return VibrationModeInfo                                           },
-    vibration_mode_info()       { return this.VibrationModeInfo.fetch(this.vibration_mode_key)         },
+    VibrationModeInfo()       { return VibrationModeInfo                                         },
+    vibration_mode_info()     { return this.VibrationModeInfo.fetch(this.vibration_mode_key)     },
 
     NextTurnCallInfo()        { return NextTurnCallInfo                                          },
     next_turn_call_info()     { return this.NextTurnCallInfo.fetch(this.next_turn_call_key)      },

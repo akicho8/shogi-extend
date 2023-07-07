@@ -6,9 +6,7 @@ export class SettingCategoryLevel1 extends SettingCategoryBase {
       { key: "byoyomi_mode_key",     },
       { key: "yomiage_mode_key",     },
       { key: "next_turn_call_key",   },
-      { key: "gpt_mode_key",         },
       { key: "send_trigger_key",     },
-      { key: "vibration_mode_key",     },
     ]
   }
 }

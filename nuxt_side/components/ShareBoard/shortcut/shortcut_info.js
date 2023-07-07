@@ -31,6 +31,10 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         _if: (c, e) => e.code === "KeyV" && c.keyboard_meta_without_shift_p(e),
         call: c => c.yomikomi_from_clipboard(),
       },
+      {
+        _if: (c, e) => c.keyboard_single_key_equal(e, ","),
+        call: c => c.general_setting_modal_shortcut_handle(),
+      },
     ]
   }
 }

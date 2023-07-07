@@ -29,6 +29,10 @@
         td
           b-tag(type="is-primary") ⌘ v
       tr
+        th 設定
+        td
+          b-tag(type="is-primary") ,
+      tr
         th これを開く
         td
           b-tag(type="is-primary") ?

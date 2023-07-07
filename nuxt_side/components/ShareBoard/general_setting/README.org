@@ -1,1 +1,1 @@
-http://localhost:4000/share-board?autoexec=general_setting_modal_handle
+http://localhost:4000/share-board?autoexec=general_setting_modal_open_handle

@@ -47,9 +47,7 @@ export const mod_clock_box = {
 
     cc_modal_shortcut_handle() {
       if (this.cc_modal_instance == null) {
-        this.sidebar_p = false
-        this.$sound.play_click()
-        this.cc_modal_open()
+        this.cc_modal_open_handle()
         return true
       }
     },
