@@ -27,6 +27,7 @@ export const mod_export = {
         ...this.player_names,
       })
       this.shared_al_add_simple("棋譜コピー")
+      return true
     },
 
     //////////////////////////////////////////////////////////////////////////////// show

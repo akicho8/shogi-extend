@@ -7,7 +7,7 @@
       tr
         th 部屋に入る
         td
-          b-tag(type="is-primary") r
+          b-tag(type="is-primary") i
       tr
         th 順番設定
         td
@@ -16,7 +16,6 @@
         th 対局時計
         td
           b-tag(type="is-primary") t
-          b-tag(type="is-primary") c
       tr
         th チャットを開く
         td
