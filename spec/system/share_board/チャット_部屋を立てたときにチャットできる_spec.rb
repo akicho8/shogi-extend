@@ -12,20 +12,20 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "bob") # bobも同じ部屋に入る
     end
     a_block do
-      find(".message_modal_handle").click            # 開く
+      find(".chat_modal_open_handle").click            # 開く
       chat_message_send(message1)
       assert_message_received_o(message1)
     end
     b_block do
-      find(".message_modal_handle").click # 開く
+      find(".chat_modal_open_handle").click # 開く
       assert_message_received_o(message1) # bob にも届いた
     end
   end
 
   it "観戦者宛送信" do
-    a_block { visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "message_modal_handle") }
-    b_block { visit_app(room_code: :test_room, user_name: "bob",   fixed_order_names: "alice", autoexec: "message_modal_handle") }
-    c_block { visit_app(room_code: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "message_modal_handle") }
+    a_block { visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
+    b_block { visit_app(room_code: :test_room, user_name: "bob",   fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
+    c_block { visit_app(room_code: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
 
     b_block { scoped_message_send(:is_message_scope_private, message1) } # 観戦者の bob が観戦者送信した
     b_block { assert_message_received_o(message1) } # 自分には (観戦者かに関係なく本人だから) 届いている
@@ -50,12 +50,12 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "順番設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
-    visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "message_modal_handle")
+    visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle")
     assert_selector(".MessageSendModal .message_scope_dropdown")
   end
 
   it "Enterで送信できる" do
-    visit_app(room_code: :test_room, user_name: "alice", autoexec: "message_modal_handle")
+    visit_app(room_code: :test_room, user_name: "alice", autoexec: "chat_modal_open_handle")
     within(".MessageSendModal") do
       find(:fillable_field).set(message1)
       find(:fillable_field).send_keys("\n")

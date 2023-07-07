@@ -1,6 +1,6 @@
 module SharedMethods
   def chat_modal_open
-    find(".message_modal_handle").click
+    find(".chat_modal_open_handle").click
   end
 
   def chat_modal_close

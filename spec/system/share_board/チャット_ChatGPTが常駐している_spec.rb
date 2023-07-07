@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b,c,d",
         :handle_name_validate => "false",
       })
-    find(".message_modal_handle").click
+    find(".chat_modal_open_handle").click
   end
 
   it "@gpt" do
