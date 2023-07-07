@@ -38,25 +38,25 @@ RSpec.describe type: :system, share_board_spec: true do
     c_block { assert_message_received_o(message2) } # carol には観戦者なので届いている
 
     b_block do
-      find(".MessageSendModal .close_handle").click # メッセージモーダルを閉じる
+      find(".ChatModal .close_handle").click # メッセージモーダルを閉じる
       order_set_off             # 順番設定を解除する
     end
 
     # bobが順番設定を解除したことで
     a_block do
       assert_message_received_o(message1)                             # bob の送信を alice は見えるようになった
-      assert_no_selector(".MessageSendModal .message_scope_dropdown") # 順番設定を解除したためスコープ選択は表示されていない
+      assert_no_selector(".ChatModal .message_scope_dropdown") # 順番設定を解除したためスコープ選択は表示されていない
     end
   end
 
   it "順番設定していたら観戦者がいなくてもスコープ選択ドロップダウンが出ている" do
     visit_app(room_code: :test_room, user_name: "alice", fixed_order_names: "alice", autoexec: "chat_modal_open_handle")
-    assert_selector(".MessageSendModal .message_scope_dropdown")
+    assert_selector(".ChatModal .message_scope_dropdown")
   end
 
   it "Enterで送信できる" do
     visit_app(room_code: :test_room, user_name: "alice", autoexec: "chat_modal_open_handle")
-    within(".MessageSendModal") do
+    within(".ChatModal") do
       find(:fillable_field).set(message1)
       find(:fillable_field).send_keys("\n")
     end
