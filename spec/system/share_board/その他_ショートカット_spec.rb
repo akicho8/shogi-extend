@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "部屋に入る" do
     visit_app
-    Capybara.current_session.active_element.send_keys("r")
+    Capybara.current_session.active_element.send_keys("i")
     assert_selector(".RoomSetupModal")
   end
 
