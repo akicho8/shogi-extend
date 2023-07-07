@@ -19,7 +19,7 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
 
         b-menu-list(label="その他")
           b-menu-item.is_active_unset(label="ツイート"                 @click.native="TheApp.book_tweet_handle")
-          b-menu-item.is_active_unset(label="キーボードショートカット" @click.native="TheApp.kb_shortcut_modal_toggle_handle")
+          b-menu-item.is_active_unset(label="ショートカット" @click.native="TheApp.kb_shortcut_modal_shortcut_handle")
 
       .box.mt-5
         .title.is-5 設定

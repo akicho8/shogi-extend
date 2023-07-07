@@ -1,7 +1,7 @@
 <template lang="pug">
 .WkbkBookShowKbShortcutModal.modal-card.box.has-text-left(@click="delete_click_handle" style="width:auto")
   .has-text-weight-bold.simple_title.is-size-6.pb-3
-    | キーボードショートカット
+    | ショートカット
   table.modal-card-body.table.is-fullwidth.mt-3.mb-0
     tbody
       tr

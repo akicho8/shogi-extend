@@ -1,26 +1,66 @@
 // チャット発言送信
 
-import MessageSendModal from "./MessageSendModal.vue"
+import ChatModal from "./ChatModal.vue"
 import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { SendTriggerInfo } from "../models/send_trigger_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageDto } from "./message_dto.js"
 
-export const mod_message = {
+export const mod_chat = {
   data() {
     return {
       message_body: "",
+      chat_modal_instance: null,
     }
   },
 
+  beforeDestroy() {
+    this.chat_modal_close()
+  },
+
   methods: {
-    message_modal_handle() {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    chat_modal_shortcut_handle() {
+      if (this.chat_modal_instance == null) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.chat_modal_open()
+        return true
+        // } else {
+        //   this.chat_modal_close()
+      }
+    },
+
+    chat_modal_open_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.modal_card_open({
-        component: MessageSendModal,
+      this.chat_modal_open()
+    },
+
+    chat_modal_close_handle() {
+      this.sidebar_p = false
+      this.$sound.play_click()
+      this.chat_modal_close()
+    },
+
+    chat_modal_open() {
+      this.chat_modal_close()
+      this.chat_modal_instance = this.modal_card_open({
+        component: ChatModal,
+        onCancel: () => {
+          this.$sound.play_click()
+          this.chat_modal_close()
+        },
       })
+    },
+
+    chat_modal_close() {
+      if (this.chat_modal_instance) {
+        this.chat_modal_instance.close()
+        this.chat_modal_instance = null
+      }
     },
 
     ////////////////////////////////////////////////////////////////////////////////

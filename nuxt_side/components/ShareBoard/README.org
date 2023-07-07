@@ -140,7 +140,7 @@
 
 ** 観戦者だけでチャット (alice が対局者で bob, carol が観戦で、自分が bob)
 
-   http://localhost:4000/share-board?room_code=a&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol&autoexec=message_modal_handle
+   http://localhost:4000/share-board?room_code=a&user_name=bob&fixed_order_state=to_o1_state&fixed_order_names=alice,bob,carol&autoexec=chat_modal_open_handle
 
 ** メンバーステイタス確認
 
@@ -154,7 +154,7 @@
 
 ** 対局時計をONにして起動する(あと持ち時間0)
 
-   http://localhost:4000/share-board?autoexec=cc_create,cc_modal_handle&clock_box.initial_main_min=0
+   http://localhost:4000/share-board?autoexec=cc_create,cc_modal_open_handle&clock_box.initial_main_min=0
 
 ** 順番設定済み + 対局時計ON
 

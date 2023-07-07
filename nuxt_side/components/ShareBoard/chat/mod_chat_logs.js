@@ -4,7 +4,7 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import { MessageDto } from "./message_dto.js"
 
-export const mod_message_logs = {
+export const mod_chat_logs = {
   data() {
     return {
       message_logs: [],

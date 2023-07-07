@@ -64,8 +64,7 @@ export default {
       this.room_code_field_unlock()
     },
     close_handle() {
-      this.$sound.play_click()
-      this.$emit("close")
+      this.TheSb.room_setup_modal_close_handle()
     },
     entry_handle() {
       this.$sound.play_click()

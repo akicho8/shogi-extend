@@ -7,7 +7,7 @@ export const mod_kb_shortcut_modal = {
     }
   },
   methods: {
-    kb_shortcut_modal_toggle_handle() {
+    kb_shortcut_modal_shortcut_handle() {
       if (this.kb_shortcut_modal_active_p()) {
         this.kb_shortcut_modal_close()
       } else {

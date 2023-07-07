@@ -13,6 +13,7 @@ export const mod_clock_box = {
     return {
       clock_box: null,
       cc_params: null,
+      cc_modal_instance: null,
     }
   },
 
@@ -37,10 +38,54 @@ export const mod_clock_box = {
   },
 
   beforeDestroy() {
+    this.cc_modal_close()
     this.cc_destroy()
   },
 
   methods: {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    cc_modal_shortcut_handle() {
+      if (this.cc_modal_instance == null) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.cc_modal_open()
+        return true
+      }
+    },
+
+    cc_modal_open_handle() {
+      this.sidebar_p = false
+      this.$sound.play_click()
+      this.cc_modal_open()
+    },
+
+    cc_modal_close_handle() {
+      this.sidebar_p = false
+      this.$sound.play_click()
+      this.cc_modal_close()
+    },
+
+    cc_modal_open() {
+      this.cc_modal_close()
+      this.cc_modal_instance = this.modal_card_open({
+        component: ClockBoxModal,
+        onCancel: () => {
+          this.$sound.play_click()
+          this.cc_modal_close()
+        },
+      })
+    },
+
+    cc_modal_close() {
+      if (this.cc_modal_instance) {
+        this.cc_modal_instance.close()
+        this.cc_modal_instance = null
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     cc_play_by(initial_main_min = 10, initial_read_sec = 30, initial_extra_sec = 0, every_plus = 0) {
       this.cc_params = [
         {
@@ -171,12 +216,6 @@ export const mod_clock_box = {
         this.clock_box.timer_stop()
         this.clock_box = null
       }
-    },
-
-    cc_modal_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.modal_card_open({component: ClockBoxModal})
     },
 
     cc_resume_handle() {

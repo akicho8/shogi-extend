@@ -271,8 +271,16 @@ export const vue_support = {
       return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey
     },
 
-    keyboard_single_p(e, key) {
+    keyboard_meta_without_shift_p(e) {
+      return e.ctrlKey || e.altKey || e.metaKey
+    },
+
+    keyboard_single_key_equal(e, key) {
       return !this.keyboard_meta_p(e) && e.key === key
+    },
+
+    keyboard_single_code_equal(e, code) {
+      return !this.keyboard_meta_p(e) && e.code === code
     },
 
     focus_on_input_tag_p() {

@@ -16,7 +16,7 @@ b-sidebar.KiwiBananaShowSidebar.is-unselectable(fullheight right overlay v-model
 
         //- b-menu-list(label="その他")
         //-   b-menu-item.is_active_unset(label="ツイート" @click.native="base.tweet_handle")
-        //-   b-menu-item.is_active_unset(label="キーボードショートカット" @click.native="base.kb_shortcut_modal_toggle_handle")
+        //-   b-menu-item.is_active_unset(label="ショートカット" @click.native="base.kb_shortcut_modal_shortcut_handle")
 </template>
 
 <script>

@@ -18,7 +18,7 @@
       KifCopyButton(@click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      b-button(@click="base.yomikomi_modal_open_handle") 棋譜の読み込み
+      b-button(@click="base.yomikomi_modal_open_handle()") 棋譜の読み込み
 
   .buttons.is-centered.mt-4(v-if="development_p && false")
     b-button.has-text-weight-bold(

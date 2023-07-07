@@ -73,8 +73,7 @@ export default {
       this.TheSb.cc_main_switch_set(v)
     },
     close_handle() {
-      this.$sound.play_click()
-      this.$emit("close")
+      this.TheSb.cc_modal_close_handle()
     },
     play_handle() {
       if (this.TheSb.clock_start_even_though_order_is_not_enabled_p) {

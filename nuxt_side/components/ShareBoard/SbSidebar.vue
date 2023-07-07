@@ -15,7 +15,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
 
         b-menu-list(label="対局手順")
 
-          b-menu-item.is_active_unset.important.room_setup_modal_handle(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_handle")
+          b-menu-item.is_active_unset.important.room_setup_modal_open_handle(:class="base.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="base.room_setup_modal_open_handle")
             template(#label)
               | 部屋に入る
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
@@ -25,7 +25,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
               | 順番設定
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi2_hand_p")
 
-          b-menu-item.is_active_unset.important.cc_modal_handle(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_handle")
+          b-menu-item.is_active_unset.important.cc_modal_open_handle(:class="base.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="base.cc_modal_open_handle")
             template(#label)
               | 対局時計
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
@@ -45,7 +45,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="trophy" label="部屋の情報(hrefで別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
 
         b-menu-list(label="検討")
-          b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))")
+          b-menu-item.is_active_unset(icon="clipboard-plus-outline" label="棋譜コピー (KIF)" @click="base.kifu_copy_handle('kif_utf8')")
           b-menu-item.is_active_unset(icon="duck"                   label="ぴよ将棋"         :href="base.current_kifu_vo.piyo_url"  :target="target_default" @click="base.other_app_click_handle('ぴよ将棋')" v-if="$PiyoShogiTypeCurrent.info.showable_p || base.debug_mode_p")
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.current_kifu_vo.kento_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
 
@@ -54,7 +54,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_url_short_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
-          b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle")
+          b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle()")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="base.edit_mode_handle")
 
         b-menu-list(label="SNS共有")
@@ -67,10 +67,10 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="mail" label="メール送信" @click.native="base.kifu_mail_handle")
 
         b-menu-list(label="その他")
-
           b-menu-item.is_active_unset(icon="help-circle-outline" label="使い方"                      @click="base.general_help_modal_handle")
           b-menu-item.is_active_unset(icon="pencil-outline" label="タイトル変更"                @click="base.title_edit_handle")
           b-menu-item.is_active_unset(icon="account-edit" label="ハンドルネーム変更"          @click="base.handle_name_modal_handle")
+          b-menu-item.is_active_unset(icon="keyboard-outline" label="ショートカット"                      @click="base.shortcut_modal_open_handle")
           b-menu-item.is_active_unset(icon="cog-outline" label="設定"                        @click="base.general_setting_modal_handle")
           b-menu-item.is_active_unset(icon="bug-outline" label="デバッグ用ログ"              @click="base.tl_modal_handle" v-if="development_p")
           b-menu-item.is_active_unset(icon="page-first" label="URLを開いたときの局面に戻す" @click="base.reset_handle" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")

@@ -21,6 +21,13 @@ export const mod_order_new = {
     }
   },
   methods: {
+    os_modal_shortcut_handle() {
+      if (this.os_modal_instance == null) {
+        this.os_modal_handle()
+        return true
+      }
+    },
+
     os_modal_handle() {
       // 動かしている途中で消すとエラーになる
       // this.$gs.delay_block(5, () => this.os_modal_close())
@@ -37,6 +44,7 @@ export const mod_order_new = {
       this.$sound.play_click()
       this.os_modal_init()
       this.$gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
+      // this.room_setup_modal_close()
       this.os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
         props: { },

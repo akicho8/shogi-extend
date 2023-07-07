@@ -133,6 +133,13 @@ export const mod_chore = {
         return "has-text-weight-bold"
       }
     },
+
+    // すべてのモーダルを閉じる
+    all_modal_close() {
+      this.room_setup_modal_close()
+      this.cc_modal_close()
+      this.os_modal_close()
+    },
   },
 
   computed: {

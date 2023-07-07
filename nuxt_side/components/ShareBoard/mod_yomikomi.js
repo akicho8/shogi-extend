@@ -10,16 +10,36 @@ export const mod_yomikomi = {
     this.yomikomi_modal_close()
   },
   methods: {
+    // クリップボードから読み込む
+    yomikomi_from_clipboard() {
+      if (navigator.clipboard) {
+        navigator.clipboard.readText().then(text => this.yomikomi_facade(text))
+        return true
+      }
+    },
+
+    // 部屋を作っている場合はモーダルに読み込む
+    yomikomi_facade(text) {
+      if (this.ac_room == null) {
+        this.yomikomi_direct(text)
+      } else {
+        this.yomikomi_modal_open_handle(text)
+      }
+    },
+
     // 棋譜の読み込みタップ時の処理
-    yomikomi_modal_open_handle() {
+    yomikomi_modal_open_handle(source = "") {
       this.sidebar_p = false
       this.$sound.play_click()
       this.yomikomi_modal_close()
       this.yomikomi_modal_instance = this.modal_card_open({
         component: AnySourceReadModal,
+        props: {
+          source: source,
+        },
         events: {
           "update:any_source": any_source => {
-            this.yomikomi_process(any_source)
+            this.yomikomi_direct(any_source)
           },
         },
       })
@@ -28,11 +48,12 @@ export const mod_yomikomi = {
     yomikomi_modal_close() {
       if (this.yomikomi_modal_instance) {
         this.yomikomi_modal_instance.close()
+        this.yomikomi_modal_instance = null
       }
     },
 
     // 棋譜読み込み処理
-    yomikomi_process(any_source) {
+    yomikomi_direct(any_source) {
       const params = {
         any_source: any_source,
         to_format: "sfen",
@@ -52,7 +73,7 @@ export const mod_yomikomi = {
           this.viewpoint = "black"
           this.ac_log({subject: "棋譜読込", body: e.body})
 
-          this.yomikomi_modal_instance.close()
+          this.yomikomi_modal_close()
 
           // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
           this.$gs.delay_block(0.5, () => this.shared_al_add({label: "棋譜読込後"}))

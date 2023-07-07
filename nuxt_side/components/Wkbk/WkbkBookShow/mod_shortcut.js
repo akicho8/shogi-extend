@@ -16,18 +16,18 @@ export const mod_shortcut = {
         }
         let processed = false
         if (e.key === "?") {
-          this.kb_shortcut_modal_toggle_handle()
+          this.kb_shortcut_modal_shortcut_handle()
           processed = true
         }
-        if (this.keyboard_single_p(e, "x")) {
+        if (this.keyboard_single_key_equal(e, "x")) {
           this.kb_next_handle("mistake")
           processed = true
         }
-        if (this.keyboard_single_p(e, "o") || e.code === "Enter") {
+        if (this.keyboard_single_key_equal(e, "o") || e.code === "Enter") {
           this.kb_next_handle("correct")
           processed = true
         }
-        if (this.keyboard_single_p(e, "q") || e.code === "Escape") {
+        if (this.keyboard_single_key_equal(e, "q") || e.code === "Escape") {
           this.quit_handle()
           processed = true
         }
@@ -35,7 +35,7 @@ export const mod_shortcut = {
           this.previous_handle()
           processed = true
         }
-        if (this.keyboard_single_p(e, "p") || e.code === "Space") {
+        if (this.keyboard_single_key_equal(e, "p") || e.code === "Space") {
           this.sidebar_toggle()
           processed = true
         }

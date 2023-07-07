@@ -51,7 +51,7 @@ module SharedMethods
 
   def clock_open
     hamburger_click
-    cc_modal_handle             # 「対局時計」モーダルを開く
+    cc_modal_open_handle             # 「対局時計」モーダルを開く
     assert_clock_off            # 時計はまだ設置されていない
     clock_switch_toggle          # 設置する
     assert_clock_on             # 時計が設置された
@@ -87,8 +87,8 @@ module SharedMethods
     ].zip(values).to_h
   end
 
-  def cc_modal_handle
-    find(".cc_modal_handle").click
+  def cc_modal_open_handle
+    find(".cc_modal_open_handle").click
   end
 
   def clock_switch_toggle

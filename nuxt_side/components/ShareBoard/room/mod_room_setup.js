@@ -2,7 +2,7 @@
 // | Method                                      | 意味                                        |
 // |---------------------------------------------+---------------------------------------------|
 // | room_create_if_exist_room_code_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
-// | room_setup_modal_handle()                   | モーダル起動                                |
+// | room_setup_modal_open_handle()              | モーダル起動                                |
 // | room_create_by(new_room_coe, new_user_name) | モーダル内で入力したものを渡す              |
 // | room_create()                               | 入室                                        |
 // | room_destroy()                              | 退室                                        |
@@ -18,6 +18,7 @@ export const mod_room_setup = {
     return {
       ac_room: null,      // subscriptions.create のインスタンス
       ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
+      room_setup_modal_instance: null,
     }
   },
   mounted() {
@@ -25,6 +26,7 @@ export const mod_room_setup = {
     this.room_create_if_exist_room_code_in_url()
   },
   beforeDestroy() {
+    this.room_setup_modal_close()
     this.room_destroy()
   },
   methods: {
@@ -40,21 +42,55 @@ export const mod_room_setup = {
       }
       // 名前が未入力または不正な場合はモーダルを表示する
       if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
-        this.room_setup_modal_handle()
+        this.room_setup_modal_open()
         return
       }
       // 合言葉と名前は問題ないので部屋に入る
       this.room_create()
     },
 
-    room_setup_modal_handle() {
+    ////////////////////////////////////////////////////////////////////////////////
+
+    room_setup_modal_toggle_handle() {
+      if (this.room_setup_modal_instance == null) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.room_setup_modal_open()
+        return true
+      }
+    },
+
+    room_setup_modal_open_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.modal_card_open({
+      this.room_setup_modal_open()
+    },
+
+    room_setup_modal_close_handle() {
+      this.sidebar_p = false
+      this.$sound.play_click()
+      this.room_setup_modal_close()
+    },
+
+    room_setup_modal_open() {
+      this.room_setup_modal_close()
+      this.room_setup_modal_instance = this.modal_card_open({
         component: RoomSetupModal,
-        props: { base: this.base },
+        onCancel: () => {
+          this.$sound.play_click()
+          this.room_setup_modal_close()
+        },
       })
     },
+
+    room_setup_modal_close() {
+      if (this.room_setup_modal_instance) {
+        this.room_setup_modal_instance.close()
+        this.room_setup_modal_instance = null
+      }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////
 
     room_create_by(new_room_coe, new_user_name) {
       this.$gs.assert(new_user_name, "new_user_name")

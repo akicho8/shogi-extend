@@ -28,7 +28,7 @@
 import { support_child } from "../support_child.js"
 
 export default {
-  name: "MessageSendModal",
+  name: "ChatModal",
   mixins: [support_child],
   inject: ["TheSb"],
   mounted() {
@@ -41,8 +41,7 @@ export default {
   },
   methods: {
     close_handle() {
-      this.$sound.play_click()
-      this.$emit("close")
+      this.TheSb.chat_modal_close_handle()
     },
     change_handle(key) {
       this.$sound.play_click()
@@ -56,7 +55,7 @@ export default {
     send_handle() {
       if (this.$gs.blank_p(this.TheSb.message_body)) {
         if (this.TheSb.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
-          this.close_handle()
+          this.chat_modal_close()
           return
         } else {
           this.$sound.play("x")
@@ -80,7 +79,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.MessageSendModal
+.ChatModal
   +modal_width(32rem)
 
   .modal-card
@@ -129,7 +128,7 @@ export default {
 
 // Windows ではデザインが崩れるため開発環境でのみ有効化する
 .STAGE-development
-  .MessageSendModal
+  .ChatModal
     .modal-card
       overflow: scroll
       resize: both

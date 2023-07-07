@@ -50,7 +50,7 @@ MainNavbar.SbNavbar(v-bind="component_attrs")
     b-navbar-item.has-text-weight-bold.px_5_if_tablet.honpu_log_click_handle(@click="TheSb.honpu_log_click_handle" v-if="TheSb.honpu_button_show_p")
       | 本譜
 
-    b-navbar-item.px_5_if_tablet.is-unselectable.message_modal_handle(tag="a" @click="TheSb.message_modal_handle" v-if="TheSb.ac_room || true")
+    b-navbar-item.px_5_if_tablet.is-unselectable.chat_modal_open_handle(tag="a" @click="TheSb.chat_modal_open_handle" v-if="TheSb.ac_room || true")
       b-icon.account_icon(icon="account")
       b-icon.message_icon(icon="chat-processing")
 
@@ -106,7 +106,7 @@ export default {
 @import "./support.sass"
 .SbNavbar
   // チャットアイコンは2つをずらして組み合わせる
-  .message_modal_handle
+  .chat_modal_open_handle
     .icon
       position: relative
       &.account_icon

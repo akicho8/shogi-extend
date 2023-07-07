@@ -105,6 +105,7 @@ import { mod_force_sync           } from "./mod_force_sync.js"
 import { mod_illegal                 } from "./illegal/mod_illegal.js"
 import { mod_board_preset_select  } from "./mod_board_preset_select.js"
 import { mod_back_to              } from "./mod_back_to.js"
+import { mod_shortcut            } from "./shortcut/mod_shortcut.js"
 import { window_active_detector   } from "./window_active_detector.js"
 import { browser_slide_lock       } from "./browser_slide_lock.js"
 
@@ -121,8 +122,8 @@ import { mod_member_info_modal    } from "./member_list_show/mod_member_info_mod
 import { mod_ping                 } from "./member_list_show/mod_ping.js"
 import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
-import { mod_message      } from "./chat/mod_message.js"
-import { mod_message_logs } from "./chat/mod_message_logs.js"
+import { mod_chat      } from "./chat/mod_chat.js"
+import { mod_chat_logs } from "./chat/mod_chat_logs.js"
 import { mod_chatgpt     } from "./chat/mod_chatgpt.js"
 
 import { mod_console      } from "./console/mod_console.js"
@@ -157,8 +158,8 @@ export default {
     autoexec_methods,
     mod_xtitle,
     mod_action_log,
-    mod_message,
-    mod_message_logs,
+    mod_chat,
+    mod_chat_logs,
     mod_chatgpt,
     mod_console,
     mod_persistent_cc_params,
@@ -208,6 +209,7 @@ export default {
     mod_illegal,
     mod_board_preset_select,
     mod_back_to,
+    mod_shortcut,
     mod_give_up,
     mod_honpu,
     mod_medal,
