@@ -19,7 +19,7 @@ module ShareBoard
       seconds = Benchmark.realtime do
         response = client.chat(
           parameters: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-4-0613",
             messages: @topic.to_gpt_messages,
             # max_tokens: 0, # わざとエラーを出す場合
             temperature: 1.0,  # 1.5 にするとかなりアホになってしまう
