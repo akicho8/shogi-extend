@@ -51,8 +51,7 @@ client-only
               b-table-column(v-slot="{row}" field="階級値" label="階級値" numeric sortable :visible="development_p")
                 | {{$gs.number_round_s(row["階級値"])}}
               b-table-column(v-slot="{row}" field="累計相対度数"   label="上位" numeric sortable)
-                template(v-if="row['累計相対度数']")
-                  | {{$gs.floatx100_percentage(row["累計相対度数"] ?? 0, 2)}} %
+                | {{$gs.floatx100_percentage(row["累計相対度数"] ?? 0, 2)}} %
               b-table-column(v-slot="{row}" field="基準値"   label="基準値" numeric sortable :visible="development_p")
                 template(v-if="row['基準値']")
                   | {{$gs.number_round_s(row["基準値"], 2)}}
