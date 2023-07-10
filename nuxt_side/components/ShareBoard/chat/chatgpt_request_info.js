@@ -12,7 +12,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
           if (context.$route.query.__system_test_now__) { return }
-          return `20文字以内で${name}に元気よくユニークな挨拶をしてください`
+          return `${name}に元気よくユニークな挨拶をしてください。`
         },
       },
       {
@@ -37,8 +37,8 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             //   // return `${names_str}チーム`
             //   return `${names_str}`
             // }).join("対")
-            // return `${teams}の対局が開始されました。20文字以内で盛り上げてください`
-            return `対局が開始されました。20文字以内で盛り上げてください`
+            // return `${teams}の対局が開始されました。盛り上げてください`
+            return `対局が開始されました。盛り上げてください。`
           }
         },
       },
@@ -47,13 +47,13 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           // `${params.turn}手目`
           // if (params.turn === 20) {
-          //   return `序盤戦を20文字以内で盛り上げてください`
+          //   return `序盤戦を盛り上げてください`
           // }
           // if (params.turn === 45) {
-          //   return `中盤戦を20文字以内で盛り上げてください`
+          //   return `中盤戦を盛り上げてください`
           // }
           // if (params.turn === 80) {
-          //   return `終盤戦を20文字以内で盛り上げてください`
+          //   return `終盤戦を盛り上げてください`
           // }
         },
       },
@@ -62,14 +62,14 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           const illegal_names = params.illegal_names.join("と")
           const name = context.user_call_name(params.from_user_name)
-          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を20文字以内で励ましてください`
+          return `反則の${illegal_names}をしてしまい落ち込んでいる${name}を励ましてください。`
         },
       },
       {
         key: "時間切れで負けた人を励ます",
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
-          return `時間切れで負けた${name}を20文字以内で励ましてください`
+          return `時間切れで負けた${name}を励ましてください。`
         },
       },
       {
@@ -79,7 +79,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             return
           }
           if (context.one_vs_one_p) {
-            return "対局が終わったところです。両者を20文字以内で労ってください"
+            return "対局が終わったところです。両者を労ってください。"
           }
           if (context.many_vs_many_p) {
             const members = context.visible_member_groups[params.win_location_key]
@@ -90,7 +90,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
             if (names.length >= 2) {
               messages.push(`とくに${name}の活躍が目立ちました。`)
             }
-            messages.push("20文字以内で熱く両者を労ってください。")
+            messages.push("熱く両者を労ってください。")
             return messages.join("")
           }
         },

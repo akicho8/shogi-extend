@@ -27,7 +27,8 @@ export const mod_chatgpt = {
       const message = ChatgptRequestInfo.fetch(key).command_fn(this, params)
       if (message != null) {
         if (this.gpt_mode_info.key === "gpt_mode_on") {
-          this.gpt_speak({message: message})
+          const message2 = [message, "返答は短かく簡潔にすること。"].join("")
+          this.gpt_speak({message: message2})
         }
       }
     },
