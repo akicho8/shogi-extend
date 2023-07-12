@@ -67,8 +67,8 @@ client-only
                   .title {{$gs.number_round_s(xi["平均"], 2)}}
               .level-item.has-text-centered
                 div
-                  .heading 分散
-                  .title {{$gs.number_round_s(xi["分散"], 2)}}
+                  .heading 不偏分散
+                  .title {{$gs.number_round_s(xi["不偏分散"], 2)}}
               .level-item.has-text-centered
                 div
                   .heading 標準偏差

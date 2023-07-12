@@ -27,7 +27,7 @@ module Swars
             :rule_key    => params[:rule_key].presence,
             :xtag        => params[:xtag].presence,
             "平均"       => @score_average,
-            "分散"       => @variance,
+            "不偏分散"   => @variance,
             "標準偏差"   => @standard_deviation,
             "基準値平均" => @standard_value_average,
           })
