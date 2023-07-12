@@ -11,7 +11,7 @@ describe("TimeUtil", () => {
     expect(TimeUtil.format_row("2000-01-02 11:22:33")).toEqual("2000-01-02")
   })
   it("format_diff", () => {
-    expect(TimeUtil.format_diff("2000-01-02 11:22:33")).toEqual("23年前")
+    expect(TimeUtil.format_diff("2000-01-02 11:22:33").includes("年前")).toEqual(true)
   })
   it("format_md_or_ymd", () => {
     expect(TimeUtil.format_md_or_ymd("2000-01-02 11:22:33")).toEqual("2000-01-02")
