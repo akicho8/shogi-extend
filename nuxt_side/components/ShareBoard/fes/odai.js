@@ -25,6 +25,7 @@ export class Odai {
       Gs.presence(this.subject) ?? "どっちが好き？",
       "？",
       this.items.map(e => `${e}`).join("または"),
+      "。",                     // 後ろに繋げる場合があるので読点を入れておく
     ].join("")
   }
 
