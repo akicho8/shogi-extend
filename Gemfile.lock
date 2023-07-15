@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: fa8452888377eec84560cef460751ad40210279b
+  revision: 460791cf62e194e978e9486e25206cc5ac6e39a8
   branch: main
   specs:
     bioshogi (0.0.1)
@@ -282,7 +282,7 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.5.9)
     nkf (0.1.2)
-    nokogiri (1.15.2)
+    nokogiri (1.15.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     oauth (0.5.8)
@@ -362,8 +362,9 @@ GEM
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
       activesupport (>= 5.0.1.rc1)
-    rails-dom-testing (2.0.3)
-      activesupport (>= 4.2.0)
+    rails-dom-testing (2.1.1)
+      activesupport (>= 5.0.0)
+      minitest
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
