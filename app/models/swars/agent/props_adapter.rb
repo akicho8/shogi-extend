@@ -43,14 +43,18 @@ module Swars
         @rule_info ||= RuleInfo.fetch(rule_key)
       end
 
-      # 野良・友対・指導
+      # 野良・友対・指導・謎BOT
       def xmode_info
-        @xmode_info ||= XmodeMagicNumberInfo.by_magic_number(props.fetch("opponent_type")).xmode_info
+        @xmode_info ||= yield_self do
+          if info = XmodeMagicNumberInfo.lookup_by_magic_number(props.fetch("opponent_type"))
+            info.xmode_info
+          end
+        end
       end
 
       # 手合割
       def preset_info
-        @preset_info ||= PresetMagicNumberInfo.by_magic_number(props.fetch("handicap")).preset_info
+        @preset_info ||= PresetMagicNumberInfo.fetch_by_magic_number(props.fetch("handicap")).preset_info
       end
 
       # 結末
@@ -104,6 +108,11 @@ module Swars
 
       # 取り込むべきか？
       def valid?
+        # opponent_type = 4 の場合が謎なので取り込まない
+        unless xmode_info
+          return false
+        end
+
         # 手数が1024以上になると DRAW_PLY_LIMIT が入る
         # 2020-11上旬に新しくウォーズに入った仕様っぽい
         # これを取り込んでもあまり意味がないので除外する
