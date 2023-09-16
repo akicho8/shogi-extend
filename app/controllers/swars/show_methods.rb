@@ -20,7 +20,7 @@ module Swars
       a = super
 
       # battle
-      a[:final_info]  = { name: e.final_info.name, :class => e.final_info.has_text_color,        }
+      a[:final_info]  = { key: e.final_info.key, name: e.final_info.name, :class => e.final_info.has_text_color,        }
       a[:preset_info] = { name: e.preset_info.name, handicap_shift: e.preset_info.handicap_shift }
       a[:rule_info]   = { name: e.rule_info.name                                                 }
       a[:xmode_info]  = { key: e.xmode.key, name: e.xmode.name }
@@ -71,6 +71,8 @@ module Swars
           :location_key => e.location_key,
           :judge_key    => e.judge_key,
           :medal_params => e.medal_params(params),
+          :ek_score1    => e.ek_score1,
+          :ek_score2    => e.ek_score2,
         }
         if e.style
           hv[:style_key] = e.style.key

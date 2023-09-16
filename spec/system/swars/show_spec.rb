@@ -12,6 +12,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       visit2 "/swars/battles/#{@key}", params
       assert_text "YamadaTaro"
       assert_text "最後は時間切れ"
+      assert_text "入玉宣言"
     end
 
     it "works" do

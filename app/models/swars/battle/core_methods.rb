@@ -60,13 +60,15 @@ module Swars
         # 駒の使用頻度を保存
         membership_extra_build_if_nothing
 
-        # 囲い対決などに使う
+        # 囲い対決・得点
         if true
           info.container.players.each.with_index do |player, i|
             memberships[i].tap do |e|
               player.skill_set.to_h.each do |key, values|
                 e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
               end
+              e.ek_score1 = player.ek_score1
+              e.ek_score2 = player.ek_score2
             end
           end
         end

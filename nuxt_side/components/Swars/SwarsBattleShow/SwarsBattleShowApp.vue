@@ -52,6 +52,16 @@ client-only
           SwarsBattleShowUserLink(:membership="record.memberships[1]" :with_location="true" :with_judge="true")
         p {{record.description}}
         p {{record.turn_max}}手まで (最後は{{record.final_info.name}})
+        p
+          a(href="https://shogiwars.heroz.jp/topics/54293aca7aa25c6e6b000042" target="_blank" @click="$sound.play_click()") 入玉宣言法
+          template(v-if="record.final_info.key === 'ENTERINGKING'")
+            | による点数
+          template(v-else)
+            | を仮定した点数
+          span.mr-1 :
+          SwarsBattleShowUserScore(:membership="record.memberships[0]")
+          span.mx-1 vs
+          SwarsBattleShowUserScore(:membership="record.memberships[1]")
 
       //-   DebugPre(v-if="development_p")
       //-     | start_turn: {{start_turn}}
