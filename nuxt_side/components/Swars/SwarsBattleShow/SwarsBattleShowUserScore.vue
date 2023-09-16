@@ -3,7 +3,7 @@ span.SwarsBattleShowUserScore(:class="[TheShow.record.final_info.key, membership
   v-template(v-if="development_p")
     span [{{TheShow.record.final_info.key}}]
     span [{{membership.judge_key}}]
-  | {{membership.ek_score1}}点
+  | {{membership.ek_score_without_cond}}点
 </template>
 
 <script>

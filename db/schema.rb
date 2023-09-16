@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_16_000000) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_16_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -373,6 +373,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_000000) do
     t.bigint "style_id", comment: "棋風"
     t.integer "ek_score1", comment: "入玉宣言時の得点(仮)"
     t.integer "ek_score2", comment: "入玉宣言時の得点(最終)"
+    t.integer "ek_score_without_cond", comment: "入玉宣言時の得点(仮)"
+    t.integer "ek_score_with_cond", comment: "入玉宣言時の得点(条件考慮)"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

@@ -67,8 +67,8 @@ module Swars
               player.skill_set.to_h.each do |key, values|
                 e.send("#{key}_tag_list=", values - (reject_tag_keys[key] || []))
               end
-              e.ek_score1 = player.ek_score1
-              e.ek_score2 = player.ek_score2
+              e.ek_score_without_cond = player.ek_score_without_cond
+              e.ek_score_with_cond = player.ek_score_with_cond
             end
           end
         end
