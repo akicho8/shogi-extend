@@ -18,11 +18,11 @@ class Preset < ApplicationRecord
 
   with_options dependent: :destroy do
     has_many :swars_battles, class_name: "Swars::Battle"
-    has_many :swars_memberships, through: :swars_battles
+    # has_many :swars_memberships, through: :swars_battles, source: :membership, class_name: "Swars::Membership"
   end
 
   with_options dependent: :destroy do
     has_many :free_battles
-    has_many :free_memberships, through: :free_battles
+    # has_many :free_memberships, through: :free_battles
   end
 end

@@ -290,8 +290,9 @@ module Swars
 
     concerning :MembershipExtraMethods do
       included do
+        # has_many :swars_battles, through: :swars_memberships, :source => <name>
         has_one :membership_extra, dependent: :destroy, autosave: true
-        scope :membership_extra_missing, -> { left_joins(:membership_extra).where(membership_extra: {id: nil}) }
+        # scope :membership_extra_missing, -> { left_joins(:membership_extra).where(membership_extra: {id: nil}) }
       end
     end
 
