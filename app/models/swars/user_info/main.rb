@@ -717,7 +717,7 @@ module Swars
           # | 2021-05-20 |         2 |
           # |------------+-----------|
           # count_all の値たちの平均を求める
-          sql = "SELECT AVG(count_all) FROM (#{sql}) as grouping" # (3 + 1 + 2) / 3 => 2
+          sql = "SELECT AVG(count_all) FROM (#{sql}) as avg_value" # (3 + 1 + 2) / 3 => 2
           ActiveRecord::Base.connection.select_value(sql).to_f.round(2)
         end
       end
