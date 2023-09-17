@@ -26,7 +26,6 @@ module BattleModelMethods
       # 盤面が変化したことが一瞬でわかるように盤面をハッシュ化しておく
       if will_save_change_to_attribute?(:sfen_body) || sfen_hash.nil?
         if sfen_body
-          p ["#{__FILE__}:#{__LINE__}", __method__, sfen_body]
           self.sfen_hash = Digest::MD5.hexdigest(sfen_body)
         end
       end
