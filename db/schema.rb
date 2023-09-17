@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_000001) do
   end
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"
@@ -371,8 +371,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_000001) do
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
     t.bigint "style_id", comment: "棋風"
-    t.integer "ek_score1", comment: "入玉宣言時の得点(仮)"
-    t.integer "ek_score2", comment: "入玉宣言時の得点(最終)"
     t.integer "ek_score_without_cond", comment: "入玉宣言時の得点(仮)"
     t.integer "ek_score_with_cond", comment: "入玉宣言時の得点(条件考慮)"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
@@ -470,7 +468,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_16_000001) do
   end
 
   create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "name", collation: "utf8mb3_bin"
+    t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
