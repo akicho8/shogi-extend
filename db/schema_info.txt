@@ -450,29 +450,31 @@
 #
 # 対局と対局者の対応 (swars_memberships as Swars::Membership)
 #
-# |----------------+----------------+------------+-------------+-------------------+------------|
-# | name           | desc           | type       | opts        | refs              | index      |
-# |----------------+----------------+------------+-------------+-------------------+------------|
-# | id             | ID             | integer(8) | NOT NULL PK |                   |            |
-# | battle_id      | 対局共通情報   | integer(8) | NOT NULL    |                   | A! B! C! D |
-# | user_id        | ユーザー       | integer(8) | NOT NULL    | => User#id        | A! E       |
-# | op_user_id     | Op user        | integer(8) |             | => Swars::User#id | C! F       |
-# | grade_id       | 棋力           | integer(8) | NOT NULL    |                   | G          |
-# | position       | 順序           | integer(4) |             |                   | H          |
-# | grade_diff     | Grade diff     | integer(4) | NOT NULL    |                   |            |
-# | created_at     | 作成日時       | datetime   | NOT NULL    |                   |            |
-# | updated_at     | 更新日時       | datetime   | NOT NULL    |                   |            |
-# | think_all_avg  | Think all avg  | integer(4) |             |                   |            |
-# | think_end_avg  | Think end avg  | integer(4) |             |                   |            |
-# | two_serial_max | Two serial max | integer(4) |             |                   |            |
-# | think_last     | Think last     | integer(4) |             |                   |            |
-# | think_max      | Think max      | integer(4) |             |                   |            |
-# | obt_think_avg  | Obt think avg  | integer(4) |             |                   |            |
-# | obt_auto_max   | Obt auto max   | integer(4) |             |                   |            |
-# | judge_id       | Judge          | integer(8) | NOT NULL    | => Judge#id       | I          |
-# | location_id    | Location       | integer(8) | NOT NULL    | => Location#id    | B! J       |
-# | style_id       | Style          | integer(8) |             |                   | K          |
-# |----------------+----------------+------------+-------------+-------------------+------------|
+# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
+# | name                  | desc                  | type       | opts        | refs              | index      |
+# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
+# | id                    | ID                    | integer(8) | NOT NULL PK |                   |            |
+# | battle_id             | 対局共通情報          | integer(8) | NOT NULL    |                   | A! B! C! D |
+# | user_id               | ユーザー              | integer(8) | NOT NULL    | => User#id        | A! E       |
+# | op_user_id            | Op user               | integer(8) |             | => Swars::User#id | C! F       |
+# | grade_id              | 棋力                  | integer(8) | NOT NULL    |                   | G          |
+# | position              | 順序                  | integer(4) |             |                   | H          |
+# | grade_diff            | Grade diff            | integer(4) | NOT NULL    |                   |            |
+# | created_at            | 作成日時              | datetime   | NOT NULL    |                   |            |
+# | updated_at            | 更新日時              | datetime   | NOT NULL    |                   |            |
+# | think_all_avg         | Think all avg         | integer(4) |             |                   |            |
+# | think_end_avg         | Think end avg         | integer(4) |             |                   |            |
+# | two_serial_max        | Two serial max        | integer(4) |             |                   |            |
+# | think_last            | Think last            | integer(4) |             |                   |            |
+# | think_max             | Think max             | integer(4) |             |                   |            |
+# | obt_think_avg         | Obt think avg         | integer(4) |             |                   |            |
+# | obt_auto_max          | Obt auto max          | integer(4) |             |                   |            |
+# | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | I          |
+# | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! J       |
+# | style_id              | Style                 | integer(8) |             |                   | K          |
+# | ek_score_without_cond | Ek score without cond | integer(4) |             |                   |            |
+# | ek_score_with_cond    | Ek score with cond    | integer(4) |             |                   |            |
+# |-----------------------+-----------------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
 # Judge.has_many :swars_memberships
@@ -581,20 +583,24 @@
 #
 # Battle (share_board_battles as ShareBoard::Battle)
 #
-# |-----------------+--------------+-------------+-------------+------+-------|
-# | name            | desc         | type        | opts        | refs | index |
-# |-----------------+--------------+-------------+-------------+------+-------|
-# | id              | ID           | integer(8)  | NOT NULL PK |      |       |
-# | room_id         | Room         | integer(8)  | NOT NULL    |      | B     |
-# | key             | キー         | string(255) | NOT NULL    |      | A!    |
-# | title           | タイトル     | string(255) | NOT NULL    |      |       |
-# | sfen            | Sfen         | text(65535) | NOT NULL    |      |       |
-# | turn            | Turn         | integer(4)  | NOT NULL    |      | C     |
-# | win_location_id | Win location | integer(8)  | NOT NULL    |      | D     |
-# | position        | 順序         | integer(4)  |             |      | E     |
-# | created_at      | 作成日時     | datetime    | NOT NULL    |      |       |
-# | updated_at      | 更新日時     | datetime    | NOT NULL    |      |       |
-# |-----------------+--------------+-------------+-------------+------+-------|
+# |-----------------+--------------+-------------+-------------+----------------+-------|
+# | name            | desc         | type        | opts        | refs           | index |
+# |-----------------+--------------+-------------+-------------+----------------+-------|
+# | id              | ID           | integer(8)  | NOT NULL PK |                |       |
+# | room_id         | Room         | integer(8)  | NOT NULL    |                | B     |
+# | key             | キー         | string(255) | NOT NULL    |                | A!    |
+# | title           | タイトル     | string(255) | NOT NULL    |                |       |
+# | sfen            | Sfen         | text(65535) | NOT NULL    |                |       |
+# | turn            | Turn         | integer(4)  | NOT NULL    |                | C     |
+# | win_location_id | Win location | integer(8)  | NOT NULL    | => Location#id | D     |
+# | position        | 順序         | integer(4)  |             |                | E     |
+# | created_at      | 作成日時     | datetime    | NOT NULL    |                |       |
+# | updated_at      | 更新日時     | datetime    | NOT NULL    |                |       |
+# |-----------------+--------------+-------------+-------------+----------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# 【警告:リレーション欠如】Locationモデルで has_many :share_board/battles されていません
+#--------------------------------------------------------------------------------
 
 # == Schema Information ==
 #
