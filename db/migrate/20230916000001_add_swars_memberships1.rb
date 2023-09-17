@@ -6,6 +6,6 @@ class AddSwarsMemberships1 < ActiveRecord::Migration[6.0]
     end
 
     Swars::Membership.reset_column_information
-    Swars::Final.fetch("ENTERINGKING").battles.each(&:rename)
+    Swars::Final.fetch("ENTERINGKING").battles.each(&:remake)
   end
 end
