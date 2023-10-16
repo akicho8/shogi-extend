@@ -27,8 +27,8 @@ devDependencies:
     specifier: ^1.2.1
     version: 1.2.1
   '@rails/actioncable':
-    specifier: ^7.0.8
-    version: 7.0.8
+    specifier: ^7.1.1
+    version: 7.1.1
   beetleshine:
     specifier: ^0.0.14
     version: 0.0.14
@@ -54,8 +54,8 @@ devDependencies:
     specifier: ^4.2.0
     version: 4.2.0
   howler:
-    specifier: ^2.2.3
-    version: 2.2.3
+    specifier: ^2.2.4
+    version: 2.2.4
   jest:
     specifier: ^29.5.0
     version: 29.5.0
@@ -72,8 +72,8 @@ devDependencies:
     specifier: ^2.16.3
     version: 2.16.3(consola@3.1.0)(pug@2.0.4)(vue@2.7.14)
   nuxt-buefy:
-    specifier: ^0.4.25
-    version: 0.4.25(vue@2.7.14)
+    specifier: ^0.4.26
+    version: 0.4.26(vue@2.7.14)
   patch-package:
     specifier: ^7.0.0
     version: 7.0.0
@@ -2712,8 +2712,8 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@rails/actioncable@7.0.8:
-    resolution: {integrity: sha512-GjYQv89ZOOfbFw8VMNUOG33GXzyAA/TCVoD+742Ob4svm1XXUkd+w+ewqUXd+7VHQtV35y1/O78AGIPeJDTy/g==}
+  /@rails/actioncable@7.1.1:
+    resolution: {integrity: sha512-ZRJ9rdwFQQjRbtgJnweY0/4UQyxN6ojEGRdib0JkjnuIciv+4ok/aAeZmBJqNreTMaBqS0eHyA9hCArwN58opg==}
     dev: true
 
   /@sinclair/typebox@0.25.24:
@@ -4186,8 +4186,8 @@ packages:
       node-int64: 0.4.0
     dev: true
 
-  /buefy@0.9.23(vue@2.7.14):
-    resolution: {integrity: sha512-zkmTOUDlh7xx0ID8cSw3Wtm97nkTGU992TcIBBTC41rjKHjJTyQn9fYr8oqvVaCTLNVJmdPnnjDCuYZtHoDEog==}
+  /buefy@0.9.25(vue@2.7.14):
+    resolution: {integrity: sha512-XOALwf3XzMnJCYslWUALyNZPnloBIsh4X7UYi1DNw7+wDT0uJ6PVDlFUjIKGTLeL0uTC0/O3E+TT60bUj0jGbg==}
     engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
     peerDependencies:
       vue: ^2.6.11
@@ -6780,8 +6780,8 @@ packages:
       lru-cache: 6.0.0
     dev: true
 
-  /howler@2.2.3:
-    resolution: {integrity: sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==}
+  /howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
     dev: true
 
   /html-encoding-sniffer@1.0.2:
@@ -9045,11 +9045,11 @@ packages:
       boolbase: 1.0.0
     dev: true
 
-  /nuxt-buefy@0.4.25(vue@2.7.14):
-    resolution: {integrity: sha512-ITOgw7ktveRXhTNB9xzIgyUHWz3g3D6iLJ8Uhst5QgXb/Pcd/GbLwAjS4uVwZSm3y8gkAu+4jG0aAbAsE/PIQg==}
+  /nuxt-buefy@0.4.26(vue@2.7.14):
+    resolution: {integrity: sha512-Q9wfwvAgGoUGk2r9oALdxMdBpy1qjFeIMAD3hBEhihQ0V/fi6DBk+a/1N4dHiUFrT+CUauboiTajiyZdPt0E0Q==}
     engines: {node: '>=8.0.0'}
     dependencies:
-      buefy: 0.9.23(vue@2.7.14)
+      buefy: 0.9.25(vue@2.7.14)
     transitivePeerDependencies:
       - vue
     dev: true
