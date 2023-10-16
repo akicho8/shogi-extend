@@ -12,12 +12,10 @@ module ShogiWeb
     # https://qiita.com/SoarTec-lab/items/9832bb89402e452b20bb
     config.load_defaults 7.0
 
-    # https://railsguides.jp/configuring.html#config-add-autoload-paths-to-load-path
-    # $LOAD_PATHに自動読み込みのパスを追加すべきかどうかを指定します。
-    # このフラグはデフォルトでtrueですが、:zeitwerkモードでは早い段階でconfig/application.rbでfalseに設定することをおすすめします。
-    config.add_autoload_paths_to_load_path = false # $LOAD_PATH を使わず zeitwerk だけにすると速くなる
-
-    # config.active_support.cache_format_version = 6.1 # Rails 6 に戻す気がなくなったら 7.0 にする
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w(assets tasks cpu_strategy_info))
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -81,8 +79,5 @@ module ShogiWeb
     #
     # https://zenn.dev/hatsu0412/scraps/4b1db3dd725a86
     config.active_record.use_yaml_unsafe_load = true
-
-    # https://github.com/rails/rails/pull/40370
-    config.active_record.legacy_connection_handling = false
   end
 end
