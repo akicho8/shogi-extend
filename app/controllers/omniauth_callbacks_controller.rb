@@ -17,6 +17,10 @@ require "open-uri" # for URI#open
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   FLASH_NOTICE_ENABLE = false
 
+  # def passthru
+  #   raise "foo"
+  # end
+
   def google
     auth_shared_process
   end

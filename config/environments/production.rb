@@ -122,11 +122,12 @@ Rails.application.configure do
 
   # for AppConfig
   config.to_prepare do
-    Rails.application.config.app_config.deep_merge!({
-                                                      :my_request_origin                 => "https://www.shogi-extend.com",
-                                                      :available_providers           => [:twitter, :google, :github],
-                                                      :nanasi_login                  => false,
-                                                      :email_pw_login                => true,
-                                                    })
+    Rails.application.config.app_config.deep_merge!(
+      {
+        :my_request_origin   => "https://www.shogi-extend.com",
+        :available_providers => [:twitter, :google, :github],
+        :nanasi_login        => false,
+        :email_pw_login      => true,
+      })
   end
 end
