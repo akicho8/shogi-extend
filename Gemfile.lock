@@ -501,7 +501,7 @@ GEM
     sshkit-interactive (0.3.0)
       sshkit (~> 1.12)
     systemu (2.6.5)
-    table_format (0.0.15)
+    table_format (0.0.16)
       activesupport
     temple (0.10.1)
     test-prof (1.0.7)
