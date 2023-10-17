@@ -64,6 +64,10 @@ Rails.application.configure do
 
   ################################################################################
 
+  # /usr/local/var/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/spring-4.1.1/lib/spring/application.rb:100:in `block in preload': Spring reloads, and therefore needs the application to have reloading enabled.
+  # Please, set config.cache_classes to false in config/environments/test.rb.
+  config.cache_classes = false
+
   # https://qiita.com/upinetree/items/41a2a8fe9e1dd7c291ab
   # ↓これは効いてないっぽい。結局 spec で perform_enqueued_jobs ブロックを使うことで同期実行するようにしている
   config.active_job.queue_adapter = :sidekiq

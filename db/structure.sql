@@ -2,7 +2,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -11,13 +11,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 DROP TABLE IF EXISTS `active_storage_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `active_storage_attachments` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `record_type` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `record_id` bigint NOT NULL,
-  `blob_id` bigint NOT NULL,
+  `record_id` bigint(20) NOT NULL,
+  `blob_id` bigint(20) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_active_storage_attachments_uniqueness` (`record_type`,`record_id`,`name`,`blob_id`),
@@ -27,15 +27,15 @@ CREATE TABLE `active_storage_attachments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_blobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `active_storage_blobs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `filename` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `content_type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `metadata` text COLLATE utf8mb4_bin,
-  `byte_size` bigint NOT NULL,
-  `checksum` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `byte_size` bigint(20) NOT NULL,
+  `checksum` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `service_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
@@ -44,10 +44,10 @@ CREATE TABLE `active_storage_blobs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_variant_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `active_storage_variant_records` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `blob_id` bigint NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `blob_id` bigint(20) NOT NULL,
   `variation_digest` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_active_storage_variant_records_uniqueness` (`blob_id`,`variation_digest`),
@@ -56,21 +56,21 @@ CREATE TABLE `active_storage_variant_records` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `app_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `level` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `emoji` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `subject` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `body` text COLLATE utf8mb4_bin NOT NULL,
-  `process_id` int NOT NULL,
+  `process_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ar_internal_metadata` (
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `value` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
@@ -81,10 +81,10 @@ CREATE TABLE `ar_internal_metadata` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `auth_infos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `auth_infos` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT 'ユーザー',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT 'ユーザー',
   `provider` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '何経由でログインしたか',
   `uid` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '長い内部ID(providerとペアではユニーク)',
   `meta_info` text COLLATE utf8mb4_bin COMMENT 'とれた情報をハッシュで持っとく用',
@@ -95,10 +95,10 @@ CREATE TABLE `auth_infos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpu_battle_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cpu_battle_records` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint DEFAULT NULL COMMENT 'ログインしているならそのユーザー',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT 'ログインしているならそのユーザー',
   `judge_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '結果',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
@@ -109,28 +109,28 @@ CREATE TABLE `cpu_battle_records` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `free_battles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `free_battles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL COMMENT 'URL識別子',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT 'URL識別子',
   `title` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `kifu_body` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜本文',
   `sfen_body` text COLLATE utf8mb4_bin NOT NULL COMMENT 'SFEN形式',
-  `turn_max` int NOT NULL COMMENT '手数',
+  `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `battled_at` datetime NOT NULL COMMENT '対局開始日時',
   `use_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `accessed_at` datetime NOT NULL COMMENT '最終参照日時',
-  `user_id` bigint DEFAULT NULL,
+  `user_id` bigint(20) DEFAULT NULL,
   `description` text COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `start_turn` int DEFAULT NULL COMMENT '???',
-  `critical_turn` int DEFAULT NULL COMMENT '開戦',
-  `outbreak_turn` int DEFAULT NULL COMMENT '中盤',
-  `image_turn` int DEFAULT NULL COMMENT '???',
+  `start_turn` int(11) DEFAULT NULL COMMENT '???',
+  `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
+  `outbreak_turn` int(11) DEFAULT NULL COMMENT '中盤',
+  `image_turn` int(11) DEFAULT NULL COMMENT '???',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `preset_id` bigint DEFAULT NULL COMMENT '手合割',
+  `preset_id` bigint(20) DEFAULT NULL COMMENT '手合割',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_free_battles_on_key` (`key`),
   KEY `index_free_battles_on_turn_max` (`turn_max`),
@@ -146,11 +146,11 @@ CREATE TABLE `free_battles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `judges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `judges` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -160,11 +160,11 @@ CREATE TABLE `judges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_access_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kiwi_access_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint DEFAULT NULL COMMENT '参照者',
-  `banana_id` bigint NOT NULL COMMENT '動画',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT '参照者',
+  `banana_id` bigint(20) NOT NULL COMMENT '動画',
   `created_at` datetime NOT NULL COMMENT '記録日時',
   PRIMARY KEY (`id`),
   KEY `index_kiwi_access_logs_on_user_id` (`user_id`),
@@ -173,13 +173,13 @@ CREATE TABLE `kiwi_access_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_banana_messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kiwi_banana_messages` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT '発言者',
-  `banana_id` bigint NOT NULL COMMENT '動画',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '発言者',
+  `banana_id` bigint(20) NOT NULL COMMENT '動画',
   `body` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '発言',
-  `position` int NOT NULL COMMENT '番号',
+  `position` int(11) NOT NULL COMMENT '番号',
   `deleted_at` datetime DEFAULT NULL COMMENT '削除日時',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
@@ -192,18 +192,18 @@ CREATE TABLE `kiwi_banana_messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_bananas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kiwi_bananas` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `user_id` bigint NOT NULL COMMENT '作成者',
-  `folder_id` bigint NOT NULL COMMENT 'フォルダ',
-  `lemon_id` bigint NOT NULL COMMENT '動画',
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `lemon_id` bigint(20) NOT NULL COMMENT '動画',
   `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
   `description` text COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
   `thumbnail_pos` float NOT NULL COMMENT 'サムネ位置',
-  `banana_messages_count` int NOT NULL DEFAULT '0' COMMENT 'コメント数',
-  `access_logs_count` int NOT NULL DEFAULT '0' COMMENT '総アクセス数',
+  `banana_messages_count` int(11) NOT NULL DEFAULT '0' COMMENT 'コメント数',
+  `access_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '総アクセス数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -217,12 +217,12 @@ CREATE TABLE `kiwi_bananas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_folders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kiwi_folders` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
-  `bananas_count` int NOT NULL DEFAULT '0' COMMENT '問題集数',
+  `position` int(11) NOT NULL,
+  `bananas_count` int(11) NOT NULL DEFAULT '0' COMMENT '問題集数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -232,12 +232,12 @@ CREATE TABLE `kiwi_folders` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_lemons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `kiwi_lemons` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT '所有者',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '所有者',
   `recordable_type` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `recordable_id` bigint NOT NULL COMMENT '対象レコード',
+  `recordable_id` bigint(20) NOT NULL COMMENT '対象レコード',
   `all_params` text COLLATE utf8mb4_bin NOT NULL COMMENT '変換パラメータ全部入り',
   `process_begin_at` datetime DEFAULT NULL COMMENT '処理開始日時',
   `process_end_at` datetime DEFAULT NULL COMMENT '処理終了日時',
@@ -245,7 +245,7 @@ CREATE TABLE `kiwi_lemons` (
   `errored_at` datetime DEFAULT NULL COMMENT 'エラー日時',
   `error_message` text COLLATE utf8mb4_bin COMMENT 'エラーメッセージ',
   `content_type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'コンテンツタイプ',
-  `file_size` int DEFAULT NULL COMMENT 'ファイルサイズ',
+  `file_size` int(11) DEFAULT NULL COMMENT 'ファイルサイズ',
   `ffprobe_info` text COLLATE utf8mb4_bin COMMENT '変換パラメータ',
   `browser_path` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '生成したファイルへのパス',
   `filename_human` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'ダウンロードファイル名',
@@ -263,11 +263,11 @@ CREATE TABLE `kiwi_lemons` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `locations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -277,11 +277,11 @@ CREATE TABLE `locations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `presets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `presets` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -291,10 +291,10 @@ CREATE TABLE `presets` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `profiles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT 'ユーザー',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT 'ユーザー',
   `description` varchar(512) COLLATE utf8mb4_bin NOT NULL COMMENT '自己紹介',
   `twitter_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `created_at` datetime NOT NULL,
@@ -305,7 +305,7 @@ CREATE TABLE `profiles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`version`)
@@ -313,16 +313,16 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_battles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share_board_battles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `room_id` bigint NOT NULL COMMENT '部屋',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) NOT NULL COMMENT '部屋',
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対局識別子',
   `title` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
   `sfen` text COLLATE utf8mb4_bin NOT NULL,
-  `turn` int NOT NULL COMMENT '手数',
-  `win_location_id` bigint NOT NULL COMMENT '勝利側',
-  `position` int DEFAULT NULL COMMENT '順序',
+  `turn` int(11) NOT NULL COMMENT '手数',
+  `win_location_id` bigint(20) NOT NULL COMMENT '勝利側',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -335,14 +335,14 @@ CREATE TABLE `share_board_battles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share_board_memberships` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `battle_id` bigint NOT NULL COMMENT '対局',
-  `user_id` bigint NOT NULL COMMENT '対局者',
-  `judge_id` bigint NOT NULL COMMENT '勝・敗・引き分け',
-  `location_id` bigint NOT NULL COMMENT '▲△',
-  `position` int DEFAULT NULL COMMENT '順序',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `battle_id` bigint(20) NOT NULL COMMENT '対局',
+  `user_id` bigint(20) NOT NULL COMMENT '対局者',
+  `judge_id` bigint(20) NOT NULL COMMENT '勝・敗・引き分け',
+  `location_id` bigint(20) NOT NULL COMMENT '▲△',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -355,11 +355,11 @@ CREATE TABLE `share_board_memberships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_rooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share_board_rooms` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '部屋識別子',
-  `battles_count` int DEFAULT '0',
+  `battles_count` int(11) DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -368,17 +368,17 @@ CREATE TABLE `share_board_rooms` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_roomships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share_board_roomships` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `room_id` bigint NOT NULL COMMENT '部屋',
-  `user_id` bigint NOT NULL COMMENT '対局者',
-  `win_count` int NOT NULL COMMENT '勝数',
-  `lose_count` int NOT NULL COMMENT '負数',
-  `battles_count` int NOT NULL COMMENT '対局数',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_id` bigint(20) NOT NULL COMMENT '部屋',
+  `user_id` bigint(20) NOT NULL COMMENT '対局者',
+  `win_count` int(11) NOT NULL COMMENT '勝数',
+  `lose_count` int(11) NOT NULL COMMENT '負数',
+  `battles_count` int(11) NOT NULL COMMENT '対局数',
   `win_rate` float NOT NULL COMMENT '勝率',
-  `score` int NOT NULL COMMENT 'スコア',
-  `rank` int NOT NULL COMMENT '順位',
+  `score` int(11) NOT NULL COMMENT 'スコア',
+  `rank` int(11) NOT NULL COMMENT '順位',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -393,11 +393,11 @@ CREATE TABLE `share_board_roomships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `share_board_users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対局者名',
-  `memberships_count` int DEFAULT '0',
+  `memberships_count` int(11) DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -406,28 +406,28 @@ CREATE TABLE `share_board_users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_battles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_battles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対局識別子',
   `battled_at` datetime NOT NULL COMMENT '対局開始日時',
   `csa_seq` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜の断片',
-  `win_user_id` bigint DEFAULT NULL COMMENT '勝者(ショートカット用)',
-  `turn_max` int NOT NULL COMMENT '手数',
+  `win_user_id` bigint(20) DEFAULT NULL COMMENT '勝者(ショートカット用)',
+  `turn_max` int(11) NOT NULL COMMENT '手数',
   `meta_info` text COLLATE utf8mb4_bin NOT NULL COMMENT '棋譜メタ情報',
   `accessed_at` datetime NOT NULL COMMENT '最終参照日時',
   `sfen_body` text COLLATE utf8mb4_bin NOT NULL,
   `sfen_hash` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `start_turn` int DEFAULT NULL COMMENT '???',
-  `critical_turn` int DEFAULT NULL COMMENT '開戦',
-  `outbreak_turn` int DEFAULT NULL COMMENT '中盤',
-  `image_turn` int DEFAULT NULL COMMENT '???',
+  `start_turn` int(11) DEFAULT NULL COMMENT '???',
+  `critical_turn` int(11) DEFAULT NULL COMMENT '開戦',
+  `outbreak_turn` int(11) DEFAULT NULL COMMENT '中盤',
+  `image_turn` int(11) DEFAULT NULL COMMENT '???',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `xmode_id` bigint NOT NULL COMMENT '対局モード',
-  `preset_id` bigint NOT NULL COMMENT '手合割',
-  `rule_id` bigint NOT NULL COMMENT '持ち時間',
-  `final_id` bigint NOT NULL COMMENT '結末',
+  `xmode_id` bigint(20) NOT NULL COMMENT '対局モード',
+  `preset_id` bigint(20) NOT NULL COMMENT '手合割',
+  `rule_id` bigint(20) NOT NULL COMMENT '持ち時間',
+  `final_id` bigint(20) NOT NULL COMMENT '結末',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_battles_on_key` (`key`),
   KEY `index_swars_battles_on_battled_at` (`battled_at`),
@@ -445,10 +445,10 @@ CREATE TABLE `swars_battles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_crawl_reservations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_crawl_reservations` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT '登録者',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '登録者',
   `target_user_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対象者',
   `to_email` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '完了通知先メールアドレス',
   `attachment_mode` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ZIPファイル添付の有無',
@@ -463,11 +463,11 @@ CREATE TABLE `swars_crawl_reservations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_finals`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_finals` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -477,11 +477,11 @@ CREATE TABLE `swars_finals` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_grades`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_grades` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `priority` int NOT NULL COMMENT '優劣',
+  `priority` int(11) NOT NULL COMMENT '優劣',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -491,10 +491,10 @@ CREATE TABLE `swars_grades` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_membership_extras`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_membership_extras` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `membership_id` bigint NOT NULL COMMENT '対局情報',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `membership_id` bigint(20) NOT NULL COMMENT '対局情報',
   `used_piece_counts` json NOT NULL COMMENT '駒の使用頻度',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
@@ -504,29 +504,29 @@ CREATE TABLE `swars_membership_extras` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_memberships` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `battle_id` bigint NOT NULL COMMENT '対局',
-  `user_id` bigint NOT NULL COMMENT '対局者',
-  `op_user_id` bigint DEFAULT NULL COMMENT '相手',
-  `grade_id` bigint NOT NULL COMMENT '対局時の段級',
-  `position` int DEFAULT NULL COMMENT '手番の順序',
-  `grade_diff` int NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `battle_id` bigint(20) NOT NULL COMMENT '対局',
+  `user_id` bigint(20) NOT NULL COMMENT '対局者',
+  `op_user_id` bigint(20) DEFAULT NULL COMMENT '相手',
+  `grade_id` bigint(20) NOT NULL COMMENT '対局時の段級',
+  `position` int(11) DEFAULT NULL COMMENT '手番の順序',
+  `grade_diff` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `think_all_avg` int DEFAULT NULL COMMENT '指し手の平均秒数(全体)',
-  `think_end_avg` int DEFAULT NULL COMMENT '指し手の平均秒数(最後5手)',
-  `two_serial_max` int DEFAULT NULL COMMENT '2秒の指し手が連続した回数',
-  `think_last` int DEFAULT NULL COMMENT '最後の指し手の秒数',
-  `think_max` int DEFAULT NULL COMMENT '最大考慮秒数',
-  `obt_think_avg` int DEFAULT NULL COMMENT '開戦後の指し手の平均秒数',
-  `obt_auto_max` int DEFAULT NULL COMMENT '開戦後に1,2秒の指し手が続く最大',
-  `judge_id` bigint NOT NULL COMMENT '勝敗',
-  `location_id` bigint NOT NULL COMMENT '位置',
-  `style_id` bigint DEFAULT NULL COMMENT '棋風',
-  `ek_score_without_cond` int DEFAULT NULL COMMENT '入玉宣言時の得点(仮)',
-  `ek_score_with_cond` int DEFAULT NULL COMMENT '入玉宣言時の得点(条件考慮)',
+  `think_all_avg` int(11) DEFAULT NULL COMMENT '指し手の平均秒数(全体)',
+  `think_end_avg` int(11) DEFAULT NULL COMMENT '指し手の平均秒数(最後5手)',
+  `two_serial_max` int(11) DEFAULT NULL COMMENT '2秒の指し手が連続した回数',
+  `think_last` int(11) DEFAULT NULL COMMENT '最後の指し手の秒数',
+  `think_max` int(11) DEFAULT NULL COMMENT '最大考慮秒数',
+  `obt_think_avg` int(11) DEFAULT NULL COMMENT '開戦後の指し手の平均秒数',
+  `obt_auto_max` int(11) DEFAULT NULL COMMENT '開戦後に1,2秒の指し手が続く最大',
+  `judge_id` bigint(20) NOT NULL COMMENT '勝敗',
+  `location_id` bigint(20) NOT NULL COMMENT '位置',
+  `style_id` bigint(20) DEFAULT NULL COMMENT '棋風',
+  `ek_score_without_cond` int(11) DEFAULT NULL COMMENT '入玉宣言時の得点(仮)',
+  `ek_score_with_cond` int(11) DEFAULT NULL COMMENT '入玉宣言時の得点(条件考慮)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `memberships_sbri_sbui` (`battle_id`,`user_id`),
   UNIQUE KEY `memberships_sbri_lk` (`battle_id`,`location_id`),
@@ -543,11 +543,11 @@ CREATE TABLE `swars_memberships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_rules` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -557,10 +557,10 @@ CREATE TABLE `swars_rules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_search_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_search_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT 'プレイヤー',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT 'プレイヤー',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -569,11 +569,11 @@ CREATE TABLE `swars_search_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_styles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_styles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -583,13 +583,13 @@ CREATE TABLE `swars_styles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '対局者名',
-  `grade_id` bigint NOT NULL COMMENT '最高段級',
+  `grade_id` bigint(20) NOT NULL COMMENT '最高段級',
   `last_reception_at` datetime DEFAULT NULL COMMENT '受容日時',
-  `search_logs_count` int DEFAULT '0',
+  `search_logs_count` int(11) DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -601,11 +601,11 @@ CREATE TABLE `swars_users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_xmodes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_xmodes` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int DEFAULT NULL COMMENT '順序',
+  `position` int(11) DEFAULT NULL COMMENT '順序',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -615,13 +615,13 @@ CREATE TABLE `swars_xmodes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_zip_dl_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `swars_zip_dl_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT '登録者',
-  `swars_user_id` bigint NOT NULL COMMENT '対象者',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '登録者',
+  `swars_user_id` bigint(20) NOT NULL COMMENT '対象者',
   `query` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'クエリ全体(予備)',
-  `dl_count` int NOT NULL COMMENT 'ダウンロード数(記録用)',
+  `dl_count` int(11) NOT NULL COMMENT 'ダウンロード数(記録用)',
   `begin_at` datetime NOT NULL COMMENT 'スコープ(開始・記録用)',
   `end_at` datetime NOT NULL COMMENT 'スコープ(終了)',
   `created_at` datetime(6) NOT NULL,
@@ -637,14 +637,14 @@ CREATE TABLE `swars_zip_dl_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `taggings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `taggings` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tag_id` int DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag_id` int(11) DEFAULT NULL,
   `taggable_type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `taggable_id` int DEFAULT NULL,
+  `taggable_id` int(11) DEFAULT NULL,
   `tagger_type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `tagger_id` int DEFAULT NULL,
+  `tagger_id` int(11) DEFAULT NULL,
   `context` varchar(128) COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -661,21 +661,21 @@ CREATE TABLE `taggings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tags` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin DEFAULT NULL,
-  `taggings_count` int DEFAULT '0',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `taggings_count` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_tags_on_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_leagues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tsl_leagues` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `generation` int NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `generation` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -684,19 +684,19 @@ CREATE TABLE `tsl_leagues` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tsl_memberships` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `league_id` bigint NOT NULL,
-  `user_id` bigint NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `league_id` bigint(20) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
   `result_key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '結果',
-  `start_pos` int NOT NULL COMMENT '初期順位',
-  `age` int DEFAULT NULL,
-  `win` int DEFAULT NULL,
-  `lose` int DEFAULT NULL,
+  `start_pos` int(11) NOT NULL COMMENT '初期順位',
+  `age` int(11) DEFAULT NULL,
+  `win` int(11) DEFAULT NULL,
+  `lose` int(11) DEFAULT NULL,
   `ox` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `previous_runner_up_count` int NOT NULL COMMENT 'これまでの次点回数',
-  `seat_count` int NOT NULL COMMENT 'これまでの在籍数',
+  `previous_runner_up_count` int(11) NOT NULL COMMENT 'これまでの次点回数',
+  `seat_count` int(11) NOT NULL COMMENT 'これまでの在籍数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -712,15 +712,15 @@ CREATE TABLE `tsl_memberships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tsl_users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `first_age` int DEFAULT NULL COMMENT 'リーグ入り年齢',
-  `last_age` int DEFAULT NULL COMMENT 'リーグ最後の年齢',
-  `memberships_count` int DEFAULT '0',
-  `runner_up_count` int NOT NULL COMMENT '次点個数',
-  `level_up_generation` int DEFAULT NULL COMMENT 'プロになった世代',
+  `first_age` int(11) DEFAULT NULL COMMENT 'リーグ入り年齢',
+  `last_age` int(11) DEFAULT NULL COMMENT 'リーグ最後の年齢',
+  `memberships_count` int(11) DEFAULT '0',
+  `runner_up_count` int(11) NOT NULL COMMENT '次点個数',
+  `level_up_generation` int(11) DEFAULT NULL COMMENT 'プロになった世代',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -730,9 +730,9 @@ CREATE TABLE `tsl_users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'キー',
   `name` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '名前',
   `user_agent` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ブラウザ情報',
@@ -745,7 +745,7 @@ CREATE TABLE `users` (
   `reset_password_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
-  `sign_in_count` int NOT NULL DEFAULT '0',
+  `sign_in_count` int(11) NOT NULL DEFAULT '0',
   `current_sign_in_at` datetime DEFAULT NULL,
   `last_sign_in_at` datetime DEFAULT NULL,
   `current_sign_in_ip` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
@@ -754,7 +754,7 @@ CREATE TABLE `users` (
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
   `unconfirmed_email` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `failed_attempts` int NOT NULL DEFAULT '0',
+  `failed_attempts` int(11) NOT NULL DEFAULT '0',
   `unlock_token` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
   `locked_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -768,11 +768,11 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_access_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_access_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint DEFAULT NULL COMMENT '参照者',
-  `book_id` bigint NOT NULL COMMENT '問題集',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL COMMENT '参照者',
+  `book_id` bigint(20) NOT NULL COMMENT '問題集',
   `created_at` datetime NOT NULL COMMENT '記録日時',
   PRIMARY KEY (`id`),
   KEY `index_wkbk_access_logs_on_user_id` (`user_id`),
@@ -781,11 +781,11 @@ CREATE TABLE `wkbk_access_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_answer_kinds`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_answer_kinds` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -795,14 +795,14 @@ CREATE TABLE `wkbk_answer_kinds` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_answer_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_answer_logs` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `article_id` bigint NOT NULL COMMENT '出題',
-  `answer_kind_id` bigint NOT NULL COMMENT '解答',
-  `book_id` bigint NOT NULL COMMENT '対戦部屋',
-  `user_id` bigint NOT NULL COMMENT '自分',
-  `spent_sec` int NOT NULL COMMENT '使用時間',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `article_id` bigint(20) NOT NULL COMMENT '出題',
+  `answer_kind_id` bigint(20) NOT NULL COMMENT '解答',
+  `book_id` bigint(20) NOT NULL COMMENT '対戦部屋',
+  `user_id` bigint(20) NOT NULL COMMENT '自分',
+  `spent_sec` int(11) NOT NULL COMMENT '使用時間',
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_wkbk_answer_logs_on_article_id` (`article_id`),
@@ -819,23 +819,23 @@ CREATE TABLE `wkbk_answer_logs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_articles` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `user_id` bigint NOT NULL COMMENT '作成者',
-  `folder_id` bigint NOT NULL COMMENT 'フォルダ',
-  `lineage_id` bigint NOT NULL COMMENT '種類',
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `lineage_id` bigint(20) NOT NULL COMMENT '種類',
   `init_sfen` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '問題',
   `viewpoint` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT '視点',
   `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
   `description` text COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
   `direction_message` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'メッセージ',
-  `turn_max` int NOT NULL COMMENT '最大手数',
+  `turn_max` int(11) NOT NULL COMMENT '最大手数',
   `mate_skip` tinyint(1) NOT NULL COMMENT '詰みチェックをスキップする',
-  `moves_answers_count` int NOT NULL DEFAULT '0' COMMENT '解答数',
-  `difficulty` int NOT NULL COMMENT '難易度',
-  `answer_logs_count` int NOT NULL DEFAULT '0' COMMENT '解答数',
+  `moves_answers_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
+  `difficulty` int(11) NOT NULL COMMENT '難易度',
+  `answer_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -853,20 +853,20 @@ CREATE TABLE `wkbk_articles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_books` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `user_id` bigint NOT NULL COMMENT '作成者',
-  `folder_id` bigint NOT NULL COMMENT 'フォルダ',
-  `sequence_id` bigint NOT NULL COMMENT '順序',
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `folder_id` bigint(20) NOT NULL COMMENT 'フォルダ',
+  `sequence_id` bigint(20) NOT NULL COMMENT '順序',
   `title` varchar(100) COLLATE utf8mb4_bin NOT NULL COMMENT 'タイトル',
   `description` text COLLATE utf8mb4_bin NOT NULL COMMENT '説明',
-  `bookships_count` int NOT NULL DEFAULT '0' COMMENT '記事数',
-  `answer_logs_count` int NOT NULL DEFAULT '0' COMMENT '解答数',
+  `bookships_count` int(11) NOT NULL DEFAULT '0' COMMENT '記事数',
+  `answer_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '解答数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
-  `access_logs_count` int NOT NULL DEFAULT '0' COMMENT '総アクセス数',
+  `access_logs_count` int(11) NOT NULL DEFAULT '0' COMMENT '総アクセス数',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_wkbk_books_on_key` (`key`),
   KEY `index_wkbk_books_on_user_id` (`user_id`),
@@ -880,13 +880,13 @@ CREATE TABLE `wkbk_books` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_bookships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_bookships` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint NOT NULL COMMENT '作成者',
-  `book_id` bigint NOT NULL COMMENT '問題集',
-  `article_id` bigint NOT NULL COMMENT '問題',
-  `position` int NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '作成者',
+  `book_id` bigint(20) NOT NULL COMMENT '問題集',
+  `article_id` bigint(20) NOT NULL COMMENT '問題',
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -902,13 +902,13 @@ CREATE TABLE `wkbk_bookships` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_folders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_folders` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
-  `books_count` int NOT NULL DEFAULT '0' COMMENT '問題集数',
-  `articles_count` int NOT NULL DEFAULT '0' COMMENT '問題数',
+  `position` int(11) NOT NULL,
+  `books_count` int(11) NOT NULL DEFAULT '0' COMMENT '問題集数',
+  `articles_count` int(11) NOT NULL DEFAULT '0' COMMENT '問題数',
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -918,11 +918,11 @@ CREATE TABLE `wkbk_folders` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_lineages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_lineages` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -932,14 +932,14 @@ CREATE TABLE `wkbk_lineages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_moves_answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_moves_answers` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `article_id` bigint NOT NULL COMMENT '問題',
-  `moves_count` int NOT NULL COMMENT 'N手',
-  `moves_str` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '連続した指し手',
-  `moves_human_str` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '人間向け指し手',
-  `position` int NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `article_id` bigint(20) NOT NULL COMMENT '問題',
+  `moves_count` int(11) NOT NULL COMMENT 'N手',
+  `moves_str` text COLLATE utf8mb4_bin COMMENT '連続した指し手',
+  `moves_human_str` text COLLATE utf8mb4_bin COMMENT '人間向け指し手',
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -951,11 +951,11 @@ CREATE TABLE `wkbk_moves_answers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_sequences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `wkbk_sequences` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -965,9 +965,9 @@ CREATE TABLE `wkbk_sequences` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xsettings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `xsettings` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `var_key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `var_value` text COLLATE utf8mb4_bin,
   `created_at` datetime(6) NOT NULL,
@@ -978,11 +978,11 @@ CREATE TABLE `xsettings` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `xy_master_rules` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `position` int NOT NULL,
+  `position` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -991,14 +991,14 @@ CREATE TABLE `xy_master_rules` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_time_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `xy_master_time_records` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` bigint DEFAULT NULL,
-  `rule_id` bigint NOT NULL COMMENT 'ルール',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) DEFAULT NULL,
+  `rule_id` bigint(20) NOT NULL COMMENT 'ルール',
   `entry_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   `summary` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-  `x_count` int NOT NULL,
+  `x_count` int(11) NOT NULL,
   `spent_sec` float NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
