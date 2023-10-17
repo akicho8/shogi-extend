@@ -3,7 +3,7 @@ load "#{__dir__}/production.rb"
 Rails.application.configure do
   Rails.application.routes.default_url_options.update(protocol: "https", host: "shogi-flow.xyz")
 
-  config.log_level = :debug
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
 
   # for AppConfig
   config.to_prepare do
