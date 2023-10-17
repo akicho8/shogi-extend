@@ -166,7 +166,7 @@ gem "bcrypt"
 # omniauth
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-google-oauth2"
-gem "omniauth-twitter"
+gem "omniauth-twitter2"
 gem "omniauth-github"
 
 # 音声読み上げ
