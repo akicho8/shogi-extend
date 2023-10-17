@@ -263,7 +263,7 @@ Devise.setup do |config|
 
     # tweet.read → あなたが表示できるすべてのツイート（非公開アカウントのツイートを含む）
     # users.read → あなたが表示できるすべてのアカウント（非公開アカウントを含む）
-    {key: :twitter,  auth_key: :twitter2,      args: {name: "twitter", scope: "tweet.read"}}, # "tweet.read users.read"
+    {key: :twitter,  auth_key: :twitter2,      args: {name: "twitter", scope: "tweet.read users.read"}}, # "tweet.read users.read"
     # https://medium.com/@salmaeng71/devise-authentication-guide-with-github-omniauth-for-rails-application-220aa52d5b82
     {key: :github,   auth_key: nil,            args: { scope: ["user", "email"] }},
   ].each do |e|
