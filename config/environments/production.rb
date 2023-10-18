@@ -48,9 +48,11 @@ Rails.application.configure do
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
   # config.assume_ssl = true
 
+  # 【注意】force_ssl を有効にすると ActionCable で /maincable が 301 になるので有効にしてはいけない
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+  # 【注意】config.logger を設定するとログが出力されなくなるので設定してはいけない
   # Log to STDOUT by default
   # config.logger = ActiveSupport::Logger.new(STDOUT)
   #   .tap  { |logger| logger.formatter = ::Logger::Formatter.new }

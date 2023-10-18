@@ -1,0 +1,2 @@
+#!/bin/sh
+wscat -c wss://www.shogi-extend.com/maincable -x "xxx" -w 0
