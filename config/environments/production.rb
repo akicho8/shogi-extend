@@ -109,8 +109,7 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, { db: AppConfig.fetch(:redis_db_for_rails_cache) }
 
   # ################################################################################ ActionCable
-  # ActionCable.server.config.disable_request_forgery_protection = true
-  config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.disable_request_forgery_protection = true # なんでも許可する
   # config.action_cable.allowed_request_origins = [/https?:\/\/.*/]
   # config.action_cable.allowed_request_origins = ["https://shogi-flow.xyz"]
   # config.action_cable.url = "wss://shogi-flow.xyz:28081"
