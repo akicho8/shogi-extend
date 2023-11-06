@@ -59,6 +59,7 @@ module Swars
         assert2 { b("幽霊角").include?("幽霊角マン")                         }
         assert2 { b("極限早繰り銀").include?("極限早繰りマン")               }
         assert2 { b("坊主美濃").include?("坊主マン")                         }
+        assert2 { b("袖飛車").include?("袖飛車マン")                         }
         assert2 { b("ツノ銀中飛車").include?("中飛車マン")                   }
         assert2 { b("居飛穴音無しの構え").include?("音無しマン")             }
         assert2 { b("筋違い角").include?("筋違い角おじさん")                 }
