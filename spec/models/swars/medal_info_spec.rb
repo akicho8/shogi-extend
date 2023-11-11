@@ -49,8 +49,10 @@ module Swars
         assert2 { w("羽生流右玉").include?("右玉マン")                       }
         assert2 { b("アヒル囲い").include?("アヒル上級")                     }
         assert2 { b("UFO銀").include?("UFOマン")                             }
-        assert2 { b("裏アヒル囲い").include?("レア戦法マン")                     }
+        assert2 { b("裏アヒル囲い").include?("レア戦法マン")                 }
         assert2 { b("カニカニ金").include?("カニ執着マン")                   }
+        assert2 { b("一間飛車").include?("一間飛車マン")                     }
+        assert2 { b("一間飛車穴熊").include?("一間飛車マン")                 }
         assert2 { b("カメレオン戦法").include?("カメレオンマン")             }
         assert2 { w("ポンポン桂").include?("ポンポンマン")                   }
         assert2 { w("右四間飛車左美濃").include?("右四間飛車マン")           }
