@@ -9,6 +9,7 @@
 // |-----------------------+--------------------------|
 // appearance_theme_info.js
 .SbApp
+  // ライト
   &.is_appearance_theme_a
     +setvar(sb_bg_color, $white)
     +setvar(sb_board_normal_color, hsla(  0,  0%,   0%, 0.2))
@@ -16,28 +17,34 @@
     +setvar(sb_side_fg_color,      unset)
     +setvar(sb_side_bg_color,      unset)
 
-  // 黒と黄
+  // ダーク
   &.is_appearance_theme_b
-    +setvar(sb_bg_color,           change_color($black, $lightness: 30%))
     +setvar(sb_board_normal_color, $sbc_b)
     +setvar(sb_board_active_color, hsla(170.18,27.09%,39.8%,1))
     +setvar(sb_side_fg_color,      $grey-lighter)
     // +setvar(sb_side_bg_color,   change_color($black, $alpha: 0.2))
     +setvar(sb_side_bg_color,      unset)
 
-  // リアル盤
+  // リアル
   &.is_appearance_theme_c
-    +setvar(sb_bg_color,           change_color($black, $lightness: 30%))
     +setvar(sb_side_fg_color,      $grey-lighter)
     +setvar(sb_side_bg_color,      unset)
     // +setvar(sp_board_piece_size, 100%) // CustomShogiPlayer 側で定義している)
     &.current_turn_self_p
       // +setvar(sp_board_brightness,   0.3)                  // 輝度を下げる
       // +setvar(sp_grid_inner_color,   hsla(0,0%,100%,0.13)) // グリッド色を白系に変更
-      // +setvar(sp_grid_outer_color,   hsla(0,0%,100%,0.13)) // 星の色のを白系に変更         
-      // +setvar(sp_board_invert,       1)                    // 盤の色反転           
+      // +setvar(sp_grid_outer_color,   hsla(0,0%,100%,0.13)) // 星の色のを白系に変更
+      // +setvar(sp_board_invert,       1)                    // 盤の色反転
       // +setvar(sp_board_sepia,        0.6)                  // ややセピア調して彩度を下げる
-      // +setvar(sp_piece_grayscale,    0.6)                  // 駒の彩度を下げる   
+      // +setvar(sp_piece_grayscale,    0.6)                  // 駒の彩度を下げる
+
+  // ダークとリアルで共通
+  &.is_appearance_theme_b, &.is_appearance_theme_c
+    +setvar(sb_bg_color,  change_color($black, $lightness: 30%)) // 全体の背景色
+    +setvar(sp_touch_lifted_origin_bg_color, transparent)        // スマホ・持ち上げた駒・背景
+    +setvar(sp_touch_lifted_origin_opacity, 0.4)                 // スマホ・持ち上げた駒・非透明度
+    .Membership
+      // 盤だけ変更したい場合はこのスコープで指定する
 
   .SbSp
     +setvar(sp_board_color, var(--sb_board_normal_color)) // 盤の色(基本)

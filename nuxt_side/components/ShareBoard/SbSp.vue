@@ -64,6 +64,11 @@ export default {
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
 
+      // スマホでのUI確認用
+      if (false) {
+        hv.sp_device = "touch"
+      }
+
       if (!this.base.edit_mode_p) {
         hv.sp_piece_variant = this.base.appearance_theme_info.sp_piece_variant
         hv.sp_board_variant = this.base.appearance_theme_info.sp_board_variant
