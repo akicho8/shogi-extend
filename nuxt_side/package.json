@@ -27,7 +27,7 @@
     "@nuxtjs/pwa": "^3.2.2",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/style-resources": "^1.2.1",
-    "@rails/actioncable": "^7.1.1",
+    "@rails/actioncable": "^7.1.2",
     "beetleshine": "^0.0.14",
     "big.js": "^6.1.1",
     "chart.js": "^2.9.4",

@@ -27,8 +27,8 @@ devDependencies:
     specifier: ^1.2.1
     version: 1.2.1
   '@rails/actioncable':
-    specifier: ^7.1.1
-    version: 7.1.1
+    specifier: ^7.1.2
+    version: 7.1.2
   beetleshine:
     specifier: ^0.0.14
     version: 0.0.14
@@ -2712,8 +2712,8 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@rails/actioncable@7.1.1:
-    resolution: {integrity: sha512-ZRJ9rdwFQQjRbtgJnweY0/4UQyxN6ojEGRdib0JkjnuIciv+4ok/aAeZmBJqNreTMaBqS0eHyA9hCArwN58opg==}
+  /@rails/actioncable@7.1.2:
+    resolution: {integrity: sha512-KGziTZfbmGm8/fHOpj515xupbYU+49hsp4etfdpoDJ/CEY2bRZR0cyFcJkpK6n0t/sxOHNWY6bo9vSgXZvT7Mg==}
     dev: true
 
   /@sinclair/typebox@0.25.24:
