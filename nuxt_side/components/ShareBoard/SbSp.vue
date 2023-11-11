@@ -58,7 +58,7 @@ export default {
       hv.sp_human_side               = this.base.sp_human_side
       hv.sp_legal_move_only          = this.base.legal_strict_p
       hv.sp_my_piece_only_move       = this.base.legal_strict_p
-      hv.sp_my_piece_kill_disabled = this.base.legal_strict_p
+      hv.sp_my_piece_kill_disabled   = this.base.legal_strict_p
       hv.sp_lift_cancel_action       = this.base.lift_cancel_action_info.key
       hv.sp_layer                    = this.sp_layer
       hv.sp_controller               = this.sp_controller
