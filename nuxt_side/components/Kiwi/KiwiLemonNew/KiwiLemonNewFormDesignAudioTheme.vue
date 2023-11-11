@@ -29,6 +29,7 @@
                       .audio_desc_item(v-if="e.bpm")
                         span 速度: {{e.bpm}}BPM
                       .audio_desc_item(v-if="e.loop_support_p") ループ対応
+                    p.is-size-7.is_line_break_on(v-if="e.desc") {{e.desc}}
 
                   .media-right
                     a(:href="e.source_url" v-if="e.source_url" target="_blank")
