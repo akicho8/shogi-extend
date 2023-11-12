@@ -38,14 +38,14 @@ client-only
             b-field.mt-5
               .control
                 .buttons.is-centered.are-small
-                  b-button(@click="share_board_first_open_handle") 詰将棋
-                  b-button(@click="share_board_last_open_handle") 終了図
+                  b-button(icon-left="eye-outline" @click="share_board_first_open_handle") 最初の局面
+                  b-button(icon-left="eye-outline" @click="share_board_last_open_handle") 最後の局面
 
             b-field.mt-5
               .control
                 .buttons.is-centered.are-small
-                  b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))"     tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存
-                  b-button(@click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
+                  b-button(icon-left="download" @click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_utf8'))"     tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_utf8'))") 保存
+                  b-button(icon-left="download" @click="kifu_dl_handle_of(FormatTypeInfo.fetch('kif_shiftjis'))" tag="a" :href="kifu_dl_url_of(FormatTypeInfo.fetch('kif_shiftjis'))") 保存 (Shift_JIS)
 
         .columns(v-if="record")
           .column
