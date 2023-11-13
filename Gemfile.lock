@@ -105,7 +105,7 @@ GEM
     bcrypt (3.1.18)
     bigdecimal (3.1.4)
     bindex (0.8.1)
-    bioshogi (0.0.3)
+    bioshogi (0.0.4)
       actionview
       activesupport (>= 7.1.0)
       color
