@@ -11,10 +11,10 @@ module Swars
 
       def fetch
         if params[:verbose]
-          puts "[fetch][history] #{originator_url}"
+          puts "[fetch][history] #{history_url}"
         end
         # 対象のURLがなければ body は nil を返す
-        body = fetcher.fetch(:history, originator_url) || ""
+        body = fetcher.fetch(:history, history_url) || ""
         if params[:SwarsUserNotFound]
           body = ""
         end
@@ -22,9 +22,7 @@ module Swars
         HistoryResult.new(all_keys)
       end
 
-      private
-
-      def originator_url
+      def history_url
         user_key = params.fetch(:user_key)
         if user_key.blank?
           raise "must not happen"
