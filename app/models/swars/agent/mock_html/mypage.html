@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="description" content="将棋ウォーズ【日本将棋連盟公認】は、従来の将棋アプリの常識を覆す派手な演出、グラフィックとAIを駆使し、超初心者から上級者まですぐに適切な相手が見つかる充実のオンライン対局を提供するサービスです。 10分切れ負けや3分切れ負けや10秒将棋でスピーディーに対局できます。オフラインでコンピュータと対局もできます。将棋ウォーズの段級位で、日本将棋連盟公認の免状・認定状（六段～５級）申請できます。" />
+  <meta name="keywords" content="加藤一二三,香川愛生,将棋,ゲーム,将棋ウォーズ,日本将棋連盟,無料,アプリ,iPhone,android,SHOGIWARS,shogiwars,棋神降臨,棋神解析,どうぶつしょうぎ,オンライン対局,オンライン,棋力,藤井聡太,羽生善治,名人,棋神,竜王,プロ棋士,囲い,戦法,Ponanza,指導対局,電王戦,棋神クイズ,ニコニコ,AbemaTV,将棋めし,棋神戦,灼熱の時代,3月のライオン,宗桂" />
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="将棋ウォーズ">
+  <meta property="og:image" content="https://shogiwars.heroz.jp/images/icon_512.jpg">
+  <meta property="og:url" content="https://shogiwars.heroz.jp/">
+  <meta property="og:description" content="将棋ウォーズ【日本将棋連盟公認】は、従来の将棋アプリの常識を覆す派手な演出、グラフィックとAIを駆使し、超初心者から上級者まですぐに適切な相手が見つかる充実のオンライン対局を提供するサービスです。 10分切れ負けや3分切れ負けや10秒将棋でスピーディーに対局できます。オフラインでコンピュータと対局もできます。将棋ウォーズの段級位で、日本将棋連盟公認の免状・認定状（六段～５級）申請できます。">
+  <meta property="og:site_name" content="将棋ウォーズ">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:site" content="@warsminamin">
+  <meta name="twitter:card" content="app">
+  <meta name="twitter:description" content="将棋ウォーズ【日本将棋連盟公認】は、従来の将棋アプリの常識を覆す派手な演出、グラフィックとAIを駆使し、超初心者から上級者まですぐに適切な相手が見つかる充実のオンライン対局を提供するサービスです。 10分切れ負けや3分切れ負けや10秒将棋でスピーディーに対局できます。オフラインでコンピュータと対局もできます。将棋ウォーズの段級位で、日本将棋連盟公認の免状・認定状（六段～５級）申請できます。">
+  <meta name="twitter:app:country" content="JP">
+  <meta name="twitter:app:name:iphone" content="将棋ウォーズ">
+  <meta name="twitter:app:id:iphone" content="496801169">
+  <meta name="twitter:app:url:iphone" content="https://itunes.apple.com/jp/app/id496801169?mt=8">
+  <meta name="twitter:app:name:ipad" content="将棋ウォーズ">
+  <meta name="twitter:app:id:ipad" content="496801169">
+  <meta name="twitter:app:url:ipad" content="https://itunes.apple.com/jp/app/id496801169?mt=8">
+  <meta name="twitter:app:name:googleplay" content="将棋ウォーズ">
+  <meta name="twitter:app:id:googleplay" content="jp.heroz.android.shogiwars">
+  <meta name="twitter:app:url:googleplay" content="https://play.google.com/store/apps/details?id=jp.heroz.android.shogiwars">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <title>testarossa00 - 将棋ウォーズ</title>
+  <link rel="stylesheet" media="screen" href="//shogiwars-cdn.heroz.jp/assets/application-712b15ed4c346239aa01d801de3ce1d58ed18e3fe7cd0104538c8800470e827f.css" />
+    <link rel="stylesheet" media="screen" href="//shogiwars-cdn.heroz.jp/assets/users-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css" />
+
+<link rel="stylesheet" media="screen" href="//shogiwars-cdn.heroz.jp/assets/users/show-237df84f727fb36185ff7b723a1ba464da778cc514927528a523e159e4feb963.css" />
+
+  <script src="//shogiwars-cdn.heroz.jp/assets/application-dd98e7289df4c48920be6241e183db5ad93a65653ced5b2d1d76533e04152feb.js"></script>
+
+<script src="//shogiwars-cdn.heroz.jp/assets/users/show-1a70e58d7a88330fa6c50b552674b88a72f1cbe870d8d6b512f49b915bfb579e.js"></script>
+
+<script src="//shogiwars-cdn.heroz.jp/assets/i18n/ja-cc84741a320c01fcf46a58b9afc0a2f6ee1a0935fcbbfce15331a048620a1057.js"></script>
+<script>
+    I18n.defaultLocale = "ja"
+    I18n.locale = "ja"
+</script>
+
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="_BCdNH8wxh-6m-j583UJQygL2NrIe9Asrj34MUM4B2ZhlNA1CkWad7t0d_AWcMpgC1mR0XzU0O_m4Q7QN0HtjQ" />
+
+  <script type="text/javascript">
+      function goTop(){
+          $('body,html').animate({scrollTop: 0},500);
+      }
+  </script>
+
+  <style type="text/css">
+    #topNavigation{
+      position: absolute;
+      left: 80%;
+      min-width: 15%;
+      max-width: 20%;
+      padding: 12px 0px;
+    }
+    #topNavigation div{
+      width: 100%;
+      /*background: #2E7D32;*/
+      background: rgba(46, 125, 50, 0.8);
+      border: 1px solid #1B5E20;
+      border-radius: 4px;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+    }
+    #topNavigation a{
+      display: block;
+      padding: 6px;
+      color: #A5D6A7;
+      font-size: 12px;
+      font-weight: bold;
+      text-shadow: 1px 1px 1px #1B5E20;
+      -moz-text-shadow: 1px 1px 1px #1B5E20;
+      -webkit-text-shadow: 1px 1px 1px #1B5E20;
+      text-decoration: none;
+    }
+    #session_invalid{
+      padding:4px;
+      font-size:12px;
+      color:#A5D6A7;
+      font-weight: bold;
+      text-shadow: 1px 1px 1px #1B5E20;
+      -moz-text-shadow: 1px 1px 1px #1B5E20;
+      -webkit-text-shadow: 1px 1px 1px #1B5E20;
+      background: rgba(46, 125, 50, 0.8);
+      border-bottom:2px solid #1B5E20;
+    }
+  </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X0F89DVXWM"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-X0F89DVXWM');
+    gtag('config', 'AW-972589478');
+</script></head>
+
+<body>
+  <div id="wrapper">
+
+  <div id="menu_middle">
+    <div class="text_box3">
+      <div class="title">
+        testarossa00
+        <span style="font-size: 16px">10000級</span>
+      </div>
+
+      <script>
+    window.addEventListener("load", function(){
+    });
+</script>
+
+<div class="contents" id="user-show">
+  <div id="user_profile">
+
+  <div class="profile">
+    <img width="100%" src="//shogiwars-cdn.heroz.jp/images/avatar/_j01-l.png" />
+    <img width="100%" src="/images/greeting/ja/greeting01.png" />
+  </div>
+
+  <div class="profile">
+    <table id="user_dankyu">
+      <tr>
+        <th>10分</th>
+        <td class="dankyu">10000級</td>
+        <td>
+          <div class="progress_bar">
+            <span style="background-size:99.9% 100%">
+              達成率&thinsp;99.9%
+            </span>
+          </div>
+          <div class="progress_note">
+              最高: 2級&thinsp;/&thinsp;
+            今月:
+              -
+          </div>
+        </td>
+
+      </tr>
+       <tr>
+        <th>3分</th>
+        <td class="dankyu">10000級</td>
+        <td>
+          <div class="progress_bar">
+            <span style="background-size:99.9% 100%">
+              達成率&thinsp;99.9%
+            </span>
+          </div>
+          <div class="progress_note">
+            今月:
+              -
+          </div>
+        </td>
+
+      </tr>
+       <tr>
+        <th>10秒</th>
+        <td class="dankyu">10000級</td>
+        <td>
+          <div class="progress_bar">
+            <span style="background-size:99.9% 100%">
+              達成率&thinsp;99.9%
+            </span>
+          </div>
+          <div class="progress_note">
+            今月:
+              -
+          </div>
+        </td>
+
+      </tr>
+    </table>
+
+  </div>
+  <br clear="all" />
+
+</div>
+  <div class="user_status">
+
+    <div class="data_rows">
+      <div>
+        <span class="item">棋士団</span>
+          <span>未所属</span>
+      </div>
+    </div>
+
+    <div class="data_rows">
+  <div><span class="item">得意囲い</span>
+      <a href="/users/testarossa00/trophy/301?locale=ja">居飛車穴熊</a>
+      24級
+      (<a href="/branking/301?locale=ja">-位</a>
+      )
+  </div>
+  <div style="margin-bottom:4px;"><span class="item">得意戦法</span>
+      <a href="/users/testarossa00/trophy/2916?locale=ja">対振り持久戦</a>
+      25級
+      (<a href="/branking/2916?locale=ja">-位</a>
+      )
+  </div>
+  <div style="margin-bottom:4px;"><span class="item">トレンド戦法</span>
+      <a href="/users/testarossa00/trophy/2916?locale=ja">対振り持久戦</a> (5回 / 月)
+  </div>
+  <div style="margin-bottom:20px;"><span class="item">お気に入り</span>
+    0件
+
+    <a class="common_button" href="/games/favorite_list?locale=ja&amp;user_id=testarossa00">棋譜一覧</a>
+  </div>
+</div>
+
+    <div id="game_history_title">戦歴</div>
+<div class="game_history">
+  <div id="category_select_tab">
+    <ul>
+      <li class="tab3">
+        <a href="javascript:void(0)" onClick="displayRecord(0, 'record')">10分</a>
+      </li>
+      <li class="tab3">
+        <a href="javascript:void(0)" onClick="displayRecord(1, 'recordsb')">3分</a>
+      </li>
+      <li class="tab3">
+        <a href="javascript:void(0)" onClick="displayRecord(2, 'records1')">10秒</a>
+      </li>
+    </ul>
+  </div>
+  <script type="text/javascript">
+      $(function () {
+          var lastGtype = '';
+          var gtype = ['', 'sb', 's1'];
+          tab = jQuery.inArray(lastGtype, gtype);
+          index = (tab >= 0) ? tab : 0;
+          displayRecord(index, 'record' + gtype[index]);
+      });
+
+      function displayRecord(index, tab) {
+          $('#category_select_tab li').each(function (i) {
+              if(i == index){
+                $(this).addClass('selected_tab');
+              }else{
+                $(this).removeClass('selected_tab');
+              }
+          });
+          $('.game_record').each(function (i) {
+              display = ($(this).attr('id') == tab) ? 'block' : 'none';
+              $(this).css('display', display);
+          });
+      }
+  </script>
+
+  <div id="record" class="game_record data_rows">
+    <div><span class="item item-battle">通算</span>
+      54勝30敗 (.642)
+    </div>
+    <div><span class="item item-battle">先手</span>
+      25勝18敗 (.581)
+    </div>
+    <div><span class="item item-battle">後手</span>
+      29勝12敗 (.707)
+    </div>
+    <div><span class="item item-flag">連勝</span>
+      3連勝中
+      (最高: 14連勝)
+    </div>
+    <div style="margin-top:10px;margin-bottom:6px;text-align:right;">
+      <a class="common_button" href="/users/phistory/testarossa00?gtype=&amp;locale=ja">月別段級位履歴</a>
+        <a class="common_button" href="/games/history?locale=ja&amp;user_id=testarossa00">対局結果・棋譜一覧</a>
+    </div>
+  </div>
+
+  <div id="recordsb" class="game_record data_rows">
+    <div><span class="item item-battle">通算</span>
+      0勝2敗 (.000)
+    </div>
+    <div><span class="item item-battle">先手</span>
+      0勝0敗 (.000)
+    </div>
+    <div><span class="item item-battle">後手</span>
+      0勝2敗 (.000)
+    </div>
+    <div><span class="item item-flag">連勝</span>
+      2連敗中
+      (最高: 0連勝)
+    </div>
+    <div style="margin-top:10px;margin-bottom:6px;text-align:right;">
+      <a class="common_button" href="/users/phistory/testarossa00?gtype=sb&amp;locale=ja">月別段級位履歴</a>
+      <a class="common_button" href="/games/history?gtype=sb&amp;locale=ja&amp;user_id=testarossa00">対局結果・棋譜一覧</a>
+    </div>
+  </div>
+
+  <div id="records1" class="game_record data_rows">
+    <div><span class="item item-battle">通算</span>
+      0勝0敗 (.000)
+    </div>
+    <div><span class="item item-battle">先手</span>
+      0勝0敗 (.000)
+    </div>
+    <div><span class="item item-battle">後手</span>
+      0勝0敗 (.000)
+    </div>
+    <div><span class="item item-flag">連勝</span>
+      0連勝中
+      (最高: 0連勝)
+    </div>
+    <div style="margin-top:10px;margin-bottom:6px;text-align:right;">
+      <a class="common_button" href="/users/phistory/testarossa00?gtype=s1&amp;locale=ja">月別段級位履歴</a>
+      <a class="common_button" href="/games/history?gtype=s1&amp;locale=ja&amp;user_id=testarossa00">対局結果・棋譜一覧</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="data_rows">
+
+</div>
+
+        <div class="data_rows">
+                    <div>
+            <span class="item item-ranking">過去大会</span>
+            <a class="common_button" href="/users/ehistory/testarossa00?locale=ja">成績一覧</a>
+          </div>
+        </div>
+
+  </div>
+</div>
+
+        <div class="title">
+    つながり
+  </div>
+  <div class="contents">
+    <div style="text-align:center;">
+      <div>
+        <form id="delete_friend_form" class="invisible" action="/friends/testarossa00/follow?locale=ja" accept-charset="UTF-8" data-remote="true" method="post"><input type="hidden" name="_method" value="delete" autocomplete="off" /><input type="hidden" name="authenticity_token" value="84P2yP2tsJmsNSYZ4zEmS7_nKDSwWSz8fhaZUjfZaKwruMM2ykHxNdam4fWtELCKioGodX3GSIj0AuUuuIZpdA" autocomplete="off" />
+          <input type="hidden" name="user_id" id="user_id" value="BOUYATETSU5" autocomplete="off" />
+          <input type="hidden" name="callback_func" id="callback_func" value="afterDeleteFriendCallback" autocomplete="off" />
+          <input type="submit" name="commit" value="友達登録を外す" class="btn_bg_blue unfollow_button" data-disable-with="友達登録を外す" />
+</form>
+        <form id="add_friend_form" class="visible" action="/friends/testarossa00/follow?locale=ja" accept-charset="UTF-8" data-remote="true" method="post"><input type="hidden" name="authenticity_token" value="-7HkCU_IGRgj8qfiV1ks6ZsPXBAVPQ9iP2oE489yda19JdY76K4Bm8J10dMvdBBsr3B1iug5O8q9zZLIpsErbw" autocomplete="off" />
+          <input type="hidden" name="user_id" id="user_id" value="BOUYATETSU5" autocomplete="off" />
+          <input type="hidden" name="callback_func" id="callback_func" value="afterAddFriendCallback" autocomplete="off" />
+          <input type="submit" name="commit" value="友達登録" class="btn_bg_blue follow_button" data-disable-with="友達登録" />
+</form>      </div>
+      <ul class="list_see">
+        <li>
+          <a href="/users/mypage/testarossa00?locale=ja">
+            <div class="sente_prof">
+              <img src="//shogiwars-cdn.heroz.jp/images/avatar/_j01-l.png" width="40%" style="max-width:100px;">
+              <span class="see_dan level1">
+        10000級
+      </span>
+            </div>
+</a>          <div class="battle_detail">
+            <div class="btn_see"></div>
+          </div>
+          <a href="/users/mypage/BOUYATETSU5?locale=ja">
+            <div class="gote_prof">
+              <img src="//shogiwars-cdn.heroz.jp/images/avatar/_e1610s3c-r.png" width="40%" style="max-width:100px;">
+              <span class="see_dan level1">
+        1級
+      </span>
+            </div>
+</a>          <div>
+            <div class="sente_name">testarossa00</div>
+            <div class="battle_detail">&nbsp;</div>
+            <div class="gote_name">BOUYATETSU5</div>
+          </div>
+          <br clear="all">
+        </li>
+      </ul>
+      <style>
+        table.winloss {
+          width: 100%;
+        }
+
+        table.winloss th {
+          text-align: center;
+        }
+
+        table.winloss tr.sum td {
+          font-size: 1.8em;
+          width: 20%;
+        }
+
+        table.winloss tr.sum th {
+          width: 40%;
+        }
+
+        .sente_prof img {
+          float: left;
+          max-width: 100px;
+        }
+
+        .gote_prof img {
+          float: right;
+          max-width: 100px;
+        }
+      </style>
+      <table class="winloss" style="">
+            <tr>
+              <td>0勝</td>
+              <th>通常</th>
+              <td>0勝</td>
+            </tr>
+            <tr>
+              <td>0勝</td>
+              <th>弾丸</th>
+              <td>0勝</td>
+            </tr>
+            <tr>
+              <td>0勝</td>
+              <th>10秒</th>
+              <td>0勝</td>
+            </tr>
+
+        <tr class="sum">
+          <td>0勝</td>
+          <th>通算</th>
+          <td>0勝</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script>
+    function afterDeleteFriendCallback() {
+        $("#add_friend_form").show();
+        $("#delete_friend_form").hide();
+    }
+
+    function afterAddFriendCallback() {
+        $("#add_friend_form").hide();
+        $("#delete_friend_form").show();
+    }
+
+  </script>
+
+      <div class="title">
+  不正ユーザー通報
+</div>
+<div class="contents">
+  <div style="text-align:center;">
+    <div id="report_cheat_container">
+      <form action="/users/report_cheat?locale=ja" accept-charset="UTF-8" data-remote="true" method="post">
+      <input type="hidden" name="token" id="token" value="361f3e4949be16767bf2afbc112cc5bfaf78a338" autocomplete="off" />
+      <input value="BOUYATETSU5" autocomplete="off" type="hidden" name="cheat_report[reporter]" id="cheat_report_reporter" />
+      <input value="testarossa00" autocomplete="off" type="hidden" name="cheat_report[cheater]" id="cheat_report_cheater" />
+      <input value="s" autocomplete="off" type="hidden" name="cheat_report[appli]" id="cheat_report_appli" />
+      <input type="hidden" name="locale" id="locale" value="ja" autocomplete="off" />
+      <div class="item" style="color:#e6b422;">カテゴリー</div>
+      <select name="cheat_report[category]" class="dropdown">
+        <option value="">選択してください</option>
+          <option value="name">不適切な名前</option>
+          <option value="soft">ソフト指し</option>
+          <option value="manner">マナー違反</option>
+      </select>
+      <div class="item" style="color:#e6b422;">
+  コメント</div>
+      <textarea rows="3" maxlength="100" placeholder="コメント(任意) 100文字以内" name="cheat_report[comment]" id="cheat_report_comment">
+</textarea>
+      <div>
+        <input type="submit" name="commit" value="通報する" class="btn_bg_blue" data-confirm="通報します。よろしいですか。" data-disable-with="通報する" />
+      </div>
+</form>    </div>
+    <p class="note">
+      通報は1日3回まで行えます。<br />
+      一度通報したユーザーを再度通報することはできません。<br />
+      棋譜ページのリンク経由で通報すると、棋譜とともに通報されます。<br />
+      必ずしも通報されたユーザーが処罰されるとは限りません。<br />
+    </p>
+  </div>
+</div>
+
+      <!--第一期棋神戦放映-->
+
+      <style type="text/css">
+#shogi_radar_chart{
+
+}
+#shogi_radar_chart div{
+  float:left;
+  width:calc(50% - 12px);
+  padding:4px 6px;
+  text-align:right;
+}
+#shogi_radar_chart div:nth-child(2n){
+  text-align:left;
+}
+.chart_name{
+  color:#FFFFFF;
+  font-weight:bold;
+  text-shadow: 1px 1px 1px #BDBDBD;
+  -moz-text-shadow: 1px 1px 1px #BDBDBD;
+  -webkit-text-shadow: 1px 1px 1px #BDBDBD;
+}
+.low_point{
+  color:#FFD54F;
+  text-shadow: 1px 1px 1px #FF8F00;
+  -moz-text-shadow: 1px 1px 1px #FF8F00;
+  -webkit-text-shadow: 1px 1px 1px #FF8F00;
+}
+.middle_point{
+  color:#FFFFFF;
+  text-shadow: 1px 1px 1px #BDBDBD;
+  -moz-text-shadow: 1px 1px 1px #BDBDBD;
+  -webkit-text-shadow: 1px 1px 1px #BDBDBD;
+}
+.high_point{
+  color:#9CCC65;
+  text-shadow: 1px 1px 1px #33691E;
+  -moz-text-shadow: 1px 1px 1px #33691E;
+  -webkit-text-shadow: 1px 1px 1px #33691E;
+}
+</style>
+<div class="title">棋力レーダーチャート(7.8)</div>
+<div class="contents">
+  <div class="rank_space"><canvas id="radar" width="200" height="200"></canvas></div>
+  <div id="shogi_radar_chart">
+    <div>
+      <span class="chart_name">攻撃力&thinsp;:&thinsp;</span>
+      <span class="low_point">1.3</span>
+    </div>
+    <div>
+      <span class="chart_name">守備力&thinsp;:&thinsp;</span>
+      <span class="low_point">1.5</span>
+    </div>
+    <div>
+      <span class="chart_name">芸術力&thinsp;:&thinsp;</span>
+      <span class="middle_point">1.7</span>
+    </div>
+    <div>
+      <span class="chart_name">早指力&thinsp;:&thinsp;</span>
+      <span class="low_point">1.5</span>
+    </div>
+    <div>
+      <span class="chart_name">戦術力&thinsp;:&thinsp;</span>
+      <span class="low_point">1.5</span>
+    </div>
+    <div>
+      <span class="chart_name">終盤力&thinsp;:&thinsp;</span>
+      <span class="low_point">0.4</span>
+    </div>
+    <br clear="all" />
+  </div>
+</div>
+<script type="text/javascript">
+$("#radar").css({
+  "background": "url(//shogiwars-cdn.heroz.jp/images/para4@2x.png)",
+  "background-repeat": "no-repeat",
+  "background-size": "200px 200px"
+});
+</script>
+
+      <div id="collection_wrapper">
+        <div class="title">コレクション(10/44)</div>
+<div class="contents" id="collection">
+
+  <ul class="collection_tab">
+      <li class="selected">
+        <a data-remote="true" href="/users/trophies/testarossa00/kakoi/0?locale=ja">囲い</a></li>
+      <li class="">
+        <a data-remote="true" href="/users/trophies/testarossa00/senpou/0?locale=ja">戦法</a></li>
+      <li class="">
+        <a data-remote="true" href="/users/trophies/testarossa00/tesuji/0?locale=ja">手筋</a></li>
+      <li class="">
+        <a data-remote="true" href="/users/trophies/testarossa00/special/0?locale=ja">特殊</a></li>
+  </ul>
+
+  <table id="badges" style="margin:0px auto;">
+        <tr>
+      <td>
+          カニ囲い
+      </td>
+            <td>
+          矢倉囲い
+      </td>
+            <td>
+          銀矢倉
+      </td>
+      </tr>
+        <tr>
+      <td>
+          片矢倉
+      </td>
+            <td>
+          総矢倉
+      </td>
+            <td>
+          矢倉穴熊
+      </td>
+      </tr>
+        <tr>
+      <td>
+          菊水矢倉
+      </td>
+            <td>
+          銀立ち矢倉
+      </td>
+            <td>
+          菱矢倉
+      </td>
+      </tr>
+  </table>
+
+  <ul class="collection_paging">
+        <li class="page selected">1</li>
+        <li class="page">
+          <a data-remote="true" href="/users/trophies/testarossa00/kakoi/1?got=10&amp;locale=ja">2</a></li>
+        <li class="page">
+          <a data-remote="true" href="/users/trophies/testarossa00/kakoi/2?got=10&amp;locale=ja">3</a></li>
+        <li class="page">
+          <a data-remote="true" href="/users/trophies/testarossa00/kakoi/3?got=10&amp;locale=ja">4</a></li>
+        <li class="page">
+          <a data-remote="true" href="/users/trophies/testarossa00/kakoi/4?got=10&amp;locale=ja">5</a></li>
+  </ul>
+
+</div>
+      </div>
+
+      <div class="title">
+        その他
+      </div>
+      <div class="contents">
+        <ul class="list_link">
+          <li><a href="/friends?locale=ja&amp;user_id=testarossa00">友達一覧</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+      $(function () {
+          draw(document.getElementById("radar"), 99, 101, 79.0, 5, 1.5996486084677008,1.839750683064598,2.1703901396397582,1.8454164901291699,1.8150344348162462,0.5, 'rgba(255, 210, 0, 0.5)');
+          SessionStorageUtil.restoreHtml("lastTrophy", "#collection_wrapper");
+      });
+  </script>
+
+    <div id="copyright">©HEROZ, Inc. All Rights Reserved.</div>
+  </div>
+  <div id="topNavigation">
+    <div><a href="javascript:void(0)" onClick="goTop()">▲TOP</a></div>
+</div>
+
+  <div id="web_base_url" data-web-base-url="//shogiwars-cdn.heroz.jp"></div>
+</body>
+</html>
