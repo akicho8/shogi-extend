@@ -25,6 +25,10 @@ module Swars
       def mypage_url
         "https://shogiwars.heroz.jp/users/mypage/#{params.fetch(:user_key)}"
       end
+
+      def regexp
+        /(#{Swars::RuleInfo.collect(&:name).join("|")})\s*(\S+[級段])/o
+      end
     end
   end
 end
