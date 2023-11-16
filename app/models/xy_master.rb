@@ -22,7 +22,7 @@ module XyMaster
     # User.find_each(&:create_XyMaster_season_xrecord_if_blank)
     # User.find_each(&:create_XyMaster_main_xrecord_if_blank)
     #
-    # if Rails.env.development? || Rails.env.test?
+    # if Rails.env.local?
     #   XyMaster::BaseChannel.redis_clear
     # end
     #

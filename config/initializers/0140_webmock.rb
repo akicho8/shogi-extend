@@ -1,4 +1,4 @@
-# if Rails.env.development? || Rails.env.test?
+# if Rails.env.local?
 #   WebMock::API.stub_request(:any, %r{shogiwars.heroz.jp/users/history/}).to_return(body: Rails.root.join("config/https___shogiwars_heroz_jp_users_history_DevUser1_gtype_sb_locale_ja.html").read)
 #   WebMock::API.stub_request(:any, %r{shogiwars.heroz.jp/games/}).to_return(body: Rails.root.join("config/http___kif_pona_heroz_jp_games_DevUser1_ispt_20171104_220810_locale_ja.html").read)
 #

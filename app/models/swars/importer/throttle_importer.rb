@@ -28,7 +28,7 @@ module Swars
       end
 
       def default_interval
-        if Rails.env.development? || Rails.env.test?
+        if Rails.env.local?
           return 10.seconds
         end
 

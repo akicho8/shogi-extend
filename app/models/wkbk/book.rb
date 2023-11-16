@@ -131,7 +131,7 @@ module Wkbk
       self.sequence_key ||= :bookship_shuffle
       self.key ||= StringUtil.secure_random_urlsafe_base64_token
 
-      if Rails.env.test? || Rails.env.development?
+      if Rails.env.local?
         self.title       ||= key
         self.description ||= "(description)"
       end

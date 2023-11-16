@@ -28,7 +28,7 @@ module Swars
         scope :toryo_timeout_checkmate_only, -> { joins(:final).where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) }
 
         before_validation on: :create do
-          if Rails.env.development? || Rails.env.test?
+          if Rails.env.local?
             # Bioshogi::Parser.parse(Bioshogi::Explain::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
             if !kifu_body_for_test && !tactic_key
               self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]

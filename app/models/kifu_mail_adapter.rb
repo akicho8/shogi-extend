@@ -47,7 +47,7 @@ class KifuMailAdapter
   def body
     hv = {}
     hv["再生"] = kifu_parser.to_share_board_tiny_url
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       hv["*再生URLの元"]     = kifu_parser.to_share_board_url
       hv["*KENTO"]           = kifu_parser.to_kento_url
       hv["*KENTO (TinyUrl)"] = kifu_parser.to_kento_tiny_url

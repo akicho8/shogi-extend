@@ -4,7 +4,7 @@ module Swars
       included do
         custom_belongs_to :grade, ar_model: Grade, st_model: GradeInfo, default: "30級" # すべてのモードのなかで一番よい段級位
 
-        if Rails.env.development? || Rails.env.test?
+        if Rails.env.local?
           before_validation do
             if Grade.count.zero?
               Swars.setup

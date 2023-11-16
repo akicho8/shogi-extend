@@ -24,7 +24,7 @@ module XyMaster
 
     class << self
       def setup(options = {})
-        if Rails.env.development? || Rails.env.test?
+        if Rails.env.local?
           rebuild
           # clear_all
         end

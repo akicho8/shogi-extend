@@ -53,7 +53,7 @@ module UrlProxy
       path = [path[:path], query].compact.join("?")
     end
 
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       domain = ENV["DOMAIN"] || "localhost"
       path = "http://#{domain}:4000" + path
     else

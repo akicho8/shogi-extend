@@ -62,7 +62,7 @@ class AppLog < ApplicationRecord
     # AppLog.call("x", level: "debug")
     # AppLog.call(body: "x", level: "debug")
     def call(body = nil, **params)
-      if Rails.env.test? || Rails.env.development?
+      if Rails.env.local?
         if params.keys.first.kind_of? String
           raise ArgumentError, params.inspect
         end

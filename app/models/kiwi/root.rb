@@ -9,7 +9,7 @@ module Kiwi
         destroy_all
       end
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         Xsetting[:kiwi_lemon_background_job_active_begin] = 0
         Xsetting[:kiwi_lemon_background_job_active_end] = 24
       end

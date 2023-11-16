@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   # http://localhost:3000/?test_request_info=1
-  if Rails.env.development? || Rails.env.test?
+  if Rails.env.local?
     before_action do
       if params[:test_request_info]
         AppLog.critical(((1 / 0) rescue $!), data: RequestInfo.new(self).to_s)

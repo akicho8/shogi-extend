@@ -45,7 +45,7 @@ class ApplicationRecord < ActiveRecord::Base
         end                                                       # end
       end
 
-      # if Rails.env.development? || Rails.env.test?
+      # if Rails.env.local?
       #   with_options presence: true do
       #     validates :final_key
       #   end
@@ -54,7 +54,7 @@ class ApplicationRecord < ActiveRecord::Base
       #     validates :final_key, inclusion: FinalInfo.keys.collect(&:to_s)
       #   end
       # end
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         if !options[:optional]
           with_options presence: true do
             validates "#{key}_id".to_sym

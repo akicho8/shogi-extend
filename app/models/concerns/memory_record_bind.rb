@@ -54,7 +54,7 @@ module MemoryRecordBind
 
         find_by!(key: info.key)
       rescue ActiveRecord::RecordNotFound => error
-        if Rails.env.test? || Rails.env.development?
+        if Rails.env.local?
           raise ArgumentError, "#{name}.fetch(#{key.inspect})\nkeys: #{pluck(:key).inspect}"
         end
         raise error
