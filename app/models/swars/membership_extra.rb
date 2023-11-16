@@ -47,7 +47,7 @@ module Swars
     end
 
     # production ではバリデーション不要。DBに任せる
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       with_options allow_blank: true do
         validates :membership_id, uniqueness: true
       end

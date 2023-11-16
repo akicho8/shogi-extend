@@ -54,7 +54,7 @@ module Api
 
       grade = Swars::Grade.fetch("十段")
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         grade = Swars::Grade.all
       end
 

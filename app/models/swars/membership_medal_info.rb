@@ -200,7 +200,7 @@ module Swars
               v = { message: "格上の人に当然のように負けた", icon: "emoticon-neutral-outline", :class => "has-text-grey-light" }
             end
           end
-          # if Rails.env.development? || Rails.env.test?
+          # if Rails.env.local?
           #   v[:message] = "(#{d})#{v[:message]}"
           # end
           v

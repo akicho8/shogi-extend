@@ -43,7 +43,7 @@ module Swars
 
     custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
 
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       with_options allow_blank: true do
         validates :location_id, uniqueness: { scope: :battle_id, case_sensitive: true }
       end
@@ -74,7 +74,7 @@ module Swars
     before_validation do
 
       # テストを書きやすいようにする
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
 
         # self.user ||= User.create!
 
@@ -103,7 +103,7 @@ module Swars
         end
       end
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         self.grade ||= Grade.first
       end
 
@@ -136,7 +136,7 @@ module Swars
     end
 
     with_options allow_blank: true do
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         with_options uniqueness: { scope: :battle_id, case_sensitive: true } do
           validates :user_id
           validates :op_user_id
@@ -156,7 +156,7 @@ module Swars
     def think_columns_update
       list = sec_list
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
         list = list.compact
       end
@@ -194,7 +194,7 @@ module Swars
     def think_columns_update2
       list = sec_list
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
         list = list.compact
       end

@@ -99,7 +99,7 @@ module Api
       # 念のためユニーク化
       # keys.uniq
 
-      if Rails.env.test? || Rails.env.development?
+      if Rails.env.local?
         keys = Swars::User.pluck(:key)
       end
 

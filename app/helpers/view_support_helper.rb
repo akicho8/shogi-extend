@@ -18,7 +18,7 @@ module ViewSupportHelper
   # <span class="label label-danger">Danger</span>
   def bootstrap_label_tag(name, options = {})
     if v = options[:color].presence || :default
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         if [:default, :primary, :success, :info, :warning, :danger].exclude?(v.to_sym)
           raise ArgumentError, [name, color].inspect
         end

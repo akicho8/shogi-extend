@@ -34,7 +34,7 @@ module ShogiWeb
       config.app_config = AppConfig
     end
 
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       config.action_mailer.default_url_options = {host: ENV["DOMAIN"] || "localhost", port: 3000} # update だと nil.update になる
       # https://github.com/rails/rails/issues/32500
       # OGP画像がフルURLになるか確認するためだけにある

@@ -76,7 +76,7 @@ module Swars
         :current_swars_user_key => current_swars_user&.key,
         :viewpoint              => current_viewpoint,
       }
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         if params[:stat]
           hv[:stat] = Battle.stat
         end
@@ -231,7 +231,7 @@ module Swars
     end
 
     def x_delete_process
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         if params[:x_destroy_all]
           x_destroy_all
         end

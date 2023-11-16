@@ -2,7 +2,7 @@
 class AvailableXsetting
   def self.app_data
     list = []
-    if Rails.env.test? || Rails.env.development?
+    if Rails.env.local?
       list += [
         { :key => :t_string_var,   :var_type => :string,   :name => "(string)",   :default => "(t_string_var.default)", :form_type => nil, :form_enable => true, },
         { :key => :t_text_var,     :var_type => :text,     :name => "(text)",     :default => "(t_text_var.default)",   :form_type => nil, :form_enable => true, },

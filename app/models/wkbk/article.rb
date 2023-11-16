@@ -66,7 +66,7 @@ module Wkbk
     }
 
     before_validation do
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         # self.title ||= SecureRandom.hex
         self.init_sfen ||= "position sfen 7nl/7k1/9/7pp/6N2/9/9/9/9 b GS2r2b3g3s2n3l16p 1"
       end

@@ -6,7 +6,7 @@ module CurrentUserMethods
     helper_method :staff?
     helper_method :current_user
 
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       before_action do
         if params[:_user_id] || params[:_login_by_key]
           current_user
@@ -49,7 +49,7 @@ module CurrentUserMethods
       # id ||= User.sysop.id
       # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "sysop")])
 
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         # id ||= User.sysop.id
         id ||= params[:_user_id]
         if v = params[:_login_by_key]
@@ -77,7 +77,7 @@ module CurrentUserMethods
         end
 
         # _user_id パラメータが来ればそれ以降もログインした状態にさせる
-        if Rails.env.development? || Rails.env.test?
+        if Rails.env.local?
           if params[:_user_id].present? || params[:_login_by_key].present?
             current_user_set(user)
           end

@@ -49,7 +49,7 @@ module Swars
     scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].desc).order(updated_at: :desc) } # 段級位が高い人たち順
 
     before_validation do
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         self.user_key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.user_key ||= SecureRandom.hex

@@ -98,14 +98,14 @@ class MediaBuilder
 
     # def default_options
     #   super.merge({
-    #       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.test? || Rails.env.development?,
+    #       disk_cache_enable: Rails.env.production? || Rails.env.staging? || Rails.env.local?,
     #     })
     # end
 
     private
 
     def output_subdirs_env
-      if Rails.env.development? || Rails.env.test?
+      if Rails.env.local?
         Rails.env
       end
     end
