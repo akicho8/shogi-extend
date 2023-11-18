@@ -21,7 +21,7 @@ module Tsl
         end
       end
 
-      # rails r 'League.generation_update(30)'
+      # rails r 'Tsl::League.generation_update(30)'
       def generation_update(generation, options = {})
         options = {
           :verbose => Rails.env.development? || Rails.env.staging? || Rails.env.production?,
@@ -31,13 +31,14 @@ module Tsl
           tp({"三段リーグ取得": generation})
         end
 
-        league = League.find_or_create_by!(generation: generation)
         scraping = Scraping.new(options.merge(generation: generation))
-
-        Array(scraping.user_infos).each do |user_info|
-          user = User.find_or_create_by!(name: user_info[:name])
-          membership = league.memberships.find_by(user: user) || league.memberships.build(user: user)
-          membership.update!(user_info.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
+        if scraping.user_infos.present?
+          league = League.find_or_create_by!(generation: generation) # 1件でも記録があればその世代が存在するとする
+          scraping.user_infos.each do |user_info|
+            user = User.find_or_create_by!(name: user_info[:name])
+            membership = league.memberships.find_by(user: user) || league.memberships.build(user: user)
+            membership.update!(user_info.slice(:result_key, :start_pos, :ox, :age, :win, :lose))
+          end
         end
       end
     end
