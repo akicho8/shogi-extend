@@ -44,7 +44,7 @@ export class HandleNameParser {
       s = s.replace(/(\D+)\d+$/, "$1")                                                            // "alice123"        → "alice"
     })
 
-    if (s.match(/.(さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人|chan|kun)$/)) {
+    if (s.match(/.(さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人|chan|kun)$/i)) {
       return s
     }
 
