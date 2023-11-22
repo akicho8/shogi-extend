@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_07_000001) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_194850) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_000001) do
   end
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"
@@ -468,7 +468,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_000001) do
   end
 
   create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "name", collation: "utf8_bin"
+    t.string "name", collation: "utf8mb3_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
@@ -514,6 +514,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_07_000001) do
     t.datetime "updated_at", null: false
     t.index ["level_up_generation"], name: "index_tsl_users_on_level_up_generation"
     t.index ["name"], name: "index_tsl_users_on_name", unique: true
+  end
+
+  create_table "url_handlings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "original_url", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["key"], name: "index_url_handlings_on_key", unique: true
+    t.index ["original_url"], name: "index_url_handlings_on_original_url", unique: true
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
