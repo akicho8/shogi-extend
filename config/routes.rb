@@ -18,6 +18,10 @@ Rails.application.routes.draw do
 
   match "eval", to: "eval#run", via: :all
 
+  ################################################################################ UrlHandling
+
+  match "url(/:key)", to: "url_handlings#show", via: :all
+
   ################################################################################ ログアウト
 
   # namespace :colosseum, path: "" do
