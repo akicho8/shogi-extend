@@ -4,13 +4,7 @@ module Swars
       def fetch
         @fetch ||= yield_self do
           text = doc.search("#user_dankyu tr").text
-          list = text.scan(regexp).collect do |rule, grade|
-            {
-              rule: Swars::RuleInfo.fetch(rule),
-              grade: Swars::GradeInfo.fetch(grade),
-            }
-          end
-          MypageResult.new(list)
+          MypageResult.new(text.scan(regexp))
         end
       end
 
