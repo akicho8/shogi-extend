@@ -545,7 +545,7 @@ if (DEVELOPMENT_P) {
   // config.proxy["/x.json"]       = process.env.MY_SITE_URL // for /x.json
   config.proxy["/admin"]           = process.env.MY_SITE_URL
   config.proxy["/animation-files"] = process.env.MY_SITE_URL
-  config.proxy["/url"]             = process.env.MY_SITE_URL
+  config.proxy["/u"]               = process.env.MY_SITE_URL
 }
 
 export default config
