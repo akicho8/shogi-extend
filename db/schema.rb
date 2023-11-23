@@ -287,8 +287,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_194851) do
   end
 
   create_table "short_url_components", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "original_url", null: false
+    t.string "key", null: false, comment: "ハッシュ"
+    t.string "original_url", limit: 2048, null: false, comment: "元URL"
     t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
