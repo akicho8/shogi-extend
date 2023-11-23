@@ -20,7 +20,7 @@ module Swars
         @count_all = scope.count
 
         scope.find_each(batch_size: 1000) do |user|
-          mypage_result = Swars::Agent::Mypage.new(user_key: user.key).fetch
+          mypage_result = Swars::Agent::Mypage.new(@options.merge(user_key: user.key)).fetch
           if mypage_result.ban_user?
             user.ban_at = Time.current
             if @options[:execute]
