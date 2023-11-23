@@ -18,9 +18,9 @@ Rails.application.routes.draw do
 
   match "eval", to: "eval#run", via: :all
 
-  ################################################################################ UrlHandling
+  ################################################################################ ShortUrl
 
-  match "url(/:key)", to: "url_handlings#show", via: :all
+  match "url(/:any)", to: "short_url/components#show", via: :all
 
   ################################################################################ ログアウト
 

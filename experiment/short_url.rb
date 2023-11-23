@@ -2,7 +2,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 Rails.application.routes.default_url_options # => {:host=>"localhost", :port=>3000}
 
-tp UrlHandling
+tp ShortUrl
 
 response = Faraday.post("http://localhost:3000/url.json", :original_url => "abc")
 p response.status
