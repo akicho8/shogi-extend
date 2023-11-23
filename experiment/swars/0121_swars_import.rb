@@ -8,8 +8,13 @@ Swars::User.destroy_all
 # Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).run
 # Swars::Importer::AllRuleImporter.new(user_key: "kinakom0chi", remote_run: true).run
 # Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: true, early_break: true).run
-Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, early_break: true, page_max: 3).run
+
+# Swars::Importer::AllRuleImporter.new(user_key: "alice", last_page_break: false, early_break: true, page_max: 3).run
+# Swars::Battle.count             # => 3
+
+Swars::Importer::AllRuleImporter.new(user_key: "muaqua2023", last_page_break: false, early_break: true, page_max: 1, remote_run: true).run
 Swars::Battle.count             # => 3
+
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=alice
 # >> alice P1 10分 [全3件][新3件][最後]
 # >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=2&user_id=alice

@@ -46,6 +46,10 @@ module Swars
     ]
 
     class << self
+      def ban
+        @ban ||= fetch("10000級")
+      end
+
       def lookup(v)
         if v.kind_of? String
           v = v.tr("０-９", "0-9")

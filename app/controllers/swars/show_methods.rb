@@ -66,7 +66,7 @@ module Swars
     def js_memberships(battle, memberships)
       memberships.collect do |e|
         hv = {
-          :user         => { key: e.user.key },
+          :user         => { key: e.user.key, ban_at: e.user.ban_at },
           :grade_info   => { name: e.grade.name },
           :location_key => e.location_key,
           :judge_key    => e.judge_key,

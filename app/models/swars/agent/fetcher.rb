@@ -19,14 +19,20 @@ module Swars
         end
 
         if local_run?
-          mock_html(type)
-        else
-          resp = agent.get(url)
-          sleep_on
-          if resp.success?
-            resp.body.force_encoding("UTF-8")
-          end
+          return mock_html(type)
         end
+
+        resp = agent.get(url)
+        sleep_on
+        unless resp.success?
+          return
+        end
+
+        html = resp.body.force_encoding("UTF-8")
+        if Rails.env.local?
+          Pathname(__dir__).join("fetched_html/#{type}.html").write(html)
+        end
+        html
       end
 
       private

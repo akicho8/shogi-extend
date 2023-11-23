@@ -60,7 +60,7 @@ module Swars
     end
 
     with_options allow_blank: true do
-      validates :user_key, uniqueness: { case_sensitive: true }
+      validates :user_key, uniqueness: { case_sensitive: true } # FIXME: これ取る
     end
 
     def to_param
@@ -72,5 +72,6 @@ module Swars
     end
 
     include GradeMethods
+    include BanCrawlerMethods
   end
 end

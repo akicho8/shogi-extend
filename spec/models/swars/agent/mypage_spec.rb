@@ -6,7 +6,7 @@ module Swars
       it "development" do
         mypage_result = Mypage.new(user_key: "testarossa00").fetch
         av = mypage_result.list.collect { |e| [e[:rule].to_s, e[:grade].to_s] }
-        assert2 { av == [["10分", "10000級"], ["3分", "10000級"], ["10秒", "10000級"]] }
+        assert2 { av == [["10分", "10000級"], ["3分", "1級"], ["10秒", "十段"]] }
       end
       it "production" do
         mypage_result = Mypage.new(user_key: "testarossa00", remote_run: true).fetch
