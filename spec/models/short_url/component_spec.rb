@@ -14,7 +14,7 @@ module ShortUrl
       assert2 { component.access_logs_count == 1 }
     end
 
-    it "ショートカット" do
+    it "単にURLから短縮URLに変換する" do
       assert2 { ShortUrl.from("http://localhost:3000/") == "http://localhost:3000/url/aae1cf3cb358fab3f0685775655dc000" }
     end
   end

@@ -44,7 +44,7 @@ export const mod_urls = {
       let url = null
       this.debug_alert(this.current_url)
       if (OWN_SHORTENED_URL_FUNCTION) {
-        url = (await this.long_url_to_short_url(this.current_url)).compact_url
+        url = await this.long_url_to_short_url(this.current_url)
       } else {
         url = await TinyURL.shorten(this.current_url)
       }
