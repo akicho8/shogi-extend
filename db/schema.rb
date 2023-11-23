@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_22_194850) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_22_194851) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -278,6 +278,22 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_194850) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_share_board_users_on_name", unique: true
+  end
+
+  create_table "short_url_access_logs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "component_id", comment: "コンポーネント"
+    t.datetime "created_at", precision: nil, null: false, comment: "記録日時"
+    t.index ["component_id"], name: "index_short_url_access_logs_on_component_id"
+  end
+
+  create_table "short_url_components", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "original_url", null: false
+    t.integer "access_logs_count", default: 0, null: false, comment: "総アクセス数"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["key"], name: "index_short_url_components_on_key", unique: true
+    t.index ["original_url"], name: "index_short_url_components_on_original_url", unique: true
   end
 
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
