@@ -293,7 +293,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_22_194851) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["key"], name: "index_short_url_components_on_key", unique: true
-    t.index ["original_url"], name: "index_short_url_components_on_original_url", unique: true
   end
 
   create_table "swars_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
