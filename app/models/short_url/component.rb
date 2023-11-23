@@ -6,7 +6,7 @@ module ShortUrl
         if c.request.format.html?
           c.redirect_to record.original_url
         else
-          c.render json: record
+          c.render json: record.compact_url
         end
       end
 
