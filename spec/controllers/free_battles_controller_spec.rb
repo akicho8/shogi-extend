@@ -36,12 +36,11 @@
 require "rails_helper"
 
 RSpec.describe FreeBattlesController, type: :controller do
-  # before do
-  #   user_login(key: "sysop")
-  #
-  #   @free_battle = FreeBattle.create!
-  # end
-  #
+  before do
+    user_login(key: "sysop")
+    @free_battle = FreeBattle.create!
+  end
+
   # it "index" do
   #   get :index
   #   assert2 { response.status == 200 }
@@ -51,17 +50,37 @@ RSpec.describe FreeBattlesController, type: :controller do
   #   get :index, params: { modal_id: @free_battle.to_param }
   #   assert2 { response.status == 200 }
   # end
-  #
-  # it "show html" do
-  #   get :show, params: {id: @free_battle.to_param}
-  #   assert2 { response.status == 200 }
-  # end
-  #
-  # it "show png" do
-  #   get :show, params: {id: @free_battle.to_param, format: "png"}
-  #   assert2 { response.status == 200 }
-  # end
-  #
+
+  it "kif" do
+    get :show, params: {id: @free_battle.to_param, format: "kif"}
+    assert2 { response.status == 200 }
+  end
+
+  it "ki2" do
+    get :show, params: {id: @free_battle.to_param, format: "ki2"}
+    assert2 { response.status == 200 }
+  end
+
+  it "sfen" do
+    get :show, params: {id: @free_battle.to_param, format: "sfen"}
+    assert2 { response.status == 200 }
+  end
+
+  it "csa" do
+    get :show, params: {id: @free_battle.to_param, format: "csa"}
+    assert2 { response.status == 200 }
+  end
+
+  it "png" do
+    get :show, params: {id: @free_battle.to_param, format: "png" }
+    assert2 { response.status == 302 }
+  end
+
+  it "KIF表示したときに棋譜の上部にリンクを含んでいない" do
+    get :show, params: { id: @free_battle.to_param, format: "kif" }
+    assert2 { !response.body.match?(/詳細URL|ぴよ将棋|KENTO/) }
+  end
+
   # it "show png turn" do
   #   get :show, params: {id: @free_battle.to_param, format: "png", turn: -1}
   #   assert2 { response.status == 200 }

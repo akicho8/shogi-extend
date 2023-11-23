@@ -34,9 +34,9 @@ module KifShowMethods
     #   text_body = KifuParser.new(params.merge(source: : kifu_body).to_xxx(params[:format])
     # end
 
-    text_body = KifuParser.new(params.merge(source: current_record.kifu_body, to_format: params[:format])).to_xxx
-    #   text_body = current_record.to_xxx(params[:format])
-    # end
+    kifu_parser_options = current_record.kifu_parser_options.merge(params.to_unsafe_h.to_options, to_format: params[:format])
+    Rails.logger.debug { kifu_parser_options }
+    text_body = KifuParser.new(kifu_parser_options).to_xxx
 
     # ユーザーの入力を元に UTF-8 → Shift_JIS 変換は危険
     # やたら例外がでるので必ず invalid: :replace が必要
