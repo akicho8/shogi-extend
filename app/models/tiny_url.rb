@@ -1,5 +1,9 @@
-# TinyUrl.from("https://example.com/") # => "https://tinyurl.com/yqp7ct"
-# TinyUrl.from("xxx")                  # => "xxx"
+# 使い方
+#  TinyUrl.from("https://example.com/") # => "https://tinyurl.com/yqp7ct"
+#  TinyUrl.from("xxx")                  # => "xxx"
+#
+# 共有将棋盤の短縮化したURLを LINE に貼ると消されるため使いづらい
+#
 module TinyUrl
   extend self
 

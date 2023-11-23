@@ -5,6 +5,8 @@ const TinyURL = require("tinyurl")
 import _ from "lodash"
 const QueryString = require("query-string")
 
+const OWN_SHORTENED_URL_FUNCTION = false // 自前の短縮URL機能を使うか？
+
 export const mod_urls = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
@@ -35,10 +37,19 @@ export const mod_urls = {
     async current_url_short_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.debug_alert(this.current_url)
-      const url = await TinyURL.shorten(this.current_url)
-      this.debug_alert(url)
+      const url = await this.current_short_url()
       this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})
+    },
+    async current_short_url() {
+      let url = null
+      this.debug_alert(this.current_url)
+      if (OWN_SHORTENED_URL_FUNCTION) {
+        url = (await this.long_url_to_short_url(this.current_url)).compact_url
+      } else {
+        url = await TinyURL.shorten(this.current_url)
+      }
+      this.debug_alert(url)
+      return url
     },
 
     other_app_click_handle(app_name) {
