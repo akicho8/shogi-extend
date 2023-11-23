@@ -8,14 +8,21 @@ module ShortUrl
       assert2 { component.compact_url == "http://localhost:3000/url/#{component.key}" }
     end
 
-    it "アクセスログを作る" do
+    it "アクセスログは実際にリダイレクトしたときに作る" do
       component = Component.fetch(original_url: "http://localhost:3000/")
+      assert2 { component.access_logs.count == 0 }
+      assert2 { component.access_logs_count == 0 }
+    end
+
+    it "リダイレクトしたと仮定すると履歴ができる" do
+      component = Component.fetch(original_url: "http://localhost:3000/")
+      component.access_logs.create!
       assert2 { component.access_logs.count == 1 }
       assert2 { component.access_logs_count == 1 }
     end
 
     it "単にURLから短縮URLに変換する" do
-      assert2 { ShortUrl.from("http://localhost:3000/") == "http://localhost:3000/url/aae1cf3cb358fab3f0685775655dc000" }
+      assert2 { ShortUrl.from("http://localhost:3000/") == "http://localhost:3000/url/zZSGrCkrLPo" }
     end
   end
 end

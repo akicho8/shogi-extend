@@ -2,7 +2,7 @@ class CreateShortUrl < ActiveRecord::Migration[5.1]
   def up
     create_table :short_url_components, force: true do |t|
       t.string :key,                null: false, index: { unique: true }
-      t.string :original_url,       null: false, index: { unique: true }
+      t.string :original_url,       null: false # ハッシュ関数があとで変わるかもしれないのでユニークにしてはいけない
       t.integer :access_logs_count, null: false, default: 0, comment: "総アクセス数"
       t.timestamps                  null: false
     end
