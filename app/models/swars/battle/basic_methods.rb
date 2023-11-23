@@ -90,7 +90,12 @@ module Swars
       end
 
       def heavy_parsed_info
-        @heavy_parsed_info ||= KifuParser.new(source: kifu_body, swars_battle_key: key)
+        @heavy_parsed_info ||= KifuParser.new(kifu_parser_options)
+      end
+
+      # 棋譜コピー用
+      def kifu_parser_options
+        { source: kifu_body, swars_battle_key: key }
       end
 
       concerning :SummaryMethods do

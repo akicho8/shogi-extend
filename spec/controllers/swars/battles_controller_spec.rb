@@ -257,6 +257,11 @@ EOT
     end
 
     describe "KIF 表示/DL" do
+      it "棋譜の上部にリンクを含んでいる" do
+        get :show, params: { id: record.to_param, format: "kif" }
+        response.body.match?(/詳細URL：.*ぴよ将棋：.*KENTO：/)
+      end
+
       it "表示(UTF-8)" do
         get :show, params: { id: record.to_param, format: "kif" }
         assert2 { response.media_type == "text/plain" }

@@ -163,6 +163,12 @@ class FreeBattle < ApplicationRecord
     parts.join
   end
 
+  # 棋譜コピー用
+  # 「なんでも棋譜変換」から棋譜表示のときに呼ぶ
+  def kifu_parser_options
+    { source: kifu_body }
+  end
+
   def fast_parser_options
     if use_info.key == :share_board || use_info.key == :kiwi_lemon
       # めちゃくちゃな操作でもエラーにしない
