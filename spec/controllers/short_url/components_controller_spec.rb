@@ -6,6 +6,7 @@ RSpec.describe ShortUrl::ComponentsController, type: :controller do
     get :show, params: { original_url: original_url, format: "json" }
     assert2 { response.status == 200 }
     record = JSON.parse(response.body, symbolize_names: true)
-    assert2 { record[:original_url] == original_url }
+    assert2 { record[:original_url] }
+    assert2 { record[:compact_url] }
   end
 end

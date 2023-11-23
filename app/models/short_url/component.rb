@@ -68,5 +68,9 @@ module ShortUrl
     def compact_url
       "#{self.class.root_url}url/#{key}"
     end
+
+    def as_json(*)
+      super.merge(compact_url: compact_url)
+    end
   end
 end

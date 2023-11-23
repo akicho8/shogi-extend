@@ -298,6 +298,14 @@ export const vue_support = {
       }
       return this.$axios.$post("/api/app_log.json", params, {progress: false})
     },
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+    // 自前の短縮URLを作る
+    // url = (await this.long_url_to_short_url(this.current_url)).compact_url
+    long_url_to_short_url(url) {
+      return this.$axios.$post("/url.json", {original_url: url}, {progress: false})
+    },
   },
 
   // FIXME: plugin にする
