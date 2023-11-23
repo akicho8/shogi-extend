@@ -5,7 +5,7 @@ const TinyURL = require("tinyurl")
 import _ from "lodash"
 const QueryString = require("query-string")
 
-const OWN_SHORTENED_URL_FUNCTION = false // 自前の短縮URL機能を使うか？
+const OWN_SHORTENED_URL_FUNCTION = true // 自前の短縮URL機能を使うか？
 
 export const mod_urls = {
   methods: {
