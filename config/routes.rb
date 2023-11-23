@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   ################################################################################ ShortUrl
 
-  match "url(/:any)", to: "short_url/components#show", via: :all
+  match "u(/:any)", to: "short_url/components#show", via: :all
 
   ################################################################################ ログアウト
 

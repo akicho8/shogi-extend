@@ -5,7 +5,7 @@ module ShortUrl
     it "基本形" do
       component = Component.fetch(original_url: "http://localhost:3000/")
       component = Component.fetch(key: component.key)
-      assert2 { component.compact_url == "http://localhost:3000/url/#{component.key}" }
+      assert2 { component.compact_url == "http://localhost:3000/u/#{component.key}" }
     end
 
     it "アクセスログは実際にリダイレクトしたときに作る" do
@@ -22,7 +22,7 @@ module ShortUrl
     end
 
     it "単にURLから短縮URLに変換する" do
-      assert2 { ShortUrl.from("http://localhost:3000/") == "http://localhost:3000/url/zZSGrCkrLPo" }
+      assert2 { ShortUrl.from("http://localhost:3000/") == "http://localhost:3000/u/zZSGrCkrLPo" }
     end
   end
 end

@@ -65,7 +65,7 @@ module ShortUrl
     end
 
     def compact_url
-      "#{self.class.root_url}url/#{key}"
+      "#{self.class.root_url}u/#{key}"
     end
 
     def as_json(*)
