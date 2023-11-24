@@ -39,6 +39,9 @@
       ScsInputNumber(label="力差" xxx_enabled_var="grade_diff_enabled"    xxx_value_var="grade_diff"    xxx_compare_var="grade_diff_compare" :min="-9" :max="9" :message="TheApp.grade_diff_message")
 
     .column.is-6-tablet.is-4-desktop
+      ScsCheckbox(label1="垢BAN" :records="TheApp.xi.ban_infos" var_name="ban_keys" last_only_if_full)
+
+    .column.is-6-tablet.is-4-desktop
       ScsInputTag(label="自分タグ" tags_var="my_tag_values" op_var="my_tag_values_op")
 
     .column.is-6-tablet.is-4-desktop

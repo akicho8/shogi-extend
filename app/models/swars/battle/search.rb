@@ -152,9 +152,19 @@ module Swars
           end
 
           if v = q.lookup("vs-grade") || q.lookup("棋力") || q.lookup("相手の棋力")
-            v = v.collect { |e| Grade.fetch(GradeInfo.fetch(e).key) }
-            m = @op.where(grade: v)
-            s = s.where(id: m.pluck(:battle_id))
+            v = v.collect { |e| GradeInfo.fetch(e).db_record }
+            if true
+              # 垢BANの場合だけ特別処理
+              if v.include?(GradeInfo.ban.db_record)
+                v = v - [GradeInfo.ban.db_record]
+                m = @op.where(user: @user.op_users.ban_only)
+                s = s.where(id: m.pluck(:battle_id))
+              end
+            end
+            if v.present?
+              m = @op.where(grade: v)
+              s = s.where(id: m.pluck(:battle_id))
+            end
             @selected = true
           end
 

@@ -61,6 +61,7 @@ export const mod_query_builder = {
       av.push(this.values_as_query("先後", this.location_keys))
       av.push(this.values_as_query("相手の棋力", this.grade_keys))
       av.push(this.compare_value_as_query("力差", this.grade_diff_enabled, this.grade_diff_compare_info, this.grade_diff))
+      av.push(this.values_as_query("垢BAN", this.ban_keys))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.my_tag_values_op).search_key_for(false), this.my_tag_values))
       av.push(this.values_as_query(this.LogicalInfo.fetch(this.vs_tag_values_op).search_key_for(true),  this.vs_tag_values))
       av.push(this.values_as_query("自分の棋風", this.my_style_keys))

@@ -12,5 +12,14 @@ module Swars
       assert2 { GradeInfo.fetch("1") == GradeInfo.fetch("1級") }
       assert2 { GradeInfo.fetch("初") == GradeInfo.fetch("初段") }
     end
+
+    it "30級より低い場合はすべて垢BAN扱いとする" do
+      assert2 { GradeInfo.fetch("30級") == GradeInfo.fetch("30級") }
+      assert2 { GradeInfo.fetch("31級") == GradeInfo.ban }
+    end
+
+    it "垢BANは10000級" do
+      assert2 { GradeInfo.ban.key == :"10000級" }
+    end
   end
 end
