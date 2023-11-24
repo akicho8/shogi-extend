@@ -42,17 +42,23 @@ module Swars
       { key: "28級", visualize: false, select_option: false, },
       { key: "29級", visualize: false, select_option: false, },
       { key: "30級", visualize: false, select_option: false, },
-      { key: "10000級", visualize: false, select_option: false, },
+      { key: "10000級", visualize: false, select_option: true, }, # ただのフラグ的な扱いなので10000級を表に表示してはいけない
     ]
+
+    BEGINNER = 30
+    BAN_KEY  = "10000級"
 
     class << self
       def ban
-        @ban ||= fetch("10000級")
+        @ban ||= fetch(BAN_KEY)
       end
 
       def lookup(v)
         if v.kind_of? String
           v = v.tr("０-９", "0-9")
+          if v.to_i > BEGINNER
+            v = BAN_KEY
+          end
         end
         super || invert_table[v]
       end

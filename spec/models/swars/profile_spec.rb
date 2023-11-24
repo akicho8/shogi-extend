@@ -36,28 +36,21 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe User, type: :model, swars_spec: true do
-    it "ユーザー名は大小文字を区別する" do
-      User.create!(key: "ALICE")
-      assert2 { User.new(key: "alice").valid? }
+  RSpec.describe Profile, type: :model, swars_spec: true do
+    it "ユーザーを作るとprofileモデルも同時に作りリレーションが正しい" do
+      user = User.create!
+      assert2 { user.profile }
+      assert2 { user.profile.user == user }
+      assert2 { user.profile.ban_crowl_count == 0 }
+      assert2 { user.profile.ban_at == nil }
+      assert2 { user.profile.ban_crowled_at == nil }
     end
 
-    it "垢BANすると二箇所の user.ban_at と profile.ban_at をセットする" do
+    it "ban_crowled_at を更新すると ban_crowl_count をインクリメントする" do
       user = User.create!
-      user.ban!
-      assert2 { user.ban_at }
-      assert2 { user.profile.ban_at }
-      assert2 { user.profile.ban_crowled_at }
+      user.profile.ban_crowled_at = Time.current
+      user.save!
       assert2 { user.profile.ban_crowl_count == 1 }
-    end
-
-    it "垢BANした人としていない人を分けるリレーションが正しい" do
-      user = User.create!
-      assert2 { User.ban_except.count == 1 }
-      assert2 { User.ban_only.count == 0 }
-      user.ban!
-      assert2 { User.ban_except.count == 0 }
-      assert2 { User.ban_only.count == 1 }
     end
   end
 end

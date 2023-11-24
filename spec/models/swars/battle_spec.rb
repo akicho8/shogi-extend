@@ -155,23 +155,14 @@ module Swars
         assert2 { record.memberships[1].note_tag_list == ["入玉", "相入玉", "居飛車"] }
       end
     end
+
+    it "垢BANした人の対局と垢BANされていない人の対局を分けるリレーションが正しい" do
+      user1, user2 = record.users
+      assert2 { Battle.ban_record_only.count == 0 }
+      assert2 { Battle.ban_record_except.count == 1 }
+      user1.ban!
+      assert2 { Battle.ban_record_only.count == 1 }
+      assert2 { Battle.ban_record_except.count == 0 }
+    end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> .............F...
-# >>
-# >> Failures:
-# >>
-# >>   1) Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
-# >>      Failure/Error: Unable to find - to read failed line
-# >>      # -:119:in `block (4 levels) in <module:Swars>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (3 levels) in <main>'
-# >>      # ./spec/support/database_cleaner.rb:18:in `block (2 levels) in <main>'
-# >>
-# >> Finished in 5.67 seconds (files took 2.49 seconds to load)
-# >> 17 examples, 1 failure
-# >>
-# >> Failed examples:
-# >>
-# >> rspec -:113 # Swars::Battle 時間チャート 時間切れ 後手のチャートの最後にそれを追加してある
-# >>

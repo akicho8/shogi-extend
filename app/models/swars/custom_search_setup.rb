@@ -23,6 +23,10 @@ module Swars
         { :key => e.key, :name => e.short_name, yomiage: e.name }
       end
 
+      hv[:ban_infos] = BanInfo.find_all(&:select_option).collect do |e|
+        { :key => e.key, :name => e.name }
+      end
+
       hv[:style_infos] = StyleInfo.collect do |e|
         { :key => e.key }
       end

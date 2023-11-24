@@ -50,9 +50,11 @@ module MemoryRecordBind
         #   end
         # end
 
-        info = pure_class.fetch(key)
+        pure_class.fetch(key).db_record!
 
-        find_by!(key: info.key)
+      # info = pure_class.fetch(key)
+      #
+      # find_by!(key: info.key)
       rescue ActiveRecord::RecordNotFound => error
         if Rails.env.local?
           raise ArgumentError, "#{name}.fetch(#{key.inspect})\nkeys: #{pluck(:key).inspect}"

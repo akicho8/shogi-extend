@@ -28,6 +28,7 @@ module Swars
           s = s.coaching_except                           # 指導対局を除外する
           s = s.expert_except                             # 十段の対局を除外する
           s = s.special_user_own_record_except(options[:skip_users]) # 特定のユーザーを除外する
+          s = s.ban_record_except                         # 垢BANになった人との対局は残す
           s
         }
 
@@ -46,6 +47,9 @@ module Swars
           end
           where.not(id: skip_battles)
         }
+
+        scope :ban_record_only,   -> { where(id: Battle.joins(:memberships).merge(Membership.where(user: User.ban_only)))     } # 垢BANになった人との対局のみ
+        scope :ban_record_except, -> { where.not(id: Battle.joins(:memberships).merge(Membership.where(user: User.ban_only))) } # 垢BANになった人との対局を除外する
       end
 
       class_methods do

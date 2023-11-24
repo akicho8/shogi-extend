@@ -35,7 +35,7 @@ module Swars
           hash[:rule] = params[:rule] || ""
           hash[:xmode] = params[:xmode] || ""
 
-          hash[:user] = { key: user.key }
+          hash[:user] = { key: user.key, ban_at: user.ban_at }
 
           hash[:rules_hash] = rules_hash
 
