@@ -47,7 +47,8 @@ gem "image_processing", "~> 1.2"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   # %i[ mri windows ]
-  gem "debug", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+  # gem "debug", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+  gem "debug"
 end
 
 group :development do
