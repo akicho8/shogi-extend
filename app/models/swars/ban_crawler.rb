@@ -14,8 +14,8 @@ module Swars
         # 条件 (ban_crawl_scope にぜんぶ渡す)
         :grade_keys           => nil, # 段級位制限
         :user_keys            => nil, # ウォーズID制限
-        :ban_crowl_count_lteq => nil, # 垢BANチェック指定回数以下
-        :ban_crowled_at_lt    => nil, # 垢BANチェックの前回が指定日時より過去
+        :ban_crawled_count_lteq => nil, # 垢BANチェック指定回数以下
+        :ban_crawled_at_lt    => nil, # 垢BANチェックの前回が指定日時より過去
         :limit                => nil, # 件数制限 (2000件=30分)
 
         # その他

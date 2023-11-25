@@ -84,8 +84,8 @@ module Swars
         scope :ban_only,             -> { where.not(ban_at: nil)                                      } # BANされた人たち
         scope :ban_except,           -> { where(ban_at: nil)                                          } # BANされた人たちを除く
         scope :pro_except,           -> { where.not(grade: Grade.fetch("十段"))                       } # プロを除く
-        scope :ban_crowl_count_lteq, -> c { joins(:profile).merge(Profile.ban_crowl_count_lteq(c))    } # 垢BANチェック指定回数以下
-        scope :ban_crowled_at_lt,    -> time { joins(:profile).merge(Profile.ban_crowled_at_lt(time)) } # 垢BANチェックの前回が指定日時より過去
+        scope :ban_crawled_count_lteq, -> c { joins(:profile).merge(Profile.ban_crawled_count_lteq(c))    } # 垢BANチェック指定回数以下
+        scope :ban_crawled_at_lt,    -> time { joins(:profile).merge(Profile.ban_crawled_at_lt(time)) } # 垢BANチェックの前回が指定日時より過去
 
         # BAN確認対象者
         scope :ban_crawl_scope, -> (options = {}) {
@@ -98,11 +98,11 @@ module Swars
           if v = options[:user_keys].presence
             s = s.where(key: v)
           end
-          if v = options[:ban_crowl_count_lteq].presence
-            s = s.ban_crowl_count_lteq(v)
+          if v = options[:ban_crawled_count_lteq].presence
+            s = s.ban_crawled_count_lteq(v)
           end
-          if v = options[:ban_crowled_at_lt].presence
-            s = s.ban_crowled_at_lt(v)
+          if v = options[:ban_crawled_at_lt].presence
+            s = s.ban_crawled_at_lt(v)
           end
           if v = options[:limit].presence
             s = s.limit(v)
@@ -123,8 +123,8 @@ module Swars
       def ban_reset
         self.ban_at = nil
         profile.ban_at = nil
-        profile.ban_crowl_count = nil
-        profile.ban_crowled_at = nil
+        profile.ban_crawled_count = nil
+        profile.ban_crawled_at = nil
         save!
       end
 
@@ -137,8 +137,8 @@ module Swars
         end
         self.ban_at = value
         profile.ban_at = value
-        profile.ban_crowled_at = time
-        profile.ban_crowl_count += 1
+        profile.ban_crawled_at = time
+        profile.ban_crawled_count += 1
       end
 
       def ban!
@@ -154,8 +154,8 @@ module Swars
           "最終対局日時" => latest_battled_at&.to_fs(:ymdhms),
           "対局数"       => memberships.size,
           "BAN日時"      => ban_at&.to_fs(:ymdhms),
-          "BAN確認数"    => profile.ban_crowl_count,
-          "BAN確認日時"  => profile.ban_crowled_at&.to_fs(:ymdhms),
+          "BAN確認数"    => profile.ban_crawled_count,
+          "BAN確認日時"  => profile.ban_crawled_at&.to_fs(:ymdhms),
           "検索数"       => search_logs_count,
           "直近検索"     => last_reception_at&.to_fs(:ymdhms),
           "登録日時"     => created_at.to_fs(:ymdhms),
