@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_000001) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_23_000003) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -452,6 +452,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_000001) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "ban_at", precision: nil, comment: "垢BAN日時"
+    t.datetime "latest_battled_at", precision: nil, comment: "直近の対局日時"
     t.index ["ban_at"], name: "index_swars_users_on_ban_at"
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
