@@ -17,6 +17,12 @@ module Swars
   class Grade < ApplicationRecord
     include MemoryRecordBind::Base
 
+    class << self
+      def ban
+        @ban ||= fetch(GradeInfo::BAN_KEY)
+      end
+    end
+
     with_options dependent: :destroy do
       has_many :users
       has_many :memberships

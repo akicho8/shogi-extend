@@ -1,38 +1,3 @@
-# -*- coding: utf-8 -*-
-# == Schema Information ==
-#
-# ユーザー (users as User)
-#
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | name                   | desc                       | type        | opts                | refs | index |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-# | id                     | ID                         | integer(8)  | NOT NULL PK         |      |       |
-# | key                    | キー                       | string(255) | NOT NULL            |      | A!    |
-# | name                   | 名前                       | string(255) | NOT NULL            |      |       |
-# | user_agent             | User agent                 | string(255) | NOT NULL            |      |       |
-# | race_key               | 種族                       | string(255) | NOT NULL            |      | F     |
-# | name_input_at          | Name input at              | datetime    |                     |      |       |
-# | created_at             | 作成日                     | datetime    | NOT NULL            |      |       |
-# | updated_at             | 更新日                     | datetime    | NOT NULL            |      |       |
-# | email                  | メールアドレス             | string(255) | NOT NULL            |      | B!    |
-# | encrypted_password     | 暗号化パスワード           | string(255) | NOT NULL            |      |       |
-# | reset_password_token   | Reset password token       | string(255) |                     |      | C!    |
-# | reset_password_sent_at | パスワードリセット送信時刻 | datetime    |                     |      |       |
-# | remember_created_at    | ログイン記憶時刻           | datetime    |                     |      |       |
-# | sign_in_count          | ログイン回数               | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | current_sign_in_at     | 現在のログイン時刻         | datetime    |                     |      |       |
-# | last_sign_in_at        | 最終ログイン時刻           | datetime    |                     |      |       |
-# | current_sign_in_ip     | 現在のログインIPアドレス   | string(255) |                     |      |       |
-# | last_sign_in_ip        | 最終ログインIPアドレス     | string(255) |                     |      |       |
-# | confirmation_token     | パスワード確認用トークン   | string(255) |                     |      | D!    |
-# | confirmed_at           | パスワード確認時刻         | datetime    |                     |      |       |
-# | confirmation_sent_at   | パスワード確認送信時刻     | datetime    |                     |      |       |
-# | unconfirmed_email      | 未確認Eメール              | string(255) |                     |      |       |
-# | failed_attempts        | 失敗したログイン試行回数   | integer(4)  | DEFAULT(0) NOT NULL |      |       |
-# | unlock_token           | Unlock token               | string(255) |                     |      | E!    |
-# | locked_at              | ロック時刻                 | datetime    |                     |      |       |
-# |------------------------+----------------------------+-------------+---------------------+------+-------|
-
 module Swars
   class User < ApplicationRecord
     alias_attribute :key, :user_key
@@ -50,7 +15,7 @@ module Swars
 
     scope :recently_only, -> { where.not(last_reception_at: nil).order(last_reception_at: :desc)              } # 最近使ってくれた人たち順
     scope :regular_only,  -> { order(search_logs_count: :desc)                                                } # 検索回数が多い人たち順
-    scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].desc).order(updated_at: :desc) } # 段級位が高い人たち順
+    scope :great_only,    -> { joins(:grade).order(Grade.arel_table[:priority].asc)                           } # 段級位が高い人たち順
 
     before_validation do
       if Rails.env.local?
@@ -109,26 +74,37 @@ module Swars
 
     concerning :ProfileBanMethods do
       included do
+        # ここでからめるより単純に専用メソッドで書き込む方がわかりやすい
+        # before_save do
+        #   if changes_to_save[:ban_at]
+        #     profile.ban_at = ban_at
+        #   end
+        # end
 
-        before_save do
-          if changes_to_save[:ban_at]
-            profile.ban_at = ban_at
-          end
-        end
-
-        scope :ban_only,   -> { where.not(ban_at: nil) }                # BANされた人たち
-        scope :ban_except, -> { where(ban_at: nil)     }                # BANされた人たちを除く
-        scope :pro_except, -> { where.not(grade: Grade.fetch("十段")) } # プロを除く
+        scope :ban_only,             -> { where.not(ban_at: nil)                                      } # BANされた人たち
+        scope :ban_except,           -> { where(ban_at: nil)                                          } # BANされた人たちを除く
+        scope :pro_except,           -> { where.not(grade: Grade.fetch("十段"))                       } # プロを除く
+        scope :ban_crowl_count_lteq, -> c { joins(:profile).merge(Profile.ban_crowl_count_lteq(c))    } # 垢BANチェック指定回数以下
+        scope :ban_crowled_at_lt,    -> time { joins(:profile).merge(Profile.ban_crowled_at_lt(time)) } # 垢BANチェックの前回が指定日時より過去
 
         # BAN確認対象者
         scope :ban_crawl_scope, -> (options = {}) {
           s = all                                         # 全員
           s = s.ban_except                                # BANされた人たちを除く
           s = s.pro_except                                # プロを除く
-          if v = options[:grade]
-            s = s.where(grade: Grade.fetch(v))
+          if v = options[:grade_keys].presence
+            s = s.grade_eq(v)
           end
-          if v = options[:limit]
+          if v = options[:user_keys].presence
+            s = s.where(key: v)
+          end
+          if v = options[:ban_crowl_count_lteq].presence
+            s = s.ban_crowl_count_lteq(v)
+          end
+          if v = options[:ban_crowled_at_lt].presence
+            s = s.ban_crowled_at_lt(v)
+          end
+          if v = options[:limit].presence
             s = s.limit(v)
           end
           s
@@ -136,30 +112,55 @@ module Swars
       end
 
       class_methods do
-        # rails r 'Swars::User.ban_crawler'
-        def ban_crawler(...)
+        # ショートカット
+        # rails r 'Swars::User.ban_crawl'
+        def ban_crawl(...)
           BanCrawler.new(...).call
         end
       end
 
-      def ban_clear
+      # 完全に初期状態に戻す
+      def ban_reset
         self.ban_at = nil
+        profile.ban_at = nil
+        profile.ban_crowl_count = nil
+        profile.ban_crowled_at = nil
         save!
       end
 
-      def ban_set(state = true)
+      # 保存しない
+      def ban_set(state)
         time = Time.current
         value = nil
         if state
           value = time
         end
         self.ban_at = value
+        profile.ban_at = value
         profile.ban_crowled_at = time
+        profile.ban_crowl_count += 1
       end
 
       def ban!
         ban_set(true)
         save!
+      end
+
+      def to_ban_h
+        {
+          "ID"           => id,
+          "ウォーズID"   => key,
+          "段級"         => grade.name,
+          "最終対局日時" => latest_battled_at&.to_fs(:ymdhms),
+          "対局数"       => memberships.size,
+          "BAN日時"      => ban_at&.to_fs(:ymdhms),
+          "BAN確認数"    => profile.ban_crowl_count,
+          "BAN確認日時"  => profile.ban_crowled_at&.to_fs(:ymdhms),
+          "検索数"       => search_logs_count,
+          "直近検索"     => last_reception_at&.to_fs(:ymdhms),
+          "登録日時"     => created_at.to_fs(:ymdhms),
+          "現在日時"     => Time.current.to_fs(:ymdhms),
+        }
       end
     end
   end

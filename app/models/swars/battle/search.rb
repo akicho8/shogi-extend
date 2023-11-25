@@ -20,7 +20,7 @@ module Swars
             :final    => nil,
             :preset   => nil,
             :memberships => {
-              :user     => nil,
+              :user     => :profile,
               :grade    => nil,
               :location => nil,
               :style    => nil,
@@ -152,11 +152,11 @@ module Swars
           end
 
           if v = q.lookup("vs-grade") || q.lookup("棋力") || q.lookup("相手の棋力")
-            v = v.collect { |e| GradeInfo.fetch(e).db_record }
+            v = Grade.array_from(v)
             if true
-              # 垢BANの場合だけ特別処理
-              if v.include?(GradeInfo.ban.db_record)
-                v = v - [GradeInfo.ban.db_record]
+              # 垢BANの場合だけ特別処理 (だけどUIを変更したので10000級はここにこない)
+              if v.include?(Grade.ban)
+                v = v - [Grade.ban]
                 m = @op.where(user: @user.op_users.ban_only)
                 s = s.where(id: m.pluck(:battle_id))
               end

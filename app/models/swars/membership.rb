@@ -63,7 +63,7 @@ module Swars
     #
     scope :toryo_timeout_checkmate_only, -> { joins(:battle).merge(Battle.toryo_timeout_checkmate_only) }
 
-    belongs_to :user, touch: true           # 対局者
+    belongs_to :user, touch: :latest_battled_at    # 対局者 (直近対局日時を更新する)
     belongs_to :op_user, class_name: "Swars::User" # 相手
     belongs_to :opponent, class_name: "Membership", optional: true
 

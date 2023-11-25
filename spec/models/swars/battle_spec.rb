@@ -164,5 +164,11 @@ module Swars
       assert2 { Battle.ban_record_only.count == 1 }
       assert2 { Battle.ban_record_except.count == 0 }
     end
+
+    it "latest_battled_at: Membershipの保存で最終対局日時を更新する" do
+      record = Battle.create!
+      assert2 { record.memberships[0].user.latest_battled_at }
+      assert2 { record.memberships[1].user.latest_battled_at }
+    end
   end
 end
