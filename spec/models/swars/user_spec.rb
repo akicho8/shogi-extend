@@ -16,8 +16,8 @@ module Swars
         
         assert2 { user.ban_at }
         assert2 { user.profile.ban_at }
-        assert2 { user.profile.ban_crowled_at }
-        assert2 { user.profile.ban_crowl_count == 1 }
+        assert2 { user.profile.ban_crawled_at }
+        assert2 { user.profile.ban_crawled_count == 1 }
       end
 
       it "ban_only: 垢BANした人としていない人を分けるリレーションが正しい" do
@@ -27,10 +27,10 @@ module Swars
         assert2 { [User.ban_except.count, User.ban_only.count] == [0, 1] }
       end
 
-      it "ban_crowl_count_lteq: 確認回数N回以下を対象とする" do
+      it "ban_crawled_count_lteq: 確認回数N回以下を対象とする" do
         user = User.create!
-        User.ban_crowl_count_lteq(0) == [user]
-        User.ban_crowl_count_lteq(-1) == []
+        User.ban_crawled_count_lteq(0) == [user]
+        User.ban_crawled_count_lteq(-1) == []
       end
 
       it "ban_reset: 垢BANも確認もしていない状態に戻す" do
@@ -40,8 +40,8 @@ module Swars
         user.reload
         assert2 { user.ban_at == nil }
         assert2 { user.profile.ban_at == nil }
-        assert2 { user.profile.ban_crowl_count == 0 }
-        assert2 { user.profile.ban_crowled_at }
+        assert2 { user.profile.ban_crawled_count == 0 }
+        assert2 { user.profile.ban_crawled_at }
       end
 
       it "ban_crawl_scope: 垢BANクロール対象を求める" do
@@ -51,12 +51,12 @@ module Swars
         assert2 { User.ban_crawl_scope(grade_keys: "九段") == [] }
         assert2 { User.ban_crawl_scope(user_keys: user.key) == [user] }
         assert2 { User.ban_crawl_scope(user_keys: "foo") == [] }
-        assert2 { User.ban_crawl_scope(ban_crowl_count_lteq: 0) == [user] }
-        assert2 { User.ban_crawl_scope(ban_crowl_count_lteq: -1) == [] }
+        assert2 { User.ban_crawl_scope(ban_crawled_count_lteq: 0) == [user] }
+        assert2 { User.ban_crawl_scope(ban_crawled_count_lteq: -1) == [] }
         assert2 { User.ban_crawl_scope(limit: 1) == [user] }
         assert2 { User.ban_crawl_scope(limit: 0) == [] }
-        assert2 { User.ban_crawl_scope(ban_crowled_at_lt: Time.current) == [] }
-        assert2 { User.ban_crawl_scope(ban_crowled_at_lt: Time.current + 1) == [user] }
+        assert2 { User.ban_crawl_scope(ban_crawled_at_lt: Time.current) == [] }
+        assert2 { User.ban_crawl_scope(ban_crawled_at_lt: Time.current + 1) == [user] }
       end
     end
   end

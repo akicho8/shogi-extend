@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_000003) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -411,8 +411,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_000003) do
   create_table "swars_profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対局者"
     t.datetime "ban_at", precision: nil, comment: "垢BAN日時"
-    t.datetime "ban_crowled_at", precision: nil, comment: "垢BANクロール日時"
-    t.integer "ban_crowl_count", comment: "垢BANクロール回数"
+    t.datetime "ban_crawled_at", precision: nil, comment: "垢BANクロール日時"
+    t.integer "ban_crawled_count", comment: "垢BANクロール回数"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["ban_at"], name: "index_swars_profiles_on_ban_at"

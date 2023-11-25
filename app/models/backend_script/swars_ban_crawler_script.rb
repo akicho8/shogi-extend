@@ -28,9 +28,9 @@ module BackendScript
         },
         {
           :label       => "確認回数N回以下を対象とする (初回なら0)",
-          :key         => :ban_crowl_count_lteq,
+          :key         => :ban_crawled_count_lteq,
           :type        => :string,
-          :default     => current_ban_crowl_count_lteq || 0,
+          :default     => current_ban_crawled_count_lteq || 0,
         },
         {
           :label       => "本家への負荷制限用 sleep 値(localを除く)",
@@ -63,7 +63,7 @@ module BackendScript
         :user_keys            => current_user_keys,
         :limit                => current_limit,
         :sleep                => current_sleep,
-        :ban_crowl_count_lteq => current_ban_crowl_count_lteq,
+        :ban_crawled_count_lteq => current_ban_crawled_count_lteq,
         :execute              => current_execute,
       }
     end
@@ -84,8 +84,8 @@ module BackendScript
       (params[:sleep].presence || 1.0)&.to_f
     end
 
-    def current_ban_crowl_count_lteq
-      (params[:ban_crowl_count_lteq].presence)&.to_i
+    def current_ban_crawled_count_lteq
+      (params[:ban_crawled_count_lteq].presence)&.to_i
     end
 
     def current_execute
