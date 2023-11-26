@@ -21,9 +21,9 @@ export const mod_battle_save = {
   },
 
   computed: {
+    // 出入りが激しいと名前が重複している状態があるためユニークにした this.room_user_names を使うこと
     battle_memberships() {
-      const names = this.member_infos.map(e => e.from_user_name)
-      const filtered_names = names.filter(e => this.user_name_to_initial_turn(e) != null) // ← リファクタリングする
+      const filtered_names = this.room_user_names.filter(e => this.user_name_to_initial_turn(e) != null) // ← リファクタリングする
       const sorted_names = _.sortBy(filtered_names, e => this.user_name_to_initial_turn(e))
       return sorted_names.map(name => {
         const location = this.user_name_to_initial_location(name)
