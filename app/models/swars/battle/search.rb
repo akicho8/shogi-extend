@@ -1,6 +1,10 @@
+# http://localhost:3000/w.json?query=tosssy%20BAN:ON
+
 module Swars
   class Battle
     class Search
+      ACCOUNT_BAN_10000 = false # 10000級で垢BAN判定する場合
+
       def initialize(all, params)
         @all = all
         @params = params
@@ -153,8 +157,7 @@ module Swars
 
           if v = q.lookup("vs-grade") || q.lookup("棋力") || q.lookup("相手の棋力")
             v = Grade.array_from(v)
-            if true
-              # 垢BANの場合だけ特別処理 (だけどUIを変更したので10000級はここにこない)
+            if ACCOUNT_BAN_10000
               if v.include?(Grade.ban)
                 v = v - [Grade.ban]
                 m = @op.where(user: @user.op_users.ban_only)
@@ -166,6 +169,14 @@ module Swars
               s = s.where(id: m.pluck(:battle_id))
             end
             @selected = true
+          end
+
+          if v = q.lookup_one("垢BAN") || q.lookup_one("BAN")
+            if ban_info = BanInfo.lookup(v)
+              m = @op.where(user: @user.op_users.ban_only)
+              s = s.where(id: m.pluck(:battle_id))
+              @selected = true
+            end
           end
 
           if e = q.lookup_op("vs-grade-diff") || q.lookup_op("力差") || q.lookup_op("棋力差")
