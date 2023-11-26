@@ -10,6 +10,11 @@ module Swars
       self.ban_crawled_at ||= Time.current
     end
 
+    with_options presence: true do
+      validates :ban_crawled_count
+      validates :ban_crawled_at
+    end
+
     # before_save do
     #   # p persisted?
     #   # p changes_to_save[:ban_crawled_at]

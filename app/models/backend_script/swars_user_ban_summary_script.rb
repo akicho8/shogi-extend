@@ -1,7 +1,7 @@
 module BackendScript
-  class SwarsBanListScript < ::BackendScript::Base
+  class SwarsUserBanSummaryScript < ::BackendScript::Base
     self.category = "swars"
-    self.script_name = "将棋ウォーズ棋譜検索 垢BAN リスト"
+    self.script_name = "棋譜検索 ユーザー 垢BAN リスト"
 
     def form_parts
       [
