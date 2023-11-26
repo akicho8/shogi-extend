@@ -39,8 +39,12 @@ export const mod_chatgpt = {
       if (this.received_from_self(params)) {
         const ymd = dayjs().format("YYYY-MM-DD")
         if (this.gpt_hello_ymd !== ymd) {
-          this.gpt_hello_ymd = ymd
-          this.gpt_speak_for("参加者にあいさつする", params)
+          this.gpt_hello_ymd = ymd // 本日はあいさつしたとする (しかしLINEから来られるとクッキーが効かず保存できない罠がある)
+          if (this.cc_play_p) {
+            // 対局中は参加者にあいさつをスキップする
+          } else {
+            this.gpt_speak_for("参加者にあいさつする", params)
+          }
         } else {
           this.debug_alert("本日はもう挨拶しました")
         }
