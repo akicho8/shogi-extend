@@ -135,8 +135,8 @@ module Swars
       validates :op_user_id
     end
 
-    with_options allow_blank: true do
-      if Rails.env.local?
+    if Rails.env.local?
+      with_options allow_blank: true do
         with_options uniqueness: { scope: :battle_id, case_sensitive: true } do
           validates :user_id
           validates :op_user_id
