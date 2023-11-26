@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "swars"
-    self.script_name = "将棋ウォーズ棋譜検索 ダッシュボード"
+    self.script_name = "棋譜検索 ダッシュボード"
 
     def script_body
       # if Rails.env.production?

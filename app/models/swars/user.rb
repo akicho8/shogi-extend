@@ -22,12 +22,14 @@ module Swars
         self.user_key ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
       end
       self.user_key ||= SecureRandom.hex
+      self.latest_battled_at ||= Time.current
 
       profile || build_profile
     end
 
     with_options presence: true do
       validates :user_key
+      validates :latest_battled_at
     end
 
     with_options allow_blank: true do
@@ -72,44 +74,43 @@ module Swars
       end
     end
 
-    concerning :ProfileBanMethods do
+    concerning :SearchMethods do
       included do
-        # ここでからめるより単純に専用メソッドで書き込む方がわかりやすい
-        # before_save do
-        #   if changes_to_save[:ban_at]
-        #     profile.ban_at = ban_at
-        #   end
-        # end
+        scope :search, -> (query = {}) { UserSearch.new(all, query).call }
 
-        scope :ban_only,             -> { where.not(ban_at: nil)                                      } # BANされた人たち
-        scope :ban_except,           -> { where(ban_at: nil)                                          } # BANされた人たちを除く
-        scope :pro_except,           -> { where.not(grade: Grade.fetch("十段"))                       } # プロを除く
-        scope :ban_crawled_count_lteq, -> c { joins(:profile).merge(Profile.ban_crawled_count_lteq(c))    } # 垢BANチェック指定回数以下
-        scope :ban_crawled_at_lt,    -> time { joins(:profile).merge(Profile.ban_crawled_at_lt(time)) } # 垢BANチェックの前回が指定日時より過去
+        scope :ban_only,               -> { where.not(ban_at: nil)                                                        } # BANされた人たち
+        scope :ban_except,             -> { where(ban_at: nil)                                                            } # BANされた人たちを除く
+        scope :pro_except,             -> { where.not(grade: Grade.fetch("十段"))                                         } # プロを除く
+        scope :pro_only,               -> { where(grade: Grade.fetch("十段"))                                             } # プロのみ
+        scope :ban_crawled_count_lteq, -> c { joins(:profile).merge(Profile.ban_crawled_count_lteq(c))                    } # 垢BANチェック指定回数以下
+        scope :ban_crawled_at_lt,      -> time { joins(:profile).merge(Profile.ban_crawled_at_lt(time))                   } # 垢BANチェックの前回が指定日時より過去
+        scope :latest_battled_at_lt,   -> time { where(arel_table[:latest_battled_at].lt(time))                           } # 最終対局が指定の日時よりも古い
+        scope :ban_crawl_then_battled, -> { joins(:profile).where(arel_table[:latest_battled_at].gt(Profile.arel_table[:ban_crawled_at])) } # 垢BANチェックしたあとで対局したものたち
+      end
 
-        # BAN確認対象者
-        scope :ban_crawl_scope, -> (options = {}) {
-          s = all                                         # 全員
-          s = s.ban_except                                # BANされた人たちを除く
-          s = s.pro_except                                # プロを除く
-          if v = options[:grade_keys].presence
-            s = s.grade_eq(v)
-          end
-          if v = options[:user_keys].presence
-            s = s.where(key: v)
-          end
-          if v = options[:ban_crawled_count_lteq].presence
-            s = s.ban_crawled_count_lteq(v)
-          end
-          if v = options[:ban_crawled_at_lt].presence
-            s = s.ban_crawled_at_lt(v)
-          end
-          if v = options[:limit].presence
-            s = s.limit(v)
-          end
-          s
+      def to_h
+        {
+          "ID"           => id,
+          "ウォーズID"   => key,
+          "段級"         => grade.name,
+          "最終対局日時" => latest_battled_at&.to_fs(:ymdhms),
+          "対局数"       => memberships.size,
+          "BAN日時"      => ban_at&.to_fs(:ymdhms),
+          "BAN確認数"    => profile.ban_crawled_count,
+          "BAN確認日時"  => profile.ban_crawled_at&.to_fs(:ymdhms),
+          "検索数"       => search_logs_count,
+          "直近検索"     => last_reception_at&.to_fs(:ymdhms),
+          "登録日時"     => created_at.to_fs(:ymdhms),
+          "現在日時"     => Time.current.to_fs(:ymdhms),
         }
       end
+    end
+
+    concerning :BanMethods do
+      # included do
+      #   # BAN確認対象者
+      #   scope :search, -> (options = {}) { ban_except.pro_except.search(options) }
+      # end
 
       class_methods do
         # ショートカット
@@ -139,28 +140,15 @@ module Swars
         profile.ban_at = value
         profile.ban_crawled_at = time
         profile.ban_crawled_count += 1
+        save!
       end
 
       def ban!
         ban_set(true)
-        save!
       end
 
-      def to_ban_h
-        {
-          "ID"           => id,
-          "ウォーズID"   => key,
-          "段級"         => grade.name,
-          "最終対局日時" => latest_battled_at&.to_fs(:ymdhms),
-          "対局数"       => memberships.size,
-          "BAN日時"      => ban_at&.to_fs(:ymdhms),
-          "BAN確認数"    => profile.ban_crawled_count,
-          "BAN確認日時"  => profile.ban_crawled_at&.to_fs(:ymdhms),
-          "検索数"       => search_logs_count,
-          "直近検索"     => last_reception_at&.to_fs(:ymdhms),
-          "登録日時"     => created_at.to_fs(:ymdhms),
-          "現在日時"     => Time.current.to_fs(:ymdhms),
-        }
+      def ban?
+        ban_at
       end
     end
   end

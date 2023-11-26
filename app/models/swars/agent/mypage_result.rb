@@ -14,7 +14,7 @@ module Swars
         freeze
       end
 
-      def ban_user?
+      def ban?
         @list.any? { |e| e[:grade] == GradeInfo.ban }
       end
 

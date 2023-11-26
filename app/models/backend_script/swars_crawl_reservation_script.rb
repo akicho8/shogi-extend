@@ -3,7 +3,7 @@ module BackendScript
     include SortMethods
 
     self.category = "swars"
-    self.script_name = "将棋ウォーズ棋譜検索 古い棋譜を補完"
+    self.script_name = "棋譜検索 古い棋譜を補完"
 
     def script_body
       s = Swars::CrawlReservation.all
