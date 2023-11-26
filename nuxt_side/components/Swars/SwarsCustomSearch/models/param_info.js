@@ -14,7 +14,7 @@ export class ParamInfo extends ParamBase {
       { key: "judge_keys",                 type: "array",  name: "勝敗",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "grade_keys",                 type: "array",  name: "棋力",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "location_keys",              type: "array",  name: "先後",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
-      { key: "ban_keys",                   type: "array",  name: "垢BAN",                                defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "ban_keys",                   type: "array",  name: "垢BAN",                               defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
 
       { key: "battled_at_range",           type: "array",   name: "日付",                               defaults: { development: null, production: [],     }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
 
