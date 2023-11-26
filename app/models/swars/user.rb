@@ -32,9 +32,9 @@ module Swars
       validates :latest_battled_at
     end
 
-    with_options allow_blank: true do
-      validates :user_key, uniqueness: { case_sensitive: true } # FIXME: これ取る
-    end
+    # with_options allow_blank: true do
+    #   validates :user_key, uniqueness: { case_sensitive: true } # FIXME: これ取る
+    # end
 
     def to_param
       user_key
