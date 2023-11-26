@@ -23,7 +23,9 @@ module Swars
       end
       self.user_key ||= SecureRandom.hex
       self.latest_battled_at ||= Time.current
+    end
 
+    before_validation on: :create do
       profile || build_profile
     end
 

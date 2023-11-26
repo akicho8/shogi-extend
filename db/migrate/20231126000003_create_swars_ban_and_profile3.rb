@@ -30,7 +30,7 @@ class CreateSwarsBanAndProfile3 < ActiveRecord::Migration[5.1]
     
     Swars::User.reset_column_information
     AppLog.info(subject: self.class.name, body: [Swars::User.count, Swars::Profile.count], mail_notify: true)
-    Swars::User.where.missing(:profile).find_each(&:save!)
+    Swars::User.where.missing(:profile).find_each(&:create_profile)
     AppLog.info(subject: self.class.name, body: [Swars::User.count, Swars::Profile.count], mail_notify: true)
 
     Swars::User.reset_column_information
