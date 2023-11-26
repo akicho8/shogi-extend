@@ -6,6 +6,7 @@ module Swars
       def case1(key, value1, value2, options = {})
         black = User.create!
         white = User.create!(key: options[:white_key])
+        white.ban!
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq])
         assert2 {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
         assert2 { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
@@ -25,6 +26,7 @@ module Swars
         case1("先後", "▲", "△")
         case1("相手の棋力", "30級", "29級")
         case1("力差", ">=0", ">=1")
+        case1("垢BAN", "and", "reject")
         case1("対局モード", "野良", "友達")
         case1("手合割", "平手", "角落ち")
         case1("tag", "居飛車", "振り飛車")
