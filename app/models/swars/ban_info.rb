@@ -2,7 +2,8 @@ module Swars
   class BanInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "ON", name: "ON", alias_keys: ["ソフト指し", "on", "true"], yomiage: "牢獄入り" },
+      { key: "reject", name: "除外", alias_keys: ["off", "false"], yomiage: nil },
+      { key: "and",    name: "絞る", alias_keys: ["on", "true"],   yomiage: nil },
     ]
 
     class << self
@@ -14,7 +15,8 @@ module Swars
 
       def invert_table
         @invert_table ||= find_all(&:alias_keys).inject({}) do |a, record|
-          record.alias_keys.inject(a) {|a, e| a.merge(e => record) }
+          a = record.alias_keys.inject(a) {|a, e| a.merge(e => record) }
+          a.merge(record.name => record)
         end
       end
     end

@@ -172,11 +172,14 @@ module Swars
           end
 
           if v = q.lookup_one("垢BAN") || q.lookup_one("BAN")
-            if ban_info = BanInfo.lookup(v)
+            ban_info = BanInfo.fetch(v)
+            if ban_info == BanInfo.fetch("絞る")
               m = @op.where(user: @user.op_users.ban_only)
-              s = s.where(id: m.pluck(:battle_id))
-              @selected = true
+            else
+              m = @op.where.not(user: @user.op_users.ban_only)
             end
+            s = s.where(id: m.pluck(:battle_id))
+            @selected = true
           end
 
           if e = q.lookup_op("vs-grade-diff") || q.lookup_op("力差") || q.lookup_op("棋力差")
