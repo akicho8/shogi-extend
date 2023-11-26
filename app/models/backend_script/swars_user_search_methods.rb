@@ -22,6 +22,12 @@ module BackendScript
           :default     => params[:user_keys],
         },
         {
+          :label       => "データベース上のIDsで絞る",
+          :key         => :ids,
+          :type        => :string,
+          :default     => params[:ids],
+        },
+        {
           :label       => "件数制限",
           :key         => :limit,
           :type        => :string,
@@ -72,6 +78,7 @@ module BackendScript
     # see: Swars::BanCrawler
     def swars_user_search_query
       {
+        :ids                    => current_ids,
         :grade_keys             => current_grade_keys,
         :user_keys              => current_user_keys,
         :limit                  => current_limit,
@@ -130,6 +137,12 @@ module BackendScript
 
     def current_ban_except
       params[:ban_except] == "true"
+    end
+
+    def current_ids
+      if v = params[:ids].presence
+        v.scan(/\d+/).collect(&:to_i)
+      end
     end
   end
 end
