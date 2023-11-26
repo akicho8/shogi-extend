@@ -35,6 +35,11 @@ module ShareBoard
 
     acts_as_list top_of_list: 0, scope: :battle
 
+    # https://github.com/rails/rails/issues/50173
+    with_options allow_blank: true do
+      validates :user_id, uniqueness: { scope: :battle_id }
+    end
+
     after_create :zadd_call
 
     def user_name=(name)
