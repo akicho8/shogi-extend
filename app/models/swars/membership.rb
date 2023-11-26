@@ -148,11 +148,6 @@ module Swars
       "#{user.key} #{grade.name}"
     end
 
-    # 相手 FIXME: 消す
-    def opponent
-      @opponent ||= battle.memberships.where.not(position: position).take
-    end
-
     def think_columns_update
       list = sec_list
 
