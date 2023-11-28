@@ -13,19 +13,19 @@ table.ClockBoxInputTable(:class="{cc_unique_p: TheSb.cc_unique_p}")
     tr
       th 持ち時間(分)
       td(v-for="e in TheSb.cc_params")
-        b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60*6")
+        b-numberinput.initial_main_min(v-bind="input_default_attrs" v-model="e.initial_main_min" :max="60*6" @input="TheSb.cc_input_handle")
     tr
       th 秒読み
       td(v-for="e in TheSb.cc_params")
-        b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60")
+        b-numberinput.initial_read_sec(v-bind="input_default_attrs" v-model="e.initial_read_sec" :max="60*60" @input="TheSb.cc_input_handle")
     tr
       th 猶予(秒)
       td(v-for="e in TheSb.cc_params")
-        b-numberinput.initial_extra_sec(v-bind="input_default_attrs" v-model="e.initial_extra_sec" :max="60*60")
+        b-numberinput.initial_extra_sec(v-bind="input_default_attrs" v-model="e.initial_extra_sec" :max="60*60" @input="TheSb.cc_input_handle")
     tr
       th 1手毎加算(秒)
       td(v-for="e in TheSb.cc_params")
-        b-numberinput.every_plus(v-bind="input_default_attrs" v-model="e.every_plus" :max="60*60")
+        b-numberinput.every_plus(v-bind="input_default_attrs" v-model="e.every_plus" :max="60*60" @input="TheSb.cc_input_handle")
 </template>
 
 <script>

@@ -5,6 +5,7 @@ export class CcInfo extends ApplicationMemoryRecord {
     return [
       { key: "ck_on",            receive_message: "時計を設置しました", label: "時計 ON",          label_type: null,         with_url: false, toast_p: true,  with_talk: true,  history: true,  },
       { key: "ck_off",           receive_message: "時計を捨てました",   label: "時計 OFF",         label_type: null,         with_url: false, toast_p: true,  with_talk: true,  history: true,  },
+      { key: "ck_input",         receive_message: "時計を調整しました", label: "時間調整",         label_type: null,         with_url: false, toast_p: false, with_talk: false, history: false, },
       { key: "ck_start",         receive_message: "開始しました",       label: "対局開始",         label_type: "is-primary", with_url: false, toast_p: false, with_talk: false, history: true,  }, // 特別処理
       { key: "ck_pause",         receive_message: "一時停止しました",   label: "一時停止",         label_type: null,         with_url: false, toast_p: true,  with_talk: true,  history: true,  },
       { key: "ck_resume",        receive_message: "時計を再開しました", label: "時計再開",         label_type: null,         with_url: false, toast_p: true,  with_talk: true,  history: true,  },
