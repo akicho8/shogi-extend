@@ -17,6 +17,9 @@ export const mod_shortcut = {
       if (this.focus_on_input_tag_p()) {
         return
       }
+      if (this.edit_mode_p) {
+        return
+      }
       const found = ShortcutInfo.values.find(o => o._if(this, e))
       if (found) {
         if (found.call(this)) {
