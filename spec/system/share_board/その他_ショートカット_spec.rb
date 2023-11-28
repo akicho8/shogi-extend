@@ -1,6 +1,12 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe type: :system, share_board_spec: true do
+  it "編集モードでは発動しない" do
+    visit_app(sp_mode: "edit")
+    Capybara.current_session.active_element.send_keys("?") # 表示
+    assert_no_selector(".SbShortcutModal")
+  end
+
   it "ショートカットモーダル" do
     visit_app
 
