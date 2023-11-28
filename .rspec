@@ -2,4 +2,3 @@
 --format documentation
 
 -r spec_helper
--r rspec-power_assert

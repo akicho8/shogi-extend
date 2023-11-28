@@ -93,8 +93,9 @@ group :development, :test do
   gem "rspec-core"
   gem "rspec-expectations"
   gem "rspec-mocks"
-  gem "rspec-power_assert"
   gem "rspec-support"
+  # gem "rspec-power_assert"
+  gem "minitest-power_assert"
   ################################################################################
 
   gem "factory_bot_rails"

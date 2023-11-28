@@ -271,6 +271,9 @@ GEM
     mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.20.0)
+    minitest-power_assert (0.3.1)
+      minitest
+      power_assert (>= 1.1)
     msgpack (1.7.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -421,9 +424,6 @@ GEM
     rspec-mocks (3.12.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
-    rspec-power_assert (1.2.0)
-      power_assert (~> 2.0)
-      rspec (>= 2.14)
     rspec-rails (6.0.3)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
@@ -579,6 +579,7 @@ DEPENDENCIES
   kaminari
   matrix
   memory_record
+  minitest-power_assert
   mysql2 (>= 0.5.5)
   nkf
   nokogiri
@@ -603,7 +604,6 @@ DEPENDENCIES
   rspec-core
   rspec-expectations
   rspec-mocks
-  rspec-power_assert
   rspec-rails
   rspec-support
   ruby-openai
