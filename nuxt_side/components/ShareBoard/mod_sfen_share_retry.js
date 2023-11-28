@@ -157,7 +157,7 @@ export const mod_sfen_share_retry = {
     RETRY_FUNCTION()     { return String(this.$route.query.RETRY_FUNCTION ?? RETRY_FUNCTION) === "true"  },
     RETRY_DELAY()        { return parseFloat(this.$route.query.RETRY_DELAY ?? RETRY_DELAY)               },
     SEND_SUCCESS_DELAY() { return parseFloat(this.$route.query.SEND_SUCCESS_DELAY ?? SEND_SUCCESS_DELAY) },
-    
+
     retry_check_delay() {
       let v = this.RETRY_DELAY + this.x_retry_count
       if (v > RETRY_DELAY_MAX) {
