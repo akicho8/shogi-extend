@@ -1,6 +1,8 @@
 require "#{__dir__}/shared_methods"
 
 RSpec.describe "対局時計_設定の操作中に値を同期する", type: :system, share_board_spec: true do
+  CC_INPUT_DEBOUNCE_DELAY = 0.5
+
   def case1(user_name)
     visit_app({
                 :room_code            => :test_room,
@@ -20,6 +22,7 @@ RSpec.describe "対局時計_設定の操作中に値を同期する", type: :sy
       clock_box_set(:black, 1, 2, 3, 4)   # alice が時計を操作し終わると 0.5 秒に
     end
     b_block do
+      sleep CC_INPUT_DEBOUNCE_DELAY
       assert_text "cc_params:[[1,2,3,4]]" # bob の画面に反映する
     end
   end

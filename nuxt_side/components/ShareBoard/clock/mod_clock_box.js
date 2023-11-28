@@ -1,5 +1,5 @@
 const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
-const INPUT_DEBOUNCE_DELAY = 1000 * 0.5     // 時計の同期のために操作が終わったと判断する秒数
+const CC_INPUT_DEBOUNCE_DELAY = 0.5 // 時計の同期のために操作が終わったと判断する秒数
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
@@ -287,7 +287,7 @@ export const mod_clock_box = {
       this.debug_alert(v)
       this.cc_params_apply()           // リアルタイムに反映すると時計の値の長押しがスムーズに動かなくなるため
       this.clock_box_share("ck_input") // みんなには操作が終わって数秒後に同期する
-    }, INPUT_DEBOUNCE_DELAY),
+    }, 1000 * CC_INPUT_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 
