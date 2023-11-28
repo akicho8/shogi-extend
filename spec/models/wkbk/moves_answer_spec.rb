@@ -38,21 +38,21 @@ module Wkbk
 
     it "works" do
       moves_answer = case1("詰将棋").moves_answers.create!(moves_str: MATE_HAND) # 頭金で詰み
-      assert2 { moves_answer.article.turn_max == 1 }                          # 最大手数が親の方に埋められている
+      assert { moves_answer.article.turn_max == 1 }                          # 最大手数が親の方に埋められている
     end
 
     describe "特殊なバリデーション" do
       it "validate1_leagal_hands" do
         moves_answer = case1("詰将棋").moves_answers.create(moves_str: "G*5a") # 52金打ちではなく玉の上に金を打った
         moves_answer.errors.full_messages # => ["駒の上に打とうとしています"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
 
       it "validate2_uniq_with_parent" do
         case1("詰将棋").moves_answers.create!(moves_str: MATE_HAND)
         moves_answer = case1("詰将棋").moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["配置と正解手順の組み合わせが既出の問題(113)と重複しています"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
 
       it "validate3_piece_box_is_empty" do
@@ -63,7 +63,7 @@ module Wkbk
 
         moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["攻め方の持駒が残っています。持駒が残る場合は「実戦詰め筋」とかにしてください"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
 
       it "validate4_all_piece_exists" do
@@ -74,37 +74,37 @@ module Wkbk
 
         moves_answer = article.moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["駒の数が変です。正確には香が1つ少ないのと歩が1つ少ないです。玉方の持駒を限定している詰将棋は「持駒限定詰将棋」にしといてください"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
 
       it "validate5_all_piece_not_exists" do
         moves_answer = case1("持駒限定詰将棋").moves_answers.create(moves_str: MATE_HAND)
         moves_answer.errors.full_messages # => ["玉方の持駒が限定されていません。「詰将棋」の間違いではないですか？"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
 
       it "validate6_mate" do
         moves_answer = case1("詰将棋").moves_answers.create(moves_str: "G*5e") # 52金打ちではなく55金打ちとした
         moves_answer.errors.full_messages # => ["局面が難しすぎます。無駄合いの場合は「最後は無駄合い」に ON にしといてください。詰みチェックしなくなります"]
-        assert2 { moves_answer.errors.present? }
+        assert { moves_answer.errors.present? }
       end
     end
 
     it "turn_maxの自動更新" do
       article = user1.wkbk_articles.create!
-      assert2 { article.turn_max == 0 }
+      assert { article.turn_max == 0 }
       article.moves_answers.create!(moves_str: MATE_HAND)
-      assert2 { article.reload.turn_max == 1 }
+      assert { article.reload.turn_max == 1 }
       article.moves_answers.create!(moves_str: "G*5e")
-      assert2 { article.reload.turn_max == 1 } # 最大手数なので1のまま
+      assert { article.reload.turn_max == 1 } # 最大手数なので1のまま
       article.moves_answers.destroy_all
-      assert2 { article.reload.turn_max == 0 } # 最大手数が0になる
+      assert { article.reload.turn_max == 0 } # 最大手数が0になる
     end
 
     it "moves" do
       article = user1.wkbk_articles.create!(init_sfen: "position startpos")
       moves_answer = article.moves_answers.create!(moves: %w(7g7f 8c8d))
-      assert2 { moves_answer.moves == ["7g7f", "8c8d"] }
+      assert { moves_answer.moves == ["7g7f", "8c8d"] }
     end
   end
 end

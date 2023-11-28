@@ -25,23 +25,23 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      assert2 { record.name == "alice" }
+      assert { record.name == "alice" }
     end
 
     it "プロフィール画像を登録している" do
-      assert2 { record.avatar }
+      assert { record.avatar }
     end
 
     it "メールアドレスを取得している" do
-      assert2 { record.email == "alice@localhost" }
+      assert { record.email == "alice@localhost" }
     end
 
     it "どっかにリダイレクトする" do
-      assert2 { response.status == 302 }
+      assert { response.status == 302 }
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがgoogleで登録されました" }
     end
   end
 
@@ -67,27 +67,27 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      assert2 { record.name == "alice" }
+      assert { record.name == "alice" }
     end
 
     it "プロフィール画像を登録している" do
-      assert2 { record.avatar }
+      assert { record.avatar }
     end
 
     it "メールアドレスはダミーを入れてある" do
-      assert2 { record.email.match?(/@localhost/) }
+      assert { record.email.match?(/@localhost/) }
     end
 
     it "ツイッターアカウント" do
-      assert2 { record.twitter_key == "nickname_is_twitter_account" }
+      assert { record.twitter_key == "nickname_is_twitter_account" }
     end
 
     it "どっかにリダイレクトする" do
-      assert2 { response.status == 302 }
+      assert { response.status == 302 }
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] aliceさんがtwitterで登録されました" }
     end
   end
 
@@ -111,27 +111,27 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
     let(:record) { User.first }
 
     it "名前がある" do
-      assert2 { record.name == "Yamada Taro" }
+      assert { record.name == "Yamada Taro" }
     end
 
     it "プロフィール画像を登録している" do
-      assert2 { record.avatar }
+      assert { record.avatar }
     end
 
     it "メールアドレスがある" do
-      assert2 { record.email == "alice@localhost" }
+      assert { record.email == "alice@localhost" }
     end
 
     it "ツイッターアカウント" do
-      assert2 { record.twitter_key.blank? }
+      assert { record.twitter_key.blank? }
     end
 
     it "どっかにリダイレクトする" do
-      assert2 { response.status == 302 }
+      assert { response.status == 302 }
     end
 
     it "メール" do
-      assert2 { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
+      assert { ActionMailer::Base.deliveries.last.subject == "[test] Yamada Taroさんがgithubで登録されました" }
     end
   end
 end

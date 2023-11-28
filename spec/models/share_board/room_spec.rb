@@ -31,7 +31,7 @@ RSpec.describe ShareBoard::Room do
     end
 
     room.reload
-    assert2 { room.roomships.collect(&:rank) === [1, 1, 3] }
+    assert { room.roomships.collect(&:rank) === [1, 1, 3] }
     tp room.roomships if $0 == __FILE__
   end
 end

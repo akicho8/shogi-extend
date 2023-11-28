@@ -82,7 +82,7 @@ RSpec.describe Api::Kiwi::BananasController, type: :controller, kiwi: true do
         user_login(User.find_by!(key: e[:login]))
       end
       get e[:action], params: e[:params]
-      assert2 { response.status == e[:status] }
+      assert { response.status == e[:status] }
     end
   end
 end

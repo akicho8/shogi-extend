@@ -48,71 +48,71 @@ RSpec.describe FreeBattle, type: :model do
     it "works" do
       free_battle1 = FreeBattle.same_body_fetch(body: "")
       free_battle2 = FreeBattle.same_body_fetch(body: "position #{Bioshogi::Sfen::STARTPOS_EXPANSION}")
-      assert2 { free_battle1.id == free_battle2.id }
+      assert { free_battle1.id == free_battle2.id }
     end
   end
 
   describe "simple_versus_desc" do
     it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "手合割：平手")
-      assert2 { free_battle.simple_versus_desc == nil }
+      assert { free_battle.simple_versus_desc == nil }
     end
     it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "68銀")
-      assert2 { free_battle.simple_versus_desc == "☗嬉野流 vs ☖その他" }
+      assert { free_battle.simple_versus_desc == "☗嬉野流 vs ☖その他" }
     end
     it "works" do
       free_battle = FreeBattle.same_body_fetch(body: "68銀 52玉 26歩 51玉 25歩 52玉 38銀 51玉 27銀")
-      assert2 { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
+      assert { free_battle.simple_versus_desc == "☗嬉野流 原始棒銀 vs ☖その他" }
     end
   end
 
   it "raw_sec_list" do
-    assert2 { record.raw_sec_list(:black)     == [ 1, 5, 2]   }
-    assert2 { record.raw_sec_list(:white)     == [ 3, 7]      }
-    assert2 { ki2_record.raw_sec_list(:white) == [ nil, nil]  }
+    assert { record.raw_sec_list(:black)     == [ 1, 5, 2]   }
+    assert { record.raw_sec_list(:white)     == [ 3, 7]      }
+    assert { ki2_record.raw_sec_list(:white) == [ nil, nil]  }
   end
 
   describe "Twitterカード" do
     describe "to_twitter_card_params" do
       it "works" do
         params = record.to_twitter_card_params
-        assert2 { params[:title]       == "5手目"                            }
-        assert2 { params[:url]         == nil                                }
-        assert2 { params[:image].match?(/http.*png\?turn=5&viewpoint=black/) }
-        assert2 { params[:description] == nil                                }
+        assert { params[:title]       == "5手目"                            }
+        assert { params[:url]         == nil                                }
+        assert { params[:image].match?(/http.*png\?turn=5&viewpoint=black/) }
+        assert { params[:description] == nil                                }
       end
     end
 
     it "adjust_turn" do
-      assert2 { record.adjust_turn(-1) == 5 }
-      assert2 { record.adjust_turn( 6) == 5 }
-      assert2 { record.adjust_turn(-9) == 0 }
+      assert { record.adjust_turn(-1) == 5 }
+      assert { record.adjust_turn( 6) == 5 }
+      assert { record.adjust_turn(-9) == 0 }
     end
 
     it "turn" do
-      assert2 { record.display_turn == 5 }
+      assert { record.display_turn == 5 }
     end
   end
 
   describe "コメントが含まれるKIFはカラムから溢れるため除去する" do
     it "works" do
       record = FreeBattle.create!(kifu_body: "*A\n**B\n1 ５六歩(57)\n")
-      assert2 { record.kifu_body == "1 ５六歩(57)\n" }
+      assert { record.kifu_body == "1 ５六歩(57)\n" }
     end
   end
 
   describe "ぴよ将棋？の日付フォーマット読み取り" do
     it "works" do
       record = FreeBattle.create!(kifu_body: "開始日時：2020年02月07日(金) 20：36：15")
-      assert2 { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
+      assert { record.battled_at.to_s == "2020-02-07 20:36:15 +0900" }
     end
   end
 
   describe "駒落ち判定" do
     it "works" do
       record = FreeBattle.create!(kifu_body: "position sfen lnsgkgsnl/1r7/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL w - 1")
-      assert2 { record.preset_info.key == :"角落ち" }
+      assert { record.preset_info.key == :"角落ち" }
     end
   end
 
@@ -124,16 +124,16 @@ RSpec.describe FreeBattle, type: :model do
     end
 
     it "works" do
-      assert2 { case1(:basic)      == 2 } # 二歩の手前で止っている
-      assert2 { case1(:kiwi_lemon) == 3 } # 二歩を許可
+      assert { case1(:basic)      == 2 } # 二歩の手前で止っている
+      assert { case1(:kiwi_lemon) == 3 } # 二歩を許可
     end
   end
 
   describe "AdapterMethods" do
     it "works" do
-      assert2 { FreeBattle.adapter_post(input_text: "68銀") }
-      assert2 { FreeBattle.adapter_post(input_text: "") rescue $!.class == Bioshogi::FileFormatError }
-      assert2 { FreeBattle.adapter_post(input_text: "58金") rescue $!.class == Bioshogi::AmbiguousFormatError }
+      assert { FreeBattle.adapter_post(input_text: "68銀") }
+      assert { FreeBattle.adapter_post(input_text: "") rescue $!.class == Bioshogi::FileFormatError }
+      assert { FreeBattle.adapter_post(input_text: "58金") rescue $!.class == Bioshogi::AmbiguousFormatError }
     end
   end
 end

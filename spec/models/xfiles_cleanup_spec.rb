@@ -9,7 +9,7 @@ RSpec.describe XfilesCleanup do
     end
     object = XfilesCleanup.new(expires_in: 0.days, execute: true)
     object.call
-    assert2 { object.subject.include?("x-files 以下削除 2個") }
-    assert2 { ActionMailer::Base.deliveries.present? }
+    assert { object.subject.include?("x-files 以下削除 2個") }
+    assert { ActionMailer::Base.deliveries.present? }
   end
 end

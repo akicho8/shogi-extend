@@ -28,24 +28,24 @@ module Kiwi
     include MailerSupport
 
     it "コメントすると動画の更新日時も更新する" do
-      assert2 { banana1.updated_at == "2000-01-01".to_time }
+      assert { banana1.updated_at == "2000-01-01".to_time }
       Timecop.freeze("2000-01-02") { banana1.banana_messages.create!(user: user1) }
-      assert2 { banana1.reload.updated_at == "2000-01-02".to_time }
+      assert { banana1.reload.updated_at == "2000-01-02".to_time }
     end
 
     it "コメントするとメール送信する" do
       perform_enqueued_jobs { banana1.banana_messages.create!(user: user2, body: "message") } # user1 さんのに user2 さんがコメント
-      assert2 { deliveries.count == 1 }                                                    # 1件送信された
-      assert2 { deliveries.last.from == ["shogi.extend@gmail.com"] }                       # from は運営のメール
-      assert2 { deliveries.last.to == ["user1@localhost"] }                                # to は動画のオーナー user1
+      assert { deliveries.count == 1 }                                                    # 1件送信された
+      assert { deliveries.last.from == ["shogi.extend@gmail.com"] }                       # from は運営のメール
+      assert { deliveries.last.to == ["user1@localhost"] }                                # to は動画のオーナー user1
 
       perform_enqueued_jobs { banana1.banana_messages.create!(user: user3, body: "message") } # user3 が続けてコメント
-      assert2 { deliveries.count == 1+2 }                                                  # 追加で2件送られている
+      assert { deliveries.count == 1+2 }                                                  # 追加で2件送られている
 
-      assert2 { deliveries.second.subject == "📝user3さんが「アヒル」にコメントしました"                 }
-      assert2 { deliveries.second.to      == ["user1@localhost"]                                       }
-      assert2 { deliveries.third.subject  == "📝以前コメントした「アヒル」にuser3さんがコメントしました" }
-      assert2 { deliveries.third.to       == ["user2@localhost"]                                       }
+      assert { deliveries.second.subject == "📝user3さんが「アヒル」にコメントしました"                 }
+      assert { deliveries.second.to      == ["user1@localhost"]                                       }
+      assert { deliveries.third.subject  == "📝以前コメントした「アヒル」にuser3さんがコメントしました" }
+      assert { deliveries.third.to       == ["user2@localhost"]                                       }
 
       tp deliveries_info if $0 == "-"
     end

@@ -25,7 +25,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
       modal_apply        # 「0+0手目まで」を押す
       modal_apply        # 「確定」を押す
       value = find(".body_field textarea").value # フォームに平手の SFEN が入っている
-      assert2 { value == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
+      assert { value == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1" }
     end
     it "入力済みの場合" do
       find(".body_field textarea").set("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
@@ -42,7 +42,7 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
       modal_apply
       modal_apply        # 「確定」を押す
       value = find(".body_field textarea").value # フォームに SFEN が入っている
-      assert2 { value == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7i6h" }
+      assert { value == "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/2P6/PP1PPPPPP/1B5R1/LNSGKGSNL w - 1 moves 8c8d 7i6h" }
     end
   end
 

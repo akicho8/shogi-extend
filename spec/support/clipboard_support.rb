@@ -12,7 +12,7 @@ module ClipboardSupport
       puts "skip: assert_clipboard(#{regexp.inspect})"
       return
     end
-    assert2 { Clipboard.read.match?(regexp) }
+    assert { Clipboard.read.match?(regexp) }
   end
 end
 

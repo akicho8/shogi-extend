@@ -58,7 +58,7 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
         user_login(User.sysop)
       end
       get e[:action], params: e[:params]
-      assert2 { response.status == e[:status] }
+      assert { response.status == e[:status] }
     end
   end
 
@@ -67,8 +67,8 @@ RSpec.describe Api::Wkbk::ArticlesController, type: :controller do
       user_login(User.sysop)
       get :edit, params: { tag_list: "a,b c", book_keys: "1,2" }
       info = JSON.parse(response.body)
-      assert2 { info["article"]["tag_list"] == ["a", "b", "c"] }
-      assert2 { info["books"].collect { |e| e["key"] } == ["1", "2"] }
+      assert { info["article"]["tag_list"] == ["a", "b", "c"] }
+      assert { info["books"].collect { |e| e["key"] } == ["1", "2"] }
     end
   end
 end

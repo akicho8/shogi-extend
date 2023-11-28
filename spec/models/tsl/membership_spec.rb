@@ -38,7 +38,7 @@ module Tsl
     end
 
     it "works" do
-      assert2 { record.valid? }
+      assert { record.valid? }
     end
   end
 end

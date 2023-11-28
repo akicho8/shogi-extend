@@ -7,7 +7,7 @@ module Swars
     let(:text) { "棋譜 #{raw_url}" }
 
     it "battle_url" do
-      assert2 { BattleUrlExtractor.new(text).battle_url.to_s == raw_url }
+      assert { BattleUrlExtractor.new(text).battle_url.to_s == raw_url }
     end
   end
 end

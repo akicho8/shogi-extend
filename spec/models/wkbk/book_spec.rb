@@ -33,17 +33,17 @@ module Wkbk
     include ActiveJob::TestHelper # for perform_enqueued_jobs
 
     it "works" do
-      assert2 { Book.first }
+      assert { Book.first }
     end
 
     it "sorted" do
-      assert2 { Book.sorted(sort_column: "id",        sort_order: "asc") }
-      assert2 { Book.sorted(sort_column: "user.id",   sort_order: "asc") }
-      assert2 { Book.sorted(sort_column: "folder.id", sort_order: "asc") }
+      assert { Book.sorted(sort_column: "id",        sort_order: "asc") }
+      assert { Book.sorted(sort_column: "user.id",   sort_order: "asc") }
+      assert { Book.sorted(sort_column: "folder.id", sort_order: "asc") }
     end
 
     it "ordered_bookships" do
-      assert2 { Book.first.ordered_bookships }
+      assert { Book.first.ordered_bookships }
     end
 
     it "bookships_order_by_ids" do
@@ -53,9 +53,9 @@ module Wkbk
       book.articles << user.wkbk_articles.create!(key: "b")
       ids = book.ordered_bookship_ids
 
-      assert2 { book.articles.order(:position).pluck(:key) == ["a", "b"] }
+      assert { book.articles.order(:position).pluck(:key) == ["a", "b"] }
       book.bookships_order_by_ids(ids.reverse)
-      assert2 { book.articles.order(:position).pluck(:key) == ["b", "a"] }
+      assert { book.articles.order(:position).pluck(:key) == ["b", "a"] }
     end
 
     it "to_xitems" do
@@ -66,8 +66,8 @@ module Wkbk
       book.articles << user.wkbk_articles.create!(difficulty: 3, folder_key: :private)
       other_user = User.create!
       records = book.to_xitems(other_user)
-      assert2 { records.collect { |e| e[:article]["difficulty"] } == [3, 2, 1] } # private も空として含めるため3がある
-      assert2 { records[0][:article]["title"] == nil }                           # private なので title を nil にしている
+      assert { records.collect { |e| e[:article]["difficulty"] } == [3, 2, 1] } # private も空として含めるため3がある
+      assert { records[0][:article]["title"] == nil }                           # private なので title を nil にしている
     end
 
     it "[TODO] as_json するまえに articles を preload しても as_json のタイミングで再度 O(n) のSQLが発生する再現" do
@@ -89,43 +89,43 @@ module Wkbk
       end
 
       it "ユーザー名で検索できる" do
-        assert2 { Book.general_search(query: "(alice)").present? }
+        assert { Book.general_search(query: "(alice)").present? }
       end
 
       it "説明を検索できる" do
-        assert2 { Book.general_search(query: "(description)").present? }
-        assert2 { Book.general_search(query: "unknown").blank? }
+        assert { Book.general_search(query: "(description)").present? }
+        assert { Book.general_search(query: "unknown").blank? }
       end
 
       it "カタカナをひらがなで検索できる" do
-        assert2 { Book.general_search(query: "あ").present? }
-        assert2 { Book.general_search(query: "ん").blank? }
+        assert { Book.general_search(query: "あ").present? }
+        assert { Book.general_search(query: "ん").blank? }
       end
 
       it "タグ検索できる" do
-        assert2 { Book.general_search(tag: "a").present?   }
-        assert2 { Book.general_search(tag: "b").present?   }
-        assert2 { Book.general_search(tag: "a,b").present? }
-        assert2 { Book.general_search(tag: "c").blank?     }
+        assert { Book.general_search(tag: "a").present?   }
+        assert { Book.general_search(tag: "b").present?   }
+        assert { Book.general_search(tag: "a,b").present? }
+        assert { Book.general_search(tag: "c").blank?     }
       end
 
       it "公開設定" do
-        assert2 { Book.general_search(current_user: @user, search_preset_key: "公開").present? }
-        assert2 { Book.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
-        assert2 { Book.general_search(current_user: @user, search_preset_key: "非公開").blank? }
+        assert { Book.general_search(current_user: @user, search_preset_key: "公開").present? }
+        assert { Book.general_search(current_user: @user, search_preset_key: "限定公開").blank? }
+        assert { Book.general_search(current_user: @user, search_preset_key: "非公開").blank? }
       end
 
       it "戦法" do
-        assert2 { Book.general_search(search_preset_key: "居飛車").blank? }
-        assert2 { Book.general_search(search_preset_key: "右玉").blank? }
+        assert { Book.general_search(search_preset_key: "居飛車").blank? }
+        assert { Book.general_search(search_preset_key: "右玉").blank? }
       end
 
       it "join問題が起きない" do
-        assert2 { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
+        assert { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "公開").present? }
       end
 
       it "履歴" do
-        assert2 { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
+        assert { Book.general_search(current_user: @user, query: "ア", tag: "a", search_preset_key: "履歴").present? }
       end
     end
 
@@ -133,8 +133,8 @@ module Wkbk
       it "works" do
         user = User.create!
         book = user.wkbk_books.create!
-        assert2 { book.mail_body }
-        assert2 { book.mail_subject }
+        assert { book.mail_body }
+        assert { book.mail_subject }
       end
     end
   end

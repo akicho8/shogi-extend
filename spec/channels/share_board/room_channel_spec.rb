@@ -12,14 +12,14 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
   describe "接続" do
     it "works" do
       subscribe(room_code: room_code)
-      assert2 { subscription.confirmed? }
+      assert { subscription.confirmed? }
     end
   end
 
   describe "切断" do
     it "works" do
       subscribe(room_code: room_code)
-      assert2 { subscription.confirmed? }
+      assert { subscription.confirmed? }
       unsubscribe
     end
   end

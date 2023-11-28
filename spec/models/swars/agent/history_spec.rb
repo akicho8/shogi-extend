@@ -6,18 +6,18 @@ module Swars
       describe "development" do
         it "取得できる" do
           result = History.new(user_key: "kinakom0chi").fetch
-          assert2 { result.all_keys.present? }
-          assert2 { result.all_keys.all? { |e| e.user_keys.include?("YamadaTaro") } }
+          assert { result.all_keys.present? }
+          assert { result.all_keys.all? { |e| e.user_keys.include?("YamadaTaro") } }
         end
         it "game_idを1つづず拾って重複していないこと" do
           result = History.new(user_key: "kinakom0chi").fetch
-          assert2 { result.all_keys.uniq == result.all_keys }
+          assert { result.all_keys.uniq == result.all_keys }
         end
       end
       it "production" do
         result = History.new(user_key: "chrono_", remote_run: true).fetch
-        assert2 { result.all_keys.present? }
-        assert2 { result.all_keys.all? { |e| e.user_keys.include?("chrono_") } }
+        assert { result.all_keys.present? }
+        assert { result.all_keys.all? { |e| e.user_keys.include?("chrono_") } }
       end
     end
   end

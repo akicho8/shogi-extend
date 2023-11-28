@@ -4,6 +4,6 @@ RSpec.describe ShareBoard::ChatGptClient do
   it "works" do
     uesr = ShareBoard::Message.new(:user, "こんにちわ")
     topic = ShareBoard::Topic[uesr]
-    assert2 { ShareBoard::ChatGptClient.new(topic).call.match?(/こんにち|手伝い|探し|困りごと/) }
+    assert { ShareBoard::ChatGptClient.new(topic).call.match?(/こんにち|手伝い|探し|困りごと/) }
   end
 end

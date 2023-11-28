@@ -11,7 +11,7 @@ RSpec.describe ShareBoard::Dashboard do
         ])
     end
     json = ShareBoard::Dashboard.new(room_code: "dev_room").call
-    assert2 { json }
+    assert { json }
     tp json if $0 == __FILE__
   end
 end

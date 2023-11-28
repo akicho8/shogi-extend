@@ -7,15 +7,15 @@ module Swars
     let(:text) { "棋譜 #{url}" }
 
     it "battle_key" do
-      assert2 { BattleUrl.new(raw_url).battle_key == battle_key }
+      assert { BattleUrl.new(raw_url).battle_key == battle_key }
     end
 
     it "user_key" do
-      assert2 { BattleUrl.new(raw_url).user_key == "alice" }
+      assert { BattleUrl.new(raw_url).user_key == "alice" }
     end
 
     it "to_s" do
-      assert2 { BattleUrl.new(raw_url).to_s == raw_url }
+      assert { BattleUrl.new(raw_url).to_s == raw_url }
     end
   end
 end

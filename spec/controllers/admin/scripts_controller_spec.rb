@@ -6,12 +6,12 @@ RSpec.describe Admin::ScriptsController, type: :controller do
   include SwarsSupport1
 
   it "ログイン必須になっている" do
-    assert2 { Admin::ScriptsController.ancestors.include?(Admin::ApplicationController) }
+    assert { Admin::ScriptsController.ancestors.include?(Admin::ApplicationController) }
   end
 
   it "認証していないのでエラーになる" do
     get :show, params: { id: "index" }
-    assert2 { response.status == 401 }
+    assert { response.status == 401 }
   end
 
   describe "すべてのスクリプトが開いた時点では動作する" do
@@ -20,7 +20,7 @@ RSpec.describe Admin::ScriptsController, type: :controller do
       it e.script_name do
         http_auth_login
         get :show, params: { id: e.key }
-        assert2 { response.status == 200 }
+        assert { response.status == 200 }
       end
     end
   end

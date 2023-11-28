@@ -18,7 +18,7 @@ require "rails_helper"
 module Swars
   RSpec.describe XmodeInfo, type: :model, swars_spec: true do
     it "alias" do
-      assert2 { Xmode.fetch("通常").name == "野良" }
+      assert { Xmode.fetch("通常").name == "野良" }
     end
   end
 end

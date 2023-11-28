@@ -23,31 +23,31 @@ module Swars
       let(:object) { PropsAdapter.new(root_props) }
 
       it "to_h" do
-        assert2 { object.to_h }
+        assert { object.to_h }
       end
 
       it "key" do
-        assert2 { object.key.to_s == "alice-bob-20000101_112233" }
+        assert { object.key.to_s == "alice-bob-20000101_112233" }
       end
 
       it "battled_at" do
-        assert2 { object.battled_at == "2000-01-01 11:22:33".to_time }
+        assert { object.battled_at == "2000-01-01 11:22:33".to_time }
       end
 
       it "rule_info" do
-        assert2 { object.rule_info == RuleInfo.fetch(:ten_min) }
+        assert { object.rule_info == RuleInfo.fetch(:ten_min) }
       end
 
       it "xmode_info" do
-        assert2 { object.xmode_info == XmodeInfo.fetch("野良") }
+        assert { object.xmode_info == XmodeInfo.fetch("野良") }
       end
 
       it "preset_info" do
-        assert2 { object.preset_info == PresetInfo.fetch("平手") }
+        assert { object.preset_info == PresetInfo.fetch("平手") }
       end
 
       it "final_info" do
-        assert2 { object.final_info == FinalInfo.fetch("投了") }
+        assert { object.final_info == FinalInfo.fetch("投了") }
       end
 
       it "memberships" do
@@ -63,31 +63,31 @@ module Swars
             :judge_info => JudgeInfo.fetch(:lose),
           },
         ]
-        assert2 { object.memberships == expected }
+        assert { object.memberships == expected }
       end
 
       it "winner_location" do
-        assert2 { object.winner_location == Bioshogi::Location.fetch(:black) }
+        assert { object.winner_location == Bioshogi::Location.fetch(:black) }
       end
 
       it "done?" do
-        assert2 { object.done? }
+        assert { object.done? }
       end
 
       it "battling?" do
-        assert2 { !object.battling? }
+        assert { !object.battling? }
       end
 
       it "csa_seq" do
-        assert2 { object.csa_seq[0] == ["+7776FU", 591] }
+        assert { object.csa_seq[0] == ["+7776FU", 591] }
       end
 
       it "valid?" do
-        assert2 { object.valid? }
+        assert { object.valid? }
       end
 
       it "invalid?" do
-        assert2 { !object.invalid? }
+        assert { !object.invalid? }
       end
     end
   end

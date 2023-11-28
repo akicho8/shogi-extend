@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe MiniImage, type: :model do
   it "デフォルト画像" do
-    assert2 { MiniImage.generate == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAP+KeNJXAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==" }
+    assert { MiniImage.generate == "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAP+KeNJXAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==" }
   end
 
   it "カスタマイズ" do
-    assert2 { MiniImage.generate(width: 1, height: 1, color: "red", format: :jpg).match?(%{data:image/jpeg;base64,/9j/.*}) }
+    assert { MiniImage.generate(width: 1, height: 1, color: "red", format: :jpg).match?(%{data:image/jpeg;base64,/9j/.*}) }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}

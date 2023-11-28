@@ -54,7 +54,7 @@ RSpec.describe Api::Wkbk::BooksController, type: :controller do
         user_login(User.sysop)
       end
       get e[:action], params: e[:params]
-      assert2 { response.status == e[:status] }
+      assert { response.status == e[:status] }
     end
   end
 end
