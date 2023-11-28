@@ -9,7 +9,7 @@ module Swars
       end
 
       it "ユーザーのサマリー" do
-        assert { @hash["user"]         == {"key" => "user1"} }
+        assert { @hash["user"]         == {"key" => "user1", "ban_at" => nil} }
         assert { @hash["rules_hash"]   == {"ten_min" => {"rule_name" => "10分", "grade_name" => "30級"}, "three_min" => {"rule_name" => "3分", "grade_name" => nil}, "ten_sec" => {"rule_name" => "10秒", "grade_name" => nil}} }
         assert { @hash["judge_counts"] == {"win" => 1, "lose" => 0} }
       end
