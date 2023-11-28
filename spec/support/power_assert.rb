@@ -6,9 +6,11 @@ if defined?(RSpec::PowerAssert)
   # RSpec::PowerAssert.example_assertion_alias :assert       # rspec-rails のせいで assert2 が上書きされてしまうため assert にできない
   # RSpec::PowerAssert.example_group_assertion_alias :assert # 同じ名前でもいいみたい。でも使わない。
   # RSpec::Rails::Assertions.remove_method(:assert)          # 干渉するというかこっちが使われてしまうので消しておく
-  #
-  RSpec::PowerAssert.example_assertion_alias :assert2
+  # raise
+  # RSpec::PowerAssert.example_assertion_alias :assert
+end
 
+if defined?(PowerAssert)
   PowerAssert.configure do |config|
     config.lazy_inspection  = true
     config.colorize_message = true

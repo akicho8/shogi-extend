@@ -4,9 +4,32 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
+
+begin
+  require 'rspec/rails'
+
+  # require 'rspec-power_assert'
+  # RSpec::Rails::Assertions.remove_method(:assert)
+  # RSpec::PowerAssert.example_assertion_alias :assert
+
+  # TestUnit のメソッドが Minitest に上書きされる問題
+  # https://github.com/rspec/rspec-rails/issues/2717
+  #
+  # それに対処するためのモンキーパッチ
+  # /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/rspec-rails-6.0.3/lib/rspec/rails/adapters.rb
+  # RSpec::Rails::MinitestAssertionAdapter::ClassMethods.module_eval do
+  #   def define_assertion_delegators
+  #   end
+  # end
+end
+
 # Add additional requires below this line. Rails is not loaded until this point!
 ################################################################################
+
+if true
+  require "minitest-power_assert"
+  Minitest::Assertions.prepend Minitest::PowerAssert::Assertions
+end
 
 require 'test_prof/recipes/rspec/let_it_be'
 

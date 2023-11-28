@@ -18,6 +18,9 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 RSpec.configure do |config|
+  # config.expect_with :minitest
+  # config.expect_with :test_unit
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -32,9 +35,6 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
     expectations.syntax = [:should, :expect]
   end
-
-  # config.expect_with :minitest
-  # config.expect_with :test_unit
 
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
