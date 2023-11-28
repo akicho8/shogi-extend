@@ -284,7 +284,7 @@ export const mod_clock_box = {
       this.cc_input_handle_lazy(v)
     },
     cc_input_handle_lazy: _.debounce(function(v) {
-      this.debug_alert(v)
+      this.clog(v)
       this.cc_params_apply()           // リアルタイムに反映すると時計の値の長押しがスムーズに動かなくなるため
       this.clock_box_share("ck_input") // みんなには操作が終わって数秒後に同期する
     }, 1000 * CC_INPUT_DEBOUNCE_DELAY),
