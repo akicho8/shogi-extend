@@ -6,6 +6,6 @@ RSpec.describe ShareBoard::Membership do
     battle = room.battles.create!
     membership = battle.memberships.create(user_name: "alice", location_key: "black", judge_key: "lose")
     membership = battle.memberships.create(user_name: "alice", location_key: "black", judge_key: "lose")
-    assert2 { membership.errors[:user_id] }
+    assert { membership.errors[:user_id] }
   end
 end

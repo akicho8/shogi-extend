@@ -5,8 +5,8 @@ module Swars
     it "リレーションが正しい" do
       user = User.create!
       ban_crawl_request = user.ban_crawl_requests.create!
-      assert2 { ban_crawl_request.user == user }
-      assert2 { user.ban_crawl_requests == [ban_crawl_request] }
+      assert { ban_crawl_request.user == user }
+      assert { user.ban_crawl_requests == [ban_crawl_request] }
     end
   end
 end

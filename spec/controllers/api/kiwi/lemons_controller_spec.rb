@@ -41,41 +41,41 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
 
   it "xresource_fetch" do
     post :xresource_fetch, params: {}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "record_create" do
     post :record_create, params: mp4_params1.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "zombie_kill" do
     post :zombie_kill, params: {}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "retry_run" do
     post :retry_run, params: {id: lemon1.id}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "destroy_run" do
     post :destroy_run, params: {id: lemon1.id}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "all_info_reload" do
     post :all_info_reload, params: {}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "zombie_kill_now" do
     post :zombie_kill_now, params: {}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "background_job_kick" do
     post :background_job_kick, params: {}.as_json, as: :json
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 end

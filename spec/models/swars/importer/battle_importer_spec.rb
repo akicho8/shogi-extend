@@ -7,15 +7,15 @@ module Swars
         key = BattleKeyGenerator.new.generate
         BattleImporter.new(key: key).run
         BattleImporter.new(key: key).run
-        assert2 { Battle.count == 1 }
+        assert { Battle.count == 1 }
       end
 
       # https://twitter.com/_B0F9_/status/1606581630243520512
       it "結末を正しく取り込んでいる" do
         key = BattleKeyGenerator.new.generate
         BattleImporter.new(key: key).run
-        assert2 { Battle.count == 1 }
-        assert2 { Battle.first.final.key == "TIMEOUT" }
+        assert { Battle.count == 1 }
+        assert { Battle.first.final.key == "TIMEOUT" }
       end
     end
   end

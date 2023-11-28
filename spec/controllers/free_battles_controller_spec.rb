@@ -42,82 +42,82 @@ RSpec.describe FreeBattlesController, type: :controller do
 
   # it "index" do
   #   get :index
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
   #
   # it "index + modal_id" do
   #   get :index, params: { modal_id: @free_battle.to_param }
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
 
   it "kif" do
     get :show, params: {id: @free_battle.to_param, format: "kif"}
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "ki2" do
     get :show, params: {id: @free_battle.to_param, format: "ki2"}
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "sfen" do
     get :show, params: {id: @free_battle.to_param, format: "sfen"}
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "csa" do
     get :show, params: {id: @free_battle.to_param, format: "csa"}
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   it "png" do
     get :show, params: {id: @free_battle.to_param, format: "png" }
-    assert2 { response.status == 302 }
+    assert { response.status == 302 }
   end
 
   it "KIF表示したときに棋譜の上部にリンクを含んでいない" do
     get :show, params: { id: @free_battle.to_param, format: "kif" }
-    assert2 { !response.body.match?(/詳細URL|ぴよ将棋|KENTO/) }
+    assert { !response.body.match?(/詳細URL|ぴよ将棋|KENTO/) }
   end
 
   # it "show png turn" do
   #   get :show, params: {id: @free_battle.to_param, format: "png", turn: -1}
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
   #
   # it "棋譜印刷" do
   #   get :show, params: {id: @free_battle.to_param, formal_sheet: true}
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
   #
   # it "new" do
   #   get :new
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
   #
   # it "コピペ新規" do
   #   get :new, params: {source_id: @free_battle.to_param}
-  #   assert2 { response.status == 302 }
+  #   assert { response.status == 302 }
   # end
   #
   # it "create" do
   #   post :create, params: {}
-  #   assert2 { response.status == 302 }
+  #   assert { response.status == 302 }
   # end
   #
   # it "edit" do
   #   get :edit, params: {id: @free_battle.to_param}
-  #   assert2 { response.status == 200 }
+  #   assert { response.status == 200 }
   # end
   #
   # it "update" do
   #   put :update, params: {id: @free_battle.to_param}
-  #   assert2 { response.status == 302 }
+  #   assert { response.status == 302 }
   # end
   #
   # it "destroy" do
   #   delete :destroy, params: {id: @free_battle.to_param}
-  #   assert2 { FreeBattle.where(id: @free_battle.to_param).none? }
-  #   assert2 { response.status == 302 }
+  #   assert { FreeBattle.where(id: @free_battle.to_param).none? }
+  #   assert { response.status == 302 }
   # end
 end

@@ -8,8 +8,8 @@ module Swars
         white = User.create!(key: options[:white_key])
         white.ban!
         battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq])
-        assert2 {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
-        assert2 { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
+        assert {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
+        assert { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
       end
 
       it "棋風" do
@@ -62,12 +62,12 @@ module Swars
       end
 
       it "works" do
-        assert2 { case1("平手")              == ["平手"]               }
-        assert2 { case1("!平手")             == ["角落ち", "飛車落ち"] }
-        assert2 { case1("-平手")             == ["角落ち", "飛車落ち"] }
-        assert2 { case1("角落ち")            == ["角落ち"]             }
-        assert2 { case1("角落ち,飛車落ち")   == ["角落ち", "飛車落ち"] }
-        assert2 { case1("-角落ち,-飛車落ち") == ["平手"] }
+        assert { case1("平手")              == ["平手"]               }
+        assert { case1("!平手")             == ["角落ち", "飛車落ち"] }
+        assert { case1("-平手")             == ["角落ち", "飛車落ち"] }
+        assert { case1("角落ち")            == ["角落ち"]             }
+        assert { case1("角落ち,飛車落ち")   == ["角落ち", "飛車落ち"] }
+        assert { case1("-角落ち,-飛車落ち") == ["平手"] }
       end
     end
 
@@ -82,7 +82,7 @@ module Swars
             :user => black,
             :main_battle_key => key,
           })
-        assert2 { battles.exists? }
+        assert { battles.exists? }
       end
     end
   end

@@ -28,7 +28,7 @@ module SharedMethods
 
   def clock_box_values_eq(location_key, expected)
     result = clock_box_values(location_key)   # 必ず変数に入れないと power_assert が死ぬ
-    assert2 { result == expected }
+    assert { result == expected }
   end
 
   def assert_clock_active_black
@@ -97,7 +97,7 @@ module SharedMethods
 
   def assert_white_read_sec(second)
     v = find(".is_white .read_sec").text.to_i
-    assert2 { v == second || v == second.pred }
+    assert { v == second || v == second.pred }
   end
 
   # 強制的に時間切れにする

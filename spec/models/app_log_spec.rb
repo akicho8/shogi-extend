@@ -26,75 +26,75 @@ RSpec.describe AppLog, type: :model do
   describe "DB保存" do
     describe "ログレベル" do
       it "デフォルトはinfoになっている" do
-        assert2 { AppLog.call.level == "info" }
+        assert { AppLog.call.level == "info" }
       end
 
       it "自分で渡す場合は基本的callを呼ぶ" do
-        assert2 { AppLog.call(level: "debug").level == "debug" }
+        assert { AppLog.call(level: "debug").level == "debug" }
       end
 
       it "ログレベル指定のメソッドを呼んでいてもオプションの方が勝る" do
-        assert2 { AppLog.alert(level: "debug").level == "debug" }
+        assert { AppLog.alert(level: "debug").level == "debug" }
       end
     end
 
     it "ハッシュをそのまま渡すと警告がでる" do
       silence_stream(STDERR) do
-        assert2 { AppLog.info({subject: "a"}).subject == "" }
+        assert { AppLog.info({subject: "a"}).subject == "" }
       end
     end
 
     it "DBに入れないオプションがある" do
-      assert2 { AppLog.debug(database: false) == nil }
-      assert2 { !AppLog.exists? }
+      assert { AppLog.debug(database: false) == nil }
+      assert { !AppLog.exists? }
     end
 
     it "空でも作成できる" do
-      assert2 { AppLog.debug }
+      assert { AppLog.debug }
     end
 
     it "記録できることを優先するので題名や本文が長すぎたらtruncateする" do
-      assert2 { AppLog.debug(subject: "🍄" * 300).subject.size == 255 }
-      assert2 { AppLog.debug(body: "🍄" * 70000).body.size == 16383 }
+      assert { AppLog.debug(subject: "🍄" * 300).subject.size == 255 }
+      assert { AppLog.debug(body: "🍄" * 70000).body.size == 16383 }
     end
 
     it "本文は第一引数に書ける" do
-      assert2 { AppLog.debug(body: "a", subject: "b").body == "a" }
-      assert2 { AppLog.debug("a", subject: "b").body       == "a" }
+      assert { AppLog.debug(body: "a", subject: "b").body == "a" }
+      assert { AppLog.debug("a", subject: "b").body       == "a" }
     end
 
     it "擬似絵文字は実際の絵文字に変換してDBに入る" do
-      assert2 { AppLog.debug(emoji: ":SOS:").emoji == "🆘" }
+      assert { AppLog.debug(emoji: ":SOS:").emoji == "🆘" }
     end
 
     it "プロセスIDを記録する" do
-      assert2 { AppLog.debug.process_id }
+      assert { AppLog.debug.process_id }
     end
   end
 
   describe "メール送信" do
     it "ログレベルが高いとメール送信する" do
       AppLog.alert
-      assert2 { ActionMailer::Base.deliveries.present? }
+      assert { ActionMailer::Base.deliveries.present? }
     end
 
     it "ログレベルが引くくてもmail_notifyオプションをつけるとメール送信する" do
       AppLog.debug
-      assert2 { ActionMailer::Base.deliveries.blank? }
+      assert { ActionMailer::Base.deliveries.blank? }
       AppLog.debug(mail_notify: true)
-      assert2 { ActionMailer::Base.deliveries.present? }
+      assert { ActionMailer::Base.deliveries.present? }
     end
 
     it "ログレベルが高くてもオプションで禁止できる" do
       AppLog.alert(mail_notify: false)
-      assert2 { ActionMailer::Base.deliveries.blank? }
+      assert { ActionMailer::Base.deliveries.blank? }
     end
 
     it "送信先を変更したり添付ファイルを付与できる" do
       AppLog.alert(to: "xxx@xxx", attachments: {"a" => "b"})
       mail = ActionMailer::Base.deliveries.last
-      assert2 { mail.to == ["xxx@xxx"] }
-      assert2 { mail.attachments["a"] }
+      assert { mail.to == ["xxx@xxx"] }
+      assert { mail.attachments["a"] }
     end
   end
 
@@ -109,38 +109,38 @@ RSpec.describe AppLog, type: :model do
 
     it "ログレベルが高いとSlack送信する" do
       AppLog.alert
-      assert2 { SlackSender.deliveries.present? }
+      assert { SlackSender.deliveries.present? }
     end
 
     it "ログレベルが高くてもオプションで禁止できる" do
       AppLog.alert(slack_notify: false)
-      assert2 { SlackSender.deliveries.blank? }
+      assert { SlackSender.deliveries.blank? }
     end
 
     it "ログレベルが引くくてもslack_notifyオプションをつけるとSlack送信する" do
       AppLog.debug
-      assert2 { SlackSender.deliveries.blank? }
+      assert { SlackSender.deliveries.blank? }
       AppLog.debug(slack_notify: true)
-      assert2 { SlackSender.deliveries.present? }
+      assert { SlackSender.deliveries.present? }
     end
   end
 
   describe "例外オブジェクトを渡せる" do
     it "それだけを渡すとsubjectやbodyに展開する" do
       app_log = AppLog.debug(Exception.new("foo"))
-      assert2 { app_log.emoji == "🆘"                }
-      assert2 { app_log.subject == "Exception" }
-      assert2 { app_log.body == "[MESSAGE]\nfoo" }
+      assert { app_log.emoji == "🆘"                }
+      assert { app_log.subject == "Exception" }
+      assert { app_log.body == "[MESSAGE]\nfoo" }
     end
 
     it "展開しても明示的に指定したオプションの方を優先する" do
       app_log = AppLog.debug(Exception.new("foo"), subject: "(subject)")
-      assert2 { app_log.subject == "(subject)" }
+      assert { app_log.subject == "(subject)" }
     end
 
     it "dataオプションを渡せる" do
       app_log = AppLog.debug(Exception.new("foo"), data: "bar")
-      assert2 { app_log.body.include?("bar") }
+      assert { app_log.body.include?("bar") }
     end
   end
 end

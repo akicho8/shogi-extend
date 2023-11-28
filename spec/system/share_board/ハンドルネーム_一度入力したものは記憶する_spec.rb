@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
         room_setup_modal_open_handle                      # 「部屋に入る」を自分でクリックする
         find(".new_room_code input").set("test_room")  # 合言葉を入力する
         value = find(".new_user_name input").value
-        assert2 { value == "alice" }                  # 以前入力したニックネームが復元されている
+        assert { value == "alice" }                  # 以前入力したニックネームが復元されている
         find(".entry_button").click                  # 共有ボタンをクリックする
         find(".close_handle").click                  # 共有ボタンをクリックする
       end

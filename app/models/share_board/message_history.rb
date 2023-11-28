@@ -5,9 +5,9 @@
 #  object.push("a")
 #  object.push("b")
 #  object.push("c")
-#  assert2 { object.to_a     == ["c", "b"] }
+#  assert { object.to_a     == ["c", "b"] }
 #  object.clear
-#  assert2 { object.to_a.empty? }
+#  assert { object.to_a.empty? }
 #
 # ▼指定の部屋の話題確認
 # rails r 'puts ShareBoard::MessageHistory.new.to_topic.to_t'

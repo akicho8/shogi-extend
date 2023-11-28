@@ -4,11 +4,11 @@ module Swars
   RSpec.describe Profile, type: :model, swars_spec: true do
     it "ユーザーを作るとprofileモデルも同時に作りリレーションが正しい" do
       user = User.create!
-      assert2 { user.profile }
-      assert2 { user.profile.user == user }
-      assert2 { user.profile.ban_crawled_count == 0 }
-      assert2 { user.profile.ban_at == nil }
-      assert2 { user.profile.ban_crawled_at }
+      assert { user.profile }
+      assert { user.profile.user == user }
+      assert { user.profile.ban_crawled_count == 0 }
+      assert { user.profile.ban_at == nil }
+      assert { user.profile.ban_crawled_at }
     end
 
     describe "垢BAN" do
@@ -17,7 +17,7 @@ module Swars
       #   user = User.create!
       #   user.profile.ban_crawled_at = Time.current
       #   user.save!
-      #   assert2 { user.profile.ban_crawled_count == 1 }
+      #   assert { user.profile.ban_crawled_count == 1 }
       # end
 
       it "ban_crawled_count_lteq: 垢BANチェック指定回数以下" do
@@ -27,8 +27,8 @@ module Swars
 
       it "ban_crawled_at_lt: 垢BANチェックの前回が指定日時より過去" do
         user = User.create!
-        assert2 { Profile.ban_crawled_at_lt(user.profile.ban_crawled_at).count == 0     } # ban_crawled_at < ban_crawled_at     なので 0
-        assert2 { Profile.ban_crawled_at_lt(user.profile.ban_crawled_at + 1).count == 1 } # ban_crawled_at < ban_crawled_at + 1 なので 1
+        assert { Profile.ban_crawled_at_lt(user.profile.ban_crawled_at).count == 0     } # ban_crawled_at < ban_crawled_at     なので 0
+        assert { Profile.ban_crawled_at_lt(user.profile.ban_crawled_at + 1).count == 1 } # ban_crawled_at < ban_crawled_at + 1 なので 1
       end
     end
   end

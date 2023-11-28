@@ -7,35 +7,35 @@ RSpec.describe DataUri, type: :model do
     let(:object) { DataUri.new(source) }
 
     it "to_blob" do
-      assert2 { object.to_blob.size == 276 }
+      assert { object.to_blob.size == 276 }
     end
 
     it "to_data_uri" do
-      assert2 { object.to_data_uri == source }
+      assert { object.to_data_uri == source }
     end
 
     it "read" do
-      assert2 { object.read }
+      assert { object.read }
     end
 
     it "mime" do
-      assert2 { object.mime }
+      assert { object.mime }
     end
 
     it "content_type" do
-      assert2 { object.content_type == "image/png" }
+      assert { object.content_type == "image/png" }
     end
 
     it "extension" do
-      assert2 { object.extension == "png" }
+      assert { object.extension == "png" }
     end
 
     it "stream" do
-      assert2 { object.stream }
+      assert { object.stream }
     end
 
     it "inspect" do
-      assert2 { object.inspect == "#<DataUri image/png (276 bytes)>" }
+      assert { object.inspect == "#<DataUri image/png (276 bytes)>" }
     end
   end
 end

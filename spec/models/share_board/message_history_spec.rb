@@ -7,9 +7,9 @@ RSpec.describe ShareBoard::MessageHistory do
     object.push("a")
     object.push("b")
     object.push("c")
-    assert2 { object.to_a == ["b", "c"] }
+    assert { object.to_a == ["b", "c"] }
     object.clear
-    assert2 { object.to_a.empty? }
+    assert { object.to_a.empty? }
   end
 
   it "一定時間経つと破棄する" do
@@ -17,7 +17,7 @@ RSpec.describe ShareBoard::MessageHistory do
     object.clear_all
     object.push("a")
     sleep(1.5)
-    assert2 { object.to_a.empty? }
+    assert { object.to_a.empty? }
   end
 
   it "無駄なく反転する" do
@@ -25,7 +25,7 @@ RSpec.describe ShareBoard::MessageHistory do
     object.push("a")
     object.push("b")
     object.push("c")
-    assert2 { object.to_a == ["c", "b"] }
+    assert { object.to_a == ["c", "b"] }
   end
 
   # it "to_topic" do
@@ -33,6 +33,6 @@ RSpec.describe ShareBoard::MessageHistory do
   #   object.push("a")
   #   object.push("b")
   #   object.push("c")
-  #   assert2 { object.to_a == ["c", "b"] }
+  #   assert { object.to_a == ["c", "b"] }
   # end
 end

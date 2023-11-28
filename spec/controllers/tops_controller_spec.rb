@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe TopsController, type: :controller do
   it "トップページが見える" do
     get :show
-    assert2 { response.status == 200 }
+    assert { response.status == 200 }
   end
 
   # http://localhost:3000/?test_request_info=1
   it "エラー時にリクエスト情報を含める" do
     get :show, params: { test_request_info: "1" }
-    assert2 { response.status == 200 }
-    assert2 { ActionMailer::Base.deliveries.last.body.include?("HTTP_USER_AGENT") }
+    assert { response.status == 200 }
+    assert { ActionMailer::Base.deliveries.last.body.include?("HTTP_USER_AGENT") }
   end
 
   # http://localhost:3000/?force_error=1

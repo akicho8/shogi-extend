@@ -40,14 +40,14 @@ module Kiwi
       lemon1.main_process
       lemon1.reload
 
-      assert2 { lemon1.status_key == "成功" }
+      assert { lemon1.status_key == "成功" }
 
-      assert2 { lemon1.real_path.to_s.match?(/public/) }
-      assert2 { lemon1.browser_path.match?(/system.*mp4/) }
+      assert { lemon1.real_path.to_s.match?(/public/) }
+      assert { lemon1.browser_path.match?(/system.*mp4/) }
 
-      assert2 { lemon1.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
-      assert2 { lemon1.thumbnail_browser_path.match?(/system.*thumbnail/) }
-      assert2 { lemon1.thumbnail_real_path.exist? == false }
+      assert { lemon1.thumbnail_real_path.to_s.match?(/public.*thumbnail/) }
+      assert { lemon1.thumbnail_browser_path.match?(/system.*thumbnail/) }
+      assert { lemon1.thumbnail_real_path.exist? == false }
     end
 
     it "指定の時間内にワーカーが動いてなかったら動かす" do
@@ -71,7 +71,7 @@ module Kiwi
 
     it "info" do
       lemon1
-      assert2 { Lemon.info }
+      assert { Lemon.info }
     end
 
     it "「みんな」の反映" do
@@ -81,9 +81,9 @@ module Kiwi
 
     it "Bananaと結び付いていないレコードたち" do
       lemon1
-      assert2 { Lemon.single_only == [lemon1] } # Banana と結び付いていないものたち
+      assert { Lemon.single_only == [lemon1] } # Banana と結び付いていないものたち
       banana1
-      assert2 { Lemon.single_only == [] } # Banana と結び付いたので空
+      assert { Lemon.single_only == [] } # Banana と結び付いたので空
     end
 
     it "reset" do
@@ -91,35 +91,35 @@ module Kiwi
     end
 
     it "advanced_kif_info" do
-      assert2 { lemon1.advanced_kif_info }
+      assert { lemon1.advanced_kif_info }
     end
 
     it "jsonでBananaと結び付いているかわかる" do
-      assert2 { lemon1.as_json(Lemon.json_struct_for_list)["banana"] == nil }
+      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] == nil }
       banana1
       lemon1.reload
-      assert2 { lemon1.as_json(Lemon.json_struct_for_list)["banana"] }
+      assert { lemon1.as_json(Lemon.json_struct_for_list)["banana"] }
     end
 
     it "ffmpegのssオプションで動画の長さを指定すると失敗するため「長さ-1」でclampする" do
       lemon1.main_process
       lemon1.reload
-      assert2 { lemon1.duration == 6 }
-      assert2 { lemon1.ffmpeg_ss_option_max == 5 }
-      assert2 { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
+      assert { lemon1.duration == 6 }
+      assert { lemon1.ffmpeg_ss_option_max == 5 }
+      assert { lemon1.thumbnail_build_command(10).include?(" -ss 5 ") }
     end
 
     it "tag_list" do
-      assert2 { lemon1.tag_list == ["居飛車", "相居飛車"] }
+      assert { lemon1.tag_list == ["居飛車", "相居飛車"] }
     end
 
     it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do
       lemon1.main_process
       lemon1.reload
-      assert2 { lemon1.real_path.exist? }
+      assert { lemon1.real_path.exist? }
       Lemon.cleanup(expires_in: 0, execute: true)
-      assert2 { !lemon1.real_path.exist? }
-      assert2 { !Lemon.exists?(lemon1.id) }
+      assert { !lemon1.real_path.exist? }
+      assert { !Lemon.exists?(lemon1.id) }
     end
   end
 end

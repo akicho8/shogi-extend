@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
     # とすると
     # Error
     # を返すようになってしまった
-    # assert2 { Clipboard.read == "Error" }
+    # assert { Clipboard.read == "Error" }
     # 2023-04-12 から直った
     assert_clipboard("tinyurl")
   end

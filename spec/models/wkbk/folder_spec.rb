@@ -22,11 +22,11 @@ module Wkbk
     include WkbkSupportMethods
 
     it "relation" do
-      assert2 { Wkbk::Book.first.folder.kind_of?(Wkbk::Folder) }
+      assert { Wkbk::Book.first.folder.kind_of?(Wkbk::Folder) }
     end
 
     it "relation" do
-      assert2 { Wkbk::Folder.first.books.present? }
+      assert { Wkbk::Folder.first.books.present? }
     end
   end
 end

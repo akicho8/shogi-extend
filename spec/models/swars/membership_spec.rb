@@ -46,27 +46,27 @@ module Swars
 
     describe "タグ" do
       it "works" do
-        assert2 { record.memberships[0].attack_tag_list  == ["新嬉野流"]       }
-        assert2 { record.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"] }
-        assert2 { record.memberships[0].defense_tag_list == []               }
-        assert2 { record.memberships[1].defense_tag_list == []               }
-        assert2 { record.memberships[0].note_tag_list    == ["居飛車"]       }
-        assert2 { record.memberships[1].note_tag_list    == ["振り飛車"]     }
+        assert { record.memberships[0].attack_tag_list  == ["新嬉野流"]       }
+        assert { record.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"] }
+        assert { record.memberships[0].defense_tag_list == []               }
+        assert { record.memberships[1].defense_tag_list == []               }
+        assert { record.memberships[0].note_tag_list    == ["居飛車"]       }
+        assert { record.memberships[1].note_tag_list    == ["振り飛車"]     }
       end
     end
 
     describe "カラム" do
       it "お互いに対戦者がわかる" do
-        assert2 { record.memberships[0].op_user }
-        assert2 { record.memberships[1].op_user }
-        assert2 { record.memberships[0].op_user == record.memberships[1].user }
-        assert2 { record.memberships[1].op_user == record.memberships[0].user }
+        assert { record.memberships[0].op_user }
+        assert { record.memberships[1].op_user }
+        assert { record.memberships[0].op_user == record.memberships[1].user }
+        assert { record.memberships[1].op_user == record.memberships[0].user }
       end
       # it "お互いの対戦情報がわかる" do
-      #   assert2 { record.memberships[0].opponent }
-      #   assert2 { record.memberships[1].opponent }
-      #   assert2 { record.memberships[0].opponent == record.memberships[1] }
-      #   assert2 { record.memberships[1].opponent == record.memberships[0] }
+      #   assert { record.memberships[0].opponent }
+      #   assert { record.memberships[1].opponent }
+      #   assert { record.memberships[0].opponent == record.memberships[1] }
+      #   assert { record.memberships[1].opponent == record.memberships[0] }
       # end
     end
   end

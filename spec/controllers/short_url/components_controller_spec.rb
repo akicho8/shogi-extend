@@ -5,7 +5,7 @@ RSpec.describe ShortUrl::ComponentsController, type: :controller do
     original_url = "http://localhost:3000/"
 
     get :show, params: { original_url: original_url, format: "json" }
-    assert2 { response.status == 200 }
-    assert2 { response.body == ShortUrl.from(original_url) }
+    assert { response.status == 200 }
+    assert { response.body == ShortUrl.from(original_url) }
   end
 end

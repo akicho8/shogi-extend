@@ -3,6 +3,6 @@ require "rails_helper"
 RSpec.describe BibiRemover do
   it "works" do
     str = [8234, 102, 111, 111, 8236].pack("U*")
-    assert2 { BibiRemover.remove(str).codepoints == [102, 111, 111] }
+    assert { BibiRemover.remove(str).codepoints == [102, 111, 111] }
   end
 end

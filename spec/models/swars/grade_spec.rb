@@ -18,11 +18,11 @@ require "rails_helper"
 module Swars
   RSpec.describe Grade, type: :model, swars_spec: true do
     it "name" do
-      assert2 { Grade.fetch("初段").name == "初段" }
+      assert { Grade.fetch("初段").name == "初段" }
     end
 
     it "priority" do
-      assert2 { Grade.fetch("初段").priority == 9 }
+      assert { Grade.fetch("初段").priority == 9 }
     end
 
     it "relation" do
@@ -30,13 +30,13 @@ module Swars
       user1 = User.create!(user_key: "user1", grade: Grade.fetch("十段"))
       user2 = User.create!(user_key: "user2", grade: Grade.fetch("初段"))
       battle = Battle.create_with_members!([user1, user2])
-      assert2 { grade.memberships.collect(&:user_id) == [user1.id] }
-      assert2 { grade.battles == [battle] }
-      assert2 { Battle.where.not(id: grade.battles).count == 0 } # 十段を除外する例
+      assert { grade.memberships.collect(&:user_id) == [user1.id] }
+      assert { grade.battles == [battle] }
+      assert { Battle.where.not(id: grade.battles).count == 0 } # 十段を除外する例
     end
 
     it "10000級が存在する" do
-      assert2 { Grade.fetch("10000級") }
+      assert { Grade.fetch("10000級") }
     end
   end
 end

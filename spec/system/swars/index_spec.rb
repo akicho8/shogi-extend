@@ -107,12 +107,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
     it "ぴよ将棋" do
       el = first(".PiyoShogiButton")
-      assert2 { el[:href].start_with?("piyoshogi://") }
+      assert { el[:href].start_with?("piyoshogi://") }
     end
 
     it "KENTO" do
       switch_to_window_by { first(".KentoButton").click }
-      assert2 { current_url.start_with?("https://www.kento-shogi.com/") }
+      assert { current_url.start_with?("https://www.kento-shogi.com/") }
     end
 
     it "KIF形式の棋譜コピー" do
@@ -355,7 +355,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         switch_to_window_by do
           find(".jump_to_kento_setting_handle").click                     # 「KENTO側で設定」の「移動」をクリック
         end
-        assert2 { current_url.include?("kento-shogi.com") }              # KENTOに移動している
+        assert { current_url.include?("kento-shogi.com") }              # KENTOに移動している
       end
     end
   end
@@ -409,7 +409,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def assert_query(query)
     value = find("#query").value
-    assert2 { value == query }
+    assert { value == query }
   end
 
   def assert_var_eq(var, val, options = {})

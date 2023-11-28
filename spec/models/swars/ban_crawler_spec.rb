@@ -5,7 +5,7 @@ module Swars
     it "works" do
       user = User.create!
       Swars::BanCrawler.new.call
-      assert2 { user.reload.ban? }
+      assert { user.reload.ban? }
     end
   end
 end
