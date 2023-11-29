@@ -254,11 +254,14 @@ export const mod_clock_box = {
     // cc_params を clock_box に適用する
     // このタイミングで cc_params を localStorage に保存する
     cc_params_apply() {
+      this.cc_params_apply_without_save()
+      this.cc_params_save()
+    },
+    cc_params_apply_without_save() {
       this.$gs.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
       this.$gs.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
       const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
       this.clock_box.rule_set_all_by_ary(ary)
-      this.cc_params_save()
     },
 
     // 共有将棋盤では扱いやすいように持ち時間は分にしている
@@ -281,12 +284,13 @@ export const mod_clock_box = {
     // 時計設定時に時計の内容をほぼリアルタイムに同期する
     // @input はクリックイベントのみに反応するので無限ループになることはない
     cc_input_handle(v) {
+      this.cc_params_apply_without_save()  // リアルタイムに反映する
       this.cc_input_handle_lazy(v)
     },
     cc_input_handle_lazy: _.debounce(function(v) {
       this.clog(v)
-      this.cc_params_apply()           // リアルタイムに反映すると時計の値の長押しがスムーズに動かなくなるため
-      this.clock_box_share("ck_input") // みんなには操作が終わって数秒後に同期する
+      this.cc_params_save()            // 何度も localStorage に保存すると遅いので操作後にする
+      this.clock_box_share("ck_input") // みんなへの同期も操作後にする
     }, 1000 * CC_INPUT_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
