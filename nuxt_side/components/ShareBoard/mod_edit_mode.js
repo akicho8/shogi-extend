@@ -1,4 +1,3 @@
-
 export const mod_edit_mode = {
   methods: {
     edit_warn_modal_handle() {
@@ -68,6 +67,31 @@ export const mod_edit_mode = {
         } else {
           this.toast_warn("回収するブロックがありません")
         }
+      }
+    },
+
+    // 編集モードの棋譜をコピーする
+    edit_mode_kifu_copy_handle() {
+      if (this.edit_mode_sfen) {
+        this.sidebar_p = false
+        this.$sound.play_click()
+        this.general_kifu_copy(this.edit_mode_sfen, {
+          to_format: this.FormatTypeInfo.fetch("kif_utf8").format_key,
+          turn: 0,
+          title: this.current_title,
+          ...this.player_names,
+        })
+      }
+    },
+  },
+  computed: {
+    // 編集モードの棋譜オブジェクト
+    edit_mode_kifu_vo() {
+      if (this.edit_mode_sfen) {
+        return this.$KifuVo.create({
+          sfen: this.edit_mode_sfen,
+          turn: 0,
+        })
       }
     },
   },

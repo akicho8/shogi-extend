@@ -12,10 +12,10 @@
       b-button(@click="base.king_formation_auto_set(true)") 詰将棋検討用玉配置
       b-button(@click="base.king_formation_auto_set(false)") 玉回収
 
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
-      PiyoShogiButton(:href="base.current_kifu_vo.piyo_url")
-      KentoButton(tag="a" :href="base.current_kifu_vo.kento_url" target="_blank")
-      KifCopyButton(@click="base.kifu_copy_handle(base.FormatTypeInfo.fetch('kif_utf8'))") コピー
+    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="base.edit_mode_kifu_vo")
+      PiyoShogiButton(:href="base.edit_mode_kifu_vo.piyo_url")
+      KentoButton(tag="a" :href="base.edit_mode_kifu_vo.kento_url" target="_blank")
+      KifCopyButton(@click="base.edit_mode_kifu_copy_handle") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
       b-button(@click="base.yomikomi_modal_open_handle()") 棋譜の読み込み
