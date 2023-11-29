@@ -30,6 +30,9 @@ export const mod_order_main = {
       }
       // 1列か2列かを確定する。初期値は2列
       this.order_unit.state_switch_to(this.fixed_order_state)
+
+      // 自分の場所を調べて正面をその視点にする
+      this.sp_viewpoint_set_by_self_location()
     },
 
     // 指定の名前
@@ -81,11 +84,12 @@ export const mod_order_main = {
       this.order_enable_p = params.order_enable_p
       this.order_copy_from_bc(params)
     },
-
+    // 後から参加したとき、または順番設定を適用したときに呼ばれる
     order_copy_from_bc(params) {
       this.$gs.assert(params.order_unit, "params.order_unit")
 
       this.order_unit        = OrderUnit.from_attributes(params.order_unit)
+      this.sp_viewpoint_set_by_self_location() // 自分の場所を調べて正面をその視点にする
 
       this.illegal_behavior_key = params.illegal_behavior_key
       this.auto_resign_key = params.auto_resign_key

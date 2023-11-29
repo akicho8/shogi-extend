@@ -180,6 +180,6 @@ export const mod_order_new = {
     },
   },
   computed: {
-    os_modal_update_ok() { return this.new_v.os_dnd_count === 0 },
+    os_modal_update_ok() { return this.new_v.os_dnd_count === 0 }, // 更新してもよいか？(ドラッグ操作していない状態か？)
   },
 }
