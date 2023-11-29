@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_26_000004) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
   end
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"
@@ -411,7 +411,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
   create_table "swars_profiles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "対局者"
     t.datetime "ban_at", precision: nil, comment: "垢BAN日時"
-    t.datetime "ban_crawled_at", precision: nil, comment: "垢BANクロール日時"
+    t.datetime "ban_crawled_at", precision: nil, null: false, comment: "垢BANクロール日時"
     t.integer "ban_crawled_count", comment: "垢BANクロール回数"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -452,7 +452,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.datetime "ban_at", precision: nil, comment: "垢BAN日時"
-    t.datetime "latest_battled_at", precision: nil, comment: "直近の対局日時"
+    t.datetime "latest_battled_at", precision: nil, null: false, comment: "直近の対局日時"
     t.index ["ban_at"], name: "index_swars_users_on_ban_at"
     t.index ["grade_id"], name: "index_swars_users_on_grade_id"
     t.index ["last_reception_at"], name: "index_swars_users_on_last_reception_at"
@@ -504,7 +504,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_000003) do
   end
 
   create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "name", collation: "utf8_bin"
+    t.string "name", collation: "utf8mb3_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
