@@ -7,7 +7,7 @@ export class KentoSfenLinkCreator extends AnyLinkCreator {
   // private
 
   get base_url() {
-    return "https://www.kento-shogi.com"
+    return "https://www.kento-shogi.com/"
   }
 
   get allowed_keys() {
