@@ -100,10 +100,11 @@ export const mod_order_main = {
 
     // 自分の場所を調べて正面をその視点にする
     sp_viewpoint_set_by_self_location() {
-      this.$gs.assert(this.user_name, "this.user_name")
-      const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
-      if (location) {
-        this.viewpoint = location.key                     // その視点に変更する
+      if (this.user_name) {
+        const location = this.user_name_to_initial_location(this.user_name) // 自分の▲△
+        if (location) {
+          this.viewpoint = location.key                     // その視点に変更する
+        }
       }
     },
 
