@@ -54,8 +54,8 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_url_short_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")
-          b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle()")
           b-menu-item.is_active_unset(icon="pencil-box-outline" label="局面編集"       @click="base.edit_mode_handle")
+          b-menu-item.is_active_unset(icon="import"             label="棋譜の読み込み" @click="base.yomikomi_modal_open_handle()")
 
         b-menu-list(label="SNS共有")
           b-menu-item.is_active_unset(icon="twitter" label="ツイートする"              @click="base.tweet_modal_handle")
