@@ -15,7 +15,7 @@
           | 対象のウォーズID
           span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
             | 必須
-        b-input(v-model.trim="TheApp.user_key" placeholder="itoshinTV" :size="TheApp.input_element_size" :disabled="!user_key_field_show")
+        b-input.user_key(v-model.trim="TheApp.user_key" placeholder="itoshinTV" :size="TheApp.input_element_size" :disabled="!user_key_field_show")
 
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="持ち時間"   :records="TheApp.xi.rule_infos"  var_name="rule_keys")

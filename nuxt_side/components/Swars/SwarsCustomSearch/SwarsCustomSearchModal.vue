@@ -39,6 +39,9 @@ export default {
     mod_storage,
     mod_sidebar,
   ],
+  props: {
+    override_user_key: { type: String, required: false }, // プレイヤー情報から使う場合に user_key が入っている
+  },
   provide() {
     return {
       TheApp: this,
@@ -53,6 +56,16 @@ export default {
   fetch() {
     return this.$axios.$get("/api/swars/custom_search_setup", {params: {}}).then(e => this.xi = e)
   },
+  mounted() {
+    if (true) {
+      // this.user_key には「棋譜検索→カスタム検索」で入力したときの値が(localStorage経由で)入っている
+      // そのため、そのまま表示してしまうと、プレイヤー情報で表示しているウォーズIDと異なるウォーズIDがフォームに表示されてしまう
+      // それを回避するためプレイヤー情報から使うときは this.$route.params.key を渡した override_user_key で user_key を上書きする
+      if (this.override_user_key) {
+        this.user_key = this.override_user_key
+      }
+    }
+  },
   methods: {
     close_click_handle() {
       this.$sound.play_click()
@@ -61,7 +74,7 @@ export default {
     submit_click_handle() {
       this.$sound.play_click()
       this.$emit("close")
-      this.app_log({emoji: ":絞込:", subject: "カスタム検索", body: [this.user_key, this.new_query_without_user_key]})
+      this.app_log({emoji: ":絞込:", subject: "プレイヤー情報カスタム検索", body: [this.user_key, this.new_query_without_user_key]})
       this.$router.push({
         name: "swars-users-key",
         params: {
