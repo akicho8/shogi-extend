@@ -50,7 +50,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="alpha-k-box-outline"    label="KENTO"            :href="base.current_kifu_vo.kento_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
 
         b-menu-list(label="棋譜再生用パーマリンク")
-          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_url_short_copy_handle" )
+          b-menu-item.is_active_unset(icon="link-plus" label="棋譜URLコピー (短縮)" @click.prevent="base.current_short_url_copy_handle" )
           b-menu-item.is_active_unset(icon="link" label="棋譜URLコピー" :href="base.current_url" @click.prevent="base.current_url_copy_handle" )
 
         b-menu-list(label="詰将棋・課題局面・変則手合割の作成")

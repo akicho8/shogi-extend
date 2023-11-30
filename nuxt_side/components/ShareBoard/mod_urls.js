@@ -1,3 +1,4 @@
+import { SimpleCache } from "@/components/models/simple_cache.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { KifuVo } from "@/components/models/kifu_vo.js"
@@ -6,6 +7,8 @@ import _ from "lodash"
 const QueryString = require("query-string")
 
 const OWN_SHORTENED_URL_FUNCTION = true // 自前の短縮URL機能を使うか？
+
+const simple_cache = new SimpleCache()
 
 export const mod_urls = {
   methods: {
@@ -34,22 +37,20 @@ export const mod_urls = {
     },
 
     // 「短縮URLのコピー」
-    async current_url_short_copy_handle() {
-      this.sidebar_p = false
+    async current_short_url_copy_handle() {
       this.$sound.play_click()
-      const url = await this.current_short_url()
-      this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})
-    },
-    async current_short_url() {
-      let url = null
-      this.debug_alert(this.current_url)
-      if (OWN_SHORTENED_URL_FUNCTION) {
-        url = await this.long_url_to_short_url(this.current_url)
-      } else {
-        url = await TinyURL.shorten(this.current_url)
+      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
+      if (this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+        this.sidebar_p = false
       }
-      this.debug_alert(url)
-      return url
+    },
+    __short_url_fetch() {
+      this.debug_alert("APIアクセス発生")
+      if (OWN_SHORTENED_URL_FUNCTION) {
+        return this.long_url_to_short_url(this.current_url)
+      } else {
+        return TinyURL.shorten(this.current_url)
+      }
     },
 
     other_app_click_handle(app_name) {
