@@ -408,7 +408,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   def assert_query(query)
-    assert_selector("#query") { |e| e.value == query }
+    assert_selector(:fillable_field, id: "query", with: query)
   end
 
   def assert_var_eq(var, val, options = {})

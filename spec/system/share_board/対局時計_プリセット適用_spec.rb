@@ -8,6 +8,6 @@ RSpec.describe type: :system, share_board_spec: true do
       find(".preset_dropdown_button").click       # プリセットを開く
       find(".dropdown-item:nth-of-type(1)").click # 一番上の「ウォーズ10分」を適用
     end
-    clock_box_values_eq(:black, [10, 0, 0, 0])    # 設定されている
+    clock_box_form_eq(:black, 10, 0, 0, 0)    # 設定されている
   end
 end
