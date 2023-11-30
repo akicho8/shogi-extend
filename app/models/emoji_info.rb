@@ -43,6 +43,7 @@ class EmojiInfo
     { key: ":ChatGPT_ERR:",  raw: "🤯", },
     { key: ":絞込:",         raw: "🔍", },
     { key: ":参照:",         raw: "🪪", },
+    { key: ":短縮URL:",      raw: "📦", },
   ]
 
   def to_s

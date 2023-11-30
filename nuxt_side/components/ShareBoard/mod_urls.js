@@ -47,6 +47,7 @@ export const mod_urls = {
     __short_url_fetch() {
       this.debug_alert("APIアクセス発生")
       if (OWN_SHORTENED_URL_FUNCTION) {
+        this.app_log({emoji: ":短縮URL:", subject: "短縮URL作成リク", body: {user_name: this.user_name, current_url: this.current_url}})
         return this.long_url_to_short_url(this.current_url)
       } else {
         return TinyURL.shorten(this.current_url)
