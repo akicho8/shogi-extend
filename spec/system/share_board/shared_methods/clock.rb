@@ -5,30 +5,23 @@ module SharedMethods
     { black: 2, white: 3 }.fetch(location_key)
   end
 
-  def cc_selector(location_key, input_class)
+  def cc_input(location_key, input_class)
     index = cc_white_black_to_nth_child(location_key)
-    ".ClockBoxInputTable td:nth-child(#{index}) .#{input_class} input"
+    ".ClockBoxInputTable td:nth-child(#{index}) .#{input_class}"
   end
 
-  def clock_box_set(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
-    find(cc_selector(location_key, :initial_main_min)).set(initial_main_min)      # 持ち時間(分)
-    find(cc_selector(location_key, :initial_read_sec)).set(initial_read_sec)      # 秒読み
-    find(cc_selector(location_key, :initial_extra_sec)).set(initial_extra_sec)    # 猶予(秒)
-    find(cc_selector(location_key, :every_plus)).set(every_plus)                  # 1手毎加算(秒)
+  def clock_box_form_set(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
+    find(cc_input(location_key, :initial_main_min)).find(:fillable_field).set(initial_main_min)                # 持ち時間(分)
+    find(cc_input(location_key, :initial_read_sec)).find(:fillable_field).set(initial_read_sec)                # 秒読み
+    find(cc_input(location_key, :initial_extra_sec)).find(:fillable_field).set(initial_extra_sec)              # 猶予(秒)
+    find(cc_input(location_key, :every_plus)).find(:fillable_field).set(every_plus)                            # 1手毎加算(秒)
   end
 
-  def clock_box_values(location_key)
-    [
-      find(cc_selector(location_key, :initial_main_min)).value,
-      find(cc_selector(location_key, :initial_read_sec)).value,
-      find(cc_selector(location_key, :initial_extra_sec)).value,
-      find(cc_selector(location_key, :every_plus)).value,
-    ].collect(&:to_i)
-  end
-
-  def clock_box_values_eq(location_key, expected)
-    result = clock_box_values(location_key)   # 必ず変数に入れないと power_assert が死ぬ
-    assert { result == expected }
+  def clock_box_form_eq(location_key, initial_main_min, initial_read_sec, initial_extra_sec, every_plus)
+    find(cc_input(location_key, :initial_main_min)).assert_selector(:fillable_field, with: initial_main_min)   # 持ち時間(分)
+    find(cc_input(location_key, :initial_read_sec)).assert_selector(:fillable_field, with: initial_read_sec)   # 秒読み
+    find(cc_input(location_key, :initial_extra_sec)).assert_selector(:fillable_field, with: initial_extra_sec) # 猶予(秒)
+    find(cc_input(location_key, :every_plus)).assert_selector(:fillable_field, with: every_plus)               # 1手毎加算(秒)
   end
 
   def assert_clock_active_black
@@ -96,8 +89,7 @@ module SharedMethods
   end
 
   def assert_white_read_sec(second)
-    v = find(".is_white .read_sec").text.to_i
-    assert { v == second || v == second.pred }
+    assert_selector(".is_white .read_sec") { |e| [second, second.pred].include?(e.text.to_i) }
   end
 
   # 強制的に時間切れにする

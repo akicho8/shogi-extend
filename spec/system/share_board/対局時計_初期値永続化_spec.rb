@@ -7,11 +7,11 @@ RSpec.describe type: :system, share_board_spec: true do
     visit "/share-board"
 
     clock_open
-    clock_box_set(:black, *@CLOCK_VALUES) # aliceが時計を設定する
+    clock_box_form_set(:black, *@CLOCK_VALUES) # aliceが時計を設定する
     find(".play_button").click         # 開始 (このタイミングで初期値として保存する)
 
     visit(current_path)                # リロード
     clock_open
-    clock_box_values_eq(:black, @CLOCK_VALUES) # 時計の初期値が復帰している
+    clock_box_form_eq(:black, *@CLOCK_VALUES) # 時計の初期値が復帰している
   end
 end

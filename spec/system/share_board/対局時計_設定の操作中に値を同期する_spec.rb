@@ -19,7 +19,7 @@ RSpec.describe "対局時計_設定の操作中に値を同期する", type: :sy
     b_block { case1("b") }
     a_block do
       clock_open
-      clock_box_set(:black, 1, 2, 3, 4)   # alice が時計を操作し終わると 0.5 秒に
+      clock_box_form_set(:black, 1, 2, 3, 4)   # alice が時計を操作し終わると 0.5 秒に
     end
     b_block do
       assert_text "cc_params:[[1,2,3,4]]", wait: CC_INPUT_DEBOUNCE_DELAY + 5 # bob の画面に反映する
