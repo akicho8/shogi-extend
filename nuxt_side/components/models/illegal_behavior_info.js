@@ -36,7 +36,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
       }, {
         key: "is_illegal_behavior_throw",
         name: "関与しない",
-        message: "リアル対面対局と同じ。反則に気づかないまま対局が進んでしまう場合がある",
+        message: "リアル対面対局と同じ",
         type: "is-danger",
         sp_illegal_validate: false,
         sp_illegal_cancel: false,
