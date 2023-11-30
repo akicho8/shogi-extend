@@ -7,7 +7,7 @@ nuxt-link.SwarsBattleShowUserLink(
   span(:class="`has-text-${membership.location_key}`" v-if="with_location") ☗
   span.ml-1(v-if="with_user_key") {{membership.user.key}}
   span.ml-1 {{membership.grade_info.name}}
-  span.mx-2(v-if="membership.user.ban_at") ✝
+  span.mx-1(v-if="membership.user.ban_at") ✝
   span.ml-1(v-if="with_judge && membership.judge_key !== 'lose'") ({{judge_info.name}})
 </template>
 
