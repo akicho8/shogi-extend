@@ -59,6 +59,14 @@ class ApplicationMailer < ActionMailer::Base
         fixed: false,
       }.merge(params)
 
+      if params[:table_format]
+        if params[:body].kind_of?(Array) || params[:body].kind_of?(Hash)
+          params[:body] = params[:body].to_t
+        end
+      end
+
+      body = gmail_problem_workaround(params[:body])
+
       if params[:fixed]
         body = gmail_problem_workaround(params[:body])
         params = params.merge(content_type: "text/html", body: pre_tag(body))

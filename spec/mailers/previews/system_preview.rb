@@ -2,6 +2,6 @@
 
 class SystemPreview < ActionMailer::Preview
   def notify
-    SystemMailer.notify(body: ENV.to_h.to_t)
+    SystemMailer.notify(body: ENV.to_h, table_format: true)
   end
 end

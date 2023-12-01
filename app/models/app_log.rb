@@ -20,19 +20,6 @@
 # [Warning: Need to add relation] AppLog モデルに belongs_to :process を追加してください
 #--------------------------------------------------------------------------------
 
-# == Schema Information ==
-#
-# App log (app_logs as AppLog)
-#
-# |------------+----------+--------------+-------------+------+-------|
-# | name       | desc     | type         | opts        | refs | index |
-# |------------+----------+--------------+-------------+------+-------|
-# | id         | ID       | integer(8)   | NOT NULL PK |      |       |
-# | subject    | 件名     | string(255)  | NOT NULL    |      |       |
-# | body       | 内容     | string(8192) | NOT NULL    |      |       |
-# | created_at | 作成日時 | datetime     | NOT NULL    |      |       |
-# |------------+----------+--------------+-------------+------+-------|
-#
 # ▼管理画面
 # AppLogScript
 #
@@ -44,10 +31,11 @@
 # AppLog.info(subject: "xxx", body: "xxx", slack_notify: true)
 # AppLog.info(subject: "xxx", body: "xxx", slack_notify: true, mail_notify: true)
 # AppLog.info("xxx", mail_notify: true)
-# AppLog.info(Exception.new, emoji: "🧡")
+# AppLog.info(body: {foo: 1}, mail_notify: true, table_format: true)
+# AppLog.info(Exception.new, emoji: "🧡", data: "追加の情報")
 # AppLog.info(body: Exception.new, emoji: "🧡")
 # AppLog.call("xxx")
-#
+
 class AppLog < ApplicationRecord
   EXCEPTION_SUPPORT = true
   EXCEPTION_NOTIFIER_USE = false
