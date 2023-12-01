@@ -8,7 +8,7 @@
     b-field(label="ブラウザ移行用URL" custom-class="is-small" type="is-primary" message="このURLをコピーして他のブラウザに持っていくと今と同じ状態で再開できる")
       b-input(expanded readonly :value="base.permalink_url")
       p.control
-        b-button(@click="clipboard_copy({text: base.permalink_url})" type="is-primary") コピー
+        b-button(@click="clipboard_copy(base.permalink_url)" type="is-primary") コピー
   .modal-card-foot
     b-button.close_handle(@click="close_handle" icon-left="chevron-left") 閉じる
 </template>

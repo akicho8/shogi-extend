@@ -177,12 +177,12 @@ export default {
 
     current_url_copy() {
       this.sidebar_close()
-      this.clipboard_copy({text: this.permalink_url})
+      this.clipboard_copy(this.permalink_url)
     },
 
     short_url_copy(method) {
       this.sidebar_close()
-      this.clipboard_copy({text: this.short_url(method)})
+      this.clipboard_copy(this.short_url(method))
     },
 
     short_url(method) {

@@ -32,7 +32,7 @@ export default {
   methods: {
     clipboard_copy_handle() {
       this.$sound.play_click()
-      this.clipboard_copy({text: this.kento_api_url})
+      this.clipboard_copy(this.kento_api_url)
     },
     back_handle() {
       this.$sound.play_click()

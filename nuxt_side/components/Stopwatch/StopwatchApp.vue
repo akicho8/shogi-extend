@@ -146,7 +146,7 @@ export default {
   methods: {
     copy_handle(text) {
       this.$sound.play_click()
-      this.clipboard_copy({text: text})
+      this.clipboard_copy(text)
     },
 
     parmalink_modal_show() {

@@ -6,7 +6,7 @@ export const mod_player_names = {
     // メンバーの名前をコピーする
     player_names_copy_handle() {
       this.$sound.play_click()
-      this.clipboard_copy({text: this.player_names_with_title_as_human_text})
+      this.clipboard_copy(this.player_names_with_title_as_human_text)
     },
   },
 
