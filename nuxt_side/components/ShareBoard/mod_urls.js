@@ -1,3 +1,4 @@
+import { Gs } from "@/components/models/gs.js"
 import { SimpleCache } from "@/components/models/simple_cache.js"
 import { DotSfen } from "@/components/models/dot_sfen.js"
 import { SafeSfen } from "@/components/models/safe_sfen.js"
@@ -37,12 +38,31 @@ export const mod_urls = {
     },
 
     // 「短縮URLのコピー」
+    //
+    // 次のように書いても一応動いたが予想に反してキャッシュの中に Promise オブジェクトが入ってしまう
+    //
+    //  async current_short_url_copy_handle() {
+    //    if (false) {
+    //      this.$sound.play_click()
+    //      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
+    //      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+    //        this.sidebar_p = false
+    //      }
+    //    }
+    //  }
+    //
     async current_short_url_copy_handle() {
       this.$sound.play_click()
-      const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
-      console.log(simple_cache.cache)
-      console.log(url)
-      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+
+      const key = Gs.str_to_md5(this.current_url)
+
+      // 1回目
+      if (simple_cache.empty_p(key)) {
+        simple_cache.write(key, await this.__short_url_fetch())
+      }
+
+      // 1, 2回目
+      if (this.clipboard_copy(simple_cache.read(key), {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
         this.sidebar_p = false
       }
     },

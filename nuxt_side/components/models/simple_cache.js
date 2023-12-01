@@ -1,3 +1,27 @@
+// 普通のキャッシュだが axios を経由したときクリップボードへのコピーに失敗する対策のために用意した
+//
+// 使用例
+//
+//  async any_method(url) {
+//    const key = Gs.str_to_md5(url)
+//
+//    // 1回目
+//    if (simple_cache.empty_p(key)) {
+//      this.debug_alert("APIアクセス発生")
+//      simple_cache.write(key, await this.$axios.$get(url))
+//    }
+//
+//    // 1,2回目
+//    return this.clipboard_copy(simple_cache.read(key))
+//  },
+//
+// 本当は次のように書きたいがそうすると cache に Promise オブジェクトが入ってしまう(どうすれば？)
+//
+//  async any_method(url) {
+//    const url = await simple_cache.fetch(url, async () => await this.$axios.$get(url))
+//    return this.clipboard_copy(url)
+//  }
+//
 import { Gs } from "@/components/models/gs.js"
 
 export class SimpleCache {
@@ -33,5 +57,10 @@ export class SimpleCache {
   exist_p(key) {
     Gs.assert(key != null, "key != null")
     return this.read(key) != null
+  }
+
+  empty_p(key) {
+    Gs.assert(key != null, "key != null")
+    return this.read(key) == null
   }
 }
