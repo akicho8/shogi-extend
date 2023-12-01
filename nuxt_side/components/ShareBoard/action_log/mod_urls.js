@@ -21,8 +21,7 @@ export const mod_urls = {
     // 棋譜URLコピー
     current_url_copy_handle() {
       this.$sound.play_click()
-      const success_message = "棋譜再生用のURLをコピーしました"
-      this.clipboard_copy({text: this.current_url, success_message: success_message})
+      this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
       this.base.shared_al_add_simple("棋譜URLコピー")
     },
 

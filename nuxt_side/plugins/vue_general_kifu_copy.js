@@ -26,7 +26,7 @@ export const vue_general_kifu_copy = {
       // 2回目(read)
       if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
         if (simple_cache.exist_p(key)) {
-          return this.clipboard_copy({text: simple_cache.read(key)})
+          return this.clipboard_copy(simple_cache.read(key))
         }
       }
 
@@ -34,7 +34,7 @@ export const vue_general_kifu_copy = {
       const body = await this.__general_kifu_copy_axios(options)
       if (body) {
         simple_cache.write(key, body)
-        return this.clipboard_copy({text: body})
+        return this.clipboard_copy(body)
       }
     },
     __general_kifu_copy_axios(options = {}) {
@@ -64,7 +64,7 @@ export const vue_general_kifu_copy = {
     //     const body = simple_cache.fetch(key, async () => {
     //       return await this.$axios.$get(url)
     //     })
-    //     return this.clipboard_copy({text: body})
+    //     return this.clipboard_copy(body)
     //   },
     //
     async kif_clipboard_copy_from_url(url) {
@@ -74,7 +74,7 @@ export const vue_general_kifu_copy = {
       if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
         if (simple_cache.exist_p(key)) {
           const body = simple_cache.read(key)
-          return this.clipboard_copy({text: body})
+          return this.clipboard_copy(body)
         }
       }
 
@@ -82,7 +82,7 @@ export const vue_general_kifu_copy = {
       this.debug_alert("APIアクセス発生")
       const body = await this.$axios.$get(url)
       simple_cache.write(key, body)
-      return this.clipboard_copy({text: body})
+      return this.clipboard_copy(body)
     },
   },
 }

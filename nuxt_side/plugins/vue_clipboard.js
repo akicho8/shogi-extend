@@ -4,10 +4,12 @@ export const vue_clipboard = {
     // params を破壊する
     // params をずっと保持していれば1,2度目で挙動がかわる(←かなり危険)
     // 成功したら true を返す
-    clipboard_copy(params) {
+    clipboard_copy(text, params = {}) {
       const success_message  = "コピーしました"
-      const failure_message1 = "iOSだけなぜか初回は失敗するのでもう一回タップしてみてください"
+      const failure_message1 = "iOSだけなぜか初回に失敗しやがるのでもう一回タップしてみてください"
       const failure_message2 = "失敗しました。もう何回やってもダメそうです"
+
+      params.text = text
 
       let success = false
 

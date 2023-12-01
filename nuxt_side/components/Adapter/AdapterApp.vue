@@ -180,7 +180,7 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     kifu_copy_handle(e) {
-      this.record_fetch(() => this.clipboard_copy({text: this.record.all_kifs[e.format_key]}))
+      this.record_fetch(() => this.clipboard_copy(this.record.all_kifs[e.format_key]))
     },
     validate_handle() {
       this.record_fetch(() => {

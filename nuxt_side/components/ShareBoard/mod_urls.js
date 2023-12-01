@@ -26,21 +26,23 @@ export const mod_urls = {
 
       this.sidebar_p = false
       this.$sound.play_click()
-      return this.clipboard_copy({text: this.room_url, success_message: "部屋のリンクをコピーしました"})
+      return this.clipboard_copy(this.room_url, {success_message: "部屋のリンクをコピーしました"})
     },
 
     // 「棋譜コピー (リンク)」
     current_url_copy_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.clipboard_copy({text: this.current_url, success_message: "棋譜再生用のURLをコピーしました"})
+      this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
     },
 
     // 「短縮URLのコピー」
     async current_short_url_copy_handle() {
       this.$sound.play_click()
       const url = await simple_cache.fetch(this.current_url, this.__short_url_fetch)
-      if (this.clipboard_copy({text: url, success_message: "棋譜再生用の短縮URLをコピーしました"})) {
+      console.log(simple_cache.cache)
+      console.log(url)
+      if (this.clipboard_copy(url, {success_message: "棋譜再生用の短縮URLをコピーしました"})) {
         this.sidebar_p = false
       }
     },
