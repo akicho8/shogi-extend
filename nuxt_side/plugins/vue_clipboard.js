@@ -1,65 +1,8 @@
-// 2回目のコピーでコピーを成功させるか？
-// iOS では axios でサーバー通信した直後にクリップボードに入れようとするとなぜか失敗する
-// そのため1回目で失敗したときにキャッシュしておき、2度目で axios のアクセスが発声しないようにすることでコピーを成功させる
-const IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND = true
-
-// もともと Vue 側の data に入れていたけどリアクティブである必要ないのでこっちでいい
-const __KIFU_COPY_CACHE_FOR_IOS__ = {}
-
 export const vue_clipboard = {
   methods: {
-    // いちばん簡単なインターフェイス
-    simple_clipboard_copy(text) {
-      return this.clipboard_copy({text: text})
-    },
-
-    // 棋譜を渡して指定フォーマットにしたものをコピーする
-    // general_kifu_copy(sfen, {to_format: "kif"})
-    general_kifu_copy(any_source, options = {}) {
-      options = {
-        candidate_enable: true, // KI2の場合trueにしないとエラーになる
-        validate_enable: false,
-        any_source: any_source,
-        ...options,
-      }
-      options.to_format = options.to_format || "kif"
-
-      // BODをコピーするときだけ turn が入っているので一応キーに含める
-      const key = [any_source, options.to_format, (options.turn || "")].join("-")
-      const body = __KIFU_COPY_CACHE_FOR_IOS__[key]
-      if (body) {
-        return this.simple_clipboard_copy(body)
-      }
-
-      this.$axios.$post("/api/general/any_source_to.json", options).then(e => {
-        this.bs_error_message_dialog(e)
-        if (e.body) {
-          if (!this.simple_clipboard_copy(e.body)) {
-            if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-              __KIFU_COPY_CACHE_FOR_IOS__[key] = e.body
-            }
-          }
-        }
-      })
-    },
-
-    // 指定 URL の結果をクリップボードにコピーする
-    // 前回取得したテキストを保存し2度目はリクエストしない
-    // 成功したら true を返す
-    async kif_clipboard_copy_from_url(url) {
-      let text = __KIFU_COPY_CACHE_FOR_IOS__[url]
-      if (text == null) {
-        text = await this.$axios.$get(url)
-        if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-          __KIFU_COPY_CACHE_FOR_IOS__[url] = text
-        }
-      }
-      return this.clipboard_copy({text: text})
-    },
-
     // params.text をクリップボードにコピー
     // params を破壊する
-    // params をずっと保持していれば1,2度目で挙動がかわる
+    // params をずっと保持していれば1,2度目で挙動がかわる(←かなり危険)
     // 成功したら true を返す
     clipboard_copy(params) {
       const success_message  = "コピーしました"

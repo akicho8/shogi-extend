@@ -15,6 +15,7 @@ import Vue from "vue"
 import { vue_dialog            } from "./vue_dialog.js"
 import { vue_actioncable       } from "./vue_actioncable.js"
 import { vue_clipboard         } from "./vue_clipboard.js"
+import { vue_general_kifu_copy         } from "./vue_general_kifu_copy.js"
 import { vue_scroll            } from "./vue_scroll.js"
 import { vue_mounted_next      } from "./vue_mounted_next.js"
 import { vue_support_route } from "./vue_support_route.js"
@@ -26,6 +27,7 @@ if (!Vue.__client_js_mixin__) {
     mixins: [
       vue_dialog,
       vue_clipboard,
+      vue_general_kifu_copy,
       vue_actioncable,
       vue_scroll,
       vue_mounted_next,
