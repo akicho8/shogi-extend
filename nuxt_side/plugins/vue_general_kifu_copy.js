@@ -1,11 +1,6 @@
 import { Gs } from "@/components/models/gs.js"
 import { SimpleCache } from "@/components/models/simple_cache.js"
 
-// 2回目のコピーでコピーを成功させるか？
-// iOS では axios でサーバー通信した直後にクリップボードに入れようとするとなぜか失敗する
-// そのため1回目で失敗したときにキャッシュしておき、2度目で axios のアクセスが発声しないようにすることでコピーを成功させる
-const IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND = true
-
 const simple_cache = new SimpleCache()
 
 export const vue_general_kifu_copy = {
@@ -23,19 +18,13 @@ export const vue_general_kifu_copy = {
 
       const key = this.__general_kifu_copy_key(any_source, options)
 
-      // 2回目(read)
-      if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-        if (simple_cache.exist_p(key)) {
-          return this.clipboard_copy(simple_cache.read(key))
-        }
+      // 1回目
+      if (simple_cache.empty_p(key)) {
+        simple_cache.write(key, await this.__general_kifu_copy_axios(options))
       }
 
-      // 1回目(write)
-      const body = await this.__general_kifu_copy_axios(options)
-      if (body) {
-        simple_cache.write(key, body)
-        return this.clipboard_copy(body)
-      }
+      // 1, 2回目
+      return this.clipboard_copy(simple_cache.read(key))
     },
     __general_kifu_copy_axios(options = {}) {
       this.debug_alert("APIアクセス発生")
@@ -70,19 +59,14 @@ export const vue_general_kifu_copy = {
     async kif_clipboard_copy_from_url(url) {
       const key = Gs.str_to_md5(url)
 
-      // 2回目(read)
-      if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
-        if (simple_cache.exist_p(key)) {
-          const body = simple_cache.read(key)
-          return this.clipboard_copy(body)
-        }
+      // 1回目
+      if (simple_cache.empty_p(key)) {
+        this.debug_alert("APIアクセス発生")
+        simple_cache.write(key, await this.$axios.$get(url))
       }
 
-      // 1回目(write)
-      this.debug_alert("APIアクセス発生")
-      const body = await this.$axios.$get(url)
-      simple_cache.write(key, body)
-      return this.clipboard_copy(body)
+      // 1,2回目
+      return this.clipboard_copy(simple_cache.read(key))
     },
   },
 }
