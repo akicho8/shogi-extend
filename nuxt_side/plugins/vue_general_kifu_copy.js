@@ -48,7 +48,7 @@ export const vue_general_kifu_copy = {
     },
     __general_kifu_copy_key(any_source, options) {
       // BODをコピーするときだけ turn が入っているので一応キーに含める
-      const str = [any_source, options.to_format, (options.turn || "")].join("/")
+      const str = [any_source, options.to_format, (options.turn ?? "")].join("/")
       return Gs.str_to_md5(str)
     },
 
