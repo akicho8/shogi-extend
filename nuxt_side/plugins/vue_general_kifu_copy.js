@@ -23,14 +23,14 @@ export const vue_general_kifu_copy = {
 
       const key = this.__general_kifu_copy_key(any_source, options)
 
-      // 2回目
+      // 2回目(read)
       if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
         if (simple_cache.exist_p(key)) {
           return this.clipboard_copy({text: simple_cache.read(key)})
         }
       }
 
-      // 1回目
+      // 1回目(write)
       const body = await this.__general_kifu_copy_axios(options)
       if (body) {
         simple_cache.write(key, body)
@@ -55,10 +55,22 @@ export const vue_general_kifu_copy = {
     // 指定 URL の結果をクリップボードにコピーする
     // 前回取得したテキストを保存し2度目はリクエストしない
     // 成功したら true を返す
+    //
+    // 本当は次のように書きたいが、そうすると Promise オブジェクトがキャッシュに入ってしまって
+    // わけがわからんことになるので冗長だが read write に分けて書くことにした
+    //
+    //   async kif_clipboard_copy_from_url(url) {
+    //     const key = Gs.str_to_md5(url)
+    //     const body = simple_cache.fetch(key, async () => {
+    //       return await this.$axios.$get(url)
+    //     })
+    //     return this.clipboard_copy({text: body})
+    //   },
+    //
     async kif_clipboard_copy_from_url(url) {
       const key = Gs.str_to_md5(url)
 
-      // 2回目
+      // 2回目(read)
       if (IOS_CLIPBOARD_BUG_THAT_FAILS_WITH_AXIOS_WORKAROUND) {
         if (simple_cache.exist_p(key)) {
           const body = simple_cache.read(key)
@@ -66,7 +78,7 @@ export const vue_general_kifu_copy = {
         }
       }
 
-      // 1回目
+      // 1回目(write)
       this.debug_alert("APIアクセス発生")
       const body = await this.$axios.$get(url)
       simple_cache.write(key, body)
