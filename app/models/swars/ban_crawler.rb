@@ -14,7 +14,7 @@ module Swars
         :query     => {},                         # スコープ
         :sleep     => Rails.env.local? ? 0 : 1.0, # 本家への負荷軽減用 (local以外)
         :ban_reset => Rails.env.local?,           # 事前にBAN情報をリセットするか？ (localのみ)
-        :debug     => Rails.env.local?,
+        :log_limit => 50,
       }.merge(options)
 
       AppLog.info(body: options)
@@ -40,6 +40,8 @@ module Swars
       @begin_at = Time.current
       @scope_count = scope.count
       @found_count = 0
+      @rows = []
+      @all_users = []
     end
 
     def scope
@@ -52,14 +54,10 @@ module Swars
         user.ban_set(r.ban?)
         if r.ban?
           @found_count += 1
-          if @options[:debug]
-            rows << user.to_h.merge("マイページ" => r.oneline)
-          end
+          @rows = (@rows + [user.to_h.merge("マイページ" => r.oneline)]).take(@options[:log_limit])
         end
       end
-      if @options[:debug]
-        all_users << user.to_h
-      end
+      @all_users = (@all_users + [user.to_h]).take(@options[:log_limit])
     end
 
     def subject
@@ -74,8 +72,8 @@ module Swars
       [
         @options.to_t,
         other.to_t,
-        rows.to_t,
-        all_users.to_t,
+        @rows.to_t,
+        @all_users.to_t,
       ].reject(&:blank?).join
     end
 
@@ -84,16 +82,8 @@ module Swars
         "開始" => @begin_at&.to_fs(:ymdhms),
         "終了" => @end_at&.to_fs(:ymdhms),
         "対象" => @scope_count,
-        "発見" => rows.count,
+        "発見" => @found_count,
       }
-    end
-
-    def rows
-      @rows ||= []
-    end
-
-    def all_users
-      @all_users ||= []
     end
   end
 end
