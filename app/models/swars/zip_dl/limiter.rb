@@ -5,9 +5,7 @@ module Swars
 
       # これだけDLすると禁止 (DL数回数ではなくDLに含む棋譜総数)
       cattr_accessor(:recent_count_max) {
-        if Rails.env.development?
-          3
-        elsif Rails.env.test?
+        if Rails.env.local?
           3
         else
           50 * 10
