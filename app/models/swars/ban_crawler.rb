@@ -14,7 +14,7 @@ module Swars
         :query     => {},                         # スコープ
         :sleep     => Rails.env.local? ? 0 : 1.0, # 本家への負荷軽減用 (local以外)
         :ban_reset => Rails.env.local?,           # 事前にBAN情報をリセットするか？ (localのみ)
-        :debug     => true,
+        :debug     => Rails.env.local?,
       }.merge(options)
 
       AppLog.info(body: options)
@@ -38,7 +38,8 @@ module Swars
       end
 
       @begin_at = Time.current
-      @old_count = scope.count
+      @scope_count = scope.count
+      @found_count = 0
     end
 
     def scope
@@ -50,7 +51,10 @@ module Swars
         r = Agent::Mypage.new(@options.merge(user_key: user.key)).fetch
         user.ban_set(r.ban?)
         if r.ban?
-          rows << user.to_h.merge("マイページ" => r.oneline)
+          @found_count += 1
+          if @options[:debug]
+            rows << user.to_h.merge("マイページ" => r.oneline)
+          end
         end
       end
       if @options[:debug]
@@ -59,11 +63,11 @@ module Swars
     end
 
     def subject
-      [
-        @end_at ? "[終了]" : "[開始]",
-        "BANクローラー",
-        "#{@old_count}件中#{rows.count}件発見",
-      ].join(" ")
+      if !@end_at
+        "[開始] BANクローラー 走査件数:#{@scope_count}件"
+      else
+        "[終了] BANクローラー #{@scope_count}件中#{@found_count}件確定"
+      end
     end
 
     def body
@@ -79,7 +83,7 @@ module Swars
       {
         "開始" => @begin_at&.to_fs(:ymdhms),
         "終了" => @end_at&.to_fs(:ymdhms),
-        "対象" => @old_count,
+        "対象" => @scope_count,
         "発見" => rows.count,
       }
     end
