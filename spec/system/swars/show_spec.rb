@@ -90,4 +90,9 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
       Capybara.assert_selector("label.is-selected", text: "+", exact_text: true)
     end
   end
+
+  it "開いたときスライダーにフォーカスしている" do
+    visit2 "/swars/battles/#{@key}"
+    assert_selector(".ShogiPlayer .b-slider-thumb", focused: true)
+  end
 end

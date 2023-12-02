@@ -236,6 +236,9 @@ export default {
       }
 
       this.short_sfen = this.record.sfen_body
+
+      // PCの場合はキーボードの左右ですぐ操作できるようスライダーにフォーカスしておく
+      this.$nextTick(() => this.slider_focus())
     },
 
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
