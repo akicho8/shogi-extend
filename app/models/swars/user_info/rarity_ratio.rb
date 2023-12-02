@@ -8,8 +8,10 @@ module Swars
       end
 
       def to_chart
-        RarityInfo.reverse_each.collect do |e|
-          { name: e.style_key, value: counts_hash[e.key] }
+        if total.positive?
+          RarityInfo.reverse_each.collect do |e|
+            { name: e.style_key, value: counts_hash[e.key] }
+          end
         end
       end
 
@@ -31,7 +33,6 @@ module Swars
       # { normal: 0.25, rare: 0.25, ... }
       def ratios_hash
         @ratios_hash ||= yield_self do
-          total = counts_hash.values.sum
           if total.positive?
             RarityInfo.inject({}) do |a, e|
               a.merge(e.key => counts_hash[e.key].fdiv(total))
@@ -41,6 +42,10 @@ module Swars
       end
 
       private
+
+      def total
+        @total ||= counts_hash.values.sum
+      end
 
       # { normal: 5, rare: 5, ... }
       def counts_hash
