@@ -95,7 +95,7 @@ module Swars
             }
           end
 
-          if Rails.env.development?
+          if Rails.env.local?
             list = list.collect { |e| e.merge("度数" => categoy_data_for_development[e["階級"]] || 0) }
           end
 

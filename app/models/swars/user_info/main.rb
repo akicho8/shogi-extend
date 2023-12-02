@@ -47,7 +47,7 @@ module Swars
 
           hash[:medal_list] = medal_list.to_a
 
-          if Rails.env.development?
+          if Rails.env.local?
             hash[:debug_hash] = medal_list.to_debug_hash
             hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
           end
