@@ -1,3 +1,5 @@
+import { Gs } from "@/components/models/gs.js"
+
 export const mod_form = {
   data() {
     return {
@@ -23,6 +25,12 @@ export const mod_form = {
         s = "相手は好敵手"
       }
       return s
+    },
+
+    swars_id_required_message() {
+      if (Gs.blank_p(this.user_key)) {
+        return "1つだけ入力してください"
+      }
     },
   },
 }

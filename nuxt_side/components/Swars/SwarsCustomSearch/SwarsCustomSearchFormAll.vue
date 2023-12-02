@@ -4,18 +4,18 @@
     b-field(grouped)
       b-input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off")
       p.control
-        b-button.has-text-weight-bold(@click="TheApp.search_click_handle" type="is-primary")
+        b-button.has-text-weight-bold(@click="TheApp.search_click_handle" type="is-primary" :disabled="TheApp.swars_id_required_message")
           | 検索
 
   .columns.form_block.is-multiline.is-variable.is-0-mobile.is-0-tablet.is-0-desktop.is-0-widescreen.is-0-fullhd
 
     .column.is-6-tablet.is-4-desktop
-      b-field.field_block(custom-class="is-small")
+      b-field.field_block.user_key(custom-class="is-small" :type="{'is-danger': TheApp.swars_id_required_message}" :message="TheApp.swars_id_required_message")
         template(#label)
           | 対象のウォーズID
           span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
             | 必須
-        b-input.user_key(v-model.trim="TheApp.user_key" placeholder="itoshinTV" :size="TheApp.input_element_size" :disabled="!user_key_field_show")
+        b-input(v-model.trim="TheApp.user_key" placeholder="BOUYATETSU5" :size="TheApp.input_element_size" :disabled="!user_key_field_show")
 
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="持ち時間"   :records="TheApp.xi.rule_infos"  var_name="rule_keys")
@@ -97,7 +97,6 @@ export default {
     new_query_field_show: { type: Boolean, required: false, default: true, },
     user_key_field_show:  { type: Boolean, required: false, default: true, },
   },
-  methods: {},
   computed: {},
 }
 </script>
