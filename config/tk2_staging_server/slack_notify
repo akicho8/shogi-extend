@@ -16,6 +16,8 @@ class App
 
   def oneline
     status.match(/Active:\s*(.*)/).captures.first.strip
+  rescue => error
+    error.message
   end
 
   def color
@@ -26,7 +28,7 @@ class App
   end
 
   def status
-    `systemctl status --no-pager --full #{name}`
+    `systemctl status --no-pager --full #{name}`.scrub
   end
 
   def icon_emoji
