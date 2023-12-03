@@ -56,6 +56,8 @@ export const vue_browser_and_form = {
       }
     },
 
+    // 使用禁止
+    // 未使用
     sp_turn_slider_auto_focus() {
       this.desktop_focus_to(this.$el.querySelector(".turn_slider"))
     },
