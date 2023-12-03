@@ -17,6 +17,7 @@ client-only
             :sp_body="record.sfen_body"
             sp_key_event_capture
             sp_slider
+            sp_mounted_focus_to_slider
             sp_controller
             :sp_viewpoint.sync="viewpoint"
             :sp_player_info="player_info"
@@ -238,7 +239,8 @@ export default {
       this.short_sfen = this.record.sfen_body
 
       // PCの場合はキーボードの左右ですぐ操作できるようスライダーにフォーカスしておく
-      this.$nextTick(() => this.slider_focus())
+      // this.$nextTick(() => this.slider_focus())
+      // ここではなく sp_mounted_focus_to_slider を有効にする
     },
 
     // 「チャート表示→閉じる→別レコード開く」のときに別レコードの時間チャートを開く
