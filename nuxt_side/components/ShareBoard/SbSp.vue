@@ -63,6 +63,7 @@ export default {
       hv.sp_layer                    = this.sp_layer
       hv.sp_controller               = this.sp_controller
       hv.sp_slider                   = this.sp_slider
+      hv.sp_mounted_focus_to_slider  = true // マウントしたらスライダーにフォーカスする
 
       // スマホでのUI確認用
       if (false) {
