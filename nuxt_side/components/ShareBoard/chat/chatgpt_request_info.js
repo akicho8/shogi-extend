@@ -12,7 +12,7 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
         command_fn: (context, params) => {
           const name = context.user_call_name(params.from_user_name)
           if (context.$route.query.__system_test_now__) { return }
-          return `${name}に元気よくユニークな挨拶をしてください。`
+          // return `${name}に元気よくユニークな挨拶をしてください。`
         },
       },
       {

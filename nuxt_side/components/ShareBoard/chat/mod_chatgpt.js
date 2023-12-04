@@ -40,7 +40,7 @@ export const mod_chatgpt = {
         const ymd = dayjs().format("YYYY-MM-DD")
         if (this.gpt_hello_ymd !== ymd) {
           this.gpt_hello_ymd = ymd // 本日はあいさつしたとする (しかしLINEから来られるとクッキーが効かず保存できない罠がある)
-          if (this.cc_play_p) {
+          if (this.cc_play_p) {    // BUG: 時計の情報が届く前に見ているため常に false になる
             // 対局中は参加者にあいさつをスキップする
           } else {
             this.gpt_speak_for("参加者にあいさつする", params)
