@@ -3,13 +3,20 @@
 module Api
   class ThreeStageLeaguesController < ::Api::ApplicationController
     # http://localhost:3000/api/three_stage_league
+    # http://localhost:3000/api/three_stage_league?generation=9
     def show
       # リクエストされたリーグが存在しないか、
       # 最新の三段リーグだけ、ときどきクロールする
-      if !current_league || current_league.newest_record?
+      if current_league.blank? || current_league.newest_record?
         Rails.cache.fetch([self.class.name, current_generation].join("/"), :expires_in => 1.hour) do
           Tsl::League.generation_update(current_generation)
         end
+      end
+
+      # 結局取得できなかった場合
+      unless current_league
+        render json: {}, status: 404
+        return
       end
 
       memberships = current_league.memberships.includes(:user, :league).order(win: :desc, start_pos: :asc)
@@ -50,6 +57,12 @@ module Api
     end
 
     def current_league
+      if Rails.env.local?
+        if current_generation.negative?
+          return
+        end
+      end
+
       @current_league ||= Tsl::League.find_by(generation: current_generation)
     end
 
