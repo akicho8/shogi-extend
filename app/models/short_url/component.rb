@@ -2,46 +2,42 @@ module ShortUrl
   class Component < ApplicationRecord
     class << self
       # コントローラー用
-      def action(c)
-        record = fetch(c.params)
-        if c.request.format.html?
+      begin
+        # 作成 curl http://localhost:3000/api/short_url/components.json -d "original_url=/"
+        # 移動 http://localhost:3000/u/UaswCQacfXi
+        def show_action(c)
+          record = fetch(c.params)
           record.access_logs.create! # アクセスログは本当にリダイレクトする直前に記録する
-          c.redirect_to record.original_url
-        else
-          c.render json: record.compact_url
+          c.respond_to do |format|
+            format.json { c.render json: record }
+            format.all  { c.redirect_to record.original_url }
+          end
+        end
+
+        def create_action(c)
+          c.render json: from(c.params[:original_url]).compact_url
+        end
+      end
+
+      # key からレコードを取得する
+      def fetch(params)
+        fetch_by_id_param(params) || find_by!(key: params[:key])
+      end
+
+      def fetch_by_id_param(params)
+        if Rails.env.local?
+          if id = params[:id].presence
+            find(id)
+          end
         end
       end
 
       # 長いURLから短縮URLに直接変換する
-      def from(url)
-        fetch(original_url: url).compact_url
-      end
-
-      # params[:any] または params[:original_url] によって探したり作ったりする
-      def fetch(params)
-        if Rails.env.local?
-          case
-          when id = params[:id].presence
-            record = find(id)
-          when key = params[:key].presence
-            record = find_by!(key: key)
-          end
-        end
-
-        unless record
-          case
-          when any = params[:any].presence
-            record = find_by!(key: any)
-          when original_url = params[:original_url].presence
-            key = AlnumHash.call(original_url)
-            record = find_by(key: key)
-            record ||= create!(key: key, original_url: original_url)
-          else
-            raise "must not happen"
-          end
-        end
-
-        record
+      def from(original_url)
+        original_url.present? or raise ArgumentError
+        key = AlnumHash.call(original_url)
+        record = find_by(key: key)
+        record ||= create!(key: key, original_url: original_url)
       end
 
       def root_url

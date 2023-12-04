@@ -4,7 +4,7 @@ module ShortUrl
     skip_forgery_protection
 
     def show
-      Component.action(self)
+      Component.show_action(self)
     end
   end
 end

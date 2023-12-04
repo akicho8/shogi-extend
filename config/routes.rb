@@ -20,7 +20,7 @@ Rails.application.routes.draw do
 
   ################################################################################ ShortUrl
 
-  match "u(/:any)", to: "short_url/components#show", via: :all
+  get "u/:key", to: "short_url/components#show"
 
   ################################################################################ ログアウト
 
@@ -148,6 +148,10 @@ Rails.application.routes.draw do
       namespace :answer_logs do
         post :create
       end
+    end
+
+    namespace :short_url, format: :json do
+      resources :components, only: :create
     end
 
     resource :session, only: [] do
