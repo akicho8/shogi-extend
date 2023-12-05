@@ -4,7 +4,12 @@ module ShortUrl
       # コントローラー用
       begin
         # 作成 curl http://localhost:3000/api/short_url/components.json -d "original_url=/"
-        # 移動 http://localhost:3000/u/UaswCQacfXi
+        # 移動 curl -I http://localhost:3000/u/UaswCQacfXi.html
+        #
+        # 注意:
+        #   curl -I http://localhost:3000/u/UaswCQacfXi
+        #   とした場合は request.format.json? が有効になるのはなぜ？
+        #
         def show_action(c)
           record = fetch(c.params)
           record.access_logs.create! # アクセスログは本当にリダイレクトする直前に記録する
