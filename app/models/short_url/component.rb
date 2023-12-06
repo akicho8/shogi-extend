@@ -13,10 +13,7 @@ module ShortUrl
         def show_action(c)
           record = fetch(c.params)
           record.access_logs.create! # アクセスログは本当にリダイレクトする直前に記録する
-          c.respond_to do |format|
-            format.json { c.render json: record }
-            format.all  { c.redirect_to record.original_url }
-          end
+          c.redirect_to record.original_url
         end
 
         def create_action(c)
