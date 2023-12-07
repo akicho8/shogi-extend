@@ -7,7 +7,7 @@ module Swars
         end
         html = fetcher.fetch(:record, key.to_battle_url)
         if !html || params[:SwarsBattleNotFound]
-          raise SwarsBattleNotFound.new("指定の対局が存在しません<br>URLを間違えていませんか？<br>#{key.to_battle_url}")
+          raise SwarsBattleNotFound.new("指定の対局が存在しません<br>URLを間違えていませんか？<br>#{key.to_battle_url}<br>それか将棋ウォーズ本家がメンテナンス中かもしれません")
         end
         md = html.match(/data-react-props="(.*?)"/)
         if !md || params[:SwarsFormatIncompatible]
