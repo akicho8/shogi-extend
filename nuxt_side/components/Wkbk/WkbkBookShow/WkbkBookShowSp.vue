@@ -12,6 +12,7 @@ MainSection.WkbkBookShowSp
 
           //- p {{base.current_sfen}}
           //- p {{base.current_init_sfen}}
+          // sp_device="touch"
           CustomShogiPlayer(
             ref="main_sp"
             v-bind="sp_bind"
