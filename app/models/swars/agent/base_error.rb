@@ -10,20 +10,20 @@ module Swars
     end
 
     class SwarsFormatIncompatible < BaseError
-      def initialize(*)
-        super(400, "将棋ウォーズ本家のデータ構造が変わってしまいました")
+      def initialize(message = "将棋ウォーズ本家のデータ構造が変わってしまいました")
+        super(400, message)
       end
     end
 
     class RaiseConnectionFailed < BaseError
-      def initialize(status = nil, message = nil)
-        super(408, "混み合っています<br>しばらくしてからアクセスしてください")
+      def initialize(message = "混み合っています<br>しばらくしてからアクセスしてください")
+        super(408, message)
       end
     end
 
     class SwarsBattleNotFound < BaseError
-      def initialize(status = nil, message = nil)
-        super(404, "指定の対局が存在しません<br>URLを間違えていませんか？")
+      def initialize(message = "指定の対局が存在しません<br>URLを間違えていませんか？")
+        super(404, message)
       end
     end
   end
