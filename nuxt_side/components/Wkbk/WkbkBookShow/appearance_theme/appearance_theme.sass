@@ -7,21 +7,27 @@
 // |-----------------------+--------------------------|
 // appearance_theme_info.js
 .WkbkBookShowApp
+  // ライト
   &.is_appearance_theme_a
     +setvar(wb_fg_color, unset)
     +setvar(wb_bg_color, $white)
-    +setvar(wb_board_normal_color, hsla(  0,  0%,   0%, 0.2))
+    +setvar(wb_board_normal_color, hsla(0, 0%, 0%, 0.2))
 
-  // 黒と黄
+  // ダーク
   &.is_appearance_theme_b
-    +setvar(wb_fg_color,           $grey-lighter)
-    +setvar(wb_bg_color,           change_color($black, $lightness: 30%))
     +setvar(wb_board_normal_color, $sbc_b)
 
   // リアル盤
   &.is_appearance_theme_c
-    +setvar(wb_fg_color,           $grey-lighter)
-    +setvar(wb_bg_color,           change_color($black, $lightness: 30%))
+
+  // ダークとリアルで共通
+  &.is_appearance_theme_b, &.is_appearance_theme_c
+    +setvar(wb_fg_color, $grey-lighter)
+    +setvar(wb_bg_color, change_color($black, $lightness: 30%))  // 全体の背景色
+    +setvar(sp_touch_lifted_origin_bg_color, transparent)        // スマホ・持ち上げた駒・背景
+    +setvar(sp_touch_lifted_origin_opacity, 0.4)                 // スマホ・持ち上げた駒・非透明度
+    .Membership
+      // 盤だけ変更したい場合はこのスコープで指定する
 
   .WkbkBookShowSp
     +setvar(sp_board_color, var(--wb_board_normal_color)) // 盤の色(基本)
