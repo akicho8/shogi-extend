@@ -1,9 +1,9 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::ResponderBase do
+RSpec.describe ShareBoard::ChatAi::Responder::Base do
   it "works" do
     def case1(s)
-      ShareBoard::ResponderBase.new(message: s).normalized_user_message
+      ShareBoard::ChatAi::Responder::Base.new(message: s).normalized_user_message
     end
     assert { case1("foo")          == "foo"    }
     assert { case1("@gpt")         == ""       }

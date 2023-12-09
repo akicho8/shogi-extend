@@ -3,7 +3,7 @@ module ShareBoard
     queue_as :default
 
     def perform(params)
-      ShareBoard::Responder2.new(params).call
+      ShareBoard::ChatAi::Responder::Responder2.new(params).call
     end
   end
 end

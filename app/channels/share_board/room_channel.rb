@@ -114,11 +114,11 @@ module ShareBoard
       end
       track(data, subject: action, body: data["message"], emoji: emoji)
       ShareBoard::ChatMessageBroadcastJob.perform_later(room_code, data)
-      ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code))
+      ShareBoard::ChatAi::Responder1Job.perform_later(data.merge(room_code: room_code))
     end
 
     def gpt_speak(data)
-      ShareBoard::Responder2Job.perform_later(data.merge(room_code: room_code))
+      ShareBoard::ChatAi::Responder2Job.perform_later(data.merge(room_code: room_code))
     end
 
     def give_up_share(data)

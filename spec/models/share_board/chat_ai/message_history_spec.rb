@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::MessageHistory do
+RSpec.describe ShareBoard::ChatAi::MessageHistory do
   it "works" do
-    object = ShareBoard::MessageHistory.new(size: 2, expires_in: 1)
+    object = ShareBoard::ChatAi::MessageHistory.new(size: 2, expires_in: 1)
     object.clear_all
     object.push("a")
     object.push("b")
@@ -13,7 +13,7 @@ RSpec.describe ShareBoard::MessageHistory do
   end
 
   it "一定時間経つと破棄する" do
-    object = ShareBoard::MessageHistory.new(size: 1, expires_in: 1)
+    object = ShareBoard::ChatAi::MessageHistory.new(size: 1, expires_in: 1)
     object.clear_all
     object.push("a")
     sleep(1.5)
@@ -21,7 +21,7 @@ RSpec.describe ShareBoard::MessageHistory do
   end
 
   it "無駄なく反転する" do
-    object = ShareBoard::MessageHistory.new(size: 2, latest_order: true)
+    object = ShareBoard::ChatAi::MessageHistory.new(size: 2, latest_order: true)
     object.push("a")
     object.push("b")
     object.push("c")
@@ -29,7 +29,7 @@ RSpec.describe ShareBoard::MessageHistory do
   end
 
   # it "to_topic" do
-  #   object = ShareBoard::MessageHistory.new(size: 2, latest_order: true)
+  #   object = ShareBoard::ChatAi::MessageHistory.new(size: 2, latest_order: true)
   #   object.push("a")
   #   object.push("b")
   #   object.push("c")
