@@ -20,7 +20,7 @@ module ShareBoard
       #   "action"=>"message_share",
       #   :room_code=>"dev_room",
       # }
-      ShareBoard::Responder1.new(params).call
+      ShareBoard::ChatAi::Responder::Responder1.new(params).call
     end
   end
 end

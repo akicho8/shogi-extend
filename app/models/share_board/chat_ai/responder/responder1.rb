@@ -1,0 +1,17 @@
+# ▼発言を返す
+# rails r 'ShareBoard::ChatAi::Responder::Responder1.new(message: "@gpt 将棋ウォーズの棋力は？").call'
+
+module ShareBoard
+  module ChatAi
+    module Responder
+      class Responder1 < Base
+        def call
+          history << user_message
+          if user_raw_message.match?(MATCH_REGEXP)
+            response_generate
+          end
+        end
+      end
+    end
+  end
+end

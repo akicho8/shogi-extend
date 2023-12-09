@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::Responder1 do
+RSpec.describe ShareBoard::ChatAi::Responder::Responder1 do
   it "works" do
-    history = ShareBoard::MessageHistory.new
+    history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 
-    object = ShareBoard::Responder1.new(message: "@gpt こんにちは")
+    object = ShareBoard::ChatAi::Responder::Responder1.new(message: "@gpt こんにちは")
     object.call
 
     puts history.to_topic.to_t if $0 == __FILE__

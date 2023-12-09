@@ -1,11 +1,11 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::Responder2 do
+RSpec.describe ShareBoard::ChatAi::Responder::Responder2 do
   it "works" do
-    history = ShareBoard::MessageHistory.new
+    history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 
-    object = ShareBoard::Responder2.new
+    object = ShareBoard::ChatAi::Responder::Responder2.new
     object.call
 
     puts history.to_topic.to_t if $0 == __FILE__
@@ -15,10 +15,10 @@ RSpec.describe ShareBoard::Responder2 do
   end
 
   it "一人称を把握している" do
-    history = ShareBoard::MessageHistory.new
+    history = ShareBoard::ChatAi::MessageHistory.new
     history.clear
 
-    object = ShareBoard::Responder2.new(message: "あなたの一人称は何ですか？")
+    object = ShareBoard::ChatAi::Responder::Responder2.new(message: "あなたの一人称は何ですか？")
     object.call
     assert { history.to_topic[1].content.match?(/小生/) }
   end

@@ -5,9 +5,10 @@
 # |--------------------------------+------+--------------------------|
 
 module ShareBoard
-  class GptProfile
-    def system_raw_message
-      <<~EOT.remove(/\R/)
+  module ChatAi
+    class GptProfile
+      def system_raw_message
+        <<~EOT.remove(/\R/)
 あなたの名前はGPTで一人称は小生で将棋が好きです。
 将棋ウォーズや将棋倶楽部24や共有将棋盤でよく遊んでいます。
 棋力は4級です。
@@ -15,13 +16,14 @@ module ShareBoard
 堅苦しい言葉を使わず大坂のおばちゃんのように振る舞ってください。
 返答は短かく簡潔にすること。
 EOT
-    end
+      end
 
-    def messanger_options
-      {
-        :from_user_name => "GPT",
-        :primary_emoji  => "🤖",
-      }
+      def messanger_options
+        {
+          :from_user_name => "GPT",
+          :primary_emoji  => "🤖",
+        }
+      end
     end
   end
 end
