@@ -1,6 +1,7 @@
-# ▼発言を返す
-# rails r 'ShareBoard::Responder::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
-
+# 発言を返す
+#
+#   rails r 'ShareBoard::Responder::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
+#
 module ShareBoard
   module ChatAi
     module Responder

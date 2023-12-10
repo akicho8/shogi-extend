@@ -6,6 +6,7 @@
         XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
       template(v-else)
         | チャット
+    b-button.ml_loader(type="is-small" @click="TheSb.ml_loader" v-if="development_p") 読込
     b-button.test_button(type="is-small" @click="TheSb.ml_test" v-if="development_p") 追加
     b-field(v-if="TheSb.message_scope_dropdown_show_p")
       b-dropdown(animation="" position="is-bottom-left" v-model="TheSb.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
@@ -33,6 +34,9 @@ export default {
   inject: ["TheSb"],
   mounted() {
     this.input_focus()
+
+    // 古いログを取得する
+    this.TheSb.ml_loader()
 
     // 本当は SbMessageLog.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった

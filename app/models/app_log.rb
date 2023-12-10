@@ -133,12 +133,14 @@ class AppLog < ApplicationRecord
 
   scope :old_only,     -> expires_in { where(arel_table[:created_at].lteq(expires_in.seconds.ago)) } # 古いもの
 
+  normalizes :subject, with: -> e { column_value_db_truncate(:subject, e) }
+  normalizes :body,    with: -> e { column_value_db_truncate(:body, e)    }
+
   before_validation on: :create do
     self.level ||= LEVEL_DEFAULT
     self.emoji = EmojiInfo.lookup(emoji) || emoji || ""
     self.process_id ||= Process.pid
 
     normalize_blank_to_empty_string :subject, :body
-    truncate :subject, :body
   end
 end

@@ -25,10 +25,10 @@ module ShareBoard
         room.redis_clear
         room.battles.create! do |e|
           e.memberships.build([
-              { user_name: "alice", location_key: "black", judge_key: "win",  },
-              { user_name: "bob",   location_key: "white", judge_key: "lose", },
-              { user_name: "carol", location_key: "black", judge_key: "win",  },
-            ])
+                                { user_name: "alice", location_key: "black", judge_key: "win",  },
+                                { user_name: "bob",   location_key: "white", judge_key: "lose", },
+                                { user_name: "carol", location_key: "black", judge_key: "win",  },
+                              ])
         end
         room
       end
@@ -40,8 +40,31 @@ module ShareBoard
 
     has_many :roomships, dependent: :destroy, inverse_of: :room # この部屋の対局者の情報(ランキングとしてそのまま使える)
 
+    has_many :chot_messages, dependent: :destroy do                # この部屋の発言
+      def create_from_data!(data)
+        data = data.symbolize_keys
+        user = User.find_or_create_by!(name: data[:from_user_name])
+        create!({
+                  :user               => user,
+                  :content            => data[:message],
+                  :message_scope_key  => data[:message_scope_key],
+                  :from_connection_id => data[:from_connection_id],
+                  :real_user_id       => data[:real_user_id],
+                  # :from_avatar_path   => data[:from_avatar_path], # とる
+                  :primary_emoji      => data[:primary_emoji],
+                  :performed_at       => data[:performed_at],
+                })
+      end
+    end
+    has_many :chot_users, through: :chot_messages, source: :user # この部屋の発言者たち
+
     before_validation do
-      self.key ||= "dev_room"
+      if Rails.env.development?
+        self.key ||= SecureRandom.hex
+      end
+      if Rails.env.test?
+        self.key ||= "dev_room"
+      end
     end
 
     with_options presence: true do
@@ -77,6 +100,30 @@ module ShareBoard
 
     def redis
       @redis ||= RedisClient.new(db: AppConfig[:redis_db_for_share_board_room])
+    end
+
+    def receive_and_bc(data)
+      # data = {
+      #   "from_connection_id"=>"Ea29TwGfUbD",
+      #   "from_user_name"=>"alice",
+      #   "performed_at"=>1702177627002,
+      #   "ua_icon_key"=>"mac",
+      #   "ac_events_hash"=>{"initialized"=>1},
+      #   "debug_mode_p"=>true,
+      #   "from_avatar_path"=>"/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--76b7d01ef121c14889a810397668c90660fc3585/mcA_BLhf_normal.png",
+      #   "message_scope_key"=>"is_message_scope_public",
+      #   "message"=>"jkjk",
+      #   "action"=>"message_share",
+      # }
+
+      # user = User.find_or_create_by!(name: data["from_user_name"])
+      # chot_message = chot_messages.create!(user: user, content: data["message"])
+      # chot_messages.create_from_data!(data)
+
+      # chot_message = Room.find_or_create_by!(key: room_code).chot_messages.create_from_data!(data)
+      chot_message = chot_messages.create_from_data!(data) # DBに入れる
+      chot_message.broadcast_self                          # バックグラウンドで配る
+      ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code)) # バックグラウンドで返事をする FIXME: chot_message を元にする？
     end
   end
 end

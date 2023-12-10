@@ -41,8 +41,11 @@ module ShareBoard
       end
     end
 
-    has_many :memberships, dependent: :destroy # 対局時の情報(複数)
-    has_many :battles, through: :memberships   # 対局(複数)
+    has_many :memberships, dependent: :destroy                   # 対局時の情報(複数)
+    has_many :battles, through: :memberships                     # 対局(複数)
+
+    has_many :chot_messages, dependent: :destroy                 # このユーザーの発言たち (すべての部屋での発言)
+    has_many :chot_rooms, through: :chot_messages, source: :room # このユーザーが発言した部屋たち
 
     before_validation do
       self.name ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"

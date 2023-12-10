@@ -106,31 +106,59 @@ class ApplicationRecord < ActiveRecord::Base
       end                                              # end
     end
 
+    # 使用禁止
+    # これ↓に置き換える
+    #
+    #   normalizes :foo, with: -> e { column_value_db_truncate(:foo, e) }
+    #
     def truncate(*colum_names, **options)
       before_validation(options) do
-        truncate(*colum_names)
-      end
-    end
-  end
-
-  def truncate(*colum_names)
-    colum_names.each do |colum_name|
-      column = self.class.columns_hash[colum_name.to_s]
-      if max = column.limit
-        if self.class.connection.adapter_name == "Mysql2"
-          if column.type == :text
-            max = max / "🍄".bytesize
-          end
-        end
-        if str = public_send(colum_name)
-          if str.size > max
-            str = str.first(max)
+        colum_names.each do |colum_name|
+          if str = public_send(colum_name)
+            str = self.class.column_value_db_truncate(colum_name, str)
             public_send("#{colum_name}=", str)
           end
         end
       end
     end
+
+    # normalizes :foo, with: -> e { column_value_db_truncate(:foo, e) }
+    def column_value_db_truncate(colum_name, str)
+      if str
+        column = columns_hash[colum_name.to_s]
+        if max = column.limit
+          if connection.adapter_name == "Mysql2"
+            if column.type == :text
+              max = max / "🍄".bytesize
+            end
+          end
+          if str.size > max
+            str = str.first(max)
+          end
+        end
+      end
+      str
+    end
   end
+
+  # def truncate(*colum_names)
+  #   colum_names.each do |colum_name|
+  #     column = self.class.columns_hash[colum_name.to_s]
+  #     if max = column.limit
+  #       if self.class.connection.adapter_name == "Mysql2"
+  #         if column.type == :text
+  #           max = max / "🍄".bytesize
+  #         end
+  #       end
+  #       if str = public_send(colum_name)
+  #         if str.size > max
+  #           str = str.first(max)
+  #           public_send("#{colum_name}=", str)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   # "" → nil
   def normalize_blank_to_nil(*keys)
