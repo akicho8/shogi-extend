@@ -3,6 +3,7 @@
   template(v-for="e in TheSb.message_logs")
     template(v-if="TheSb.message_share_received_p(e)")
       SbAvatarLine(:info="e" :key="e.unique_key")
+        .flex_item(v-if="development_p") [{{e.unique_key}}]
         XemojiWrap.flex_item.message_body(:class="e.message_class" :str="e.auto_linked_message")
 </template>
 

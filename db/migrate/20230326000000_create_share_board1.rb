@@ -1,4 +1,4 @@
-class CreateShareBoard < ActiveRecord::Migration[5.1]
+class CreateShareBoard1 < ActiveRecord::Migration[5.1]
   def up
     create_table :share_board_memberships, force: true do |t|
       t.belongs_to :battle,   null: false,              comment: "対局"

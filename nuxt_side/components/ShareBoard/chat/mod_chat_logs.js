@@ -10,14 +10,21 @@ export const mod_chat_logs = {
       message_logs: [],
     }
   },
+  mounted() {
+    // this.ml_add({message: "a"})
+  },
   methods: {
-    // 発言の追加
+    // 発言の追加 (単に最後にpushする)
     ml_add(params) {
       this.ml_add_xmessage(MessageDto.create(params))
     },
 
     ml_add_xmessage(message_dto) {
       this.message_logs.push(message_dto)
+      this.ml_truncate_and_scroll_to_bottom()
+    },
+
+    ml_truncate_and_scroll_to_bottom() {
       this.message_logs = _.takeRight(this.message_logs, this.AppConfig.CHAT_MESSAGES_SIZE_MAX)
       this.ml_scroll_to_bottom()
     },
@@ -47,6 +54,25 @@ export const mod_chat_logs = {
       if (elem) {
         this.scroll_to_bottom(elem)
       }
+    },
+
+    ml_clear() {
+      this.message_logs = []
+    },
+
+    // 直近のログを入れる
+    ml_loader() {
+      // http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room
+      this.$axios.$get("/api/share_board/chat_message_loader", {
+        params: {
+          room_code: this.room_code,
+        },
+      }).then(e => {
+        this.ml_clear()
+        this.clog(e.chot_messages)
+        e.chot_messages.forEach(e => this.message_logs.push(MessageDto.create(e)))
+        this.ml_truncate_and_scroll_to_bottom()
+      })
     },
   },
 }

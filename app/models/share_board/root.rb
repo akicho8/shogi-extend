@@ -16,6 +16,8 @@ module ShareBoard
         Battle,
         Judge,
         Location,
+        MessageScope,
+        Room,
       ].each do |e|
         e.setup(options)
       end
@@ -28,6 +30,8 @@ module ShareBoard
         Roomship,
         Room,
         Membership,
+        MessageScope,
+        ChotMessage,
       ]
     end
 

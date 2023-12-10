@@ -3,7 +3,7 @@ module ShareBoard
     queue_as :default
 
     def perform(room_code, data)
-      ShareBoard::Broadcaster.new(room_code).call("message_share_broadcasted", data)
+      Room.find_or_create_by!(key: room_code).receive_and_bc(data)
     end
   end
 end

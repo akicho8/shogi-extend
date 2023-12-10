@@ -114,11 +114,11 @@ module ShareBoard
       end
       track(data, subject: action, body: data["message"], emoji: emoji)
       ShareBoard::ChatMessageBroadcastJob.perform_later(room_code, data)
-      ShareBoard::ChatAi::Responder1Job.perform_later(data.merge(room_code: room_code))
     end
 
+    # /gpt コマンド
     def gpt_speak(data)
-      ShareBoard::ChatAi::Responder2Job.perform_later(data.merge(room_code: room_code))
+      ShareBoard::Responder2Job.perform_later(data.merge(room_code: room_code))
     end
 
     def give_up_share(data)
@@ -273,6 +273,20 @@ module ShareBoard
       if str.present?
         "(#{str})"
       end
+    end
+
+    concerning :ChatLogMethods do
+      # def receive_and_bc(data)
+      #   Room.find_or_create_by!(key: room_code).receive_and_bc(data)
+      # end
+
+      # def user_object
+      #   find_or_create_by(room_code: room_code)
+      # end
+      #
+      # def room_object
+      #   find_or_create_by(room_code: room_code)
+      # end
     end
   end
 end

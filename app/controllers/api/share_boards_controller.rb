@@ -17,5 +17,10 @@ module Api
     def dashboard
       render json: ShareBoard::Dashboard.new(params.to_unsafe_h.deep_symbolize_keys.merge(user: current_user)).call
     end
+
+    # GET http://localhost:3000/api/share_board/chat_message_loader.json?room_code=dev_room
+    def chat_message_loader
+      render json: ShareBoard::ChatMessageLoader.new(params.to_unsafe_h.deep_symbolize_keys.merge(user: current_user)).call
+    end
   end
 end

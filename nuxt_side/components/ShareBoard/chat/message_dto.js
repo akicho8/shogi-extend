@@ -18,12 +18,13 @@ export class MessageDto {
   }
 
   constructor(params) {
-    this.message            = params.message
+    this.id                 = params.id
+    this.message            = params.content ?? params.message
     this.message_scope_key  = params.message_scope_key ?? "is_message_scope_public"
     this.from_connection_id = params.from_connection_id                    // null なら bot 等
     this.from_user_name     = params.from_user_name                        // null なら名前を表示しなくなる
     this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null は守護獣
-    this.primary_emoji    = params.primary_emoji                       // 優先する絵文字
+    this.primary_emoji      = params.primary_emoji                         // 優先する絵文字
     this.performed_at       = params.performed_at ?? TimeUtil.current_ms() // unique_key 生成用だけに利用
 
     this.unique_key = this.unique_key_generate()
@@ -69,12 +70,18 @@ export class MessageDto {
   }
 
   unique_key_generate() {
-    const str = [
-      this.from_user_name,
-      this.message,
-      this.from_connection_id,
-      this.performed_at,
-    ].join("/")
-    return Gs.str_to_md5(str)
+    if (this.id) {
+      // DBに入っているユニークなID
+      return `${this.id}`
+    } else {
+      // DBに入っていない場合のID
+      const str = [
+        this.from_user_name,
+        this.message,
+        this.from_connection_id,
+        this.performed_at,
+      ].join("/")
+      return Gs.str_to_md5(str)
+    }
   }
 }
