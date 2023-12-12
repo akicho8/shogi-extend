@@ -28,7 +28,7 @@ module ShareBoard
       {
         "from_connection_id" => SecureRandom.hex,
         "from_user_name"     => "alice",
-        "performed_at"       => Time.current.to_i,
+        "performed_at"       => (Time.current.to_f * 1000).to_i,
         "xmatch_redis_ttl"   => 60 * 3,
         "API_VERSION"        => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
       }.merge(params)

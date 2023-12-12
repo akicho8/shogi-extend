@@ -9,7 +9,11 @@ module ShareBoard
     # GET http://localhost:3000/api/share_board/chat_message_loader?room_code=xxx
     # GET https://www.shogi-extend.com/api/share_board/chat_message_loader?room_code=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def call
-      room = Room.find_or_create_by!(key: @params[:room_code])
+      s = Room.all
+      s = s.includes({chot_messages: {user: nil, message_scope: nil, real_user: nil}})
+      s = s.limit(@params[:limit])
+      room = s.find_or_create_by!(key: @params[:room_code])
+      # room = room.
 
       # room.save!
       # user = ShareBoard::User.create!

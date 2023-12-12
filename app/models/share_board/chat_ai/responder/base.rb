@@ -2,6 +2,9 @@
 #
 #   rails r 'ShareBoard::Responder::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
 #
+# - ChotMessage に依存してはいけない
+# - 現在の雑談内容をもとに新しい発言をするので ChotMessage と 1:1 の関係ではない
+# - 発言ではなく部屋と 1:1 の関係になる
 module ShareBoard
   module ChatAi
     module Responder
@@ -13,11 +16,37 @@ module ShareBoard
 
         delegate :logger, to: :Rails
 
+        # params = {
+        #   "from_connection_id"=>"espq1cQtyB3",
+        #   "from_user_name"=>"alice",
+        #   "performed_at"=>1678970689204,
+        #   "ua_icon_key"=>"mac",
+        #   "ac_events_hash"=>{"initialized"=>1,
+        #     "connected"=>2,
+        #     "received"=>16,
+        #     "disconnected"=>1},
+        #   "debug_mode_p"=>true,
+        #   "from_avatar_path"=>"/assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png",
+        #   "message"=>"@gpt hello",
+        #   "message_scope_key"=>"is_message_scope_public",
+        #   "action"=>"message_share",
+        #   :room_code=>"dev_room",
+        # }
         def initialize(params = {})
           @params = {
             room_code: "dev_room",
           }.merge(params.symbolize_keys)
         end
+
+        def call
+          raise NotImplementedError, "#{__method__} is not implemented"
+        end
+
+        def normalized_user_message
+          user_raw_message.remove(MATCH_REGEXP)
+        end
+
+        private
 
         def response_generate
           begin
@@ -37,10 +66,6 @@ module ShareBoard
           end
         end
 
-        def room_code
-          params[:room_code]
-        end
-
         def messanger
           Messenger.new(messanger_options)
         end
@@ -51,18 +76,6 @@ module ShareBoard
 
         def user_message
           Message.new(:user, normalized_user_message)
-        end
-
-        def normalized_user_message
-          user_raw_message.remove(MATCH_REGEXP)
-        end
-
-        def user_raw_message
-          params[:message]
-        end
-
-        def message_scope_key
-          params[:message_scope_key] || :is_message_scope_public
         end
 
         def system_message
@@ -76,6 +89,23 @@ module ShareBoard
             **GptProfile.new.messanger_options,
           }
         end
+
+        # 必要なパラメータは以下だけ
+
+        def room_code
+          params[:room_code]
+        end
+
+        def user_raw_message
+          params[:message]
+        end
+
+        def message_scope_key
+          params[:message_scope_key] || :is_message_scope_public
+        end
+
+        # class MessagerGpt
+        # end
       end
     end
   end

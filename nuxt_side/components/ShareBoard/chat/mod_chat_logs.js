@@ -66,6 +66,7 @@ export const mod_chat_logs = {
       this.$axios.$get("/api/share_board/chat_message_loader", {
         params: {
           room_code: this.room_code,
+          limit: this.AppConfig.CHAT_MESSAGES_SIZE_MAX,
         },
       }).then(e => {
         this.ml_clear()

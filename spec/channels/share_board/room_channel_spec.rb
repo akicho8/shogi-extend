@@ -29,7 +29,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     {
       "from_connection_id" => SecureRandom.hex,
       "from_user_name" => "alice",
-      "performed_at"   => Time.current.to_i,
+      "performed_at"   => (Time.current.to_f * 1000).to_i,
       "ac_events_hash" => {},
       "API_VERSION"    => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
       "debug_mode_p"   => true,
