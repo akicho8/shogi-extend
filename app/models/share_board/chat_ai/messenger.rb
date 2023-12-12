@@ -3,10 +3,11 @@
 #
 #   rails r 'ShareBoard::ChatAi::Messenger.new.call("こんにちは")'
 #
-#
 module ShareBoard
   module ChatAi
     class Messenger
+      DIRECT_MODE = false
+
       attr_accessor :params
 
       def initialize(params = {})
@@ -19,19 +20,22 @@ module ShareBoard
       def call(message = nil, bc_params = {})
         bc_params = {
           :message      => message || "#{Time.current}",
-          :performed_at => Time.current.to_i,
+          :performed_at => Time.current.to_f * 1000,
         }.merge(params, bc_params)
 
-        if false
+        if DIRECT_MODE
           Broadcaster.new(room_code).call("message_share_broadcasted", bc_params)
         else
-          room = Room.find_or_create_by!(key: room_code)
           chot_message = room.chot_messages.create_from_data!(bc_params) # DBに入れる
-          chot_message.broadcast_self                                    # バックグラウンドで配る
+          chot_message.broadcast_to_all                                  # バックグラウンドで配る
         end
       end
 
       private
+
+      def room
+        Room.find_or_create_by!(key: room_code)
+      end
 
       def room_code
         params[:room_code]

@@ -122,8 +122,9 @@ module ShareBoard
 
       # chot_message = Room.find_or_create_by!(key: room_code).chot_messages.create_from_data!(data)
       chot_message = chot_messages.create_from_data!(data) # DBに入れる
-      chot_message.broadcast_self                          # バックグラウンドで配る
+      chot_message.broadcast_to_all                          # バックグラウンドで配る
       ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code)) # バックグラウンドで返事をする FIXME: chot_message を元にする？
+      # chot_message.responder1_job_run
     end
   end
 end

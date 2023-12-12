@@ -81,11 +81,12 @@ module ShareBoard
       validates :performed_at
     end
 
-    def broadcast_self
+    def broadcast_to_all
       __nil_check_skip_keys__ = [
         "message_scope_key",
         "from_connection_id",
         "primary_emoji",
+        "from_avatar_path",
       ]
       data = as_json(JSON_TYPE1).merge("__nil_check_skip_keys__" => __nil_check_skip_keys__)
       Broadcaster.new(room.key).call("message_share_broadcasted", data)
@@ -107,5 +108,17 @@ module ShareBoard
     # def performed_at
     #   created_at.to_i
     # end
+
+    def responder1_job_run
+      Responder1Job.perform_later(id)
+    end
+
+    def responder1_main_run
+      ChatAi::Responder::Responder1.new(self).call
+    end
+
+    def responder2_main_run
+      ChatAi::Responder::Responder2.new(self).call
+    end
   end
 end

@@ -1,3 +1,5 @@
+# 話し掛けられたら返答する
+
 module ShareBoard
   class Responder1Job < ApplicationJob
     queue_as :default
