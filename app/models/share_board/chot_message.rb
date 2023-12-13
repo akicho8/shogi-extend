@@ -100,7 +100,7 @@ module ShareBoard
       user.name
     end
 
-    # http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room
+    # http://localhost:3000/api/share_board/chot_message_loader?room_code=dev_room
     def from_avatar_path
       real_user&.avatar_path
     end

@@ -133,7 +133,7 @@ export const mod_room_setup = {
           this.ac_events_hash_inc("initialized")
           this.tl_add("HOOK", "initialized", e)
         },
-        connected: e => {
+        connected: e => {       // FIXME: 初回チェック
           this.ac_events_hash_inc("connected")
           this.tl_add("HOOK", "connected", e)
           this.ua_notify_once()                       // USER_AGENT を記録

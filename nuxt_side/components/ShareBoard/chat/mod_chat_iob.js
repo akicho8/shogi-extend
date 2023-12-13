@@ -5,7 +5,7 @@
 // import { SendTriggerInfo } from "../models/send_trigger_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
-// import { MessageDto } from "./message_dto.js"
+import { MessageDto } from "./message_dto.js"
 
 const LATEST  = 100             // 最新の発言番号
 const STEP    = 2               // まとめて読み込む発言数
@@ -25,8 +25,11 @@ export const mod_chat_iob = {
   // <script>
   data() {
     return {
-      seek_pos: LATEST - STEP,  // 読み込んだ最後の位置
+      // seek_pos: LATEST - STEP,  // 読み込んだ最後の位置
+      seek_pos: null,  // 読み込んだ最後の位置
+      iob_page_seq_id: 0,
       old_scroll_height: null,  // 古い発言を差し込む直前の高さ
+      // fetched_data: null,
 
       // デバッグ用
       iob_flags: {},                // 監視した要素の状態
@@ -45,13 +48,93 @@ export const mod_chat_iob = {
   },
   beforeDestroy() {
     // 実戦ではコンポーネントを離れるときに解除しておく
-    // this.iob_stop()
+    this.iob_stop()
   },
   methods: {
-    // 発言の最上位(一番古いもの)を監視する
+    // 初回だけ呼ぶ
+    ml_read_once() {
+      if (this.iob_page_seq_id === 0) {
+        this.ml_read()
+      }
+    },
+
+    // 新しいメッセージを読み込む
+    ml_read() {
+      // http://localhost:3000/api/share_board/chot_message_loader?room_code=dev_room&limit=2
+
+      // link: app/models/share_board/room/chot_message_loader.rb
+      const params = {
+        room_code:   this.room_code,                        // 部屋
+        limit:       this.AppConfig.CHAT_MESSAGES_SIZE_MAX, // 件数
+        seek_pos:    this.seek_pos,                         // 指定未満を取得する。nil なら最新から取得する。
+        // 以下は AppLog のため
+        page_seq_id: this.iob_page_seq_id_next(),           // 取得するページ番号 (アクセスカウンタでもある)
+        user_name:   this.user_name,                        // 取得しようとした人
+      }
+
+      this.$axios.$get("/api/share_board/chot_message_loader", {params: params}).then(e => {
+        console.log(`${this.seek_pos} -> ${e.next_seek_pos}`)
+        // this.fetched_data = e
+        this.seek_pos = e.next_seek_pos
+        this.ml_merge(e.chot_messages)
+
+        // this.$nextTick(() => {
+        //   // 最初は一番下にセットする
+        //   this.ml_scroll_to_bottom()
+
+        // 次のフレーム
+        this.$nextTick(() => {
+          // if (Gs.present_p(e.chot_messages)) {
+          this.iob_viewpoint_adjust(e)    // スクロール位置を元に戻す
+          this.iob_start_or_stop(e)       // 終わりでなければ監視者を用意する。終わりなら監視者を殺す。
+          this.iob_observe_next_frame(e)  // 終わりでなければ次のフレームで最上位を監視する
+        })
+
+        // this.ml_truncate_and_scroll_to_bottom()
+        // this.$nextTick(() => this.ml_scroll_to_bottom())
+      })
+    },
+
+    // スクロール位置を元に戻す
+    iob_viewpoint_adjust(e) {
+      if (e.data_exist_p) {
+        if (this.old_scroll_height) {
+          this.iob_root_el().scrollTop = this.iob_root_el().scrollHeight - this.old_scroll_height + PADDING
+        }
+      }
+    },
+
+    iob_start_or_stop(e) {
+      if (e.has_next_p) {
+        if (!this.$iob_instance) {
+          this.iob_start()
+        }
+      } else {
+        if (this.$iob_instance) {
+          this.iob_stop()
+        }
+      }
+    },
+
+    // // 必要なら起動する
+    // iob_start_if_need() {
+    //   console.log("iob_start_if_need")
+    //   if (this.seek_pos != null) {           // 監視したい対象がある
+    //     if (!this.$iob_instance) {   // まだ起動していない
+    //       console.log("iob_start")
+    //       this.iob_start()
+    //     }
+    //   }
+    // },
+
     iob_start() {
-      this.iob_stop()
-      this.$chat_observer_object = new IntersectionObserver((entries, observer) => {
+      Gs.assert(Gs.blank_p(this.$iob_instance), "Gs.blank_p(this.$iob_instance)")
+      const options = {
+        root: this.iob_root_el(),       // なくても動作に影響なかったが指定しておいたほうが良さそう
+        rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
+        threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
+      }
+      this.$iob_instance = new IntersectionObserver((entries, observer) => {
         this.entries_count = entries.length // 監視対象の数を確認する
 
         this.iob_flags = {}
@@ -72,58 +155,65 @@ export const mod_chat_iob = {
             console.log(this.iob_root_el())
             this.old_scroll_height = this.iob_root_el().scrollHeight
 
-            // 過去のコンテンツを STEP 件数読み込む
-            // (実際はサーバーから読み込んだのを、現在のコンテンツの奥に差し込む感じになる)
-            this.seek_pos = this.seek_pos - STEP
-            if (this.seek_pos < 0) {
-              this.seek_pos = 0
-            }
+            this.ml_read()
 
-            // もうコンテンツがない場合は監視を止める
-            // (実際はサーバーから読み込んだコンテンツがそれで最後だった場合)
-            if (this.seek_pos === 0) {
-              this.iob_stop()
-            }
-
-            // コンテンツが更新されてからスクロール位置を元に戻す
-            this.$nextTick(() => {
-              this.iob_root_el().scrollTop = this.iob_root_el().scrollHeight - this.old_scroll_height + PADDING
-
-              // スクロール位置を元に戻してから次のフレームで最上位の要素を監視する (順序重要)
-              this.iob_observe()
-            })
+            // // // 過去のコンテンツを STEP 件数読み込む
+            // // // (実際はサーバーから読み込んだのを、現在のコンテンツの奥に差し込む感じになる)
+            // // this.seek_pos = this.seek_pos - STEP
+            // // if (this.seek_pos < 0) {
+            // //   this.seek_pos = 0
+            // // }
+            // //
+            // // // もうコンテンツがない場合は監視を止める
+            // // // (実際はサーバーから読み込んだコンテンツがそれで最後だった場合)
+            // // if (this.seek_pos === 0) {
+            // //   this.iob_stop()
+            // // }
+            //
+            // // コンテンツが更新されてからスクロール位置を元に戻す
+            // this.$nextTick(() => {
+            //   this.iob_root_el().scrollTop = this.iob_root_el().scrollHeight - this.old_scroll_height + PADDING
+            //
+            //   // スクロール位置を元に戻してから次のフレームで最上位の要素を監視する (順序重要)
+            //   this.iob_observe_next_frame()
+            // })
           }
         })
-      }, {
-        root: this.iob_root_el(), // なくても動作に影響なかったが指定しておいたほうが良さそう
-        rootMargin: `${PADDING}px 0px`,          // CSS と合わせる。これがないと判定もずれる。
-        threshold: 1.0,                          // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
-      })
+      }, options)
 
       // スクロール位置が一番下まで移動したあとで最上位の要素を監視する
-      this.iob_observe()
+      // this.iob_observe_next_frame()
     },
 
     // 最上位の要素を監視する
-    iob_observe() {
-      if (this.$chat_observer_object) {
-        this.$nextTick(() => {
-          this.$chat_observer_object.observe(document.querySelector(".SbAvatarLine:first-child"))
-        })
+    iob_observe_next_frame(e) {
+      if (e.has_next_p) {
+        if (this.$iob_instance) {
+          this.$nextTick(() => {
+            const el = document.querySelector(".SbMessageLog .SbAvatarLine:first-child")
+            console.log(el)
+            if (el) {
+              Gs.assert(el, "el")
+              this.$iob_instance.observe(el)
+            }
+          })
+        }
       }
     },
 
     // 監視をやめる
     iob_stop() {
-      if (this.$chat_observer_object) {
-        this.$chat_observer_object.disconnect()
-        this.$chat_observer_object = null
+      if (this.$iob_instance) {
+        this.$iob_instance.disconnect()
+        this.$iob_instance = null
       }
     },
 
     iob_root_el() {
       // return this.iob_root_el
-      return document.querySelector(".SbMessageLog")
+      const el = document.querySelector(".SbMessageLog")
+      Gs.assert(el, "el")
+      return el
     },
     // iob_root_el2() {
     //   const el = this.iob_root_el()
@@ -134,6 +224,12 @@ export const mod_chat_iob = {
     //   el.
     //   return document.querySelector(".SbMessageLog")
     // },
+
+    iob_page_seq_id_next() {
+      const v = this.iob_page_seq_id
+      this.iob_page_seq_id += 1
+      return v
+    },
   },
   computed: {
     // 表示する発言の配列

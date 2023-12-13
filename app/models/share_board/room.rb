@@ -126,5 +126,21 @@ module ShareBoard
       ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code)) # バックグラウンドで返事をする FIXME: chot_message を元にする？
       # chot_message.responder1_job_run
     end
+
+    def as_json_for_chot_message_loader(params = {})
+      ChotMessageLoader.new(self, params).as_json
+    end
+
+    def chot_messages_mock_setup(n = 10, user: nil)
+      if Rails.env.local?
+        if chot_messages.empty?
+          user ||= User.create!
+          chot_messages.destroy_all
+          n.times do |i|
+            chot_messages.create!(user: user, content: "(#{i})")
+          end
+        end
+      end
+    end
   end
 end
