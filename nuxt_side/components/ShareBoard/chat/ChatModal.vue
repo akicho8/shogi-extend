@@ -33,6 +33,9 @@ export default {
   mixins: [support_child],
   inject: ["TheSb"],
   mounted() {
+    // 発言の最上位(一番古いもの)を監視する
+    this.TheSb.iob_start()
+
     this.input_focus()
 
     // 古いログを取得する
@@ -42,6 +45,9 @@ export default {
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
     this.TheSb.ml_scroll_to_bottom()
+  },
+  beforeDestroy() {
+    this.TheSb.iob_stop()
   },
   methods: {
     close_handle() {
