@@ -3,7 +3,7 @@ import { CcInfo             } from "../clock/cc_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-export const mod_chatgpt = {
+export const mod_chat_ai = {
   methods: {
     gpt_speak(params) {
       params = {

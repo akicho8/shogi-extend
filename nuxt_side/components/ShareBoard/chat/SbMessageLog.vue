@@ -1,10 +1,11 @@
 <template lang="pug">
 .SbMessageLog.is_scroll_y
-  template(v-for="e in TheSb.message_logs")
-    template(v-if="TheSb.message_share_received_p(e)")
-      SbAvatarLine(:info="e" :key="e.unique_key")
-        .flex_item(v-if="development_p") [{{e.unique_key}}]
-        XemojiWrap.flex_item.message_body(:class="e.message_class" :str="e.auto_linked_message")
+  .SbAvatarLine(v-for="iob_row in TheSb.iob_rows" :key="iob_row") {{iob_row}}
+  //- template(v-for="e in TheSb.message_logs")
+  //-   template(v-if="TheSb.message_share_received_p(e)")
+  //-     SbAvatarLine(:info="e" :key="e.unique_key")
+  //-       .flex_item(v-if="development_p") [{{e.unique_key}}]
+  //-       XemojiWrap.flex_item.message_body(:class="e.message_class" :str="e.auto_linked_message")
 </template>
 
 <script>
@@ -38,4 +39,19 @@ export default {
 .STAGE-development
   .SbMessageLog
     border: 1px dashed change_color($primary, $alpha: 0.5)
+
+.SbMessageLog
+  .SbAvatarLine
+    // font-size: 4rem
+    // color: hsl(0 0% 60%)
+    // border: 1px solid hsl(0 0% 60%)
+    // flex: 1 0 200px
+    // display: flex
+    // align-items: center
+    // justify-content: center
+    // background-color: hsl(0 0% 85%)
+    &.visible_false
+      background-color: LightPink
+    &.visible_true
+      background-color: LightSkyBlue
 </style>
