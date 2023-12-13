@@ -1,11 +1,10 @@
 <template lang="pug">
 .SbMessageLog.is_scroll_y
-  .SbAvatarLine(v-for="iob_row in TheSb.iob_rows" :key="iob_row") {{iob_row}}
-  //- template(v-for="e in TheSb.message_logs")
-  //-   template(v-if="TheSb.message_share_received_p(e)")
-  //-     SbAvatarLine(:info="e" :key="e.unique_key")
-  //-       .flex_item(v-if="development_p") [{{e.unique_key}}]
-  //-       XemojiWrap.flex_item.message_body(:class="e.message_class" :str="e.auto_linked_message")
+  //- .SbAvatarLine(v-for="iob_row in TheSb.iob_rows" :key="iob_row") {{iob_row}}
+  template(v-for="e in TheSb.message_logs")
+    SbAvatarLine(:info="e" :key="e.unique_key")
+      .flex_item(v-if="development_p") [{{e.unique_key}}]
+      XemojiWrap.flex_item.message_body(:class="e.message_class" :str="TheSb.ml_show(e)")
 </template>
 
 <script>

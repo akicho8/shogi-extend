@@ -86,28 +86,13 @@ export const mod_chat = {
 
     // 受信
     message_share_broadcasted(params) {
-      // console.log(params)
-
       const message_dto = MessageDto.create(params)
       this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
-      if (this.message_share_received_p(params)) {       // 見てもいいなら
+      if (this.ml_show_p(message_dto)) {                 // 見てもいいなら
         this.$sound.play("patxu")                        // 「パッ」
         this.$buefy.toast.open(message_dto.toast_params) // 表示
         this.talk2(message_dto.message)                  // しゃべる
       }
-    },
-
-    // 受信した発言を表示してもよいですか？
-    message_share_received_p(e) {
-      let exec = true
-      if (e.message_scope_key === "is_message_scope_private") { // 観戦者宛のときに、
-        if (!this.received_from_self(e)) {                      // 自分が送信者ではなく、
-          if (this.self_is_member_p) {                          // 自分が対局者の場合は、
-            exec = false                                        // 受信しない
-          }
-        }
-      }
-      return exec
     },
 
     // ログ用の追加データとして data に名前を入れておく
