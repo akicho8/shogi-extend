@@ -12,7 +12,7 @@ import { Gs } from "@/components/models/gs.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
 
-export class MessageDto {
+export class MessageRecord {
   static create(params) {
     return new this(params)
   }

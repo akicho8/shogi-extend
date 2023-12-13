@@ -16,6 +16,11 @@ export const mod_chore = {
       // }
 
       if (focus_p) {
+        // PC の場合はよそ見中であってもチャットを受信するのでモバイルのときだけとしてもいいが、スマホが多数派なので分けないでいい
+        this.mh_window_focus()
+      }
+
+      if (focus_p) {
         if (this.mobile_p) {
           this.sound_resume_modal_handle()
         }

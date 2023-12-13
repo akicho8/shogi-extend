@@ -20,7 +20,7 @@ module ShareBoard
       hv[:next_seek_pos]     = next_seek_pos          # [2, 3] を返すとしたら 2 が入っているので次に seek_pos に 2 を入れて呼ばせる
       hv[:has_next_p]        = has_next_p             # 次があるか？ 2未満 (つまり 0 か 1) があれば true
       hv[:data_exist_p]      = chot_messages.present? # 今回データを取得できたか？
-      hv[:page_seq_id]       = current_page_seq_id    # JS側から来た page_seq_id (デバッグ用)
+      hv[:page_index]       = current_page_index    # JS側から来た page_index (デバッグ用)
       hv[:chot_messages]     = chot_messages.as_json(ChotMessage::JSON_TYPE1)
       hv
     end
@@ -32,7 +32,7 @@ module ShareBoard
     end
 
     def body
-      "[#{current_page_seq_id}] #{current_seek_pos || '?'}未満から#{current_limit || '?'}件取得した結果 #{chot_messages.collect(&:id)} を返す (次:#{has_next_p ? '有' : '無'})"
+      "[#{current_page_index}] #{current_seek_pos || '?'}未満から#{current_limit || '?'}件取得した結果 #{chot_messages.collect(&:id)} を返す (次:#{has_next_p ? '有' : '無'})"
     end
 
     def root_attributes
@@ -67,8 +67,19 @@ module ShareBoard
       @has_next_p = !!@has_next_p
     end
 
+    # 次にアクセスするときに渡してほしい seek_pos の値
     def next_seek_pos
-      chot_messages.first&.id
+      if chot_messages.empty?
+        # ここで nil を返してしまうと JS 側で seek_pos が null になり初回アクセスと同じ状態になってしまう。
+        # そのため空のときは今回渡されたままにしておく
+        # こうすると JS 側の処理がシンプルになる
+        current_seek_pos
+      else
+        # 次から最上位のIDを渡してほしいため
+        if e = chot_messages.first
+          e.id
+        end
+      end
     end
 
     def current_limit
@@ -83,8 +94,8 @@ module ShareBoard
       end
     end
 
-    def current_page_seq_id
-      if v = @params[:page_seq_id]
+    def current_page_index
+      if v = @params[:page_index]
         v.to_i
       end
     end

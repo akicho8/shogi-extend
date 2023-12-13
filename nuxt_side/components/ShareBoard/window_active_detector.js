@@ -1,5 +1,5 @@
 // ウィンドウがアクティブか調べる
-// ・focus のとき +1 して blur のとき -1 することで 0 か 1 になるのか？
+// ・focus のとき +1 して blur のとき -1 することで、必ず 0 か 1 になると予想したが、そうならなかった
 // ・mobile safari の共有リンクで Twitter App に飛んで戻ったとき 0 でも 1 でもなくなる
 // ・なので focus や blur の一方が連続で呼ばれるのを考慮しないといけない
 //
@@ -46,24 +46,28 @@ export const window_active_detector = {
         return document.hasFocus()
       }
     },
+
     window_focus_hook() {
       if (this.debug_mode_p) {
         this.tl_add("HOOK", "focus")
       }
       this.window_active_change_hook(true)
     },
+
     window_blur_hook() {
       if (this.debug_mode_p) {
         this.tl_add("HOOK", "blur")
       }
       this.window_active_change_hook(false)
     },
+
     visibilitychange_hook() {
       if (this.debug_mode_p) {
         this.tl_add("HOOK", document.visibilityState)
       }
       this.window_active_change_hook(this.native_window_active_p())
     },
+
     window_active_change_hook(focus_p) {
       this.window_active_p = focus_p
       if (focus_p) {

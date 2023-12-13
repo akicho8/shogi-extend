@@ -1,13 +1,13 @@
-// チャットの発言履歴
+// チャットの発言リスト
 
 import _ from "lodash"
 import dayjs from "dayjs"
-import { MessageDto } from "./message_dto.js"
+import { MessageRecord } from "./message_record.js"
 
-export const mod_chat_logs = {
+export const mod_chat_message_list = {
   data() {
     return {
-      message_logs: [],
+      message_list: [],
     }
   },
   mounted() {
@@ -16,25 +16,25 @@ export const mod_chat_logs = {
   methods: {
     // 発言の追加 (単に最後にpushする)
     ml_add(attributes) {
-      this.ml_add_xmessage(MessageDto.create(attributes))
+      this.ml_add_xmessage(MessageRecord.create(attributes))
     },
 
-    // list を MessageDto 化して追加して整列する
+    // list を MessageRecord 化して追加して整列する
     ml_merge(list) {
-      list = list.map(e => MessageDto.create(e))
-      list = [...list, ...this.message_logs]
+      list = list.map(e => MessageRecord.create(e))
+      list = [...list, ...this.message_list]
       list = _.uniqBy(list, "unique_key")
       list = _.sortBy(list, "performed_at")
-      this.message_logs = list
+      this.message_list = list
     },
 
-    ml_add_xmessage(message_dto) {
-      this.message_logs.push(message_dto)
+    ml_add_xmessage(message_record) {
+      this.message_list.push(message_record)
       this.ml_truncate_and_scroll_to_bottom()
     },
 
     ml_truncate_and_scroll_to_bottom() {
-      this.message_logs = _.takeRight(this.message_logs, this.AppConfig.CHAT_MESSAGES_SIZE_MAX_OF_MAX)
+      this.message_list = _.takeRight(this.message_list, this.AppConfig.CHAT_MESSAGES_SIZE_MAX_OF_MAX)
       this.ml_scroll_to_bottom()
     },
 
@@ -59,14 +59,14 @@ export const mod_chat_logs = {
 
     // 一番下までスクロール
     ml_scroll_to_bottom() {
-      const elem = document.querySelector(".SbMessageLog")
+      const elem = document.querySelector(".SbMessageList")
       if (elem) {
         this.scroll_to_bottom(elem)
       }
     },
 
     ml_clear() {
-      this.message_logs = []
+      this.message_list = []
     },
 
     // 表示してもよいか？
@@ -90,5 +90,8 @@ export const mod_chat_logs = {
         return e.invisible_message
       }
     },
+  },
+  computed: {
+    ml_count() { return this.message_list.length },
   },
 }
