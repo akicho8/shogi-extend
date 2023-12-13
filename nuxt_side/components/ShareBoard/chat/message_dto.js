@@ -48,6 +48,11 @@ export class MessageDto {
     return Gs.auto_link(this.message, {mention: false}) // `@alice` をリンクにしないようにする
   }
 
+  // 表示できないときのメッセージ
+  get invisible_message() {
+    return "*".repeat(this.message.length)
+  }
+
   // 表示するときの色
   get message_class() {
     return this.message_scope_info.message_class
