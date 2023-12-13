@@ -6,7 +6,10 @@
         XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
       template(v-else)
         | チャット
-    b-button.ml_read(type="is-small" @click="TheSb.ml_read" v-if="development_p") 読込
+    b-button.mh_reset_all_and_setup(type="is-small" @click="TheSb.mh_reset_all_and_setup" v-if="development_p") よそ見から復帰
+    b-button.mh_reset_all(type="is-small" @click="TheSb.mh_reset_all" v-if="development_p") 初期化
+    b-button.mh_read(type="is-small" @click="TheSb.mh_read" v-if="development_p") 読込{{TheSb.mh_seek_pos}}
+    b-button.mh_head_observe(type="is-small" @click="TheSb.mh_head_observe" v-if="development_p") 監視
     b-button.test_button(type="is-small" @click="TheSb.ml_test" v-if="development_p") 追加
     b-field(v-if="TheSb.message_scope_dropdown_show_p")
       b-dropdown(animation="" position="is-bottom-left" v-model="TheSb.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
@@ -17,11 +20,10 @@
   .modal-card-body
     .body_inner
       .SbMessageLogWrapper
-        p iob_flags={{TheSb.iob_flags}}
-        p old_scroll_height={{TheSb.old_scroll_height}}
-        p seek_pos={{TheSb.seek_pos}}
-        p entries_count={{TheSb.entries_count}}
-        SbMessageLog(ref="SbMessageLog")
+        // p mh_flags={{TheSb.mh_flags}}
+        // p mh_scroll_height={{TheSb.mh_scroll_height}}
+        // p mh_seek_pos={{TheSb.mh_seek_pos}}
+        SbMessageList(ref="SbMessageList")
       b-field.InputField
         b-input(v-model="TheSb.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
@@ -38,21 +40,21 @@ export default {
   inject: ["TheSb"],
   mounted() {
     // // 発言の最上位(一番古いもの)を監視する
-    // this.TheSb.iob_start()
+    // this.TheSb.mh_start()
 
     this.input_focus()
 
-    // 古いログを取得する
-    this.TheSb.ml_read_once()
+    // 部屋に入っているなら古いログを取得する
+    this.TheSb.mh_chat_open()
 
-    // 本当は SbMessageLog.vue の mounted で実行したかったが
+    // 本当は SbMessageList.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
     this.TheSb.ml_scroll_to_bottom()
   },
-  // beforeDestroy() {
-  //   this.TheSb.iob_stop()
-  // },
+  beforeDestroy() {
+    this.TheSb.mh_chat_close()
+  },
   methods: {
     close_handle() {
       this.TheSb.chat_modal_close_handle()

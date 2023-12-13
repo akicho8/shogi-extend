@@ -5,7 +5,7 @@ import { MessageScopeInfo } from "../models/message_scope_info.js"
 import { SendTriggerInfo } from "../models/send_trigger_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
-import { MessageDto } from "./message_dto.js"
+import { MessageRecord } from "./message_record.js"
 
 export const mod_chat = {
   data() {
@@ -86,12 +86,12 @@ export const mod_chat = {
 
     // 受信
     message_share_broadcasted(params) {
-      const message_dto = MessageDto.create(params)
-      this.ml_add_xmessage(message_dto)                  // 後で表示するためスコープに関係なく発言履歴に追加する
-      if (this.ml_show_p(message_dto)) {                 // 見てもいいなら
+      const message_record = MessageRecord.create(params)
+      this.ml_add_xmessage(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
+      if (this.ml_show_p(message_record)) {                 // 見てもいいなら
         this.$sound.play("patxu")                        // 「パッ」
-        this.$buefy.toast.open(message_dto.toast_params) // 表示
-        this.talk2(message_dto.message)                  // しゃべる
+        this.$buefy.toast.open(message_record.toast_params) // 表示
+        this.talk2(message_record.message)                  // しゃべる
       }
     },
 

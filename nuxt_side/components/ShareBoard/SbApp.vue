@@ -123,9 +123,9 @@ import { mod_ping                 } from "./member_list_show/mod_ping.js"
 import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
 import { mod_chat      } from "./chat/mod_chat.js"
-import { mod_chat_logs } from "./chat/mod_chat_logs.js"
+import { mod_chat_message_list } from "./chat/mod_chat_message_list.js"
 import { mod_chat_ai   } from "./chat/mod_chat_ai.js"
-import { mod_chat_iob  } from "./chat/mod_chat_iob.js"
+import { mod_chat_message_history  } from "./chat/mod_chat_message_history.js"
 
 import { mod_console      } from "./console/mod_console.js"
 
@@ -161,9 +161,9 @@ export default {
     mod_action_log,
 
     mod_chat,
-    mod_chat_logs,
+    mod_chat_message_list,
     mod_chat_ai,
-    mod_chat_iob,
+    mod_chat_message_history,
 
     mod_console,
     mod_persistent_cc_params,

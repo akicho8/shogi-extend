@@ -1,15 +1,14 @@
 <template lang="pug">
-.SbMessageLog.is_scroll_y
-  //- .SbAvatarLine(v-for="iob_row in TheSb.iob_rows" :key="iob_row") {{iob_row}}
-  template(v-for="e in TheSb.message_logs")
+.SbMessageList.is_scroll_y
+  template(v-for="e in TheSb.message_list")
     SbAvatarLine(:info="e" :key="e.unique_key")
-      .flex_item(v-if="development_p") [{{e.unique_key}}]
+      .flex_item.is-size-7(v-if="development_p") [{{e.unique_key}}]
       XemojiWrap.flex_item.message_body(:class="e.message_class" :str="TheSb.ml_show(e)")
 </template>
 
 <script>
 export default {
-  name: "SbMessageLog",
+  name: "SbMessageList",
   inject: ["TheSb"],
 }
 </script>
@@ -17,7 +16,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.SbMessageLog
+.SbMessageList
   @extend %overlay
   padding: 0
   .SbAvatarLine
@@ -36,13 +35,13 @@ export default {
     .UserMedal
       color: $grey
 .STAGE-development
-  .SbMessageLog
+  .SbMessageList
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
 .STAGE-development
-  .SbMessageLog
+  .SbMessageList
     .SbAvatarLine
-      font-size: 4rem
+      // font-size: 4rem
       // color: hsl(0 0% 60%)
       // border: 1px solid hsl(0 0% 60%)
       // flex: 1 0 200px
