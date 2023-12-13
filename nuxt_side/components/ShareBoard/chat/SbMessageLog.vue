@@ -39,18 +39,19 @@ export default {
   .SbMessageLog
     border: 1px dashed change_color($primary, $alpha: 0.5)
 
-.SbMessageLog
-  .SbAvatarLine
-    // font-size: 4rem
-    // color: hsl(0 0% 60%)
-    // border: 1px solid hsl(0 0% 60%)
-    // flex: 1 0 200px
-    // display: flex
-    // align-items: center
-    // justify-content: center
-    // background-color: hsl(0 0% 85%)
-    &.visible_false
-      background-color: LightPink
-    &.visible_true
-      background-color: LightSkyBlue
+.STAGE-development
+  .SbMessageLog
+    .SbAvatarLine
+      font-size: 4rem
+      // color: hsl(0 0% 60%)
+      // border: 1px solid hsl(0 0% 60%)
+      // flex: 1 0 200px
+      // display: flex
+      // align-items: center
+      // justify-content: center
+      // background-color: hsl(0 0% 85%)
+      &.visible_false
+        background-color: LightPink
+      &.visible_true
+        background-color: LightSkyBlue
 </style>

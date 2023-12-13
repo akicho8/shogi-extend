@@ -15,8 +15,17 @@ export const mod_chat_logs = {
   },
   methods: {
     // 発言の追加 (単に最後にpushする)
-    ml_add(params) {
-      this.ml_add_xmessage(MessageDto.create(params))
+    ml_add(attributes) {
+      this.ml_add_xmessage(MessageDto.create(attributes))
+    },
+
+    // list を MessageDto 化して追加して整列する
+    ml_merge(list) {
+      list = list.map(e => MessageDto.create(e))
+      list = [...list, ...this.message_logs]
+      list = _.uniqBy(list, "unique_key")
+      list = _.sortBy(list, "performed_at")
+      this.message_logs = list
     },
 
     ml_add_xmessage(message_dto) {
@@ -25,7 +34,7 @@ export const mod_chat_logs = {
     },
 
     ml_truncate_and_scroll_to_bottom() {
-      this.message_logs = _.takeRight(this.message_logs, this.AppConfig.CHAT_MESSAGES_SIZE_MAX)
+      this.message_logs = _.takeRight(this.message_logs, this.AppConfig.CHAT_MESSAGES_SIZE_MAX_OF_MAX)
       this.ml_scroll_to_bottom()
     },
 
@@ -80,22 +89,6 @@ export const mod_chat_logs = {
       } else {
         return e.invisible_message
       }
-    },
-
-    // 直近のログを入れる
-    ml_loader() {
-      // http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room
-      this.$axios.$get("/api/share_board/chat_message_loader", {
-        params: {
-          room_code: this.room_code,
-          limit: this.AppConfig.CHAT_MESSAGES_SIZE_MAX,
-        },
-      }).then(e => {
-        this.ml_clear()
-        this.clog(e.chot_messages)
-        e.chot_messages.forEach(e => this.message_logs.push(MessageDto.create(e)))
-        this.ml_truncate_and_scroll_to_bottom()
-      })
     },
   },
 }
