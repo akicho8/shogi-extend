@@ -31,5 +31,8 @@ class CreateShareBoard4 < ActiveRecord::Migration[5.1]
       t.integer :position, null: true,  index: true, comment: "順序"
       t.timestamps         null: false
     end
+
+    ShareBoard::MessageScope.reset_column_information
+    ShareBoard.setup
   end
 end
