@@ -18,7 +18,7 @@ module ShareBoard
       #   "debug_mode_p"=>true,
       #   "from_avatar_path"=>"/assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png",
       #   "message"=>"@gpt hello",
-      #   "message_scope_key"=>"is_message_scope_public",
+      #   "message_scope_key"=>"ms_public",
       #   "action"=>"message_share",
       #   :room_code=>"dev_room",
       # }

@@ -59,7 +59,7 @@ export const mod_order_main = {
       this.order_enable_p = params.order_enable_p
       // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
       if (!this.order_enable_p) {
-        this.message_scope_key = "is_message_scope_public"
+        this.message_scope_key = "ms_public"
       }
       if (params.message) {
         const message = `${this.user_call_name(params.from_user_name)}が順番設定を${params.message}にしました`

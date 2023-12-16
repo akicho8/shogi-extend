@@ -20,7 +20,7 @@ export class MessageRecord {
   constructor(params) {
     this.id                 = params.id
     this.message            = params.content ?? params.message
-    this.message_scope_key  = params.message_scope_key ?? "is_message_scope_public"
+    this.message_scope_key  = params.message_scope_key ?? "ms_public"
     this.from_connection_id = params.from_connection_id                    // null なら bot 等
     this.from_user_name     = params.from_user_name                        // null なら名前を表示しなくなる
     this.from_avatar_path   = params.from_avatar_path                      // あればアバターが出て null は守護獣

@@ -61,7 +61,7 @@ module ShareBoard
       # },
     }
 
-    custom_belongs_to :message_scope,  ar_model: MessageScope, st_model: MessageScopeInfo, default: "is_message_scope_public"
+    custom_belongs_to :message_scope,  ar_model: MessageScope, st_model: MessageScopeInfo, default: "ms_public"
 
     belongs_to :real_user, class_name: "::User", optional: true # ログインしているユーザーID
 

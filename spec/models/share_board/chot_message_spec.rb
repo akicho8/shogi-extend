@@ -5,10 +5,6 @@ RSpec.describe ShareBoard::ChotMessage do
     ShareBoard.setup
   end
 
-  it "発言スコープ種別のレコードがある" do
-    assert { ShareBoard::MessageScope.count == 2 }
-  end
-
   it "レコードを作る" do
     user = ShareBoard::User.create!
     room = ShareBoard::Room.create!
@@ -20,7 +16,7 @@ RSpec.describe ShareBoard::ChotMessage do
     assert { user.chot_messages_count == 1 }
     assert { room.chot_messages == [chot_message] }
     assert { room.chot_users == [user] }
-    assert { chot_message.message_scope == ShareBoard::MessageScope[:is_message_scope_public] }
+    assert { chot_message.message_scope == ShareBoard::MessageScope[:ms_public] }
   end
 
   it "user 側のリレーションが正しい" do

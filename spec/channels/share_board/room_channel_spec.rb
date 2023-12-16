@@ -224,7 +224,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_code: room_code)
     end
     it "works" do
-      data = data_factory("message" => "(message)", "message_scope_key" => "is_message_scope_private")
+      data = data_factory("message" => "(message)", "message_scope_key" => "ms_private")
       expect {
         subscription.message_share(data)
       }.to have_broadcasted_to(channel_key).with(bc_action: "message_share_broadcasted", bc_params: data)
@@ -236,7 +236,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_code: room_code)
     end
     it "works" do
-      data = data_factory("message" => "", "message_scope_key" => "is_message_scope_public")
+      data = data_factory("message" => "", "message_scope_key" => "ms_public")
       subscription.gpt_speak(data)
     end
   end
