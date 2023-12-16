@@ -15,6 +15,7 @@
 // | mh_head_observe()     | (3) 終わりでなければ次のフレームで最上位を監視する           |
 // | mh_safe_start()       | 監視者がいなければ生成する                                   |
 // | mh_start()            | 監視者を生成する                                             |
+// | mh_visible_changed()  | 表示状態が変化したときに呼ばれる                             |
 // | mh_stop()             | 監視者を殺す                                                 |
 // | mh_safe_stop()        | 監視者がいれば殺す                                           |
 // | mh_root_el_fetch()    | .SbMessageList の要素を必ず取得する                          |
@@ -175,49 +176,52 @@ export const mod_chat_message_history = {
       }
     },
 
+    // 監視者がいなければ生成する
     mh_safe_start() {
       if (!this.$mh_observer) {
         this.mh_start()
       }
     },
 
+    // 監視者を生成する
     mh_start() {
       this.debug_alert("mh_start")
 
       Gs.assert(this.$mh_observer == null, "this.$mh_observer == null")
       const options = {
-        root: this.mh_root_el_fetch(),        // なくても動作に影響なかったが指定しておいたほうが良さそう
+        root: this.mh_root_el_fetch(),  // なくても動作に影響なかったが指定しておいたほうが良さそう
         rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
         threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
       }
 
       this.$mh_observer = new IntersectionObserver((entries, observer) => {
         Gs.assert(entries.length === 1, "entries.length === 1")
-
-        entries.forEach(e => {
-          console.log(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
-
-          // 状態に対応するクラスを付与する
-          e.target.classList.toggle("visible_true", e.isIntersecting)   // 見えたら
-          e.target.classList.toggle("visible_false", !e.isIntersecting) // 見えなかったら
-
-          // ぜんぶ見えたとき
-          if (e.isIntersecting) {
-            // もう用はないので解除する
-            observer.unobserve(e.target)
-
-            // 差し込む前の領域の高さを保持しておく
-            console.log(this.mh_root_el_fetch())
-            this.mh_scroll_height = this.mh_root_el_fetch().scrollHeight
-
-            this.mh_read()
-          }
-        })
+        entries.forEach(e => this.mh_visible_changed(e))
       }, options)
       this.clog(this.$mh_observer)
 
       // スクロール位置が一番下まで移動したあとで最上位の要素を監視する
       // this.mh_head_observe()
+    },
+    // 表示状態が変化したときに呼ばれる
+    mh_visible_changed(e) {
+      console.log(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
+
+      // 状態に対応するクラスを付与する
+      e.target.classList.toggle("visible_true", e.isIntersecting)   // 見えたら
+      e.target.classList.toggle("visible_false", !e.isIntersecting) // 見えなかったら
+
+      // ぜんぶ見えたとき
+      if (e.isIntersecting) {
+        // もう用はないので解除する
+        observer.unobserve(e.target)
+
+        // 差し込む前の領域の高さを保持しておく
+        console.log(this.mh_root_el_fetch())
+        this.mh_scroll_height = this.mh_root_el_fetch().scrollHeight
+
+        this.mh_read()
+      }
     },
 
     // 監視者を殺す
