@@ -34,21 +34,11 @@ export default {
       color: $grey
     .UserMedal
       color: $grey
-.STAGE-development
+
+.SbApp.debug_mode_p
   .SbMessageList
     border: 1px dashed change_color($primary, $alpha: 0.5)
-
-.STAGE-development
-  .SbMessageList
     .SbAvatarLine
-      // font-size: 4rem
-      // color: hsl(0 0% 60%)
-      // border: 1px solid hsl(0 0% 60%)
-      // flex: 1 0 200px
-      // display: flex
-      // align-items: center
-      // justify-content: center
-      // background-color: hsl(0 0% 85%)
       &.visible_false
         background-color: LightPink
       &.visible_true
