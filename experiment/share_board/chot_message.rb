@@ -25,7 +25,7 @@ room = ShareBoard::Room.create!(key: "dev_room")
 # room.chot_messages       # => #<ActiveRecord::Associations::CollectionProxy [#<ShareBoard::ChotMessage id: 1, room_id: 1, user_id: 1, message_scope_id: 1, content: "a", performed_at: 1702462991374, created_at: "2023-12-13 19:23:11.000000000 +0900", updated_at: "2023-12-13 19:23:11.000000000 +0900", real_user_id: nil, from_connection_id: nil, primary_emoji: nil>, #<ShareBoard::ChotMessage id: 2, room_id: 1, user_id: 1, message_scope_id: 1, content: "a", performed_at: 1702462991385, created_at: "2023-12-13 19:23:11.000000000 +0900", updated_at: "2023-12-13 19:23:11.000000000 +0900", real_user_id: 25, from_connection_id: nil, primary_emoji: nil>]>
 # room.chot_users          # => #<ActiveRecord::Associations::CollectionProxy [#<ShareBoard::User id: 1, name: "user1", memberships_count: 0, created_at: "2023-12-13 19:23:11.000000000 +0900", updated_at: "2023-12-13 19:23:11.000000000 +0900", chot_messages_count: 2>, #<ShareBoard::User id: 1, name: "user1", memberships_count: 0, created_at: "2023-12-13 19:23:11.000000000 +0900", updated_at: "2023-12-13 19:23:11.000000000 +0900", chot_messages_count: 2>]>
 # 
-# chot_message.message_scope_key = :is_message_scope_private
+# chot_message.message_scope_key = :ms_private
 # 
 # tp chot_message
 

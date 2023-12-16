@@ -111,7 +111,7 @@ module ShareBoard
       #   "ac_events_hash"=>{"initialized"=>1},
       #   "debug_mode_p"=>true,
       #   "from_avatar_path"=>"/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--76b7d01ef121c14889a810397668c90660fc3585/mcA_BLhf_normal.png",
-      #   "message_scope_key"=>"is_message_scope_public",
+      #   "message_scope_key"=>"ms_public",
       #   "message"=>"jkjk",
       #   "action"=>"message_share",
       # }

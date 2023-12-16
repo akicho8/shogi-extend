@@ -105,7 +105,7 @@ module ShareBoard
     end
 
     def message_share(data)
-      if data["message_scope_key"] == "is_message_scope_public"
+      if data["message_scope_key"] == "ms_public"
         action = "チャット"
         emoji = ":公開チャット:"
       else

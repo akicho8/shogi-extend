@@ -27,12 +27,12 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { visit_app(room_code: :test_room, user_name: "bob",   fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
     c_block { visit_app(room_code: :test_room, user_name: "carol", fixed_order_names: "alice", autoexec: "chat_modal_open_handle") }
 
-    b_block { scoped_message_send(:is_message_scope_private, message1) } # 観戦者の bob が観戦者送信した
+    b_block { scoped_message_send(:ms_private, message1) } # 観戦者の bob が観戦者送信した
     b_block { assert_message_received_o(message1) } # 自分には (観戦者かに関係なく本人だから) 届いている
     a_block { assert_message_received_x(message1) } # alice には対局者なので届いていない
     c_block { assert_message_received_o(message1) } # carol には観戦者なので届いている
 
-    a_block { scoped_message_send(:is_message_scope_private, message2) } # 対局者の alice が送信した
+    a_block { scoped_message_send(:ms_private, message2) } # 対局者の alice が送信した
     a_block { assert_message_received_o(message2) } # 自分には (観戦者かに関係なく本人だから) 届いている
     b_block { assert_message_received_o(message2) } # bob   には観戦者なので届いている
     c_block { assert_message_received_o(message2) } # carol には観戦者なので届いている

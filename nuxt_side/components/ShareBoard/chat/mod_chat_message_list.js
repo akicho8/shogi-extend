@@ -76,10 +76,10 @@ export const mod_chat_message_list = {
     // 表示してもよいか？
     ml_show_p(e) {
       let exec = true
-      if (e.message_scope_key === "is_message_scope_private") { // 観戦者宛のときに、
-        if (!this.received_from_self(e)) {                      // 自分が送信者ではなく、
-          if (this.self_is_member_p) {                          // 自分が対局者の場合は、
-            exec = false                                        // 受信しない
+      if (e.message_scope_key === "ms_private") { // 観戦者宛のときに、
+        if (!this.received_from_self(e)) {        // 自分が送信者ではなく、
+          if (this.self_is_member_p) {            // 自分が対局者の場合は、
+            exec = false                          // 受信しない
           }
         }
       }
