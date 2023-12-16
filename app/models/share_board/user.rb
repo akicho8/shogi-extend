@@ -36,8 +36,16 @@
 module ShareBoard
   class User < ApplicationRecord
     class << self
-      def [](name)
+      def [](...)
+        lookup(...)
+      end
+
+      def lookup(name)
         find_or_initialize_by(name: name)
+      end
+
+      def fetch(name)
+        find_or_create_by!(name: name)
       end
     end
 
@@ -48,7 +56,7 @@ module ShareBoard
     has_many :chat_rooms, through: :chat_messages, source: :room # このユーザーが発言した部屋たち
 
     before_validation do
-      self.name ||= "#{self.class.name.demodulize.underscore}#{self.class.count.next}"
+      self.name ||= "(name#{self.class.count.next})"
     end
 
     with_options presence: true do

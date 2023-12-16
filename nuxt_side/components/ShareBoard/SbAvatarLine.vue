@@ -7,13 +7,16 @@
     template(v-if="replace_icon")
       XemojiWrap.user_guardian.flex_item.is-flex(:str="replace_icon")
 
-    // 自分プロフィール画像があるなら優先して表示する
+    // 絵文字表示順序
+    //  (1) 優先絵文字
+    //  (2) 自分プロフィール画像
+    //  (3) 守護獣画像
+    template(v-if="info.primary_emoji")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="info.primary_emoji")
     template(v-else-if="info.from_avatar_path")
       img.avatar_img.flex_item(:src="info.from_avatar_path")
-
-    // 自分プロフィール画像がないなら守護獣表示
     template(v-else)
-      XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian2")
+      XemojiWrap.user_guardian.flex_item.is-flex(:str="default_guardian")
 
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
@@ -32,14 +35,13 @@ export default {
   mixins: [support_child],
   inject: ["TheSb"],
   props: {
-    info:            { type: Object, required: true  },
-    replace_icon:    { type: String, required: false },
+    info:         { type: Object, required: true  },
+    replace_icon: { type: String, required: false },
     medal_show_p: { type: Boolean, default: true  },
   },
   computed: {
-    default_guardian() { return this.TheSb.guardian_from_str(this.info.from_user_name) },
-    default_guardian2() { return this.info.primary_emoji || this.default_guardian },
-    medal_decorator()  { return this.TheSb.medal_decorator_by_name(this.info.from_user_name)  },
+    default_guardian() { return this.TheSb.guardian_from_str(this.info.from_user_name)       },
+    medal_decorator()  { return this.TheSb.medal_decorator_by_name(this.info.from_user_name) },
   },
 }
 </script>

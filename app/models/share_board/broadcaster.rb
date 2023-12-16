@@ -2,15 +2,15 @@
 
 # ▼メッセージ送信
 # rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK")'
-# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK", from_user_name: "運営")'
+# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK", from_user_name: "運営", primary_emoji: "🤖")'
 
 module ShareBoard
   class Broadcaster
     attr_accessor :room_code
     attr_accessor :default_params
 
-    def initialize(room_code = "dev_room", default_params = {})
-      @room_code = room_code
+    def initialize(room_code = nil, default_params = {})
+      @room_code = room_code || "dev_room"
       @default_params = {
         :API_VERSION => ShareBoardControllerMethods::API_VERSION,
       }.merge(default_params)
