@@ -205,7 +205,7 @@ export const mod_chat_message_history = {
     },
     // 表示状態が変化したときに呼ばれる
     mh_visible_changed(observer, e) {
-      console.log(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
+      this.clog(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
 
       // 状態に対応するクラスを付与する
       e.target.classList.toggle("visible_true", e.isIntersecting)   // 見えたら
@@ -217,7 +217,7 @@ export const mod_chat_message_history = {
         observer.unobserve(e.target)
 
         // 差し込む前の領域の高さを保持しておく
-        console.log(this.mh_root_el_fetch())
+        this.clog(this.mh_root_el_fetch())
         this.mh_scroll_height = this.mh_root_el_fetch().scrollHeight
 
         this.mh_read()
