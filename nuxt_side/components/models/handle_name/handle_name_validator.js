@@ -18,13 +18,13 @@ export class HandleNameValidator {
   static MAX_LENGTH = 16
 
   static PREFIX_LIST = [
-    "素敵な",
-    "友好的な",
+    "もっと素敵な",
     "真面目に",
-    "親近感のある",
-    "フレンドリーな",
-    "親しみのある",
-    "捨てハンでない",
+    // "友好的な",
+    // "親近感のある",
+    // "フレンドリーな",
+    // "親しみのある",
+    // "捨てハンでない",
   ]
 
   static create(source, options = {}) {

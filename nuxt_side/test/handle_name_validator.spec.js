@@ -71,7 +71,7 @@ describe("HandleNameValidator", () => {
   })
 
   test("prefixが含まれるのはダメ", () => {
-    expect(HandleNameValidator.valid_p("親しみのある")).toEqual(false)
+    expect(HandleNameValidator.valid_p("真面目に")).toEqual(false)
   })
 
   test("長すぎるのはダメ", () => {
