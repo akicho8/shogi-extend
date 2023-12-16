@@ -18,9 +18,9 @@ module Api
       render json: ShareBoard::Dashboard.new(params_with_user).call
     end
 
-    # GET http://localhost:3000/api/share_board/chot_message_loader.json?room_code=dev_room
-    def chot_message_loader
-      render json: ShareBoard::Room.find_or_create_by!(key: params[:room_code]).as_json_for_chot_message_loader(params_with_user)
+    # GET http://localhost:3000/api/share_board/chat_message_loader.json?room_code=dev_room
+    def chat_message_loader
+      render json: ShareBoard::Room.find_or_create_by!(key: params[:room_code]).as_json_for_chat_message_loader(params_with_user)
     end
 
     private

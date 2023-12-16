@@ -104,12 +104,12 @@ export const mod_chat_message_history = {
     },
 
     // 新しいメッセージを読み込む
-    // http://localhost:3000/api/share_board/chot_message_loader?room_code=dev_room&limit=2
+    // http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room&limit=2
     mh_read() {
       this.debug_alert("mh_read")
-      this.$axios.$get("/api/share_board/chot_message_loader", {params: this.mh_api_params()}).then(e => {
+      this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params()}).then(e => {
         this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
-        this.ml_merge(e.chot_messages)
+        this.ml_merge(e.chat_messages)
         this.$nextTick(() => this.mh_next_process())
       })
     },
@@ -121,7 +121,7 @@ export const mod_chat_message_history = {
       Gs.assert(Gs.present_p(this.user_name), "Gs.present_p(this.user_name)")
       Gs.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
 
-      // link: app/models/share_board/room/chot_message_loader.rb
+      // link: app/models/share_board/room/chat_message_loader.rb
       return {
         room_code:  this.room_code,                        // 部屋
         limit:      this.CHAT_DEFAULT_PER_PAGE, // 件数

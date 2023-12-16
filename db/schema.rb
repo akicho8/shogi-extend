@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_10_000000) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_10_000001) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -229,6 +229,23 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_000000) do
     t.index ["win_location_id"], name: "index_share_board_battles_on_win_location_id"
   end
 
+  create_table "share_board_chat_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.bigint "room_id", null: false, comment: "部屋"
+    t.bigint "user_id", null: false, comment: "発言者(キーは名前だけなのですり変われる)"
+    t.bigint "message_scope_id", null: false, comment: "スコープ"
+    t.string "content", limit: 256, null: false, comment: "発言内容"
+    t.bigint "performed_at", null: false, comment: "実行開始日時(ms)"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.bigint "real_user_id", comment: "ログインユーザー"
+    t.string "from_connection_id", comment: "null なら bot 等"
+    t.string "primary_emoji", comment: "優先する絵文字"
+    t.index ["message_scope_id"], name: "index_share_board_chat_messages_on_message_scope_id"
+    t.index ["real_user_id"], name: "index_share_board_chat_messages_on_real_user_id"
+    t.index ["room_id"], name: "index_share_board_chat_messages_on_room_id"
+    t.index ["user_id"], name: "index_share_board_chat_messages_on_user_id"
+  end
+
   create_table "share_board_chot_messages", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "room_id", null: false, comment: "部屋"
     t.bigint "user_id", null: false, comment: "発言者(キーは名前だけなのですり変われる)"
@@ -276,6 +293,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_000000) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "chot_messages_count", default: 0
+    t.integer "chat_messages_count", default: 0
     t.index ["key"], name: "index_share_board_rooms_on_key", unique: true
   end
 
@@ -305,6 +323,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_10_000000) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "chot_messages_count", default: 0
+    t.integer "chat_messages_count", default: 0
     t.index ["name"], name: "index_share_board_users_on_name", unique: true
   end
 

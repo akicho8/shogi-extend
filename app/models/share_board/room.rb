@@ -40,7 +40,7 @@ module ShareBoard
 
     has_many :roomships, dependent: :destroy, inverse_of: :room # この部屋の対局者の情報(ランキングとしてそのまま使える)
 
-    has_many :chot_messages, dependent: :destroy do                # この部屋の発言
+    has_many :chat_messages, dependent: :destroy do                # この部屋の発言
       def create_from_data!(data)
         data = data.symbolize_keys
         user = User.find_or_create_by!(name: data[:from_user_name])
@@ -56,7 +56,7 @@ module ShareBoard
                 })
       end
     end
-    has_many :chot_users, through: :chot_messages, source: :user # この部屋の発言者たち
+    has_many :chat_users, through: :chat_messages, source: :user # この部屋の発言者たち
 
     before_validation do
       if Rails.env.development?
@@ -117,27 +117,27 @@ module ShareBoard
       # }
 
       # user = User.find_or_create_by!(name: data["from_user_name"])
-      # chot_message = chot_messages.create!(user: user, content: data["message"])
-      # chot_messages.create_from_data!(data)
+      # chat_message = chat_messages.create!(user: user, content: data["message"])
+      # chat_messages.create_from_data!(data)
 
-      # chot_message = Room.find_or_create_by!(key: room_code).chot_messages.create_from_data!(data)
-      chot_message = chot_messages.create_from_data!(data) # DBに入れる
-      chot_message.broadcast_to_all                          # バックグラウンドで配る
-      ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code)) # バックグラウンドで返事をする FIXME: chot_message を元にする？
-      # chot_message.responder1_job_run
+      # chat_message = Room.find_or_create_by!(key: room_code).chat_messages.create_from_data!(data)
+      chat_message = chat_messages.create_from_data!(data) # DBに入れる
+      chat_message.broadcast_to_all                          # バックグラウンドで配る
+      ShareBoard::Responder1Job.perform_later(data.merge(room_code: room_code)) # バックグラウンドで返事をする FIXME: chat_message を元にする？
+      # chat_message.responder1_job_run
     end
 
-    def as_json_for_chot_message_loader(params = {})
-      ChotMessageLoader.new(self, params).as_json
+    def as_json_for_chat_message_loader(params = {})
+      ChatMessageLoader.new(self, params).as_json
     end
 
-    def chot_messages_mock_setup(n = 10, user: nil)
+    def chat_messages_mock_setup(n = 10, user: nil)
       if Rails.env.local?
-        if chot_messages.empty?
+        if chat_messages.empty?
           user ||= User.create!
-          chot_messages.destroy_all
+          chat_messages.destroy_all
           n.times do |i|
-            chot_messages.create!(user: user, content: "(#{i})")
+            chat_messages.create!(user: user, content: "(#{i})")
           end
         end
       end

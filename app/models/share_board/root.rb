@@ -31,7 +31,7 @@ module ShareBoard
         Room,
         Membership,
         MessageScope,
-        ChotMessage,
+        ChatMessage,
       ]
     end
 
