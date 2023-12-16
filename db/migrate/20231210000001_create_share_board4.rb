@@ -1,18 +1,18 @@
 class CreateShareBoard4 < ActiveRecord::Migration[5.1]
   def up
     change_table :share_board_rooms do |t|
-      unless t.column_exists?(:chot_messages_count)
-        t.integer :chot_messages_count, default: 0
+      unless t.column_exists?(:chat_messages_count)
+        t.integer :chat_messages_count, default: 0
       end
     end
 
     change_table :share_board_users do |t|
-      unless t.column_exists?(:chot_messages_count)
-        t.integer :chot_messages_count, default: 0
+      unless t.column_exists?(:chat_messages_count)
+        t.integer :chat_messages_count, default: 0
       end
     end
 
-    create_table :share_board_chot_messages, force: true do |t|
+    create_table :share_board_chat_messages, force: true do |t|
       # 必須
       t.belongs_to :room,          null: false, comment: "部屋"
       t.belongs_to :user,          null: false, comment: "発言者(キーは名前だけなのですり変われる)"

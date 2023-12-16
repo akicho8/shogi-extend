@@ -26,8 +26,8 @@ module ShareBoard
         if DIRECT_MODE
           Broadcaster.new(room_code).call("message_share_broadcasted", bc_params)
         else
-          chot_message = room.chot_messages.create_from_data!(bc_params) # DBに入れる
-          chot_message.broadcast_to_all                                  # バックグラウンドで配る
+          chat_message = room.chat_messages.create_from_data!(bc_params) # DBに入れる
+          chat_message.broadcast_to_all                                  # バックグラウンドで配る
         end
       end
 

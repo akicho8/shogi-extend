@@ -12,7 +12,7 @@ RSpec.describe ShareBoard::MessageScope do
   it "指定種別に対応するレコードたちを取得できる" do
     user = ShareBoard::User.create!
     room = ShareBoard::Room.create!
-    chot_message = room.chot_messages.create!(user: user)
-    assert { ShareBoard::MessageScope[:ms_public].chot_messages == [chot_message] }
+    chat_message = room.chat_messages.create!(user: user)
+    assert { ShareBoard::MessageScope[:ms_public].chat_messages == [chat_message] }
   end
 end

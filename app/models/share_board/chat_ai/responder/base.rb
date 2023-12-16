@@ -2,8 +2,8 @@
 #
 #   rails r 'ShareBoard::Responder::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
 #
-# - ChotMessage に依存してはいけない
-# - 現在の雑談内容をもとに新しい発言をするので ChotMessage と 1:1 の関係ではない
+# - ChatMessage に依存してはいけない
+# - 現在の雑談内容をもとに新しい発言をするので ChatMessage と 1:1 の関係ではない
 # - 発言ではなく部屋と 1:1 の関係になる
 module ShareBoard
   module ChatAi

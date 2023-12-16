@@ -230,7 +230,7 @@ Rails.application.routes.draw do
       post :battle_create
       get :battle_create if Rails.env.development?
       get :dashboard
-      get :chot_message_loader
+      get :chat_message_loader
     end
   end
 

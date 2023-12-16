@@ -17,6 +17,6 @@ module ShareBoard
   class MessageScope < ApplicationRecord
     include MemoryRecordBind::Basic
 
-    has_many :chot_messages, dependent: :destroy
+    has_many :chat_messages, dependent: :destroy
   end
 end
