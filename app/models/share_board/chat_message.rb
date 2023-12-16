@@ -26,39 +26,19 @@
 module ShareBoard
   class ChatMessage < ApplicationRecord
     JSON_TYPE1 = {
-      # only: [
-      #   :sfen,
-      #   :position,
-      #   :created_at,
-      # ],
-
       only: [
         :id,
-        # :room_id,
-        # :user_id,
         :content,
         :performed_at,
-        # :created_at,
-        # :updated_at,
-        # :real_user_id,
+        :real_user_id,
         :from_connection_id,
         :primary_emoji,
-        # :from_user_name,
-        # :from_avatar_path,
       ],
-
       methods: [
         :message_scope_key,
         :from_user_name,
         :from_avatar_path,
       ],
-      # include: {
-      #   user: {
-      #     only: [
-      #       :name,
-      #     ],
-      #   },
-      # },
     }
 
     custom_belongs_to :message_scope,  ar_model: MessageScope, st_model: MessageScopeInfo, default: "ms_public"
@@ -68,9 +48,10 @@ module ShareBoard
     belongs_to :user, counter_cache: true # 発言者
     belongs_to :room, counter_cache: true # 所属する部屋
 
-    normalizes :content, with: -> e { column_value_db_truncate(:content, e) }
+    normalizes :content, with: -> e { column_value_db_truncate(:content, e) } # 長すぎるメッセージを途中で切る
 
-    # default_scope { order(:created_at) }
+    # 仮にソートするなら performed_at を参照すること
+    # default_scope { order(:performed_at) }
 
     before_validation do
       self.performed_at ||= (Time.current.to_f * 1000).to_i
@@ -81,33 +62,22 @@ module ShareBoard
       validates :performed_at
     end
 
+    # 配る
     def broadcast_to_all
-      __nil_check_skip_keys__ = [
-        "message_scope_key",
-        "from_connection_id",
-        "primary_emoji",
-        "from_avatar_path",
-      ]
       data = as_json(JSON_TYPE1).merge("__nil_check_skip_keys__" => __nil_check_skip_keys__)
       Broadcaster.new(room.key).call("message_share_broadcasted", data)
     end
 
-    # def as_chat_json
-    #   as_json(JSON_TYPE1)
-    # end
-
+    # 送信者名
     def from_user_name
       user.name
     end
 
+    # ログインしている人のアバター画像
     # http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room
     def from_avatar_path
       real_user&.avatar_path
     end
-
-    # def performed_at
-    #   created_at.to_i
-    # end
 
     def responder1_job_run
       Responder1Job.perform_later(id)
@@ -119,6 +89,28 @@ module ShareBoard
 
     def responder2_main_run
       ChatAi::Responder::Responder2.new(self).call
+    end
+
+    # se say -r dev_room -t bot -m GPTです。こんにちは
+    def info
+      {
+        :room_code      => room.key,
+        :real_user_name => real_user&.name,
+        **attributes,
+        **as_json(JSON_TYPE1),
+      }
+    end
+
+    private
+
+    def __nil_check_skip_keys__
+      [
+        "message_scope_key",
+        "from_connection_id",
+        "primary_emoji",
+        "from_avatar_path",
+        "real_user_id",
+      ]
     end
   end
 end

@@ -1,7 +1,9 @@
 require "rails_helper"
 
-RSpec.describe ShareBoard::Broadcaster do
-  it "works" do
-    ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK")
+module ShareBoard
+  RSpec.describe Broadcaster do
+    it "works" do
+      Broadcaster.new.call("message_share_broadcasted", message: "OK")
+    end
   end
 end
