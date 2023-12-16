@@ -79,16 +79,16 @@ module ShareBoard
       real_user&.avatar_path
     end
 
-    def responder1_job_run
-      Responder1Job.perform_later(id)
+    def responder_res_job_run
+      ResponderResJob.perform_later(id)
     end
 
-    def responder1_main_run
-      ChatAi::Responder::Responder1.new(self).call
+    def responder_res_main_run
+      ChatAi::Responder::ResponderRes.new(self).call
     end
 
-    def responder2_main_run
-      ChatAi::Responder::Responder2.new(self).call
+    def responder_something_say_main_run
+      ChatAi::Responder::ResponderSomethingSay.new(self).call
     end
 
     # se say -r dev_room -t bot -m GPTです。こんにちは

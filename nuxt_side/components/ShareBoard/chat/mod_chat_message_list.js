@@ -13,7 +13,7 @@ export const mod_chat_message_list = {
     }
   },
   mounted() {
-    // this.ml_add({message: "a"})
+    // this.ml_add({content: "a"})
   },
   methods: {
     // 発言の追加 (単に最後にpushする)
@@ -48,15 +48,15 @@ export const mod_chat_message_list = {
     },
 
     // Bot用 (自分だけが見える)
-    local_bot_say(message) {
-      this.ml_add({from_user_name: "Bot", message: message})
+    local_bot_say(content) {
+      this.ml_add({from_user_name: "Bot", content: content})
     },
 
     // 自分だけが見える発言
-    local_say(message) {
+    local_say(content) {
       this.ml_add({
         from_user_name: this.user_name,
-        message: message,
+        content: content,
         from_avatar_path: this.g_current_user?.avatar_path,
       })
     },

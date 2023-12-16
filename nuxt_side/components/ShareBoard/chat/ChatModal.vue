@@ -81,7 +81,7 @@ export default {
         }
       }
       this.$sound.play_click()
-      this.TheSb.message_share({message: this.TheSb.message_body})
+      this.TheSb.message_share({content: this.TheSb.message_body})
       this.TheSb.message_body = ""
       this.input_focus()
     },

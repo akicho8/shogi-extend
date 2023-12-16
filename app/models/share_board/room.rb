@@ -18,7 +18,7 @@
 #  room = ShareBoard::Room.find_or_create_by!(key: "dev_room")
 #  room.receive_and_bc({
 #                        "from_user_name"    => "GPT",
-#                        "message"           => "(message)",
+#                        "content"           => "(content)",
 #                        "real_user_id"      => User.bot.id,
 #                        "message_scope_key" => "ms_private",
 #                        "primary_emoji"     => "🍄",
@@ -57,7 +57,7 @@ module ShareBoard
         user = User.fetch(data[:from_user_name])
         create!({
                   :user               => user,
-                  :content            => data[:content] || data[:message],
+                  :content            => data[:content],
                   :message_scope_key  => data[:message_scope_key],
                   :from_connection_id => data[:from_connection_id], # FIXME: とる
                   :real_user_id       => data[:real_user_id],
@@ -82,35 +82,37 @@ module ShareBoard
       validates :key
     end
 
-    def score_by_user(user)
-      memberships.where(user: user, judge: Judge.fetch(:win)).count
-    end
+    concerning :RankingMethods do
+      def score_by_user(user)
+        memberships.where(user: user, judge: Judge.fetch(:win)).count
+      end
 
-    def ox_count_by_user(user, judge)
-      memberships.where(user: user, judge: Judge.fetch(judge)).count
-    end
+      def ox_count_by_user(user, judge)
+        memberships.where(user: user, judge: Judge.fetch(judge)).count
+      end
 
-    def rank_by_score(score)
-      redis.call("ZCOUNT", redis_key, score + 1, "+inf") + 1
-    end
+      def rank_by_score(score)
+        redis.call("ZCOUNT", redis_key, score + 1, "+inf") + 1
+      end
 
-    def redis_clear
-      redis.call("DEL", redis_key)
-    end
+      def redis_clear
+        redis.call("DEL", redis_key)
+      end
 
-    # "share_board/room/1"
-    def redis_key
-      [self.class.name.underscore, id].join("/")
-    end
+      # "share_board/room/1"
+      def redis_key
+        [self.class.name.underscore, id].join("/")
+      end
 
-    def redis_rebuild
-      redis_clear
-      roomships.each(&:score_post_to_redis)
-      roomships.each(&:rank_update)
-    end
+      def redis_rebuild
+        redis_clear
+        roomships.each(&:score_post_to_redis)
+        roomships.each(&:rank_update)
+      end
 
-    def redis
-      @redis ||= RedisClient.new(db: AppConfig[:redis_db_for_share_board_room])
+      def redis
+        @redis ||= RedisClient.new(db: AppConfig[:redis_db_for_share_board_room])
+      end
     end
 
     concerning :ChatMesssageMethods do
@@ -129,7 +131,7 @@ module ShareBoard
         end
         params = {
           **default_options,
-          # :message           => "(message#{chat_messages.count.next})",
+          # :content           => "(content#{chat_messages.count.next})",
           # :real_user_id      => ::User.bot.id,
           # :message_scope_key => "ms_private", # ms_public or ms_private
           # :from_user_name    => "GPT",
@@ -140,7 +142,7 @@ module ShareBoard
 
       # def gpt_message_send(params = {})
       #   receive_and_bc({
-      #                    :message => "(message#{chat_messages.count.next})",
+      #                    :content => "(content#{chat_messages.count.next})",
       #                    # :real_user_id      => ::User.bot.id,
       #                    # :message_scope_key => "ms_private", # ms_public or ms_private
       #                    # :from_user_name    => "GPT",
@@ -158,19 +160,19 @@ module ShareBoard
         #   "debug_mode_p"=>true,
         #   "from_avatar_path"=>"/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBEQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--76b7d01ef121c14889a810397668c90660fc3585/mcA_BLhf_normal.png",
         #   "message_scope_key"=>"ms_public",
-        #   "message"=>"jkjk",
+        #   "content"=>"jkjk",
         #   "action"=>"message_share",
         # }
 
         # user = User.find_or_create_by!(name: data["from_user_name"])
-        # chat_message = chat_messages.create!(user: user, content: data["message"])
+        # chat_message = chat_messages.create!(user: user, content: data["content"])
         # chat_messages.create_from_data!(data)
 
         # chat_message = Room.find_or_create_by!(key: room_code).chat_messages.create_from_data!(data)
         chat_message = chat_messages.create_from_data!(data) # DBに入れる
         chat_message.broadcast_to_all                          # バックグラウンドで配る
-        ShareBoard::Responder1Job.perform_later(data.merge(room_code: key)) # バックグラウンドで返事をする FIXME: chat_message を元にする？
-        # chat_message.responder1_job_run
+        ShareBoard::ResponderResJob.perform_later(data.merge(room_code: key)) # バックグラウンドで返事をする FIXME: chat_message を元にする？
+        # chat_message.responder_res_job_run
         if Rails.env.development?
           tp chat_message.info
         end

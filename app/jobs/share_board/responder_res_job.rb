@@ -1,7 +1,7 @@
 # 話し掛けられたら返答する
 
 module ShareBoard
-  class Responder1Job < ApplicationJob
+  class ResponderResJob < ApplicationJob
     queue_as :default
 
     def perform(params)
@@ -22,7 +22,7 @@ module ShareBoard
       #   "action"=>"message_share",
       #   :room_code=>"dev_room",
       # }
-      ShareBoard::ChatAi::Responder::Responder1.new(params).call
+      ShareBoard::ChatAi::Responder::ResponderRes.new(params).call
     end
   end
 end

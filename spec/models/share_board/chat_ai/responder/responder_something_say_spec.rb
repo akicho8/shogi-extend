@@ -1,12 +1,12 @@
 require "rails_helper"
 
 module ShareBoard
-  RSpec.describe ChatAi::Responder::Responder2 do
+  RSpec.describe ChatAi::Responder::ResponderSomethingSay do
     it "works" do
       history = ChatAi::MessageHistory.new
       history.clear
 
-      object = ChatAi::Responder::Responder2.new
+      object = ChatAi::Responder::ResponderSomethingSay.new
       object.call
 
       puts history.to_topic.to_t if $0 == __FILE__
@@ -19,7 +19,7 @@ module ShareBoard
       history = ChatAi::MessageHistory.new
       history.clear
 
-      object = ChatAi::Responder::Responder2.new(message: "あなたの一人称は何ですか？")
+      object = ChatAi::Responder::ResponderSomethingSay.new(content: "あなたの一人称は何ですか？")
       object.call
       assert { history.to_topic[1].content.match?(/小生/) }
     end
