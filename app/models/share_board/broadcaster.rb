@@ -1,8 +1,8 @@
 # 全部これで送る
 
 # ▼メッセージ送信
-# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK")'
-# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", message: "OK", from_user_name: "運営", primary_emoji: "🤖")'
+# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", content: "OK")'
+# rails r 'ShareBoard::Broadcaster.new.call("message_share_broadcasted", content: "OK", from_user_name: "運営", primary_emoji: "🤖")'
 
 module ShareBoard
   class Broadcaster

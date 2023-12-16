@@ -1,6 +1,6 @@
 # 発言を返す
 #
-#   rails r 'ShareBoard::Responder::Responder.new(message: "@gpt 将棋ウォーズの棋力は？").call'
+#   rails r 'ShareBoard::Responder::Responder.new(content: "@gpt 将棋ウォーズの棋力は？").call'
 #
 # - ChatMessage に依存してはいけない
 # - 現在の雑談内容をもとに新しい発言をするので ChatMessage と 1:1 の関係ではない
@@ -27,7 +27,7 @@ module ShareBoard
         #     "disconnected"=>1},
         #   "debug_mode_p"=>true,
         #   "from_avatar_path"=>"/assets/human/0005_fallback_avatar_icon-f076233f605139a9b8991160e1d79e6760fe6743d157446f88b12d9dae5f0e03.png",
-        #   "message"=>"@gpt hello",
+        #   "content"=>"@gpt hello",
         #   "message_scope_key"=>"ms_public",
         #   "action"=>"message_share",
         #   :room_code=>"dev_room",
@@ -97,7 +97,7 @@ module ShareBoard
         end
 
         def user_raw_message
-          params[:message]
+          params[:content]
         end
 
         def message_scope_key

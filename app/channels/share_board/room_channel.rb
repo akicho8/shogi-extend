@@ -118,7 +118,7 @@ module ShareBoard
 
     # /gpt コマンド
     def gpt_speak(data)
-      ShareBoard::Responder2Job.perform_later(data.merge(room_code: room_code))
+      ShareBoard::ResponderSomethingSayJob.perform_later(data.merge(room_code: room_code))
     end
 
     def give_up_share(data)

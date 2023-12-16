@@ -1,12 +1,12 @@
 require "rails_helper"
 
 module ShareBoard
-  RSpec.describe ChatAi::Responder::Responder1 do
+  RSpec.describe ChatAi::Responder::ResponderRes do
     it "works" do
       history = ChatAi::MessageHistory.new
       history.clear
 
-      object = ChatAi::Responder::Responder1.new(message: "@gpt こんにちは")
+      object = ChatAi::Responder::ResponderRes.new(content: "@gpt こんにちは")
       object.call
 
       puts history.to_topic.to_t if $0 == __FILE__

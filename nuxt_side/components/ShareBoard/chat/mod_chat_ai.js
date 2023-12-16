@@ -10,13 +10,13 @@ export const mod_chat_ai = {
         message_scope_key: this.message_scope_info.key, // 発言者のスコープを元にする
         ...params,
       }
-      params.message ??= ""                             // null チェックをかわすため
+      params.content ??= ""                             // null チェックをかわすため
       this.ac_room_perform("gpt_speak", params)         // --> app/channels/share_board/room_channel.rb
 
       // 確認のため
       if (!this.$route.query.__system_test_now__ || true) {
         if (this.debug_mode_p) {
-          this.local_bot_say(params.message)
+          this.local_bot_say(params.content)
         }
       }
     },
@@ -24,11 +24,11 @@ export const mod_chat_ai = {
     ////////////////////////////////////////////////////////////////////////////////
 
     gpt_speak_for(key, params) {
-      const message = ChatgptRequestInfo.fetch(key).command_fn(this, params)
-      if (message != null) {
+      const content = ChatgptRequestInfo.fetch(key).command_fn(this, params)
+      if (content != null) {
         if (this.gpt_mode_info.key === "gpt_mode_on") {
-          const message2 = [message, "返答は短かく簡潔にすること。"].join("")
-          this.gpt_speak({message: message2})
+          const content2 = [content, "返答は短かく簡潔にすること。"].join("")
+          this.gpt_speak({content: content2})
         }
       }
     },

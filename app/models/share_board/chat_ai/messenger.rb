@@ -17,9 +17,9 @@ module ShareBoard
         }.merge(params)
       end
 
-      def call(message = nil, bc_params = {})
+      def call(content = nil, bc_params = {})
         bc_params = {
-          :message      => message || "#{Time.current}",
+          :content      => content || "#{Time.current}",
           :performed_at => Time.current.to_f * 1000,
         }.merge(params, bc_params)
 

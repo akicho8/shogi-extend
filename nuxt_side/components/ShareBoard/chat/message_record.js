@@ -1,5 +1,5 @@
 // |---------------------|
-// | message             |
+// | content             |
 // | auto_linked_message |
 // | from_connection_id  |
 // | from_user_name      |
@@ -19,7 +19,7 @@ export class MessageRecord {
 
   constructor(params) {
     this.id                 = params.id
-    this.message            = params.content ?? params.message
+    this.content            = params.content
     this.message_scope_key  = params.message_scope_key ?? "ms_public"
     this.from_connection_id = params.from_connection_id                    // null なら bot 等
     this.from_user_name     = params.from_user_name                        // null なら名前を表示しなくなる
@@ -45,12 +45,12 @@ export class MessageRecord {
 
   // 表示するときのメッセージは加工しておく
   get auto_linked_message() {
-    return Gs.auto_link(this.message, {mention: false}) // `@alice` をリンクにしないようにする
+    return Gs.auto_link(this.content, {mention: false}) // `@alice` をリンクにしないようにする
   }
 
   // 表示できないときのメッセージ
   get invisible_message() {
-    return "*".repeat(this.message.length)
+    return "*".repeat(this.content.length)
   }
 
   // 表示するときの色
@@ -67,11 +67,15 @@ export class MessageRecord {
 
   get toast_message() {
     const name = Gs.presence(this.from_user_name) ?? "？"
-    return `${name}: ${this.message}`
+    return `${name}: ${this.content}`
   }
 
   get toast_type() {
     return this.message_scope_info.toast_type
+  }
+
+  get message() {
+    Gs.assert(false)
   }
 
   unique_key_generate() {
@@ -82,7 +86,7 @@ export class MessageRecord {
       // DBに入っていない場合のID
       const str = [
         this.from_user_name,
-        this.message,
+        this.content,
         this.from_connection_id,
         this.performed_at,
       ].join("/")
