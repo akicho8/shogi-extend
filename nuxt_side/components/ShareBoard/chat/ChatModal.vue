@@ -6,7 +6,7 @@
         XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
       template(v-else)
         | チャット
-    b-button.mh_reset_all_and_setup(type="is-small" @click="TheSb.mh_reset_all_and_setup" v-if="development_p") よそ見から復帰
+    b-button.mh_reload(type="is-small" @click="TheSb.mh_reload" v-if="development_p") よそ見から復帰
     b-button.mh_reset_all(type="is-small" @click="TheSb.mh_reset_all" v-if="development_p") 初期化
     b-button.mh_read(type="is-small" @click="TheSb.mh_read" v-if="development_p") 読込{{TheSb.mh_seek_pos}}
     b-button.mh_head_observe(type="is-small" @click="TheSb.mh_head_observe" v-if="development_p") 監視

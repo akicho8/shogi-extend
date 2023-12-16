@@ -1,27 +1,41 @@
 // メッセージ履歴
 
-// | mh_room_entry |
-// | mh_room_leave |
-// | mh_setup  |
+// |-----------------------+--------------------------------------------------------------|
+// | Method                | 意味                                                         |
+// |-----------------------+--------------------------------------------------------------|
+// | mh_reset()            | 初期化する                                                   |
+// | mh_reset_all()        | 初期化する (メッセージリストも消去する)                      |
+// | mh_reload()           | よそ見から復帰したときに読んでほしい内容になっている         |
+// | mh_setup()            | チャットを開いた瞬間に毎回実行してほしい内容                 |
+// | mh_read()             | 新しいメッセージを読み込む                                   |
+// | mh_api_params()       | APIに渡すパラメータ                                          |
+// | mh_next_process()     | 読み込んだあとで毎回行う処理                                 |
+// | mh_viewpoint_adjust() | (1) スクロール位置を元に戻す                                 |
+// | mh_start_or_stop()    | (2) 終わりでなければ監視者を用意する。終わりなら監視者を殺す |
+// | mh_head_observe()     | (3) 終わりでなければ次のフレームで最上位を監視する           |
+// | mh_safe_start()       | 監視者がいなければ生成する                                   |
+// | mh_start()            | 監視者を生成する                                             |
+// | mh_stop()             | 監視者を殺す                                                 |
+// | mh_safe_stop()        | 監視者がいれば殺す                                           |
+// | mh_root_el_fetch()    | .SbMessageList の要素を必ず取得する                          |
+// | mh_root_el()          | SbMessageList                                                |
+// | mh_page_index_next()  | axios で取得するページ(ブロック)番号を作る                   |
+// | mh_seek_pos           | 読み込み位置(初回はnull)                                     |
+// | mh_has_next_p         | 次があるか？                                                 |
+// |-----------------------+--------------------------------------------------------------|
 
-// import ChatModal from "./ChatModal.vue"
-// import { MessageScopeInfo } from "../models/message_scope_info.js"
-// import { SendTriggerInfo } from "../models/send_trigger_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
 
-const LATEST  = 100             // 最新の発言番号
-const STEP    = 2               // まとめて読み込む発言数
-const PADDING = 0             // スクロールエリア内の隙間 (px)
+const PADDING = 0 // スクロールエリア内の隙間 (px)
 
 export const mod_chat_message_history = {
   data() {
     return {
       mh_page_index: 0,       // 次にリクエストするページ番号
-      mh_scroll_height: null,  // 古い発言を差し込む直前の高さ
-      mh_data: null,           // 最後に取得したデータの内容
-      mh_flags: {},            // 監視した要素の状態
+      mh_scroll_height: null, // 古い発言を差し込む直前の高さ
+      mh_latest_info: null,   // 最後に取得したデータの内容
     }
   },
   mounted() {
@@ -40,11 +54,11 @@ export const mod_chat_message_history = {
   methods: {
     //////////////////////////////////////////////////////////////////////////////// フック
 
-    mh_room_entry()   { this.mh_reset_all()           }, // 入室直後
-    mh_room_leave()   { this.mh_reset_all()           }, // 退室直前
-    mh_chat_open()    { this.mh_setup()               }, // チャットモーダルを開いたとき
-    mh_chat_close()   { this.mh_safe_stop()           }, // チャットモーダルを閉じたとき
-    mh_window_focus() { this.mh_reset_all_and_setup() }, // よそ見から復帰したとき
+    mh_room_entry()   { this.mh_reset_all() }, // 入室直後
+    mh_room_leave()   { this.mh_reset_all() }, // 退室直前
+    mh_chat_open()    { this.mh_setup()     }, // チャットモーダルを開いたとき
+    mh_chat_close()   { this.mh_safe_stop() }, // チャットモーダルを閉じたとき
+    mh_window_focus() { this.mh_reload()    }, // よそ見から復帰したとき
 
     ////////////////////////////////////////////////////////////////////////////////
 
@@ -55,8 +69,7 @@ export const mod_chat_message_history = {
 
       this.mh_page_index    = 0    // 次にリクエストするページ番号
       this.mh_scroll_height = null // 古い発言を差し込む直前の高さ
-      this.mh_data          = null // 最後に取得したデータの内容
-      this.mh_flags         = {}   // 監視した要素の状態
+      this.mh_latest_info   = null // 最後に取得したデータの内容
     },
 
     // すべてを初期状態にする
@@ -69,7 +82,7 @@ export const mod_chat_message_history = {
     // よそ見から復帰したときに読んでほしい内容になっている
     // 当初は、すでに入っている発言たちは残しておいた方がよいかとケチ臭いことを思っていたが
     // よそ見した時点で、不整合状態になる恐れがあり、そうすると会話が噛み合わなくなるので全部初期化した方がよい
-    mh_reset_all_and_setup() {
+    mh_reload() {
       if (this.ac_room) {
         this.app_log({emoji: ":チャット履歴:", subject: "よそ見からの復帰", body: `復帰前履歴行数${this.ml_count}件`})
         this.mh_reset_all()       // よそ見した時点で不整合が起きている可能性があるので全リセット
@@ -95,7 +108,7 @@ export const mod_chat_message_history = {
     mh_read() {
       this.debug_alert("mh_read")
       this.$axios.$get("/api/share_board/chot_message_loader", {params: this.mh_api_params()}).then(e => {
-        this.mh_data = e                   // 最後に取得した内容を保持しておく
+        this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
         this.ml_merge(e.chot_messages)
         this.$nextTick(() => this.mh_next_process())
       })
@@ -111,7 +124,7 @@ export const mod_chat_message_history = {
       // link: app/models/share_board/room/chot_message_loader.rb
       return {
         room_code:  this.room_code,                        // 部屋
-        limit:      this.AppConfig.CHAT_MESSAGES_SIZE_MAX, // 件数
+        limit:      this.CHAT_DEFAULT_PER_PAGE, // 件数
         seek_pos:   this.mh_seek_pos,                      // 指定未満を取得する。nil なら最新から取得する。
         // 以下は AppLog のため
         page_index: this.mh_page_index_next(),             // 取得するページ番号 (アクセスカウンタでもある)
@@ -128,7 +141,7 @@ export const mod_chat_message_history = {
 
     // (1) スクロール位置を元に戻す
     mh_viewpoint_adjust() {
-      if (this.mh_data.data_exist_p) {
+      if (this.mh_latest_info.data_exist_p) {
         if (this.mh_scroll_height) {
           this.mh_root_el_fetch().scrollTop = this.mh_root_el_fetch().scrollHeight - this.mh_scroll_height + PADDING
         }
@@ -181,9 +194,7 @@ export const mod_chat_message_history = {
       this.$mh_observer = new IntersectionObserver((entries, observer) => {
         Gs.assert(entries.length === 1, "entries.length === 1")
 
-        this.mh_flags = {}
         entries.forEach(e => {
-          this.mh_flags[e.target.innerText] = e.isIntersecting // 状態確認用
           console.log(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
 
           // 状態に対応するクラスを付与する
@@ -249,7 +260,9 @@ export const mod_chat_message_history = {
     },
   },
   computed: {
-    mh_seek_pos()   { return this.mh_data && this.mh_data["next_seek_pos"] }, // 読み込み位置(初回はnull)
-    mh_has_next_p() { return this.mh_data && this.mh_data["has_next_p"]    }, // 次があるか？
+    mh_seek_pos()           { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
+    mh_has_next_p()         { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
+
+    CHAT_DEFAULT_PER_PAGE() { return parseInt(this.$route.query.CHAT_DEFAULT_PER_PAGE ?? this.AppConfig.CHAT_DEFAULT_PER_PAGE) },
   },
 }
