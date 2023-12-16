@@ -1,44 +1,70 @@
 require "rails_helper"
 
 RSpec.describe ShareBoard::ChotMessage do
-  it "works" do
+  before do
+    ShareBoard.setup
+  end
+
+  it "発言スコープ種別のレコードがある" do
+    assert { ShareBoard::MessageScope.count == 2 }
+  end
+
+  it "レコードを作る" do
     user = ShareBoard::User.create!
+    room = ShareBoard::Room.create!
+    chot_message = room.chot_messages.create!(user: user)
+    assert { chot_message.user == user }
+    assert { chot_message.room == room }
+    chot_message.save!
+    assert { room.chot_messages_count == 1 }
+    assert { user.chot_messages_count == 1 }
+    assert { room.chot_messages == [chot_message] }
+    assert { room.chot_users == [user] }
+    assert { chot_message.message_scope == ShareBoard::MessageScope[:is_message_scope_public] }
+  end
 
-    # room = ShareBoard::Room.create!
-    # room.chot_messages.
-    # ChotMessage
+  it "user 側のリレーションが正しい" do
+    user = ShareBoard::User.create!
+    room = ShareBoard::Room.create!
+    assert { user.chot_messages.create!(room: room) }
+  end
 
-    # 2.times do |i|
-    #   room.battles.create! do |e|
-    #     e.memberships.build([
-    #         { user_name: "alice", location_key: "black", judge_key: "win",  },
-    #         { user_name: "bob",   location_key: "white", judge_key: "lose", },
-    #         { user_name: "carol", location_key: "black", judge_key: "win",  },
-    #       ])
-    #   end
-    # end
+  it "ログインしている人のIDを一緒に記録する" do
+    login_user = User.create!
+    user = ShareBoard::User.create!
+    room = ShareBoard::Room.create!
+    chot_message = room.chot_messages.create!(user: user, real_user: login_user)
+    assert { chot_message.real_user == login_user }
+  end
 
-    room.reload
-    assert { room.roomships.collect(&:rank) === [1, 1, 3] }
-    tp room.roomships if $0 == __FILE__
+  it "簡単にデータを用意する" do
+    user = ShareBoard::User.create!
+    room = ShareBoard::Room.create!
+    room.chot_messages_mock_setup(10, user: user)
+    assert { room.chot_messages.count == 10 }
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >>
-# >> ShareBoard::Room
-# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
-# >> | id | room_id | user_id | win_count | lose_count | battles_count | win_rate | score | rank | created_at                | updated_at                |
-# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
-# >> | 33 |      23 |      33 |         2 |          0 |             2 |      1.0 |     2 |    1 | 2023-11-26 15:17:18 +0900 | 2023-11-26 15:17:18 +0900 |
-# >> | 35 |      23 |      35 |         2 |          0 |             2 |      1.0 |     2 |    1 | 2023-11-26 15:17:18 +0900 | 2023-11-26 15:17:18 +0900 |
-# >> | 34 |      23 |      34 |         0 |          2 |             2 |      0.0 |     0 |    3 | 2023-11-26 15:17:18 +0900 | 2023-11-26 15:17:18 +0900 |
-# >> |----+---------+---------+-----------+------------+---------------+----------+-------+------+---------------------------+---------------------------|
-# >>   works
-# >>
-# >> Top 1 slowest examples (0.46153 seconds, 18.1% of total time):
-# >>   ShareBoard::Room works
-# >>     0.46153 seconds -:19
-# >>
-# >> Finished in 2.55 seconds (files took 2.56 seconds to load)
-# >> 1 example, 0 failures
-# >>
+# >> 
+# >> ShareBoard::ChotMessage
+# >>   発言スコープ種別のレコードがある
+# >>   レコードを作る
+# >>   user 側のリレーションが正しい
+# >>   ログインしている人のIDを一緒に記録する
+# >>   簡単にデータを用意する
+# >> 
+# >> Top 5 slowest examples (0.38014 seconds, 15.6% of total time):
+# >>   ShareBoard::ChotMessage 発言スコープ種別のレコードがある
+# >>     0.11456 seconds -:8
+# >>   ShareBoard::ChotMessage レコードを作る
+# >>     0.09706 seconds -:12
+# >>   ShareBoard::ChotMessage ログインしている人のIDを一緒に記録する
+# >>     0.07191 seconds -:32
+# >>   ShareBoard::ChotMessage 簡単にデータを用意する
+# >>     0.06844 seconds -:40
+# >>   ShareBoard::ChotMessage user 側のリレーションが正しい
+# >>     0.02817 seconds -:26
+# >> 
+# >> Finished in 2.43 seconds (files took 1.55 seconds to load)
+# >> 5 examples, 0 failures
+# >> 
