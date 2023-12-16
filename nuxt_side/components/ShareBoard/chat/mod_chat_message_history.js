@@ -196,7 +196,7 @@ export const mod_chat_message_history = {
 
       this.$mh_observer = new IntersectionObserver((entries, observer) => {
         Gs.assert(entries.length === 1, "entries.length === 1")
-        entries.forEach(e => this.mh_visible_changed(e))
+        entries.forEach(e => this.mh_visible_changed(observer, e))
       }, options)
       this.clog(this.$mh_observer)
 
@@ -204,7 +204,7 @@ export const mod_chat_message_history = {
       // this.mh_head_observe()
     },
     // 表示状態が変化したときに呼ばれる
-    mh_visible_changed(e) {
+    mh_visible_changed(observer, e) {
       console.log(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
 
       // 状態に対応するクラスを付与する
