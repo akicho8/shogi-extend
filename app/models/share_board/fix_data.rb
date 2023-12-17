@@ -38,7 +38,7 @@ module ShareBoard
         },
       ].each do |params|
         params = params.deep_symbolize_keys
-        room = ShareBoard::Room.find_or_create_by!(key: params[:room_key])
+        room = ShareBoard::Room.fetch(params[:room_key])
         battle = room.battles.find(params[:id])
         # battle.memberships.destroy_all
         # battle.memberships.create!(params[:memberships])

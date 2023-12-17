@@ -1,6 +1,10 @@
 module SharedMethods
-  def chat_modal_open
+  def chat_modal_open(&block)
     find(".chat_modal_open_handle").click
+    if block_given?
+      yield
+      chat_modal_close
+    end
   end
 
   def chat_modal_close
@@ -49,5 +53,36 @@ module SharedMethods
       find(:fillable_field).set(message)             # メッセージ入力
       find(".send_handle").click                     # 送信
     end
+  end
+
+  # 下スクロールさせて上に行く(過去を見る)
+  def chat_scroll_to_top
+    Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = 0))
+  end
+
+  # 下スクロールさせて上に行く(読み込みが終わるだろう時間まで少し待つ)
+  def chat_scroll_to_top_with_wait
+    chat_scroll_to_top
+    sleep 0.5
+  end
+
+  # 上スクロールさせて下に行く(最新を見る)
+  def chat_scroll_to_bottom
+    Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = document.querySelector(".SbMessageList").scrollHeight))
+  end
+
+  # 発言を count 件用意する
+  def chat_message_setup(count)
+    eval_code %(ShareBoard::Room.fetch("test_room").setup_for_test(count: #{count}, force: true))
+  end
+
+  # 発言読み込み数
+  def assert_ml_count_in_modal(count)
+    assert_selector(".ChatModal .ml_count", text: count.to_s, exact_text: true)
+  end
+
+  # API実行回数
+  def assert_mh_page_index_in_modal(index)
+    assert_selector(".ChatModal .mh_page_index", text: index.to_s, exact_text: true)
   end
 end

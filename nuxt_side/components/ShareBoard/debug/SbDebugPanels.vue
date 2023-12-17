@@ -1,5 +1,7 @@
 <template lang="pug">
 .SbDebugPanels.columns.is-multiline
+  SbDebugPanelsChat
+
   .column.is-2
     .panel
       .panel-heading

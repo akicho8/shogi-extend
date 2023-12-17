@@ -9,9 +9,13 @@ module ShareBoard
 
     # GET http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
     # GET http://localhost:3000/api/share_board/chat_message_loader?room_key=xxx
+    # GET http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&mock=true
     # GET https://www.shogi-extend.com/api/share_board/chat_message_loader?room_key=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def as_json
-      @room.chat_messages_mock_setup
+      if @params[:mock]
+        @room.setup_for_test(force: true, count: 100)
+      end
+
       AppLog.debug(subject: subject, body: body)
 
       hv = {}
@@ -20,7 +24,7 @@ module ShareBoard
       hv[:next_seek_pos]     = next_seek_pos          # [2, 3] を返すとしたら 2 が入っているので次に seek_pos に 2 を入れて呼ばせる
       hv[:has_next_p]        = has_next_p             # 次があるか？ 2未満 (つまり 0 か 1) があれば true
       hv[:data_exist_p]      = chat_messages.present? # 今回データを取得できたか？
-      hv[:page_index]       = current_page_index    # JS側から来た page_index (デバッグ用)
+      hv[:page_index]        = current_page_index     # JS側から来た page_index (デバッグ用)
       hv[:chat_messages]     = chat_messages.as_json(ChatMessage::JSON_TYPE1)
       hv
     end

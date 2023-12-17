@@ -37,7 +37,7 @@ module ShareBoard
     it "簡単にデータを用意する" do
       user = User.create!
       room = Room.create!
-      room.chat_messages_mock_setup(10, user: user)
+      room.setup_for_test(10, user: user)
       assert { room.chat_messages.count == 10 }
     end
 

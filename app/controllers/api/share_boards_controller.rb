@@ -20,7 +20,7 @@ module Api
 
     # GET http://localhost:3000/api/share_board/chat_message_loader.json?room_key=dev_room
     def chat_message_loader
-      render json: ShareBoard::Room.find_or_create_by!(key: params[:room_key]).as_json_for_chat_message_loader(params_with_user)
+      render json: ShareBoard::Room.fetch(params[:room_key]).as_json_for_chat_message_loader(params_with_user)
     end
 
     private
