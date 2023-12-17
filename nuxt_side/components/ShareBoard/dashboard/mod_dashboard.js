@@ -17,7 +17,7 @@ export const mod_dashboard = {
     dashboard_url() {
       return QueryString.stringifyUrl({
         url: `/share-board/dashboard`,
-        query: {room_code: this.room_code},
+        query: {room_key: this.room_key},
       })
     },
   },

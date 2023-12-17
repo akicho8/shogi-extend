@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true do
   let(:user1)       { User.create!                            }
-  let(:room_code)   { SecureRandom.hex                        }
-  let(:channel_key) { "share_board/room_channel/#{room_code}" }
+  let(:room_key)   { SecureRandom.hex                        }
+  let(:channel_key) { "share_board/room_channel/#{room_key}" }
 
   before do
     stub_connection(current_user: user1, once_uuid: "(uuid)")
@@ -11,14 +11,14 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "接続" do
     it "works" do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
       assert { subscription.confirmed? }
     end
   end
 
   describe "切断" do
     it "works" do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
       assert { subscription.confirmed? }
       unsubscribe
     end
@@ -38,7 +38,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "部屋退出" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -50,7 +50,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "局面配布" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("sfen" => "(sfen)", "turn" => 0, message: "(message)")
@@ -62,7 +62,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "本譜配布" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("sfen" => "(sfen)", "turn" => 0)
@@ -74,7 +74,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "指し手送信" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory({
@@ -100,7 +100,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "指し手受信" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("to_user_name" => "alice", "to_connection_id" => SecureRandom.hex)
@@ -112,7 +112,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "指手不達" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("x_retry_count" => 1)
@@ -124,7 +124,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "タイトル共有" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("title" => "(title)")
@@ -136,7 +136,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "情報要求" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -148,7 +148,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "情報送信" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -160,7 +160,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "対局時計の共有" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory({
@@ -179,7 +179,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "生存通知" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -191,7 +191,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "順番機能" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("order_enable_p" => true)
@@ -203,7 +203,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "順番設定" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory({
@@ -221,7 +221,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "メッセージ" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("message" => "(message)", "message_scope_key" => "ms_private")
@@ -233,7 +233,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "ChatGPTに発言を促す" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("message" => "", "message_scope_key" => "ms_public")
@@ -243,7 +243,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "投了発動" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -255,7 +255,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "PING" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -267,7 +267,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "PONG" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory
@@ -279,7 +279,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "ログ記録" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("subject" => "(subject)", "body" => "body")
@@ -289,7 +289,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "エラー発動確認" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("key_has_nil" => nil)
@@ -301,7 +301,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "共有アクションログ" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("label" => "(label)", message: "(message)")
@@ -313,7 +313,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "メダル" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "個数共有" do
       data = data_factory("medal_counts_hash" => {"alice" => 1})
@@ -331,7 +331,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "強制退室" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "works" do
       data = data_factory("kicked_user_name" => "(kicked_user_name)")
@@ -343,7 +343,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
 
   describe "お題" do
     before do
-      subscribe(room_code: room_code)
+      subscribe(room_key: room_key)
     end
     it "配送" do
       data = data_factory("odai" => "xxx")

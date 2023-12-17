@@ -17,8 +17,8 @@ export const mod_urls = {
     room_url_copy_handle() {
       if (this.if_room_is_empty()) { return }
 
-      this.$gs.assert(this.$gs.present_p(this.room_code), "this.$gs.present_p(this.room_code)")
-      if (this.$gs.blank_p(this.room_code)) {
+      this.$gs.assert(this.$gs.present_p(this.room_key), "this.$gs.present_p(this.room_key)")
+      if (this.$gs.blank_p(this.room_key)) {
         // ここは通らないはず
         this.$sound.play_click()
         this.toast_warn("まだ合言葉を設定してません")
@@ -69,7 +69,7 @@ export const mod_urls = {
     __short_url_fetch() {
       this.debug_alert("APIアクセス発生")
       if (OWN_SHORTENED_URL_FUNCTION) {
-        const body = {room_code: this.room_code, user_name: this.user_name, current_url: this.current_url}
+        const body = {room_key: this.room_key, user_name: this.user_name, current_url: this.current_url}
         this.app_log({emoji: ":短縮URL:", subject: `短縮URL作成リクエスト(${this.user_name})`, body: body, mail_notify: true, table_format: false})
         return this.long_url_to_short_url(this.current_url)
       } else {
@@ -116,9 +116,9 @@ export const mod_urls = {
     current_kif_url()  { return this.url_merge({format: "kif"})            },
     json_debug_url()   { return this.url_merge({format: "json"})           },
     twitter_card_url() { return this.url_merge({format: "png"})            },
-    room_url()         { return this.url_for({room_code: this.room_code}) }, // 合言葉だけを付与したURL(タイトル不要)
+    room_url()         { return this.url_for({room_key: this.room_key}) }, // 合言葉だけを付与したURL(タイトル不要)
 
-    // room_code や autoexec は含めない
+    // room_key や autoexec は含めない
     current_url_params() {
       const params = {
         xbody: SafeSfen.encode(this.current_sfen),

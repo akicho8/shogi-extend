@@ -2,12 +2,12 @@
 .SbDashboard
   MainNavbar
     template(slot="brand")
-      NavbarItemHome(icon="chevron-left" :to="{name: 'share-board', query: {room_code: room_code}}")
+      NavbarItemHome(icon="chevron-left" :to="{name: 'share-board', query: {room_key: room_key}}")
       b-navbar-item.has-text-weight-bold(tag="div")
-        | {{room_code}}
+        | {{room_key}}
   MainSection
     .container
-      SbDashboardBody(:room_code="room_code")
+      SbDashboardBody(:room_key="room_key")
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
   name: "SbDashboard",
   mixins: [support_child],
   computed: {
-    room_code() { return this.$route.query.room_code },
+    room_key() { return this.$route.query.room_key },
   },
 }
 </script>

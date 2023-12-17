@@ -29,7 +29,7 @@ client-only
       p current_turn: {{current_turn}}
       p viewpoint: {{viewpoint}}
       p sp_player_info: {{JSON.stringify(sp_player_info)}}
-      //- p room_code: {{JSON.stringify(room_code)}}
+      //- p room_key: {{JSON.stringify(room_key)}}
       //- p user_name: {{JSON.stringify(user_name)}}
       //- p 人数: {{JSON.stringify(member_infos.length)}}
       //- p 手数: {{current_turn}} / {{turn_offset_max}}
@@ -283,7 +283,7 @@ export default {
         this.current_turn,
         this.current_title,
         this.viewpoint,
-        this.room_code,
+        this.room_key,
         this.color_theme_key,
       ], () => {
         // 両方エラーになってしまう

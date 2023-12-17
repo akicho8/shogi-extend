@@ -41,7 +41,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="base.sideb
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="base.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="base.room_recreate_modal_handle" v-if="base.debug_mode_p")
           b-menu-item.is_active_unset(icon="home" label="部屋の情報" @click="base.general_dashboard_modal_handle" :disabled="$gs.blank_p(base.ac_room)")
-          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="部屋の情報(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_code: base.room_code}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
+          b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="部屋の情報(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: base.room_key}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="trophy" label="部屋の情報(hrefで別タブ)" :href="base.dashboard_url" target="_blank" :disabled="$gs.blank_p(base.ac_room)" v-if="development_p")
 
         b-menu-list(label="検討")

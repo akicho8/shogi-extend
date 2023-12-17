@@ -171,7 +171,7 @@ module ShareBoardControllerMethods
 
     # リアルタイム共有
     attrs = attrs.merge({
-        # :room_code => params[:room_code] || "",
+        # :room_key => params[:room_key] || "",
         :connection_id   => StringUtil.secure_random_urlsafe_base64_token,
         :session_id      => sb_session_id,
         :session_counter => sb_session_counter,

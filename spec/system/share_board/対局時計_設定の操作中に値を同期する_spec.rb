@@ -5,7 +5,7 @@ RSpec.describe "対局時計_設定の操作中に値を同期する", type: :sy
 
   def case1(user_name)
     visit_app({
-                :room_code            => :test_room,
+                :room_key            => :test_room,
                 :user_name            => user_name,
                 :fixed_member_names   => "a,b",
                 :fixed_order_names    => "a,b",

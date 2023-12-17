@@ -105,7 +105,7 @@ export const mod_chat_message_history = {
     },
 
     // 新しいメッセージを読み込む
-    // http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room&limit=2
+    // http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
     mh_read() {
       this.debug_alert("mh_read")
       this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params()}).then(e => {
@@ -118,13 +118,13 @@ export const mod_chat_message_history = {
     // APIに渡すパラメータ
     mh_api_params() {
       this.debug_alert("mh_api_params")
-      Gs.assert(Gs.present_p(this.room_code), "Gs.present_p(this.room_code)")
+      Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
       Gs.assert(Gs.present_p(this.user_name), "Gs.present_p(this.user_name)")
       Gs.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
 
       // link: app/models/share_board/room/chat_message_loader.rb
       return {
-        room_code:  this.room_code,                        // 部屋
+        room_key:  this.room_key,                        // 部屋
         limit:      this.CHAT_DEFAULT_PER_PAGE, // 件数
         seek_pos:   this.mh_seek_pos,                      // 指定未満を取得する。nil なら最新から取得する。
         // 以下は AppLog のため

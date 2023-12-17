@@ -6,11 +6,11 @@
 
 module ShareBoard
   class Broadcaster
-    attr_accessor :room_code
+    attr_accessor :room_key
     attr_accessor :default_params
 
-    def initialize(room_code = nil, default_params = {})
-      @room_code = room_code || "dev_room"
+    def initialize(room_key = nil, default_params = {})
+      @room_key = room_key || "dev_room"
       @default_params = {
         :API_VERSION => AppConfig[:share_board_api_version],
       }.merge(default_params)
@@ -35,7 +35,7 @@ module ShareBoard
     end
 
     def broadcast_to
-      "share_board/room_channel/#{room_code}"
+      "share_board/room_channel/#{room_key}"
     end
   end
 end

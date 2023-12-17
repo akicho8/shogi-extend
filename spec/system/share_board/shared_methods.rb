@@ -12,19 +12,19 @@ module SharedMethods
     visit2("/share-board", *args)
   end
 
-  def room_setup(room_code, user_name, params = {})
+  def room_setup(room_key, user_name, params = {})
     params = {
       shuffle_first: false,     # テストにランダム要素が含まれると混乱するため初期値では入室順に順序が決まるようにする
     }.merge(params)
     visit_app(params)
-    room_menu_open_and_input(room_code, user_name)
+    room_menu_open_and_input(room_key, user_name)
   end
 
-  def room_menu_open_and_input(room_code, user_name)
+  def room_menu_open_and_input(room_key, user_name)
     hamburger_click
     room_setup_modal_open_handle        # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
-      find(".new_room_code input").set(room_code) # 合言葉を入力する
+      find(".new_room_key input").set(room_key) # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
       find(".entry_button").click                 # 共有ボタンをクリックする
       find(".close_handle").click                 # 閉じる

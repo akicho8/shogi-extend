@@ -120,7 +120,7 @@ module ShareBoard
         # 発言する
         def simple_say(params = {})
           tp params if Rails.env.development?
-          fetch(params[:room_code] || "dev_room").simple_say(params)
+          fetch(params[:room_key] || "dev_room").simple_say(params)
         end
       end
 
@@ -168,10 +168,10 @@ module ShareBoard
         # chat_message = chat_messages.create!(user: user, content: data["content"])
         # chat_messages.create_from_data!(data)
 
-        # chat_message = Room.find_or_create_by!(key: room_code).chat_messages.create_from_data!(data)
+        # chat_message = Room.find_or_create_by!(key: room_key).chat_messages.create_from_data!(data)
         chat_message = chat_messages.create_from_data!(data) # DBに入れる
         chat_message.broadcast_to_all                          # バックグラウンドで配る
-        ShareBoard::ResponderResJob.perform_later(data.merge(room_code: key)) # バックグラウンドで返事をする FIXME: chat_message を元にする？
+        ShareBoard::ResponderResJob.perform_later(data.merge(room_key: key)) # バックグラウンドで返事をする FIXME: chat_message を元にする？
         # chat_message.responder_res_job_run
         if Rails.env.development?
           tp chat_message.info

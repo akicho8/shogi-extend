@@ -30,11 +30,11 @@ module ShareBoard
         #   "content"=>"@gpt hello",
         #   "message_scope_key"=>"ms_public",
         #   "action"=>"message_share",
-        #   :room_code=>"dev_room",
+        #   :room_key=>"dev_room",
         # }
         def initialize(params = {})
           @params = {
-            room_code: "dev_room",
+            room_key: "dev_room",
           }.merge(params.symbolize_keys)
         end
 
@@ -56,7 +56,7 @@ module ShareBoard
             if text
               history << Message.new(:assistant, text)
               logger.debug { history.to_topic.to_t }
-              AppLog.important(subject: "ChatGPT 返答記録 (#{room_code})", body: history.to_topic.to_t)
+              AppLog.important(subject: "ChatGPT 返答記録 (#{room_key})", body: history.to_topic.to_t)
               messanger.call(text)
             end
           rescue Net::ReadTimeout => error
@@ -71,7 +71,7 @@ module ShareBoard
         end
 
         def history
-          @history ||= MessageHistory.new(room_code: room_code)
+          @history ||= MessageHistory.new(room_key: room_key)
         end
 
         def user_message
@@ -84,7 +84,7 @@ module ShareBoard
 
         def messanger_options
           {
-            :room_code         => room_code,
+            :room_key         => room_key,
             :message_scope_key => message_scope_key,
             **GptProfile.new.messanger_options,
           }
@@ -92,8 +92,8 @@ module ShareBoard
 
         # 必要なパラメータは以下だけ
 
-        def room_code
-          params[:room_code]
+        def room_key
+          params[:room_key]
         end
 
         def user_raw_message

@@ -3,7 +3,7 @@ require File.expand_path('../../../config/environment', __FILE__)
 ShareBoard.setup(force: true)
 
 params = {
-  :room_code  => "dev_room",
+  :room_key  => "dev_room",
   :title     => "共有将棋盤",
   :sfen      => "position sfen lnsgkgsnl/1r5b1/ppppppppp/9/9/9/PPPPPPPPP/1B5R1/LNSGKGSNL b - 1",
   :turn      => 0,

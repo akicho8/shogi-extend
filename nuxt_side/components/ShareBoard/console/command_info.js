@@ -139,8 +139,8 @@ export class CommandInfo extends ApplicationMemoryRecord {
         example: "/対局中",
         preformat: true,
         command_fn: (context, args) => {
-          if (context.$gs.blank_p(context.room_code)) {
-            context.room_code = "test_room"
+          if (context.$gs.blank_p(context.room_key)) {
+            context.room_key = "test_room"
           }
           if (context.$gs.blank_p(context.user_name)) {
             context.user_name = "alice"
