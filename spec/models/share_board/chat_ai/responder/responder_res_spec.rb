@@ -2,6 +2,10 @@ require "rails_helper"
 
 module ShareBoard
   RSpec.describe ChatAi::Responder::ResponderRes do
+    before do
+      ShareBoard.setup
+    end
+
     it "works" do
       history = ChatAi::MessageHistory.new
       history.clear

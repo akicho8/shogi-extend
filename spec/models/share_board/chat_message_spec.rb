@@ -27,17 +27,17 @@ module ShareBoard
     end
 
     it "ログインしている人のIDを一緒に記録する" do
-      login_user = ::User.create!
+      session_user = ::User.create!
       user = User.create!
       room = Room.create!
-      chat_message = room.chat_messages.create!(user: user, session_user: login_user)
-      assert { chat_message.session_user == login_user }
+      chat_message = room.chat_messages.create!(user: user, session_user: session_user)
+      assert { chat_message.session_user == session_user }
     end
 
     it "簡単にデータを用意する" do
       user = User.create!
       room = Room.create!
-      room.setup_for_test(10, user: user)
+      room.setup_for_test(count: 10, user: user, force: true)
       assert { room.chat_messages.count == 10 }
     end
 

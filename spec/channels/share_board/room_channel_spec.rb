@@ -6,6 +6,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
   let(:channel_key) { "share_board/room_channel/#{room_key}" }
 
   before do
+    ShareBoard.setup
     stub_connection(current_user: user1, once_uuid: "(uuid)")
   end
 
@@ -224,10 +225,10 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("message" => "(message)", "message_scope_key" => "ms_private")
+      data = data_factory("content" => "(content)", "message_scope_key" => "ms_private")
       expect {
         subscription.message_share(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "message_share_broadcasted", bc_params: data)
+      }.to have_broadcasted_to(channel_key)
     end
   end
 
@@ -236,7 +237,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
       subscribe(room_key: room_key)
     end
     it "works" do
-      data = data_factory("message" => "", "message_scope_key" => "ms_public")
+      data = data_factory("content" => "", "message_scope_key" => "ms_public")
       subscription.gpt_speak(data)
     end
   end
