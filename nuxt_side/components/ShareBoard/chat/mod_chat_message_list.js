@@ -4,8 +4,6 @@ import _ from "lodash"
 import dayjs from "dayjs"
 import { MessageRecord } from "./message_record.js"
 
-const CHAT_MESSAGE_LIST_TRUNCATE = false
-
 export const mod_chat_message_list = {
   data() {
     return {
@@ -36,8 +34,8 @@ export const mod_chat_message_list = {
     },
 
     ml_truncate_and_scroll_to_bottom() {
-      if (CHAT_MESSAGE_LIST_TRUNCATE) {
-        this.message_list = _.takeRight(this.message_list, this.AppConfig.CHAT_DEFAULT_PER_PAGE_OF_MAX)
+      if (this.mh_rows_size_max >= 0) {
+        this.message_list = _.takeRight(this.message_list, this.mh_rows_size_max)
       }
       this.ml_scroll_to_bottom()
     },

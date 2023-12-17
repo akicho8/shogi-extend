@@ -125,7 +125,7 @@ export const mod_chat_message_history = {
       // link: app/models/share_board/room/chat_message_loader.rb
       return {
         room_key:  this.room_key,                        // 部屋
-        limit:      this.CHAT_DEFAULT_PER_PAGE, // 件数
+        limit:      this.mh_per_page, // 件数
         seek_pos:   this.mh_seek_pos,                      // 指定未満を取得する。nil なら最新から取得する。
         // 以下は AppLog のため
         page_index: this.mh_page_index_next(),             // 取得するページ番号 (アクセスカウンタでもある)
@@ -264,9 +264,7 @@ export const mod_chat_message_history = {
     },
   },
   computed: {
-    mh_seek_pos()           { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
-    mh_has_next_p()         { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
-
-    CHAT_DEFAULT_PER_PAGE() { return parseInt(this.$route.query.CHAT_DEFAULT_PER_PAGE ?? this.AppConfig.CHAT_DEFAULT_PER_PAGE) },
+    mh_seek_pos()   { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
+    mh_has_next_p() { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
   },
 }

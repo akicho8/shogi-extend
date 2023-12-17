@@ -7,9 +7,6 @@ export const AppConfig = {
 
   TORYO_THEN_CURRENT_LOCATION_IS_LOSE: false, // 誰が投了したかに関係なく現在の色のチームが負け(二歩の場合手番が進むため支障あり)
 
-  CHAT_DEFAULT_PER_PAGE: 25,                 // チャット発言履歴保持件数
-  CHAT_DEFAULT_PER_PAGE_OF_MAX: 100,         // チャット発言履歴保持件数の最大
-
   CLOSE_IF_BLANK_MESSAGE_POST: false,         // 空送信で閉じるか？
 
   CLOCK_PRESET_USE: false,                    // 対局時計の初期設定リストを(CcRuleInfo)を表示するか？
@@ -20,6 +17,4 @@ export const AppConfig = {
 if (process.env.NODE_ENV === "development") {
   AppConfig.CLOCK_PRESET_USE             = true
   AppConfig.NAVBAR_COLOR_CHANGE          = true
-  AppConfig.CHAT_DEFAULT_PER_PAGE        = 2    // チャットを開いたときにサーバーから1度に取得するメッセージ件数
-  AppConfig.CHAT_DEFAULT_PER_PAGE_OF_MAX = 10   // チャット発言履歴保持件数の最大
 }
