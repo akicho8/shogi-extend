@@ -240,7 +240,11 @@ end
 
 RSpec.configure do |config|
   config.before(type: :system) do |example|
-    page.driver.browser.download_path = Rails.root.join("tmp").to_s
+    if page.driver.browser.respond_to?(:download_path=)
+      page.driver.browser.download_path = Rails.root.join("tmp").to_s
+    else
+      warn "download_path= が未定義です"
+    end
   end
 end
 
