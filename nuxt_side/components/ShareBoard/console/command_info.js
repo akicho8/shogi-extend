@@ -6,7 +6,7 @@
 // | /send               |
 // | /var                |
 // | /debug              |
-// | /gpt message        |
+// | /gpt content        |
 // | /medal-team black 1 |
 // | /medal-user alice 1 |
 // | /header             |
@@ -79,9 +79,9 @@ export class CommandInfo extends ApplicationMemoryRecord {
       {
         desc: "GPT に発言促す",
         key: "gpt",
-        example: "/gpt message",
+        example: "/gpt content",
         command_fn: (context, args) => {
-          context.gpt_speak({message: args[0]})
+          context.gpt_speak({content: args[0]})
         },
       },
       {
