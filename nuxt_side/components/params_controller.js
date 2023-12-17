@@ -54,7 +54,22 @@ export const params_controller = {
     },
     pc_data_set_by_query_or_default() {
       this.ParamInfo.values.forEach(e => {
-        let v = this.$route.query[e.key]
+        let v = null
+
+        if (e.key in this.$route.query) {
+          v = this.$route.query[e.key]
+        } else {
+          // キーの指定がないなら alias で試す
+          if (e.alias) {
+            for (let key in e.alias) {
+              v = this.$route.query[key]
+              if (v != null) {
+                break
+              }
+            }
+          }
+        }
+
         if (this.$gs.present_p(v)) {
           if (e.type === "integer") {
             v = Math.trunc(Number(v))
