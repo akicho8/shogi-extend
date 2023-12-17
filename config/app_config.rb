@@ -5,6 +5,8 @@ AppConfig.deep_merge!({
     :zip_dl_max_default             => 50, # 一括ダウンロードするときの件数(初期値)
     :zip_dl_max_of_max              => 50, # 一括ダウンロードするときの件数(最大)
 
+    :share_board_api_version        => 59,
+
     ################################################################################ email
     :admin_email_name               => "SHOGI-EXTEND",
     :admin_email                    => "shogi.extend@gmail.com",

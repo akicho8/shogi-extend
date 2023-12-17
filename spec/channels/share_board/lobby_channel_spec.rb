@@ -30,7 +30,7 @@ module ShareBoard
         "from_user_name"     => "alice",
         "performed_at"       => (Time.current.to_f * 1000).to_i,
         "xmatch_redis_ttl"   => 60 * 3,
-        "API_VERSION"        => ShareBoardControllerMethods::API_VERSION, # サーバー側で生める
+        "API_VERSION"        => AppConfig[:share_board_api_version], # サーバー側で生める
       }.merge(params)
     end
 

@@ -12,7 +12,7 @@ module ShareBoard
     def initialize(room_code = nil, default_params = {})
       @room_code = room_code || "dev_room"
       @default_params = {
-        :API_VERSION => ShareBoardControllerMethods::API_VERSION,
+        :API_VERSION => AppConfig[:share_board_api_version],
       }.merge(default_params)
     end
 
