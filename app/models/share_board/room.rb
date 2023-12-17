@@ -122,6 +122,12 @@ module ShareBoard
           tp params if Rails.env.development?
           fetch(params[:room_key] || "dev_room").simple_say(params)
         end
+
+        # GPTに発言させる
+        def something_say(params = {})
+          tp params if Rails.env.development?
+          ResponderSomethingSayJob.perform_later(params)
+        end
       end
 
       def simple_say(params = {})

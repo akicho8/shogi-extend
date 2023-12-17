@@ -11,7 +11,7 @@ module ShareBoard
     module Responder
       class ResponderSomethingSay < Base
         def call
-          if user_raw_message.present?
+          if message_content.present?
             history << user_message
           end
           response_generate
