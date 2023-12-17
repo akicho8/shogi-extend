@@ -28,7 +28,7 @@ RSpec.describe Api::Kiwi::TopsController, type: :controller, kiwi: true do
   include KiwiSupport
 
   it "index" do
-    user_login(User.sysop)
+    user_login(User.admin)
     get :index
     assert { response.status == 200 }
   end

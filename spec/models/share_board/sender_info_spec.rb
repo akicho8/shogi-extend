@@ -6,9 +6,9 @@ module ShareBoard
       assert { SenderInfo[:bot] }
       assert { SenderInfo[:bot].default_options_fn.call }
     end
-    it "sysop" do
-      assert { SenderInfo[:sysop] }
-      assert { SenderInfo[:sysop].default_options_fn.call }
+    it "admin" do
+      assert { SenderInfo[:admin] }
+      assert { SenderInfo[:admin].default_options_fn.call }
     end
   end
 end

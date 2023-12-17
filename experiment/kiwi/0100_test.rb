@@ -6,7 +6,7 @@ Kiwi::Banana.destroy_all
 Kiwi::Lemon.destroy_all
 Kiwi::Folder.setup
 
-user1 = User.sysop
+user1 = User.admin
 params1 = {
   :body => "position startpos moves 7g7f 8c8d",
   :all_params => {

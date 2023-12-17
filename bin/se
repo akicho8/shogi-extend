@@ -5,7 +5,7 @@ require "thor"
 
 class App < Thor
   # se say -r dev_room -s ms_public -t bot        -m GPTの発言
-  # se say -r dev_room -s ms_public -t sysop      -m 運営の発言
+  # se say -r dev_room -s ms_public -t admin      -m 運営の発言
   # se say -r dev_room -s ms_public -n きなこもち -m 通常発言
   desc "say -r 合言葉 -n 名前 -m 発言", "共有将棋盤のチャットで発言する"
   method_option :room_key,         type: :string, aliases: "-r", desc: "合言葉"
@@ -13,7 +13,7 @@ class App < Thor
   method_option :from_user_name,    type: :string, aliases: "-n", desc: "名前"
   method_option :primary_emoji,     type: :string, aliases: "-e", desc: "最優先表示絵文字"
   method_option :message_scope_key, type: :string, aliases: "-s", desc: "発言スコープ"
-  method_option :sender_key,        type: :string, aliases: "-t", desc: "テーマ(sysop|bot)"
+  method_option :sender_key,        type: :string, aliases: "-t", desc: "テーマ(admin|bot)"
   def say
     ShareBoard::Room.simple_say(options.to_options)
   end

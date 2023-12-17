@@ -3,10 +3,10 @@ class User
     extend ActiveSupport::Concern
 
     class_methods do
-      # rails r "tp User.sysop"
-      # rails r "tp User.sysop.permit_tag_list"
-      def sysop
-        staff_create!(key: "sysop", name: "運営", email: AppConfig[:admin_email])
+      # rails r "tp User.admin"
+      # rails r "tp User.admin.permit_tag_list"
+      def admin
+        staff_create!(key: "admin", name: "運営", email: AppConfig[:admin_email])
       end
 
       def bot
@@ -20,7 +20,7 @@ class User
         end
 
         create!(attrs) do |e|
-          e.password = Rails.application.credentials.sysop_password
+          e.password = Rails.application.credentials.admin_password
           e.confirmed_at = Time.current
           e.permit_tag_list = "staff"
           e.name_input_at = Time.current
@@ -28,8 +28,8 @@ class User
       end
     end
 
-    def sysop?
-      key == "sysop"
+    def admin?
+      key == "admin"
     end
 
     def bot?

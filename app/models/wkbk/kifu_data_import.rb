@@ -9,7 +9,7 @@ module Wkbk
     end
 
     def run
-      user = params[:user] || User.sysop
+      user = params[:user] || User.admin
       # user.wkbk_articles.destroy_all
 
       dir = Rails.root.join("kifu_data").expand_path

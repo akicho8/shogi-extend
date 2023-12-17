@@ -28,7 +28,7 @@ RSpec.describe Api::Wkbk::TopsController, type: :controller do
   include WkbkSupportMethods
 
   it "index" do
-    user_login(User.sysop)
+    user_login(User.admin)
     get :index
     assert { response.status == 200 }
   end

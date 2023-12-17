@@ -241,7 +241,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "正しくダウンロードする" do
-        login_by :sysop
+        login_by :admin
 
         visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click
@@ -266,7 +266,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       end
 
       it "正しく予約する" do
-        login_by :sysop
+        login_by :admin
 
         visit2 "/swars/search", query: "YamadaTaro"
         hamburger_click

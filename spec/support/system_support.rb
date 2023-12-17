@@ -190,7 +190,7 @@ if true
     end
 
     def login
-      login_by("sysop")
+      login_by("admin")
     end
 
     def logout

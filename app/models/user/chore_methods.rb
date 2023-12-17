@@ -39,14 +39,14 @@ class User
         })
     end
 
-    # rails r 'User.sysop.change_notify'
+    # rails r 'User.admin.change_notify'
     def change_notify
       if saved_changes? || profile.saved_changes?
         change_notify_force
       end
     end
 
-    # rails r 'User.sysop.change_notify_force'
+    # rails r 'User.admin.change_notify_force'
     def change_notify_force
       body = [
         self,

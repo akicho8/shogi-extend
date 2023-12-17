@@ -5,7 +5,7 @@ Kiwi::Folder.setup
 
 def create(recipe_key)
   recipe_info = RecipeInfo.fetch(recipe_key)
-  user1 = User.sysop
+  user1 = User.admin
   params1 = {
     :body => "position startpos moves 7g7f 8c8d",
     :all_params => {

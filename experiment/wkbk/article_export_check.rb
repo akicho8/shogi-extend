@@ -5,7 +5,7 @@ User.delete_all
 Wkbk.destroy_all
 Wkbk.setup
 
-# user1 = User.sysop
+# user1 = User.admin
 # 
 # article = user1.wkbk_articles.create! do |e|
 #   e.init_sfen = "4k4/9/4G4/9/9/9/9/9/9 b G2r2b2g4s4n4l1p 1"
@@ -96,7 +96,7 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/suppressor.rb:48:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/persistence.rb:55:in `create!'
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `sysop'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
 # ~> 	from -:30:in `<main>'
 # ~> /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/core.rb:211:in `find_by!': Couldn't find Wkbk::Judge (ActiveRecord::RecordNotFound)
@@ -166,7 +166,7 @@ Wkbk::Article.import_all
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/suppressor.rb:48:in `save!'
 # ~> 	from /usr/local/var/rbenv/versions/2.6.5/lib/ruby/gems/2.6.0/gems/activerecord-6.0.3.2/lib/active_record/persistence.rb:55:in `create!'
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:21:in `staff_create!'
-# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `sysop'
+# ~> 	from /Users/ikeda/src/shogi-extend/app/models/concerns/user_staff_methods.rb:8:in `admin'
 # ~> 	from /Users/ikeda/src/shogi-extend/app/models/wkbk/article/import_export_methods.rb:51:in `import_all'
 # ~> 	from -:30:in `<main>'
 # >> write: /Users/ikeda/src/shogi-extend/app/models/wkbk/articles.yml (0)

@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   skip_before_action :user_name_required, action: [:edit, :update]
 
   before_action only: [:index] do
-    if !sysop?
+    if !admin?
       redirect_to :root, alert: "アクセス権限がありません"
     end
   end

@@ -13,11 +13,11 @@ RSpec.describe "将棋ドリル", type: :system do
 
   it "問題集詳細" do
     visit2 "/rack/books/1"
-    assert_text "sysop - public"
+    assert_text "admin - public"
   end
 
   it "問題集編集" do
-    visit2 "/rack/books/1/edit?_login_by_key=sysop"
+    visit2 "/rack/books/1/edit?_login_by_key=admin"
     assert_text ""
   end
 
@@ -32,7 +32,7 @@ RSpec.describe "将棋ドリル", type: :system do
   end
 
   it "問題編集" do
-    visit2 "/rack/articles/1/edit?_login_by_key=sysop"
+    visit2 "/rack/articles/1/edit?_login_by_key=admin"
   end
 
   it "問題新規" do

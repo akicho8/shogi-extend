@@ -36,7 +36,7 @@ RSpec.describe Api::Kiwi::LemonsController, type: :controller, kiwi: true do
   include KiwiSupport
 
   before do
-    @user1 = user_login(User.sysop)
+    @user1 = user_login(User.admin)
   end
 
   it "xresource_fetch" do

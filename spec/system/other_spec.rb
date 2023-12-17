@@ -8,7 +8,7 @@ RSpec.describe "その他", type: :system do
 
   describe "nuxt_login_required" do
     before do
-      login_by("sysop")
+      login_by("admin")
     end
     it "login" do
       visit2 "/video/new", __nuxt_login_required_force: "login"

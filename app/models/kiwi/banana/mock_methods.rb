@@ -13,9 +13,9 @@ module Kiwi
         # rails r 'Kiwi::Banana.mock_setup2'
         def mock_setup2
           [
-            { key: 1, user: :sysop, folder_key: :public,  },
-            { key: 2, user: :sysop, folder_key: :limited, },
-            { key: 3, user: :sysop, folder_key: :private, },
+            { key: 1, user: :admin, folder_key: :public,  },
+            { key: 2, user: :admin, folder_key: :limited, },
+            { key: 3, user: :admin, folder_key: :private, },
             { key: 4, user: :bot,   folder_key: :public,  },
             { key: 5, user: :bot,   folder_key: :limited, },
             { key: 6, user: :bot,   folder_key: :private, },
@@ -50,12 +50,12 @@ module Kiwi
             banana = user.kiwi_bananas.create!(key: e[:key], lemon: lemon1, folder_key: e[:folder_key], title: title, tag_list: e.values.join(" "))
 
             banana.banana_messages.create!(user: user,       body: "x" * 512)
-            banana.banana_messages.create!(user: User.sysop, body: "あ" * 512)
+            banana.banana_messages.create!(user: User.admin, body: "あ" * 512)
             banana.banana_messages.create!(user: User.bot,   body: "表示してはいけない", deleted_at: Time.current)
             banana.banana_messages.create!(user: User.bot,   body: "https://example.com/")
             banana.banana_messages.create!(user: User.bot,   body: (1..20).to_a.join("\n"))
 
-            banana.access_logs.create!(user: User.sysop)
+            banana.access_logs.create!(user: User.admin)
             banana.access_logs.create!(user: user)
             banana.access_logs.create!
           end
@@ -69,7 +69,7 @@ module Kiwi
 
           RecipeInfo.each do |recipe_info|
             tp recipe_info.key
-            user1 = User.sysop
+            user1 = User.admin
             params1 = {
               :body => "position startpos moves 7g7f 8c8d",
               :all_params => {
