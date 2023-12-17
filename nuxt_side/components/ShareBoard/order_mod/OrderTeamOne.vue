@@ -1,6 +1,6 @@
 <template lang="pug">
 .OrderTeamOne
-  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@click="TheOSM.state_toggle_handle")
+  .OrderTeamOneTitle.is-size-7.has-text-weight-bold.is-clickable(@dblclick="TheOSM.state_toggle_handle")
     | {{label}}
   VueDraggable(
     tag="ul"
