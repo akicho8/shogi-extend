@@ -21,14 +21,15 @@ module ShareBoard
       end
 
       def mock
-        room = Room.create!
+        records = [
+          { user_name: "alice", location_key: "black", judge_key: "win",  },
+          { user_name: "bob",   location_key: "white", judge_key: "lose", },
+          { user_name: "carol", location_key: "black", judge_key: "win",  },
+        ]
+        room = Room.create!(key: "dev_room")
         room.redis_clear
         room.battles.create! do |e|
-          e.memberships.build([
-                                { user_name: "alice", location_key: "black", judge_key: "win",  },
-                                { user_name: "bob",   location_key: "white", judge_key: "lose", },
-                                { user_name: "carol", location_key: "black", judge_key: "win",  },
-                              ])
+          e.memberships.build(records)
         end
         room
       end
