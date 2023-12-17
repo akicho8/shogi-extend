@@ -112,7 +112,7 @@ module ShareBoard
         action = "観戦チャ"
         emoji = ":観戦チャット:"
       end
-      track(data, subject: action, body: data["message"], emoji: emoji)
+      track(data, subject: action, body: data["content"], emoji: emoji)
       ShareBoard::ChatMessageBroadcastJob.perform_later(room_key, data)
     end
 
@@ -122,7 +122,7 @@ module ShareBoard
     end
 
     def give_up_share(data)
-      track(data, subject: "投了発動", body: data["message"], emoji: ":投了:")
+      track(data, subject: "投了発動", body: data["content"], emoji: ":投了:")
       broadcast(:give_up_share_broadcasted, data)
     end
 
