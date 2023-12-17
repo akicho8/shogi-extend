@@ -42,8 +42,8 @@ module ShareBoard
           raise NotImplementedError, "#{__method__} is not implemented"
         end
 
-        def normalized_user_message
-          user_raw_message.remove(MATCH_REGEXP)
+        def normalized_message_content
+          message_content.remove(MATCH_REGEXP)
         end
 
         private
@@ -75,18 +75,18 @@ module ShareBoard
         end
 
         def user_message
-          Message.new(:user, normalized_user_message)
+          Message.new(:user, normalized_message_content)
         end
 
         def system_message
-          Message.new(:system, GptProfile.new.system_raw_message)
+          Message.new(:system, GptProfile.system_raw_message)
         end
 
         def messanger_options
           {
-            :room_key         => room_key,
+            :room_key          => room_key,
             :message_scope_key => message_scope_key,
-            **GptProfile.new.messanger_options,
+            **SenderInfo.fetch(:bot).default_options_fn.call,
           }
         end
 
@@ -96,16 +96,13 @@ module ShareBoard
           params[:room_key]
         end
 
-        def user_raw_message
+        def message_content
           params[:content]
         end
 
         def message_scope_key
           params[:message_scope_key] || :ms_public
         end
-
-        # class MessagerGpt
-        # end
       end
     end
   end

@@ -34,7 +34,7 @@ module ShareBoard
       private
 
       def room
-        Room.find_or_create_by!(key: room_key)
+        Room.fetch(room_key)
       end
 
       def room_key

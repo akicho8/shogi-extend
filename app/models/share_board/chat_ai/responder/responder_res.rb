@@ -8,7 +8,7 @@ module ShareBoard
       class ResponderRes < Base
         def call
           history << user_message
-          if user_raw_message.match?(MATCH_REGEXP)
+          if message_content.match?(MATCH_REGEXP)
             response_generate
           end
         end

@@ -4,7 +4,7 @@ module ShareBoard
   RSpec.describe ChatAi::Responder::Base do
     it "works" do
       def case1(s)
-        ChatAi::Responder::Base.new(content: s).normalized_user_message
+        ChatAi::Responder::Base.new(content: s).normalized_message_content
       end
       assert { case1("foo")          == "foo"    }
       assert { case1("@gpt")         == ""       }
