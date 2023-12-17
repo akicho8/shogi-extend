@@ -77,12 +77,12 @@ module SharedMethods
   end
 
   # 発言読み込み数
-  def assert_ml_count_in_modal(count)
-    assert_selector(".ChatModal .ml_count", text: count.to_s, exact_text: true)
+  def assert_ml_count_in_modal(count, **options)
+    assert_selector(".ChatModal .ml_count", text: count.to_s, exact_text: true, **options)
   end
 
   # API実行回数
-  def assert_mh_page_index_in_modal(index)
-    assert_selector(".ChatModal .mh_page_index", text: index.to_s, exact_text: true)
+  def assert_mh_page_index_in_modal(index, **options)
+    assert_selector(".ChatModal .mh_page_index", text: index.to_s, exact_text: true, **options)
   end
 end
