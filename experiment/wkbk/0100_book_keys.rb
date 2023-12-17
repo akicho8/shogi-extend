@@ -3,7 +3,7 @@ require "./setup"
 Wkbk::Article.destroy_all
 Wkbk::Book.destroy_all
 
-user = User.sysop
+user = User.admin
 book = user.wkbk_books.create!(key: 1)
 book.articles << user.wkbk_articles.create!(key: 1)
 book.articles << user.wkbk_articles.create!(key: 2)
@@ -15,7 +15,7 @@ book.articles << user.wkbk_articles.create!(key: 3)
 book.articles << user.wkbk_articles.create!(key: 4)
 book.articles.first.books.include?(book) # => true
 
-user = User.sysop
+user = User.admin
 user.wkbk_bookships.count             # => 2
 user.wkbk_active_articles.pluck(:key) # => ["1", "2"]
 user.wkbk_active_books.pluck(:key)    # => ["1", "1"]

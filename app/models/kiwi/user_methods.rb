@@ -66,17 +66,17 @@ module Kiwi
         end
       end
 
-      # # rails r 'User.sysop.lobby_speak(Time.current)'
+      # # rails r 'User.admin.lobby_speak(Time.current)'
       # def lobby_speak(body, options = {})
       #   kiwi_lobby_messages.create!({body: body}.merge(options))
       # end
 
-      # # rails r 'User.sysop.room_speak(Kiwi::Room.first, Time.current)'
+      # # rails r 'User.admin.room_speak(Kiwi::Room.first, Time.current)'
       # def room_speak(room, body, options = {})
       #   kiwi_room_messages.create!({room: room, body: body}.merge(options))
       # end
 
-      # rails r 'User.sysop.kiwi_banana_message_speak(Kiwi::Banana.first, Time.current)'
+      # rails r 'User.admin.kiwi_banana_message_speak(Kiwi::Banana.first, Time.current)'
       def kiwi_banana_message_speak(banana, body, options = {})
         kiwi_banana_messages.create!({banana: banana, body: body}.merge(options))
       end

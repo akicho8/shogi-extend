@@ -19,7 +19,7 @@ class KiwiPreview < ActionMailer::Preview
         :cover_text => "1行目\n2行目",
       },
     }
-    user1 = User.sysop
+    user1 = User.admin
     free_battle1 = user1.free_battles.create!(kifu_body: "68S", use_key: "kiwi_lemon")
     lemon1 = user1.kiwi_lemons.create!(recordable: free_battle1, all_params: all_params)
     lemon1.main_process

@@ -76,7 +76,7 @@ module Wkbk
 
         def import_one(e, options = {})
           options = {
-            user: User.sysop,
+            user: User.admin,
           }.merge(options)
 
           # if e[:user][:key] != "932ed39bb18095a2fc73e0002f94ecf1"

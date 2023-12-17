@@ -22,7 +22,7 @@ class CpuBattleRecord < ApplicationRecord
     def setup(options = {})
       if Rails.env.production? || Rails.env.staging?
       else
-        create!(user: User.sysop, judge_key: :win)
+        create!(user: User.admin, judge_key: :win)
         create!(user: nil,                   judge_key: :lose)
       end
     end

@@ -3,7 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 # Wkbk::Article.destroy_all
 
-# user = User.sysop
+# user = User.admin
 # params = {
 #   "article" => {
 #     "init_sfen" => "4k4/9/4GG3/9/9/9/9/9/9 b 2r2b2g4s4n4l18p 1",
@@ -34,7 +34,7 @@ require File.expand_path('../../config/environment', __FILE__)
 #   e.endpos_answers.build(end_sfen: "4k4/4G4/4G4/9/9/9/9/9/9 w 2r2b2g4s4n4l18p 2")
 # end
 
-# user = User.sysop
+# user = User.admin
 # 11.times do |i|
 #   article = user.wkbk_articles.create! do |e|
 #     e.init_sfen = "4k4/9/4G4/9/9/9/9/9/P8 b G2r2b2g4s4n4l#{i+1}p 1"

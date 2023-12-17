@@ -6,7 +6,7 @@ class User
       def setup(options = {})
         super
 
-        sysop
+        admin
         bot
       end
     end

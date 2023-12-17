@@ -2,7 +2,7 @@ module CurrentUserMethods
   extend ActiveSupport::Concern
 
   included do
-    helper_method :sysop?
+    helper_method :admin?
     helper_method :staff?
     helper_method :current_user
 
@@ -15,8 +15,8 @@ module CurrentUserMethods
     end
   end
 
-  def sysop?
-    current_user && current_user.sysop?
+  def admin?
+    current_user && current_user.admin?
   end
 
   def staff?
@@ -24,7 +24,7 @@ module CurrentUserMethods
   end
 
   def editable_record?(record)
-    sysop? || current_user_is_owner_of?(record)
+    admin? || current_user_is_owner_of?(record)
   end
 
   def current_user_is_owner_of?(record)
@@ -46,11 +46,11 @@ module CurrentUserMethods
       id = nil
       user = nil
 
-      # id ||= User.sysop.id
-      # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "sysop")])
+      # id ||= User.admin.id
+      # Rails.logger.debug(["#{__FILE__}:#{__LINE__}", __method__, params, User.find_by(key: "admin")])
 
       if Rails.env.local?
-        # id ||= User.sysop.id
+        # id ||= User.admin.id
         id ||= params[:_user_id]
         if v = params[:_login_by_key]
           if v = User.find_by(key: v)
@@ -124,9 +124,9 @@ module CurrentUserMethods
     current_user_memoize_variable_clear
   end
 
-  def sysop_login_unless_logout
+  def admin_login_unless_logout
     if !current_user
-      current_user_set(User.sysop)
+      current_user_set(User.admin)
     end
   end
 

@@ -12,10 +12,10 @@ module ShareBoard
         },
       },
       {
-        :key => :sysop,
+        :key => :admin,
         :default_options_fn => -> {
           {
-            :real_user_id   => ::User.sysop.id,
+            :real_user_id   => ::User.admin.id,
             :from_user_name => "運営",
           }
         },

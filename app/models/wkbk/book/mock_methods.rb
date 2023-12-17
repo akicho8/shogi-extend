@@ -11,8 +11,8 @@ module Wkbk
         # rails r 'Wkbk::Book.mock_setup'
         def mock_setup
           [
-            { key: 1, user: :sysop, folder_key: :public,  },
-            { key: 2, user: :sysop, folder_key: :private, },
+            { key: 1, user: :admin, folder_key: :public,  },
+            { key: 2, user: :admin, folder_key: :private, },
             { key: 3, user: :bot,   folder_key: :public,  },
             { key: 4, user: :bot,   folder_key: :private, },
           ].each do |e|
@@ -35,7 +35,7 @@ module Wkbk
           book.articles << user.wkbk_articles.create!(key: "5-3", title: "(公開)",   folder_key: :public)
 
           user = User.find_or_create_by(name: "bob")
-          title = "sysopの解答履歴付き"
+          title = "adminの解答履歴付き"
           user.wkbk_bookships.destroy_all
           user.wkbk_articles.destroy_all
           user.wkbk_books.destroy_all
@@ -45,9 +45,9 @@ module Wkbk
           book.articles << user.wkbk_articles.create!(key: "6-3", title: "初", folder_key: :public)
           correct = ::Wkbk::AnswerKind.fetch("correct")
           mistake = ::Wkbk::AnswerKind.fetch("mistake")
-          answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: correct, book: book, spent_sec: 1) # o
-          answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: mistake, book: book, spent_sec: 2) # x
-          answer_log = User.sysop.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: mistake, book: book, spent_sec: 3) # o
+          answer_log = User.admin.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: correct, book: book, spent_sec: 1) # o
+          answer_log = User.admin.wkbk_answer_logs.create!(article: book.articles[0], answer_kind: mistake, book: book, spent_sec: 2) # x
+          answer_log = User.admin.wkbk_answer_logs.create!(article: book.articles[1], answer_kind: mistake, book: book, spent_sec: 3) # o
         end
 
         def mock_book

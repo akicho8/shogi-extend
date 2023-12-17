@@ -4,7 +4,7 @@ require "./setup"
 
 Wkbk::Article.destroy_all
 
-user = User.sysop
+user = User.admin
 
 params = {
   "title"            => "(title)",

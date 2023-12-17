@@ -9,7 +9,7 @@ module Wkbk
     end
 
     def run
-      user = User.sysop
+      user = User.admin
 
       # Wkbk.destroy_all
       # Wkbk.setup

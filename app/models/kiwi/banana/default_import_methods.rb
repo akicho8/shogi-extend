@@ -98,7 +98,7 @@ module Kiwi
 
           Bioshogi.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new(STDOUT))
 
-          user = User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1") || User.sysop
+          user = User.find_by(key: "932ed39bb18095a2fc73e0002f94ecf1") || User.admin
 
           free_battle = nil
           lemon = nil

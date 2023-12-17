@@ -34,24 +34,24 @@ RSpec.describe Api::Wkbk::BooksController, type: :controller do
     { action: :show,  params: { book_key: 1,    },               status: 200, },
     { action: :show,  params: { book_key: 2,    },               status: 403, },
     { action: :show,  params: { book_key: :x,   },               status: 404, },
-    { action: :edit,  params: { book_key: 2,    }, user: :sysop, status: 200, },
-    { action: :show,  params: { book_key: 4,    }, user: :sysop, status: 403, },
+    { action: :edit,  params: { book_key: 2,    }, user: :admin, status: 200, },
+    { action: :show,  params: { book_key: 4,    }, user: :admin, status: 403, },
     { action: :edit,  params: {                 },               status: 403, },
-    { action: :edit,  params: {                 }, user: :sysop, status: 200, },
+    { action: :edit,  params: {                 }, user: :admin, status: 200, },
     { action: :edit,  params: {                 },               status: 403, },
-    { action: :edit,  params: {                 }, user: :sysop, status: 200, },
+    { action: :edit,  params: {                 }, user: :admin, status: 200, },
     { action: :edit,  params: { book_key: 1,    },               status: 403, },
     { action: :edit,  params: { book_key: 2,    },               status: 403, },
     { action: :edit,  params: { book_key: 3,    },               status: 403, },
     { action: :edit,  params: { book_key: 4,    },               status: 403, },
-    { action: :edit,  params: { book_key: 1,    }, user: :sysop, status: 200, },
-    { action: :edit,  params: { book_key: 2,    }, user: :sysop, status: 200, },
-    { action: :edit,  params: { book_key: 3,    }, user: :sysop, status: 404, },
-    { action: :edit,  params: { book_key: 4,    }, user: :sysop, status: 404, },
+    { action: :edit,  params: { book_key: 1,    }, user: :admin, status: 200, },
+    { action: :edit,  params: { book_key: 2,    }, user: :admin, status: 200, },
+    { action: :edit,  params: { book_key: 3,    }, user: :admin, status: 404, },
+    { action: :edit,  params: { book_key: 4,    }, user: :admin, status: 404, },
   ].each do |e|
     it "アクセス制限" do
       if e[:user]
-        user_login(User.sysop)
+        user_login(User.admin)
       end
       get e[:action], params: e[:params]
       assert { response.status == e[:status] }
