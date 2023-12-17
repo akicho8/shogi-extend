@@ -6,7 +6,7 @@ module ShareBoard
         :key => :bot,
         :default_options_fn => -> {
           {
-            :real_user_id   => ::User.bot.id,
+            :session_user_id   => ::User.bot.id,
             :from_user_name => "GPT",
             :primary_emoji  => "🤖",
           }
@@ -16,7 +16,7 @@ module ShareBoard
         :key => :admin,
         :default_options_fn => -> {
           {
-            :real_user_id   => ::User.admin.id,
+            :session_user_id   => ::User.admin.id,
             :from_user_name => "運営",
           }
         },

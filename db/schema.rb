@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_17_000000) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_17_000002) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -237,12 +237,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_000000) do
     t.bigint "performed_at", null: false, comment: "実行開始日時(ms)"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "real_user_id", comment: "ログインユーザー"
+    t.bigint "session_user_id", comment: "ログインユーザー"
     t.string "from_connection_id", comment: "null なら bot 等"
     t.string "primary_emoji", comment: "優先する絵文字"
     t.index ["message_scope_id"], name: "index_share_board_chat_messages_on_message_scope_id"
-    t.index ["real_user_id"], name: "index_share_board_chat_messages_on_real_user_id"
     t.index ["room_id"], name: "index_share_board_chat_messages_on_room_id"
+    t.index ["session_user_id"], name: "index_share_board_chat_messages_on_session_user_id"
     t.index ["user_id"], name: "index_share_board_chat_messages_on_user_id"
   end
 

@@ -201,7 +201,7 @@ export const mod_room_setup = {
       }
       if (this.g_current_user) {
         params.from_avatar_path = this.g_current_user.avatar_path
-        params.real_user_id     = this.g_current_user.id
+        params.session_user_id     = this.g_current_user.id
       }
       return params
     },

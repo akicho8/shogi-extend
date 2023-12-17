@@ -21,7 +21,7 @@ class CreateShareBoard4 < ActiveRecord::Migration[5.1]
       t.bigint :performed_at,      null: false, comment: "実行開始日時(ms)"
       t.timestamps null: false
       # NULL許可
-      t.belongs_to :real_user,     null: true,  comment: "ログインユーザー"
+      t.belongs_to :session_user,     null: true,  comment: "ログインユーザー"
       t.string :from_connection_id,             comment: "null なら bot 等"
       t.string :primary_emoji,                  comment: "優先する絵文字"
     end
