@@ -7,7 +7,7 @@
       a.permalink(:href="base.dashboard_url" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    SbDashboardBody(:room_code="base.room_code")
+    SbDashboardBody(:room_key="base.room_key")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
 </template>

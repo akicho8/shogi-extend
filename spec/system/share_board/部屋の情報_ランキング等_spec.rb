@@ -5,7 +5,7 @@ RSpec.describe "部屋の情報_ランキング等", type: :system, share_board_
     eval_code %(ShareBoard.setup(force: true))
     eval_code %(ShareBoard::Room.mock)
 
-    visit2 "/share-board/dashboard", room_code: "dev_room"
+    visit2 "/share-board/dashboard", room_key: "dev_room"
     assert_text("順位")
     assert_text("alice")
     assert_text("bob")

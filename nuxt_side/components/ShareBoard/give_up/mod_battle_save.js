@@ -5,7 +5,7 @@ export const mod_battle_save = {
   methods: {
     battle_save_run() {
       const params = {
-        room_code:        this.room_code,
+        room_key:        this.room_key,
         title:            this.current_title,
         sfen:             this.current_sfen,
         turn:             this.current_turn,

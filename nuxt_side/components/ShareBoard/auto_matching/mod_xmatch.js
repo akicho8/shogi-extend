@@ -26,7 +26,7 @@ export const mod_xmatch = {
     // 自動で開始する方法確認
     // http://localhost:4000/share-board?autoexec=test_direct1
     test_direct1() {
-      this.room_code = "__room_code__"
+      this.room_key = "__room_key__"
       this.user_name = "x"
 
       this.os_setup_by_names(["alice"])
@@ -164,7 +164,7 @@ export const mod_xmatch = {
       this.$gs.delay_block(0, () => this.toast_ok(`${this.user_call_name(params.from_user_name)}が${xmatch_rule_info.name}にエントリーしました`))
       // this.$sound.play_click()
       // 合言葉がある場合マッチングが成立している
-      if (params.room_code) {
+      if (params.room_key) {
         this.$gs.assert(params.members, "params.members")
         if (params.members.some(e => e.from_connection_id === this.connection_id)) { // 自分が含まれていれば
           this.xmatch_establishment(params)
@@ -212,7 +212,7 @@ export const mod_xmatch = {
       // 各クライアントで順番と時計が設定されている状態でさらに部屋共有による情報選抜が起きる
       // めちゃくちゃだけどホストの概念がないのでこれでいい
       this.room_destroy()               // デバッグ時にダイアログの選択肢再選択も耐えるため
-      this.room_code = params.room_code // サーバー側で決めた共通の合言葉を使う
+      this.room_key = params.room_key // サーバー側で決めた共通の合言葉を使う
       this.room_create()
     },
     xmatch_setup5_call(params) {

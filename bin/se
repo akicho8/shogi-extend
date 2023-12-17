@@ -8,7 +8,7 @@ class App < Thor
   # se say -r dev_room -s ms_public -t sysop      -m 運営の発言
   # se say -r dev_room -s ms_public -n きなこもち -m 通常発言
   desc "say -r 合言葉 -n 名前 -m 発言", "共有将棋盤のチャットで発言する"
-  method_option :room_code,         type: :string, aliases: "-r", desc: "合言葉"
+  method_option :room_key,         type: :string, aliases: "-r", desc: "合言葉"
   method_option :content,           type: :string, aliases: "-m", desc: "発言内容"
   method_option :from_user_name,    type: :string, aliases: "-n", desc: "名前"
   method_option :primary_emoji,     type: :string, aliases: "-e", desc: "最優先表示絵文字"
@@ -20,10 +20,10 @@ class App < Thor
 
   # se gpt -r dev_room -n きなこもち -m こんにちは
   desc "gpt -r 合言葉", "共有将棋盤にいるGPTに対して発言を促す"
-  method_option :room_code, type: :string, default: "dev_room", aliases: "-r", desc: "合言葉"
+  method_option :room_key, type: :string, default: "dev_room", aliases: "-r", desc: "合言葉"
   method_option :content,   type: :string, default: nil,        aliases: "-m", desc: "メッセージ"
   def gpt
-    ShareBoard::ChatAi::Responder::ResponderSomethingSay.new(room_code: options[:room_code], content: options[:content]).call
+    ShareBoard::ChatAi::Responder::ResponderSomethingSay.new(room_key: options[:room_key], content: options[:content]).call
   end
 
   desc "about", "情報"

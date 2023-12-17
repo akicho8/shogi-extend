@@ -12,7 +12,7 @@
 export default {
   name: "SbDashboardBody",
   props: {
-    room_code: { type: String, required: true },
+    room_key: { type: String, required: true },
   },
   provide() {
     return {
@@ -28,7 +28,7 @@ export default {
   fetch() {
     return this.$axios.$get("/api/share_board/dashboard", {
       params: {
-        room_code: this.room_code,
+        room_key: this.room_key,
       },
     }).then(e => this.info = e)
   },

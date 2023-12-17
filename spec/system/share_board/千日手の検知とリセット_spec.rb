@@ -70,7 +70,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "千日手は判定が特殊だけど最後は二歩と同じ扱いになるので千日手のときも自動投了になる" do
     visit_app({
-        :room_code            => :test_room,
+        :room_key            => :test_room,
         :user_name            => "a",
         :fixed_member_names   => "a",
         :fixed_order_names    => "a",

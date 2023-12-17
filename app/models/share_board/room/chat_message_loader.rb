@@ -7,9 +7,9 @@ module ShareBoard
       @params = params
     end
 
-    # GET http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room&limit=2
-    # GET http://localhost:3000/api/share_board/chat_message_loader?room_code=xxx
-    # GET https://www.shogi-extend.com/api/share_board/chat_message_loader?room_code=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
+    # GET http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
+    # GET http://localhost:3000/api/share_board/chat_message_loader?room_key=xxx
+    # GET https://www.shogi-extend.com/api/share_board/chat_message_loader?room_key=5%E6%9C%88%E9%8A%80%E6%B2%B3%E6%88%A6
     def as_json
       @room.chat_messages_mock_setup
       AppLog.debug(subject: subject, body: body)

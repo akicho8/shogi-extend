@@ -20,7 +20,7 @@ module ShareBoard
       #   "message"=>"@gpt hello",
       #   "message_scope_key"=>"ms_public",
       #   "action"=>"message_share",
-      #   :room_code=>"dev_room",
+      #   :room_key=>"dev_room",
       # }
       ShareBoard::ChatAi::Responder::ResponderRes.new(params).call
     end

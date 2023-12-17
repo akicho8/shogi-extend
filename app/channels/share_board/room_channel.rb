@@ -4,12 +4,12 @@ module ShareBoard
     end
 
     def subscribed
-      if room_code.blank?
+      if room_key.blank?
         reject
         return
       end
       subscribed_track("購読開始")
-      stream_from "share_board/room_channel/#{room_code}"
+      stream_from "share_board/room_channel/#{room_key}"
     end
 
     def unsubscribed
@@ -113,12 +113,12 @@ module ShareBoard
         emoji = ":観戦チャット:"
       end
       track(data, subject: action, body: data["message"], emoji: emoji)
-      ShareBoard::ChatMessageBroadcastJob.perform_later(room_code, data)
+      ShareBoard::ChatMessageBroadcastJob.perform_later(room_key, data)
     end
 
     # /gpt コマンド
     def gpt_speak(data)
-      ShareBoard::ResponderSomethingSayJob.perform_later(data.merge(room_code: room_code))
+      ShareBoard::ResponderSomethingSayJob.perform_later(data.merge(room_key: room_key))
     end
 
     def give_up_share(data)
@@ -188,18 +188,18 @@ module ShareBoard
 
     private
 
-    def room_code
-      params["room_code"].presence
+    def room_key
+      params["room_key"].presence
     end
 
     def broadcast(...)
-      Broadcaster.new(room_code).call(...)
+      Broadcaster.new(room_key).call(...)
     end
 
     def track(data, **options)
       subject = []
       subject << "共有将棋盤"
-      subject << "[#{room_code}]"
+      subject << "[#{room_key}]"
       if v = options[:subject].presence
         subject << v
       end
@@ -223,7 +223,7 @@ module ShareBoard
     def subscribed_track(action)
       subject = [
         "共有将棋盤",
-        "[#{room_code}]",
+        "[#{room_key}]",
         action,
       ].join(" ")
 
@@ -277,15 +277,15 @@ module ShareBoard
 
     concerning :ChatLogMethods do
       # def receive_and_bc(data)
-      #   Room.find_or_create_by!(key: room_code).receive_and_bc(data)
+      #   Room.find_or_create_by!(key: room_key).receive_and_bc(data)
       # end
 
       # def user_object
-      #   find_or_create_by(room_code: room_code)
+      #   find_or_create_by(room_key: room_key)
       # end
       #
       # def room_object
-      #   find_or_create_by(room_code: room_code)
+      #   find_or_create_by(room_key: room_key)
       # end
     end
   end

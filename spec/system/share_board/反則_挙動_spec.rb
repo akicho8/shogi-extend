@@ -29,7 +29,7 @@ RSpec.describe type: :system, share_board_spec: true do
       visit_app({
           :body                 => sfen,
           :illegal_behavior_key => illegal_behavior_key,
-          :room_code            => :test_room,
+          :room_key            => :test_room,
           :user_name            => "1",
           :fixed_member_names   => "1,2",
           :fixed_order_names    => "1,2",

@@ -11,7 +11,7 @@ module ShareBoard
                               { user_name: "bob",   location_key: "white", judge_key: "lose", },
                             ])
       end
-      json = Dashboard.new(room_code: "dev_room").call
+      json = Dashboard.new(room_key: "dev_room").call
       assert { json }
       tp json if $0 == __FILE__
     end

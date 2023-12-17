@@ -7,13 +7,13 @@
     b-button(@click="TheSb.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="TheSb.ac_room") 部屋のリンク
   .modal-card-body
     template(v-if="true || !TheSb.ac_room")
-      template(v-if="room_code_field_locked")
-        b-field(key="room_code_field_locked_false")
+      template(v-if="room_key_field_locked")
+        b-field(key="room_key_field_locked_false")
           .control
-            b-button.has-text-weight-bold(@click="room_code_show_toggle_handle" icon-left="lock" :disabled="TheSb.ac_room")
+            b-button.has-text-weight-bold(@click="room_key_show_toggle_handle" icon-left="lock" :disabled="TheSb.ac_room")
       template(v-else)
-        b-field(label="合言葉" label-position="on-border" key="room_code_field_locked_true")
-          b-input.new_room_code(v-model.trim="new_room_code" :disabled="TheSb.ac_room" ref="new_room_code")
+        b-field(label="合言葉" label-position="on-border" key="room_key_field_locked_true")
+          b-input.new_room_key(v-model.trim="new_room_key" :disabled="TheSb.ac_room" ref="new_room_key")
       b-field(label="ハンドルネーム" label-position="on-border")
         b-input.new_user_name(v-model.trim="new_user_name" :disabled="TheSb.ac_room")
 
@@ -38,16 +38,16 @@ export default {
   inject: ["TheSb"],
   data() {
     return {
-      new_room_code: this.TheSb.room_code,
+      new_room_key: this.TheSb.room_key,
       new_user_name: this.TheSb.user_name,
-      room_code_field_locked: null,
+      room_key_field_locked: null,
     }
   },
   created() {
-    this.room_code_field_lock()
+    this.room_key_field_lock()
   },
   mounted() {
-    this.desktop_focus_to(this.$refs.new_room_code)
+    this.desktop_focus_to(this.$refs.new_room_key)
   },
   methods: {
     leave_handle() {
@@ -59,9 +59,9 @@ export default {
         this.toast_warn("今は部屋の外です")
       }
     },
-    room_code_show_toggle_handle() {
+    room_key_show_toggle_handle() {
       this.$sound.play_click()
-      this.room_code_field_unlock()
+      this.room_key_field_unlock()
     },
     close_handle() {
       this.TheSb.room_setup_modal_close_handle()
@@ -69,10 +69,10 @@ export default {
     entry_handle() {
       this.$sound.play_click()
 
-      this.new_room_code = _.trim(this.new_room_code)
+      this.new_room_key = _.trim(this.new_room_key)
       this.new_user_name = _.trim(this.new_user_name)
 
-      if (this.$gs.blank_p(this.new_room_code)) {
+      if (this.$gs.blank_p(this.new_room_key)) {
         this.toast_warn("合言葉を入力してください")
         return
       }
@@ -81,8 +81,8 @@ export default {
         return
       }
 
-      this.TheSb.room_create_by(this.new_room_code, this.new_user_name)
-      this.room_code_field_lock()
+      this.TheSb.room_create_by(this.new_room_key, this.new_user_name)
+      this.room_key_field_lock()
 
       if (this.TheSb.auto_close_p) {
         this.$emit("close")
@@ -92,15 +92,15 @@ export default {
     ////////////////////////////////////////////////////////////////////////////////
 
     // 鍵有効 (合言葉が入力済みのとき)
-    room_code_field_lock() {
+    room_key_field_lock() {
       if (ROOM_CODE_ALWAYS_SHOW) {
         return
       }
-      this.room_code_field_locked = this.$gs.present_p(this.TheSb.room_code)
+      this.room_key_field_locked = this.$gs.present_p(this.TheSb.room_key)
     },
     // 鍵解除
-    room_code_field_unlock() {
-      this.room_code_field_locked = false
+    room_key_field_unlock() {
+      this.room_key_field_locked = false
     },
   },
 }

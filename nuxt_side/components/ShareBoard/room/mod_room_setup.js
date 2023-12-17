@@ -1,7 +1,7 @@
 // |---------------------------------------------+---------------------------------------------|
 // | Method                                      | 意味                                        |
 // |---------------------------------------------+---------------------------------------------|
-// | room_create_if_exist_room_code_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
+// | room_create_if_exist_room_key_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
 // | room_setup_modal_open_handle()              | モーダル起動                                |
 // | room_create_by(new_room_coe, new_user_name) | モーダル内で入力したものを渡す              |
 // | room_create()                               | 入室                                        |
@@ -23,7 +23,7 @@ export const mod_room_setup = {
   },
   mounted() {
     // this.name_setup()
-    this.room_create_if_exist_room_code_in_url()
+    this.room_create_if_exist_room_key_in_url()
   },
   beforeDestroy() {
     this.room_setup_modal_close()
@@ -31,13 +31,13 @@ export const mod_room_setup = {
   },
   methods: {
     // URLに合言葉の指定があればそのまま部屋に入る
-    room_create_if_exist_room_code_in_url() {
+    room_create_if_exist_room_key_in_url() {
       // URLに合言葉がない場合は何もしない
-      if (this.$gs.blank_p(this.$route.query.room_code)) {
+      if (this.$gs.blank_p(this.$route.query.room_key)) {
         return
       }
       // 合言葉が復元できたとしても元々空であれば何もしない
-      if (this.$gs.blank_p(this.room_code)) {
+      if (this.$gs.blank_p(this.room_key)) {
         return
       }
       // 名前が未入力または不正な場合はモーダルを表示する
@@ -108,7 +108,7 @@ export const mod_room_setup = {
         return
       }
 
-      this.room_code = new_room_coe
+      this.room_key = new_room_coe
       this.room_create()
       // this.toast_ok("入室しました")
     },
@@ -116,10 +116,10 @@ export const mod_room_setup = {
     room_create() {
       this.tl_alert("room_create")
       this.$gs.assert(this.user_name, "this.user_name")
-      this.$gs.assert(this.room_code, "this.room_code")
+      this.$gs.assert(this.room_key, "this.room_key")
       this.$gs.assert(this.ac_room == null, "this.ac_room == null")
 
-      this.ga_click(`共有将棋盤 [${this.room_code}] 入室`)
+      this.ga_click(`共有将棋盤 [${this.room_key}] 入室`)
 
       this.member_infos_init()
       this.member_info_init()
@@ -128,8 +128,8 @@ export const mod_room_setup = {
       this.mh_room_entry()
 
       // ユーザーの操作に関係なくサーバーの負荷の問題で切断や再起動される場合があるためそれを考慮すること
-      this.tl_add("USER", `subscriptions.create ${this.room_code}`)
-      this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_code: this.room_code}, {
+      this.tl_add("USER", `subscriptions.create ${this.room_key}`)
+      this.ac_room = this.ac_subscription_create({channel: "ShareBoard::RoomChannel", room_key: this.room_key}, {
         initialized: e => {
           this.ac_events_hash_inc("initialized")
           this.tl_add("HOOK", "initialized", e)
@@ -264,6 +264,6 @@ export const mod_room_setup = {
     session_counter() { return this.config.record.session_counter }, // セッションが動いていればリロードで+1される
 
     // 合言葉と名前が入力済みなので共有可能か？
-    connectable_p() { return this.$gs.present_p(this.room_code) && this.$gs.present_p(this.user_name) },
+    connectable_p() { return this.$gs.present_p(this.room_key) && this.$gs.present_p(this.user_name) },
   },
 }

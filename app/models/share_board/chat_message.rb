@@ -74,7 +74,7 @@ module ShareBoard
     end
 
     # ログインしている人のアバター画像
-    # http://localhost:3000/api/share_board/chat_message_loader?room_code=dev_room
+    # http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room
     def from_avatar_path
       real_user&.avatar_path
     end
@@ -94,7 +94,7 @@ module ShareBoard
     # se say -r dev_room -t bot -m GPTです。こんにちは
     def info
       {
-        :room_code      => room.key,
+        :room_key      => room.key,
         :real_user_name => real_user&.name,
         **attributes,
         **as_json(JSON_TYPE1),

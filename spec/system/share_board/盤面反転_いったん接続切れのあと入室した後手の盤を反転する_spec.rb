@@ -5,7 +5,7 @@ RSpec.describe type: :system, share_board_spec: true do
     a_block do
       # alice が先手で bob を後手とする
       visit_app({
-                  :room_code            => :test_room,
+                  :room_key            => :test_room,
                   :user_name            => "alice",
                   :fixed_member_names   => "alice,bob",
                   :fixed_order_names    => "alice,bob",

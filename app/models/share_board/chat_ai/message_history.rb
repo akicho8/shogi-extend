@@ -21,7 +21,7 @@ module ShareBoard
     class MessageHistory
       def initialize(options = {})
         @options = {
-          :room_code    => "dev_room",
+          :room_key    => "dev_room",
           :size         => 20,       # 保持する件数
           :expires_in   => 1.hours,  # 保持する時間
           :latest_order => false,    # 後から追加したもの順にするか？
@@ -69,7 +69,7 @@ module ShareBoard
       end
 
       def key
-        @key ||= Digest::MD5.hexdigest(@options[:room_code])
+        @key ||= Digest::MD5.hexdigest(@options[:room_key])
       end
     end
   end
