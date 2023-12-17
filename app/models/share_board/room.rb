@@ -19,7 +19,7 @@
 #  room.receive_and_bc({
 #                        "from_user_name"    => "GPT",
 #                        "content"           => "(content)",
-#                        "real_user_id"      => User.bot.id,
+#                        "session_user_id"      => User.bot.id,
 #                        "message_scope_key" => "ms_private",
 #                        "primary_emoji"     => "🍄",
 #                      })
@@ -60,7 +60,7 @@ module ShareBoard
                   :content            => data[:content],
                   :message_scope_key  => data[:message_scope_key],
                   :from_connection_id => data[:from_connection_id], # FIXME: とる
-                  :real_user_id       => data[:real_user_id],
+                  :session_user_id       => data[:session_user_id],
                   # :from_avatar_path   => data[:from_avatar_path], # とる
                   :primary_emoji      => data[:primary_emoji],
                   :performed_at       => data[:performed_at],
@@ -138,7 +138,7 @@ module ShareBoard
         params = {
           **default_options,
           # :content           => "(content#{chat_messages.count.next})",
-          # :real_user_id      => ::User.bot.id,
+          # :session_user_id      => ::User.bot.id,
           # :message_scope_key => "ms_private", # ms_public or ms_private
           # :from_user_name    => "GPT",
           # :primary_emoji     => "🍄",
@@ -149,7 +149,7 @@ module ShareBoard
       # def gpt_message_send(params = {})
       #   receive_and_bc({
       #                    :content => "(content#{chat_messages.count.next})",
-      #                    # :real_user_id      => ::User.bot.id,
+      #                    # :session_user_id      => ::User.bot.id,
       #                    # :message_scope_key => "ms_private", # ms_public or ms_private
       #                    # :from_user_name    => "GPT",
       #                    # :primary_emoji     => "🍄",

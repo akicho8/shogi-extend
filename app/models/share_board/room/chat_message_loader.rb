@@ -42,7 +42,7 @@ module ShareBoard
     def chat_messages
       @chat_messages ||= yield_self do
         s = @room.chat_messages
-        s = s.includes(user: nil, message_scope: nil, real_user: nil)
+        s = s.includes(user: nil, message_scope: nil, session_user: nil)
         s = s.order(id: :desc)
         if v = current_limit
           s = s.limit(v)

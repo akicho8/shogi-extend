@@ -30,7 +30,7 @@ module ShareBoard
         :id,
         :content,
         :performed_at,
-        :real_user_id,
+        :session_user_id,
         :from_connection_id,
         :primary_emoji,
       ],
@@ -43,7 +43,7 @@ module ShareBoard
 
     custom_belongs_to :message_scope,  ar_model: MessageScope, st_model: MessageScopeInfo, default: "ms_public"
 
-    belongs_to :real_user, class_name: "::User", optional: true # ログインしているユーザーID
+    belongs_to :session_user, class_name: "::User", optional: true # ログインしているユーザーID
 
     belongs_to :user, counter_cache: true # 発言者
     belongs_to :room, counter_cache: true # 所属する部屋
@@ -76,7 +76,7 @@ module ShareBoard
     # ログインしている人のアバター画像
     # http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room
     def from_avatar_path
-      real_user&.avatar_path
+      session_user&.avatar_path
     end
 
     def responder_res_job_run
@@ -95,7 +95,7 @@ module ShareBoard
     def info
       {
         :room_key      => room.key,
-        :real_user_name => real_user&.name,
+        :session_user_name => session_user&.name,
         **attributes,
         **as_json(JSON_TYPE1),
       }
@@ -109,7 +109,7 @@ module ShareBoard
         "from_connection_id",
         "primary_emoji",
         "from_avatar_path",
-        "real_user_id",
+        "session_user_id",
       ]
     end
   end

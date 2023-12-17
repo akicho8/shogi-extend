@@ -30,8 +30,8 @@ module ShareBoard
       login_user = ::User.create!
       user = User.create!
       room = Room.create!
-      chat_message = room.chat_messages.create!(user: user, real_user: login_user)
-      assert { chat_message.real_user == login_user }
+      chat_message = room.chat_messages.create!(user: user, session_user: login_user)
+      assert { chat_message.session_user == login_user }
     end
 
     it "簡単にデータを用意する" do
