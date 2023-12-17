@@ -11,9 +11,9 @@ export const mod_console = {
     },
 
     console_command_run(params) {
-      if (params.message.startsWith("/")) {
-        this.local_say(params.message)
-        let str = params.message
+      if (params.content.startsWith("/")) {
+        this.local_say(params.content)
+        let str = params.content
         str = str.replace(/^./, "")
         str = str.trim()
         const args = this.$gs.str_split(str)
