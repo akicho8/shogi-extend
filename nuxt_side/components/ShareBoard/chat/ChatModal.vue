@@ -6,6 +6,9 @@
         XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
       template(v-else)
         | チャット
+      template(v-if="development_p")
+        span.mx-1.ml_count {{TheSb.ml_count}}
+        span.mx-1.mh_page_index {{TheSb.mh_page_index}}
     b-button.mh_reload(type="is-small" @click="TheSb.mh_reload" v-if="development_p") よそ見から復帰
     b-button.mh_reset_all(type="is-small" @click="TheSb.mh_reset_all" v-if="development_p") 初期化
     b-button.mh_read(type="is-small" @click="TheSb.mh_read" v-if="development_p") 読込{{TheSb.mh_seek_pos}}

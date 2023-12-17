@@ -89,17 +89,21 @@ export const mod_chat_message_history = {
         this.mh_reset_all()       // よそ見した時点で不整合が起きている可能性があるので全リセット
         if (this.mh_root_el()) {  // すでにチャットモーダルを開いてメッセージが見える状態であれば
           this.mh_setup()         // チャットを開いたときに実行する内容を実行する
+        } else {
+          // チャットモーダルを開いていない
         }
       }
     },
 
     // チャットを開いた瞬間に毎回実行してほしい内容
     mh_setup() {
-      if (this.ac_room) {
-        if (this.mh_page_index === 0) {
-          this.mh_read()
-        } else {
-          this.mh_next_process()
+      if (this.mh_enable) {
+        if (this.ac_room) {
+          if (this.mh_page_index === 0) {
+            this.mh_read()
+          } else {
+            this.mh_next_process()
+          }
         }
       }
     },
@@ -266,5 +270,6 @@ export const mod_chat_message_history = {
   computed: {
     mh_seek_pos()   { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
     mh_has_next_p() { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
+    mh_enable()     { return this.mh_per_page >= 0                                       }, // この機能が有効か？
   },
 }

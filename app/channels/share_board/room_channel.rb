@@ -274,19 +274,5 @@ module ShareBoard
         "(#{str})"
       end
     end
-
-    concerning :ChatLogMethods do
-      # def receive_and_bc(data)
-      #   Room.find_or_create_by!(key: room_key).receive_and_bc(data)
-      # end
-
-      # def user_object
-      #   find_or_create_by(room_key: room_key)
-      # end
-      #
-      # def room_object
-      #   find_or_create_by(room_key: room_key)
-      # end
-    end
   end
 end
