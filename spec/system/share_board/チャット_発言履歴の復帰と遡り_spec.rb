@@ -22,7 +22,7 @@ RSpec.describe "チャット_LINE風履歴", type: :system, share_board_spec: tr
     end
     b_block {}                                                            # タブを切り替えて
     a_block do                                                            # 戻ると、
-      assert_ml_count_in_modal(1, wait: 2)                                # リロードされ1件読み込まれている
+      assert_ml_count_in_modal(1)                                         # リロードされ1件読み込まれている
     end
   end
 
