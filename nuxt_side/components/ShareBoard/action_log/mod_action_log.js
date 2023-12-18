@@ -77,7 +77,7 @@ export const mod_action_log = {
       } else {
         this.action_logs.push(action_log_dto)
         this.action_logs = _.takeRight(this.action_logs, ACTION_LOG_MAX)
-        this.al_scroll_to_bottom()
+        this.$nextTick(() => this.al_scroll_to_bottom())
       }
     },
     al_add_test() {
@@ -107,7 +107,7 @@ export const mod_action_log = {
     al_scroll_to_bottom() {
       const e = this.$refs.SbActionLog
       if (e) {
-        this.scroll_to_bottom(e.$refs.SideColumnScroll)
+        this.$nextTick(() => this.scroll_to_bottom(e.$refs.SideColumnScroll))
       }
     },
 

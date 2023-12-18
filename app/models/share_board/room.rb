@@ -171,6 +171,7 @@ module ShareBoard
         ChatMessageLoader.new(self, params).as_json
       end
 
+      # rails r 'ShareBoard::Room.fetch(:dev_room).setup_for_test(count: 100)'
       def setup_for_test(count: 10, user: nil, force: false, prefix: "")
         if Rails.env.local?
           if chat_messages.empty? || force

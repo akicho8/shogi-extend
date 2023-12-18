@@ -53,7 +53,9 @@ export default {
     // 本当は SbMessageList.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
-    this.TheSb.ml_scroll_to_bottom()
+    if (!this.mh_enable) {
+      this.$nextTick(() => this.TheSb.ml_scroll_to_bottom())
+    }
   },
   beforeDestroy() {
     this.TheSb.mh_chat_close()

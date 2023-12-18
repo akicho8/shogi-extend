@@ -11,6 +11,19 @@ RSpec.describe "チャット_LINE風履歴", type: :system, share_board_spec: tr
     assert_system_variable("ml_count", 1)                                 # 件数は 1
   end
 
+  it "初回のスクロール位置はいちばん下になっている" do
+    chat_message_setup(100)                                               # 100件用意する
+    visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 50)  # 1回で50件読む
+    assert_system_variable("ml_count", 0)                                 # 件数は 0
+    chat_modal_open do
+      assert_message_received_o("(content:99)")                           # 50..99 は有り
+      assert_message_received_x("(content:49)")                           #  0..49 は無し
+      assert { chat_scroll_ratio == 0.9 }                                 # 一番下までスクロールしている
+      assert_mh_page_index_in_modal(1)                                    # APIへのアクセスは1回のみ
+      assert_ml_count_in_modal(50)                                        # いまは50件ある
+    end
+  end
+
   it "よそ見から復帰したとき(タブを切り替えて戻ったとき)に最新にするためリロードする" do
     chat_message_setup(1)                                                 # 1件用意する
     a_block do
