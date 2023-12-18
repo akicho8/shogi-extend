@@ -181,14 +181,6 @@ const config = {
     // base: { href: process.env.MY_SITE_URL },
   },
   /*
-  ** Customize the progress-bar color
-  */
-  // loading: { color: "hsl(348, 100%, 61%)" }, // bulma red color
-  // loading: { color: "hsl(48,  100%, 67%)" }, // bulma yellow color
-  loading: { color: "hsl(0, 0%, 21%)"     }, // bulma grey-daker color
-  // loading: { color: "hsl(204, 86%,  53%)" }, // bulma cyan
-  // loading: { color: "orange", height: "8px"  }, // bulma cyan
-  /*
   ** Global CSS
   */
   css: [
@@ -534,11 +526,29 @@ const config = {
   },
 }
 
+////////////////////////////////////////////////////////////////////////////////// プログレスバー
+//
+// https://v2.nuxt.com/ja/docs/features/loading/
+//
+// config.loading = { color: "hsl(348, 100%, 61%)" }, // bulma red color
+// config.loading = { color: "hsl(48,  100%, 67%)" }, // bulma yellow color
+// config.loading = { color: "hsl(0, 0%, 21%)"     }, // bulma grey-daker color
+// config.loading = { color: "orange", height: "8px"  }, // bulma cyan
+//
 if (DEVELOPMENT_P) {
-  // https://v2.nuxt.com/ja/docs/features/loading/
+  // 挙動がよくわからんのでいろいろ試してよかったのだけ production に適用する
   config.loading = {
-    color: "orange",
-    height: "8px",
+    color: "hsl(204, 86%, 53%)",        // bulma cyan color // プログレスバーの CSS カラー
+    failedColor: "hsl(348, 100%, 61%)", // bulma red color  // ルートをレンダリング中にエラーが発生した場合のプログレスバーの CSS カラー
+    height: "8px",                      // 高さ
+    throttle: 0,                        // プログレスバーを表示するまでに待つ時間(ms)。プログレスバーの点滅を防ぐことに役立つ。
+    duration: 5000,                     // プログレスバーを表示する時間の最大値（ms）
+    continuous: true,                   // ローディングが duration で指定した時間より長くかかる場合にアニメーションを継続する。
+  }
+} else {
+  config.loading = {
+    color: "hsl(204, 86%, 53%)",        // bulma cyan color // プログレスバーの CSS カラー
+    failedColor: "hsl(348, 100%, 61%)", // bulma red color  // ルートをレンダリング中にエラーが発生した場合のプログレスバーの CSS カラー。（例えば data または fetch がエラーを返したとき）
   }
 }
 
