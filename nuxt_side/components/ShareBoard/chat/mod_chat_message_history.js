@@ -116,7 +116,7 @@ export const mod_chat_message_history = {
     // http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
     mh_read() {
       this.tl_add("MH", "mh_read")
-      this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params()}).then(e => {
+      this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params(), progress: true}).then(e => {
         this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
         this.ml_merge(e.chat_messages)
         this.$nextTick(() => this.mh_next_process())

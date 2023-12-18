@@ -60,10 +60,9 @@ module SharedMethods
     Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = 0))
   end
 
-  # 下スクロールさせて上に行く(読み込みが終わるだろう時間まで少し待つ)
+  # 下スクロールさせて上に行く
   def chat_scroll_to_top_with_wait
     chat_scroll_to_top
-    sleep 0.5
   end
 
   # 上スクロールさせて下に行く(最新を見る)
