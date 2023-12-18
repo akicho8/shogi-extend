@@ -57,7 +57,7 @@ module SharedMethods
 
   # 下スクロールさせて上に行く(過去を見る)
   def chat_scroll_to_top
-    Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = 0))
+    Capybara.execute_script(%(document.querySelector(".SbMessageBox").scrollTop = 0))
   end
 
   # 下スクロールさせて上に行く
@@ -67,13 +67,13 @@ module SharedMethods
 
   # 上スクロールさせて下に行く(最新を見る)
   def chat_scroll_to_bottom
-    Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = document.querySelector(".SbMessageList").scrollHeight))
+    Capybara.execute_script(%(document.querySelector(".SbMessageBox").scrollTop = document.querySelector(".SbMessageBox").scrollHeight))
   end
 
   # どこまでスクロールしているかを返す
   def chat_scroll_ratio
-    scrollTop = Capybara.execute_script(%(return document.querySelector(".SbMessageList").scrollTop))
-    scrollHeight = Capybara.execute_script(%(return document.querySelector(".SbMessageList").scrollHeight))
+    scrollTop = Capybara.execute_script(%(return document.querySelector(".SbMessageBox").scrollTop))
+    scrollHeight = Capybara.execute_script(%(return document.querySelector(".SbMessageBox").scrollHeight))
     scrollTop.fdiv(scrollHeight).round(1)
   end
 

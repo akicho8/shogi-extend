@@ -16,7 +16,7 @@ export const mod_chat_ai = {
       // 確認のため
       if (!this.$route.query.__system_test_now__ || true) {
         if (this.debug_mode_p) {
-          this.local_bot_say(params.content)
+          this.ml_bot_puts(params.content)
         }
       }
     },

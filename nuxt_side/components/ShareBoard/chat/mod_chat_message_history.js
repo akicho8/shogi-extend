@@ -18,8 +18,8 @@
 // | mh_visible_changed()  | 表示状態が変化したときに呼ばれる                             |
 // | mh_stop()             | 監視者を殺す                                                 |
 // | mh_safe_stop()        | 監視者がいれば殺す                                           |
-// | mh_root_el_fetch()    | .SbMessageList の要素を必ず取得する                          |
-// | mh_root_el()          | SbMessageList                                                |
+// | mh_root_el_fetch()    | .SbMessageBox の要素を必ず取得する                          |
+// | mh_root_el()          | SbMessageBox                                                |
 // | mh_page_index_next()  | axios で取得するページ(ブロック)番号を作る                   |
 // | mh_seek_pos           | 読み込み位置(初回はnull)                                     |
 // | mh_has_next_p         | 次があるか？                                                 |
@@ -118,7 +118,7 @@ export const mod_chat_message_history = {
       this.tl_add("MH", "mh_read")
       this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params(), progress: true}).then(e => {
         this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
-        this.ml_merge(e.chat_messages)
+        this.ml_concat(e.chat_messages)
         this.$nextTick(() => this.mh_next_process())
       })
     },
@@ -175,8 +175,8 @@ export const mod_chat_message_history = {
       if (this.mh_has_next_p) {
         if (this.$mh_observer) {
           this.$nextTick(() => {    // 確実に最上位が見えなくなるまで待つため (一応なくても動く)
-            this.mh_root_el_fetch() // .SbMessageList が参照できることを確証する
-            const el = document.querySelector(".SbMessageList .SbAvatarLine:first-child")
+            this.mh_root_el_fetch() // .SbMessageBox が参照できることを確証する
+            const el = document.querySelector(".SbMessageBox .SbAvatarLine:first-child")
             if (el) {
               this.$mh_observer.observe(el)
             } else {
@@ -252,19 +252,19 @@ export const mod_chat_message_history = {
       }
     },
 
-    // .SbMessageList の要素を必ず取得する
+    // .SbMessageBox の要素を必ず取得する
     mh_root_el_fetch() {
       const el = this.mh_root_el()
-      Gs.assert(Gs.present_p(el), "チャットモーダルが開いていない状態で .SbMessageList を参照しようとしいる")
+      Gs.assert(Gs.present_p(el), "チャットモーダルが開いていない状態で .SbMessageBox を参照しようとしいる")
       return el
     },
 
-    // .SbMessageList が存在するか？
+    // .SbMessageBox が存在するか？
     // ここは this.chat_modal_instance の有無で調べてもよかったが、
-    // 本当に必要なのはチャットモーダルオブジェクトではなく .SbMessageList 要素が存在するかどうかなので
+    // 本当に必要なのはチャットモーダルオブジェクトではなく .SbMessageBox 要素が存在するかどうかなので
     // より直接的な方法にした
     mh_root_el() {
-      return document.querySelector(".SbMessageList")
+      return document.querySelector(".SbMessageBox")
     },
 
     // axios で取得するページ(ブロック)番号を作る
