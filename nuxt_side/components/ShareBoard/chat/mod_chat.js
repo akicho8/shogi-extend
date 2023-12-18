@@ -87,9 +87,9 @@ export const mod_chat = {
     // 受信
     message_share_broadcasted(params) {
       const message_record = MessageRecord.create(params)
-      this.ml_add_xmessage(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
+      this.ml_push_record(message_record)                  // 後で表示するためスコープに関係なく発言履歴に追加する
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
-        this.$sound.play("patxu")                        // 「パッ」
+        this.$sound.play("patxu")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
         this.talk2(message_record.content)                  // しゃべる
       }

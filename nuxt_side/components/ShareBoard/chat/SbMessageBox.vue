@@ -1,6 +1,6 @@
 <template lang="pug">
-.SbMessageList.is_scroll_y
-  template(v-for="e in TheSb.message_list")
+.SbMessageBox.is_scroll_y
+  template(v-for="e in TheSb.message_records")
     SbAvatarLine(:info="e" :key="e.unique_key")
       .flex_item.is-size-7(v-if="development_p") [{{e.unique_key}}]
       XemojiWrap.flex_item.message_body(:class="e.message_class" :str="TheSb.ml_show(e)")
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "SbMessageList",
+  name: "SbMessageBox",
   inject: ["TheSb"],
 }
 </script>
@@ -16,7 +16,7 @@ export default {
 <style lang="sass">
 @import "../support.sass"
 
-.SbMessageList
+.SbMessageBox
   @extend %overlay
   padding: 0
   .SbAvatarLine
@@ -36,7 +36,7 @@ export default {
       color: $grey
 
 .SbApp.debug_mode_p
-  .SbMessageList
+  .SbMessageBox
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .SbAvatarLine
       &.visible_false

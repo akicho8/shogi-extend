@@ -12,7 +12,7 @@ export const mod_console = {
 
     console_command_run(params) {
       if (params.content.startsWith("/")) {
-        this.local_say(params.content)
+        this.ml_puts(params.content)
         let str = params.content
         str = str.replace(/^./, "")
         str = str.trim()
@@ -20,7 +20,7 @@ export const mod_console = {
         const command = args.shift()
         const info = CommandInfo.lookup(command)
         if (info == null) {
-          this.local_bot_say("command not found")
+          this.ml_bot_puts("command not found")
         } else {
           let value = null
           try {
@@ -31,7 +31,7 @@ export const mod_console = {
           }
           if (value != null) {
             value = this.__console_result_valus_as_string(info, value)
-            this.local_bot_say(value)
+            this.ml_bot_puts(value)
           }
         }
         return "break"
