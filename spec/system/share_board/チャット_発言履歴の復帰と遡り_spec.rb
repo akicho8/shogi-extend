@@ -42,11 +42,14 @@ RSpec.describe "チャット_LINE風履歴", type: :system, share_board_spec: tr
   it "遡って昔の発言を参照する" do
     chat_message_setup(100)                                               # 100件用意する
     visit_app(room_key: :test_room, user_name: "alice", mh_per_page: 40)  # 1回で40件読む (つまり3回のアクセスが必要)
-    chat_modal_open                                                       # チャットを開いたタイミングで40件読む
-    chat_scroll_to_top_with_wait                                          # 最上位までスクロールしたので残りのうち40件を読んで80件になる
-    chat_scroll_to_top_with_wait                                          # 再度最上位までスクロールしたので残りのうち20件を読んで100件になる
-    assert_message_received_o("(content:0)")                              # するといちばん古い発言が見えている
-    assert_mh_page_index_in_modal(3)                                      # APIには3回アクセスしている
+    chat_modal_open do                                                    # チャットを開いたタイミングで40件読む
+      assert_mh_page_index_in_modal(1)                                    # APIアクセス1回目
+      chat_scroll_to_top_with_wait                                        # 最上位までスクロールしたので残りのうち40件を読んで80件になる
+      assert_mh_page_index_in_modal(2)                                    # APIアクセス2回目
+      chat_scroll_to_top_with_wait                                        # 再度最上位までスクロールしたので残りのうち20件を読んで100件になる
+      assert_mh_page_index_in_modal(3)                                    # APIアクセス3回目
+      assert_message_received_o("(content:0)")                            # するといちばん古い発言が見えている
+    end
   end
 
   it "入室と退室のタイミングで履歴を消す" do
