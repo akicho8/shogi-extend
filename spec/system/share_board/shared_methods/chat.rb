@@ -71,6 +71,13 @@ module SharedMethods
     Capybara.execute_script(%(document.querySelector(".SbMessageList").scrollTop = document.querySelector(".SbMessageList").scrollHeight))
   end
 
+  # どこまでスクロールしているかを返す
+  def chat_scroll_ratio
+    scrollTop = Capybara.execute_script(%(return document.querySelector(".SbMessageList").scrollTop))
+    scrollHeight = Capybara.execute_script(%(return document.querySelector(".SbMessageList").scrollHeight))
+    scrollTop.fdiv(scrollHeight).round(1)
+  end
+
   # 発言を count 件用意する
   def chat_message_setup(count)
     eval_code %(ShareBoard::Room.fetch("test_room").setup_for_test(count: #{count}, force: true))

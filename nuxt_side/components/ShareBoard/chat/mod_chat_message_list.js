@@ -37,7 +37,7 @@ export const mod_chat_message_list = {
       if (this.mh_rows_size_max >= 0) {
         this.message_list = _.takeRight(this.message_list, this.mh_rows_size_max)
       }
-      this.ml_scroll_to_bottom()
+      this.$nextTick(() => this.ml_scroll_to_bottom())
     },
 
     // デバッグ用
@@ -61,10 +61,7 @@ export const mod_chat_message_list = {
 
     // 一番下までスクロール
     ml_scroll_to_bottom() {
-      const elem = document.querySelector(".SbMessageList")
-      if (elem) {
-        this.scroll_to_bottom(elem)
-      }
+      this.scroll_to_bottom(document.querySelector(".SbMessageList"))
     },
 
     ml_clear() {

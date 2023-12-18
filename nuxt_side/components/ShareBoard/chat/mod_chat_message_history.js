@@ -9,7 +9,7 @@
 // | mh_setup()            | チャットを開いた瞬間に毎回実行してほしい内容                 |
 // | mh_read()             | 新しいメッセージを読み込む                                   |
 // | mh_api_params()       | APIに渡すパラメータ                                          |
-// | mh_next_process()     | 読み込んだあとで毎回行う処理                                 |
+// | mh_next_process()     | 読み込んだ1フレーム後に毎回行う処理                          |
 // | mh_viewpoint_adjust() | (1) スクロール位置を元に戻す                                 |
 // | mh_start_or_stop()    | (2) 終わりでなければ監視者を用意する。終わりなら監視者を殺す |
 // | mh_head_observe()     | (3) 終わりでなければ次のフレームで最上位を監視する           |
@@ -66,6 +66,7 @@ export const mod_chat_message_history = {
     // 初期化
     // コンテンツは残す
     mh_reset() {
+      this.tl_add("MH", "mh_reset")
       this.mh_safe_stop()
 
       this.mh_page_index    = 0    // 次にリクエストするページ番号
@@ -75,6 +76,7 @@ export const mod_chat_message_history = {
 
     // すべてを初期状態にする
     mh_reset_all() {
+      this.tl_add("MH", "mh_reset_all")
       this.mh_reset()
       this.ml_clear()
     },
@@ -84,6 +86,7 @@ export const mod_chat_message_history = {
     // 当初は、すでに入っている発言たちは残しておいた方がよいかとケチ臭いことを思っていたが
     // よそ見した時点で、不整合状態になる恐れがあり、そうすると会話が噛み合わなくなるので全部初期化した方がよい
     mh_reload() {
+      this.tl_add("MH", "mh_reload")
       if (this.ac_room) {
         this.app_log({emoji: ":チャット履歴:", subject: "よそ見からの復帰", body: `復帰前履歴行数${this.ml_count}件`})
         this.mh_reset_all()       // よそ見した時点で不整合が起きている可能性があるので全リセット
@@ -97,6 +100,7 @@ export const mod_chat_message_history = {
 
     // チャットを開いた瞬間に毎回実行してほしい内容
     mh_setup() {
+      this.tl_add("MH", "mh_setup")
       if (this.mh_enable) {
         if (this.ac_room) {
           if (this.mh_page_index === 0) {
@@ -111,7 +115,7 @@ export const mod_chat_message_history = {
     // 新しいメッセージを読み込む
     // http://localhost:3000/api/share_board/chat_message_loader?room_key=dev_room&limit=2
     mh_read() {
-      this.debug_alert("mh_read")
+      this.tl_add("MH", "mh_read")
       this.$axios.$get("/api/share_board/chat_message_loader", {params: this.mh_api_params()}).then(e => {
         this.mh_latest_info = e                   // 最後に取得した内容を保持しておく
         this.ml_merge(e.chat_messages)
@@ -121,7 +125,6 @@ export const mod_chat_message_history = {
 
     // APIに渡すパラメータ
     mh_api_params() {
-      this.debug_alert("mh_api_params")
       Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
       Gs.assert(Gs.present_p(this.user_name), "Gs.present_p(this.user_name)")
       Gs.assert(this.ac_room != null, "部屋を作成しない状態で部屋の発言履歴を取得しようとしている")
@@ -137,24 +140,28 @@ export const mod_chat_message_history = {
       }
     },
 
-    // 読み込んだあとで毎回行う処理
+    // 読み込んだ1フレーム後に毎回行う処理
     mh_next_process() {
+      this.tl_add("MH", "mh_next_process")
       this.mh_viewpoint_adjust()    // スクロール位置を元に戻す
       this.mh_start_or_stop()       // 終わりでなければ監視者を用意する。終わりなら監視者を殺す。
-      this.mh_head_observe()        // 終わりでなければ次のフレームで最上位を監視する
+      this.mh_head_observe()        // 終わりでなければ次のフレームで最上位を監視する (スクロール位置を元に戻したあとで)
     },
 
     // (1) スクロール位置を元に戻す
     mh_viewpoint_adjust() {
-      if (this.mh_latest_info.data_exist_p) {
+      if (this.mh_data_exist_p) {
         if (this.mh_scroll_height) {
           this.mh_root_el_fetch().scrollTop = this.mh_root_el_fetch().scrollHeight - this.mh_scroll_height + PADDING
+        } else {
+          this.ml_scroll_to_bottom() // 初回は一番下までスクロールする (これがないと2連続で読み込んでしまう)
         }
       }
     },
 
     // (2) 終わりでなければ監視者を用意する。終わりなら監視者を殺す
     mh_start_or_stop() {
+      this.tl_add("MH", "mh_start_or_stop")
       if (this.mh_has_next_p) {
         this.mh_safe_start()
       } else {
@@ -164,16 +171,16 @@ export const mod_chat_message_history = {
 
     // (3) 終わりでなければ次のフレームで最上位を監視する
     mh_head_observe() {
-      this.debug_alert("mh_head_observe")
+      this.tl_add("MH", "mh_head_observe")
       if (this.mh_has_next_p) {
         if (this.$mh_observer) {
-          this.$nextTick(() => {
+          this.$nextTick(() => {    // 確実に最上位が見えなくなるまで待つため (一応なくても動く)
             this.mh_root_el_fetch() // .SbMessageList が参照できることを確証する
             const el = document.querySelector(".SbMessageList .SbAvatarLine:first-child")
             if (el) {
               this.$mh_observer.observe(el)
             } else {
-              this.debug_alert("チャットメッセージの最上位の要素が存在しません")
+              this.tl_add("MH", "チャットメッセージの最上位の要素が存在しません")
             }
           })
         }
@@ -182,6 +189,7 @@ export const mod_chat_message_history = {
 
     // 監視者がいなければ生成する
     mh_safe_start() {
+      this.tl_add("MH", "mh_safe_start")
       if (!this.$mh_observer) {
         this.mh_start()
       }
@@ -189,7 +197,7 @@ export const mod_chat_message_history = {
 
     // 監視者を生成する
     mh_start() {
-      this.debug_alert("mh_start")
+      this.tl_add("MH", "mh_start")
 
       Gs.assert(this.$mh_observer == null, "this.$mh_observer == null")
       const options = {
@@ -209,6 +217,7 @@ export const mod_chat_message_history = {
     },
     // 表示状態が変化したときに呼ばれる
     mh_visible_changed(observer, e) {
+      this.tl_add("MH", "mh_visible_changed")
       this.clog(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
 
       // 状態に対応するクラスを付与する
@@ -230,15 +239,14 @@ export const mod_chat_message_history = {
 
     // 監視者を殺す
     mh_stop() {
-      this.debug_alert("mh_stop")
       Gs.assert(this.$mh_observer != null, "this.$mh_observer != null") // Gs.present_p(this.$mh_observer) は false になるので注意
       this.$mh_observer.disconnect()
       this.$mh_observer = null
+      this.tl_add("MH", "this.$mh_observer.disconnect()")
     },
 
     // 監視者がいれば殺す
     mh_safe_stop() {
-      this.debug_alert("mh_safe_stop")
       if (this.$mh_observer) {
         this.mh_stop()
       }
@@ -268,8 +276,9 @@ export const mod_chat_message_history = {
     },
   },
   computed: {
-    mh_seek_pos()   { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
-    mh_has_next_p() { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
-    mh_enable()     { return this.mh_per_page >= 0                                       }, // この機能が有効か？
+    mh_seek_pos()     { return this.mh_latest_info && this.mh_latest_info["next_seek_pos"] }, // 読み込み位置(初回はnull)
+    mh_has_next_p()   { return this.mh_latest_info && this.mh_latest_info["has_next_p"]    }, // 次があるか？
+    mh_data_exist_p() { return this.mh_latest_info && this.mh_latest_info["data_exist_p"]  }, // 今があるか？
+    mh_enable()       { return this.mh_per_page >= 0                                       }, // この機能が有効か？
   },
 }

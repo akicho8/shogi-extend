@@ -61,14 +61,11 @@ export const mod_track_log = {
       } else {
         this.track_logs.push(params)
         this.track_logs = _.takeRight(this.track_logs, TRACK_LOG_MAX)
-        this.tl_scroll_to_bottom()
+        this.$nextTick(() => this.tl_scroll_to_bottom())
       }
     },
     tl_scroll_to_bottom() {
-      const elem = document.querySelector(".TrackLogModal .modal-card-body")
-      if (elem) {
-        this.scroll_to_bottom(elem)
-      }
+      this.scroll_to_bottom(document.querySelector(".TrackLogModal .modal-card-body"))
     },
   },
 }

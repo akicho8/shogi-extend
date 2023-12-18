@@ -233,21 +233,12 @@ export const vue_support = {
     },
 
     // 一番下までスクロール
+    // ここで $nextTick を指定するな
     scroll_to_bottom(elem) {
       if (elem) {
-        this.$nextTick(() => {
-          elem.scrollTop = elem.scrollHeight
-        })
+        elem.scrollTop = elem.scrollHeight
       }
     },
-
-    // scroll_to_bottom2(elem) {
-    //   if (this.$refs[elem]) {
-    //     this.$nextTick(() => {
-    //       this.$refs[elem].scrollTop = this.$refs[elem].scrollHeight
-    //     })
-    //   }
-    // },
 
     ////////////////////////////////////////////////////////////////////////////////
 
