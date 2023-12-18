@@ -18,11 +18,10 @@
 // | mh_visible_changed()  | 表示状態が変化したときに呼ばれる                             |
 // | mh_stop()             | 監視者を殺す                                                 |
 // | mh_safe_stop()        | 監視者がいれば殺す                                           |
-// | mh_root_el_fetch()    | .SbMessageBox の要素を必ず取得する                          |
-// | mh_root_el()          | SbMessageBox                                                |
 // | mh_page_index_next()  | axios で取得するページ(ブロック)番号を作る                   |
 // | mh_seek_pos           | 読み込み位置(初回はnull)                                     |
-// | mh_has_next_p         | 次があるか？                                                 |
+// | mh_has_next_p         | 次のデータがあるか？                                         |
+// | mh_data_exist_p       | 今のデータがあるか？                                         |
 // |-----------------------+--------------------------------------------------------------|
 
 import { Gs } from "@/components/models/gs.js"
@@ -44,10 +43,10 @@ export const mod_chat_message_history = {
     // this.mh_start()
     //
     // // 一番下にスクロールしておく
-    // this.mh_root_el_fetch().scrollTop = this.mh_root_el_fetch().scrollHeight
+    // this.ml_root_el_fetch().scrollTop = this.ml_root_el_fetch().scrollHeight
     //
     // // スクロール操作の自動化
-    // setInterval(() => this.mh_root_el_fetch().scrollTop -= 1, 1000 * 0.01)
+    // setInterval(() => this.ml_root_el_fetch().scrollTop -= 1, 1000 * 0.01)
   },
   beforeDestroy() {
     this.mh_safe_stop()
@@ -90,7 +89,7 @@ export const mod_chat_message_history = {
       if (this.ac_room) {
         this.app_log({emoji: ":チャット履歴:", subject: "よそ見からの復帰", body: `復帰前履歴行数${this.ml_count}件`})
         this.mh_reset_all()       // よそ見した時点で不整合が起きている可能性があるので全リセット
-        if (this.mh_root_el()) {  // すでにチャットモーダルを開いてメッセージが見える状態であれば
+        if (this.ml_root_el()) {  // すでにチャットモーダルを開いてメッセージが見える状態であれば
           this.mh_setup()         // チャットを開いたときに実行する内容を実行する
         } else {
           // チャットモーダルを開いていない
@@ -151,10 +150,12 @@ export const mod_chat_message_history = {
     // (1) スクロール位置を元に戻す
     mh_viewpoint_adjust() {
       if (this.mh_data_exist_p) {
-        if (this.mh_scroll_height) {
-          this.mh_root_el_fetch().scrollTop = this.mh_root_el_fetch().scrollHeight - this.mh_scroll_height + PADDING
+        if (this.mh_scroll_height == null) {
+          // 初回: 0.9 あたりに位置する (これがないと2連続で読み込んでしまう)
+          this.ml_scroll_to_bottom()
         } else {
-          this.ml_scroll_to_bottom() // 初回は一番下までスクロールする (これがないと2連続で読み込んでしまう)
+          // 次回: 0.5 あたりに位置する
+          this.ml_root_el_fetch().scrollTop = this.ml_root_el_fetch().scrollHeight - this.mh_scroll_height + PADDING
         }
       }
     },
@@ -175,7 +176,7 @@ export const mod_chat_message_history = {
       if (this.mh_has_next_p) {
         if (this.$mh_observer) {
           this.$nextTick(() => {    // 確実に最上位が見えなくなるまで待つため (一応なくても動く)
-            this.mh_root_el_fetch() // .SbMessageBox が参照できることを確証する
+            this.ml_root_el_fetch() // .SbMessageBox が参照できることを確証する
             const el = document.querySelector(".SbMessageBox .SbAvatarLine:first-child")
             if (el) {
               this.$mh_observer.observe(el)
@@ -201,7 +202,7 @@ export const mod_chat_message_history = {
 
       Gs.assert(this.$mh_observer == null, "this.$mh_observer == null")
       const options = {
-        root: this.mh_root_el_fetch(),  // なくても動作に影響なかったが指定しておいたほうが良さそう
+        root: this.ml_root_el_fetch(),  // なくても動作に影響なかったが指定しておいたほうが良さそう
         rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
         threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
       }
@@ -230,8 +231,8 @@ export const mod_chat_message_history = {
         observer.unobserve(e.target)
 
         // 差し込む前の領域の高さを保持しておく
-        this.clog(this.mh_root_el_fetch())
-        this.mh_scroll_height = this.mh_root_el_fetch().scrollHeight
+        this.clog(this.ml_root_el_fetch())
+        this.mh_scroll_height = this.ml_root_el_fetch().scrollHeight
 
         this.mh_read()
       }
@@ -250,21 +251,6 @@ export const mod_chat_message_history = {
       if (this.$mh_observer) {
         this.mh_stop()
       }
-    },
-
-    // .SbMessageBox の要素を必ず取得する
-    mh_root_el_fetch() {
-      const el = this.mh_root_el()
-      Gs.assert(Gs.present_p(el), "チャットモーダルが開いていない状態で .SbMessageBox を参照しようとしいる")
-      return el
-    },
-
-    // .SbMessageBox が存在するか？
-    // ここは this.chat_modal_instance の有無で調べてもよかったが、
-    // 本当に必要なのはチャットモーダルオブジェクトではなく .SbMessageBox 要素が存在するかどうかなので
-    // より直接的な方法にした
-    mh_root_el() {
-      return document.querySelector(".SbMessageBox")
     },
 
     // axios で取得するページ(ブロック)番号を作る

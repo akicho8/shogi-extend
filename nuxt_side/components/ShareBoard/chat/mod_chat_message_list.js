@@ -3,8 +3,9 @@
 import _ from "lodash"
 import dayjs from "dayjs"
 import { MessageRecord } from "./message_record.js"
+import { Gs } from "@/components/models/gs.js"
 
-export const mod_chat_message_records = {
+export const mod_chat_message_list = {
   data() {
     return {
       message_records: [],
@@ -53,7 +54,19 @@ export const mod_chat_message_records = {
 
     // 一番下までスクロール
     ml_scroll_to_bottom() {
-      this.scroll_to_bottom(document.querySelector(".SbMessageBox"))
+      this.scroll_to_bottom(this.ml_root_el())
+    },
+
+    // .SbMessageBox の要素を取得する (存在確認にも使う)
+    ml_root_el() {
+      return document.querySelector(".SbMessageBox")
+    },
+
+    // .SbMessageBox の要素を取得する (かならずある)
+    ml_root_el_fetch() {
+      const el = this.ml_root_el()
+      Gs.assert(el, "チャットモーダルが開いていない状態で .SbMessageBox を参照しようとしいる")
+      return el
     },
 
     // 表示してもよいか？
