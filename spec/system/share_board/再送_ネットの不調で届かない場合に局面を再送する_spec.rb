@@ -15,49 +15,49 @@ RSpec.describe type: :system, share_board_spec: true do
   end
 
   it "同期成功" do
+    @RS_RESEND_DELAY  = 1 # 1秒後に応答確認
     @RS_SUCCESS_DELAY = 0 # 最速で応答する
-    @RS_RESEND_DELAY        = 1 # 1秒後に応答確認
     case1
     a_block do
-      sync_failed_modal_closed    # 同期OKになっているので「同期失敗」ダイアログは出ない
+      assert_rs_modal_closed    # 同期OKになっているので「同期失敗」ダイアログは出ない
     end
   end
 
   it "再送モーダル表示" do
+    @RS_RESEND_DELAY  = 0  # しかも0秒後に応答確認
     @RS_SUCCESS_DELAY = -1 # 応答しない
-    @RS_RESEND_DELAY        = 0  # しかも0秒後に応答確認
     case1
     a_block do
-      sync_failed_count(1)
+      assert_rs_faild_count(1)
       assert_text("次の手番のbobさんの通信状況が悪いため再送してください")
 
       find(:button, text: "再送する", exact_text: true).click
       assert_action_text("再送1")
       assert_text("再送1")
-      sync_failed_count(2)
+      assert_rs_faild_count(2)
 
       find(:button, text: "再送する", exact_text: true).click
       assert_action_text("再送2")
-      sync_failed_count(3)
+      assert_rs_faild_count(3)
     end
   end
 
   it "再送モーダル表示キャンセル" do
-    @RS_RESEND_DELAY        = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
+    @RS_RESEND_DELAY  = 0 # 0秒後に返信をチェックするのですぐにダイアログ表示
     @RS_SUCCESS_DELAY = 3 # しかし3秒後に成功したのでダイアログを消される
     case1
     a_block do
-      sync_failed_count(1)
+      assert_rs_faild_count(1)
       sleep(@RS_SUCCESS_DELAY) # ダイアログを消される
-      sync_failed_modal_closed
+      assert_rs_modal_closed
     end
   end
 
-  def sync_failed_count(n)
+  def assert_rs_faild_count(n)
     assert_selector(".modal-card-title", text: "同期失敗 #{n}回目", exact_text: true, wait: 30)
   end
 
-  def sync_failed_modal_closed
+  def assert_rs_modal_closed
     assert_no_selector(".modal-card-title")
   end
 end

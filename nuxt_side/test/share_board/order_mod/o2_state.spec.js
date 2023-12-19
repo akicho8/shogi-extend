@@ -26,6 +26,11 @@ describe("O2State", () => {
     expect(f(10)).toEqual("b")
     expect(f(11)).toEqual("a")
   })
+  test("user_name_reject", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    object.user_name_reject("c")
+    expect(object.simple_teams).toEqual([["a"], ["b"]])
+  })
   test("simple_teams", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     expect(object.simple_teams).toEqual([["a", "c"], ["b"]])

@@ -7,6 +7,11 @@ describe("O1State", () => {
     object.swap_run()
     expect(object.black_start_order_uniq_users.map(e => e.to_s)).toEqual(["b", "a", "c"])
   })
+  test("user_name_reject", () => {
+    const object = new O1State(["a", "b", "c"].map(e => Item.create(e)))
+    object.user_name_reject("b")
+    expect(object.black_start_order_uniq_users.map(e => e.to_s)).toEqual(["a", "c"])
+  })
   test("turn_to_item", () => {
     const f = turn => {
       const object = new O1State(["a", "b", "c"].map(e => Item.create(e)))

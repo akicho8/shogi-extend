@@ -196,7 +196,7 @@ export default {
         this.toast_ok(`変更はありません`)
         return
       }
-      this.TheSb.new_order_share("反映")
+      this.TheSb.new_order_share("順番設定を反映しました")
       this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.TheSb.cc_next_message())
     },
 

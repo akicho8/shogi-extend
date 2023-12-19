@@ -10,11 +10,11 @@
         span.mx-1.ml_count {{TheSb.ml_count}}
         span.mx-1.mh_page_index {{TheSb.mh_page_index}}
     template(v-if="development_p")
-      b-button.mh_reload(       type="is-small" @click="TheSb.mh_reload"       ) よそ見から復帰
-      b-button.mh_reset_all(    type="is-small" @click="TheSb.mh_reset_all"    ) 初期化
-      b-button.mh_read(         type="is-small" @click="TheSb.mh_read"         ) 読込
-      b-button.mh_head_observe( type="is-small" @click="TheSb.mh_head_observe" ) 監視
-      b-button.ml_test(         type="is-small" @click="TheSb.ml_test"         ) 追加
+      b-button.mh_reload(       size="is-small" @click="TheSb.mh_reload"       ) よそ見から復帰
+      b-button.mh_reset_all(    size="is-small" @click="TheSb.mh_reset_all"    ) 初期化
+      b-button.mh_read(         size="is-small" @click="TheSb.mh_read"         ) 読込
+      b-button.mh_head_observe( size="is-small" @click="TheSb.mh_head_observe" ) 監視
+      b-button.ml_test(         size="is-small" @click="TheSb.ml_test"         ) 追加
     b-field(v-if="TheSb.message_scope_dropdown_show_p")
       b-dropdown(animation="" position="is-bottom-left" v-model="TheSb.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
         template(#trigger)

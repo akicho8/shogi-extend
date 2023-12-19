@@ -23,6 +23,10 @@
       | {{$gs.pretty_inspect(member_info)}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    template(v-if="TheSb.debug_mode_p")
+      template(v-if="TheSb.order_lookup_from_name(member_info.from_user_name)")
+        b-button.reject_handle(@click="reject_handle" type="is-warning") 順番除外
+      b-button.kick_handle(@click="kick_handle" type="is-danger") KICK
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
 </template>
 
@@ -44,6 +48,12 @@ export default {
     },
     ping_handle() {
       this.TheSb.member_info_ping_handle(this.member_info)
+    },
+    reject_handle() {
+      this.TheSb.os_member_delete(this.member_info.from_user_name)
+    },
+    kick_handle() {
+      this.TheSb.user_kick(this.member_info.from_user_name)
     },
     seconds_ago(v) {
       const seconds = Math.ceil((this.$time.current_ms() - v) / 1000)

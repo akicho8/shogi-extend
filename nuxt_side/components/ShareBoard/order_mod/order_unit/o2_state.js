@@ -37,6 +37,12 @@ export class O2State extends OxState {
     this.cache_clear()
   }
 
+  // 指定のユーザーを除外する
+  user_name_reject(user_name) {
+    this.teams = this.teams.map(e => _.reject(e, e => e.user_name === user_name))
+    this.cache_clear()
+  }
+
   // demo_set() {
   //   this.users_allocate(["a", "b", "c", "d", "e"])
   // }
