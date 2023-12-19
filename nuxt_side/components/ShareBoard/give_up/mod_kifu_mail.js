@@ -42,7 +42,7 @@ export const mod_kifu_mail = {
           kento_url:       this.current_kifu_vo.kento_url,
         }
       }
-      this.$axios.$post("/api/share_board/kifu_mail.json", params, {progress: false}).then(e => {
+      this.$axios.$post("/api/share_board/kifu_mail.json", params, {progress: true}).then(e => {
         if (!options.silent) {
           this.toast_ok(e.message)
         }
