@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
+import SbResendModal from "./SbResendModal.vue"
 
 const RS_RESEND_FUNCTION  = true // この機能を有効にするか？
 const RS_SEQ_IDS_SIZE     = 5    // rs_seq_id は直近N件保持しておく
@@ -14,14 +15,14 @@ export const mod_resend = {
       rs_seq_id: 0,             // sfen_share する度(正確にはsfen_share_params_setする度)にインクリメントしていく(乱数でもいい？)
       rs_seq_ids: [],           // それを最大 RS_SEQ_IDS_SIZE 件保持しておく
       rs_send_success_p: false, // 直近のSFENの同期が成功したか？
-      rs_resend_delay_id: null,  // 送信してから RS_RESEND_DELAY 秒後に動かすための setTimeout の戻値
-      rs_failed_total: 0, // SFEN送信に失敗した総回数(不具合解析用)
+      rs_resend_delay_id: null, // 送信してから RS_RESEND_DELAY 秒後に動かすための setTimeout の戻値
+      rs_failed_total: 0,       // SFEN送信に失敗した総回数(不具合解析用)
       rs_failed_count: 0,       // 直近の指し手のSFEN送信に失敗して回数(表示用)
-      rs_modal: null,  // $buefy.dialog.confirm のインスタンス
+      rs_modal: null,           // モーダルインスタンス
     }
   },
   beforeDestroy() {
-    this.retry_delay_cancel()
+    this.re_resend_delay_cancel()
     this.rs_modal_close()
   },
   methods: {
@@ -37,7 +38,7 @@ export const mod_resend = {
       if (this.RS_RESEND_FUNCTION) {
         if (this.order_enable_p && this.order_unit.valid_p) {
           if (this.RS_RESEND_DELAY >= 0) {
-            this.retry_delay_cancel()
+            this.re_resend_delay_cancel()
             this.rs_resend_delay_id = Gs.delay_block(this.rs_retry_check_delay, () => {
               if (this.rs_send_success_p) {
                 // 相手から応答があった
@@ -51,7 +52,7 @@ export const mod_resend = {
         }
       }
     },
-    retry_delay_cancel() {
+    re_resend_delay_cancel() {
       if (this.rs_resend_delay_id) {
         Gs.delay_stop(this.rs_resend_delay_id)
         this.rs_resend_delay_id = null
@@ -64,29 +65,37 @@ export const mod_resend = {
       this.rs_failed_count += 1
       this.rs_failed_notify()
 
-      const next_user_name = this.turn_to_user_name(this.sfen_share_params.turn)
-      const message = `
-        次の手番の${this.user_call_name(next_user_name)}の通信状況が悪いため再送してください
-        <ul class="has-text-grey is-size-7 mx-1 mt-2">
-          <li>再送しないと対局を続けられません</li>
-          <li>${this.rs_retry_check_delay}秒後に再度確認します</li>
-        </ul>
-      `
-      this.rs_modal_close()
-      this.rs_modal = this.dialog_confirm({
-        title: `同期失敗 ${this.rs_failed_count}回目`,
-        message: message,
-        cancelText: "諦める",
-        confirmText: "再送する",
-        hasIcon: true,
-        type: "is-warning",
-        focusOn: "confirm",
+      // const next_user_name = this.turn_to_user_name(this.sfen_share_params.turn)
+      // const message = `
+      // 次の手番の${this.user_call_name(next_user_name)}の通信状況が悪いため再送してください
+      // <ul class="has-text-grey is-size-7 mx-1 mt-2">
+      //   <li>再送しないと対局を続けられません</li>
+      //   <li>${this.rs_retry_check_delay}秒後に再度確認します</li>
+      // </ul>
+      // `
+      // this.rs_modal_close()
+      // this.rs_modal = this.dialog_confirm({
+      //   title: `同期失敗 ${this.rs_failed_count}回目`,
+      //   message: message,
+      //   cancelText: "諦める",
+      //   confirmText: "再送する",
+      //   hasIcon: true,
+      //   type: "is-warning",
+      //   focusOn: "confirm",
+      //   onCancel: () => {
+      //     this.$sound.play_click()
+      //   },
+      //   onConfirm: () => {
+      //     this.$sound.play_click()
+      //     this.sfen_share()
+      //   },
+      // })
+
+      this.rs_modal = this.modal_card_open({
+        component: SbResendModal,
+        props: { },
+        canCancel: [],
         onCancel: () => {
-          this.$sound.play_click()
-        },
-        onConfirm: () => {
-          this.$sound.play_click()
-          this.sfen_share()
         },
       })
     },
@@ -148,7 +157,6 @@ export const mod_resend = {
         }
       }
     },
-
   },
 
   computed: {
@@ -162,6 +170,15 @@ export const mod_resend = {
         v = RS_RESEND_DELAY_MAX
       }
       return v
+    },
+
+    rs_next_user_name() {
+      if (this.sfen_share_params) {
+        const name = this.turn_to_user_name(this.sfen_share_params.turn)
+        if (name) {
+          return this.user_call_name(name)
+        }
+      }
     },
   },
 }
