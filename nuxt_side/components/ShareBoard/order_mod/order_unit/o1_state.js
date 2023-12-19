@@ -30,6 +30,12 @@ export class O1State extends OxState {
     this.cache_clear()
   }
 
+  // 指定のユーザーを除外する
+  user_name_reject(user_name) {
+    this.users = _.reject(this.users, e => e.user_name === user_name)
+    this.cache_clear()
+  }
+
   users_allocate(users) {
     this.users = users
     this.cache_clear()

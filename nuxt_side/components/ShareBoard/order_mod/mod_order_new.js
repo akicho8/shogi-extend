@@ -173,10 +173,20 @@ export const mod_order_new = {
         }
       }
 
-      if (params.message) {
-        this.toast_ok(`${this.user_call_name(params.from_user_name)}が順番設定を${params.message}しました`)
-      }
+      // 再送モーダルが出ている人はどうしてよいか迷っているため自動で閉じる
+      this.rs_modal_close()
 
+      if (params.message) {
+        this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
+      }
+    },
+
+    // 特定の人を除外するショートカット
+    os_member_delete(user_name) {
+      this.clog(this.order_unit.flat_uniq_users)
+      this.os_modal_init()                                                         // new_v を準備する
+      this.new_v.order_unit.user_name_reject(user_name)                            // new_v から次の人を除外する
+      this.new_order_share(`順番設定から${this.user_call_name(user_name)}を外しました`) // new_v を配って更新する
     },
   },
   computed: {

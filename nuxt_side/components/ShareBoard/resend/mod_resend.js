@@ -157,6 +157,11 @@ export const mod_resend = {
         }
       }
     },
+
+    // 次の人を順番設定から除外する
+    rs_next_member_delete() {
+      this.os_member_delete(this.rs_next_user_name)
+    },
   },
 
   computed: {
@@ -172,13 +177,20 @@ export const mod_resend = {
       return v
     },
 
+    // 次に指す人の名前
     rs_next_user_name() {
       if (this.sfen_share_params) {
-        const name = this.turn_to_user_name(this.sfen_share_params.turn)
-        if (name) {
-          return this.user_call_name(name)
-        }
+        // return this.turn_to_user_name(this.sfen_share_params.turn)
+        return this.sfen_share_params["next_user_name"]
       }
     },
+
+    // // 次に指す人の呼名
+    // rs_next_user_call_name() {
+    //   const name = this.rs_next_user_name
+    //   if (name) {
+    //     return this.user_call_name(name)
+    //   }
+    // },
   },
 }

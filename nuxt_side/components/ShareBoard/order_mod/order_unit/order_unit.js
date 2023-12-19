@@ -26,31 +26,32 @@ export class OrderUnit {
 
   // Delegate Methods
 
-  get main_user_count()                 { return this.order_state.main_user_count                       }
-  get empty_p()                         { return this.order_state.empty_p                               }
-  get self_vs_self_p()                  { return this.order_state.self_vs_self_p                        }
-  get one_vs_one_p()                    { return this.order_state.one_vs_one_p                          }
-  get many_vs_many_p()                  { return this.order_state.many_vs_many_p                        }
+  get main_user_count()                     { return this.order_state.main_user_count                           }
+  get empty_p()                             { return this.order_state.empty_p                                   }
+  get self_vs_self_p()                      { return this.order_state.self_vs_self_p                            }
+  get one_vs_one_p()                        { return this.order_state.one_vs_one_p                              }
+  get many_vs_many_p()                      { return this.order_state.many_vs_many_p                            }
 
-  get black_start_order_uniq_users()    { return this.order_state.black_start_order_uniq_users          }
-  first_user(scolor)                    { return this.order_state.first_user(scolor)                    }
+  get black_start_order_uniq_users()        { return this.order_state.black_start_order_uniq_users              }
+  first_user(scolor)                        { return this.order_state.first_user(scolor)                        }
   real_order_users(change_per, scolor)      { return this.order_state.real_order_users(change_per, scolor)      }
   real_order_users_to_s(change_per, scolor) { return this.order_state.real_order_users_to_s(change_per, scolor) }
-  name_to_turns_hash(scolor)            { return this.order_state.name_to_turns_hash(scolor)            }
-  get name_to_object_hash()             { return this.order_state.name_to_object_hash                   }
-  get hash()                            { return this.order_state.hash                                  }
-  get flat_uniq_users()                 { return this.order_state.flat_uniq_users                       }
-  get round_size()                      { return this.order_state.round_size                            }
-  get swap_enable_p()                   { return this.order_state.swap_enable_p                         }
-  get error_messages()                  { return this.order_state.error_messages                        }
-  users_allocate(users)                 { this.order_state.users_allocate(users)                        }
-  users_allocate_from_teams(teams)      { this.order_state.users_allocate_from_teams(teams)             }
-  shuffle_all()                        { this.order_state.shuffle_all()                               }
-  teams_each_shuffle()                       { this.order_state.teams_each_shuffle()                              }
-  swap_run()                            { this.order_state.swap_run()                                   }
-  get state_name()                      { return this.order_state.state_name                            }
-  cache_clear()                         { this.order_state.cache_clear()                                }
-  get simple_teams()                    { return this.order_state.simple_teams                          }
+  name_to_turns_hash(scolor)                { return this.order_state.name_to_turns_hash(scolor)                }
+  get name_to_object_hash()                 { return this.order_state.name_to_object_hash                       }
+  get hash()                                { return this.order_state.hash                                      }
+  get flat_uniq_users()                     { return this.order_state.flat_uniq_users                           }
+  get round_size()                          { return this.order_state.round_size                                }
+  get swap_enable_p()                       { return this.order_state.swap_enable_p                             }
+  get error_messages()                      { return this.order_state.error_messages                            }
+  users_allocate(users)                     { this.order_state.users_allocate(users)                            }
+  users_allocate_from_teams(teams)          { this.order_state.users_allocate_from_teams(teams)                 }
+  shuffle_all()                             { this.order_state.shuffle_all()                                    }
+  teams_each_shuffle()                      { this.order_state.teams_each_shuffle()                             }
+  swap_run()                                { this.order_state.swap_run()                                       }
+  user_name_reject(user_name)               { this.order_state.user_name_reject(user_name)                      } // 順番設定から除外する
+  get state_name()                          { return this.order_state.state_name                                }
+  cache_clear()                             { this.order_state.cache_clear()                                    }
+  get simple_teams()                        { return this.order_state.simple_teams                              }
 
   constructor() {
     this.order_state = new O2State()
