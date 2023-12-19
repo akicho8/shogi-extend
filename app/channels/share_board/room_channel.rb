@@ -36,17 +36,17 @@ module ShareBoard
       broadcast(:sfen_share_broadcasted, data)
     end
 
-    def received_ok(data)
+    def rs_receive_success(data)
       if data["debug_mode_p"]
         track(data, subject: "指手受信", body: "OK > #{data['to_user_name']}", emoji: ":OK:")
       end
-      broadcast(:received_ok_broadcasted, data)
+      broadcast(:rs_receive_success_broadcasted, data)
     end
 
-    def sfen_share_not_reach(data)
-      x_retry_count = data['x_retry_count']
-      track(data, subject: "指手不達", body: "#{x_retry_count}回目", emoji: ":指手不達:")
-      raise SfenNotReachError, "指手不達(#{x_retry_count}回目) : #{data}"
+    def rs_failed_notify(data)
+      rs_failed_count = data['rs_failed_count']
+      track(data, subject: "指手不達", body: "#{rs_failed_count}回目", emoji: ":指手不達:")
+      raise SfenNotReachError, "指手不達(#{rs_failed_count}回目) : #{data}"
     end
 
     def title_share(data)

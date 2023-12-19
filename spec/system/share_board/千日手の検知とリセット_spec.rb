@@ -78,7 +78,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o1_state",
         :clock_auto_start     => "true",
         :auto_resign_key      => "is_auto_resign_on",
-        :RETRY_FUNCTION       => "false",
+        :RS_RESEND_FUNCTION       => "false",
       })
     perpetual_trigger
     assert_selector(".IllegalModal", text: "千日手で☖の勝ち！")

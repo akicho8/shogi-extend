@@ -19,9 +19,9 @@ client-only
         p next_location: {{next_location.key}}
         p timer: {{clock_box.timer}}
         p pause_or_play_p: {{clock_box.pause_or_play_p}}
-      p send_success_p={{send_success_p}}
-      p x_retry_count={{x_retry_count}}
-      p sequence_codes={{sequence_codes}}
+      p rs_send_success_p={{rs_send_success_p}}
+      p rs_failed_count={{rs_failed_count}}
+      p rs_seq_ids={{rs_seq_ids}}
       p $route.query: {{$route.query}}
       p sp_human_side: {{sp_human_side}}
       p current_turn_self_p: {{current_turn_self_p}}
@@ -100,7 +100,7 @@ import { mod_export               } from "./mod_export.js"
 import { mod_player_names         } from "./mod_player_names.js"
 import { mod_color_theme          } from "./mod_color_theme.js"
 import { mod_sfen_share           } from "./mod_sfen_share.js"
-import { mod_sfen_share_retry     } from "./mod_sfen_share_retry.js"
+import { mod_resend     } from "./mod_resend.js"
 import { mod_force_sync           } from "./mod_force_sync.js"
 import { mod_illegal                 } from "./illegal/mod_illegal.js"
 import { mod_board_preset_select  } from "./mod_board_preset_select.js"
@@ -208,7 +208,7 @@ export default {
     mod_color_theme,
     mod_appearance_theme,
     mod_sfen_share,
-    mod_sfen_share_retry,
+    mod_resend,
     mod_force_sync,
     mod_illegal,
     mod_board_preset_select,

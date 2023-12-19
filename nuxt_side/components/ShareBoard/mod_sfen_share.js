@@ -21,7 +21,7 @@ export const mod_sfen_share = {
         this.$gs.assert(lmi.next_turn_offset === this.current_sfen_turn_max, "lmi.next_turn_offset === this.current_sfen_turn_max")
       }
 
-      this.x_retry_count = 0    // 着手したので再送回数を0にしておく
+      this.rs_failed_count = 0    // 着手したので再送回数を0にしておく
 
       const illegal_names = lmi.illegal_list.map(e => e.name)  // ["駒ワープ", "王手放置"]
 
@@ -63,18 +63,18 @@ export const mod_sfen_share = {
 
     // 指し手の配信
     sfen_share() {
-      if (this.ac_room) { // ac_room が有効でないときに sfen_share_callback_set を呼ばないようにするため
-        this.send_success_p = false // 数ms後に相手から応答があると true になる
+      if (this.ac_room) { // ac_room が有効でないときに rs_sfen_share_after_hook を呼ばないようにするため
+        this.rs_send_success_p = false // 数ms後に相手から応答があると true になる
         const params = {
           ...this.sfen_share_params,
-          x_retry_count: this.x_retry_count, // 1以上:再送回数
+          rs_failed_count: this.rs_failed_count, // 1以上:再送回数
         }
-        if (this.x_retry_count >= 1) {
-          params.label = `再送${this.x_retry_count}`
+        if (this.rs_failed_count >= 1) {
+          params.label = `再送${this.rs_failed_count}`
           params.label_type = "is-warning"
         }
         this.ac_room_perform("sfen_share", params) // --> app/channels/share_board/room_channel.rb
-        this.sfen_share_callback_set()
+        this.rs_sfen_share_after_hook()
       } else {
         // 自分しかいないため即履歴とする
         // これによって履歴を使うためにわざわざ部屋を立てる必要がなくなる
@@ -131,7 +131,7 @@ export const mod_sfen_share = {
 
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.sfen_shared_after_notice(params)                   // 反則がないときだけ指し手と次の人を通知する
-        this.received_ok_send(params)                 // 受信OKを指し手に通知する
+        this.rs_receive_success_send(params)                 // 受信OKを指し手に通知する
       }
 
       this.gpt_case_turn(params)

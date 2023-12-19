@@ -1,6 +1,6 @@
 require "#{__dir__}/shared_methods"
 
-RSpec.describe "チャット_LINE風履歴", type: :system, share_board_spec: true do
+RSpec.describe "チャット_発言履歴の復帰と遡り", type: :system, share_board_spec: true do
   let(:content1) { SecureRandom.hex }
 
   it "完全に抜けた状態から再度入室すると発言履歴がある" do
@@ -33,8 +33,12 @@ RSpec.describe "チャット_LINE風履歴", type: :system, share_board_spec: tr
       find(".ChatModal .mh_reset_all").click                              # デバッグ用の「初期化」をクリックすると
       assert_ml_count_in_modal(0)                                         # 0件になるが、
     end
-    b_block {}                                                            # タブを切り替えて
-    a_block do                                                            # 戻ると、
+    if false
+      b_block {}                                                          # タブを切り替えて戻る (headless だと visibilitychange が効かないため)
+    else
+      a_block { find(".ChatModal .mh_reload").click }                     # デバッグ用の「よそ見から復帰」をクリックすると
+    end
+    a_block do
       assert_ml_count_in_modal(1)                                         # リロードされ1件読み込まれている
     end
   end
