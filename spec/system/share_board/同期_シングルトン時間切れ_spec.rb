@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
         "user_name"                => user_name,
         "fixed_member_names"       => "alice,bob",
         "fixed_order_names"        => "alice,bob",
-        "RETRY_DELAY"              => -1,
+        "RS_RESEND_DELAY"              => -1,
         "CC_AUTO_TIME_LIMIT_DELAY" => @CC_AUTO_TIME_LIMIT_DELAY,
         "CC_TIME_LIMIT_BC_DELAY"   => @CC_TIME_LIMIT_BC_DELAY,
         **clock_box_params([0, @initial_read_sec, 0, 0]),
