@@ -26,12 +26,16 @@ module ShareBoard
       assert { user.chat_messages.create!(room: room) }
     end
 
-    it "ログインしている人のIDを一緒に記録する" do
+    it "ログインしている人のIDを一緒に記録し削除時は session_user_id を nil にして発言を残す" do
       session_user = ::User.create!
       user = User.create!
       room = Room.create!
       chat_message = room.chat_messages.create!(user: user, session_user: session_user)
       assert { chat_message.session_user == session_user }
+      assert { session_user.share_board_chat_messages == [chat_message] }
+      session_user.destroy!
+      chat_message.reload
+      assert { chat_message.session_user == nil }
     end
 
     it "簡単にデータを用意する" do

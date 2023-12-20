@@ -50,4 +50,5 @@ class User < ApplicationRecord
 
   include ::Wkbk::UserMethods
   include ::Kiwi::UserMethods
+  include ::ShareBoard::SessionUserMethods
 end
