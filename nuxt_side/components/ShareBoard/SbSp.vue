@@ -180,12 +180,21 @@ export default {
     .button
       margin-bottom: 0
 
-  // 名前で横幅を取ってしまうと持駒がはみでるので3文字までにする
-  .ShogiPlayerGround
+  .CustomShogiPlayer
+    // 横並びなら3行で切る
+    +IF_HORIZONTAL
+      .MembershipLocationPlayerInfoName
+        // https://zenn.dev/itayuri/articles/51f0004a3bad64
+        overflow: hidden
+        display: -webkit-box
+        text-overflow: ellipsis
+        -webkit-box-orient: vertical
+        -webkit-line-clamp: 3
+
+    // 縦並びなら一行の3文字で切る
     +IF_VERTICAL
       .MembershipLocationPlayerInfoName
-        +mobile
-          max-width: 3em
-          white-space: nowrap
-          overflow: hidden
+        max-width: 3em
+        white-space: nowrap
+        overflow: hidden
 </style>
