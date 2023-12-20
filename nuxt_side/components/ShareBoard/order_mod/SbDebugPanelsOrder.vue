@@ -42,6 +42,7 @@
         | 本順序:{{TheSb.order_unit.real_order_users_to_s(TheSb.change_per, TheSb.start_color)}}
       .panel-block(v-if="TheSb.new_v.order_unit")
         | 仮順序:{{TheSb.new_v.order_unit.real_order_users_to_s(TheSb.change_per, TheSb.start_color)}}
+      .panel-block rs_resend_delay_id:{{TheSb.rs_resend_delay_id}}
   .column.is-4
     .panel
       .panel-heading

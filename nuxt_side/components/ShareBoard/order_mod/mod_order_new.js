@@ -149,12 +149,7 @@ export const mod_order_new = {
         this.tl_alert("new_order_share 自分→他者")
       }
       if (this.$gs.present_p(params.message)) {
-        this.al_add({
-          ...params,
-          label: "順番更新",
-          sfen: this.current_sfen, // FIXME: とる
-          turn: this.current_turn,
-        })
+        this.al_add({...params, label: "順番更新"})
       }
 
       // new_v.order_unit のパラメータを order_unit に反映する
@@ -174,7 +169,7 @@ export const mod_order_new = {
       }
 
       // 再送モーダルが出ている人はどうしてよいか迷っているため自動で閉じる
-      this.rs_modal_close()
+      this.rs_close_all()
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
