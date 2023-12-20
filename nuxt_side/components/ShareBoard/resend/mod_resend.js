@@ -18,12 +18,11 @@ export const mod_resend = {
       rs_resend_delay_id: null, // 送信してから RS_RESEND_DELAY 秒後に動かすための setTimeout の戻値
       rs_failed_total: 0,       // SFEN送信に失敗した総回数(不具合解析用)
       rs_failed_count: 0,       // 直近の指し手のSFEN送信に失敗して回数(表示用)
-      rs_modal: null,           // モーダルインスタンス
+      rs_modal_instance: null,  // モーダルインスタンス
     }
   },
   beforeDestroy() {
-    this.re_resend_delay_cancel()
-    this.rs_modal_close()
+    this.rs_close_all()
   },
   methods: {
     sequence_code_embed() {
@@ -65,33 +64,8 @@ export const mod_resend = {
       this.rs_failed_count += 1
       this.rs_failed_notify()
 
-      // const next_user_name = this.turn_to_user_name(this.sfen_share_params.turn)
-      // const message = `
-      // 次の手番の${this.user_call_name(next_user_name)}の通信状況が悪いため再送してください
-      // <ul class="has-text-grey is-size-7 mx-1 mt-2">
-      //   <li>再送しないと対局を続けられません</li>
-      //   <li>${this.rs_retry_check_delay}秒後に再度確認します</li>
-      // </ul>
-      // `
-      // this.rs_modal_close()
-      // this.rs_modal = this.dialog_confirm({
-      //   title: `同期失敗 ${this.rs_failed_count}回目`,
-      //   message: message,
-      //   cancelText: "諦める",
-      //   confirmText: "再送する",
-      //   hasIcon: true,
-      //   type: "is-warning",
-      //   focusOn: "confirm",
-      //   onCancel: () => {
-      //     this.$sound.play_click()
-      //   },
-      //   onConfirm: () => {
-      //     this.$sound.play_click()
-      //     this.sfen_share()
-      //   },
-      // })
-
-      this.rs_modal = this.modal_card_open({
+      this.rs_modal_close()
+      this.rs_modal_instance = this.modal_card_open({
         component: SbResendModal,
         props: { },
         canCancel: [],
@@ -100,9 +74,9 @@ export const mod_resend = {
       })
     },
     rs_modal_close() {
-      if (this.rs_modal) {
-        this.rs_modal.close()
-        this.rs_modal = null
+      if (this.rs_modal_instance) {
+        this.rs_modal_instance.close()
+        this.rs_modal_instance = null
       }
     },
 
@@ -161,6 +135,12 @@ export const mod_resend = {
     // 次の人を順番設定から除外する
     rs_next_member_delete() {
       this.os_member_delete(this.rs_next_user_name)
+    },
+
+    // モーダルとモーダル発動タイマーを合わせて削除する
+    rs_close_all() {
+      this.re_resend_delay_cancel()
+      this.rs_modal_close()
     },
   },
 
