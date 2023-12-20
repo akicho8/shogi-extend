@@ -36,17 +36,8 @@ export const mod_chat_message_history = {
       mh_page_index: 0,       // 次にリクエストするページ番号
       mh_scroll_height: null, // 古い発言を差し込む直前の高さ
       mh_latest_info: null,   // 最後に取得したデータの内容
+      mh_observer: null,      // IntersectionObserver のインスタンス
     }
-  },
-  mounted() {
-    // // 発言の最上位(一番古いもの)を監視する
-    // this.mh_start()
-    //
-    // // 一番下にスクロールしておく
-    // this.ml_root_el_fetch().scrollTop = this.ml_root_el_fetch().scrollHeight
-    //
-    // // スクロール操作の自動化
-    // setInterval(() => this.ml_root_el_fetch().scrollTop -= 1, 1000 * 0.01)
   },
   beforeDestroy() {
     this.mh_safe_stop()
@@ -174,12 +165,12 @@ export const mod_chat_message_history = {
     mh_head_observe() {
       this.tl_add("MH", "mh_head_observe")
       if (this.mh_has_next_p) {
-        if (this.$mh_observer) {
+        if (this.mh_observer) {
           this.$nextTick(() => {    // 確実に最上位が見えなくなるまで待つため (一応なくても動く)
             this.ml_root_el_fetch() // .SbMessageBox が参照できることを確証する
             const el = document.querySelector(".SbMessageBox .SbAvatarLine:first-child")
             if (el) {
-              this.$mh_observer.observe(el)
+              this.mh_observer.observe(el)
             } else {
               this.tl_add("MH", "チャットメッセージの最上位の要素が存在しません")
             }
@@ -191,7 +182,7 @@ export const mod_chat_message_history = {
     // 監視者がいなければ生成する
     mh_safe_start() {
       this.tl_add("MH", "mh_safe_start")
-      if (!this.$mh_observer) {
+      if (!this.mh_observer) {
         this.mh_start()
       }
     },
@@ -200,23 +191,21 @@ export const mod_chat_message_history = {
     mh_start() {
       this.tl_add("MH", "mh_start")
 
-      Gs.assert(this.$mh_observer == null, "this.$mh_observer == null")
+      Gs.assert(this.mh_observer == null, "this.mh_observer == null")
       const options = {
         root: this.ml_root_el_fetch(),  // なくても動作に影響なかったが指定しておいたほうが良さそう
         rootMargin: `${PADDING}px 0px`, // CSS と合わせる。これがないと判定もずれる。
         threshold: 1.0,                 // isIntersecting: true とするタイミング。1.0:すべて 0.5:半分 0.0:一瞬
       }
 
-      this.$mh_observer = new IntersectionObserver((entries, observer) => {
+      this.mh_observer = new IntersectionObserver((entries, observer) => {
         Gs.assert(entries.length === 1, "entries.length === 1")
         entries.forEach(e => this.mh_visible_changed(observer, e))
       }, options)
-      this.clog(this.$mh_observer)
-
-      // スクロール位置が一番下まで移動したあとで最上位の要素を監視する
-      // this.mh_head_observe()
+      this.clog(this.mh_observer)
     },
-    // 表示状態が変化したときに呼ばれる
+
+    // 表示状態が変化したときに呼ぶ
     mh_visible_changed(observer, e) {
       this.tl_add("MH", "mh_visible_changed")
       this.clog(`${e.target.innerText} ${e.isIntersecting} ${e.intersectionRatio}`)
@@ -240,15 +229,15 @@ export const mod_chat_message_history = {
 
     // 監視者を殺す
     mh_stop() {
-      Gs.assert(this.$mh_observer != null, "this.$mh_observer != null") // Gs.present_p(this.$mh_observer) は false になるので注意
-      this.$mh_observer.disconnect()
-      this.$mh_observer = null
-      this.tl_add("MH", "this.$mh_observer.disconnect()")
+      Gs.assert(this.mh_observer != null, "this.mh_observer != null") // Gs.present_p(this.mh_observer) は false になるので注意
+      this.mh_observer.disconnect()
+      this.mh_observer = null
+      this.tl_add("MH", "this.mh_observer.disconnect()")
     },
 
     // 監視者がいれば殺す
     mh_safe_stop() {
-      if (this.$mh_observer) {
+      if (this.mh_observer) {
         this.mh_stop()
       }
     },
