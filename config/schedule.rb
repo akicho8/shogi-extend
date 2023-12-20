@@ -78,7 +78,7 @@ if false
   end
 end
 
-# every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
+every("30 7 * * *") { command "sudo systemctl restart sidekiq" }
 
 if @environment == "production"
   # every("5 11 * * *") { command "ruby -e 'p 1 / 1'" }
