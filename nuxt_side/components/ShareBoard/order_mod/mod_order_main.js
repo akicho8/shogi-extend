@@ -213,5 +213,18 @@ export const mod_order_main = {
         return "watcher"
       })
     },
+
+    // 自分の色のチームのメンバー数を返す
+    my_team_member_count() {
+      const location = this.my_location
+      if (location) {
+        return this.order_unit.team_member_count(location)
+      }
+    },
+
+    // 自分のチームは二人以上いるか？
+    my_team_member_is_many_p() {
+      return (this.my_team_member_count ?? 0) >= 2
+    },
   },
 }

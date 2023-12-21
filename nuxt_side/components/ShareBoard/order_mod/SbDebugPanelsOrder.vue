@@ -61,6 +61,8 @@
       .panel-block 前は自分の手番か？ {{TheSb.previous_turn_self_p}}
       .panel-block 自分はメンバーに含まれているか？ {{TheSb.self_is_member_p}}
       .panel-block 自分は観戦者か？ {{TheSb.self_is_watcher_p}}
+      .panel-block 自分チームのメンバー数 {{TheSb.my_team_member_count}}
+      .panel-block 自分チームのメンバーは2人以上いる？ {{TheSb.my_team_member_is_many_p}}
 
   .column.is-4(v-if="TheSb.new_v.order_unit")
     .panel
