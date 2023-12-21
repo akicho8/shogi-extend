@@ -52,6 +52,7 @@ export class OrderUnit {
   get state_name()                          { return this.order_state.state_name                                }
   cache_clear()                             { this.order_state.cache_clear()                                    }
   get simple_teams()                        { return this.order_state.simple_teams                              }
+  turn_to_item(turn, change_per, scolor)    { return this.order_state.turn_to_item(turn, change_per, scolor)    }
 
   constructor() {
     this.order_state = new O2State()
@@ -81,10 +82,6 @@ export class OrderUnit {
     if (swap_flag) {
       this.swap_run()
     }
-  }
-
-  turn_to_item(turn, change_per, scolor) {
-    return this.order_state.turn_to_item(turn, change_per, scolor)
   }
 
   state_switch_to(method) {
