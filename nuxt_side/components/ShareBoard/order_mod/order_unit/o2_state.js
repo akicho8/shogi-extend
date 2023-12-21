@@ -143,6 +143,11 @@ export class O2State extends OxState {
     return this.teams.map(users => users.map(e => e.user_name))
   }
 
+  // 指定の色のチームのメンバー数を返す
+  team_member_count(location) {
+    return this.teams[location.code].length
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
 
   // {

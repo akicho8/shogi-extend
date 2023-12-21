@@ -1,5 +1,6 @@
 import { O1State } from "@/components/ShareBoard/order_mod/order_unit/o1_state.js"
 import { Item } from "@/components/ShareBoard/order_mod/order_unit/item.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 describe("O1State", () => {
   test("swap_run", () => {
@@ -30,5 +31,10 @@ describe("O1State", () => {
   test("real_order_users_to_s", () => {
     const object = new O1State([Item.create("a"), Item.create("b"), Item.create("c")])
     expect(object.real_order_users_to_s(1, 0)).toEqual("abc")
+  })
+  test("team_member_count", () => {
+    const object = new O1State([Item.create("a"), Item.create("b"), Item.create("c")])
+    expect(object.team_member_count(Location.fetch("black"))).toEqual(undefined)
+    expect(object.team_member_count(Location.fetch("white"))).toEqual(undefined)
   })
 })

@@ -1,5 +1,6 @@
 import { O2State } from "@/components/ShareBoard/order_mod/order_unit/o2_state.js"
 import { Item } from "@/components/ShareBoard/order_mod/order_unit/item.js"
+import { Location } from "shogi-player/components/models/location.js"
 
 describe("O2State", () => {
   test("swap_run", () => {
@@ -46,5 +47,10 @@ describe("O2State", () => {
   test("teams_each_shuffle", () => {
     const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
     object.teams_each_shuffle()
+  })
+  test("team_member_count", () => {
+    const object = new O2State([[Item.create("a"), Item.create("c")], [Item.create("b")]])
+    expect(object.team_member_count(Location.fetch("black"))).toEqual(2)
+    expect(object.team_member_count(Location.fetch("white"))).toEqual(1)
   })
 })

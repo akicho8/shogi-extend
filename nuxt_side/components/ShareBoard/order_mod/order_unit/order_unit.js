@@ -53,6 +53,7 @@ export class OrderUnit {
   cache_clear()                             { this.order_state.cache_clear()                                    }
   get simple_teams()                        { return this.order_state.simple_teams                              }
   turn_to_item(turn, change_per, scolor)    { return this.order_state.turn_to_item(turn, change_per, scolor)    }
+  team_member_count(location)           { return this.order_state.team_member_count(location)           }
 
   constructor() {
     this.order_state = new O2State()
