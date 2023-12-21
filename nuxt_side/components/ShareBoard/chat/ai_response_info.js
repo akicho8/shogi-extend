@@ -2,9 +2,10 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 import { Gs } from "@/components/models/gs.js"
 import { Odai } from "../fes/odai.js"
 import { Location } from "shogi-player/components/models/location.js"
+import { MessageRecord } from "./message_record.js"
 import _ from "lodash"
 
-export class ChatgptRequestInfo extends ApplicationMemoryRecord {
+export class AiResponseInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       {
@@ -95,6 +96,13 @@ export class ChatgptRequestInfo extends ApplicationMemoryRecord {
           }
         },
       },
+      // {
+      //   key: "チャットでたまに発言する",
+      //   command_fn: (context, params) => {
+      //     const message_record = MessageRecord.create(params)
+      //     content.ai_something_say({content: "", message_scope_key: message_record.message_scope_info.key})
+      //   },
+      // },
     ]
   }
 }

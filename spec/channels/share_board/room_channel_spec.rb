@@ -238,7 +238,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
     it "works" do
       data = data_factory("content" => "", "message_scope_key" => "ms_public")
-      subscription.gpt_speak(data)
+      subscription.ai_something_say(data)
     end
   end
 
