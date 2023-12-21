@@ -1,34 +1,53 @@
-import { ChatgptRequestInfo } from "./chatgpt_request_info.js"
-import { CcInfo             } from "../clock/cc_info.js"
+// AIが発動する条件を書く
+
+import { AiResponseInfo } from "./ai_response_info.js"
+import { MessageRecord } from "./message_record.js"
+import { CcInfo } from "../clock/cc_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
 export const mod_chat_ai = {
   methods: {
-    gpt_speak(params) {
+    // /gpt または /gpt xxx
+    ai_something_say(params) {
       params = {
         message_scope_key: this.message_scope_info.key, // 発言者のスコープを元にする
         ...params,
       }
       params.content ??= ""                             // null チェックをかわすため
-      this.ac_room_perform("gpt_speak", params)         // --> app/channels/share_board/room_channel.rb
+      this.ac_room_perform("ai_something_say", params)         // --> app/channels/share_board/room_channel.rb
 
-      // 確認のため
-      if (!this.$route.query.__system_test_now__ || true) {
-        if (this.debug_mode_p) {
-          this.ml_bot_puts(params.content)
-        }
+      if (this.debug_mode_p) {
+        this.ml_bot_puts(`ai_something_say: "${params.content}"`)
       }
     },
 
     ////////////////////////////////////////////////////////////////////////////////
 
+    // /gpt xxx の xxx を自動で作る
     gpt_speak_for(key, params) {
-      const content = ChatgptRequestInfo.fetch(key).command_fn(this, params)
+      if (this.gpt_mode_info.key === "gpt_mode_off") { return }
+      let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
-        if (this.gpt_mode_info.key === "gpt_mode_on") {
-          const content2 = [content, "返答は短かく簡潔にすること。"].join("")
-          this.gpt_speak({content: content2})
+        content = [content, "返答は短かく簡潔にすること。"].join("")
+        this.ai_something_say({content: content})
+      }
+    },
+
+    //////////////////////////////////////////////////////////////////////////////// 特殊
+
+    // ときどき自動で /gpt を実行する
+    // このとき直前に送った人のスコープを真似する
+    ai_random_say(params) {
+      if (this.gpt_mode_info.key === "gpt_mode_off") { return }
+      if (this.$route.query.__system_test_now__) { return }
+
+      if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
+        const value = Math.random()
+        const run = value < this.ai_auto_response_ratio // 0:必ずfalse
+        this.clog([value, this.ai_auto_response_ratio, run])
+        if (run) {
+          this.ai_something_say({content: "", message_scope_key: params.message_scope_key})
         }
       }
     },

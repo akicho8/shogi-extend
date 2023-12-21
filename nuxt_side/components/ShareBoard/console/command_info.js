@@ -81,7 +81,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         key: "gpt",
         example: "/gpt content",
         command_fn: (context, args) => {
-          context.gpt_speak({content: args[0]})
+          context.ai_something_say({content: args[0]})
         },
       },
       {

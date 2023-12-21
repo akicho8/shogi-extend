@@ -93,6 +93,7 @@ export const mod_chat = {
         this.$buefy.toast.open(message_record.toast_params) // 表示
         this.talk2(message_record.content)                  // しゃべる
       }
+      this.ai_random_say(params)                            // AIに反応させる
     },
 
     // ログ用の追加データとして data に名前を入れておく

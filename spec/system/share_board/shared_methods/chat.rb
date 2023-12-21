@@ -31,6 +31,11 @@ module SharedMethods
     assert_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))
   end
 
+  # 最後に送信した人の名前
+  def assert_no_message_latest_from(name, options = {})
+    assert_no_selector(".ChatModal .SbAvatarLine:last-of-type .name_block", {text: name, exact_text: true}.merge(options))
+  end
+
   # message を受信した
   def assert_message_received_o(message, options = {})
     within(".ChatModal") do
