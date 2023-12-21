@@ -8,7 +8,7 @@
     ul.has-text-grey.is-size-7.mt-2
       li {{TheSb.user_call_name(TheSb.rs_next_user_name)}}がいなくなっている場合は順番設定から除外してください
       template(v-if="TheSb.debug_mode_p")
-        li {{TheSb.rs_retry_check_delay}}秒後に再度確認します
+        li {{TheSb.rs_resend_delay_real_sec}}秒後に再度確認します
     template(v-if="development_p")
       pre {{TheSb.sfen_share_params}}
     template(v-if="TheSb.debug_mode_p")
@@ -35,11 +35,11 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.rs_modal_close()
+      this.TheSb.rs_modal_with_timer_close()
     },
     resend_handle() {
       this.$sound.play_click()
-      this.TheSb.rs_modal_close()
+      this.TheSb.rs_modal_with_timer_close()
       this.TheSb.sfen_share()
     },
   },

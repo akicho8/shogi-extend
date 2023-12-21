@@ -1,12 +1,12 @@
+import { SingleClock } from "./single_clock.js"
+import { Location } from "shogi-player/components/models/location.js"
+import { Gs } from "@/components/models/gs.js"
+
 const HUMAN_STATUS_LABELS = {
   play:  "動作中",
   pause: "一時停止中",
   stop:  "停止中",
 }
-
-import { SingleClock } from "./single_clock.js"
-import { Location } from "shogi-player/components/models/location.js"
-import { Gs } from "@/components/models/gs.js"
 
 export class ClockBox {
   constructor(params = {}) {

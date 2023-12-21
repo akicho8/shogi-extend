@@ -169,7 +169,7 @@ export const mod_order_new = {
       }
 
       // 再送モーダルが出ている人はどうしてよいか迷っているため自動で閉じる
-      this.rs_close_all()
+      this.rs_modal_with_timer_close()
 
       if (params.message) {
         this.toast_ok(`${this.user_call_name(params.from_user_name)}が${params.message}`)
