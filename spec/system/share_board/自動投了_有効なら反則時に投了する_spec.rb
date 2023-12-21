@@ -11,7 +11,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o1_state",
         :clock_auto_start     => "true",
         :auto_resign_key      => auto_resign_key,
-        :RS_RESEND_FUNCTION       => "false",
+        :RS_ENABLE       => "false",
       })
     piece_move_o("88", "55", "☗5五角")
     assert_selector(".IllegalModal")
