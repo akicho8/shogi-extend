@@ -57,8 +57,8 @@ export const mod_chat_ai = {
     gpt_case_hello(params) {
       if (this.received_from_self(params)) {
         const ymd = dayjs().format("YYYY-MM-DD")
-        if (this.gpt_hello_ymd !== ymd) {
-          this.gpt_hello_ymd = ymd // 本日はあいさつしたとする (しかしLINEから来られるとクッキーが効かず保存できない罠がある)
+        if (this.ai_hello_ymd !== ymd) {
+          this.ai_hello_ymd = ymd // 本日はあいさつしたとする (しかしLINEから来られるとクッキーが効かず保存できない罠がある)
           if (this.cc_play_p) {    // BUG: 時計の情報が届く前に見ているため常に false になる
             // 対局中は参加者にあいさつをスキップする
           } else {
