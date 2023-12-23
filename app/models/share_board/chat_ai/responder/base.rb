@@ -79,7 +79,7 @@ module ShareBoard
         end
 
         def system_message
-          Message.new(:system, GptProfile.system_raw_message)
+          Message.new(:system, AiProfile.system_raw_message)
         end
 
         def messanger_options
