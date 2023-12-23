@@ -12,7 +12,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "carol")                   # carolは観戦目的で同じ部屋に入る
     end
     a_block do
-      hamburger_click
+      global_menu_open
       os_modal_handle                                  # 「順番設定」モーダルを開く
       os_switch_toggle                                 # 有効スイッチをクリック
       drag_to_watch("dnd_black", 1)                    # 黒の[1]にいる carol を観戦に移動する

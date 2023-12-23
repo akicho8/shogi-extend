@@ -7,7 +7,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "alice")
       begin
         visit "/share-board"                         # 再来
-        hamburger_click
+        global_menu_open
         room_setup_modal_open_handle                      # 「部屋に入る」を自分でクリックする
         find(".new_room_key input").set("test_room")  # 合言葉を入力する
         find(".new_user_name").find(:fillable_field, with: "alice") # 以前入力したニックネームが復元されている

@@ -168,11 +168,11 @@ if true
       `open #{save_page}`
     end
 
-    def hamburger_click
+    def global_menu_open
       find(".sidebar_toggle_navbar_item").click
     end
 
-    def hamburger_close
+    def global_menu_close
       find(".sidebar_close_handle").click
     end
 

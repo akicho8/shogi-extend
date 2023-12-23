@@ -15,7 +15,7 @@ RSpec.describe type: :system, share_board_spec: true do
       piece_move_o("33", "34", "☖3四歩")  # bobが指す
     end
     a_block do
-      hamburger_click
+      global_menu_open
       menu_item_click("1手戻す (待った)") # 「1手戻す」モーダルを開く
       find(".apply_button").click         # 「N手目まで戻る」
       assert_turn(1)                      # 1手目に戻っている

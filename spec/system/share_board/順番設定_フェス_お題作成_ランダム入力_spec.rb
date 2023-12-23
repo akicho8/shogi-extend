@@ -13,7 +13,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block { case1("a") }
     a_block do
-      hamburger_click
+      global_menu_open
       os_modal_handle                                         # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動

@@ -19,7 +19,7 @@ RSpec.describe "投了_ランキングに反映する", type: :system, share_boa
     end
     a_block do
       give_up_run
-      hamburger_click
+      global_menu_open
       menu_item_click("部屋の情報")
       within(".modal") do
         assert_text("alice")

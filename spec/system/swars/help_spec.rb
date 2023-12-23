@@ -5,14 +5,14 @@ RSpec.describe "よくある質問 (FAQ)", type: :system, swars_spec: true do
 
   it "モーダルで開く" do
     visit2 "/swars/search"
-    hamburger_click
+    global_menu_open
     menu_item_click("よくある質問 (FAQ)")
     find(".close_handle").click
   end
 
   it "モーダルからパーマリンクで飛ぶ" do
     visit2 "/swars/search"
-    hamburger_click
+    global_menu_open
     menu_item_click("よくある質問 (FAQ)")
     switch_to_window_by do
       find(".permalink").click

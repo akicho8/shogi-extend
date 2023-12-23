@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_state    => "to_o1_state",
         :handle_name_validate => "false",
       })
-    hamburger_click
+    global_menu_open
     os_modal_handle
     os_switch_toggle
     apply_button
