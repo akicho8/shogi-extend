@@ -23,15 +23,15 @@ b-sidebar.WkbkBookShowSidebar.is-unselectable(fullheight right overlay v-model="
 
       .box.mt-5
         .title.is-5 設定
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="TimeLimitFuncInfo"       :sync_value.sync="TheApp.time_limit_func_key"      )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="TimeLimitSecInfo"        :sync_value.sync="TheApp.time_limit_sec"           )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="AutoMoveInfo"            :sync_value.sync="TheApp.auto_move_key"         )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="ArticleTitleDisplayInfo" :sync_value.sync="TheApp.article_title_display_key")
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="MovesMatchInfo"          :sync_value.sync="TheApp.moves_match_key"          )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="CorrectBehaviorInfo"     :sync_value.sync="TheApp.correct_behavior_key"     )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="ViewpointFlipInfo"       :sync_value.sync="TheApp.viewpoint_flip_key"       )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="SoldierFlopInfo"         :sync_value.sync="TheApp.soldier_flop_key"         )
-        SimpleRadioButton(:base="TheApp" custom-class="is-small" element_size="is-small" model_name="AppearanceThemeInfo"     :sync_value.sync="TheApp.appearance_theme_key"     )
+        SimpleRadioButton.time_limit_func_key(       :base="TheApp" custom-class="is-small" element_size="is-small" model_name="TimeLimitFuncInfo"       :sync_value.sync="TheApp.time_limit_func_key"      )
+        SimpleRadioButton.time_limit_sec(            :base="TheApp" custom-class="is-small" element_size="is-small" model_name="TimeLimitSecInfo"        :sync_value.sync="TheApp.time_limit_sec"           )
+        SimpleRadioButton.auto_move_key(             :base="TheApp" custom-class="is-small" element_size="is-small" model_name="AutoMoveInfo"            :sync_value.sync="TheApp.auto_move_key"         )
+        SimpleRadioButton.article_title_display_key( :base="TheApp" custom-class="is-small" element_size="is-small" model_name="ArticleTitleDisplayInfo" :sync_value.sync="TheApp.article_title_display_key")
+        SimpleRadioButton.moves_match_key(           :base="TheApp" custom-class="is-small" element_size="is-small" model_name="MovesMatchInfo"          :sync_value.sync="TheApp.moves_match_key"          )
+        SimpleRadioButton.correct_behavior_key(      :base="TheApp" custom-class="is-small" element_size="is-small" model_name="CorrectBehaviorInfo"     :sync_value.sync="TheApp.correct_behavior_key"     )
+        SimpleRadioButton.viewpoint_flip_key(        :base="TheApp" custom-class="is-small" element_size="is-small" model_name="ViewpointFlipInfo"       :sync_value.sync="TheApp.viewpoint_flip_key"       )
+        SimpleRadioButton.soldier_flop_key(          :base="TheApp" custom-class="is-small" element_size="is-small" model_name="SoldierFlopInfo"         :sync_value.sync="TheApp.soldier_flop_key"         )
+        SimpleRadioButton.appearance_theme_key(      :base="TheApp" custom-class="is-small" element_size="is-small" model_name="AppearanceThemeInfo"     :sync_value.sync="TheApp.appearance_theme_key"     )
 </template>
 
 <script>
