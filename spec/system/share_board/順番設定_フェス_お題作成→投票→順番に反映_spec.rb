@@ -15,7 +15,7 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block { case1("b") }
     c_block { case1("c") }
     a_block do
-      hamburger_click
+      global_menu_open
       os_modal_handle                                         # 「順番設定」モーダルを開く
       os_switch_toggle                                        # 有効スイッチをクリック
       find(:button, text: "お題ﾒｰｶｰ", exact_text: true).click # お題メーカー起動
@@ -40,7 +40,7 @@ RSpec.describe type: :system, share_board_spec: true do
       find(:button, text: "やめとく", exact_text: true).click
     end
     a_block do
-      hamburger_click
+      global_menu_open
       os_modal_handle
       find(:button, text: "結果を反映する(2/3)", exact_text: true).click # a b は投票したが c はまだなので 2/3 となっている
       assert_order_team_one "", "ab", sort: true # 順番に反映した。a も b も右側である "(team_white)" を選択したため偏っている

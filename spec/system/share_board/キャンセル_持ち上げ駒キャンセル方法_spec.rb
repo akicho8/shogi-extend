@@ -4,7 +4,7 @@ RSpec.describe type: :system, share_board_spec: true do
   def case1(selector)
     visit_app(room_key: :test_room, user_name: "alice")
 
-    hamburger_click
+    global_menu_open
     menu_item_click("設定")               # モーダルを開く
     find("a", text: "その他", exact_text: true).click      # 「その他」タブ
     find(:label, text: selector, exact_text: true).click

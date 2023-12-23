@@ -16,7 +16,7 @@ RSpec.describe type: :system, share_board_spec: true do
       assert_turn(1)                             # bob側も1手進んでいる
     end
     a_block do
-      hamburger_click
+      global_menu_open
       menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
       find(".apply_button").click                       # 「N手目まで戻る」
       # buefy_dialog_button_click(".is-danger")           # 「本当に実行」クリック
@@ -32,7 +32,7 @@ RSpec.describe type: :system, share_board_spec: true do
       room_setup("test_room", "alice")                    # alice先輩が部屋を作る
       piece_move_o("77", "76", "☗7六歩")                # aliceが指す
       assert_turn(1)                                    # 1手進んでいる
-      hamburger_click
+      global_menu_open
       menu_item_click("初期配置に戻す")                 # 「初期配置に戻す」モーダルを開く
       Capybara.within(".TurnChangeModal") do
         assert_text("局面 #0")                          # 初期配置に戻すため初期値は0手目になっているが

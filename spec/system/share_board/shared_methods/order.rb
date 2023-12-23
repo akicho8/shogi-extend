@@ -10,7 +10,7 @@ module SharedMethods
   end
 
   def os_modal_open
-    hamburger_click
+    global_menu_open
     os_modal_handle
   end
 

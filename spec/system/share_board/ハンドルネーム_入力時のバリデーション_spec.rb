@@ -10,7 +10,7 @@ RSpec.describe type: :system, share_board_spec: true do
   it "works" do
     a_block do
       visit_app
-      hamburger_click
+      global_menu_open
       menu_item_click("ハンドルネーム変更")
       case1("", "ハンドルネームを入力してください")
       case1("名無し", "ハンドルネームを入力してください")

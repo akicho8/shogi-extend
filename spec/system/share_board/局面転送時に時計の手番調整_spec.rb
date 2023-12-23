@@ -31,7 +31,7 @@ RSpec.describe type: :system, share_board_spec: true do
       sp_controller_click("previous")                # 1手戻す
       assert_turn(0)                                 # 0手目に戻せてる
 
-      hamburger_click
+      global_menu_open
       menu_item_click("局面の転送")                 # モーダルを開く
       find(:button, text: "転送する", exact_text: true).click   # 反映する
 

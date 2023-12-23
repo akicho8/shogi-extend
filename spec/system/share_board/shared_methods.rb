@@ -21,7 +21,7 @@ module SharedMethods
   end
 
   def room_menu_open_and_input(room_key, user_name)
-    hamburger_click
+    global_menu_open
     room_setup_modal_open_handle                  # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
@@ -33,7 +33,7 @@ module SharedMethods
   end
 
   def room_setup_by_fillin_params
-    hamburger_click
+    global_menu_open
     room_setup_modal_open_handle                  # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".entry_button").click                 # 共有ボタンをクリックする
@@ -42,7 +42,7 @@ module SharedMethods
   end
 
   def room_recreate_apply
-    hamburger_click
+    global_menu_open
     menu_item_click("再起動")     # モーダルを開く
     apply_button  # 実行する
   end
@@ -53,7 +53,7 @@ module SharedMethods
 
   # 退室
   def room_leave
-    hamburger_click
+    global_menu_open
     room_setup_modal_open_handle        # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
@@ -61,7 +61,7 @@ module SharedMethods
 
   # 手合割選択
   def preset_select(preset_key)
-    hamburger_click
+    global_menu_open
     menu_item_click("手合割")
     find(".BoardPresetSelectModal .board_preset_key").select(preset_key)
     find(".apply_button").click
@@ -69,7 +69,7 @@ module SharedMethods
 
   # なんでもいいから1vs1のルールを選択する
   def xmatch_select_1vs1
-    hamburger_click
+    global_menu_open
     menu_item_click("自動マッチング")           # モーダルを開く
     find(".rule_1vs1_05_00_00_5_pRvsB").click   # 飛vs角を選択
   end
@@ -104,7 +104,7 @@ module SharedMethods
   end
 
   def kifu_yomikomi
-    hamburger_click
+    global_menu_open
     menu_item_click("棋譜の読み込み")
     find(".AnySourceReadModal textarea").set("68S", clear: :backspace)
     find(".AnySourceReadModal .submit_handle").click
