@@ -255,7 +255,7 @@ Rails.application.routes.draw do
 
   if Rails.env.production?
     Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-      [user, password] == ["admin", Rails.application.credentials[:admin_password]]
+      [user, password] == ["admin", Rails.application.credentials[:basic_auth_password]]
     end
   end
 
