@@ -20,7 +20,7 @@ class User
         end
 
         create!(attrs) do |e|
-          e.password = Rails.application.credentials.admin_password
+          e.password = Rails.application.credentials.staff_password
           e.confirmed_at = Time.current
           e.permit_tag_list = "staff"
           e.name_input_at = Time.current
