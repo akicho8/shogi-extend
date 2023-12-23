@@ -52,7 +52,7 @@ module ShareBoard
           begin
             topic = history.to_topic
             topic.unshift(system_message)
-            text = ChatGptClient.new(topic).call
+            text = ChatAiClient.new(topic).call
             if text
               history << Message.new(:assistant, text)
               logger.debug { history.to_topic.to_t }

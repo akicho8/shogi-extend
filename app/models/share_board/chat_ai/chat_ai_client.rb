@@ -1,6 +1,6 @@
 module ShareBoard
   module ChatAi
-    class ChatGptClient
+    class ChatAiClient
       def initialize(topic, options = {})
         raise "must not happen" unless topic.kind_of?(Topic)
         @topic = topic

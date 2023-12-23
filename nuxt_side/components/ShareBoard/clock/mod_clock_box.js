@@ -338,7 +338,7 @@ export const mod_clock_box = {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_info.with_talk})
       }
       this.cc_timeout_logging(params)
-      this.gpt_case_clock(params)
+      this.ai_say_case_clock(params)
     },
     __cc_receive_message(params) {
       const cc_info = CcInfo.fetch(params.cc_key)

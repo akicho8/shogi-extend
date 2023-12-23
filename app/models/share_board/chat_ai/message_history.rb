@@ -65,7 +65,7 @@ module ShareBoard
       end
 
       def redis
-        @redis ||= Redis.new(db: AppConfig.fetch(:redis_db_for_share_board_gpt))
+        @redis ||= Redis.new(db: AppConfig.fetch(:redis_db_for_share_board_ai))
       end
 
       def key

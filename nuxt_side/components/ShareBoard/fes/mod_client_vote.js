@@ -47,7 +47,7 @@ export const mod_client_vote = {
       this.odai_received_p = true
       this.received_odai = new_odai
       this.client_vote_modal_handle()
-      this.gpt_case_odai(params, new_odai)
+      this.ai_say_case_odai(params, new_odai)
     },
 
     // ホストからのお題と投票結果の削除命令を出す
