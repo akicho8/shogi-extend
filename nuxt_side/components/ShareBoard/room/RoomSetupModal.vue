@@ -13,9 +13,9 @@
             b-button.has-text-weight-bold(@click="room_key_show_toggle_handle" icon-left="lock" :disabled="TheSb.ac_room")
       template(v-else)
         b-field(label="合言葉" label-position="on-border" key="room_key_field_locked_true")
-          b-input.new_room_key(v-model.trim="new_room_key" :disabled="TheSb.ac_room" ref="new_room_key")
+          b-input.new_room_key(v-model.trim="new_room_key" :disabled="TheSb.ac_room" ref="new_room_key" autocomplete="on")
       b-field(label="ハンドルネーム" label-position="on-border")
-        b-input.new_user_name(v-model.trim="new_user_name" :disabled="TheSb.ac_room")
+        b-input.new_user_name(v-model.trim="new_user_name" :disabled="TheSb.ac_room" autocomplete="on")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
