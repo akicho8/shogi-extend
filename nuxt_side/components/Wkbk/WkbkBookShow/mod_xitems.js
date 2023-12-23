@@ -105,7 +105,8 @@ export const mod_xitems = {
       const new_moves = new NextHandFinder(this.current_article.list_of_moves, moves).call()
       if (new_moves) {
         const new_sfen = [this.current_article.init_sfen, "moves", ...new_moves].join(" ")
-        this.sp_sfen_set(new_sfen)
+        const floped_sfen = this.sfen_flop(new_sfen)
+        this.sp_sfen_set(floped_sfen)
       }
       // })
     },

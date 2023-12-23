@@ -172,6 +172,10 @@ if true
       find(".sidebar_toggle_navbar_item").click
     end
 
+    def hamburger_close
+      find(".sidebar_close_handle").click
+    end
+
     def menu_item_click(text)
       find(".b-sidebar li a", text: text, exact_text: true).click
     end
