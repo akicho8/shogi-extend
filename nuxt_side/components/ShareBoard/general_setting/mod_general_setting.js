@@ -7,7 +7,7 @@ import { TalkVolumeInfo       } from "../models/talk_volume_info.js"
 import { CtrlModeInfo         } from "../models/ctrl_mode_info.js"
 import { QuickSyncInfo        } from "../models/quick_sync_info.js"
 import { YomiageModeInfo      } from "../models/yomiage_mode_info.js"
-import { GptModeInfo          } from "../models/gpt_mode_info.js"
+import { AiModeInfo          } from "../models/ai_mode_info.js"
 import { ByoyomiModeInfo      } from "../models/byoyomi_mode_info.js"
 import { VibrationModeInfo      } from "../models/vibration_mode_info.js"
 import { NextTurnCallInfo      } from "../models/next_turn_call_info.js"
@@ -40,8 +40,8 @@ export const mod_general_setting = {
     YomiageModeInfo()         { return YomiageModeInfo                                           },
     yomiage_mode_info()       { return this.YomiageModeInfo.fetch(this.yomiage_mode_key)         },
 
-    GptModeInfo()             { return GptModeInfo                                               },
-    gpt_mode_info()           { return this.GptModeInfo.fetch(this.gpt_mode_key)                 },
+    AiModeInfo()             { return AiModeInfo                                               },
+    ai_mode_info()           { return this.AiModeInfo.fetch(this.ai_mode_key)                 },
 
     ByoyomiModeInfo()         { return ByoyomiModeInfo                                           },
     byoyomi_mode_info()       { return this.ByoyomiModeInfo.fetch(this.byoyomi_mode_key)         },

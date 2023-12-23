@@ -127,14 +127,14 @@ export const mod_sfen_share = {
         this.illegal_then_give_up(params)             // 自分が反則した場合は投了する
         this.illegal_modal_handle(params.illegal_names) // 反則があれば表示する
         this.illegal_logging(params)                  // 反則の状態を記録する
-        this.gpt_case_illegal(params)                 // 反則した人を励ます
+        this.ai_say_case_illegal(params)                 // 反則した人を励ます
 
         this.from_user_toast(params)                  // 誰が操作したかを表示する
         this.sfen_shared_after_notice(params)                   // 反則がないときだけ指し手と次の人を通知する
         this.rs_receive_success_send(params)                 // 受信OKを指し手に通知する
       }
 
-      this.gpt_case_turn(params)
+      this.ai_say_case_turn(params)
       this.al_add(params)
     },
     from_user_name_valid(params) {

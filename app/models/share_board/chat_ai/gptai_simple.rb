@@ -13,7 +13,7 @@ module ShareBoard
       end
 
       def call
-        ChatGptClient.new(topic, @options).call
+        ChatAiClient.new(topic, @options).call
       end
 
       def topic

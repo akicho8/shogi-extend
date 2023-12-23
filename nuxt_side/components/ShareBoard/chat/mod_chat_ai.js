@@ -25,8 +25,8 @@ export const mod_chat_ai = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // /gpt xxx の xxx を自動で作る
-    gpt_speak_for(key, params) {
-      if (this.gpt_mode_info.key === "gpt_mode_off") { return }
+    ai_say_for(key, params) {
+      if (this.ai_mode_info.key === "ai_mode_off") { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
         content = [content, "返答は短かく簡潔にすること。"].join("")
@@ -39,7 +39,7 @@ export const mod_chat_ai = {
     // ときどき自動で /gpt を実行する
     // このとき直前に送った人のスコープを真似する
     ai_random_say(params) {
-      if (this.gpt_mode_info.key === "gpt_mode_off") { return }
+      if (this.ai_mode_info.key === "ai_mode_off") { return }
       if (this.$route.query.__system_test_now__) { return }
 
       if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
@@ -54,7 +54,7 @@ export const mod_chat_ai = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    gpt_case_hello(params) {
+    ai_say_case_hello(params) {
       if (this.received_from_self(params)) {
         const ymd = dayjs().format("YYYY-MM-DD")
         if (this.ai_hello_ymd !== ymd) {
@@ -62,7 +62,7 @@ export const mod_chat_ai = {
           if (this.cc_play_p) {    // BUG: 時計の情報が届く前に見ているため常に false になる
             // 対局中は参加者にあいさつをスキップする
           } else {
-            this.gpt_speak_for("参加者にあいさつする", params)
+            this.ai_say_for("参加者にあいさつする", params)
           }
         } else {
           this.debug_alert("本日はもう挨拶しました")
@@ -70,51 +70,51 @@ export const mod_chat_ai = {
       }
     },
 
-    gpt_case_odai(params) {
+    ai_say_case_odai(params) {
       if (this.received_from_self(params)) {
-        this.gpt_speak_for("お題に答える", params)
+        this.ai_say_for("お題に答える", params)
       }
     },
 
-    gpt_case_illegal(params) {
+    ai_say_case_illegal(params) {
       if (this.received_from_self(params)) {
         if (this.$gs.present_p(params.illegal_names)) {
           if (this.cc_play_p) {
             // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
             if (this.auto_resign_info.key === "is_auto_resign_off") {
-              this.gpt_speak_for("反則した人を励ます", params)
+              this.ai_say_for("反則した人を励ます", params)
             }
           }
         }
       }
     },
 
-    gpt_case_turn(params) {
+    ai_say_case_turn(params) {
       if (this.received_from_self(params)) {
         if (this.cc_play_p) {
-          this.gpt_speak_for("局面にコメントする", params)
+          this.ai_say_for("局面にコメントする", params)
         }
       }
     },
 
-    gpt_case_clock(params) {
+    ai_say_case_clock(params) {
       if (this.received_from_self(params)) {
         const cc_info = CcInfo.fetch(params.cc_key)
         if (cc_info.key === "ck_start") {
-          this.gpt_speak_for("対局を盛り上げる", params)
+          this.ai_say_for("対局を盛り上げる", params)
         }
         if (cc_info.key === "ck_timeout") {
           // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
           if (this.auto_resign_info.key === "is_auto_resign_off") {
-            this.gpt_speak_for("時間切れで負けた人を励ます", params)
+            this.ai_say_for("時間切れで負けた人を励ます", params)
           }
         }
       }
     },
 
-    gpt_case_give_up(params) {
+    ai_say_case_give_up(params) {
       if (this.received_from_self(params)) {
-        this.gpt_speak_for("見応えのある対局だったと褒める", params)
+        this.ai_say_for("見応えのある対局だったと褒める", params)
       }
     },
   },
