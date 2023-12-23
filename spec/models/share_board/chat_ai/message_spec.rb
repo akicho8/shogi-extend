@@ -7,9 +7,9 @@ module ShareBoard
       assert { object.to_h == { role: "user", content: "a/b/c" } }
     end
 
-    it "to_gpt" do
+    it "to_api" do
       object = ChatAi::Message.new(:user, "a/b/c")
-      assert { object.to_gpt == { role: "user", content: "a/b/c" } }
+      assert { object.to_api == { role: "user", content: "a/b/c" } }
     end
 
     # it "to_redis_value" do

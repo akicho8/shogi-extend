@@ -5,8 +5,8 @@ module ShareBoard
         AppLog.info(subject: "topic", body: to_t)
       end
 
-      def to_gpt_messages
-        collect(&:to_gpt)
+      def to_api_messages
+        collect(&:to_api)
       end
 
       def to_t

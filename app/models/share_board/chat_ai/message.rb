@@ -20,7 +20,7 @@ module ShareBoard
         }
       end
 
-      def to_gpt
+      def to_api
         to_h
       end
 

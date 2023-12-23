@@ -21,7 +21,7 @@ module ShareBoard
           response = client.chat(
             parameters: {
               model: "gpt-4-0613",
-              messages: @topic.to_gpt_messages,
+              messages: @topic.to_api_messages,
               # max_tokens: 0, # わざとエラーを出す場合
               temperature: 1.0,  # 1.5 にするとかなりアホになってしまう
             })
