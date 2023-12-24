@@ -21,8 +21,11 @@
 <script>
 import VueDraggable from "vuedraggable"
 import { MemberStatusInfo } from "./member_status_info.js"
+import { support_child } from "../support_child.js"
 
 export default {
+  name: "OrderTeamOne",
+  inject: ["TheOSM"],
   props: {
     label: { type: String, required: true, },
     items: { type: Array,  required: true, },
@@ -30,7 +33,6 @@ export default {
   components: {
     VueDraggable,
   },
-  inject: ["TheSb", "TheOSM"],
   data() {
     return {
       current_items: this.items,

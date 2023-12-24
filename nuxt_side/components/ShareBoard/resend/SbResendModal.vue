@@ -27,11 +27,6 @@ import _ from "lodash"
 export default {
   name: "SbResendModal",
   mixins: [support_child],
-  data() {
-    return {
-    }
-  },
-  inject: ["TheSb"],
   methods: {
     close_handle() {
       this.$sound.play_click()

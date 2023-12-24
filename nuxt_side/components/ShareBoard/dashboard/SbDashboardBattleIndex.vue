@@ -25,9 +25,11 @@ const QueryString = require("query-string")
 import { SafeSfen } from "@/components/models/safe_sfen.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbDashboardBody",
+  mixins: [support_child],
   inject: ["TheDb"],
   methods: {
     sb_path(row) {

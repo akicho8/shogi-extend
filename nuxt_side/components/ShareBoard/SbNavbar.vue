@@ -64,7 +64,6 @@ import { support_child } from "./support_child.js"
 export default {
   name: "SbNavbar",
   mixins: [support_child],
-  inject: ["TheSb"],
   computed: {
     component_attrs() {
       const hv = {}

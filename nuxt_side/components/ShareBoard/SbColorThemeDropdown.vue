@@ -1,18 +1,18 @@
 <template lang="pug">
-b-dropdown.SbColorThemeDropdown(v-model="base.color_theme_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="base.color_theme_key_change_handle")
+b-dropdown.SbColorThemeDropdown(v-model="TheSb.color_theme_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" :max-height="screen_is_desktop ? '50vh' : null" :scrollable="screen_is_desktop" @change="TheSb.color_theme_key_change_handle")
   template(#trigger)
-    b-button(:label="base.color_theme_info.name" icon-right="menu-down" size="is-small")
-  template(v-for="e in base.ColorThemeInfo.values")
+    b-button(:label="TheSb.color_theme_info.name" icon-right="menu-down" size="is-small")
+  template(v-for="e in TheSb.ColorThemeInfo.values")
     template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
       template(v-if="e.separator")
         b-dropdown-item(separator)
       template(v-else)
-        b-dropdown-item(:class="e.key" :value="e.key" @click="base.color_theme_item_click_handle(e)")
+        b-dropdown-item(:class="e.key" :value="e.key" @click="TheSb.color_theme_item_click_handle(e)")
           .media
             .media-content
               .is_line_break_on.is-size-7
                 | {{e.name}}
-              img.is-block(:src="e.thumbnail_url(base)" loading="lazy")
+              img.is-block(:src="e.thumbnail_url(TheSb)" loading="lazy")
 </template>
 
 <script>

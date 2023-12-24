@@ -1,13 +1,13 @@
 <template lang="pug">
-.SbActionLog.SideColumn.column(:class="has_content_class(base.action_logs)")
+.SbActionLog.SideColumn.column(:class="has_content_class(TheSb.action_logs)")
   .SideColumnScroll(ref="SideColumnScroll")
-    .mini_title(v-if="base.debug_mode_p")
+    .mini_title(v-if="TheSb.debug_mode_p")
       | 操作履歴
       span.mini_title_desc
         | タップで戻れる
     .SbAvatarLines
-      template(v-for="(e, i) in base.action_logs")
-        SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="base.action_log_click_handle(e)" :medal_show_p="false")
+      template(v-for="(e, i) in TheSb.action_logs")
+        SbAvatarLine.is-clickable(:info="e" tag="a" :key="e.unique_key" @click="TheSb.action_log_click_handle(e)" :medal_show_p="false")
           template(v-if="e.label")
             template(v-if="e.label && e.label_type")
               b-tag.flex_item(:type="e.label_type" size="is-small") {{e.label}}

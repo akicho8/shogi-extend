@@ -31,10 +31,11 @@ table.ClockBoxInputTable(:class="{cc_unique_p: TheSb.cc_unique_p}")
 <script>
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "ClockBoxInputTable",
-  inject: ["TheSb"],
+  mixins: [support_child],
   computed: {
     Location() { return Location },
     input_default_attrs() {

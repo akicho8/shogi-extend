@@ -26,7 +26,6 @@ export const mod_track_log = {
       this.$sound.play_click()
       this.modal_card_open({
         component: TrackLogModal,
-        props: { base: this.base },
       })
     },
     tl_clear() {

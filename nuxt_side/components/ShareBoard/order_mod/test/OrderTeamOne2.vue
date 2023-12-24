@@ -3,14 +3,14 @@
   //- ghostClass="ghost_element"
   //- @start="event_check"
   .OrderTeamOne2Title.is-size-7.has-text-weight-bold
-    | {{label}}{{base.os_dnd_count}}
+    | {{label}}{{TheApp.os_dnd_count}}
   VueDraggable(
     tag="ul"
     :animation="200"
     group="OrderTeam"
     v-model="current_items"
     ref="draggable"
-    @start="base.os_dnd_count += 1"
+    @start="TheApp.os_dnd_count += 1"
     @end="end_handle"
     )
     template(v-for="e in current_items")
@@ -29,7 +29,7 @@ export default {
   components: {
     VueDraggable,
   },
-  inject: ["base"],
+  inject: ["TheApp"],
   data() {
     return {
       current_items: this.items,
@@ -45,8 +45,8 @@ export default {
   },
   methods: {
     end_handle() {
-      this.base.os_dnd_count -= 1
-      this.base.order_unit.cache_clear()
+      this.TheApp.os_dnd_count -= 1
+      this.TheApp.order_unit.cache_clear()
     },
   },
 }

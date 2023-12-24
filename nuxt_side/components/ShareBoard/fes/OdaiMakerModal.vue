@@ -27,17 +27,16 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
 import { Dice } from "@/components/models/dice.js"
 
 const VALIDATION_ON = false
+import { support_child } from "../support_child.js"
 
 export default {
   name: "OdaiMakerModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   data() {
     return {
       dice: new Dice(),

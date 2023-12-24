@@ -67,11 +67,10 @@ export const mod_xmatch = {
       this.xmatch_modal_close()
       this.xmatch_modal_instance = this.modal_card_open({
         component: XmatchModal,
-        props: { base: this.base },
         onCancel: () => {
           this.$sound.play_click()
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
-          this.base.rule_unselect("${name}がやめました")
+          this.TheSb.rule_unselect("${name}がやめました")
           this.xmatch_modal_close()
         },
       })

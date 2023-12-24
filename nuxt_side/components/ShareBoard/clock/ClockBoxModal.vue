@@ -66,7 +66,6 @@ import _ from "lodash"
 export default {
   name: "ClockBoxModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   methods: {
     main_switch_handle(v) {
       this.$sound.play_toggle(v)

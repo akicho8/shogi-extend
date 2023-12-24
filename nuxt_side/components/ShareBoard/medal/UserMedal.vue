@@ -7,12 +7,14 @@ span.UserMedal(v-if="medal_decorator.exist_p")
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "UserMedal",
+  mixins: [support_child],
   props: {
     name: { type: String, required: true, },
   },
-  inject: ["TheSb"],
   computed: {
     medal_decorator() { return this.TheSb.medal_decorator_by_name(this.name) },
   },

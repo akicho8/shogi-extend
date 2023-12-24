@@ -6,7 +6,7 @@ import { CcInfo } from "../clock/cc_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-export const mod_chat_ai = {
+export const mod_chat_ai_trigger_rule = {
   methods: {
     // /gpt または /gpt xxx
     ai_something_say(params) {
@@ -44,7 +44,7 @@ export const mod_chat_ai = {
 
       if (this.received_from_self(params)) { // ここで Bot は弾くので無限ループにはならない
         const value = Math.random()
-        const run = value < this.ai_auto_response_ratio // 0:必ずfalse
+        const run = value < this.ai_auto_response_ratio // 0.0:必ずfalse 1.0:必ず反応する
         this.clog([value, this.ai_auto_response_ratio, run])
         if (run) {
           this.ai_something_say({content: "", message_scope_key: params.message_scope_key})

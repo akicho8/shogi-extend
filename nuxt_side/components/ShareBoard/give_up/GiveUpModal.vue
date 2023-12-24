@@ -14,14 +14,13 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "GiveUpModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   mounted() {
     this.TheSb.talk2(this.message)
   },

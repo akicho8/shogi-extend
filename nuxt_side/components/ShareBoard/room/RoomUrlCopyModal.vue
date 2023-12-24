@@ -14,9 +14,11 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "RoomUrlCopyModal",
-  inject: ["TheSb"],
+  mixins: [support_child],
   mounted() {
     this.$sound.play("notification")
     this.TheSb.talk2("部屋のリンクをコピーしますか？")

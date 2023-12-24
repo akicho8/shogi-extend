@@ -23,9 +23,11 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "GeneralSettingModal",
-  inject: ["TheSb"],
+  mixins: [support_child],
   data() {
     return {
       tab_index: this.TheSb.setting_category_info.code,

@@ -81,7 +81,7 @@ export const mod_action_log = {
       }
     },
     al_add_test() {
-      const i = this.base.action_logs.length
+      const i = this.action_logs.length
       this.al_add({
         lmi: {
           kif_without_from:    "☗00歩",
@@ -117,7 +117,6 @@ export const mod_action_log = {
       this.modal_card_open({
         component: ActionLogShowModal,
         props: {
-          base: this.base,
           action_log: action_log,
         },
       })

@@ -17,10 +17,11 @@ b-table.SbTrackLog(
 
 <script>
 import dayjs from "dayjs"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbTrackLog",
-  inject: ["TheSb"],
+  mixins: [support_child],
   methods: {
     time_format(t) {
       return dayjs(t).format("HH:mm:ss.SSS")

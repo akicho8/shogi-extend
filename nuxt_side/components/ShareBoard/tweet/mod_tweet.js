@@ -1,4 +1,4 @@
-import TweetModal from "./TweetModal.vue"
+import SbTweetModal from "./SbTweetModal.vue"
 const TinyURL = require("tinyurl")
 
 export const mod_tweet = {
@@ -6,7 +6,7 @@ export const mod_tweet = {
     tweet_modal_handle() {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.modal_card_open({component: TweetModal})
+      this.modal_card_open({component: SbTweetModal})
     },
 
     async tweet_handle() {

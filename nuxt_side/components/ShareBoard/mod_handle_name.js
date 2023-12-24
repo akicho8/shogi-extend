@@ -41,7 +41,6 @@ export const mod_handle_name = {
       this.modal_card_open({
         component: HandleNameModal,
         props: {
-          base: this.base,
           params: params,
         },
       })

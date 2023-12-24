@@ -27,13 +27,14 @@
 <script>
 import { TimeoutInfo } from "./timeout_info.js"
 import { Location } from "shogi-player/components/models/location.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "TimeoutModal",
+  mixins: [support_child],
   props: {
     timeout_key: { type: String, required: true, },
   },
-  inject: ["TheSb"],
   data() {
     return {
       snapshot_clock: null,

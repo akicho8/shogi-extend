@@ -44,7 +44,6 @@ import { support_child } from "../support_child.js"
 export default {
   name: "SbShortcutModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   methods: {
     close_handle() {
       this.TheSb.shortcut_modal_close_handle()

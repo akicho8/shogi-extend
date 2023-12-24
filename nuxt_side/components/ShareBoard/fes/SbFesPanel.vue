@@ -40,13 +40,12 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbFesPanel",
   mixins: [support_child],
-  inject: ["TheSb"],
 }
 </script>
 

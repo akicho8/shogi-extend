@@ -41,7 +41,6 @@ import { support_child } from "../support_child.js"
 export default {
   name: "ChatModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   mounted() {
     // // 発言の最上位(一番古いもの)を監視する
     // this.TheSb.mh_start()

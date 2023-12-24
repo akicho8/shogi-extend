@@ -18,8 +18,8 @@
         @ev_turn_offset_change="v => new_turn = v"
       )
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-4
-      PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="base.other_app_click_handle('ぴよ将棋')")
-      KentoButton(tag="a" :href="current_kifu_vo.kento_url" target="_blank" @click="base.other_app_click_handle('KENTO')")
+      PiyoShogiButton(:href="current_kifu_vo.piyo_url" @click="TheSb.other_app_click_handle('ぴよ将棋')")
+      KentoButton(tag="a" :href="current_kifu_vo.kento_url" target="_blank" @click="TheSb.other_app_click_handle('KENTO')")
       KifCopyButton(@click="kifu_copy_handle") コピー
 
     .buttons.mb-0.is-centered.are-small.is-marginless.mt-3
@@ -45,12 +45,12 @@
         :href="kifu_show_url(current_format_type_info)"
         )
 
-    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="base.debug_mode_p")
+    .buttons.mb-0.is-centered.are-small.is-marginless.mt-3(v-if="TheSb.debug_mode_p")
       b-button(tag="a" :href="current_url"      target="_blank") 別タブで開く
       b-button(tag="a" :href="json_debug_url"   target="_blank") json
       b-button(tag="a" :href="twitter_card_url" target="_blank") png
 
-    pre.mt-4(v-if="base.debug_mode_p") {{$gs.pretty_inspect(action_log)}}
+    pre.mt-4(v-if="TheSb.debug_mode_p") {{$gs.pretty_inspect(action_log)}}
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") キャンセル
@@ -88,13 +88,13 @@ export default {
     },
     apply_handle() {
       this.$sound.play_click()
-      this.base.action_log_jump({...this.action_log, turn: this.new_turn})
+      this.TheSb.action_log_jump({...this.action_log, turn: this.new_turn})
       this.$emit("close")
     },
   },
   computed: {
     current_format_type_info() {
-      return this.base.FormatTypeInfo.fetch("kif_utf8")
+      return this.TheSb.FormatTypeInfo.fetch("kif_utf8")
     },
   },
 }

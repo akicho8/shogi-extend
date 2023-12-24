@@ -31,14 +31,13 @@ SbAvatarLine.SbMemberOne.is-clickable(
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbMemberOne",
   mixins: [support_child],
-  inject: ["TheSb"],
   props: {
     info: { type: Object, required: true, },
   },

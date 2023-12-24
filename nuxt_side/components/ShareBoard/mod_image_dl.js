@@ -8,7 +8,6 @@ export const mod_image_dl = {
       this.$sound.play_click()
       this.modal_card_open({
         component: ImageDlModal,
-        props: { base: this.base },
       })
     },
 
@@ -31,8 +30,8 @@ export const mod_image_dl = {
     },
 
     image_dl_run() {
-      window.location.href = this.base.image_dl_preview_url({disposition: "attachment"})
-      this.base.shared_al_add_simple("画像ダウンロード")
+      window.location.href = this.TheSb.image_dl_preview_url({disposition: "attachment"})
+      this.TheSb.shared_al_add_simple("画像ダウンロード")
     },
   },
 

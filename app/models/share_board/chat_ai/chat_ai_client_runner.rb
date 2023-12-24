@@ -1,8 +1,8 @@
-# -*- compile-command: "rails runner 'p ShareBoard::ChatAi::GptaiSimple.new(\"OK\").call'" -*-
+# -*- compile-command: "rails runner 'p ShareBoard::ChatAi::ChatAiClientRunner.new(\"OK\").call'" -*-
 
 module ShareBoard
   module ChatAi
-    class GptaiSimple
+    class ChatAiClientRunner
       attr_accessor :user_text
 
       def initialize(user_text, options = {})

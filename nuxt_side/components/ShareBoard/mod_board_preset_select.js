@@ -27,7 +27,6 @@ export const mod_board_preset_select = {
       this.$sound.play_click()
       this.modal_card_open({
         component: BoardPresetSelectModal,
-        props: { base: this.base },
       })
     },
   },

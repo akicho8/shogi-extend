@@ -15,12 +15,14 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "IllegalModal",
+  mixins: [support_child],
   props: {
     illegal_names: { type: Array,  required: true, },
   },
-  inject: ["TheSb"],
   data() {
     return {
       current_location: null, // モーダル発動時の先後

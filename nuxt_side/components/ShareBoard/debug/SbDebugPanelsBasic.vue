@@ -9,9 +9,11 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "SbDebugPanelsBasic",
-  inject: ["TheSb"],
+  mixins: [support_child],
   computed: {
     Howler() { return window.Howler },
   },

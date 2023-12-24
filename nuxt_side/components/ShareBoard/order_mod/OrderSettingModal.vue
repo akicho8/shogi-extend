@@ -68,13 +68,12 @@
 
 <script>
 const SHUFFLE_MAX = 8
-
-import { support_child } from "../support_child.js"
 import { Gs           } from "@/components/models/gs.js"
 import { FurigomaPack  } from "@/components/models/furigoma/furigoma_pack.js"
 import { Location      } from "shogi-player/components/models/location.js"
 import { Dice          } from "@/components/models/dice.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "OrderSettingModal",
@@ -89,7 +88,6 @@ export default {
       dice: new Dice(),
     }
   },
-  inject: ["TheSb"],
   methods: {
     //////////////////////////////////////////////////////////////////////////////// イベント
 
