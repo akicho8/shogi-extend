@@ -18,7 +18,6 @@ import _ from "lodash"
 export default {
   name: "SbDebugPanelsChat",
   mixins: [support_child],
-  inject: ["TheSb"],
 }
 </script>
 

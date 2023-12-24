@@ -27,13 +27,12 @@
 </template>
 
 <script>
-import { support_child } from "./support_child.js"
 import _ from "lodash"
+import { support_child } from "./support_child.js"
 
 export default {
   name: "SbAvatarLine",
   mixins: [support_child],
-  inject: ["TheSb"],
   props: {
     info:         { type: Object, required: true  },
     replace_icon: { type: String, required: false },

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title ツイート
-    SbColorThemeDropdown(:base="TheSb")
+    SbColorThemeDropdown
 
   .modal-card-body
     .preview_image_container.is-flex
@@ -16,9 +16,11 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
-  name: "TweetModal",
-  inject: ["TheSb"],
+  name: "SbTweetModal",
+  mixins: [support_child],
   beforeMount() {
     this.TheSb.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
@@ -51,7 +53,7 @@ export default {
 </script>
 
 <style lang="sass">
-.TweetModal
+.SbTweetModal
   +modal_max_width(960px)
 
   // 上下の不自然な隙間を取る

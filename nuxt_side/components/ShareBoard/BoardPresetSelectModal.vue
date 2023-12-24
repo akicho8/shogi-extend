@@ -5,12 +5,12 @@
       | 手合割
     div
       span.mx-1 評価値
-      span(v-if="base.board_preset_info.handicap_level >= 1") +
-      | {{base.board_preset_info.handicap_level}}
+      span(v-if="TheSb.board_preset_info.handicap_level >= 1") +
+      | {{TheSb.board_preset_info.handicap_level}}
   .modal-card-body
     .select_container
-      b-select.board_preset_key(v-model="base.board_preset_key" @input="$sound.play_click()")
-        option(v-for="e in base.BoardPresetInfo.values" :value="e.key" v-text="e.name")
+      b-select.board_preset_key(v-model="TheSb.board_preset_key" @input="$sound.play_click()")
+        option(v-for="e in TheSb.BoardPresetInfo.values" :value="e.key" v-text="e.name")
     .sp_container.mt-4
       CustomShogiPlayer(
         sp_mode="view"
@@ -20,11 +20,11 @@
         :sp_piece_stand_blank_then_hidden="false"
         sp_operation_disabled
         :sp_turn="0"
-        :sp_body="base.board_preset_info.sfen"
+        :sp_body="TheSb.board_preset_info.sfen"
       )
     .description_container.mt-4
       .description
-        | {{base.board_preset_info.description}}
+        | {{TheSb.board_preset_info.description}}
     .buttons_container.buttons.has-addons.is-centered.mb-0.mt-4
       b-button.mb-0(@click="next_handle(-1)" icon-left="chevron-left")
       b-button.mb-0(@click="next_handle(1)" icon-left="chevron-right")
@@ -42,10 +42,10 @@ export default {
   methods: {
     next_handle(v) {
       this.$sound.play_click()
-      const i = this.base.board_preset_info.code + v
-      const new_index = this.$gs.imodulo(i, this.base.BoardPresetInfo.values.length)
-      const next = this.base.BoardPresetInfo.fetch(new_index)
-      this.base.board_preset_key = next.key
+      const i = this.TheSb.board_preset_info.code + v
+      const new_index = this.$gs.imodulo(i, this.TheSb.BoardPresetInfo.values.length)
+      const next = this.TheSb.BoardPresetInfo.fetch(new_index)
+      this.TheSb.board_preset_key = next.key
     },
     close_handle() {
       this.$sound.play_click()
@@ -53,7 +53,7 @@ export default {
     },
     apply_handle() {
       this.$sound.play_click()
-      this.base.force_sync_handicap()
+      this.TheSb.force_sync_handicap()
       this.$emit("close")
     },
   },

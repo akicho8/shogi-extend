@@ -41,17 +41,17 @@ client-only
       //- p URL: {{current_url}}
       //- p サイドバー {{sidebar_p}}
 
-    SbSidebar(:base="base")
+    SbSidebar
     SbNavbar
 
     MainSection.is_mobile_padding_zero(v-if="room_creating_busy === 0")
       .container.is-fluid
         //- .is-desktop でデスクトップ以上のときだけ横並びになる
         .columns.is-centered.is-desktop.is-variable.is-0
-          SbSp(:base="base" ref="SbSp")
+          SbSp(ref="SbSp")
           SbMemberList
-          SbActionLog(:base="base" ref="SbActionLog")
-        SbDebugPanels(:base="base" v-if="debug_mode_p")
+          SbActionLog(ref="SbActionLog")
+        SbDebugPanels(v-if="debug_mode_p")
 </template>
 
 <script>
@@ -124,7 +124,7 @@ import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
 import { mod_chat      } from "./chat/mod_chat.js"
 import { mod_chat_message_list } from "./chat/mod_chat_message_list.js"
-import { mod_chat_ai   } from "./chat/mod_chat_ai.js"
+import { mod_chat_ai_trigger_rule   } from "./chat/mod_chat_ai_trigger_rule.js"
 import { mod_chat_message_history  } from "./chat/mod_chat_message_history.js"
 
 import { mod_console      } from "./console/mod_console.js"
@@ -162,7 +162,7 @@ export default {
 
     mod_chat,
     mod_chat_message_list,
-    mod_chat_ai,
+    mod_chat_ai_trigger_rule,
     mod_chat_message_history,
 
     mod_console,
@@ -320,7 +320,7 @@ export default {
   },
 
   computed: {
-    base()           { return this },
+    TheSelf()        { return this },
     FormatTypeInfo() { return FormatTypeInfo },
     AppConfig()      { return AppConfig },
 

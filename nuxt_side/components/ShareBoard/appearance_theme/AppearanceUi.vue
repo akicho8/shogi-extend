@@ -6,9 +6,11 @@
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "AppearanceUi",
-  inject: ["TheSb"],
+  mixins: [support_child],
 }
 </script>
 

@@ -16,7 +16,6 @@ export const mod_sound_resume = {
       this.sound_resume_modal_close()
       this.sound_resume_modal_instance = this.$buefy.modal.open({
         component: SoundResumeModal,
-        props: { base: this.base },
         customClass: "SoundResumeModal",
         parent: this,
         animation: "",

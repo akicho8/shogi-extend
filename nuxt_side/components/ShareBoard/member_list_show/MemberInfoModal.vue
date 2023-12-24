@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "MemberInfoModal",
@@ -40,7 +40,6 @@ export default {
   props: {
     member_info: { type: Object, required: true, },
   },
-  inject: ["TheSb"],
   methods: {
     close_handle() {
       this.$sound.play_click()

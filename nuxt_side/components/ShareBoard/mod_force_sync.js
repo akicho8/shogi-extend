@@ -29,7 +29,6 @@ export const mod_force_sync = {
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
-            base: this.base,
             sfen: this.current_sfen,
             turn: 0,
           },
@@ -60,7 +59,6 @@ export const mod_force_sync = {
         this.modal_card_open({
           component: TurnChangeModal,
           props: {
-            base: this.base,
             sfen: this.current_sfen,
             turn: _.clamp(this.current_turn - 1, 0, this.current_turn),
           },
@@ -76,7 +74,6 @@ export const mod_force_sync = {
       this.$sound.play_click()
       this.modal_card_open({
         component: ForceSyncModal,
-        props: { base: this.base },
       })
     },
 

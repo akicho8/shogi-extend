@@ -40,14 +40,13 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import dayjs from "dayjs"
 import { Location } from "shogi-player/components/models/location.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SbMemberList",
   mixins: [support_child],
-  inject: ["TheSb"],
   computed: {
     Location() { return Location },
   },

@@ -28,14 +28,13 @@
 </template>
 
 <script>
-import { support_child } from "../support_child.js"
 import { Location } from "shogi-player/components/models/location.js"
 import _ from "lodash"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "ClientVoteModal",
   mixins: [support_child],
-  inject: ["TheSb"],
   methods: {
     // 選択
     select_handle(name, index) {

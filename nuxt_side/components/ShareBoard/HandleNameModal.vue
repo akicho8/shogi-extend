@@ -22,7 +22,7 @@ export default {
   },
   data() {
     return {
-      new_name: this.base.user_name,
+      new_name: this.TheSb.user_name,
     }
   },
   mounted() {
@@ -36,10 +36,10 @@ export default {
     save_handle() {
       this.$sound.play_click()
       this.new_name = _.trim(this.new_name)
-      if (this.base.handle_name_invalid_then_toast_warn(this.new_name)) {
+      if (this.TheSb.handle_name_invalid_then_toast_warn(this.new_name)) {
         return
       }
-      this.base.handle_name_set(this.new_name)
+      this.TheSb.handle_name_set(this.new_name)
 
       // ハンドルネームを正しく入力した場合にのみ success_callback を実行する
       if (this.params) {

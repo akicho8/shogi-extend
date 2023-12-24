@@ -10,9 +10,11 @@ SimpleRadioButton.SimpleRadioButtonWrapper.field_block(
 </template>
 
 <script>
+import { support_child } from "../support_child.js"
+
 export default {
   name: "SimpleRadioButtonWrapper",
-  inject: ["TheSb"],
+  mixins: [support_child],
   props: {
     item: { type: Object, required: true },
   },

@@ -12,7 +12,7 @@
         sp_slider
         sp_controller
         :sp_view_mode_piece_movable="false"
-        :sp_viewpoint="base.viewpoint"
+        :sp_viewpoint="TheSb.viewpoint"
         :sp_body="sfen"
         :sp_turn="turn"
         @ev_turn_offset_change="v => new_turn = v"
@@ -28,9 +28,7 @@ import { support_child } from "./support_child.js"
 
 export default {
   name: "TurnChangeModal",
-  mixins: [
-    support_child,
-  ],
+  mixins: [support_child],
   props: {
     sfen: { type: String, required: true, },
     turn: { type: Number, required: true, },
@@ -47,7 +45,7 @@ export default {
     },
     apply_handle() {
       this.$sound.play_click()
-      this.base.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
+      this.TheSb.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
       this.$emit("close")
     },
   },

@@ -19,7 +19,6 @@ export const mod_room_recreate = {
       this.$sound.play_click()
       this.modal_card_open({
         component: RoomRecreateModal,
-        props: { base: this.base },
       })
     },
 

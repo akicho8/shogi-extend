@@ -8,7 +8,6 @@ export const mod_dashboard = {
       this.$sound.play_click()
       this.modal_card_open({
         component: SbDashboardModal,
-        props: { base: this.base },
       })
     },
   },

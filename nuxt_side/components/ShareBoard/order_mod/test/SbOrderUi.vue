@@ -74,7 +74,7 @@ export default {
   },
   provide() {
     return {
-      base: this,
+      TheApp: this,
     }
   },
   data() {

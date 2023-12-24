@@ -29,18 +29,10 @@
 </template>
 
 <script>
-// import { support_child } from "./support_child.js"
-
+// これは特殊で ../Swars/SwarsBattleShow/SwarsBattleShowSidebar.vue のなかでも使っている
 export default {
   name: "SbSidebarExport",
-  // mixins: [support_child],
   props: {
-    // base.current_turn
-    // base.kifu_copy_handle(e)
-    // base.kifu_show_handle(e)
-    // base.kifu_show_url(e)
-    // base.kifu_download_handle(e)
-    // base.kifu_download_url(e)
     base: { type: Object, required: true },
   },
 }

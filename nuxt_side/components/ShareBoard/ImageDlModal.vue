@@ -2,22 +2,22 @@
 .modal-card
   .modal-card-head
     .modal-card-title 画像ダウンロード
-    SbColorThemeDropdown(:base="base")
+    SbColorThemeDropdown
 
-    b-dropdown.image_size_key_dropdown(v-model="base.image_size_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" @change="base.image_size_key_change_handle")
+    b-dropdown.image_size_key_dropdown(v-model="TheSb.image_size_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" @change="TheSb.image_size_key_change_handle")
       template(#trigger)
-        b-button(:label="base.image_size_info.name" icon-right="menu-down" size="is-small")
-      template(v-for="e in base.ImageSizeInfo.values")
+        b-button(:label="TheSb.image_size_info.name" icon-right="menu-down" size="is-small")
+      template(v-for="e in TheSb.ImageSizeInfo.values")
         template(v-if="e.environment == null || e.environment.includes($config.STAGE)")
           template(v-if="e.separator")
             b-dropdown-item(separator)
           template(v-else)
-            b-dropdown-item(:class="e.key" :value="e.key" @click="base.image_size_item_click_handle(e)") {{e.option_name}}
+            b-dropdown-item(:class="e.key" :value="e.key" @click="TheSb.image_size_item_click_handle(e)") {{e.option_name}}
 
   .modal-card-body
     .preview_image_container.is-flex
       .preview_image.is-flex
-        b-image(:src="preview_url" @load="base.color_theme_image_load_handle" @error="base.color_theme_image_error_handle" :loading="true")
+        b-image(:src="preview_url" @load="TheSb.color_theme_image_load_handle" @error="TheSb.color_theme_image_error_handle" :loading="true")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button.download_handle(@click="download_handle" type="is-primary") ダウンロード
@@ -29,13 +29,8 @@ import { support_child } from "./support_child.js"
 export default {
   name: "ImageDlModal",
   mixins: [support_child],
-  data() {
-    return {
-    }
-  },
-
   beforeMount() {
-    this.base.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
+    this.TheSb.color_theme_loading_start() // b-image で初回のロードに時間がかかるため
   },
   methods: {
     close_handle() {
@@ -44,11 +39,11 @@ export default {
     },
     download_handle() {
       this.$sound.play_click()
-      this.base.image_dl_run()
+      this.TheSb.image_dl_run()
     },
   },
   computed: {
-    preview_url() { return this.base.image_dl_preview_url() },
+    preview_url() { return this.TheSb.image_dl_preview_url() },
   },
 }
 </script>
