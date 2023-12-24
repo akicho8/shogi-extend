@@ -29,11 +29,11 @@ export default {
     },
     test_handle() {
       this.$sound.play_click()
-      this.TheSb.room_recreate()
+      this.SB.room_recreate()
     },
     apply_handle() {
       this.$sound.play_click()
-      this.TheSb.room_recreate()
+      this.SB.room_recreate()
       this.$emit("close")
     },
   },

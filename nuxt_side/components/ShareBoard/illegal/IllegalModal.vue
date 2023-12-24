@@ -4,7 +4,7 @@
     .modal-card-title
       | {{reason}}で{{current_location.name}}の勝ち！
   .modal-card-body
-    template(v-if="TheSb.auto_resign_info.key === 'is_auto_resign_on'")
+    template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
       p 終局です
     template(v-else)
       p ルールを守りましょう
@@ -29,12 +29,12 @@ export default {
     }
   },
   created() {
-    this.current_location = this.TheSb.current_location
+    this.current_location = this.SB.current_location
   },
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.illegal_modal_close()
+      this.SB.illegal_modal_close()
       this.$emit("close")
     },
   },

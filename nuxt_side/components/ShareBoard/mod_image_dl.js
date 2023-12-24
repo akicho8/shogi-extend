@@ -30,8 +30,8 @@ export const mod_image_dl = {
     },
 
     image_dl_run() {
-      window.location.href = this.TheSb.image_dl_preview_url({disposition: "attachment"})
-      this.TheSb.shared_al_add_simple("画像ダウンロード")
+      window.location.href = this.SB.image_dl_preview_url({disposition: "attachment"})
+      this.SB.shared_al_add_simple("画像ダウンロード")
     },
   },
 

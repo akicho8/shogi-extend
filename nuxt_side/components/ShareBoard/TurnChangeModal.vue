@@ -12,7 +12,7 @@
         sp_slider
         sp_controller
         :sp_view_mode_piece_movable="false"
-        :sp_viewpoint="TheSb.viewpoint"
+        :sp_viewpoint="SB.viewpoint"
         :sp_body="sfen"
         :sp_turn="turn"
         @ev_turn_offset_change="v => new_turn = v"
@@ -45,7 +45,7 @@ export default {
     },
     apply_handle() {
       this.$sound.play_click()
-      this.TheSb.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
+      this.SB.new_turn_set_and_sync({sfen: this.sfen, turn: this.new_turn})
       this.$emit("close")
     },
   },

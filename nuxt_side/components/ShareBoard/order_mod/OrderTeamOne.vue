@@ -46,11 +46,11 @@ export default {
     // dnd
 
     start_handle() {
-      this.TheSb.new_v.os_dnd_count += 1
+      this.SB.new_v.os_dnd_count += 1
     },
     end_handle() {
-      this.TheSb.new_v.os_dnd_count -= 1
-      this.TheSb.new_v.order_unit.cache_clear()
+      this.SB.new_v.os_dnd_count -= 1
+      this.SB.new_v.order_unit.cache_clear()
     },
 
     // name
@@ -73,14 +73,14 @@ export default {
       // return "status_disconnet"
       // return "status_blur"
 
-      const member_info = this.TheSb.room_user_names_hash[item.to_s]
+      const member_info = this.SB.room_user_names_hash[item.to_s]
       if (member_info == null) {
         return "status_leave"
       }
-      if (this.TheSb.member_is_window_blur(member_info)) {
+      if (this.SB.member_is_window_blur(member_info)) {
         return "status_blur"
       }
-      if (this.TheSb.member_is_disconnect(member_info)) {
+      if (this.SB.member_is_disconnect(member_info)) {
         return "status_disconnet"
       }
       return "status_active"

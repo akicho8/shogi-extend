@@ -262,7 +262,7 @@ export default {
   },
   provide() {
     return {
-      TheSb: this,
+      SB: this,
     }
   },
   beforeMount() {

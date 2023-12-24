@@ -4,10 +4,10 @@
     .modal-card-title
       | 部屋の情報
     b-tooltip(position="is-left" label="パーマリンク")
-      a.permalink(:href="TheSb.dashboard_url" target="_blank")
+      a.permalink(:href="SB.dashboard_url" target="_blank")
         b-icon(icon="link")
   .modal-card-body
-    SbDashboardBody(:room_key="TheSb.room_key")
+    SbDashboardBody(:room_key="SB.room_key")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
 </template>

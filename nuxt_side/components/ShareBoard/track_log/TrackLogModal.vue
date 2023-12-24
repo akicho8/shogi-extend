@@ -2,10 +2,10 @@
 .modal-card.TrackLogModal
   .modal-card-head
     .modal-card-title
-      | ログ ({{TheSb.track_logs.length}})
+      | ログ ({{SB.track_logs.length}})
 
   .modal-card-body
-    SbTrackLog(:TheSb="TheSb" ref="SbTrackLog")
+    SbTrackLog(:SB="SB" ref="SbTrackLog")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") 閉じる
@@ -21,7 +21,7 @@ export default {
   name: "TrackLogModal",
   mixins: [support_child],
   mounted() {
-    this.TheSb.tl_scroll_to_bottom()
+    this.SB.tl_scroll_to_bottom()
   },
   methods: {
     close_handle() {
@@ -30,11 +30,11 @@ export default {
     },
     test_handle() {
       this.$sound.play_click()
-      this.TheSb.tl_test()
+      this.SB.tl_test()
     },
     clear_handle() {
       this.$sound.play_click()
-      this.TheSb.tl_clear()
+      this.SB.tl_clear()
     },
   },
 }

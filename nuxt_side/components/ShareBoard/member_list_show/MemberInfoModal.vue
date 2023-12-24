@@ -3,7 +3,7 @@
   .modal-card-head
     .modal-card-title
       | {{member_info.from_user_name}}
-      span.mx-1(v-if="TheSb.member_is_self(member_info)")
+      span.mx-1(v-if="SB.member_is_self(member_info)")
         | (自分)
 
   .modal-card-body
@@ -11,7 +11,7 @@
       table.table.is-fullwidth.is-narrow
         tbody.is-size-7
           template(v-for="row in table_rows")
-            tr(v-if="row.enabled || TheSb.debug_mode_p")
+            tr(v-if="row.enabled || SB.debug_mode_p")
               th {{row.label}}
               td.is_line_break_on(:class="row.value_class")
                 template(v-if="_.isFunction(row.value)")
@@ -19,12 +19,12 @@
                 template(v-else)
                   | {{row.value}}
                 span.mx-1(v-if="row.desc" v-text="row.desc" :class="row.desc_class")
-    pre(v-if="TheSb.debug_mode_p")
+    pre(v-if="SB.debug_mode_p")
       | {{$gs.pretty_inspect(member_info)}}
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
-    template(v-if="TheSb.debug_mode_p")
-      template(v-if="TheSb.order_lookup_from_name(member_info.from_user_name)")
+    template(v-if="SB.debug_mode_p")
+      template(v-if="SB.order_lookup_from_name(member_info.from_user_name)")
         b-button.reject_handle(@click="reject_handle" type="is-warning") 順番除外
       b-button.kick_handle(@click="kick_handle" type="is-danger") KICK
     b-button.ping_handle(@click="ping_handle" type="is-primary") PING
@@ -46,13 +46,13 @@ export default {
       this.$emit("close")
     },
     ping_handle() {
-      this.TheSb.member_info_ping_handle(this.member_info)
+      this.SB.member_info_ping_handle(this.member_info)
     },
     reject_handle() {
-      this.TheSb.os_member_delete(this.member_info.from_user_name)
+      this.SB.os_member_delete(this.member_info.from_user_name)
     },
     kick_handle() {
-      this.TheSb.user_kick(this.member_info.from_user_name)
+      this.SB.user_kick(this.member_info.from_user_name)
     },
     seconds_ago(v) {
       const seconds = Math.ceil((this.$time.current_ms() - v) / 1000)
@@ -69,12 +69,12 @@ export default {
         {
           enabled: true,
           label: "通信状況",
-          value: this.TheSb.member_net_level(this.member_info),
+          value: this.SB.member_net_level(this.member_info),
         },
         {
           enabled: true,
           label: "接続切れ",
-          value: `${this.$gs.number_floor(this.TheSb.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
+          value: `${this.$gs.number_floor(this.SB.member_disconnected_count_per_min(this.member_info), 2)}回/1分 計${this.member_info.ac_events_hash.disconnected || 0}回`,
         },
         {
           enabled: true,
@@ -84,7 +84,7 @@ export default {
         {
           enabled: true,
           label: "端末",
-          value: this.TheSb.UaIconInfo.fetch(this.member_info.ua_icon_key).name,
+          value: this.SB.UaIconInfo.fetch(this.member_info.ua_icon_key).name,
         },
         {
           enabled: true,
@@ -102,12 +102,12 @@ export default {
         {
           enabled: true,
           label: "役割",
-          value: this.TheSb.member_status_label(this.member_info),
+          value: this.SB.member_status_label(this.member_info),
         },
         {
           enabled: true,
           label: "手番",
-          value: this.TheSb.user_name_to_display_turns(this.member_info.from_user_name) ?? "なし",
+          value: this.SB.user_name_to_display_turns(this.member_info.from_user_name) ?? "なし",
         },
         {
           enabled: true,

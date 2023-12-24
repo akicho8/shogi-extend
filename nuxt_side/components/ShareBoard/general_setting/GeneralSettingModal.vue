@@ -5,11 +5,11 @@
       | 設定
   .modal-card-body
     b-tabs(type="is-boxed" size="is-small" v-model="tab_index" @input="input_handle")
-      template(v-for="e in TheSb.SettingCategoryInfo.values")
+      template(v-for="e in SB.SettingCategoryInfo.values")
         b-tab-item(:label="e.name")
     .tab_content
-      .columns.form_block.is-multiline.is-variable.is-0(:key="TheSb.setting_category_info.key")
-        template(v-for="item in TheSb.setting_category_info.list.values")
+      .columns.form_block.is-multiline.is-variable.is-0(:key="SB.setting_category_info.key")
+        template(v-for="item in SB.setting_category_info.list.values")
           .column(:class="item.column_class || 'is-12-tablet'")
             SimpleRadioButtonWrapper(:item="item")
     .notification.is-warning.is-light.is-size-7.mt-3
@@ -30,19 +30,19 @@ export default {
   mixins: [support_child],
   data() {
     return {
-      tab_index: this.TheSb.setting_category_info.code,
+      tab_index: this.SB.setting_category_info.code,
     }
   },
   watch: {
-    tab_index(v) { this.TheSb.setting_category_key = this.TheSb.SettingCategoryInfo.fetch(v).key },
+    tab_index(v) { this.SB.setting_category_key = this.SB.SettingCategoryInfo.fetch(v).key },
   },
   methods: {
     close_handle() {
-      this.TheSb.general_setting_modal_close_handle()
+      this.SB.general_setting_modal_close_handle()
     },
     input_handle(index) {
       this.$sound.play_click()
-      this.TheSb.talk2(this.TheSb.SettingCategoryInfo.fetch(index).name)
+      this.SB.talk2(this.SB.SettingCategoryInfo.fetch(index).name)
     },
   },
 }

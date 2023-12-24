@@ -21,7 +21,7 @@ export default {
   mixins: [support_child],
   mounted() {
     this.$sound.play("notification")
-    this.TheSb.talk2("部屋のリンクをコピーしますか？")
+    this.SB.talk2("部屋のリンクをコピーしますか？")
   },
   methods: {
     close_handle() {
@@ -29,7 +29,7 @@ export default {
       this.$emit("close")
     },
     apply_handle() {
-      if (this.TheSb.room_url_copy_handle()) {
+      if (this.SB.room_url_copy_handle()) {
         this.$emit("close")
       }
     },

@@ -70,7 +70,7 @@ export const mod_xmatch = {
         onCancel: () => {
           this.$sound.play_click()
           this.xmatch_rule_key_reset() // ac_lobbyが閉じているBCが来ないかもしれないため最初に解除しておく
-          this.TheSb.rule_unselect("${name}がやめました")
+          this.SB.rule_unselect("${name}がやめました")
           this.xmatch_modal_close()
         },
       })

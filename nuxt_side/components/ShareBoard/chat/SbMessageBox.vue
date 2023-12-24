@@ -1,9 +1,9 @@
 <template lang="pug">
 .SbMessageBox.is_scroll_y
-  template(v-for="e in TheSb.message_records")
+  template(v-for="e in SB.message_records")
     SbAvatarLine(:info="e" :key="e.unique_key")
       .flex_item.is-size-7(v-if="development_p") [{{e.unique_key}}]
-      XemojiWrap.flex_item.message_body(:class="e.message_class" :str="TheSb.ml_show(e)")
+      XemojiWrap.flex_item.message_body(:class="e.message_class" :str="SB.ml_show(e)")
 </template>
 
 <script>
