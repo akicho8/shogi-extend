@@ -39,8 +39,8 @@ export default {
     medal_show_p: { type: Boolean, default: true  },
   },
   computed: {
-    default_guardian() { return this.TheSb.guardian_from_str(this.info.from_user_name)       },
-    medal_decorator()  { return this.TheSb.medal_decorator_by_name(this.info.from_user_name) },
+    default_guardian() { return this.SB.guardian_from_str(this.info.from_user_name)       },
+    medal_decorator()  { return this.SB.medal_decorator_by_name(this.info.from_user_name) },
   },
 }
 </script>

@@ -2,11 +2,11 @@
 .modal-card
   .modal-card-head
     .modal-card-title 投了
-    a.cc_time_zero_callback(@click="TheSb.cc_time_zero_callback" v-if="TheSb.debug_mode_p") 時間切れ
+    a.cc_time_zero_callback(@click="SB.cc_time_zero_callback" v-if="SB.debug_mode_p") 時間切れ
   .modal-card-body
     .content
       p {{message}}
-      p.give_up_warn_message.is-size-7.has-text-grey(v-if="TheSb.my_team_member_is_many_p")
+      p.give_up_warn_message.is-size-7.has-text-grey(v-if="SB.my_team_member_is_many_p")
         | 自分本位の投了は仲間から反感を買う場合があります
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 諦めない
@@ -22,28 +22,28 @@ export default {
   name: "GiveUpModal",
   mixins: [support_child],
   mounted() {
-    this.TheSb.talk2(this.message)
+    this.SB.talk2(this.message)
   },
   methods: {
     give_up_handle() {
       this.$sound.play_click()
       this.$emit("close")
-      if (!this.TheSb.give_up_button_show_p) {
+      if (!this.SB.give_up_button_show_p) {
         this.toast_ng("投了確認モーダルを出している間に投了できる条件が無効になりました")
         return
       }
-      this.TheSb.give_up_direct_run_with_valid()
+      this.SB.give_up_direct_run_with_valid()
     },
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.give_up_modal_close()
+      this.SB.give_up_modal_close()
     },
   },
   computed: {
     message() {
       let s = null
-      if (this.TheSb.self_is_member_p) {
-        if (this.TheSb.current_turn_self_p) {
+      if (this.SB.self_is_member_p) {
+        if (this.SB.current_turn_self_p) {
           s = "本当に投了しますか？"
         } else {
           s = "手番ではないけど本当に投了しますか？"

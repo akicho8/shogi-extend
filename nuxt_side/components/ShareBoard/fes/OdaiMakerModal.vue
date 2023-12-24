@@ -3,8 +3,8 @@
   .modal-card-head
     .modal-card-title
       | お題メーカー
-      span.mx-1.has-text-grey.has-text-weight-normal(v-if="TheSb.debug_mode_p")
-        | (ID:{{TheSb.master_odai.unique_code}})
+      span.mx-1.has-text-grey.has-text-weight-normal(v-if="SB.debug_mode_p")
+        | (ID:{{SB.master_odai.unique_code}})
     a.odai_src_random_handle(@click="odai_src_random_handle")
       b-icon(:icon="dice.to_icon")
   .modal-card-body
@@ -12,18 +12,18 @@
       template(#label)
         | お題
         span.mx-1(class="has-text-grey") 例: {{example.subject}}
-      b-input.odai_subject(v-model="TheSb.master_odai.subject" ref="subject_input_tag")
+      b-input.odai_subject(v-model="SB.master_odai.subject" ref="subject_input_tag")
     b-field(grouped)
       b-field(label="選択肢1" label-position="on-border")
-        b-input.odai_left(v-model="TheSb.master_odai.left_value" :placeholder="example.left_value" expanded)
+        b-input.odai_left(v-model="SB.master_odai.left_value" :placeholder="example.left_value" expanded)
       b-field(label="選択肢2" label-position="on-border")
-        b-input.odai_right(v-model="TheSb.master_odai.right_value" :placeholder="example.right_value" expanded)
+        b-input.odai_right(v-model="SB.master_odai.right_value" :placeholder="example.right_value" expanded)
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle") キャンセル
     b-button(@click="submit_handle" type="is-primary")
       | 出題する
-      //- template(v-if="TheSb.odai_new_p") 送信する
-      //- template(v-if="TheSb.odai_persisted_p") 再送信する
+      //- template(v-if="SB.odai_new_p") 送信する
+      //- template(v-if="SB.odai_persisted_p") 再送信する
 </template>
 
 <script>
@@ -53,23 +53,23 @@ export default {
     submit_handle() {
       this.$sound.play_click()
       if (VALIDATION_ON) {
-        if (this.TheSb.master_odai.invalid_p) {
+        if (this.SB.master_odai.invalid_p) {
           this.toast_warn("ぜんぶ入力してください")
           return
         }
       }
-      this.TheSb.odai_share(this.TheSb.master_odai)
+      this.SB.odai_share(this.SB.master_odai)
       this.$emit("close")
     },
     // お題名が空のときかつデスクトップならフォーカスする
     input_focus() {
-      if (this.$gs.blank_p(this.TheSb.master_odai.subject)) {
+      if (this.$gs.blank_p(this.SB.master_odai.subject)) {
         this.desktop_focus_to(this.$refs.subject_input_tag)
       }
     },
     odai_src_random_handle() {
       this.dice.roll()
-      this.TheSb.odai_src_random_handle()
+      this.SB.odai_src_random_handle()
     },
   },
   computed: {

@@ -27,11 +27,11 @@ export default {
     },
     test_handle() {
       this.$sound.play_click()
-      this.TheSb.force_sync("テスト転送")
+      this.SB.force_sync("テスト転送")
     },
     sync_handle() {
       this.$sound.play_click()
-      this.TheSb.force_sync_direct()
+      this.SB.force_sync_direct()
       this.$emit("close")
     },
   },

@@ -3,16 +3,16 @@
   .modal-card-head
     .modal-card-title.is-flex-shrink-1
       | どのチームに参加する？
-      template(v-if="TheSb.voted_result.already_vote_p(TheSb.user_name)")
+      template(v-if="SB.voted_result.already_vote_p(SB.user_name)")
         span.mx-1.has-text-grey.has-text-weight-normal
           | 投票済み
   .modal-card-body
-    template(v-if="$gs.present_p(TheSb.received_odai.subject)")
+    template(v-if="$gs.present_p(SB.received_odai.subject)")
       .subject.has-text-centered
-        | {{TheSb.received_odai.subject}}
-    template(v-if="$gs.present_p($gs.ary_compact_blank(TheSb.received_odai.items))")
+        | {{SB.received_odai.subject}}
+    template(v-if="$gs.present_p($gs.ary_compact_blank(SB.received_odai.items))")
       .items
-        template(v-for="(e, i) in TheSb.received_odai.items")
+        template(v-for="(e, i) in SB.received_odai.items")
           .item.is_line_break_on.is-clickable.is-unselectable(
             @click="select_handle(e, i)"
             :class="vote_select_item_class(i)"
@@ -38,10 +38,10 @@ export default {
   methods: {
     // 選択
     select_handle(name, index) {
-      if (this.TheSb.voted_latest_index !== index) {
+      if (this.SB.voted_latest_index !== index) {
         this.$sound.play_click()
-        this.TheSb.talk2(name)
-        this.TheSb.voted_latest_index = index
+        this.SB.talk2(name)
+        this.SB.voted_latest_index = index
       }
     },
     // やめとく
@@ -52,16 +52,16 @@ export default {
     // このチームに参加する
     submit_handle() {
       this.$sound.play_click()
-      if (this.TheSb.voted_latest_index == null) {
+      if (this.SB.voted_latest_index == null) {
         this.toast_warn("選択してから投票してください")
         return
       }
       this.$emit("close")
-      this.TheSb.vote_select_share()
+      this.SB.vote_select_share()
     },
     // 選択した方の css クラス
     vote_select_item_class(i) {
-      if (i === this.TheSb.voted_latest_index) {
+      if (i === this.SB.voted_latest_index) {
         return "is_active"
       } else {
         return "is_inactive"

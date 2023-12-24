@@ -15,14 +15,14 @@ export const mod_urls = {
         turn: this.new_turn,
         ...this.action_log.player_names_with_title,
       })
-      this.TheSb.shared_al_add_simple("棋譜コピー")
+      this.SB.shared_al_add_simple("棋譜コピー")
     },
 
     // 棋譜URLコピー
     current_url_copy_handle() {
       this.$sound.play_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
-      this.TheSb.shared_al_add_simple("棋譜URLコピー")
+      this.SB.shared_al_add_simple("棋譜URLコピー")
     },
 
     // 指定の棋譜への直リンURL
@@ -38,7 +38,7 @@ export const mod_urls = {
     kifu_show_handle(e) {
       this.$sound.play_click()
       this.window_popup(this.kifu_show_url(e))
-      this.TheSb.shared_al_add_simple("棋譜表示")
+      this.SB.shared_al_add_simple("棋譜表示")
     },
 
     // 指定の棋譜のダウンロードURL
@@ -51,12 +51,12 @@ export const mod_urls = {
       if (typeof window !== 'undefined') {
         this.$sound.play_click()
         window.location.href = this.kifu_download_url(e)
-        this.TheSb.shared_al_add_simple("棋譜ダウンロード")
+        this.SB.shared_al_add_simple("棋譜ダウンロード")
       }
     },
 
     url_merge(params = {}) {
-      return this.TheSb.url_for({...this.current_url_params, ...params})
+      return this.SB.url_for({...this.current_url_params, ...params})
     },
   },
   computed: {
@@ -71,10 +71,10 @@ export const mod_urls = {
         xbody: SafeSfen.encode(this.new_sfen),      // プレビュー盤のSFEN
         turn: this.new_turn,                        // プレビュー盤の手数
         viewpoint: this.viewpoint,                  // メインの盤よりプレビュー盤の視点を優先させたいため
-        ...this.TheSb.url_share_params,              // 共有するパラメータ
+        ...this.SB.url_share_params,              // 共有するパラメータ
         ...this.action_log.player_names_with_title, // 面子情報
       }
-      return this.TheSb.pc_url_params_clean(params)
+      return this.SB.pc_url_params_clean(params)
     },
 
     current_kifu_vo() {

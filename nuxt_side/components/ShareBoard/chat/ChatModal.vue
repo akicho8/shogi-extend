@@ -2,37 +2,37 @@
 .modal-card
   .modal-card-head
     .modal-card-title.is-flex.is-align-items-center
-      template(v-if="TheSb.message_scope_info.title_emoji")
-        XemojiWrap.be_quiet_icon(:str="TheSb.message_scope_info.title_emoji")
+      template(v-if="SB.message_scope_info.title_emoji")
+        XemojiWrap.be_quiet_icon(:str="SB.message_scope_info.title_emoji")
       template(v-else)
         | チャット
       template(v-if="development_p")
-        span.mx-1.ml_count {{TheSb.ml_count}}
-        span.mx-1.mh_page_index {{TheSb.mh_page_index}}
+        span.mx-1.ml_count {{SB.ml_count}}
+        span.mx-1.mh_page_index {{SB.mh_page_index}}
     template(v-if="development_p")
-      b-button.mh_reload(       size="is-small" @click="TheSb.mh_reload"       ) よそ見から復帰
-      b-button.mh_reset_all(    size="is-small" @click="TheSb.mh_reset_all"    ) 初期化
-      b-button.mh_read(         size="is-small" @click="TheSb.mh_read"         ) 読込
-      b-button.mh_head_observe( size="is-small" @click="TheSb.mh_head_observe" ) 監視
-      b-button.ml_test(         size="is-small" @click="TheSb.ml_test"         ) 追加
-    b-field(v-if="TheSb.message_scope_dropdown_show_p")
-      b-dropdown(animation="" position="is-bottom-left" v-model="TheSb.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
+      b-button.mh_reload(       size="is-small" @click="SB.mh_reload"       ) よそ見から復帰
+      b-button.mh_reset_all(    size="is-small" @click="SB.mh_reset_all"    ) 初期化
+      b-button.mh_read(         size="is-small" @click="SB.mh_read"         ) 読込
+      b-button.mh_head_observe( size="is-small" @click="SB.mh_head_observe" ) 監視
+      b-button.ml_test(         size="is-small" @click="SB.ml_test"         ) 追加
+    b-field(v-if="SB.message_scope_dropdown_show_p")
+      b-dropdown(animation="" position="is-bottom-left" v-model="SB.message_scope_key" @active-change="e => e && $sound.play_click()" @change="change_handle")
         template(#trigger)
           b-button.message_scope_dropdown(icon-right="dots-vertical" size="is-small")
-        template(v-for="e in TheSb.MessageScopeInfo.values")
+        template(v-for="e in SB.MessageScopeInfo.values")
           b-dropdown-item(:key="e.key" :class="e.key" :value="e.key" v-text="e.name")
   .modal-card-body
     .body_inner
       .SbMessageLogWrapper
-        // p mh_flags={{TheSb.mh_flags}}
-        // p mh_scroll_height={{TheSb.mh_scroll_height}}
-        // p mh_seek_pos={{TheSb.mh_seek_pos}}
+        // p mh_flags={{SB.mh_flags}}
+        // p mh_scroll_height={{SB.mh_scroll_height}}
+        // p mh_seek_pos={{SB.mh_seek_pos}}
         SbMessageBox(ref="SbMessageBox")
       b-field.InputField
-        b-input(v-model="TheSb.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
+        b-input(v-model="SB.message_body" ref="message_input_tag" @keydown.native.enter="enter_handle")
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left")
-    b-button.send_handle(:class="TheSb.message_scope_info.class" :key="TheSb.message_scope_info.key" @click="send_handle" :icon-left="TheSb.message_scope_info.icon" :type="TheSb.message_scope_info.type") {{TheSb.message_scope_info.label}}
+    b-button.send_handle(:class="SB.message_scope_info.class" :key="SB.message_scope_info.key" @click="send_handle" :icon-left="SB.message_scope_info.icon" :type="SB.message_scope_info.type") {{SB.message_scope_info.label}}
 </template>
 
 <script>
@@ -43,51 +43,51 @@ export default {
   mixins: [support_child],
   mounted() {
     // // 発言の最上位(一番古いもの)を監視する
-    // this.TheSb.mh_start()
+    // this.SB.mh_start()
 
     this.input_focus()
 
     // 部屋に入っているなら古いログを取得する
-    this.TheSb.mh_chat_open()
+    this.SB.mh_chat_open()
 
     // 本当は SbMessageBox.vue の mounted で実行したかったが
     // まだコンポーネントが表示されてないので効かなかった
     // おそらく modal が表示されるまでに1フレームぐらいかかってるっぽい
     if (!this.mh_enable) {
-      this.$nextTick(() => this.TheSb.ml_scroll_to_bottom())
+      this.$nextTick(() => this.SB.ml_scroll_to_bottom())
     }
   },
   beforeDestroy() {
-    this.TheSb.mh_chat_close()
+    this.SB.mh_chat_close()
   },
   methods: {
     close_handle() {
-      this.TheSb.chat_modal_close_handle()
+      this.SB.chat_modal_close_handle()
     },
     change_handle(key) {
       this.$sound.play_click()
-      this.TheSb.talk2(this.TheSb.MessageScopeInfo.fetch(key).name)
+      this.SB.talk2(this.SB.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
-      if (this.TheSb.send_trigger_p(e)) {
+      if (this.SB.send_trigger_p(e)) {
         this.send_handle()
       }
     },
     send_handle() {
-      if (this.$gs.blank_p(this.TheSb.message_body)) {
-        if (this.TheSb.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
+      if (this.$gs.blank_p(this.SB.message_body)) {
+        if (this.SB.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
           this.chat_modal_close()
           return
         } else {
           this.$sound.play("x")
-          this.TheSb.message_body = ""
+          this.SB.message_body = ""
           this.input_focus()
           return
         }
       }
       this.$sound.play_click()
-      this.TheSb.message_share({content: this.TheSb.message_body})
-      this.TheSb.message_body = ""
+      this.SB.message_share({content: this.SB.message_body})
+      this.SB.message_body = ""
       this.input_focus()
     },
     input_focus() {

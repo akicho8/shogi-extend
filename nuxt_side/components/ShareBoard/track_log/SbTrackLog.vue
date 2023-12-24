@@ -1,6 +1,6 @@
 <template lang="pug">
 b-table.SbTrackLog(
-  :data="TheSb.track_logs"
+  :data="SB.track_logs"
   :mobile-cards="false"
   :show-header="false"
   narrowed

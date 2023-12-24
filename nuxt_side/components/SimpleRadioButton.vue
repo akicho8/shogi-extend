@@ -51,7 +51,7 @@ b-field.SimpleRadioButton(
 
 <script>
 // 使い方
-//  SimpleRadioButton.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
+//  SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
 export default {
   name: "SimpleRadioButton",
   props: {

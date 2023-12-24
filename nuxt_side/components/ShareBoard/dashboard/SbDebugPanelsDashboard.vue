@@ -3,12 +3,12 @@
   .panel
     .panel-heading
       | 部屋の情報
-    a.panel-block(@click="TheSb.general_dashboard_modal_handle") モーダル版
-    a.panel-block(:href="TheSb.dashboard_url") LINK
+    a.panel-block(@click="SB.general_dashboard_modal_handle") モーダル版
+    a.panel-block(:href="SB.dashboard_url") LINK
   .panel.assert_system_variable
     .panel-heading
       | [assert_system_variable]
-    .panel-block dashboard_url:{{TheSb.dashboard_url}}
+    .panel-block dashboard_url:{{SB.dashboard_url}}
 </template>
 
 <script>

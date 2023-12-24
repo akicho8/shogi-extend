@@ -17,7 +17,7 @@
   ////////////////////////////////////////////////////////////////////////////////
   .modal-card-body(@click="!instance && main_switch_handle(true)")
     //- pre
-    //-   | {{TheSb.cc_params}}
+    //-   | {{SB.cc_params}}
 
     template(v-if="!instance")
       .has-text-centered.has-text-grey.my-6
@@ -39,14 +39,14 @@
 
       .forms_block(v-if="!instance.pause_or_play_p")
         ClockBoxInputTable
-        b-switch.cc_unique_mode_set_handle.mt-5(:value="TheSb.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
+        b-switch.cc_unique_mode_set_handle.mt-5(:value="SB.cc_unique_p" @input="cc_unique_mode_set_handle" size="is-small") 個別設定
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
     template(v-if="instance")
-      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => TheSb.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p && TheSb.AppConfig.CLOCK_PRESET_USE")
+      b-dropdown.mx-2.preset_dropdown(position="is-top-right" @active-change="e => SB.cc_dropdown_active_change(e)" v-if="!instance.pause_or_play_p && SB.AppConfig.CLOCK_PRESET_USE")
         b-button.preset_dropdown_button(slot="trigger" icon-left="menu-up")
-        template(v-for="e in TheSb.CcRuleInfo.values")
+        template(v-for="e in SB.CcRuleInfo.values")
           b-dropdown-item(@click="cc_params_set_handle(e)") {{e.name}}
       .buttons
         template(v-if="instance.pause_or_play_p && !instance.timer")
@@ -69,14 +69,14 @@ export default {
   methods: {
     main_switch_handle(v) {
       this.$sound.play_toggle(v)
-      this.TheSb.cc_main_switch_set(v)
+      this.SB.cc_main_switch_set(v)
     },
     close_handle() {
-      this.TheSb.cc_modal_close_handle()
+      this.SB.cc_modal_close_handle()
     },
     play_handle() {
-      if (this.TheSb.clock_start_even_though_order_is_not_enabled_p) {
-        this.TheSb.cc_play_confirm({
+      if (this.SB.clock_start_even_though_order_is_not_enabled_p) {
+        this.SB.cc_play_confirm({
           onConfirm: () => {
             this.play_core_handle()
           },
@@ -88,45 +88,45 @@ export default {
     play_core_handle() {
       this.$gs.assert(!this.clock_box, "!this.clock_box")
       this.$sound.play_click()
-      this.TheSb.cc_params_apply()
-      this.TheSb.cc_play_handle()
-      this.TheSb.clock_box_share("ck_start")
-      if (this.TheSb.auto_close_p) {
+      this.SB.cc_params_apply()
+      this.SB.cc_play_handle()
+      this.SB.clock_box_share("ck_start")
+      if (this.SB.auto_close_p) {
         this.$emit("close")
       }
     },
     pause_handle() {
       this.$sound.play_click()
-      this.TheSb.cc_pause_handle()
-      this.TheSb.clock_box_share("ck_pause")
-      if (this.TheSb.ac_room && this.TheSb.order_enable_p) {
+      this.SB.cc_pause_handle()
+      this.SB.clock_box_share("ck_pause")
+      if (this.SB.ac_room && this.SB.order_enable_p) {
         this.$gs.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください"))
       }
     },
     stop_handle() {
       this.$sound.play_click()
       if (this.instance.pause_or_play_p) {
-        this.TheSb.cc_stop_handle()
-        this.TheSb.clock_box_share("ck_stop")
+        this.SB.cc_stop_handle()
+        this.SB.clock_box_share("ck_stop")
       } else {
         this.toast_ok("すでに停止しています")
       }
     },
     resume_handle() {
       this.$sound.play_click()
-      this.TheSb.cc_resume_handle()
-      this.TheSb.clock_box_share("ck_resume")
-      if (this.TheSb.auto_close_p) {
+      this.SB.cc_resume_handle()
+      this.SB.clock_box_share("ck_resume")
+      if (this.SB.auto_close_p) {
         this.$emit("close")
       }
     },
     save_handle() {
       this.$sound.play_click()
-      this.TheSb.cc_params_apply()
+      this.SB.cc_params_apply()
       this.toast_ok("反映しました")
     },
     cc_params_set_handle(e) {
-      this.TheSb.cc_params = e.cc_params   // cloneDeep したものを渡している
+      this.SB.cc_params = e.cc_params   // cloneDeep したものを渡している
       if (false) {
         this.toast_ok(`${e.name}のプリセットを読み込みました`)
       } else {
@@ -135,11 +135,11 @@ export default {
     },
     cc_unique_mode_set_handle(value) {
       this.$sound.play_toggle(value)
-      this.TheSb.cc_unique_mode_set(value)
+      this.SB.cc_unique_mode_set(value)
     },
   },
   computed: {
-    instance() { return this.TheSb.clock_box },
+    instance() { return this.SB.clock_box },
     clock_box_p: {
       get()  { return !!this.instance },
       set(v) {},

@@ -46,7 +46,7 @@ export default {
   mixins: [support_child],
   methods: {
     close_handle() {
-      this.TheSb.shortcut_modal_close_handle()
+      this.SB.shortcut_modal_close_handle()
     },
   },
 }

@@ -4,27 +4,27 @@
     .modal-card-title
       | 順番設定
 
-      template(v-if="TheSb.order_enable_p && false")
+      template(v-if="SB.order_enable_p && false")
         span.ml-1.has-text-grey.has-text-weight-normal
-          | 参加者{{TheSb.new_v.order_unit.main_user_count}}人
+          | 参加者{{SB.new_v.order_unit.main_user_count}}人
 
     // footer の close_handle は位置がずれて Capybara (spec/system/share_board_spec.rb) で押せないため上にもう1つ設置
     a.mx-2.close_handle_for_capybara.delete(@click="close_handle" v-if="development_p")
     //- template(v-if="!instance")
-    b-switch.main_switch(size="is-small" type="is-primary" v-model="TheSb.order_enable_p" @input="main_switch_handle") 有効
-  .modal-card-body(@click="!TheSb.order_enable_p && main_switch_handle(true)")
-    .start_message.has-text-centered.has-text-grey.my-6(v-if="!TheSb.order_enable_p")
+    b-switch.main_switch(size="is-small" type="is-primary" v-model="SB.order_enable_p" @input="main_switch_handle") 有効
+  .modal-card-body(@click="!SB.order_enable_p && main_switch_handle(true)")
+    .start_message.has-text-centered.has-text-grey.my-6(v-if="!SB.order_enable_p")
       | 右上のスイッチで有効にしよう
 
-    template(v-if="TheSb.order_enable_p || development_p")
-      //- pre {{JSON.stringify(TheSb.new_v.os_change.to_h)}}
+    template(v-if="SB.order_enable_p || development_p")
+      //- pre {{JSON.stringify(SB.new_v.os_change.to_h)}}
       .TeamsContainer
-        template(v-if="TheSb.new_v.order_unit.order_state.state_name === 'O1State'")
-          OrderTeamOne.dnd_both(:items.sync="TheSb.new_v.order_unit.order_state.users"   label="対局")
-        template(v-if="TheSb.new_v.order_unit.order_state.state_name === 'O2State'")
-          OrderTeamOne.dnd_black(:items.sync="TheSb.new_v.order_unit.order_state.teams[0]" label="☗")
-          OrderTeamOne.dnd_white(:items.sync="TheSb.new_v.order_unit.order_state.teams[1]" label="☖")
-        OrderTeamOne.dnd_watch_users(:items.sync="TheSb.new_v.order_unit.watch_users" label="観戦")
+        template(v-if="SB.new_v.order_unit.order_state.state_name === 'O1State'")
+          OrderTeamOne.dnd_both(:items.sync="SB.new_v.order_unit.order_state.users"   label="対局")
+        template(v-if="SB.new_v.order_unit.order_state.state_name === 'O2State'")
+          OrderTeamOne.dnd_black(:items.sync="SB.new_v.order_unit.order_state.teams[0]" label="☗")
+          OrderTeamOne.dnd_white(:items.sync="SB.new_v.order_unit.order_state.teams[1]" label="☖")
+        OrderTeamOne.dnd_watch_users(:items.sync="SB.new_v.order_unit.watch_users" label="観戦")
 
       .shuffle_and_hurigoma_buttons_container.mt-5
         b-field.is-marginless
@@ -46,23 +46,23 @@
       .buttons.is-centered.mb-0.mt-2
         b-button.mb-0(size="is-small" @click="odai_maker_handle")
           | お題ﾒｰｶｰ
-        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="TheSb.odai_received_p")
-          | 結果を反映する({{TheSb.voted_result.count}}/{{TheSb.room_user_names.length}})
-        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="TheSb.odai_received_p && TheSb.debug_mode_p")
+        b-button.mb-0(size="is-small" type="is-primary" @click="voted_result_to_order_apply_handle" v-if="SB.odai_received_p")
+          | 結果を反映する({{SB.voted_result.count}}/{{SB.room_user_names.length}})
+        b-button.mb-0(size="is-small" type="is-danger" @click="odai_delete_handle" v-if="SB.odai_received_p && SB.debug_mode_p")
           | 削除
 
       hr
       .columns.is-multiline.other_setting.is-marginless.is-variable.is-0
         .column.is-12
-          SimpleRadioButton.illegal_behavior(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="TheSb.new_v.illegal_behavior_key")
-        .column.is-12(v-if="TheSb.debug_mode_p || true")
-          SimpleRadioButton.auto_resign(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="TheSb.new_v.auto_resign_key")
+          SimpleRadioButton.illegal_behavior(:base="SB" custom-class="is-small" element_size="is-small" model_name="IllegalBehaviorInfo" :sync_value.sync="SB.new_v.illegal_behavior_key")
+        .column.is-12(v-if="SB.debug_mode_p || true")
+          SimpleRadioButton.auto_resign(:base="SB" custom-class="is-small" element_size="is-small" model_name="AutoResignInfo" :sync_value.sync="SB.new_v.auto_resign_key")
         .column.is-12
-          SimpleRadioButton.change_per(:base="TheSb" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="TheSb.new_v.change_per")
+          SimpleRadioButton.change_per(:base="SB" custom-class="is-small" element_size="is-small" model_name="ChangePerInfo" :sync_value.sync="SB.new_v.change_per")
 
   .modal-card-foot
     b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
-    template(v-if="TheSb.order_enable_p")
+    template(v-if="SB.order_enable_p")
       b-button.apply_button(@click="apply_handle" :type="submit_button_color") 確定
 </template>
 
@@ -93,19 +93,19 @@ export default {
 
     main_switch_handle(v) {
       this.$sound.play_toggle(v)
-      this.TheSb.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
+      this.SB.order_switch_share({order_enable_p: v, message: v ? "有効" : "無効"})
 
       // 対局者が0人であれば反映する(のはおかしいのでなにもしない)
       // if (v) {
-      //   if (this.TheSb.order_unit.main_user_count === 0) {
-      //     this.TheSb.new_order_share("")
+      //   if (this.SB.order_unit.main_user_count === 0) {
+      //     this.SB.new_order_share("")
       //   }
       // }
     },
 
     close_handle() {
-      if (this.TheSb.os_modal_close_if_not_save_p) {
-        this.TheSb.os_modal_close_confirm({
+      if (this.SB.os_modal_close_if_not_save_p) {
+        this.SB.os_modal_close_confirm({
           onConfirm: () => {
             this.$sound.play_click()
             this.direct_close_handle()
@@ -119,26 +119,26 @@ export default {
 
     direct_close_handle() {
       this.$emit("close")
-      this.TheSb.os_modal_close()
+      this.SB.os_modal_close()
     },
 
     test_handle() {
       this.$sound.play_click()
-      this.TheSb.tn_notify()
+      this.SB.tn_notify()
     },
 
     // 全体ｼｬｯﾌﾙ
     shuffle_all_handle() {
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.shuffle_all()
-      this.TheSb.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
+      this.SB.new_v.order_unit.shuffle_all()
+      this.SB.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.teams_each_shuffle()
-      this.TheSb.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
+      this.SB.new_v.order_unit.teams_each_shuffle()
+      this.SB.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
     // 振り駒
@@ -151,11 +151,11 @@ export default {
       })
       const prefix = `振り駒をした結果、${furigoma_pack.message}`
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
-      const user = this.TheSb.new_v.order_unit.first_user(this.TheSb.start_color)
+      this.SB.new_v.order_unit.furigoma_core(furigoma_pack.swap_p)
+      const user = this.SB.new_v.order_unit.first_user(this.SB.start_color)
       Gs.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
-      this.TheSb.shared_al_add({label: furigoma_pack.piece_names, message: message})
+      this.SB.shared_al_add({label: furigoma_pack.piece_names, message: message})
       this.dice.roll()
     },
 
@@ -163,13 +163,13 @@ export default {
     swap_handle() {
       if (this.invalid_case2("先後入替")) { return }
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.swap_run()
-      this.TheSb.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
+      this.SB.new_v.order_unit.swap_run()
+      this.SB.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
     },
 
     // 反映時のエラーの内容は new_v.order_unit に任せる
     invalid_case1() {
-      const messages = this.TheSb.new_v.order_unit.error_messages
+      const messages = this.SB.new_v.order_unit.error_messages
       if (Gs.present_p(messages)) {
         this.$sound.play("x")
         messages.forEach(e => this.toast_warn(e))
@@ -179,7 +179,7 @@ export default {
 
     // 偶数人数であること
     invalid_case2(name) {
-      if (!this.TheSb.new_v.order_unit.swap_enable_p) {
+      if (!this.SB.new_v.order_unit.swap_enable_p) {
         this.$sound.play("x")
         this.toast_warn(`参加人数が奇数のときはチーム編成が変わるので${name}できません`)
         return true
@@ -190,12 +190,12 @@ export default {
     apply_handle() {
       if (this.invalid_case1()) { return }
       this.$sound.play_click()
-      if (!this.TheSb.new_v.os_change.has_changes_to_save_p) {
+      if (!this.SB.new_v.os_change.has_changes_to_save_p) {
         this.toast_ok(`変更はありません`)
         return
       }
-      this.TheSb.new_order_share("順番設定を反映しました")
-      this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.TheSb.cc_next_message())
+      this.SB.new_order_share("順番設定を反映しました")
+      this.$gs.delay_block(this.$route.query.__system_test_now__ ? 0 : 3.0, () => this.SB.cc_next_message())
     },
 
     hint_handle(model) {
@@ -206,7 +206,7 @@ export default {
 
     state_toggle_handle() {
       this.$sound.play_click()
-      this.TheSb.new_v.order_unit.state_toggle()
+      this.SB.new_v.order_unit.state_toggle()
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -214,30 +214,30 @@ export default {
     odai_maker_handle() {
       this.$sound.play_click()
       this.direct_close_handle()
-      this.TheSb.odai_maker_handle()
-      this.TheSb.shared_al_add({label: "お題作成", message: "お題を作成しています"})
+      this.SB.odai_maker_handle()
+      this.SB.shared_al_add({label: "お題作成", message: "お題を作成しています"})
     },
 
     voted_result_to_order_apply_handle() {
       this.$sound.play_click()
-      this.TheSb.voted_result_to_order_apply()
-      this.TheSb.shared_al_add({label: "結果反映", message: "投票の結果でチーム分けしました"})
+      this.SB.voted_result_to_order_apply()
+      this.SB.shared_al_add({label: "結果反映", message: "投票の結果でチーム分けしました"})
     },
 
     odai_delete_handle() {
       this.$sound.play_click()
-      this.TheSb.odai_delete()
-      this.TheSb.shared_al_add({label: "お題削除", message: "お題を削除しました"})
+      this.SB.odai_delete()
+      this.SB.shared_al_add({label: "お題削除", message: "お題を削除しました"})
     },
 
     ////////////////////////////////////////////////////////////////////////////////
   },
   computed: {
     submit_button_color() {
-      if (this.TheSb.new_v.order_unit.invalid_p) {
+      if (this.SB.new_v.order_unit.invalid_p) {
         return "is-warning"
       }
-      if (this.TheSb.new_v.os_change.has_changes_to_save_p) {
+      if (this.SB.new_v.os_change.has_changes_to_save_p) {
         return "is-primary"
       }
     },

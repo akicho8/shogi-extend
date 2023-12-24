@@ -8,11 +8,11 @@
         | 接続切れで
       | {{snapshot_clock.current.location.flip.name}}の勝ち！
   .modal-card-body
-    template(v-if="TheSb.auto_resign_info.key === 'is_auto_resign_on'")
+    template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
       p 終局です
     template(v-else)
       template(v-if="timeout_info.key === 'audo_judgement'")
-        p {{user_call_name(TheSb.current_turn_user_name)}}は接続切れのまま時間切れになりました
+        p {{user_call_name(SB.current_turn_user_name)}}は接続切れのまま時間切れになりました
       template(v-else)
         p ルールを守って時間内に指しましょう
         p 対戦相手がお情けで許可してくれた場合は次の手を指して対局を続行できます
@@ -41,15 +41,15 @@ export default {
     }
   },
   created() {
-    if (this.TheSb.clock_box) {
-      this.snapshot_clock = this.TheSb.clock_box.duplicate
+    if (this.SB.clock_box) {
+      this.snapshot_clock = this.SB.clock_box.duplicate
     } else {
       this.snapshot_clock = new ClockBox()
     }
   },
   // mounted() {
   //   if (!this.clock_running_p) {
-  //     this.TheSb.tl_alert("対局時計は設定されていません")
+  //     this.SB.tl_alert("対局時計は設定されていません")
   //   }
   // },
   // watch: {
@@ -63,7 +63,7 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.TheSb.timeout_modal_close()
+      this.SB.timeout_modal_close()
       this.$emit("close")
     },
     submit_handle() {
@@ -71,7 +71,7 @@ export default {
     },
   },
   computed: {
-    // clock()           { return this.TheSb.clock_box              },
+    // clock()           { return this.SB.clock_box              },
     // clock_running_p() { return this.clock && this.clock.pause_or_play_p },
 
     TimeoutInfo()   { return TimeoutInfo },

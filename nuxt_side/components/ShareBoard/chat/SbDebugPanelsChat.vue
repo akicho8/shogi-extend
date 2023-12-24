@@ -3,12 +3,12 @@
   .panel
     .panel-heading
       | チャット履歴
-    a.panel-block(@click="TheSb.mh_reset_all") 初期化
+    a.panel-block(@click="SB.mh_reset_all") 初期化
   .panel.assert_system_variable
     .panel-heading
       | [assert_system_variable]
-    .panel-block ml_count:{{TheSb.ml_count}}
-    .panel-block mh_page_index:{{TheSb.mh_page_index}}
+    .panel-block ml_count:{{SB.ml_count}}
+    .panel-block mh_page_index:{{SB.mh_page_index}}
 </template>
 
 <script>

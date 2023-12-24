@@ -16,7 +16,7 @@ export default {
     name: { type: String, required: true, },
   },
   computed: {
-    medal_decorator() { return this.TheSb.medal_decorator_by_name(this.name) },
+    medal_decorator() { return this.SB.medal_decorator_by_name(this.name) },
   },
 }
 </script>
