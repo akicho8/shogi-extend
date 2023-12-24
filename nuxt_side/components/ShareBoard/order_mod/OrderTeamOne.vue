@@ -25,7 +25,8 @@ import { support_child } from "../support_child.js"
 
 export default {
   name: "OrderTeamOne",
-  inject: ["TheOSM"],
+  mixins: [support_child],
+  inject: ["TheOSM"],           // OrderSettingModal
   props: {
     label: { type: String, required: true, },
     items: { type: Array,  required: true, },
