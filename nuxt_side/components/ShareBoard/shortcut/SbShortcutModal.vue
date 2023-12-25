@@ -23,11 +23,11 @@
       tr
         th 棋譜コピー
         td
-          b-tag(type="is-primary") ⌘ c
+          b-tag(type="is-primary") ⇧ c
       tr
         th 棋譜張り付け
         td
-          b-tag(type="is-primary") ⌘ v
+          b-tag(type="is-primary") ⇧ v
       tr
         th 設定
         td
