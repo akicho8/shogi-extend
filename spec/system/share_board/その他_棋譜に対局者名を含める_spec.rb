@@ -40,7 +40,7 @@ RSpec.describe type: :system, share_board_spec: true do
       visit_app(black: "alice")
       piece_move_o("77", "76", "☗7六歩")
       action_log_row_of(0).click
-      Capybara.within(".ActionLogShowModal") do
+      Capybara.within(".ActionLogModal") do
         assert_text('"black": "alice"') # デバッグ情報の表示を見ている
       end
     end

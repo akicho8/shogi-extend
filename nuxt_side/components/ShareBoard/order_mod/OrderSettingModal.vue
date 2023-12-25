@@ -131,14 +131,14 @@ export default {
     shuffle_all_handle() {
       this.$sound.play_click()
       this.SB.new_v.order_unit.shuffle_all()
-      this.SB.shared_al_add({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
+      this.SB.al_share({label: "全体ｼｬｯﾌﾙ", message: "全体ｼｬｯﾌﾙしました"})
     },
 
     // チーム内シャッフル
     teams_each_shuffle_handle() {
       this.$sound.play_click()
       this.SB.new_v.order_unit.teams_each_shuffle()
-      this.SB.shared_al_add({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
+      this.SB.al_share({label: "ﾁｰﾑ内ｼｬｯﾌﾙ", message: "ﾁｰﾑ内ｼｬｯﾌﾙしました"})
     },
 
     // 振り駒
@@ -155,7 +155,7 @@ export default {
       const user = this.SB.new_v.order_unit.first_user(this.SB.start_color)
       Gs.assert(user != null, "user != null")
       const message = `${prefix}で${this.user_call_name(user.user_name)}の先手になりました`
-      this.SB.shared_al_add({label: furigoma_pack.piece_names, message: message})
+      this.SB.al_share({label: furigoma_pack.piece_names, message: message})
       this.dice.roll()
     },
 
@@ -164,7 +164,7 @@ export default {
       if (this.invalid_case2("先後入替")) { return }
       this.$sound.play_click()
       this.SB.new_v.order_unit.swap_run()
-      this.SB.shared_al_add({label: "先後入替", message: "先後を入れ替えました"})
+      this.SB.al_share({label: "先後入替", message: "先後を入れ替えました"})
     },
 
     // 反映時のエラーの内容は new_v.order_unit に任せる
@@ -215,19 +215,19 @@ export default {
       this.$sound.play_click()
       this.direct_close_handle()
       this.SB.odai_maker_handle()
-      this.SB.shared_al_add({label: "お題作成", message: "お題を作成しています"})
+      this.SB.al_share({label: "お題作成", message: "お題を作成しています"})
     },
 
     voted_result_to_order_apply_handle() {
       this.$sound.play_click()
       this.SB.voted_result_to_order_apply()
-      this.SB.shared_al_add({label: "結果反映", message: "投票の結果でチーム分けしました"})
+      this.SB.al_share({label: "結果反映", message: "投票の結果でチーム分けしました"})
     },
 
     odai_delete_handle() {
       this.$sound.play_click()
       this.SB.odai_delete()
-      this.SB.shared_al_add({label: "お題削除", message: "お題を削除しました"})
+      this.SB.al_share({label: "お題削除", message: "お題を削除しました"})
     },
 
     ////////////////////////////////////////////////////////////////////////////////

@@ -76,7 +76,7 @@ RSpec.describe type: :system, share_board_spec: true do
       piece_move_o("33", "34", "☖3四歩")
       assert_turn(2)                                    # 現在2手目
       action_log_row_of(0).click                        # 一番上の2手目を記憶した行をクリックしてモーダル起動
-      Capybara.within(".ActionLogShowModal") do
+      Capybara.within(".ActionLogModal") do
         assert_text("局面 #2")                          # 当然2手目になっている
         find(".button.previous").click                  # 「<」で1手目に進めると
         assert_text("局面 #1")                          # 1手目になっている

@@ -83,10 +83,9 @@ export const mod_urls = {
       this.ga_click(app_name)
       this.app_log({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 
-      this.shared_al_add({
+      this.al_share({
         label: `${app_name}起動`,
         message: `${app_name}を起動しました`,
-        // message_except_self: false,
         sfen: this.current_sfen,
         turn: this.current_turn,
       })
