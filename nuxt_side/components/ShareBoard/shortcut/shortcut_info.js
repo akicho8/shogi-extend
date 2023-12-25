@@ -8,7 +8,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.shortcut_modal_shortcut_handle(),
       },
       {
-        _if: (c, e) => c.keyboard_single_code_equal(e, "Space"),
+        _if: (c, e) => c.keyboard_single_code_equal(e, "Enter"),
         call: c => c.chat_modal_shortcut_handle(),
       },
       {
@@ -20,7 +20,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.os_modal_shortcut_handle(),
       },
       {
-        _if: (c, e) => c.keyboard_single_key_equal(e, "t"),
+        _if: (c, e) => c.keyboard_single_key_equal(e, "c"),
         call: c => c.cc_modal_shortcut_handle(),
       },
       {

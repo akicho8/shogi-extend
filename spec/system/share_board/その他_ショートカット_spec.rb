@@ -17,6 +17,16 @@ RSpec.describe type: :system, share_board_spec: true do
     assert_no_selector(".SbShortcutModal")
   end
 
+  it "チャットを開いて閉じる" do
+    visit_app
+
+    Capybara.current_session.active_element.send_keys(:enter)
+    assert_selector(".ChatModal")
+
+    Capybara.current_session.active_element.send_keys(:enter)
+    assert_no_selector(".ChatModal")
+  end
+
   it "部屋に入る" do
     visit_app
     Capybara.current_session.active_element.send_keys("i")
@@ -25,7 +35,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "対局時計" do
     visit_app
-    Capybara.current_session.active_element.send_keys("t")
+    Capybara.current_session.active_element.send_keys("c")
     assert_selector(".ClockBoxModal")
   end
 

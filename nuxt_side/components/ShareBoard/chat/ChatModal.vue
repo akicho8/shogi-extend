@@ -37,6 +37,7 @@
 
 <script>
 import { support_child } from "../support_child.js"
+import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "ChatModal",
@@ -69,14 +70,21 @@ export default {
       this.SB.talk2(this.SB.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
+      // 空 + Enter で閉じる (ここは送信トリガーの方法とは関係なく Enter 固定とする)
+      if (Gs.blank_p(this.SB.message_body)) {
+        this.SB.chat_modal_close()
+        return
+      }
+
+      // 設定によって送信キーは変わる
       if (this.SB.send_trigger_p(e)) {
         this.send_handle()
       }
     },
     send_handle() {
-      if (this.$gs.blank_p(this.SB.message_body)) {
-        if (this.SB.AppConfig.CLOSE_IF_BLANK_MESSAGE_POST) {
-          this.chat_modal_close()
+      if (Gs.blank_p(this.SB.message_body)) {
+        if (this.SB.AppConfig.CHAT_BLANK_MESSAGE_POST_THEN_CLOSE) {
+          this.SB.chat_modal_close()
           return
         } else {
           this.$sound.play("x")
