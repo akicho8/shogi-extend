@@ -15,11 +15,16 @@
       tr
         th 対局時計
         td
-          b-tag(type="is-primary") t
+          b-tag(type="is-primary") c
       tr
         th チャットを開く
         td
-          b-tag(type="is-primary") Space
+          b-tag(type="is-primary") Enter
+      tr
+        th チャットを閉じる
+        td
+          b-tag(type="is-primary") Enter
+          //- | or 空送信
       tr
         th 棋譜コピー
         td
