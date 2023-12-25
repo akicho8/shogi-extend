@@ -24,11 +24,11 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: c => c.cc_modal_shortcut_handle(),
       },
       {
-        _if: (c, e) => e.code === "KeyC" && c.keyboard_meta_without_shift_p(e),
+        _if: (c, e) => e.code === "KeyC" && c.keyboard_shift_p(e),
         call: c => c.kifu_copy_handle("kif_utf8"),
       },
       {
-        _if: (c, e) => e.code === "KeyV" && c.keyboard_meta_without_shift_p(e),
+        _if: (c, e) => e.code === "KeyV" && c.keyboard_shift_p(e),
         call: c => c.yomikomi_from_clipboard(),
       },
       {

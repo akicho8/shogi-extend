@@ -254,12 +254,15 @@ export const vue_support = {
     // keyCode: 229  <-- IMEで変換した
     //
     keyboard_enter_p(e) {
-      this.debug_alert(e.keyCode)
       return e.keyCode === 13
     },
 
     keyboard_meta_p(e) {
       return e.shiftKey || e.ctrlKey || e.altKey || e.metaKey
+    },
+
+    keyboard_shift_p(e) {
+      return e.shiftKey
     },
 
     keyboard_meta_without_shift_p(e) {

@@ -31,7 +31,7 @@ RSpec.describe type: :system, share_board_spec: true do
 
   it "棋譜コピー" do
     visit_app
-    Capybara.current_session.active_element.send_keys([:command, "c"])
+    Capybara.current_session.active_element.send_keys([:shift, "c"])
     assert_text("コピーしました", wait: 3)
     assert { Clipboard.read.include?("棋戦：共有将棋盤") }
   end
