@@ -1,4 +1,4 @@
-// ActionLogShowModal 用の mixins
+// ActionLogModal 用の mixins
 // Sb.vue のスコープのものとメソッド名が重複しているので注意
 
 import { DotSfen } from "@/components/models/dot_sfen.js"
@@ -15,14 +15,14 @@ export const mod_urls = {
         turn: this.new_turn,
         ...this.action_log.player_names_with_title,
       })
-      this.SB.shared_al_add_simple("棋譜コピー")
+      this.SB.al_share_puts("棋譜コピー")
     },
 
     // 棋譜URLコピー
     current_url_copy_handle() {
       this.$sound.play_click()
       this.clipboard_copy(this.current_url, {success_message: "棋譜再生用のURLをコピーしました"})
-      this.SB.shared_al_add_simple("棋譜URLコピー")
+      this.SB.al_share_puts("棋譜URLコピー")
     },
 
     // 指定の棋譜への直リンURL
@@ -38,7 +38,7 @@ export const mod_urls = {
     kifu_show_handle(e) {
       this.$sound.play_click()
       this.window_popup(this.kifu_show_url(e))
-      this.SB.shared_al_add_simple("棋譜表示")
+      this.SB.al_share_puts("棋譜表示")
     },
 
     // 指定の棋譜のダウンロードURL
@@ -51,7 +51,7 @@ export const mod_urls = {
       if (typeof window !== 'undefined') {
         this.$sound.play_click()
         window.location.href = this.kifu_download_url(e)
-        this.SB.shared_al_add_simple("棋譜ダウンロード")
+        this.SB.al_share_puts("棋譜ダウンロード")
       }
     },
 

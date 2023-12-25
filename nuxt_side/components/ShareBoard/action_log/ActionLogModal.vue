@@ -62,7 +62,7 @@ import { support_child } from "../support_child.js"
 import { mod_urls } from "./mod_urls.js"
 
 export default {
-  name: "ActionLogShowModal",
+  name: "ActionLogModal",
   mixins: [
     support_child,
     mod_urls,
@@ -88,7 +88,7 @@ export default {
     },
     apply_handle() {
       this.$sound.play_click()
-      this.SB.action_log_jump({...this.action_log, turn: this.new_turn})
+      this.SB.al_restore({...this.action_log, turn: this.new_turn})
       this.$emit("close")
     },
   },
@@ -102,7 +102,7 @@ export default {
 
 <style lang="sass">
 @import "../support.sass"
-.ActionLogShowModal
+.ActionLogModal
   +modal_width(512px)
 
   .modal-card-body
@@ -111,7 +111,7 @@ export default {
       margin-bottom: 0
 
 .STAGE-development
-  .ActionLogShowModal
+  .ActionLogModal
     .sp_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .modal-card-body

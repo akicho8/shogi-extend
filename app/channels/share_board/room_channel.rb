@@ -145,9 +145,9 @@ module ShareBoard
       broadcast(:fake_error_broadcasted, data)
     end
 
-    def shared_al_add(data)
+    def al_share(data)
       track(data, subject: data["label"])
-      broadcast(:shared_al_add_broadcasted, data)
+      broadcast(:al_share_broadcasted, data)
     end
 
     def acquire_medal_count_share(data)

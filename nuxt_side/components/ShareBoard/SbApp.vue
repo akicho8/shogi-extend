@@ -67,7 +67,10 @@ import { AppConfig                } from "./models/mod_config.js"
 import { support_parent           } from "./support_parent.js"
 
 import { mod_xtitle               } from "./mod_xtitle.js"
+
 import { mod_action_log           } from "./action_log/mod_action_log.js"
+import { mod_action_log_share     } from "./action_log/mod_action_log_share.js"
+
 import { mod_turn_notify          } from "./mod_turn_notify.js"
 import { mod_otasuke              } from "./mod_otasuke.js"
 import { mod_order_main           } from "./order_mod/mod_order_main.js"
@@ -122,10 +125,10 @@ import { mod_member_info_modal    } from "./member_list_show/mod_member_info_mod
 import { mod_ping                 } from "./member_list_show/mod_ping.js"
 import { mod_net_level            } from "./member_list_show/mod_net_level.js"
 
-import { mod_chat      } from "./chat/mod_chat.js"
-import { mod_chat_message_list } from "./chat/mod_chat_message_list.js"
-import { mod_chat_ai_trigger_rule   } from "./chat/mod_chat_ai_trigger_rule.js"
-import { mod_chat_message_history  } from "./chat/mod_chat_message_history.js"
+import { mod_chat                 } from "./chat/mod_chat.js"
+import { mod_chat_message_list    } from "./chat/mod_chat_message_list.js"
+import { mod_chat_ai_trigger_rule } from "./chat/mod_chat_ai_trigger_rule.js"
+import { mod_chat_message_history } from "./chat/mod_chat_message_history.js"
 
 import { mod_console      } from "./console/mod_console.js"
 
@@ -158,7 +161,9 @@ export default {
     support_parent,
     autoexec_methods,
     mod_xtitle,
+
     mod_action_log,
+    mod_action_log_share,
 
     mod_chat,
     mod_chat_message_list,

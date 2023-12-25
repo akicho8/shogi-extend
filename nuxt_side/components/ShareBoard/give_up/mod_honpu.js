@@ -1,5 +1,7 @@
 // 本譜機能
 
+import { Gs } from "@/components/models/gs.js"
+
 export const mod_honpu = {
   data() {
     return {
@@ -10,8 +12,8 @@ export const mod_honpu = {
     // 起動時に本譜登録する
     // ・合言葉を持っていない
     // ・body を持っている
-    if (this.$gs.blank_p(this.$route.query.room_key)) {
-      if (this.$gs.present_p(this.$route.query.body) || this.$gs.present_p(this.$route.query.xbody)) {
+    if (Gs.blank_p(this.$route.query.room_key)) {
+      if (Gs.present_p(this.$route.query.body) || Gs.present_p(this.$route.query.xbody)) {
         this.honpu_log_set()
       }
     }
@@ -22,7 +24,7 @@ export const mod_honpu = {
       const params = {
         // win_location_key: this.current_location.flip.key, // SFENと手数を確認しなくても投了した側がすぐにわかるようにしておく
       }
-      this.honpu_log = this.al_factory(params)
+      this.honpu_log = this.al_create(params)
     },
 
     // 本譜を削除する
@@ -32,7 +34,7 @@ export const mod_honpu = {
 
     // 本譜をクリックしたときの処理
     honpu_log_click_handle() {
-      this.action_log_click_handle(this.honpu_log)
+      this.al_click_handle(this.honpu_log)
     },
 
     // 本譜の共有

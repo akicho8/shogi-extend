@@ -19,7 +19,7 @@ export const mod_edit_mode = {
         hasIcon: false,
         onConfirm: () => {
           this.$sound.play_click()
-          this.shared_al_add({label: "局面編集前"})
+          this.al_share({label: "局面編集前"})
           this.sp_mode = "edit"
         },
       })
@@ -50,7 +50,7 @@ export const mod_edit_mode = {
         this.honpu_share()             // それを他の人に共有する
       }
       this.sp_mode = "play"
-      this.shared_al_add({label: "局面編集後"})
+      this.al_share({label: "局面編集後"})
       if (this.ac_room) {
         this.$nextTick(() => this.quick_sync(`${this.user_call_name(this.user_name)}が編集した局面を転送しました`))
       }

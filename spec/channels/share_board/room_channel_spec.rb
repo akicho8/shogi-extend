@@ -307,8 +307,8 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     it "works" do
       data = data_factory("label" => "(label)", message: "(message)")
       expect {
-        subscription.shared_al_add(data)
-      }.to have_broadcasted_to(channel_key).with(bc_action: "shared_al_add_broadcasted", bc_params: data)
+        subscription.al_share(data)
+      }.to have_broadcasted_to(channel_key).with(bc_action: "al_share_broadcasted", bc_params: data)
     end
   end
 
