@@ -25,7 +25,7 @@ module ShareBoard
 
       object = ChatAi::Responder::ResponderSomethingSay.new(content: "あなたの一人称は何ですか？")
       object.call
-      assert { history.to_topic[1].content.match?(/あたし/) }
+      assert { history.to_topic[1].content.match?(/小生/) }
     end
   end
 end
