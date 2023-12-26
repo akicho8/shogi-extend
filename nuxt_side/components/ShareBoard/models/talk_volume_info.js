@@ -12,7 +12,7 @@ export class TalkVolumeInfo extends ApplicationMemoryRecord {
   static input_handle_callback(context, value) {
     const app = context.base
     Gs.assert(app != null, "app != null")
-    app.$nextTick(() => app.talk2(value))
+    app.$nextTick(() => app.sb_talk(value))
   }
 
   static get define() {

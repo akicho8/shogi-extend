@@ -40,7 +40,7 @@ export default {
     select_handle(name, index) {
       if (this.SB.voted_latest_index !== index) {
         this.$sound.play_click()
-        this.SB.talk2(name)
+        this.SB.sb_talk(name)
         this.SB.voted_latest_index = index
       }
     },

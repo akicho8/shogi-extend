@@ -219,7 +219,7 @@ export const mod_clock_box = {
         volume: this.clock_volume,
         ...options,
       }
-      this.talk2(s, options)
+      this.sb_talk(s, options)
     },
 
     cc_destroy() {
@@ -417,7 +417,7 @@ export const mod_clock_box = {
 
     cc_play_confirm(params = {}) {
       this.$sound.play_click()
-      this.talk2("ちょっと待って。先に順番設定をしてください")
+      this.sb_talk("ちょっと待って。先に順番設定をしてください")
       this.dialog_confirm({
         title: "ちょっと待って",
         type: "is-warning",

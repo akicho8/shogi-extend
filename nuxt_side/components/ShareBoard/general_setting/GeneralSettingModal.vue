@@ -42,7 +42,7 @@ export default {
     },
     input_handle(index) {
       this.$sound.play_click()
-      this.SB.talk2(this.SB.SettingCategoryInfo.fetch(index).name)
+      this.SB.sb_talk(this.SB.SettingCategoryInfo.fetch(index).name)
     },
   },
 }
