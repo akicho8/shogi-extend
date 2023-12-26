@@ -19,9 +19,9 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
     it "空の場合" do
       find(".body_field textarea").set("手合割：平手")
       find(".any_source_trim_handle").click      # 「トリム」ボタンを押す
-      assert_text("0手目から")
+      assert_selector(:button, "0手目から")
       modal_apply        # 「0手目から」を押す
-      assert_text("0+0手目まで")
+      assert_selector(:button, "0+0手目まで")
       modal_apply        # 「0+0手目まで」を押す
       modal_apply        # 「確定」を押す
       value = find(".body_field textarea").value # フォームに平手の SFEN が入っている
@@ -30,15 +30,15 @@ RSpec.describe "動画作成", type: :system, kiwi: true do
     it "入力済みの場合" do
       find(".body_field textarea").set("position startpos moves 7g7f 8c8d 7i6h 3c3d 6h7g")
       find(".any_source_trim_handle").click      # 「トリム」ボタンを押す
-      assert_text("0手目から")
+      assert_selector(:button, "0手目から")
       find(".button.next").click
-      assert_text("1手目から")
+      assert_selector(:button, "1手目から")
       modal_apply
-      assert_text("1+4手目")
+      assert_selector(:button, "1+4手目")
       find(".button.previous").click
-      assert_text("1+3手目")
+      assert_selector(:button, "1+3手目")
       find(".button.previous").click
-      assert_text("1+2手目")
+      assert_selector(:button, "1+2手目")
       modal_apply
       modal_apply        # 「確定」を押す
       value = find(".body_field textarea").value # フォームに SFEN が入っている
