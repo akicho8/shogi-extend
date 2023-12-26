@@ -149,7 +149,7 @@ export const mod_clock_box = {
       this.clock_box = new ClockBox({
         initial_turn: this.current_location.code, // this.current_sfen を元にした現在の手番
         koreyori_fn: context => this.cc_koreyori(context.initial_read_sec),
-        time_zero_fn: e => this.cc_time_zero_callback(),
+        time_zero_fn: e => this.cc_time_zero_fn(),
         switched_fn: () => {
           // this.$sound.play_click()
         },
@@ -492,9 +492,8 @@ export const mod_clock_box = {
 
     // 共有する時計情報
     clock_share_data() {
-      const params = {
-        ...this.cc_params,
-      }
+      const params = {}
+      params.cc_params = this.cc_params
       if (this.clock_box) {
         params.clock_box_attributes = this.clock_box.attributes
       }

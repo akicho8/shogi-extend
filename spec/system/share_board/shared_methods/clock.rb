@@ -94,7 +94,7 @@ module SharedMethods
 
   # 強制的に時間切れにする
   # モーダルがポップアップしていると押せないので注意
-  def cc_time_zero_callback
-    find(".cc_time_zero_callback").click
+  def cc_time_zero_fn
+    find(".cc_time_zero_fn").click
   end
 end
