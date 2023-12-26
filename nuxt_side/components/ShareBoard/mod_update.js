@@ -27,7 +27,7 @@ export const mod_update = {
       }
     },
     reload_modal_handle() {
-      this.talk2(MESSAGE)
+      this.sb_talk(MESSAGE)
       this.$sound.stop_all()
       this.dialog_alert({
         message: MESSAGE,

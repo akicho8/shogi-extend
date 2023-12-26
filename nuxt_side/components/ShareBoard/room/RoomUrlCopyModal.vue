@@ -21,7 +21,7 @@ export default {
   mixins: [support_child],
   mounted() {
     this.$sound.play("notification")
-    this.SB.talk2("部屋のリンクをコピーしますか？")
+    this.SB.sb_talk("部屋のリンクをコピーしますか？")
   },
   methods: {
     close_handle() {

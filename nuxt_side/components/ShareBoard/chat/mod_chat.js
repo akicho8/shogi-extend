@@ -91,14 +91,14 @@ export const mod_chat = {
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
         this.$sound.play("patxu")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
-        this.talk2(message_record.content)                  // しゃべる
+        this.sb_talk(message_record.content)                  // しゃべる
       }
       this.ai_random_say(params)                            // AIに反応させる
     },
 
     // ログ用の追加データとして data に名前を入れておく
     // 直接 talk を使うべからず
-    talk2(content, options = {}) {
+    sb_talk(content, options = {}) {
       return this.talk(content, {
         data: this.user_name,
         // volume: this.talk_volume,

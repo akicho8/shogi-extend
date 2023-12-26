@@ -67,7 +67,7 @@ export default {
     },
     change_handle(key) {
       this.$sound.play_click()
-      this.SB.talk2(this.SB.MessageScopeInfo.fetch(key).name)
+      this.SB.sb_talk(this.SB.MessageScopeInfo.fetch(key).name)
     },
     enter_handle(e) {
       // 空 + Enter で閉じる (ここは送信トリガーの方法とは関係なく Enter 固定とする)

@@ -22,7 +22,7 @@ export default {
   name: "GiveUpModal",
   mixins: [support_child],
   mounted() {
-    this.SB.talk2(this.message)
+    this.SB.sb_talk(this.message)
   },
   methods: {
     give_up_handle() {

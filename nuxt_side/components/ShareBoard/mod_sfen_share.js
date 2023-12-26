@@ -164,8 +164,8 @@ export const mod_sfen_share = {
       this.next_turn_message = null
       if (this.$gs.blank_p(params.illegal_names)) {                // 反則がなかった場合
         if (this.yomiagable_p) {
-          this.talk2(this.user_call_name(params.from_user_name), { // 「aliceさん」
-            onend: () => this.talk2(params.lmi.yomiage, {          // 「7 6 ふー！」
+          this.sb_talk(this.user_call_name(params.from_user_name), { // 「aliceさん」
+            onend: () => this.sb_talk(params.lmi.yomiage, {          // 「7 6 ふー！」
               onend: () => this.next_turn_call(params),            // 「次は〜」
             }),
           })
