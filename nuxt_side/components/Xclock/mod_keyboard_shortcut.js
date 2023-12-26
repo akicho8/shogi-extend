@@ -23,7 +23,7 @@ export const mod_keyboard_shortcut = {
       }
 
       // 時間切れになったあとは操作禁止
-      if (this.clock_box.zero_arrival) {
+      if (this.clock_box.any_zero_p) {
         return
       }
 

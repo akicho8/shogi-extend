@@ -15,6 +15,14 @@
       a.panel-block(@click="SB.timeout_modal_handle('audo_judgement')") モーダル(判定)
       a.panel-block(@click="SB.timeout_modal_close") 閉じる
 
+  .column.is-2
+    .panel
+      .panel-heading
+        | 対局時計
+      a.panel-block.cc_koreyori(@click="SB.cc_koreyori(30)") [発声] これより1手30で〜
+      a.panel-block.cc_byoyomi(@click="SB.cc_byoyomi(5)") [発声] 5 (残り5秒)
+      a.panel-block.cc_interval_yomi(@click="SB.cc_interval_yomi(`20秒`)") [発声] 20秒〜
+
   SbDebugPanelsDashboard
 
   .column.is-2

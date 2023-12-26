@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
+import { Gs } from "@/components/models/gs.js"
 
 const ONE_MIN = 60
 
@@ -34,15 +35,17 @@ export class SingleClock {
     this.minus_sec = 0
     this.elapsed_sec = 0
     this.elapsed_sec_old = 0
+    this.koreyori_count = 0
   }
 
   copy_from(o) {
-    this.main_sec  = o.main_sec
-    this.read_sec  = o.read_sec
-    this.extra_sec = o.extra_sec
-    this.minus_sec = o.minus_sec
-    this.elapsed_sec   = o.elapsed_sec
-    this.elapsed_sec_old   = o.elapsed_sec_old
+    this.main_sec         = o.main_sec
+    this.read_sec         = o.read_sec
+    this.extra_sec        = o.extra_sec
+    this.minus_sec        = o.minus_sec
+    this.elapsed_sec      = o.elapsed_sec
+    this.elapsed_sec_old  = o.elapsed_sec_old
+    this.koreyori_count = o.koreyori_count
 
     this.initial_read_sec  = o.initial_read_sec
     this.initial_main_sec  = o.initial_main_sec
@@ -61,9 +64,15 @@ export class SingleClock {
 
   generation_next(value) {
     if (value != null) {
-
       this.elapsed_sec += value
 
+      const previous_changes = {
+        main_sec: this.main_sec,
+        read_sec: this.read_sec,
+        extra_sec: this.extra_sec,
+      }
+
+      // 減算
       this.main_sec += value
       if (this.main_sec < 0) {
         this.read_sec += this.main_sec
@@ -78,46 +87,48 @@ export class SingleClock {
         }
       }
 
+      // ここは減算したあとの状態で「30秒」などと発声するためのコールバック
       if (value < 0) {
         const t = this.main_sec
         if (t >= 1) {
-          this.second_decriment_hook_call("main_sec", t)
+          this.second_decriment_fn_call("main_sec", t)
         } else {
           const t = this.read_sec
           if (t >= 1) {
-            this.second_decriment_hook_call("read_sec", t)
+            this.second_decriment_fn_call("read_sec", t)
           } else {
             const t = this.extra_sec
             if (t >= 1) {
-              this.second_decriment_hook_call("extra_sec", t)
+              this.second_decriment_fn_call("extra_sec", t)
             }
           }
         }
       }
 
-      // 全体の本当の残り秒数
-      // if (value < 0) {
-      //   const t = this.rest
-      //   if (t >= 1) {
-      //     this.second_decriment_hook_call("rest_sec", t)
-      //   }
-      // }
-
-      // if (!this.base.zero_arrival) {
-      if (this.rest === 0) {
-        if (this.base.timer) {
-          // this.base.zero_arrival = true
-          this.base.params.time_zero_callback(this)
+      // 「これより1手N秒でお願いします」
+      if (this.every_plus === 0) {               // フィッシャールールでないとき、
+        if (previous_changes.main_sec >= 1) {    // 持ち時間が1秒以上あったときから
+          if (this.main_sec === 0) {             // 0 になった瞬間に
+            if (this.read_sec >= 1) {            // 秒読みが残っていれば
+              this.base.params.koreyori_fn(this) // これより1手 initial_read_sec 秒でお願いします
+              this.koreyori_count += 1           // これより実行回数を記録しておく
+            }
+          }
         }
       }
-      // }
+
+      // チーン
+      if (this.rest === 0) {
+        if (this.base.timer) {
+          this.base.params.time_zero_fn(this)
+        }
+      }
     }
   }
 
-  second_decriment_hook_call(key, t) {
-    const m = Math.trunc(t / ONE_MIN)
-    const s = t % ONE_MIN
-    this.base.params.second_decriment_hook(this, key, t, m, s)
+  second_decriment_fn_call(key, sec) {
+    const [mm, ss] = Gs.idivmod(sec, ONE_MIN)
+    this.base.params.second_decriment_fn(this, key, sec, mm, ss)
   }
 
   // 指した直後に時計のボタンを押す
@@ -140,46 +151,8 @@ export class SingleClock {
     }
   }
 
-  // switch_handle() {
-  //   if (this.pause_or_play_p) {
-  //     // this.tap_and_auto_start_handle()
-  //     this.simple_switch_handle()
-  //   } else {
-  //     this.set_or_tap_handle()
-  //   }
-  // }
-
-  // simple_switch_handle() {
-  //   if (this.active_p) {
-  //     this.generation_next(this.every_plus)
-  //     this.read_sec_set()
-  //     this.minus_sec = 0 // 押したらマイナスになったぶんは0に戻しておく。これで再びチーンになる
-  //     this.base.clock_switch()
-  //   }
-  // }
-
-  // tap_and_auto_start_handle() {
-  //   if (!this.pause_or_play_p) {
-  //     this.base.initial_boot_from(this.index)
-  //     this.base.clock_switch()
-  //     return
-  //   }
-  //   this.simple_switch_handle()
-  // }
-
-  // set_or_tap_handle() {
-  //   // if (!this.pause_or_play_p) {
-  //   //   if (this.turn == null) {
-  //   //     this.base.turn = this.index
-  //   //   }
-  //   // }
-  //   this.base.clock_switch()
-  // }
-
   read_sec_set() {
-    // if (this.read_sec < this.initial_read_sec) {
     this.read_sec = this.initial_read_sec
-    // }
   }
 
   //////////////////////////////////////////////////////////////////////////////// getter
@@ -221,35 +194,36 @@ export class SingleClock {
       if (this.active_p) {
         ary.push("is_sclock_active")
         if (this.main_sec === 0) {
-          ary.push(this.base.params.active_value_zero_class)
+          ary.push(this.base.params.active_value_zero_css_class)
           ary.push("sclock_zero")
         } else {
-          ary.push(this.base.params.active_value_nonzero_class)
+          ary.push(this.base.params.active_value_nonzero_css_class)
           ary.push("sclock_nonzero")
         }
       } else {
-        ary.push(this.base.params.inactive_class)
+        ary.push(this.base.params.inactive_css_class)
         ary.push("is_sclock_inactive")
       }
     }
     return _.compact(ary)
   }
 
-  get bar_class() {
+  // 残り時間に対応したCSSクラスを返す
+  get rest_class() {
     const ary = []
     if (this.pause_or_play_p) {
       if (this.active_p) {
         if (this.rest >= 1) {
-          ary.push("is_blink")
+          ary.push("cc_rest_gteq_1")
         }
         if (this.rest <= 5) {
-          ary.push("is_level4")
+          ary.push("cc_rest_lteq_5")
         } else if (this.rest <= 10) {
-          ary.push("is_level3")
+          ary.push("cc_rest_lteq_10")
         } else if (this.rest < 60) {
-          ary.push("is_level2")
+          ary.push("cc_rest_lt_60")
         } else {
-          ary.push("is_level1")
+          ary.push("cc_rest_gteq_60")
         }
       } else {
       }
@@ -327,7 +301,8 @@ export class SingleClock {
       extra_sec:         this.extra_sec,
       minus_sec:         this.minus_sec,
       elapsed_sec:       this.elapsed_sec,
-      elapsed_sec_old:       this.elapsed_sec_old,
+      elapsed_sec_old:   this.elapsed_sec_old,
+      koreyori_count:    this.koreyori_count,
       initial_read_sec:  this.initial_read_sec,
       initial_main_sec:  this.initial_main_sec,
       initial_extra_sec: this.initial_extra_sec,
