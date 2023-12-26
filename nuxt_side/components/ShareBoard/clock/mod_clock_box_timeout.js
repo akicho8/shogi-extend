@@ -19,7 +19,7 @@ export const mod_clock_box_timeout = {
     // しかしそれでは端末を切って逃げると時間切れが伝わらない
     // そこで関係者は数秒待ってから自分で時間切れダイアログを【まだ表示されてなかったら】表示する
     // 2秒後に表示するつもりで1秒後にBCが届いたら2秒後の発動はキャンセルする
-    cc_time_zero_callback() {
+    cc_time_zero_fn() {
       if (this.ac_room && this.order_enable_p) {
         if (this.current_turn_self_p) {
           this.cc_timeout_modal_show_and_broadcast() // 当事者は発動してBC

@@ -2,7 +2,7 @@
 .modal-card
   .modal-card-head
     .modal-card-title 投了
-    a.cc_time_zero_callback(@click="SB.cc_time_zero_callback" v-if="SB.debug_mode_p") 時間切れ
+    a.cc_time_zero_fn(@click="SB.cc_time_zero_fn" v-if="SB.debug_mode_p") 時間切れ
   .modal-card-body
     .content
       p {{message}}
