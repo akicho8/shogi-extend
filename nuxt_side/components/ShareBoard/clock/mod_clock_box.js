@@ -1,10 +1,10 @@
-const BYOYOMI_TALK_PITCH = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
-const CC_INPUT_DEBOUNCE_DELAY = 0.5 // 時計の同期のために操作が終わったと判断する秒数
+const BYOYOMI_TALK_PITCH      = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
+const CC_INPUT_DEBOUNCE_DELAY = 0.5  // 時計の同期のために操作が終わったと判断する秒数
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
 import { CcInfo     } from "./cc_info.js"
-
+import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
 import ClockBoxModal  from "./ClockBoxModal.vue"
@@ -31,7 +31,7 @@ export const mod_clock_box = {
       this.clock_box.play_handle()
     }
 
-    if (this.$route.query["clock_auto_start"] === "true") {
+    if (this.$route.query.clock_auto_start === "true") {
       this.cc_create()
       this.cc_params_apply()
       this.clock_box.play_handle()
@@ -108,7 +108,7 @@ export const mod_clock_box = {
       ].forEach(column => {
         const key = `clock_box.${column}`
         const value = this.$route.query[key]
-        if (this.$gs.present_p(value)) {
+        if (Gs.present_p(value)) {
           const iv = parseInt(value)
           this.$set(this.cc_params[0], column, iv)
         }
@@ -147,33 +147,36 @@ export const mod_clock_box = {
     cc_create() {
       this.cc_destroy()
       this.clock_box = new ClockBox({
-        turn: this.current_location.code, // this.current_sfen を元にした現在の手番
-        clock_switch_hook: () => {
+        initial_turn: this.current_location.code, // this.current_sfen を元にした現在の手番
+        koreyori_fn: context => this.cc_koreyori(context.initial_read_sec),
+        time_zero_fn: e => this.cc_time_zero_callback(),
+        switched_fn: () => {
           // this.$sound.play_click()
         },
-        time_zero_callback: e => {
-          this.cc_time_zero_callback()
-        },
-        second_decriment_hook: (single_clock, key, t, m, s) => {
-          if (1 <= m && m <= 10) {
-            if (s === 0) {
-              this.cc_minute_yomi(`${m}分`)
+        second_decriment_fn: (single_clock, key, sec, mm, ss) => {
+          if (1 <= mm && mm <= 10) {
+            if (ss === 0) {
+              this.cc_interval_yomi(`${mm}分`)
             }
           }
-          if (t === 10 || t === 20 || t === 30) {
-            this.cc_minute_yomi(`${t}秒`)
+          if (sec === 10 || sec === 20 || sec === 30) {
+            this.cc_interval_yomi(`${sec}秒`)
           }
           if (key === "read_sec") {
-            if (t <= this.cc_byoyomi_start_for_read_sec(single_clock)) {
-              this.cc_byoyomi(t)
+            // 秒読みの場合は何回も繰り返されるため(煩くならないように)調整する
+            if (sec <= this.cc_byoyomi_start_for_read_sec(single_clock)) {
+              this.cc_byoyomi(sec)
             }
           } else {
-            if (t <= 9) {
-              this.cc_byoyomi(t)
+            // main_sec, extra_sec の場合
+            if (sec <= 9) {
+              this.cc_byoyomi(sec)
             }
           }
         },
       })
+
+      this.clock_box.speed = this.clock_speed
     },
 
     // 秒読み10秒設定のとき毎回9から読み上げると騒いので10秒なら5秒から読み上げる
@@ -200,14 +203,23 @@ export const mod_clock_box = {
     },
 
     // "n分" や "30秒" の読み上げ
-    cc_minute_yomi(s) {
-      if (this.byoyomi_mode_info.minute_yomi) {
+    cc_interval_yomi(s) {
+      if (this.byoyomi_mode_info.interval_yomi) {
         this.cc_talk(s)
       }
     },
 
-    cc_talk(s) {
-      this.talk2(s, {rate: BYOYOMI_TALK_PITCH, volume: this.clock_volume})
+    cc_koreyori(sec) {
+      this.cc_talk(`これより1手${sec}秒でお願い致します`)
+    },
+
+    cc_talk(s, options = {}) {
+      options = {
+        rate: BYOYOMI_TALK_PITCH,
+        volume: this.clock_volume,
+        ...options,
+      }
+      this.talk2(s, options)
     },
 
     cc_destroy() {
@@ -258,8 +270,8 @@ export const mod_clock_box = {
       this.cc_params_save()
     },
     cc_params_apply_without_save() {
-      this.$gs.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
-      this.$gs.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
+      Gs.assert(_.isArray(this.cc_params), "_.isArray(this.cc_params)")
+      Gs.assert(this.cc_params.length >= 1, "this.cc_params.length >= 1")
       const ary = this.clock_box.single_clocks.map((e, i) => this.cc_params_one_to_clock_box_params(this.cc_params[i] || this.cc_params[0]))
       this.clock_box.rule_set_all_by_ary(ary)
     },
@@ -359,7 +371,7 @@ export const mod_clock_box = {
 
     // setup_info_send_broadcasted から呼ばれたときは from_user_name は入っていないので注意
     clock_share_data_receive(params) {
-      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
+      Gs.assert(Gs.present_p(params), "Gs.present_p(params)")
       this.tl_add("時計", `${this.user_name} は時計情報を受信して反映した`, params)
       if (params.clock_box_attributes == null) {
         this.cc_destroy()                                       // 時計を捨てたことを同期
@@ -445,7 +457,7 @@ export const mod_clock_box = {
     },
 
     cc_params_inspect(params) {
-      this.$gs.assert(_.isArray(params), "_.isArray(params)")
+      Gs.assert(_.isArray(params), "_.isArray(params)")
       const values = params.map(params => CcRuleInfo.cc_params_keys.map(e => params[e]))
       return JSON.stringify(values)
     },
@@ -463,7 +475,7 @@ export const mod_clock_box = {
       //       params.from_user_name,
       //       this.current_url,
       //     ]
-      //     this.ac_log({subject: "時間切れ", body: this.$gs.short_inspect(body)})
+      //     this.ac_log({subject: "時間切れ", body: Gs.short_inspect(body)})
       //   }
       // }
     },
@@ -475,13 +487,14 @@ export const mod_clock_box = {
 
     cc_play_p()  { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
 
-    cc_unique_p()  { return this.cc_params.length == 2                 }, // 個別設定か？
-    cc_common_p()  { return this.cc_params.length == 1                 }, // 共通設定か？
+    cc_common_p()  { return this.cc_params.length == 1 }, // 共通設定か？
+    cc_unique_p()  { return this.cc_params.length == 2 }, // 個別設定か？
 
     // 共有する時計情報
     clock_share_data() {
-      const params = {}
-      params.cc_params = this.cc_params
+      const params = {
+        ...this.cc_params,
+      }
       if (this.clock_box) {
         params.clock_box_attributes = this.clock_box.attributes
       }
@@ -489,7 +502,7 @@ export const mod_clock_box = {
     },
 
     // 順番設定を有効にしてないのに時計を開始しようとしている？
-    clock_start_even_though_order_is_not_enabled_p() {
+    cc_start_even_though_order_is_not_enabled_p() {
       return this.ac_room && !this.order_enable_p
     },
   },

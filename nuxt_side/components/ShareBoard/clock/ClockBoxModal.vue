@@ -75,7 +75,7 @@ export default {
       this.SB.cc_modal_close_handle()
     },
     play_handle() {
-      if (this.SB.clock_start_even_though_order_is_not_enabled_p) {
+      if (this.SB.cc_start_even_though_order_is_not_enabled_p) {
         this.SB.cc_play_confirm({
           onConfirm: () => {
             this.play_core_handle()

@@ -28,6 +28,7 @@
 import { TimeoutInfo } from "./timeout_info.js"
 import { Location } from "shogi-player/components/models/location.js"
 import { support_child } from "../support_child.js"
+import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "TimeoutModal",
@@ -41,11 +42,8 @@ export default {
     }
   },
   created() {
-    if (this.SB.clock_box) {
-      this.snapshot_clock = this.SB.clock_box.duplicate
-    } else {
-      this.snapshot_clock = new ClockBox()
-    }
+    Gs.assert(this.SB.clock_box, "this.SB.clock_box")
+    this.snapshot_clock = this.SB.clock_box.duplicate
   },
   // mounted() {
   //   if (!this.clock_running_p) {
@@ -71,10 +69,7 @@ export default {
     },
   },
   computed: {
-    // clock()           { return this.SB.clock_box              },
-    // clock_running_p() { return this.clock && this.clock.pause_or_play_p },
-
-    TimeoutInfo()   { return TimeoutInfo },
+    TimeoutInfo()  { return TimeoutInfo                              },
     timeout_info() { return this.TimeoutInfo.fetch(this.timeout_key) },
   },
 }

@@ -5,7 +5,7 @@
     div pause_or_play_p: {{clock_box.pause_or_play_p}}
     div timer: {{clock_box.timer}}
     div counter: {{clock_box.counter}}
-    div zero_arrival: {{clock_box.zero_arrival}}
+    div any_zero_p: {{clock_box.any_zero_p}}
     div mouse_cursor_p: {{mouse_cursor_p}}
 
   //////////////////////////////////////////////////////////////////////////////// form
@@ -14,7 +14,7 @@
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in clock_box.single_clocks")
           .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
-            .active_current_bar(:class="e.bar_class" v-if="e.active_p")
+            .active_current_bar(:class="e.rest_class" v-if="e.active_p")
             .inactive_current_bar(v-else)
             .wide_container.form.is-flex
               b-field(label="持ち時間(分)" custom-class="is-small")
@@ -37,7 +37,7 @@
       .level.is-mobile.is-unselectable.is-marginless
         template(v-for="(e, i) in clock_box.single_clocks")
           .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
-            .active_current_bar(:class="e.bar_class" v-if="e.active_p && clock_box.timer")
+            .active_current_bar(:class="e.rest_class" v-if="e.active_p && clock_box.timer")
             .inactive_current_bar(v-else)
             .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
               .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
@@ -91,10 +91,10 @@ export default {
   created() {
     this.clock_box = new ClockBox({
       turn: 0,
-      clock_switch_hook: () => {
+      switched_fn: () => {
         this.$sound.play_click()
       },
-      time_zero_callback: e => {
+      time_zero_fn: e => {
         this.$sound.play("lose")
         this.say("時間切れ")
         this.$buefy.dialog.alert({
@@ -102,23 +102,23 @@ export default {
           onConfirm: () => { this.stop_handle() },
         })
       },
-      second_decriment_hook: (single_clock, key, t, m, s) => {
-        if (1 <= m && m <= 10) {
-          if (s === 0) {
-            this.say(`${m}分`)
+      second_decriment_fn: (single_clock, key, sec, mm, ss) => {
+        if (1 <= mm && mm <= 10) {
+          if (ss === 0) {
+            this.say(`${mm}分`)
           }
         }
-        if (t === 10 || t === 20 || t === 30) {
-          this.say(`${t}秒`)
+        if (sec === 10 || sec === 20 || sec === 30) {
+          this.say(`${sec}秒`)
         }
-        if (t <= 5) {
-          this.say(`${t}`)
+        if (sec <= 5) {
+          this.say(`${sec}`)
         }
-        if (t <= 6 && false) {
+        if (sec <= 6 && false) {
           const index = single_clock.index
           setTimeout(() => {
             if (index === single_clock.base.current_index) {
-              this.say(`${t - 1}`)
+              this.say(`${sec - 1}`)
             }
           }, 1000 * 0.75)
         }
@@ -422,21 +422,21 @@ export default {
   &.is_xclock_active
     .screen_container
       .active_current_bar
-        &.is_level1
+        &.cc_rest_gteq_60
           background-color: $blue
-          &.is_blink
+          &.cc_rest_gteq_1
             animation: xclock_bar_blink 1s ease-in-out 0.5s infinite alternate
-        &.is_level2
+        &.cc_rest_lt_60
           background-color: $yellow
-          &.is_blink
+          &.cc_rest_gteq_1
             animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
-        &.is_level3
+        &.cc_rest_lteq_10
           background-color: $red
-          &.is_blink
+          &.cc_rest_gteq_1
             animation: xclock_bar_blink 0.5s ease-in-out 0.5s infinite alternate
-        &.is_level4
+        &.cc_rest_lteq_5
           background-color: $red
-          &.is_blink
+          &.cc_rest_gteq_1
             animation: xclock_bar_blink 0.25s ease-in-out 0.5s infinite alternate
 
 @keyframes xclock_bar_blink

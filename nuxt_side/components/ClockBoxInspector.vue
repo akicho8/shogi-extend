@@ -6,8 +6,8 @@
     .block
       .level.is-mobile
         template(v-for="(e, i) in clock_box.single_clocks")
-          .level-item.has-text-centered
-            .active_current_bar(:class="e.bar_class" v-if="e.active_p && clock_box.timer")
+          .level-item.has-text-centered(:class="`SingleClock${i}`")
+            .active_current_bar(:class="e.rest_class" v-if="e.active_p && clock_box.timer")
             div
               p {{e.location.name}}
               p
@@ -15,9 +15,12 @@
                 span.mx-1(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
                 span.mx-1(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
               p {{e.initial_main_sec}} / {{e.initial_read_sec}} / {{e.initial_extra_sec}} / {{e.every_plus}} / {{e.minus_sec}}
-              p active_p:{{e.active_p}} rest:{{e.rest}}
-              p elapsed_sec:{{e.elapsed_sec}} elapsed_sec_old:{{e.elapsed_sec_old}}
-
+              .panel.assert_system_variable
+                .panel-block active_p:{{e.active_p}}
+                .panel-block rest:{{e.rest}}
+                .panel-block elapsed_sec:{{e.elapsed_sec}}
+                .panel-block elapsed_sec_old:{{e.elapsed_sec_old}}
+                .panel-block koreyori_count:{{e.koreyori_count}}
       .columns
         .column
           b-field(label="内部値")
@@ -26,7 +29,7 @@
               p pause_or_play_p: {{clock_box.pause_or_play_p}}
               p timer: {{clock_box.timer}}
               p turn: {{clock_box.turn}}
-              p zero_arrival: {{clock_box.zero_arrival}}
+              p any_zero_p: {{clock_box.any_zero_p}}
               p speed: {{clock_box.speed}}
               p play_count: {{clock_box.play_count}}
               p pause_count: {{clock_box.pause_count}}
