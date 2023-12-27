@@ -97,10 +97,8 @@ export class ClockBox {
 
   // 時間経過
   generation_next(value) {
-    if (this.timer) {
-      this.elapsed_sec += value
-      this.current.generation_next(value)
-    }
+    this.elapsed_sec += value
+    this.current.generation_next(value)
   }
 
   // デバッグ用
