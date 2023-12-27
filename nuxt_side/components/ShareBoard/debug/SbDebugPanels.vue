@@ -6,14 +6,14 @@
     .panel
       .panel-heading
         | 時間切れ
-      a.panel-block.cc_time_zero_fn(@click="SB.cc_time_zero_fn") 最初のコールバック
+      a.panel-block.cc_timeout_trigger(@click="SB.cc_timeout_trigger") 最初のコールバック
       a.panel-block(@click="SB.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC
-      a.panel-block(@click="SB.cc_delayed_timeout_modal") 他者は数秒後発動
-      a.panel-block(@click="SB.timeout_modal_handle_if_not_exist") 受信
-      a.panel-block(@click="SB.cc_auto_timeout_delay_stop") 数秒後発動キャンセル
-      a.panel-block(@click="SB.timeout_modal_handle('self_notification')") モーダル(自首)
-      a.panel-block(@click="SB.timeout_modal_handle('audo_judgement')") モーダル(判定)
-      a.panel-block(@click="SB.timeout_modal_close") 閉じる
+      a.panel-block(@click="SB.cc_timeout_modal_show_later") 他者は数秒後発動
+      a.panel-block(@click="SB.cc_timeout_modal_open_if_not_exist") 受信
+      a.panel-block(@click="SB.cc_timeout_judge_delay_stop") 数秒後発動キャンセル
+      a.panel-block(@click="SB.cc_timeout_modal_open('self_notify')") モーダル(自首)
+      a.panel-block(@click="SB.cc_timeout_modal_open('audo_judge')") モーダル(判定)
+      a.panel-block(@click="SB.cc_timeout_modal_close") 閉じる
 
   .column.is-2
     .panel

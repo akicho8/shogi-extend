@@ -24,7 +24,7 @@ RSpec.describe type: :system, share_board_spec: true do
       give_up_modal_open                                # 投了モーダルを表示した状態にする
     end
     a_block do
-      find(".GiveUpModal .cc_time_zero_fn").click # alice が時間切れになる
+      find(".GiveUpModal .cc_timeout_trigger").click # alice が時間切れになる
     end
     a_block do
       assert_no_give_up_modal                           # 時間切れになったことで投了モーダルが閉じられている
