@@ -1,4 +1,5 @@
 import { DebugModeInfo } from "./models/debug_mode_info.js"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_debug = {
   methods: {
@@ -10,7 +11,7 @@ export const mod_debug = {
     },
 
     debug_mode_set_any(value = null) {
-      if (this.$gs.present_p(value)) {
+      if (Gs.present_p(value)) {
         this.debug_mode_p = value
       } else {
         this.debug_mode_toggle()
@@ -23,7 +24,7 @@ export const mod_debug = {
     debug_mode_info() { return this.DebugModeInfo.fetch(this.debug_mode_key) },
     debug_mode_p: {
       get()  { return this.debug_mode_info.key === "is_debug_mode_on"                                  },
-      set(v) { this.debug_mode_key = this.$gs.str_to_boolean(v) ? "is_debug_mode_on" : "is_debug_mode_off" },
+      set(v) { this.debug_mode_key = Gs.str_to_boolean(v) ? "is_debug_mode_on" : "is_debug_mode_off" },
     },
   },
 }
