@@ -2,16 +2,16 @@
 .modal-card
   .modal-card-head
     .modal-card-title
-      template(v-if="timeout_info.key === 'self_notification'")
+      template(v-if="timeout_info.key === 'self_notify'")
         | 時間切れで
-      template(v-if="timeout_info.key === 'audo_judgement'")
+      template(v-if="timeout_info.key === 'audo_judge'")
         | 接続切れで
       | {{snapshot_clock.current.location.flip.name}}の勝ち！
   .modal-card-body
     template(v-if="SB.auto_resign_info.key === 'is_auto_resign_on'")
       p 終局です
     template(v-else)
-      template(v-if="timeout_info.key === 'audo_judgement'")
+      template(v-if="timeout_info.key === 'audo_judge'")
         p {{user_call_name(SB.current_turn_user_name)}}は接続切れのまま時間切れになりました
       template(v-else)
         p ルールを守って時間内に指しましょう
@@ -61,7 +61,7 @@ export default {
   methods: {
     close_handle() {
       this.$sound.play_click()
-      this.SB.timeout_modal_close()
+      this.SB.cc_timeout_modal_close()
       this.$emit("close")
     },
     submit_handle() {

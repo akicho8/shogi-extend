@@ -83,7 +83,7 @@ module SharedMethods
     assert_selector(".TimeoutModal")
   end
 
-  def timeout_modal_close
+  def cc_timeout_modal_close
     find(".TimeoutModal button", text: "閉じる", exact_text: true).click
   end
 

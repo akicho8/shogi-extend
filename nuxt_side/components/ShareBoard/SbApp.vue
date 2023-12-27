@@ -8,8 +8,8 @@ client-only
       p watching_member_count: {{watching_member_count}}
       p order_enable_p: {{order_enable_p}}
 
-      p timeout_modal_instance: {{!!timeout_modal_instance}}
-      p cc_auto_timeout_delay_id: {{cc_auto_timeout_delay_id}}
+      p cc_timeout_modal_instance: {{!!cc_timeout_modal_instance}}
+      p cc_timeout_judge_delay_id: {{cc_timeout_judge_delay_id}}
 
       p current_xmatch_rule_key: {{current_xmatch_rule_key}}
       p self_vs_self_p: {{self_vs_self_p}}

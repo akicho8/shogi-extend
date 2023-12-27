@@ -57,7 +57,7 @@ RSpec.describe "対局時計_基本", type: :system, share_board_spec: true do
       assert_clock_active_white                    # bob側もbob側にの時計に切り替わった
       sleep(@INITIAL_SEC)                          # bobは再び時間切れになるまで待った
       assert_text("時間切れで☗の勝ち！")          # 2度目のダイアログが出た
-      timeout_modal_close                         # いったん閉じないと assert_white_read_sec が失敗するため
+      cc_timeout_modal_close                         # いったん閉じないと assert_white_read_sec が失敗するため
       assert_white_read_sec(0)                     # また0時間切れになった
     end
     a_block do

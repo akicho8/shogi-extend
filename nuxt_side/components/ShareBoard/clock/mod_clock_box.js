@@ -149,7 +149,7 @@ export const mod_clock_box = {
       this.clock_box = new ClockBox({
         initial_turn: this.current_location.code, // this.current_sfen を元にした現在の手番
         koreyori_fn: context => this.cc_koreyori(context.initial_read_sec),
-        time_zero_fn: e => this.cc_time_zero_fn(),
+        time_zero_fn: e => this.cc_timeout_trigger(),
         switched_fn: () => {
           // this.$sound.play_click()
         },
@@ -337,7 +337,7 @@ export const mod_clock_box = {
       this.__cc_action_log_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
       if (cc_info.key === "ck_timeout") {
-        this.timeout_modal_handle_if_not_exist()
+        this.cc_timeout_modal_open_if_not_exist()
       } else if (cc_info.key === "ck_start") {
         this.__cc_start_call(params)
       } else if (cc_info.key === "ck_on") {

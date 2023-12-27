@@ -4,7 +4,7 @@
   //-   .panel
   //-     .panel-heading
   //-       | 時間切れメソッド
-  //-     a.panel-block(@click="base.cc_time_zero_fn") 最初のコールバック
+  //-     a.panel-block(@click="base.cc_timeout_trigger") 最初のコールバック
   //-     a.panel-block(@click="base.cc_time_limit_modal_show_and_broadcast") 当事者は自分で発動＆BC
   //-     a.panel-block(@click="base.cc_delayed_time_limit_modal") 他者は数秒後発動
   //-     a.panel-block(@click="base.time_limit_modal_handle_if_not_exist") 受信
