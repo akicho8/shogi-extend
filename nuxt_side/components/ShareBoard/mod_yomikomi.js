@@ -1,4 +1,5 @@
 import AnySourceReadModal from "@/components/AnySourceReadModal.vue"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_yomikomi = {
   data() {
@@ -76,8 +77,8 @@ export const mod_yomikomi = {
           this.yomikomi_modal_close()
 
           // すぐ実行すると棋譜読込前より先に記録される場合があるので遅らせる
-          this.$gs.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))
-          this.$gs.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました`))
+          Gs.delay_block(0.5, () => this.al_share({label: "棋譜読込後"}))
+          Gs.delay_block(1.0, () => this.quick_sync(`${this.user_call_name(this.user_name)}が棋譜を読み込んで共有しました`))
         }
       })
     },

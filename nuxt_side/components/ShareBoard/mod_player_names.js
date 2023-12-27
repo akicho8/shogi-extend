@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
 
 export const mod_player_names = {
@@ -19,13 +20,13 @@ export const mod_player_names = {
       })
       info["観戦"] = this.player_names_with_title.other
       info["面子"] = this.player_names_with_title.member
-      info = this.$gs.hash_compact_blank(info)
+      info = Gs.hash_compact_blank(info)
       return _.map(info, (v, k) => `${k}: ${v}\n`).join("")
     },
 
     // ぴよ将棋用のパラメータに変換する
     player_names_for_piyo() {
-      return this.$gs.hash_compact_blank({
+      return Gs.hash_compact_blank({
         game_name:  this.player_names_with_title.title,
         sente_name: this.player_names_with_title.black,
         gote_name:  this.player_names_with_title.white,
@@ -98,7 +99,7 @@ export const mod_player_names = {
       let hv = Location.values.reduce((a, e, i) => ({...a, [e.key]: this.$route.query[e.key]}), {})
       hv["other"] = this.$route.query["other"]
       hv["member"] = this.$route.query["member"]
-      hv = this.$gs.hash_compact_blank(hv)
+      hv = Gs.hash_compact_blank(hv)
       return hv
     },
   },

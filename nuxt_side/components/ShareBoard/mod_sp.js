@@ -1,6 +1,7 @@
 const DEBOUNCE_DELAY = 1000 * 1.0   // 1秒後に反映
 
 import _ from "lodash"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_sp = {
   data() {
@@ -54,7 +55,7 @@ export const mod_sp = {
     // ・あとで current_sfen に設定する
     // ・すぐに反映しないのは駒箱が消えてしまうから
     ev_edit_mode_short_sfen_change(v) {
-      this.$gs.assert(this.sp_mode === "edit", 'this.sp_mode === "edit"')
+      Gs.assert(this.sp_mode === "edit", 'this.sp_mode === "edit"')
 
       // NOTE: current_sfen に設定すると(current_sfenは駒箱を持っていないため)駒箱が消える
       // edit_modeの完了後に edit_mode_sfen を current_sfen に戻す
@@ -95,7 +96,7 @@ export const mod_sp = {
         this.$sound.play("x")
         const messages = []
         const name = this.current_turn_user_name
-        if (this.$gs.blank_p(name)) {
+        if (Gs.blank_p(name)) {
           messages.push(`順番設定で対局者の指定がないので誰も操作できません`)
         } else {
           messages.push(`今は${this.user_call_name(name)}の手番です`)
@@ -109,7 +110,7 @@ export const mod_sp = {
             messages.push(`検討する場合は順番設定を解除してください`)
           }
         }
-        if (this.$gs.present_p(messages)) {
+        if (Gs.present_p(messages)) {
           const full_message = messages.join("。")
           this.toast_ok(full_message)
           this.tl_add("OPVALID", `(${full_message})`)

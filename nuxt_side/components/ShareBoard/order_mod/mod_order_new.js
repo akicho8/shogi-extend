@@ -3,6 +3,7 @@
 import { OsChange } from "./os_change.js"
 import { OrderUnit } from "./order_unit/order_unit.js"
 import OrderSettingModal from "./OrderSettingModal.vue"
+import { Gs } from "@/components/models/gs.js"
 
 export const mod_order_new = {
   data() {
@@ -30,7 +31,7 @@ export const mod_order_new = {
 
     os_modal_handle() {
       // 動かしている途中で消すとエラーになる
-      // this.$gs.delay_block(5, () => this.os_modal_close())
+      // Gs.delay_block(5, () => this.os_modal_close())
 
       if (this.if_room_is_empty()) { return }
       this.sidebar_p = false
@@ -43,7 +44,7 @@ export const mod_order_new = {
 
       this.$sound.play_click()
       this.os_modal_init()
-      this.$gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
+      Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
       // this.room_setup_modal_close()
       this.os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
@@ -51,7 +52,7 @@ export const mod_order_new = {
         canCancel: [],
         // fullScreen: true, // 左右に余白ができるのと 100vh はスマホでおかしくなる
         onCancel: () => {
-          this.$gs.assert(false, "must not happen")
+          Gs.assert(false, "must not happen")
           this.$sound.play_click()
           this.os_modal_close()
         },
@@ -130,7 +131,7 @@ export const mod_order_new = {
     // 自分を含めて受信し「順番設定」を更新する
     // さらに「順番設定(仮)」も更新する
     new_order_share(message) {
-      this.$gs.assert(this.new_v.order_unit, "this.new_v.order_unit")
+      Gs.assert(this.new_v.order_unit, "this.new_v.order_unit")
       const params = {
         order_unit:        this.new_v.order_unit.attributes,
         //
@@ -148,7 +149,7 @@ export const mod_order_new = {
       } else {
         this.tl_alert("new_order_share 自分→他者")
       }
-      if (this.$gs.present_p(params.message)) {
+      if (Gs.present_p(params.message)) {
         this.al_add({...params, label: "順番更新"})
       }
 

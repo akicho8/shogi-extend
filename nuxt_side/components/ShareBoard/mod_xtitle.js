@@ -1,3 +1,5 @@
+import { Gs } from "@/components/models/gs.js"
+
 export const mod_xtitle = {
   data() {
     return {
@@ -18,8 +20,8 @@ export const mod_xtitle = {
       this.toast_ok(`${this.user_call_name(params.from_user_name)}がタイトルを${params.title}に変更しました`)
     },
     title_share_data_receive(params) {
-      this.$gs.assert(this.$gs.present_p(params), "this.$gs.present_p(params)")
-      this.$gs.assert("title" in params, '"title" in params')
+      Gs.assert(Gs.present_p(params), "Gs.present_p(params)")
+      Gs.assert("title" in params, '"title" in params')
       this.current_title = params.title
       this.ac_log({subject: "タイ変更", body: `タイトル "${this.current_title}" を受信`})
     },

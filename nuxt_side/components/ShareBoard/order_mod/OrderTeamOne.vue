@@ -22,6 +22,7 @@
 import VueDraggable from "vuedraggable"
 import { MemberStatusInfo } from "./member_status_info.js"
 import { support_child } from "../support_child.js"
+import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "OrderTeamOne",
@@ -65,7 +66,7 @@ export default {
     },
     // すべてのの名前のぷるぷる効果が同期していると変なのでずらす
     name_style(item) {
-      const value = this.$gs.irand()
+      const value = Gs.irand()
       return { "animation-delay": `${value}s` }
     },
 
