@@ -5,6 +5,14 @@
   .column.is-2
     .panel
       .panel-heading
+        | 本譜 ({{SB.honpu_log ? `手数:${SB.honpu_log.turn}` : `無`}})
+      a.panel-block.honpu_log_set(@click="SB.honpu_log_set") 作成
+      a.panel-block.honpu_log_click_handle(@click="SB.honpu_log_click_handle") 開く
+      a.panel-block.honpu_log_clear(@click="SB.honpu_log_clear") 削除
+
+  .column.is-2
+    .panel
+      .panel-heading
         | 時間切れ
       a.panel-block.cc_timeout_trigger(@click="SB.cc_timeout_trigger") 最初のコールバック
       a.panel-block(@click="SB.cc_timeout_modal_show_and_broadcast") 当事者は自分で発動＆BC

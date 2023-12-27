@@ -8,7 +8,7 @@ RSpec.describe type: :system, share_board_spec: true do
     end
     b_block do
       visit_app(room_key: :test_room, user_name: "bob") # bobが部屋に入ると
-      assert_honpu_link_exist                            # 本譜が共有されている
+      assert_honpu_link_on                            # 本譜が共有されている
     end
   end
 end

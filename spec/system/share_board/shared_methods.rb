@@ -110,8 +110,12 @@ module SharedMethods
     find(".AnySourceReadModal .submit_handle").click
   end
 
-  def assert_honpu_link_exist
-    assert_selector("a", text: "本譜", exact_text: true, wait: 30)
+  def assert_honpu_link_on
+    assert_selector(".SbNavbar a", text: "本譜", exact_text: true)
+  end
+
+  def assert_honpu_link_off
+    assert_no_selector(".SbNavbar a", text: "本譜", exact_text: true)
   end
 
   # 「投了」を押してモーダルを表示する

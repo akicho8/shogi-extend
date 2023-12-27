@@ -34,7 +34,9 @@ export const mod_honpu = {
 
     // 本譜をクリックしたときの処理
     honpu_log_click_handle() {
-      this.al_click_handle(this.honpu_log)
+      if (this.honpu_log) {
+        this.al_click_handle(this.honpu_log)
+      }
     },
 
     // 本譜の共有
