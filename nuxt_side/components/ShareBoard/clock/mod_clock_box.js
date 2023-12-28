@@ -210,7 +210,9 @@ export const mod_clock_box = {
     },
 
     cc_koreyori(sec) {
-      this.cc_talk(`これより1手${sec}秒でお願い致します`)
+      Gs.delay_block(CC_KOREYORI_DELAY, () => {
+        this.cc_talk(`これより1手${sec}秒でお願い致します`)
+      })
     },
 
     cc_talk(s, options = {}) {
