@@ -3,15 +3,18 @@ import { Location } from "shogi-player/components/models/location.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-const ONE_MIN = 60
+const SEC_PER_MIN = 60
+const MIN_PER_HOUR = 60
 
 export class SingleClock {
   static time_format(v) {
     let format = null
-    if ((v / ONE_MIN) >= ONE_MIN) {
-      format = "h:mm:ss"
-    } else {
+    if (v < SEC_PER_MIN) {
+      format = "s"
+    } else if (v < SEC_PER_MIN * MIN_PER_HOUR) {
       format = "m:ss"
+    } else {
+      format = "h:mm:ss"
     }
     return dayjs().startOf("year").set("seconds", v).format(format)
   }
@@ -20,7 +23,7 @@ export class SingleClock {
     this.base  = base
     this.index = index
 
-    this.initial_main_sec  = base.params.initial_main_sec || ONE_MIN * 3
+    this.initial_main_sec  = base.params.initial_main_sec || SEC_PER_MIN * 3
     this.initial_extra_sec = base.params.initial_extra_sec || 0
     this.initial_read_sec  = base.params.initial_read_sec || 0
     this.every_plus        = base.params.every_plus || 0
@@ -127,7 +130,7 @@ export class SingleClock {
   }
 
   second_decriment_fn_call(key, sec) {
-    const [mm, ss] = Gs.idivmod(sec, ONE_MIN)
+    const [mm, ss] = Gs.idivmod(sec, SEC_PER_MIN)
     this.base.params.second_decriment_fn(this, key, sec, mm, ss)
   }
 
@@ -231,12 +234,16 @@ export class SingleClock {
     return ary
   }
 
-  get to_time_format() {
+  get main_sec_mmss() {
     return this.constructor.time_format(this.main_sec)
   }
 
-  get to_time_format2() {
+  get read_sec_mmss() {
     return this.constructor.time_format(this.read_sec)
+  }
+
+  get extra_sec_mmss() {
+    return this.constructor.time_format(this.extra_sec)
   }
 
   get pause_or_play_p() {
@@ -264,11 +271,11 @@ export class SingleClock {
   //////////////////////////////////////////////////////////////////////////////// for v-model
 
   get main_minute_for_vmodel() {
-    return Math.trunc(this.initial_main_sec / ONE_MIN)
+    return Math.trunc(this.initial_main_sec / SEC_PER_MIN)
   }
 
   set main_minute_for_vmodel(v) {
-    this.initial_main_sec = Math.trunc(v * ONE_MIN)
+    this.initial_main_sec = Math.trunc(v * SEC_PER_MIN)
     this.main_sec = this.initial_main_sec
     // this.read_sec_set()
   }

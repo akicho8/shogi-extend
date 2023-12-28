@@ -22,13 +22,13 @@ export const mod_clock_decorator = {
       const e = this.clock_box.single_clocks[location.code]
       let o = []
       if (e.initial_main_sec >= 1 || e.every_plus >= 1) {
-        o.push(`<div class="second main_sec">${e.to_time_format}</div>`)
+        o.push(`<div class="second main_sec">${e.main_sec_mmss}</div>`)
       }
       if (e.initial_read_sec >= 1) {
-        o.push(`<div class="second read_sec">${e.read_sec}</div>`)
+        o.push(`<div class="second read_sec">${e.read_sec_mmss}</div>`)
       }
       if (e.initial_extra_sec >= 1) {
-        o.push(`<div class="second extra_sec">${e.extra_sec}</div>`)
+        o.push(`<div class="second extra_sec">${e.extra_sec_mmss}</div>`)
       }
       const values = o.join("")
 
@@ -67,8 +67,8 @@ export const mod_clock_decorator = {
   },
   computed: {
     // return {
-    //   black: { name: "先手", time: this.clock_box.single_clocks[0].to_time_format },
-    //   white: { name: "後手", time: this.clock_box.single_clocks[1].to_time_format },
+    //   black: { name: "先手", time: this.clock_box.single_clocks[0].main_sec_mmss },
+    //   white: { name: "後手", time: this.clock_box.single_clocks[1].main_sec_mmss },
     // }
     sp_player_info() {
       return Location.values.reduce((a, e) => {
