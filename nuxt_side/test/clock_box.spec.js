@@ -1,3 +1,4 @@
+// ../components/models/clock_box/clock_box.js
 import { ClockBox } from "@/components/models/clock_box/clock_box.js"
 
 describe("ClockBox", () => {
@@ -27,5 +28,27 @@ describe("ClockBox", () => {
   test("duplicate", () => {
     const clock_box = new ClockBox()
     const instance = clock_box.duplicate
+  })
+  test("reset", () => {
+    const clock_box = new ClockBox()
+    clock_box.reset()
+  })
+  test("clock_switch", () => {
+    const clock_box = new ClockBox({initial_turn: 0})
+    clock_box.clock_switch()
+  })
+  test("tap_on", () => {
+    const clock_box = new ClockBox({initial_turn: 0})
+    clock_box.tap_on(0)
+    clock_box.tap_on(1)
+  })
+  test("location_to", () => {
+    const clock_box = new ClockBox({initial_turn: 0})
+    clock_box.location_to(0)
+    clock_box.location_to(1)
+  })
+  test("generation_next", () => {
+    const clock_box = new ClockBox({initial_turn: 0})
+    clock_box.generation_next(-1)
   })
 })
