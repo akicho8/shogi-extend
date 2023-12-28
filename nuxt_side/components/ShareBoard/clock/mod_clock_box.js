@@ -1,5 +1,6 @@
 const BYOYOMI_TALK_PITCH      = 1.65 // 秒読み発声速度。次の発声に被らないようにする。速くても人間が予測できるので聞き取れる
 const CC_INPUT_DEBOUNCE_DELAY = 0.5  // 時計の同期のために操作が終わったと判断する秒数
+const CC_KOREYORI_DELAY       = 1.0  // N秒の発声とかぶるためすこし間を空けてから発言する
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"

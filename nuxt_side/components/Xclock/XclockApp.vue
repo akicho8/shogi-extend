@@ -39,19 +39,19 @@
           .level-item.has-text-centered.is-marginless(@pointerdown="xswitch_handle(e)" :class="e.dom_class")
             .active_current_bar(:class="e.rest_class" v-if="e.active_p && clock_box.timer")
             .inactive_current_bar(v-else)
-            .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.to_time_format.length}`]")
+            .wide_container.time_fields.is-flex(:class="[`display_lines-${e.display_lines}`, `text_width-${e.main_sec_mmss.length}`]")
               .field(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1")
                 .time_label 残り時間
                 .time_value.is-family-monospace.is_line_break_off
-                  | {{e.to_time_format}}
+                  | {{e.main_sec_mmss}}
               .field(v-if="e.initial_read_sec >= 1")
                 .time_label 秒読み
                 .time_value.is-family-monospace.is_line_break_off
-                  | {{e.read_sec}}
+                  | {{e.read_sec_mmss}}
               .field(v-if="e.initial_extra_sec >= 1")
                 .time_label 猶予
                 .time_value.is-family-monospace.is_line_break_off
-                  | {{e.extra_sec}}
+                  | {{e.extra_sec_mmss}}
 
   //////////////////////////////////////////////////////////////////////////////// form
   .debug_container.mt-5(v-if="development_p")

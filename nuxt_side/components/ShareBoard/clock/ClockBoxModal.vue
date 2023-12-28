@@ -31,7 +31,7 @@
               .is-size-2 {{e.location.name}}
               // →横並び
               .is-family-monospace
-                span.mx-1.is-size-4(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1") {{e.to_time_format}}
+                span.mx-1.is-size-4(v-if="e.initial_main_sec >= 1 || e.every_plus >= 1") {{e.main_sec_mmss}}
                 span.mx-1.is-size-4(v-if="e.initial_read_sec >= 1") {{e.read_sec}}
                 span.mx-1.is-size-4(v-if="e.initial_extra_sec >= 1") {{e.extra_sec}}
               // ↓縦並び
