@@ -25,12 +25,15 @@ export const mod_chat_ai_trigger_rule = {
     ////////////////////////////////////////////////////////////////////////////////
 
     // /gpt xxx の xxx を自動で作る
-    ai_say_for(key, params) {
+    ai_say_for(delay, key, params) {
       if (this.ai_mode_info.key === "ai_mode_off") { return }
       let content = AiResponseInfo.fetch(key).command_fn(this, params)
       if (content != null) {
         content = [content, "返答は短かく簡潔にすること。"].join("")
-        this.ai_something_say({content: content})
+        if (this.$route.query.__system_test_now__) {
+          delay = 0
+        }
+        Gs.delay_block(delay, () => this.ai_something_say({content: content}))
       }
     },
 
@@ -62,7 +65,7 @@ export const mod_chat_ai_trigger_rule = {
           if (this.cc_play_p) {    // BUG: 時計の情報が届く前に見ているため常に false になる
             // 対局中は参加者にあいさつをスキップする
           } else {
-            this.ai_say_for("参加者にあいさつする", params)
+            this.ai_say_for(0, "参加者にあいさつする", params)
           }
         } else {
           this.debug_alert("本日はもう挨拶しました")
@@ -72,7 +75,7 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_case_odai(params) {
       if (this.received_from_self(params)) {
-        this.ai_say_for("お題に答える", params)
+        this.ai_say_for(2, "お題に答える", params)
       }
     },
 
@@ -82,7 +85,7 @@ export const mod_chat_ai_trigger_rule = {
           if (this.cc_play_p) {
             // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
             if (this.auto_resign_info.key === "is_auto_resign_off") {
-              this.ai_say_for("反則した人を励ます", params)
+              this.ai_say_for(3, "反則した人を励ます", params)
             }
           }
         }
@@ -92,7 +95,7 @@ export const mod_chat_ai_trigger_rule = {
     ai_say_case_turn(params) {
       if (this.received_from_self(params)) {
         if (this.cc_play_p) {
-          this.ai_say_for("局面にコメントする", params)
+          this.ai_say_for(0, "局面にコメントする", params)
         }
       }
     },
@@ -101,12 +104,12 @@ export const mod_chat_ai_trigger_rule = {
       if (this.received_from_self(params)) {
         const cc_info = CcInfo.fetch(params.cc_key)
         if (cc_info.key === "ck_start") {
-          this.ai_say_for("対局を盛り上げる", params)
+          this.ai_say_for(3, "対局を盛り上げる", params)
         }
         if (cc_info.key === "ck_timeout") {
           // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
           if (this.auto_resign_info.key === "is_auto_resign_off") {
-            this.ai_say_for("時間切れで負けた人を励ます", params)
+            this.ai_say_for(3, "時間切れで負けた人を励ます", params)
           }
         }
       }
@@ -114,7 +117,7 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_case_give_up(params) {
       if (this.received_from_self(params)) {
-        this.ai_say_for("見応えのある対局だったと褒める", params)
+        this.ai_say_for(3, "見応えのある対局だったと褒める", params)
       }
     },
   },
