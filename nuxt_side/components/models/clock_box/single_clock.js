@@ -32,23 +32,25 @@ export class SingleClock {
   }
 
   variable_reset() {
-    this.main_sec  = this.initial_main_sec
-    this.extra_sec = this.initial_extra_sec
-    this.read_sec  = this.initial_read_sec
-    this.minus_sec = 0
-    this.elapsed_sec = 0
+    this.main_sec        = this.initial_main_sec
+    this.extra_sec       = this.initial_extra_sec
+    this.read_sec        = this.initial_read_sec
+
+    this.minus_sec       = 0
+    this.elapsed_sec     = 0
     this.elapsed_sec_old = 0
-    this.koreyori_count = 0
+    this.koreyori_count  = 0
   }
 
   copy_from(o) {
-    this.main_sec         = o.main_sec
-    this.read_sec         = o.read_sec
-    this.extra_sec        = o.extra_sec
-    this.minus_sec        = o.minus_sec
-    this.elapsed_sec      = o.elapsed_sec
-    this.elapsed_sec_old  = o.elapsed_sec_old
-    this.koreyori_count = o.koreyori_count
+    this.main_sec          = o.main_sec
+    this.read_sec          = o.read_sec
+    this.extra_sec         = o.extra_sec
+
+    this.minus_sec         = o.minus_sec
+    this.elapsed_sec       = o.elapsed_sec
+    this.elapsed_sec_old   = o.elapsed_sec_old
+    this.koreyori_count    = o.koreyori_count
 
     this.initial_read_sec  = o.initial_read_sec
     this.initial_main_sec  = o.initial_main_sec
