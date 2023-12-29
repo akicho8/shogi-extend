@@ -200,10 +200,10 @@ export class SingleClock {
         ary.push("is_sclock_active")
         if (this.main_sec === 0) {
           ary.push(this.base.params.active_value_zero_css_class)
-          ary.push("sclock_zero")
+          ary.push("is_sclock_zero")
         } else {
           ary.push(this.base.params.active_value_nonzero_css_class)
-          ary.push("sclock_nonzero")
+          ary.push("is_sclock_nonzero")
         }
       } else {
         ary.push(this.base.params.inactive_css_class)
