@@ -101,6 +101,11 @@ export class ClockBox {
     this.current.generation_next(value)
   }
 
+  // 1回分進む
+  tick() {
+    this.generation_next(-1)
+  }
+
   // デバッグ用
   main_sec_set(main_sec) {
     this.single_clocks.forEach(e => e.main_sec = main_sec)
@@ -141,7 +146,7 @@ export class ClockBox {
 
   timer_start() {
     if (this.timer == null) {
-      this.timer = setInterval(() => this.generation_next(-1), 1000 / this.speed)
+      this.timer = setInterval(() => this.tick(), 1000 / this.speed)
     }
   }
 
