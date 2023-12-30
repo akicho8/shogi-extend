@@ -35,11 +35,11 @@ export const mod_clock_box_timeout = {
     // 当事者は自分で起動してBC
     cc_timeout_modal_show_and_broadcast() {
       this.tl_alert("当事者は自分で起動してBC")
-      this.auto_resign_then_give_up() // 自動投了なら投了する
-      this.cc_timeout_modal_open("self_notify")   // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
+      this.auto_resign_then_give_up()           // 自動投了なら投了する
+      this.cc_timeout_modal_open("self_notify") // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.CC_TIMEOUT_BC_DELAY}秒後にBC`)
       Gs.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {
-        this.clock_box_share("ck_timeout") // その上で、時間切れをBCする
+        this.clock_box_share("ck_timeout")      // その上で、時間切れをBCする
       })
     },
 
@@ -112,6 +112,6 @@ export const mod_clock_box_timeout = {
   },
   computed: {
     CC_TIMEOUT_JUDGE_DELAY() { return parseFloat(this.$route.query.CC_TIMEOUT_JUDGE_DELAY || CC_TIMEOUT_JUDGE_DELAY) },
-    CC_TIMEOUT_BC_DELAY()    { return parseFloat(this.$route.query.CC_TIMEOUT_BC_DELAY || CC_TIMEOUT_BC_DELAY)     },
+    CC_TIMEOUT_BC_DELAY()    { return parseFloat(this.$route.query.CC_TIMEOUT_BC_DELAY || CC_TIMEOUT_BC_DELAY)       },
   },
 }
