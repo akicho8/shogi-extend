@@ -12,11 +12,15 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("あ。り。す。")).toEqual("ありすさん")
     expect(HandleNameParser.call_name("alice@日本")).toEqual("aliceさん")
     expect(HandleNameParser.call_name("alice＠日本")).toEqual("aliceさん")
+    expect(HandleNameParser.call_name("中の人")).toEqual("中の人")
+  })
+
+  test("語尾のゴミを取る", () => {
     expect(HandleNameParser.call_name("alice!")).toEqual("aliceさん")
     expect(HandleNameParser.call_name("alice！")).toEqual("aliceさん")
     expect(HandleNameParser.call_name("alice!!")).toEqual("aliceさん")
-    expect(HandleNameParser.call_name("中の人")).toEqual("中の人")
     expect(HandleNameParser.call_name("alice.")).toEqual("aliceさん")
+    expect(HandleNameParser.call_name("alice-")).toEqual("aliceさん")
   })
 
   test("ん", () => {
@@ -37,10 +41,11 @@ describe("HandleNameParser", () => {
     expect(HandleNameParser.call_name("aliceちゃん")).toEqual("aliceちゃん") // 最後が "ん" の影響でスルーされているだけ
   })
 
-  test("chan/kun", () => {
+  test("もともとニックネームのような人に敬称をつけない", () => {
     expect(HandleNameParser.call_name("alicechan")).toEqual("alicechan")
     expect(HandleNameParser.call_name("alicekun")).toEqual("alicekun")
     expect(HandleNameParser.call_name("ALICECHAN")).toEqual("ALICECHAN")
+    expect(HandleNameParser.call_name("○○民")).toEqual("○○民")
   })
 
   test("絵文字が語尾に含まれる場合は除去する", () => {
