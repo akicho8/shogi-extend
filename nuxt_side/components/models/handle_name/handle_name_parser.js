@@ -5,7 +5,7 @@ import { Gs } from "@/components/models/gs.js"
 const CLEAN_TRY_COUNT = 2
 
 export class HandleNameParser {
-  static DELETE_SUFFIX_CHARS = "!！.／"         // 最後にあると削除する文字たち
+  static DELETE_SUFFIX_CHARS = "!！.／-"        // 最後にあると削除する文字たち
   static DELETE_SUFFIX_WORD  = ["だよ", "です"] // 最後にあると削除する単語たち
   static DELETE_CHAR         = "。"             // どこにあっても削除する文字たち
 
@@ -44,7 +44,7 @@ export class HandleNameParser {
       s = s.replace(/(\D+)\d+$/, "$1")                                                            // "alice123"        → "alice"
     })
 
-    if (s.match(/.(さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人|chan|kun)$/i)) {
+    if (s.match(/.(さま|サマ|ｻﾏ|様|氏|段|級|団|冠|人|民|chan|kun)$/i)) {
       return s
     }
 
