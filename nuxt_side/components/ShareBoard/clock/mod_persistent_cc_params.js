@@ -29,7 +29,7 @@ export const mod_persistent_cc_params = {
     },
 
     // 以前は一つのハッシュだったので配列でなければハッシュの配列に変更する
-    persistent_cc_params_array_wrap() {
+    cc_params_convert_to_array_of_hash() {
       if (!_.isArray(this.persistent_cc_params)) {
         this.persistent_cc_params = _.cloneDeep([this.persistent_cc_params])
       }
