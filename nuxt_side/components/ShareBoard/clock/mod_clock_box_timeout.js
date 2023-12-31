@@ -39,7 +39,7 @@ export const mod_clock_box_timeout = {
       this.cc_timeout_modal_open("self_notify") // モーダルが発動しない0.1秒の間に指してしまうので本人にはすぐに表示する
       this.tl_add("TIME_LIMIT", `本人側 ${this.CC_TIMEOUT_BC_DELAY}秒後にBC`)
       Gs.delay_block(this.CC_TIMEOUT_BC_DELAY, () => {
-        this.clock_box_share("ck_timeout")      // その上で、時間切れをBCする
+        this.clock_box_share("cc_behavior_timeout")      // その上で、時間切れをBCする
       })
     },
 

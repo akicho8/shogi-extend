@@ -86,7 +86,7 @@
       a.panel-block(@click="SB.handle_name_clear_handle") ハンドルネームを空にする
       a.panel-block(@click="SB.edit_warn_modal_handle") 編集警告
       a.panel-block(@click="SB.al_test") 指し手
-      a.panel-block(@click="SB.clock_box_share('ck_manual_sync')") 時計同期
+      a.panel-block(@click="SB.clock_box_share('cc_behavior_manual_sync')") 時計同期
       a.panel-block(@click="SB.reload_modal_handle") リロード確認
       a.panel-block(@click="SB.room_entry_call({from_user_name: 'alice'})") 入室コール
       a.panel-block(@click="SB.room_leave_call({from_user_name: 'alice'})") 退室コール
