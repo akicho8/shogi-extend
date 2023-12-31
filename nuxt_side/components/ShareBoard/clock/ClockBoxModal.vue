@@ -90,7 +90,7 @@ export default {
       this.$sound.play_click()
       this.SB.cc_params_apply()
       this.SB.cc_play_handle()
-      this.SB.clock_box_share("ck_start")
+      this.SB.clock_box_share("cc_behavior_start")
       if (this.SB.auto_close_p) {
         this.$emit("close")
       }
@@ -98,7 +98,7 @@ export default {
     pause_handle() {
       this.$sound.play_click()
       this.SB.cc_pause_handle()
-      this.SB.clock_box_share("ck_pause")
+      this.SB.clock_box_share("cc_behavior_pause")
       if (this.SB.ac_room && this.SB.order_enable_p) {
         this.$gs.delay_block(2.5, () => this.toast_ok("続けて検討する場合は順番設定を無効にしてください"))
       }
@@ -107,7 +107,7 @@ export default {
       this.$sound.play_click()
       if (this.instance.pause_or_play_p) {
         this.SB.cc_stop_handle()
-        this.SB.clock_box_share("ck_stop")
+        this.SB.clock_box_share("cc_behavior_stop")
       } else {
         this.toast_ok("すでに停止しています")
       }
@@ -115,7 +115,7 @@ export default {
     resume_handle() {
       this.$sound.play_click()
       this.SB.cc_resume_handle()
-      this.SB.clock_box_share("ck_resume")
+      this.SB.clock_box_share("cc_behavior_resume")
       if (this.SB.auto_close_p) {
         this.$emit("close")
       }

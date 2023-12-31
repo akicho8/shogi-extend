@@ -4,7 +4,7 @@ const CC_KOREYORI_DELAY       = 1.0  // N秒の発声とかぶるためすこし
 
 import { ClockBox   } from "@/components/models/clock_box/clock_box.js"
 import { CcRuleInfo } from "@/components/models/cc_rule_info.js"
-import { CcInfo     } from "./cc_info.js"
+import { CcBehaviorInfo     } from "./cc_behavior_info.js"
 import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 
@@ -120,10 +120,10 @@ export const mod_clock_box = {
       if (v) {
         this.cc_create()
         this.cc_params_apply() // ONにしたらすぐにパラメータを反映する
-        this.clock_box_share("ck_on")
+        this.clock_box_share("cc_behavior_on")
       } else {
         this.cc_destroy()
-        this.clock_box_share("ck_off")
+        this.clock_box_share("cc_behavior_off")
       }
     },
 
@@ -249,7 +249,7 @@ export const mod_clock_box = {
     cc_stop_share_handle() {
       if (this.cc_play_p) {
         this.cc_stop_handle()
-        this.clock_box_share("ck_silent_stop")
+        this.clock_box_share("cc_behavior_silent_stop")
       }
     },
     cc_play_handle() {
@@ -305,32 +305,32 @@ export const mod_clock_box = {
     cc_input_handle_lazy: _.debounce(function(v) {
       this.clog(v)
       this.cc_params_save()            // 何度も localStorage に保存すると遅いので操作後にする
-      this.clock_box_share("ck_input") // みんなへの同期も操作後にする
+      this.clock_box_share("cc_behavior_input") // みんなへの同期も操作後にする
     }, 1000 * CC_INPUT_DEBOUNCE_DELAY),
 
     ////////////////////////////////////////////////////////////////////////////////
 
     // 時計の状態をすべて共有するためのパラメータを作る
-    clock_box_share_params_factory(cc_key, params = {}) {
-      const cc_info = CcInfo.fetch(cc_key)
+    clock_box_share_params_factory(cc_behavior_key, params = {}) {
+      const cc_behavior_info = CcBehaviorInfo.fetch(cc_behavior_key)
       params = {
-        cc_key: cc_info.key,
+        cc_behavior_key: cc_behavior_info.key,
         talk: true,
         ...params,
         ...this.clock_share_data,
       }
-      if (cc_info.with_url) {
+      if (cc_behavior_info.with_url) {
         params.current_url = this.current_url // 棋譜再現URLをログに出すため
       }
       return params
     },
     // 時計の状態をすべて共有する
-    clock_box_share(cc_key, params = {}) {
-      params = this.clock_box_share_params_factory(cc_key, params)
+    clock_box_share(cc_behavior_key, params = {}) {
+      params = this.clock_box_share_params_factory(cc_behavior_key, params)
       this.ac_room_perform("clock_box_share", params) // --> app/channels/share_board/room_channel.rb
     },
     clock_box_share_broadcasted(params) {
-      const cc_info = CcInfo.fetch(params.cc_key)
+      const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       this.tl_add("時計受信", `${params.from_user_name} -> ${this.user_name}`, params)
       this.tl_alert("時計同期")
       if (this.received_from_self(params)) {
@@ -339,25 +339,25 @@ export const mod_clock_box = {
       }
       this.__cc_action_log_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
-      if (cc_info.key === "ck_timeout") {
+      if (cc_behavior_info.key === "cc_behavior_timeout") {
         this.cc_timeout_modal_open_if_not_exist()
-      } else if (cc_info.key === "ck_start") {
+      } else if (cc_behavior_info.key === "cc_behavior_start") {
         this.__cc_start_call(params)
-      } else if (cc_info.key === "ck_on") {
+      } else if (cc_behavior_info.key === "cc_behavior_on") {
         this.toast_ok(this.__cc_receive_message(params), {onend: () => {
           if (this.received_from_self(params)) {
             this.toast_ok("時間を設定したら右下のボタンで対局を開始してください", {duration: 1000 * 3})
           }
         }})
-      } else if (cc_info.toast_p) {
-        this.toast_ok(this.__cc_receive_message(params), {talk: cc_info.with_talk})
+      } else if (cc_behavior_info.toast_p) {
+        this.toast_ok(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
       }
       this.cc_timeout_logging(params)
       this.ai_say_case_clock(params)
     },
     __cc_receive_message(params) {
-      const cc_info = CcInfo.fetch(params.cc_key)
-      return `${this.user_call_name(params.from_user_name)}が${cc_info.receive_message}`
+      const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
+      return `${this.user_call_name(params.from_user_name)}が${cc_behavior_info.receive_message}`
     },
     __cc_start_call(params) {
       this.toast_ok(this.__cc_receive_message(params), {
@@ -386,12 +386,12 @@ export const mod_clock_box = {
     },
 
     __cc_action_log_store(params) {
-      const cc_info = CcInfo.fetch(params.cc_key)
-      if (cc_info.history) {
+      const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
+      if (cc_behavior_info.history) {
         params = {
           ...params,
-          label: cc_info.label,
-          label_type: cc_info.label_type,
+          label: cc_behavior_info.label,
+          label_type: cc_behavior_info.label_type,
           clock_box_attributes: null, // 容量が大きいので空にしておく
           current_url: null, // 絶対に使わないので消しておく
         }
@@ -415,7 +415,7 @@ export const mod_clock_box = {
 
     // 最初の PLAY か？
     first_play_trigger_p(params) {
-      return params.cc_key === "ck_start"
+      return params.cc_behavior_key === "cc_behavior_start"
     },
 
     cc_play_confirm(params = {}) {
@@ -469,11 +469,11 @@ export const mod_clock_box = {
       this.tl_add("CC初期値", `${label}: ${this.cc_params_inspect(params)}`)
     },
 
-    // 時間切れの状態を記録する → ck_timeout のログとかぶっているので不要
+    // 時間切れの状態を記録する → cc_behavior_timeout のログとかぶっているので不要
     cc_timeout_logging(params) {
       // if (this.received_from_self(params)) {
-      //   const cc_info = CcInfo.fetch(params.cc_key)
-      //   if (cc_info.key === "ck_timeout") {
+      //   const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
+      //   if (cc_behavior_info.key === "cc_behavior_timeout") {
       //     const body = [
       //       params.from_user_name,
       //       this.current_url,
@@ -486,7 +486,7 @@ export const mod_clock_box = {
 
   computed: {
     CcRuleInfo() { return CcRuleInfo },
-    CcInfo()     { return CcInfo     },
+    CcBehaviorInfo()     { return CcBehaviorInfo     },
 
     cc_play_p()  { return this.clock_box && this.clock_box.play_p }, // 時計の状態 PLAY
 

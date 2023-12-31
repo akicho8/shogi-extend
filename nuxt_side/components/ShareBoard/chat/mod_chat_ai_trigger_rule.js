@@ -2,7 +2,7 @@
 
 import { AiResponseInfo } from "./ai_response_info.js"
 import { MessageRecord } from "./message_record.js"
-import { CcInfo } from "../clock/cc_info.js"
+import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
@@ -102,11 +102,11 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_case_clock(params) {
       if (this.received_from_self(params)) {
-        const cc_info = CcInfo.fetch(params.cc_key)
-        if (cc_info.key === "ck_start") {
+        const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
+        if (cc_behavior_info.key === "cc_behavior_start") {
           this.ai_say_for(3, "対局を盛り上げる", params)
         }
-        if (cc_info.key === "ck_timeout") {
+        if (cc_behavior_info.key === "cc_behavior_timeout") {
           // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
           if (this.auto_resign_info.key === "is_auto_resign_off") {
             this.ai_say_for(3, "時間切れで負けた人を励ます", params)
