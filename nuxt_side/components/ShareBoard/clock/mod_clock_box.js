@@ -322,6 +322,12 @@ export const mod_clock_box = {
       if (cc_behavior_info.with_url) {
         params.current_url = this.current_url // 棋譜再現URLをログに出すため
       }
+      if (cc_behavior_info.with_member_data) {
+        params.member_data = this.player_names_with_title_as_human_text
+      }
+      if (cc_behavior_info.log_level) {
+        params.log_level = cc_behavior_info.log_level
+      }
       return params
     },
     // 時計の状態をすべて共有する
