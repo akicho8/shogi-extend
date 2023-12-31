@@ -70,9 +70,8 @@ module ShareBoard
       values = data["cc_params"].collect do |e|
         e.fetch_values("initial_main_min", "initial_read_sec", "initial_extra_sec", "every_plus")
       end
-      url = data["current_url"]
-      message = [data["cc_behavior_key"], values.inspect, url].compact.join(" ")
-      track(data, subject: "対局時計", body: message, emoji: ":対局時計:")
+      message = [data["cc_behavior_key"], values.inspect, data["member_data"], data["current_url"]].compact.join("\n\n")
+      track(data, subject: "対局時計", body: message, emoji: ":対局時計:", level: data["log_level"])
       broadcast(:clock_box_share_broadcasted, data)
     end
 
