@@ -31,6 +31,7 @@ export const mod_ping = {
 
     //////////////////////////////////////////////////////////////////////////////// これだけあればいいけど失敗したかどうかわかりにくい
 
+    // PING を送信する
     ping_command(e) {
       this.ping_callback_set(e)
       this.ac_room_perform("ping_command", {
@@ -39,14 +40,17 @@ export const mod_ping = {
         ping_at: this.$time.current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
+    // PING を受信する
     ping_command_broadcasted(params) {
       if (params.to_connection_id === this.connection_id) {
         const now = this.$time.current_ms()
         Gs.delay_block(this.PONG_DELAY, () => this.pong_command(params))
         const gap = now - params.ping_at
         this.ac_log({subject: "PING", body: `${params.from_user_name} → ${this.user_name} ${gap}ms`})
+        this.talk("ピン")
       }
     },
+    // PONG を送信する
     pong_command(params) {
       this.ac_room_perform("pong_command", {
         to_user_name: params.from_user_name,
@@ -55,6 +59,7 @@ export const mod_ping = {
         pong_at: this.$time.current_ms(),
       }) // --> app/channels/share_board/room_channel.rb
     },
+    // PONG を受信する
     pong_command_broadcasted(params) {
       if (params.to_connection_id === this.connection_id) {
         if (SLOW_AND_PONG_IGNORED && !this.ping_running_p) {
@@ -98,6 +103,7 @@ export const mod_ping = {
     ping_done() {
       this.ping_success = true
       this.ping_callback_stop()
+      this.talk("ポン")
     },
   },
 
@@ -105,9 +111,6 @@ export const mod_ping = {
     PING_OK_SEC() { return this.$route.query.PING_OK_SEC || PING_OK_SEC },
     PONG_DELAY()  { return this.$route.query.PONG_DELAY || PONG_DELAY   },
 
-    // PING実行中？
-    ping_running_p() {
-      return Gs.present_p(this.ping_runner_id)
-    },
+    ping_running_p() { return Gs.present_p(this.ping_runner_id) }, // PING実行中？
   },
 }
