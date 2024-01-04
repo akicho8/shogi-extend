@@ -103,9 +103,9 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.18)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     bindex (0.8.1)
-    bioshogi (0.0.7)
+    bioshogi (0.0.8)
       actionview
       activesupport (>= 7.1.0)
       color
@@ -294,11 +294,11 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.5.9)
     nkf (0.1.2)
-    nokogiri (1.15.5-arm64-darwin)
+    nokogiri (1.16.0-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.5-x86_64-darwin)
+    nokogiri (1.16.0-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.15.5-x86_64-linux)
+    nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.9)
       faraday (>= 0.17.3, < 3.0)
@@ -328,7 +328,7 @@ GEM
       omniauth
       omniauth-oauth2 (~> 1.0)
     orm_adapter (0.5.0)
-    pkg-config (1.5.5)
+    pkg-config (1.5.6)
     power_assert (2.0.3)
     pp (0.4.0)
       prettyprint
