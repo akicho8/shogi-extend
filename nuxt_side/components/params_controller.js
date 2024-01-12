@@ -61,7 +61,7 @@ export const params_controller = {
         } else {
           // キーの指定がないなら alias で試す
           if (e.alias) {
-            for (let key in e.alias) {
+            for (const key of e.alias) { // in だと Hash#each 風になるので注意！
               v = this.$route.query[key]
               if (v != null) {
                 break
