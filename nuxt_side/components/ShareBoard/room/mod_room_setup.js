@@ -34,7 +34,7 @@ export const mod_room_setup = {
     // URLに合言葉の指定があればそのまま部屋に入る
     room_create_if_exist_room_key_in_url() {
       // URLに合言葉がない場合は何もしない
-      if (Gs.blank_p(this.$route.query.room_key)) {
+      if (this.query_room_key_blank_p) {
         return
       }
       // 合言葉が復元できたとしても元々空であれば何もしない
@@ -266,5 +266,8 @@ export const mod_room_setup = {
 
     // 合言葉と名前が入力済みなので共有可能か？
     connectable_p() { return Gs.present_p(this.room_key) && Gs.present_p(this.user_name) },
+
+    query_room_key()         { return this.$route.query["room_key"] ?? this.$route.query["room_code"] }, // 合言葉の値 (URL限定)
+    query_room_key_blank_p() { return Gs.blank_p(this.query_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
   },
 }
