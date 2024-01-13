@@ -6,20 +6,20 @@
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="SB.ac_room && false") 入室中
     b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.ac_room") 部屋のリンク
   .modal-card-body
-    template(v-if="SB.rsm_autocomp_use_p")
+    template(v-if="SB.rsm_autocomplete_use_p")
       // b-autocomplete の場合はモーダルの中に入ってしまって使いにくい
       b-field(label="合言葉" label-position="on-border")
         b-autocomplete(
           max-height="4rem"
           v-model.trim="SB.new_room_key"
-          :data="SB.rsm_autocomp_data"
+          :data="SB.rsm_complement_list_for_ac"
           type="search"
           placeholder=""
           :open-on-focus="true"
           :clearable="false"
           expanded
-          @select="SB.rsm_autocomp_select_handle"
-          @keydown.native.enter="SB.rsm_autocomp_enter_handle"
+          @select="SB.rsm_autocomplete_select_handle"
+          @keydown.native.enter="SB.rsm_autocomplete_enter_handle"
           :disabled="SB.ac_room"
           ref="new_room_key"
           )
@@ -28,7 +28,7 @@
       b-field(label="合言葉" label-position="on-border")
         b-input.new_room_key(v-model.trim="SB.new_room_key" :disabled="SB.ac_room" ref="new_room_key" autocomplete="on" list="room_key_comp_list")
       datalist(id="room_key_comp_list")
-        template(v-for="room_key in SB.room_keys")
+        template(v-for="room_key in SB.complement_room_keys")
           option(:value="room_key")
 
     b-field(label="ハンドルネーム" label-position="on-border")
@@ -46,14 +46,13 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 
-const ROOM_CODE_ALWAYS_SHOW = true  // 合言葉は表示しっぱなしにするか？
 import { support_child } from "../support_child.js"
 
 export default {
   name: "RoomSetupModal",
   mixins: [support_child],
   mounted() {
-    // this.desktop_focus_to(this.$refs.new_room_key)
+    this.desktop_focus_to(this.$refs.new_room_key)
   },
 }
 </script>

@@ -12,7 +12,7 @@ export const mod_honpu = {
     // 起動時に本譜登録する
     // ・合言葉を持っていない
     // ・body を持っている
-    if (this.query_room_key_blank_p) {
+    if (this.url_room_key_is_blank_p) {
       if (Gs.present_p(this.$route.query.body) || Gs.present_p(this.$route.query.xbody)) {
         this.honpu_log_set()
       }

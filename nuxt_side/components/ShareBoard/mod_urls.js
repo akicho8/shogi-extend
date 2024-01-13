@@ -15,7 +15,7 @@ export const mod_urls = {
   methods: {
     ////////////////////////////////////////////////////////////////////////////////
     room_url_copy_handle() {
-      if (this.if_room_is_empty()) { return }
+      if (this.room_is_empty_p()) { return }
 
       Gs.assert(Gs.present_p(this.room_key), "Gs.present_p(this.room_key)")
       if (Gs.blank_p(this.room_key)) {
@@ -80,7 +80,6 @@ export const mod_urls = {
     other_app_click_handle(app_name) {
       this.sidebar_p = false
       this.$sound.play_click()
-      this.ga_click(app_name)
       this.app_log({emoji: ":外部アプリ:", subject: "共有将棋盤→外部アプリ起動", body: app_name})
 
       this.al_share({
