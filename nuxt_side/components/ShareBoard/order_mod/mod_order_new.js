@@ -45,7 +45,7 @@ export const mod_order_new = {
       this.$sound.play_click()
       this.os_modal_init()
       Gs.assert(this.os_modal_instance == null, "this.os_modal_instance == null")
-      // this.room_setup_modal_close()
+      // this.rsm_close()
       this.os_modal_instance = this.modal_card_open({
         component: OrderSettingModal,
         props: { },

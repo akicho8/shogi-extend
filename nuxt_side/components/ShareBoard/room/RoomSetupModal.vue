@@ -6,27 +6,45 @@
       b-tag.mx-2.has-text-weight-bold(type="is-success" v-if="SB.ac_room && false") 入室中
     b-button(@click="SB.room_url_copy_handle" icon-left="link" size="is-small" rounded v-if="SB.ac_room") 部屋のリンク
   .modal-card-body
-    template(v-if="true || !SB.ac_room")
-      template(v-if="room_key_field_locked")
-        b-field(key="room_key_field_locked_false")
-          .control
-            b-button.has-text-weight-bold(@click="room_key_show_toggle_handle" icon-left="lock" :disabled="SB.ac_room")
-      template(v-else)
-        b-field(label="合言葉" label-position="on-border" key="room_key_field_locked_true")
-          b-input.new_room_key(v-model.trim="new_room_key" :disabled="SB.ac_room" ref="new_room_key" autocomplete="on")
-      b-field(label="ハンドルネーム" label-position="on-border")
-        b-input.new_user_name(v-model.trim="new_user_name" :disabled="SB.ac_room" autocomplete="on")
+    template(v-if="SB.rsm_autocomp_use_p")
+      // b-autocomplete の場合はモーダルの中に入ってしまって使いにくい
+      b-field(label="合言葉" label-position="on-border")
+        b-autocomplete(
+          max-height="4rem"
+          v-model.trim="SB.new_room_key"
+          :data="SB.rsm_autocomp_data"
+          type="search"
+          placeholder=""
+          :open-on-focus="true"
+          :clearable="false"
+          expanded
+          @select="SB.rsm_autocomp_select_handle"
+          @keydown.native.enter="SB.rsm_autocomp_enter_handle"
+          :disabled="SB.ac_room"
+          ref="new_room_key"
+          )
+    template(v-else)
+      // HTML5のdatalistを使った方がモーダルの上に表示できる
+      b-field(label="合言葉" label-position="on-border")
+        b-input.new_room_key(v-model.trim="SB.new_room_key" :disabled="SB.ac_room" ref="new_room_key" autocomplete="on" list="room_key_comp_list")
+      datalist(id="room_key_comp_list")
+        template(v-for="room_key in SB.room_keys")
+          option(:value="room_key")
+
+    b-field(label="ハンドルネーム" label-position="on-border")
+      b-input.new_user_name(v-model.trim="SB.new_user_name" :disabled="SB.ac_room" autocomplete="on")
 
   .modal-card-foot
-    b-button.close_handle.has-text-weight-normal(@click="close_handle" icon-left="chevron-left") 閉じる
+    b-button.close_handle.has-text-weight-normal(@click="SB.rsm_close_handle" icon-left="chevron-left") 閉じる
     template(v-if="SB.ac_room")
-      b-button.leave_button(@click="leave_handle" type="is-danger") 退室
+      b-button.leave_button(@click="SB.rsm_leave_handle" type="is-danger") 退室
     template(v-else)
-      b-button.entry_button(@click="entry_handle" type="is-primary") 入室
+      b-button.entry_button(@click="SB.rsm_entry_handle" type="is-primary") 入室
 </template>
 
 <script>
 import _ from "lodash"
+import { Gs } from "@/components/models/gs.js"
 
 const ROOM_CODE_ALWAYS_SHOW = true  // 合言葉は表示しっぱなしにするか？
 import { support_child } from "../support_child.js"
@@ -34,72 +52,8 @@ import { support_child } from "../support_child.js"
 export default {
   name: "RoomSetupModal",
   mixins: [support_child],
-  data() {
-    return {
-      new_room_key: this.SB.room_key,
-      new_user_name: this.SB.user_name,
-      room_key_field_locked: null,
-    }
-  },
-  created() {
-    this.room_key_field_lock()
-  },
   mounted() {
-    this.desktop_focus_to(this.$refs.new_room_key)
-  },
-  methods: {
-    leave_handle() {
-      this.$sound.play_click()
-      if (this.SB.ac_room) {
-        // this.toast_ok("退室しました")
-        this.SB.room_destroy()
-      } else {
-        this.toast_warn("今は部屋の外です")
-      }
-    },
-    room_key_show_toggle_handle() {
-      this.$sound.play_click()
-      this.room_key_field_unlock()
-    },
-    close_handle() {
-      this.SB.room_setup_modal_close_handle()
-    },
-    entry_handle() {
-      this.$sound.play_click()
-
-      this.new_room_key = _.trim(this.new_room_key)
-      this.new_user_name = _.trim(this.new_user_name)
-
-      if (this.$gs.blank_p(this.new_room_key)) {
-        this.toast_warn("合言葉を入力してください")
-        return
-      }
-
-      if (this.SB.handle_name_invalid_then_toast_warn(this.new_user_name)) {
-        return
-      }
-
-      this.SB.room_create_by(this.new_room_key, this.new_user_name)
-      this.room_key_field_lock()
-
-      if (this.SB.auto_close_p) {
-        this.$emit("close")
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    // 鍵有効 (合言葉が入力済みのとき)
-    room_key_field_lock() {
-      if (ROOM_CODE_ALWAYS_SHOW) {
-        return
-      }
-      this.room_key_field_locked = this.$gs.present_p(this.SB.room_key)
-    },
-    // 鍵解除
-    room_key_field_unlock() {
-      this.room_key_field_locked = false
-    },
+    // this.desktop_focus_to(this.$refs.new_room_key)
   },
 }
 </script>

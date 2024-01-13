@@ -13,7 +13,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
       },
       {
         _if: (c, e) => c.keyboard_single_key_equal(e, "i"),
-        call: c => c.room_setup_modal_toggle_handle(),
+        call: c => c.rsm_toggle_handle(),
       },
       {
         _if: (c, e) => c.keyboard_single_key_equal(e, "o"),
