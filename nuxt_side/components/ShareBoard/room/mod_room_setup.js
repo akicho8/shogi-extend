@@ -2,8 +2,8 @@
 // | Method                                      | 意味                                        |
 // |---------------------------------------------+---------------------------------------------|
 // | room_create_if_exist_room_key_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
-// | room_setup_modal_open_handle()              | モーダル起動                                |
-// | room_create_by(new_room_coe, new_user_name) | モーダル内で入力したものを渡す              |
+// | rsm_open_handle()              | モーダル起動                                |
+// | room_create_by(new_room_key, new_user_name) | モーダル内で入力したものを渡す              |
 // | room_create()                               | 入室                                        |
 // | room_destroy()                              | 退室                                        |
 // |---------------------------------------------+---------------------------------------------|
@@ -11,23 +11,18 @@
 import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
-import RoomSetupModal from "./RoomSetupModal.vue"
-import { HandleNameValidator } from "@/components/models/handle_name/handle_name_validator.js"
 
 export const mod_room_setup = {
   data() {
     return {
       ac_room: null,      // subscriptions.create のインスタンス
       ac_events_hash: {}, // ACのイベントが発生した回数を記録(デバッグ用)
-      room_setup_modal_instance: null,
     }
   },
   mounted() {
-    // this.name_setup()
     this.room_create_if_exist_room_key_in_url()
   },
   beforeDestroy() {
-    this.room_setup_modal_close()
     this.room_destroy()
   },
   methods: {
@@ -43,7 +38,7 @@ export const mod_room_setup = {
       }
       // 名前が未入力または不正な場合はモーダルを表示する
       if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
-        this.room_setup_modal_open()
+        this.rsm_open()
         return
       }
       // 合言葉と名前は問題ないので部屋に入る
@@ -52,52 +47,11 @@ export const mod_room_setup = {
 
     ////////////////////////////////////////////////////////////////////////////////
 
-    room_setup_modal_toggle_handle() {
-      if (this.room_setup_modal_instance == null) {
-        this.sidebar_p = false
-        this.$sound.play_click()
-        this.room_setup_modal_open()
-        return true
-      }
-    },
-
-    room_setup_modal_open_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.room_setup_modal_open()
-    },
-
-    room_setup_modal_close_handle() {
-      this.sidebar_p = false
-      this.$sound.play_click()
-      this.room_setup_modal_close()
-    },
-
-    room_setup_modal_open() {
-      this.room_setup_modal_close()
-      this.room_setup_modal_instance = this.modal_card_open({
-        component: RoomSetupModal,
-        onCancel: () => {
-          this.$sound.play_click()
-          this.room_setup_modal_close()
-        },
-      })
-    },
-
-    room_setup_modal_close() {
-      if (this.room_setup_modal_instance) {
-        this.room_setup_modal_instance.close()
-        this.room_setup_modal_instance = null
-      }
-    },
-
-    ////////////////////////////////////////////////////////////////////////////////
-
-    room_create_by(new_room_coe, new_user_name) {
+    room_create_by(new_room_key, new_user_name) {
       Gs.assert(new_user_name, "new_user_name")
-      Gs.assert(new_room_coe, "new_room_coe")
+      Gs.assert(new_room_key, "new_room_key")
 
-      new_room_coe = _.trim(new_room_coe)
+      new_room_key = _.trim(new_room_key)
       new_user_name = _.trim(new_user_name)
 
       if (this.user_name !== new_user_name) {
@@ -109,7 +63,7 @@ export const mod_room_setup = {
         return
       }
 
-      this.room_key = new_room_coe
+      this.room_key = new_room_key
       this.room_create()
       // this.toast_ok("入室しました")
     },
@@ -121,6 +75,8 @@ export const mod_room_setup = {
       Gs.assert(this.ac_room == null, "this.ac_room == null")
 
       this.ga_click(`共有将棋盤 [${this.room_key}] 入室`)
+
+      this.room_keys_update_and_save_to_storage()
 
       this.member_infos_init()
       this.member_info_init()

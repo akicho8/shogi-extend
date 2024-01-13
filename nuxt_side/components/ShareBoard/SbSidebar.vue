@@ -15,7 +15,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
 
         b-menu-list(label="対局手順")
 
-          b-menu-item.is_active_unset.important.room_setup_modal_open_handle(:class="SB.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="SB.room_setup_modal_open_handle")
+          b-menu-item.is_active_unset.important.rsm_open_handle(:class="SB.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="SB.rsm_open_handle")
             template(#label)
               | 部屋に入る
               b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
