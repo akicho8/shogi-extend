@@ -33,7 +33,7 @@ export const mod_order_new = {
       // 動かしている途中で消すとエラーになる
       // Gs.delay_block(5, () => this.os_modal_close())
 
-      if (this.if_room_is_empty()) { return }
+      if (this.room_is_empty_p()) { return }
       this.sidebar_p = false
 
       // this.cc_play_confirm({

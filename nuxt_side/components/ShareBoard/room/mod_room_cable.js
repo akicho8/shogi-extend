@@ -1,8 +1,8 @@
 // |---------------------------------------------+---------------------------------------------|
 // | Method                                      | 意味                                        |
 // |---------------------------------------------+---------------------------------------------|
-// | room_create_if_exist_room_key_in_url()     | URLに合言葉の指定があればそのまま部屋に入る |
-// | rsm_open_handle()              | モーダル起動                                |
+// | room_create_if_exist_room_key_in_url()      | URLに合言葉の指定があればそのまま部屋に入る |
+// | rsm_open_handle()                           | モーダル起動                                |
 // | room_create_by(new_room_key, new_user_name) | モーダル内で入力したものを渡す              |
 // | room_create()                               | 入室                                        |
 // | room_destroy()                              | 退室                                        |
@@ -12,7 +12,7 @@ import _ from "lodash"
 import { Gs } from "@/components/models/gs.js"
 import dayjs from "dayjs"
 
-export const mod_room_setup = {
+export const mod_room_cable = {
   data() {
     return {
       ac_room: null,      // subscriptions.create のインスタンス
@@ -28,19 +28,24 @@ export const mod_room_setup = {
   methods: {
     // URLに合言葉の指定があればそのまま部屋に入る
     room_create_if_exist_room_key_in_url() {
-      // URLに合言葉がない場合は何もしない
-      if (this.query_room_key_blank_p) {
-        return
+      if (true) {
+        // URLに合言葉がない場合は何もしない
+        if (this.url_room_key_is_blank_p) {
+          return
+        }
+
+        // 合言葉が復元できたとしても元々空であれば何もしない
+        if (Gs.blank_p(this.room_key)) {
+          return
+        }
+
+        // 名前が未入力または不正な場合はモーダルを表示する
+        if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
+          this.rsm_open()
+          return
+        }
       }
-      // 合言葉が復元できたとしても元々空であれば何もしない
-      if (Gs.blank_p(this.room_key)) {
-        return
-      }
-      // 名前が未入力または不正な場合はモーダルを表示する
-      if (this.handle_name_invalid_then_toast_warn(this.user_name)) {
-        this.rsm_open()
-        return
-      }
+
       // 合言葉と名前は問題ないので部屋に入る
       this.room_create()
     },
@@ -73,8 +78,6 @@ export const mod_room_setup = {
       Gs.assert(this.user_name, "this.user_name")
       Gs.assert(this.room_key, "this.room_key")
       Gs.assert(this.ac_room == null, "this.ac_room == null")
-
-      this.ga_click(`共有将棋盤 [${this.room_key}] 入室`)
 
       this.room_keys_update_and_save_to_storage()
 
@@ -207,7 +210,7 @@ export const mod_room_setup = {
     },
 
     ////////////////////////////////////////////////////////////////////////////////
-    if_room_is_empty() {
+    room_is_empty_p() {
       if (Gs.blank_p(this.ac_room)) {
         this.$sound.play_click()
         this.toast_warn("まず部屋を立てよう")
@@ -223,7 +226,7 @@ export const mod_room_setup = {
     // 合言葉と名前が入力済みなので共有可能か？
     connectable_p() { return Gs.present_p(this.room_key) && Gs.present_p(this.user_name) },
 
-    query_room_key()         { return this.$route.query["room_key"] ?? this.$route.query["room_code"] }, // 合言葉の値 (URL限定)
-    query_room_key_blank_p() { return Gs.blank_p(this.query_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
+    url_room_key()            { return this.$route.query["room_key"] ?? this.$route.query["room_code"] }, // 合言葉の値 (URL限定)
+    url_room_key_is_blank_p() { return Gs.blank_p(this.url_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
   },
 }
