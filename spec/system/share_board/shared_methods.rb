@@ -22,7 +22,7 @@ module SharedMethods
 
   def room_menu_open_and_input(room_key, user_name)
     global_menu_open
-    room_setup_modal_open_handle                  # 「部屋に入る」を自分でクリックする
+    rsm_open_handle                  # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".new_room_key input").set(room_key)   # 合言葉を入力する
       find(".new_user_name input").set(user_name) # ハンドルネームを入力する
@@ -34,7 +34,7 @@ module SharedMethods
 
   def room_setup_by_fillin_params
     global_menu_open
-    room_setup_modal_open_handle                  # 「部屋に入る」を自分でクリックする
+    rsm_open_handle                  # 「部屋に入る」を自分でクリックする
     Capybara.within(".RoomSetupModal") do
       find(".entry_button").click                 # 共有ボタンをクリックする
       find(".close_handle").click                 # 閉じる
@@ -54,7 +54,7 @@ module SharedMethods
   # 退室
   def room_leave
     global_menu_open
-    room_setup_modal_open_handle        # 「部屋に入る」を自分でクリックする
+    rsm_open_handle        # 「部屋に入る」を自分でクリックする
     first(".leave_button").click   # 退室ボタンをクリックする
     first(".close_handle").click   # 閉じる
   end
@@ -91,8 +91,8 @@ module SharedMethods
     assert_text "#{key}:#{value}"
   end
 
-  def room_setup_modal_open_handle
-    find(".room_setup_modal_open_handle").click
+  def rsm_open_handle
+    find(".rsm_open_handle").click
   end
 
   def assert_system_variable(key, value)
