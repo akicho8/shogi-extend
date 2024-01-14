@@ -21,7 +21,7 @@
           p もし続行する場合は時計を再設定してください
         p 続行しない場合は左上から投了しましょう
   .modal-card-foot
-    b-button(@click="close_handle" type="is-primary") 閉じる
+    b-button.close_handle(@click="close_handle" type="is-primary") 閉じる
 </template>
 
 <script>
