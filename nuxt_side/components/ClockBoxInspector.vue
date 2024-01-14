@@ -20,7 +20,8 @@
                 .panel-block rest:{{e.rest}}
                 .panel-block elapsed_sec:{{e.elapsed_sec}}
                 .panel-block elapsed_sec_old:{{e.elapsed_sec_old}}
-                .panel-block koreyori_count:{{e.koreyori_count}}
+                .panel-block read_koreyori_count:{{e.read_koreyori_count}}
+                .panel-block extra_koreyori_count:{{e.extra_koreyori_count}}
       .columns
         .column
           b-field(label="内部値")

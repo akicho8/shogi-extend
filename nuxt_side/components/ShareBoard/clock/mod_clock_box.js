@@ -149,7 +149,8 @@ export const mod_clock_box = {
       this.cc_destroy()
       this.clock_box = new ClockBox({
         initial_turn: this.current_location.code, // this.current_sfen を元にした現在の手番
-        koreyori_fn: context => this.cc_koreyori(context.initial_read_sec),
+        read_koreyori_fn: context => this.cc_read_koreyori(context.initial_read_sec),
+        extra_koreyori_fn: context => this.cc_extra_koreyori(context.initial_extra_sec),
         time_zero_fn: e => this.cc_timeout_trigger(),
         switched_fn: () => {
           // this.$sound.play_click()
@@ -210,9 +211,15 @@ export const mod_clock_box = {
       }
     },
 
-    cc_koreyori(sec) {
+    cc_read_koreyori(sec) {
       Gs.delay_block(CC_KOREYORI_DELAY, () => {
         this.cc_talk(`これより1手${sec}秒でお願い致します`)
+      })
+    },
+
+    cc_extra_koreyori(sec) {
+      Gs.delay_block(CC_KOREYORI_DELAY, () => {
+        this.cc_talk(`猶予が0になったら負けです`)
       })
     },
 

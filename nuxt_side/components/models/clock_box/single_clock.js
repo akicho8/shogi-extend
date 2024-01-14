@@ -39,7 +39,8 @@ export class SingleClock {
     this.minus_sec       = 0
     this.elapsed_sec     = 0
     this.elapsed_sec_old = 0
-    this.koreyori_count  = 0
+    this.read_koreyori_count  = 0
+    this.extra_koreyori_count  = 0
   }
 
   copy_from(o) {
@@ -50,7 +51,8 @@ export class SingleClock {
     this.minus_sec         = o.minus_sec
     this.elapsed_sec       = o.elapsed_sec
     this.elapsed_sec_old   = o.elapsed_sec_old
-    this.koreyori_count    = o.koreyori_count
+    this.read_koreyori_count    = o.read_koreyori_count
+    this.extra_koreyori_count    = o.extra_koreyori_count
 
     this.initial_read_sec  = o.initial_read_sec
     this.initial_main_sec  = o.initial_main_sec
@@ -111,13 +113,22 @@ export class SingleClock {
       }
 
       // 「これより1手N秒でお願いします」
-      if (this.every_plus === 0) {               // フィッシャールールでないとき、
-        if (previous_changes.main_sec >= 1) {    // 持ち時間が1秒以上あったときから
-          if (this.main_sec === 0) {             // 0 になった瞬間に
-            if (this.read_sec >= 1) {            // 秒読みが残っていれば
-              this.base.params.koreyori_fn(this) // これより1手 initial_read_sec 秒でお願いします
-              this.koreyori_count += 1           // これより実行回数を記録しておく
-            }
+      if (this.read_koreyori_count === 0) {                          // 初回なら
+        if (previous_changes.main_sec >= 1 && this.main_sec === 0) { // 残り時間 1 -> 0 のタイミングで
+          if (this.read_sec >= 1) {                                  // 秒読みが残っていれば
+            this.base.params.read_koreyori_fn(this)                  // 「これより1手N秒でお願いします」
+            this.read_koreyori_count += 1                            // 実行回数を記録しておく
+          }
+        }
+      }
+
+      // 「猶予が0になったら負けです」
+      if (this.extra_koreyori_count === 0) {                           // 初回なら
+        if ((previous_changes.main_sec >= 1 && this.main_sec === 0) || // 残り時間 1 -> 0 または
+            (previous_changes.read_sec >= 1 && this.read_sec === 0)) { // 秒読み   1 -> 0 のタイミングで
+          if (this.extra_sec >= 1) {                                   // 猶予が残っていれば
+            this.base.params.extra_koreyori_fn(this)                   // 「猶予が0になったら負けです」
+            this.extra_koreyori_count += 1                             // 実行回数を記録しておく
           }
         }
       }
@@ -311,7 +322,8 @@ export class SingleClock {
       minus_sec:         this.minus_sec,
       elapsed_sec:       this.elapsed_sec,
       elapsed_sec_old:   this.elapsed_sec_old,
-      koreyori_count:    this.koreyori_count,
+      read_koreyori_count:    this.read_koreyori_count,
+      extra_koreyori_count:    this.extra_koreyori_count,
       initial_read_sec:  this.initial_read_sec,
       initial_main_sec:  this.initial_main_sec,
       initial_extra_sec: this.initial_extra_sec,
