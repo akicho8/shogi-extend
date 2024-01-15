@@ -32,6 +32,7 @@ task :v do
   end
 end
 
+desc "bin/se の実行 (COMMAND=xxx)"
 task :se do
   on roles(:all) do
     within current_path do
