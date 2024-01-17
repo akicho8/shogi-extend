@@ -9,8 +9,23 @@ module ShareBoard
   module ChatAi
     module Responder
       class Base
-        GPT_NAME     = "gpt"
-        MATCH_REGEXP = /\A\s*@#{GPT_NAME}(?!\w+)\s*|\s*[>＞]\s*#{GPT_NAME}\s*\z/i
+        begin
+          GPT_NAME = "GPT"
+
+          # 本来は @gpt hello と書いてほしい。Twitter でもそうなっている。
+          # しかし、スペースを入れる重要さを理解できてない人がいるため仕方なく @gpthello にも対応する
+          if false
+            # @gpt hello
+            MATCH_REGEXP_TWITTER_LIKE = /\A\s*@#{GPT_NAME}(?!\w+)\s*/i
+          else
+            # @gpthello
+            MATCH_REGEXP_TWITTER_LIKE = /\A\s*@#{GPT_NAME}\s*/i
+          end
+
+          MATCH_REGEXP_REDIRECT = /\s*[>＞]\s*#{GPT_NAME}\s*\z/i
+
+          MATCH_REGEXP = Regexp.union(MATCH_REGEXP_TWITTER_LIKE, MATCH_REGEXP_REDIRECT)
+        end
 
         attr_accessor :params
 
