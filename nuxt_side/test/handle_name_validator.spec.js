@@ -27,6 +27,11 @@ describe("HandleNameValidator", () => {
     expect(HandleNameValidator.valid_p("..")).toEqual(false)
   })
 
+  test("特定文字からの開始はダメ", () => {
+    expect(HandleNameValidator.valid_p("？foo")).toEqual(false)
+    expect(HandleNameValidator.valid_p("?foo")).toEqual(false)
+  })
+
   test("明かな捨てハンは禁止", () => {
     expect(HandleNameValidator.valid_p("名無し")).toEqual(false)
     expect(HandleNameValidator.valid_p("ななし")).toEqual(false)
