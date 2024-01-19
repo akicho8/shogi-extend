@@ -84,7 +84,7 @@ export class HandleNameValidator {
       }
     }
     if (message == null) {
-      if (s.length <= 1 && !s.match(/[一-龠]/)) { // 1文字のひらがな
+      if (s.length <= 1 && !s.match(/[一-龠]/)) { // 漢字を除く、1文字はだめ
         message = this.message_sample
       }
     }
