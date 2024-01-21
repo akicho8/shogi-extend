@@ -11,6 +11,7 @@
 import { Gs } from "@/components/models/gs.js"
 import { TimeUtil } from "@/components/models/time_util.js"
 import { MessageScopeInfo } from "@/components/ShareBoard/models/message_scope_info.js"
+import { MessageValidator } from "@/components/models/arashi_killer/message_validator.js"
 
 export class MessageRecord {
   static create(params) {
@@ -92,5 +93,15 @@ export class MessageRecord {
       ].join("/")
       return Gs.str_to_md5(str)
     }
+  }
+
+  // 荒らし判定したか？
+  get content_invalid_p() {
+    return MessageValidator.invalid_p(this.content)
+  }
+
+  // 荒らしではない
+  get content_valid_p() {
+    return MessageValidator.valid_p(this.content)
   }
 }

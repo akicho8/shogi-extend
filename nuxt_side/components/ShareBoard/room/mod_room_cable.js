@@ -30,7 +30,7 @@ export const mod_room_cable = {
     room_create_if_exist_room_key_in_url() {
       if (true) {
         // URLに合言葉がない場合は何もしない
-        if (this.url_room_key_is_blank_p) {
+        if (this.url_room_key_blank_p) {
           return
         }
 
@@ -167,13 +167,14 @@ export const mod_room_cable = {
     },
 
     // 自分で送信したものを受信した
-    received_from_self(params) {
-      return params.from_connection_id === this.connection_id
+    received_from_self(object) {
+      Gs.assert("from_connection_id" in object, '"from_connection_id" in object')
+      return object.from_connection_id === this.connection_id
     },
 
     // 他者が送信したものを受信した
-    received_from_other(params) {
-      return !this.received_from_self(params)
+    received_from_other(object) {
+      return !this.received_from_self(object)
     },
 
     ////////////////////////////////////////////////////////////////////////////////
@@ -227,6 +228,6 @@ export const mod_room_cable = {
     connectable_p() { return Gs.present_p(this.room_key) && Gs.present_p(this.user_name) },
 
     url_room_key()            { return this.$route.query["room_key"] ?? this.$route.query["room_code"] }, // 合言葉の値 (URL限定)
-    url_room_key_is_blank_p() { return Gs.blank_p(this.url_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
+    url_room_key_blank_p() { return Gs.blank_p(this.url_room_key)                                 }, // 合言葉の値 (URL限定) が空か？
   },
 }
