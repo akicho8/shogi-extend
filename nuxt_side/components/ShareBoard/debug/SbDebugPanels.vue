@@ -198,6 +198,7 @@
       .panel-block next_turn_message:{{SB.next_turn_message}}
       .panel-block latest_illegal_name:{{SB.latest_illegal_name}}
       .panel-block viewpoint:{{SB.viewpoint}}
+      .panel-block arashi_count:{{SB.arashi_count}}
 
   .column.is-6.is-clipped
     .panel

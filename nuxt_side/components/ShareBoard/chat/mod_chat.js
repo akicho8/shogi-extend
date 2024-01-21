@@ -7,6 +7,7 @@ import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
 
+
 export const mod_chat = {
   data() {
     return {
@@ -91,9 +92,12 @@ export const mod_chat = {
       if (this.ml_show_p(message_record)) {                 // 見てもいいなら
         this.$sound.play("patxu")                           // 「パッ」
         this.$buefy.toast.open(message_record.toast_params) // 表示
-        this.sb_talk(message_record.content)                  // しゃべる
+        if (message_record.content_valid_p) {               // 荒らし判定されていなければ
+          this.sb_talk(message_record.content)              // しゃべる
+        }
       }
       this.ai_random_say(params)                            // AIに反応させる
+      this.ai_say_case_arashi(message_record)               // 荒らし判定
     },
 
     // ログ用の追加データとして data に名前を入れておく
