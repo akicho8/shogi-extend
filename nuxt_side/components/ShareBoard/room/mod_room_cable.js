@@ -143,13 +143,16 @@ export const mod_room_cable = {
     // perform のラッパーで共通のパラメータを入れる
     ac_room_perform(action, params = {}) {
       if (this.ac_room) {
-        this.ac_room.perform(action, {
-          ...this.ac_room_perform_default_params(),
-          ...params,
-        }) // --> app/channels/share_board/room_channel.rb
-        // this.tl_add("USER", action)
+        this.ac_room.perform(action, this.ac_room_perform_params_wrap(params)) // --> app/channels/share_board/room_channel.rb
       }
     },
+    ac_room_perform_params_wrap(params) {
+      return {
+        ...this.ac_room_perform_default_params(),
+        ...params,
+      }
+    },
+    // 共有時の共通情報
     ac_room_perform_default_params() {
       const params = {
         from_connection_id: this.connection_id,      // 送信者識別子

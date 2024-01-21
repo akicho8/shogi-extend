@@ -346,12 +346,15 @@ export const mod_clock_box = {
       const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
       this.tl_add("時計受信", `${params.from_user_name} -> ${this.user_name}`, params)
       this.tl_alert("時計同期")
+
       if (this.received_from_self(params)) {
       } else {
         this.clock_share_data_receive(params)
       }
+
       this.__cc_action_log_store(params)         // 履歴追加
       this.__cc_location_change_and_call(params) // 視点変更とニワトリ
+
       if (cc_behavior_info.key === "cc_behavior_timeout") {
         this.cc_timeout_modal_open_if_not_exist()
       } else if (cc_behavior_info.key === "cc_behavior_start") {
@@ -365,7 +368,7 @@ export const mod_clock_box = {
       } else if (cc_behavior_info.toast_p) {
         this.toast_ok(this.__cc_receive_message(params), {talk: cc_behavior_info.with_talk})
       }
-      this.cc_timeout_logging(params)
+
       this.ai_say_case_clock(params)
     },
     __cc_receive_message(params) {
@@ -480,20 +483,6 @@ export const mod_clock_box = {
 
     cc_params_debug(label, params) {
       this.tl_add("CC初期値", `${label}: ${this.cc_params_inspect(params)}`)
-    },
-
-    // 時間切れの状態を記録する → cc_behavior_timeout のログとかぶっているので不要
-    cc_timeout_logging(params) {
-      // if (this.received_from_self(params)) {
-      //   const cc_behavior_info = CcBehaviorInfo.fetch(params.cc_behavior_key)
-      //   if (cc_behavior_info.key === "cc_behavior_timeout") {
-      //     const body = [
-      //       params.from_user_name,
-      //       this.current_url,
-      //     ]
-      //     this.ac_log({subject: "時間切れ", body: Gs.short_inspect(body)})
-      //   }
-      // }
     },
   },
 

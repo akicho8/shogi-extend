@@ -47,7 +47,7 @@ export const mod_sfen_share = {
           effect_key:          lmi.effect_key,                            // 効果音キー
         },
         illegal_names: illegal_names, // ["駒ワープ", "王手放置", "千日手"]
-        clock_box_params: this.clock_box_share_params_factory("cc_behavior_silent"), // 指し手と合わせて時計の情報も送る
+        clock_box_params: this.ac_room_perform_params_wrap(this.clock_box_share_params_factory("cc_behavior_silent")), // 指し手と合わせて時計の情報も送る
       }
 
       const next_user_name = this.turn_to_user_name(lmi.next_turn_offset) // alice, bob がいて初手を指したら bob
@@ -105,7 +105,17 @@ export const mod_sfen_share = {
       }
 
       // 時計も更新する
-      this.clock_box_share_broadcasted(params.clock_box_params)
+      if (this.received_from_self(params)) {
+        // 自分の時計は変更しない
+      } else {
+        // 他者の時計の内部情報を更新する
+        Gs.assert(params.clock_box_params.cc_behavior_key == "cc_behavior_silent", 'params.clock_box_params.cc_behavior_key == "cc_behavior_silent"')
+        if (true) {
+          this.clock_box_share_broadcasted(params.clock_box_params)
+        } else {
+          this.clock_share_data_receive(params.clock_box_params) // 他者の時計の内部情報だけを更新する
+        }
+      }
 
       if (true) {
         // 指したので時間切れ発動予約をキャンセルする
