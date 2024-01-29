@@ -55,8 +55,8 @@ module SharedMethods
     within(".ChatModal") do
       find(".message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
       find(".dropdown .#{message_scope_key}").click  # スコープ選択
-      assert_message_scope_key(message_scope_key)    # 指定のスコープになっている
     end
+    assert_message_scope_key(message_scope_key)    # 指定のスコープになっている
   end
 
   # 指定のスコープにしてからメッセージ送信

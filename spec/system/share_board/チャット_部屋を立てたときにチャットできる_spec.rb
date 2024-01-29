@@ -38,7 +38,7 @@ RSpec.describe type: :system, share_board_spec: true do
     c_block { assert_message_received_o(message2) } # carol には観戦者なので届いている
 
     b_block do
-      find(".ChatModal .close_handle").click # メッセージモーダルを閉じる
+      chat_modal_close
       order_set_off             # 順番設定を解除する
     end
 
