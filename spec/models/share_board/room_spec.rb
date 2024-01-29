@@ -77,7 +77,7 @@ module ShareBoard
 
       describe "GPTに発言を促す" do
         it "DBには入らない発言に応答させる" do
-          Room.something_say({room_key: "dev_room", message_scope_key: "ms_private", content: "3.14159 とは何ですか？(一言で)"})
+          Room.something_say({room_key: "dev_room", message_scope_key: "ms_private", content: "3.14159 とは何ですか？(漢字三文字で)"})
           chat_message = Room.fetch("dev_room").chat_messages.sole
           assert { chat_message.content.include?("円周率") }
           assert { chat_message.from_user_name == "GPT" }
