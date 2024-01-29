@@ -86,7 +86,8 @@ export const mod_room_setup_modal = {
       this.room_create_by(this.new_room_key, this.new_user_name)
 
       if (this.auto_close_p) {
-        this.rsm_close_handle()
+        this.sidebar_p = false
+        this.rsm_close()
       }
     },
   },
