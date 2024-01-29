@@ -7,7 +7,6 @@ import { Gs } from "@/components/models/gs.js"
 import _ from "lodash"
 import { MessageRecord } from "./message_record.js"
 
-
 export const mod_chat = {
   data() {
     return {
@@ -129,6 +128,10 @@ export const mod_chat = {
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {
+      if (true) {               // 常に表示する
+        return true
+      }
+
       if (false) {
         // 必要最低限表示したいときはこちらだけど利用者はボタンが出る条件が予想つかないかもしれない
         return this.watching_member_count >= 1 // 観戦者が1人以上いる場合
