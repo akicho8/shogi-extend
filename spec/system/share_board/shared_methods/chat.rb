@@ -50,14 +50,19 @@ module SharedMethods
     end
   end
 
-  # 指定のスコープにしてからメッセージ送信
-  def scoped_message_send(message_scope_key, message)
+  # 指定のスコープに変更する
+  def message_scope_key_set(message_scope_key)
     within(".ChatModal") do
       find(".message_scope_dropdown").click          # スコープ選択ドロップダウンを開く
       find(".dropdown .#{message_scope_key}").click  # スコープ選択
-      find(:fillable_field).set(message)             # メッセージ入力
-      find(".send_handle").click                     # 送信
+      assert_message_scope_key(message_scope_key)    # 指定のスコープになっている
     end
+  end
+
+  # 指定のスコープにしてからメッセージ送信
+  def scoped_message_send(message_scope_key, message)
+    message_scope_key_set(message_scope_key)
+    chat_message_send(message)
   end
 
   # 下スクロールさせて上に行く(過去を見る)
@@ -95,5 +100,10 @@ module SharedMethods
   # API実行回数
   def assert_mh_page_index_in_modal(index, **options)
     assert_selector(".ChatModal .mh_page_index", text: index.to_s, exact_text: true, **options)
+  end
+
+  # 指定のスコープになっている
+  def assert_message_scope_key(message_scope_key)
+    assert_selector(".ChatModal .send_handle.#{message_scope_key}")
   end
 end

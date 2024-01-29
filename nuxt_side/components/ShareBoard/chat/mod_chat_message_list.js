@@ -71,13 +71,13 @@ export const mod_chat_message_list = {
 
     // 表示してもよいか？
     ml_show_p(record) {
-      if (record.message_scope_key === "ms_public") {  // 公開スコープならOK
+      if (record.message_scope_key === "ms_public") {  // 公開スコープなら許可
         return true
       }
-      if (this.self_is_watcher_p) {                    // 自分が観戦者ならOK
+      if (this.self_is_watcher_p) {                    // 自分が観戦者なら許可
         return true
       }
-      if (this.received_from_self(record)) {           // 自分が送信者ならOK
+      if (this.received_from_self(record)) {           // 自分が送信者なら許可
         return true
       }
       return false
