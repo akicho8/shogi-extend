@@ -58,16 +58,12 @@ export const mod_order_main = {
         this.tl_alert("order_switch_share 自分→他者")
       }
       this.order_enable_p = params.order_enable_p
+      this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
 
       // 順番設定ONのタイミングで本譜を消す
       // これは投了せずに対局を終了した人が前の対局の本譜を参照して混乱しているのを見かけたために入れてある
       if (this.order_enable_p) {
         this.honpu_log_clear()
-      }
-
-      // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
-      if (!this.order_enable_p) {
-        this.message_scope_key = "ms_public"
       }
 
       if (params.message) {
@@ -91,6 +87,7 @@ export const mod_order_main = {
       this.tl_alert("順番設定パラメータを先代から受信")
 
       this.order_enable_p = params.order_enable_p
+      this.order_off_then_message_scope_key_set_public() // 順番設定OFFになったら自動的にチャットの送信先スコープを「全体宛」に戻す
       this.order_copy_from_bc(params)
     },
     // 後から参加したとき、または順番設定を適用したときに呼ばれる

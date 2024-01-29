@@ -117,6 +117,13 @@ export const mod_chat = {
         return this.keyboard_enter_p(e) && this.keyboard_meta_p(e)
       }
     },
+
+    // 順番設定OFFになっていたら自動的にチャットの送信先スコープを「全体宛」に戻す
+    order_off_then_message_scope_key_set_public() {
+      if (!this.order_enable_p) {
+        this.message_scope_key = "ms_public"
+      }
+    },
   },
 
   computed: {
@@ -128,7 +135,7 @@ export const mod_chat = {
 
     // 観戦者宛送信ボタンを表示する？
     message_scope_dropdown_show_p() {
-      if (true) {               // 常に表示する
+      if (false) {               // 常に表示する
         return true
       }
 
