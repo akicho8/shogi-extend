@@ -92,7 +92,9 @@ export const mod_chat_ai_trigger_rule = {
           if (this.cc_play_p) {
             // 自動投了だと「反則した人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
             if (this.auto_resign_info.key === "is_auto_resign_off") {
-              this.ai_say_for(3, "反則した人を励ます", params)
+              if (this.ai_say_turn_gteq(1)) {
+                this.ai_say_for(3, "反則した人を励ます", params)
+              }
             }
           }
         }
@@ -116,7 +118,9 @@ export const mod_chat_ai_trigger_rule = {
         if (cc_behavior_info.key === "cc_behavior_timeout") {
           // 自動投了だと「時間切れで負けた人を励ます」と「見応えのある対局だったと褒める」が重なってしまうため自動投了しないときだけ発言させる
           if (this.auto_resign_info.key === "is_auto_resign_off") {
-            this.ai_say_for(3, "時間切れで負けた人を励ます", params)
+            if (this.ai_say_turn_gteq(1)) {
+              this.ai_say_for(3, "時間切れで負けた人を励ます", params)
+            }
           }
         }
       }
@@ -124,7 +128,9 @@ export const mod_chat_ai_trigger_rule = {
 
     ai_say_case_give_up(params) {
       if (this.received_from_self(params)) {
-        this.ai_say_for(3, "見応えのある対局だったと褒める", params)
+        if (this.ai_say_turn_gteq(50)) {
+          this.ai_say_for(3, "見応えのある対局だったと褒める", params)
+        }
       }
     },
 
@@ -138,6 +144,13 @@ export const mod_chat_ai_trigger_rule = {
         }
       }
     },
+
+    // private
+
+    ai_say_turn_gteq(turn) {
+      if (this.$route.query.__system_test_now__) { return true }
+      return this.current_turn >= turn
+    }
   },
 
   computed: {
