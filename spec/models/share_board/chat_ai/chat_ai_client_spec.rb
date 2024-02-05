@@ -7,5 +7,12 @@ module ShareBoard
       topic = ChatAi::Topic[uesr]
       assert { ChatAi::ChatAiClient.new(topic).call.match?(/こんにち|手伝い|探し|困りごと/) }
     end
+
+    it ".text_normalize" do
+      assert { ChatAi::ChatAiClient.text_normalize("「xxx") == "xxx" }
+      assert { ChatAi::ChatAiClient.text_normalize("xxx」") == "xxx" }
+      assert { ChatAi::ChatAiClient.text_normalize("xxx。") == "xxx" }
+      assert { ChatAi::ChatAiClient.text_normalize("xxx\n") == "xxx" }
+    end
   end
 end
