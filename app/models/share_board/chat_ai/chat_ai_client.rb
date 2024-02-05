@@ -1,6 +1,15 @@
 module ShareBoard
   module ChatAi
     class ChatAiClient
+      class << self
+        def text_normalize(text)
+          text = text.strip
+          text = text.remove(/。\z/)
+          text = text.remove(/\A「/)
+          text = text.remove(/」\z/)
+        end
+      end
+
       def initialize(topic, options = {})
         raise "must not happen" unless topic.kind_of?(Topic)
         @topic = topic
@@ -36,6 +45,10 @@ module ShareBoard
         end
 
         text = response.dig("choices", 0, "message", "content")
+
+        if text
+          text = self.class.text_normalize(text)
+        end
 
         if text
           AppLog.info(subject: "チャット (GPT)", body: "#{seconds} #{text.inspect}", emoji: ":ChatGPT_OUT:")
