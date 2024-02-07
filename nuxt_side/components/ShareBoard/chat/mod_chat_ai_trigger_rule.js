@@ -6,7 +6,8 @@ import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-const ARASHI_THRESHOLD = 3             // 荒らし判定閾値
+const ARASHI_THRESHOLD = 3 // 荒らし判定閾値
+const ARASHI_RE_RATE   = 2 // 1/n の確率で反応する
 
 export const mod_chat_ai_trigger_rule = {
   data() {
@@ -138,8 +139,10 @@ export const mod_chat_ai_trigger_rule = {
       if (this.received_from_self(message_record)) {
         if (message_record.content_invalid_p) {
           this.arashi_count += 1
-          if (this.arashi_count >= ARASHI_THRESHOLD) {
-            this.ai_say_for(0, "チャット荒らしに怒る", message_record)
+          if (this.arashi_count >= this.ARASHI_THRESHOLD) {
+            if (Gs.irand(this.ARASHI_RE_RATE) === 0) {
+              this.ai_say_for(0, "チャット荒らしに怒る", message_record)
+            }
           }
         }
       }
@@ -155,5 +158,6 @@ export const mod_chat_ai_trigger_rule = {
 
   computed: {
     ARASHI_THRESHOLD() { return parseInt(this.$route.query.ARASHI_THRESHOLD ?? ARASHI_THRESHOLD) },
+    ARASHI_RE_RATE()   { return parseInt(this.$route.query.ARASHI_RE_RATE ?? ARASHI_RE_RATE) },
   },
 }

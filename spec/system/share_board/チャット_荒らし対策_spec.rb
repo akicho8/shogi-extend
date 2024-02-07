@@ -9,6 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names    => "a,b",
         :handle_name_validate => "false",
         :ARASHI_THRESHOLD     => 1,
+        :ARASHI_RE_RATE       => 1,
       })
     find(".chat_modal_open_handle").click
   end
