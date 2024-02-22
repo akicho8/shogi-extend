@@ -54,7 +54,7 @@ export class ParamInfo extends ParamBase {
 
       { key: "persistent_cc_params",       type: "json",    name: "対局時計",                               defaults: { development: null,                      production: c => c.CcRuleInfo.default_cc_params, }, permanent: true,  relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: c => c.cc_params_convert_to_array_of_hash(), },
       { key: "ai_hello_ymd",               type: "string",  name: "GPTの挨拶記憶",                          defaults: { development: null,                      production: "",                                  }, permanent: true,  relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                                      },
-      { key: "ai_auto_response_ratio",     type: "float",   name: "GPTの反応確率",                          defaults: { development: 1.0,                       production: 0.01,                                }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                                      },
+      { key: "ai_auto_response_ratio",     type: "float",   name: "GPTの反応確率",                          defaults: { development: 1.0,                       production: 0.02,                                }, permanent: false, relation: null,                   alias: null, input_attrs: null,               desc: null, after_set: null,                                      },
     ]
   }
 }
