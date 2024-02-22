@@ -7,13 +7,16 @@ module ShareBoard
     end
 
     it "大文字小文字を区別しない" do
-      assert { case1("@gpt hello")    == "hello"  }
-      assert { case1("@GPT hello")    == "hello"  }
+      assert { case1("@gpt hello")     == "hello"  }
+      assert { case1("@GPT hello")     == "hello"  }
+      assert { case1("＠ＧＰＴ hello") == "hello"  }
+      assert { case1("＠ｇｐｔ hello") == "hello"  }
     end
 
     it "gptのあとに半角アルファベットが来ても解釈する" do
-      assert { case1("@gpthello")    == "hello"  }
+      assert { case1("@gpthello")     == "hello"  }
       assert { case1("@gpt hello")    == "hello"  }
+      assert { case1("＠ＧＰＴhello") == "hello"  }
     end
 
     it "リダイレクト表記" do

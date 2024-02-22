@@ -10,16 +10,17 @@ module ShareBoard
     module Responder
       class Base
         begin
-          GPT_NAME = "GPT"
+          GPT_PREFIX = /(?:@|＠)/
+          GPT_NAME = /(?:GPT|ＧＰＴ)/i
 
           # 本来は @gpt hello と書いてほしい。Twitter でもそうなっている。
           # しかし、スペースを入れる重要さを理解できてない人がいるため仕方なく @gpthello にも対応する
           if false
             # @gpt hello
-            MATCH_REGEXP_TWITTER_LIKE = /\A\s*@#{GPT_NAME}(?!\w+)\s*/i
+            MATCH_REGEXP_TWITTER_LIKE = /\A\s*#{GPT_PREFIX}#{GPT_NAME}(?!\w+)\s*/i
           else
             # @gpthello
-            MATCH_REGEXP_TWITTER_LIKE = /\A\s*@#{GPT_NAME}\s*/i
+            MATCH_REGEXP_TWITTER_LIKE = /\A\s*#{GPT_PREFIX}#{GPT_NAME}\s*/i
           end
 
           MATCH_REGEXP_REDIRECT = /\s*[>＞]\s*#{GPT_NAME}\s*\z/i
