@@ -28,7 +28,7 @@ b-table.SwarsBattleIndexTable(
   SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.xi.total === 0")
 
   b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="base.column_visible_p('id')" sortable centered numeric)
-    a(@click="base.show_handle(row)") \#{{row.id}}
+    nuxt-link(:to="base.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
 
   b-table-column(v-slot="{row}" label="自分" :visible="base.column_visible_p('membership_left')")
     SwarsBattleIndexMembership(:base="base" :row="row" :membership="row.memberships[0]" :with_user_key="base.column_visible_p('user_key_left')")
