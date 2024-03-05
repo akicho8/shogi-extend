@@ -55,6 +55,13 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     assert_selector(:fillable_field, type: "search", with: "YamadaTaro 持ち時間:10分")
   end
 
+  it "commandを押しながらタブをクリックすると別タブで開く" do
+    visit2 "/swars/users/YamadaTaro"
+    window = Capybara.window_opened_by { tab_element("他").click(:meta) }
+    Capybara.switch_to_window(window)
+    within(".boxes") { assert_text "将棋ウォーズの運営を支える力" }
+  end
+
   def assert_current_tab_at(index)
     assert_selector ".tabs li:nth-of-type(#{index.next}).is-active"
   end
@@ -63,7 +70,11 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     find(".tabs li:nth-of-type(#{index.next})").click
   end
 
+  def tab_element(name)
+    find(:xpath, "//*[text()='#{name}']")
+  end
+
   def tab_click_by_name(name)
-    find(:xpath, "//*[text()='#{name}']").click
+    tab_element(name).click
   end
 end
