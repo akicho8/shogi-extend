@@ -186,6 +186,24 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".is_scene_turn_max").click
         assert_var_eq(:scene_key, "turn_max")
       end
+
+      describe "別タブで開く系" do
+        it "commandを押しながら盤面をクリックすると別タブで開く" do
+          visit2 "/swars/search", query: "YamadaTaro"
+          global_menu_open
+          window = Capybara.window_opened_by { find(".is_layout_board").click(:meta) }
+          Capybara.switch_to_window(window)
+          assert_selector(".SwarsBattleIndexBoard")
+        end
+
+        it "commandを押しながら終局をクリックすると別タブで開く" do
+          visit2 "/swars/search", query: "YamadaTaro"
+          global_menu_open
+          window = Capybara.window_opened_by { find(".is_scene_turn_max").click(:meta) }
+          Capybara.switch_to_window(window)
+          assert_var_eq(:scene_key, "turn_max")
+        end
+      end
     end
   end
 
