@@ -13,7 +13,7 @@
       PageCloseButton(@click="back_handle" position="is_absolute")
       SwarsUserShowDropdownMenu
       SwarsUserShowHead
-      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()" @click.native="input_handle($event)")
+      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()" @click.native="tab_item_click_handle($event)")
         b-tab-item(label="日付")
         b-tab-item(label="段級")
         b-tab-item(label="戦法")
@@ -104,7 +104,8 @@ export default {
       }
     },
 
-    input_handle(e) {
+    // メタキーと一緒にクリックした場合のみ別タブで開く
+    tab_item_click_handle(e) {
       if (this.keyboard_meta_p(e)) {
         this.other_window_open(this.tab_switch_router_url)
       }

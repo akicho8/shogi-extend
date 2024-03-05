@@ -18,7 +18,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
         b-menu-list(label="レイアウト")
           template(v-for="e in base.LayoutInfo.values")
             b-menu-item.is_active_unset(
-              @click.stop="base.layout_key_set(e)"
+              @click.stop="base.layout_key_set(e, $event)"
               :class="e.key"
               )
               template(slot="label")
@@ -35,7 +35,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
 
         b-menu-list(label="局面")
           template(v-for="e in base.SceneInfo.values")
-            b-menu-item.is_active_unset(@click.stop="base.scene_key_set(e)" :class="e.div_class")
+            b-menu-item.is_active_unset(@click.stop="base.scene_key_set(e, $event)" :class="e.div_class")
               template(slot="label")
                 span(:class="{'has-text-weight-bold': base.scene_info.key === e.key}") {{e.name}}
 

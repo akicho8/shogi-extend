@@ -180,25 +180,27 @@ export default {
       return list.join(" ")
     },
 
-    scene_key_set(info) {
-      // if (this.scene_key != info.key) {
+    scene_key_set(info, e) {
       this.$sound.play_click()
       this.talk(info.name)
-      this.scene_key = info.key
-      // }
-      // if (this.layout_key !== "is_layout_board") {
-      this.layout_key = "is_layout_board"
-      // }
+      if (this.keyboard_meta_p(e)) {
+        this.other_window_open(this.tab_switch_router_url({layout_key: "is_layout_board", scene_key: info.key}))
+      } else {
+        this.layout_key = "is_layout_board" // 強制的に「盤面」に切り替える
+        this.scene_key = info.key
+      }
       this.app_log({subject: "局面", body: info.name})
     },
 
-    layout_key_set(info) {
-      // if (this.layout_key != info.key) {
+    layout_key_set(info, e) {
       this.$sound.play_click()
       this.talk(info.name)
-      this.layout_key = info.key
+      if (this.keyboard_meta_p(e)) {
+        this.other_window_open(this.tab_switch_router_url({layout_key: info.key}))
+      } else {
+        this.layout_key = info.key
+      }
       this.app_log({subject: "レイアウト", body: info.name})
-      // }
     },
 
     ga_process(params) {
@@ -207,6 +209,20 @@ export default {
       } else {
         this.ga_click("将棋ウォーズ棋譜検索 未入力")
       }
+    },
+
+    tab_switch_router_params(new_params = {}) {
+      return {
+        query: {
+          ...this.$route.query,
+          layout_key: this.layout_info.key,
+          scene_key: this.scene_info.key,
+          ...new_params,
+        },
+      }
+    },
+    tab_switch_router_url(new_params = {}) {
+      return this.$router.resolve(this.tab_switch_router_params(new_params)).href
     },
   },
 

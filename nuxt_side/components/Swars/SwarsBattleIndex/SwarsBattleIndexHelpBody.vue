@@ -270,10 +270,9 @@ HelpContent.SwarsBattleIndexHelpBody
       li 2020年ぐらいから本家側で棋譜コピーできるようになった
 
   article
-    h2 レイアウトの固定URLがほしい
+    h2 レイアウトや局面の固定URLがほしい
     ul
-      li 一覧 → URL に layout_key=is_layout_table を追加する
-      li 盤面 → URL に layout_key=is_layout_board を追加する
+      li メタキーを押しながら「一覧」「盤面」「開戦」「中盤」「終局」をクリックする
 
   article
     h2 ここに載ってない
