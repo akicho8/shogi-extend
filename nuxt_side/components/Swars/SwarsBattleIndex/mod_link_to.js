@@ -4,14 +4,21 @@ import { ApplicationMemoryRecord } from "@/components/models/application_memory_
 
 export const mod_link_to = {
   methods: {
+    // 未使用
     show_handle(row) {
       this.$sound.play_click()
+      this.$router.push(this.show_route_params(row))
+    },
+
+    // nuxt-link(:to="base.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
+    // として使う用だが、Vue や Nuxt を新しくした結果 @click.native が反応しなくなってしまった
+    show_route_params(row) {
       const params = {}
       params.viewpoint = row.memberships[0].location_key
       if (this.layout_info.key === "is_layout_board") {
         params.scene_key = this.scene_info.key
       }
-      this.$router.push({name: "swars-battles-key", params: { key: row.key }, query: params})
+      return {name: "swars-battles-key", params: { key: row.key }, query: params}
     },
 
     kifu_vo(record) {

@@ -1,7 +1,7 @@
 <template lang="pug">
 .SwarsBattleIndexBoard.columns.is-multiline.mt-4
   template(v-for="e in base.xi.records")
-    .column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet.is-clickable(@click.stop="base.show_handle(e)")
+    nuxt-link.column.is-one-fifth-widescreen.is-one-quarter-desktop.is-one-third-tablet(:to="base.show_route_params(e)" @click.native="$sound.play_click()")
       CustomShogiPlayer(
         sp_mode="view"
         sp_layout="vertical"
