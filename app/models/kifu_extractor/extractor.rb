@@ -20,7 +20,7 @@ module KifuExtractor
       CaseUrlLishogiEditor,
       CaseUrlLishogiBattle,
       CaseUrlKento,
-      CaseUrlShogidb2Show,
+      # CaseUrlShogidb2Show,
       CaseUrlShogidb2Board,
       CaseUrlHerozSwarsGames,
       CaseUrlShogiQuestUrl,
