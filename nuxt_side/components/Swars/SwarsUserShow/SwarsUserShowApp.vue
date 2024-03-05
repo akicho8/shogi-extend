@@ -13,7 +13,7 @@
       PageCloseButton(@click="back_handle" position="is_absolute")
       SwarsUserShowDropdownMenu
       SwarsUserShowHead
-      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()")
+      b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()" @click.native="input_handle($event)")
         b-tab-item(label="日付")
         b-tab-item(label="段級")
         b-tab-item(label="戦法")
@@ -69,9 +69,7 @@ export default {
 
   watch: {
     // tab_index だけは update_handle に渡さないので変更に合わせてURLを書き換える
-    tab_index() {
-      this.$router.replace({query: { ...this.$route.query, tab_index: this.tab_index }}).catch(err => {})
-    },
+    tab_index() { this.$router.replace(this.tab_switch_router_params).catch(err => {}) },
 
     // query が変化したら再度APIからとってくる
     "$route.query.query": "$fetch",
@@ -105,6 +103,12 @@ export default {
         return `has-text-${row.day_type}`
       }
     },
+
+    input_handle(e) {
+      if (this.keyboard_meta_p(e)) {
+        this.other_window_open(this.tab_switch_router_url)
+      }
+    },
   },
 
   computed: {
@@ -112,6 +116,9 @@ export default {
     RuleSelectInfo()  { return RuleSelectInfo   },
     SampleMaxInfo()   { return SampleMaxInfo    },
     XmodeSelectInfo() { return XmodeSelectInfo  },
+
+    tab_switch_router_params() { return {query: { ...this.$route.query, tab_index: this.tab_index }} },
+    tab_switch_router_url()    { return this.$router.resolve(this.tab_switch_router_params).href  },
 
     axios_get_params() {
       return {
