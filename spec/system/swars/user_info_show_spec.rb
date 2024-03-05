@@ -57,9 +57,9 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
 
   it "commandを押しながらタブをクリックすると別タブで開く" do
     visit2 "/swars/users/YamadaTaro"
-    window = Capybara.window_opened_by { tab_element("他").click(:meta) }
-    Capybara.switch_to_window(window)
-    within(".boxes") { assert_text "将棋ウォーズの運営を支える力" }
+    window = window_opened_by(wait: 10) { tab_element("他").click(:meta) }
+    switch_to_window(window)
+    within(".boxes", wait: 10) { assert_text "将棋ウォーズの運営を支える力" }
   end
 
   def assert_current_tab_at(index)
