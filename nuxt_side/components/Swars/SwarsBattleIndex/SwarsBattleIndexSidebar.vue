@@ -22,6 +22,8 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
               :class="e.key"
               )
               template(slot="label")
+                //- nuxt-link(:class="{'has-text-weight-bold': base.layout_info.key === e.key}" :to="{query: {layout_key: e.key}}" @click.native.stop.prevent="") {{e.name}}
+                //- a(:class="{'has-text-weight-bold': base.layout_info.key === e.key}" href="/" @click.native.stop.prevent="") {{e.name}}
                 span(:class="{'has-text-weight-bold': base.layout_info.key === e.key}") {{e.name}}
                 template(v-if="e.key === 'is_layout_table'")
                   b-dropdown.is-pulled-right(position="is-bottom-left" :close-on-click="false" :mobile-modal="false" @active-change="false && $sound.play_click()")
