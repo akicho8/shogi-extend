@@ -25,6 +25,13 @@
       end
     end
 
+    desc "cap production #{service}:journal:all"
+    task "journal:all" do
+      on roles(:app) do
+        execute :journalctl, "--no-pager -u #{service}"
+      end
+    end
+
     desc "cap production #{service}:journal:tailf"
     task "journal:tailf" do
       on roles(:app) do

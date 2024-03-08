@@ -3,9 +3,10 @@ import _ from "lodash"
 
 export const mod_battle_save = {
   methods: {
+    // 棋譜保存。投了時に呼ばれる。
     battle_save_run() {
       const params = {
-        room_key:        this.room_key,
+        room_key:         this.room_key,
         title:            this.current_title,
         sfen:             this.current_sfen,
         turn:             this.current_turn,
@@ -13,9 +14,7 @@ export const mod_battle_save = {
         win_location_key: this.give_up_win_location_key,
       }
       this.$axios.$post("/api/share_board/battle_create.json", params, {progress: true}).then(e => {
-        if (this.debug_mode_p) {
-          this.toast_ok(`対局を保存しました (#${e.id})`)
-        }
+        this.toast_ok(e.message, {talk: false})
       })
     },
   },

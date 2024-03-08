@@ -92,7 +92,7 @@ export const mod_give_up = {
 
       // ログインしていれば自分に棋譜を送信する
       // このときオプションとして勝ち負けの情報を入れておいて題名のアイコンを変化させる
-      if (this.g_current_user) {
+      if (this.login_and_email_valid_p) {
         this.kifu_mail_run({silent: true, sb_judge_key: this.give_up_then_self_judge_key(params)})
       }
     },
