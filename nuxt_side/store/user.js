@@ -6,6 +6,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  // ログインしているのは開発者か？
   staff_p(state) {
     if (state.g_current_user) {
       const v = state.g_current_user.permit_tag_list
@@ -14,9 +15,13 @@ export const getters = {
       }
     }
   },
+
+  // ログインしていてメールアドレスが適切か？
   login_and_email_valid_p(state) {
     return state.g_current_user && state.g_current_user["email_valid?"]
   },
+
+  // ログインしていて名前があるか？
   g_current_user_name(state) {
     if (state.g_current_user) {
       return state.g_current_user.name
