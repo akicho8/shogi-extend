@@ -8,31 +8,31 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
         NavbarItemProfileLink(component="a" :click_fn="SB.profile_click_handle")
     .mt-4
       b-menu
-        // 元のアイコン
-        // 1. home-account
-        // 2. sort-bool-ascending
-        // 3. alarm
-
-        b-menu-list(label="対局手順")
-
-          b-menu-item.is_active_unset.important.rsm_open_handle(:class="SB.bold_if(mi1_bold_p)" icon="numeric-1-circle-outline" @click="SB.rsm_open_handle")
-            template(#label)
-              | 部屋に入る
-              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi1_hand_p")
-
-          b-menu-item.is_active_unset.important.os_modal_handle(:class="SB.bold_if(mi2_bold_p)" icon="numeric-2-circle-outline" @click="SB.os_modal_handle")
-            template(#label)
-              | 順番設定
-              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi2_hand_p")
-
-          b-menu-item.is_active_unset.important.cc_modal_open_handle(:class="SB.bold_if(mi3_bold_p)" icon="numeric-3-circle-outline" @click="SB.cc_modal_open_handle")
-            template(#label)
-              | 対局時計
-              b-icon.is_hand(size="is-small" icon="arrow-left-bold" v-if="mi3_hand_p")
+        .main_procedure
+          b-menu-list(label="対局手順")
+            .buttons.is-centered.mb-0
+              b-button.mb-0.is_active_unset.important.rsm_open_handle(rounded expanded :class="SB.bold_if(mi1_bold_p)" @click="SB.rsm_open_handle")
+                .number_with_label
+                  b-icon(icon="numeric-1-circle-outline")
+                  | 部屋に入る
+                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi1_hand_p")
+                .check_mark(v-if="SB.bold_if(mi1_bold_p)") ✅
+              b-button.mb-0.is_active_unset.important.os_modal_handle(rounded expanded :class="SB.bold_if(mi2_bold_p)" @click="SB.os_modal_handle")
+                .number_with_label
+                  b-icon(icon="numeric-2-circle-outline")
+                  | 順番設定
+                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi2_hand_p")
+                .check_mark(v-if="SB.bold_if(mi2_bold_p)") ✅
+              b-button.mb-0.is_active_unset.important.cc_modal_open_handle(rounded expanded :class="SB.bold_if(mi3_bold_p)" @click="SB.cc_modal_open_handle")
+                .number_with_label
+                  b-icon(icon="numeric-3-circle-outline")
+                  | 対局時計
+                  b-icon(size="is-small" icon="arrow-left-bold" v-if="SB.debug_mode_p && mi3_hand_p")
+                .check_mark(v-if="SB.bold_if(mi3_bold_p)") ✅
 
         b-menu-list(label="局面操作")
-          b-menu-item.is_active_unset(icon="undo"        label="1手戻す (待った)" @click="SB.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(icon="page-first"  label="初期配置に戻す"   @click="SB.board_init_modal_handle")
+          b-menu-item.is_active_unset(icon="undo"        label="1手戻す (待った)" @click="SB.force_sync_turn_previous_modal_handle")
           b-menu-item.is_active_unset(icon="transfer-up" label="局面の転送"       @click="SB.force_sync_modal_handle" v-if="SB.quick_sync_info.sidebar_function_show || SB.debug_mode_p")
 
         b-menu-list(label="対局サポート")
@@ -40,7 +40,7 @@ b-sidebar.is-unselectable.SbSidebar(fullheight right overlay v-model="SB.sidebar
           b-menu-item.is_active_unset(icon="link"                   label="部屋のリンクのコピー" @click="SB.room_url_copy_handle")
           b-menu-item.is_active_unset(icon="heart"                  label="自動マッチング"       @click="SB.xmatch_modal_handle" v-if="$config.STAGE !== 'production'")
           b-menu-item.is_active_unset(icon="restart"                label="再起動"               @click="SB.room_recreate_modal_handle" v-if="SB.debug_mode_p")
-          b-menu-item.is_active_unset(icon="home" label="部屋の情報" @click="SB.general_dashboard_modal_handle" :disabled="$gs.blank_p(SB.ac_room)")
+          b-menu-item.is_active_unset(icon="home" label="部屋の情報 (対局履歴)" @click="SB.general_dashboard_modal_handle" :disabled="$gs.blank_p(SB.ac_room)")
           b-menu-item.is_active_unset(icon="trophy" tag="nuxt-link" label="部屋の情報(nuxt-link)" :to="{name: 'share-board-dashboard', query: {room_key: SB.room_key}}" @click.native="$sound.play_click()" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
           b-menu-item.is_active_unset(icon="trophy" label="部屋の情報(hrefで別タブ)" :href="SB.dashboard_url" target="_blank" :disabled="$gs.blank_p(SB.ac_room)" v-if="development_p")
 
@@ -130,4 +130,23 @@ export default {
 
   .important
     font-size: $size-5
+
+  .main_procedure
+    .buttons
+      gap: 0.5rem               // ボタン同士の隙間
+      .button
+        padding: 0.5rem 1.25rem 0.5rem 0.75rem // ボタン内の隙間
+        // .button 内のアイコンは位置を微調整されているためリセットする
+        .icon
+          margin-right: 0
+          margin-left: 0
+          line-height: 1.0
+        > span // button 中身は span で囲まれている
+          display: flex
+          align-items: center
+          justify-content: space-between
+          flex-grow: 1          // 横幅最大化
+          .number_with_label
+            display: flex
+            gap: 0.4rem         // 番号とラベルの隙間
 </style>
