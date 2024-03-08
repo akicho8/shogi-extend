@@ -9,17 +9,18 @@ export const mod_kifu_mail = {
     // 「メール送信」ボタンが押されたとき
     kifu_mail_handle() {
       this.$sound.play_click()
-      // 部屋に入っているときは別ページに飛ぶと困るだろうから警告を出すに留める
-      if (this.ac_room && !this.g_current_user) {
+
+      if (!this.login_and_email_valid_p) {
         this.toast_warn("ログインしてメールアドレスを適切に設定していると使えます")
         return
       }
-      if (this.nuxt_login_required()) { return }
+
       this.kifu_mail_run()
     },
     // ログインユーザーがいる前提で直接実行する
     kifu_mail_run(options = {}) {
-      Gs.assert(this.g_current_user, "this.g_current_user")
+      Gs.assert(this.login_and_email_valid_p, "this.login_and_email_valid_p")
+
       options = {
         silent: false,     // true: 何も表示しない
         sb_judge_key: "none", // 勝ち負け (win, lose, none)

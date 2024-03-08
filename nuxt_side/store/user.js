@@ -14,6 +14,9 @@ export const getters = {
       }
     }
   },
+  login_and_email_valid_p(state) {
+    return state.g_current_user && state.g_current_user["email_valid?"]
+  },
   g_current_user_name(state) {
     if (state.g_current_user) {
       return state.g_current_user.name

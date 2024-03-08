@@ -1,21 +1,47 @@
 module ShareBoard
   class BattleCreate
+    BUG_WORKAROUND = true
+
     attr_reader :battle
+    attr_reader :error
 
     def initialize(params)
       @params = params
     end
 
     def call
-      @battle = room.battles.create!(battle_params) do |e|
-        e.memberships.build(memberships)
+      begin
+        if @params[:fake_error]
+          raise ActiveRecord::NotNullViolation.new("(fake_error)")
+        end
+        if BUG_WORKAROUND
+          # 回避できるのかはわからないが TRANSACTION 内に入れなくてもいいものはなるべく別にしてみる
+          memberships.each { |e| User.fetch(e[:user_name]) }
+          @battle = room.battles.create!(battle_params)
+          @battle.memberships.create!(memberships)
+        else
+          # 本来はこのようにすればよいはずだが production 環境では ActiveRecord::NotNullViolation (Mysql2::Error: Column 'user_id' cannot be null) がまれに起きる
+          @battle = room.battles.create!(battle_params) do |e|
+            e.memberships.build(memberships)
+          end
+        end
+      rescue ActiveRecord::ActiveRecordError => error
+        @error = error
+        AppLog.critical(@error)
       end
-
       self
     end
 
     def as_json(...)
-      @battle.as_json(...)
+      { message: message }
+    end
+
+    def message
+      if @error
+        @error.message
+      else
+        "対局を保存しました"
+      end
     end
 
     private
