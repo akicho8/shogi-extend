@@ -18,6 +18,9 @@ module Tsl
       def setup(options = {})
         Scraping.league_range.each do |generation|
           generation_update(generation, options)
+          if Rails.env.staging? || Rails.env.production?
+            sleep(1)
+          end
         end
       end
 
