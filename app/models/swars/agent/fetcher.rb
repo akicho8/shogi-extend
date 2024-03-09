@@ -15,7 +15,8 @@ module Swars
 
       def fetch(type, url)
         if params[:RaiseConnectionFailed]
-          raise Faraday::ConnectionFailed, ""
+          # ~/src/shogi-extend/app/controllers/swars/exception_catch.rb
+          url = "https://httpbin.org/status/504" # Faraday::ServerError を発生させる
         end
 
         if local_run?
@@ -39,6 +40,7 @@ module Swars
         @agent ||= Faraday.new do |conn|
           raise if OpenSSL::SSL::VERIFY_PEER != OpenSSL::SSL::VERIFY_NONE
           conn.use FaradayMiddleware::Instrumentation # --> config/initializers/0260_faraday_logger.rb
+          conn.response :raise_error
           conn.headers[:user_agent] = USER_AGENT
           conn.headers[:cookie] = Rails.application.credentials.swars_agent_cookie
         end
