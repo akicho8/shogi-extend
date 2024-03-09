@@ -29,9 +29,7 @@ module Swars
         end
 
         html = resp.body.force_encoding("UTF-8")
-        if Rails.env.local?
-          Pathname(__dir__).join("fetched_html/#{type}.html").write(html)
-        end
+        record_the_most_recently_html_file(type, html)
         html
       end
 
@@ -67,6 +65,13 @@ module Swars
             end
             sleep(v)
           end
+        end
+      end
+
+      # 読み込んだ直近のファイルを記録しておく
+      def record_the_most_recently_html_file(type, html)
+        if Rails.env.local?
+          Pathname(__dir__).join("fetched_html/#{type}.html").write(html)
         end
       end
     end
