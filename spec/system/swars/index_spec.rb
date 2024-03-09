@@ -193,7 +193,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
           global_menu_open
           window = window_opened_by(wait: 10) { find(".is_layout_board").click(:meta) }
           switch_to_window(window)
-          assert_selector(".SwarsBattleIndexBoard")
+          assert_selector(".SwarsBattleIndexBoard", wait: 10)
         end
 
         it "commandを押しながら終局をクリックすると別タブで開く" do
