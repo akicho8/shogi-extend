@@ -16,7 +16,8 @@ module Swars
       def fetch(type, url)
         if params[:RaiseConnectionFailed]
           # ~/src/shogi-extend/app/controllers/swars/exception_catch.rb
-          agent.get("https://httpbin.org/status/504") # Faraday::ServerError を発生させる
+          # agent.get("https://httpbin.org/status/504") # Faraday::ServerError を発生させる
+          raise Faraday::ConnectionFailed, ""
         end
 
         if local_run?
@@ -25,12 +26,12 @@ module Swars
 
         resp = agent.get(url)
         sleep_on
-        unless resp.success?
+        if !resp.success?    # 200 ではないならすべて取得できなかったとする
           return
         end
 
         html = resp.body.force_encoding("UTF-8")
-        record_the_most_recently_html_file(type, html)
+        record_the_most_recently_html_file_on_local(type, html)
         html
       end
 
@@ -40,9 +41,14 @@ module Swars
         @agent ||= Faraday.new do |conn|
           raise if OpenSSL::SSL::VERIFY_PEER != OpenSSL::SSL::VERIFY_NONE
           conn.use FaradayMiddleware::Instrumentation # --> config/initializers/0260_faraday_logger.rb
-          conn.response :raise_error
           conn.headers[:user_agent] = USER_AGENT
           conn.headers[:cookie] = Rails.application.credentials.swars_agent_cookie
+
+          # 200 以外のときに例題を出すか？
+          # 自前で処理したいので指定しない
+          if false
+            conn.response :raise_error
+          end
         end
       end
 
@@ -71,7 +77,7 @@ module Swars
       end
 
       # 読み込んだ直近のファイルを記録しておく
-      def record_the_most_recently_html_file(type, html)
+      def record_the_most_recently_html_file_on_local(type, html)
         if Rails.env.local?
           Pathname(__dir__).join("fetched_html/#{type}.html").write(html)
         end

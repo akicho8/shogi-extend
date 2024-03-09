@@ -18,15 +18,14 @@ module Swars
 
       # Faraday の raise_error middleware で出るもの
       rescue_from "Faraday::ServerError" do |exception|
-        AppLog.info(exception, data: exception.response)
-        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: exception.response_status
+        AppLog.critical(exception, data: exception.response)
+        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
       end
 
-      # Faraday の raise_error middleware を使わなかったこときに使っていたもの
-      # 504 のときに例外にならない？
+      # Faraday の raise_error middleware を使わない場合でもこの例外は発生する
       rescue_from "Faraday::ConnectionFailed" do |exception|
-        AppLog.info(exception, data: exception.response)
-        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: exception.response_status
+        AppLog.critical(exception, data: exception.response)
+        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
       end
 
       rescue_from "ActiveRecord::RecordNotUnique" do |exception| # 中身は「Mysql2::Error: Duplicate entry」
