@@ -16,16 +16,16 @@ module Swars
         render json: { message: "対応するデータが見つかりません" }, status: 404
       end
 
-      # Faraday の raise_error middleware で出るもの
-      rescue_from "Faraday::ServerError" do |exception|
+      # "Faraday::ServerError"      → Faraday の raise_error middleware で出るもの
+      # "Faraday::ConnectionFailed" → Faraday の raise_error middleware を使わない場合でもこの例外は発生する
+      rescue_from "Faraday::ServerError", "Faraday::ConnectionFailed" do |exception|
         AppLog.critical(exception, data: exception.response)
-        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
-      end
-
-      # Faraday の raise_error middleware を使わない場合でもこの例外は発生する
-      rescue_from "Faraday::ConnectionFailed" do |exception|
-        AppLog.critical(exception, data: exception.response)
-        render json: { message: "混み合っています<br>しばらくしてからアクセスしてください" }, status: 408
+        message = [
+          "将棋ウォーズの本家がぶっこわれました",
+          "しばらくしてからアクセスすると直るかもしれません",
+          exception.message,
+        ].collect(&:presence).join("<br>")
+        render json: { message: message }, status: 408
       end
 
       rescue_from "ActiveRecord::RecordNotUnique" do |exception| # 中身は「Mysql2::Error: Duplicate entry」
