@@ -17,6 +17,9 @@ export const mod_otasuke = {
   computed: {
     // 「？」ボタン表示条件
     otasuke_button_show_p() {
+      if (!this.debug_mode_p) { // あまり使われていないようなので通常モードでは表示しないようにする
+        return false
+      }
       if (this.edit_mode_p) {
         return false
       }
