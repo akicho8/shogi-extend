@@ -28,7 +28,7 @@ export class IllegalBehaviorInfo extends ApplicationMemoryRecord {
         key: "is_illegal_behavior_newbie",
         name: "できない",
         message: "初心者向け (将棋ウォーズ風)",
-        type: "is-primary",
+        type: "is-warning",
         sp_illegal_validate: true,
         sp_illegal_cancel: true,
         perpetual_check_p: false,
