@@ -12,7 +12,7 @@ export const mod_sound_effect = {
         this.$sound.play_click()
       }
     },
-    // 自分が指したときの駒音 (画面にされるのは次のフレームなのでずらす)
+    // 自分が指したときの駒音 (画面に反映されるのは次のフレームなのでずらす)
     se_piece_move() {
       this.$nextTick(() => {
         this.$sound.play("piece_put")
