@@ -1,3 +1,22 @@
+GIT
+  remote: https://github.com/akicho8/bioshogi.git
+  revision: e3029835088c454656aea9861b7b1a6d506ca83b
+  branch: main
+  specs:
+    bioshogi (0.0.9)
+      actionview
+      activesupport (>= 7.1.0)
+      color
+      faraday
+      memory_record
+      rmagick (>= 5.0.0)
+      rubyzip (>= 2.3.0)
+      systemu
+      table_format
+      thor
+      tree_support
+      zeitwerk
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -105,19 +124,6 @@ GEM
     bcrypt (3.1.18)
     bigdecimal (3.1.7)
     bindex (0.8.1)
-    bioshogi (0.0.8)
-      actionview
-      activesupport (>= 7.1.0)
-      color
-      faraday
-      memory_record
-      rmagick (>= 5.0.0)
-      rubyzip (>= 2.3.0)
-      systemu
-      table_format
-      thor
-      tree_support
-      zeitwerk
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -550,7 +556,7 @@ DEPENDENCIES
   annotate_models
   aws-sdk-polly
   bcrypt
-  bioshogi (>= 0.0.3)
+  bioshogi!
   bootsnap
   capistrano
   capistrano-maintenance
