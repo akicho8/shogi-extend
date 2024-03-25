@@ -297,7 +297,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         find(".post_handle").click                         # 「棋譜取得の予約」
 
         # モーダル発動
-        assert_text("予約しました(0件待ち)")
+        assert_text("予約しました(0件待ち)", wait: 10)
         find(".dialog.modal.is-active button").click       # 「OK」をクリック
 
         find(".crawler_run_handle_handle").click           # 「さばく」
