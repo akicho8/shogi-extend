@@ -40,7 +40,7 @@ module ShareBoard
         Rails.logger.debug { response.pretty_inspect }
 
         if error_message = response.dig("error", "message")
-          AppLog.info(subject: "チャット (GPT)", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
+          AppLog.error(subject: "チャット (GPT)", body: "[ERROR]#{seconds} #{error_message.inspect}", emoji: ":ChatGPT_ERR:")
           return
         end
 
