@@ -29,7 +29,7 @@ module ShareBoard
         seconds = Benchmark.realtime do
           response = client.chat(
             parameters: {
-              model: "gpt-4-0613",
+              model: "gpt-4-0125-preview", # https://platform.openai.com/docs/models
               messages: @topic.to_api_messages,
               # max_tokens: 0, # わざとエラーを出す場合
               temperature: 1.0,  # 1.5 にするとかなりアホになってしまう
