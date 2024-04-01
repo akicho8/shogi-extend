@@ -93,6 +93,8 @@ module ShareBoard
         [self.class.name.underscore, id].join("/")
       end
 
+      # ランキングが壊れたとき用で最初から作り直す
+      # ShareBoard::Room.find_by(key: "kbcdk").redis_rebuild
       def redis_rebuild
         redis_clear
         roomships.each(&:score_post_to_redis)
