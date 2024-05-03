@@ -50,14 +50,14 @@ end
 # >>     used?
 # >>     analize
 # >> 
-# >> Top 3 slowest examples (0.38807 seconds, 15.0% of total time):
+# >> Top 3 slowest examples (0.33384 seconds, 12.9% of total time):
 # >>   Swars::AiCop 棋神判定 works
-# >>     0.19864 seconds -:10
-# >>   Swars::AiCop 棋神判定 analize
-# >>     0.12561 seconds -:35
+# >>     0.20979 seconds -:10
 # >>   Swars::AiCop 棋神判定 used?
-# >>     0.06382 seconds -:31
+# >>     0.06286 seconds -:31
+# >>   Swars::AiCop 棋神判定 analize
+# >>     0.06118 seconds -:35
 # >> 
-# >> Finished in 2.59 seconds (files took 4.13 seconds to load)
+# >> Finished in 2.58 seconds (files took 4.31 seconds to load)
 # >> 3 examples, 0 failures
 # >> 

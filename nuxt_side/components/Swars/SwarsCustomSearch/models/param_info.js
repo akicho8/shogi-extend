@@ -50,9 +50,9 @@ export class ParamInfo extends ParamBase {
       { key: "my_think_last",              type: "integer", name: "最終思考",                           defaults: { development: null, production: 3*60,   }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
       { key: "my_think_last_compare",      type: "string",  name: "最終思考演算子",                     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
-      // { key: "my_mid_think_avg_enabled",   type: "boolean", name: "中盤以降の平均思考有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
-      // { key: "my_mid_think_avg",           type: "integer", name: "中盤以降の平均思考",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
-      // { key: "my_mid_think_avg_compare",   type: "string",  name: "中盤以降の平均思考演算子",           defaults: { development: null, production: "lteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_ai_wave_count_enabled",   type: "boolean", name: "棋神波形数有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "my_ai_wave_count",           type: "integer", name: "棋神波形数",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_ai_wave_count_compare",   type: "string",  name: "棋神波形数演算子",           defaults: { development: null, production: "lteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
       { key: "my_ai_drop_total_enabled", type: "boolean", name: "棋神を模倣した指し手の数有効",   defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "my_ai_drop_total",         type: "integer", name: "棋神を模倣した指し手の数",       defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },

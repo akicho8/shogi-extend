@@ -28,7 +28,11 @@ module Swars
             #   # m.battle.turn_max >= 50 &&
             #   # (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
           else
-            (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq
+            AiCop.membership_arrest(m)
+            # v = false
+            # v ||= (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq
+            # v ||= (m.ai_wave_count || 0) >= AiCop.ai_wave_count_gteq
+            # v ||= (m.ai_two_freq || 0) >= AiCop.ai_two_freq_gteq && m.battle.turn_max >= 50
           end
         },
       },

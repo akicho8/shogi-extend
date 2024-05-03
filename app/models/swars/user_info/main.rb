@@ -215,29 +215,49 @@ module Swars
       #       AND swars_memberships.ai_drop_total >= 10
       #       AND ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
       #
+
+      # 新しい条件
+      #
+      # SELECT COUNT(*) FROM swars_memberships
+      # INNER JOIN judges ON judges.id = swars_memberships.judge_id
+      # INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id
+      # WHERE
+      #        swars_memberships.id IN (203, 201, 199, 197, 195, 193, 191, 189, 187, 185)
+      #   AND judges.key = 'win'
+      #   AND swars_battles.turn_max >= 50
+      #   AND (swars_memberships.ai_drop_total >= 15 OR swars_memberships.ai_wave_count >= 3 OR swars_memberships.ai_two_freq >= 0.6)
+      #
       def ai_use_battle_count_lv1
         @ai_use_battle_count_lv1 ||= yield_self do
+
           # A
           s = win_scope                                                                           # 勝っている
           # s = s.joins(:battle, :grade)
-          if false
-            s = s.where(Membership.arel_table[:grade_diff].gteq(0))                 # 自分と同じか格上に対して
-          end
-          if false
-            s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
-          end
+          s = s.joins(:battle)
 
-          s = s.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
+          # if false
+          #   s = s.where(Membership.arel_table[:grade_diff].gteq(0))                 # 自分と同じか格上に対して
+          # end
+
+          s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq)) # 50手以上
+
+          c1 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
+          c2 = Membership.where(Membership.arel_table[:ai_wave_count].gteq(AiCop.ai_wave_count_gteq))
+          c3 = Membership.where(Membership.arel_table[:ai_two_freq].gteq(AiCop.ai_two_freq_gteq))
+          c = c1.or(c2).or(c3)
+          s = s.merge(c)
+
+          # ((m.ai_two_freq || 0) >= AiCop.ai_two_freq_gteq && m.battle.turn_max >= 50)
 
           # if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
           #   s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
           # end
 
-          if false
-            c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
-            c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
-            s = s.merge(c1.or(c2))
-          end
+          # if false
+          #   c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
+          #   c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
+          #   s = s.merge(c1.or(c2))
+          # end
 
           # if false
           #   # (B or C)

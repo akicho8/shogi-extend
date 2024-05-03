@@ -39,15 +39,25 @@ module Swars
       # def ai_drop_total(...)
       #   analize(...).ai_drop_total
       # end
+
+      def membership_arrest(m)
+        m.judge_key == "win" && m.battle.turn_max >= 50 && (
+          (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq ||
+          (m.ai_wave_count || 0) >= AiCop.ai_wave_count_gteq ||
+          (m.ai_two_freq || 0) >= AiCop.ai_two_freq_gteq
+        )
+      end
     end
 
-    cattr_accessor(:ai_drop_total_gteq) { 5 } # N回以上続けば棋神確定
+    cattr_accessor(:ai_drop_total_gteq) { 15 } # N回以上続けば棋神確定
+    cattr_accessor(:ai_wave_count_gteq) { 3 }  # N回以上続けば棋神確定
+    cattr_accessor(:ai_two_freq_gteq) { 0.6 }  # 以上 2 があると棋神確定
 
     FIRST_TRIGGER_GTEQ   = 3 # n 秒以上を指した次に
     ONE_SECOND           = 1 # n 秒で指して続いて
     TWO_SECOND           = 2 # n 秒で
     TWO_CONSECUTIVE_GTEQ = 3 # n 連続以上指したとき棋神チケット1回消費
-    TWO_BEFORE_VALUE           = 2 # 連続する TWO_SECOND に入る前の個数
+    TWO_BEFORE_VALUE     = 2 # 連続する TWO_SECOND に入る前の個数
 
     # 固定
     HANDS_PER_TICKET     = 5 # 1つのチケットで 5 手指す
