@@ -80,11 +80,11 @@
     .column.is-6-tablet.is-4-desktop
       ScsInputNumber(label="最終思考" xxx_enabled_var="my_think_last_enabled"      xxx_value_var="my_think_last"      xxx_compare_var="my_think_last_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_think_last)")
 
-    .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-      ScsInputNumber(label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_mid_think_avg)")
+    //- .column.is-6-tablet.is-4-desktop(v-if="staff_p")
+    //-   ScsInputNumber(label="中盤以降の平均思考" xxx_enabled_var="my_mid_think_avg_enabled"      xxx_value_var="my_mid_think_avg"      xxx_compare_var="my_mid_think_avg_compare" :min="0" :max="60*10" :message="TheApp.scs_time_format(TheApp.my_mid_think_avg)")
 
-    .column.is-6-tablet.is-4-desktop(v-if="staff_p || true")
-      ScsInputNumber(label="中盤以降の最大連続即指し回数" xxx_enabled_var="my_mid_machine_gun_enabled"      xxx_value_var="my_mid_machine_gun"      xxx_compare_var="my_mid_machine_gun_compare" :min="0" :max="100")
+    .column.is-6-tablet.is-4-desktop(v-if="staff_p")
+      ScsInputNumber(label="棋神を模倣した指し手の数" xxx_enabled_var="my_ai_drop_total_enabled"      xxx_value_var="my_ai_drop_total"      xxx_compare_var="my_ai_drop_total_compare" :min="0" :max="100")
 </template>
 
 <script>

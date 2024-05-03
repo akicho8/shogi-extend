@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_17_000003) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_000004) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -413,16 +413,16 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_000003) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "think_all_avg", comment: "指し手の平均秒数(全体)"
     t.integer "think_end_avg", comment: "指し手の平均秒数(最後5手)"
-    t.integer "two_serial_max", comment: "2秒の指し手が連続した回数"
     t.integer "think_last", comment: "最後の指し手の秒数"
     t.integer "think_max", comment: "最大考慮秒数"
-    t.integer "obt_think_avg", comment: "開戦後の指し手の平均秒数"
-    t.integer "obt_auto_max", comment: "開戦後に1,2秒の指し手が続く最大"
+    t.integer "ai_drop_total", comment: "棋神を使って指した総手数"
     t.bigint "judge_id", null: false, comment: "勝敗"
     t.bigint "location_id", null: false, comment: "位置"
     t.bigint "style_id", comment: "棋風"
     t.integer "ek_score_without_cond", comment: "入玉宣言時の得点(仮)"
     t.integer "ek_score_with_cond", comment: "入玉宣言時の得点(条件考慮)"
+    t.integer "ai_wave_count", comment: "棋神使用模様個数"
+    t.float "ai_two_freq", comment: "2手差し頻出度"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

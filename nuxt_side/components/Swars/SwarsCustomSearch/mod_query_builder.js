@@ -42,7 +42,7 @@ export const mod_query_builder = {
     my_think_avg_compare_info()       { return CompareInfo.fetch(this.my_think_avg_compare)       },
     my_think_last_compare_info()      { return CompareInfo.fetch(this.my_think_last_compare)      },
     my_mid_think_avg_compare_info()   { return CompareInfo.fetch(this.my_mid_think_avg_compare)   },
-    my_mid_machine_gun_compare_info() { return CompareInfo.fetch(this.my_mid_machine_gun_compare) },
+    my_ai_drop_total_compare_info()   { return CompareInfo.fetch(this.my_ai_drop_total_compare) },
 
     new_query() {
       return this.$gs.str_squish([this.user_key, ...this.query_key_value_ary].join(" "))
@@ -76,8 +76,8 @@ export const mod_query_builder = {
       av.push(this.compare_value_as_query("最大思考", this.my_think_max_enabled, this.my_think_max_compare_info, this.my_think_max))
       av.push(this.compare_value_as_query("平均思考", this.my_think_avg_enabled, this.my_think_avg_compare_info, this.my_think_avg))
       av.push(this.compare_value_as_query("最終思考", this.my_think_last_enabled, this.my_think_last_compare_info, this.my_think_last))
-      av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
-      av.push(this.compare_value_as_query("中盤以降の最大連続即指し回数", this.my_mid_machine_gun_enabled, this.my_mid_machine_gun_compare_info, this.my_mid_machine_gun))
+      // av.push(this.compare_value_as_query("中盤以降の平均思考", this.my_mid_think_avg_enabled, this.my_mid_think_avg_compare_info, this.my_mid_think_avg))
+      av.push(this.compare_value_as_query("棋神を模倣した指し手の数", this.my_ai_drop_total_enabled, this.my_ai_drop_total_compare_info, this.my_ai_drop_total))
       return av
     },
   },

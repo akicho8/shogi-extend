@@ -21,7 +21,7 @@
 # | think_last            | Think last            | integer(4) |             |                   |            |
 # | think_max             | Think max             | integer(4) |             |                   |            |
 # | obt_think_avg         | Obt think avg         | integer(4) |             |                   |            |
-# | obt_auto_max          | Obt auto max          | integer(4) |             |                   |            |
+# | ai_drop_total          | Obt auto max          | integer(4) |             |                   |            |
 # | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | I          |
 # | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! J       |
 # | style_id              | Style                 | integer(8) |             |                   | K          |
@@ -172,57 +172,26 @@ module Swars
         self.think_end_avg = c.div(d)
       end
 
-      a = list                                   # => [2, 3, 3, 2, 2, 2]
-      x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
-      x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
-      v = x.compact.max                          # => 3
-      if v
-        self.two_serial_max = v
-      end
+      # a = list                                   # => [2, 3, 3, 2, 2, 2]
+      # x = a.chunk { |e| e == 2 }                 # => [[true, [2]], [false, [3, 3], [true, [2, 2, 2]]
+      # x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
+      # v = x.compact.max                          # => 3
+      # if v
+      #   self.two_serial_max = v
+      # end
 
       think_columns_update2
     end
 
-    # t.integer :obt_think_avg,   null: true, comment: "開戦後の指し手の平均秒数"
-    # t.integer :obt_auto_max,  null: true, comment: "開戦後の2秒の指し手が連続した回数"
-    # t.integer :think_max2,       null: true, comment: "開戦後の最大考慮秒数"
     def think_columns_update2
       list = sec_list
 
+      # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
       if Rails.env.local?
-        # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
         list = list.compact
       end
 
-      if battle.outbreak_turn
-        # 全体が [a i b j c k d l]
-        # 自分側の list が [a b c d e]
-        # outbreak_turn が c の部分の 5 とすると
-        # 5 / 2 で 2 なので [a b c d e].drop(2) で [c d e] が list に残る
-        # これが開戦後の指し手
-        from = battle.outbreak_turn / 2
-        list = list.drop(from)
-
-        # self.think_max2  = list.max || 0
-
-        d = list.size
-        c = list.sum
-        if d.positive?
-          self.obt_think_avg = c.div(d) # 中盤以降の指し手の平均
-        end
-
-        a = list                                   # => [2, 3, 3, 2, 1, 2]
-        x = a.chunk { |e| e == 1 || e == 2 }       # => [[true, [2]], [false, [3, 3], [true, [2, 1, 2]]
-        x = x.collect { |k, v| k ? v.size : nil }  # => [       1,            nil,           3        ]
-        v = x.compact.max                          # => 3
-        if v
-          self.obt_auto_max = v # 中盤以降で 1 or 2 秒が続く回数の最大
-        end
-
-        # if Rails.env.development?
-        #   p [obt_think_avg, obt_auto_max]
-        # end
-      end
+      self.attributes = Swars::AiCop.analize(list).attributes_for_model
     end
 
     concerning :MedalMethods do

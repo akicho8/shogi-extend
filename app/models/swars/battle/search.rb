@@ -206,14 +206,14 @@ module Swars
             @selected = true
           end
 
-          if e = q.lookup_op("中盤以降の平均思考")
-            m = @my.where(Membership.arel_table[:obt_think_avg].public_send(e[:operator], e[:value]))
-            s = s.where(id: m.pluck(:battle_id))
-            @selected = true
-          end
+          # if e = q.lookup_op("中盤以降の平均思考")
+          #   m = @my.where(Membership.arel_table[:obt_think_avg].public_send(e[:operator], e[:value]))
+          #   s = s.where(id: m.pluck(:battle_id))
+          #   @selected = true
+          # end
 
-          if e = q.lookup_op("中盤以降の最大連続即指し回数")
-            m = @my.where(Membership.arel_table[:obt_auto_max].public_send(e[:operator], e[:value]))
+          if e = q.lookup_op("棋神を模倣した指し手の数")
+            m = @my.where(Membership.arel_table[:ai_drop_total].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
             @selected = true
           end

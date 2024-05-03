@@ -13,20 +13,14 @@ Swars::User.destroy_all
 # Swars::Battle.count             # => 3
 
 Swars::Importer::AllRuleImporter.new(user_key: "muaqua2023", last_page_break: false, early_break: true, page_max: 1, remote_run: true).run
-Swars::Battle.count             # => 3
+Swars::Battle.count             # => 0
 
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=alice
-# >> alice P1 10分 [全3件][新3件][最後]
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=2&user_id=alice
-# >> alice P2 10分 [全3件][新3件][最後]
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=3&user_id=alice
-# >> alice P3 10分 [全3件][新3件][最後]
-# >> [fetch][record] https://shogiwars.heroz.jp/games/DevUser1-YamadaTaro-20200101_123401?locale=ja
-# >> [fetch][record] https://shogiwars.heroz.jp/games/DevUser2-YamadaTaro-20200101_123402?locale=ja
-# >> [fetch][record] https://shogiwars.heroz.jp/games/DevUser3-YamadaTaro-20200101_123403?locale=ja
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&page=1&user_id=alice
-# >> alice P1 3分 [全3件][新0件][最後]
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=&page=1&user_id=muaqua2023
+# >> muaqua2023 P1 10分 [全0件][新0件][最後]
 # >> 新しい対局が見つからなかったので終わる(次のページはないと考える)
-# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&page=1&user_id=alice
-# >> alice P1 10秒 [全3件][新0件][最後]
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=sb&page=1&user_id=muaqua2023
+# >> muaqua2023 P1 3分 [全0件][新0件][最後]
+# >> 新しい対局が見つからなかったので終わる(次のページはないと考える)
+# >> [fetch][history] https://shogiwars.heroz.jp/games/history?gtype=s1&page=1&user_id=muaqua2023
+# >> muaqua2023 P1 10秒 [全0件][新0件][最後]
 # >> 新しい対局が見つからなかったので終わる(次のページはないと考える)
