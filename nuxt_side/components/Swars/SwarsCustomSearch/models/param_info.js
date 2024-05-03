@@ -50,13 +50,13 @@ export class ParamInfo extends ParamBase {
       { key: "my_think_last",              type: "integer", name: "最終思考",                           defaults: { development: null, production: 3*60,   }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
       { key: "my_think_last_compare",      type: "string",  name: "最終思考演算子",                     defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
-      { key: "my_mid_think_avg_enabled",   type: "boolean", name: "中盤以降の平均思考有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
-      { key: "my_mid_think_avg",           type: "integer", name: "中盤以降の平均思考",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
-      { key: "my_mid_think_avg_compare",   type: "string",  name: "中盤以降の平均思考演算子",           defaults: { development: null, production: "lteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      // { key: "my_mid_think_avg_enabled",   type: "boolean", name: "中盤以降の平均思考有効",             defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      // { key: "my_mid_think_avg",           type: "integer", name: "中盤以降の平均思考",                 defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      // { key: "my_mid_think_avg_compare",   type: "string",  name: "中盤以降の平均思考演算子",           defaults: { development: null, production: "lteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
-      { key: "my_mid_machine_gun_enabled", type: "boolean", name: "中盤以降の最大連続即指し回数有効",   defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
-      { key: "my_mid_machine_gun",         type: "integer", name: "中盤以降の最大連続即指し回数",       defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
-      { key: "my_mid_machine_gun_compare", type: "string",  name: "中盤以降の最大連続即指し回数演算子", defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_ai_drop_total_enabled", type: "boolean", name: "棋神を模倣した指し手の数有効",   defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
+      { key: "my_ai_drop_total",         type: "integer", name: "棋神を模倣した指し手の数",       defaults: { development: null, production: 10,     }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
+      { key: "my_ai_drop_total_compare", type: "string",  name: "棋神を模倣した指し手の数演算子", defaults: { development: null, production: "gteq", }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },
 
       { key: "grade_diff_enabled",         type: "boolean", name: "力差有効",                           defaults: { development: null, production: false,  }, permanent: true, relation: null, permalink: true, resetable: true,  desc: null, },
       { key: "grade_diff",                 type: "integer", name: "力差",                               defaults: { development: null, production: 1,      }, permanent: true, relation: null, permalink: true, resetable: false, desc: null, },

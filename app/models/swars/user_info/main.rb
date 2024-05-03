@@ -212,29 +212,32 @@ module Swars
       #           swars_memberships.id = 13
       #       AND swars_memberships.judge_key = 'win'
       #       AND swars_battles.turn_max >= 50
-      #       AND swars_memberships.obt_auto_max >= 10
+      #       AND swars_memberships.ai_drop_total >= 10
       #       AND ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
       #
       def ai_use_battle_count_lv1
         @ai_use_battle_count_lv1 ||= yield_self do
           # A
           s = win_scope                                                                           # 勝っている
-          s = s.joins(:battle, :grade)
-          s = s.where(Membership.arel_table[:grade_diff].gteq(0)) if false                 # 自分と同じか格上に対して
-          # s = s.where(Battle.arel_table[:final_key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) # もともと CHECKMATE だけだったが……いらない？
-          s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
-          s = s.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+          # s = s.joins(:battle, :grade)
+          if false
+            s = s.where(Membership.arel_table[:grade_diff].gteq(0))                 # 自分と同じか格上に対して
+          end
+          if false
+            s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))                    # 50手以上の対局で
+          end
+
+          s = s.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
 
           # if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
           #   s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
           # end
 
-          c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
-          c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
-
-          # s and (c1 or c2)
-          # ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
-          s = s.merge(c1.or(c2))
+          if false
+            c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
+            c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
+            s = s.merge(c1.or(c2))
+          end
 
           # if false
           #   # (B or C)
@@ -246,8 +249,8 @@ module Swars
           # else
 
           # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
-          # c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(10))
-          # c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+          # c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(10))
+          # c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
           # s = s.merge(c1.or(c2))
 
           # end
@@ -271,7 +274,7 @@ module Swars
       #       s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
       #     end
       #     # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
-      #     c2 = Membership.where(Membership.arel_table[:obt_auto_max].gteq(AiCop.obt_auto_max_gteq))
+      #     c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
       #     # s = s.merge(c1.or(c2))
       #     s = s.merge(c2)
       #     s.count

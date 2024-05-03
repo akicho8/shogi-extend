@@ -22,10 +22,14 @@ module Swars
         message: "将棋ウォーズの運営を支える力がある",
         medal_params: "🧙‍♂️",
         if_cond: -> m {
-          m.judge_key == "win" &&
-            (m.obt_auto_max || 0) >= AiCop.obt_auto_max_gteq &&
-            m.battle.turn_max >= 50 &&
-            (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
+          if false
+            # m.judge_key == "win" &&
+            #   # (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq &&
+            #   # m.battle.turn_max >= 50 &&
+            #   # (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
+          else
+            (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq
+          end
         },
       },
       {
