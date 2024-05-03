@@ -257,9 +257,44 @@ module Swars
     end
   end
 end
-# >> Run options: exclude {:slow_spec=>true}
-# >> ..........
-# >>
-# >> Finished in 14.56 seconds (files took 4.85 seconds to load)
-# >> 10 examples, 0 failures
-# >>
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::MembershipMedalInfo
+# >>   タグ依存メダル
+# >>     works
+# >>   切断マン
+# >>     works
+# >>   絶対投了しないマン
+# >>     works
+# >>   相手退席待ちマン
+# >>     works
+# >>   1手詰じらしマン
+# >>     works
+# >>   長考
+# >>     works
+# >>   無気力マン
+# >>     works
+# >>   ただの千日手
+# >>     works
+# >>   切れ負けマン
+# >>     works
+# >>   運営支えマン
+# >>     works
+# >>   段級差
+# >>     全パターン
+# >> 
+# >> Top 5 slowest examples (8.38 seconds, 67.1% of total time):
+# >>   Swars::MembershipMedalInfo 段級差 全パターン
+# >>     4.73 seconds -:208
+# >>   Swars::MembershipMedalInfo タグ依存メダル works
+# >>     1.7 seconds -:28
+# >>   Swars::MembershipMedalInfo 無気力マン works
+# >>     0.97467 seconds -:135
+# >>   Swars::MembershipMedalInfo 長考 works
+# >>     0.48728 seconds -:117
+# >>   Swars::MembershipMedalInfo 絶対投了しないマン works
+# >>     0.47456 seconds -:64
+# >> 
+# >> Finished in 12.48 seconds (files took 2.96 seconds to load)
+# >> 11 examples, 0 failures
+# >> 

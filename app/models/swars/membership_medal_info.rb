@@ -23,9 +23,9 @@ module Swars
         medal_params: "🧙‍♂️",
         if_cond: -> m {
           m.judge_key == "win" &&
-          (m.obt_auto_max || 0) >= AiCop.obt_auto_max_gteq &&
-          m.battle.turn_max >= 50 &&
-          (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
+            (m.obt_auto_max || 0) >= AiCop.obt_auto_max_gteq &&
+            m.battle.turn_max >= 50 &&
+            (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
         },
       },
       {
@@ -34,8 +34,8 @@ module Swars
         medal_params: "😈",
         if_cond: -> m {
           (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t &&
-          m.judge_key == "win" &&
-          m.battle.final_info.key == :CHECKMATE
+            m.judge_key == "win" &&
+            m.battle.final_info.key == :CHECKMATE
         },
       },
       {
@@ -44,9 +44,9 @@ module Swars
         medal_params: "🪳",
         if_cond: -> m {
           m.battle.final_info.key == :TIMEOUT &&
-          m.judge_key == "lose" &&
-          m.battle.turn_max >= 14 &&
-          (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t
+            m.judge_key == "lose" &&
+            m.battle.turn_max >= 14 &&
+            (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t
         },
       },
       {
@@ -56,9 +56,9 @@ module Swars
         medal_params: "🧟",
         if_cond: -> m {
           m.judge_key == "lose" &&
-          m.battle.turn_max >= 14 &&
-          m.think_last && m.think_max != m.think_last &&
-          (t = m.battle.rule_info.long_leave_alone2) && m.think_max >= t
+            m.battle.turn_max >= 14 &&
+            m.think_last && m.think_max != m.think_last &&
+            (t = m.battle.rule_info.long_leave_alone2) && m.think_max >= t
         },
       },
       {
@@ -67,7 +67,7 @@ module Swars
         medal_params: "🧠",
         if_cond: -> m {
           m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi &&
-          m.tag_names_for(:note).include?("背水の陣")
+            m.tag_names_for(:note).include?("背水の陣")
         },
       },
       {
@@ -148,8 +148,8 @@ module Swars
         medal_params: "🏈",
         if_cond: -> m {
           m.tag_names_for(:note).include?("入玉") &&
-          m.judge_key == "win" &&
-          m.battle.final_info.toryo_or_tsumi
+            m.judge_key == "win" &&
+            m.battle.final_info.toryo_or_tsumi
         },
       },
       {
