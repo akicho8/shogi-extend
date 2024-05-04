@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_03_000006) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_000008) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000006) do
   end
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"
@@ -423,6 +423,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000006) do
     t.integer "ek_score_with_cond", comment: "入玉宣言時の得点(条件考慮)"
     t.integer "ai_wave_count", comment: "棋神使用模様個数"
     t.float "ai_two_freq", comment: "2手差し頻出度"
+    t.integer "ai_noizy_two_max", comment: "22221パターンを考慮した2の並び個数最大値"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true
@@ -532,7 +533,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000006) do
   end
 
   create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "name", collation: "utf8_bin"
+    t.string "name", collation: "utf8mb3_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end

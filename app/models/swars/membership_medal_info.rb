@@ -22,18 +22,18 @@ module Swars
         message: "将棋ウォーズの運営を支える力がある",
         medal_params: "🧙‍♂️",
         if_cond: -> m {
-          if false
-            # m.judge_key == "win" &&
-            #   # (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq &&
-            #   # m.battle.turn_max >= 50 &&
-            #   # (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
-          else
-            AiCop.membership_arrest(m)
-            # v = false
-            # v ||= (m.ai_drop_total || 0) >= AiCop.ai_drop_total_gteq
-            # v ||= (m.ai_wave_count || 0) >= AiCop.ai_wave_count_gteq
-            # v ||= (m.ai_two_freq || 0) >= AiCop.ai_two_freq_gteq && m.battle.turn_max >= 50
-          end
+          AiCop::Judgement.membership_arrest?(m)
+          # if false
+          #   # m.judge_key == "win" &&
+          #   #   # (m.ai_drop_total || 0) >= AiCop.drop_total_threshold &&
+          #   #   # m.battle.turn_max >= 50 &&
+          #   #   # (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
+          # else
+          #   # v = false
+          #   # v ||= (m.ai_drop_total || 0) >= AiCop.drop_total_threshold
+          #   # v ||= (m.ai_wave_count || 0) >= AiCop.wave_count_threshold
+          #   # v ||= (m.ai_two_freq || 0) >= AiCop.two_freq_threshold && m.battle.turn_max >= 50
+          # end
         },
       },
       {

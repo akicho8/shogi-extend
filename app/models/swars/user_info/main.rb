@@ -227,79 +227,15 @@ module Swars
       #   AND swars_battles.turn_max >= 50
       #   AND (swars_memberships.ai_drop_total >= 15 OR swars_memberships.ai_wave_count >= 3 OR swars_memberships.ai_two_freq >= 0.6)
       #
-      def ai_use_battle_count_lv1
-        @ai_use_battle_count_lv1 ||= yield_self do
 
-          # A
-          s = win_scope                                                                           # 勝っている
-          # s = s.joins(:battle, :grade)
-          s = s.joins(:battle)
+      # SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id`
+      # WHERE `swars_memberships`.`id` IN (263, 261, 259, 257, 255, 253, 251, 249, 247, 245)
+      # AND `judges`.`key` = 'win'
+      # AND (`swars_memberships`.`ai_drop_total` >= 15 OR `swars_memberships`.`ai_wave_count` >= 3 OR `swars_memberships`.`ai_two_freq` >= 0.6 AND `swars_battles`.`turn_max` >= 50)
 
-          # if false
-          #   s = s.where(Membership.arel_table[:grade_diff].gteq(0))                 # 自分と同じか格上に対して
-          # end
-
-          s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq)) # 50手以上
-
-          c1 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
-          c2 = Membership.where(Membership.arel_table[:ai_wave_count].gteq(AiCop.ai_wave_count_gteq))
-          c3 = Membership.where(Membership.arel_table[:ai_two_freq].gteq(AiCop.ai_two_freq_gteq))
-          c = c1.or(c2).or(c3)
-          s = s.merge(c)
-
-          # ((m.ai_two_freq || 0) >= AiCop.ai_two_freq_gteq && m.battle.turn_max >= 50)
-
-          # if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
-          #   s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                     # 3分は除く
-          # end
-
-          # if false
-          #   c1 = Battle.joins(:rule).where(Rule.arel_table[:key].eq_any([:ten_min, :ten_sec]))  # 10分 or 10秒
-          #   c2 = Grade.unscoped.where(Grade.arel_table[:priority].between(Grade.god_priority_range)) # or 対象段位
-          #   s = s.merge(c1.or(c2))
-          # end
-
-          # if false
-          #   # (B or C)
-          #   a = Membership.where(Membership.arel_table[:obt_think_avg].lteq(3))       # 指し手平均3秒以下
-          #   a = a.or(Membership.where(Membership.arel_table[:think_end_avg].lteq(2))) # または最後の5手の平均指し手が2秒以下
-          #
-          #   # A and (B or C)
-          #   s = s.merge(a)
-          # else
-
-          # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
-          # c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(10))
-          # c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
-          # s = s.merge(c1.or(c2))
-
-          # end
-
-          # c1 = Membership.where(Membership.arel_table[:two_serial_max].gteq(10))
-          # c2 = Membership.where(Membership.arel_table[:two_serial_max].gteq(5))
-          # c3 = Membership.where(Membership.arel_table[:think_end_avg].lteq(2))
-          # c4 = c1.or(c2.merge(c3))     # c1 or c2 and c3 は c1 or (c2 and c3) のこと
-          # s = s.merge(c4)
-
-          s.count
-        end
+      def ai_use_battle_count
+        @ai_use_battle_count ||= AiCop::Judgement.arrest_scope(ids_scope).count
       end
-
-      # def ai_use_battle_count_lv2
-      #   @ai_use_battle_count_lv2 ||= yield_self do
-      #     s = win_scope
-      #     s = s.joins(:battle)
-      #     s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-      #     if MembershipMedalInfo::AI_JUDGMENT_EXCLUDE_THREE_MIN
-      #       s = s.where(Battle.arel_table[:rule_key].not_eq(:three_min))                      # 3分は除く
-      #     end
-      #     # c1 = Membership.where(Membership.arel_table[:obt_think_avg].lteq(1))
-      #     c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(AiCop.ai_drop_total_gteq))
-      #     # s = s.merge(c1.or(c2))
-      #     s = s.merge(c2)
-      #     s.count
-      #   }.call
-      # end
 
       ################################################################################
 
@@ -449,11 +385,11 @@ module Swars
       end
 
       def kishin_info_records
-        if v = ai_use_battle_count_lv1
+        if v = ai_use_battle_count
           if v.positive?
             [
-              { name: "有り", value: ai_use_battle_count_lv1,             },
-              { name: "無し", value: win_count - ai_use_battle_count_lv1, },
+              { name: "有り", value: ai_use_battle_count,             },
+              { name: "無し", value: win_count - ai_use_battle_count, },
             ]
           end
         end

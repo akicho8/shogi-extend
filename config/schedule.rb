@@ -35,7 +35,7 @@ every("5 3 * * *") do
     # "Swars::Crawler::RecentlyCrawler.run",
 
     # %(AppLog.important(subject: "CRON", body: "ai_drop_total update")),
-    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(ai_drop_total: nil).find_in_batches.with_index { |records, i| records.each {|e| e.think_columns_update2; e.save!(validate: false) rescue nil }; print "#{i} "; AppLog.important(subject: "ai_drop_total", body: i) }',
+    # 'Swars::Membership.where(Swars::Membership.arel_table[:created_at].gteq(7.days.ago)).where(ai_drop_total: nil).find_in_batches.with_index { |records, i| records.each {|e| e.ai_columns_set; e.save!(validate: false) rescue nil }; print "#{i} "; AppLog.important(subject: "ai_drop_total", body: i) }',
 
     # %(AppLog.important(subject: "CRON", body: "耀龍四間飛車 update begin")),
     # %(ActsAsTaggableOn::Tag.find_by(name: "耀龍四間飛車").taggings.where(taggable_type: "Swars::Membership").order(id: :desc).in_batches.each_record{|e|e.taggable.battle.remake rescue nil}),

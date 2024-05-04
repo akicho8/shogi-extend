@@ -180,10 +180,10 @@ module Swars
       #   self.two_serial_max = v
       # end
 
-      think_columns_update2
+      ai_columns_set
     end
 
-    def think_columns_update2
+    def ai_columns_set
       list = sec_list
 
       # パックマン戦法のKIFには時間が入ってなくて、その場合、時間が nil になるため。ただしそれは基本開発環境のみ
@@ -191,7 +191,7 @@ module Swars
         list = list.compact
       end
 
-      self.attributes = Swars::AiCop.analize(list).attributes_for_model
+      self.attributes = AiCop::Analyzer.analyze(list).attributes_for_model
     end
 
     concerning :MedalMethods do
