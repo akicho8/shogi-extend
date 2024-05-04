@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000008) do
   end
 
   create_table "free_battles", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "key", null: false, collation: "utf8mb3_bin", comment: "URL識別子"
+    t.string "key", null: false, collation: "utf8_bin", comment: "URL識別子"
     t.string "title"
     t.text "kifu_body", null: false, comment: "棋譜本文"
     t.text "sfen_body", null: false, comment: "SFEN形式"
@@ -533,7 +533,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000008) do
   end
 
   create_table "tags", id: :integer, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
-    t.string "name", collation: "utf8mb3_bin"
+    t.string "name", collation: "utf8_bin"
     t.integer "taggings_count", default: 0
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
