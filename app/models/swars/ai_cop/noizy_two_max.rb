@@ -6,7 +6,8 @@
 # - 22221  → 5個
 # - 222212 → 6個
 #
-# ~/src/shogi-extend/experiment/swars/ai_cop/noizy_two_max.rb
+# ~/src/#!/usr/bin/env ruby
+#!/usr/local/var/rbenv/versions/3.2.1/bin/rubyogi-extend/experiment/swars/ai_cop/noizy_two_max.rb
 #
 module Swars
   module AiCop
@@ -17,7 +18,7 @@ module Swars
 
       class << self
         def from(list)
-          object = NoizyTwoMax.new
+          object = new
           list.each { |e| object.update(e) }
           object.max
         end

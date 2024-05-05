@@ -277,7 +277,6 @@ module Swars
 
           ################################################################################
           { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
-          # { name: "棋神乱用の疑い",                      type1: "pie",    type2: nil,                             body: kishin_info_records_lv2,       pie_type: "is_pair_values" },
           { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
           { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
 
@@ -394,17 +393,6 @@ module Swars
           end
         end
       end
-
-      # def kishin_info_records_lv2
-      #   if v = ai_use_battle_count_lv2
-      #     if v.positive?
-      #       [
-      #         { name: "有り", value: v,             },
-      #         { name: "無し", value: win_count - v, },
-      #       ]
-      #     end
-      #   end
-      # end
 
       ################################################################################
 

@@ -52,11 +52,16 @@ module SwarsMedalSupport
     end
   end
 
-  # 棋神乱用
+  # 棋神乱用 (非推奨)
   def csa_seq_generate4(n, sec = 2)
     outbreak_csa + n.times.flat_map do |i|
       seconds = life - (i * (sec * 2))
-      [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds - sec], ["-5251OU", seconds]]
+      [
+        ["+5958OU", seconds],
+        ["-5152OU", seconds],
+        ["+5859OU", seconds - sec],
+        ["-5251OU", seconds],
+      ]
     end
   end
 

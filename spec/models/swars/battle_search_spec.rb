@@ -41,8 +41,8 @@ module Swars
         case1("最大思考", ">=1", "==0")
         case1("平均思考", ">=1", "==0")
         case1("最終思考", ">=1", "==0")
-        case1("棋神波形数", ">=1", "==0", csa_seq: csa_seq_generate4(10))
-        case1("棋神を模倣した指し手の数", ">=1", "==0", csa_seq: csa_seq_generate4(10))
+        case1("棋神波形数", ">=1", "==0", csa_seq: KifuGenerator.generate_ai)
+        case1("棋神を模倣した指し手の数", ">=1", "==0", csa_seq: KifuGenerator.generate_ai)
         case1("相手", "white_man", "unknown_man", white_key: "white_man")
       end
     end

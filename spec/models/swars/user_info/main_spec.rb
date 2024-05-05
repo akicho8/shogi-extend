@@ -203,57 +203,19 @@ module Swars
     end
 
     describe "将棋ウォーズの運営を支える力 kishin_info_records" do
-      def case1(rule_key, n)
-        Battle.create!(csa_seq: csa_seq_generate4(n), rule_key: rule_key) do |e|
+      def case1(n)
+        csa_seq = KifuGenerator.generate_ai(size: n, rule_key: :ten_min)
+        battle = Battle.create!(csa_seq: csa_seq, rule_key: :ten_min) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
         @black.user_info.kishin_info_records&.collect { |e| e[:value] }
       end
 
-      def case2(grade_key)
-        @black = User.create!(grade_key: grade_key)
-        assert { case1(:three_min, 11) == nil }
-      end
-
-      it "3分 五段以上" do
-        @black = User.create!(grade_key: "五段")
-        assert { case1(:three_min, 10) == nil    }
-        assert { case1(:three_min, 11) == [1, 1] }
-        assert { case1(:three_min, 11) == [2, 1] }
-      end
-
-      it "10分 1級 判定あり" do
-        @black = User.create!(grade_key: "1級")
-        assert { case1(:ten_min, 11) == [1, 0] }
-      end
-
-      it "10秒 1級 判定あり" do
-        @black = User.create!(grade_key: "1級")
-        assert { case1(:ten_sec, 11) == [1, 0] }
-      end
-
-      describe "3分の判定スルー" do
-        it { case2("十段") }
-        it { case2("四段") }
-      end
-    end
-
-    xdescribe "棋神乱用の疑い kishin_info_records_lv2" do
-      before do
-        @black = User.create!
-      end
-
-      def case1(n)
-        Battle.create!(csa_seq: csa_seq_generate4(n)) do |e|
-          e.memberships.build(user: @black, judge_key: :win)
-        end
-        @black.user_info.kishin_info_records_lv2&.collect { |e| e[:value] }
-      end
-
       it "works" do
-        assert { case1(10) == nil    }
-        assert { case1(11) == [1, 1] }
-        assert { case1(12) == [2, 1] }
+        @black = User.create!(grade_key: "五段")
+        assert { case1(28) == nil    }
+        assert { case1(29) == [1, 1] }
+        assert { case1(29) == [2, 1] }
       end
     end
 

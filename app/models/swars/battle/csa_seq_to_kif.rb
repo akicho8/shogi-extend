@@ -42,6 +42,10 @@ module Swars
           # ・もともとはこれを容認していたがそれだとKIFの時間に負の値を書くことになる
           # ・そうするとKENTOで読めなくなるためしかたなくマイナスは0に補正している
           if used.negative?
+            if Rails.env.test?
+              raise "時間と対局モードが異なっている"
+            end
+
             used = 0
           end
 
