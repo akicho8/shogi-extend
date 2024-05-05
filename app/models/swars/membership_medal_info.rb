@@ -12,29 +12,11 @@ module Swars
           m.judge_key == "lose" && m.battle.turn_max >= 14 && m.battle.final_info.key == :DISCONNECT
         },
       },
-
-      # ・「10分」または「10秒」のルールまたは「五段以上」である
-      # ・手数50手以上の対局である
-      # ・対局に勝っている
-      # ・1秒または2秒の指し手が10連続以上続く
       {
         key: "運営支えマン",
         message: "将棋ウォーズの運営を支える力がある",
         medal_params: "🧙‍♂️",
-        if_cond: -> m {
-          AiCop::Judgement.membership_arrest?(m)
-          # if false
-          #   # m.judge_key == "win" &&
-          #   #   # (m.ai_drop_total || 0) >= AiCop.drop_total_threshold &&
-          #   #   # m.battle.turn_max >= 50 &&
-          #   #   # (m.battle.rule_key == "ten_min" || m.battle.rule_key == "ten_sec" || m.grade.like_god?)
-          # else
-          #   # v = false
-          #   # v ||= (m.ai_drop_total || 0) >= AiCop.drop_total_threshold
-          #   # v ||= (m.ai_wave_count || 0) >= AiCop.wave_count_threshold
-          #   # v ||= (m.ai_two_freq || 0) >= AiCop.two_freq_threshold && m.battle.turn_max >= 50
-          # end
-        },
+        if_cond: -> m { m.fraud? },
       },
       {
         key: "1手詰じらしマン",
@@ -74,10 +56,17 @@ module Swars
         message: "大駒すべて捨てたのに勝った",
         medal_params: "🧠",
         if_cond: -> m {
-          m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi &&
-            m.tag_names_for(:note).include?("背水の陣")
+          m.judge_key == "win" && m.battle.final_info.toryo_or_tsumi && m.tag_names_for(:note).include?("背水の陣")
         },
       },
+      # {
+      #   key: "逆背水マン",
+      #   message: "大駒すべて取られて負けた",
+      #   medal_params: "💢",
+      #   if_cond: -> m {
+      #     m.judge_key == "lose" && m.battle.final_info.toryo_or_tsumi && m.tag_names_for(:note).include?("背水の陣")
+      #   },
+      # },
       {
         key: "大長考負けマン",
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をしたあげく負けた" },

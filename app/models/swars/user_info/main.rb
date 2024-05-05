@@ -202,39 +202,9 @@ module Swars
         end
       end
 
-      # 棋神
-      # turn_max >= 2 なら obt_think_avg と think_end_avg は nil ではないので turn_max >= 2 の条件を必ず入れること
-      #
-      #   SELECT swars_memberships.* FROM swars_memberships
-      #     INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id
-      #     INNER JOIN swars_grades  ON swars_grades.id  = swars_memberships.grade_id
-      #     WHERE
-      #           swars_memberships.id = 13
-      #       AND swars_memberships.judge_key = 'win'
-      #       AND swars_battles.turn_max >= 50
-      #       AND swars_memberships.ai_drop_total >= 10
-      #       AND ((swars_battles.rule_key = 'ten_min' OR swars_battles.rule_key = 'ten_sec') OR swars_grades.priority <= 5)
-      #
-
-      # 新しい条件
-      #
-      # SELECT COUNT(*) FROM swars_memberships
-      # INNER JOIN judges ON judges.id = swars_memberships.judge_id
-      # INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id
-      # WHERE
-      #        swars_memberships.id IN (203, 201, 199, 197, 195, 193, 191, 189, 187, 185)
-      #   AND judges.key = 'win'
-      #   AND swars_battles.turn_max >= 50
-      #   AND (swars_memberships.ai_drop_total >= 15 OR swars_memberships.ai_wave_count >= 3 OR swars_memberships.ai_two_freq >= 0.6)
-      #
-
-      # SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id`
-      # WHERE `swars_memberships`.`id` IN (263, 261, 259, 257, 255, 253, 251, 249, 247, 245)
-      # AND `judges`.`key` = 'win'
-      # AND (`swars_memberships`.`ai_drop_total` >= 15 OR `swars_memberships`.`ai_wave_count` >= 3 OR `swars_memberships`.`ai_two_freq` >= 0.6 AND `swars_battles`.`turn_max` >= 50)
-
-      def ai_use_battle_count
-        @ai_use_battle_count ||= AiCop::Judgement.arrest_scope(ids_scope).count
+      # 棋神を使って対局した数
+      def fraud_battle_count
+        @fraud_battle_count ||= ids_scope.fraud_only.count
       end
 
       ################################################################################
@@ -304,7 +274,7 @@ module Swars
           { name: "右玉ファミリー",                      type1: "pie",    type2: nil,                             body: migigyoku_kinds,                    pie_type: "is_many_values" },
 
           ################################################################################
-          { name: "将棋ウォーズの運営を支える力",        type1: "pie",    type2: nil,                            body: kishin_info_records,           pie_type: "is_pair_values" },
+          { name: "将棋ウォーズの運営を支える力",        type1: "pie",    type2: nil,                            body: fraud_info_records,           pie_type: "is_pair_values" },
         ]
         if Rails.env.development?
           list.unshift({
@@ -383,12 +353,12 @@ module Swars
         end
       end
 
-      def kishin_info_records
-        if v = ai_use_battle_count
+      def fraud_info_records
+        if v = fraud_battle_count
           if v.positive?
             [
-              { name: "有り", value: ai_use_battle_count,             },
-              { name: "無し", value: win_count - ai_use_battle_count, },
+              { name: "有り", value: fraud_battle_count,             },
+              { name: "無し", value: win_count - fraud_battle_count, },
             ]
           end
         end

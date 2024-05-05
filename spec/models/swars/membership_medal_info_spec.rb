@@ -30,6 +30,7 @@ module Swars
         assert { b("飛車不成") == "飛車不成マン" }
         assert { b("背水の陣") == "背水マン"     }
         assert { b("入玉")     == "入玉勝ちマン" }
+        # assert { test(["背水の陣"], :lose)[:black].include?("逆背水マン")   }
       end
     end
 

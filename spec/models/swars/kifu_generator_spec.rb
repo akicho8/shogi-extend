@@ -13,10 +13,10 @@ end
 # >> Swars::KifuGenerator
 # >>   works
 # >> 
-# >> Top 1 slowest examples (0.15438 seconds, 6.9% of total time):
+# >> Top 1 slowest examples (0.1525 seconds, 6.7% of total time):
 # >>   Swars::KifuGenerator works
-# >>     0.15438 seconds -:5
+# >>     0.1525 seconds -:5
 # >> 
-# >> Finished in 2.23 seconds (files took 1.61 seconds to load)
+# >> Finished in 2.27 seconds (files took 1.61 seconds to load)
 # >> 1 example, 0 failures
 # >> 

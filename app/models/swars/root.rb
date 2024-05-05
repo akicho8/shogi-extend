@@ -46,8 +46,8 @@ module Swars
 
     # 実行順序重要
     def destroy_all
-      models.each do |e|
-        e.destroy_all
+      ForeignKey.disabled do
+        models.each(&:destroy_all)
       end
     end
 

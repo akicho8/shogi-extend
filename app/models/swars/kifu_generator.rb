@@ -7,24 +7,34 @@
 #
 module Swars
   class KifuGenerator
-    DEFAULT_TIME_LIST = [3, 1, 2, 2, 2]
-    DEFAULT_SIZE      = 50
-    DEFAULT_HAND_LIST = ["+5958OU", "-5152OU", "+5859OU", "-5251OU"]
+    FRAUD_PATTERN  = [3, 1, 2, 2, 2]
+    DEFAULT_SIZE   = 50
+    LOOP_HAND_LIST = ["+5958OU", "-5152OU", "+5859OU", "-5251OU"]                       # 王を上下に動かす
+    OUTBREAK_LIST  = ["+1716FU", "-1314FU", "+1615FU", "-1415FU", "+1915KY", "-1115KY"] # 1筋で後手が香車を取るところまで
 
     class << self
+      def fraud_pattern(options = {})
+        options = {
+          :size => 15 * LocationInfo.count, # ちょうど波形3回分
+        }.merge(options)
+        generate(**options)
+      end
+
+      def outbreak_pattern(options = {})
+        options = {
+          :hand_list => OUTBREAK_LIST,
+          :time_list => [0],
+          :size      => OUTBREAK_LIST.size,
+        }.merge(options)
+        generate(**options)
+      end
+
       def generate(...)
         new(...).generate
       end
 
       def default
-        generate_ai
-      end
-
-      def generate_ai(options = {})
-        options = {
-          :size => 15 * LocationInfo.count, # ちょうど波形3回分
-        }.merge(options)
-        generate(**options)
+        fraud_pattern
       end
     end
 
@@ -56,11 +66,11 @@ module Swars
     end
 
     def time_list
-      @options[:time_list] || DEFAULT_TIME_LIST
+      @options[:time_list] || FRAUD_PATTERN
     end
 
     def hand_list
-      @options[:hand_list] || DEFAULT_HAND_LIST
+      @options[:hand_list] || LOOP_HAND_LIST
     end
 
     def size

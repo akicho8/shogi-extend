@@ -202,13 +202,13 @@ module Swars
       end
     end
 
-    describe "将棋ウォーズの運営を支える力 kishin_info_records" do
-      def case1(n)
-        csa_seq = KifuGenerator.generate_ai(size: n, rule_key: :ten_min)
-        battle = Battle.create!(csa_seq: csa_seq, rule_key: :ten_min) do |e|
-          e.memberships.build(user: @black, judge_key: :win)
+    describe "将棋ウォーズの運営を支える力 fraud_info_records" do
+      def case1(size)
+        csa_seq = KifuGenerator.fraud_pattern(size: size)
+        battle = Battle.create!(csa_seq: csa_seq) do |e|
+          e.memberships.build(user: @black)
         end
-        @black.user_info.kishin_info_records&.collect { |e| e[:value] }
+        @black.user_info.fraud_info_records&.collect { |e| e[:value] }
       end
 
       it "works" do

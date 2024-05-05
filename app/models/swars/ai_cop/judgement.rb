@@ -12,7 +12,7 @@ module Swars
       mattr_accessor(:two_freq_threshold)   { 0.6 } #    M以上の割合で 2 があると棋神確定 (最大1.0)
 
       # 検索一覧時の個別判定
-      def membership_arrest?(membership)
+      def fraud?(membership)
         false ||
           (membership.ai_wave_count || 0) >= wave_count_threshold ||
           (membership.ai_drop_total || 0) >= drop_total_threshold ||
@@ -20,13 +20,13 @@ module Swars
       end
 
       # プレイヤー情報用
-      def arrest_scope(s)
-        s = s.joins(:battle)
+      def fraud_only(scope)
+        scope = scope.joins(:battle)
         c1 = Membership.where(Membership.arel_table[:ai_wave_count].gteq(wave_count_threshold))
         c2 = Membership.where(Membership.arel_table[:ai_drop_total].gteq(drop_total_threshold))
         c3a = Membership.where(Membership.arel_table[:ai_two_freq].gteq(two_freq_threshold))
         c3b = Battle.where(Battle.arel_table[:turn_max].gteq(turn_max_threshold))
-        s.merge(c1.or(c2).or(c3a.merge(c3b)))
+        scope.merge(c1.or(c2).or(c3a.merge(c3b)))
       end
     end
   end

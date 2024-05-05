@@ -14,18 +14,6 @@ module SwarsMedalSupport
     600
   end
 
-  # 開戦する
-  def outbreak_csa
-    [
-      ["+1716FU", life],
-      ["-1314FU", life],
-      ["+1615FU", life],
-      ["-1415FU", life],
-      ["+1915KY", life],
-      ["-1115KY", life],
-    ]
-  end
-
   def csa_seq_generate1(n, sec: 0)
     rest = life - sec
     [
@@ -54,7 +42,7 @@ module SwarsMedalSupport
 
   # 棋神乱用 (非推奨)
   def csa_seq_generate4(n, sec = 2)
-    outbreak_csa + n.times.flat_map do |i|
+    Swars::KifuGenerator.outbreak_pattern + n.times.flat_map do |i|
       seconds = life - (i * (sec * 2))
       [
         ["+5958OU", seconds],

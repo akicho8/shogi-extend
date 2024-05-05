@@ -40,6 +40,7 @@ module Swars
   class Membership < ApplicationRecord
     include TagMethods
     include ::Swars::MembershipTimeChartMethods
+    include AiCop::MembershipMethods
 
     custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
 
