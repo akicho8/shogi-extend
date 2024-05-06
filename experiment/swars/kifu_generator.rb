@@ -5,3 +5,4 @@ Swars::KifuGenerator.generate(time_list: [3, 1, 2, 2, 2], size: 30) # => [["+595
 Swars::KifuGenerator.generate(rule_key: :three_min, size: 2)        # => [["+5958OU", 180], ["-5152OU", 180]]
 Swars::KifuGenerator.outbreak_pattern # => [["+1716FU", 600], ["-1314FU", 600], ["+1615FU", 600], ["-1415FU", 600], ["+1915KY", 600], ["-1115KY", 600]]
 Swars::KifuGenerator.generate_n(2, last: 1)        # => [["+5958OU", 600], ["-5152OU", 599]]
+Swars::KifuGenerator.kiremake                      # => [["+5958OU", 540], ["-5152OU", 540], ["+5859OU", 480], ["-5251OU", 480], ["+5958OU", 420], ["-5152OU", 420], ["+5859OU", 360], ["-5251OU", 360], ["+5958OU", 300], ["-5152OU", 300], ["+5859OU", 240], ["-5251OU", 240], ["+5958OU", 180], ["-5152OU", 180], ["+5859OU", 120], ["-5251OU", 120], ["+5958OU", 60], ["-5152OU", 60], ["+5859OU", 0], ["-5251OU", 0]]

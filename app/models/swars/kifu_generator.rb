@@ -1,10 +1,12 @@
 # ウォーズ専用の棋譜を生成する
 #
 # Swars::KifuGenerator.generate(time_list: [3, 1, 2, 2, 2], size: 30) # => [["+5958OU", 597], ["-5152OU", 597], ["+5859OU", 596], ["-5251OU", 596], ["+5958OU", 594], ["-5152OU", 594], ["+5859OU", 592], ["-5251OU", 592], ["+5958OU", 590], ["-5152OU", 590], ["+5859OU", 587], ["-5251OU", 587], ["+5958OU", 586], ["-5152OU", 586], ["+5859OU", 584], ["-5251OU", 584], ["+5958OU", 582], ["-5152OU", 582], ["+5859OU", 580], ["-5251OU", 580], ["+5958OU", 577], ["-5152OU", 577], ["+5859OU", 576], ["-5251OU", 576], ["+5958OU", 574], ["-5152OU", 574], ["+5859OU", 572], ["-5251OU", 572], ["+5958OU", 570], ["-5152OU", 570]]
-# Swars::KifuGenerator.generate(rule_key: :three_min, size: 2)        # => [["+5958OU", 177], ["-5152OU", 177]]
+# Swars::KifuGenerator.generate(rule_key: :three_min, size: 2)        # => [["+5958OU", 180], ["-5152OU", 180]]
+# Swars::KifuGenerator.outbreak_pattern # => [["+1716FU", 600], ["-1314FU", 600], ["+1615FU", 600], ["-1415FU", 600], ["+1915KY", 600], ["-1115KY", 600]]
+# Swars::KifuGenerator.generate_n(2, last: 1)        # => [["+5958OU", 600], ["-5152OU", 599]]
+# Swars::KifuGenerator.kiremake                      # => [["+5958OU", 540], ["-5152OU", 540], ["+5859OU", 480], ["-5251OU", 480], ["+5958OU", 420], ["-5152OU", 420], ["+5859OU", 360], ["-5251OU", 360], ["+5958OU", 300], ["-5152OU", 300], ["+5859OU", 240], ["-5251OU", 240], ["+5958OU", 180], ["-5152OU", 180], ["+5859OU", 120], ["-5251OU", 120], ["+5958OU", 60], ["-5152OU", 60], ["+5859OU", 0], ["-5251OU", 0]]
 #
 # ~/src/shogi-extend/experiment/swars/kifu_generator.rb
-#
 module Swars
   class KifuGenerator
     LOOP_HAND_LIST = ["+5958OU", "-5152OU", "+5859OU", "-5251OU"]                       # 王を上下に動かす
@@ -13,6 +15,10 @@ module Swars
     class << self
       def generate_n(size, options = {})
         generate({size: size}.merge(options))
+      end
+
+      def kiremake
+        generate(time_list: [60], size: 10 * LocationInfo.count, rule_key: :ten_min)
       end
 
       def fraud_pattern(options = {})

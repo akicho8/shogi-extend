@@ -162,19 +162,19 @@ module Swars
     end
 
     describe "切れ負けマン" do
-      def case1
+      def case1(final_key)
         @black = User.create!
         @white = User.create!
-        Battle.create!(csa_seq: csa_seq_generate3(20, 30), final_key: :TIMEOUT) do |e|
+        battle = Battle.create!(csa_seq: KifuGenerator.kiremake, final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.medal_key_with_messsage
+        @black.memberships.first.medal_info.key == :"切れ負けマン"
       end
 
       it "works" do
-        case1                   # => [:切れ負けマン, "時間切れで負けた"]
-        assert { case1 == [:切れ負けマン, "時間切れで負けた"] }
+        assert { !case1(:TORYO) }
+        assert { case1(:TIMEOUT) }
       end
     end
 
@@ -257,7 +257,7 @@ module Swars
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::MembershipMedalInfo
 # >>   タグ依存メダル
 # >>     works
@@ -281,7 +281,7 @@ end
 # >>     works
 # >>   段級差
 # >>     全パターン
-# >> 
+# >>
 # >> Top 5 slowest examples (8.38 seconds, 67.1% of total time):
 # >>   Swars::MembershipMedalInfo 段級差 全パターン
 # >>     4.73 seconds -:208
@@ -293,7 +293,7 @@ end
 # >>     0.48728 seconds -:117
 # >>   Swars::MembershipMedalInfo 絶対投了しないマン works
 # >>     0.47456 seconds -:64
-# >> 
+# >>
 # >> Finished in 12.48 seconds (files took 2.96 seconds to load)
 # >> 11 examples, 0 failures
-# >> 
+# >>

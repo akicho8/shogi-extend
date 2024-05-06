@@ -27,6 +27,8 @@ module Swars
 
         scope :toryo_timeout_checkmate_only, -> { joins(:final).where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"])) }
 
+        # attr_accessor :csa_seq2
+
         before_validation on: :create do
           if Rails.env.local?
             # Bioshogi::Parser.parse(Bioshogi::Explain::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
@@ -97,6 +99,11 @@ module Swars
       def kifu_parser_options
         { source: kifu_body, swars_battle_key: key }
       end
+
+      # def kifu_generator=(instance)
+      #   @kifu_generator
+      #   self.csa_seq = instance.csa_seq
+      # end
 
       concerning :SummaryMethods do
         def total_seconds

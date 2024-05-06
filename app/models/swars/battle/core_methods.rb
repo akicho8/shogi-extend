@@ -5,6 +5,7 @@ module Swars
         serialize :csa_seq
         attr_accessor :kifu_body_for_test
         attr_accessor :tactic_key
+        # attr_accessor :kifu_generator
 
         before_save do
           if tactic_key || kifu_body_for_test || (will_save_change_to_attribute?(:csa_seq) && csa_seq)
