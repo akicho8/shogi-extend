@@ -282,20 +282,20 @@ module Swars
       end
     end
 
-    describe "投了までの心の準備系 count_of_toryo_think_last max_of_toryo_think_last avg_of_toryo_think_last" do
+    describe "投了までの心の準備系 toryo_think_last_groups toryo_think_last_max toryo_think_last_avg" do
       before do
         @black = User.create!
       end
 
       def case1(n, sec)
-        Battle.create!(csa_seq: no_time_with_last(n, sec), final_key: :TORYO) do |e|
+        Battle.create!(csa_seq: Swars::KifuGenerator.generate_n(n, last: sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_info = @black.user_info
         [
-          user_info.count_of_toryo_think_last,
-          user_info.max_of_toryo_think_last,
-          user_info.avg_of_toryo_think_last,
+          user_info.toryo_think_last_groups,
+          user_info.toryo_think_last_max,
+          user_info.toryo_think_last_avg,
         ]
       end
 

@@ -11,8 +11,8 @@ module Swars
     OUTBREAK_LIST  = ["+1716FU", "-1314FU", "+1615FU", "-1415FU", "+1915KY", "-1115KY"] # 1筋で後手が香車を取るところまで
 
     class << self
-      def generate_n(size)
-        generate(size: size)
+      def generate_n(size, options = {})
+        generate({size: size}.merge(options))
       end
 
       def fraud_pattern(options = {})
@@ -52,7 +52,10 @@ module Swars
     def generate
       rest = life_time
       size.times.collect.with_index do |i|
-        if i.even?
+        case
+        when i == size.pred && last
+          rest -= last
+        when i.even?
           rest -= time_cycle.next
         end
         [hand_cycle.next, rest]
@@ -67,6 +70,7 @@ module Swars
         :hand_list  => hand_list,
         :size       => size,
         :life_time  => life_time,
+        :last       => last,
       }
     end
 
@@ -98,6 +102,10 @@ module Swars
 
     def life_time
       @options[:life_time] || rule_info.life_time.to_i
+    end
+
+    def last
+      @options[:last]
     end
   end
 end

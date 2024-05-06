@@ -252,9 +252,9 @@ module Swars
 
           ################################################################################
           { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
-          { name: "投了までの心の準備",                  type1: "pie",    type2: nil,                             body: count_of_toryo_think_last,   pie_type: "is_many_values" },
-          { name: "投了までの心の準備(平均)",            type1: "simple", type2: "second",                        body: avg_of_toryo_think_last,     },
-          { name: "投了までの心の準備(最長)",            type1: "simple", type2: "second",                        body: max_of_toryo_think_last,     },
+          { name: "投了までの心の準備",                  type1: "pie",    type2: nil,                             body: toryo_think_last_groups,   pie_type: "is_many_values" },
+          { name: "投了までの心の準備(平均)",            type1: "simple", type2: "second",                        body: toryo_think_last_avg,     },
+          { name: "投了までの心の準備(最長)",            type1: "simple", type2: "second",                        body: toryo_think_last_max,     },
 
           ################################################################################
           { name: "最大思考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
@@ -435,7 +435,7 @@ module Swars
         s = s.where(Final.arel_table[:key].eq("TORYO"))
       end
 
-      def count_of_toryo_think_last
+      def toryo_think_last_groups
         sep_min = 1.minutes
         sep_sec = 10.seconds
         list = []
@@ -468,13 +468,13 @@ module Swars
         list
       end
 
-      def max_of_toryo_think_last
+      def toryo_think_last_max
         if v = toryo_think_last_scope0.maximum(:think_last)
           v
         end
       end
 
-      def avg_of_toryo_think_last
+      def toryo_think_last_avg
         if v = toryo_think_last_scope0.average(:think_last)
           v.to_f.round(2)
         end

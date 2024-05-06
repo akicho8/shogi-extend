@@ -5,6 +5,7 @@ module Swars
     it "works" do
       assert { KifuGenerator.generate(time_list: [3, 1], size: 3) == [["+5958OU", 597], ["-5152OU", 597], ["+5859OU", 596]] }
       assert { KifuGenerator.generate(rule_key: :three_min, size: 2) == [["+5958OU", 180], ["-5152OU", 180]] }
+      assert { KifuGenerator.generate_n(2, last: 1) == [["+5958OU", 600], ["-5152OU", 599]] }
     end
   end
 end

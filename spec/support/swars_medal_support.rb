@@ -14,14 +14,6 @@ module SwarsMedalSupport
     600
   end
 
-  # n手分ノータイム指し 最後だけ sec 秒
-  def no_time_with_last(n, sec)
-    list = Swars::KifuGenerator.generate_n(n)
-    v = list.pop
-    v = [v.first, life - sec]
-    list + [v]
-  end
-
   # 2手1組としてn手分sec秒ずつ指す
   def csa_seq_generate3(n, sec)
     n.times.flat_map do |i|
