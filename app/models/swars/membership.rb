@@ -208,7 +208,7 @@ module Swars
         info.medal_params_build(self)
       end
 
-      def first_matched_medal_key_and_message
+      def medal_key_with_messsage
         [
           medal_info.key,
           medal_params[:message],

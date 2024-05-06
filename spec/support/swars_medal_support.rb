@@ -14,14 +14,8 @@ module SwarsMedalSupport
     600
   end
 
-  def csa_seq_generate1(n, sec: 0)
-    rest = life - sec
-    [
-      ["+5958OU", rest],
-      ["-5152OU", rest],
-      ["+5859OU", rest],
-      ["-5251OU", rest],
-    ].cycle.take(n)
+  def csa_seq_generate1(size)
+    Swars::KifuGenerator.generate(size: size)
   end
 
   # n手分ノータイム指し 最後だけ sec 秒

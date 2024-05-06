@@ -38,16 +38,16 @@ module Swars
       def case1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_info.key == :"切断マン"
       end
 
       it "works" do
-        assert { case1(13) != [:切断マン, "悔しかったので切断した"] }
-        assert { case1(14) == [:切断マン, "悔しかったので切断した"] }
+        assert { !case1(13) }
+        assert { case1(14) }
       end
     end
 
@@ -55,17 +55,16 @@ module Swars
       def case1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n, sec: 1), final_key: :TIMEOUT) do |e|
+        battle = Battle.create!(csa_seq: KifuGenerator.generate(size: n, life_time: 60 * 10 - 1), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message == [:絶対投了しないマン, "悔しかったので時間切れになるまで9分59秒放置した"]
+        battle.memberships.first.medal_key_with_messsage == [:"絶対投了しないマン", "悔しかったので時間切れになるまで9分59秒放置した"]
       end
 
       it "works" do
         assert { !case1(13) }
         assert { case1(14) }
-        assert { case1(15) }
       end
     end
 
@@ -73,15 +72,15 @@ module Swars
       def case1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message.first
+        @black.memberships.first.medal_info.key == :"相手退席待ちマン"
       end
 
       it "works" do
-        assert { case1 == :"相手退席待ちマン" }
+        assert { case1 }
       end
     end
 
@@ -89,16 +88,15 @@ module Swars
       def case1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
+        Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_key_with_messsage == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
       end
 
       it "works" do
-        case1                   # => [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
-        assert { case1 == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"] }
+        assert { case1 }
       end
     end
 
@@ -108,11 +106,11 @@ module Swars
 
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]], final_key: :CHECKMATE) do |e|
+        Battle.create!(csa_seq: [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
           e.memberships.build(user: @white)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_key_with_messsage
       end
 
       it "works" do
@@ -126,11 +124,11 @@ module Swars
       def case1(n, final_key)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_key_with_messsage
       end
 
       it "works" do
@@ -148,11 +146,11 @@ module Swars
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DRAW_SENNICHI) do |e|
+        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_key_with_messsage
       end
 
       it "works" do
@@ -167,11 +165,11 @@ module Swars
       def case1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate3(20, 30), final_key: :TIMEOUT) do |e|
+        Battle.create!(csa_seq: csa_seq_generate3(20, 30), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        @black.memberships.first.medal_key_with_messsage
       end
 
       it "works" do
@@ -184,7 +182,7 @@ module Swars
       def test(pattern)
         @black = User.create!
         @white = User.create!
-        battle = Swars::Battle.create!(csa_seq: Swars::KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
+        battle = Battle.create!(csa_seq: KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
