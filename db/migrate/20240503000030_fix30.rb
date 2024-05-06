@@ -16,5 +16,9 @@ class Fix30 < ActiveRecord::Migration[6.0]
         Swars::Grade[grade_key].memberships.where(ai_drop_total: nil).find_each { |e| e.ai_columns_set; e.save(validate: false) }
       end
     end
+
+    say_with_time "all" do
+      Swars::Membership.where(ai_drop_total: nil).find_each { |e| e.ai_columns_set; e.save(validate: false) }
+    end
   end
 end

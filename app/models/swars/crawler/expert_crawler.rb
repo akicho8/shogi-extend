@@ -4,9 +4,9 @@ module Swars
     class ExpertCrawler < Base
       def default_params
         {
-          user_keys: (Rails.env.production? || Rails.env.staging?) ? Rails.application.credentials[:expert_import_user_keys] : ["DevUser1"],
-          page_max: Rails.env.production? ? 5 : 1,
-          early_break: true,
+          :user_keys   => default_user_keys,
+          :page_max    => Rails.env.production? ? 5 : 1,
+          :early_break => true,
         }
       end
 
@@ -15,6 +15,19 @@ module Swars
           report_for(user_key) do
             Importer::AllRuleImporter.new(params.merge(user_key: user_key)).run
           end
+        end
+      end
+
+      private
+
+      def default_user_keys
+        case
+        when Rails.env.production?
+          Rails.application.credentials[:expert_import_user_keys]
+        when Rails.env.staging?
+          ["itoshinTV", "BOUYATETSU5", "bsplive"]
+        else
+          ["DevUser1"]
         end
       end
     end
