@@ -4,7 +4,7 @@ module Swars
   RSpec.describe "100手勝ちマン", type: :model, swars_spec: true do
     def case1(n)
       user = User.create!
-      Swars::Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
+      Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
         e.memberships.build(user: user, judge_key: :win)
       end
       user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"100手勝ちマン")

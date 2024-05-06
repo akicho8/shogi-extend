@@ -14,13 +14,9 @@ module SwarsMedalSupport
     600
   end
 
-  def csa_seq_generate1(size)
-    Swars::KifuGenerator.generate(size: size)
-  end
-
   # n手分ノータイム指し 最後だけ sec 秒
-  def csa_seq_generate2(n, sec)
-    list = csa_seq_generate1(n)
+  def no_time_with_last(n, sec)
+    list = Swars::KifuGenerator.generate_n(n)
     v = list.pop
     v = [v.first, life - sec]
     list + [v]
@@ -51,12 +47,12 @@ module SwarsMedalSupport
 
   # 先手居飛車でN手の棋譜を生成
   def ibisha_csa_seq_generate(n)
-    [ [black_ibisha, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
+    [ [black_ibisha, life], ["-1112KY", life] ] + Swars::KifuGenerator.generate_n(n - 2)
   end
 
   # 先手振り飛車でN手の棋譜を生成
   def furibisha_csa_seq_generate(n)
-    [ [black_furibisha, life], ["-1112KY", life] ] + csa_seq_generate1(n - 2)
+    [ [black_furibisha, life], ["-1112KY", life] ] + Swars::KifuGenerator.generate_n(n - 2)
   end
 end
 

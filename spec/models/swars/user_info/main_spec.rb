@@ -68,7 +68,7 @@ module Swars
       end
 
       def case1(judge_key, n)
-        Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
         @black.user_info.avg_win_lose_turn_max.collect { |e| e[:value] }
@@ -88,7 +88,7 @@ module Swars
       end
 
       def case1(n, final_key, judge_key)
-        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
         end
         @black.user_info.avg_of_toryo_turn_max
@@ -107,7 +107,7 @@ module Swars
       end
 
       def case1(n)
-        Battle.create!(csa_seq: csa_seq_generate1(n)) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
           e.memberships.build(user: @black)
         end
         @black.user_info.avg_of_turn_max
@@ -219,26 +219,24 @@ module Swars
       end
     end
 
-    describe "1手詰を焦らして悦に入った回数 count_of_checkmate_think_last" do
-      before do
+    describe "1手詰を焦らして悦に入った回数 checkmate_think_groups" do
+      def case1(last_sec)
         @black = User.create!
-      end
-
-      def case1(sec)
-        Battle.create!(csa_seq: csa_seq_generate2(3, sec), final_key: "CHECKMATE") do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate(time_list: [0, 0, last_sec]), final_key: "CHECKMATE") do |e|
           e.memberships.build(user: @black)
         end
         user_info = @black.user_info
         [
-          user_info.count_of_checkmate_think_last,
-          user_info.max_of_checkmate_think_last,
+          user_info.checkmate_think_groups,
+          user_info.checkmate_think_max,
         ]
       end
 
       it "works" do
-        assert { case1(400) == [[{name: "6分", value: 1}], 400] }
-        assert { case1(500) == [[{name: "6分", value: 1}, {name: "8分", value: 1}], 500] }
-        assert { case1(300) == [[{name: "6分", value: 1}, {name: "8分", value: 1}, {name: "5分", value: 1}], 500] }
+        assert { case1(29) == [nil, nil] }
+        assert { case1(59) == [[{name: "30秒", value: 1}], 59] }
+        assert { case1(60) == [[{name: "1分",  value: 1}], 60] }
+        assert { case1(61) == [[{name: "1分",  value: 1}], 61] }
       end
     end
 
@@ -248,7 +246,7 @@ module Swars
       end
 
       def case1(n)
-        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         @black.user_info.disconnect_count
@@ -267,7 +265,7 @@ module Swars
       end
 
       def case1(n)
-        Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_info = @black.user_info
@@ -290,7 +288,7 @@ module Swars
       end
 
       def case1(n, sec)
-        Battle.create!(csa_seq: csa_seq_generate2(n, sec), final_key: :TORYO) do |e|
+        Battle.create!(csa_seq: no_time_with_last(n, sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_info = @black.user_info
@@ -356,7 +354,7 @@ module Swars
       end
 
       def case1
-        battle = Battle.create!(csa_seq: csa_seq_generate1(3))
+        battle = Battle.create!(csa_seq: KifuGenerator.generate_n(3))
         battle.memberships.collect { |e| e.user.user_info.used_piece_counts_records.to_chart.reject { |e| e[:value].zero? } }
       end
 

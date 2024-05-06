@@ -247,8 +247,8 @@ module Swars
 
           ################################################################################
           { name: "勝ち",                                type1: "pie",    type2: nil,                             body: judge_info_records(:win),      pie_type: "is_many_values" },
-          { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: count_of_checkmate_think_last, pie_type: "is_many_values" },
-          { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: max_of_checkmate_think_last,   },
+          { name: "1手詰を焦らして悦に入った頻度",       type1: "pie",   type2:  nil,                             body: checkmate_think_groups, pie_type: "is_many_values" },
+          { name: "1手詰を焦らして悦に入った時間(最長)", type1: "simple", type2: "second",                        body: checkmate_think_max,   },
 
           ################################################################################
           { name: "負け",                                type1: "pie",    type2: nil,                             body: judge_info_records(:lose),     pie_type: "is_many_values" },
@@ -491,23 +491,15 @@ module Swars
         s = s.where(Membership.arel_table[:think_last].gteq(checkmate_think_last_gteq))
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq("CHECKMATE"))
-        # s = s.where(Battle.arel_table[:turn_max].gteq(14))
       end
 
-      def count_of_checkmate_think_last
-        # if v = checkmate_think_last_scope.count
-        #   if v.positive?
-        #     v
-        #   end
-        # end
-
+      def checkmate_think_groups
         s = checkmate_think_last_scope
-        # s = ids_scope
         h = s.group("think_last DIV 60").order("count_all desc").count
         if h.present?
           h.collect do |min, count|
             if min.zero?
-              min = "#{checkmate_think_last_gteq}秒"
+              min = "#{checkmate_think_last_gteq}秒" # 以上
             else
               min = "#{min}分"
             end
@@ -516,10 +508,8 @@ module Swars
         end
       end
 
-      def max_of_checkmate_think_last
-        if v = checkmate_think_last_scope.maximum(:think_last)
-          v
-        end
+      def checkmate_think_max
+        checkmate_think_last_scope.maximum(:think_last)
       end
 
       ################################################################################

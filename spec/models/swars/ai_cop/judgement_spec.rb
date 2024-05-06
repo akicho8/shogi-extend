@@ -4,11 +4,11 @@ module Swars::AiCop
   RSpec.describe Judgement, type: :model do
     describe do
       it "works" do
-        battle = Swars::Battle.create!(csa_seq: Swars::KifuGenerator.fraud_pattern(size: 28))
+        battle = Swars::Battle.create!(csa_seq: KifuGenerator.fraud_pattern(size: 28))
         assert { battle.memberships[0].fraud?       == false }
         assert { Swars::Membership.fraud_only.count == 0 }
 
-        battle = Swars::Battle.create!(csa_seq: Swars::KifuGenerator.fraud_pattern(size: 29))
+        battle = Swars::Battle.create!(csa_seq: KifuGenerator.fraud_pattern(size: 29))
         assert { battle.memberships[0].fraud?       == true }
         assert { Swars::Membership.fraud_only.count == 1 }
       end

@@ -80,7 +80,7 @@ module Swars
       def case1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DISCONNECT) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -109,7 +109,7 @@ module Swars
       def case1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -141,7 +141,7 @@ module Swars
       def case1
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]], final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -157,7 +157,7 @@ module Swars
       def case1(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :TIMEOUT) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
@@ -196,7 +196,7 @@ module Swars
       def test(n)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: :DRAW_SENNICHI) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
@@ -213,7 +213,7 @@ module Swars
       def test(pattern)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: Swars::KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
@@ -230,7 +230,7 @@ module Swars
       def case1(n, final_key)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate1(n), final_key: final_key) do |e|
+        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
