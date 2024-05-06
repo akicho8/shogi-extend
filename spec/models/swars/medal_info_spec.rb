@@ -210,10 +210,10 @@ module Swars
     end
 
     describe "運営支えマン" do
-      def test(n)
+      def test(pattern)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate4(n), final_key: :CHECKMATE) do |e|
+        Swars::Battle.create!(csa_seq: Swars::KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
@@ -221,7 +221,8 @@ module Swars
       end
 
       it "works" do
-        assert { test(20).include?(:"運営支えマン") }
+        assert { test(:fraud_pattern).include?(:"運営支えマン") }
+        assert { test(:no_fraud_pattern).exclude?(:"運営支えマン") }
       end
     end
 

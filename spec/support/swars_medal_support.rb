@@ -40,19 +40,6 @@ module SwarsMedalSupport
     end
   end
 
-  # 棋神乱用 (非推奨)
-  def csa_seq_generate4(n, sec = 2)
-    Swars::KifuGenerator.outbreak_pattern + n.times.flat_map do |i|
-      seconds = life - (i * (sec * 2))
-      [
-        ["+5958OU", seconds],
-        ["-5152OU", seconds],
-        ["+5859OU", seconds - sec],
-        ["-5251OU", seconds],
-      ]
-    end
-  end
-
   # 指し手の平均用
   def csa_seq_generate5(seconds = [100, 200])
     [

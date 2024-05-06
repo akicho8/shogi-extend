@@ -196,12 +196,12 @@ module Swars
     end
 
     concerning :MedalMethods do
-      def first_matched_medal
+      def medal_info
         MembershipMedalInfo.find { |e| e.if_cond.call(self) } or raise "must not happen"
       end
 
       def medal_params(params = {})
-        info = first_matched_medal
+        info = medal_info
         if v = (params[:medal_debug] || ENV["MEDAL_DEBUG"])
           info = MembershipMedalInfo[(id + v.to_i).modulo(MembershipMedalInfo.count)]
         end
@@ -210,7 +210,7 @@ module Swars
 
       def first_matched_medal_key_and_message
         [
-          first_matched_medal.key,
+          medal_info.key,
           medal_params[:message],
         ]
       end

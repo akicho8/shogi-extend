@@ -13,7 +13,7 @@ module Swars
           end
         end
         {black: black, white: white}.inject({}) { |a, (k, v)|
-          a.merge(k => v.memberships.first.first_matched_medal.key.to_s)
+          a.merge(k => v.memberships.first.medal_info.key.to_s)
         }
       end
 
@@ -181,19 +181,19 @@ module Swars
     end
 
     describe "運営支えマン" do
-      def test(n)
+      def test(pattern)
         @black = User.create!
         @white = User.create!
-        Swars::Battle.create!(csa_seq: csa_seq_generate4(n), final_key: :CHECKMATE) do |e|
+        battle = Swars::Battle.create!(csa_seq: Swars::KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.first_matched_medal_key_and_message
+        battle.memberships[0].medal_info.key
       end
 
       it "works" do
-        test(20)                # => [:運営支えマン, "将棋ウォーズの運営を支える力がある"]
-        assert { test(20) == [:運営支えマン, "将棋ウォーズの運営を支える力がある"] }
+        assert { test(:fraud_pattern) == :"運営支えマン" }
+        assert { test(:no_fraud_pattern) != :"運営支えマン" }
       end
     end
 

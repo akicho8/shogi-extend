@@ -33,14 +33,14 @@ module Swars
         Style,
         Preset,
         Judge,
-        User,
-        Battle,
-        Membership,
-        MembershipExtra,
         Grade,
         Xmode,
         Rule,
         Final,
+        User,
+        Battle,
+        Membership,
+        MembershipExtra,
       ]
     end
 

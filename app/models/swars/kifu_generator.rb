@@ -20,6 +20,10 @@ module Swars
         generate(**options)
       end
 
+      def no_fraud_pattern(options = {})
+        fraud_pattern(size: 14 * LocationInfo.count)
+      end
+
       def outbreak_pattern(options = {})
         options = {
           :hand_list => OUTBREAK_LIST,
