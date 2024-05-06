@@ -52,7 +52,7 @@ module Swars
         black = User.create!
         white = User.create!
         users = [black, white]
-        csa_seq = SwarsMedalSupport.KifuGenerator.generate_n(1)
+        csa_seq = KifuGenerator.generate_n(1)
         Battle.create_with_members!(users, preset_key: "平手", csa_seq: csa_seq)
         Battle.create_with_members!(users, preset_key: "角落ち", csa_seq: csa_seq)
         Battle.create_with_members!(users, preset_key: "飛車落ち", csa_seq: csa_seq)
