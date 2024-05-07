@@ -230,7 +230,7 @@ module Swars
 
           ################################################################################
           { name: "勝敗別平均手数",                      type1: "pie",    type2: nil,                             body: avg_win_lose_turn_max,        pie_type: "is_many_values" },
-          { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_turn_max,               },
+          { name: "平均手数",                            type1: "simple", type2: "numeric_with_unit", unit: "手", body: turn_max_avg,               },
           { name: "投了時の平均手数",                    type1: "simple", type2: "numeric_with_unit", unit: "手", body: avg_of_toryo_turn_max,         },
 
           ################################################################################
@@ -257,9 +257,9 @@ module Swars
           { name: "投了までの心の準備(最長)",            type1: "simple", type2: "second",                        body: toryo_think_last_max,     },
 
           ################################################################################
-          { name: "最大思考",                            type1: "simple", type2: "second",                        body: max_of_think_max,              },
-          { name: "平均思考",                            type1: "simple", type2: "second",                        body: avg_of_think_all_avg,          },
-          { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: avg_of_think_end_avg,          },
+          { name: "最大思考",                            type1: "simple", type2: "second",                        body: think_max_to_max,              },
+          { name: "平均思考",                            type1: "simple", type2: "second",                        body: think_all_avg_to_avg,          },
+          { name: "詰ます速度(1手平均)",                 type1: "simple", type2: "second",                        body: think_end_avg_to_avg,          },
 
           ################################################################################
 
@@ -366,17 +366,17 @@ module Swars
 
       ################################################################################
 
-      def max_of_think_max
+      def think_max_to_max
         ids_scope.maximum(:think_max)
       end
 
-      def avg_of_think_all_avg
+      def think_all_avg_to_avg
         if v = ids_scope.average(:think_all_avg)
           v.to_f.round(2)
         end
       end
 
-      def avg_of_turn_max
+      def turn_max_avg
         if false
           s = Battle.where(id: current_scope.pluck(:battle_id))
           if v = s.average(:turn_max)
@@ -550,7 +550,7 @@ module Swars
 
       ################################################################################
 
-      def avg_of_think_end_avg
+      def think_end_avg_to_avg
         s = win_scope
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq("CHECKMATE"))

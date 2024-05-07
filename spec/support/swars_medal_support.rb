@@ -22,16 +22,6 @@ module SwarsMedalSupport
     end
   end
 
-  # 指し手の平均用
-  def csa_seq_generate5(seconds = [100, 200])
-    [
-      ["+5958OU", life - seconds[0]],
-      ["-5152OU", life],
-      ["+5859OU", life - seconds[0] - seconds[1]],
-      ["-5251OU", life],
-    ]
-  end
-
   # 先手は居玉
   def csa_seq_generate6(n)
     [["+2858HI", life], ["-5152OU", life], ["+5828HI", life], ["-5251OU", life]].cycle.take(n)

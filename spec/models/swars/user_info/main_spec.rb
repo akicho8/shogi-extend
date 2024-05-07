@@ -101,7 +101,7 @@ module Swars
       end
     end
 
-    describe "平均手数 avg_of_turn_max" do
+    describe "平均手数 turn_max_avg" do
       before do
         @black = User.create!
       end
@@ -110,7 +110,7 @@ module Swars
         Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_info.avg_of_turn_max
+        @black.user_info.turn_max_avg
       end
 
       it "works" do
@@ -119,23 +119,23 @@ module Swars
       end
     end
 
-    describe "最大思考 max_of_think_max 平均思考 avg_of_think_all_avg" do
+    describe "最大思考 think_max_to_max 平均思考 think_all_avg_to_avg" do
       before do
         @black = User.create!
       end
 
       def case1
-        Battle.create!(csa_seq: csa_seq_generate5) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate(time_list: [10, 20])) do |e|
           e.memberships.build(user: @black)
         end
         [
-          @black.user_info.max_of_think_max,
-          @black.user_info.avg_of_think_all_avg,
+          @black.user_info.think_max_to_max,
+          @black.user_info.think_all_avg_to_avg,
         ]
       end
 
       it "works" do
-        assert { case1 ==  [200, 150.0] }
+        assert { case1 == [20, 15.0] }
       end
     end
 
@@ -183,22 +183,22 @@ module Swars
       end
     end
 
-    describe "詰ます速度(1手平均) avg_of_think_end_avg" do
+    describe "詰ます速度(1手平均) think_end_avg_to_avg" do
       before do
         @black = User.create!
       end
 
       def case1(final_key)
-        Battle.create!(csa_seq: csa_seq_generate5, final_key: final_key) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate(time_list: [10, 20]), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
         end
-        @black.user_info.avg_of_think_end_avg
+        @black.user_info.think_end_avg_to_avg
       end
 
       it "works" do
-        assert { case1("DISCONNECT") == nil  } # CHECKMATE専用
-        assert { case1("CHECKMATE") == 150.0 }
-        assert { case1("CHECKMATE") == 150.0 } # 平均なので変化してない
+        assert { case1(:DISCONNECT) == nil  } # CHECKMATE専用
+        assert { case1(:CHECKMATE) == 15.0 }
+        assert { case1(:CHECKMATE) == 15.0 } # 平均なので変化してない
       end
     end
 
