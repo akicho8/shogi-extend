@@ -6,8 +6,8 @@ import { CcBehaviorInfo } from "../clock/cc_behavior_info.js"
 import dayjs from "dayjs"
 import { Gs } from "@/components/models/gs.js"
 
-const ARASHI_THRESHOLD = 3 // 荒らし判定閾値
-const ARASHI_RE_RATE   = 2 // 1/n の確率で反応する
+const ARASHI_THRESHOLD = 3  // 荒らし判定閾値
+const ARASHI_RE_RATE   = 10 // 1/n の確率で反応する
 
 export const mod_chat_ai_trigger_rule = {
   data() {
