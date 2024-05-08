@@ -1,5 +1,5 @@
 # AllRuleImporter.new(user_key: "alice", page_max: 3).run
-
+# ~/src/shogi-extend/experiment/swars/all_rule_importer.rb
 module Swars
   module Importer
     class AllRuleImporter
