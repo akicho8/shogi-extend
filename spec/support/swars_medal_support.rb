@@ -14,17 +14,9 @@ module SwarsMedalSupport
     600
   end
 
-  # 2手1組としてn手分sec秒ずつ指す
-  def csa_seq_generate3(n, sec)
-    n.times.flat_map do |i|
-      seconds = life - (i * sec.seconds)
-      [["+5958OU", seconds], ["-5152OU", seconds], ["+5859OU", seconds], ["-5251OU", seconds]]
-    end
-  end
-
   # 先手は居玉
   def csa_seq_generate6(n)
-    [["+2858HI", life], ["-5152OU", life], ["+5828HI", life], ["-5251OU", life]].cycle.take(n)
+    
   end
 
   # 先手居飛車でN手の棋譜を生成

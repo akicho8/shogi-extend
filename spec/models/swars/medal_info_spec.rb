@@ -95,7 +95,8 @@ module Swars
 
     describe "居玉勝ちマン" do
       before do
-        Battle.create!(csa_seq: csa_seq_generate6(50)) do |e|
+        csa_seq = KifuGenerator.generate_n(50, hand_list: ["+2858HI", "-5152OU", "+5828HI", "-5251OU"])
+        Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: user)
         end
       end
