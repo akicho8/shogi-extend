@@ -386,6 +386,7 @@ export default {
   },
   mounted() {
     this.chart_create()
+    this.zoom_key_change()
   },
   watch: {
     "TheShow.viewpoint": {
@@ -568,6 +569,9 @@ export default {
     // 拡縮を変更したときに呼ぶ
     zoom_key_change_handle() {
       this.$sound.play_click()
+      this.zoom_key_change()
+    },
+    zoom_key_change() {
       if (this.TheShow.time_chart_zoom_info.key === "zoom_plus") {
         // 拡大
         const ticks = this._chart_config.options.scales.yAxes[0].ticks
