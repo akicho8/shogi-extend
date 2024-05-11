@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/akicho8/bioshogi.git
-  revision: 4cd6fffdfd9029915c7732b8740b39030c9112da
+  revision: f739d1a5abc387c83435789e59752859133c673a
   branch: main
   specs:
-    bioshogi (0.0.10)
+    bioshogi (0.0.11)
       actionview
       activesupport (>= 7.1.0)
       color
@@ -122,7 +122,7 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     bcrypt (3.1.18)
-    bigdecimal (3.1.7)
+    bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
@@ -235,7 +235,7 @@ GEM
     httparty (0.21.0)
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    i18n (1.14.4)
+    i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -282,7 +282,7 @@ GEM
     msgpack (1.7.1)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    multipart-post (2.4.0)
+    multipart-post (2.4.1)
     mutex_m (0.2.0)
     mysql2 (0.5.6)
     net-imap (0.4.4)
@@ -299,11 +299,11 @@ GEM
     net-ssh (7.1.0)
     nio4r (2.5.9)
     nkf (0.1.2)
-    nokogiri (1.16.3-arm64-darwin)
+    nokogiri (1.16.4-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.3-x86_64-darwin)
+    nokogiri (1.16.4-x86_64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.3-x86_64-linux)
+    nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.9)
       faraday (>= 0.17.3, < 3.0)
@@ -416,7 +416,7 @@ GEM
       railties (>= 5.2)
     retryable (3.0.5)
     rexml (3.2.5)
-    rmagick (5.4.4)
+    rmagick (6.0.0)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     rspec (3.13.0)
