@@ -46,11 +46,12 @@ export const mod_search = {
     // ↓この方法だと同じURLでもアクセスする
     // a(@click="TheApp.interactive_search({query: new_query})") {{name}}
     interactive_search(params) { // private
-      this.$sound.play_click()
       if (this.$fetchState.pending) {
-        this.toast_ng("連打すんな")
+        this.debug_alert("interactive_search の処理中に interactive_search が再度呼ばれている")
         return
       }
+
+      this.$sound.play_click()
       const new_params = {...this.$route.query, ...params} // フィルターなどでは query を上書きする。またはなにもしない。
       if (Number(new_params.page || 0) <= 1) {
         delete new_params.page
