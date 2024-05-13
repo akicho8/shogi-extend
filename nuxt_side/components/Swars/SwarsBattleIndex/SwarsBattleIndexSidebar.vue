@@ -52,9 +52,6 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
                 :class="[{'has-text-weight-bold': base.per_info.per === e.per}, e.key]"
                 )
 
-          template(v-if="development_p")
-            b-menu-item.is_active_unset.vs_user_modal_handle(@click="base.vs_user_modal_handle" label="相手で絞る" :disabled="menu_item_disabled")
-
         b-menu-list(label="まとめて取得")
           b-menu-item.is_active_unset.swars_direct_download_handle(
             label="ダウンロード"

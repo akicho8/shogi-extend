@@ -62,7 +62,6 @@ import { mod_tiresome             } from "./mod_tiresome.js"
 import { mod_per                  } from "./mod_per.js"
 import { mod_sidebar              } from "./mod_sidebar.js"
 import { mod_storage              } from "./mod_storage.js"
-import { mod_vs_user              } from "./mod_vs_user.js"
 
 import { ExternalAppInfo } from "@/components/models/external_app_info.js"
 import { ZipDlInfo       } from "@/components/models/zip_dl_info.js"
@@ -88,7 +87,6 @@ export default {
     mod_help,
     mod_default_key,
     mod_storage,
-    mod_vs_user,
   ],
 
   data() {

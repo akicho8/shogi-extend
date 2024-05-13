@@ -235,20 +235,6 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         assert_var_eq(:records_length, 1)
       end
     end
-
-    describe "相手で絞る" do
-      it "サイドバーから変更する" do
-        visit2 "/swars/search", query: "YamadaTaro"
-        global_menu_open
-        find(".vs_user_modal_handle").click
-        within(".VsUserModal") do
-          find("input").set("DevUser1")
-          find(".apply_handle").click
-        end
-        assert_no_selector(".VsUserModal")
-        assert_var_eq(:records_length, 1)
-      end
-    end
   end
 
   describe "まとめて取得" do
