@@ -29,17 +29,16 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
       {
         key: "対局を盛り上げる",
         command_fn: (context, params) => {
-          if (context.order_enable_p) {
-            // const teams = Location.values.map(location => {
-            //   const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
-            //   const names = members.map(e => context.user_call_name(e.from_user_name))
-            //   const names_str = names.join("と")
-            //   // return `${names_str}の${location.name}チーム`
-            //   // return `${names_str}チーム`
-            //   return `${names_str}`
-            // }).join("対")
-            // return `${teams}の対局が開始されました。盛り上げてください`
+          if (!context.order_enable_p) {
             return `対局が開始されました。盛り上げてください。`
+          } else {
+            const teams = Location.values.map(location => {
+              const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
+              const names = members.map(e => context.user_call_name(e.from_user_name))
+              const names_str = names.join("と、")
+              return `${names_str}チーム`
+            }).join("対")
+            return `${teams}の対局が開始されました。観戦者の立場で特定の人を応援したり、将棋の嘘の格言を(嘘とバレないように)一言添えたりして、自由に盛り上げてください。`
           }
         },
       },
