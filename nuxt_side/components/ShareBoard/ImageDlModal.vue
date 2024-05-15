@@ -1,7 +1,11 @@
 <template lang="pug">
 .modal-card
   .modal-card-head
-    .modal-card-title 画像ダウンロード
+    .modal-card-title
+      | 画像ダウンロード
+      template(v-if="SB.debug_mode_p")
+        | ({{SB.image_dl_success_count}})
+
     SbColorThemeDropdown
 
     b-dropdown.image_size_key_dropdown(v-model="SB.image_size_key" @active-change="e => e && $sound.play_click()" position="is-bottom-left" @change="SB.image_size_key_change_handle")

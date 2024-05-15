@@ -2,6 +2,11 @@ import ImageDlModal from "./ImageDlModal.vue"
 import { ImageSizeInfo } from "./models/image_size_info.js"
 
 export const mod_image_dl = {
+  data() {
+    return {
+      image_dl_success_count: 0,        // 正常にダウンロードができた場合にインクリメントしていく
+    }
+  },
   methods: {
     image_dl_modal_handle() {
       this.sidebar_p = false
@@ -30,8 +35,9 @@ export const mod_image_dl = {
     },
 
     image_dl_run() {
-      window.location.href = this.SB.image_dl_preview_url({disposition: "attachment"})
-      this.SB.al_share_puts("画像ダウンロード")
+      window.location.href = this.image_dl_preview_url({disposition: "attachment"})
+      this.al_share_puts("画像ダウンロード")
+      this.image_dl_success_count += 1
     },
   },
 
