@@ -202,8 +202,16 @@ export const mod_order_main = {
         return _.sortBy(this.member_infos, e => {
           return this.user_name_to_initial_turn(e.from_user_name) ?? this.member_infos.length
         })
+      } else {
+        return this.member_infos
       }
-      return this.member_infos
+    },
+
+    // 対局に参加しているメンバー一覧(順不同)
+    versus_member_infos() {
+      if (this.order_enable_p) {
+        return this.member_infos.filter(e => this.user_name_to_initial_turn(e.from_user_name))
+      }
     },
 
     // 黒・白・観戦のグループでユーザー配列を返す
