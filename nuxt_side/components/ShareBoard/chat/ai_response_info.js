@@ -32,19 +32,22 @@ export class AiResponseInfo extends ApplicationMemoryRecord {
           if (!context.order_enable_p) {
             return `対局が開始されました。盛り上げてください。`
           } else {
-            // const teams = Location.values.map(location => {
-            //   const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
-            //   const names = members.map(e => context.user_call_name(e.from_user_name))
-            //   const names_str = names.join("と、")
-            //   return `${names_str}チーム`
-            // }).join("対")
-            // return `${teams}の対局が開始されました。観戦者の立場で特定の人を応援したり、将棋の嘘の格言を(嘘とバレないように)一言添えたりして、自由に盛り上げてください。`
-
-            if (context.versus_member_infos) {
-              const member_info = _.sample(context.versus_member_infos)
-              if (member_info) {
-                const call_name = context.user_call_name(member_info.from_user_name)
-                return `対局が開始されました。${call_name}に将棋の嘘の格言を(嘘とバレないように)アドバイスしてください。`
+            if (true) {
+              const teams = Location.values.map(location => {
+                const members = context.visible_member_groups[location.key] || [] // order_enable_p が有効なときにしか取れないので注意
+                const names = members.map(e => context.user_call_name(e.from_user_name))
+                const names_str = names.join("と、")
+                return `${names_str}チーム`
+              }).join("対")
+              return `${teams}の対局が開始されました。観戦者の立場で特定の人を応援したり、将棋の嘘の格言を(嘘とバレないように)一言添えたりして、自由に盛り上げてください。`
+            }
+            if (false) {
+              if (context.versus_member_infos) {
+                const member_info = _.sample(context.versus_member_infos)
+                if (member_info) {
+                  const call_name = context.user_call_name(member_info.from_user_name)
+                  return `対局が開始されました。${call_name}に将棋の嘘の格言を(嘘とバレないように)アドバイスしてください。`
+                }
               }
             }
           }
