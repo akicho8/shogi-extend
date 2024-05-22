@@ -350,18 +350,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000031) do
     t.bigint "preset_id", null: false, comment: "手合割"
     t.bigint "rule_id", null: false, comment: "持ち時間"
     t.bigint "final_id", null: false, comment: "結末"
-    t.index ["accessed_at"], name: "index_swars_battles_on_accessed_at"
-    t.index ["battled_at"], name: "index_swars_battles_on_battled_at"
+    t.index ["accessed_at"],   name: "index_swars_battles_on_accessed_at"
+    t.index ["battled_at"],    name: "index_swars_battles_on_battled_at"
     t.index ["critical_turn"], name: "index_swars_battles_on_critical_turn"
-    t.index ["final_id"], name: "index_swars_battles_on_final_id"
-    t.index ["key"], name: "index_swars_battles_on_key", unique: true
+    t.index ["final_id"],      name: "index_swars_battles_on_final_id"
+    t.index ["key"],           name: "index_swars_battles_on_key", unique: true
     t.index ["outbreak_turn"], name: "index_swars_battles_on_outbreak_turn"
-    t.index ["preset_id"], name: "index_swars_battles_on_preset_id"
-    t.index ["rule_id"], name: "index_swars_battles_on_rule_id"
-    t.index ["start_turn"], name: "index_swars_battles_on_start_turn"
-    t.index ["turn_max"], name: "index_swars_battles_on_turn_max"
-    t.index ["win_user_id"], name: "index_swars_battles_on_win_user_id"
-    t.index ["xmode_id"], name: "index_swars_battles_on_xmode_id"
+    t.index ["preset_id"],     name: "index_swars_battles_on_preset_id"
+    t.index ["rule_id"],       name: "index_swars_battles_on_rule_id"
+    t.index ["start_turn"],    name: "index_swars_battles_on_start_turn"
+    t.index ["turn_max"],      name: "index_swars_battles_on_turn_max"
+    t.index ["win_user_id"],   name: "index_swars_battles_on_win_user_id"
+    t.index ["xmode_id"],      name: "index_swars_battles_on_xmode_id"
   end
 
   create_table "swars_crawl_reservations", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|

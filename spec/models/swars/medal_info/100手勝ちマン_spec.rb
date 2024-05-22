@@ -7,7 +7,7 @@ module Swars
       Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
         e.memberships.build(user: user, judge_key: :win)
       end
-      user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"100手勝ちマン")
+      user.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"100手勝ちマン")
     end
 
     it "works" do

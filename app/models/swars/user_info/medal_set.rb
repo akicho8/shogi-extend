@@ -1,6 +1,6 @@
 module Swars
   module UserInfo
-    class MedalList
+    class MedalSet
       cattr_accessor(:threshold) { 0.7 }
 
       attr_reader :user_info
@@ -96,7 +96,7 @@ module Swars
       end
 
       # ボトルネックを探すときに使う
-      # tp Swars::User.find_by!(user_key: "SugarHuuko").user_info.medal_list.time_stats
+      # tp Swars::User.find_by!(user_key: "SugarHuuko").user_info.medal_set.time_stats
       def time_stats(sort: true)
         av = MedalInfo.collect { |e|
           ms = Benchmark.ms { instance_eval(&e.if_cond) }

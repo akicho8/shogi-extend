@@ -12,8 +12,8 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.all_tag_ratio_for("新嬉野流")           == 1.0 }
-        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
+        assert { user.user_info.medal_set.all_tag_ratio_for("新嬉野流")           == 1.0 }
+        assert { user.user_info.medal_set.win_and_all_tag_ratio_for("新米長玉") == 0.0 }
       end
     end
 
@@ -21,7 +21,7 @@ module Swars
       def case1
         Battle.create! { |e| e.memberships.build(user: user, judge_key: :lose) }
         Battle.create! { |e| e.memberships.build(user: user, judge_key: :win)  } # 2戦目勝ったけど分母は負け数なので結果は変わらない
-        user.user_info.medal_list.defeated_tag_counts
+        user.user_info.medal_set.defeated_tag_counts
       end
 
       it "works" do
@@ -31,7 +31,7 @@ module Swars
 
     describe "レコードが0件" do
       it "works" do
-        assert { user.user_info.medal_list.win_and_all_tag_ratio_for("新米長玉") == 0 }
+        assert { user.user_info.medal_set.win_and_all_tag_ratio_for("新米長玉") == 0 }
       end
     end
 
@@ -41,7 +41,7 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.to_a }
+        assert { user.user_info.medal_set.to_a }
       end
     end
 
@@ -56,8 +56,8 @@ module Swars
       end
 
       it "works" do
-        assert { @black.user_info.medal_list.all_tag_ratio_for("パックマン戦法") == 0           }
-        assert { @white.user_info.medal_list.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
+        assert { @black.user_info.medal_set.all_tag_ratio_for("パックマン戦法") == 0           }
+        assert { @white.user_info.medal_set.win_and_all_tag_ratio_for("パックマン戦法") == 1.0 }
       end
     end
 
@@ -68,7 +68,7 @@ module Swars
             e.memberships.build(user: user, judge_key: win_or_lose)
           end
         end
-        user.user_info.medal_list.win_lose_streak_max_hash
+        user.user_info.medal_set.win_lose_streak_max_hash
       end
 
       it "works" do

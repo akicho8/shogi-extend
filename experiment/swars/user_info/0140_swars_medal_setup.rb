@@ -29,8 +29,8 @@ Swars::Battle.create! do |e|
   e.memberships.build(user: user2)
 end
 
-tp user1.user_info.medal_list.to_debug_hash
-tp user1.user_info.medal_list.to_a
+tp user1.user_info.medal_set.to_debug_hash
+tp user1.user_info.medal_set.to_a
 tp user1.user_info.to_hash
 
 # >> |---------------------------------+-------------------------------------------------------------------------------------|
@@ -71,7 +71,7 @@ tp user1.user_info.to_hash
 # >> |               rules_hash | {:ten_min=>{:rule_name=>"10分", :grade_name=>"30級"}, :three_min=>{:rule_name=>"3分", :grade_name=>nil}, :ten_sec=>{:rule_name=>"10秒", :grade_name=>nil}}                                                                                                                                                                           |
 # >> |             judge_counts | {"win"=>3, "lose"=>0}                                                                                                                                                                                                                                                                                                                |
 # >> |               judge_keys | ["win", "win", "win"]                                                                                                                                                                                                                                                                                                                |
-# >> |               medal_list | [{:message=>"居飛車党", :method=>"raw", :name=>"⬆️", :type=>nil}, {:message=>"嬉野流で勝った", :method=>"raw", :name=>"↗️", :type=>nil}, {:message=>"3連勝した", :method=>"raw", :name=>"🍡", :type=>nil}, {:message=>"千日手があった", :method=>"raw", :name=>"🍌", :type=>nil}]                                                |
+# >> |               medal_set | [{:message=>"居飛車党", :method=>"raw", :name=>"⬆️", :type=>nil}, {:message=>"嬉野流で勝った", :method=>"raw", :name=>"↗️", :type=>nil}, {:message=>"3連勝した", :method=>"raw", :name=>"🍡", :type=>nil}, {:message=>"千日手があった", :method=>"raw", :name=>"🍌", :type=>nil}]                                                |
 # >> |               debug_hash | {"引き分けを除く対象サンプル数"=>3, "勝ち数"=>3, "負け数"=>0, "勝率"=>1.0, "引き分け率"=>0.25, "切れ負け率(分母:負け数)"=>nil, "切断率(分母:負け数)"=>nil, "居飛車率"=>1.0, "居玉勝率"=>0.0, "アヒル囲い率"=>0.0, "嬉野流率"=>0.0, "棋風"=>{:rarity_key_SSR=>0.0, :rarity_key_SR=>0.0, :rarity_key_R=>1.0, :rarity_key_N=>0.0}, "... |
 # >> | win_lose_streak_max_hash | {"win"=>3, "lose"=>0}                                                                                                                                                                                                                                                                                                                |
 # >> |           every_day_list | [{:battled_on=>Fri, 10 May 2024, :day_type=>nil, :judge_counts=>{"win"=>1, "lose"=>0}, :all_tags=>nil}, {:battled_on=>Thu, 09 May 2024, :day_type=>nil, :judge_counts=>{"win"=>1, "lose"=>0}, :all_tags=>nil}, {:battled_on=>Sat, 01 Jan 2000, :day_type=>:info,...                                                                  |

@@ -46,11 +46,11 @@ module Swars
           hash[:judge_keys] = current_scope.limit(current_ox_max).s_pluck_judge_key.reverse # limitは上書きできる
 
           # かなり遅い
-          hash[:medal_list] = medal_list.to_a
+          hash[:medal_set] = medal_set.to_a
 
           if Rails.env.local?
-            hash[:debug_hash] = medal_list.to_debug_hash
-            hash[:win_lose_streak_max_hash] = medal_list.win_lose_streak_max_hash
+            hash[:debug_hash] = medal_set.to_debug_hash
+            hash[:win_lose_streak_max_hash] = medal_set.win_lose_streak_max_hash
           end
 
           ################################################################################
@@ -75,8 +75,8 @@ module Swars
         @judge_counts ||= judge_counts_wrap(ids_scope.s_group_judge_key.count)
       end
 
-      def medal_list
-        @medal_list ||= MedalList.new(self)
+      def medal_set
+        @medal_set ||= MedalSet.new(self)
       end
 
       ################################################################################ win, lose

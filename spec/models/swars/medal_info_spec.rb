@@ -17,7 +17,7 @@ module Swars
           end
         end
         {black: black, white: white}.inject({}) { |a, (k, v)|
-          a.merge(k => v.user_info.medal_list.matched_medal_infos.collect(&:key).collect(&:to_s))
+          a.merge(k => v.user_info.medal_set.matched_medal_infos.collect(&:key).collect(&:to_s))
         }
       end
 
@@ -85,7 +85,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切断マン")
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"切断マン")
       end
 
       it "works" do
@@ -103,7 +103,7 @@ module Swars
       end
 
       it "works" do
-        assert { user.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"居玉勝ちマン") }
+        assert { user.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"居玉勝ちマン") }
       end
     end
 
@@ -115,7 +115,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"切れ負けマン")
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"切れ負けマン")
       end
 
       it "works" do
@@ -135,7 +135,7 @@ module Swars
       end
 
       it "works" do
-        assert { @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
+        assert { @black.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"1手詰じらしマン") }
       end
     end
 
@@ -147,7 +147,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "works" do
@@ -163,7 +163,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key).include?(:"絶対投了しないマン")
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key).include?(:"絶対投了しないマン")
       end
 
       it "works" do
@@ -184,7 +184,7 @@ module Swars
           e.memberships.build(user: @white, judge_key: :win)
         end
 
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "works" do
@@ -202,7 +202,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "works" do
@@ -219,7 +219,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "works" do
@@ -236,7 +236,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "works" do
@@ -255,7 +255,7 @@ module Swars
         @black = User.create!
         @white = User.create!
         Battle.create_with_members!([@black, @white], xmode: xmode)
-        @black.user_info.medal_list.matched_medal_infos.collect(&:key)
+        @black.user_info.medal_set.matched_medal_infos.collect(&:key)
       end
 
       it "友対マン" do

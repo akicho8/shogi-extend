@@ -3,7 +3,7 @@ require File.expand_path('../../../../config/environment', __FILE__)
 
 # user = Swars::User.create!
 # Swars::Battle.create! { |e| e.memberships.build(user: user) }
-# tp user.user_info.medal_list.to_debug_hash
+# tp user.user_info.medal_set.to_debug_hash
 
 # tp Swars::Battle
 # >> |---------------------------------+---------------------------------------|

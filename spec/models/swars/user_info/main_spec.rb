@@ -35,7 +35,7 @@ module Swars
       end
 
       it "メダル" do
-        assert { @hash["medal_list"] == [{"message" => "居飛車党", "method" => "raw", "name" => "⬆️", "type" => nil}, {"message" => "嬉野流で勝った", "method" => "raw", "name" => "↗️", "type" => nil}] }
+        assert { @hash["medal_set"] == [{"message" => "居飛車党", "method" => "raw", "name" => "⬆️", "type" => nil}, {"message" => "嬉野流で勝った", "method" => "raw", "name" => "↗️", "type" => nil}] }
       end
     end
 
