@@ -19,6 +19,7 @@ module Swars
         has_many :users, through: :memberships
 
         scope :win_lose_only, -> { where.not(win_user_id: nil) } # 勝敗が必ずあるもの
+        scope :draw_only,     -> { where(win_user_id: nil) }     # 引き分けのもの
         scope :newest_order, -> { order(battled_at: :desc) }     # 新しい順
 
         custom_belongs_to :rule,  ar_model: Rule,  st_model: RuleInfo,  default: "10分"

@@ -72,7 +72,8 @@ module Swars
         assert { w("レグスペ").include?("レグスペマン")                     }
         assert { b("入玉").include?("入玉勝ちマン")                         }
         assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
-        assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン")    }
+        # assert { test(["鬼殺し"], :win)[:white].include?("鬼殺されマン")    }
+        assert { b("鬼殺し").include?("鬼殺しマン")                         }
       end
     end
 

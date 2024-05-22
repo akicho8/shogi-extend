@@ -3,25 +3,37 @@ module Swars
     class MedalList
       cattr_accessor(:threshold) { 0.7 }
 
-      attr_accessor :user_info
+      attr_reader :user_info
 
       delegate *[
-        :user,
+        # win, lose
+        :current_scope,
         :ids_scope,
+        :win_scope,
+        :win_count,
+        :lose_scope,
+        :lose_count,
+        :win_lose_count,
+        :win_lose_draw_count,
+
+        # draw
+        :draw_current_scope,
+        :draw_current_scope_ids,
+        :draw_ids_scope,
+        :draw_scope,
+        :draw_count,
+
+        # others
+        :user,
+        :condition_add,
         :real_count,
         :params,
         :at_least_value,
         :judge_counts,
         :sample_max,
-        :current_scope,
-        :condition_add,
         :all_tag_names_hash_or_zero,
         :all_tag_names_hash,
         :fraud_battle_count,
-        :win_scope,
-        :win_count,
-        :lose_scope,
-        :lose_count,
         :turn_max_gteq,
         :xmode_counts,
       ], to: :user_info
@@ -81,6 +93,24 @@ module Swars
         #   return MedalInfo
         # end
         MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:medal_debug] }
+      end
+
+      # ボトルネックを探すときに使う
+      # tp Swars::User.find_by!(user_key: "SugarHuuko").user_info.medal_list.time_stats
+      def time_stats(sort: true)
+        av = MedalInfo.collect { |e|
+          ms = Benchmark.ms { instance_eval(&e.if_cond) }
+          [ms, e]
+        }
+        if sort
+          av = av.sort_by { |ms, e| -ms }
+        end
+        av.collect do |ms, e|
+          {
+            "メダル名" => e.name,
+            "時間"     => "%.2f" % ms,
+          }
+        end
       end
 
       ################################################################################ 戦法・戦術を使った回数
@@ -180,6 +210,7 @@ module Swars
 
       ################################################################################ 相手に指定のタグを使われて自分が負けた
 
+      # かなり遅いのでやめる
       def defeated_tag_counts
         @defeated_tag_counts ||= yield_self do
           s = user.op_memberships   # 相手が
@@ -319,40 +350,43 @@ module Swars
       ################################################################################ 引き分け
 
       # 開幕千日手数
+      # 12手で引き分けにした回数 / 対局数
       def start_draw_ratio
         @start_draw_ratio ||= yield_self do
-          if new_scope_count.positive?
-            s = new_scope
-            s = s.joins(:battle => :final).where(Final.arel_table[:key].eq("DRAW_SENNICHI"))
+          if win_lose_draw_count.positive?
+            s = draw_scope
+            s = s.joins(:battle)
             s = s.where(Battle.arel_table[:turn_max].eq(12))
             c = s.count
-            c.fdiv(new_scope_count)
+            c.fdiv(win_lose_draw_count)
           end
         end
       end
 
       # 引き分け率
+      # 50手以上で引き分けた回数 / 対局数
       def draw_ratio
         @draw_ratio ||= yield_self do
-          if new_scope_count.positive?
-            s = new_scope
-            s = s.joins(:battle => :final).where(Final.arel_table[:key].eq("DRAW_SENNICHI"))
+          if win_lose_draw_count.positive?
+            s = draw_scope
+            s = s.joins(:battle)
+            s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
             c = s.count
-            c.fdiv(new_scope_count)
+            c.fdiv(win_lose_draw_count)
           end
         end
       end
 
       # 引き分けを含むため current_scope は使わずに作り直す
       # ただし必須の条件は入れる
-      def new_scope
-        s = user.memberships
-        s = condition_add(s)
-      end
+      # def new_scope
+      #   s = user.memberships
+      #   s = condition_add(s)
+      # end
 
-      def new_scope_count
-        @new_scope_count ||= new_scope.count
-      end
+      # def new_scope_count
+      #   @new_scope_count ||= new_scope.count
+      # end
 
       ################################################################################
 

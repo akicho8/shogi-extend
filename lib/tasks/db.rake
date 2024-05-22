@@ -4,12 +4,13 @@ task "my:db:production_db_backup_to_local_and_db_sync" do
   Rake::Task["my:db:db_sync"].invoke
 end
 
-# rake my:db_sync
+# rake my:db:db_sync
 desc "db/shogi_web_production.sql.gz をローカルの development にコピーする"
 task "my:db:db_sync" do
-  system "zcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
+  system "gzcat db/shogi_web_production.sql.gz | mysql -u root shogi_web_development"
 end
 
+# rake my:db:production_db_backup_to_local_and_db_sync TABLES=swars_battles,swars_crawl_reservations,swars_finals,swars_grades,swars_membership_extras,swars_memberships,swars_profiles,swars_rules,swars_styles,swars_users,swars_xmodes,taggings,tags
 desc "本番サーバーの production の DB をローカルにバックアップする"
 task "my:db:production_db_backup_to_local" do
   tables = (ENV["TABLES"] || "").split(",").join(" ")

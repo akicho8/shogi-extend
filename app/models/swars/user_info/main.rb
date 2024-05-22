@@ -45,6 +45,7 @@ module Swars
           # 直近勝敗リスト
           hash[:judge_keys] = current_scope.limit(current_ox_max).s_pluck_judge_key.reverse # limitは上書きできる
 
+          # かなり遅い
           hash[:medal_list] = medal_list.to_a
 
           if Rails.env.local?
@@ -55,6 +56,8 @@ module Swars
           ################################################################################
 
           hash[:every_day_list]       = every_day_list
+
+          # 以下はわりと速い
           hash[:every_grade_list]     = every_grade_list
           hash[:every_my_attack_list] = every_my_attack_list
           hash[:every_vs_attack_list] = every_vs_attack_list
@@ -76,25 +79,29 @@ module Swars
         @medal_list ||= MedalList.new(self)
       end
 
+      ################################################################################ win, lose
+
       def current_scope
         s = user.memberships
-
-        # if v = params[:query].presence
-        #   raise v.inspect
-        #   scope = Battle.search(user: user, query_info: QueryInfo.parse(v))
-        #   battle_ids = scope.collect(&:id)
-        #   s = s.joins(:battle).where(battle_id: battle_ids)
-        # end
-
         s = win_lose_only_condition_add(s)
+      end
+
+      def current_scope_ids
+        @current_scope_ids ||= current_scope.ids
       end
 
       # all_tag_counts を使う場合 current_scope の条件で引いたもので id だけを取得してSQLを作り直した方が若干速い
       # また group するときも order が入っていると MySQL では group に order のカラムも含めないと、
       # 正しく動かなくてわけわからんんことになるのでそれの回避
       def ids_scope
-        Membership.where(id: current_scope.ids) # 再スコープ化
+        Membership.where(id: current_scope_ids) # 再スコープ化
       end
+
+      def win_lose_count
+        @win_lose_count ||= ids_scope.count
+      end
+
+      # win
 
       def win_scope
         @win_scope ||= ids_scope.s_where_judge_key_eq("win")
@@ -104,6 +111,8 @@ module Swars
         @win_count ||= win_scope.count
       end
 
+      # lose
+
       def lose_scope
         @lose_scope ||= ids_scope.s_where_judge_key_eq("lose")
       end
@@ -111,6 +120,35 @@ module Swars
       def lose_count
         @lose_count ||= lose_scope.count
       end
+
+      ################################################################################ draw
+
+      def draw_current_scope
+        s = user.memberships
+        s = draw_only_condition_add(s)
+      end
+
+      def draw_current_scope_ids
+        @draw_current_scope_ids ||= draw_current_scope.ids
+      end
+
+      def draw_ids_scope
+        Membership.where(id: draw_current_scope_ids)
+      end
+
+      def draw_scope
+        @draw_scope ||= draw_ids_scope
+      end
+
+      def draw_count
+        @draw_count ||= draw_scope.count
+      end
+
+      def win_lose_draw_count
+        @win_lose_draw_count ||= win_lose_count + draw_count
+      end
+
+      ################################################################################
 
       # 最低でも2以上にすること
       def turn_max_gteq
@@ -166,6 +204,11 @@ module Swars
       def win_lose_only_condition_add(s)
         s = condition_add(s)
         s = s.merge(Battle.win_lose_only) # 勝敗が必ずあるもの
+      end
+
+      def draw_only_condition_add(s)
+        s = condition_add(s)
+        s = s.merge(Battle.draw_only) # 引き分けのもの
       end
 
       # 必須の条件
@@ -677,6 +720,7 @@ module Swars
         ["win", "lose"].inject({}) { |a, e| a.merge(e => (group[e] || []).count) }
       end
 
+      # FIXME: おそい
       def rules_hash
         group = current_scope.includes(:battle).group_by { |e| e.battle.rule_key }
 

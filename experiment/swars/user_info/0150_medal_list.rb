@@ -1,12 +1,11 @@
 #!/usr/bin/env ruby
-require File.expand_path('../../../config/environment', __FILE__)
+require File.expand_path('../../../../config/environment', __FILE__)
 
-user = Swars::User.create!
-Swars::Battle.create! { |e| e.memberships.build(user: user) }
+# user = Swars::User.create!
+# Swars::Battle.create! { |e| e.memberships.build(user: user) }
+# tp user.user_info.medal_list.to_debug_hash
 
-tp user.user_info.medal_list.to_debug_hash
-
-tp Swars::Battle
+# tp Swars::Battle
 # >> |---------------------------------+---------------------------------------|
 # >> |                    アヒル囲い率 | 0.0                                   |
 # >> |                  タグ平均偏差値 | 55.23933333333334                     |
