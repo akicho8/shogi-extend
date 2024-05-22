@@ -1,0 +1,27 @@
+require File.expand_path('../../../config/environment', __FILE__)
+
+def _(n = 1)
+  "%.2f ms" % Benchmark.ms { n.times { yield } }
+end
+
+def sql(&block)
+  if block
+    begin
+      logger = ActiveRecord::Base.logger
+      ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+      yield
+    ensure
+      ActiveRecord::Base.logger = logger
+    end
+  else
+    ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
+  end
+end
+
+def s(...)
+  sql(...)
+end
+
+def l(...)
+  sql(...)
+end

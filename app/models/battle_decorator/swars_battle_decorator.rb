@@ -22,7 +22,7 @@ module BattleDecorator
       end
 
       s += battle.note_tag_list.grep(/(^相|入玉|駒柱|対)/)
-      # s = s.grep_v(/対抗型/)
+      # s = s.grep_v(/対抗形/)
       if battle.xmode == Swars::Xmode.fetch("指導")
         s << "指導対局"
       end

@@ -1,8 +1,8 @@
 <template lang="pug">
 .SwarsUserShowTabContent0Day.boxes(v-if="TheApp.tab_index === 0")
-  template(v-for="(row, i) in TheApp.info.every_day_list")
+  template(v-for="(row, i) in TheApp.info.day_items")
     nuxt-link.box.one_box.two_column(
-      :key="`every_day_list/${i}`"
+      :key="`day_items/${i}`"
       :to="TheApp.date_search_path(row)"
       @click.native="$sound.play_click()"
       )

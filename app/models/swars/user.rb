@@ -1,5 +1,11 @@
 module Swars
   class User < ApplicationRecord
+    class << self
+      def [](key)
+        find_by(key: key)
+      end
+    end
+
     alias_attribute :key, :user_key
 
     has_one :profile, dependent: :destroy, autosave: true # プロフィール
@@ -42,8 +48,8 @@ module Swars
       user_key
     end
 
-    def user_info(params = {})
-      UserInfo::Main.new(self, params)
+    def user_stat(params = {})
+      UserStat::Main.new(self, params)
     end
 
     concerning :GradeMethods do

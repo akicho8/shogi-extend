@@ -1,5 +1,5 @@
 # 最終棋神判定
-# ~/src/shogi-extend/experiment/swars/ai_cop/judgement.rb
+# ~/src/shogi-extend/workbench/swars/ai_cop/judgement.rb
 module Swars
   module AiCop
     module Judgement

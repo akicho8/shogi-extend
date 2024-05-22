@@ -1,0 +1,31 @@
+# frozen-string-literal: true
+
+module Swars
+  module UserStat
+    class RageStat < Base
+      delegate *[
+        :l_scope,
+      ], to: :@user_stat
+
+      # 1手詰を焦らして悦に入った回数
+      def positive_count
+        if count.positive?
+          count
+        end
+      end
+
+      def count
+        @count ||= scope.count
+      end
+
+      private
+
+      def scope
+        s = l_scope
+        s = s.joins(:battle => :final)
+        s = s.where(Battle.arel_table[:turn_max].gteq(14))
+        s = s.where(Final.arel_table[:key].eq("DISCONNECT"))
+      end
+    end
+  end
+end

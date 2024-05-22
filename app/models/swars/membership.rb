@@ -41,6 +41,7 @@ module Swars
     include TagMethods
     include ::Swars::MembershipTimeChartMethods
     include AiCop::MembershipMethods
+    include UserStat::MembershipGlobalExtension
 
     custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
 

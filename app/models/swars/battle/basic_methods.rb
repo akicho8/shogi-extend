@@ -2,6 +2,10 @@ module Swars
   class Battle
     concern :BasicMethods do
       class_methods do
+        def [](key)
+          find_by(key: key)
+        end
+
         def create_with_members!(users, attributes = {})
           create!(attributes) do |e|
             users.each do |user|
@@ -51,7 +55,7 @@ module Swars
 
           if Rails.env.local?
             unless key
-              if Rails.env.teet?
+              if Rails.env.test?
                 self.key = BattleKeyGenerator.new(seed: self.class.count).generate.to_s
               else
                 self.key = SecureRandom.hex

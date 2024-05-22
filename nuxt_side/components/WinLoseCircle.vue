@@ -4,7 +4,7 @@
     .level-item.has-text-centered.win.win_lose_counts
       .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
         .heading WIN
-        .title {{info.judge_counts["win"]}}
+        .title {{win}}
     .level-item.has-text-centered.doughnut.is-narrow
       .chart_container
         //- view-source:https://www.chartjs.org/samples/latest/charts/doughnut.html
@@ -21,7 +21,7 @@
     .level-item.has-text-centered.lose.win_lose_counts
       .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('lose')")
         .heading LOSE
-        .title {{info.judge_counts["lose"]}}
+        .title {{lose}}
 </template>
 
 <script>
@@ -67,7 +67,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import chart_mixin from '@/components/models/chart_mixin.js'
 
-// http://localhost:3000/w?query=kinakom0chi&user_info_show=true
+// http://localhost:3000/w?query=kinakom0chi&user_stat_show=true
 export default {
   mixins: [chart_mixin],
 
@@ -102,17 +102,17 @@ export default {
   methods: {
     click_handle(judge_key) {
       if (this.click_func) {
-        this.click_func(JudgeInfo.fetch(judge_key))
+        this.click_func(JudgeInfo.fetch(judge_key), this.info.click_func_options || {})
       }
     }
   },
 
   computed: {
-    win()           { return this.info.judge_counts.win  },
-    lose()          { return this.info.judge_counts.lose },
-    win_lose_pair() { return [this.win, this.lose]       },
-    total()         { return this.win + this.lose        },
-    rate()          { return this.win / this.total       },
+    win()           { return this.info.judge_counts.win ?? 0    },
+    lose()          { return this.info.judge_counts.lose ?? 0   },
+    win_lose_pair() { return [this.win, this.lose] },
+    total()         { return this.win + this.lose  },
+    rate()          { return this.win / this.total },
 
     rate_human() {
       if (this.total === 0) {

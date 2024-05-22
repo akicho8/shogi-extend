@@ -43,6 +43,7 @@ module Swars
     include CoreMethods
     include BasicMethods
     include StatMethods
+    include Stat2Methods
     include HelperMethods
     include SearchMethods
   end

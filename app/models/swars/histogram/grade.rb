@@ -1,6 +1,6 @@
 # 将棋ウォーズ棋力分布
 #
-# experiment/swars/棋力ヒストグラム.rb
+# workbench/swars/棋力ヒストグラム.rb
 # app/models/swars/histogram/grade.rb
 # nuxt_side/pages/swars/histograms/grade.vue
 #

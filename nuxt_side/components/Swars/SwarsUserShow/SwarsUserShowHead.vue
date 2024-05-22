@@ -8,8 +8,8 @@
 
   // 段級位
   .is-flex.rule_container
-    template(v-for="(row, key) in TheApp.info.rules_hash")
-      nuxt-link.rule_one.is-clickable(tag="span" :to="TheApp.search_path({'持ち時間': row.rule_name})" :key="key" @click.native="$sound.play_click()")
+    template(v-for="row in TheApp.info.rule_items")
+      nuxt-link.rule_one.is-clickable(tag="span" :to="TheApp.search_path({'持ち時間': row.rule_name})" :key="row.rule_key" @click.native="$sound.play_click()")
         span.rule_name.is-size-7.has-text-grey
           | {{row.rule_name}}
         span.grade_name.is-size-5
@@ -29,6 +29,8 @@
         b-icon(icon="checkbox-blank-circle" size="is-small" type="is-danger")
       span.has-text-success(v-if="judge_key === 'lose'")
         b-icon(icon="close" size="is-small" type="is-success")
+      span.has-text-success(v-if="judge_key === 'draw'")
+        b-icon(icon="minus" size="is-small" type="is-success")
 
   SwarsUserShowHeadMedal
 </template>

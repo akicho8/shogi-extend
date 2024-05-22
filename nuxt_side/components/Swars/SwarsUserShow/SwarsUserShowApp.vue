@@ -77,7 +77,7 @@ export default {
 
   fetchOnServer: false,
   fetch() {
-    return this.$axios.$get("/api/swars/user_info", {params: this.axios_get_params}).then(e => this.info = e)
+    return this.$axios.$get("/api/swars/user_stat", {params: this.axios_get_params}).then(e => this.info = e)
   },
 
   mounted() {

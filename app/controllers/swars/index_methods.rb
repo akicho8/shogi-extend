@@ -46,7 +46,7 @@ module Swars
           if params[:try_fetch] == "true"
             import_process_any
           end
-          render json: current_swars_user.user_info(params.to_unsafe_h.to_options)
+          render json: current_swars_user.user_stat(params.to_unsafe_h.to_options)
         end
       end
     end

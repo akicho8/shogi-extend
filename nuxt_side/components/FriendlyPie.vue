@@ -1,5 +1,5 @@
 <template lang="pug">
-.FriendlyPie.is-unselectable(:class="`pie_type_${info.pie_type}`")
+.FriendlyPie.is-unselectable(:class="`pie_type_${info.chart_options.pie_type}`")
   canvas(ref="main_canvas")
 </template>
 
@@ -25,7 +25,7 @@ const CHART_CONFIG_DEFAULT = {
   // https://misc.0o0o.org/chartjs-doc-ja/charts/doughnut.html
   options: {
     cutoutPercentage: 0,       // ドーナッツの円の切り抜き度合(0〜100)
-    rotation: Math.PI * 0.5,   // 真下を0とする
+    rotation: Math.PI * 0.5,  // 開始点 -0.5:真上 0.5:真下
     // aspectRatio: 3.0, // 大きいほど横長方形になる
     aspectRatio: 3.0, // 大きいほど横長方形になる。円=正方形としたいので1.0
     circumference: 2 * Math.PI * 1.0, // 全体の円
@@ -53,7 +53,7 @@ const CHART_CONFIG_DEFAULT = {
 
 import chart_mixin from '@/components/models/chart_mixin.js'
 
-// http://localhost:3000/w?query=kinakom0chi&user_info_show=true
+// http://localhost:3000/w?query=kinakom0chi&user_stat_show=true
 export default {
   mixins: [
     chart_mixin,
@@ -76,10 +76,10 @@ export default {
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2({count: this.data_count})
     // this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type2()
 
-    if (this.info.pie_type === "is_many_values") {
+    if (this.info.chart_options.pie_type === "is_many_values") {
       this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type0({diff: 45, count: this.data_count})
     }
-    if (this.info.pie_type === "is_pair_values") {
+    if (this.info.chart_options.pie_type === "is_pair_values") {
       this._chart_config.data.datasets[0].backgroundColor = PaletteGenerator.palette_type3()
       // this._chart_config.options.legend.display = false
     }

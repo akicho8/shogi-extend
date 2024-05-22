@@ -7,6 +7,18 @@ class JudgeInfo
   ]
 
   class << self
+    def zero_default_hash
+      @zero_default_hash ||= each_with_object({}) { |e, m|
+        m[e.key] = 0
+      }.freeze
+    end
+
+    def zero_default_hash_wrap(hash)
+      zero_default_hash.merge(hash.symbolize_keys)
+    end
+  end
+
+  class << self
     def lookup(v)
       if v.respond_to?(:downcase)
         v = v.downcase

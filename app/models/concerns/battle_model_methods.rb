@@ -313,5 +313,3 @@ module BattleModelMethods
     end
   end
 end
-# ~> -:2:in `<module:BattleModelMethods>': uninitialized constant BattleModelMethods::ActiveSupport (NameError)
-# ~> 	from -:1:in `<main>'

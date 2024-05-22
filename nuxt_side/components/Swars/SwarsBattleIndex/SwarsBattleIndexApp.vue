@@ -236,7 +236,7 @@ export default {
     LayoutInfo()     { return LayoutInfo                         },
     layout_info()    { return LayoutInfo.fetch(this.layout_key) },
 
-    user_info_query() { return Gs.presence(Gs.query_compact(this.query)) },
+    user_stat_query() { return Gs.presence(Gs.query_compact(this.query)) },
   },
 }
 </script>

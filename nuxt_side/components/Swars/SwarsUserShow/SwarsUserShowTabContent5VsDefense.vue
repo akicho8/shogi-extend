@@ -1,8 +1,8 @@
 <template lang="pug">
 .SwarsUserShowTabContent5VsDefense.boxes(v-if="TheApp.tab_index === 5")
-  template(v-for="(row, i) in TheApp.info.every_vs_defense_list")
+  template(v-for="(row, i) in TheApp.info.vs_defense_items")
     nuxt-link.box.one_box.two_column(
-      :key="`every_vs_defense_list/${i}`"
+      :key="`matrix_stat.vs_defense_items/${i}`"
       :to="TheApp.vs_tag_search_path(row)"
       @click.native="$sound.play_click()"
       )

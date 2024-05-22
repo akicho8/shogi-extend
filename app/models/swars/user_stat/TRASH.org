@@ -1,0 +1,27 @@
+module Swars
+  module UserStat
+    class KyusenStat < Base
+      # delegate *[
+      #   :ids_scope,
+      #   :all_tag,
+      # ], to: :@user_stat
+      #
+      # def to_chart
+      #   a = scope.where(Battle.arel_table[:outbreak_turn].lt(Battle::OUTBREAK_TURN_AVG)).count
+      #   b = scope.where(Battle.arel_table[:outbreak_turn].gteq(Battle::OUTBREAK_TURN_AVG)).count
+      #   [
+      #     { name: "急戦",   value: a },
+      #     { name: "持久戦", value: b },
+      #   ]
+      # end
+      #
+      # private
+      #
+      # def scope
+      #   s = ids_scope
+      #   s = s.joins(:battle)
+      #   s = s.where(Battle.arel_table[:turn_max].gteq(14))
+      # end
+    end
+  end
+end

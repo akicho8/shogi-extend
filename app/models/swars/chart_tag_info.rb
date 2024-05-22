@@ -1,3 +1,5 @@
+# Nuxt でなかったころに使っていた残骸
+
 module Swars
   class ChartTagInfo
     include ApplicationMemoryRecord
@@ -6,7 +8,7 @@ module Swars
       { key: "furibisha", name: "振り飛車",    },
 
       { key: "ai_ibisha", name: "相居飛車",    },
-      { key: "taikoukei", name: "対抗型",      },
+      { key: "taikoukei", name: "対抗形",      },
       { key: "aifuri",    name: "相振り",      },
     ]
 

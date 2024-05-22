@@ -10,7 +10,7 @@ module Swars
           e.memberships.build(user: user, judge_key: judge_key)
         end
       end
-      user.user_info.medal_set.matched_medal_infos.collect(&:name)
+      user.user_stat.medal_stat.matched_medal_infos.collect(&:name)
     end
 
     it "連勝" do

@@ -176,7 +176,7 @@ const CHART_CONFIG_DEFAULT = {
 import chart_mixin from '@/components/models/chart_mixin.js'
 import { BarPresetInfo } from "./models/bar_preset_info.js"
 
-// http://localhost:3000/w?query=kinakom0chi&user_info_show=true
+// http://localhost:3000/w?query=kinakom0chi&user_stat_show=true
 export default {
   mixins: [
     chart_mixin,
@@ -234,13 +234,13 @@ export default {
     // tategaki_p が有効なら縦書きにする
     // "成銀" --> ["成", "銀"]
     name_decorate(str) {
-      if (this.info.tategaki_p) {
+      if (this.info.chart_options.tategaki_p) {
         str = [...str]
       }
       return str
     },
     tooltip_value_decorator(value) {
-      if (this.info.value_format === "percentage") {
+      if (this.info.chart_options.value_format === "percentage") {
         return (value * 100).toFixed(2) + " %"
       } else {
         return `${value}`
@@ -250,7 +250,7 @@ export default {
       if (value === 0) {
         return ""
       } else {
-        if (this.info.value_format === "percentage") {
+        if (this.info.chart_options.value_format === "percentage") {
           return (value * 100).toFixed(2)
         } else {
           return `${value}`

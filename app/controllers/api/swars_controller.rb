@@ -92,10 +92,10 @@ module Api
     # end
 
     # プレイヤー情報
-    concerning :UserInfoMethods do
-      # http://localhost:3000/api/swars/user_info?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
-      def user_info
-        render json: Swars::User.find_by!(user_key: params[:user_key]).user_info(params.to_unsafe_h.to_options)
+    concerning :UserStatMethods do
+      # http://localhost:3000/api/swars/user_stat?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
+      def user_stat
+        render json: Swars::User.find_by!(user_key: params[:user_key]).user_stat(params.to_unsafe_h.to_options)
       end
     end
   end

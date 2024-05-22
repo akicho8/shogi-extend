@@ -15,7 +15,7 @@
 /public/packs
 /public/packs-test
 
-/experiment/_*
+/workbench/_*
 /_*
 node_modules
 yarn-debug.log*

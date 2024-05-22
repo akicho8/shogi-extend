@@ -52,9 +52,9 @@ Rails.application.routes.draw do
       end
     end
 
-    # http://localhost:3000/w?query=DevUser1&user_info_show=true
+    # http://localhost:3000/w?query=DevUser1&user_stat_show=true
     if !path
-      if request.params[:user_info_show]
+      if request.params[:user_stat_show]
         user_key = request.params[:query]
         path = "/swars/users/#{user_key}"
       end
@@ -120,7 +120,7 @@ Rails.application.routes.draw do
     get "swars/download_config_fetch(.:format)", to: "swars#download_config_fetch"
     get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
     get "swars/distribution_ratio(.:format)",    to: "swars#distribution_ratio"
-    get "swars/user_info(.:format)",             to: "swars#user_info"
+    get "swars/user_stat(.:format)",             to: "swars#user_stat"
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
 

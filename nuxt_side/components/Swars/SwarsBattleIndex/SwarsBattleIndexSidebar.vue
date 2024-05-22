@@ -6,7 +6,7 @@ b-sidebar.is-unselectable.SwarsBattleIndexSidebar(fullheight right overlay v-mod
     .mt-4
       b-menu
         b-menu-list(label="Action")
-          b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.xi.current_swars_user_key}, query: {query: base.user_info_query}}" @click.native="$sound.play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
+          b-menu-item.is_active_unset.swars_users_key_handle(tag="nuxt-link" :to="{name: 'swars-users-key', params: {key: base.xi.current_swars_user_key}, query: {query: base.user_stat_query}}" @click.native="$sound.play_click()" label="プレイヤー情報" :disabled="menu_item_disabled")
 
           b-menu-item.swars_custom_search_handle(
             label="カスタム検索"

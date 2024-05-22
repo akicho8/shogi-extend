@@ -1,0 +1,20 @@
+require "../setup"
+user = Swars::User["SugarHuuko"]
+_ { user.user_stat.toryo_stat.to_chart } # => "134.14 ms"
+_ { user.user_stat.toryo_stat.max      } # => "22.10 ms"
+s { user.user_stat.toryo_stat.to_chart } # => [{:name=>"10秒未満", :value=>7}]
+s { user.user_stat.toryo_stat.max      } # => 5
+# >>   Swars::Membership Ids (14.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
+# >>   ↳ app/models/swars/user_stat/base_scope_methods.rb:31:in `scope_ids'
+# >>   Swars::Membership Ids (0.7ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (98271894, 98271896, 98271899, 98271900, 98271902, 98271905, 98271907, 98271909, 98271911, 98271913, 98303204, 98212763, 98212766, 98212768, 98212769, 98212771, 98212774, 98208928, 98212775, 98212778, 98263994, 98263995, 98263998, 98264000, 98264001, 98264003, 98264005, 98264007, 98196869, 98196871, 98196872, 98196874, 98196876, 98196878, 98196881, 98196885, 98196899, 98196901, 98196903, 98196909, 98196911, 98196913, 98196915, 98191817, 97909143, 97909144, 97904863, 97904485, 97904487, 97904490) AND `judges`.`key` = 'lose' AND `swars_battles`.`turn_max` >= 14 AND `swars_finals`.`key` = 'TORYO'
+# >>   ↳ app/models/swars/user_stat/toryo_stat.rb:70:in `block in scope'
+# >>   Swars::Membership Maximum (0.2ms)  SELECT MAX(`swars_memberships`.`think_last`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (97904487, 98196885, 98212763, 98212766, 98271894, 98271899, 98271902)
+# >>   ↳ app/models/swars/user_stat/toryo_stat.rb:50:in `max'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, think_last DIV 10 AS `think_last_div_10` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (97904487, 98196885, 98212763, 98212766, 98271894, 98271899, 98271902) AND `swars_memberships`.`think_last` < 60 GROUP BY think_last DIV 10 ORDER BY count_all desc
+# >>   ↳ app/models/swars/user_stat/toryo_stat.rb:20:in `to_chart'
+# >>   Swars::Membership Ids (13.6ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
+# >>   ↳ app/models/swars/user_stat/base_scope_methods.rb:31:in `scope_ids'
+# >>   Swars::Membership Ids (0.7ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (98271894, 98271896, 98271899, 98271900, 98271902, 98271905, 98271907, 98271909, 98271911, 98271913, 98303204, 98212763, 98212766, 98212768, 98212769, 98212771, 98212774, 98208928, 98212775, 98212778, 98263994, 98263995, 98263998, 98264000, 98264001, 98264003, 98264005, 98264007, 98196869, 98196871, 98196872, 98196874, 98196876, 98196878, 98196881, 98196885, 98196899, 98196901, 98196903, 98196909, 98196911, 98196913, 98196915, 98191817, 97909143, 97909144, 97904863, 97904485, 97904487, 97904490) AND `judges`.`key` = 'lose' AND `swars_battles`.`turn_max` >= 14 AND `swars_finals`.`key` = 'TORYO'
+# >>   ↳ app/models/swars/user_stat/toryo_stat.rb:70:in `block in scope'
+# >>   Swars::Membership Maximum (0.2ms)  SELECT MAX(`swars_memberships`.`think_last`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (97904487, 98196885, 98212763, 98212766, 98271894, 98271899, 98271902)
+# >>   ↳ app/models/swars/user_stat/toryo_stat.rb:50:in `max'

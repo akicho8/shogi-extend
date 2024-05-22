@@ -16,12 +16,16 @@ export const mod_search = {
     win_lose_click_handle(judge_info) {
       this.win_lose_click_shared_handle(judge_info)
     },
-    ibisha_win_lose_click_handle(judge_info) {
-      this.win_lose_click_shared_handle(judge_info, {tag: "居飛車"})
+    win_lose_with_tag_click_handle(judge_info, tag) {
+      Gs.assert(Gs.present_p(tag), "Gs.present_p(tag)")
+      this.win_lose_click_shared_handle(judge_info, {tag: tag})
     },
-    furibisha_win_lose_click_handle(judge_info) {
-      this.win_lose_click_shared_handle(judge_info, {tag: "振り飛車"})
-    },
+    // ibi_win_lose_click_handle(judge_info) {
+    //   this.win_lose_click_shared_handle(judge_info, {tag: "居飛車"})
+    // },
+    // furi_win_lose_click_handle(judge_info) {
+    //   this.win_lose_click_shared_handle(judge_info, {tag: "振り飛車"})
+    // },
     win_lose_click_shared_handle(judge_info, params = {}) {
       this.$sound.play_click()
       this.$router.push(this.search_path({"勝敗": judge_info.name, ...params}))
