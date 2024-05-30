@@ -1,8 +1,9 @@
 class Fix32 < ActiveRecord::Migration[6.0]
   def up
-    tag = ActsAsTaggableOn::Tag.find_by(name: "対抗形")
-    if tag.taggings.count.zero?
-      tag.destroy!
+    if tag = ActsAsTaggableOn::Tag.find_by(name: "対抗形")
+      if tag.taggings.count.zero?
+        tag.destroy!
+      end
     end
 
     if tag = ActsAsTaggableOn::Tag.find_by(name: "対抗型")
