@@ -56,9 +56,9 @@ module Swars
       end
 
       it "works" do
-        assert { case1(KifuGenerator.ibisha_pattern)    == [1, 0] }
-        assert { case1(KifuGenerator.furibisha_pattern) == [1, 1] }
-        assert { case1(KifuGenerator.furibisha_pattern) == [1, 2] }
+        assert { case1(KifuGenerator.ibis_pattern)    == [1, 0] }
+        assert { case1(KifuGenerator.furi_pattern) == [1, 1] }
+        assert { case1(KifuGenerator.furi_pattern) == [1, 2] }
       end
     end
 

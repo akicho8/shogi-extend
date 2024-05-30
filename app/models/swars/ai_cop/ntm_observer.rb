@@ -11,16 +11,14 @@
 #
 module Swars
   module AiCop
-    class NoizyTwoMax
+    class NtmObserver < Observer
       ONE      = 1
       TWO      = 2
       INTERVAL = 5
 
       class << self
-        def from(list)
-          object = new
-          list.each { |e| object.update(e) }
-          object.max
+        def max(...)
+          parse(...).max
         end
       end
 
@@ -29,6 +27,12 @@ module Swars
       def initialize
         @mode = :idol
         @max = 0
+      end
+
+      def attributes_for_model
+        {
+          :ai_noizy_two_max => max,
+        }
       end
 
       def update(value)

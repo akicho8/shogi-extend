@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_03_000031) do
-  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_000034) do
+  create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=InnoDB ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -424,6 +424,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_03_000031) do
     t.integer "ai_wave_count", comment: "棋神使用模様個数"
     t.float "ai_two_freq", comment: "2手差し頻出度"
     t.integer "ai_noizy_two_max", comment: "22221パターンを考慮した2の並び個数最大値"
+    t.float "ai_gear_freq", comment: "121頻出度"
     t.index ["battle_id", "location_id"], name: "memberships_sbri_lk", unique: true
     t.index ["battle_id", "op_user_id"], name: "memberships_bid_ouid", unique: true
     t.index ["battle_id", "user_id"], name: "memberships_sbri_sbui", unique: true

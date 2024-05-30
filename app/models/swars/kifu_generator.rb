@@ -6,10 +6,10 @@
 # Swars::KifuGenerator.generate_n(2, last: 1)                         # => [["+5958OU", 600], ["-5152OU", 599]]
 # Swars::KifuGenerator.kiremake                                       # => [["+5958OU", 540], ["-5152OU", 540], ["+5859OU", 480], ["-5251OU", 480], ["+5958OU", 420], ["-5152OU", 420], ["+5859OU", 360], ["-5251OU", 360], ["+5958OU", 300], ["-5152OU", 300], ["+5859OU", 240], ["-5251OU", 240], ["+5958OU", 180], ["-5152OU", 180], ["+5859OU", 120], ["-5251OU", 120], ["+5958OU", 60], ["-5152OU", 60], ["+5859OU", 0], ["-5251OU", 0]]
 #
-# Swars::KifuGenerator.ibisha_pattern                                 # => [["+2726FU", 600], ["-8384FU", 600]]
-# Swars::KifuGenerator.ibisha_pattern(4)                              # => [["+2726FU", 600], ["-8384FU", 600], ["+5958OU", 600], ["-5152OU", 600]]
-# Swars::KifuGenerator.furibisha_pattern                              # => [["+2878HI", 600], ["-8232HI", 600]]
-# Swars::KifuGenerator.furibisha_pattern(4)                           # => [["+2878HI", 600], ["-8232HI", 600], ["+5958OU", 600], ["-5152OU", 600]]
+# Swars::KifuGenerator.ibis_pattern                                 # => [["+2726FU", 600], ["-8384FU", 600]]
+# Swars::KifuGenerator.ibis_pattern(4)                              # => [["+2726FU", 600], ["-8384FU", 600], ["+5958OU", 600], ["-5152OU", 600]]
+# Swars::KifuGenerator.furi_pattern                              # => [["+2878HI", 600], ["-8232HI", 600]]
+# Swars::KifuGenerator.furi_pattern(4)                           # => [["+2878HI", 600], ["-8232HI", 600], ["+5958OU", 600], ["-5152OU", 600]]
 #
 # ~/src/shogi-extend/experiment/swars/kifu_generator.rb
 module Swars
@@ -38,6 +38,14 @@ module Swars
         fraud_pattern(size: 14 * LocationInfo.count)
       end
 
+      def gear_pattern(options = {})
+        options = {
+          :time_list => [1, 2],
+          :size      => 50 * LocationInfo.count,
+        }.merge(options)
+        generate(**options)
+      end
+
       def outbreak_pattern(options = {})
         options = {
           :hand_list => OUTBREAK_LIST,
@@ -46,15 +54,15 @@ module Swars
         generate(**options)
       end
 
-      def ibisha_pattern(n = 2, options = {})
+      def ibis_pattern(n = 2, options = {})
         av = []
         av += generate({size: 2, hand_list: ["+2726FU", "-8384FU"]}.merge(options))
         av += generate_n(n)
         av.take(n)
       end
 
-      def furibisha_pattern(n = 2, options = {})
-        ibisha_pattern(n, {hand_list: ["+2878HI", "-8232HI"]}.merge(options))
+      def furi_pattern(n = 2, options = {})
+        ibis_pattern(n, {hand_list: ["+2878HI", "-8232HI"]}.merge(options))
       end
 
       def generate(...)

@@ -9,11 +9,11 @@ module Swars
       assert { KifuGenerator.generate_n(2, last: 1)                      == [["+5958OU", 600], ["-5152OU", 599]] }
     end
 
-    it "ibisha_pattern / furibisha_pattern" do
-      assert { KifuGenerator.ibisha_pattern       == [["+2726FU", 600], ["-8384FU", 600]] }
-      assert { KifuGenerator.ibisha_pattern(4)    == [["+2726FU", 600], ["-8384FU", 600], ["+5958OU", 600], ["-5152OU", 600]] }
-      assert { KifuGenerator.furibisha_pattern    == [["+2878HI", 600], ["-8232HI", 600]] }
-      assert { KifuGenerator.furibisha_pattern(4) == [["+2878HI", 600], ["-8232HI", 600], ["+5958OU", 600], ["-5152OU", 600]] }
+    it "ibis_pattern / furi_pattern" do
+      assert { KifuGenerator.ibis_pattern       == [["+2726FU", 600], ["-8384FU", 600]] }
+      assert { KifuGenerator.ibis_pattern(4)    == [["+2726FU", 600], ["-8384FU", 600], ["+5958OU", 600], ["-5152OU", 600]] }
+      assert { KifuGenerator.furi_pattern    == [["+2878HI", 600], ["-8232HI", 600]] }
+      assert { KifuGenerator.furi_pattern(4) == [["+2878HI", 600], ["-8232HI", 600], ["+5958OU", 600], ["-5152OU", 600]] }
     end
   end
 end

@@ -17,8 +17,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(KifuGenerator.ibisha_pattern(13)) == nil }
-        assert { case1(KifuGenerator.ibisha_pattern(14)) == { win: 1, lose: 0 } }
+        assert { case1(KifuGenerator.ibis_pattern(13)) == nil }
+        assert { case1(KifuGenerator.ibis_pattern(14)) == { win: 1, lose: 0 } }
       end
     end
 
@@ -37,8 +37,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(KifuGenerator.furibisha_pattern(13)) == nil }
-        assert { case1(KifuGenerator.furibisha_pattern(14)) == { win: 1, lose: 0 } }
+        assert { case1(KifuGenerator.furi_pattern(13)) == nil }
+        assert { case1(KifuGenerator.furi_pattern(14)) == { win: 1, lose: 0 } }
       end
     end
   end

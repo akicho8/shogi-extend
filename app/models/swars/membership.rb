@@ -195,6 +195,11 @@ module Swars
       self.attributes = AiCop::Analyzer.analyze(list).attributes_for_model
     end
 
+    def ai_columns_update!
+      ai_columns_set
+      save!
+    end
+
     concerning :MedalMethods do
       def medal_info
         MembershipMedalInfo.find { |e| e.if_cond.call(self) } or raise "must not happen"
