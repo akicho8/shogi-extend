@@ -1,4 +1,4 @@
-class Fix38 < ActiveRecord::Migration[6.0]
+class Fix39 < ActiveRecord::Migration[6.0]
   def up
     Swars::Membership.reset_column_information
     # Swars::Membership.update_all("ai_gear_freq = NULL")
