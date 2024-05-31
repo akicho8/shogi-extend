@@ -87,29 +87,38 @@ module BattleModelMethods
   def parser_exec_after(info)
   end
 
-  # def remake(options = {})
-  #   retryable_options = {
-  #     :on           => StandardError, # ActiveRecord::Deadlocked,
-  #     :tries        => 10,
-  #     :sleep        => 1,
-  #     :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
-  #     :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
-  #     :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
-  #   }
-  #   Retryable.retryable(retryable_options) do
-  #     remake_witout_retry(options)
-  #   end
-  # end
-
   def remake(options = {})
-    b = taggings.collect { |e| e.tag.name }.sort
-    parser_exec
-    save!
-    memberships.each(&:save!)   # 更新で設定したタグを保存するため
-    a = taggings.collect { |e| e.tag.name }.sort
-    updated = a != b # タグの変更は e.changed? では関知できない
-    print(updated ? "U" : ".")
+    retryable_options = {
+      :on           => StandardError,
+      :tries        => 5,
+      :sleep        => 1,
+      :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
+      :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
+      :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
+    }
+    begin
+      Retryable.retryable(retryable_options) do
+        remake_fast(options)
+      end
+    rescue => error
+      puts error
+    end
+  end
+
+  def remake_without_retry(options = {})
+    tag_names = -> { memberships.collect { |e| e.taggings.collect { |e| e.tag.name } } }
+    before = tag_names.call
+    remake_fast(options)
+    after = tag_names.call
+    updated = before != after
+    print updated ? "U" : "."
     updated
+  end
+
+  def remake_fast(options = {})
+    parser_exec
+    memberships.each(&:save!)
+    save!
   end
 
   # def header_detail(h)
