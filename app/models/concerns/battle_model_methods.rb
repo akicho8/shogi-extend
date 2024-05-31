@@ -87,21 +87,21 @@ module BattleModelMethods
   def parser_exec_after(info)
   end
 
-  def remake(options = {})
-    retryable_options = {
-      :on           => StandardError, # ActiveRecord::Deadlocked,
-      :tries        => 10,
-      :sleep        => 1,
-      :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
-      :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
-      :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
-    }
-    Retryable.retryable(retryable_options) do
-      remake_witout_retry(options)
-    end
-  end
+  # def remake(options = {})
+  #   retryable_options = {
+  #     :on           => StandardError, # ActiveRecord::Deadlocked,
+  #     :tries        => 10,
+  #     :sleep        => 1,
+  #     :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
+  #     :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
+  #     :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
+  #   }
+  #   Retryable.retryable(retryable_options) do
+  #     remake_witout_retry(options)
+  #   end
+  # end
 
-  def remake_witout_retry(options = {})
+  def remake(options = {})
     b = taggings.collect { |e| e.tag.name }.sort
     parser_exec
     save!
