@@ -10,7 +10,7 @@ module Swars
       mattr_accessor(:drop_total_threshold) { 15  } # 2. N回以上代指しすれば棋神確定
       mattr_accessor(:turn_max_threshold)   { 50  } # 3. (先後合わせて)N手以上の対局 かつ↓
       mattr_accessor(:two_freq_threshold)   { 0.6 } #    M以上の割合で 2 があると棋神確定 (最大1.0)
-      mattr_accessor(:gear_freq_threshold)  { 0.3 } # 4. 121の角が0.3以上(自分の指し手の60%が121ならと同じ)
+      mattr_accessor(:gear_freq_threshold)  { 0.22 } # 4. 121の角が0.22以上(自分の指し手の60%が121ならと同じ)
 
       # 検索一覧時の個別判定
       def fraud?(membership)
