@@ -6,12 +6,13 @@ class Fix43 < ActiveRecord::Migration[6.0]
           AppLog.important("#{user_key} start")
           if user = Swars::User.find_by(key: user_key)
             s = user.battles.limit(200).order(id: :desc)
-            s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/05/31 17:45")))
+            s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/05/31 18:00")))
             s.in_batches.each_record(&:remake)
           end
           AppLog.important("#{user_key} done")
         end
       end
+      raise "OK"
 
       # say_with_time "all" do
       #   s = Swars::Membership
