@@ -1,4 +1,4 @@
-class Fix41 < ActiveRecord::Migration[6.0]
+class Fix42 < ActiveRecord::Migration[6.0]
   def up
     unless Rails.env.local?
       Swars::Membership.reset_column_information
@@ -32,7 +32,9 @@ class Fix41 < ActiveRecord::Migration[6.0]
         say_with_time "#{user_key}" do
           AppLog.important("#{user_key} start")
           if user = Swars::User.find_by(key: user_key)
-            user.battles.limit(200).order(id: :desc).in_batches.each_record do |e|
+            s = user.battles.limit(200).order(id: :desc)
+            s = s.where(Swars::Battle.arel_table[:updated_at].lt(Time.parse("2024/05/31 12:00")))
+            s.in_batches.each_record do |e|
               e.remake
             end
           end
