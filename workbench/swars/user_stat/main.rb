@@ -42,8 +42,8 @@ _ { pp user.user_stat.to_hash }    # => "347.12 ms"
 # >> | 連勝                                 |  1.55 |                                                                                                                                                                                                                                                                        12 |
 # >> | 相居飛車                             |  1.36 | {:judge_counts=>{"lose"=>5, "win"=>26, "draw"=>1}}                                                                                                                                                                                                                        |
 # >> | 振り飛車                             |  1.35 |                                                                                                                                                                                                                                                                           |
-# >> | 対戦相手との段級差(平均)             |  1.17 |                                                                                                                                                                                                                                                                     -1.48 |
-# >> | 長考 (最長)                          |  0.94 |                                                                                                                                                                                                                                                                        71 |
+# >> | 対戦相手との段級差 (平均)             |  1.17 |                                                                                                                                                                                                                                                                     -1.48 |
+# >> | 最長考                          |  0.94 |                                                                                                                                                                                                                                                                        71 |
 # >> | 平均思考                             |  0.70 |                                                                                                                                                                                                                                                                       1.5 |
 # >> | 右玉度                               |  0.56 | [{:name=>"右玉", :value=>4}, {:name=>"その他", :value=>46}]                                                                                                                                                                                                               |
 # >> | 投了までの心の準備 (平均)            |  0.46 |                                                                                                                                                                                                                                                                       2.0 |
@@ -536,7 +536,7 @@ _ { pp user.user_stat.to_hash }    # => "347.12 ms"
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:second},
 # >>     :body=>5},
-# >>    {:name=>"長考 (最長)",
+# >>    {:name=>"最長考",
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:second},
 # >>     :body=>71},
@@ -567,7 +567,7 @@ _ { pp user.user_stat.to_hash }    # => "347.12 ms"
 # >>       {:name=>"圭", :value=>0.0035650623885918},
 # >>       {:name=>"杏", :value=>0.0035650623885918},
 # >>       {:name=>"と", :value=>0.004901960784313725}]},
-# >>    {:name=>"対戦相手との段級差(平均)",
+# >>    {:name=>"対戦相手との段級差 (平均)",
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:raw},
 # >>     :body=>-1.48},
@@ -893,7 +893,7 @@ _ { pp user.user_stat.to_hash }    # => "347.12 ms"
 # >>     "chart_type"=>"simple",
 # >>     "chart_options"=>{"simple_type"=>"second"},
 # >>     "body"=>nil},
-# >>    {"name"=>"長考 (最長)",
+# >>    {"name"=>"最長考",
 # >>     "chart_type"=>"simple",
 # >>     "chart_options"=>{"simple_type"=>"second"},
 # >>     "body"=>5},
@@ -926,7 +926,7 @@ _ { pp user.user_stat.to_hash }    # => "347.12 ms"
 # >>       {"name"=>"圭", "value"=>0.0},
 # >>       {"name"=>"杏", "value"=>0.0},
 # >>       {"name"=>"と", "value"=>0.0}]},
-# >>    {"name"=>"対戦相手との段級差(平均)",
+# >>    {"name"=>"対戦相手との段級差 (平均)",
 # >>     "chart_type"=>"simple",
 # >>     "chart_options"=>{"simple_type"=>"raw"},
 # >>     "body"=>0.0},

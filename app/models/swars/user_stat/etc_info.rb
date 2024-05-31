@@ -170,7 +170,7 @@ module Swars
         ################################################################################
 
         {
-          key: "長考 (最長)",
+          key: "最長考",
           chart_type: :simple,
           chart_options: {
             simple_type: :second,
@@ -208,7 +208,7 @@ module Swars
         },
 
         {
-          key: "対戦相手との段級差(平均)",
+          key: "対戦相手との段級差 (平均)",
           chart_type: :simple,
           chart_options: {
             simple_type: :raw,
