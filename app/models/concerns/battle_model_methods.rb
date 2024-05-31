@@ -89,10 +89,10 @@ module BattleModelMethods
 
   def remake(options = {})
     retryable_options = {
-      :on           => ActiveRecord::Deadlocked,
+      :on           => StandardError, # ActiveRecord::Deadlocked,
       :tries        => 10,
       :sleep        => 1,
-      :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" },
+      :ensure       => proc { |retries| puts "#{retries}回リトライして終了した" if retries.positive? },
       :exception_cb => proc { |exception| puts "exception_cb: #{exception}" },
       :log_method   => proc { |retries, exception| puts "#{retries}回目の例外: #{exception}" },
     }
