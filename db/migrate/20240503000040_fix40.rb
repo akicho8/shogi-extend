@@ -1,4 +1,4 @@
-class Fix39 < ActiveRecord::Migration[6.0]
+class Fix40 < ActiveRecord::Migration[6.0]
   def up
     Swars::Membership.reset_column_information
     # Swars::Membership.update_all("ai_gear_freq = NULL")
@@ -6,7 +6,7 @@ class Fix39 < ActiveRecord::Migration[6.0]
     Rails.application.credentials[:expert_import_user_keys].each do |user_key|
       say_with_time "#{user_key}" do
         if user = Swars::User.find_by(key: user_key)
-          user.battles.limit(nil).order(id: :desc).in_batches.each_record do |e|
+          user.battles.limit(200).order(id: :desc).in_batches.each_record do |e|
             Retryable.retryable { e.remake }
           end
         end
