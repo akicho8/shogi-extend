@@ -10,7 +10,7 @@ module Swars
       user.user_stat.note_stat.to_chart("居飛車")
     end
 
-    it "居飛車での勝敗数" do
+    it "居飛車・振り飛車での勝敗数" do
       assert { case1(KifuGenerator.furi_pattern(14)) == nil }
       assert { case1(KifuGenerator.ibis_pattern(14)) == { judge_counts: { "win" => 1 } } }
     end

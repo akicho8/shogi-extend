@@ -228,26 +228,6 @@ module Swars
       end
     end
 
-    describe "無気力マン" do
-      def case1(n, final_key)
-        @black = User.create!
-        @white = User.create!
-        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
-          e.memberships.build(user: @black, judge_key: :lose)
-          e.memberships.build(user: @white, judge_key: :win)
-        end
-        @black.user_stat.medal_stat.matched_medal_infos.collect(&:key).include?(:"無気力マン")
-      end
-
-      it "works" do
-        assert { case1(19, :TORYO)      }
-        assert { case1(19, :CHECKMATE)  }
-        assert { !case1(20, :CHECKMATE) }
-        assert { !case1(19, :TIMEOUT)   }
-        assert { !case1(20, :TIMEOUT)   }
-      end
-    end
-
     describe "対局モード" do
       def case1(xmode)
         xmode = Xmode.fetch(xmode)

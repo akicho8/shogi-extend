@@ -44,7 +44,7 @@ module Swars
 
           if Rails.env.local?
             h[:debug_hash]  = medal_stat.to_debug_hash
-            h[:streak_stat] = streak_stat.to_h
+            h[:consecutive_wins_and_losses_stat] = consecutive_wins_and_losses_stat.to_h
           end
         end
       end
@@ -52,19 +52,19 @@ module Swars
       def to_header_h
         {
           :user         => { key: user.key, ban_at: user.ban_at }, # 対象者情報
-          :rule_items   => grade_stat.to_chart,                    # ルール別最高段位
+          :rule_items   => grade_by_rules_stat.to_chart,                    # ルール別最高段位
           :judge_counts => ids_scope.total_judge_counts,           # 勝ち負け数
-          :medal_stat   => medal_stat.to_a,                        # メダル一覧
-          :judge_keys   => rjudge_stat.to_a,                       # 直近勝敗リスト
+          :medal_items  => medal_stat.to_a,                        # メダル一覧
+          :judge_keys   => recent_outcome_list_stat.to_a,                       # 直近勝敗リスト
         }
       end
 
       def to_tabs_h
         {
-          :day_items      => day_stat.to_chart, # 「日付」
+          :day_items      => daily_win_loss_list_stat.to_chart, # 「日付」
           :vs_grade_items => vs_stat.to_chart,  # 「段級」
           **matrix_stat.to_all_chart,           # 「戦型」「対攻」「囲い」「対囲」
-          :etc_items      => etc_stat.to_a,     # 「他」
+          :etc_items      => other_stat.to_a,     # 「他」
         }
       end
 
@@ -77,15 +77,15 @@ module Swars
       ################################################################################
 
       def win_tag
-        @win_tag ||= TagStat.new(self, w_scope)
+        @win_tag ||= TagStat.new(self, ids_scope.win_only)
       end
 
       def all_tag
         @all_tag ||= TagStat.new(self, ids_scope)
       end
 
-      def etc_stat
-        @etc_stat ||= EtcStat.new(self)
+      def other_stat
+        @other_stat ||= OtherStat.new(self)
       end
 
       def medal_stat
@@ -100,12 +100,12 @@ module Swars
         @rarity_stat ||= RarityStat.new(self)
       end
 
-      def migi_stat
-        @migi_stat ||= MigiStat.new(self)
+      def right_king_stat
+        @right_king_stat ||= RightKingStat.new(self)
       end
 
-      def tzone_stat
-        @tzone_stat ||= TzoneStat.new(self)
+      def match_time_period_stat
+        @match_time_period_stat ||= MatchTimePeriodStat.new(self)
       end
 
       def piece_stat
@@ -116,16 +116,16 @@ module Swars
         @note_stat ||= NoteStat.new(self)
       end
 
-      def houti_stat
-        @houti_stat ||= HoutiStat.new(self)
+      def leave_alone_stat
+        @leave_alone_stat ||= LeaveAloneStat.new(self)
       end
 
-      def streak_stat
-        @streak_stat ||= StreakStat.new(self)
+      def consecutive_wins_and_losses_stat
+        @consecutive_wins_and_losses_stat ||= ConsecutiveWinsAndLossesStat.new(self)
       end
 
-      def toryo_stat
-        @toryo_stat ||= ToryoStat.new(self)
+      def resignation_stat
+        @resignation_stat ||= ResignationStat.new(self)
       end
 
       def mate_stat
@@ -140,20 +140,20 @@ module Swars
         @turn_stat ||= TurnStat.new(self)
       end
 
-      def tavg_stat
-        @tavg_stat ||= TavgStat.new(self)
+      def average_moves_by_outcome_stat
+        @average_moves_by_outcome_stat ||= AverageMovesByOutcomeStat.new(self)
       end
 
-      def ttavg_stat
-        @ttavg_stat ||= TtavgStat.new(self)
+      def average_moves_at_resignation_stat
+        @average_moves_at_resignation_stat ||= AverageMovesAtResignationStat.new(self)
       end
 
       def matrix_stat
         @matrix_stat ||= MatrixStat.new(self)
       end
 
-      def rage_stat
-        @rage_stat ||= RageStat.new(self)
+      def checkmate_delay_enjoyment_stat
+        @checkmate_delay_enjoyment_stat ||= CheckmateDelayEnjoymentStat.new(self)
       end
 
       def mental_stat
@@ -164,12 +164,12 @@ module Swars
         @final_stat ||= FinalStat.new(self)
       end
 
-      def day_stat
-        @day_stat ||= DayStat.new(self)
+      def daily_win_loss_list_stat
+        @daily_win_loss_list_stat ||= DailyWinLossListStat.new(self)
       end
 
-      def grade_stat
-        @grade_stat ||= GradeStat.new(self)
+      def grade_by_rules_stat
+        @grade_by_rules_stat ||= GradeByRulesStat.new(self)
       end
 
       def rule_stat
@@ -184,20 +184,24 @@ module Swars
         @gdiff_stat ||= GdiffStat.new(self)
       end
 
-      def bpd_stat
-        @bpd_stat ||= BpdStat.new(self)
+      def daily_average_matches_stat
+        @daily_average_matches_stat ||= DailyAverageMatchesStat.new(self)
       end
 
       def vs_stat
         @vs_stat ||= VsStat.new(self)
       end
 
-      def mspeed_stat
-        @mspeed_stat ||= MspeedStat.new(self)
+      def mate_speed_stat
+        @mate_speed_stat ||= MateSpeedStat.new(self)
       end
 
-      def rjudge_stat
-        @rjudge_stat ||= RjudgeStat.new(self)
+      def recent_outcome_list_stat
+        @recent_outcome_list_stat ||= RecentOutcomeListStat.new(self)
+      end
+
+      def lethargy_stat
+        @lethargy_stat ||= LethargyStat.new(self)
       end
     end
   end

@@ -38,7 +38,8 @@ module Swars
           if Rails.env.local?
             # Bioshogi::Parser.parse(Bioshogi::Explain::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read).to_csa
             if !kifu_body_for_test && !tactic_key
-              self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+              # self.csa_seq ||= [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+              self.csa_seq ||= KifuGenerator.generate_n(5, rule_key: rule_key, hand_list: ["+7968GI", "-8232HI", "+5756FU", "-3334FU", "+6857GI"])
             end
 
             (LocationInfo.count - memberships.size).times do

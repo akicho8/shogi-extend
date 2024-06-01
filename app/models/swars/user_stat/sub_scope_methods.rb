@@ -1,48 +1,46 @@
 # frozen-string-literal: true
 
-# FIXME: w_scope, l_scope で分けてもそんなに速くはならない
-
 module Swars
   module UserStat
     module SubScopeMethods
       ################################################################################ win, lose
 
-      def wl_scope
-        @wl_scope ||= Membership.where(id: ids_scope.joins(:battle).merge(Battle.win_lose_only).ids)
-      end
-
-      def wl_count
-        @wl_count ||= wl_scope.count
-      end
+      # def wl_scope
+      #   @wl_scope ||= Membership.where(id: ids_scope.joins(:battle).merge(Battle.win_lose_only).ids)
+      # end
+      #
+      # def wl_count
+      #   @wl_count ||= wl_scope.count
+      # end
 
       ################################################################################ win
 
-      def w_scope
-        @w_scope ||= ids_scope.s_where_judge_key_eq(:win)
+      def win_only
+        @win_only ||= ids_scope.win_only
       end
 
-      def w_count
-        @w_count ||= w_scope.count
+      def win_count
+        @win_count ||= win_only.count
       end
 
       ################################################################################ lose
 
-      def l_scope
-        @l_scope ||= ids_scope.s_where_judge_key_eq(:lose)
+      def lose_only
+        @lose_only ||= ids_scope.lose_only
       end
 
-      def l_count
-        @l_count ||= l_scope.count
+      def lose_count
+        @lose_count ||= lose_only.count
       end
 
       ################################################################################ draw
 
-      def d_scope
-        @d_scope ||= ids_scope.s_where_judge_key_eq(:draw)
+      def draw_only
+        @draw_only ||= ids_scope.draw_only
       end
 
       def d_count
-        @d_count ||= d_scope.count
+        @d_count ||= draw_only.count
       end
 
       ################################################################################ other
@@ -50,7 +48,7 @@ module Swars
       def win_ratio
         @win_ratio ||= yield_self do
           if ids_count.positive?
-            w_count.fdiv(ids_count)
+            win_count.fdiv(ids_count)
           end
         end
       end

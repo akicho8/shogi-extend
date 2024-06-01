@@ -65,6 +65,14 @@ if defined? RSpec
       t.pattern = "spec/models/**/*_spec.rb"
       t.rspec_opts = "-f p --fail-fast --only-failures"
     end
+
+    namespace :swars do
+      desc "プレイヤー情報のテスト"
+      RSpec::Core::RakeTask.new(:user_stat) do |t|
+        t.pattern = "spec/models/swars/user_stat/*_spec.rb"
+        t.rspec_opts = "-f p"
+      end
+    end
   end
 end
 

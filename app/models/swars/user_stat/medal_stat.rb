@@ -11,11 +11,8 @@ module Swars
 
         # win, lose
         # :wl_scope,
-        :w_scope,
-        :w_count,
-        :l_scope,
-        :l_count,
-        :d_scope,
+        :win_count,
+        :lose_count,
         :d_count,
 
         # draw
@@ -33,7 +30,7 @@ module Swars
         :win_tag,
         :all_tag,
         :win_ratio,
-        :streak_stat,
+        :consecutive_wins_and_losses_stat,
       ], to: :user_stat
 
       # 最低でも2以上にすること
@@ -66,15 +63,15 @@ module Swars
       def to_debug_hash
         {
           "対象サンプル数"                  => ids_count,
-          "勝ち数"                          => w_count,
-          "負け数"                          => l_count,
+          "勝ち数"                          => win_count,
+          "負け数"                          => lose_count,
           "勝率"                            => win_ratio,
           "引き分け率"                      => draw_ratio,
           "切れ負け率(分母:負け数)"         => lose_ratio_of("TIMEOUT"),
           "切断率(分母:負け数)"             => lose_ratio_of("DISCONNECT"),
           "居飛車率"                        => all_tag.ratio(:"居飛車"),
           "振り飛車率"                      => all_tag.ratio(:"振り飛車"),
-          "居玉勝率"                        => igyoku_win_ratio,
+          "居玉勝率"                        => win_tag.ratio(:"居玉"),
           "アヒル囲い率"                    => all_tag.ratio(:"アヒル囲い"),
           "嬉野流率"                        => all_tag.ratio(:"嬉野流"),
           "棋風"                            => user_stat.rarity_stat.ratios_hash,
@@ -83,7 +80,7 @@ module Swars
           "大長考または放置率"              => long_think_ratio,
           "棋神降臨疑惑対局数"              => fraud_stat.count,
           "長考または放置率"                => short_think_ratio,
-          "最大連勝連敗"                    => streak_stat.to_h,
+          "最大連勝連敗"                    => consecutive_wins_and_losses_stat.to_h,
           "タグの重み"                      => all_tag.to_h,
         }
       end
@@ -138,20 +135,6 @@ module Swars
         end
       end
 
-      ################################################################################ 居玉勝ちマン
-
-      # 居玉で勝った率
-      def igyoku_win_ratio
-        if ids_count.positive?
-          s = w_scope
-          s = s.joins(:battle => :final)
-          s = s.where(Final.arel_table[:key].eq_any(["TORYO", "TIMEOUT", "CHECKMATE"]))
-          s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
-          s = s.tagged_with("居玉", on: :defense_tags)
-          s.count.fdiv(ids_count)
-        end
-      end
-
       ################################################################################ 1手詰じらしマン
 
       def jirasi_ratio
@@ -163,7 +146,7 @@ module Swars
 
       def teasing_count_for(rule_info)
         if t = rule_info.teasing_limit
-          s = w_scope
+          s = ids_scope.win_only
           s = s.where(Membership.arel_table[:think_last].gteq(t))
           s = s.joins(:battle => [:rule, :final])
           s = s.where(Rule.arel_table[:key].eq(rule_info.key))
@@ -183,7 +166,7 @@ module Swars
 
       def zettai_toryo_sinai_count_for(rule_info)
         if t = rule_info.long_leave_alone
-          s = l_scope
+          s = ids_scope.lose_only
           s = s.where(Membership.arel_table[:think_last].gteq(t))
           s = s.joins(:battle => [:rule, :final])
           s = s.where(Rule.arel_table[:key].eq(rule_info.key))
@@ -204,7 +187,7 @@ module Swars
 
       def taisekimachi_count_for(rule_info)
         if t = rule_info.long_leave_alone2
-          s = l_scope
+          s = ids_scope.lose_only
           s = s.where(Membership.arel_table[:think_last].not_eq(nil))
           s = s.where(Membership.arel_table[:think_max].not_eq(Membership.arel_table[:think_last]))
           s = s.where(Membership.arel_table[:think_max].gteq(t)) # 最後ではないところで長考がある
@@ -247,7 +230,7 @@ module Swars
         a = rule_info.short_leave_alone
         b = rule_info.long_leave_alone
         if a && b
-          s = l_scope
+          s = ids_scope.lose_only
           s = s.where(Membership.arel_table[:think_max].between(a...b))
           s = s.joins(:battle => :rule)
           s = s.where(Rule.arel_table[:key].eq(rule_info.key))
@@ -262,7 +245,7 @@ module Swars
       def start_draw_ratio
         @start_draw_ratio ||= yield_self do
           if ids_count.positive?
-            s = d_scope
+            s = ids_scope.draw_only
             s = s.joins(:battle)
             s = s.where(Battle.arel_table[:turn_max].eq(12))
             c = s.count
@@ -276,7 +259,7 @@ module Swars
       def draw_ratio
         @draw_ratio ||= yield_self do
           if ids_count.positive?
-            s = d_scope
+            s = ids_scope.draw_only
             s = s.joins(:battle)
             s = s.where(Battle.arel_table[:turn_max].gteq(turn_max_gteq))
             c = s.count
@@ -294,15 +277,15 @@ module Swars
       def lose_ratio_of(final_key)
         @lose_ratio_of ||= {}
         @lose_ratio_of[final_key] ||= yield_self do
-          if l_count.positive?
+          if lose_count.positive?
             if false
-              s = l_scope.joins(:battle).where(Battle.arel_table[:final_key].eq(final_key))
+              s = ids_scope.lose_only.joins(:battle).where(Battle.arel_table[:final_key].eq(final_key))
             else
-              s = l_scope.joins(:battle => :final).where(Final.arel_table[:key].eq(final_key))
+              s = ids_scope.lose_only.joins(:battle => :final).where(Final.arel_table[:key].eq(final_key))
             end
             s = s.where(Battle.arel_table[:turn_max].gteq(14))
             c = s.count
-            c.fdiv(l_count)
+            c.fdiv(lose_count)
           end
         end
       end
@@ -310,13 +293,13 @@ module Swars
       # 19手以下で投了または詰まされて負けた率 (分母: 負け数)
       def hayai_toryo
         @hayai_toryo ||= yield_self do
-          if l_count.positive?
-            s = l_scope
+          if lose_count.positive?
+            s = ids_scope.lose_only
             s = s.joins(:battle => :final)
             s = s.where(Final.arel_table[:key].eq_any(["TORYO", "CHECKMATE"]))
             s = s.where(Battle.arel_table[:turn_max].lteq(19))
             c = s.count
-            c.fdiv(l_count)
+            c.fdiv(lose_count)
           else
             0
           end
@@ -326,12 +309,12 @@ module Swars
       # 100手で勝った率
       def one_hundred_win_rate
         @one_hundred_win_rate ||= yield_self do
-          if w_count.positive?
-            s = w_scope
+          if win_count.positive?
+            s = ids_scope.win_only
             s = s.joins(:battle)
             s = s.where(Battle.arel_table[:turn_max].eq(100))
             c = s.count
-            c.fdiv(w_count)
+            c.fdiv(win_count)
           else
             0
           end

@@ -4,7 +4,7 @@ module Swars
   module UserStat
     class MateStat < Base
       delegate *[
-        :w_scope,
+        :ids_scope,
       ], to: :@user_stat
 
       # 1手詰を焦らして悦に入った回数
@@ -54,7 +54,7 @@ module Swars
       end
 
       def scope
-        s = w_scope
+        s = ids_scope.win_only
         s = s.where(Membership.arel_table[:think_last].gteq(threshold))
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq("CHECKMATE"))

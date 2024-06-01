@@ -15,19 +15,45 @@ module Swars
       end
 
       before do
-        case1("初段", "win")
-        case1("九段", "win")
-        case1("九段", "win")
-        case1("九段", "lose")
+        case1("初段", :win)
+        case1("九段", :win)
+        case1("九段", :win)
+        case1("九段", :lose)
       end
 
       it "works" do
-        result = [
-          {:grade_name=>"九段", :judge_counts=>{:win=>2, :lose=>1}, :appear_ratio=>0.75},
-          {:grade_name=>"初段", :judge_counts=>{:win=>1}, :appear_ratio=>0.25},
+        outcome = [
+          {:grade_name => "九段", :judge_counts => {:win => 2, :lose => 1}, :appear_ratio => 0.75},
+          {:grade_name => "初段", :judge_counts => {:win => 1,           }, :appear_ratio => 0.25},
         ]
-        assert { @user.user_stat.vs_stat.to_chart == result }
+        assert { @user.user_stat.vs_stat.to_chart == outcome }
       end
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::UserStat::VsStat
+# >>   段級
+# >>     works (FAILED - 1)
+# >> 
+# >> Failures:
+# >> 
+# >>   1) Swars::UserStat::VsStat 段級 works
+# >>      Failure/Error: Unable to find - to read failed line
+# >>      Minitest::Assertion:
+# >>      # -:29:in `block (3 levels) in <module:Swars>'
+# >>      # ./spec/support/database_cleaner.rb:26:in `block (3 levels) in <main>'
+# >>      # ./spec/support/database_cleaner.rb:26:in `block (2 levels) in <main>'
+# >> 
+# >> Top 1 slowest examples (0.7772 seconds, 27.1% of total time):
+# >>   Swars::UserStat::VsStat 段級 works
+# >>     0.7772 seconds -:24
+# >> 
+# >> Finished in 2.86 seconds (files took 1.57 seconds to load)
+# >> 1 example, 1 failure
+# >> 
+# >> Failed examples:
+# >> 
+# >> rspec -:24 # Swars::UserStat::VsStat 段級 works
+# >> 

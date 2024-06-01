@@ -40,7 +40,7 @@ module Swars
   class Membership < ApplicationRecord
     include TagMethods
     include ::Swars::MembershipTimeChartMethods
-    include AiCop::MembershipMethods
+    include FraudDetector::MembershipMethods
     include UserStat::MembershipGlobalExtension
 
     custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
@@ -193,7 +193,7 @@ module Swars
         list = list.compact
       end
 
-      self.attributes = AiCop::Analyzer.analyze(list).attributes_for_model
+      self.attributes = FraudDetector::Analyzer.analyze(list).db_attributes
     end
 
     def ai_columns_update!

@@ -5,7 +5,7 @@ module Swars
     class MentalStat < Base
       delegate *[
         :averages_hash,
-      ], to: "@user_stat.tavg_stat"
+      ], to: "@user_stat.average_moves_by_outcome_stat"
 
       # 不屈の闘志
       def level

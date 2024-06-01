@@ -46,5 +46,6 @@ module Swars
     include Stat2Methods
     include HelperMethods
     include SearchMethods
+    include UserStat::BattleGlobalExtension
   end
 end
