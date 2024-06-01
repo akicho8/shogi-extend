@@ -37,12 +37,8 @@ require "rails_helper"
 
 module Swars
   RSpec.describe Battle, type: :model, swars_spec: true do
-    let :csa_seq do
-      [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
-    end
-
     let :record do
-      Battle.create!(csa_seq: csa_seq)
+      Battle.create!(csa_seq: Battle::OLD_CSA_SEQ)
     end
 
     it "KIFの直リンクがモデルから取れる" do
@@ -96,7 +92,7 @@ module Swars
 
       describe "投了" do
         let :record do
-          Swars::Battle.create!(final_key: :TORYO, csa_seq: csa_seq)
+          Swars::Battle.create!(final_key: :TORYO, csa_seq: Battle::OLD_CSA_SEQ)
         end
 
         it "後手は時間切れでないので放置時間は無し" do
@@ -120,7 +116,7 @@ module Swars
 
       describe "時間切れ" do
         let :record do
-          Swars::Battle.create!(final_key: :TIMEOUT, csa_seq: csa_seq)
+          Swars::Battle.create!(final_key: :TIMEOUT, csa_seq: Battle::OLD_CSA_SEQ)
         end
 
         it "後手の手番で時間切れなので残り秒数が取得できる" do

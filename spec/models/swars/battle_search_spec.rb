@@ -7,7 +7,7 @@ module Swars
         black = User.create!
         white = User.create!(key: options[:white_key])
         white.ban!
-        battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq])
+        battle = Battle.create_with_members!([black, white], csa_seq: options[:csa_seq] || Battle::OLD_CSA_SEQ)
         assert {  Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value1}")).exists? }
         assert { !Battle.search(user: black, query_info: QueryInfo.parse("#{key}:#{value2}")).exists? }
       end

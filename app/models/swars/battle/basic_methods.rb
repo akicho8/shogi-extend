@@ -16,6 +16,8 @@ module Swars
       end
 
       included do
+        OLD_CSA_SEQ = [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 594], ["-3334FU", 590], ["+6857GI", 592]]
+
         belongs_to :win_user, class_name: "Swars::User", optional: true # 勝者プレイヤーへのショートカット。引き分けの場合は入っていない。memberships.win.user と同じ
 
         has_many :memberships, -> { order(:position) }, dependent: :destroy, inverse_of: :battle
