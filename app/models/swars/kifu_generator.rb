@@ -94,13 +94,13 @@ module Swars
 
     def to_h
       {
-        :generate   => generate,
-        :rule_info  => rule_info,
-        :time_list  => time_list,
-        :hand_list  => hand_list,
-        :size       => size,
-        :life_time  => life_time,
-        :last       => last,
+        :generate  => generate,
+        :rule_info => rule_info,
+        :time_list => time_list,
+        :hand_list => hand_list,
+        :size      => size,
+        :life_time => life_time,
+        :last      => last,
       }
     end
 
