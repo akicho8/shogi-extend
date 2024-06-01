@@ -80,11 +80,6 @@ module Swars
 
         ################################################################################
 
-        { key: "ルール別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
-        { key: "対局モード",       body: proc { xmode_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
-
-        ################################################################################
-
         { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { streak_stat.to_chart(:win)  }, },
         { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { streak_stat.to_chart(:lose) }, },
 
@@ -95,71 +90,46 @@ module Swars
           body: proc { tavg_stat.to_chart },
           bottom_message: proc { tavg_stat.bottom_message },
           chart_type: :pie,
-          chart_options: {
-            pie_type: :is_many_values,
-          },
+          chart_options: { pie_type: :is_many_values, },
         },
 
-        {
-          key: "不屈の闘志",
-          chart_type: :simple,
-          chart_options: {},
-          body: proc { mental_stat.level },
-        },
+        { key: "不屈の闘志", chart_type: :simple, chart_options: {}, body: proc { mental_stat.level }, },
+
+        ################################################################################
 
         { key: "平均手数",       body: proc { turn_stat.average     },           chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
         { key: "最長手数",       body: proc { turn_stat.max         },           chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
 
-        {
-          key: "投了時の平均手数",
-          chart_type: :simple,
-          chart_options: {
-            simple_type: :numeric_with_unit,
-            unit: "手",
-          },
-          body: proc { ttavg_stat.average },
-        },
+        ################################################################################
+
+        { key: "投了時の平均手数", proc { ttavg_stat.average }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, body:  },
 
         { key: "投了せずに放置した回数",        body: proc { houti_stat.positive_count    }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "投了せずに放置した時間 (最長)", body: proc { houti_stat.max               }, chart_type: :simple, chart_options: { simple_type: :second,                        }, },
         { key: "投了せずに放置した頻度",        body: proc { houti_stat.to_chart          }, chart_type: :pie,    chart_options: { pie_type: :is_many_values,                   }, },
 
+        ################################################################################
+
+        { key: "ルール別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
+        { key: "対局モード",       body: proc { xmode_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
+
+        ################################################################################
+
         { key: "1日の平均対局数", body: proc { bpd_stat.average }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "局", }, },
 
-        {
-          key: "対局時間帯",
-          chart_type: :bar,
-          chart_options: {
-            bar_type: :is_default,
-          },
-          body: proc { tzone_stat.to_chart },
-        },
+        { key: "対局時間帯", body: proc { tzone_stat.to_chart },, chart_type: :bar, chart_options: { bar_type: :is_default, }, },
 
-        {
-          key: "勝ち",
-          chart_type: :pie,
-          chart_options: {
-            pie_type: :is_many_values,
-          },
-          body: proc { final_stat.to_chart(:win) },
-        },
+        { key: "勝ち", body: proc { final_stat.to_chart(:win) },  chart_type: :pie, chart_options: { pie_type: :is_many_values,}, },
 
         ################################################################################
 
         { key: "1手詰を焦らして悦に入った回数",        body: proc { mate_stat.positive_count }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回" }, },
         { key: "1手詰を焦らして悦に入った時間 (最長)", body: proc { mate_stat.max            }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
-        { key: "1手詰を焦らして悦に入った頻度",        body: proc { mate_stat.to_chart   }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
+        { key: "1手詰を焦らして悦に入った頻度",        body: proc { mate_stat.to_chart       }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################
 
-        {
-          key: "負け",
-          chart_type: :pie,
-          chart_options: {
-            pie_type: :is_many_values,
-          },
-          body: proc { final_stat.to_chart(:lose) },
-        },
+        { key:"負け", body: proc { final_stat.to_chart(:lose) }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################
 
