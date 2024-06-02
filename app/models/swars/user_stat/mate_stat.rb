@@ -50,7 +50,7 @@ module Swars
       private
 
       def threshold
-        30
+        RuleInfo[:three_min].ittezume_jirasi_sec # 45秒
       end
 
       def scope

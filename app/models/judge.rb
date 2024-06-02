@@ -21,3 +21,4 @@ class Judge < ApplicationRecord
     # has_many :swars_battles, through: :swars_memberships
   end
 end
+# ~> -:16:in `<main>': uninitialized constant ApplicationRecord (NameError)

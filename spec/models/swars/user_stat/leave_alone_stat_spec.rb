@@ -7,8 +7,8 @@ module Swars
         @black = User.create!
       end
 
-      def case1(n)
-        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :TIMEOUT) do |e|
+      def case1
+        Battle.create!(final_key: :TIMEOUT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_stat = @black.user_stat
@@ -19,9 +19,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(13) == [nil, nil] }
-        assert { case1(14) == [[{name: "10分", value: 1}], 600] }
-        assert { case1(15) == [[{name: "10分", value: 2}], 600] }
+        assert { case1 == [[{name: "10分", value: 1}], 600] }
+        assert { case1 == [[{name: "10分", value: 2}], 600] }
       end
     end
   end

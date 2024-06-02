@@ -52,19 +52,19 @@ module Swars
       def to_header_h
         {
           :user         => { key: user.key, ban_at: user.ban_at }, # 対象者情報
-          :rule_items   => grade_by_rules_stat.to_chart,                    # ルール別最高段位
-          :judge_counts => ids_scope.total_judge_counts,           # 勝ち負け数
+          :rule_items   => grade_by_rules_stat.to_chart,           # ルール別最高段位
+          :judge_counts => total_judge_counts,                     # 勝ち負け数
           :medal_items  => medal_stat.to_a,                        # メダル一覧
-          :judge_keys   => recent_outcome_list_stat.to_a,                       # 直近勝敗リスト
+          :judge_keys   => recent_outcome_list_stat.to_a,          # 直近勝敗リスト
         }
       end
 
       def to_tabs_h
         {
           :day_items      => daily_win_loss_list_stat.to_chart, # 「日付」
-          :vs_grade_items => vs_stat.to_chart,  # 「段級」
-          **matrix_stat.to_all_chart,           # 「戦型」「対攻」「囲い」「対囲」
-          :etc_items      => other_stat.to_a,     # 「他」
+          :vs_grade_items => vs_stat.to_chart,                  # 「段級」
+          **matrix_stat.to_all_chart,                           # 「戦型」「対攻」「囲い」「対囲」
+          :etc_items      => other_stat.to_a,                   # 「他」
         }
       end
 
@@ -73,6 +73,10 @@ module Swars
       end
 
       ################################################################################
+
+      def total_judge_counts
+        @total_judge_counts ||= ids_scope.total_judge_counts
+      end
 
       ################################################################################
 
@@ -160,8 +164,8 @@ module Swars
         @mental_stat ||= MentalStat.new(self)
       end
 
-      def final_stat
-        @final_stat ||= FinalStat.new(self)
+      def judge_final_stat
+        @judge_final_stat ||= JudgeFinalStat.new(self)
       end
 
       def daily_win_loss_list_stat
@@ -202,6 +206,22 @@ module Swars
 
       def lethargy_stat
         @lethargy_stat ||= LethargyStat.new(self)
+      end
+
+      def perpetual_check_stat
+        @perpetual_check_stat ||= PerpetualCheckStat.new(self)
+      end
+
+      def taisekimati_stat
+        @taisekimati_stat ||= TaisekimatiStat.new(self)
+      end
+
+      def prolonged_deliberation_stat
+        @prolonged_deliberation_stat ||= ProlongedDeliberationStat.new(self)
+      end
+
+      def overthinking_loss_stat
+        @overthinking_loss_stat ||= OverthinkingLossStat.new(self)
       end
     end
   end

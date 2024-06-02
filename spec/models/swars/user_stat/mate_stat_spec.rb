@@ -16,8 +16,8 @@ module Swars
       end
 
       it "works" do
-        assert { case1(29) == [nil, nil] }
-        assert { case1(59) == [[{name: "30秒", value: 1}], 59] }
+        assert { case1(44) == [nil, nil] }
+        assert { case1(45) == [[{name: "45秒", value: 1}], 45] }
         assert { case1(60) == [[{name: "1分",  value: 1}], 60] }
         assert { case1(61) == [[{name: "1分",  value: 1}], 61] }
       end

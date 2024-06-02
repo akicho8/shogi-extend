@@ -7,6 +7,26 @@ module Swars
         :ordered_ids_scope,
       ], to: :@user_stat
 
+      def five_win?
+        count(:win).between?(5, 9)
+      end
+
+      def ten_win?
+        count(:win) >= 10
+      end
+
+      def five_lose?
+        count(:lose).between?(5, 9)
+      end
+
+      def ten_lose?
+        count(:lose) >= 10
+      end
+
+      def waves_strong?
+        count(:win) >= 5 && count(:lose) >= 5
+      end
+
       # なければ nil を返す
       def to_chart(key)
         to_h[key]

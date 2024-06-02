@@ -12,6 +12,7 @@ module Swars
         (count || 0).positive?
       end
 
+      # 無気力な対局をした回数 (わざと負けた回数でもある)
       def positive_count
         if exist?
           count

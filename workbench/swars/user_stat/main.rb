@@ -1,70 +1,75 @@
 require "../setup"
 user = Swars::User.find_by(key: "SugarHuuko")
 tp Swars::User.find_by(key: "SugarHuuko").user_stat.other_stat.time_stats
-_ { pp user.user_stat.to_hash }    # => "375.68 ms"
+_ { pp user.user_stat.to_hash }    # => "391.34 ms"
 
 @record = Swars::Battle.create!
 tp @record.memberships.first.user.user_stat.to_header_h
 
 @hash = @record.memberships.first.user.user_stat.to_hash.as_json
-@hash["user"]                   # => {"key"=>"user957300", "ban_at"=>nil}
+@hash["user"]                   # => {"key"=>"user957304", "ban_at"=>nil}
 @hash["rule_items"]         # => [{"rule_key"=>"ten_min", "rule_name"=>"10分", "grade_name"=>"30級"}, {"rule_key"=>"three_min", "rule_name"=>"3分", "grade_name"=>nil}, {"rule_key"=>"ten_sec", "rule_name"=>"10秒", "grade_name"=>nil}]
 @hash["judge_counts"]           # => {"win"=>1}
 
 # >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> | 項目                                 | 時間  | 結果                                                                                                                                                                                                                                                                      |
 # >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | ids_count                            | 92.81 |                                                                                                                                                                                                                                                                        50 |
-# >> | 1日の平均対局数                      | 24.73 |                                                                                                                                                                                                                                                                      12.5 |
-# >> | 駒の使用率                           | 14.74 | [{:name=>"玉", :value=>0.08155080213903744}, {:name=>"飛", :value=>0.08422459893048129}, {:name=>"角", :value=>0.09180035650623886}, {:name=>"金", :value=>0.10338680926916222}, {:name=>"銀", :value=>0.16310160427807488}, {:name=>"桂", :value=>0.08600713012477719... |
-# >> | 角不成                               |  9.32 |                                                                                                                                                                                                                                                                           |
-# >> | 棋風                                 |  6.51 | [{:name=>"王道", :value=>21}, {:name=>"準王道", :value=>8}, {:name=>"準変態", :value=>14}, {:name=>"変態", :value=>7}]                                                                                                                                                    |
-# >> | 対局モード                           |  5.66 | [{:name=>"野良", :value=>50}, {:name=>"友達", :value=>0}, {:name=>"指導", :value=>0}]                                                                                                                                                                                     |
-# >> | 切断逃亡                             |  5.53 |                                                                                                                                                                                                                                                                           |
-# >> | 投了までの心の準備                   |  3.50 | [{:name=>"10秒未満", :value=>7}]                                                                                                                                                                                                                                          |
-# >> | ルール別対局頻度                     |  2.86 | [{:name=>"10分", :value=>0}, {:name=>"3分", :value=>45}, {:name=>"10秒", :value=>5}]                                                                                                                                                                                      |
-# >> | 勝ち                                 |  2.81 | [{:key=>:TORYO, :name=>"投了", :value=>27}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>5}, {:key=>:CHECKMATE, :name=>"詰み", :value=>7}]                                                                                                                                 |
-# >> | 詰ます速度 (1手平均)                 |  2.56 |                                                                                                                                                                                                                                                                      1.86 |
+# >> | ids_count                            | 97.75 |                                                                                                                                                                                                                                                                        50 |
+# >> | 駒の使用率                           | 35.32 | [{:name=>"玉", :value=>0.08155080213903744}, {:name=>"飛", :value=>0.08422459893048129}, {:name=>"角", :value=>0.09180035650623886}, {:name=>"金", :value=>0.10338680926916222}, {:name=>"銀", :value=>0.16310160427807488}, {:name=>"桂", :value=>0.08600713012477719... |
+# >> | 勝ち                                 | 10.93 | [{:key=>:TORYO, :name=>"投了", :value=>27}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>5}, {:key=>:CHECKMATE, :name=>"詰み", :value=>7}]                                                                                                                                 |
+# >> | 角不成                               |  9.51 |                                                                                                                                                                                                                                                                           |
+# >> | 負け                                 |  7.08 | [{:key=>:TORYO, :name=>"投了", :value=>7}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>1}, {:key=>:CHECKMATE, :name=>"詰み", :value=>0}]                                                                                                                                  |
+# >> | 棋風                                 |  6.43 | [{:name=>"王道", :value=>21}, {:name=>"準王道", :value=>8}, {:name=>"準変態", :value=>14}, {:name=>"変態", :value=>7}]                                                                                                                                                    |
+# >> | 対局モード                           |  5.64 | [{:name=>"野良", :value=>50}, {:name=>"友達", :value=>0}, {:name=>"指導", :value=>0}]                                                                                                                                                                                     |
+# >> | 切断逃亡                             |  5.03 |                                                                                                                                                                                                                                                                           |
+# >> | 1日の平均対局数                      |  4.39 |                                                                                                                                                                                                                                                                      12.5 |
+# >> | 投了までの心の準備                   |  3.63 | [{:name=>"10秒未満", :value=>7}]                                                                                                                                                                                                                                          |
+# >> | 対局時間帯                           |  2.75 | [{:name=>"4", :value=>7}, {:name=>"5", :value=>8}, {:name=>"6", :value=>8}, {:name=>"7", :value=>5}, {:name=>"8", :value=>0}, {:name=>"9", :value=>0}, {:name=>"10", :value=>0}, {:name=>"11", :value=>0}, {:name=>"12", :value=>0}, {:name=>"13", :value=>0}, {...       |
+# >> | ルール別対局頻度                     |  2.71 | [{:name=>"10分", :value=>0}, {:name=>"3分", :value=>45}, {:name=>"10秒", :value=>5}]                                                                                                                                                                                      |
+# >> | 無気力な対局                         |  2.54 |                                                                                                                                                                                                                                                                           |
+# >> | 将棋ウォーズの運営を支える力         |  2.41 |                                                                                                                                                                                                                                                                           |
 # >> | 居飛車                               |  2.39 | {:judge_counts=>{"win"=>39, "lose"=>8, "draw"=>3}}                                                                                                                                                                                                                        |
-# >> | 1手詰を焦らして悦に入った回数        |  2.36 |                                                                                                                                                                                                                                                                           |
-# >> | 対局時間帯                           |  2.23 | [{:name=>"4", :value=>7}, {:name=>"5", :value=>8}, {:name=>"6", :value=>8}, {:name=>"7", :value=>5}, {:name=>"8", :value=>0}, {:name=>"9", :value=>0}, {:name=>"10", :value=>0}, {:name=>"11", :value=>0}, {:name=>"12", :value=>0}, {:name=>"13", :value=>0}, {...       |
-# >> | 将棋ウォーズの運営を支える力         |  2.21 |                                                                                                                                                                                                                                                                           |
-# >> | 負け                                 |  2.08 | [{:key=>:TORYO, :name=>"投了", :value=>7}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>1}, {:key=>:CHECKMATE, :name=>"詰み", :value=>0}]                                                                                                                                  |
-# >> | 投了せずに放置した回数               |  1.63 |                                                                                                                                                                                                                                                                           |
-# >> | 相居飛車                             |  1.57 | {:judge_counts=>{"lose"=>5, "win"=>26, "draw"=>1}}                                                                                                                                                                                                                        |
-# >> | 平均手数                             |  1.55 |                                                                                                                                                                                                                                                                        89 |
-# >> | 投了時の平均手数                     |  1.51 |                                                                                                                                                                                                                                                                       108 |
-# >> | 対振り                               |  1.49 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
-# >> | 持久戦                               |  1.45 | {:judge_counts=>{"lose"=>5, "win"=>18}}                                                                                                                                                                                                                                   |
-# >> | 振り飛車                             |  1.42 |                                                                                                                                                                                                                                                                           |
-# >> | 長手数                               |  1.37 | {:judge_counts=>{"lose"=>7, "win"=>21}}                                                                                                                                                                                                                                   |
-# >> | 対抗形                               |  1.36 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
-# >> | 急戦                                 |  1.34 | {:judge_counts=>{"win"=>18, "lose"=>3, "draw"=>1}}                                                                                                                                                                                                                        |
-# >> | 短手数                               |  1.32 | {:judge_counts=>{"win"=>17, "draw"=>1, "lose"=>1}}                                                                                                                                                                                                                        |
+# >> | 詰ます速度 (1手平均)                 |  2.22 |                                                                                                                                                                                                                                                                      1.86 |
+# >> | 対戦相手との段級差 (平均)            |  1.84 |                                                                                                                                                                                                                                                                     -1.48 |
+# >> | 投了せずに放置                       |  1.70 |                                                                                                                                                                                                                                                                           |
+# >> | 平均手数                             |  1.61 |                                                                                                                                                                                                                                                                        89 |
+# >> | 1手詰を焦らして悦に入る              |  1.58 |                                                                                                                                                                                                                                                                           |
+# >> | 投了時の平均手数                     |  1.52 |                                                                                                                                                                                                                                                                       108 |
+# >> | 相居飛車                             |  1.39 | {:judge_counts=>{"lose"=>5, "win"=>26, "draw"=>1}}                                                                                                                                                                                                                        |
+# >> | 対振り                               |  1.38 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
+# >> | 振り飛車                             |  1.36 |                                                                                                                                                                                                                                                                           |
+# >> | 大駒コンプリート                     |  1.33 | {:judge_counts=>{"win"=>7}}                                                                                                                                                                                                                                               |
+# >> | 大駒全ブッチ                         |  1.32 | {:judge_counts=>{"win"=>1}}                                                                                                                                                                                                                                               |
+# >> | 急戦                                 |  1.31 | {:judge_counts=>{"win"=>18, "lose"=>3, "draw"=>1}}                                                                                                                                                                                                                        |
 # >> | 相振り                               |  1.31 |                                                                                                                                                                                                                                                                           |
+# >> | 対抗形                               |  1.30 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
 # >> | 勝敗別平均手数                       |  1.30 | [{:name=>"勝ち", :value=>89}, {:name=>"負け", :value=>109}]                                                                                                                                                                                                               |
-# >> | 対戦相手との段級差 (平均)            |  1.28 |                                                                                                                                                                                                                                                                     -1.48 |
-# >> | 連勝                                 |  1.16 |                                                                                                                                                                                                                                                                        12 |
-# >> | 最長考                               |  1.06 |                                                                                                                                                                                                                                                                        71 |
-# >> | 平均思考                             |  0.93 |                                                                                                                                                                                                                                                                       1.5 |
-# >> | 右玉度                               |  0.56 | [{:name=>"右玉", :value=>4}, {:name=>"その他", :value=>46}]                                                                                                                                                                                                               |
-# >> | 投了までの心の準備 (平均)            |  0.48 |                                                                                                                                                                                                                                                                       2.0 |
-# >> | 不屈の闘志                           |  0.26 |                                                                                                                                                                                                                                                                        10 |
+# >> | 持久戦                               |  1.30 | {:judge_counts=>{"lose"=>5, "win"=>18}}                                                                                                                                                                                                                                   |
+# >> | 長手数                               |  1.29 | {:judge_counts=>{"lose"=>7, "win"=>21}}                                                                                                                                                                                                                                   |
+# >> | 短手数                               |  1.29 | {:judge_counts=>{"win"=>17, "draw"=>1, "lose"=>1}}                                                                                                                                                                                                                        |
+# >> | 入玉                                 |  1.28 |                                                                                                                                                                                                                                                                           |
+# >> | 連勝                                 |  1.21 |                                                                                                                                                                                                                                                                        12 |
+# >> | 最長考                               |  1.05 |                                                                                                                                                                                                                                                                        71 |
+# >> | 平均思考                             |  0.76 |                                                                                                                                                                                                                                                                       1.5 |
+# >> | 右玉度                               |  0.50 | [{:name=>"右玉", :value=>4}, {:name=>"その他", :value=>46}]                                                                                                                                                                                                               |
+# >> | 投了までの心の準備 (平均)            |  0.49 |                                                                                                                                                                                                                                                                       2.0 |
+# >> | 不屈の闘志                           |  0.27 |                                                                                                                                                                                                                                                                        10 |
 # >> | 右玉ファミリー                       |  0.02 | [{:name=>:右玉, :value=>3}, {:name=>:三段右玉, :value=>1}]                                                                                                                                                                                                                |
 # >> | 派閥                                 |  0.01 | [{:name=>:居飛車, :value=>50}, {:name=>:振り飛車, :value=>0}]                                                                                                                                                                                                             |
 # >> | 1手詰を焦らして悦に入った時間 (最長) |  0.01 |                                                                                                                                                                                                                                                                           |
-# >> | 棋風 (速度)                          |  0.01 | [{:name=>:急戦, :value=>22}, {:name=>:持久戦, :value=>23}]                                                                                                                                                                                                                |
-# >> | 棋風 (手数)                          |  0.00 | [{:name=>:短手数, :value=>19}, {:name=>:長手数, :value=>28}]                                                                                                                                                                                                              |
-# >> | 投了せずに放置した時間 (最長)        |  0.00 |                                                                                                                                                                                                                                                                           |
+# >> | 1日の最高対局数                      |  0.01 |                                                                                                                                                                                                                                                                        31 |
+# >> | 投了せずに放置した時間 (最長)        |  0.01 |                                                                                                                                                                                                                                                                           |
+# >> | 棋風 (速度)                          |  0.00 | [{:name=>:急戦, :value=>22}, {:name=>:持久戦, :value=>23}]                                                                                                                                                                                                                |
 # >> | テスト                               |  0.00 | [{:name=>"a", :value=>1}, {:name=>"b", :value=>2}, {:name=>"c", :value=>3}, {:name=>"d", :value=>4}, {:name=>"e", :value=>5}]                                                                                                                                             |
+# >> | 棋風 (手数)                          |  0.00 | [{:name=>:短手数, :value=>19}, {:name=>:長手数, :value=>28}]                                                                                                                                                                                                              |
 # >> | 1手詰を焦らして悦に入った頻度        |  0.00 |                                                                                                                                                                                                                                                                           |
 # >> | 投了までの心の準備 (最長)            |  0.00 |                                                                                                                                                                                                                                                                         5 |
-# >> | 飛車不成                             |  0.00 |                                                                                                                                                                                                                                                                           |
-# >> | 最長手数                             |  0.00 |                                                                                                                                                                                                                                                                       177 |
 # >> | 投了せずに放置した頻度               |  0.00 |                                                                                                                                                                                                                                                                           |
+# >> | 最長手数                             |  0.00 |                                                                                                                                                                                                                                                                       177 |
+# >> | 飛車不成                             |  0.00 |                                                                                                                                                                                                                                                                           |
 # >> | 連敗                                 |  0.00 |                                                                                                                                                                                                                                                                         2 |
 # >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> {:onetime_key=>"6d86c2339c16dfc26ff2e43a06ada35a",
+# >> {:onetime_key=>"48f2f4fec9dcbd31f08046c4d46d28d5",
 # >>  :sample_max=>50,
 # >>  :user=>{:key=>"SugarHuuko", :ban_at=>nil},
 # >>  :rule_items=>
@@ -78,6 +83,7 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>    {:message=>"UFO銀で勝った", :method=>"raw", :name=>"🛸", :type=>nil},
 # >>    {:message=>"大駒全部捨てて勝った", :method=>"raw", :name=>"🧠", :type=>nil},
 # >>    {:message=>"10連勝した", :method=>"raw", :name=>"💮", :type=>nil},
+# >>    {:message=>"居玉で勝った", :method=>"raw", :name=>"🗿", :type=>nil},
 # >>    {:message=>"対局放棄と受け取られかねない長考をした", :method=>"raw", :name=>"🚫", :type=>nil},
 # >>    {:message=>"開幕千日手をした", :method=>"raw", :name=>"❓", :type=>nil},
 # >>    {:message=>"千日手があった", :method=>"raw", :name=>"🍌", :type=>nil}],
@@ -339,6 +345,18 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
 # >>     :body=>nil},
+# >>    {:name=>"投了せずに放置",
+# >>     :chart_type=>:simple,
+# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
+# >>     :body=>nil},
+# >>    {:name=>"1手詰を焦らして悦に入る",
+# >>     :chart_type=>:simple,
+# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
+# >>     :body=>nil},
+# >>    {:name=>"無気力な対局",
+# >>     :chart_type=>:simple,
+# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
+# >>     :body=>nil},
 # >>    {:name=>"角不成",
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
@@ -425,6 +443,21 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"連敗"},
 # >>     :body=>2},
+# >>    {:name=>"大駒全ブッチ",
+# >>     :chart_type=>:win_lose_circle,
+# >>     :chart_options=>
+# >>      {:click_method=>:win_lose_with_tag_click_handle, :tag=>"大駒全ブッチ"},
+# >>     :body=>{:judge_counts=>{"win"=>1}}},
+# >>    {:name=>"大駒コンプリート",
+# >>     :chart_type=>:win_lose_circle,
+# >>     :chart_options=>
+# >>      {:click_method=>:win_lose_with_tag_click_handle, :tag=>"大駒コンプリート"},
+# >>     :body=>{:judge_counts=>{"win"=>7}}},
+# >>    {:name=>"入玉",
+# >>     :chart_type=>:win_lose_circle,
+# >>     :chart_options=>
+# >>      {:click_method=>:win_lose_with_tag_click_handle, :tag=>"入玉"},
+# >>     :body=>nil},
 # >>    {:name=>"勝敗別平均手数",
 # >>     :chart_type=>:pie,
 # >>     :chart_options=>{:pie_type=>:is_many_values},
@@ -443,10 +476,6 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"手"},
 # >>     :body=>108},
-# >>    {:name=>"投了せずに放置した回数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
 # >>    {:name=>"投了せずに放置した時間 (最長)",
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:second},
@@ -469,38 +498,6 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>      [{:name=>"野良", :value=>50},
 # >>       {:name=>"友達", :value=>0},
 # >>       {:name=>"指導", :value=>0}]},
-# >>    {:name=>"1日の平均対局数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"局"},
-# >>     :body=>12.5},
-# >>    {:name=>"対局時間帯",
-# >>     :chart_type=>:bar,
-# >>     :chart_options=>{:bar_type=>:is_default},
-# >>     :body=>
-# >>      [{:name=>"4", :value=>7},
-# >>       {:name=>"5", :value=>8},
-# >>       {:name=>"6", :value=>8},
-# >>       {:name=>"7", :value=>5},
-# >>       {:name=>"8", :value=>0},
-# >>       {:name=>"9", :value=>0},
-# >>       {:name=>"10", :value=>0},
-# >>       {:name=>"11", :value=>0},
-# >>       {:name=>"12", :value=>0},
-# >>       {:name=>"13", :value=>0},
-# >>       {:name=>"14", :value=>0},
-# >>       {:name=>"15", :value=>0},
-# >>       {:name=>"16", :value=>0},
-# >>       {:name=>"17", :value=>0},
-# >>       {:name=>"18", :value=>0},
-# >>       {:name=>"19", :value=>0},
-# >>       {:name=>"20", :value=>0},
-# >>       {:name=>"21", :value=>0},
-# >>       {:name=>"22", :value=>6},
-# >>       {:name=>"23", :value=>2},
-# >>       {:name=>"0", :value=>8},
-# >>       {:name=>"1", :value=>6},
-# >>       {:name=>"2", :value=>0},
-# >>       {:name=>"3", :value=>0}]},
 # >>    {:name=>"勝ち",
 # >>     :chart_type=>:pie,
 # >>     :chart_options=>{:pie_type=>:is_many_values},
@@ -508,10 +505,6 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>      [{:key=>:TORYO, :name=>"投了", :value=>27},
 # >>       {:key=>:TIMEOUT, :name=>"時間切れ", :value=>5},
 # >>       {:key=>:CHECKMATE, :name=>"詰み", :value=>7}]},
-# >>    {:name=>"1手詰を焦らして悦に入った回数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
 # >>    {:name=>"1手詰を焦らして悦に入った時間 (最長)",
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:second},
@@ -574,6 +567,42 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>     :chart_type=>:simple,
 # >>     :chart_options=>{:simple_type=>:raw},
 # >>     :body=>-1.48},
+# >>    {:name=>"1日の平均対局数",
+# >>     :chart_type=>:simple,
+# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"局"},
+# >>     :body=>12.5},
+# >>    {:name=>"1日の最高対局数",
+# >>     :chart_type=>:simple,
+# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"局"},
+# >>     :body=>31},
+# >>    {:name=>"対局時間帯",
+# >>     :chart_type=>:bar,
+# >>     :chart_options=>{:bar_type=>:is_default},
+# >>     :body=>
+# >>      [{:name=>"4", :value=>7},
+# >>       {:name=>"5", :value=>8},
+# >>       {:name=>"6", :value=>8},
+# >>       {:name=>"7", :value=>5},
+# >>       {:name=>"8", :value=>0},
+# >>       {:name=>"9", :value=>0},
+# >>       {:name=>"10", :value=>0},
+# >>       {:name=>"11", :value=>0},
+# >>       {:name=>"12", :value=>0},
+# >>       {:name=>"13", :value=>0},
+# >>       {:name=>"14", :value=>0},
+# >>       {:name=>"15", :value=>0},
+# >>       {:name=>"16", :value=>0},
+# >>       {:name=>"17", :value=>0},
+# >>       {:name=>"18", :value=>0},
+# >>       {:name=>"19", :value=>0},
+# >>       {:name=>"20", :value=>0},
+# >>       {:name=>"21", :value=>0},
+# >>       {:name=>"22", :value=>6},
+# >>       {:name=>"23", :value=>2},
+# >>       {:name=>"0", :value=>8},
+# >>       {:name=>"1", :value=>6},
+# >>       {:name=>"2", :value=>0},
+# >>       {:name=>"3", :value=>0}]},
 # >>    {:name=>"右玉度",
 # >>     :chart_type=>:pie,
 # >>     :chart_options=>{:pie_type=>:is_pair_values},
@@ -591,9 +620,9 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>    "勝ち数"=>39,
 # >>    "負け数"=>8,
 # >>    "勝率"=>0.78,
-# >>    "引き分け率"=>0.02,
+# >>    "引き分け回数"=>1,
 # >>    "切れ負け率(分母:負け数)"=>0.125,
-# >>    "切断率(分母:負け数)"=>0.0,
+# >>    "切断率(分母:負け数)"=>nil,
 # >>    "居飛車率"=>1.0,
 # >>    "振り飛車率"=>0.0,
 # >>    "居玉勝率"=>0.18,
@@ -604,7 +633,7 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>      :rarity_key_SR=>0.28,
 # >>      :rarity_key_R=>0.16,
 # >>      :rarity_key_N=>0.42},
-# >>    "1手詰を詰まさないでじらした割合"=>0.0,
+# >>    "1手詰を焦らした回数"=>0,
 # >>    "絶対投了しない率"=>0.0,
 # >>    "大長考または放置率"=>0.02,
 # >>    "棋神降臨疑惑対局数"=>0,
@@ -657,7 +686,7 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>      :背水の陣=>1}},
 # >>  :consecutive_wins_and_losses_stat=>{:lose=>2, :win=>12, :draw=>1}}
 # >> |--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |         user | {:key=>"user957300", :ban_at=>nil}                                                                                                                                                          |
+# >> |         user | {:key=>"user957304", :ban_at=>nil}                                                                                                                                                          |
 # >> |   rule_items | [{:rule_key=>:ten_min, :rule_name=>"10分", :grade_name=>"30級"}, {:rule_key=>:three_min, :rule_name=>"3分", :grade_name=>nil}, {:rule_key=>:ten_sec, :rule_name=>"10秒", :grade_name=>nil}] |
 # >> | judge_counts | {"win"=>1}                                                                                                                                                                                  |
 # >> |  medal_items | [{:message=>"居飛車党", :method=>"raw", :name=>"⬆️", :type=>nil}, {:message=>"嬉野流で勝った", :method=>"raw", :name=>"↗️", :type=>nil}]                                                |

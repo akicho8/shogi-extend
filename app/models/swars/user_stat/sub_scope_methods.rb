@@ -39,8 +39,8 @@ module Swars
         @draw_only ||= ids_scope.draw_only
       end
 
-      def d_count
-        @d_count ||= draw_only.count
+      def draw_count
+        @draw_count ||= draw_only.count
       end
 
       ################################################################################ other

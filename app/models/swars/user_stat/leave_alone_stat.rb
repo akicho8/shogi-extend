@@ -42,9 +42,12 @@ module Swars
       def scope
         s = ids_scope.lose_only
         s = s.joins(:battle => :final)
-        s = s.where(Battle.arel_table[:turn_max].gteq(14))
-        s = s.where(Final.arel_table[:key].eq("TIMEOUT"))
-        s = s.where(Membership.arel_table[:think_last].gteq(60))
+        s = s.where(Final.arel_table[:key].eq(:TIMEOUT))
+        s = s.where(Membership.arel_table[:think_last].gteq(threshold))
+      end
+
+      def threshold
+        RuleInfo[:ten_min].toryo_houti_sec
       end
     end
   end

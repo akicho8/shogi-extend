@@ -114,7 +114,7 @@ module Swars
 
         ################################################################################
 
-        { key: "勝ち", body: proc { final_stat.to_chart(:win) },  chart_type: :pie, chart_options: { pie_type: :is_many_values,}, },
+        { key: "勝ち", body: proc { judge_final_stat.to_chart(:win) },  chart_type: :pie, chart_options: { pie_type: :is_many_values,}, },
 
         ################################################################################
 
@@ -123,7 +123,7 @@ module Swars
 
         ################################################################################
 
-        { key:"負け", body: proc { final_stat.to_chart(:lose) }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
+        { key:"負け", body: proc { judge_final_stat.to_chart(:lose) }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################
 

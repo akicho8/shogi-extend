@@ -17,17 +17,17 @@ module Swars
       end
     end
 
-    describe "負かされた戦法 (未使用)" do
-      def case1
-        Battle.create! { |e| e.memberships.build(user: user, judge_key: :lose) }
-        Battle.create! { |e| e.memberships.build(user: user, judge_key: :win)  } # 2戦目勝ったけど分母は負け数なので結果は変わらない
-        user.user_stat.medal_stat.defeated_tag_counts
-      end
-
-      it "works" do
-        assert { case1 == {"2手目△３ニ飛戦法"=>1.0, "振り飛車"=>1.0, "対抗形"=>1.0} }
-      end
-    end
+    # describe "負かされた戦法 (未使用)" do
+    #   def case1
+    #     Battle.create! { |e| e.memberships.build(user: user, judge_key: :lose) }
+    #     Battle.create! { |e| e.memberships.build(user: user, judge_key: :win)  } # 2戦目勝ったけど分母は負け数なので結果は変わらない
+    #     user.user_stat.medal_stat.defeated_tag_counts
+    #   end
+    #
+    #   it "works" do
+    #     assert { case1 == {"2手目△３ニ飛戦法"=>1.0, "振り飛車"=>1.0, "対抗形"=>1.0} }
+    #   end
+    # end
 
     describe "レコードが0件" do
       it "works" do

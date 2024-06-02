@@ -53,27 +53,6 @@ task "test:retry2" do
 end
 
 if defined? RSpec
-  namespace :spec do
-    desc "core (--fail-fast)"
-    RSpec::Core::RakeTask.new(:core) do |t|
-      t.pattern = "spec/models/**/*_spec.rb"
-      t.rspec_opts = "-f p --fail-fast"
-    end
-
-    desc "corec (--fail-fast --only-failures)"
-    RSpec::Core::RakeTask.new(:corec) do |t|
-      t.pattern = "spec/models/**/*_spec.rb"
-      t.rspec_opts = "-f p --fail-fast --only-failures"
-    end
-
-    namespace :swars do
-      desc "プレイヤー情報のテスト"
-      RSpec::Core::RakeTask.new(:user_stat) do |t|
-        t.pattern = "spec/models/swars/user_stat/*_spec.rb"
-        t.rspec_opts = "-f p"
-      end
-    end
-  end
 end
 
 # require "rspec/core/rake_task"

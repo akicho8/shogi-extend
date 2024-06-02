@@ -23,7 +23,7 @@ module Swars
         message: -> m { "1手詰を#{m.think_last_s}焦らして歪んだ優越感に浸った" },
         medal_params: "😈",
         if_cond: -> m {
-          (t = m.battle.rule_info.teasing_limit) && (m.think_last || 0) >= t &&
+          (t = m.battle.rule_info.ittezume_jirasi_sec) && (m.think_last || 0) >= t &&
             m.judge_key == "win" &&
             m.battle.final_info.key == :CHECKMATE
         },
@@ -36,7 +36,7 @@ module Swars
           m.battle.final_info.key == :TIMEOUT &&
             m.judge_key == "lose" &&
             m.battle.turn_max >= 14 &&
-            (t = m.battle.rule_info.long_leave_alone) && (m.think_last || 0) >= t
+            (t = m.battle.rule_info.toryo_houti_sec) && (m.think_last || 0) >= t
         },
       },
       {
@@ -48,7 +48,7 @@ module Swars
           m.judge_key == "lose" &&
             m.battle.turn_max >= 14 &&
             m.think_last && m.think_max != m.think_last &&
-            (t = m.battle.rule_info.long_leave_alone2) && m.think_max >= t
+            (t = m.battle.rule_info.taisekimati_sec) && m.think_max >= t
         },
       },
       {
@@ -72,7 +72,7 @@ module Swars
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をしたあげく負けた" },
         medal_params: "🚫",
         if_cond: -> m {
-          m.judge_key == "lose" && (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t
+          m.judge_key == "lose" && (t = m.battle.rule_info.kangaesugi_like_houti_sec) && m.think_max >= t
         },
       },
       {
@@ -80,7 +80,7 @@ module Swars
         message: -> m { "対局放棄と受け取られかねない#{m.think_max_s}の長考をした" },
         medal_params: "⚠",
         if_cond: -> m {
-          (t = m.battle.rule_info.long_leave_alone) && m.think_max >= t
+          (t = m.battle.rule_info.kangaesugi_like_houti_sec) && m.think_max >= t
         },
       },
       {
@@ -88,7 +88,7 @@ module Swars
         message: -> m { "考えすぎて負けた。ちなみにいちばん長かったのは#{m.think_max_s}" },
         medal_params: "🤯",
         if_cond: -> m {
-          (t = m.battle.rule_info.short_leave_alone) && m.think_max >= t && m.judge_key == "lose"
+          (t = m.battle.rule_info.kangaezugi_sec) && m.think_max >= t && m.judge_key == "lose"
         },
       },
       {
