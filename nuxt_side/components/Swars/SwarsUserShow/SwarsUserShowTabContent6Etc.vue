@@ -11,7 +11,7 @@
             template(v-if="row.chart_type === 'win_lose_circle'")
               WinLoseCircle(
                 :info="row.body"
-                :click_func="(judge_info) => TheApp[row.chart_options.click_method](judge_info, row.chart_options.tag)"
+                :click_func="(judge_info) => TheApp[row.chart_options.click_method](judge_info, row.chart_options.with_search_params)"
                 size="is-small"
                 v-if="row.body"
                 )

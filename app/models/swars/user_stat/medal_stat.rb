@@ -51,7 +51,7 @@ module Swars
           "絶対投了しない回数"      => user_stat.leave_alone_stat.count,
           "棋神降臨疑惑対局数"      => user_stat.fraud_stat.count,
           "最大連勝連敗"            => user_stat.consecutive_wins_and_losses_stat.to_h,
-          "タグの重み"              => user_stat.all_tag.to_h,
+          "タグの重み"              => user_stat.all_tag.counts_hash,
         }
       end
 

@@ -1,55 +1,11 @@
 require "../setup"
-tp Swars::UserStat::OtherInfo["勝敗別平均手数"].bottom_message # => #<Proc:0x000000010814cf18 /Users/ikeda/src/shogi-extend/app/models/swars/user_stat/other_info.rb:102>
+tp Swars::UserStat::OtherInfo["勝敗別平均手数"].bottom_message # => 
 tp Swars::UserStat::OtherInfo
-# >> |-----------------------------------------------------------------------------------------------------|
-# >> | #<Proc:0x000000010814cf18 /Users/ikeda/src/shogi-extend/app/models/swars/user_stat/other_info.rb:102> |
-# >> |-----------------------------------------------------------------------------------------------------|
-# >> |--------------------------------------|
-# >> | テスト                               |
-# >> | ids_count                            |
-# >> | 切断逃亡                             |
-# >> | 角不成                               |
-# >> | 飛車不成                             |
-# >> | 棋風                                 |
-# >> | 派閥                                 |
-# >> | 居飛車                               |
-# >> | 振り飛車                             |
-# >> | 相居飛車                             |
-# >> | 対振り                               |
-# >> | 対抗形                               |
-# >> | 相振り                               |
-# >> | 棋風 (速度)                          |
-# >> | 急戦                                 |
-# >> | 持久戦                               |
-# >> | 棋風 (手数)                          |
-# >> | 短手数                               |
-# >> | 長手数                               |
-# >> | 対局モード                           |
-# >> | 連勝 (最大)                          |
-# >> | 連敗 (最大)                          |
-# >> | 勝敗別平均手数                       |
-# >> | 平均手数                             |
-# >> | 最長手数                             |
-# >> | 投了時の平均手数                     |
-# >> | 投了せずに放置した回数               |
-# >> | 投了せずに放置した時間 (最長)        |
-# >> | 投了せずに放置した頻度               |
-# >> | 1日の平均対局数                      |
-# >> | 対局時間帯                           |
-# >> | 勝ち                                 |
-# >> | 1手詰を焦らして悦に入った回数        |
-# >> | 1手詰を焦らして悦に入った時間 (最長) |
-# >> | 1手詰を焦らして悦に入った頻度        |
-# >> | 負け                                 |
-# >> | 投了までの心の準備                   |
-# >> | 投了までの心の準備 (平均)            |
-# >> | 投了までの心の準備 (最長)            |
-# >> | 最長考                          |
-# >> | 平均思考                             |
-# >> | 詰ます速度(1手平均)                  |
-# >> | 駒の使用率                           |
-# >> | 対戦相手との段級差 (平均)             |
-# >> | 右玉度                               |
-# >> | 右玉ファミリー                       |
-# >> | 将棋ウォーズの運営を支える力         |
-# >> |--------------------------------------|
+# ~> <internal:/opt/rbenv/versions/3.2.2/lib/ruby/site_ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:37:in `require': /Users/ikeda/src/shogi-extend/app/models/swars/user_stat/other_info.rb:70: syntax error, unexpected ',', expecting => (SyntaxError)
+# ~> ...急戦", :"持久戦"])     }, },
+# ~> ...                                ^
+# ~> 
+# ~> 	from <internal:/opt/rbenv/versions/3.2.2/lib/ruby/site_ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:37:in `require'
+# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/bootsnap-1.16.0/lib/bootsnap/load_path_cache/core_ext/kernel_require.rb:32:in `require'
+# ~> 	from /opt/rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/zeitwerk-2.6.15/lib/zeitwerk/kernel.rb:26:in `require'
+# ~> 	from -:2:in `<main>'

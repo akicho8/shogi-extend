@@ -31,11 +31,11 @@ module Swars
       end
 
       it "角不成" do
-        assert { case1("角不成").user_stat.all_tag.to_h[:"角不成"] >= 1 }
+        assert { case1("角不成").user_stat.all_tag.counts_hash[:"角不成"] >= 1 }
       end
 
       it "飛車不成" do
-        assert { case1("飛車不成").user_stat.all_tag.to_h[:"飛車不成"] >= 1 }
+        assert { case1("飛車不成").user_stat.all_tag.counts_hash[:"飛車不成"] >= 1 }
       end
     end
   end

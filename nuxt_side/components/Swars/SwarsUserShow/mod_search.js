@@ -12,24 +12,11 @@ export const mod_search = {
       return {name: "swars-search", query: {query: query}}
     },
 
-    // WinLoseCircle から呼ばれるシリーズ
-    win_lose_click_handle(judge_info) {
-      this.win_lose_click_shared_handle(judge_info)
-    },
-    win_lose_with_tag_click_handle(judge_info, tag) {
-      Gs.assert(Gs.present_p(tag), "Gs.present_p(tag)")
-      this.win_lose_click_shared_handle(judge_info, {tag: tag})
-    },
-    // ibi_win_lose_click_handle(judge_info) {
-    //   this.win_lose_click_shared_handle(judge_info, {tag: "居飛車"})
-    // },
-    // furi_win_lose_click_handle(judge_info) {
-    //   this.win_lose_click_shared_handle(judge_info, {tag: "振り飛車"})
-    // },
-    win_lose_click_shared_handle(judge_info, params = {}) {
+    win_lose_click_handle(judge_info, params = {}) {
       this.$sound.play_click()
-      this.$router.push(this.search_path({"勝敗": judge_info.name, ...params}))
+      this.$router.push(this.search_path({...params, "勝敗": judge_info.name}))
     },
+
     ////////////////////////////////////////////////////////////////////////////////
 
     name_click_handle() {

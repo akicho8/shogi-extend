@@ -8,30 +8,29 @@ module Swars
       ], to: :@user_stat
 
       def exist?(key)
-        to_h.fetch(key).positive?
+        counts_hash.has_key?(key)
+      end
+
+      def count(key)
+        counts_hash.fetch(key, 0)
       end
 
       def to_chart
         @to_chart ||= yield_self do
-          if attributes.present?
+          if counts_hash.present?
             XmodeInfo.collect do |e|
-              { name: e.name, value: to_h.fetch(e.key) }
+              { name: e.name, value: count(e.key) }
             end
           end
         end
       end
 
-      private
-
-      def attributes
-        @attributes ||= ids_scope.joins(:battle).group(Battle.arel_table[:xmode_id]).count
-      end
-
-      def to_h
-        @to_h ||= yield_self do
-          Xmode.all.each_with_object({}) do |e, m|
-            m[e.key.to_sym] = attributes[e.id] || 0
-          end
+      def counts_hash
+        @counts_hash ||= yield_self do
+          s = ids_scope
+          s = s.joins(:battle => :xmode)
+          s = s.group(Xmode.arel_table[:key])
+          s.count.symbolize_keys
         end
       end
     end

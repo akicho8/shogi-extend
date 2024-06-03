@@ -196,6 +196,10 @@ module Swars
         @vs_stat ||= VsStat.new(self)
       end
 
+      def xmode_judge_stat
+        @xmode_judge_stat ||= XmodeJudgeStat.new(self)
+      end
+
       def mate_speed_stat
         @mate_speed_stat ||= MateSpeedStat.new(self)
       end

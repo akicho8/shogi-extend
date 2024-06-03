@@ -29,7 +29,7 @@ module Swars
       ################################################################################
 
       def to_chart(keys)
-        if keys.any? { |e| to_h.has_key?(e) }
+        if keys.any? { |e| counts_hash.has_key?(e) }
           keys.collect do |e|
             { name: e, value: count(e) }
           end
@@ -40,7 +40,7 @@ module Swars
 
       def exist?(key)
         Rails.env.local? and !key.kind_of? Symbol and raise "key はシンボルにすること : #{key.inspect}"
-        to_h.has_key?(key)
+        counts_hash.has_key?(key)
       end
 
       def ratio(key)
@@ -53,11 +53,11 @@ module Swars
 
       def count(key)
         Rails.env.local? and !key.kind_of? Symbol and raise "key はシンボルにすること : #{key.inspect}"
-        to_h.fetch(key, 0)
+        counts_hash.fetch(key, 0)
       end
 
-      def to_h
-        @to_h ||= yield_self do
+      def counts_hash
+        @counts_hash ||= yield_self do
           s = @scope
           # s = s.toryo_timeout_checkmate_only
           counts = s.all_tag_counts
@@ -66,11 +66,11 @@ module Swars
       end
 
       def to_set
-        @to_set ||= to_h.keys.to_set
+        @to_set ||= counts_hash.keys.to_set
       end
 
       def to_s
-        @to_s ||= to_h.keys.join(",")
+        @to_s ||= counts_hash.keys.join(",")
       end
     end
   end

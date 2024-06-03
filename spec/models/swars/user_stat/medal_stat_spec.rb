@@ -202,8 +202,8 @@ module Swars
         assert { case1("友達").include?(:"友対マン") }
       end
 
-      it "指導受けマン" do
-        assert { case1("指導").include?(:"指導受けマン") }
+      it "プロ越えマン" do
+        assert { case1("指導").include?(:"プロ越えマン") }
       end
     end
   end
