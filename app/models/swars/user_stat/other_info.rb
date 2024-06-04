@@ -34,7 +34,7 @@ module Swars
 
         ################################################################################
 
-        { key: "切断逃亡",                body: proc { checkmate_delay_enjoyment_stat.positive_count }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "切断逃亡",                body: proc { disconnect_escape_stat.positive_count }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "無気力な対局",            body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
@@ -77,8 +77,8 @@ module Swars
 
         ################################################################################
 
-        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { consecutive_wins_and_losses_stat.to_chart(:win)  }, },
-        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { consecutive_wins_and_losses_stat.to_chart(:lose) }, },
+        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { win_lose_streak_stat.to_chart(:win)  }, },
+        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { win_lose_streak_stat.to_chart(:lose) }, },
 
         ################################################################################
 

@@ -47,13 +47,13 @@ module Swars
 
         ################################################################################
 
-        { key: "5連勝",              medal_params: { message: "5連勝した",                                    method: "raw",  name: "🍰",                type: nil,                            }, if_cond: proc { consecutive_wins_and_losses_stat.five_win? },},
-        { key: "10連勝",             medal_params: { message: "10連勝した",                                   method: "raw",  name: "💮",                type: nil,                            }, if_cond: proc { consecutive_wins_and_losses_stat.ten_win? },},
+        { key: "5連勝",              medal_params: { message: "5連勝した",                                    method: "raw",  name: "🍰",                type: nil,                            }, if_cond: proc { win_lose_streak_stat.five_win? },},
+        { key: "10連勝",             medal_params: { message: "10連勝した",                                   method: "raw",  name: "💮",                type: nil,                            }, if_cond: proc { win_lose_streak_stat.ten_win? },},
 
-        { key: "5連敗",              medal_params: { message: "5連敗した",                                    method: "raw",  name: "🌧",                type: nil,                             }, if_cond: proc { consecutive_wins_and_losses_stat.five_lose? },},
-        { key: "10連敗",             medal_params: { message: "10連敗した",                                   method: "raw",  name: "⛈",                type: nil,                             }, if_cond: proc { consecutive_wins_and_losses_stat.ten_lose?   },},
+        { key: "5連敗",              medal_params: { message: "5連敗した",                                    method: "raw",  name: "🌧",                type: nil,                             }, if_cond: proc { win_lose_streak_stat.five_lose? },},
+        { key: "10連敗",             medal_params: { message: "10連敗した",                                   method: "raw",  name: "⛈",                type: nil,                             }, if_cond: proc { win_lose_streak_stat.ten_lose?   },},
 
-        { key: "波が激しいマン",     medal_params: { message: "勝ち負けの波が激しい",                         method: "raw",  name: "🌊",                type: nil,                            }, if_cond: proc { consecutive_wins_and_losses_stat.waves_strong? },},
+        { key: "波が激しいマン",     medal_params: { message: "勝ち負けの波が激しい",                         method: "raw",  name: "🌊",                type: nil,                            }, if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
         ################################################################################
 
@@ -70,7 +70,7 @@ module Swars
         { key: "飛車不成マン",       medal_params: { message: "飛車不成で舐めプした",                         method: "raw",  name: "💀",                type: nil,                            }, if_cond: proc { all_tag.exist?(:"飛車不成") }           },
         { key: "1手詰じらしマン",    medal_params: { message: "1手詰を焦らして歪んだ優越感に浸った",          method: "raw",  name: "😈",                type: nil,                          }, if_cond: proc { user_stat.mate_stat.count.positive? } },
         { key: "絶対投了しないマン", medal_params: { message: "悔しかったので時間切れまで放置した",           method: "raw",  name: "🪳",                type: nil,                            }, if_cond: proc { user_stat.leave_alone_stat.count.positive? } },
-        { key: "相手退席待ちマン",   medal_params: { message: "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗", method: "raw",  name: "🧟",   type: nil, }, if_cond: proc { user_stat.taisekimati_stat.count.positive? } },
+        { key: "相手退席待ちマン",   medal_params: { message: "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗", method: "raw",  name: "🧟",   type: nil, }, if_cond: proc { user_stat.waiting_to_leave_stat.count.positive? } },
         { key: "大長考マン",         medal_params: { message: "対局放棄と受け取られかねない長考をした",       method: "raw",  name: "🚫",                type: nil,                            }, if_cond: proc { user_stat.prolonged_deliberation_stat.count.positive? } },
         { key: "長考マン",           medal_params: { message: "考えすぎて負けがち",                           method: "raw",  name: "🤯",                type: nil,                            }, if_cond: proc { user_stat.overthinking_loss_stat.medal? } },
         { key: "無気力マン",         medal_params: { message: "無気力な対局をした",                           method: "raw",  name: "🦥",                type: nil,                            }, if_cond: proc { user_stat.lethargy_stat.exist? } },

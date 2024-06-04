@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserStat::TaisekimatiStat, type: :model, swars_spec: true do
+  RSpec.describe UserStat::WaitingToLeaveStat, type: :model, swars_spec: true do
     describe "相手退席待ちマン" do
       before do
         @black = User.create!
@@ -12,7 +12,7 @@ module Swars
       end
 
       it "count" do
-        assert { @black.user_stat.taisekimati_stat.count == 1 }
+        assert { @black.user_stat.waiting_to_leave_stat.count == 1 }
       end
 
       it "medal" do

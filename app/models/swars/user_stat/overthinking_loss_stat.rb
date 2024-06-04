@@ -28,7 +28,7 @@ module Swars
       end
 
       def range
-        a = RuleInfo[:ten_min].kangaezugi_sec            # 2.5 min
+        a = RuleInfo[:ten_min].kangaesugi_sec            # 2.5 min
         b = RuleInfo[:ten_min].kangaesugi_like_houti_sec # 3.0 min
         a...b
       end

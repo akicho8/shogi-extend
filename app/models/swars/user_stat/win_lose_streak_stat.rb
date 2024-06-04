@@ -2,7 +2,7 @@
 
 module Swars
   module UserStat
-    class ConsecutiveWinsAndLossesStat < Base
+    class WinLoseStreakStat < Base
       delegate *[
         :ordered_ids_scope,
       ], to: :@user_stat

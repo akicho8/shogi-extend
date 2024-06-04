@@ -44,7 +44,7 @@ module Swars
 
           if Rails.env.local?
             h[:debug_hash]  = medal_stat.to_debug_hash
-            h[:consecutive_wins_and_losses_stat] = consecutive_wins_and_losses_stat.to_h
+            h[:win_lose_streak_stat] = win_lose_streak_stat.to_h
           end
         end
       end
@@ -124,8 +124,8 @@ module Swars
         @leave_alone_stat ||= LeaveAloneStat.new(self)
       end
 
-      def consecutive_wins_and_losses_stat
-        @consecutive_wins_and_losses_stat ||= ConsecutiveWinsAndLossesStat.new(self)
+      def win_lose_streak_stat
+        @win_lose_streak_stat ||= WinLoseStreakStat.new(self)
       end
 
       def resignation_stat
@@ -156,8 +156,8 @@ module Swars
         @matrix_stat ||= MatrixStat.new(self)
       end
 
-      def checkmate_delay_enjoyment_stat
-        @checkmate_delay_enjoyment_stat ||= CheckmateDelayEnjoymentStat.new(self)
+      def disconnect_escape_stat
+        @disconnect_escape_stat ||= DisconnectEscapeStat.new(self)
       end
 
       def mental_stat
@@ -216,8 +216,8 @@ module Swars
         @perpetual_check_stat ||= PerpetualCheckStat.new(self)
       end
 
-      def taisekimati_stat
-        @taisekimati_stat ||= TaisekimatiStat.new(self)
+      def waiting_to_leave_stat
+        @waiting_to_leave_stat ||= WaitingToLeaveStat.new(self)
       end
 
       def prolonged_deliberation_stat

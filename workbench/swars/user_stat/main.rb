@@ -684,7 +684,7 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>      :割り打ちの銀=>1,
 # >>      :大駒全ブッチ=>1,
 # >>      :背水の陣=>1}},
-# >>  :consecutive_wins_and_losses_stat=>{:lose=>2, :win=>12, :draw=>1}}
+# >>  :win_lose_streak_stat=>{:lose=>2, :win=>12, :draw=>1}}
 # >> |--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 # >> |         user | {:key=>"user957314", :ban_at=>nil}                                                                                                                                                          |
 # >> |   rule_items | [{:rule_key=>:ten_min, :rule_name=>"10分", :grade_name=>"30級"}, {:rule_key=>:three_min, :rule_name=>"3分", :grade_name=>nil}, {:rule_key=>:ten_sec, :rule_name=>"10秒", :grade_name=>nil}] |

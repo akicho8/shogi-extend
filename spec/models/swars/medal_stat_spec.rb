@@ -44,21 +44,5 @@ module Swars
         assert { user.user_stat.medal_stat.to_a }
       end
     end
-
-    describe "all_tag.ratio" do
-      before do
-        @black = User.create!
-        @white = User.create!
-        Battle.create!(tactic_key: "パックマン戦法") do |e|
-          e.memberships.build(user: @black, judge_key: "lose")
-          e.memberships.build(user: @white, judge_key: "win")
-        end
-      end
-
-      it "works" do
-        assert { @black.user_stat.all_tag.ratio(:"パックマン戦法") == 0   }
-        assert { @white.user_stat.win_tag.ratio(:"パックマン戦法") == 1.0 }
-      end
-    end
   end
 end

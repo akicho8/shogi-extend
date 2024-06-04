@@ -2,41 +2,77 @@ require "rails_helper"
 
 module Swars
   RSpec.describe UserStat::TagStat, type: :model, swars_spec: true do
-    describe "派閥" do
-      before do
-        @black = User.create!
-      end
-
-      def case1(csa_seq)
-        Battle.create!(csa_seq: csa_seq) do |e|
-          e.memberships.build(user: @black)
+    describe "all_tag" do
+      describe "角不成" do
+        def case1(tactic_key)
+          @black = User.create!
+          Battle.create!(tactic_key: tactic_key) do |e|
+            e.memberships.build(user: @black)
+          end
         end
-        @black.user_stat.all_tag.to_chart([:"居飛車", :"振り飛車"]).collect { |e| e[:value] }
+
+        it "works" do
+          case1("角不成")
+          assert { @black.user_stat.all_tag.exist?(:"角不成")       }
+          assert { @black.user_stat.all_tag.count(:"角不成") == 1   }
+          assert { @black.user_stat.all_tag.ratio(:"角不成") == 1.0 }
+        end
       end
 
-      it "works" do
-        assert { case1(KifuGenerator.ibis_pattern) == [1, 0] }
-        assert { case1(KifuGenerator.furi_pattern) == [1, 1] }
-        assert { case1(KifuGenerator.furi_pattern) == [1, 2] }
+      describe "派閥" do
+        def case1(tactic_key)
+          black = User.create!
+          Battle.create!(tactic_key: tactic_key) do |e|
+            e.memberships.build(user: black)
+          end
+          black.user_stat.all_tag.to_chart([:"居飛車", :"振り飛車"]).collect { |e| e[:value] }
+        end
+
+        it "works" do
+          assert { case1("棒銀")     == [1, 0] }
+          assert { case1("四間飛車") == [0, 1] }
+        end
       end
     end
 
-    describe "不成シリーズ" do
-      def case1(tactic_key)
-        black = User.create!
-        Battle.create!(tactic_key: tactic_key) do |e|
-          e.memberships.build(user: black)
+    describe "win_tag" do
+      describe "勝った条件を含める" do
+        def case1
+          @black = User.create!
+          Battle.create!(tactic_key: "棒銀") do |e|
+            e.memberships.build(user: @black, judge_key: :lose)
+          end
         end
-        black
-      end
 
-      it "角不成" do
-        assert { case1("角不成").user_stat.all_tag.counts_hash[:"角不成"] >= 1 }
-      end
-
-      it "飛車不成" do
-        assert { case1("飛車不成").user_stat.all_tag.counts_hash[:"飛車不成"] >= 1 }
+        it "works" do
+          case1
+          assert { @black.user_stat.all_tag.exist?(:"棒銀") == true  }
+          assert { @black.user_stat.win_tag.exist?(:"棒銀") == false }
+        end
       end
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::UserStat::TagStat
+# >>   all_tag
+# >>     角不成
+# >>       works
+# >>     派閥
+# >>       works
+# >>   win_tag
+# >>     勝った条件を含める
+# >>       works
+# >> 
+# >> Top 3 slowest examples (1.45 seconds, 41.0% of total time):
+# >>   Swars::UserStat::TagStat all_tag 角不成 works
+# >>     0.61696 seconds -:14
+# >>   Swars::UserStat::TagStat all_tag 派閥 works
+# >>     0.58422 seconds -:31
+# >>   Swars::UserStat::TagStat win_tag 勝った条件を含める works
+# >>     0.2497 seconds -:47
+# >> 
+# >> Finished in 3.54 seconds (files took 1.62 seconds to load)
+# >> 3 examples, 0 failures
+# >> 

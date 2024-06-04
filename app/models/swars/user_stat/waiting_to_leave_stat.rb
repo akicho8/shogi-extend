@@ -2,7 +2,7 @@
 
 module Swars
   module UserStat
-    class TaisekimatiStat < Base
+    class WaitingToLeaveStat < Base
       delegate *[
         :ids_scope,
       ], to: :@user_stat

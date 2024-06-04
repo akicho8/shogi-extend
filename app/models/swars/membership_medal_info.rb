@@ -88,7 +88,7 @@ module Swars
         message: -> m { "考えすぎて負けた。ちなみにいちばん長かったのは#{m.think_max_s}" },
         medal_params: "🤯",
         if_cond: -> m {
-          (t = m.battle.rule_info.kangaezugi_sec) && m.think_max >= t && m.judge_key == "lose"
+          (t = m.battle.rule_info.kangaesugi_sec) && m.think_max >= t && m.judge_key == "lose"
         },
       },
       {

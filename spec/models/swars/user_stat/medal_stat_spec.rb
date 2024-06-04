@@ -163,7 +163,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.user_stat.medal_stat.matched_medal_infos.collect(&:key)
+        @black.user_stat.medal_stat.active_medals.collect(&:key)
       end
 
       it "works" do
@@ -180,7 +180,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.user_stat.medal_stat.matched_medal_infos.collect(&:key)
+        @black.user_stat.medal_stat.active_medals.collect(&:key)
       end
 
       it "works" do
@@ -195,7 +195,7 @@ module Swars
         @black = User.create!
         @white = User.create!
         Battle.create_with_members!([@black, @white], xmode: xmode)
-        @black.user_stat.medal_stat.matched_medal_infos.collect(&:key)
+        @black.user_stat.medal_stat.active_medals.collect(&:key)
       end
 
       it "友対マン" do

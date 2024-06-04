@@ -2,7 +2,7 @@
 
 module Swars
   module UserStat
-    class CheckmateDelayEnjoymentStat < Base
+    class DisconnectEscapeStat < Base
       delegate *[
         :ids_scope,
       ], to: :@user_stat
