@@ -50,11 +50,28 @@ module Swars
           assert { @black.user_stat.win_tag.exist?(:"棒銀") == false }
         end
       end
+
+      describe "オールラウンダー" do
+        def case1
+          black = User.create!
+          Swars::Battle.create!(tactic_key: "早石田") do |e|
+            e.memberships.build(user: black, judge_key: :win)
+          end
+          Swars::Battle.create!(tactic_key: "棒銀") do |e|
+            e.memberships.build(user: black, judge_key: :win)
+          end
+          black.user_stat.win_tag.group_all_rounder?
+        end
+
+        it "works" do
+          assert { case1 }
+        end
+      end
     end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::UserStat::TagStat
 # >>   all_tag
 # >>     角不成
@@ -64,7 +81,7 @@ end
 # >>   win_tag
 # >>     勝った条件を含める
 # >>       works
-# >> 
+# >>
 # >> Top 3 slowest examples (1.45 seconds, 41.0% of total time):
 # >>   Swars::UserStat::TagStat all_tag 角不成 works
 # >>     0.61696 seconds -:14
@@ -72,7 +89,7 @@ end
 # >>     0.58422 seconds -:31
 # >>   Swars::UserStat::TagStat win_tag 勝った条件を含める works
 # >>     0.2497 seconds -:47
-# >> 
+# >>
 # >> Finished in 3.54 seconds (files took 1.62 seconds to load)
 # >> 3 examples, 0 failures
-# >> 
+# >>

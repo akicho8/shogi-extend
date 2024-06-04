@@ -1,10 +1,11 @@
 <template lang="pug">
 .SwarsUserShowHeadMedal(v-if="TheApp.info.medal_items.length >= 1")
   .one_element(v-for="e in TheApp.info.medal_items" @click="TheApp.medal_click_handle(e)" :class="{'is-clickable': e.message}")
-    template(v-if="false")
-    b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
-    XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.name")
-    b-icon(         v-else-if="e.method === 'icon'" :icon="e.name" :type="e.type" size="is-small")
+    XemojiWrap.raw(:str="e.name")
+    //- template(v-if="false")
+    //- b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
+    //- XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.name")
+    //- b-icon(         v-else-if="e.method === 'icon'" :icon="e.name" :type="e.type" size="is-small")
 </template>
 
 <script>

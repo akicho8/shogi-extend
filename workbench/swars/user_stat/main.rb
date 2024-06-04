@@ -86,7 +86,7 @@ tp @record.memberships.first.user.user_stat.to_header_h
 # >>    {:message=>"10連勝した", :method=>"raw", :name=>"💮", :type=>nil},
 # >>    {:message=>"居玉で勝った", :method=>"raw", :name=>"🗿", :type=>nil},
 # >>    {:message=>"開幕千日手をした", :method=>"raw", :name=>"❓", :type=>nil},
-# >>    {:message=>"千日手があった", :method=>"raw", :name=>"🍌", :type=>nil}],
+# >>    {:message=>"千日手をした", :method=>"raw", :name=>"🍌", :type=>nil}],
 # >>  :judge_keys=>
 # >>   ["win",
 # >>    "win",

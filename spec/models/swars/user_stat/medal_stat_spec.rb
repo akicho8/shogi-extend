@@ -1,11 +1,12 @@
 require "rails_helper"
+require "#{__dir__}/medal_stat_or_condition_only_tag_medal_test_case_list"
 
 module Swars
   RSpec.describe UserStat::MedalStat, type: :model, swars_spec: true do
     describe "メダルリスト" do
       it "works" do
         user = User.create!
-        assert { user.user_stat.medal_stat.to_a }
+        assert { user.user_stat.medal_stat.as_json }
       end
     end
 
@@ -13,73 +14,35 @@ module Swars
       User.create!
     end
 
-    describe "タグ依存メダル" do
-      def test(tactic_keys, win_or_lose)
+    # 判定できるのは OR 条件のタグのみ。
+    # つまりオールラウンダーはこれで判定してはいけない。
+    # 「早石田」で後手が勝つ場合、先手の win_tag に「早石田」は入らないので「三間飛車で勝った」のテストができない。
+    # したがって早石田を持っている側を勝ちにする。
+    # こうすることでテストしたいタグを持っている側の win_tag に必ず該当のタグが入る。
+    describe "OR判定専用タグ依存メダル" do
+      def case1(e)
         black = User.create!
         white = User.create!
-        tactic_keys.each do |e|
-          Battle.create!(tactic_key: e) do |e|
-            e.memberships.build(user: black, judge_key: win_or_lose)
-            e.memberships.build(user: white)
-          end
+        skill = Bioshogi::Explain::TacticInfo.flat_lookup(e[:tactic_key])
+        info = skill.sample_kif_info
+        player = info.container.players.find { |e| e.skill_set.has_skill?(skill) } # このスキルを持っているプレイヤー
+        Battle.create!(tactic_key: e[:tactic_key]) do |e|
+          e.memberships.build(user: black, judge_key: player.location.key == :black ? :win : :lose) # そのプレイヤーの方を勝ちにする
+          e.memberships.build(user: white, judge_key: player.location.key == :white ? :win : :lose)
         end
-        {black: black, white: white}.inject({}) { |a, (k, v)|
-          a.merge(k => v.user_stat.medal_stat.to_set.collect(&:to_s))
-        }
+        [black, white].any? do |user|
+          if false
+            p user.user_stat.win_tag.to_s
+            p user.user_stat.instance_eval(&UserStat::MedalInfo.fetch(e[:expected_medal_key]).if_cond)
+          end
+          user.user_stat.medal_stat.active?(e[:expected_medal_key])
+        end
       end
 
-      def b(*tactic_keys)
-        test(tactic_keys, :win)[:black]
-      end
-
-      def w(*tactic_keys)
-        test(tactic_keys, :lose)[:white]
-      end
-
-      it "works" do
-        assert { b("角不成").include?("角不成マン")     }
-        assert { b("飛車不成").include?("飛車不成マン") }
-        # プレイヤー情報だけにあるもの
-        assert { b("棒銀").include?("居飛車党")                             }
-        assert { b("早石田").include?("振り飛車党")                         }
-        assert { b("棒銀", "早石田").include?("オールラウンダー")           }
-        assert { b("ロケット").include?("ロケットマン")                     }
-        assert { b("遠見の角").include?("遠見の角マン")                     }
-        assert { b("屋敷流二枚銀").include?("屋敷マン")                     }
-        assert { b("屋敷流二枚銀棒銀型").include?("屋敷マン")               }
-        assert { b("嬉野流").include?("嬉野マン")                           }
-        assert { w("パックマン戦法").include?("パックマン野郎")             }
-        assert { b("耀龍四間飛車").include?("耀龍マン")                     }
-        assert { b("耀龍ひねり飛車").include?("耀龍マン")                   }
-        assert { w("右玉").include?("右玉マン")                             }
-        assert { b("糸谷流右玉").include?("右玉マン")                       }
-        assert { w("羽生流右玉").include?("右玉マン")                       }
-        assert { b("アヒル囲い").include?("アヒル上級")                     }
-        assert { b("UFO銀").include?("UFOマン")                             }
-        assert { b("裏アヒル囲い").include?("レア戦法マン")                 }
-        assert { b("カニカニ金").include?("カニ執着マン")                   }
-        assert { b("一間飛車").include?("一間飛車マン")                     }
-        assert { b("一間飛車穴熊").include?("一間飛車マン")                 }
-        assert { b("カメレオン戦法").include?("カメレオンマン")             }
-        assert { w("ポンポン桂").include?("ポンポンマン")                   }
-        assert { w("右四間飛車左美濃").include?("右四間飛車マン")           }
-        assert { b("ダイヤモンド美濃").include?("ダイヤマン")               }
-        assert { b("チョコレート囲い").include?("チョコレートマン")         }
-        assert { b("幽霊角").include?("幽霊角マン")                         }
-        assert { b("極限早繰り銀").include?("極限早繰りマン")               }
-        assert { b("坊主美濃").include?("坊主マン")                         }
-        assert { b("袖飛車").include?("袖飛車マン")                         }
-        assert { b("ツノ銀中飛車").include?("中飛車マン")                   }
-        assert { b("居飛穴音無しの構え").include?("音無しマン")             }
-        assert { b("筋違い角").include?("筋違い角おじさん")                 }
-        assert { b("いちご囲い").include?("スイーツマン")                   }
-        assert { b("背水の陣").include?("背水マン")                         }
-        assert { b("エルモ囲い").include?("エルモマン")                     }
-        assert { w("銀冠の小部屋").include?("小部屋マン")                   }
-        assert { w("レグスペ").include?("レグスペマン")                     }
-        assert { b("入玉").include?("入玉勝ちマン")                         }
-        assert { test(["無敵囲い"], :lose)[:white].include?("無敵囲いマン") }
-        assert { b("鬼殺し").include?("鬼殺しマン")                         }
+      MedalStatOrConditionOnlyTagMedalTestCaseList.each do |e|
+        it "#{e[:tactic_key]} → #{e[:expected_medal_key]}" do
+          assert { case1(e) }
+        end
       end
     end
 
@@ -94,19 +57,6 @@ module Swars
 
       it "works" do
         assert { case1 == true  }
-      end
-    end
-
-    describe "居玉勝ちマン" do
-      before do
-        csa_seq = KifuGenerator.generate_n(50, hand_list: ["+2858HI", "-5152OU", "+5828HI", "-5251OU"])
-        Battle.create!(csa_seq: csa_seq) do |e|
-          e.memberships.build(user: user)
-        end
-      end
-
-      it "works" do
-        assert { user.user_stat.medal_stat.active?(:"居玉勝ちマン") }
       end
     end
 
@@ -188,36 +138,5 @@ module Swars
         assert { test(:no_fraud_pattern).exclude?(:"運営支えマン") }
       end
     end
-
-    describe "対局モード" do
-      def case1(xmode)
-        xmode = Xmode.fetch(xmode)
-        @black = User.create!
-        @white = User.create!
-        Battle.create_with_members!([@black, @white], xmode: xmode)
-        @black.user_stat.medal_stat.active_medals.collect(&:key)
-      end
-
-      it "友対マン" do
-        assert { case1("友達").include?(:"友対マン") }
-      end
-
-      it "プロ越えマン" do
-        assert { case1("指導").include?(:"プロ越えマン") }
-      end
-    end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >>
-# >> Swars::UserStat::MedalStat
-# >>   メダルリスト
-# >>     works
-# >>
-# >> Top 1 slowest examples (0.30063 seconds, 11.1% of total time):
-# >>   Swars::UserStat::MedalStat メダルリスト works
-# >>     0.30063 seconds -:6
-# >>
-# >> Finished in 2.71 seconds (files took 1.78 seconds to load)
-# >> 1 example, 0 failures
-# >>

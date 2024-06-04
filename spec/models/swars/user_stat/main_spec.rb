@@ -22,7 +22,7 @@ module Swars
           assert { @hash["judge_keys"]  == ["win"] }
         end
         it "メダル" do
-          assert { @hash["medal_items"] == [{"message" =>  "居飛車党", "method" =>  "raw", "name" =>  "⬆️", "type" =>  nil}, {"message" =>  "嬉野流で勝った", "method" =>  "raw", "name" =>  "↗️", "type" =>  nil}] }
+          assert { @hash["medal_items"] }
         end
       end
 

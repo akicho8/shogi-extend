@@ -90,7 +90,6 @@ module Swars
           self.location_key ||= LocationInfo[index].key
           self.judge_key ||= JudgeInfo[index].key
         end
-
       end
 
       if user

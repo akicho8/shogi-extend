@@ -13,7 +13,7 @@ module Swars
         :win_ratio,
       ], to: :user_stat
 
-      def to_a
+      def as_json
         [
           *medal_test,
           *active_medals.collect(&:medal_params),
@@ -24,8 +24,12 @@ module Swars
         MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:medal_debug] }
       end
 
+      def active_medal_keys
+        @active_medal_keys ||= active_medals.collect(&:key).to_set
+      end
+
       def to_set
-        @to_set ||= active_medals.collect(&:key).to_set
+        active_medal_keys
       end
 
       def active?(key)

@@ -22,7 +22,7 @@ module Swars
         ratio(:"振り飛車") > 0.5
       end
 
-      def group_ar?
+      def group_all_rounder?
         ratio(:"居飛車") > 0.25 && ratio(:"振り飛車") > 0.25
       end
 
