@@ -29,7 +29,7 @@ export class ColumnInfo extends ApplicationMemoryRecord {
       { key: "show",                 name: "詳細",             visible: true,   operation_p: true,  available_env: { development: true, staging: true,  production: true, }, },
 
       { key: "id",                   name: "ID",               visible: false,  operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
-      { key: "medal",                name: "アイコン",         visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
+      { key: "badge",                name: "アイコン",         visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "attack_tag_list",      name: "戦型",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
       { key: "defense_tag_list",     name: "囲い",             visible: true,   operation_p: false, available_env: { development: true, staging: true,  production: true, }, },
 

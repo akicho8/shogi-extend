@@ -22,7 +22,7 @@
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
 
     // メダル
-    UserMedal.flex_item.is-size-7(v-if="medal_show_p" :name="info.from_user_name")
+    UserBadge.flex_item.is-size-7(v-if="badge_show_p" :name="info.from_user_name")
   slot
 </template>
 
@@ -36,11 +36,11 @@ export default {
   props: {
     info:         { type: Object, required: true  },
     replace_icon: { type: String, required: false },
-    medal_show_p: { type: Boolean, default: true  },
+    badge_show_p: { type: Boolean, default: true  },
   },
   computed: {
     default_guardian() { return this.SB.guardian_from_str(this.info.from_user_name)       },
-    medal_decorator()  { return this.SB.medal_decorator_by_name(this.info.from_user_name) },
+    badge_decorator()  { return this.SB.badge_decorator_by_name(this.info.from_user_name) },
   },
 }
 </script>

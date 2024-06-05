@@ -18,7 +18,7 @@ export class DevQueryInfo extends ApplicationMemoryRecord {
       { name: "対象の対局がなかった",     params: { query: "YamadaTaro", x_destroy_all: true, throttle_cache_clear: true, SwarsBattleNotFound: true,     }, },
       { name: "▲を左に表示",             params: { query: "YamadaTaro", viewpoint: "black",                                                             }, },
       { name: "△を左に表示",             params: { query: "YamadaTaro", viewpoint: "white",                                                             }, },
-      { name: "全レコード表示",           params: { query: "",           all: true, per: 50, medal_debug: true,                                          }, },
+      { name: "全レコード表示",           params: { query: "",           all: true, per: 50, badge_debug: true,                                          }, },
     ]
   }
 }

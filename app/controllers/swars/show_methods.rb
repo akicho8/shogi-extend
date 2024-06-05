@@ -70,7 +70,7 @@ module Swars
           :grade_info   => { name: e.grade.name },
           :location_key => e.location_key,
           :judge_key    => e.judge_key,
-          :medal_params => e.medal_params(params),
+          :badge_params => e.badge_params(params),
           :ek_score_without_cond    => e.ek_score_without_cond,
           :ek_score_with_cond    => e.ek_score_with_cond,
         }

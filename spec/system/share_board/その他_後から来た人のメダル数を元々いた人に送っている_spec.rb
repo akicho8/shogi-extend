@@ -9,7 +9,7 @@ RSpec.describe type: :system, share_board_spec: true do
         :fixed_order_names           => "alice,bob",
         "clock_box.initial_main_min" => 60,
         :clock_auto_start       => true,
-        :acquire_medal_count         => 1,
+        :acquire_badge_count         => 1,
       })
   end
 

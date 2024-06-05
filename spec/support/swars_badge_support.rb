@@ -1,7 +1,7 @@
-module SwarsMedalSupport
+module SwarsBadgeSupport
   extend self
 end
 
 RSpec::Rails::ModelExampleGroup.module_eval do
-  include SwarsMedalSupport
+  include SwarsBadgeSupport
 end

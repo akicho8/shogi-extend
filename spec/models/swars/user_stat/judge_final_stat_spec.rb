@@ -45,19 +45,19 @@ module Swars
         it "切断マン" do
           @black = User.create!
           case1(:DISCONNECT, :lose)
-          assert { @black.user_stat.medal_stat.active?("切断マン") }
+          assert { @black.user_stat.badge_stat.active?("切断マン") }
         end
 
         it "切れ負けマン" do
           @black = User.create!
           case1(:TIMEOUT, :lose)
-          assert { @black.user_stat.medal_stat.active?("切れ負けマン") }
+          assert { @black.user_stat.badge_stat.active?("切れ負けマン") }
         end
 
         it "投了マン" do
           @black = User.create!
           case1(:TORYO, :lose)
-          assert { @black.user_stat.medal_stat.active?("投了マン") }
+          assert { @black.user_stat.badge_stat.active?("投了マン") }
         end
       end
     end

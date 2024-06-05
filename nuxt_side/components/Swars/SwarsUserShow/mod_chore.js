@@ -1,7 +1,7 @@
 export const mod_chore = {
   methods: {
-    medal_click_handle(medal) {
-      const message = medal.message
+    badge_click_handle(badge) {
+      const message = badge.message
       if (message) {
         this.$sound.play_click()
         this.toast_ok(message)

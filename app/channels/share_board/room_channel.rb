@@ -149,20 +149,20 @@ module ShareBoard
       broadcast(:al_share_broadcasted, data)
     end
 
-    def acquire_medal_count_share(data)
-      # track(data, subject: "メダル", "#{data["medal_user_name"]} = #{data["acquire_medal_count"]"}")
-      medal_user_name = data["medal_user_name"]
-      acquire_medal_count = data["acquire_medal_count"]
-      track(data, subject: "メダル＝", body: "#{medal_user_name} = #{acquire_medal_count}")
-      broadcast(:acquire_medal_count_share_broadcasted, data)
+    def acquire_badge_count_share(data)
+      # track(data, subject: "メダル", "#{data["badge_user_name"]} = #{data["acquire_badge_count"]"}")
+      badge_user_name = data["badge_user_name"]
+      acquire_badge_count = data["acquire_badge_count"]
+      track(data, subject: "メダル＝", body: "#{badge_user_name} = #{acquire_badge_count}")
+      broadcast(:acquire_badge_count_share_broadcasted, data)
     end
 
-    def medal_add_to_user_share(data)
-      # track(data, subject: "メダル", "#{data["medal_user_name"]} = #{data["acquire_medal_count"]"}")
-      medal_user_name = data["medal_user_name"]
-      acquire_medal_plus = data["acquire_medal_plus"]
-      track(data, subject: "メダル＋", body: "#{medal_user_name} + #{acquire_medal_plus}")
-      broadcast(:medal_add_to_user_share_broadcasted, data)
+    def badge_add_to_user_share(data)
+      # track(data, subject: "メダル", "#{data["badge_user_name"]} = #{data["acquire_badge_count"]"}")
+      badge_user_name = data["badge_user_name"]
+      acquire_badge_plus = data["acquire_badge_plus"]
+      track(data, subject: "メダル＋", body: "#{badge_user_name} + #{acquire_badge_plus}")
+      broadcast(:badge_add_to_user_share_broadcasted, data)
     end
 
     def user_kick(data)

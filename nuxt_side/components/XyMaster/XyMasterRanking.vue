@@ -20,8 +20,8 @@
           default-sort-direction="desc"
           )
           b-table-column(v-slot="{row}" field="rank" label="順位"  sortable numeric centered :width="1" cell-class="index_td")
-            template(v-if="medal_hash[row.rank]")
-              XemojiWrap.medal(:str="medal_hash[row.rank]")
+            template(v-if="badge_hash[row.rank]")
+              XemojiWrap.badge(:str="badge_hash[row.rank]")
             template(v-else)
               | {{row.rank}}
           b-table-column(v-slot="{row}" field="entry_name" label="名前" sortable cell-class="entry_name_td")
@@ -42,7 +42,7 @@ export default {
   name: "XyMasterRanking",
   mixins: [support_child],
   computed: {
-    medal_hash() {
+    badge_hash() {
       return {
         "1": "🥇",
         "2": "🥈",
@@ -79,7 +79,7 @@ export default {
     .index_td
       padding: 0
       height: 100%
-      .medal
+      .badge
         display: flex
         justify-content: center
         .xemoji

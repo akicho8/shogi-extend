@@ -4,9 +4,9 @@ rspec ./spec/controllers/omniauth_callbacks_controller_spec.rb:135 # OmniauthCal
 rspec ./spec/system/share_board/その他_自動マッチング_spec.rb:4 # {:type=>:system, :share_board_spec=>true} 飛vs角を1vs1
 rspec ./spec/system/share_board/その他_自動マッチング_spec.rb:40 # {:type=>:system, :share_board_spec=>true} 自分vs自分 平手
 rspec ./spec/system/share_board/チャット_内部コマンド_その他_spec.rb:62 # {:type=>:system, :share_board_spec=>true} /対局中
-rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:20 # {:type=>:system, :share_board_spec=>true} /medal-user
-rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:34 # {:type=>:system, :share_board_spec=>true} /medal-team
-rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:44 # {:type=>:system, :share_board_spec=>true} /medal-self
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:20 # {:type=>:system, :share_board_spec=>true} /badge-user
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:34 # {:type=>:system, :share_board_spec=>true} /badge-team
+rspec ./spec/system/share_board/チャット_内部コマンド_メダル_spec.rb:44 # {:type=>:system, :share_board_spec=>true} /badge-self
 rspec ./spec/system/share_board/チャット_内部コマンド_強制退室_spec.rb:4 # {:type=>:system, :share_board_spec=>true} works
 rspec ./spec/system/share_board/チャット_部屋を立てたときにチャットできる_spec.rb:25 # {:type=>:system, :share_board_spec=>true} 観戦者宛送信
 rspec ./spec/system/share_board/反則_挙動_spec.rb:43 # {:type=>:system, :share_board_spec=>true} 対局中 一般用「できる・注意あり(全体へ)」

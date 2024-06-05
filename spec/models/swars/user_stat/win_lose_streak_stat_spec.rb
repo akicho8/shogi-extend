@@ -21,14 +21,14 @@ module Swars
 
       it "10連勝" do
         case1([:win] * 10)
-        assert { @user.user_stat.medal_stat.win_lose_streak_stat.ten_win? }
-        assert { @user.user_stat.medal_stat.active?(:"10連勝") }
+        assert { @user.user_stat.badge_stat.win_lose_streak_stat.ten_win? }
+        assert { @user.user_stat.badge_stat.active?(:"10連勝") }
       end
 
       it "波が激しいマン" do
         case1([:win] * 5 + [:lose] * 5)
-        assert { @user.user_stat.medal_stat.win_lose_streak_stat.waves_strong? }
-        assert { @user.user_stat.medal_stat.active?(:"波が激しいマン") }
+        assert { @user.user_stat.badge_stat.win_lose_streak_stat.waves_strong? }
+        assert { @user.user_stat.badge_stat.active?(:"波が激しいマン") }
       end
     end
   end

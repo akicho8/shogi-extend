@@ -2,7 +2,7 @@
 
 module Swars
   module UserStat
-    class MedalStat < Base
+    class BadgeStat < Base
       attr_reader :user_stat
 
       delegate *[
@@ -15,29 +15,29 @@ module Swars
 
       def as_json
         [
-          *medal_test,
-          *active_medals.collect(&:medal_params),
+          *badge_test,
+          *active_badges.collect(&:badge_params),
         ]
       end
 
-      def active_medals
-        MedalInfo.find_all { |e| instance_eval(&e.if_cond) || params[:medal_debug] }
+      def active_badges
+        BadgeInfo.find_all { |e| instance_eval(&e.if_cond) || params[:badge_debug] }
       end
 
-      def active_medal_keys
-        @active_medal_keys ||= active_medals.collect(&:key).to_set
+      def active_badge_keys
+        @active_badge_keys ||= active_badges.collect(&:key).to_set
       end
 
       def to_set
-        active_medal_keys
+        active_badge_keys
       end
 
       def active?(key)
-        instance_eval(&MedalInfo[key].if_cond)
+        instance_eval(&BadgeInfo[key].if_cond)
       end
 
-      def medal_test
-        unless params[:medal_debug]
+      def badge_test
+        unless params[:badge_debug]
           return []
         end
         [
@@ -76,9 +76,9 @@ module Swars
       end
 
       # ボトルネックを探すときに使う
-      # tp Swars::User.find_by!(user_key: "SugarHuuko").user_stat.medal_stat.time_stats
+      # tp Swars::User.find_by!(user_key: "SugarHuuko").user_stat.badge_stat.time_stats
       def time_stats(sort: true)
-        av = MedalInfo.values.shuffle.collect { |e|
+        av = BadgeInfo.values.shuffle.collect { |e|
           if_cond = nil
           ms = Benchmark.ms { if_cond = !!instance_eval(&e.if_cond) }
           [ms, e, if_cond]
@@ -91,7 +91,7 @@ module Swars
             "メダル名" => e.name,
             "時間"     => "%.2f" % ms,
             "結果"     => if_cond ? "○" : "",
-            "絵"       => e.medal_params[:name],
+            "絵"       => e.badge_params[:name],
           }
         end
       end

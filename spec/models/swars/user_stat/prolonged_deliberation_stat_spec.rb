@@ -10,7 +10,7 @@ module Swars
         Swars::Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
-        @black.user_stat.medal_stat.to_set
+        @black.user_stat.badge_stat.to_set
       end
 
       it "works" do

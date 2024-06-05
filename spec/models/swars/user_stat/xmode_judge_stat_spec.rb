@@ -38,12 +38,12 @@ module Swars
     describe "メダル" do
       it "友対勝ちマン" do
         case1("友達", :win)
-        assert { @black.user_stat.medal_stat.active?("友対勝ちマン") }
+        assert { @black.user_stat.badge_stat.active?("友対勝ちマン") }
       end
 
       it "プロ越えマン" do
         case1("指導", :win)
-        assert { @black.user_stat.medal_stat.active?("プロ越えマン") }
+        assert { @black.user_stat.badge_stat.active?("プロ越えマン") }
       end
     end
   end

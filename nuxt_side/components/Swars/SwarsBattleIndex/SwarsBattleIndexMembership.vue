@@ -1,8 +1,8 @@
 <template lang="pug">
-.SwarsBattleIndexMembership(:class="{'has_medal': has_medal}")
+.SwarsBattleIndexMembership(:class="{'has_badge': has_badge}")
   .icon_with_name
-    template(v-if="has_medal && membership.medal_params")
-      MembershipMedal(:params="membership.medal_params" )
+    template(v-if="has_badge && membership.badge_params")
+      MembershipBadge(:params="membership.badge_params" )
     SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="base.user_stat_query")
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
@@ -31,7 +31,7 @@ export default {
     },
   },
   computed: {
-    has_medal() { return this.base.column_visible_p('medal') },
+    has_badge() { return this.base.column_visible_p('badge') },
   },
 }
 </script>
@@ -54,7 +54,7 @@ export default {
         margin-left: 2px  // タグ同士の隙間
 
   // メダルがあってタブレット以上なら戦法の左をアイコンのぶんだけずらしておく
-  &.has_medal
+  &.has_badge
     .tags
       +tablet
         margin-left: 1.5rem

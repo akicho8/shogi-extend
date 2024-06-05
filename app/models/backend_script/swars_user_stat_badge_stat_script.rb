@@ -1,5 +1,5 @@
 module BackendScript
-  class SwarsUserStatMedalStatScript < ::BackendScript::Base
+  class SwarsUserStatBadgeStatScript < ::BackendScript::Base
     include SwarsIdMethods
 
     self.category = "swars"
@@ -9,7 +9,7 @@ module BackendScript
       if user = Swars::User.find_by(user_key: current_swars_id)
         user_stat = user.user_stat(sample_max: 200)
         user_stat.ids_scope.to_a # 最も重い共通処理を実行済みにしておく
-        user_stat.medal_stat.time_stats
+        user_stat.badge_stat.time_stats
       end
     end
   end

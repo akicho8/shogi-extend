@@ -200,23 +200,23 @@ module Swars
       save!
     end
 
-    concerning :MedalMethods do
-      def medal_info
-        MembershipMedalInfo.find { |e| e.if_cond.call(self) } or raise "must not happen"
+    concerning :BadgeMethods do
+      def badge_info
+        MembershipBadgeInfo.find { |e| e.if_cond.call(self) } or raise "must not happen"
       end
 
-      def medal_params(params = {})
-        info = medal_info
-        if v = (params[:medal_debug] || ENV["MEDAL_DEBUG"])
-          info = MembershipMedalInfo[(id + v.to_i).modulo(MembershipMedalInfo.count)]
+      def badge_params(params = {})
+        info = badge_info
+        if v = (params[:badge_debug] || ENV["MEDAL_DEBUG"])
+          info = MembershipBadgeInfo[(id + v.to_i).modulo(MembershipBadgeInfo.count)]
         end
-        info.medal_params_build(self)
+        info.badge_params_build(self)
       end
 
-      def medal_key_with_messsage
+      def badge_key_with_messsage
         [
-          medal_info.key,
-          medal_params[:message],
+          badge_info.key,
+          badge_params[:message],
         ]
       end
 

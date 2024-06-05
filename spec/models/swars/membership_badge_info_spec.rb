@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe MembershipMedalInfo, type: :model, swars_spec: true do
+  RSpec.describe MembershipBadgeInfo, type: :model, swars_spec: true do
     describe "タグ依存メダル" do
       def test(tactic_keys, win_or_lose)
         black = User.create!
@@ -13,7 +13,7 @@ module Swars
           end
         end
         {black: black, white: white}.inject({}) { |a, (k, v)|
-          a.merge(k => v.memberships.first.medal_info.key.to_s)
+          a.merge(k => v.memberships.first.badge_info.key.to_s)
         }
       end
 
@@ -42,7 +42,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.medal_info.key == :"切断マン"
+        @black.memberships.first.badge_info.key == :"切断マン"
       end
 
       it "works" do
@@ -59,7 +59,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        battle.memberships.first.medal_key_with_messsage == [:"絶対投了しないマン", "悔しかったので時間切れになるまで9分59秒放置した"]
+        battle.memberships.first.badge_key_with_messsage == [:"絶対投了しないマン", "悔しかったので時間切れになるまで9分59秒放置した"]
       end
 
       it "works" do
@@ -76,7 +76,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.medal_info.key == :"相手退席待ちマン"
+        @black.memberships.first.badge_info.key == :"相手退席待ちマン"
       end
 
       it "works" do
@@ -92,7 +92,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.medal_key_with_messsage == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
+        @black.memberships.first.badge_key_with_messsage == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
       end
 
       it "works" do
@@ -110,7 +110,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: judge_key)
           e.memberships.build(user: @white)
         end
-        @black.memberships.first.medal_key_with_messsage
+        @black.memberships.first.badge_key_with_messsage
       end
 
       it "works" do
@@ -128,7 +128,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.medal_key_with_messsage
+        @black.memberships.first.badge_key_with_messsage
       end
 
       it "works" do
@@ -150,7 +150,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.memberships.first.medal_key_with_messsage
+        @black.memberships.first.badge_key_with_messsage
       end
 
       it "works" do
@@ -169,7 +169,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.memberships.first.medal_info.key == :"切れ負けマン"
+        @black.memberships.first.badge_info.key == :"切れ負けマン"
       end
 
       it "works" do
@@ -186,7 +186,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        battle.memberships[0].medal_info.key
+        battle.memberships[0].badge_info.key
       end
 
       it "works" do
@@ -201,7 +201,7 @@ module Swars
           keys.each do |key|
             e.memberships.build(user: User.create!(grade_key: key))
           end
-        }.memberships.collect { |e| e.medal_params[:message] }
+        }.memberships.collect { |e| e.badge_params[:message] }
       end
 
       it "全パターン" do
@@ -258,7 +258,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::MembershipMedalInfo
+# >> Swars::MembershipBadgeInfo
 # >>   タグ依存メダル
 # >>     works
 # >>   切断マン
@@ -283,15 +283,15 @@ end
 # >>     全パターン
 # >>
 # >> Top 5 slowest examples (8.38 seconds, 67.1% of total time):
-# >>   Swars::MembershipMedalInfo 段級差 全パターン
+# >>   Swars::MembershipBadgeInfo 段級差 全パターン
 # >>     4.73 seconds -:208
-# >>   Swars::MembershipMedalInfo タグ依存メダル works
+# >>   Swars::MembershipBadgeInfo タグ依存メダル works
 # >>     1.7 seconds -:28
-# >>   Swars::MembershipMedalInfo 無気力マン works
+# >>   Swars::MembershipBadgeInfo 無気力マン works
 # >>     0.97467 seconds -:135
-# >>   Swars::MembershipMedalInfo 長考 works
+# >>   Swars::MembershipBadgeInfo 長考 works
 # >>     0.48728 seconds -:117
-# >>   Swars::MembershipMedalInfo 絶対投了しないマン works
+# >>   Swars::MembershipBadgeInfo 絶対投了しないマン works
 # >>     0.47456 seconds -:64
 # >>
 # >> Finished in 12.48 seconds (files took 2.96 seconds to load)

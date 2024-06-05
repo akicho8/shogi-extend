@@ -1,11 +1,11 @@
 require "rails_helper"
-require "#{__dir__}/medal_stat_or_condition_only_tag_medal_test_case_list"
+require "#{__dir__}/badge_stat_or_condition_only_tag_badge_test_case_list"
 
 module Swars
-  RSpec.describe UserStat::MedalStat, type: :model, swars_spec: true do
+  RSpec.describe UserStat::BadgeStat, type: :model, swars_spec: true do
     it "対局が0件の場合でもエラーにならない" do
       user = User.create!
-      assert { user.user_stat.medal_stat.as_json }
+      assert { user.user_stat.badge_stat.as_json }
     end
 
     # 判定できるのは OR 条件のタグのみ。
@@ -27,14 +27,14 @@ module Swars
         [black, white].any? do |user|
           if false
             p user.user_stat.win_tag.to_s
-            p user.user_stat.instance_eval(&UserStat::MedalInfo.fetch(e[:expected_medal_key]).if_cond)
+            p user.user_stat.instance_eval(&UserStat::BadgeInfo.fetch(e[:expected_badge_key]).if_cond)
           end
-          user.user_stat.medal_stat.active?(e[:expected_medal_key])
+          user.user_stat.badge_stat.active?(e[:expected_badge_key])
         end
       end
 
-      MedalStatOrConditionOnlyTagMedalTestCaseList.each do |e|
-        it "#{e[:tactic_key]} → #{e[:expected_medal_key]}" do
+      BadgeStatOrConditionOnlyTagBadgeTestCaseList.each do |e|
+        it "#{e[:tactic_key]} → #{e[:expected_badge_key]}" do
           assert { case1(e) }
         end
       end
@@ -51,7 +51,7 @@ module Swars
       end
 
       it "works" do
-        assert { @black.user_stat.medal_stat.active?(:"1手詰じらしマン") }
+        assert { @black.user_stat.badge_stat.active?(:"1手詰じらしマン") }
       end
     end
 
@@ -63,7 +63,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :lose)
           e.memberships.build(user: @white, judge_key: :win)
         end
-        @black.user_stat.medal_stat.active?(:"絶対投了しないマン")
+        @black.user_stat.badge_stat.active?(:"絶対投了しないマン")
       end
 
       it "works" do
@@ -79,7 +79,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.user_stat.medal_stat.active_medals.collect(&:key)
+        @black.user_stat.badge_stat.active_badges.collect(&:key)
       end
 
       it "works" do
@@ -96,7 +96,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.user_stat.medal_stat.active_medals.collect(&:key)
+        @black.user_stat.badge_stat.active_badges.collect(&:key)
       end
 
       it "works" do

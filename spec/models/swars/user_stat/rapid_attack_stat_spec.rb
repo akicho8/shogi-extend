@@ -8,10 +8,10 @@ module Swars
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_stat.rapid_attack_stat.medal?
+        black.user_stat.rapid_attack_stat.badge?
       end
 
-      it "medal?" do
+      it "badge?" do
         assert { !case1("持久戦") }
         assert { case1("急戦")    }
       end

@@ -15,8 +15,8 @@ module Swars
         assert { @black.user_stat.waiting_to_leave_stat.count == 1 }
       end
 
-      it "medal" do
-        assert { @black.user_stat.medal_stat.active?("相手退席待ちマン") }
+      it "badge" do
+        assert { @black.user_stat.badge_stat.active?("相手退席待ちマン") }
       end
     end
   end

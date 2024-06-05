@@ -22,7 +22,7 @@ module Swars
         it "廃指しマン" do
           @black = User.create!
           30.times { Battle.create! { |e| e.memberships.build(user: @black) } }
-          assert { @black.user_stat.medal_stat.active?("廃指しマン") }
+          assert { @black.user_stat.badge_stat.active?("廃指しマン") }
         end
       end
     end

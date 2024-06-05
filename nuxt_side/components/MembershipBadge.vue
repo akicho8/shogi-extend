@@ -1,5 +1,5 @@
 <template lang="pug">
-.MembershipMedal(:class="wrapper_class" @click="click_handle")
+.MembershipBadge(:class="wrapper_class" @click="click_handle")
   XemojiWrap(v-if="params.emoji" :str="params.emoji")
   b-icon(v-else-if="params.icon" :icon="params.icon" :type="params.type" size="is-small" :class="params.class")
   template(v-else) {{params}}
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "MembershipMedal",
+  name: "MembershipBadge",
   props: {
     params: { type: Object, required: true },
   },
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="sass">
-.MembershipMedal
+.MembershipBadge
   flex-shrink: 0                // 絵文字潰れを防ぐ
 
   display: flex
@@ -51,7 +51,7 @@ export default {
   margin-right: 0.3em
 
 .STAGE-development
-  .MembershipMedal
+  .MembershipBadge
     border: 1px dashed change_color($primary, $alpha: 0.5)
     .xemoji_wrap, .icon
       border: 1px dashed change_color($primary, $alpha: 0.5)

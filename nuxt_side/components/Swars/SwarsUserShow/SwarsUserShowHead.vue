@@ -32,7 +32,7 @@
       span.has-text-success(v-if="judge_key === 'draw'")
         b-icon(icon="minus" size="is-small" type="is-success")
 
-  SwarsUserShowHeadMedal
+  SwarsUserShowHeadBadge
 </template>
 
 <script>

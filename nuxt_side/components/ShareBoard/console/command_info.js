@@ -7,8 +7,8 @@
 // | /var                |
 // | /debug              |
 // | /gpt content        |
-// | /medal-team black 1 |
-// | /medal-user alice 1 |
+// | /badge-team black 1 |
+// | /badge-user alice 1 |
 // | /header             |
 // |---------------------|
 
@@ -87,34 +87,34 @@ export class CommandInfo extends ApplicationMemoryRecord {
       },
       {
         desc: "メダル情報の確認",
-        key: "medal",
-        example: "/medal",
+        key: "badge",
+        example: "/badge",
         command_fn: (context, args) => {
-          return JSON.stringify(context.medal_counts_hash)
+          return JSON.stringify(context.badge_counts_hash)
         },
       },
       {
         desc: "指定チームのメダルの増減(部屋でのみ使用可)",
-        key: "medal-team",
-        example: "/medal-team black 1",
+        key: "badge-team",
+        example: "/badge-team black 1",
         command_fn: (context, args) => {
-          context.medal_add_to_team(args[0], parseInt(args[1] ?? "1"))
+          context.badge_add_to_team(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
         desc: "指定の人のメダルの増減(部屋でのみ使用可)",
-        key: "medal-user",
-        example: "/medal-user alice 1",
+        key: "badge-user",
+        example: "/badge-user alice 1",
         command_fn: (context, args) => {
-          context.medal_add_to_user(args[0], parseInt(args[1] ?? "1"))
+          context.badge_add_to_user(args[0], parseInt(args[1] ?? "1"))
         },
       },
       {
         desc: "自分のメダル増減",
-        key: "medal-self",
-        example: "/medal-self 1",
+        key: "badge-self",
+        example: "/badge-self 1",
         command_fn: (context, args) => {
-          context.medal_add_to_self(parseInt(args[0] ?? "1"))
+          context.badge_add_to_self(parseInt(args[0] ?? "1"))
         },
       },
       {

@@ -52,7 +52,7 @@
     SbFesPanel
   .column.is-12
     SbDebugPanelsOrder
-  SbDebugPanelsMedal
+  SbDebugPanelsBadge
   SbDebugPanelsRoomUrlCopyModal
   .column.is-6(v-if="SB.clock_box")
     ClockBoxInspector(:clock_box="SB.clock_box")

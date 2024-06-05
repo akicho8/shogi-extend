@@ -9,7 +9,7 @@ def test(*list)
       e.memberships.build(user: black, judge_key: win_or_lose)
     end
   end
-  black.user_stat.medal_stat.straight_win_straight_lose_hash
+  black.user_stat.badge_stat.straight_win_straight_lose_hash
 end
 
 test(:win, :win, :win)   # => {"win"=>3, "lose"=>0}

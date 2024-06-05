@@ -1,4 +1,4 @@
-export class MedalDecorator {
+export class BadgeDecorator {
   constructor(counts_hash, user_name) {
     this.counts_hash = counts_hash
     this.user_name = user_name
@@ -17,14 +17,14 @@ export class MedalDecorator {
   }
 
   // 実際に表示するメダルたち
-  get visible_medal_text() {
-    return this.__medal_char.repeat(this.__visible_medal_count)
+  get visible_badge_text() {
+    return this.__badge_char.repeat(this.__visible_badge_count)
   }
 
   //////////////////////////////////////////////////////////////////////////////// private
 
   // 実際に表示できるメダル数
-  get __visible_medal_count() {
+  get __visible_badge_count() {
     if (this.count_lteq_max) {
       return this.count
     } else {
@@ -32,7 +32,7 @@ export class MedalDecorator {
     }
   }
 
-  get __medal_char() {
+  get __badge_char() {
     return "⭐"
   }
 

@@ -9,7 +9,7 @@ module Swars
       ], to: :@user_stat
 
       # 長考マン: 考えすぎて負けがち
-      def medal?
+      def badge?
         (ratio || 0) > 0.1
       end
 
