@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::DisconnectEscapeStat, type: :model, swars_spec: true do
     describe "切断逃亡" do
-      before do
-        @black = User.create!
-      end
-
       def case1(n)
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1(13) == nil }
         assert { case1(14) == 1 }
         assert { case1(14) == 2 }

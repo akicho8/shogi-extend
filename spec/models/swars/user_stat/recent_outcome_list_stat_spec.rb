@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::RecentOutcomeListStat, type: :model, swars_spec: true do
     describe "直近勝敗リスト" do
-      before do
-        @black = User.create!
-      end
-
       def case1(battled_at, judge_key)
         Battle.create!(battled_at: battled_at) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1("2000-01-01 00:01", :win)  == ["win"]         }
         assert { case1("2000-01-01 00:02", :lose) == ["win", "lose"] }
       end

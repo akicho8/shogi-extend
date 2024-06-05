@@ -3,7 +3,7 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::WaitingToLeaveStat, type: :model, swars_spec: true do
     describe "相手退席待ちマン" do
-      before do
+      def case1
         @black = User.create!
         csa_seq = KifuGenerator.generate_n(16) + [["+5958OU", 300], ["-5152OU", 600], ["+5859OU", 1], ["-5251OU", 600]]
         Swars::Battle.create!(csa_seq: csa_seq, final_key: :CHECKMATE) do |e|
@@ -12,10 +12,12 @@ module Swars
       end
 
       it "count" do
+        case1
         assert { @black.user_stat.waiting_to_leave_stat.count == 1 }
       end
 
       it "badge" do
+        case1
         assert { @black.user_stat.badge_stat.active?("相手退席待ちマン") }
       end
     end

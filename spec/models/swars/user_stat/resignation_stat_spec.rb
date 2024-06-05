@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::ResignationStat, type: :model, swars_spec: true do
     describe "投了までの心の準備系" do
-      before do
-        @black = User.create!
-      end
-
       def case1(n, sec)
         Battle.create!(csa_seq: Swars::KifuGenerator.generate_n(n, last: sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
@@ -20,6 +16,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1(15, 9)  == [[{name: "10秒未満", value: 1}], 9, 9.0] }
         assert { case1(15, 10) == [[{name: "10秒未満", value: 1}, {name: "10秒", value: 1}], 10, 9.5] }
         assert { case1(15, 11) == [[{name: "10秒", value: 2}, {name: "10秒未満", value: 1}], 11, 10.0] }

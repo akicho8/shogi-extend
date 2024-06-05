@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::TurnStat, type: :model, swars_spec: true do
     describe "平均手数・最長手数" do
-      before do
-        @black = User.create!
-      end
-
       def case1(n)
         Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
@@ -15,11 +11,13 @@ module Swars
       end
 
       it "average" do
+        @black = User.create!
         assert { case1(2).average == 2 }
         assert { case1(8).average == 5 }
       end
 
       it "max" do
+        @black = User.create!
         assert { case1(2).max == 2 }
         assert { case1(8).max == 8 }
       end

@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::MateSpeedStat, type: :model, swars_spec: true do
     describe "詰ます速度" do
-      before do
-        @black = User.create!
-      end
-
       def case1(final_key)
         Battle.create!(csa_seq: KifuGenerator.generate(time_list: [10, 20]), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :win)
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1(:DISCONNECT) == nil } # CHECKMATE専用
         assert { case1(:CHECKMATE) == 15.0 }
         assert { case1(:CHECKMATE) == 15.0 } # 平均なので変化してない

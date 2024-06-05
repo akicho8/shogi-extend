@@ -10,30 +10,44 @@ module Swars
         end
         user_stat = @black.user_stat
         [
-          user_stat.mate_stat.to_chart,
           user_stat.mate_stat.max,
+          user_stat.mate_stat.to_chart,
         ]
       end
 
       it "works" do
         assert { case1(44) == [nil, nil] }
-        assert { case1(45) == [[{name: "45秒", value: 1}], 45] }
-        assert { case1(60) == [[{name: "1分",  value: 1}], 60] }
-        assert { case1(61) == [[{name: "1分",  value: 1}], 61] }
+        assert { case1(45) == [45, [{name: "45秒", value: 1}]] }
+        assert { case1(60) == [60, [{name: "1分",  value: 1}]] }
+        assert { case1(61) == [61, [{name: "1分",  value: 1}]] }
+      end
+
+      describe "メダル" do
+        def case1
+          @black = User.create!
+          Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
+            e.memberships.build(user: @black)
+          end
+        end
+
+        it "1手詰じらしマン" do
+          case1
+          assert { @black.user_stat.badge_stat.active?(:"1手詰じらしマン") }
+        end
       end
     end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::UserStat::MateStat
 # >>   1手詰を焦らして悦に入った回数
 # >>     works
-# >> 
+# >>
 # >> Top 1 slowest examples (1.49 seconds, 41.8% of total time):
 # >>   Swars::UserStat::MateStat 1手詰を焦らして悦に入った回数 works
 # >>     1.49 seconds -:18
-# >> 
+# >>
 # >> Finished in 3.56 seconds (files took 1.58 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

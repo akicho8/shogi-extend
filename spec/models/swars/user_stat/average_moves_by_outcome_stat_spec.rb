@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::AverageMovesByOutcomeStat, type: :model, swars_spec: true do
     describe "勝敗別平均手数" do
-      before do
-        @black = User.create!
-      end
-
       def case1(judge_key, n)
         Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1(:win,  10) == [10,  0] }
         assert { case1(:win,  90) == [50,  0] }
         assert { case1(:lose, 10) == [50, 10] }

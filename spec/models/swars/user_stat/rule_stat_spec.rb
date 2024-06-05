@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::RuleStat, type: :model, swars_spec: true do
     describe "ルール別対局頻度" do
-      before do
-        @black = User.create!
-      end
-
       def case1(rule_key)
         csa_seq = KifuGenerator.generate_n(0, rule_key: rule_key)
         Battle.create!(rule_key: rule_key, csa_seq: csa_seq) do |e|
@@ -15,6 +11,8 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
+
         case1(:ten_min)
         case1(:three_min)
         case1(:ten_sec)
@@ -31,15 +29,15 @@ module Swars
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::UserStat::RuleStat
 # >>   ルール別対局頻度
 # >>     works
-# >> 
+# >>
 # >> Top 1 slowest examples (0.57971 seconds, 21.6% of total time):
 # >>   Swars::UserStat::RuleStat ルール別対局頻度 works
 # >>     0.57971 seconds -:17
-# >> 
+# >>
 # >> Finished in 2.68 seconds (files took 1.56 seconds to load)
 # >> 1 example, 0 failures
-# >> 
+# >>

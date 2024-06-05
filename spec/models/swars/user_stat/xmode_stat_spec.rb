@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::XmodeStat, type: :model, swars_spec: true do
     describe "対局モード" do
-      before do
-        @black = User.create!
-      end
-
       def case1(xmode_key)
         Battle.create!(xmode_key: xmode_key) do |e|
           e.memberships.build(user: @black)
@@ -14,6 +10,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         case1(:"野良")
         case1(:"友達")
         case1(:"指導")

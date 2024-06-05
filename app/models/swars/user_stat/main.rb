@@ -24,10 +24,8 @@ module Swars
         end
       end
 
-      # http://localhost:3000/w.json?query=kinakom0chi&format_type=user
-      # http://localhost:3000/w.json?query=DevUser1&format_type=user
-      # http://localhost:3000/w.json?query=DevUser1&format_type=user&debug=true
-      # https://www.shogi-extend.com/w.json?query=kinakom0chi&format_type=user
+      # http://localhost:3000/api/swars/user_stat?user_key=kinakom0chi
+      # http://localhost:3000/api/swars/user_stat?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
       def to_hash
         {}.tap do |h|
           ################################################################################ メタ情報

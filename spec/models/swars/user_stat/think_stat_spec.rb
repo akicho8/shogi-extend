@@ -3,11 +3,8 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::ThinkStat, type: :model, swars_spec: true do
     describe "最大思考 / 平均思考" do
-      before do
-        @black = User.create!
-      end
-
       def case1
+        @black = User.create!
         Battle.create!(csa_seq: KifuGenerator.generate(time_list: [10, 20])) do |e|
           e.memberships.build(user: @black)
         end

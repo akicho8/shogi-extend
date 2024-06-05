@@ -3,11 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::GdiffStat, type: :model, swars_spec: true do
     describe "対戦相手との段級差の平均" do
-      before do
-        @black = User.create!
-        @white = User.create!
-      end
-
       def case1(black_grade_key, white_grade_key)
         @black.update!(grade_key: black_grade_key)
         @white.update!(grade_key: white_grade_key)
@@ -19,6 +14,8 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
+        @white = User.create!
         assert { case1("二段", "三段") == 1.0 }
         assert { case1("二段", "四段") == 1.5 }
       end

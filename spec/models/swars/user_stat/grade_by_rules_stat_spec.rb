@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::GradeByRulesStat, type: :model, swars_spec: true do
     describe "ルール別最高段級位" do
-      before do
-        @black = User.create!
-      end
-
       def case1(rule_key, grade_key)
         @black.update!(grade_key: grade_key)
         Battle.create!(rule_key: rule_key) do |e|
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         case1(:ten_min, "1級")
         case1(:ten_min, "2級")
         case1(:three_min, "3級")

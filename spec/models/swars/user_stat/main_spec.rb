@@ -4,45 +4,49 @@ module Swars
   RSpec.describe UserStat::Main, type: :model, swars_spec: true do
     describe "プレイヤー情報" do
       before do
-        @record = Battle.create!
-        @hash = @record.memberships.first.user.user_stat.to_hash.as_json
+        @user = User.create!
+        Battle.create! do |e|
+          e.memberships.build(user: @user)
+        end
+        @as_json = @user.user_stat.to_hash.as_json
       end
 
       describe "ヘッダー" do
         it "名前" do
-          assert { @hash["user"] == {"key" => "user1", "ban_at" => nil} }
+          assert { @as_json["user"] == {"key" => "user1", "ban_at" => nil} }
         end
         it "ルール別の段級位" do
-          assert { @hash["rule_items"] == [{"rule_key" => "ten_min", "rule_name" => "10分", "grade_name" => "30級"}, {"rule_key" => "three_min", "rule_name" => "3分", "grade_name" => nil}, {"rule_key" => "ten_sec", "rule_name" => "10秒", "grade_name" => nil}] }
+          assert { @as_json["rule_items"] == [{"rule_key" => "ten_min", "rule_name" => "10分", "grade_name" => "30級"}, {"rule_key" => "three_min", "rule_name" => "3分", "grade_name" => nil}, {"rule_key" => "ten_sec", "rule_name" => "10秒", "grade_name" => nil}] }
         end
         it "勝敗数" do
-          assert { @hash["judge_counts"] == {"win" => 1} }
+          assert { @as_json["judge_counts"] == {"win" => 1} }
         end
         it "直近N件の勝敗履歴" do
-          assert { @hash["judge_keys"]  == ["win"] }
+          assert { @as_json["judge_keys"]  == ["win"] }
         end
         it "メダル" do
-          assert { @hash["badge_items"] }
+          assert { @as_json["badge_items"] }
         end
       end
 
       it "各タブの情報" do
-        assert { @hash["day_items"]       == [{"battled_on" => "2000-01-01", "day_type" => "info", "judge_counts" => {"win" => 1, "lose" => 0}}] }
-        assert { @hash["vs_grade_items"]  == [{"grade_name" => "30級", "judge_counts" => {"win" => 1}, "appear_ratio" => 1.0}] }
-        assert { @hash["my_attack_items"] == [{"tag" => {"name" => "新嬉野流", "count" => 1}, "appear_ratio" => 1.0, "judge_counts" => {"win" => 1}}] }
-        assert { @hash["vs_attack_items"] == [{"tag" => {"name" => "2手目△３ニ飛戦法", "count" => 1}, "appear_ratio" => 1.0, "judge_counts" => {"lose" => nil, "win" => 1}}] }
-        assert { @hash["my_defense_items"] == [] }
-        assert { @hash["vs_defense_items"] == [] }
+        assert { @as_json["day_items"]       == [{"battled_on" => "2000-01-01", "day_type" => "info", "judge_counts" => {"win" => 1, "lose" => 0}}] }
+        assert { @as_json["vs_grade_items"]  == [{"grade_name" => "30級", "judge_counts" => {"win" => 1}, "appear_ratio" => 1.0}] }
+        assert { @as_json["my_attack_items"] == [{"tag" => {"name" => "新嬉野流", "count" => 1}, "appear_ratio" => 1.0, "judge_counts" => {"win" => 1}}] }
+        assert { @as_json["vs_attack_items"] == [{"tag" => {"name" => "2手目△３ニ飛戦法", "count" => 1}, "appear_ratio" => 1.0, "judge_counts" => {"lose" => nil, "win" => 1}}] }
+        assert { @as_json["my_defense_items"] == [] }
+        assert { @as_json["vs_defense_items"] == [] }
       end
 
       it "対局数0の場合にエラーにならない" do
-        assert { User.create!.user_stat.to_hash }
+        user = User.create!
+        assert { user.user_stat.as_json }
       end
     end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::UserStat::Main
 # >>   プレイヤー情報
 # >>     各タブの情報
@@ -53,7 +57,7 @@ end
 # >>       勝敗数
 # >>       直近N件の勝敗履歴
 # >>       メダル
-# >> 
+# >>
 # >> Top 5 slowest examples (1.67 seconds, 39.6% of total time):
 # >>   Swars::UserStat::Main プレイヤー情報 各タブの情報
 # >>     0.70977 seconds -:29
@@ -65,7 +69,7 @@ end
 # >>     0.22524 seconds -:15
 # >>   Swars::UserStat::Main プレイヤー情報 ヘッダー 名前
 # >>     0.22133 seconds -:12
-# >> 
+# >>
 # >> Finished in 4.21 seconds (files took 1.56 seconds to load)
 # >> 7 examples, 0 failures
-# >> 
+# >>

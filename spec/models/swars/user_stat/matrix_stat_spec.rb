@@ -18,7 +18,7 @@ module Swars
         assert do
           @user.user_stat.matrix_stat.my_attack_items == [
             {:tag => {"name" => "目くらまし戦法", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
-            {:tag => {"name" => "アヒル戦法", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
+            {:tag => {"name" => "アヒル戦法",     "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
           ]
         end
       end

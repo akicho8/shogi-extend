@@ -3,10 +3,6 @@ require "rails_helper"
 module Swars
   RSpec.describe UserStat::AverageMovesAtResignationStat, type: :model, swars_spec: true do
     describe "投了時の平均手数" do
-      before do
-        @black = User.create!
-      end
-
       def case1(n, final_key, judge_key)
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
@@ -15,6 +11,7 @@ module Swars
       end
 
       it "works" do
+        @black = User.create!
         assert { case1(2, :TORYO, :lose)      == 2 }
         assert { case1(8, :TORYO, :lose)      == 5 }
         assert { case1(9, :DISCONNECT, :lose) == 5 } # TORYO で lose 専用なので結果は変わらない

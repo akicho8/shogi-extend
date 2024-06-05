@@ -20,6 +20,24 @@ module Swars
         assert { case1(49).over50_draw_count == 0 }
         assert { case1(50).over50_draw_count == 1 }
       end
+
+      describe "メダル" do
+        def case1(n)
+          @black = User.create!
+          Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DRAW_SENNICHI) do |e|
+            e.memberships.build(user: @black, judge_key: :draw)
+          end
+          @black.user_stat.badge_stat
+        end
+
+        it "開幕千日手" do
+          assert { case1(12).active?(:"開幕千日手") }
+        end
+
+        it "ただの千日手" do
+          assert { case1(50).active?(:"ただの千日手") }
+        end
+      end
     end
   end
 end
@@ -30,13 +48,20 @@ end
 # >>   開幕千日手回数 / 引き分け数
 # >>     開幕千日手回数
 # >>     引き分け数
+# >>     メダル
+# >>       開幕千日手
+# >>       ただの千日手
 # >> 
-# >> Top 2 slowest examples (1.67 seconds, 44.9% of total time):
+# >> Top 4 slowest examples (2.16 seconds, 50.7% of total time):
 # >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 開幕千日手回数
-# >>     1.17 seconds -:14
+# >>     1.2 seconds -:14
 # >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 引き分け数
-# >>     0.50633 seconds -:19
+# >>     0.50682 seconds -:19
+# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 メダル ただの千日手
+# >>     0.24646 seconds -:37
+# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 メダル 開幕千日手
+# >>     0.20018 seconds -:33
 # >> 
-# >> Finished in 3.73 seconds (files took 1.56 seconds to load)
-# >> 2 examples, 0 failures
+# >> Finished in 4.25 seconds (files took 1.54 seconds to load)
+# >> 4 examples, 0 failures
 # >> 
