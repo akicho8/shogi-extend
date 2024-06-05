@@ -86,7 +86,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "メダル情報の確認",
+        desc: "バッジ情報の確認",
         key: "badge",
         example: "/badge",
         command_fn: (context, args) => {
@@ -94,7 +94,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "指定チームのメダルの増減(部屋でのみ使用可)",
+        desc: "指定チームのバッジの増減(部屋でのみ使用可)",
         key: "badge-team",
         example: "/badge-team black 1",
         command_fn: (context, args) => {
@@ -102,7 +102,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "指定の人のメダルの増減(部屋でのみ使用可)",
+        desc: "指定の人のバッジの増減(部屋でのみ使用可)",
         key: "badge-user",
         example: "/badge-user alice 1",
         command_fn: (context, args) => {
@@ -110,7 +110,7 @@ export class CommandInfo extends ApplicationMemoryRecord {
         },
       },
       {
-        desc: "自分のメダル増減",
+        desc: "自分のバッジ増減",
         key: "badge-self",
         example: "/badge-self 1",
         command_fn: (context, args) => {

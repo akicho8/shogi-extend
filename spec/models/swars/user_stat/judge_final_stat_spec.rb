@@ -41,7 +41,7 @@ module Swars
         assert { @black.user_stat.judge_final_stat.counts_hash == {["win", "CHECKMATE"] => 1} }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         it "切断マン" do
           @black = User.create!
           case1(:DISCONNECT, :lose)

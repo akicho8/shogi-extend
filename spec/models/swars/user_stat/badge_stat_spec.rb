@@ -3,13 +3,13 @@ require "#{__dir__}/badge_stat_or_condition_only_tag_badge_test_case_list"
 
 module Swars
   RSpec.describe UserStat::BadgeStat, type: :model, swars_spec: true do
-    describe "メダル" do
+    describe "バッジ" do
       # 判定できるのは OR 条件のタグのみ。
       # つまりオールラウンダーはこれで判定してはいけない。
       # 「早石田」で後手が勝つ場合、先手の win_tag に「早石田」は入らないので「三間飛車で勝った」のテストができない。
       # したがって早石田を持っている側を勝ちにする。
       # こうすることでテストしたいタグを持っている側の win_tag に必ず該当のタグが入る。
-      describe "OR判定専用タグ依存メダル" do
+      describe "OR判定専用タグ依存バッジ" do
         def case1(e)
           black = User.create!
           white = User.create!

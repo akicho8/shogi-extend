@@ -88,7 +88,7 @@ module Swars
         end
         av.collect do |ms, e, if_cond|
           {
-            "メダル名" => e.name,
+            "バッジ名" => e.name,
             "時間"     => "%.2f" % ms,
             "結果"     => if_cond ? "○" : "",
             "絵"       => e.badge_params[:name],

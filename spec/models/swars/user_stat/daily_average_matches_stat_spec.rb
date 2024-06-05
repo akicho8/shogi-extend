@@ -18,7 +18,7 @@ module Swars
         assert { @black.user_stat.daily_average_matches_stat.max == 2 }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         it "廃指しマン" do
           @black = User.create!
           30.times { Battle.create! { |e| e.memberships.build(user: @black) } }

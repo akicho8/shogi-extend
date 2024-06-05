@@ -21,7 +21,7 @@
     // 名前
     XemojiWrap.user_name.flex_item(:str="info.from_user_name")
 
-    // メダル
+    // バッジ
     UserBadge.flex_item.is-size-7(v-if="badge_show_p" :name="info.from_user_name")
   slot
 </template>

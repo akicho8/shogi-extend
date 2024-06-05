@@ -20,7 +20,7 @@ module Swars
         assert { case1 == [600, [{name: "10分", value: 2}]] }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         def case1
           @black = User.create!
           Swars::Battle.create!(final_key: :TIMEOUT) do |e|

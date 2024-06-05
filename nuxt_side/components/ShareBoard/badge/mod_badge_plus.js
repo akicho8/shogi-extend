@@ -1,4 +1,4 @@
-// チャット内コマンドでのメダル操作(なくてもよい)
+// チャット内コマンドでのバッジ操作(なくてもよい)
 
 import { Gs } from "@/components/models/gs.js"
 import { Location } from "shogi-player/components/models/location.js"
@@ -7,7 +7,7 @@ import _ from "lodash"
 export const mod_badge_plus = {
   methods: {
     // /badge-team コマンド用
-    // チーム毎に一括でメダル付与したいときに使う
+    // チーム毎に一括でバッジ付与したいときに使う
     // location_key 側のチームの人たちに加算するように伝える
     // あくまで加算は本人に行ってもらう
     badge_add_to_team(location_key, plus) {

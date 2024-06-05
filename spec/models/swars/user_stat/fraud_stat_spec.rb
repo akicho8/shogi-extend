@@ -18,7 +18,7 @@ module Swars
         assert { case1(29) == [2, 1] }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         def case1(pattern)
           @black = User.create!
           Swars::Battle.create!(csa_seq: KifuGenerator.send(pattern), final_key: :CHECKMATE) do |e|

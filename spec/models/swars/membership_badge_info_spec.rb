@@ -2,7 +2,7 @@ require "rails_helper"
 
 module Swars
   RSpec.describe MembershipBadgeInfo, type: :model, swars_spec: true do
-    describe "タグ依存メダル" do
+    describe "タグ依存バッジ" do
       def test(tactic_keys, win_or_lose)
         black = User.create!
         white = User.create!
@@ -259,7 +259,7 @@ end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
 # >> Swars::MembershipBadgeInfo
-# >>   タグ依存メダル
+# >>   タグ依存バッジ
 # >>     works
 # >>   切断マン
 # >>     works
@@ -285,7 +285,7 @@ end
 # >> Top 5 slowest examples (8.38 seconds, 67.1% of total time):
 # >>   Swars::MembershipBadgeInfo 段級差 全パターン
 # >>     4.73 seconds -:208
-# >>   Swars::MembershipBadgeInfo タグ依存メダル works
+# >>   Swars::MembershipBadgeInfo タグ依存バッジ works
 # >>     1.7 seconds -:28
 # >>   Swars::MembershipBadgeInfo 無気力マン works
 # >>     0.97467 seconds -:135

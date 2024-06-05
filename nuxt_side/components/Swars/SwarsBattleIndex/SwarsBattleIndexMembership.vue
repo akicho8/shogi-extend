@@ -53,7 +53,7 @@ export default {
       &:not(:first-child)
         margin-left: 2px  // タグ同士の隙間
 
-  // メダルがあってタブレット以上なら戦法の左をアイコンのぶんだけずらしておく
+  // バッジがあってタブレット以上なら戦法の左をアイコンのぶんだけずらしておく
   &.has_badge
     .tags
       +tablet

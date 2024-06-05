@@ -9,7 +9,7 @@ module Swars
 
       include ApplicationMemoryRecord
       memory_record [
-        # ネガティブなメダル
+        # ネガティブなバッジ
 
         { key: "切断マン",           badge_params: { name: "💩",   message: "切断の使い手",                            }, if_cond: proc { (user_stat.judge_final_stat.count_by(:lose, :DISCONNECT) || 0).positive? },},
         { key: "絶対投了しないマン", badge_params: { name: "🪳",   message: "悔しかったので時間切れまで放置した",      }, if_cond: proc { user_stat.leave_alone_stat.count.positive? } },

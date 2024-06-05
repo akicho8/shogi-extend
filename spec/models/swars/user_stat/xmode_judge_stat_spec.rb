@@ -35,7 +35,7 @@ module Swars
       end
     end
 
-    describe "メダル" do
+    describe "バッジ" do
       it "友対勝ちマン" do
         case1("友達", :win)
         assert { @black.user_stat.badge_stat.active?("友対勝ちマン") }

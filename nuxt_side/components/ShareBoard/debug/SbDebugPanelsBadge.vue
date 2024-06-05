@@ -2,7 +2,7 @@
 .SbDebugPanelsBadge.column.is-2
   .panel
     .panel-heading
-      | メダル
+      | バッジ
     .panel-block
       b-button(size="is-small" @click="SB.badge_add_to_self_if_win('black', 1)") ☗+1
       b-button(size="is-small" @click="SB.badge_add_to_self_if_win('black', -1)") ☗-1

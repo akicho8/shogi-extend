@@ -24,7 +24,7 @@ module Swars
         it "直近N件の勝敗履歴" do
           assert { @as_json["judge_keys"]  == ["win"] }
         end
-        it "メダル" do
+        it "バッジ" do
           assert { @as_json["badge_items"] }
         end
       end
@@ -56,7 +56,7 @@ end
 # >>       ルール別の段級位
 # >>       勝敗数
 # >>       直近N件の勝敗履歴
-# >>       メダル
+# >>       バッジ
 # >>
 # >> Top 5 slowest examples (1.67 seconds, 39.6% of total time):
 # >>   Swars::UserStat::Main プレイヤー情報 各タブの情報

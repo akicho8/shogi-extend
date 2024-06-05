@@ -21,7 +21,7 @@ module Swars
         assert { case1(50).over50_draw_count == 1 }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         def case1(n)
           @black = User.create!
           Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DRAW_SENNICHI) do |e|
@@ -48,7 +48,7 @@ end
 # >>   開幕千日手回数 / 引き分け数
 # >>     開幕千日手回数
 # >>     引き分け数
-# >>     メダル
+# >>     バッジ
 # >>       開幕千日手
 # >>       ただの千日手
 # >> 
@@ -57,9 +57,9 @@ end
 # >>     1.2 seconds -:14
 # >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 引き分け数
 # >>     0.50682 seconds -:19
-# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 メダル ただの千日手
+# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 バッジ ただの千日手
 # >>     0.24646 seconds -:37
-# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 メダル 開幕千日手
+# >>   Swars::UserStat::PerpetualCheckStat 開幕千日手回数 / 引き分け数 バッジ 開幕千日手
 # >>     0.20018 seconds -:33
 # >> 
 # >> Finished in 4.25 seconds (files took 1.54 seconds to load)

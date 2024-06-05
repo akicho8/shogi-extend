@@ -19,7 +19,7 @@ RSpec.describe type: :system, share_board_spec: true do
     b_block do
       case1("bob")
       give_up_run                             # bob は手番ではないがヘッダーの「投了」ボタンを押す
-      assert_member_has_text("alice", "⭐") # bob が負けたので alice にメダル付与している
+      assert_member_has_text("alice", "⭐") # bob が負けたので alice にバッジ付与している
     end
     a_block do
       assert_member_has_text("alice", "⭐") # alice から見ても同じ

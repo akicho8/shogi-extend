@@ -312,7 +312,7 @@ RSpec.describe ShareBoard::RoomChannel, type: :channel, share_board_spec: true d
     end
   end
 
-  describe "メダル" do
+  describe "バッジ" do
     before do
       subscribe(room_key: room_key)
     end

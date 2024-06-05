@@ -22,7 +22,7 @@ module Swars
         assert { case1(61) == [61, [{name: "1分",  value: 1}]] }
       end
 
-      describe "メダル" do
+      describe "バッジ" do
         def case1
           @black = User.create!
           Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|

@@ -9,7 +9,7 @@ export const mod_badge = {
     }
   },
   methods: {
-    // 起動時に名前が復元できていればメダル獲得数を表示に反映する
+    // 起動時に名前が復元できていればバッジ獲得数を表示に反映する
     // これは this.user_name を設定した直後に自動的に呼ぶ
     badge_write() {
       this.clog(`badge_write()`)
@@ -28,20 +28,20 @@ export const mod_badge = {
       }
     },
 
-    // 自分のメダル数を +plus してみんなに伝える
+    // 自分のバッジ数を +plus してみんなに伝える
     badge_add_to_self(plus) {
       this.clog(`badge_add_to_self(${plus})`)
       this.acquire_badge_count += plus
       this.acquire_badge_count_share()
     },
 
-    // 自分のメダル数を +plus してみんなに伝える(サイドバー用)
+    // 自分のバッジ数を +plus してみんなに伝える(サイドバー用)
     badge_add_to_self_handle(plus) {
       this.$sound.play_click()
       this.badge_add_to_self(plus)
     },
 
-    // 自分のメダル数を(自分を含めて)みんなに伝える
+    // 自分のバッジ数を(自分を含めて)みんなに伝える
     acquire_badge_count_share() {
       if (Gs.blank_p(this.user_name)) {
         return

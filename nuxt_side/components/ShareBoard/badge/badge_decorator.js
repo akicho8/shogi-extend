@@ -16,14 +16,14 @@ export class BadgeDecorator {
     return this.count <= this.__max
   }
 
-  // 実際に表示するメダルたち
+  // 実際に表示するバッジたち
   get visible_badge_text() {
     return this.__badge_char.repeat(this.__visible_badge_count)
   }
 
   //////////////////////////////////////////////////////////////////////////////// private
 
-  // 実際に表示できるメダル数
+  // 実際に表示できるバッジ数
   get __visible_badge_count() {
     if (this.count_lteq_max) {
       return this.count

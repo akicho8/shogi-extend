@@ -3,7 +3,7 @@ module BackendScript
     include SwarsIdMethods
 
     self.category = "swars"
-    self.script_name = "将棋ウォーズ棋譜 メダル一覧の計算時間の確認"
+    self.script_name = "将棋ウォーズ棋譜 バッジ一覧の計算時間の確認"
 
     def script_body
       if user = Swars::User.find_by(user_key: current_swars_id)
