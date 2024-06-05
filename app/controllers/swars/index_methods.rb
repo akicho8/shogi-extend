@@ -3,7 +3,6 @@ module Swars
     def index
       [
         :case_kento_api,
-        :case_player_info,
         :case_zip_download,
         :case_swars_search,
       ].each do |e|
@@ -30,23 +29,6 @@ module Swars
                 },
               })
           end
-        end
-      end
-    end
-
-    # http://localhost:3000/w.json?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86&format_type=user
-    def case_player_info
-      if request.format.json?
-        if params[:format_type] == "user"
-          raise "must not happen"
-          if !current_swars_user
-            render json: {}, status: :not_found
-            return
-          end
-          if params[:try_fetch] == "true"
-            import_process_any
-          end
-          render json: current_swars_user.user_stat(params.to_unsafe_h.to_options)
         end
       end
     end
