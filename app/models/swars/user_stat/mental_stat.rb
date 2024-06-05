@@ -3,6 +3,22 @@
 module Swars
   module UserStat
     class MentalStat < Base
+      class << self
+        def report
+          Rails.application.credentials[:expert_import_user_keys].collect { |key|
+            if user = Swars::User[key]
+              mental_stat = user.user_stat(sample_max: 200).mental_stat
+              {
+                :key        => key,
+                :level      => mental_stat.level,
+                :raw_level  => mental_stat.raw_level,
+                :hard_brain => mental_stat.hard_brain?,
+              }
+            end
+          }.compact.sort_by { |e| -e[:level] }
+        end
+      end
+
       delegate *[
         :averages_hash,
       ], to: "@user_stat.average_moves_by_outcome_stat"
@@ -12,6 +28,11 @@ module Swars
         if v = raw_level
           (v.fdiv(win + lose) * 100).round
         end
+      end
+
+      # 心強すぎマン
+      def hard_brain?
+        (level || 0) >= 5
       end
 
       def raw_level

@@ -15,10 +15,10 @@ module Swars
         s = ids_scope
         s = s.joins(:battle)
         s = s.select([
-                       "DATE(#{battled_at}) AS battled_on",
-                       "COUNT(judge_id = #{Judge[:win].id}  OR NULL) AS win",
-                       "COUNT(judge_id = #{Judge[:lose].id} OR NULL) AS lose",
-                     ])
+            "DATE(#{battled_at}) AS battled_on",
+            "COUNT(judge_id = #{Judge[:win].id}  OR NULL) AS win",
+            "COUNT(judge_id = #{Judge[:lose].id} OR NULL) AS lose",
+          ])
         s = s.order("battled_on DESC")
         s = s.group("battled_on")
         s.collect do |e|
@@ -28,23 +28,6 @@ module Swars
             :day_type     => day_type_for(battled_on),
             :judge_counts => { win: e.win, lose: e.lose },
           }
-        end
-      end
-
-      # 昔の方法 (遅い)
-      def to_chart_slow
-        judge_counts_of = -> memberships {
-          group = memberships.group_by(&:judge_key)
-          ["win", "lose"].each_with_object({}) { |e, m| m[e] = (group[e] || []).count }
-        }
-        group = ids_scope.joins(:battle).order(Battle.arel_table[:battled_at].desc).group_by { |e| e.battle.battled_at.midnight }
-        group.collect do |battled_at, memberships|
-          hv = {}
-          hv[:battled_on]   = battled_at.to_date
-          hv[:day_type]     = day_type_for(battled_at)
-          hv[:judge_counts] = judge_counts_of[memberships]
-          # hv[:all_tags]     = nil   # ← 設定すればビュー側で出る
-          hv
         end
       end
 

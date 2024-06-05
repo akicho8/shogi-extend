@@ -54,7 +54,7 @@ module Swars
           :user         => { key: user.key, ban_at: user.ban_at }, # 対象者情報
           :rule_items   => grade_by_rules_stat.to_chart,           # ルール別最高段位
           :judge_counts => total_judge_counts,                     # 勝ち負け数
-          :medal_items  => medal_stat.as_json,                     # メダル一覧
+          :medal_items  => medal_stat.as_json.shuffle,             # メダル一覧
           :judge_keys   => recent_outcome_list_stat.to_a,          # 直近勝敗リスト
         }
       end
@@ -145,7 +145,11 @@ module Swars
       end
 
       def turn_stat
-        @turn_stat ||= TurnStat.new(self)
+        @turn_stat ||= TurnStat.new(self, ids_scope)
+      end
+
+      def win_turn_stat
+        @win_turn_stat ||= TurnStat.new(self, ids_scope.win_only)
       end
 
       def average_moves_by_outcome_stat

@@ -40,18 +40,38 @@ module Swars
         case1(:CHECKMATE, :win)
         assert { @black.user_stat.judge_final_stat.counts_hash == {["win", "CHECKMATE"] => 1} }
       end
+
+      describe "メダル" do
+        it "切断マン" do
+          @black = User.create!
+          case1(:DISCONNECT, :lose)
+          assert { @black.user_stat.medal_stat.active?("切断マン") }
+        end
+
+        it "切れ負けマン" do
+          @black = User.create!
+          case1(:TIMEOUT, :lose)
+          assert { @black.user_stat.medal_stat.active?("切れ負けマン") }
+        end
+
+        it "投了マン" do
+          @black = User.create!
+          case1(:TORYO, :lose)
+          assert { @black.user_stat.medal_stat.active?("投了マン") }
+        end
+      end
     end
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::UserStat::JudgeFinalStat
 # >>   勝ち負け時の結末の内訳
 # >>     to_chart
 # >>     count_by
 # >>     ratio_by
 # >>     counts_hash
-# >> 
+# >>
 # >> Top 4 slowest examples (1.14 seconds, 35.3% of total time):
 # >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 to_chart
 # >>     0.72114 seconds -:12
@@ -61,7 +81,7 @@ end
 # >>     0.14106 seconds -:32
 # >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 counts_hash
 # >>     0.13575 seconds -:38
-# >> 
+# >>
 # >> Finished in 3.23 seconds (files took 1.57 seconds to load)
 # >> 4 examples, 0 failures
-# >> 
+# >>

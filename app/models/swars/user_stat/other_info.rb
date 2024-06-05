@@ -35,11 +35,11 @@ module Swars
         ################################################################################
 
         { key: "切断逃亡",                body: proc { disconnect_escape_stat.positive_count }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "無気力な対局",            body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "角不成",                  body: proc { all_tag.counts_hash[:"角不成"]                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "飛車不成",                body: proc { all_tag.counts_hash[:"飛車不成"]                     }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count              }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "無気力な対局",            body: proc { lethargy_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "角不成",                  body: proc { all_tag.counts_hash[:"角不成"]        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "飛車不成",                body: proc { all_tag.counts_hash[:"飛車不成"]      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
@@ -59,21 +59,13 @@ module Swars
 
         ################################################################################
 
-        { key: "派閥",        chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { all_tag.to_chart([:"居飛車", :"振り飛車"]) }, },
-        { key: "居飛車",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "居飛車"    }, }, body: proc { note_stat.to_chart("居飛車")             }, },
-        { key: "振り飛車",    chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "振り飛車", }, }, body: proc { note_stat.to_chart("振り飛車")           }, },
-        { key: "相居飛車",    chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相居飛車", }, }, body: proc { note_stat.to_chart("相居飛車")           }, },
-        { key: "対振り",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対振り",   }, }, body: proc { note_stat.to_chart("対振り")             }, },
-        { key: "対抗形",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対抗形",   }, }, body: proc { note_stat.to_chart("対抗形")             }, },
-        { key: "相振り",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相振り",   }, }, body: proc { note_stat.to_chart("相振り")             }, },
-
-        { key: "棋風 (速度)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { all_tag.to_chart([:"急戦", :"持久戦"])     }, },
-        { key: "急戦",        chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "急戦",     }, }, body: proc { note_stat.to_chart("急戦")               }, },
-        { key: "持久戦",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "持久戦",   }, }, body: proc { note_stat.to_chart("持久戦")             }, },
-
-        { key: "棋風 (手数)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { all_tag.to_chart([:"短手数", :"長手数"])   }, },
-        { key: "短手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "短手数",   }, }, body: proc { note_stat.to_chart("短手数")             }, },
-        { key: "長手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "長手数",   }, }, body: proc { note_stat.to_chart("長手数")             }, },
+        { key: "派閥",        body: proc { all_tag.to_chart([:"居飛車", :"振り飛車"]) }, chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 },
+        { key: "居飛車",      body: proc { note_stat.to_chart("居飛車")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "居飛車"    }, }, },
+        { key: "振り飛車",    body: proc { note_stat.to_chart("振り飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "振り飛車", }, }, },
+        { key: "相居飛車",    body: proc { note_stat.to_chart("相居飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相居飛車", }, }, },
+        { key: "対振り",      body: proc { note_stat.to_chart("対振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対振り",   }, }, },
+        { key: "対抗形",      body: proc { note_stat.to_chart("対抗形")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対抗形",   }, }, },
+        { key: "相振り",      body: proc { note_stat.to_chart("相振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相振り",   }, }, },
 
         ################################################################################
 
@@ -85,6 +77,16 @@ module Swars
         { key: "大駒全ブッチ",     body: proc { note_stat.to_chart("大駒全ブッチ")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒全ブッチ",     }, }, },
         { key: "大駒コンプリート", body: proc { note_stat.to_chart("大駒コンプリート") }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒コンプリート", }, }, },
         { key: "入玉",             body: proc { note_stat.to_chart("入玉")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "入玉",             }, }, },
+
+        ################################################################################
+
+        { key: "棋風 (速度)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { all_tag.to_chart([:"急戦", :"持久戦"])     }, },
+        { key: "急戦",        chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "急戦",     }, }, body: proc { note_stat.to_chart("急戦")               }, },
+        { key: "持久戦",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "持久戦",   }, }, body: proc { note_stat.to_chart("持久戦")             }, },
+
+        { key: "棋風 (手数)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { all_tag.to_chart([:"短手数", :"長手数"])   }, },
+        { key: "短手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "短手数",   }, }, body: proc { note_stat.to_chart("短手数")             }, },
+        { key: "長手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "長手数",   }, }, body: proc { note_stat.to_chart("長手数")             }, },
 
         ################################################################################
 
@@ -100,11 +102,8 @@ module Swars
 
         ################################################################################
 
-        { key: "平均手数", body: proc { turn_stat.average }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
-        { key: "最長手数", body: proc { turn_stat.max     }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
-
-        ################################################################################
-
+        { key: "最長手数",         body: proc { turn_stat.max                             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
+        { key: "平均手数",         body: proc { turn_stat.average                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
         { key: "投了時の平均手数", body: proc { average_moves_at_resignation_stat.average }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "手", }, },
 
         ################################################################################

@@ -7,6 +7,11 @@ module Swars
         :ids_scope,
       ], to: :@user_stat
 
+      def initialize(user_stat, scope)
+        super(user_stat)
+        @scope = scope
+      end
+
       # 最大手数
       def max
         @max ||= scope.maximum(Battle.arel_table[:turn_max])
@@ -24,7 +29,7 @@ module Swars
       private
 
       def scope
-        s = ids_scope
+        s = @scope
         s = s.joins(:battle)
       end
     end

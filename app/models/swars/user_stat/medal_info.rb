@@ -58,10 +58,10 @@ module Swars
         { key: "無敵囲いマン",       medal_params: { name: "🔰",   message: "無敵囲いで勝った",                   }, if_cond: proc { win_tag.exist?(:"無敵囲い")                  },},
         { key: "背水マン",           medal_params: { name: "🧠",   message: "大駒全部捨てて勝った",               }, if_cond: proc { win_tag.exist?(:"背水の陣")                  },},
         { key: "エルモマン",         medal_params: { name: "🐒",   message: "エルモ囲いで勝った",                 }, if_cond: proc { win_tag.exist?(:"エルモ囲い")                  },},
-        { key: "小部屋マン",         medal_params: { name: "🛖",   message: "銀冠の小部屋で勝った",               }, if_cond: proc { win_tag.exist?(:"銀冠の小部屋")                  },},
+        { key: "小部屋マン",         medal_params: { name: "🛖",   message: "銀冠の小部屋の使い手",               }, if_cond: proc { win_tag.exist?(:"銀冠の小部屋")                  },},
         { key: "鬼殺しマン",         medal_params: { name: "👹",   message: "鬼殺しで勝った",                     }, if_cond: proc { win_tag.to_s.include?("鬼殺し") },},
         { key: "アヒルマン",         medal_params: { name: "🐥",   message: "アヒル戦法で勝った",                 }, if_cond: proc { win_tag.exist?(:"アヒル戦法") },},
-        { key: "稲庭マン",           medal_params: { name: "🤖",   message: "稲庭戦法で勝った",                   }, if_cond: proc { win_tag.exist?(:"稲庭戦法") },},
+        { key: "稲庭マン",           medal_params: { name: "👾",   message: "稲庭戦法で勝った",                   }, if_cond: proc { win_tag.exist?(:"稲庭戦法") },},
         { key: "パンツマン",         medal_params: { name: "🩲",   message: "パンツを脱いで勝った",               }, if_cond: proc { win_tag.exist?(:"パンツを脱ぐ") }, },
         { key: "居玉勝ちマン",       medal_params: { name: "🗿",   message: "居玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"居玉") }, },
         { key: "入玉勝ちマン",       medal_params: { name: "🏈",   message: "入玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"入玉") }, },
@@ -74,16 +74,17 @@ module Swars
 
         #############################################             ###################################
 
-        # { key: "200手越えマン",    medal_params: { name: "🌊",   message: "200手以上の対局で勝った",            }, if_cond: proc { (turn_stat.max || 0) >= 200 },},
+        { key: "200手越えマン",      medal_params: { name: "⚡️",    message: "200手以上で勝った",                  }, if_cond: proc { (user_stat.win_turn_stat.max || 0) >= 200 },},
+        { key: "心強すぎマン",       medal_params: { name: "🫀",   message: "折れない心の持ち主",                 }, if_cond: proc { user_stat.mental_stat.hard_brain? },},
+        { key: "廃指しマン",         medal_params: { name: "😡",   message: "廃指し名人",                         }, if_cond: proc { (user_stat.daily_average_matches_stat.max || 0) >= 30 },},
 
-        ################################################################################ 専用のテストが必
-
-        { key: "切れ負けマン",       medal_params: { name: "⌛",   message: "切れ負けが多い",                     }, if_cond: proc { (user_stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
+        { key: "投了マン",           medal_params: { name: "🙇‍♂️", message: "負けるときは必ず投了する",            }, if_cond: proc { (user_stat.judge_final_stat.ratio_by(:lose, :TORYO) || 0) >= 1.0 }, },
+        { key: "切れ負けマン",       medal_params: { name: "⌛",   message: "切れ負けが多い",                      }, if_cond: proc { (user_stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       medal_params: { name: "🍀",   message: "変態戦法の使い手",                   }, if_cond: proc { user_stat.rarity_stat.minority?                    },},
         { key: "長考マン",           medal_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { user_stat.overthinking_loss_stat.medal? } },
         { key: "開幕千日手",         medal_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { (user_stat.perpetual_check_stat.opening_repetition_move_count || 0).positive? } },
-        { key: "ただの千日手",       medal_params: { name: "🍌",   message: "千日手をした",                       }, if_cond: proc { (user_stat.perpetual_check_stat.over50_draw_count || 0).positive? } },
-        { key: "友対勝ちマン",           medal_params: { name: "🆚",   message: "友達対局で勝った",                   }, if_cond: proc { user_stat.xmode_judge_stat.exist?(:"友達", :win) } },
+        { key: "ただの千日手",       medal_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { (user_stat.perpetual_check_stat.over50_draw_count || 0).positive? } },
+        { key: "友対勝ちマン",       medal_params: { name: "🆚",   message: "友達対局で勝った",                   }, if_cond: proc { user_stat.xmode_judge_stat.exist?(:"友達", :win) } },
         { key: "指導受けマン",       medal_params: { name: "🔥",   message: "指導対局で負けた",                   }, if_cond: proc { user_stat.xmode_judge_stat.exist?(:"指導", :lose) } },
         { key: "プロ越えマン",       medal_params: { name: "💪",   message: "指導対局で勝った",                   }, if_cond: proc { user_stat.xmode_judge_stat.exist?(:"指導", :win) } },
         { key: "運営支えマン",       medal_params: { name: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある", }, if_cond: proc { user_stat.fraud_stat.count.positive? } },

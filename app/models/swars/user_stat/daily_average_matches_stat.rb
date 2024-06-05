@@ -35,9 +35,9 @@ module Swars
             s = s.joins(:battle)
             s = s.group(:battled_on)
             s = s.select([
-                           "DATE(#{battled_at}) AS battled_on",
-                           "COUNT(*) AS count_all",
-                         ])
+                "DATE(#{battled_at}) AS battled_on",
+                "COUNT(*) AS count_all",
+              ])
             Rails.logger.debug { s.to_t }
             sql = "SELECT AVG(count_all) AS average, MAX(count_all) AS max FROM (#{s.to_sql}) AS from_values"
             ActiveRecord::Base.connection.select_one(sql)

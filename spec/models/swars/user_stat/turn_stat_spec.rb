@@ -9,18 +9,19 @@ module Swars
 
       def case1(n)
         Battle.create!(csa_seq: KifuGenerator.generate_n(n)) do |e|
-          e.memberships.build(user: @black)
+          e.memberships.build(user: @black, judge_key: :lose)
         end
-        turn_stat = @black.user_stat.turn_stat
-        [
-          turn_stat.average,
-          turn_stat.max,
-        ]
+        @black.user_stat.turn_stat
       end
 
-      it "works" do
-        assert { case1(10) == [10, 10] }
-        assert { case1(90) == [50, 90] }
+      it "average" do
+        assert { case1(2).average == 2 }
+        assert { case1(8).average == 5 }
+      end
+
+      it "max" do
+        assert { case1(2).max == 2 }
+        assert { case1(8).max == 8 }
       end
     end
   end
@@ -29,12 +30,15 @@ end
 # >> 
 # >> Swars::UserStat::TurnStat
 # >>   平均手数・最長手数
-# >>     works
+# >>     average
+# >>     max
 # >> 
-# >> Top 1 slowest examples (1.2 seconds, 36.5% of total time):
-# >>   Swars::UserStat::TurnStat 平均手数・最長手数 works
-# >>     1.2 seconds -:21
+# >> Top 2 slowest examples (1.53 seconds, 42.6% of total time):
+# >>   Swars::UserStat::TurnStat 平均手数・最長手数 average
+# >>     1.14 seconds -:17
+# >>   Swars::UserStat::TurnStat 平均手数・最長手数 max
+# >>     0.39505 seconds -:22
 # >> 
-# >> Finished in 3.28 seconds (files took 1.56 seconds to load)
-# >> 1 example, 0 failures
+# >> Finished in 3.6 seconds (files took 1.55 seconds to load)
+# >> 2 examples, 0 failures
 # >> 

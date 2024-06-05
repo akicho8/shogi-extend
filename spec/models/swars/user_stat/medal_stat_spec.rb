@@ -40,34 +40,6 @@ module Swars
       end
     end
 
-    describe "切断マン" do
-      def case1
-        @black = User.create!
-        Swars::Battle.create!(final_key: :DISCONNECT) do |e|
-          e.memberships.build(user: @black, judge_key: :lose)
-        end
-        @black.user_stat.medal_stat.active?(:"切断マン")
-      end
-
-      it "works" do
-        assert { case1 == true  }
-      end
-    end
-
-    describe "切れ負けマン" do
-      def case1
-        @black = User.create!
-        Swars::Battle.create!(final_key: :TIMEOUT) do |e|
-          e.memberships.build(user: @black, judge_key: :lose)
-        end
-        @black.user_stat.medal_stat.active?(:"切れ負けマン")
-      end
-
-      it "works" do
-        assert { case1 }
-      end
-    end
-
     describe "1手詰じらしマン" do
       before do
         @black = User.create!
