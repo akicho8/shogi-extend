@@ -96,6 +96,10 @@ module Swars
         @medal_stat ||= MedalStat.new(self)
       end
 
+      def rapid_attack_stat
+        @rapid_attack_stat ||= RapidAttackStat.new(self)
+      end
+
       def xmode_stat
         @xmode_stat ||= XmodeStat.new(self)
       end

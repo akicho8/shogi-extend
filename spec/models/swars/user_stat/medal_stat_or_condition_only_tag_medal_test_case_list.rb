@@ -42,7 +42,7 @@ MedalStatOrConditionOnlyTagMedalTestCaseList = [
   { expected_medal_key: "袖飛車マン",       tactic_key: "袖飛車",             },
   { expected_medal_key: "中飛車マン",       tactic_key: "ツノ銀中飛車",       },
   { expected_medal_key: "音無しマン",       tactic_key: "居飛穴音無しの構え", },
-  { expected_medal_key: "筋違い角マン", tactic_key: "筋違い角",           },
+  { expected_medal_key: "筋違い角マン",     tactic_key: "筋違い角",           },
   { expected_medal_key: "スイーツマン",     tactic_key: "いちご囲い",         },
   { expected_medal_key: "背水マン",         tactic_key: "背水の陣",           },
   { expected_medal_key: "エルモマン",       tactic_key: "エルモ囲い",         },

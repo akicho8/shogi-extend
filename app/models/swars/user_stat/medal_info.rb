@@ -25,6 +25,8 @@ module Swars
         { key: "振り飛車党",         medal_params: { name: "⬅️",    message: "振り飛車党",                         }, if_cond: proc { win_tag.group_furi?                  },},
         { key: "オールラウンダー",   medal_params: { name: "🅰",    message: "オールラウンダー",                   }, if_cond: proc { win_tag.group_all_rounder?               },},
 
+        { key: "急戦マン",           medal_params: { name: "🐝",    message: "急戦で勝ち越した",                   }, if_cond: proc { user_stat.rapid_attack_stat.medal? },},
+
         { key: "三間飛車マン",       medal_params: { name: "3⃣",    message: "三間飛車で勝った",                   }, if_cond: proc { win_tag.to_s.match?(/三間|石田/) },},
         { key: "四間飛車マン",       medal_params: { name: "4⃣",    message: "四間飛車で勝った",                   }, if_cond: proc { win_tag.to_s.match?(/(?<!右)四間飛車/) },},
         { key: "九間飛車マン",       medal_params: { name: "9⃣",    message: "九間飛車で勝った",                   }, if_cond: proc { win_tag.to_s.include?("九間飛車") }, },

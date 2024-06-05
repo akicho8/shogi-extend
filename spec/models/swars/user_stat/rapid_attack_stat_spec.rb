@@ -1,33 +1,19 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe UserStat::RarityStat, type: :model, swars_spec: true do
-    describe "棋風" do
+  RSpec.describe UserStat::RapidAttackStat, type: :model, swars_spec: true do
+    describe "急戦で勝ち越した" do
       def case1(tactic_key)
         black = User.create!
         Battle.create!(tactic_key: tactic_key) do |e|
           e.memberships.build(user: black)
         end
-        black.user_stat.rarity_stat
+        black.user_stat.rapid_attack_stat.medal?
       end
 
-      it "to_chart" do
-        assert do
-          case1("新米長玉").to_chart == [
-            { :name => "王道",   :value => 0 },
-            { :name => "準王道", :value => 0 },
-            { :name => "準変態", :value => 0 },
-            { :name => "変態",   :value => 1 },
-          ]
-        end
-      end
-
-      it "majority?" do
-        assert { case1("棒銀").majority? }
-      end
-
-      it "minority?" do
-        assert { case1("新米長玉").minority? }
+      it "medal?" do
+        assert { !case1("持久戦") }
+        assert { case1("急戦")    }
       end
     end
   end
