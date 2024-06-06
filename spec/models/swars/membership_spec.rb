@@ -53,6 +53,10 @@ module Swars
         assert { record.memberships[0].note_tag_list    == ["居飛車", "対振り", "対抗形"] }
         assert { record.memberships[1].note_tag_list    == ["振り飛車", "対抗形"]         }
       end
+
+      it "タグ検索で LOWER を使わない" do
+        assert { Membership.tagged_with("居玉").to_sql.exclude?("LOWER") }
+      end
     end
 
     describe "カラム" do
