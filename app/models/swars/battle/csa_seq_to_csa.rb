@@ -1,11 +1,11 @@
 module Swars
   class Battle
-    class CsaSeqToKif
+    class CsaSeqToCsa
       def initialize(battle)
         @battle = battle
       end
 
-      def to_kif
+      def to_csa
         @lines = []
         render_header
         render_body

@@ -18,7 +18,7 @@ module Swars
         if tactic_key
           return Bioshogi::Explain::TacticInfo.flat_lookup(tactic_key).sample_kif_file.read
         end
-        kifu_body_for_test || kifu_body_from_csa_seq
+        kifu_body_for_test || to_temporary_csa
       end
 
       # 駒の使用頻度の情報がなければ保存
@@ -42,11 +42,11 @@ module Swars
         end
       end
 
-      private
-
-      def kifu_body_from_csa_seq
-        CsaSeqToKif.new(self).to_kif
+      def to_temporary_csa
+        CsaSeqToCsa.new(self).to_csa
       end
+
+      private
 
       def fast_parser_options
         {

@@ -9,7 +9,7 @@ module Swars
 
       include ApplicationMemoryRecord
       memory_record [
-        # ネガティブなバッジ
+        ################################################################################ ネガティブなバッジ
 
         { key: "切断マン",           badge_params: { name: "💩",   message: "切断の使い手",                            }, if_cond: proc { (user_stat.judge_final_stat.count_by(:lose, :DISCONNECT) || 0).positive? },},
         { key: "絶対投了しないマン", badge_params: { name: "🪳",   message: "悔しかったので時間切れまで放置した",      }, if_cond: proc { user_stat.leave_alone_stat.count.positive? } },
@@ -20,7 +20,8 @@ module Swars
         { key: "角不成マン",         badge_params: { name: "☠",    message: "角不成で舐めプした",                      }, if_cond: proc { all_tag.exist?(:"角不成") }  },
         { key: "飛車不成マン",       badge_params: { name: "💀",   message: "飛車不成で舐めプした",                    }, if_cond: proc { all_tag.exist?(:"飛車不成") }  },
 
-        # 順番はロジックに影響ないが表示順序が変わる
+        ################################################################################
+
         { key: "居飛車党",           badge_params: { name: "⬆️",    message: "居飛車党",                           }, if_cond: proc { win_tag.group_ibis?                  },},
         { key: "振り飛車党",         badge_params: { name: "⬅️",    message: "振り飛車党",                         }, if_cond: proc { win_tag.group_furi?                  },},
         { key: "オールラウンダー",   badge_params: { name: "🅰",    message: "オールラウンダー",                   }, if_cond: proc { win_tag.group_all_rounder?               },},
@@ -44,7 +45,7 @@ module Swars
         { key: "UFOマン",            badge_params: { name: "🛸",   message: "UFO銀で勝った",                      }, if_cond: proc { win_tag.exist?(:"UFO銀")                   },},
         { key: "カニ執着マン",       badge_params: { name: "🦀",   message: "カニ系戦法で勝った",                 }, if_cond: proc { win_tag.to_s.include?("カニ") },},
         { key: "カメレオンマン",     badge_params: { name: "🦎",   message: "カメレオン系戦法で勝った",           }, if_cond: proc { win_tag.to_s.include?("カメレオン") },},
-        { key: "ポンポンマン",       badge_params: { name: "🐴",   message: "ポンポン桂で勝った",                 }, if_cond: proc { win_tag.exist?(:"ポンポン桂")                  },},
+        { key: "ポンポンマン",       badge_params: { name: "🦗",   message: "ポンポン桂で勝った",                 }, if_cond: proc { win_tag.exist?(:"ポンポン桂")                  },},
         { key: "穴熊マン",           badge_params: { name: "🐻",   message: "穴熊で勝った",                       }, if_cond: proc { win_tag.to_s.include?("熊")                  },},
         { key: "ダイヤマン",         badge_params: { name: "💎",   message: "ダイヤモンド美濃で勝った",           }, if_cond: proc { win_tag.exist?(:"ダイヤモンド美濃")                 },},
         { key: "チョコレートマン",   badge_params: { name: "🍫",   message: "チョコレート囲いで勝った",           }, if_cond: proc { win_tag.exist?(:"チョコレート囲い")                 },},
@@ -65,6 +66,8 @@ module Swars
         { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱いで勝った",               }, if_cond: proc { win_tag.exist?(:"パンツを脱ぐ") }, },
         { key: "居玉勝ちマン",       badge_params: { name: "🗿",   message: "居玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"居玉") }, },
         { key: "入玉勝ちマン",       badge_params: { name: "🏈",   message: "入玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"入玉") }, },
+        { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めで勝った",                      }, if_cond: proc { win_tag.exist?(:"都詰め") }  },
+        { key: "駒柱マン",           badge_params: { name: "🗽",   message: "駒柱を作って勝った",                  }, if_cond: proc { win_tag.exist?(:"駒柱") }  },
 
         #############################################             ###################################
 

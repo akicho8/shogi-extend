@@ -67,6 +67,20 @@ module Swars
           assert { case1 }
         end
       end
+
+      describe "都詰め" do
+        def case1
+          black = User.create!
+          Battle.create!(tactic_key: "都詰め") do |e|
+            e.memberships.build(user: black, judge_key: :win)
+          end
+          black
+        end
+
+        it "works" do
+          assert { case1.user_stat.win_tag.exist?(:"都詰め") }
+        end
+      end
     end
   end
 end
