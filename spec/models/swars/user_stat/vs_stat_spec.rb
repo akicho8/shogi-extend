@@ -29,13 +29,13 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::VsStat
+# >> UserStat::VsStat
 # >>   段級
 # >>     works (FAILED - 1)
 # >>
 # >> Failures:
 # >>
-# >>   1) Swars::UserStat::VsStat 段級 works
+# >>   1) UserStat::VsStat 段級 works
 # >>      Failure/Error: Unable to find - to read failed line
 # >>      Minitest::Assertion:
 # >>      # -:29:in `block (3 levels) in <module:Swars>'
@@ -43,7 +43,7 @@ end
 # >>      # ./spec/support/database_cleaner.rb:26:in `block (2 levels) in <main>'
 # >>
 # >> Top 1 slowest examples (0.7772 seconds, 27.1% of total time):
-# >>   Swars::UserStat::VsStat 段級 works
+# >>   UserStat::VsStat 段級 works
 # >>     0.7772 seconds -:24
 # >>
 # >> Finished in 2.86 seconds (files took 1.57 seconds to load)
@@ -51,5 +51,5 @@ end
 # >>
 # >> Failed examples:
 # >>
-# >> rspec -:24 # Swars::UserStat::VsStat 段級 works
+# >> rspec -:24 # UserStat::VsStat 段級 works
 # >>

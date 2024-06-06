@@ -21,12 +21,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::MateSpeedStat
+# >> UserStat::MateSpeedStat
 # >>   詰ます速度(1手平均) mate_speed_stat.average
 # >>     works
 # >> 
 # >> Top 1 slowest examples (1.31 seconds, 38.7% of total time):
-# >>   Swars::UserStat::MateSpeedStat 詰ます速度(1手平均) mate_speed_stat.average works
+# >>   UserStat::MateSpeedStat 詰ます速度(1手平均) mate_speed_stat.average works
 # >>     1.31 seconds -:17
 # >> 
 # >> Finished in 3.39 seconds (files took 1.58 seconds to load)

@@ -47,7 +47,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::Main
+# >> UserStat::Main
 # >>   プレイヤー情報
 # >>     各タブの情報
 # >>     対局数0の場合にエラーにならない
@@ -59,15 +59,15 @@ end
 # >>       バッジ
 # >>
 # >> Top 5 slowest examples (1.67 seconds, 39.6% of total time):
-# >>   Swars::UserStat::Main プレイヤー情報 各タブの情報
+# >>   UserStat::Main プレイヤー情報 各タブの情報
 # >>     0.70977 seconds -:29
-# >>   Swars::UserStat::Main プレイヤー情報 対局数0の場合にエラーにならない
+# >>   UserStat::Main プレイヤー情報 対局数0の場合にエラーにならない
 # >>     0.2779 seconds -:38
-# >>   Swars::UserStat::Main プレイヤー情報 ヘッダー 勝敗数
+# >>   UserStat::Main プレイヤー情報 ヘッダー 勝敗数
 # >>     0.23148 seconds -:18
-# >>   Swars::UserStat::Main プレイヤー情報 ヘッダー ルール別の段級位
+# >>   UserStat::Main プレイヤー情報 ヘッダー ルール別の段級位
 # >>     0.22524 seconds -:15
-# >>   Swars::UserStat::Main プレイヤー情報 ヘッダー 名前
+# >>   UserStat::Main プレイヤー情報 ヘッダー 名前
 # >>     0.22133 seconds -:12
 # >>
 # >> Finished in 4.21 seconds (files took 1.56 seconds to load)

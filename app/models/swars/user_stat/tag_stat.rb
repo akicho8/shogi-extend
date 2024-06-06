@@ -39,7 +39,7 @@ module Swars
       ################################################################################
 
       def exist?(key)
-        Rails.env.local? and !key.kind_of? Symbol and raise "key はシンボルにすること : #{key.inspect}"
+        assert_key(key)
         counts_hash.has_key?(key)
       end
 
@@ -52,14 +52,13 @@ module Swars
       end
 
       def count(key)
-        Rails.env.local? and !key.kind_of? Symbol and raise "key はシンボルにすること : #{key.inspect}"
+        assert_key(key)
         counts_hash.fetch(key, 0)
       end
 
       def counts_hash
         @counts_hash ||= yield_self do
           s = @scope
-          # s = s.toryo_timeout_checkmate_only
           counts = s.all_tag_counts
           counts.each_with_object({}) { |e, m| m[e.name.to_sym] = e.count }
         end
@@ -71,6 +70,19 @@ module Swars
 
       def to_s
         @to_s ||= counts_hash.keys.join(",")
+      end
+
+      private
+
+      def assert_key(key)
+        if Rails.env.local?
+          unless key.kind_of? Symbol
+            raise "key はシンボルにすること : #{key.inspect}"
+          end
+          unless Bioshogi::Explain::TacticInfo.flat_lookup(key)
+            raise "存在しない : #{key.inspect}"
+          end
+        end
       end
     end
   end

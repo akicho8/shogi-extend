@@ -24,12 +24,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::GdiffStat
+# >> UserStat::GdiffStat
 # >>   対戦相手との段級差の平均
 # >>     works
 # >> 
 # >> Top 1 slowest examples (1.2 seconds, 36.7% of total time):
-# >>   Swars::UserStat::GdiffStat 対戦相手との段級差の平均 works
+# >>   UserStat::GdiffStat 対戦相手との段級差の平均 works
 # >>     1.2 seconds -:21
 # >> 
 # >> Finished in 3.27 seconds (files took 1.56 seconds to load)

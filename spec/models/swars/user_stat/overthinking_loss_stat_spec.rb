@@ -7,7 +7,7 @@ module Swars
         seconds = min.minutes
         @black = User.create!
         csa_seq = [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]]
-        Swars::Battle.create!(csa_seq: csa_seq, final_key: :CHECKMATE) do |e|
+        Battle.create!(csa_seq: csa_seq, final_key: :CHECKMATE) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         @black.user_stat.badge_stat.to_set
@@ -24,12 +24,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::OverthinkingLossStat
+# >> UserStat::OverthinkingLossStat
 # >>   長考マン
 # >>     works
 # >> 
 # >> Top 1 slowest examples (1.55 seconds, 42.8% of total time):
-# >>   Swars::UserStat::OverthinkingLossStat 長考マン works
+# >>   UserStat::OverthinkingLossStat 長考マン works
 # >>     1.55 seconds -:16
 # >> 
 # >> Finished in 3.61 seconds (files took 1.58 seconds to load)

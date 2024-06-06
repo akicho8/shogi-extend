@@ -26,15 +26,15 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::TurnStat
+# >> UserStat::TurnStat
 # >>   平均手数・最長手数
 # >>     average
 # >>     max
 # >> 
 # >> Top 2 slowest examples (1.53 seconds, 42.6% of total time):
-# >>   Swars::UserStat::TurnStat 平均手数・最長手数 average
+# >>   UserStat::TurnStat 平均手数・最長手数 average
 # >>     1.14 seconds -:17
-# >>   Swars::UserStat::TurnStat 平均手数・最長手数 max
+# >>   UserStat::TurnStat 平均手数・最長手数 max
 # >>     0.39505 seconds -:22
 # >> 
 # >> Finished in 3.6 seconds (files took 1.55 seconds to load)

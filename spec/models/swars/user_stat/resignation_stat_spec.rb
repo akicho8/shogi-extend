@@ -4,7 +4,7 @@ module Swars
   RSpec.describe UserStat::ResignationStat, type: :model, swars_spec: true do
     describe "投了までの心の準備系" do
       def case1(n, sec)
-        Battle.create!(csa_seq: Swars::KifuGenerator.generate_n(n, last: sec), final_key: :TORYO) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n, last: sec), final_key: :TORYO) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         user_stat = @black.user_stat

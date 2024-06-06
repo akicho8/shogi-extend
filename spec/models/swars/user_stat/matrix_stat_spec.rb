@@ -51,7 +51,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::MatrixStat
+# >> UserStat::MatrixStat
 # >>   戦法・囲い×自分・相手
 # >>     my_attack_items
 # >>     vs_attack_items
@@ -59,13 +59,13 @@ end
 # >>     vs_defense_items
 # >> 
 # >> Top 4 slowest examples (1.23 seconds, 33.5% of total time):
-# >>   Swars::UserStat::MatrixStat 戦法・囲い×自分・相手 my_attack_items
+# >>   UserStat::MatrixStat 戦法・囲い×自分・相手 my_attack_items
 # >>     0.64206 seconds -:17
-# >>   Swars::UserStat::MatrixStat 戦法・囲い×自分・相手 my_defense_items
+# >>   UserStat::MatrixStat 戦法・囲い×自分・相手 my_defense_items
 # >>     0.21416 seconds -:34
-# >>   Swars::UserStat::MatrixStat 戦法・囲い×自分・相手 vs_defense_items
+# >>   UserStat::MatrixStat 戦法・囲い×自分・相手 vs_defense_items
 # >>     0.19847 seconds -:42
-# >>   Swars::UserStat::MatrixStat 戦法・囲い×自分・相手 vs_attack_items
+# >>   UserStat::MatrixStat 戦法・囲い×自分・相手 vs_attack_items
 # >>     0.17795 seconds -:26
 # >> 
 # >> Finished in 3.68 seconds (files took 1.57 seconds to load)

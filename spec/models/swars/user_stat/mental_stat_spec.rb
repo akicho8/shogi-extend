@@ -26,15 +26,15 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::MentalStat
+# >> UserStat::MentalStat
 # >>   report
 # >>   不屈の闘志
 # >>     works
 # >>
 # >> Top 2 slowest examples (0.81982 seconds, 28.4% of total time):
-# >>   Swars::UserStat::MentalStat 不屈の闘志 works
+# >>   UserStat::MentalStat 不屈の闘志 works
 # >>     0.63995 seconds -:12
-# >>   Swars::UserStat::MentalStat report
+# >>   UserStat::MentalStat report
 # >>     0.17987 seconds -:22
 # >>
 # >> Finished in 2.89 seconds (files took 1.55 seconds to load)

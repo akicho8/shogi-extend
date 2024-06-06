@@ -25,7 +25,7 @@ module Swars
       describe "バッジ" do
         def case1
           @black = User.create!
-          Swars::Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
+          Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :CHECKMATE) do |e|
             e.memberships.build(user: @black)
           end
         end
@@ -40,12 +40,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::MateStat
+# >> UserStat::MateStat
 # >>   1手詰を焦らして悦に入った回数
 # >>     works
 # >>
 # >> Top 1 slowest examples (1.49 seconds, 41.8% of total time):
-# >>   Swars::UserStat::MateStat 1手詰を焦らして悦に入った回数 works
+# >>   UserStat::MateStat 1手詰を焦らして悦に入った回数 works
 # >>     1.49 seconds -:18
 # >>
 # >> Finished in 3.56 seconds (files took 1.58 seconds to load)

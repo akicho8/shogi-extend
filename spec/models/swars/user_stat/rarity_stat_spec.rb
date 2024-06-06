@@ -34,18 +34,18 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::RarityStat
+# >> UserStat::RarityStat
 # >>   棋風
 # >>     to_chart
 # >>     majority?
 # >>     minority?
 # >> 
 # >> Top 3 slowest examples (1.76 seconds, 46.1% of total time):
-# >>   Swars::UserStat::RarityStat 棋風 to_chart
+# >>   UserStat::RarityStat 棋風 to_chart
 # >>     1.24 seconds -:14
-# >>   Swars::UserStat::RarityStat 棋風 majority?
+# >>   UserStat::RarityStat 棋風 majority?
 # >>     0.32325 seconds -:19
-# >>   Swars::UserStat::RarityStat 棋風 minority?
+# >>   UserStat::RarityStat 棋風 minority?
 # >>     0.18998 seconds -:23
 # >> 
 # >> Finished in 3.81 seconds (files took 1.51 seconds to load)

@@ -27,12 +27,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::XmodeStat
+# >> UserStat::XmodeStat
 # >>   対局モード
 # >>     works
 # >> 
 # >> Top 1 slowest examples (0.71583 seconds, 21.6% of total time):
-# >>   Swars::UserStat::XmodeStat 対局モード works
+# >>   UserStat::XmodeStat 対局モード works
 # >>     0.71583 seconds -:16
 # >> 
 # >> Finished in 3.32 seconds (files took 1.57 seconds to load)

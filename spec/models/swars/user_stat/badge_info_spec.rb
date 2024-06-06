@@ -9,11 +9,11 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::BadgeInfo
+# >> UserStat::BadgeInfo
 # >>   works
 # >> 
 # >> Top 1 slowest examples (0.13707 seconds, 6.0% of total time):
-# >>   Swars::UserStat::BadgeInfo works
+# >>   UserStat::BadgeInfo works
 # >>     0.13707 seconds -:5
 # >> 
 # >> Finished in 2.29 seconds (files took 1.63 seconds to load)

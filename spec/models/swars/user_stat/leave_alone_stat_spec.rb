@@ -23,7 +23,7 @@ module Swars
       describe "バッジ" do
         def case1
           @black = User.create!
-          Swars::Battle.create!(final_key: :TIMEOUT) do |e|
+          Battle.create!(final_key: :TIMEOUT) do |e|
             e.memberships.build(user: @black, judge_key: :lose)
           end
         end
@@ -38,12 +38,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::LeaveAloneStat
+# >> UserStat::LeaveAloneStat
 # >>   投了せずに放置した回数 / 投了せずに放置した時間
 # >>     works
 # >>
 # >> Top 1 slowest examples (1.35 seconds, 39.5% of total time):
-# >>   Swars::UserStat::LeaveAloneStat 投了せずに放置した回数 / 投了せずに放置した時間 works
+# >>   UserStat::LeaveAloneStat 投了せずに放置した回数 / 投了せずに放置した時間 works
 # >>     1.35 seconds -:21
 # >>
 # >> Finished in 3.42 seconds (files took 1.56 seconds to load)

@@ -25,12 +25,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::DailyWinLossListStat
+# >> UserStat::DailyWinLossListStat
 # >>   日別勝敗リスト
 # >>     works
 # >>
 # >> Top 1 slowest examples (0.52132 seconds, 20.1% of total time):
-# >>   Swars::UserStat::DailyWinLossListStat 日別勝敗リスト works
+# >>   UserStat::DailyWinLossListStat 日別勝敗リスト works
 # >>     0.52132 seconds -:17
 # >>
 # >> Finished in 2.59 seconds (files took 1.55 seconds to load)

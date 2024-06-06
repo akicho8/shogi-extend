@@ -65,7 +65,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::JudgeFinalStat
+# >> UserStat::JudgeFinalStat
 # >>   勝ち負け時の結末の内訳
 # >>     to_chart
 # >>     count_by
@@ -73,13 +73,13 @@ end
 # >>     counts_hash
 # >>
 # >> Top 4 slowest examples (1.14 seconds, 35.3% of total time):
-# >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 to_chart
+# >>   UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 to_chart
 # >>     0.72114 seconds -:12
-# >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 count_by
+# >>   UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 count_by
 # >>     0.14118 seconds -:26
-# >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 ratio_by
+# >>   UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 ratio_by
 # >>     0.14106 seconds -:32
-# >>   Swars::UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 counts_hash
+# >>   UserStat::JudgeFinalStat 勝ち負け時の結末の内訳 counts_hash
 # >>     0.13575 seconds -:38
 # >>
 # >> Finished in 3.23 seconds (files took 1.57 seconds to load)

@@ -5,7 +5,7 @@ module Swars
     describe "無気力マン" do
       def case1(n, final_key)
         @black = User.create!
-        Swars::Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
         @black.user_stat.lethargy_stat.exist?
@@ -23,12 +23,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::LethargyStat
+# >> UserStat::LethargyStat
 # >>   無気力マン
 # >>     works
 # >> 
 # >> Top 1 slowest examples (1.76 seconds, 46.1% of total time):
-# >>   Swars::UserStat::LethargyStat 無気力マン works
+# >>   UserStat::LethargyStat 無気力マン works
 # >>     1.76 seconds -:14
 # >> 
 # >> Finished in 3.81 seconds (files took 1.54 seconds to load)

@@ -50,7 +50,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::XmodeJudgeStat
+# >> UserStat::XmodeJudgeStat
 # >>   対局モードと勝敗
 # >>     to_chart
 # >>     exist?
@@ -59,15 +59,15 @@ end
 # >>     counts_hash
 # >>
 # >> Top 5 slowest examples (1.23 seconds, 36.3% of total time):
-# >>   Swars::UserStat::XmodeJudgeStat 対局モードと勝敗 to_chart
+# >>   UserStat::XmodeJudgeStat 対局モードと勝敗 to_chart
 # >>     0.60145 seconds -:17
-# >>   Swars::UserStat::XmodeJudgeStat 対局モードと勝敗 count_by
+# >>   UserStat::XmodeJudgeStat 対局モードと勝敗 count_by
 # >>     0.16859 seconds -:25
-# >>   Swars::UserStat::XmodeJudgeStat 対局モードと勝敗 counts_hash
+# >>   UserStat::XmodeJudgeStat 対局モードと勝敗 counts_hash
 # >>     0.15959 seconds -:33
-# >>   Swars::UserStat::XmodeJudgeStat 対局モードと勝敗 ratio_by
+# >>   UserStat::XmodeJudgeStat 対局モードと勝敗 ratio_by
 # >>     0.15075 seconds -:29
-# >>   Swars::UserStat::XmodeJudgeStat 対局モードと勝敗 exist?
+# >>   UserStat::XmodeJudgeStat 対局モードと勝敗 exist?
 # >>     0.14532 seconds -:21
 # >>
 # >> Finished in 3.37 seconds (files took 1.66 seconds to load)

@@ -21,12 +21,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::AverageMovesAtResignationStat
+# >> UserStat::AverageMovesAtResignationStat
 # >>   勝敗別平均手数
 # >>     works
 # >>
 # >> Top 1 slowest examples (1.57 seconds, 43.0% of total time):
-# >>   Swars::UserStat::AverageMovesAtResignationStat 勝敗別平均手数 works
+# >>   UserStat::AverageMovesAtResignationStat 勝敗別平均手数 works
 # >>     1.57 seconds -:17
 # >>
 # >> Finished in 3.64 seconds (files took 1.56 seconds to load)

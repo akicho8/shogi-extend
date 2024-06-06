@@ -30,12 +30,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::DailyAverageMatchesStat
+# >> UserStat::DailyAverageMatchesStat
 # >>   1日の平均対局数
 # >>     works
 # >>
 # >> Top 1 slowest examples (1.44 seconds, 41.1% of total time):
-# >>   Swars::UserStat::DailyAverageMatchesStat 1日の平均対局数 works
+# >>   UserStat::DailyAverageMatchesStat 1日の平均対局数 works
 # >>     1.44 seconds -:17
 # >>
 # >> Finished in 3.5 seconds (files took 1.58 seconds to load)

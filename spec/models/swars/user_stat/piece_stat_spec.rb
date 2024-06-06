@@ -19,11 +19,11 @@ end
 
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::PieceStat
+# >> UserStat::PieceStat
 # >>   駒の使用頻度
 # >> 
 # >> Top 1 slowest examples (0.99612 seconds, 30.4% of total time):
-# >>   Swars::UserStat::PieceStat 駒の使用頻度
+# >>   UserStat::PieceStat 駒の使用頻度
 # >>     0.99612 seconds -:14
 # >> 
 # >> Finished in 3.28 seconds (files took 1.56 seconds to load)

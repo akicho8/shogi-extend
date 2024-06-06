@@ -54,10 +54,10 @@ module Swars
       describe "オールラウンダー" do
         def case1
           black = User.create!
-          Swars::Battle.create!(tactic_key: "早石田") do |e|
+          Battle.create!(tactic_key: "早石田") do |e|
             e.memberships.build(user: black, judge_key: :win)
           end
-          Swars::Battle.create!(tactic_key: "棒銀") do |e|
+          Battle.create!(tactic_key: "棒銀") do |e|
             e.memberships.build(user: black, judge_key: :win)
           end
           black.user_stat.win_tag.group_all_rounder?
@@ -86,7 +86,7 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> Swars::UserStat::TagStat
+# >> UserStat::TagStat
 # >>   all_tag
 # >>     角不成
 # >>       works
@@ -97,11 +97,11 @@ end
 # >>       works
 # >>
 # >> Top 3 slowest examples (1.45 seconds, 41.0% of total time):
-# >>   Swars::UserStat::TagStat all_tag 角不成 works
+# >>   UserStat::TagStat all_tag 角不成 works
 # >>     0.61696 seconds -:14
-# >>   Swars::UserStat::TagStat all_tag 派閥 works
+# >>   UserStat::TagStat all_tag 派閥 works
 # >>     0.58422 seconds -:31
-# >>   Swars::UserStat::TagStat win_tag 勝った条件を含める works
+# >>   UserStat::TagStat win_tag 勝った条件を含める works
 # >>     0.2497 seconds -:47
 # >>
 # >> Finished in 3.54 seconds (files took 1.62 seconds to load)

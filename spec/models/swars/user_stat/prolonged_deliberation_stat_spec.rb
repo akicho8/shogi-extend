@@ -7,7 +7,7 @@ module Swars
         seconds = min.minutes
         @black = User.create!
         csa_seq = [["+7968GI", 600 - seconds], ["-8232HI", 597], ["+5756FU", 600 - seconds - 1]]
-        Swars::Battle.create!(csa_seq: csa_seq) do |e|
+        Battle.create!(csa_seq: csa_seq) do |e|
           e.memberships.build(user: @black)
         end
         @black.user_stat.badge_stat.to_set

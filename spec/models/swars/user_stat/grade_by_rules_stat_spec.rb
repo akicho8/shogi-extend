@@ -30,12 +30,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> Swars::UserStat::GradeByRulesStat
+# >> UserStat::GradeByRulesStat
 # >>   ルール別最高段級位
 # >>     works
 # >> 
 # >> Top 1 slowest examples (0.78487 seconds, 27.2% of total time):
-# >>   Swars::UserStat::GradeByRulesStat ルール別最高段級位 works
+# >>   UserStat::GradeByRulesStat ルール別最高段級位 works
 # >>     0.78487 seconds -:17
 # >> 
 # >> Finished in 2.88 seconds (files took 1.55 seconds to load)
