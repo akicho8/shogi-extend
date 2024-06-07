@@ -1,4 +1,5 @@
 require File.expand_path('../../../config/environment', __FILE__)
+ActiveRecord::Base.connection.disable_query_cache!
 
 def _(n = 1)
   "%.2f ms" % Benchmark.ms { n.times { yield } }

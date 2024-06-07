@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.daily_average_matches_stat.average }        # => "239.06 ms"
 _ { Swars::User["SugarHuuko"].user_stat.daily_average_matches_stat.max }            # => 
 s { tp Swars::User["SugarHuuko"].user_stat.daily_average_matches_stat.average }     # => 

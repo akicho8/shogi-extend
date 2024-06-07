@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.grade_by_rules_stat.to_chart }        # => "161.68 ms"
 s { Swars::User["SugarHuuko"].user_stat.grade_by_rules_stat.to_chart }        # => [{:rule_key=>:ten_min, :rule_name=>"10分", :grade_name=>nil}, {:rule_key=>:three_min, :rule_name=>"3分", :grade_name=>"七段"}, {:rule_key=>:ten_sec, :rule_name=>"10秒", :grade_name=>"六段"}]
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

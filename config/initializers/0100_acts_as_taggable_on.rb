@@ -1,8 +1,3 @@
-# ActsAsTaggableOn.setup do |config|
-#   config.delimiter = " "
-# end
-
-# 独自のパーサーを使うようにする
 ActsAsTaggableOn.setup do |c|
   c.remove_unused_tags = false  # true すると FreeBattle.setup の更新でこける
   # c.default_parser = SoftParser
@@ -20,6 +15,7 @@ ActsAsTaggableOn.setup do |c|
   #   - 強制的に strict_case_match = true になる (LOWERが使われなくなる)
   # - デメリット
   #   - 絵文字や特殊文字が入らなくなる
+  #   - tagged_with(on: xxx) が激重になる
   # - 問題点
   #   - すでにDBに特殊文字が入っているため ALTER が通らない
   #
@@ -28,6 +24,7 @@ ActsAsTaggableOn.setup do |c|
   end
 
   # 最速にはできないが、せめて LOWER を使わないようにする？
+  # tagged_with(on: xxx) が激重になるため、これも指定してはいけない
   #
   # |--------+-------------------------------------|
   # |        | 速度                                |
@@ -36,8 +33,7 @@ ActsAsTaggableOn.setup do |c|
   # | 適用後 | Swars::Membership Count ( 1229.9ms) |
   # |--------+-------------------------------------|
   #
-  if true
+  if false
     c.strict_case_match = true
   end
 end
-# ActsAsTaggableOn.default_parser = ActsAsTaggableOn::PickUpParser

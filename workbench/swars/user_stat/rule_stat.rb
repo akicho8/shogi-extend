@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.rule_stat.to_chart }        # => "162.53 ms"
 s { Swars::User["SugarHuuko"].user_stat.rule_stat.to_chart }        # => [{:name=>"10分", :value=>0}, {:name=>"3分", :value=>45}, {:name=>"10秒", :value=>5}]
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

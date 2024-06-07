@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.piece_stat.to_chart } # => "212.49 ms"
 s { Swars::User["SugarHuuko"].user_stat.piece_stat.to_chart } # => [{:name=>"玉", :value=>0.08155080213903744}, {:name=>"飛", :value=>0.08422459893048129}, {:name=>"角", :value=>0.09180035650623886}, {:name=>"金", :value=>0.10338680926916222}, {:name=>"銀", :value=>0.16310160427807488}, {:name=>"桂", :value=>0.08600713012477719}, {:name=>"香", :value=>0.01693404634581105}, {:name=>"歩", :value=>0.3092691622103387}, {:name=>"龍", :value=>0.027629233511586453}, {:name=>"馬", :value=>0.021836007130124777}, {:name=>"全", :value=>0.0022281639928698753}, {:name=>"圭", :value=>0.0035650623885918}, {:name=>"杏", :value=>0.0035650623885918}, {:name=>"と", :value=>0.004901960784313725}]
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

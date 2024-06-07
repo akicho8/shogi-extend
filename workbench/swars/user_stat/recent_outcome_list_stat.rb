@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.recent_outcome_list_stat.to_a } # => "137.29 ms"
 s { Swars::User["SugarHuuko"].user_stat.recent_outcome_list_stat.to_a } # => ["win", "win", "win", "draw", "lose", "lose", "win", "win", "win", "draw", "win", "win", "lose", "win", "lose", "win", "lose"]
 # >>   Swars::User Load (0.1ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

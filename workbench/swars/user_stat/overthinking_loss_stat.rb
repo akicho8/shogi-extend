@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { user = Swars::User["SugarHuuko"].user_stat.overthinking_loss_stat.ratio } # => "246.92 ms"
 s { user = Swars::User["SugarHuuko"].user_stat.overthinking_loss_stat.ratio } # => 0.0
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

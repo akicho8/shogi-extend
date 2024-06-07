@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 user = Swars::User["SugarHuuko"]
 _   { user.user_stat.leave_alone_stat.count    } # => "137.28 ms"
 _   { user.user_stat.leave_alone_stat.max      } # => "19.31 ms"

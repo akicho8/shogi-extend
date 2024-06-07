@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.waiting_to_leave_stat.count } # => "218.52 ms"
 s { Swars::User["SugarHuuko"].user_stat.waiting_to_leave_stat.count } # => 0
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 Swars::User["SugarHuuko"].user_stat.ids_scope.any_method1 # => 
 # ~> /Users/ikeda/src/shogi-extend/app/models/swars/user_stat/sub_scope_methods.rb:20:in `<module:SubScopeMethods>': undefined local variable or method `ids_scope' for Swars::UserStat::SubScopeMethods:Module (NameError)
 # ~> 

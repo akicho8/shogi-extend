@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 
 black = Swars::User.create!
 Swars::Battle.create!(tactic_key: "糸谷流右玉") do |e|

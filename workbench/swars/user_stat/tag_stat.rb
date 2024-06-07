@@ -1,4 +1,10 @@
-require "../setup"
+require "./setup"
+
+# 実行順序でかわる
+ActsAsTaggableOn.strict_case_match = false
+_ { Swars::User["SugarHuuko"].user_stat.all_tag.counts_hash } # => "206.90 ms"
+ActsAsTaggableOn.strict_case_match = true
+_ { Swars::User["SugarHuuko"].user_stat.all_tag.counts_hash } # => "27.60 ms"
 
 # _ { Swars::User["SugarHuuko"].user_stat.all_tag.counts_hash[:"居飛車"] } # => "249.66 ms"
 # s { Swars::User["SugarHuuko"].user_stat.all_tag.counts_hash[:"居飛車"] } # => 50
@@ -28,6 +34,6 @@ require "../setup"
 # s { ActsAsTaggableOn.strict_case_match = true;  Swars::Membership.tagged_with("居玉").count } # => 632389
 # s { ActsAsTaggableOn.strict_case_match = false; Swars::Membership.tagged_with("居玉").count } # => 632389
 
-ActsAsTaggableOn.strict_case_match                # => true
-_ { Swars::Membership.tagged_with("居玉").count } # => "2025.10 ms"
+# ActsAsTaggableOn.strict_case_match                # => true
+# _ { Swars::Membership.tagged_with("居玉").count } # => "2025.10 ms"
 

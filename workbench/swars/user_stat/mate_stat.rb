@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 user = Swars::User["SugarHuuko"]
 mate_stat = user.user_stat.mate_stat
 s { mate_stat.positive_count } # => nil

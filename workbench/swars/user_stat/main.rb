@@ -1,694 +1,270 @@
-require "../setup"
-user = Swars::User.find_by(key: "SugarHuuko")
-tp Swars::User.find_by(key: "SugarHuuko").user_stat.other_stat.time_stats
-_ { pp user.user_stat.to_hash }    # => "338.52 ms"
-
-@record = Swars::Battle.create!
-tp @record.memberships.first.user.user_stat.to_header_h
-
-@hash = @record.memberships.first.user.user_stat.to_hash.as_json
-@hash["user"]                   # => {"key"=>"user957314", "ban_at"=>nil}
-@hash["rule_items"]         # => [{"rule_key"=>"ten_min", "rule_name"=>"10分", "grade_name"=>"30級"}, {"rule_key"=>"three_min", "rule_name"=>"3分", "grade_name"=>nil}, {"rule_key"=>"ten_sec", "rule_name"=>"10秒", "grade_name"=>nil}]
-@hash["judge_counts"]           # => {"win"=>1}
-
-# >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | 項目                                 | 時間  | 結果                                                                                                                                                                                                                                                                      |
-# >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> | ids_count                            | 94.43 |                                                                                                                                                                                                                                                                        50 |
-# >> | 駒の使用率                           | 36.04 | [{:name=>"玉", :value=>0.08155080213903744}, {:name=>"飛", :value=>0.08422459893048129}, {:name=>"角", :value=>0.09180035650623886}, {:name=>"金", :value=>0.10338680926916222}, {:name=>"銀", :value=>0.16310160427807488}, {:name=>"桂", :value=>0.08600713012477719... |
-# >> | 勝ち                                 | 12.60 | [{:key=>:TORYO, :name=>"投了", :value=>27}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>5}, {:key=>:CHECKMATE, :name=>"詰み", :value=>7}]                                                                                                                                 |
-# >> | 角不成                               |  9.61 |                                                                                                                                                                                                                                                                           |
-# >> | 負け                                 |  7.20 | [{:key=>:TORYO, :name=>"投了", :value=>7}, {:key=>:TIMEOUT, :name=>"時間切れ", :value=>1}, {:key=>:CHECKMATE, :name=>"詰み", :value=>0}]                                                                                                                                  |
-# >> | 棋風                                 |  6.62 | [{:name=>"王道", :value=>21}, {:name=>"準王道", :value=>8}, {:name=>"準変態", :value=>14}, {:name=>"変態", :value=>7}]                                                                                                                                                    |
-# >> | 切断逃亡                             |  5.56 |                                                                                                                                                                                                                                                                           |
-# >> | 友達対局                             |  4.84 |                                                                                                                                                                                                                                                                           |
-# >> | 1日の平均対局数                      |  4.02 |                                                                                                                                                                                                                                                                      12.5 |
-# >> | 投了までの心の準備                   |  3.77 | [{:name=>"10秒未満", :value=>7}]                                                                                                                                                                                                                                          |
-# >> | ルール別対局頻度                     |  3.71 | [{:name=>"10分", :value=>0}, {:name=>"3分", :value=>45}, {:name=>"10秒", :value=>5}]                                                                                                                                                                                      |
-# >> | 居飛車                               |  2.68 | {:judge_counts=>{"win"=>39, "lose"=>8, "draw"=>3}}                                                                                                                                                                                                                        |
-# >> | 無気力な対局                         |  2.67 |                                                                                                                                                                                                                                                                           |
-# >> | 対局時間帯                           |  2.62 | [{:name=>"4", :value=>7}, {:name=>"5", :value=>8}, {:name=>"6", :value=>8}, {:name=>"7", :value=>5}, {:name=>"8", :value=>0}, {:name=>"9", :value=>0}, {:name=>"10", :value=>0}, {:name=>"11", :value=>0}, {:name=>"12", :value=>0}, {:name=>"13", :value=>0}, {...       |
-# >> | 将棋ウォーズの運営を支える力         |  2.44 |                                                                                                                                                                                                                                                                           |
-# >> | 投了時の平均手数                     |  2.32 |                                                                                                                                                                                                                                                                       108 |
-# >> | 詰ます速度 (1手平均)                 |  2.29 |                                                                                                                                                                                                                                                                      1.86 |
-# >> | 持久戦                               |  2.00 | {:judge_counts=>{"lose"=>5, "win"=>18}}                                                                                                                                                                                                                                   |
-# >> | 急戦                                 |  1.98 | {:judge_counts=>{"win"=>18, "lose"=>3, "draw"=>1}}                                                                                                                                                                                                                        |
-# >> | 平均手数                             |  1.79 |                                                                                                                                                                                                                                                                        89 |
-# >> | 投了せずに放置                       |  1.76 |                                                                                                                                                                                                                                                                           |
-# >> | 相居飛車                             |  1.71 | {:judge_counts=>{"lose"=>5, "win"=>26, "draw"=>1}}                                                                                                                                                                                                                        |
-# >> | 対振り                               |  1.65 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
-# >> | 1手詰を焦らして悦に入る              |  1.63 |                                                                                                                                                                                                                                                                           |
-# >> | 対戦相手との段級差 (平均)            |  1.58 |                                                                                                                                                                                                                                                                     -1.48 |
-# >> | 勝敗別平均手数                       |  1.54 | [{:name=>"勝ち", :value=>89}, {:name=>"負け", :value=>109}]                                                                                                                                                                                                               |
-# >> | 振り飛車                             |  1.43 |                                                                                                                                                                                                                                                                           |
-# >> | 短手数                               |  1.40 | {:judge_counts=>{"win"=>17, "draw"=>1, "lose"=>1}}                                                                                                                                                                                                                        |
-# >> | 大駒コンプリート                     |  1.40 | {:judge_counts=>{"win"=>7}}                                                                                                                                                                                                                                               |
-# >> | 大駒全ブッチ                         |  1.39 | {:judge_counts=>{"win"=>1}}                                                                                                                                                                                                                                               |
-# >> | 長手数                               |  1.36 | {:judge_counts=>{"lose"=>7, "win"=>21}}                                                                                                                                                                                                                                   |
-# >> | 入玉                                 |  1.34 |                                                                                                                                                                                                                                                                           |
-# >> | 対抗形                               |  1.32 | {:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}                                                                                                                                                                                                                        |
-# >> | 連勝                                 |  1.30 |                                                                                                                                                                                                                                                                        12 |
-# >> | 相振り                               |  1.28 |                                                                                                                                                                                                                                                                           |
-# >> | 対局モード                           |  1.20 | [{:name=>"野良", :value=>50}, {:name=>"友達", :value=>0}, {:name=>"指導", :value=>0}]                                                                                                                                                                                     |
-# >> | 最長考                               |  1.02 |                                                                                                                                                                                                                                                                        71 |
-# >> | 平均思考                             |  0.77 |                                                                                                                                                                                                                                                                       1.5 |
-# >> | 右玉度                               |  0.54 | [{:name=>"右玉", :value=>4}, {:name=>"その他", :value=>46}]                                                                                                                                                                                                               |
-# >> | 投了までの心の準備 (平均)            |  0.47 |                                                                                                                                                                                                                                                                       2.0 |
-# >> | 不屈の闘志                           |  0.25 |                                                                                                                                                                                                                                                                        10 |
-# >> | 右玉ファミリー                       |  0.02 | [{:name=>:右玉, :value=>3}, {:name=>:三段右玉, :value=>1}]                                                                                                                                                                                                                |
-# >> | 派閥                                 |  0.01 | [{:name=>:居飛車, :value=>50}, {:name=>:振り飛車, :value=>0}]                                                                                                                                                                                                             |
-# >> | 投了せずに放置した時間 (最長)        |  0.01 |                                                                                                                                                                                                                                                                           |
-# >> | 棋風 (速度)                          |  0.01 | [{:name=>:急戦, :value=>22}, {:name=>:持久戦, :value=>23}]                                                                                                                                                                                                                |
-# >> | 1手詰を焦らして悦に入った時間 (最長) |  0.01 |                                                                                                                                                                                                                                                                           |
-# >> | 棋風 (手数)                          |  0.01 | [{:name=>:短手数, :value=>19}, {:name=>:長手数, :value=>28}]                                                                                                                                                                                                              |
-# >> | 1日の最高対局数                      |  0.01 |                                                                                                                                                                                                                                                                        31 |
-# >> | 1手詰を焦らして悦に入った頻度        |  0.00 |                                                                                                                                                                                                                                                                           |
-# >> | テスト                               |  0.00 | [{:name=>"a", :value=>1}, {:name=>"b", :value=>2}, {:name=>"c", :value=>3}, {:name=>"d", :value=>4}, {:name=>"e", :value=>5}]                                                                                                                                             |
-# >> | 投了までの心の準備 (最長)            |  0.00 |                                                                                                                                                                                                                                                                         5 |
-# >> | 飛車不成                             |  0.00 |                                                                                                                                                                                                                                                                           |
-# >> | 最長手数                             |  0.00 |                                                                                                                                                                                                                                                                       177 |
-# >> | 投了せずに放置した頻度               |  0.00 |                                                                                                                                                                                                                                                                           |
-# >> | 連敗                                 |  0.00 |                                                                                                                                                                                                                                                                         2 |
-# >> |--------------------------------------+-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> {:onetime_key=>"cf7998c5992a9eac3febfa0698612b85",
-# >>  :sample_max=>50,
-# >>  :user=>{:key=>"SugarHuuko", :ban_at=>nil},
-# >>  :rule_items=>
-# >>   [{:rule_key=>:ten_min, :rule_name=>"10分", :grade_name=>nil},
-# >>    {:rule_key=>:three_min, :rule_name=>"3分", :grade_name=>"七段"},
-# >>    {:rule_key=>:ten_sec, :rule_name=>"10秒", :grade_name=>"六段"}],
-# >>  :judge_counts=>{"win"=>39, "lose"=>8, "draw"=>3},
-# >>  :badge_items=>
-# >>   [{:message=>"居飛車党", :method=>"raw", :name=>"⬆️", :type=>nil},
-# >>    {:message=>"右玉で勝った", :method=>"raw", :name=>"🌛", :type=>nil},
-# >>    {:message=>"UFO銀で勝った", :method=>"raw", :name=>"🛸", :type=>nil},
-# >>    {:message=>"大駒全部捨てて勝った", :method=>"raw", :name=>"🧠", :type=>nil},
-# >>    {:message=>"10連勝した", :method=>"raw", :name=>"💮", :type=>nil},
-# >>    {:message=>"居玉で勝った", :method=>"raw", :name=>"🗿", :type=>nil},
-# >>    {:message=>"開幕千日手をした", :method=>"raw", :name=>"❓", :type=>nil},
-# >>    {:message=>"千日手をした", :method=>"raw", :name=>"🍌", :type=>nil}],
-# >>  :judge_keys=>
-# >>   ["win",
-# >>    "win",
-# >>    "win",
-# >>    "draw",
-# >>    "lose",
-# >>    "lose",
-# >>    "win",
-# >>    "win",
-# >>    "win",
-# >>    "draw",
-# >>    "win",
-# >>    "win",
-# >>    "lose",
-# >>    "win",
-# >>    "lose",
-# >>    "win",
-# >>    "lose"],
-# >>  :day_items=>
-# >>   [{:battled_on=>Tue, 21 May 2024,
-# >>     :day_type=>nil,
-# >>     :judge_counts=>{:win=>7, :lose=>3}},
-# >>    {:battled_on=>Mon, 20 May 2024,
-# >>     :day_type=>nil,
-# >>     :judge_counts=>{:win=>25, :lose=>4}},
-# >>    {:battled_on=>Sun, 19 May 2024,
-# >>     :day_type=>:danger,
-# >>     :judge_counts=>{:win=>2, :lose=>0}},
-# >>    {:battled_on=>Wed, 15 May 2024,
-# >>     :day_type=>nil,
-# >>     :judge_counts=>{:win=>5, :lose=>1}}],
-# >>  :vs_grade_items=>
-# >>   [{:grade_name=>"八段", :judge_counts=>{:draw=>2}, :appear_ratio=>0.04},
-# >>    {:grade_name=>"七段",
-# >>     :judge_counts=>{:lose=>5, :win=>6},
-# >>     :appear_ratio=>0.22},
-# >>    {:grade_name=>"六段",
-# >>     :judge_counts=>{:win=>14, :lose=>1},
-# >>     :appear_ratio=>0.3},
-# >>    {:grade_name=>"五段",
-# >>     :judge_counts=>{:win=>11, :lose=>2},
-# >>     :appear_ratio=>0.26},
-# >>    {:grade_name=>"四段",
-# >>     :judge_counts=>{:win=>6, :draw=>1},
-# >>     :appear_ratio=>0.14},
-# >>    {:grade_name=>"三段", :judge_counts=>{:win=>1}, :appear_ratio=>0.02},
-# >>    {:grade_name=>"9級", :judge_counts=>{:win=>1}, :appear_ratio=>0.02}],
-# >>  :my_attack_items=>
-# >>   [{:tag=>{"name"=>"力戦", "count"=>17},
-# >>     :appear_ratio=>0.34,
-# >>     :judge_counts=>{"win"=>13, "lose"=>3, "draw"=>1}},
-# >>    {:tag=>{"name"=>"原始棒銀", "count"=>5},
-# >>     :appear_ratio=>0.1,
-# >>     :judge_counts=>{"win"=>5}},
-# >>    {:tag=>{"name"=>"UFO銀", "count"=>5},
-# >>     :appear_ratio=>0.1,
-# >>     :judge_counts=>{"win"=>5}},
-# >>    {:tag=>{"name"=>"角交換型", "count"=>3},
-# >>     :appear_ratio=>0.06,
-# >>     :judge_counts=>{"win"=>3}},
-# >>    {:tag=>{"name"=>"▲４五歩早仕掛け", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"win"=>2}},
-# >>    {:tag=>{"name"=>"銀雲雀", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"対振り持久戦", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"相掛かり", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"△３三角型空中戦法", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"角換わり", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"手得角交換型", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"地下鉄飛車", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"へなちょこ急戦", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"draw"=>1}}],
-# >>  :vs_attack_items=>
-# >>   [{:tag=>{"name"=>"力戦", "count"=>12},
-# >>     :appear_ratio=>0.24,
-# >>     :judge_counts=>{"win"=>9, "lose"=>2, "draw"=>1}},
-# >>    {:tag=>{"name"=>"5筋位取り中飛車", "count"=>5},
-# >>     :appear_ratio=>0.1,
-# >>     :judge_counts=>{"lose"=>1, "win"=>4}},
-# >>    {:tag=>{"name"=>"角交換振り飛車", "count"=>5},
-# >>     :appear_ratio=>0.1,
-# >>     :judge_counts=>{"lose"=>nil, "draw"=>1, "win"=>4}},
-# >>    {:tag=>{"name"=>"四間飛車", "count"=>4},
-# >>     :appear_ratio=>0.08,
-# >>     :judge_counts=>{"lose"=>1, "win"=>3}},
-# >>    {:tag=>{"name"=>"三間飛車", "count"=>4},
-# >>     :appear_ratio=>0.08,
-# >>     :judge_counts=>{"lose"=>nil, "draw"=>1, "win"=>3}},
-# >>    {:tag=>{"name"=>"新嬉野流", "count"=>4},
-# >>     :appear_ratio=>0.08,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>4}},
-# >>    {:tag=>{"name"=>"棒銀", "count"=>3},
-# >>     :appear_ratio=>0.06,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>3}},
-# >>    {:tag=>{"name"=>"向かい飛車", "count"=>3},
-# >>     :appear_ratio=>0.06,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>3}},
-# >>    {:tag=>{"name"=>"角交換型", "count"=>3},
-# >>     :appear_ratio=>0.06,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>3}},
-# >>    {:tag=>{"name"=>"地下鉄飛車", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>2}},
-# >>    {:tag=>{"name"=>"原始棒銀", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>2}},
-# >>    {:tag=>{"name"=>"UFO銀", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>2}},
-# >>    {:tag=>{"name"=>"右四間飛車", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"win"=>1, "lose"=>1}},
-# >>    {:tag=>{"name"=>"ゴキゲン中飛車", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"四間飛車ミレニアム", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"相掛かり", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"相掛かり棒銀", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"横歩取り", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"腰掛け銀", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"角換わり", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"手損角交換型", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"鬼殺し向かい飛車", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}}],
-# >>  :my_defense_items=>
-# >>   [{:tag=>{"name"=>"居玉", "count"=>11},
-# >>     :appear_ratio=>0.22,
-# >>     :judge_counts=>{"lose"=>2, "win"=>9}},
-# >>    {:tag=>{"name"=>"舟囲い", "count"=>9},
-# >>     :appear_ratio=>0.18,
-# >>     :judge_counts=>{"win"=>6, "lose"=>2, "draw"=>1}},
-# >>    {:tag=>{"name"=>"新型雁木", "count"=>6},
-# >>     :appear_ratio=>0.12,
-# >>     :judge_counts=>{"win"=>5, "lose"=>1}},
-# >>    {:tag=>{"name"=>"右玉", "count"=>3},
-# >>     :appear_ratio=>0.06,
-# >>     :judge_counts=>{"lose"=>1, "win"=>2}},
-# >>    {:tag=>{"name"=>"居飛車金美濃", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"win"=>2}},
-# >>    {:tag=>{"name"=>"カブト囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>1}},
-# >>    {:tag=>{"name"=>"箱入り娘", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"ツノ銀雁木", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>1}},
-# >>    {:tag=>{"name"=>"オールド雁木", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}},
-# >>    {:tag=>{"name"=>"へこみ矢倉", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>1}},
-# >>    {:tag=>{"name"=>"串カツ囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>1}},
-# >>    {:tag=>{"name"=>"金盾囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"draw"=>1}},
-# >>    {:tag=>{"name"=>"三段右玉", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>1}}],
-# >>  :vs_defense_items=>
-# >>   [{:tag=>{"name"=>"居玉", "count"=>8},
-# >>     :appear_ratio=>0.16,
-# >>     :judge_counts=>{"win"=>7, "lose"=>1}},
-# >>    {:tag=>{"name"=>"高美濃囲い", "count"=>5},
-# >>     :appear_ratio=>0.1,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>5}},
-# >>    {:tag=>{"name"=>"中住まい", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>2}},
-# >>    {:tag=>{"name"=>"右玉", "count"=>2},
-# >>     :appear_ratio=>0.04,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>2}},
-# >>    {:tag=>{"name"=>"振り飛車ミレニアム", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"片美濃囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"銀冠", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"ツノ銀雁木", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>1}},
-# >>    {:tag=>{"name"=>"木村美濃", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>1}},
-# >>    {:tag=>{"name"=>"右矢倉", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"新型雁木", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"カブト囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"振り飛車穴熊", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>1}},
-# >>    {:tag=>{"name"=>"早囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"win"=>nil, "lose"=>1}},
-# >>    {:tag=>{"name"=>"金矢倉", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}},
-# >>    {:tag=>{"name"=>"美濃囲い", "count"=>1},
-# >>     :appear_ratio=>0.02,
-# >>     :judge_counts=>{"lose"=>nil, "win"=>1}}],
-# >>  :etc_items=>
-# >>   [{:name=>"テスト",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:name=>"a", :value=>1},
-# >>       {:name=>"b", :value=>2},
-# >>       {:name=>"c", :value=>3},
-# >>       {:name=>"d", :value=>4},
-# >>       {:name=>"e", :value=>5}]},
-# >>    {:name=>"ids_count", :chart_type=>:simple, :chart_options=>{}, :body=>50},
-# >>    {:name=>"切断逃亡",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"投了せずに放置",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"1手詰を焦らして悦に入る",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"無気力な対局",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"角不成",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"飛車不成",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"回"},
-# >>     :body=>nil},
-# >>    {:name=>"棋風",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:name=>"王道", :value=>21},
-# >>       {:name=>"準王道", :value=>8},
-# >>       {:name=>"準変態", :value=>14},
-# >>       {:name=>"変態", :value=>7}]},
-# >>    {:name=>"派閥",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>:居飛車, :value=>50}, {:name=>:振り飛車, :value=>0}]},
-# >>    {:name=>"居飛車",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"居飛車"},
-# >>     :body=>{:judge_counts=>{"win"=>39, "lose"=>8, "draw"=>3}}},
-# >>    {:name=>"振り飛車",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"振り飛車"},
-# >>     :body=>nil},
-# >>    {:name=>"相居飛車",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"相居飛車"},
-# >>     :body=>{:judge_counts=>{"lose"=>5, "win"=>26, "draw"=>1}}},
-# >>    {:name=>"対振り",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"対振り"},
-# >>     :body=>{:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}},
-# >>    {:name=>"対抗形",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"対抗形"},
-# >>     :body=>{:judge_counts=>{"win"=>13, "lose"=>3, "draw"=>2}}},
-# >>    {:name=>"相振り",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"相振り"},
-# >>     :body=>nil},
-# >>    {:name=>"棋風 (速度)",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>:急戦, :value=>22}, {:name=>:持久戦, :value=>23}]},
-# >>    {:name=>"急戦",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"急戦"},
-# >>     :body=>{:judge_counts=>{"win"=>18, "lose"=>3, "draw"=>1}}},
-# >>    {:name=>"持久戦",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"持久戦"},
-# >>     :body=>{:judge_counts=>{"lose"=>5, "win"=>18}}},
-# >>    {:name=>"棋風 (手数)",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>:短手数, :value=>19}, {:name=>:長手数, :value=>28}]},
-# >>    {:name=>"短手数",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"短手数"},
-# >>     :body=>{:judge_counts=>{"win"=>17, "draw"=>1, "lose"=>1}}},
-# >>    {:name=>"長手数",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"長手数"},
-# >>     :body=>{:judge_counts=>{"lose"=>7, "win"=>21}}},
-# >>    {:name=>"連勝",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"連勝"},
-# >>     :body=>12},
-# >>    {:name=>"連敗",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"連敗"},
-# >>     :body=>2},
-# >>    {:name=>"大駒全ブッチ",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"大駒全ブッチ"},
-# >>     :body=>{:judge_counts=>{"win"=>1}}},
-# >>    {:name=>"大駒コンプリート",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"大駒コンプリート"},
-# >>     :body=>{:judge_counts=>{"win"=>7}}},
-# >>    {:name=>"入玉",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"入玉"},
-# >>     :body=>nil},
-# >>    {:name=>"友達対局",
-# >>     :chart_type=>:win_lose_circle,
-# >>     :chart_options=>
-# >>      {:click_method=>:win_lose_click_handle, :tag=>"入玉"},
-# >>     :body=>nil},
-# >>    {:name=>"勝敗別平均手数",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>"勝ち", :value=>89}, {:name=>"負け", :value=>109}],
-# >>     :bottom_message=>"負けそうなときも粘り強く指すタイプ"},
-# >>    {:name=>"不屈の闘志", :chart_type=>:simple, :chart_options=>{}, :body=>10},
-# >>    {:name=>"平均手数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"手"},
-# >>     :body=>89},
-# >>    {:name=>"最長手数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"手"},
-# >>     :body=>177},
-# >>    {:name=>"投了時の平均手数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"手"},
-# >>     :body=>108},
-# >>    {:name=>"投了せずに放置した時間 (最長)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>nil},
-# >>    {:name=>"投了せずに放置した頻度",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>nil},
-# >>    {:name=>"ルール別対局頻度",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:name=>"10分", :value=>0},
-# >>       {:name=>"3分", :value=>45},
-# >>       {:name=>"10秒", :value=>5}]},
-# >>    {:name=>"対局モード",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:name=>"野良", :value=>50},
-# >>       {:name=>"友達", :value=>0},
-# >>       {:name=>"指導", :value=>0}]},
-# >>    {:name=>"勝ち",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:key=>:TORYO, :name=>"投了", :value=>27},
-# >>       {:key=>:TIMEOUT, :name=>"時間切れ", :value=>5},
-# >>       {:key=>:CHECKMATE, :name=>"詰み", :value=>7}]},
-# >>    {:name=>"1手詰を焦らして悦に入った時間 (最長)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>nil},
-# >>    {:name=>"1手詰を焦らして悦に入った頻度",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>nil},
-# >>    {:name=>"負け",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>
-# >>      [{:key=>:TORYO, :name=>"投了", :value=>7},
-# >>       {:key=>:TIMEOUT, :name=>"時間切れ", :value=>1},
-# >>       {:key=>:CHECKMATE, :name=>"詰み", :value=>0}]},
-# >>    {:name=>"投了までの心の準備",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>"10秒未満", :value=>7}]},
-# >>    {:name=>"投了までの心の準備 (平均)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>2.0},
-# >>    {:name=>"投了までの心の準備 (最長)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>5},
-# >>    {:name=>"最長考",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>71},
-# >>    {:name=>"平均思考",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>1.5},
-# >>    {:name=>"詰ます速度 (1手平均)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:second},
-# >>     :body=>1.86},
-# >>    {:name=>"駒の使用率",
-# >>     :chart_type=>:bar,
-# >>     :chart_options=>
-# >>      {:bar_type=>:is_default, :tategaki_p=>true, :value_format=>:percentage},
-# >>     :body=>
-# >>      [{:name=>"玉", :value=>0.08155080213903744},
-# >>       {:name=>"飛", :value=>0.08422459893048129},
-# >>       {:name=>"角", :value=>0.09180035650623886},
-# >>       {:name=>"金", :value=>0.10338680926916222},
-# >>       {:name=>"銀", :value=>0.16310160427807488},
-# >>       {:name=>"桂", :value=>0.08600713012477719},
-# >>       {:name=>"香", :value=>0.01693404634581105},
-# >>       {:name=>"歩", :value=>0.3092691622103387},
-# >>       {:name=>"龍", :value=>0.027629233511586453},
-# >>       {:name=>"馬", :value=>0.021836007130124777},
-# >>       {:name=>"全", :value=>0.0022281639928698753},
-# >>       {:name=>"圭", :value=>0.0035650623885918},
-# >>       {:name=>"杏", :value=>0.0035650623885918},
-# >>       {:name=>"と", :value=>0.004901960784313725}]},
-# >>    {:name=>"対戦相手との段級差 (平均)",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:raw},
-# >>     :body=>-1.48},
-# >>    {:name=>"1日の平均対局数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"局"},
-# >>     :body=>12.5},
-# >>    {:name=>"1日の最高対局数",
-# >>     :chart_type=>:simple,
-# >>     :chart_options=>{:simple_type=>:numeric_with_unit, :unit=>"局"},
-# >>     :body=>31},
-# >>    {:name=>"対局時間帯",
-# >>     :chart_type=>:bar,
-# >>     :chart_options=>{:bar_type=>:is_default},
-# >>     :body=>
-# >>      [{:name=>"4", :value=>7},
-# >>       {:name=>"5", :value=>8},
-# >>       {:name=>"6", :value=>8},
-# >>       {:name=>"7", :value=>5},
-# >>       {:name=>"8", :value=>0},
-# >>       {:name=>"9", :value=>0},
-# >>       {:name=>"10", :value=>0},
-# >>       {:name=>"11", :value=>0},
-# >>       {:name=>"12", :value=>0},
-# >>       {:name=>"13", :value=>0},
-# >>       {:name=>"14", :value=>0},
-# >>       {:name=>"15", :value=>0},
-# >>       {:name=>"16", :value=>0},
-# >>       {:name=>"17", :value=>0},
-# >>       {:name=>"18", :value=>0},
-# >>       {:name=>"19", :value=>0},
-# >>       {:name=>"20", :value=>0},
-# >>       {:name=>"21", :value=>0},
-# >>       {:name=>"22", :value=>6},
-# >>       {:name=>"23", :value=>2},
-# >>       {:name=>"0", :value=>8},
-# >>       {:name=>"1", :value=>6},
-# >>       {:name=>"2", :value=>0},
-# >>       {:name=>"3", :value=>0}]},
-# >>    {:name=>"右玉度",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_pair_values},
-# >>     :body=>[{:name=>"右玉", :value=>4}, {:name=>"その他", :value=>46}]},
-# >>    {:name=>"右玉ファミリー",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_many_values},
-# >>     :body=>[{:name=>:右玉, :value=>3}, {:name=>:三段右玉, :value=>1}]},
-# >>    {:name=>"将棋ウォーズの運営を支える力",
-# >>     :chart_type=>:pie,
-# >>     :chart_options=>{:pie_type=>:is_pair_values},
-# >>     :body=>nil}],
-# >>  :debug_hash=>
-# >>   {"対象サンプル数"=>50,
-# >>    "勝ち数"=>39,
-# >>    "負け数"=>8,
-# >>    "勝率"=>0.78,
-# >>    "居飛車率"=>1.0,
-# >>    "振り飛車率"=>0.0,
-# >>    "居玉勝率"=>0.18,
-# >>    "アヒル囲い率"=>0.0,
-# >>    "嬉野流率"=>0.0,
-# >>    "棋風"=>
-# >>     {:rarity_key_SSR=>0.14,
-# >>      :rarity_key_SR=>0.28,
-# >>      :rarity_key_R=>0.16,
-# >>      :rarity_key_N=>0.42},
-# >>    "1手詰を焦らした回数"=>0,
-# >>    "絶対投了しない回数"=>0,
-# >>    "棋神降臨疑惑対局数"=>0,
-# >>    "最大連勝連敗"=>{:lose=>2, :win=>12, :draw=>1},
-# >>    "タグの重み"=>
-# >>     {:力戦=>17,
-# >>      :居飛車=>50,
-# >>      :カブト囲い=>1,
-# >>      :箱入り娘=>1,
-# >>      :銀雲雀=>1,
-# >>      :舟囲い=>9,
-# >>      :居飛車金美濃=>2,
-# >>      :対振り持久戦=>1,
-# >>      :新型雁木=>6,
-# >>      :相掛かり=>1,
-# >>      :▲４五歩早仕掛け=>2,
-# >>      :居玉=>11,
-# >>      :△３三角型空中戦法=>1,
-# >>      :ツノ銀雁木=>1,
-# >>      :オールド雁木=>1,
-# >>      :原始棒銀=>5,
-# >>      :UFO銀=>5,
-# >>      :へこみ矢倉=>1,
-# >>      :串カツ囲い=>1,
-# >>      :金盾囲い=>1,
-# >>      :角交換型=>3,
-# >>      :角換わり=>1,
-# >>      :右玉=>3,
-# >>      :手得角交換型=>1,
-# >>      :地下鉄飛車=>1,
-# >>      :三段右玉=>1,
-# >>      :へなちょこ急戦=>1,
-# >>      :垂れ歩=>12,
-# >>      :対振り=>18,
-# >>      :対抗形=>18,
-# >>      :持久戦=>23,
-# >>      :短手数=>19,
-# >>      :急戦=>22,
-# >>      :相居飛車=>32,
-# >>      :長手数=>28,
-# >>      :大駒コンプリート=>7,
-# >>      :継ぎ桂=>3,
-# >>      :相居玉=>6,
-# >>      :腹銀=>1,
-# >>      :ふんどしの桂=>5,
-# >>      :桂頭の銀=>1,
-# >>      :割り打ちの銀=>1,
-# >>      :大駒全ブッチ=>1,
-# >>      :背水の陣=>1}},
-# >>  :win_lose_streak_stat=>{:lose=>2, :win=>12, :draw=>1}}
-# >> |--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-# >> |         user | {:key=>"user957314", :ban_at=>nil}                                                                                                                                                          |
-# >> |   rule_items | [{:rule_key=>:ten_min, :rule_name=>"10分", :grade_name=>"30級"}, {:rule_key=>:three_min, :rule_name=>"3分", :grade_name=>nil}, {:rule_key=>:ten_sec, :rule_name=>"10秒", :grade_name=>nil}] |
-# >> | judge_counts | {"win"=>1}                                                                                                                                                                                  |
-# >> |  badge_items | [{:message=>"居飛車党", :method=>"raw", :name=>"⬆️", :type=>nil}, {:message=>"嬉野流で勝った", :method=>"raw", :name=>"↗️", :type=>nil}]                                                |
-# >> |   judge_keys | ["win"]                                                                                                                                                                                     |
-# >> |--------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+require "./setup"
+# tp Swars::User.find_by(key: "SugarHuuko").user_stat.other_stat.time_stats
+sql
+puts Swars::User["HIKOUKI_GUMO"].user_stat(sample_max: 200).as_json
+# >>   Swars::User Load (0.3ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'HIKOUKI_GUMO' LIMIT 1
+# >>   ↳ app/models/swars/user.rb:5:in `[]'
+# >>   Swars::Membership Ids (34.8ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/base_scope_methods.rb:35:in `scope_ids'
+# >>   Swars::Membership Load (0.2ms)  SELECT swars_rules.key AS rule_key, MIN(swars_grades.priority) AS min_priority FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_rules` ON `swars_rules`.`id` = `swars_battles`.`rule_id` INNER JOIN `swars_grades` ON `swars_grades`.`id` = `swars_memberships`.`grade_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `rule_key`
+# >>   ↳ app/models/swars/user_stat/grade_by_rules_stat.rb:18:in `block in to_chart'
+# >>   Swars::Grade Load (0.2ms)  SELECT m.rule_key, swars_grades.key AS grade_name FROM `swars_grades` INNER JOIN (SELECT swars_rules.key AS rule_key, MIN(swars_grades.priority) AS min_priority FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_rules` ON `swars_rules`.`id` = `swars_battles`.`rule_id` INNER JOIN `swars_grades` ON `swars_grades`.`id` = `swars_memberships`.`grade_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `rule_key`) m ON priority = m.min_priority ORDER BY `swars_grades`.`priority` ASC
+# >>   ↳ app/models/swars/user_stat/grade_by_rules_stat.rb:30:in `block in to_chart'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/membership_global_extension.rb:14:in `total_judge_counts'
+# >>   Judge Load (0.2ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.2ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'DISCONNECT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Membership Count (0.4ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key`, `swars_finals`.`key` AS `swars_finals_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`, `swars_finals`.`key`
+# >>   ↳ app/models/swars/user_stat/judge_final_stat.rb:55:in `block in counts_hash'
+# >>   Swars::Membership Count (0.4ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_finals`.`key` = 'TIMEOUT' AND `swars_memberships`.`think_last` >= 60
+# >>   ↳ app/models/swars/user_stat/leave_alone_stat.rb:37:in `count'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose'
+# >>   ↳ app/models/swars/user_stat/sub_scope_methods.rb:33:in `lose_count'
+# >>   Swars::Membership Count (0.5ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND (`swars_finals`.`key` = 'TORYO' OR `swars_finals`.`key` = 'CHECKMATE') AND `swars_battles`.`turn_max` <= 19
+# >>   ↳ app/models/swars/user_stat/lethargy_stat.rb:29:in `block in count'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `swars_memberships`.`think_max` >= 180
+# >>   ↳ app/models/swars/user_stat/prolonged_deliberation_stat.rb:15:in `block in count'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'win' AND `swars_memberships`.`think_last` >= 45 AND `swars_finals`.`key` = 'CHECKMATE'
+# >>   ↳ app/models/swars/user_stat/mate_stat.rb:47:in `count'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_memberships`.`think_last` IS NOT NULL AND `swars_memberships`.`think_max` != `swars_memberships`.`think_last` AND `swars_memberships`.`think_max` >= 300 AND `swars_battles`.`turn_max` >= 14
+# >>   ↳ app/models/swars/user_stat/waiting_to_leave_stat.rb:19:in `block in count'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/tag_stat.rb:62:in `block in counts_hash'
+# >>   ActsAsTaggableOn::Tag Load (0.8ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046','99305048')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id
+# >>   ↳ app/models/swars/user_stat/tag_stat.rb:63:in `each_with_object'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/base_scope_methods.rb:45:in `ids_count'
+# >>   Swars::Membership Pluck (0.3ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'win'
+# >>   ↳ app/models/swars/user_stat/tag_stat.rb:62:in `block in counts_hash'
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id
+# >>   ↳ app/models/swars/user_stat/tag_stat.rb:63:in `each_with_object'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'win'
+# >>   ↳ app/models/swars/user_stat/sub_scope_methods.rb:23:in `win_count'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `judges`.`key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) ORDER BY FIELD(swars_memberships.id, '99305042','99305045','99305046','99259352','99305048')
+# >>   ↳ app/models/application_record.rb:69:in `block in custom_belongs_to'
+# >>   Swars::Membership Maximum (0.3ms)  SELECT MAX(`swars_battles`.`turn_max`) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'win'
+# >>   ↳ app/models/swars/user_stat/turn_stat.rb:17:in `max'
+# >>   Swars::Membership Average (0.3ms)  SELECT AVG(turn_max) AS `average_turn_max`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/average_moves_by_outcome_stat.rb:45:in `block in averages_hash'
+# >>   Swars::Membership Load (0.2ms)  SELECT DATE(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo')) AS battled_on, COUNT(*) AS count_all FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `battled_on`
+# >>   ↳ app/models/swars/user_stat/daily_average_matches_stat.rb:41:in `block (2 levels) in aggregate_outcome'
+# >>    (0.3ms)  SELECT AVG(count_all) AS average, MAX(count_all) AS max FROM (SELECT DATE(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo')) AS battled_on, COUNT(*) AS count_all FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `battled_on`) AS from_values
+# >>   ↳ app/models/swars/user_stat/daily_average_matches_stat.rb:43:in `block in aggregate_outcome'
+# >>   Judge Load (0.2ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.2ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TORYO' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TIMEOUT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/rarity_stat.rb:73:in `block in tags'
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'attack_tags') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046','99305048')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id
+# >>   ↳ app/models/swars/user_stat/rarity_stat.rb:72:in `each'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/rarity_stat.rb:73:in `block in tags'
+# >>   ActsAsTaggableOn::Tag Load (0.6ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'defense_tags') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046','99305048')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id
+# >>   ↳ app/models/swars/user_stat/rarity_stat.rb:72:in `each'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_memberships`.`think_max` >= 150 AND `swars_memberships`.`think_max` < 180
+# >>   ↳ app/models/swars/user_stat/overthinking_loss_stat.rb:26:in `block in count'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'draw'
+# >>   ↳ app/models/swars/user_stat/sub_scope_methods.rb:43:in `draw_count'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `swars_xmodes`.`key` AS `swars_xmodes_key`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `swars_xmodes`.`key`, `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/xmode_judge_stat.rb:52:in `block in counts_hash'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND (`swars_memberships`.`ai_wave_count` >= 3 OR `swars_memberships`.`ai_drop_total` >= 15 OR `swars_memberships`.`ai_two_freq` >= 0.6 AND `swars_battles`.`turn_max` >= 50 OR `swars_memberships`.`ai_gear_freq` >= 0.22 AND `swars_battles`.`turn_max` >= 50)
+# >>   ↳ app/models/swars/user_stat/fraud_stat.rb:13:in `count'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `judges`.`key` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) ORDER BY FIELD(swars_memberships.id, '99305042','99305045','99305046','99259352','99305048') LIMIT 17
+# >>   ↳ app/models/application_record.rb:69:in `block in custom_belongs_to'
+# >>   Judge Load (0.2ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in `lookup'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/concerns/memory_record_bind.rb:77:in `lookup'
+# >>   Swars::Membership Load (0.3ms)  SELECT DATE(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo')) AS battled_on, COUNT(judge_id = 1  OR NULL) AS win, COUNT(judge_id = 2 OR NULL) AS lose FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY battled_on ORDER BY battled_on DESC
+# >>   ↳ app/models/swars/user_stat/daily_win_loss_list_stat.rb:24:in `collect'
+# >>   Swars::Membership Ids (25.5ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`op_user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/vs_stat.rb:88:in `ids'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `swars_grades`.`key` AS `swars_grades_key`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `swars_grades` ON `swars_grades`.`id` = `swars_memberships`.`grade_id` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `swars_grades`.`key`, `judges`.`key` ORDER BY `swars_grades`.`priority` ASC
+# >>   ↳ app/models/swars/user_stat/vs_stat.rb:17:in `to_chart'
+# >>   Swars::Membership Ids (11.8ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:44:in `build_by'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:51:in `build_by'
+# >>   ActsAsTaggableOn::Tag Load (0.4ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'attack_tags') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046','99305048')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id ORDER BY count desc
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:52:in `collect'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_f5d5141` ON `swars::membe_taggings_f5d5141`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_f5d5141`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_f5d5141`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '力戦' ESCAPE '!') AND `swars::membe_taggings_f5d5141`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_ad02ba7` ON `swars::membe_taggings_ad02ba7`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_ad02ba7`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_ad02ba7`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '角換わり' ESCAPE '!') AND `swars::membe_taggings_ad02ba7`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_06aa9d9` ON `swars::membe_taggings_06aa9d9`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_06aa9d9`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_06aa9d9`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '棒銀' ESCAPE '!') AND `swars::membe_taggings_06aa9d9`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_720d116` ON `swars::membe_taggings_720d116`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_720d116`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_720d116`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '▲７八飛戦法' ESCAPE '!') AND `swars::membe_taggings_720d116`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_5588c1e` ON `swars::membe_taggings_5588c1e`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_5588c1e`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_5588c1e`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '向かい飛車' ESCAPE '!') AND `swars::membe_taggings_5588c1e`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_1033e80` ON `swars::membe_taggings_1033e80`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_1033e80`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_1033e80`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '三間飛車ミレニアム' ESCAPE '!') AND `swars::membe_taggings_1033e80`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Ids (8.0ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`op_user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:44:in `build_by'
+# >>   Swars::Membership Pluck (0.1ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049)
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:51:in `build_by'
+# >>   ActsAsTaggableOn::Tag Load (0.3ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'attack_tags') AND (taggings.taggable_id IN ('99259351','99305043','99305044','99305047','99305049')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id ORDER BY count desc
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:52:in `collect'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_2e29728` ON `swars::membe_taggings_2e29728`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_2e29728`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_2e29728`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '5筋位取り中飛車' ESCAPE '!') AND `swars::membe_taggings_2e29728`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_ad02ba7` ON `swars::membe_taggings_ad02ba7`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_ad02ba7`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_ad02ba7`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '角換わり' ESCAPE '!') AND `swars::membe_taggings_ad02ba7`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_fbf8131` ON `swars::membe_taggings_fbf8131`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_fbf8131`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_fbf8131`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '九間飛車' ESCAPE '!') AND `swars::membe_taggings_fbf8131`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_a11b922` ON `swars::membe_taggings_a11b922`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_a11b922`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_a11b922`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '腰掛け銀' ESCAPE '!') AND `swars::membe_taggings_a11b922`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_24fec36` ON `swars::membe_taggings_24fec36`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_24fec36`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_24fec36`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '右四間飛車' ESCAPE '!') AND `swars::membe_taggings_24fec36`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_9de03ff` ON `swars::membe_taggings_9de03ff`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_9de03ff`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_9de03ff`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '対振り持久戦' ESCAPE '!') AND `swars::membe_taggings_9de03ff`.`context` = 'attack_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Ids (6.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:44:in `build_by'
+# >>   Swars::Membership Pluck (0.1ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:51:in `build_by'
+# >>   ActsAsTaggableOn::Tag Load (0.2ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'defense_tags') AND (taggings.taggable_id IN ('99259352','99305042','99305045','99305046','99305048')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id ORDER BY count desc
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:52:in `collect'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_c581859` ON `swars::membe_taggings_c581859`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_c581859`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_c581859`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '美濃囲い' ESCAPE '!') AND `swars::membe_taggings_c581859`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_9598db9` ON `swars::membe_taggings_9598db9`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_9598db9`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_9598db9`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '振り飛車ミレニアム' ESCAPE '!') AND `swars::membe_taggings_9598db9`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Ids (6.8ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`op_user_id` = 23974 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 5
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:44:in `build_by'
+# >>   Swars::Membership Pluck (0.1ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049)
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:51:in `build_by'
+# >>   ActsAsTaggableOn::Tag Load (0.2ms)  SELECT tags.*, taggings.tags_count AS count FROM `tags` JOIN (SELECT taggings.tag_id, COUNT(taggings.tag_id) AS tags_count FROM `taggings` WHERE (taggings.taggable_type = 'Swars::Membership' AND taggings.context = 'defense_tags') AND (taggings.taggable_id IN ('99259351','99305043','99305044','99305047','99305049')) GROUP BY `taggings`.`tag_id` HAVING (COUNT(taggings.tag_id) > 0)) AS taggings ON taggings.tag_id = tags.id ORDER BY count desc
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:52:in `collect'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_d0162ee` ON `swars::membe_taggings_d0162ee`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_d0162ee`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_d0162ee`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '角換わり右玉' ESCAPE '!') AND `swars::membe_taggings_d0162ee`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_8927555` ON `swars::membe_taggings_8927555`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_8927555`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_8927555`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '振り飛車穴熊' ESCAPE '!') AND `swars::membe_taggings_8927555`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_94f3238` ON `swars::membe_taggings_94f3238`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_94f3238`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_94f3238`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '左山囲い' ESCAPE '!') AND `swars::membe_taggings_94f3238`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_15dd54e` ON `swars::membe_taggings_15dd54e`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_15dd54e`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_15dd54e`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '舟囲い' ESCAPE '!') AND `swars::membe_taggings_15dd54e`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_bdddf7d` ON `swars::membe_taggings_bdddf7d`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_bdddf7d`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_bdddf7d`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '居飛車穴熊' ESCAPE '!') AND `swars::membe_taggings_bdddf7d`.`context` = 'defense_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305043, 99305044, 99305047, 99259351, 99305049) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/matrix_stat.rb:61:in `block (2 levels) in build_by'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_battles`.`turn_max` >= 14 AND `swars_finals`.`key` = 'DISCONNECT'
+# >>   ↳ app/models/swars/user_stat/disconnect_escape_stat.rb:18:in `count'
+# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_a7ebda8` ON `swars::membe_taggings_a7ebda8`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_a7ebda8`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_a7ebda8`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '居飛車' ESCAPE '!') AND `swars::membe_taggings_a7ebda8`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_a9c1913` ON `swars::membe_taggings_a9c1913`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_a9c1913`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_a9c1913`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '振り飛車' ESCAPE '!') AND `swars::membe_taggings_a9c1913`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_aa182c2` ON `swars::membe_taggings_aa182c2`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_aa182c2`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_aa182c2`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '相居飛車' ESCAPE '!') AND `swars::membe_taggings_aa182c2`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_0deaf82` ON `swars::membe_taggings_0deaf82`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_0deaf82`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_0deaf82`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '対振り' ESCAPE '!') AND `swars::membe_taggings_0deaf82`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_6b8ff07` ON `swars::membe_taggings_6b8ff07`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_6b8ff07`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_6b8ff07`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '対抗形' ESCAPE '!') AND `swars::membe_taggings_6b8ff07`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_7a1d286` ON `swars::membe_taggings_7a1d286`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_7a1d286`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_7a1d286`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '相振り' ESCAPE '!') AND `swars::membe_taggings_7a1d286`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_f8fd97d` ON `swars::membe_taggings_f8fd97d`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_f8fd97d`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_f8fd97d`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '大駒全ブッチ' ESCAPE '!') AND `swars::membe_taggings_f8fd97d`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_9c84015` ON `swars::membe_taggings_9c84015`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_9c84015`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_9c84015`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '大駒コンプリート' ESCAPE '!') AND `swars::membe_taggings_9c84015`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_f11a8b7` ON `swars::membe_taggings_f11a8b7`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_f11a8b7`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_f11a8b7`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '入玉' ESCAPE '!') AND `swars::membe_taggings_f11a8b7`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_e5a6191` ON `swars::membe_taggings_e5a6191`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_e5a6191`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_e5a6191`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '急戦' ESCAPE '!') AND `swars::membe_taggings_e5a6191`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_8afafbc` ON `swars::membe_taggings_8afafbc`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_8afafbc`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_8afafbc`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '持久戦' ESCAPE '!') AND `swars::membe_taggings_8afafbc`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_411d086` ON `swars::membe_taggings_411d086`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_411d086`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_411d086`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '短手数' ESCAPE '!') AND `swars::membe_taggings_411d086`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Count (0.2ms)  SELECT COUNT(*) AS `count_all`, `judges`.`key` AS `judges_key` FROM `swars_memberships` INNER JOIN `taggings` `swars::membe_taggings_4f7abbb` ON `swars::membe_taggings_4f7abbb`.`taggable_id` = `swars_memberships`.`id` AND `swars::membe_taggings_4f7abbb`.`taggable_type` = 'Swars::Membership' AND `swars::membe_taggings_4f7abbb`.`tag_id` IN (SELECT `tags`.`id` FROM `tags` WHERE `tags`.`name` LIKE '長手数' ESCAPE '!') AND `swars::membe_taggings_4f7abbb`.`context` = 'note_tags' INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `judges`.`key`
+# >>   ↳ app/models/swars/user_stat/note_stat.rb:23:in `to_chart'
+# >>   Swars::Membership Maximum (0.1ms)  SELECT MAX(`swars_battles`.`turn_max`) FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/turn_stat.rb:17:in `max'
+# >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_battles`.`turn_max`) FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/turn_stat.rb:24:in `block in average'
+# >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_battles`.`turn_max`) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_finals`.`key` = 'TORYO'
+# >>   ↳ app/models/swars/user_stat/average_moves_at_resignation_stat.rb:15:in `average'
+# >>   Swars::Membership Count (0.1ms)  SELECT COUNT(*) AS `count_all`, `swars_rules`.`key` AS `swars_rules_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_rules` ON `swars_rules`.`id` = `swars_battles`.`rule_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `swars_rules`.`key`
+# >>   ↳ app/models/swars/user_stat/rule_stat.rb:13:in `block in to_chart'
+# >>   Swars::Membership Count (0.1ms)  SELECT COUNT(*) AS `count_all`, `swars_xmodes`.`key` AS `swars_xmodes_key` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) GROUP BY `swars_xmodes`.`key`
+# >>   ↳ app/models/swars/user_stat/xmode_stat.rb:33:in `block in counts_hash'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TORYO' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TIMEOUT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'CHECKMATE' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'DISCONNECT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'ENTERINGKING' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'DRAW_SENNICHI' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'win' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'OUTE_SENNICHI' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TORYO' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'TIMEOUT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.2ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'CHECKMATE' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'DISCONNECT' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'ENTERINGKING' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'DRAW_SENNICHI' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Judge Load (0.1ms)  SELECT `judges`.* FROM `judges` WHERE `judges`.`key` = 'lose' ORDER BY `judges`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Final Load (0.1ms)  SELECT `swars_finals`.* FROM `swars_finals` WHERE `swars_finals`.`key` = 'OUTE_SENNICHI' ORDER BY `swars_finals`.`position` ASC LIMIT 1
+# >>   ↳ app/models/application_memory_record.rb:22:in `db_record!'
+# >>   Swars::Membership Ids (0.2ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'lose' AND `swars_battles`.`turn_max` >= 14 AND `swars_finals`.`key` = 'TORYO'
+# >>   ↳ app/models/swars/user_stat/resignation_stat.rb:70:in `block in scope'
+# >>   Swars::Membership Maximum (0.1ms)  SELECT MAX(`swars_memberships`.`think_last`) FROM `swars_memberships` WHERE `swars_memberships`.`id` = 99305048
+# >>   ↳ app/models/swars/user_stat/resignation_stat.rb:50:in `max'
+# >>   Swars::Membership Count (0.1ms)  SELECT COUNT(*) AS `count_all`, think_last DIV 10 AS `think_last_div_10` FROM `swars_memberships` WHERE `swars_memberships`.`id` = 99305048 AND `swars_memberships`.`think_last` < 60 GROUP BY think_last DIV 10 ORDER BY count_all desc
+# >>   ↳ app/models/swars/user_stat/resignation_stat.rb:20:in `to_chart'
+# >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_memberships`.`think_last`) FROM `swars_memberships` WHERE `swars_memberships`.`id` = 99305048
+# >>   ↳ app/models/swars/user_stat/resignation_stat.rb:56:in `block in average'
+# >>   Swars::Membership Maximum (0.1ms)  SELECT MAX(`swars_memberships`.`think_max`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/think_stat.rb:12:in `max'
+# >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_memberships`.`think_all_avg`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/think_stat.rb:18:in `block in average'
+# >>   Swars::Membership Average (0.2ms)  SELECT AVG(`swars_memberships`.`think_end_avg`) FROM `swars_memberships` INNER JOIN `judges` ON `judges`.`id` = `swars_memberships`.`judge_id` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_finals` ON `swars_finals`.`id` = `swars_battles`.`final_id` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048) AND `judges`.`key` = 'win' AND `swars_finals`.`key` = 'CHECKMATE'
+# >>   ↳ app/models/swars/user_stat/mate_speed_stat.rb:15:in `average'
+# >>   Swars::Membership Load (0.1ms)  SELECT `swars_memberships`.* FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/piece_stat.rb:48:in `block in counts_hash'
+# >>   Swars::MembershipExtra Load (0.1ms)  SELECT `swars_membership_extras`.* FROM `swars_membership_extras` WHERE `swars_membership_extras`.`membership_id` IN (99259352, 99305042, 99305045, 99305046, 99305048)
+# >>   ↳ app/models/swars/user_stat/piece_stat.rb:48:in `block in counts_hash'
+# >>   Swars::Membership Average (0.1ms)  SELECT AVG(`swars_memberships`.`grade_diff`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/gdiff_stat.rb:11:in `average'
+# >>   Swars::Membership Pluck (0.2ms)  SELECT `swars_memberships`.`battle_id` FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99305042, 99305045, 99305046, 99259352, 99305048)
+# >>   ↳ app/models/swars/user_stat/match_time_period_stat.rb:11:in `to_chart'
+# >>   Swars::Battle Count (0.1ms)  SELECT COUNT(*) AS `count_all`, HOUR(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo')) AS `hour_convert_tz_battled_at_utc_asia_tokyo` FROM `swars_battles` WHERE `swars_battles`.`id` IN (49743466, 49766574, 49766575, 49766576, 49766577) GROUP BY HOUR(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo'))
+# >>   ↳ app/models/swars/user_stat/match_time_period_stat.rb:14:in `to_chart'

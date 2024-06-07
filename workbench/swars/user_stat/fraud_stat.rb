@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.fraud_stat.to_chart } # => "156.70 ms"
 s { Swars::User["SugarHuuko"].user_stat.fraud_stat.to_chart } # => nil
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

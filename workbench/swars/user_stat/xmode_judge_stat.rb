@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 Swars::User["SugarHuuko"].user_stat(sample_max: 200).xmode_stat.count(:"野良") # => 199
 Swars::User["SugarHuuko"].user_stat(sample_max: 200).xmode_stat.count(:"指導") # => 1
 Swars::User["SugarHuuko"].user_stat(sample_max: 200).xmode_judge_stat.counts_hash # => {["野良", "win"]=>142, ["野良", "lose"]=>52, ["指導", "win"]=>1, ["野良", "draw"]=>5}

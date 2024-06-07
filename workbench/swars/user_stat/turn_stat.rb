@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 s { Swars::User["SugarHuuko"].user_stat.turn_stat.average        } # => 89
 _ { Swars::User["SugarHuuko"].user_stat.turn_stat.average        } # => "22.01 ms"
 s { Swars::User["SugarHuuko"].user_stat.turn_stat.max            } # => 177

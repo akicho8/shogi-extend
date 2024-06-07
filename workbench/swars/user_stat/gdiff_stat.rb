@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.gdiff_stat.average }        # => "159.74 ms"
 s { Swars::User["SugarHuuko"].user_stat.gdiff_stat.average }        # => -1.48
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 user = Swars::User["SugarHuuko"]
 _ { user.user_stat.resignation_stat.to_chart } # => "134.14 ms"
 _ { user.user_stat.resignation_stat.max      } # => "22.10 ms"

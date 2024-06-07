@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.xmode_stat.to_chart } # => "220.23 ms"
 s { Swars::User["SugarHuuko"].user_stat.xmode_stat.to_chart } # => [{:name=>"野良", :value=>50}, {:name=>"友達", :value=>0}, {:name=>"指導", :value=>0}]
 Swars::User["SugarHuuko"].user_stat.xmode_stat.counts_hash    # => {:野良=>50}

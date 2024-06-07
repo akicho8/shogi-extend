@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 tp Swars::UserStat::OtherInfo["勝敗別平均手数"].bottom_message # => 
 tp Swars::UserStat::OtherInfo
 # ~> <internal:/opt/rbenv/versions/3.2.2/lib/ruby/site_ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:37:in `require': /Users/ikeda/src/shogi-extend/app/models/swars/user_stat/other_info.rb:70: syntax error, unexpected ',', expecting => (SyntaxError)

@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.perpetual_check_stat.opening_repetition_move_count } # => "233.02 ms"
 s { Swars::User["SugarHuuko"].user_stat.perpetual_check_stat.opening_repetition_move_count } # => 1
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

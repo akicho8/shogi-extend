@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.vs_stat.to_chart } # => "144.63 ms"
 s { Swars::User["SugarHuuko"].user_stat.vs_stat.to_chart } # => [{:grade_name=>"八段", :judge_counts=>{:draw=>2}, :appear_ratio=>0.04}, {:grade_name=>"七段", :judge_counts=>{:lose=>5, :win=>6}, :appear_ratio=>0.22}, {:grade_name=>"六段", :judge_counts=>{:win=>14, :lose=>1}, :appear_ratio=>0.3}, {:grade_name=>"五段", :judge_counts=>{:win=>11, :lose=>2}, :appear_ratio=>0.26}, {:grade_name=>"四段", :judge_counts=>{:win=>6, :draw=>1}, :appear_ratio=>0.14}, {:grade_name=>"三段", :judge_counts=>{:win=>1}, :appear_ratio=>0.02}, {:grade_name=>"9級", :judge_counts=>{:win=>1}, :appear_ratio=>0.02}]
 tp Swars::User["SugarHuuko"].user_stat.vs_stat.to_chart

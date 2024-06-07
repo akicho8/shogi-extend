@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.prolonged_deliberation_stat.count }        # => "226.45 ms"
 s { Swars::User["SugarHuuko"].user_stat.prolonged_deliberation_stat.count }        # => 0
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1

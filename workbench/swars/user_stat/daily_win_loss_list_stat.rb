@@ -1,4 +1,4 @@
-require "../setup"
+require "./setup"
 _ { Swars::User["SugarHuuko"].user_stat.daily_win_loss_list_stat.to_chart }        # => "254.99 ms"
 s { Swars::User["SugarHuuko"].user_stat.daily_win_loss_list_stat.to_chart }        # => [{:battled_on=>Wed, 05 Jun 2024, :day_type=>nil, :judge_counts=>{:win=>4, :lose=>0}}, {:battled_on=>Sat, 01 Jun 2024, :day_type=>:info, :judge_counts=>{:win=>5, :lose=>2}}, {:battled_on=>Fri, 31 May 2024, :day_type=>nil, :judge_counts=>{:win=>26, :lose=>13}}]
 # >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
