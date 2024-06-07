@@ -158,11 +158,11 @@ module Swars
 
     it "垢BANした人の対局と垢BANされていない人の対局を分けるリレーションが正しい" do
       user1, user2 = record.users
-      assert { Battle.ban_record_only.count == 0 }
-      assert { Battle.ban_record_except.count == 1 }
+      assert { Battle.ban_only.count == 0 }
+      assert { Battle.ban_except.count == 1 }
       user1.ban!
-      assert { Battle.ban_record_only.count == 1 }
-      assert { Battle.ban_record_except.count == 0 }
+      assert { Battle.ban_only.count == 1 }
+      assert { Battle.ban_except.count == 0 }
     end
 
     it "latest_battled_at: Membershipの保存で最終対局日時を更新する" do

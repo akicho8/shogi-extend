@@ -38,7 +38,7 @@ module Swars
 
     it "指定ユーザーのバトルは削除しない" do
       case1("user1" => "1級", "user2" => "2級")
-      assert { cleanup_scope(skip_users: ["user1"]).count == 0 }
+      assert { cleanup_scope(user_except: ["user1"]).count == 0 }
     end
   end
 end

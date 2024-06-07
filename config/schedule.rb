@@ -54,7 +54,8 @@ every("5 3 * * *") do
     %(Kiwi::Lemon.cleanup(execute: true)),   # ライブラリ登録していないものを削除する(x-files以下の対応ファイルも削除する)
     %(XfilesCleanup.new(execute: true).call), # public/system/x-files 以下の古い png と rb を削除する
     %(FreeBattle.cleanup(execute: true)),
-    %(Swars::Battle.cleanup(execute: true)),  # 30分かかる
+    %(Swars::Battle.cleanup1(execute: true).call),  # 30分かかる
+    %(Swars::Battle.cleanup2(execute: true).call),  # 30分かかる
     %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
     %(AppLog.cleanup(execute: true)),
 

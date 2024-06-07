@@ -5,36 +5,44 @@ module Swars
     class Cleanup
       def initialize(options = {})
         @options = {
-          :expires_in => Rails.env.production? ? 45.days : 0.days,
+          :scope      => Battle.none,
           :execute    => false,
-          :time_limit => Rails.env.production? ? 4.hours : nil,  # 最大処理時間(朝2時に実行したら6時には必ず終了させる)
+          :time_limit => nil,
+          :verbose    => false,
         }.merge(options)
       end
 
       def call
-        @scope = Battle.cleanup_scope(@options)
-
         @start_time = Time.current
-        @count = @scope.count
-        memo["前"] = @scope.count
+        @count = scope.count
+        memo["前"] = scope.count
 
         @free_changes = FreeSpace.new.call do
-          @scope.find_in_batches(batch_size: 1000) do |records|
+          scope.find_in_batches(batch_size: 1000) do |records|
             one_group(records)
             rows << @group
           end
         end
 
-        memo["後"]   = @scope.count
+        memo["後"]   = scope.count
         memo["差"]   = memo["後"] - memo["前"]
         memo["開始"] = @start_time.to_fs(:ymdhms)
         memo["終了"] = Time.current.to_fs(:ymdhms)
         memo["空き"] = @free_changes.join(" → ")
 
         AppLog.important(subject: subject, body: body)
+
+        if @options[:verbose]
+          puts subject
+          puts body
+        end
       end
 
       private
+
+      def scope
+        @options[:scope]
+      end
 
       def one_group(records)
         @group = {}
@@ -73,7 +81,7 @@ module Swars
 
       def body
         [
-          @options.to_t,
+          @options.except(:scope).to_t,
           memo.to_t,
           rows.to_t,
           errors.to_t,

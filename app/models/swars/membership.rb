@@ -41,7 +41,7 @@ module Swars
     include TagMethods
     include ::Swars::MembershipTimeChartMethods
     include FraudDetector::MembershipMethods
-    include UserStat::MembershipGlobalExtension
+    include User::Stat::MembershipGlobalExtension
 
     custom_belongs_to :location, ar_model: Location, st_model: LocationInfo, default: nil
 

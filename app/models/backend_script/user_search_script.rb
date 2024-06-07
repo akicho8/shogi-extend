@@ -1,5 +1,5 @@
 module BackendScript
-  class UserSearchScript < ::BackendScript::Base
+  class User::SearchScript < ::BackendScript::Base
     include SortMethods
     include TargetUsersMethods
 

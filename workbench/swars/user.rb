@@ -1,4 +1,6 @@
-require File.expand_path('../../../config/environment', __FILE__)
+require "./setup"
+s { Swars::User["SugarHuuko"] }       # => #<Swars::User id: 17413, user_key: "SugarHuuko", grade_id: 2, last_reception_at: "2024-06-06 19:34:50.000000000 +0900", search_logs_count: 9732, created_at: "2019-02-12 21:04:46.000000000 +0900", updated_at: "2024-06-06 19:34:50.000000000 +0900", ban_at: nil, latest_battled_at: "2024-06-05 12:00:36.000000000 +0900">
+_ { Swars::User["SugarHuuko"] }       # => "1.94 ms"
 
 # user = Swars::User.find_by(key: "YamadaTaro") # => #<Swars::User id: 59, user_key: "YamadaTaro", grade_id: 7, last_reception_at: nil, search_logs_count: 0, created_at: "2023-11-24 18:45:09.000000000 +0900", updated_at: "2023-11-24 18:45:10.000000000 +0900", ban_at: nil>
 # user.ban!
@@ -9,8 +11,8 @@ require File.expand_path('../../../config/environment', __FILE__)
 # # user.save!
 # user.ban!
 
-# Swars::Battle.ban_record_except.count # => 30
-# Swars::Battle.ban_record_only.count   # => 1
+# Swars::Battle.ban_except.count # => 30
+# Swars::Battle.ban_only.count   # => 1
 # Swars::Battle.count                   # => 31
 #
 # Swars::User.where.missing(:profile).find_each(&:save!)
@@ -26,15 +28,12 @@ require File.expand_path('../../../config/environment', __FILE__)
 # ActiveSupport::LogSubscriber.colorize_logging = false
 # logger = ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
 # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-# 
+#
 # Swars::User.where(latest_battled_at: nil).find_each { |e| e.update!(latest_battled_at: user.memberships.joins(:battle).maximum(Swars::Battle.arel_table[:battled_at])) }
 
 # tp Swars::User
 
-Swars::User.where(Swars::User.arel_table[:latest_battled_at].gt(Swars::Profile.arel_table[:ban_crawled_at])).to_sql
-
-
-
+# Swars::User.where(Swars::User.arel_table[:latest_battled_at].gt(Swars::Profile.arel_table[:ban_crawled_at])).to_sql
 
 # tp Swars::User
 # tp Swars::Profile
@@ -43,14 +42,15 @@ Swars::User.where(Swars::User.arel_table[:latest_battled_at].gt(Swars::Profile.a
 # user = Swars::User.first
 # my = user.memberships
 # user.key                        # => "tosssy"
-# 
+#
 # ActiveSupport::LogSubscriber.colorize_logging = false
 # ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-# 
+#
 # user.op_users.collect(&:key)    # => ["muaqua2023"]
 # user.op_users.ban_only          # => #<ActiveRecord::AssociationRelation []>
 
 # op = user.op_memberships
 # m = op.where(user: Swars::User.ban_only)
 # m.pluck(:battle_id)             # => []
-
+# >>   Swars::User Load (0.6ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
+# >>   ↳ app/models/swars/user.rb:9:in `[]'

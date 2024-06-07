@@ -16,33 +16,13 @@ module Swars
     attr_reader :key
 
     def initialize(key)
-      # UserKeyValidator.new(key).validate!
       @key = key.dup.freeze
-      @cache = {}
       freeze
     end
 
     def to_s
       key
     end
-
-    # def to_battle_url
-    #   q = { locale: "ja" }
-    #   "https://shogiwars.heroz.jp/games/#{self}?#{q.to_query}"
-    # end
-    #
-    # def to_time
-    #   Time.zone.parse(parts.last)
-    # end
-    #
-    # def user_keys
-    #   parts.take(2)
-    # end
-
-    # def user_key_at(location)
-    #   location = Bioshogi::Location.fetch(location)
-    #   parts[location.code]
-    # end
 
     def <=>(other)
       [self.class, key] <=> [other.class, other.key]
@@ -63,11 +43,5 @@ module Swars
     def inspect
       "<#{self}>"
     end
-
-    private
-
-    # def parts
-    #   @cache[:parts] ||= key.split("-")
-    # end
   end
 end

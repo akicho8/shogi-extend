@@ -54,8 +54,8 @@ module Swars
         assert { record.memberships[1].note_tag_list    == ["振り飛車", "対抗形"]         }
       end
 
-      it "タグ検索で LOWER を使わない" do
-        assert { Membership.tagged_with("居玉").to_sql.exclude?("LOWER") }
+      it "タグ検索で LOWER を使う" do
+        assert { Membership.tagged_with("居玉").to_sql.include?("LOWER") }
       end
     end
 

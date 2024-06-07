@@ -50,7 +50,8 @@ module Swars
       def user_create_or_update(e)
         grade = Grade.fetch(e[:grade_info].key)
         user = User.find_or_initialize_by(user_key: e[:user_key])
-        user.grade_update_if_new(grade)
+        user.high_grade_then_set(grade)
+        user.save!
       end
 
       def battle_create!

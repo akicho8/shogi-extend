@@ -17,7 +17,7 @@ module Swars
 
     it "user1 は対象外なので削除しない" do
       case1("user1" => "1級", "user2" => "2級")
-      Battle.cleanup(execute: true, skip_users: ["user1"])
+      Battle.cleanup(execute: true, user_except: ["user1"])
       assert { Battle.count == 1 }
     end
   end
