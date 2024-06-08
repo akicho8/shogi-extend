@@ -51,6 +51,7 @@ module Swars
           s = ids_scope
           s = s.joins(:battle => :final)
           s = s.joins(:judge)
+          s = s.where(Battle.arel_table[:turn_max].gteq(2)) # BOUYATETSU5 は1手目での切断が多いため。2手指せば通信環境は正常である。
           s = s.group(Judge.arel_table[:key], Final.arel_table[:key])
           s.count
         end

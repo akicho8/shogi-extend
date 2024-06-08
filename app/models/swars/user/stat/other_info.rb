@@ -34,12 +34,12 @@ module Swars
 
         ################################################################################
 
-        { key: "切断逃亡",                body: proc { disconnect_escape_stat.positive_count }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count              }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "無気力な対局",            body: proc { lethargy_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "角不成",                  body: proc { all_tag.counts_hash[:"角不成"]        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "飛車不成",                body: proc { all_tag.counts_hash[:"飛車不成"]      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "切断逃亡",                body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "角不成",                  body: proc { all_tag.counts_hash[:"角不成"]                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "飛車不成",                body: proc { all_tag.counts_hash[:"飛車不成"]              }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "無気力な対局",            body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 

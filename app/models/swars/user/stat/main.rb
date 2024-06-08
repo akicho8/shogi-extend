@@ -24,9 +24,10 @@ module Swars
         end
       end
 
-      # https://www.shogi-extend.com/api/swars/stat.json?user_key=kinakom0chi
-      # http://localhost:3000/api/swars/stat?user_key=kinakom0chi
-      # http://localhost:3000/api/swars/stat?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
+      # https://www.shogi-extend.com/api/swars/user_stat.json?user_key=kinakom0chi
+      # http://localhost:3000/api/swars/user_stat?user_key=BOUYATETSU5&sample_max=200
+      # http://localhost:3000/api/swars/user_stat?user_key=kinakom0chi
+      # http://localhost:3000/api/swars/user_stat?user_key=YamadaTaro&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93:10%E5%88%86
       def to_hash
         {}.tap do |h|
           ################################################################################ メタ情報
@@ -161,10 +162,6 @@ module Swars
 
       def matrix_stat
         @matrix_stat ||= MatrixStat.new(self)
-      end
-
-      def disconnect_escape_stat
-        @disconnect_escape_stat ||= DisconnectEscapeStat.new(self)
       end
 
       def mental_stat

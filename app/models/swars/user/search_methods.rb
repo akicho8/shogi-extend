@@ -12,9 +12,13 @@ module Swars
     concern :SearchMethods do
       included do
         scope :search,               -> (query = {}) { Search.new(all, query).call }
-        scope :pro_only,             -> { where(grade: Grade.fetch("十段"))                   } # プロのみ
-        scope :pro_except,           -> { where.not(grade: Grade.fetch("十段"))               } # プロを除く
         scope :latest_battled_at_lt, -> time { where(arel_table[:latest_battled_at].lt(time)) } # 最終対局が指定の日時よりも古い
+
+        scope :pro_only,   -> { where(grade: Grade.fetch("十段"))     } # プロのみ
+        scope :pro_except, -> { where.not(grade: Grade.fetch("十段")) } # プロを除く
+
+        scope :user_only,   -> keys { where(key: keys)     } # ユーザーを絞る
+        scope :user_except, -> keys { where.not(key: keys) } # ユーザーを省く
       end
     end
 
@@ -45,7 +49,7 @@ module Swars
           s = s.grade_eq(v)
         end
         if v = @options[:user_keys].presence
-          s = s.where(key: v)
+          s = s.user_only(v)
         end
         if v = @options[:ban_crawled_count_lteq].presence
           s = s.ban_crawled_count_lteq(v)

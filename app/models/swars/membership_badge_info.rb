@@ -9,7 +9,7 @@ module Swars
         message: "悔しかったので切断した",
         badge_params: "💩",
         if_cond: -> m {
-          m.judge_key == "lose" && m.battle.turn_max >= 14 && m.battle.final_info.key == :DISCONNECT
+          m.judge_key == "lose" && m.battle.turn_max >= 2 && m.battle.final_info.key == :DISCONNECT
         },
       },
       {

@@ -37,17 +37,15 @@ module Swars
     describe "切断マン" do
       def case1(n)
         @black = User.create!
-        @white = User.create!
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DISCONNECT) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
-          e.memberships.build(user: @white, judge_key: :win)
         end
         @black.memberships.first.badge_info.key == :"切断マン"
       end
 
       it "works" do
-        assert { !case1(13) }
-        assert { case1(14) }
+        assert { !case1(1) }
+        assert { case1(2) }
       end
     end
 
