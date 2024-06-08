@@ -26,7 +26,7 @@ module Swars
       end
 
       it "波が激しいマン" do
-        case1([:win] * 5 + [:lose] * 5)
+        case1([:win] * 8 + [:lose] * 8)
         assert { @user.stat.badge_stat.win_lose_streak_stat.waves_strong? }
         assert { @user.stat.badge_stat.active?(:"波が激しいマン") }
       end

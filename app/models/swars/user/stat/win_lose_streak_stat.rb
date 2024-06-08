@@ -24,7 +24,7 @@ module Swars
       end
 
       def waves_strong?
-        count(:win) >= 5 && count(:lose) >= 5
+        count(:win) >= 8 && count(:lose) >= 8
       end
 
       # なければ nil を返す

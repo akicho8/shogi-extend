@@ -66,7 +66,7 @@ module Swars
         { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱いで勝った",               }, if_cond: proc { win_tag.exist?(:"パンツを脱ぐ") }, },
         { key: "居玉勝ちマン",       badge_params: { name: "🗿",   message: "居玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"居玉") }, },
         { key: "入玉勝ちマン",       badge_params: { name: "🏈",   message: "入玉で勝った",                       }, if_cond: proc { win_tag.exist?(:"入玉") }, },
-        { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めで勝った",                      }, if_cond: proc { win_tag.exist?(:"都詰め") }  },
+        { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めで勝った (超レア)",            }, if_cond: proc { win_tag.exist?(:"都詰め") }  },
         { key: "駒柱マン",           badge_params: { name: "🗽",   message: "駒柱を作って勝った",                  }, if_cond: proc { win_tag.exist?(:"駒柱") }  },
 
         #############################################             ###################################

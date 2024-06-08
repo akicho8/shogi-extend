@@ -227,7 +227,7 @@ module Swars
 
           # 絞り込めていないときだけ自分の対局で絞る
           unless @selected
-            s = s.joins(:memberships).merge(Membership.where(user_id: @user.id))
+            s = s.joins(:memberships).merge(Membership.where(user_id: @user.id)) # FIXME: joins → eager_load
           end
         end
 

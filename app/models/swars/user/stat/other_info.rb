@@ -113,11 +113,6 @@ module Swars
 
         ################################################################################
 
-        { key: "ルール別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
-        { key: "対局モード",       body: proc { xmode_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
-
-        ################################################################################
-
         { key: "勝ち", body: proc { judge_final_stat.to_chart(:win) },  chart_type: :pie, chart_options: { pie_type: :is_many_values,}, },
 
         ################################################################################
@@ -183,6 +178,11 @@ module Swars
           },
           body: proc { gdiff_stat.average },
         },
+
+        ################################################################################
+
+        { key: "ルール別対局頻度", body: proc { rule_stat.to_chart  }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
+        { key: "対局モード",       body: proc { xmode_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################
 
