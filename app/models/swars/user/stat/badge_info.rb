@@ -22,9 +22,9 @@ module Swars
 
         ################################################################################
 
-        { key: "居飛車党",           badge_params: { name: "⬆️",    message: "居飛車党",                           }, if_cond: proc { win_tag.group_ibis?                  },},
-        { key: "振り飛車党",         badge_params: { name: "⬅️",    message: "振り飛車党",                         }, if_cond: proc { win_tag.group_furi?                  },},
-        { key: "オールラウンダー",   badge_params: { name: "🅰",    message: "オールラウンダー",                   }, if_cond: proc { win_tag.group_all_rounder?               },},
+        { key: "居飛車党",           badge_params: { name: "⬆️",    message: "真の居飛車党",                           }, if_cond: proc { win_tag.group_ibis?                  },},
+        { key: "振り飛車党",         badge_params: { name: "⬅️",    message: "真の振り飛車党",                         }, if_cond: proc { win_tag.group_furi?                  },},
+        { key: "オールラウンダー",   badge_params: { name: "🅰",    message: "真のオールラウンダー",                   }, if_cond: proc { win_tag.group_all_rounder?               },},
 
         { key: "急戦マン",           badge_params: { name: "🐝",    message: "急戦で勝ち越した",                   }, if_cond: proc { stat.rapid_attack_stat.badge? },},
 
@@ -81,7 +81,7 @@ module Swars
         { key: "心強すぎマン",       badge_params: { name: "🫀",   message: "折れない心の持ち主",                 }, if_cond: proc { stat.mental_stat.hard_brain? },},
         { key: "廃指しマン",         badge_params: { name: "😡",   message: "廃指し名人",                         }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
 
-        { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "負けるときは必ず投了する",            }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TORYO) || 0) >= 1.0 }, },
+        { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "負けるときは必ず投了した",            }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TORYO) || 0) >= 1.0 }, },
         { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けが多い",                      }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の使い手",                   }, if_cond: proc { stat.rarity_stat.minority?                    },},
         { key: "長考マン",           badge_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
