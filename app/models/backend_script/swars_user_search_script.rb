@@ -1,6 +1,6 @@
 module BackendScript
-  class SwarsUser::SearchScript < ::BackendScript::Base
-    include SwarsUser::SearchMethods
+  class SwarsUserSearchScript < ::BackendScript::Base
+    include SwarsUserSearchMethods
 
     self.category = "swars"
     self.script_name = "棋譜検索 ユーザー 検索"

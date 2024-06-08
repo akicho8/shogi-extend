@@ -1,7 +1,7 @@
 module BackendScript
   class SwarsUserBanCrawlerScript < ::BackendScript::Base
     include AtomicScript::PostRedirectMethods
-    include SwarsUser::SearchMethods
+    include SwarsUserSearchMethods
 
     self.category = "swars"
     self.script_name = "棋譜検索 ユーザー 垢BAN クローラー発動"

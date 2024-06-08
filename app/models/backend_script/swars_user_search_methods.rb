@@ -1,5 +1,5 @@
 module BackendScript
-  concern :SwarsUser::SearchMethods do
+  concern :SwarsUserSearchMethods do
     included do
     end
 

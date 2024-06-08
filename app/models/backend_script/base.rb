@@ -22,7 +22,7 @@ module BackendScript
     end
 
     def user_link_to(name, user)
-      h.link_to(name, User::SearchScript.script_link_path(target_user_ids: user.id))
+      h.link_to(name, UserSearchScript.script_link_path(target_user_ids: user.id))
     end
 
     def question_link_to(name, question)

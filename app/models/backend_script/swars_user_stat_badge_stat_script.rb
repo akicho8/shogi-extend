@@ -1,5 +1,5 @@
 module BackendScript
-  class SwarsStatBadgeStatScript < ::BackendScript::Base
+  class SwarsUserStatBadgeStatScript < ::BackendScript::Base
     include SwarsIdMethods
 
     self.category = "swars"
