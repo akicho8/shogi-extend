@@ -73,6 +73,15 @@ module Swars
 
     scope :rule_eq, -> v { joins(:battle).merge(Battle.rule_eq(v)) } # ルール "10分" や "ten_min" どちらでもOK
 
+    scope :pro_only,   -> {     where(grade: Grade.fetch("十段")) }
+    scope :pro_except, -> { where.not(grade: Grade.fetch("十段")) }
+
+    scope :ban_only,   -> {     where(user: User.ban_only) }
+    scope :ban_except, -> { where.not(user: User.ban_only) }
+
+    scope :user_only,   -> user_keys {     where(user: User.user_only(user_keys)) }
+    scope :user_except, -> user_keys { where.not(user: User.user_only(user_keys)) }
+
     before_validation do
 
       # テストを書きやすいようにする
@@ -287,3 +296,5 @@ module Swars
     end
   end
 end
+# ~> -:40:in `<module:Swars>': uninitialized constant Swars::ApplicationRecord (NameError)
+# ~>    from -:39:in `<main>'

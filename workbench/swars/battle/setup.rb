@@ -1,1 +1,1 @@
-require "../setup"
+require "#{__dir__}/../setup"
