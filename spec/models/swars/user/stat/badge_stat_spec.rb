@@ -22,7 +22,7 @@ module Swars
           end
           [black, white].any? do |user|
             if false
-              p user.stat.win_tag.to_s
+              p user.stat.win_stat.to_s
               p user.stat.instance_eval(&User::Stat::BadgeInfo.fetch(e[:expected_badge_key]).if_cond)
             end
             user.stat.badge_stat.active?(e[:expected_badge_key])

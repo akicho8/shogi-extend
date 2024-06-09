@@ -4,7 +4,7 @@ module Swars
   module User::Stat
     class RightKingStat < Base
       delegate *[
-        :all_tag,
+        :tag_stat,
         :ids_count,
       ], to: :@stat
 
@@ -18,17 +18,17 @@ module Swars
       end
 
       def to_names_chart
-        list = keys.find_all { |e| all_tag.exist?(e) }
+        list = keys.find_all { |e| tag_stat.counts_hash.has_key?(e) }
         if list.present?
           list.collect { |e|
-            { name: e, value: all_tag.count(e) }
+            { name: e, value: tag_stat.counts_hash[e] }
           }.sort_by { |e| -e[:value] }
         end
       end
 
       # 右玉形を使った回数
       def count
-        @count ||= keys.sum { |e| all_tag.count(e) }
+        @count ||= keys.sum { |e| tag_stat.counts_hash.fetch(e, 0) }
       end
 
       # 右玉形の戦法名一覧

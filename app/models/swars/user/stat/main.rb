@@ -3,9 +3,6 @@
 module Swars
   module User::Stat
     class Main
-      include BaseScopeMethods
-      include SubScopeMethods
-
       attr_accessor :user
       attr_accessor :params
 
@@ -80,12 +77,31 @@ module Swars
 
       ################################################################################
 
-      def win_tag
-        @win_tag ||= TagStat.new(self, ids_scope.win_only)
+      def my_scope
+        @my_scope ||= ScopeExt.new(self, user.memberships)
+      end
+      delegate *ScopeExt::DELEGATE_METHODS, to: :my_scope
+
+      def op_scope
+        @op_scope ||= ScopeExt.new(self, user.op_memberships)
       end
 
-      def all_tag
-        @all_tag ||= TagStat.new(self, ids_scope)
+      ################################################################################
+
+      def tag_stat
+        @tag_stat ||= TagStat.new(self, my_scope)
+      end
+
+      def my_tag_stat
+        tag_stat
+      end
+
+      def op_tag_stat
+        @op_tag_stat ||= TagStat.new(self, op_scope)
+      end
+
+      def win_stat
+        @win_stat ||= WinStat.new(self)
       end
 
       def other_stat

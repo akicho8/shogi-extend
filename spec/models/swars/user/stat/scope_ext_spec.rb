@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe User::Stat::BaseScopeMethods, type: :model, swars_spec: true do
+  RSpec.describe User::Stat::ScopeExt, type: :model, swars_spec: true do
     def case1
       @black = User.create!
       Battle.create! do |e|

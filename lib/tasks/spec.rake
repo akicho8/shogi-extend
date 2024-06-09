@@ -24,6 +24,12 @@ if defined?(RSpec)
       t.rspec_opts = "-f p"
     end
 
+    desc "基本的に system 以外のテスト"
+    RSpec::Core::RakeTask.new(:fast) do |t|
+      t.pattern = "spec/{models,controllers}/**/*_spec.rb"
+      t.rspec_opts = "-f p"
+    end
+
     namespace :swars do
       desc "プレイヤー情報のテスト"
       RSpec::Core::RakeTask.new(:user_stat) do |t|

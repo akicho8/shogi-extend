@@ -11,8 +11,8 @@ module Swars
     it "works" do
       @black = User.create!
       case1
-      assert { @black.stat.ids_scope.win_only   }
-      assert { @black.stat.ids_scope.lose_only   }
+      assert { @black.stat.ids_scope.win_only }
+      assert { @black.stat.ids_scope.lose_only }
       assert { @black.stat.win_ratio }
     end
   end

@@ -26,7 +26,7 @@
           OrderTeamOne.dnd_white(:items.sync="SB.new_v.order_unit.order_state.teams[1]" label="☖")
         OrderTeamOne.dnd_watch_users(:items.sync="SB.new_v.order_unit.watch_users" label="観戦")
 
-      .shuffle_and_hurigoma_buttons_container.mt-5
+      .shuffle_and_furigoma_buttons_container.mt-5
         b-field.is-marginless
           .control
             b-button.shuffle_all_handle(size="is-small" @click="shuffle_all_handle") 全体ｼｬｯﾌﾙ
@@ -258,7 +258,7 @@ export default {
     justify-content: center
     gap: 6px
 
-  .shuffle_and_hurigoma_buttons_container
+  .shuffle_and_furigoma_buttons_container
     display: flex
     align-items: center
     justify-content: center
@@ -283,6 +283,6 @@ export default {
       border: 1px dashed change_color($primary, $alpha: 0.5)
     .TeamsContainer
       border: 1px dashed change_color($primary, $alpha: 0.5)
-    .shuffle_and_hurigoma_buttons_container
+    .shuffle_and_furigoma_buttons_container
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

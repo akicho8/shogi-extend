@@ -4,13 +4,13 @@ module Swars
   module User::Stat
     class RapidAttackStat < Base
       delegate *[
-        :win_tag,
-        :win_ratio,
+        :tag_stat,
+        :win_stat,
       ], to: :@stat
 
       def badge?
-        if (win_ratio || 0) > 0.5
-          win_tag.count(:"持久戦") < win_tag.count(:"急戦")
+        if tag_stat.win_count_by(:"持久戦") < tag_stat.win_count_by(:"急戦")
+          win_stat.exist?(:"急戦")
         end
       end
     end

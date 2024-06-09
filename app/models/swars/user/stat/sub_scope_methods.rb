@@ -2,7 +2,19 @@
 
 module Swars
   module User::Stat
-    module SubScopeMethods
+    concern :SubScopeMethods do
+      included do
+        self::DELEGATE_METHODS.concat [
+          :win_only,
+          :win_count,
+          :lose_only,
+          :lose_count,
+          :draw_only,
+          :draw_count,
+          :win_ratio,
+        ]
+      end
+
       ################################################################################ win, lose
 
       # def wl_scope

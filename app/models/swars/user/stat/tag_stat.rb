@@ -4,26 +4,13 @@ module Swars
   module User::Stat
     class TagStat < Base
       delegate *[
-        :ids_count,
       ], to: :@stat
 
-      def initialize(stat, scope)
+      attr_reader :scope_ext
+
+      def initialize(stat, scope_ext)
         super(stat)
-        @scope = scope
-      end
-
-      ################################################################################
-
-      def group_ibis?
-        ratio(:"居飛車") > 0.5
-      end
-
-      def group_furi?
-        ratio(:"振り飛車") > 0.5
-      end
-
-      def group_all_rounder?
-        ratio(:"居飛車") > 0.25 && ratio(:"振り飛車") > 0.25
+        @scope_ext = scope_ext
       end
 
       ################################################################################
@@ -31,56 +18,113 @@ module Swars
       def to_chart(keys)
         if keys.any? { |e| counts_hash.has_key?(e) }
           keys.collect do |e|
-            { name: e, value: count(e) }
+            { name: e, value: counts_hash[e] }
           end
         end
       end
 
       ################################################################################
 
-      def exist?(key)
-        assert_key(key)
-        counts_hash.has_key?(key)
-      end
-
-      def ratio(key)
-        if ids_count.positive?
-          count(key).fdiv(ids_count)
-        else
-          0
-        end
-      end
-
-      def count(key)
-        assert_key(key)
-        counts_hash.fetch(key, 0)
-      end
-
       def counts_hash
-        @counts_hash ||= yield_self do
-          s = @scope
-          counts = s.all_tag_counts
-          counts.each_with_object({}) { |e, m| m[e.name.to_sym] = e.count }
+        @counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+          m.update(tag => count) { |k, v1, v2| v1 + v2 }
         end
       end
 
-      def to_set
-        @to_set ||= counts_hash.keys.to_set
+      # 未使用
+      def win_counts_hash
+        @win_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+          if judge_key == :win
+            m[tag] = count
+          end
+        end
+      end
+
+      # 未使用
+      def lose_counts_hash
+        @lose_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+          if judge_key == :lose
+            m[tag] = count
+          end
+        end
+      end
+
+      # 未使用
+      def draw_counts_hash
+        @draw_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
+          if judge_key == :draw
+            m[tag] = count
+          end
+        end
+      end
+
+      ################################################################################
+
+      def win_count_by(tag)
+        assert_tag(tag)
+        win_counts_hash[tag] || 0
+      end
+
+      def lose_count_by(tag)
+        assert_tag(tag)
+        lose_counts_hash[tag] || 0
+      end
+
+      def draw_count_by(tag)
+        assert_tag(tag)
+        draw_counts_hash[tag] || 0
+      end
+
+      def judge_counts(tag)
+        assert_tag(tag)
+        {
+          :win  => inside_counts_hash[[tag, :win]] || 0,
+          :lose => inside_counts_hash[[tag, :lose]] || 0,
+        }
+      end
+
+      ################################################################################
+
+      def ratios_hash
+        @ratios_hash ||= {}.tap do |m|
+          counts_hash.each_key do |tag|
+            win = inside_counts_hash[[tag, :win]] || 0
+            lose = inside_counts_hash[[tag, :lose]] || 0
+            denominator = win + lose
+            if denominator.positive?
+              m[tag] = win.fdiv(denominator)
+            end
+          end
+        end
+      end
+
+      ################################################################################
+
+      def to_h
+        counts_hash
+      end
+
+      def tags
+        @tags ||= counts_hash.keys
       end
 
       def to_s
         @to_s ||= counts_hash.keys.join(",")
       end
 
+      ################################################################################
+
       private
 
-      def assert_key(key)
-        if Rails.env.local?
-          unless key.kind_of? Symbol
-            raise "key はシンボルにすること : #{key.inspect}"
-          end
-          unless Bioshogi::Explain::TacticInfo.flat_lookup(key)
-            raise "存在しない : #{key.inspect}"
+      def inside_counts_hash
+        @inside_counts_hash ||= yield_self do
+          s = @scope_ext.ids_scope
+          s = s.joins(:taggings => :tag)
+          s = s.joins(:judge)
+          s = s.group("tags.name")
+          s = s.group("judges.key")
+          s.count.transform_keys do |tag, judge_key|
+            [tag.to_sym, judge_key.to_sym]
           end
         end
       end

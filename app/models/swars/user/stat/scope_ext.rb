@@ -2,9 +2,28 @@
 
 module Swars
   module User::Stat
-    concern :BaseScopeMethods do
-      included do
-        cattr_accessor(:max_of_max) { 200 }
+    class ScopeExt < Base
+      DELEGATE_METHODS = [
+        :filtered_battle_ids,
+        :scope_ids,
+        :ids_scope,
+        :ids_count,
+        :ordered_ids_scope,
+        :sample_max,
+      ]
+
+      include SubScopeMethods
+
+      cattr_accessor(:max_of_max) { 200 }
+
+      delegate *[
+        :user,
+        :params,
+      ], to: :@stat
+
+      def initialize(stat, scope)
+        super(stat)
+        @scope = scope
       end
 
       # 最優先の必須スコープ
@@ -13,8 +32,8 @@ module Swars
       #
       # Swars::Membership Ids (40.7ms)  SELECT swars_memberships.id FROM swars_memberships INNER JOIN swars_battles ON swars_battles.id = swars_memberships.battle_id WHERE swars_memberships.user_id = 17413 ORDER BY swars_battles.battled_at DESC LIMIT 50
       #
-      def base_cond(s)
-        s = s.joins(:battle).merge(Battle.newest_order)
+      def base_scope
+        s = @scope.joins(:battle).merge(Battle.newest_order)
         if ids = filtered_battle_ids
           s = s.where(battle: ids)
         end
@@ -25,14 +44,14 @@ module Swars
       def filtered_battle_ids
         @filtered_battle_ids ||= yield_self do
           if query = params[:query]
-            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids
+            Battle::Search.new(Battle.all, user: user, query_info: QueryInfo.parse(query)).scope.ids # FIXME: Battle.unscoped にしないといけない？
           end
         end
       end
 
       # この IDs は直近順に並んでいる
       def scope_ids
-        @scope_ids ||= base_cond(user.memberships).ids
+        @scope_ids ||= base_scope.ids
       end
 
       # すべてのクエリはこれ元に行えば高速に引ける
@@ -49,8 +68,6 @@ module Swars
       def ordered_ids_scope
         @ordered_ids_scope ||= ids_scope.order([Arel.sql("FIELD(#{Membership.table_name}.id, ?)"), scope_ids])
       end
-
-      private
 
       def sample_max
         @sample_max ||= yield_self do

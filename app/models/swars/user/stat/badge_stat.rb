@@ -7,8 +7,8 @@ module Swars
 
       delegate *[
         :params,
-        :win_tag,
-        :all_tag,
+        :tag_stat,
+        :win_stat,
         :win_lose_streak_stat,
         :win_ratio,
       ], to: :stat
@@ -60,18 +60,17 @@ module Swars
           "対象サンプル数"      => stat.ids_count,
           "勝ち数"              => stat.win_count,
           "負け数"              => stat.lose_count,
-          "勝率"                => stat.win_ratio,
-          "居飛車率"            => stat.all_tag.ratio(:"居飛車"),
-          "振り飛車率"          => stat.all_tag.ratio(:"振り飛車"),
-          "居玉勝率"            => stat.win_tag.ratio(:"居玉"),
-          "アヒル囲い率"        => stat.all_tag.ratio(:"アヒル囲い"),
-          "嬉野流率"            => stat.all_tag.ratio(:"嬉野流"),
+          "居飛車率"            => stat.win_stat.ratios_hash[:"居飛車"],
+          "振り飛車率"          => stat.win_stat.ratios_hash[:"振り飛車"],
+          "居玉勝率"            => stat.win_stat.ratios_hash[:"居玉"],
+          "アヒル囲い率"        => stat.win_stat.ratios_hash[:"アヒル囲い"],
+          "嬉野流率"            => stat.win_stat.ratios_hash[:"嬉野流"],
           "棋風"                => stat.rarity_stat.ratios_hash,
           "1手詰を焦らした回数" => stat.mate_stat.count,
           "絶対投了しない回数"  => stat.leave_alone_stat.count,
           "棋神降臨疑惑対局数"  => stat.fraud_stat.count,
           "最大連勝連敗"        => stat.win_lose_streak_stat.to_h,
-          "タグの重み"          => stat.all_tag.counts_hash,
+          "タグの重み"          => stat.win_stat.ratios_hash,
         }
       end
 

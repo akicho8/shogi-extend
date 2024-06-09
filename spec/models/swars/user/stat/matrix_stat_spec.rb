@@ -17,8 +17,8 @@ module Swars
       it "my_attack_items" do
         assert do
           @user.stat.matrix_stat.my_attack_items == [
-            {:tag => {"name" => "目くらまし戦法", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
-            {:tag => {"name" => "アヒル戦法",     "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
+            {:tag => {"name" => "目くらまし戦法", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => {"name" => "アヒル戦法",     "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
@@ -26,7 +26,7 @@ module Swars
       it "vs_attack_items" do
         assert do
           @user.stat.matrix_stat.vs_attack_items == [
-            {:tag => {"name" => "四間飛車", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"lose" => nil, "win" => 1}},
+            {:tag => {"name" => "四間飛車", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
           ]
         end
       end
@@ -34,7 +34,7 @@ module Swars
       it "my_defense_items" do
         assert do
           @user.stat.matrix_stat.my_defense_items == [
-            {:tag => {"name" => "アヒル囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"win" => 1}},
+            {:tag => {"name" => "アヒル囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
@@ -42,7 +42,7 @@ module Swars
       it "vs_defense_items" do
         assert do
           @user.stat.matrix_stat.vs_defense_items == [
-            {:tag => {"name" => "美濃囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {"lose" => nil, "win" => 1}},
+            {:tag => {"name" => "美濃囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
           ]
         end
       end

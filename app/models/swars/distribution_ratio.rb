@@ -28,7 +28,7 @@ module Swars
 
     # 出現個数
     def ivalues
-      @ivalues ||= all_counts_hash.values
+      @ivalues ||= total_counts_hash.values
     end
 
     # 出現率を出すためのもの
@@ -60,7 +60,7 @@ module Swars
       {
         :minmax      => minmax, # 最低最大出現率
         :avg         => avg,
-        :items_total => all_counts_hash.count,
+        :items_total => total_counts_hash.count,
         :ignore_keys => ignore_keys,
         :histogram   => histogram,
       }
@@ -68,7 +68,7 @@ module Swars
 
     def items
       @items ||= yield_self do
-        all_counts_hash.sort_by { |_, count| -count }.each.with_index.collect do |(name, count), i|
+        total_counts_hash.sort_by { |_, count| -count }.each.with_index.collect do |(name, count), i|
           v = sd1.appear_ratio(count)
           {
             :index          => i,
@@ -86,8 +86,8 @@ module Swars
       RarityInfo.find { |e| value <= e.ratio } or raise "must not happen"
     end
 
-    def all_counts_hash
-      @all_counts_hash ||= all_keys.inject({}) { |a, e| a.merge(e => counts_hash[e]) }.except(*ignore_keys)
+    def total_counts_hash
+      @total_counts_hash ||= all_keys.inject({}) { |a, e| a.merge(e => counts_hash[e]) }.except(*ignore_keys)
     end
 
     # {"棒銀" => 1}

@@ -4,13 +4,12 @@ module Swars
   module User::Stat
     class VsStat < Base
       delegate *[
-        :user,
-        :base_cond,
+        :op_scope,
       ], to: :@stat
 
       # 対段級
       def to_chart
-        s = ids_scope
+        s = op_scope.ids_scope
         s = s.joins(:grade).group(Grade.arel_table[:key]) # 段級と
         s = s.joins(:judge).group(Judge.arel_table[:key]) # 勝ち負けでグループ化
         s = s.order(Grade.arel_table[:priority].asc)      # 相手が強い順
@@ -54,7 +53,7 @@ module Swars
           {
             :grade_name   => k,                       # 段級
             :judge_counts => v,                       # 勝敗
-            :appear_ratio => total.fdiv(denominator), # 遭遇率
+            :appear_ratio => total.fdiv(op_scope.ids_count), # 遭遇率
           }
         end
 
@@ -72,20 +71,6 @@ module Swars
         # >> |------------+----------------------+--------------|
 
         av
-      end
-
-      private
-
-      def ids_scope
-        @ids_scope ||= Membership.where(id: ids)
-      end
-
-      def denominator
-        @denominator ||= ids.size
-      end
-
-      def ids
-        @ids ||= base_cond(user.op_memberships).ids
       end
     end
   end
