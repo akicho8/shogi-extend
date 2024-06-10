@@ -63,6 +63,9 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+# パスと名前が一致していることを確認する
+Zeitwerk::Loader.eager_load_all
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
