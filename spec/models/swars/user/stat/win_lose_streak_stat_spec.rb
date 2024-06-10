@@ -33,3 +33,22 @@ module Swars
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::User::Stat::WinLoseStreakStat
+# >>   連勝・連敗
+# >>     works
+# >>     10連勝
+# >>     波が激しいマン
+# >> 
+# >> Top 3 slowest examples (3.42 seconds, 61.7% of total time):
+# >>   Swars::User::Stat::WinLoseStreakStat 連勝・連敗 works
+# >>     1.56 seconds -:16
+# >>   Swars::User::Stat::WinLoseStreakStat 連勝・連敗 波が激しいマン
+# >>     1.11 seconds -:28
+# >>   Swars::User::Stat::WinLoseStreakStat 連勝・連敗 10連勝
+# >>     0.73999 seconds -:22
+# >> 
+# >> Finished in 5.54 seconds (files took 1.99 seconds to load)
+# >> 3 examples, 0 failures
+# >> 

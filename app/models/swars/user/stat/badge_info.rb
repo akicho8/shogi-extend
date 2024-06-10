@@ -23,19 +23,26 @@ module Swars
 
         ################################################################################
 
-        { key: "居飛車党",           badge_params: { name: "⬆️",     message: "居飛車の匠",       }, if_cond: proc { win_stat.the_ture_master_of_ibis? },},
-        { key: "振り飛車党",         badge_params: { name: "⬅️",    message: "振り飛車の匠",     }, if_cond: proc { win_stat.the_ture_master_of_furi? },},
-        { key: "オールラウンダー",   badge_params: { name: "🅰",    message: "オールラウンダー", }, if_cond: proc { win_stat.the_ture_master_of_all_rounder? },},
+        { key: "居飛車党",           badge_params: { name: "⬆️",     message: "真の居飛車党",         }, if_cond: proc { win_stat.the_ture_master_of_ibis? },},
+        { key: "振り飛車党",         badge_params: { name: "⬅️",    message: "真の振り飛車党",       }, if_cond: proc { win_stat.the_ture_master_of_furi? },},
+        { key: "オールラウンダー",   badge_params: { name: "🅰",    message: "真のオールラウンダー", }, if_cond: proc { win_stat.the_ture_master_of_all_rounder? },},
 
         ################################################################################
 
-        { key: "三間飛車マン",   badge_params: { name: "3⃣", message: "三間飛車の達人", }, if_cond: proc { win_stat.match?(/三間|石田/) },},
-        { key: "四間飛車マン",   badge_params: { name: "4⃣", message: "四間飛車のエキスパート",   }, if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
-        { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車の先駆者",     }, if_cond: proc { win_stat.include?("九間飛車") }, },
-        { key: "中飛車マン",     badge_params: { name: "🀄",   message: "中飛車の名人",          }, if_cond: proc { win_stat.include?("中飛車") },},
+        { key: "三間飛車マン",   badge_params: { name: "3⃣", message: "三間飛車の匠",          }, if_cond: proc { win_stat.match?(/三間|石田/) },},
+        { key: "四間飛車マン",   badge_params: { name: "4⃣", message: "四間飛車の匠",          }, if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
+        { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車のパイオニア",  }, if_cond: proc { win_stat.include?("九間飛車") }, },
+        { key: "中飛車マン",     badge_params: { name: "🀄",   message: "中飛車名人",            }, if_cond: proc { win_stat.include?("中飛車") },},
         { key: "右四間飛車マン", badge_params: { name: "⚔",    message: "右四間飛車の破壊神",    }, if_cond: proc { win_stat.include?("右四間") }, },
         { key: "袖飛車マン",     badge_params: { name: "👘",   message: "袖飛車の奇人",          }, if_cond: proc { win_stat.exist?(:"袖飛車") },},
-        { key: "一間飛車マン",   badge_params: { name: "1️⃣",    message: "一間飛車の先駆者",      }, if_cond: proc { win_stat.include?("一間飛車") }, },
+        { key: "一間飛車マン",   badge_params: { name: "1️⃣",    message: "一間飛車の異端児",      }, if_cond: proc { win_stat.include?("一間飛車") }, },
+
+        ################################################################################ 手筋
+
+        { key: "ロケットマン",       badge_params: { name: "🚀",   message: "ロケットの名手",             }, if_cond: proc { win_stat.exist?(:"ロケット") },},
+        { key: "金底マン",           badge_params: { name: "🪨",   message: "金底の歩の名手",             }, if_cond: proc { win_stat.exist?(:"金底の歩") },},
+        { key: "遠見の角マン",       badge_params: { name: "🔭",   message: "遠見の角の名手",             }, if_cond: proc { win_stat.exist?(:"遠見の角") },},
+        { key: "幽霊角マン",         badge_params: { name: "👻",   message: "幽霊角の名手",               }, if_cond: proc { win_stat.exist?(:"幽霊角")                   },},
 
         ################################################################################ 単純な勝ち越しシリーズ
 
@@ -43,9 +50,6 @@ module Swars
         { key: "パックマン野郎",     badge_params: { name: "🅿",    message: "パックマンの達人",          }, if_cond: proc { win_stat.include?("パックマン") },},
         { key: "耀龍マン",           badge_params: { name: "🐉",   message: "耀龍戦法の使い手",           }, if_cond: proc { win_stat.include?("耀龍") }, },
         { key: "右玉マン",           badge_params: { name: "➡",    message: "右玉の匠",                  }, if_cond: proc { win_stat.include?("右玉") }, },
-        { key: "ロケットマン",       badge_params: { name: "🚀",   message: "ロケットの名手",             }, if_cond: proc { win_stat.exist?(:"ロケット") },},
-        { key: "金底マン",           badge_params: { name: "🪨",   message: "金底の歩の名手",             }, if_cond: proc { win_stat.exist?(:"金底の歩") },},
-        { key: "遠見の角マン",       badge_params: { name: "🔭",   message: "遠見の角の名手",             }, if_cond: proc { win_stat.exist?(:"遠見の角") },},
         { key: "屋敷マン",           badge_params: { name: "🥷",   message: "屋敷流二枚銀の使い手",       }, if_cond: proc { win_stat.include?("屋敷流二枚銀") },},
         { key: "UFOマン",            badge_params: { name: "🛸",   message: "UFO銀の使い手",              }, if_cond: proc { win_stat.exist?(:"UFO銀") },},
         { key: "カニ執着マン",       badge_params: { name: "🦀",   message: "カニ系戦法の使い手",         }, if_cond: proc { win_stat.include?("カニ") },},
@@ -54,7 +58,6 @@ module Swars
         { key: "穴熊マン",           badge_params: { name: "🐻",   message: "穴熊名人",                   }, if_cond: proc { win_stat.include?("熊") },},
         { key: "ダイヤマン",         badge_params: { name: "💎",   message: "ダイヤモンド美濃の使い手",   }, if_cond: proc { win_stat.exist?(:"ダイヤモンド美濃")                 },},
         { key: "チョコレートマン",   badge_params: { name: "🍫",   message: "チョコレート囲いの使い手",   }, if_cond: proc { win_stat.exist?(:"チョコレート囲い")                 },},
-        { key: "幽霊角マン",         badge_params: { name: "👻",   message: "幽霊角の名手",               }, if_cond: proc { win_stat.exist?(:"幽霊角")                   },},
         { key: "極限早繰りマン",     badge_params: { name: "🏃🏻", message: "極限早繰り銀の使い手",       }, if_cond: proc { win_stat.exist?(:"極限早繰り銀")                  },},
         { key: "坊主マン",           badge_params: { name: "👴🏻", message: "坊主美濃の使い手",           }, if_cond: proc { win_stat.exist?(:"坊主美濃")                  },},
         { key: "レグスペマン",       badge_params: { name: "🐔",   message: "レグスペの使い手",           }, if_cond: proc { win_stat.exist?(:"レグスペ")                  },},
@@ -66,15 +69,15 @@ module Swars
         { key: "アヒルマン",         badge_params: { name: "🐥",   message: "アヒル戦法の名匠",           }, if_cond: proc { win_stat.exist?(:"アヒル戦法") },},
         { key: "稲庭マン",           badge_params: { name: "👾",   message: "稲庭戦法のエキスパート",     }, if_cond: proc { win_stat.exist?(:"稲庭戦法") },},
         { key: "居玉勝ちマン",       badge_params: { name: "🗿",   message: "居玉の達人",                 }, if_cond: proc { win_stat.exist?(:"居玉") }, },
-        { key: "入玉勝ちマン",       badge_params: { name: "🏈",   message: "入玉名人",                   }, if_cond: proc { win_stat.exist?(:"入玉") }, },
+        { key: "入玉勝ちマン",       badge_params: { name: "🏈",   message: "入玉の達人",                 }, if_cond: proc { win_stat.exist?(:"入玉") }, },
 
         ################################################################################ 文言が特殊
 
         { key: "駒柱マン",           badge_params: { name: "🗽",   message: "駒柱の作り手",               }, if_cond: proc { win_stat.exist?(:"駒柱") }  },
-        { key: "パンツマン",         badge_params: { name: "🩲",   message: "脱ぎのスペシャリスト",       }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
-        { key: "小部屋マン",         badge_params: { name: "🛖",   message: "銀冠の小部屋の使い手",       }, if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
+        { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱いだ",             }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
+        { key: "小部屋マン",         badge_params: { name: "🛖",   message: "銀冠の小部屋を活用した",     }, if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
         { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めマスター (超レア)",    }, if_cond: proc { win_stat.exist?(:"都詰め") } },
-        { key: "背水マン",           badge_params: { name: "🧠",   message: "大駒全ブッチの達人", }, if_cond: proc { win_stat.exist?(:"背水の陣") },},
+        { key: "ブッチマン",         badge_params: { name: "🧠",   message: "大駒全ブッチの達人",         }, if_cond: proc { win_stat.exist?(:"大駒全ブッチ") },},
         { key: "筋違い角マン",       badge_params: { name: "👨🏻", message: "筋違い角おじさん",           }, if_cond: proc { win_stat.exist?(:"筋違い角") },},
 
         ################################################################################ 特殊
@@ -91,14 +94,14 @@ module Swars
 
         { key: "200手越えマン",      badge_params: { name: "⚡️",    message: "200手以上で勝った",                  }, if_cond: proc { (stat.win_turn_stat.max || 0) >= 200 },},
         { key: "心強すぎマン",       badge_params: { name: "🫀",   message: "折れない心の持ち主",                 }, if_cond: proc { stat.mental_stat.hard_brain? },},
-        { key: "廃指しマン",         badge_params: { name: "😡",   message: "廃指しの狂人",                       }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
+        { key: "廃指しマン",         badge_params: { name: "😡",   message: "感情的になって廃指しした",           }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
 
         { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了の達人",                         }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TORYO) || 0) >= 1.0 }, },
         { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けの常連",                     }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の匠",                       }, if_cond: proc { stat.rarity_stat.minority?                    },},
         { key: "長考マン",           badge_params: { name: "🤯",   message: "長考が原因で負けがち",               }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
         { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { (stat.perpetual_check_stat.opening_repetition_move_count || 0).positive? } },
-        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手師",                           }, if_cond: proc { (stat.perpetual_check_stat.over50_draw_count || 0).positive? } },
+        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { (stat.perpetual_check_stat.over50_draw_count || 0).positive? } },
         { key: "友対勝ちマン",       badge_params: { name: "🆚",   message: "友達対局で勝った",                   }, if_cond: proc { stat.xmode_judge_stat.exist?(:"友達", :win) } },
         { key: "指導受けマン",       badge_params: { name: "🔥",   message: "指導対局で負けた",                   }, if_cond: proc { stat.xmode_judge_stat.exist?(:"指導", :lose) } },
         { key: "プロ越えマン",       badge_params: { name: "💪",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.xmode_judge_stat.exist?(:"指導", :win) } },

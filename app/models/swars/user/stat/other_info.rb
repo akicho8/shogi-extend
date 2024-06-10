@@ -69,8 +69,8 @@ module Swars
 
         ################################################################################
 
-        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { win_lose_streak_stat.to_chart(:win)  }, },
-        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { win_lose_streak_stat.to_chart(:lose) }, },
+        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { win_lose_streak_stat.positive_max(:win)  }, },
+        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { win_lose_streak_stat.positive_max(:lose) }, },
 
         ################################################################################
 
