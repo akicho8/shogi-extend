@@ -99,8 +99,6 @@ group :development, :test do
   ################################################################################
 
   gem "factory_bot_rails"
-
-  gem "test-prof"               # for let_it_be
 end
 
 group :development do

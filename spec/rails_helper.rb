@@ -31,8 +31,6 @@ if true
   Minitest::Assertions.prepend Minitest::PowerAssert::Assertions
 end
 
-require 'test_prof/recipes/rspec/let_it_be'
-
 require "tempfile"              # for capture
 require "active_support/testing/stream"
 

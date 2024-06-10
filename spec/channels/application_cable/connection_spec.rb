@@ -1,12 +1,14 @@
 require "rails_helper"
 
 RSpec.describe ApplicationCable::Connection, type: :channel do
-  let_it_be(:user) { User.create! }
+  before do
+    @user = User.create!
+  end
 
   it "接続成功" do
-    cookies.signed[:user_id] = user.id
+    cookies.signed[:user_id] = @user.id
     connect "/maincable"
-    expect(connection.current_user).to eq user
+    assert { connection.current_user == @user }
   end
 
   xit "ユーザーの指定がないため接続拒否" do
