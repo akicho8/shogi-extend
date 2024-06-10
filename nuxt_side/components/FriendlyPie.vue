@@ -96,7 +96,7 @@ export default {
     data_list()      { return this.info.body || []             },
     data_count()     { return this.data_list.length            },
     extract_labels() { return this.data_list.map(e => e.name)  },
-    extract_values() { return this.data_list.map(e => e.value) },
+    extract_values() { return this.data_list.map(e => e.value ?? 0) },
   },
 }
 </script>
