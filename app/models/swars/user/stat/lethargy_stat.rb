@@ -24,7 +24,7 @@ module Swars
           if lose_count.positive?
             s = ids_scope.lose_only
             s = s.joins(:battle => :final)
-            s = s.where(Final.arel_table[:key].eq_any(["TORYO", "CHECKMATE"]))
+            s = s.where(Final.arel_table[:key].eq_any([:TORYO, :CHECKMATE]))
             s = s.where(Battle.arel_table[:turn_max].lteq(19))
             s.count
           end

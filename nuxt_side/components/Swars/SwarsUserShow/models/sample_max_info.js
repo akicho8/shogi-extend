@@ -12,6 +12,6 @@ export class SampleMaxInfo extends ApplicationMemoryRecord {
     ]
   }
   get name() {
-    return `最大${this.value}件`
+    return `直近${this.value}件`
   }
 }

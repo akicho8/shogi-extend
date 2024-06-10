@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe User::Stat::DailyWinLossListStat, type: :model, swars_spec: true do
+  RSpec.describe User::Stat::DailyWinLoseListStat, type: :model, swars_spec: true do
     describe "日別勝敗リスト" do
       def case1(battled_at, judge_key)
         Battle.create!(battled_at: battled_at) do |e|
@@ -13,8 +13,9 @@ module Swars
         @black = User.create!
         case1("2000-01-01", :win)
         case1("2000-01-02", :lose)
+        case1("2000-01-03", :draw)
         assert do
-          @black.stat.daily_win_loss_list_stat.to_chart == [
+          @black.stat.daily_win_lose_list_stat.to_chart == [
             {:battled_on => "2000-01-02".to_date, :day_type => :danger, :judge_counts => {:win => 0, :lose => 1}},
             {:battled_on => "2000-01-01".to_date, :day_type => :info,   :judge_counts => {:win => 1, :lose => 0}},
           ]
@@ -25,12 +26,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> User::Stat::DailyWinLossListStat
+# >> User::Stat::DailyWinLoseListStat
 # >>   日別勝敗リスト
 # >>     works
 # >>
 # >> Top 1 slowest examples (0.52132 seconds, 20.1% of total time):
-# >>   User::Stat::DailyWinLossListStat 日別勝敗リスト works
+# >>   User::Stat::DailyWinLoseListStat 日別勝敗リスト works
 # >>     0.52132 seconds -:17
 # >>
 # >> Finished in 2.59 seconds (files took 1.55 seconds to load)

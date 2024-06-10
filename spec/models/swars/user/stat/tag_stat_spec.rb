@@ -15,9 +15,9 @@ module Swars
 
     it "to_chart" do
       assert do
-        @black.stat.tag_stat.to_chart([:"居飛車", :"振り飛車"]) == [
-          { :name => :"居飛車",   :value => 1,   },
-          { :name => :"振り飛車", :value => nil, },
+        @black.stat.tag_stat.to_pie_chart([:"居飛車", :"振り飛車"]) == [
+          { :name => :"居飛車",   :value => 1, },
+          { :name => :"振り飛車", :value => 0, },
         ]
       end
     end
@@ -30,8 +30,8 @@ module Swars
       assert { @black.stat.tag_stat.ratios_hash[:"棒銀"] == 1.0 }
     end
 
-    it "judge_counts" do
-      assert { @black.stat.tag_stat.judge_counts(:"棒銀") == { win: 1, lose: 0 } }
+    it "to_win_lose_h" do
+      assert { @black.stat.tag_stat.to_win_lose_h(:"棒銀") == { win: 1, lose: 0 } }
     end
   end
 end

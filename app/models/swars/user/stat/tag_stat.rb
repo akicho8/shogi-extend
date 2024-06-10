@@ -15,11 +15,17 @@ module Swars
 
       ################################################################################
 
-      def to_chart(keys)
+      def to_pie_chart(keys)
         if keys.any? { |e| counts_hash.has_key?(e) }
           keys.collect do |e|
-            { name: e, value: counts_hash[e] }
+            { name: e, value: counts_hash[e] || 0 }
           end
+        end
+      end
+
+      def to_win_lose_chart(tag)
+        if judge_counts = to_win_lose_h(tag)
+          { judge_counts: judge_counts }
         end
       end
 
@@ -75,12 +81,16 @@ module Swars
         draw_counts_hash[tag] || 0
       end
 
-      def judge_counts(tag)
+      def to_win_lose_h(tag)
         assert_tag(tag)
-        {
-          :win  => inside_counts_hash[[tag, :win]] || 0,
-          :lose => inside_counts_hash[[tag, :lose]] || 0,
-        }
+        win  = inside_counts_hash[[tag, :win]]
+        lose = inside_counts_hash[[tag, :lose]]
+        if win || lose
+          {
+            :win  => win || 0,
+            :lose => lose || 0,
+          }
+        end
       end
 
       ################################################################################

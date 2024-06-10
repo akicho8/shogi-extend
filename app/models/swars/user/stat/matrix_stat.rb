@@ -42,15 +42,18 @@ module Swars
       def build_by(tag_stat, context)
         scope_ext = tag_stat.scope_ext
         tags = scope_ext.ids_scope.tag_counts_on(context, order: "count DESC")
-        tags.collect do |tag|
-          {}.tap do |h|
-            h[:tag]          = tag.attributes.slice("name", "count") # 戦法名・個数
-            h[:appear_ratio] = tag.count.fdiv(scope_ext.ids_count)   # 遭遇率
-            judge_counts = tag_stat.judge_counts(tag.name.to_sym)
+        tags.each_with_object([]) do |tag, av|
+          if judge_counts = tag_stat.to_win_lose_h(tag.name.to_sym)
             if tag_stat == op_tag_stat
               judge_counts[:win], judge_counts[:lose] = judge_counts[:lose], judge_counts[:win]
             end
-            h[:judge_counts] = judge_counts
+            av << {
+              :tag          => tag.attributes.slice("name", "count"), # 戦法名・個数
+              :appear_ratio => tag.count.fdiv(scope_ext.ids_count),   # 遭遇率
+              :judge_counts => judge_counts,                          # 勝敗数
+            }
+          else
+            # 引き分けしかない場合
           end
         end
       end

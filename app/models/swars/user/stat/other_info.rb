@@ -59,13 +59,13 @@ module Swars
 
         ################################################################################
 
-        { key: "派閥",        body: proc { tag_stat.to_chart([:"居飛車", :"振り飛車"]) }, chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 },
-        { key: "居飛車",      body: proc { note_stat.to_chart("居飛車")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "居飛車"    }, }, },
-        { key: "振り飛車",    body: proc { note_stat.to_chart("振り飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "振り飛車", }, }, },
-        { key: "相居飛車",    body: proc { note_stat.to_chart("相居飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相居飛車", }, }, },
-        { key: "対振り",      body: proc { note_stat.to_chart("対振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対振り",   }, }, },
-        { key: "対抗形",      body: proc { note_stat.to_chart("対抗形")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対抗形",   }, }, },
-        { key: "相振り",      body: proc { note_stat.to_chart("相振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相振り",   }, }, },
+        { key: "派閥",        body: proc { tag_stat.to_pie_chart([:"居飛車", :"振り飛車"])     }, chart_type: :pie,             chart_options: { pie_type: :is_many_values, }, },
+        { key: "居飛車",      body: proc { tag_stat.to_win_lose_chart(:"居飛車")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "居飛車"    }, }, },
+        { key: "振り飛車",    body: proc { tag_stat.to_win_lose_chart(:"振り飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "振り飛車", }, }, },
+        { key: "相居飛車",    body: proc { tag_stat.to_win_lose_chart(:"相居飛車")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相居飛車", }, }, },
+        { key: "対振り",      body: proc { tag_stat.to_win_lose_chart(:"対振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対振り",   }, }, },
+        { key: "対抗形",      body: proc { tag_stat.to_win_lose_chart(:"対抗形")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "対抗形",   }, }, },
+        { key: "相振り",      body: proc { tag_stat.to_win_lose_chart(:"相振り")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "相振り",   }, }, },
 
         ################################################################################
 
@@ -74,13 +74,13 @@ module Swars
 
         ################################################################################
 
-        { key: "棋風 (速度)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { tag_stat.to_chart([:"急戦", :"持久戦"])     }, },
-        { key: "急戦",        chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "急戦",     }, }, body: proc { note_stat.to_chart("急戦")               }, },
-        { key: "持久戦",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "持久戦",   }, }, body: proc { note_stat.to_chart("持久戦")             }, },
+        { key: "棋風 (速度)", body: proc { tag_stat.to_pie_chart([:"急戦", :"持久戦"])       }, chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 },
+        { key: "急戦",        body: proc { tag_stat.to_win_lose_chart(:"急戦")               }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "急戦",     }, }, },
+        { key: "持久戦",      body: proc { tag_stat.to_win_lose_chart(:"持久戦")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "持久戦",   }, }, },
 
-        { key: "棋風 (手数)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { tag_stat.to_chart([:"短手数", :"長手数"])   }, },
-        { key: "短手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "短手数",   }, }, body: proc { note_stat.to_chart("短手数")             }, },
-        { key: "長手数",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "長手数",   }, }, body: proc { note_stat.to_chart("長手数")             }, },
+        { key: "棋風 (手数)", body: proc { tag_stat.to_pie_chart([:"短手数", :"長手数"])     }, chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 },
+        { key: "短手数",      body: proc { tag_stat.to_win_lose_chart(:"短手数")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "短手数",   }, }, },
+        { key: "長手数",      body: proc { tag_stat.to_win_lose_chart(:"長手数")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "長手数",   }, }, },
 
         ################################################################################
 
@@ -126,23 +126,8 @@ module Swars
 
         ################################################################################
 
-        {
-          key: "最長考",
-          chart_type: :simple,
-          chart_options: {
-            simple_type: :second,
-          },
-          body: proc { think_stat.max },
-        },
-
-        {
-          key: "平均思考",
-          chart_type: :simple,
-          chart_options: {
-            simple_type: :second,
-          },
-          body: proc { think_stat.average },
-        },
+        { key: "最長考",   body: proc { think_stat.max     }, chart_type: :simple, chart_options: { simple_type: :second, }, },
+        { key: "平均思考", body: proc { think_stat.average }, chart_type: :simple, chart_options: { simple_type: :second, }, },
 
         {
           key: "詰ます速度 (1手平均)",
@@ -155,13 +140,14 @@ module Swars
 
         ################################################################################
 
-        { key: "大駒全ブッチ",     body: proc { note_stat.to_chart("大駒全ブッチ")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒全ブッチ",     }, }, },
-        { key: "大駒コンプリート", body: proc { note_stat.to_chart("大駒コンプリート") }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒コンプリート", }, }, },
-        { key: "入玉",             body: proc { note_stat.to_chart("入玉")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "入玉",             }, }, },
-        { key: "金底の歩",         body: proc { note_stat.to_chart("金底の歩")         }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "金底の歩",         }, }, },
-        { key: "継ぎ桂",           body: proc { note_stat.to_chart("継ぎ桂")           }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "継ぎ桂",           }, }, },
-        { key: "腹銀",             body: proc { note_stat.to_chart("腹銀")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "腹銀",             }, }, },
-        { key: "割り打ちの銀",     body: proc { note_stat.to_chart("割り打ちの銀")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "割り打ちの銀",     }, }, },
+        { key: "大駒全ブッチ",     body: proc { tag_stat.to_win_lose_chart(:"大駒全ブッチ")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒全ブッチ",     }, }, },
+        { key: "大駒コンプリート", body: proc { tag_stat.to_win_lose_chart(:"大駒コンプリート") }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒コンプリート", }, }, },
+        { key: "入玉",             body: proc { tag_stat.to_win_lose_chart(:"入玉")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "入玉",             }, }, },
+        { key: "垂れ歩",           body: proc { tag_stat.to_win_lose_chart(:"垂れ歩")           }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "垂れ歩",           }, }, },
+        { key: "金底の歩",         body: proc { tag_stat.to_win_lose_chart(:"金底の歩")         }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "金底の歩",         }, }, },
+        { key: "割り打ちの銀",     body: proc { tag_stat.to_win_lose_chart(:"割り打ちの銀")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "割り打ちの銀",     }, }, },
+        { key: "腹銀",             body: proc { tag_stat.to_win_lose_chart(:"腹銀")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "腹銀",             }, }, },
+        { key: "継ぎ桂",           body: proc { tag_stat.to_win_lose_chart(:"継ぎ桂")           }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "継ぎ桂",           }, }, },
 
         ################################################################################
 

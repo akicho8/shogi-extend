@@ -58,7 +58,7 @@ module Swars
 
       def to_tabs_h
         {
-          :day_items      => daily_win_loss_list_stat.to_chart, # 「日付」
+          :day_items      => daily_win_lose_list_stat.to_chart, # 「日付」
           :vs_grade_items => vs_stat.to_chart,                  # 「段級」
           **matrix_stat.to_all_chart,                           # 「戦型」「対攻」「囲い」「対囲」
           :etc_items      => other_stat.to_a,                   # 「他」
@@ -188,8 +188,8 @@ module Swars
         @judge_final_stat ||= JudgeFinalStat.new(self)
       end
 
-      def daily_win_loss_list_stat
-        @daily_win_loss_list_stat ||= DailyWinLossListStat.new(self)
+      def daily_win_lose_list_stat
+        @daily_win_lose_list_stat ||= DailyWinLoseListStat.new(self)
       end
 
       def grade_by_rules_stat
