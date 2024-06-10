@@ -38,7 +38,7 @@ module Swars
       it "counts_hash" do
         @black = User.create!
         case1(:win, :CHECKMATE)
-        assert { @black.stat.judge_final_stat.counts_hash == {["win", "CHECKMATE"] => 1} }
+        assert { @black.stat.judge_final_stat.counts_hash == { [:win, :CHECKMATE] => 1} }
       end
 
       describe "対戦成立条件は最低2手指すこと" do

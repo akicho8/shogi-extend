@@ -14,7 +14,7 @@ module Swars
 
       include SubScopeMethods
 
-      cattr_accessor(:max_of_max) { 200 }
+      cattr_accessor(:max_of_sample_max) { 1000 }
 
       delegate *[
         :user,
@@ -72,7 +72,7 @@ module Swars
       def sample_max
         @sample_max ||= yield_self do
           max = (params[:sample_max].presence || default_params[:sample_max]).to_i
-          [max, max_of_max].min
+          [max, max_of_sample_max].min
         end
       end
     end

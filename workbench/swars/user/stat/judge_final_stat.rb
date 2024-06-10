@@ -1,10 +1,10 @@
 require "./setup"
-Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.counts_hash            # => {["win", "TORYO"]=>108, ["win", "CHECKMATE"]=>49, ["win", "DISCONNECT"]=>3, ["lose", "DISCONNECT"]=>6, ["win", "TIMEOUT"]=>11, ["lose", "TIMEOUT"]=>4, ["lose", "CHECKMATE"]=>5, ["lose", "TORYO"]=>14}
+Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.counts_hash            # => {[:win, :TORYO]=>108, [:win, :CHECKMATE]=>49, [:win, :TIMEOUT]=>11, [:lose, :TIMEOUT]=>4, [:lose, :CHECKMATE]=>5, [:win, :DISCONNECT]=>2, [:lose, :TORYO]=>14}
 Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.count_by(:win, :TORYO) # => 108
 Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.ratio_by(:win, :TORYO) # => 0.631578947368421
 Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.ratio_by(:lose, :TORYO) # => 0.4827586206896552
-Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.count_by(:lose, :DISCONNECT) # => 6
-tp Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.counts_hash # => {["win", "TORYO"]=>108, ["win", "CHECKMATE"]=>49, ["win", "DISCONNECT"]=>3, ["lose", "DISCONNECT"]=>6, ["win", "TIMEOUT"]=>11, ["lose", "TIMEOUT"]=>4, ["lose", "CHECKMATE"]=>5, ["lose", "TORYO"]=>14}
+Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.count_by(:lose, :DISCONNECT) # => nil
+tp Swars::User["BOUYATETSU5"].stat(sample_max: 200).judge_final_stat.counts_hash # => {[:win, :TORYO]=>108, [:win, :CHECKMATE]=>49, [:win, :TIMEOUT]=>11, [:lose, :TIMEOUT]=>4, [:lose, :CHECKMATE]=>5, [:win, :DISCONNECT]=>2, [:lose, :TORYO]=>14}
 
 s = Swars::User["BOUYATETSU5"].stat(sample_max: 200).ids_scope
 s = s.find_all{|e|e.battle.final.key == "DISCONNECT"}
@@ -12,16 +12,15 @@ s = s.find_all{|e|e.judge.key == "lose"}
 tp s.collect{|e| {judge: e.judge.key, final: e.battle.final.key, key: e.battle.key, turn_max: e.battle.turn_max }}
 
 
-# >> |------------------------+-----|
-# >> |       ["win", "TORYO"] | 108 |
-# >> |   ["win", "CHECKMATE"] | 49  |
-# >> |  ["win", "DISCONNECT"] | 3   |
-# >> | ["lose", "DISCONNECT"] | 6   |
-# >> |     ["win", "TIMEOUT"] | 11  |
-# >> |    ["lose", "TIMEOUT"] | 4   |
-# >> |  ["lose", "CHECKMATE"] | 5   |
-# >> |      ["lose", "TORYO"] | 14  |
-# >> |------------------------+-----|
+# >> |---------------------+-----|
+# >> |      [:win, :TORYO] | 108 |
+# >> |  [:win, :CHECKMATE] | 49  |
+# >> |    [:win, :TIMEOUT] | 11  |
+# >> |   [:lose, :TIMEOUT] | 4   |
+# >> | [:lose, :CHECKMATE] | 5   |
+# >> | [:win, :DISCONNECT] | 2   |
+# >> |     [:lose, :TORYO] | 14  |
+# >> |---------------------+-----|
 # >> |-------+------------+--------------------------------------+----------|
 # >> | judge | final      | key                                  | turn_max |
 # >> |-------+------------+--------------------------------------+----------|

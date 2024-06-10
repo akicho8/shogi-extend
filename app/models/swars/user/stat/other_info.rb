@@ -74,12 +74,6 @@ module Swars
 
         ################################################################################
 
-        { key: "大駒全ブッチ",     body: proc { note_stat.to_chart("大駒全ブッチ")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒全ブッチ",     }, }, },
-        { key: "大駒コンプリート", body: proc { note_stat.to_chart("大駒コンプリート") }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒コンプリート", }, }, },
-        { key: "入玉",             body: proc { note_stat.to_chart("入玉")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "入玉",             }, }, },
-
-        ################################################################################
-
         { key: "棋風 (速度)", chart_type: :pie,             chart_options: { pie_type: :is_many_values,                                      },                 body: proc { tag_stat.to_chart([:"急戦", :"持久戦"])     }, },
         { key: "急戦",        chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "急戦",     }, }, body: proc { note_stat.to_chart("急戦")               }, },
         { key: "持久戦",      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "持久戦",   }, }, body: proc { note_stat.to_chart("持久戦")             }, },
@@ -158,6 +152,18 @@ module Swars
           },
           body: proc { mate_speed_stat.average },
         },
+
+        ################################################################################
+
+        { key: "大駒全ブッチ",     body: proc { note_stat.to_chart("大駒全ブッチ")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒全ブッチ",     }, }, },
+        { key: "大駒コンプリート", body: proc { note_stat.to_chart("大駒コンプリート") }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "大駒コンプリート", }, }, },
+        { key: "入玉",             body: proc { note_stat.to_chart("入玉")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "入玉",             }, }, },
+        { key: "金底の歩",         body: proc { note_stat.to_chart("金底の歩")         }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "金底の歩",         }, }, },
+        { key: "継ぎ桂",           body: proc { note_stat.to_chart("継ぎ桂")           }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "継ぎ桂",           }, }, },
+        { key: "腹銀",             body: proc { note_stat.to_chart("腹銀")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "腹銀",             }, }, },
+        { key: "割り打ちの銀",     body: proc { note_stat.to_chart("割り打ちの銀")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "割り打ちの銀",     }, }, },
+
+        ################################################################################
 
         {
           key: "駒の使用率",
