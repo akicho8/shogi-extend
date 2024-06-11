@@ -66,7 +66,7 @@ module Swars
           s = ids_scope.lose_only
           s = s.joins(:battle => :final)
           s = s.where(Battle.arel_table[:turn_max].gteq(14))
-          s = s.where(Final.arel_table[:key].eq("TORYO"))
+          s = s.where(Final.arel_table[:key].eq(:TORYO))
           s = Membership.where(id: s.ids) # join をはずすことで 0.3 ms 速くなる
         end
       end

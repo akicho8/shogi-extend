@@ -160,6 +160,10 @@ module Swars
         @think_stat ||= ThinkStat.new(self)
       end
 
+      def pro_skill_exceed_stat
+        @pro_skill_exceed_stat ||= ProSkillExceedStat.new(self)
+      end
+
       def turn_stat
         @turn_stat ||= TurnStat.new(self, ids_scope)
       end

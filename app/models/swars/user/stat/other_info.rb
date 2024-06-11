@@ -34,17 +34,23 @@ module Swars
 
         ################################################################################
 
-        { key: "切断逃亡",                body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "投了せずに放置",          body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "1手詰を焦らして悦に入る", body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "角不成",                  body: proc { tag_stat.counts_hash[:"角不成"]      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "飛車不成",                body: proc { tag_stat.counts_hash[:"飛車不成"]    }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "無気力な対局",            body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "指導対局で勝利 (平手)",   body: proc { pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
-        { key: "指導対局",         body: proc { xmode_judge_stat.to_chart(:"指導") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", },    }, },
+        { key: "投了せずに放置",                   body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "放置で離席させ逆時間切れ勝ち狙い", body: proc { waiting_to_leave_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "切断逃亡",                         body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "1手詰を焦らして悦に入った",        body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "角不成",                           body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "飛車不成",                         body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "無気力な対局",                     body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+
+        ################################################################################
+
         { key: "友達対局",         body: proc { xmode_judge_stat.to_chart(:"友達") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "友達", },    }, },
+        { key: "指導対局",         body: proc { xmode_judge_stat.to_chart(:"指導") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", },    }, },
+        { key: "指導対局 (平手)",  body: proc { pro_skill_exceed_stat.to_win_lose_chart }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", "手合割": "平手" }, }, },
 
         ################################################################################
 

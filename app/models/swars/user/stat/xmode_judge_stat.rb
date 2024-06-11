@@ -5,9 +5,12 @@ module Swars
     class XmodeJudgeStat < Base
       delegate *[
         :ids_scope,
-        :total_judge_counts,
         :xmode_stat,
       ], to: :@stat
+
+      def strong_in_friends?
+        count_by(:"友達", :win) > count_by(:"友達", :lose)
+      end
 
       # 友達対局での勝敗
       def to_chart(xmode_key)
@@ -22,14 +25,16 @@ module Swars
 
       # Swars::User["SugarHuuko"].stat.xmode_judge_stat.exist?(:"野良", :win)
       def exist?(xmode_key, judge_key)
-        key = [xmode_key.to_s, judge_key.to_s]
-        counts_hash.has_key?(key)
+        assert_xmode_key(xmode_key)
+        assert_judge_key(judge_key)
+        counts_hash.has_key?([xmode_key, judge_key])
       end
 
       # Swars::User["SugarHuuko"].stat.xmode_judge_stat.count_by(:"野良", :win) # => 39
       def count_by(xmode_key, judge_key)
-        key = [xmode_key.to_s, judge_key.to_s]
-        counts_hash.fetch(key, 0)
+        assert_xmode_key(xmode_key)
+        assert_judge_key(judge_key)
+        counts_hash.fetch([xmode_key, judge_key], 0)
       end
 
       # Swars::User["SugarHuuko"].stat.xmode_judge_stat.ratio_by(:"野良", :win) # => 0.78
@@ -49,7 +54,7 @@ module Swars
           s = s.joins(:judge)
           s = s.group(Xmode.arel_table[:key])
           s = s.group(Judge.arel_table[:key])
-          s.count
+          s.count.transform_keys { |e| e.collect(&:to_sym) }
         end
       end
     end

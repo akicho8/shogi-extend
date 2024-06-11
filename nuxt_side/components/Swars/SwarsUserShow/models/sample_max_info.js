@@ -9,6 +9,8 @@ export class SampleMaxInfo extends ApplicationMemoryRecord {
       { value: 100,  environment: ["development", "staging", "production"], },
       { value: 200,  environment: ["development", "staging", "production"], },
       { value: 1000, environment: ["development"],                          },
+      { value: 2000, environment: ["development"],                          },
+      { value: 5000, environment: ["development"],                          },
     ]
   }
   get name() {

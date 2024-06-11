@@ -12,6 +12,13 @@ module Assertion
     end
   end
 
+  def assert_xmode_key(xmode_key)
+    if Rails.env.local?
+      assert_symbol(xmode_key)
+      Swars::XmodeInfo.fetch(xmode_key)
+    end
+  end
+
   def assert_judge_key(judge_key)
     if Rails.env.local?
       assert_symbol(judge_key)

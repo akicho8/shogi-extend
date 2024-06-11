@@ -7,6 +7,12 @@ module Swars
         :ids_scope,
       ], to: :@stat
 
+      def positive_count
+        if count.positive?
+          count
+        end
+      end
+
       # 相手退席待ち数
       def count
         @count ||= yield_self do

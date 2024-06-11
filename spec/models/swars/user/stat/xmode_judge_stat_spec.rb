@@ -36,14 +36,9 @@ module Swars
     end
 
     describe "バッジ" do
-      it "友対勝ちマン" do
+      it "友対勝ち越しマン" do
         case1("友達", :win)
-        assert { @black.stat.badge_stat.active?("友対勝ちマン") }
-      end
-
-      it "プロ越えマン" do
-        case1("指導", :win)
-        assert { @black.stat.badge_stat.active?("プロ越えマン") }
+        assert { @black.stat.badge_stat.active?("友対勝ち越しマン") }
       end
     end
   end

@@ -14,7 +14,7 @@ module Swars
 
       include SubScopeMethods
 
-      cattr_accessor(:max_of_sample_max) { 1000 }
+      cattr_accessor(:max_of_sample_max) { Rails.env.local? ? 10000 : 1000 }
 
       delegate *[
         :user,

@@ -9,22 +9,16 @@ module Swars
 
       # 最大思考
       def max
-        @max ||= scope.maximum(:think_max)
+        @max ||= ids_scope.maximum(:think_max)
       end
 
       # 平均思考
       def average
         @average ||= yield_self do
-          if v = scope.average(:think_all_avg)
+          if v = ids_scope.average(:think_all_avg)
             v.to_f.round(2)
           end
         end
-      end
-
-      private
-
-      def scope
-        ids_scope
       end
     end
   end
