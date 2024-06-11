@@ -31,7 +31,7 @@ module Swars
       end
 
       it "counts_hash" do
-        assert { @black.stat.xmode_judge_stat.counts_hash == { ["指導", "win"] => 1} }
+        assert { @black.stat.xmode_judge_stat.counts_hash == { [:"指導", :win] => 1} }
       end
     end
 

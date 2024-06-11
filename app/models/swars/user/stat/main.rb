@@ -236,8 +236,8 @@ module Swars
         @lethargy_stat ||= LethargyStat.new(self)
       end
 
-      def perpetual_check_stat
-        @perpetual_check_stat ||= PerpetualCheckStat.new(self)
+      def draw_stat
+        @draw_stat ||= DrawStat.new(self)
       end
 
       def waiting_to_leave_stat

@@ -13,19 +13,22 @@ module Swars
         else
           av = av.reject(&:local_only)
         end
-        av.collect do |e|
-          h = {
-            :name          => e.name,
-            :chart_type    => e.chart_type,
-            :chart_options => e.chart_options,
-            :body          => @stat.instance_eval(&e.body),
-          }
-          if Rails.env.local?
-            if e.bottom_message
-              h[:bottom_message] = @stat.instance_eval(&e.bottom_message)
+        av.each_with_object([]) do |e, m|
+          body = @stat.instance_eval(&e.body)
+          if body || Rails.env.local?
+            h = {
+              :name          => e.name,
+              :chart_type    => e.chart_type,
+              :chart_options => e.chart_options,
+              :body          => body,
+            }
+            if Rails.env.local?
+              if e.bottom_message
+                h[:bottom_message] = @stat.instance_eval(&e.bottom_message)
+              end
             end
+            m << h
           end
-          h
         end
       end
 

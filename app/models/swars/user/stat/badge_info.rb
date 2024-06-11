@@ -99,16 +99,16 @@ module Swars
         { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了の達人",                         }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TORYO) || 0) >= 1.0 }, },
         { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けの常連",                     }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の匠",                       }, if_cond: proc { stat.rarity_stat.minority?                    },},
-        { key: "長考マン",           badge_params: { name: "🤯",   message: "長考が原因で負けがち",               }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
-        { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { (stat.perpetual_check_stat.opening_repetition_move_count || 0).positive? } },
-        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { (stat.perpetual_check_stat.over50_draw_count || 0).positive? } },
+        { key: "長考マン",           badge_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
+        { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { stat.draw_stat.positive_rigging_count } },
+        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { stat.draw_stat.positive_normal_count } },
         { key: "運営支えマン",       badge_params: { name: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある", }, if_cond: proc { stat.fraud_stat.count.positive? } },
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
-        { key: "指導受けマン",       badge_params: { name: "🔥",   message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.exist?(:"指導") } },
         { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.strong_in_friends? } },
-        { key: "プロ越えマン",       badge_params: { name: "💪",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },
+        { key: "指導受けマン",       badge_params: { name: "🔥",   message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.exist?(:"指導") } },
+        { key: "プロ越えマン",       badge_params: { name: "🦁",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },
       ]
     end
   end
