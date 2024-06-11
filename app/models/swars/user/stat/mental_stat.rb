@@ -41,6 +41,14 @@ module Swars
         end
       end
 
+      def fair_play?
+        if win && lose
+          lose > win
+        else
+          true
+        end
+      end
+
       def win
         averages_hash[:win]
       end

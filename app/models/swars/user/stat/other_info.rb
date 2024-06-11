@@ -49,9 +49,15 @@ module Swars
 
         ################################################################################
 
+        { key: "マナー", local_only: true, body: proc { fair_play_stat.percentage_score }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "点", }, },
+
+        ################################################################################
+
         { key: "友達対局",         body: proc { xmode_judge_stat.to_chart(:"友達") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "友達", },    }, },
         { key: "指導対局",         body: proc { xmode_judge_stat.to_chart(:"指導") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", },    }, },
         { key: "指導対局 (平手)",  body: proc { pro_skill_exceed_stat.to_win_lose_chart }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", "手合割": "平手" }, }, },
+
+        ################################################################################
 
         ################################################################################
 

@@ -13,7 +13,7 @@ module Swars
 
     it "total_judge_counts" do
       case1(:win, :lose, :win)
-      assert { @black.memberships.total_judge_counts == { "win" => 2, "lose" => 1 } }
+      assert { @black.memberships.total_judge_counts == { win: 2, lose: 1 } }
     end
   end
 end

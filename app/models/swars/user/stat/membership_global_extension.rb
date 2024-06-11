@@ -11,7 +11,7 @@ module Swars
 
       class_methods do
         def total_judge_counts
-          s_group_judge_key.count
+          s_group_judge_key.count.symbolize_keys
         end
       end
     end

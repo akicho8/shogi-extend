@@ -8,6 +8,11 @@ module Swars
         :total_judge_counts,
       ], to: :@stat
 
+      # 投了を究めた
+      def toryo_master?
+        (ratio_by(:lose, :TORYO) || 0) >= 1.0
+      end
+
       # Swars::User["SugarHuuko"].stat.judge_final_stat.count_by(:win, :TORYO) # => 27
       def count_by(judge_key, final_key)
         assert_judge_key(judge_key)
@@ -18,7 +23,7 @@ module Swars
       # Swars::User["SugarHuuko"].stat.judge_final_stat.ratio_by(:win, :TORYO) # => 0.6923076923076923
       def ratio_by(judge_key, final_key)
         if count = count_by(judge_key, final_key)
-          if denominator = total_judge_counts[judge_key.to_s]
+          if denominator = total_judge_counts[judge_key]
             count.fdiv(denominator)
           end
         end

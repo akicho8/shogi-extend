@@ -15,6 +15,12 @@ module Swars
 
       ################################################################################
 
+      def fair_play?
+        !counts_hash[:"角不成"] && !counts_hash[:"飛車不成"]
+      end
+
+      ################################################################################
+
       def to_pie_chart(keys)
         if keys.any? { |e| counts_hash.has_key?(e) }
           keys.collect do |e|
@@ -133,9 +139,7 @@ module Swars
           s = s.joins(:judge)
           s = s.group("tags.name")
           s = s.group("judges.key")
-          s.count.transform_keys do |tag, judge_key|
-            [tag.to_sym, judge_key.to_sym]
-          end
+          s.count.transform_keys { |e| e.collect(&:to_sym) }
         end
       end
     end
