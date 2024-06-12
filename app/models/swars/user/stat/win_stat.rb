@@ -23,22 +23,6 @@ module Swars
 
       ################################################################################
 
-      def exist?(tag)
-        assert_tag(tag)
-        ratios_hash.has_key?(tag)
-      end
-
-      def include?(str)
-        str.kind_of? String or raise TypeError, str.inspect
-        to_s.include?(str)
-      end
-
-      def match?(value)
-        to_s.match?(value)
-      end
-
-      ################################################################################
-
       def ratios_hash
         @ratios_hash ||= tag_stat.ratios_hash.each_with_object({}) do |(tag, ratio), m|
           if ratio > 0.5        # 「勝ち越し」なので >= ではだめ
@@ -50,14 +34,7 @@ module Swars
       def to_h
         ratios_hash
       end
-
-      def tags
-        @tags ||= ratios_hash.keys
-      end
-
-      def to_s
-        @to_s ||= tags.join(",")
-      end
+      prepend TagMethods
 
       ################################################################################
     end

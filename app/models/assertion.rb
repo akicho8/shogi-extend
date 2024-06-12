@@ -34,9 +34,17 @@ module Assertion
   end
 
   def assert_symbol(var)
+    assert_kind_of(var, Symbol)
+  end
+
+  def assert_string(var)
+    assert_kind_of(var, String)
+  end
+
+  def assert_kind_of(var, klass)
     if Rails.env.local?
-      unless var.kind_of? Symbol
-        raise TypeError, "var はシンボルにすること : #{var.inspect}"
+      unless var.kind_of? klass
+        raise TypeError, "var は #{klass} にすること : #{var.inspect}"
       end
     end
   end

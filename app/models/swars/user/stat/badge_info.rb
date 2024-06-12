@@ -33,16 +33,16 @@ module Swars
         { key: "四間飛車マン",   badge_params: { name: "4⃣", message: "四間飛車の匠",          }, if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
         { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車のパイオニア",  }, if_cond: proc { win_stat.include?("九間飛車") }, },
         { key: "中飛車マン",     badge_params: { name: "🀄",   message: "中飛車名人",            }, if_cond: proc { win_stat.include?("中飛車") },},
-        { key: "右四間飛車マン", badge_params: { name: "⚔",    message: "右四間飛車の破壊神",    }, if_cond: proc { win_stat.include?("右四間") }, },
+        { key: "右四間飛車マン", badge_params: { name: "⚔",    message: "右四間に砕けないものはナイ", }, if_cond: proc { win_stat.include?("右四間") }, },
         { key: "袖飛車マン",     badge_params: { name: "👘",   message: "袖飛車の奇人",          }, if_cond: proc { win_stat.exist?(:"袖飛車") },},
         { key: "一間飛車マン",   badge_params: { name: "1️⃣",    message: "一間飛車の異端児",      }, if_cond: proc { win_stat.include?("一間飛車") }, },
 
         ################################################################################ 手筋
 
-        { key: "ロケットマン",       badge_params: { name: "🚀",   message: "ロケットの名手",             }, if_cond: proc { win_stat.exist?(:"ロケット") },},
-        { key: "金底マン",           badge_params: { name: "🪨",   message: "金底の歩の名手",             }, if_cond: proc { win_stat.exist?(:"金底の歩") },},
-        { key: "遠見の角マン",       badge_params: { name: "🔭",   message: "遠見の角の名手",             }, if_cond: proc { win_stat.exist?(:"遠見の角") },},
-        { key: "幽霊角マン",         badge_params: { name: "👻",   message: "幽霊角の名手",               }, if_cond: proc { win_stat.exist?(:"幽霊角")                   },},
+        { key: "ロケットマン",       badge_params: { name: "🚀",   message: "ロケットの名手",           }, if_cond: proc { win_stat.exist?(:"ロケット") },},
+        { key: "金底マン",           badge_params: { name: "🪨",   message: "金底の歩を効果的に使った", }, if_cond: proc { win_stat.exist?(:"金底の歩") },},
+        { key: "遠見の角マン",       badge_params: { name: "🔭",   message: "遠見の角の名手",           }, if_cond: proc { win_stat.exist?(:"遠見の角") },},
+        { key: "幽霊角マン",         badge_params: { name: "👻",   message: "幽霊角の名手",              }, if_cond: proc { win_stat.exist?(:"幽霊角")                   },},
 
         ################################################################################ 単純な勝ち越しシリーズ
 
@@ -74,7 +74,7 @@ module Swars
         ################################################################################ 文言が特殊
 
         { key: "駒柱マン",           badge_params: { name: "🗽",   message: "駒柱の作り手",               }, if_cond: proc { win_stat.exist?(:"駒柱") }  },
-        { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱いだ",             }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
+        { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱ぐと強くなる",     }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
         { key: "小部屋マン",         badge_params: { name: "🛖",   message: "銀冠の小部屋を活用した",     }, if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
         { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めマスター (超レア)",    }, if_cond: proc { win_stat.exist?(:"都詰め") } },
         { key: "ブッチマン",         badge_params: { name: "🧠",   message: "大駒全ブッチの達人",         }, if_cond: proc { win_stat.exist?(:"大駒全ブッチ") },},
@@ -86,8 +86,8 @@ module Swars
 
         ################################################################################
 
-        { key: "10連勝",             badge_params: { name: "💮",   message: "10連勝した",                         }, if_cond: proc { win_lose_streak_stat.ten_win? },},
-        { key: "10連敗",             badge_params: { name: "⛈",    message: "連敗名人",                           }, if_cond: proc { win_lose_streak_stat.ten_lose? },},
+        { key: "10連勝",             badge_params: { name: "🔥",   message: "10連勝した",                         }, if_cond: proc { win_lose_streak_stat.ten_win? },},
+        { key: "10連敗",             badge_params: { name: "⛈",   message: "10連敗した",                         }, if_cond: proc { win_lose_streak_stat.ten_lose? },},
         { key: "波が激しいマン",     badge_params: { name: "🌊",   message: "勝ち負けの波が激しい",               }, if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
         ################################################################################
@@ -96,18 +96,19 @@ module Swars
         { key: "心強すぎマン",       badge_params: { name: "🫀",   message: "折れない心の持ち主",                 }, if_cond: proc { stat.mental_stat.hard_brain? },},
         { key: "廃指しマン",         badge_params: { name: "😡",   message: "感情的になって廃指しした",           }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
 
-        { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了を究めた",                       }, if_cond: proc { stat.judge_final_stat.toryo_master? }, },
+        { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了を究めた",                       }, if_cond: proc { (stat.judge_final_stat.toryo_ratio || 0) >= 1.0 }, },
+        { key: "詰まされマン",       badge_params: { name: "Ⓜ️",   message: "マゾヒストの傾向がある",             }, if_cond: proc { (stat.judge_final_stat.checkmate_ratio || 0) >= 1.0 }, },
         { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けの常連",                     }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の匠",                       }, if_cond: proc { stat.rarity_stat.minority?                    },},
         { key: "長考マン",           badge_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
-        { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { stat.draw_stat.positive_rigging_count } },
+        # { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { stat.draw_stat.positive_rigging_count } },
         { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { stat.draw_stat.positive_normal_count } },
         { key: "運営支えマン",       badge_params: { name: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある", }, if_cond: proc { stat.fraud_stat.count.positive? } },
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
         { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.strong_in_friends? } },
-        { key: "指導受けマン",       badge_params: { name: "🔥",   message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.exist?(:"指導") } },
+        { key: "指導受けマン",       badge_params: { name: "👨‍🎓", message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.versus_pro? } },
         { key: "プロ越えマン",       badge_params: { name: "🦁",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },
       ]
     end

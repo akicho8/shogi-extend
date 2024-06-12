@@ -41,7 +41,7 @@ module Swars
         end
       end
 
-      def fair_play?
+      def guideline?
         if win && lose
           lose > win
         else

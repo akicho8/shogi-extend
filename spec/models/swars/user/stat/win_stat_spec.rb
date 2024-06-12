@@ -15,9 +15,9 @@ module Swars
       describe "重要" do
         it "ratios_hash" do
           case1(["棒銀"], :lose)
-          assert { @black.stat.win_stat.ratios_hash == {} }
+          assert { @black.stat.win_stat.to_h == {} }
           case1(["棒銀"], :win)
-          assert { @black.stat.win_stat.ratios_hash[:"棒銀"] == 1.0 }
+          assert { @black.stat.win_stat.to_h[:"棒銀"] == 1.0 }
         end
 
         it "tags" do

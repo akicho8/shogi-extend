@@ -8,10 +8,6 @@ module Swars
         :ids_scope,
       ], to: :@stat
 
-      def fair_play?
-        (count || 0).zero?
-      end
-
       def exist?
         (count || 0).positive?
       end

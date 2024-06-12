@@ -240,8 +240,8 @@ module Swars
         @draw_stat ||= DrawStat.new(self)
       end
 
-      def fair_play_stat
-        @fair_play_stat ||= FairPlayStat.new(self)
+      def guideline_stat
+        @guideline_stat ||= GuidelineStat.new(self)
       end
 
       def waiting_to_leave_stat

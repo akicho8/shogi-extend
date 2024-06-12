@@ -8,9 +8,14 @@ module Swars
         :total_judge_counts,
       ], to: :@stat
 
-      # 投了を究めた
-      def toryo_master?
-        (ratio_by(:lose, :TORYO) || 0) >= 1.0
+      # 投了を究めた率
+      def toryo_ratio
+        ratio_by(:lose, :TORYO)
+      end
+
+      # 詰まされるのを究めた率
+      def checkmate_ratio
+        ratio_by(:lose, :CHECKMATE)
       end
 
       # Swars::User["SugarHuuko"].stat.judge_final_stat.count_by(:win, :TORYO) # => 27

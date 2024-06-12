@@ -8,6 +8,9 @@ module Swars
       ], to: :@stat
 
       def to_a
+        # if ids_count.positive?
+        #   return []
+        # end
         av = OtherInfo.values
         if Rails.env.local?
         else

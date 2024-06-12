@@ -5,7 +5,14 @@ module Swars
     class XmodeStat < Base
       delegate *[
         :ids_scope,
+        :user,
       ], to: :@stat
+
+      # 指導対局を受けた？
+      # 自分がプロではない条件を入れないと先生も指導を受けたことになってしまう
+      def versus_pro?
+        exist?(:"指導") && !user.grade_info.teacher
+      end
 
       def exist?(key)
         counts_hash.has_key?(key)

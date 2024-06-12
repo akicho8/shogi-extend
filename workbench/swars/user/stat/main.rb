@@ -66,7 +66,7 @@ _ { Swars::User["HIKOUKI_GUMO"].stat(sample_max: 200).to_hash } # =>
 # ~> >  95          { key: "200手越えマン",      badge_params: { name: "⚡️",    message: "200手以上で勝った",                  }, if_cond: proc { (stat.win_turn_stat.max || 0) >= 200 },},
 # ~> >  96          { key: "心強すぎマン",       badge_params: { name: "🫀",   message: "折れない心の持ち主",                 }, if_cond: proc { stat.mental_stat.hard_brain? },},
 # ~> >  97          { key: "廃指しマン",         badge_params: { name: "😡",   message: "感情的になって廃指しした",           }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
-# ~> >  99          { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了を究めた",                       }, if_cond: proc { (stat.judge_final_stat.toryo_master? }, },
+# ~> >  99          { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了を究めた",                       }, if_cond: proc { (stat.judge_final_stat.toryo_ratio }, },
 # ~> > 100          { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けの常連",                     }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
 # ~> > 101          { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の匠",                       }, if_cond: proc { stat.rarity_stat.minority?                    },},
 # ~> > 102          { key: "長考マン",           badge_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
@@ -81,7 +81,7 @@ _ { Swars::User["HIKOUKI_GUMO"].stat(sample_max: 200).to_hash } # =>
 # ~>   114    end
 # ~>   115  end
 # ~> /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/badge_info.rb:99: syntax error, unexpected '}', expecting ')' (SyntaxError)
-# ~> ...udge_final_stat.toryo_master? }, },
+# ~> ...udge_final_stat.toryo_ratio }, },
 # ~> ...                              ^
 # ~> /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/badge_info.rb:100: syntax error, unexpected ')', expecting '}'
 # ~> ...ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},

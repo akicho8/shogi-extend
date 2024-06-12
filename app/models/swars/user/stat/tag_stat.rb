@@ -15,12 +15,6 @@ module Swars
 
       ################################################################################
 
-      def fair_play?
-        !counts_hash[:"角不成"] && !counts_hash[:"飛車不成"]
-      end
-
-      ################################################################################
-
       def to_pie_chart(keys)
         if keys.any? { |e| counts_hash.has_key?(e) }
           keys.collect do |e|
@@ -72,16 +66,23 @@ module Swars
 
       ################################################################################
 
+      def count_by(tag)
+        assert_tag(tag)
+        counts_hash[tag] || 0
+      end
+
       def win_count_by(tag)
         assert_tag(tag)
         win_counts_hash[tag] || 0
       end
 
+      # 未使用
       def lose_count_by(tag)
         assert_tag(tag)
         lose_counts_hash[tag] || 0
       end
 
+      # 未使用
       def draw_count_by(tag)
         assert_tag(tag)
         draw_counts_hash[tag] || 0
@@ -119,14 +120,7 @@ module Swars
       def to_h
         counts_hash
       end
-
-      def tags
-        @tags ||= counts_hash.keys
-      end
-
-      def to_s
-        @to_s ||= counts_hash.keys.join(",")
-      end
+      prepend TagMethods
 
       ################################################################################
 

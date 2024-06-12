@@ -23,14 +23,8 @@ module Swars
           },
         },
 
-        {
-          key: "ids_count",
-          local_only: true,
-          body: proc { ids_count },
-          chart_type: :simple,
-          chart_options: {
-          },
-        },
+        { key: "ids_count",         local_only: true, body: proc { ids_count                                  }, chart_type: :simple, chart_options: {}, },
+        { key: "win / lose / draw", local_only: true, body: proc { [win_count, lose_count, draw_count] * ", " }, chart_type: :simple, chart_options: {}, },
 
         ################################################################################
 
@@ -38,26 +32,25 @@ module Swars
 
         ################################################################################
 
-        { key: "投了せずに放置",                   body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "放置で離席させ逆時間切れ勝ち狙い", body: proc { waiting_to_leave_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "切断逃亡",                         body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "1手詰を焦らして悦に入った",        body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "角不成",                           body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "飛車不成",                         body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "無気力な対局",                     body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "先手で千日手にした",               body: proc { draw_stat.positive_bad_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "行動規範", local_only: false, body: proc { guideline_stat.percentage_score }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "点", }, },
 
         ################################################################################
 
-        { key: "マナー", local_only: true, body: proc { fair_play_stat.percentage_score }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "点", }, },
+        { key: "投了せずに放置",                   local_only: false, body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.positive_count    }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "切断逃亡",                         local_only: false, body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "先手で千日手にした",               local_only: true,  body: proc { draw_stat.positive_bad_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
-        { key: "友達対局",         body: proc { xmode_judge_stat.to_chart(:"友達") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "友達", },    }, },
-        { key: "指導対局",         body: proc { xmode_judge_stat.to_chart(:"指導") },      chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", },    }, },
+        { key: "友達対局",         body: proc { xmode_judge_stat.to_chart(:"友達")      }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "友達", },    }, },
+        { key: "指導対局",         body: proc { xmode_judge_stat.to_chart(:"指導")      }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", },    }, },
         { key: "指導対局 (平手)",  body: proc { pro_skill_exceed_stat.to_win_lose_chart }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { "対局モード": "指導", "手合割": "平手" }, }, },
-
-        ################################################################################
 
         ################################################################################
 
@@ -161,6 +154,7 @@ module Swars
         { key: "割り打ちの銀",     body: proc { tag_stat.to_win_lose_chart(:"割り打ちの銀")     }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "割り打ちの銀",     }, }, },
         { key: "腹銀",             body: proc { tag_stat.to_win_lose_chart(:"腹銀")             }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "腹銀",             }, }, },
         { key: "継ぎ桂",           body: proc { tag_stat.to_win_lose_chart(:"継ぎ桂")           }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "継ぎ桂",           }, }, },
+        { key: "桂頭の銀",         body: proc { tag_stat.to_win_lose_chart(:"桂頭の銀")         }, chart_type: :win_lose_circle, chart_options: { click_method: :win_lose_click_handle, with_search_params: { tag: "桂頭の銀",         }, }, },
 
         ################################################################################
 
@@ -181,7 +175,7 @@ module Swars
           chart_options: {
             simple_type: :raw,
           },
-          body: proc { gdiff_stat.average },
+          body: proc { gdiff_stat.formated_average }
         },
 
         ################################################################################

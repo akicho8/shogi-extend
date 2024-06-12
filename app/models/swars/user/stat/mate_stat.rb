@@ -49,15 +49,15 @@ module Swars
 
       private
 
-      def threshold
-        RuleInfo[:three_min].ittezume_jirasi_sec # 45秒
-      end
-
       def scope
         s = ids_scope.win_only
         s = s.where(Membership.arel_table[:think_last].gteq(threshold))
         s = s.joins(:battle => :final)
-        s = s.where(Final.arel_table[:key].eq("CHECKMATE"))
+        s = s.where(Final.arel_table[:key].eq(:CHECKMATE))
+      end
+
+      def threshold
+        RuleInfo[:three_min].ittezume_jirasi_sec # 45秒
       end
     end
   end
