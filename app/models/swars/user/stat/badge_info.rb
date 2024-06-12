@@ -33,7 +33,7 @@ module Swars
         { key: "四間飛車マン",   badge_params: { name: "4⃣", message: "四間飛車の匠",          }, if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
         { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車のパイオニア",  }, if_cond: proc { win_stat.include?("九間飛車") }, },
         { key: "中飛車マン",     badge_params: { name: "🀄",   message: "中飛車名人",            }, if_cond: proc { win_stat.include?("中飛車") },},
-        { key: "右四間飛車マン", badge_params: { name: "⚔",    message: "右四間に砕けないものはナイ", }, if_cond: proc { win_stat.include?("右四間") }, },
+        { key: "右四間飛車マン", badge_params: { name: "🪓",  message: "右四間に砕けないものはない", }, if_cond: proc { win_stat.include?("右四間") }, },
         { key: "袖飛車マン",     badge_params: { name: "👘",   message: "袖飛車の奇人",          }, if_cond: proc { win_stat.exist?(:"袖飛車") },},
         { key: "一間飛車マン",   badge_params: { name: "1️⃣",    message: "一間飛車の異端児",      }, if_cond: proc { win_stat.include?("一間飛車") }, },
 
