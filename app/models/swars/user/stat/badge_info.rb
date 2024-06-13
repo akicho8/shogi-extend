@@ -108,7 +108,7 @@ module Swars
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
-        # { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.strong_in_friends? } },
+        # { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.friend_battle_katikosi? } },
         { key: "友対GGマン",         badge_params: { name: "❤️",   message: "友達対局で切磋琢磨した",             }, if_cond: proc { stat.xmode_judge_stat.friend_battle_sessatakuma? } },
         { key: "指導受けマン",       badge_params: { name: "👨‍🎓", message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.versus_pro? } },
         { key: "プロ越えマン",       badge_params: { name: "🦁",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },

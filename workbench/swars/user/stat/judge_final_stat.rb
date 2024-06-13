@@ -11,6 +11,7 @@ s = s.find_all{|e|e.battle.final.key == "DISCONNECT"}
 s = s.find_all{|e|e.judge.key == "lose"}
 tp s.collect{|e| {judge: e.judge.key, final: e.battle.final.key, key: e.battle.key, turn_max: e.battle.turn_max }}
 
+Swars::Battle.where(:turn_max => 1).count # => 5532
 
 # >> |---------------------+-----|
 # >> |      [:win, :TORYO] | 108 |
