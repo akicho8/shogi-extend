@@ -2,14 +2,14 @@ require "rails_helper"
 
 module Swars
   RSpec.describe User::Stat::XmodeJudgeStat, type: :model, swars_spec: true do
-    def case1(xmode_key, judge_key)
-      @black = User.create!
-      Battle.create!(xmode_key: xmode_key) do |e|
-        e.memberships.build(user: @black, judge_key: judge_key)
-      end
-    end
-
     describe "対局モードと勝敗" do
+      def case1(xmode_key, judge_key)
+        @black = User.create!
+        Battle.create!(xmode_key: xmode_key) do |e|
+          e.memberships.build(user: @black, judge_key: judge_key)
+        end
+      end
+
       before do
         case1(:"指導", :win)
       end
@@ -36,9 +36,23 @@ module Swars
     end
 
     describe "バッジ" do
-      it "友対勝ち越しマン" do
-        case1("友達", :win)
-        assert { @black.stat.badge_stat.active?("友対勝ち越しマン") }
+      def case1(xmode_key, judge_key)
+        Battle.create!(xmode_key: xmode_key) do |e|
+          e.memberships.build(user: @black, judge_key: judge_key)
+        end
+      end
+
+      it "友対GGマン" do
+        @black = User.create!
+        3.times { case1("友達", :lose) }
+        2.times { case1("友達", :win) }
+        assert { @black.stat.badge_stat.active?("友対GGマン") }
+      end
+
+      it "友対無双マン" do
+        @black = User.create!
+        5.times { case1("友達", :win) }
+        assert { @black.stat.badge_stat.active?("友対無双マン") }
       end
     end
   end
