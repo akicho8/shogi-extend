@@ -8,9 +8,30 @@ module Swars
         :xmode_stat,
       ], to: :@stat
 
+      ################################################################################
+
+      # 友達対局で勝ち越した？
       def strong_in_friends?
-        count_by(:"友達", :win) > count_by(:"友達", :lose)
+        if win_lose_total(:"友達") >= 5
+          ratio_by_xmode_key(:"友達") > 0.5
+        end
       end
+
+      # 友達対局で切磋琢磨した
+      def friend_battle_sessatakuma?
+        if win_lose_total(:"友達") >= 5
+          (0.3...0.7).cover?(ratio_by_xmode_key(:"友達"))
+        end
+      end
+
+      # 友達対局で無双した？
+      def friend_battle_musou?
+        if win_lose_total(:"友達") >= 5
+          ratio_by_xmode_key(:"友達") >= 0.75
+        end
+      end
+
+      ################################################################################
 
       def ratio_by_xmode_key(xmode_key)
         win = count_by(xmode_key, :win)
@@ -21,6 +42,10 @@ module Swars
         else
           0.0
         end
+      end
+
+      def win_lose_total(xmode_key)
+        count_by(xmode_key, :win) + count_by(xmode_key, :lose)
       end
 
       # 友達対局での勝敗

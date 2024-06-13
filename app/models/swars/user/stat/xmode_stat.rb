@@ -14,12 +14,14 @@ module Swars
         exist?(:"指導") && !user.grade_info.teacher
       end
 
-      def exist?(key)
-        counts_hash.has_key?(key)
+      def exist?(xmode_key)
+        assert_xmode_key(xmode_key)
+        counts_hash.has_key?(xmode_key)
       end
 
-      def count(key)
-        counts_hash.fetch(key, 0)
+      def count(xmode_key)
+        assert_xmode_key(xmode_key)
+        counts_hash.fetch(xmode_key, 0)
       end
 
       def to_chart

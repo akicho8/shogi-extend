@@ -70,10 +70,10 @@
 
 # Change the variant processor for Active Storage.
 # Changing this default means updating all places in your code that
-# generate variants to use image processing macros and ruby-vips
+# generate variants to use image processing macros and ruby-credentials
 # operations. See the upgrading guide for detail on the changes required.
 # The `:mini_magick` option is not deprecated; it's fine to keep using it.
-# Rails.application.config.active_storage.variant_processor = :vips
+# Rails.application.config.active_storage.variant_processor = :credentials
 
 # Enable parameter wrapping for JSON.
 # Previously this was set in an initializer. It's fine to keep using that initializer if you've customized it.

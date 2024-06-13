@@ -5,7 +5,7 @@ module Swars
     class MentalStat < Base
       class << self
         def report
-          Rails.application.credentials[:expert_import_user_keys].collect { |key|
+          Swars::User::Vip.auto_crawl_user_keys.collect { |key|
             if user = Swars::User[key]
               mental_stat = user.stat(sample_max: 200).mental_stat
               {

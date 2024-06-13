@@ -20,6 +20,7 @@ module Swars
         { key: "相手退席待ちマン",   badge_params: { name: "🪰",   message: AITETAISEKIMATMAN_MESSAGE,                 }, if_cond: proc { stat.waiting_to_leave_stat.count.positive? } },
         { key: "角不成マン",         badge_params: { name: "☠",    message: "角不成で舐めプした",                    }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"角不成") }  },
         { key: "飛車不成マン",       badge_params: { name: "💀",   message: "飛車不成で舐めプした",                   }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"飛車不成") }  },
+        { key: "友対無双マン",       badge_params: { name: "💔",   message: "友達対局で友達を無くした",               }, if_cond: proc { stat.xmode_judge_stat.friend_battle_musou? } },
 
         ################################################################################
 
@@ -107,7 +108,8 @@ module Swars
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
-        { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.strong_in_friends? } },
+        # { key: "友対勝ち越しマン",   badge_params: { name: "🆚",   message: "友達対局で勝ち越した",               }, if_cond: proc { stat.xmode_judge_stat.strong_in_friends? } },
+        { key: "友対GGマン",         badge_params: { name: "❤️",   message: "友達対局で切磋琢磨した",             }, if_cond: proc { stat.xmode_judge_stat.friend_battle_sessatakuma? } },
         { key: "指導受けマン",       badge_params: { name: "👨‍🎓", message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.versus_pro? } },
         { key: "プロ越えマン",       badge_params: { name: "🦁",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },
       ]

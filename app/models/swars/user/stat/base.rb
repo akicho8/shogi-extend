@@ -5,6 +5,10 @@ module Swars
     class Base
       include Assertion
 
+      delegate *[
+        :badge_debug,
+      ], to: :stat
+
       def initialize(stat)
         @stat = stat
       end

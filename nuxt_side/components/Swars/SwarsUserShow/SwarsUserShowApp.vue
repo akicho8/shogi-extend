@@ -43,7 +43,7 @@ import { mod_filter_modal    } from "./mod_filter_modal.js"
 import { RuleSelectInfo   } from "./models/rule_select_info.js"
 import { SampleMaxInfo    } from "./models/sample_max_info.js"
 import { XmodeSelectInfo  } from "./models/xmode_select_info.js"
-import { ParamInfo        } from "./models/param_info.js"
+import { ParamInfo } from "./models/param_info.js"
 
 import _ from "lodash"
 
@@ -125,7 +125,8 @@ export default {
       return {
         user_key: this.$route.params.key, // ウォーズID
         sample_max: this.sample_max,      // localStorage から取得している
-        ...this.$route.query,             // 必要なのは query, debug
+        badge_debug: this.badge_debug,
+        ...this.$route.query,
       }
     },
   },

@@ -23,7 +23,7 @@ module Swars
       def default_user_keys
         case
         when Rails.env.production?
-          Rails.application.credentials[:expert_import_user_keys]
+          Swars::User::Vip.auto_crawl_user_keys
         when Rails.env.staging?
           ["itoshinTV", "BOUYATETSU5", "bsplive"]
         else

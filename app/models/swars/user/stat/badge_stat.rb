@@ -18,7 +18,7 @@ module Swars
       end
 
       def active_badges
-        BadgeInfo.find_all { |e| instance_eval(&e.if_cond) || params[:badge_debug] }
+        BadgeInfo.find_all { |e| instance_eval(&e.if_cond) || badge_debug }
       end
 
       def active_badge_keys

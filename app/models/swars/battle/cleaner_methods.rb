@@ -67,7 +67,7 @@ module Swars
             :old_only    => Rails.env.local? ? 0.days : 50.days,
             :xmode_only  => "野良",
             :ban_except  => true,
-            :user_except => Rails.application.credentials[:battle_cleaner_except_users] + Rails.application.credentials[:protected_battle_user_keys],
+            :user_except => Swars::User::Vip.long_time_keep_user_keys + Swars::User::Vip.protected_user_keys,
           }.merge(options)
           cleaner_scope(options)
         }
@@ -77,7 +77,7 @@ module Swars
           options = {
             :old_only   => Rails.env.local? ? 0.days : 100.days,
             :xmode_only => "野良",
-            :user_only  => Rails.application.credentials[:battle_cleaner_except_users],
+            :user_only  => Swars::User::Vip.long_time_keep_user_keys,
           }.merge(options)
           cleaner_scope(options)
         }

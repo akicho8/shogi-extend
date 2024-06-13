@@ -41,9 +41,9 @@ module Swars
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.positive_count    }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "切断逃亡",                         local_only: false, body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { mate_stat.positive_count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "先手で千日手にした",               local_only: true,  body: proc { draw_stat.positive_bad_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################

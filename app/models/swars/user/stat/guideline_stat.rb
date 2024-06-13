@@ -8,7 +8,7 @@ module Swars
           options = {
             sample_max: 200,
           }.merge(options)
-          Rails.application.credentials[:expert_import_user_keys].collect { |key|
+          Swars::User::Vip.auto_crawl_user_keys.collect { |key|
             if user = Swars::User[key]
               guideline_stat = user.stat(options).guideline_stat
               {

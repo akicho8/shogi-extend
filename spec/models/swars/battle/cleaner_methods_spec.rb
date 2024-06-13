@@ -130,7 +130,7 @@ module Swars
 
     describe "cleaner1 / cleaner2" do
       def case1
-        user_key = Rails.application.credentials[:battle_cleaner_except_users].first
+        user_key = Swars::User::Vip.long_time_keep_user_keys.first
         Battle.create! do |e|
           e.memberships.build(user: User.create!(user_key: user_key))
         end

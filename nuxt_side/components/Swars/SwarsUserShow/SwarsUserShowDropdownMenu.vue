@@ -1,5 +1,12 @@
 <template lang="pug">
 DotsMenuButton.SwarsUserShowDropdownMenu
+  template(v-if="development_p")
+    b-dropdown-item(@click="TheApp.update_handle({badge_debug: true})")
+      span バッジ全表示 ON
+    b-dropdown-item(@click="TheApp.update_handle({badge_debug: false})")
+      span バッジ全表示 OFF
+    b-dropdown-item(separator)
+
   // この下のアイテムはすべてクリック音を設定してない
   // なんか変な気もするけど押したときに伝搬して b-dropdown で鳴る
   //- b-dropdown-item(@click="TheApp.search_by_user_key_handle" v-if="development_p")
@@ -36,10 +43,17 @@ DotsMenuButton.SwarsUserShowDropdownMenu
     b-icon(icon="link" size="is-small")
     span ウォーズ本家
 
+  b-dropdown-item(:href="TheApp.swars_player_follow_url" :target="target_default" v-if="development_p")
+    b-icon(icon="link" size="is-small")
+    span 友達登録している
+
+  b-dropdown-item(:href="TheApp.swars_player_follower_url" :target="target_default" v-if="development_p")
+    b-icon(icon="link" size="is-small")
+    span 友達登録されている
+
   b-dropdown-item.is-hidden-desktop(separator)
   b-dropdown-item.is-hidden-desktop(has-link)
     a キャンセル
-
 </template>
 
 <script>

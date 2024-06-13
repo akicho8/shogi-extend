@@ -3,7 +3,7 @@ class Fix30 < ActiveRecord::Migration[6.0]
     Swars::Membership.reset_column_information
     Swars::Membership.update_all("ai_drop_total = null")
 
-    Rails.application.credentials[:expert_import_user_keys].each do |user_key|
+    Swars::User::Vip.auto_crawl_user_keys.each do |user_key|
       say_with_time "#{user_key}" do
         if user = Swars::User.find_by(key: user_key)
           user.memberships.where(ai_drop_total: nil).find_each { |e| e.ai_columns_set; e.save(validate: false) }

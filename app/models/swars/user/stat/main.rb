@@ -19,6 +19,8 @@ module Swars
         ActiveRecord::Base.logger.silence do
           AppLog.debug(emoji: ":参照:", subject: "プレイヤー情報参照", body: [user.key, params[:query]])
         end
+
+        prepare
       end
 
       # https://www.shogi-extend.com/api/swars/user_stat.json?user_key=kinakom0chi
@@ -67,6 +69,10 @@ module Swars
 
       def as_json(*)
         to_hash
+      end
+
+      def badge_debug
+        params[:badge_debug]
       end
 
       ################################################################################
@@ -254,6 +260,12 @@ module Swars
 
       def overthinking_loss_stat
         @overthinking_loss_stat ||= OverthinkingLossStat.new(self)
+      end
+
+      private
+
+      def prepare
+        @params[:badge_debug] = @params[:badge_debug].to_s == "true"
       end
     end
   end
