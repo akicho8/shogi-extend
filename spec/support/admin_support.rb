@@ -5,7 +5,7 @@ module AdminSupport
   def http_auth_login
     user_name = SecureRandom.hex
     password = Rails.application.credentials[:basic_auth_password]
-    encode_vips = ActionController::HttpAuthentication::Basic.encode_vips(user_name, password)
-    request.env["HTTP_AUTHORIZATION"] = encode_vips
+    encode_credentials = ActionController::HttpAuthentication::Basic.encode_credentials(user_name, password)
+    request.env["HTTP_AUTHORIZATION"] = encode_credentials
   end
 end
