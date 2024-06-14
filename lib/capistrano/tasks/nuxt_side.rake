@@ -18,11 +18,16 @@ namespace :nuxt_side do
   end
 
   # cap staging nuxt_side:deploy
+  # cap production nuxt_side:deploy
   desc "Nuxt側のアップロード"
   task :deploy do
     if false
       # nuxt_side/dist を public/app として転送するだけ
-      Dir.chdir("nuxt_side") { system "nuxt generate --dotenv .env.#{fetch(:stage)}" }
+      run_locally do
+        within "nuxt_side" do
+          execute :nuxt, "build --dotenv .env.#{fetch(:stage)}"
+        end
+      end
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"
@@ -35,7 +40,11 @@ namespace :nuxt_side do
       # 1. nuxt_side/.nuxt を nuxt_side/.nuxt として転送
       # 2. nuxt_side/static/* も Nuxt が直接配信しているるため転送が必要
       # 3. nuxt_side で npm install
-      Dir.chdir("nuxt_side") { system "nuxt build --dotenv .env.#{fetch(:stage)}" }
+      run_locally do
+        within "nuxt_side" do
+          execute :nuxt, "build --dotenv .env.#{fetch(:stage)}"
+        end
+      end
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"

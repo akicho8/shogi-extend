@@ -9,7 +9,11 @@ namespace :next_side do
   task :deploy do
     if false
       # next_side/dist を public/app として転送するだけ
-      Dir.chdir("next_side") { system "next generate --dotenv .env.#{fetch(:stage)}" }
+      run_locally do
+        within "next_side" do
+          execute :nuxt, "generate --dotenv .env.#{fetch(:stage)}"
+        end
+      end
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"
@@ -22,7 +26,11 @@ namespace :next_side do
       # 1. next_side/.next を next_side/.next として転送
       # 2. next_side/static/* も Next が直接配信しているるため転送が必要
       # 3. next_side で yarn
-      Dir.chdir("next_side") { system "next build --dotenv .env.#{fetch(:stage)}" }
+      run_locally do
+        within "next_side" do
+          execute :nuxt, "generate --dotenv .env.#{fetch(:stage)}"
+        end
+      end
       on roles(:web) do |host|
         execute :rm, "-rf", "#{release_path}/public/app"
         execute :rm, "-rf", "#{release_path}/public/s"
