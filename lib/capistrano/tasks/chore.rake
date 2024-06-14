@@ -142,10 +142,10 @@ end
 
 desc "デプロイ失敗"
 task "deploy:failed" do
-  system "say '失敗'"
+  system %(say "デプロイに失敗しました")
 end
 
 desc "デプロイ成功"
 after "deploy:finished", :finished_banner do # finished にすると動かない
-  system "say 'デプロイ成功'"
+  system %(say "デプロイに成功しました")
 end
