@@ -3,7 +3,7 @@
 module Swars
   module User::Stat
     class XmodeJudgeStat < Base
-      MINIMUM_NUMBER_OF_BATTLES = 5 # 最低必要対局数
+      MINIMUM_NUMBER_OF_BATTLES = 8 # 最低必要対局数
 
       delegate *[
         :ids_scope,
@@ -26,12 +26,27 @@ module Swars
         end
       end
 
-      # 友達対局で無双した？
-      def friend_battle_musou?
+      # 友達対局で無双した度合い
+      def friend_kill_ratio
         if win_lose_total(:"友達") >= MINIMUM_NUMBER_OF_BATTLES
-          ratio_by_xmode_key(:"友達") >= 0.75
+          if v = ratio_by_xmode_key(:"友達")
+            ab = 0.8..1.00
+            if v >= ab.min
+              map_range(v, *ab.minmax, 0.0, 1.0)
+            end
+          end
         end
       end
+
+      # # 友達対局で無双した度合い
+      # def friend_kill_ratio
+      #   xmode_key = :"友達"
+      #   if win_lose_total(xmode_key) >= MINIMUM_NUMBER_OF_BATTLES
+      #     if ratio_by_xmode_key(xmode_key) >= 0.75
+      #       count_by(xmode_key, :win) - count_by(xmode_key, :lose)
+      #     end
+      #   end
+      # end
 
       ################################################################################
 

@@ -28,7 +28,7 @@ module Swars
         Battle.create!(csa_seq: KifuGenerator.generate_n(13)) do |e|
           e.memberships.build(user: black, judge_key: :draw, location_key: location_key)
         end
-        black.stat.draw_stat.bad_count
+        black.stat.draw_stat.black_sennichi_count
       end
 
       it "works" do

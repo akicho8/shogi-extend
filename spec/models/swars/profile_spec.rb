@@ -1,3 +1,24 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Profile (swars_profiles as Swars::Profile)
+#
+# |-------------------+-------------------+------------+-------------+------------+-------|
+# | name              | desc              | type       | opts        | refs       | index |
+# |-------------------+-------------------+------------+-------------+------------+-------|
+# | id                | ID                | integer(8) | NOT NULL PK |            |       |
+# | user_id           | User              | integer(8) | NOT NULL    | => User#id | A     |
+# | ban_at            | Ban at            | datetime   |             |            | B     |
+# | ban_crawled_at    | Ban crawled at    | datetime   | NOT NULL    |            |       |
+# | ban_crawled_count | Ban crawled count | integer(4) |             |            |       |
+# | created_at        | 作成日時          | datetime   | NOT NULL    |            |       |
+# | updated_at        | 更新日時          | datetime   | NOT NULL    |            |       |
+# |-------------------+-------------------+------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
 require "rails_helper"
 
 module Swars

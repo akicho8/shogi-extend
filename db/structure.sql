@@ -23,7 +23,7 @@ CREATE TABLE `active_storage_attachments` (
   UNIQUE KEY `index_active_storage_attachments_uniqueness` (`record_type`,`record_id`,`name`,`blob_id`),
   KEY `index_active_storage_attachments_on_blob_id` (`blob_id`),
   CONSTRAINT `fk_rails_c3b3935057` FOREIGN KEY (`blob_id`) REFERENCES `active_storage_blobs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_blobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -40,7 +40,7 @@ CREATE TABLE `active_storage_blobs` (
   `service_name` varchar(255) COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_active_storage_blobs_on_key` (`key`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `active_storage_variant_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -66,7 +66,7 @@ CREATE TABLE `app_logs` (
   `process_id` int NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `ar_internal_metadata`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -91,7 +91,7 @@ CREATE TABLE `auth_infos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_auth_infos_on_provider_and_uid` (`provider`,`uid`),
   KEY `index_auth_infos_on_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `cpu_battle_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -142,7 +142,7 @@ CREATE TABLE `free_battles` (
   KEY `index_free_battles_on_critical_turn` (`critical_turn`),
   KEY `index_free_battles_on_outbreak_turn` (`outbreak_turn`),
   KEY `index_free_battles_on_preset_id` (`preset_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `judges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -169,7 +169,7 @@ CREATE TABLE `kiwi_access_logs` (
   PRIMARY KEY (`id`),
   KEY `index_kiwi_access_logs_on_user_id` (`user_id`),
   KEY `index_kiwi_access_logs_on_banana_id` (`banana_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_banana_messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -188,7 +188,7 @@ CREATE TABLE `kiwi_banana_messages` (
   KEY `index_kiwi_banana_messages_on_user_id` (`user_id`),
   KEY `index_kiwi_banana_messages_on_banana_id` (`banana_id`),
   KEY `index_kiwi_banana_messages_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_bananas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -213,7 +213,7 @@ CREATE TABLE `kiwi_bananas` (
   KEY `index_kiwi_bananas_on_folder_id` (`folder_id`),
   KEY `index_kiwi_bananas_on_banana_messages_count` (`banana_messages_count`),
   KEY `index_kiwi_bananas_on_access_logs_count` (`access_logs_count`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_folders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -228,7 +228,7 @@ CREATE TABLE `kiwi_folders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_kiwi_folders_on_key` (`key`),
   KEY `index_kiwi_folders_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `kiwi_lemons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -259,7 +259,7 @@ CREATE TABLE `kiwi_lemons` (
   KEY `index_kiwi_lemons_on_successed_at` (`successed_at`),
   KEY `index_kiwi_lemons_on_errored_at` (`errored_at`),
   KEY `index_kiwi_lemons_on_created_at` (`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `locations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -301,7 +301,7 @@ CREATE TABLE `profiles` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_profiles_on_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -333,6 +333,28 @@ CREATE TABLE `share_board_battles` (
   KEY `index_share_board_battles_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `share_board_chat_messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `share_board_chat_messages` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `room_id` bigint NOT NULL COMMENT '部屋',
+  `user_id` bigint NOT NULL COMMENT '発言者(キーは名前だけなのですり変われる)',
+  `message_scope_id` bigint NOT NULL COMMENT 'スコープ',
+  `content` varchar(256) COLLATE utf8mb4_bin NOT NULL COMMENT '発言内容',
+  `performed_at` bigint NOT NULL COMMENT '実行開始日時(ms)',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `session_user_id` bigint DEFAULT NULL COMMENT 'ログインユーザー',
+  `from_connection_id` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'null なら bot 等',
+  `primary_emoji` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '優先する絵文字',
+  PRIMARY KEY (`id`),
+  KEY `index_share_board_chat_messages_on_room_id` (`room_id`),
+  KEY `index_share_board_chat_messages_on_user_id` (`user_id`),
+  KEY `index_share_board_chat_messages_on_message_scope_id` (`message_scope_id`),
+  KEY `index_share_board_chat_messages_on_session_user_id` (`session_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -353,6 +375,20 @@ CREATE TABLE `share_board_memberships` (
   KEY `index_share_board_memberships_on_position` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `share_board_message_scopes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `share_board_message_scopes` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  `position` int DEFAULT NULL COMMENT '順序',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_share_board_message_scopes_on_key` (`key`),
+  KEY `index_share_board_message_scopes_on_position` (`position`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `share_board_rooms`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -362,6 +398,7 @@ CREATE TABLE `share_board_rooms` (
   `battles_count` int DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `chat_messages_count` int DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_share_board_rooms_on_key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -400,6 +437,7 @@ CREATE TABLE `share_board_users` (
   `memberships_count` int DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `chat_messages_count` int DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_share_board_users_on_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -420,13 +458,25 @@ DROP TABLE IF EXISTS `short_url_components`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `short_url_components` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `original_url` varchar(2048) COLLATE utf8mb4_bin NOT NULL,
+  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL COMMENT 'ハッシュ',
+  `original_url` varchar(2048) COLLATE utf8mb4_bin NOT NULL COMMENT '元URL',
   `access_logs_count` int NOT NULL DEFAULT '0' COMMENT '総アクセス数',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_short_url_components_on_key` (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `swars_ban_crawl_requests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `swars_ban_crawl_requests` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL COMMENT 'BAN判定対象者',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_swars_ban_crawl_requests_on_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_battles`;
@@ -466,7 +516,7 @@ CREATE TABLE `swars_battles` (
   KEY `index_swars_battles_on_preset_id` (`preset_id`),
   KEY `index_swars_battles_on_rule_id` (`rule_id`),
   KEY `index_swars_battles_on_final_id` (`final_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_crawl_reservations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -525,7 +575,7 @@ CREATE TABLE `swars_membership_extras` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_membership_extras_on_membership_id` (`membership_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -542,16 +592,18 @@ CREATE TABLE `swars_memberships` (
   `updated_at` datetime NOT NULL,
   `think_all_avg` int DEFAULT NULL COMMENT '指し手の平均秒数(全体)',
   `think_end_avg` int DEFAULT NULL COMMENT '指し手の平均秒数(最後5手)',
-  `two_serial_max` int DEFAULT NULL COMMENT '2秒の指し手が連続した回数',
   `think_last` int DEFAULT NULL COMMENT '最後の指し手の秒数',
   `think_max` int DEFAULT NULL COMMENT '最大考慮秒数',
-  `obt_think_avg` int DEFAULT NULL COMMENT '開戦後の指し手の平均秒数',
-  `obt_auto_max` int DEFAULT NULL COMMENT '開戦後に1,2秒の指し手が続く最大',
+  `ai_drop_total` int DEFAULT NULL COMMENT '棋神を使って指した総手数',
   `judge_id` bigint NOT NULL COMMENT '勝敗',
   `location_id` bigint NOT NULL COMMENT '位置',
   `style_id` bigint DEFAULT NULL COMMENT '棋風',
   `ek_score_without_cond` int DEFAULT NULL COMMENT '入玉宣言時の得点(仮)',
   `ek_score_with_cond` int DEFAULT NULL COMMENT '入玉宣言時の得点(条件考慮)',
+  `ai_wave_count` int DEFAULT NULL COMMENT '棋神使用模様個数',
+  `ai_two_freq` float DEFAULT NULL COMMENT '2手差し頻出度',
+  `ai_noizy_two_max` int DEFAULT NULL COMMENT '22221パターンを考慮した2の並び個数最大値',
+  `ai_gear_freq` float DEFAULT NULL COMMENT '121頻出度',
   PRIMARY KEY (`id`),
   UNIQUE KEY `memberships_sbri_sbui` (`battle_id`,`user_id`),
   UNIQUE KEY `memberships_sbri_lk` (`battle_id`,`location_id`),
@@ -564,7 +616,23 @@ CREATE TABLE `swars_memberships` (
   KEY `index_swars_memberships_on_judge_id` (`judge_id`),
   KEY `index_swars_memberships_on_location_id` (`location_id`),
   KEY `index_swars_memberships_on_style_id` (`style_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `swars_profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `swars_profiles` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL COMMENT '対局者',
+  `ban_at` datetime DEFAULT NULL COMMENT '垢BAN日時',
+  `ban_crawled_at` datetime NOT NULL COMMENT '垢BANクロール日時',
+  `ban_crawled_count` int DEFAULT NULL COMMENT '垢BANクロール回数',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_swars_profiles_on_user_id` (`user_id`),
+  KEY `index_swars_profiles_on_ban_at` (`ban_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -590,7 +658,7 @@ CREATE TABLE `swars_search_logs` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_swars_search_logs_on_user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_styles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -617,12 +685,15 @@ CREATE TABLE `swars_users` (
   `search_logs_count` int DEFAULT '0',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `ban_at` datetime DEFAULT NULL COMMENT '垢BAN日時',
+  `latest_battled_at` datetime NOT NULL COMMENT '直近の対局日時',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_swars_users_on_user_key` (`user_key`),
   KEY `index_swars_users_on_grade_id` (`grade_id`),
   KEY `index_swars_users_on_last_reception_at` (`last_reception_at`),
-  KEY `index_swars_users_on_updated_at` (`updated_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  KEY `index_swars_users_on_updated_at` (`updated_at`),
+  KEY `index_swars_users_on_ban_at` (`ban_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `swars_xmodes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -682,7 +753,7 @@ CREATE TABLE `taggings` (
   KEY `index_taggings_on_context` (`context`),
   KEY `index_taggings_on_tagger_id_and_tagger_type` (`tagger_id`,`tagger_type`),
   KEY `taggings_idy` (`taggable_id`,`taggable_type`,`tagger_id`,`context`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tags`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -693,7 +764,7 @@ CREATE TABLE `tags` (
   `taggings_count` int DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_tags_on_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_leagues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -705,7 +776,7 @@ CREATE TABLE `tsl_leagues` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_tsl_leagues_on_generation` (`generation`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_memberships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -733,7 +804,7 @@ CREATE TABLE `tsl_memberships` (
   KEY `index_tsl_memberships_on_win` (`win`),
   KEY `index_tsl_memberships_on_lose` (`lose`),
   KEY `index_tsl_memberships_on_previous_runner_up_count` (`previous_runner_up_count`)
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tsl_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -751,21 +822,7 @@ CREATE TABLE `tsl_users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_tsl_users_on_name` (`name`),
   KEY `index_tsl_users_on_level_up_generation` (`level_up_generation`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `url_handlings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `url_handlings` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `original_url` varchar(255) COLLATE utf8mb4_bin NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `index_url_handlings_on_key` (`key`),
-  UNIQUE KEY `index_url_handlings_on_original_url` (`original_url`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -803,7 +860,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `index_users_on_confirmation_token` (`confirmation_token`),
   UNIQUE KEY `index_users_on_unlock_token` (`unlock_token`),
   KEY `index_users_on_race_key` (`race_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_access_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -830,7 +887,7 @@ CREATE TABLE `wkbk_answer_kinds` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_wkbk_answer_kinds_on_key` (`key`),
   KEY `index_wkbk_answer_kinds_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_answer_logs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -854,7 +911,7 @@ CREATE TABLE `wkbk_answer_logs` (
   CONSTRAINT `fk_rails_d0ad6b6cc7` FOREIGN KEY (`answer_kind_id`) REFERENCES `wkbk_answer_kinds` (`id`),
   CONSTRAINT `fk_rails_eb31249ac9` FOREIGN KEY (`book_id`) REFERENCES `wkbk_books` (`id`),
   CONSTRAINT `fk_rails_fd4f2b6aef` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -888,7 +945,7 @@ CREATE TABLE `wkbk_articles` (
   CONSTRAINT `fk_rails_7748a2a1da` FOREIGN KEY (`lineage_id`) REFERENCES `wkbk_lineages` (`id`),
   CONSTRAINT `fk_rails_819a1bdac0` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_aad2792528` FOREIGN KEY (`folder_id`) REFERENCES `wkbk_folders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_books`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -915,7 +972,7 @@ CREATE TABLE `wkbk_books` (
   CONSTRAINT `fk_rails_44fef78592` FOREIGN KEY (`folder_id`) REFERENCES `wkbk_folders` (`id`),
   CONSTRAINT `fk_rails_e41ea88b96` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `fk_rails_f6d4c81ca5` FOREIGN KEY (`sequence_id`) REFERENCES `wkbk_sequences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_bookships`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -937,7 +994,7 @@ CREATE TABLE `wkbk_bookships` (
   CONSTRAINT `fk_rails_086541430d` FOREIGN KEY (`book_id`) REFERENCES `wkbk_books` (`id`),
   CONSTRAINT `fk_rails_4606d8c214` FOREIGN KEY (`article_id`) REFERENCES `wkbk_articles` (`id`),
   CONSTRAINT `fk_rails_8f080017eb` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_folders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -953,7 +1010,7 @@ CREATE TABLE `wkbk_folders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_wkbk_folders_on_key` (`key`),
   KEY `index_wkbk_folders_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_lineages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -967,7 +1024,7 @@ CREATE TABLE `wkbk_lineages` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_wkbk_lineages_on_key` (`key`),
   KEY `index_wkbk_lineages_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `wkbk_moves_answers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1000,7 +1057,7 @@ CREATE TABLE `wkbk_sequences` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_wkbk_sequences_on_key` (`key`),
   KEY `index_wkbk_sequences_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xsettings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1013,7 +1070,7 @@ CREATE TABLE `xsettings` (
   `updated_at` datetime(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_xsettings_on_var_key` (`var_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1026,7 +1083,7 @@ CREATE TABLE `xy_master_rules` (
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_xy_master_rules_on_position` (`position`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xy_master_time_records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1045,7 +1102,7 @@ CREATE TABLE `xy_master_time_records` (
   KEY `index_xy_master_time_records_on_user_id` (`user_id`),
   KEY `index_xy_master_time_records_on_rule_id` (`rule_id`),
   KEY `index_xy_master_time_records_on_entry_name` (`entry_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1058,8 +1115,29 @@ CREATE TABLE `xy_master_time_records` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 INSERT INTO `schema_migrations` (version) VALUES
+('20240503000044'),
+('20240503000043'),
+('20240503000042'),
+('20240503000036'),
+('20240503000035'),
+('20240503000034'),
+('20240503000033'),
+('20240503000032'),
+('20240503000031'),
+('20240503000030'),
+('20240503000009'),
+('20240503000007'),
+('20240503000006'),
+('20240503000005'),
+('20240503000004'),
+('20240503000003'),
+('20240503000002'),
+('20240503000001'),
+('20231217000003'),
+('20231217000002'),
+('20231126000004'),
+('20231126000003'),
 ('20231122194851'),
-('20231122194850'),
 ('20231107000001'),
 ('20230916000001'),
 ('20230515000001'),

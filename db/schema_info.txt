@@ -420,6 +420,26 @@
 
 # == Schema Information ==
 #
+# Profile (swars_profiles as Swars::Profile)
+#
+# |-------------------+-------------------+------------+-------------+------------+-------|
+# | name              | desc              | type       | opts        | refs       | index |
+# |-------------------+-------------------+------------+-------------+------------+-------|
+# | id                | ID                | integer(8) | NOT NULL PK |            |       |
+# | user_id           | User              | integer(8) | NOT NULL    | => User#id | A     |
+# | ban_at            | Ban at            | datetime   |             |            | B     |
+# | ban_crawled_at    | Ban crawled at    | datetime   | NOT NULL    |            |       |
+# | ban_crawled_count | Ban crawled count | integer(4) |             |            |       |
+# | created_at        | 作成日時          | datetime   | NOT NULL    |            |       |
+# | updated_at        | 更新日時          | datetime   | NOT NULL    |            |       |
+# |-------------------+-------------------+------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
 # Membership extra (swars_membership_extras as Swars::MembershipExtra)
 #
 # |-------------------+-------------------+------------+-------------+------+-------|
@@ -464,16 +484,18 @@
 # | updated_at            | 更新日時              | datetime   | NOT NULL    |                   |            |
 # | think_all_avg         | Think all avg         | integer(4) |             |                   |            |
 # | think_end_avg         | Think end avg         | integer(4) |             |                   |            |
-# | two_serial_max        | Two serial max        | integer(4) |             |                   |            |
 # | think_last            | Think last            | integer(4) |             |                   |            |
 # | think_max             | Think max             | integer(4) |             |                   |            |
-# | obt_think_avg         | Obt think avg         | integer(4) |             |                   |            |
-# | ai_drop_total          | Obt auto max          | integer(4) |             |                   |            |
+# | ai_drop_total         | Ai drop total         | integer(4) |             |                   |            |
 # | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | I          |
 # | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! J       |
 # | style_id              | Style                 | integer(8) |             |                   | K          |
 # | ek_score_without_cond | Ek score without cond | integer(4) |             |                   |            |
 # | ek_score_with_cond    | Ek score with cond    | integer(4) |             |                   |            |
+# | ai_wave_count         | Ai wave count         | integer(4) |             |                   |            |
+# | ai_two_freq           | Ai two freq           | float(24)  |             |                   |            |
+# | ai_noizy_two_max      | Ai noizy two max      | integer(4) |             |                   |            |
+# | ai_gear_freq          | Ai gear freq          | float(24)  |             |                   |            |
 # |-----------------------+-----------------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------
@@ -506,17 +528,62 @@
 
 # == Schema Information ==
 #
+# Ban crawl request (swars_ban_crawl_requests as Swars::BanCrawlRequest)
+#
+# |------------+----------+------------+-------------+------------+-------|
+# | name       | desc     | type       | opts        | refs       | index |
+# |------------+----------+------------+-------------+------------+-------|
+# | id         | ID       | integer(8) | NOT NULL PK |            |       |
+# | user_id    | User     | integer(8) | NOT NULL    | => User#id | A     |
+# | created_at | 作成日時 | datetime   | NOT NULL    |            |       |
+# | updated_at | 更新日時 | datetime   | NOT NULL    |            |       |
+# |------------+----------+------------+-------------+------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Component (short_url_components as ShortUrl::Component)
+#
+# |-------------------+-------------------+--------------+---------------------+------+-------|
+# | name              | desc              | type         | opts                | refs | index |
+# |-------------------+-------------------+--------------+---------------------+------+-------|
+# | id                | ID                | integer(8)   | NOT NULL PK         |      |       |
+# | key               | キー              | string(255)  | NOT NULL            |      | A!    |
+# | original_url      | Original url      | string(2048) | NOT NULL            |      |       |
+# | access_logs_count | Access logs count | integer(4)   | DEFAULT(0) NOT NULL |      |       |
+# | created_at        | 作成日時          | datetime     | NOT NULL            |      |       |
+# | updated_at        | 更新日時          | datetime     | NOT NULL            |      |       |
+# |-------------------+-------------------+--------------+---------------------+------+-------|
+
+# == Schema Information ==
+#
+# Access log (short_url_access_logs as ShortUrl::AccessLog)
+#
+# |--------------+-----------+------------+-------------+------+-------|
+# | name         | desc      | type       | opts        | refs | index |
+# |--------------+-----------+------------+-------------+------+-------|
+# | id           | ID        | integer(8) | NOT NULL PK |      |       |
+# | component_id | Component | integer(8) |             |      | A     |
+# | created_at   | 作成日時  | datetime   | NOT NULL    |      |       |
+# |--------------+-----------+------------+-------------+------+-------|
+
+# == Schema Information ==
+#
 # User (share_board_users as ShareBoard::User)
 #
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | name              | desc              | type        | opts        | refs | index |
-# |-------------------+-------------------+-------------+-------------+------+-------|
-# | id                | ID                | integer(8)  | NOT NULL PK |      |       |
-# | name              | Name              | string(255) | NOT NULL    |      | A!    |
-# | memberships_count | Memberships count | integer(4)  | DEFAULT(0)  |      |       |
-# | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
-# | updated_at        | 更新日時          | datetime    | NOT NULL    |      |       |
-# |-------------------+-------------------+-------------+-------------+------+-------|
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | name                | desc                | type        | opts        | refs | index |
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
+# | name                | Name                | string(255) | NOT NULL    |      | A!    |
+# | memberships_count   | Memberships count   | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
+# | chat_messages_count | Chat messages count | integer(4)  | DEFAULT(0)  |      |       |
+# |---------------------+---------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -546,15 +613,16 @@
 #
 # Room (share_board_rooms as ShareBoard::Room)
 #
-# |---------------+---------------+-------------+-------------+------+-------|
-# | name          | desc          | type        | opts        | refs | index |
-# |---------------+---------------+-------------+-------------+------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK |      |       |
-# | key           | キー          | string(255) | NOT NULL    |      | A!    |
-# | battles_count | Battles count | integer(4)  | DEFAULT(0)  |      |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL    |      |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL    |      |       |
-# |---------------+---------------+-------------+-------------+------+-------|
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | name                | desc                | type        | opts        | refs | index |
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
+# | key                 | キー                | string(255) | NOT NULL    |      | A!    |
+# | battles_count       | Battles count       | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
+# | chat_messages_count | Chat messages count | integer(4)  | DEFAULT(0)  |      |       |
+# |---------------------+---------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==
 #
@@ -577,6 +645,47 @@
 # Judge.has_many :swars_memberships
 # Location.has_many :swars_memberships
 # User.has_one :profile
+#--------------------------------------------------------------------------------
+
+# == Schema Information ==
+#
+# Message scope (share_board_message_scopes as ShareBoard::MessageScope)
+#
+# |------------+----------+-------------+-------------+------+-------|
+# | name       | desc     | type        | opts        | refs | index |
+# |------------+----------+-------------+-------------+------+-------|
+# | id         | ID       | integer(8)  | NOT NULL PK |      |       |
+# | key        | キー     | string(255) | NOT NULL    |      | A!    |
+# | position   | 順序     | integer(4)  |             |      | B     |
+# | created_at | 作成日時 | datetime    | NOT NULL    |      |       |
+# | updated_at | 更新日時 | datetime    | NOT NULL    |      |       |
+# |------------+----------+-------------+-------------+------+-------|
+
+# == Schema Information ==
+#
+# Chat message (share_board_chat_messages as ShareBoard::ChatMessage)
+#
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+# | name               | desc            | type        | opts        | refs         | index |
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+# | id                 | ID              | integer(8)  | NOT NULL PK |              |       |
+# | room_id            | Room            | integer(8)  | NOT NULL    |              | A     |
+# | user_id            | User            | integer(8)  | NOT NULL    | => User#id   | B     |
+# | message_scope_id   | Message scope   | integer(8)  | NOT NULL    |              | C     |
+# | content            | Content         | string(256) | NOT NULL    |              |       |
+# | performed_at       | Performed at    | integer(8)  | NOT NULL    |              |       |
+# | created_at         | 作成日時        | datetime    | NOT NULL    |              |       |
+# | updated_at         | 更新日時        | datetime    | NOT NULL    |              |       |
+# | session_user_id    | Session user    | integer(8)  |             | => ::User#id | D     |
+# | from_connection_id | From connection | string(255) |             |              |       |
+# | primary_emoji      | Primary emoji   | string(255) |             |              |       |
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_many :share_board_chat_messages, foreign_key: :session_user_id
+# User.has_one :profile
+# [Warning: Need to add index] create_share_board_chat_messages マイグレーションに add_index :share_board_chat_messages, :from_connection_id を追加してください
+# [Warning: Need to add relation] ShareBoard::ChatMessage モデルに belongs_to :from_connection を追加してください
 #--------------------------------------------------------------------------------
 
 # == Schema Information ==
@@ -969,6 +1078,8 @@
 # | search_logs_count | Search logs count | integer(4)  | DEFAULT(0)  |      |       |
 # | created_at        | 作成日時          | datetime    | NOT NULL    |      |       |
 # | updated_at        | 更新日時          | datetime    | NOT NULL    |      | D     |
+# | ban_at            | Ban at            | datetime    |             |      | E     |
+# | latest_battled_at | Latest battled at | datetime    | NOT NULL    |      |       |
 # |-------------------+-------------------+-------------+-------------+------+-------|
 
 # == Schema Information ==

@@ -20,7 +20,7 @@ module Swars
         { key: "相手退席待ちマン",   badge_params: { name: "🪰",   message: AITETAISEKIMATMAN_MESSAGE,                 }, if_cond: proc { stat.waiting_to_leave_stat.count.positive? } },
         { key: "角不成マン",         badge_params: { name: "☠",    message: "角不成で舐めプした",                    }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"角不成") }  },
         { key: "飛車不成マン",       badge_params: { name: "💀",   message: "飛車不成で舐めプした",                   }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"飛車不成") }  },
-        { key: "友対無双マン",       badge_params: { name: "💔",   message: "友達対局で友達を無くした",               }, if_cond: proc { stat.xmode_judge_stat.friend_battle_musou? } },
+        { key: "友対無双マン",       badge_params: { name: "💔",   message: "友達対局で友達を無くした",               }, if_cond: proc { stat.xmode_judge_stat.friend_kill_ratio } },
 
         ################################################################################
 
@@ -98,13 +98,14 @@ module Swars
         { key: "廃指しマン",         badge_params: { name: "😡",   message: "感情的になって廃指しした",           }, if_cond: proc { (stat.daily_average_matches_stat.max || 0) >= 30 },},
 
         { key: "投了マン",           badge_params: { name: "🙇‍♂️", message: "投了を究めた",                       }, if_cond: proc { (stat.judge_final_stat.toryo_ratio || 0) >= 1.0 }, },
-        { key: "詰まされマン",       badge_params: { name: "Ⓜ️",   message: "マゾヒストの傾向がある",             }, if_cond: proc { (stat.judge_final_stat.checkmate_ratio || 0) >= 1.0 }, },
+        { key: "詰まされマン",       badge_params: { name: "Ⓜ️",   message: "マゾヒストの傾向がある",             }, if_cond: proc { (stat.judge_final_stat.kiwame_ratio(:CHECKMATE) || 0) >= 1.0 }, },
         { key: "切れ負けマン",       badge_params: { name: "⌛",   message: "切れ負けの常連",                     }, if_cond: proc { (stat.judge_final_stat.ratio_by(:lose, :TIMEOUT) || 0) >= 0.25 },},
         { key: "レア戦法マン",       badge_params: { name: "🍀",   message: "変態戦法の匠",                       }, if_cond: proc { stat.rarity_stat.minority?                    },},
         { key: "長考マン",           badge_params: { name: "🤯",   message: "考えすぎて負けがち",                 }, if_cond: proc { stat.overthinking_loss_stat.badge? } },
         # { key: "開幕千日手",         badge_params: { name: "❓",   message: "開幕千日手をした",                   }, if_cond: proc { stat.draw_stat.positive_rigging_count } },
-        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { stat.draw_stat.positive_normal_count } },
+        { key: "ただの千日手",       badge_params: { name: "🍌",   message: "千日手の使い手",                     }, if_cond: proc { stat.draw_stat.normal_count&.positive? } },
         { key: "運営支えマン",       badge_params: { name: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある", }, if_cond: proc { stat.fraud_stat.count.positive? } },
+        { key: "示範マン",           badge_params: { name: "🏆",   message: "行動規範を究めた",                     }, if_cond: proc { stat.gentleman_stat.badge? } },
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 

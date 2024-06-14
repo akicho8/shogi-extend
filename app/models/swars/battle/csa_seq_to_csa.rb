@@ -54,7 +54,7 @@ module Swars
       end
 
       def render_footer
-        @lines << "%" + @battle.final_info.csa_last_action_key
+        @lines << @battle.final_info.csa_footer
       end
 
       def event_title
@@ -62,15 +62,15 @@ module Swars
       end
 
       def event_types
-        ary = []
-        ary << @battle.rule_info.long_name
+        av = []
+        av << @battle.rule_info.long_name
         if @battle.xmode == Xmode.fetch("指導")
-          ary << "指導対局"
+          av << "指導対局"
         end
         if @battle.preset_info.handicap
-          ary << @battle.preset_info.name
+          av << @battle.preset_info.name
         end
-        ary
+        av
       end
     end
   end

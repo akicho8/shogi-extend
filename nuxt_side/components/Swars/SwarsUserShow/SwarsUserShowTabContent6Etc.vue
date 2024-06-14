@@ -79,6 +79,5 @@ export default {
     color: $grey-light
     font-size: $size-7
     margin-top: 0.25rem
-    __css_keep__: 0
 </style>
 

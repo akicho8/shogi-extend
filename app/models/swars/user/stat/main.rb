@@ -166,6 +166,10 @@ module Swars
         @think_stat ||= ThinkStat.new(self)
       end
 
+      def namepu_stat
+        @namepu_stat ||= NamepuStat.new(self)
+      end
+
       def pro_skill_exceed_stat
         @pro_skill_exceed_stat ||= ProSkillExceedStat.new(self)
       end
@@ -218,6 +222,10 @@ module Swars
         @gdiff_stat ||= GdiffStat.new(self)
       end
 
+      def template_stat
+        @template_stat ||= TemplateStat.new(self)
+      end
+
       def daily_average_matches_stat
         @daily_average_matches_stat ||= DailyAverageMatchesStat.new(self)
       end
@@ -246,8 +254,8 @@ module Swars
         @draw_stat ||= DrawStat.new(self)
       end
 
-      def guideline_stat
-        @guideline_stat ||= GuidelineStat.new(self)
+      def gentleman_stat
+        @gentleman_stat ||= GentlemanStat.new(self)
       end
 
       def waiting_to_leave_stat

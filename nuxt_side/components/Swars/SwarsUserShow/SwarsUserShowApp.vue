@@ -23,10 +23,10 @@
         b-tab-item(label="他")
       SwarsUserShowTabContent0Day
       SwarsUserShowTabContent1Grade
-      SwarsUserShowTabContent2MyAttack
-      SwarsUserShowTabContent3VsAttack
-      SwarsUserShowTabContent4MyDefense
-      SwarsUserShowTabContent5VsDefense
+      SwarsUserShowTabContentPart(:tab_index="2" var_name="my_attack_items"  search_func="tag_search_path"    :vs_mode="false" right_label="使用率")
+      SwarsUserShowTabContentPart(:tab_index="3" var_name="vs_attack_items"  search_func="vs_tag_search_path" :vs_mode="true"  right_label="遭遇率")
+      SwarsUserShowTabContentPart(:tab_index="4" var_name="my_defense_items" search_func="tag_search_path"    :vs_mode="false" right_label="使用率")
+      SwarsUserShowTabContentPart(:tab_index="5" var_name="vs_attack_items"  search_func="vs_tag_search_path" :vs_mode="true"  right_label="遭遇率")
       SwarsUserShowTabContent6Etc
     SwarsUserShowFooter
 

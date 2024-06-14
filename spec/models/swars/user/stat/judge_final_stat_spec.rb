@@ -71,7 +71,7 @@ module Swars
 
         it "投了マン" do
           @black = User.create!
-          case1(:lose, :TORYO)
+          5.times { case1(:lose, :TORYO) }
           assert { @black.stat.badge_stat.active?("投了マン") }
         end
       end

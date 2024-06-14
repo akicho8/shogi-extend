@@ -1,21 +1,27 @@
 require "./setup"
-tp Swars::User::Stat::OtherInfo["勝敗別平均手数"].bottom_message # => #<Proc:0x000000010c0900a8 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:94>
+tp Swars::User::Stat::OtherInfo["勝敗別平均手数"].bottom_message # => #<Proc:0x0000000125adb8f0 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:96>
 tp Swars::User::Stat::OtherInfo
 # >> |------------------------------------------------------------------------------------------------------|
-# >> | #<Proc:0x000000010c0900a8 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:94> |
+# >> | #<Proc:0x0000000125adb8f0 /Users/ikeda/src/shogi-extend/app/models/swars/user/stat/other_info.rb:96> |
 # >> |------------------------------------------------------------------------------------------------------|
 # >> |--------------------------------------|
 # >> | テスト                               |
 # >> | ids_count                            |
-# >> | 指導対局で勝った                     |
-# >> | 切断逃亡                             |
+# >> | win / lose / draw                    |
+# >> | 指導対局に平手で勝利                 |
+# >> | 行動規範                             |
 # >> | 投了せずに放置                       |
-# >> | 1手詰を焦らして悦に入る              |
+# >> | 放置で離席させ逆時間切れ勝ち狙い     |
+# >> | 対局放棄と受け取られかねない長考     |
+# >> | 切断逃亡                             |
+# >> | 1手詰を焦らして悦に入った            |
+# >> | 無気力な対局                         |
 # >> | 角不成                               |
 # >> | 飛車不成                             |
-# >> | 無気力な対局                         |
-# >> | 指導対局                             |
+# >> | 先手で千日手にした                   |
 # >> | 友達対局                             |
+# >> | 指導対局                             |
+# >> | 指導対局 (平手)                      |
 # >> | 棋風                                 |
 # >> | 派閥                                 |
 # >> | 居飛車                               |
@@ -57,6 +63,7 @@ tp Swars::User::Stat::OtherInfo
 # >> | 割り打ちの銀                         |
 # >> | 腹銀                                 |
 # >> | 継ぎ桂                               |
+# >> | 桂頭の銀                             |
 # >> | 駒の使用率                           |
 # >> | 対戦相手との段級差 (平均)            |
 # >> | ルール別対局頻度                     |

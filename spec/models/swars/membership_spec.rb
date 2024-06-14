@@ -17,16 +17,18 @@
 # | updated_at            | 更新日時              | datetime   | NOT NULL    |                   |            |
 # | think_all_avg         | Think all avg         | integer(4) |             |                   |            |
 # | think_end_avg         | Think end avg         | integer(4) |             |                   |            |
-# | two_serial_max        | Two serial max        | integer(4) |             |                   |            |
 # | think_last            | Think last            | integer(4) |             |                   |            |
 # | think_max             | Think max             | integer(4) |             |                   |            |
-# | obt_think_avg         | Obt think avg         | integer(4) |             |                   |            |
-# | ai_drop_total          | Obt auto max          | integer(4) |             |                   |            |
+# | ai_drop_total         | Ai drop total         | integer(4) |             |                   |            |
 # | judge_id              | Judge                 | integer(8) | NOT NULL    | => Judge#id       | I          |
 # | location_id           | Location              | integer(8) | NOT NULL    | => Location#id    | B! J       |
 # | style_id              | Style                 | integer(8) |             |                   | K          |
 # | ek_score_without_cond | Ek score without cond | integer(4) |             |                   |            |
 # | ek_score_with_cond    | Ek score with cond    | integer(4) |             |                   |            |
+# | ai_wave_count         | Ai wave count         | integer(4) |             |                   |            |
+# | ai_two_freq           | Ai two freq           | float(24)  |             |                   |            |
+# | ai_noizy_two_max      | Ai noizy two max      | integer(4) |             |                   |            |
+# | ai_gear_freq          | Ai gear freq          | float(24)  |             |                   |            |
 # |-----------------------+-----------------------+------------+-------------+-------------------+------------|
 #
 #- Remarks ----------------------------------------------------------------------

@@ -44,14 +44,14 @@ module Swars
 
       it "友対GGマン" do
         @black = User.create!
-        3.times { case1("友達", :lose) }
-        2.times { case1("友達", :win) }
+        4.times { case1("友達", :lose) }
+        4.times { case1("友達", :win) }
         assert { @black.stat.badge_stat.active?("友対GGマン") }
       end
 
       it "友対無双マン" do
         @black = User.create!
-        5.times { case1("友達", :win) }
+        8.times { case1("友達", :win) }
         assert { @black.stat.badge_stat.active?("友対無双マン") }
       end
     end

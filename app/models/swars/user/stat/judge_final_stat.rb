@@ -12,12 +12,19 @@ module Swars
 
       # 投了を究めた率
       def toryo_ratio
-        ratio_by(:lose, :TORYO)
+        kiwame_ratio(:TORYO)
       end
 
       # 詰まされるのを究めた率
       def checkmate_ratio
-        ratio_by(:lose, :CHECKMATE)
+        kiwame_ratio(:CHECKMATE)
+      end
+
+      # 特定の負け方を究めた率
+      def kiwame_ratio(final_key)
+        if (count_by(:lose, final_key) || 0) >= 5
+          ratio_by(:lose, final_key)
+        end
       end
 
       # Swars::User["SugarHuuko"].stat.judge_final_stat.count_by(:win, :TORYO) # => 27
@@ -27,6 +34,7 @@ module Swars
         counts_hash[[judge_key, final_key]]
       end
 
+      # 例: ratio_by(:lose, :TORYO) だと「TORYO 回数 / lose 回数」となる (引き分けは考慮する必要がない)
       # Swars::User["SugarHuuko"].stat.judge_final_stat.ratio_by(:win, :TORYO) # => 0.6923076923076923
       def ratio_by(judge_key, final_key)
         if count = count_by(judge_key, final_key)

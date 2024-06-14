@@ -28,14 +28,15 @@ module Swars
 
         ################################################################################
 
-        { key: "指導対局で勝利 (平手)",   body: proc { pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "平手の指導対局で勝利", body: proc { pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
-        { key: "行動規範", local_only: false, body: proc { guideline_stat.percentage_score }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "点", }, },
+        { key: "行動規範", local_only: false, body: proc { gentleman_stat.final_score&.floor }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "点", }, },
 
         ################################################################################
 
+        { key: "逆棋力詐欺",                       local_only: false, body: proc { gdiff_stat.reverse_kiryoku_sagi_count         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "投了せずに放置",                   local_only: false, body: proc { leave_alone_stat.positive_count               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.positive_count          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.positive_count    }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
@@ -44,7 +45,7 @@ module Swars
         { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.positive_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "先手で千日手にした",               local_only: true,  body: proc { draw_stat.positive_bad_count                  }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "先手で千日手にした",               local_only: false, body: proc { draw_stat.black_sennichi_count&.positive?     }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
@@ -132,8 +133,8 @@ module Swars
 
         ################################################################################
 
-        { key: "最長考",   body: proc { think_stat.max     }, chart_type: :simple, chart_options: { simple_type: :second, }, },
-        { key: "平均思考", body: proc { think_stat.average }, chart_type: :simple, chart_options: { simple_type: :second, }, },
+        { key: "最長考",   body: proc { think_stat.max                      }, chart_type: :simple, chart_options: { simple_type: :second, }, },
+        { key: "平均思考", body: proc { think_stat.average.try { round(2) } }, chart_type: :simple, chart_options: { simple_type: :second, }, },
 
         {
           key: "詰ます速度 (1手平均)",
@@ -175,7 +176,7 @@ module Swars
           chart_options: {
             simple_type: :raw,
           },
-          body: proc { gdiff_stat.formated_average }
+          body: proc { gdiff_stat.average.try { round(2) } }
         },
 
         ################################################################################

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # == Schema Information ==
 #
-# MessageScope (swars_message_scopes as ShareBoard::MessageScope)
+# Message scope (share_board_message_scopes as ShareBoard::MessageScope)
 #
 # |------------+----------+-------------+-------------+------+-------|
 # | name       | desc     | type        | opts        | refs | index |

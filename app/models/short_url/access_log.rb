@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Access log (short_url_access_logs as ShortUrl::AccessLog)
+#
+# |--------------+-----------+------------+-------------+------+-------|
+# | name         | desc      | type       | opts        | refs | index |
+# |--------------+-----------+------------+-------------+------+-------|
+# | id           | ID        | integer(8) | NOT NULL PK |      |       |
+# | component_id | Component | integer(8) |             |      | A     |
+# | created_at   | 作成日時  | datetime   | NOT NULL    |      |       |
+# |--------------+-----------+------------+-------------+------+-------|
+
 module ShortUrl
   class AccessLog < ApplicationRecord
     belongs_to :component, counter_cache: true, touch: true

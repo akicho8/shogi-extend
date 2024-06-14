@@ -3,6 +3,27 @@
 module Swars
   module User::Stat
     class TagStat < Base
+      class << self
+        def report(options = {})
+          Swars::User::Vip.auto_crawl_user_keys.collect { |user_key|
+            if user = Swars::User[user_key]
+              tag_stat = user.stat(options).tag_stat
+              {
+                :user_key       => user.key,
+                :namepu_count   => tag_stat.namepu_count,
+                :muriseme_level => tag_stat.muriseme_level,
+                # "ブッチ win"   => tag_stat.win_count_by(:"大駒全ブッチ"),
+                # "ブッチ lose"  => tag_stat.lose_count_by(:"大駒全ブッチ"),
+                # "ブッチ 効果"  => tag_stat.ratios_hash[:"大駒全ブッチ"].to_f.try { "%.2f" % self },
+              }
+            end
+          }.compact.sort_by { |e| e[:muriseme_level].to_f }
+          #   .collect do |e|
+          #   e.merge(:muriseme_level => e[:muriseme_level].try { "%.2f" % self })
+          # end
+        end
+      end
+
       delegate *[
       ], to: :@stat
 
@@ -11,6 +32,22 @@ module Swars
       def initialize(stat, scope_ext)
         super(stat)
         @scope_ext = scope_ext
+      end
+
+      ################################################################################
+
+      def muriseme_level(tag = nil)
+        tag ||= :"大駒全ブッチ"
+        if count_by(tag) >= 5        # 最低N回以上使って
+          # v = 0.5 - ratios_hash[tag] # 0.5 に足りないぶんだけ無理攻めしている
+          # if v.positive?
+          #   v
+          # end
+          diff = lose_count_by(tag) - win_count_by(tag)
+          if diff.positive?
+            diff
+          end
+        end
       end
 
       ################################################################################
@@ -37,7 +74,6 @@ module Swars
         end
       end
 
-      # 未使用
       def win_counts_hash
         @win_counts_hash ||= inside_counts_hash.each_with_object({}) do |((tag, judge_key), count), m|
           if judge_key == :win
@@ -139,3 +175,5 @@ module Swars
     end
   end
 end
+# ~> -:4:in `<module:Swars>': uninitialized constant Swars::User (NameError)
+# ~> 	from -:3:in `<main>'

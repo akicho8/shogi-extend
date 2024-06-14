@@ -4,12 +4,12 @@ module Swars
   module User::Stat
     class MentalStat < Base
       class << self
-        def report
-          Swars::User::Vip.auto_crawl_user_keys.collect { |key|
-            if user = Swars::User[key]
-              mental_stat = user.stat(sample_max: 200).mental_stat
+        def report(options = {})
+          Swars::User::Vip.auto_crawl_user_keys.collect { |user_key|
+            if user = Swars::User[user_key]
+              mental_stat = user.stat(options).mental_stat
               {
-                :key        => key,
+                :user_key   => user.key,
                 :level      => mental_stat.level,
                 :raw_level  => mental_stat.raw_level,
                 :hard_brain => mental_stat.hard_brain?,
@@ -32,7 +32,7 @@ module Swars
 
       # 心強すぎマン
       def hard_brain?
-        (level || 0) >= 5
+        level.try { |e| e >= 5 }
       end
 
       def raw_level
@@ -41,11 +41,12 @@ module Swars
         end
       end
 
-      def guideline?
+      # 心が弱いレベル
+      def heart_weak_level
         if win && lose
-          lose > win
-        else
-          true
+          if lose < win
+            win - lose
+          end
         end
       end
 

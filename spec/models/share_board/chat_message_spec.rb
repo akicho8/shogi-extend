@@ -1,3 +1,31 @@
+# -*- coding: utf-8 -*-
+# == Schema Information ==
+#
+# Chat message (share_board_chat_messages as ShareBoard::ChatMessage)
+#
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+# | name               | desc            | type        | opts        | refs         | index |
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+# | id                 | ID              | integer(8)  | NOT NULL PK |              |       |
+# | room_id            | Room            | integer(8)  | NOT NULL    |              | A     |
+# | user_id            | User            | integer(8)  | NOT NULL    | => User#id   | B     |
+# | message_scope_id   | Message scope   | integer(8)  | NOT NULL    |              | C     |
+# | content            | Content         | string(256) | NOT NULL    |              |       |
+# | performed_at       | Performed at    | integer(8)  | NOT NULL    |              |       |
+# | created_at         | 作成日時        | datetime    | NOT NULL    |              |       |
+# | updated_at         | 更新日時        | datetime    | NOT NULL    |              |       |
+# | session_user_id    | Session user    | integer(8)  |             | => ::User#id | D     |
+# | from_connection_id | From connection | string(255) |             |              |       |
+# | primary_emoji      | Primary emoji   | string(255) |             |              |       |
+# |--------------------+-----------------+-------------+-------------+--------------+-------|
+#
+#- Remarks ----------------------------------------------------------------------
+# User.has_many :share_board_chat_messages, foreign_key: :session_user_id
+# User.has_one :profile
+# [Warning: Need to add index] create_share_board_chat_messages マイグレーションに add_index :share_board_chat_messages, :from_connection_id を追加してください
+# [Warning: Need to add relation] ShareBoard::ChatMessage モデルに belongs_to :from_connection を追加してください
+#--------------------------------------------------------------------------------
+
 require "rails_helper"
 
 module ShareBoard

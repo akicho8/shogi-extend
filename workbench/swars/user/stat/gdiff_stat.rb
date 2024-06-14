@@ -1,25 +1,17 @@
 require "./setup"
-_ { Swars::User["SugarHuuko"].stat.gdiff_stat.average          } # => "201.95 ms"
-s { Swars::User["SugarHuuko"].stat.gdiff_stat.average          } # => -1.22
-s { Swars::User["SugarHuuko"].stat.gdiff_stat.formated_average } # => -1.22
-s { Swars::User["SugarHuuko"].stat.gdiff_stat.abs              } # => 1.22
-# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
-# >>   ↳ app/models/swars/user.rb:9:in `[]'
-# >>   Swars::Membership Ids (17.0ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
+# _ { Swars::User["SugarHuuko"].stat.gdiff_stat.average          } # => "154.56 ms"
+# s { Swars::User["SugarHuuko"].stat.gdiff_stat.average          } # => -0.436e1
+# s { Swars::User["SugarHuuko"].stat.gdiff_stat.abs              } # => 0.436e1
+# Swars::User.create!.stat.gdiff_stat.average # => nil
+# Swars::User.create!.stat.gdiff_stat.abs     # => nil
+
+# s { Swars::User.create!.stat.gdiff_stat.reverse_kiryoku_sagi_count } # => 0
+s { Swars::User["Taichan0601"].stat.gdiff_stat.reverse_kiryoku_sagi_count } # => 23
+
+# tp Swars::User::Stat::GdiffStat.report
+# >>   Swars::User Load (0.5ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'Taichan0601' LIMIT 1
+# >>   ↳ app/models/swars/user.rb:44:in `[]'
+# >>   Swars::Membership Ids (3.0ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 464468 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
 # >>   ↳ app/models/swars/user/stat/scope_ext.rb:54:in `scope_ids'
-# >>   Swars::Membership Average (0.4ms)  SELECT AVG(`swars_memberships`.`grade_diff`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99322337, 99322339, 99322341, 99322343, 99049425, 99030316, 99030318, 99030319, 99030328, 99030332, 99030336, 98973484, 98973487, 98973489, 98973491, 98973493, 98973495, 98972125, 98972127, 98972130, 98972132, 98972134, 98972136, 98971214, 98969678, 98969683, 98969687, 98969691, 98969695, 98969697, 98969700, 98969704, 98969709, 98972152, 98966476, 98973059, 98964728, 98964730, 98964731, 98964733, 98964736, 98963461, 98963319, 98963324, 98962470, 98963326, 98963330, 98963333, 98962119, 98963337)
-# >>   ↳ app/models/swars/user/stat/gdiff_stat.rb:20:in `average'
-# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
-# >>   ↳ app/models/swars/user.rb:9:in `[]'
-# >>   Swars::Membership Ids (13.8ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
-# >>   ↳ app/models/swars/user/stat/scope_ext.rb:54:in `scope_ids'
-# >>   Swars::Membership Average (0.3ms)  SELECT AVG(`swars_memberships`.`grade_diff`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99322337, 99322339, 99322341, 99322343, 99049425, 99030316, 99030318, 99030319, 99030328, 99030332, 99030336, 98973484, 98973487, 98973489, 98973491, 98973493, 98973495, 98972125, 98972127, 98972130, 98972132, 98972134, 98972136, 98971214, 98969678, 98969683, 98969687, 98969691, 98969695, 98969697, 98969700, 98969704, 98969709, 98972152, 98966476, 98973059, 98964728, 98964730, 98964731, 98964733, 98964736, 98963461, 98963319, 98963324, 98962470, 98963326, 98963330, 98963333, 98962119, 98963337)
-# >>   ↳ app/models/swars/user/stat/gdiff_stat.rb:20:in `average'
-# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
-# >>   ↳ app/models/swars/user.rb:9:in `[]'
-# >>   Swars::Membership Ids (12.9ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
-# >>   ↳ app/models/swars/user/stat/scope_ext.rb:54:in `scope_ids'
-# >>   Swars::Membership Count (0.3ms)  SELECT COUNT(*) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99322337, 99322339, 99322341, 99322343, 99049425, 99030316, 99030318, 99030319, 99030328, 99030332, 99030336, 98973484, 98973487, 98973489, 98973491, 98973493, 98973495, 98972125, 98972127, 98972130, 98972132, 98972134, 98972136, 98971214, 98969678, 98969683, 98969687, 98969691, 98969695, 98969697, 98969700, 98969704, 98969709, 98972152, 98966476, 98973059, 98964728, 98964730, 98964731, 98964733, 98964736, 98963461, 98963319, 98963324, 98962470, 98963326, 98963330, 98963333, 98962119, 98963337)
-# >>   ↳ app/models/swars/user/stat/scope_ext.rb:64:in `ids_count'
-# >>   Swars::Membership Average (0.3ms)  SELECT AVG(`swars_memberships`.`grade_diff`) FROM `swars_memberships` WHERE `swars_memberships`.`id` IN (99322337, 99322339, 99322341, 99322343, 99049425, 99030316, 99030318, 99030319, 99030328, 99030332, 99030336, 98973484, 98973487, 98973489, 98973491, 98973493, 98973495, 98972125, 98972127, 98972130, 98972132, 98972134, 98972136, 98971214, 98969678, 98969683, 98969687, 98969691, 98969695, 98969697, 98969700, 98969704, 98969709, 98972152, 98966476, 98973059, 98964728, 98964730, 98964731, 98964733, 98964736, 98963461, 98963319, 98963324, 98962470, 98963326, 98963330, 98963333, 98962119, 98963337)
-# >>   ↳ app/models/swars/user/stat/gdiff_stat.rb:20:in `average'
+# >>   Swars::Membership Count (2.0ms)  SELECT COUNT(*) FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` INNER JOIN `swars_xmodes` ON `swars_xmodes`.`id` = `swars_battles`.`xmode_id` WHERE `swars_memberships`.`id` IN (99986603, 99980821, 99304156, 99304158, 98297921, 98297925, 96638251, 96638253, 96638254, 95135883, 95135884, 95135887, 95135889, 93981623, 90925745, 90925747, 90925749, 89453082, 89453084, 89453087, 87763231, 87763232, 87763234, 86622830, 86622851, 86622858, 85660563, 85660571, 85660582, 77572944, 77572946, 77572948, 77572949, 68736445, 68736446, 68736449, 53468018, 49416012, 48874673, 48874674, 48874676, 48874679, 48874680, 48874683, 48874684, 48874686, 48874688, 48874691, 48874692, 48874695) AND `swars_memberships`.`grade_diff` >= 10 AND `swars_xmodes`.`key` = '野良'
+# >>   ↳ app/models/swars/user/stat/gdiff_stat.rb:42:in `reverse_kiryoku_sagi_count'

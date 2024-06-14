@@ -4,6 +4,7 @@ module Swars
   module User::Stat
     class Base
       include Assertion
+      include Helper
 
       delegate *[
         :badge_debug,

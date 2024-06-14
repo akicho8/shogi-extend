@@ -3,15 +3,16 @@
 #
 # Room (share_board_rooms as ShareBoard::Room)
 #
-# |---------------+---------------+-------------+-------------+------+-------|
-# | name          | desc          | type        | opts        | refs | index |
-# |---------------+---------------+-------------+-------------+------+-------|
-# | id            | ID            | integer(8)  | NOT NULL PK |      |       |
-# | key           | キー          | string(255) | NOT NULL    |      | A!    |
-# | battles_count | Battles count | integer(4)  | DEFAULT(0)  |      |       |
-# | created_at    | 作成日時      | datetime    | NOT NULL    |      |       |
-# | updated_at    | 更新日時      | datetime    | NOT NULL    |      |       |
-# |---------------+---------------+-------------+-------------+------+-------|
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | name                | desc                | type        | opts        | refs | index |
+# |---------------------+---------------------+-------------+-------------+------+-------|
+# | id                  | ID                  | integer(8)  | NOT NULL PK |      |       |
+# | key                 | キー                | string(255) | NOT NULL    |      | A!    |
+# | battles_count       | Battles count       | integer(4)  | DEFAULT(0)  |      |       |
+# | created_at          | 作成日時            | datetime    | NOT NULL    |      |       |
+# | updated_at          | 更新日時            | datetime    | NOT NULL    |      |       |
+# | chat_messages_count | Chat messages count | integer(4)  | DEFAULT(0)  |      |       |
+# |---------------------+---------------------+-------------+-------------+------+-------|
 
 module ShareBoard
   class Room < ApplicationRecord
