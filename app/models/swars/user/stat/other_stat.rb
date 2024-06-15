@@ -18,6 +18,17 @@ module Swars
         end
         av.each_with_object([]) do |e, m|
           body = @stat.instance_eval(&e.body)
+
+          if body
+            if e[:chart_type] == :simple
+              if e[:zero_skip]
+                if body == 0
+                  body = nil
+                end
+              end
+            end
+          end
+
           if body || Rails.env.local?
             h = {
               :name          => e.name,
