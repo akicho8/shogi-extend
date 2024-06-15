@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :ids_scope,
         :user,
-      ], to: :@stat
+      ], to: :stat
 
       # 指導対局を受けた？
       # 自分がプロではない条件を入れないと先生も指導を受けたことになってしまう

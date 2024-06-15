@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :ids_scope,
         :ids_count,
-      ], to: :@stat
+      ], to: :stat
 
       # 棋神を使って対局した数
       def count

@@ -5,7 +5,7 @@ module Swars
     class AverageMovesByOutcomeStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 勝敗別平均手数
       def to_chart

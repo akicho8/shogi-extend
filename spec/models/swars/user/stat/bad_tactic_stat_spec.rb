@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe User::Stat::NamepuStat, type: :model, swars_spec: true do
+  RSpec.describe User::Stat::BadTacticStat, type: :model, swars_spec: true do
     describe "舐めプ戦法回数" do
       def case1
         @black = User.create!
@@ -10,13 +10,13 @@ module Swars
         end
       end
 
-      it "namepu_count" do
+      it "bad_tactic_count" do
         case1
-        assert { @black.stat.namepu_stat.namepu_count > 0 }
+        assert { @black.stat.bad_tactic_stat.bad_tactic_count > 0 }
       end
 
       it ".report" do
-        assert { User::Stat::NamepuStat.report }
+        assert { User::Stat::BadTacticStat.report }
       end
     end
   end

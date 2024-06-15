@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :ids_scope,
         :lose_count,
-      ], to: :@stat
+      ], to: :stat
 
       # 長考マン: 考えすぎて負けがち
       def badge?

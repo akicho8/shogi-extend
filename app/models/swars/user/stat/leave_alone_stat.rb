@@ -5,14 +5,7 @@ module Swars
     class LeaveAloneStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
-
-      # 投了せずに放置した回数
-      def positive_count
-        if count.positive?
-          count
-        end
-      end
+      ], to: :stat
 
       # 投了せずに放置した時間の最長
       def max
@@ -26,13 +19,14 @@ module Swars
       # 投了せずに放置した頻度
       def to_chart
         if count.positive?
-          h = scope.group("think_last DIV 60").order("count_all desc").count
+          h = scope.group("think_last DIV 60").order("count_all DESC").count
           h.collect do |min, count|
             { name: "#{min}分", value: count }
           end
         end
       end
 
+      # 投了せずに放置した回数
       def count
         @count ||= scope.count
       end

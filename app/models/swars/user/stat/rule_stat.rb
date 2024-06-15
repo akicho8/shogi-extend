@@ -5,7 +5,7 @@ module Swars
     class RuleStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # ルール別対局頻度
       def to_chart

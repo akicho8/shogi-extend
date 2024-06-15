@@ -5,7 +5,7 @@ module Swars
     class WinStat < Base
       delegate *[
         :tag_stat,
-      ], to: :@stat
+      ], to: :stat
 
       ################################################################################
 

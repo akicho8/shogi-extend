@@ -5,7 +5,7 @@ module Swars
     class AverageMovesAtResignationStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 投了時の平均手数
       def average

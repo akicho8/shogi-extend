@@ -19,7 +19,7 @@ module Swars
       delegate *[
         :user,
         :params,
-      ], to: :@stat
+      ], to: :stat
 
       def initialize(stat, scope)
         super(stat)

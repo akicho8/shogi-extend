@@ -13,7 +13,7 @@ Swars::User["SugarHuuko"].stat.tag_stat.to_win_lose_chart(:"居飛車")         
 Swars::User["SugarHuuko"].stat.win_stat.exist?(:"居飛車")                      # => true
 Swars::User["SugarHuuko"].stat.win_stat.match?(/角交換/)                       # => true
 
-Swars::User["SugarHuuko"].stat.tag_stat.namepu_count        # => 0
+Swars::User["SugarHuuko"].stat.tag_stat.bad_tactic_count        # => 0
 
 Swars::User["slowstep3210"].stat(sample_max: 100).tag_stat.to_win_lose_h(:"大駒全ブッチ") # => {:win=>2, :lose=>19}
 Swars::User["BOUYATETSU5"].stat(sample_max: 100).tag_stat.to_win_lose_h(:"大駒全ブッチ") # => {:win=>7, :lose=>0}

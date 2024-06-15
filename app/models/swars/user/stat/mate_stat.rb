@@ -5,13 +5,11 @@ module Swars
     class MateStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 1手詰を焦らして悦に入った回数
-      def positive_count
-        if count.positive?
-          count
-        end
+      def count
+        @count ||= scope.count
       end
 
       # 1手詰を焦らして悦に入った時間(最長)
@@ -41,10 +39,6 @@ module Swars
             end
           end
         end
-      end
-
-      def count
-        @count ||= scope.count
       end
 
       private

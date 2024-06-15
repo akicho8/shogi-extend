@@ -5,7 +5,7 @@ module Swars
     class RarityStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def to_chart
         if total.positive?
@@ -70,7 +70,7 @@ module Swars
 
       def tags
         @tags ||= [:attack_tags, :defense_tags].flat_map do |e|
-          ids_scope.tag_counts_on(e)
+          ids_scope.tag_counts_on(e) # FIXME: tag_stat.counts_hash を引くようにはできんか？
         end
       end
     end

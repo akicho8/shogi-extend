@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :tag_stat,
         :ids_count,
-      ], to: :@stat
+      ], to: :stat
 
       def to_ratio_chart
         if count.positive?

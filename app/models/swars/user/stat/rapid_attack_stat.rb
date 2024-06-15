@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :tag_stat,
         :win_stat,
-      ], to: :@stat
+      ], to: :stat
 
       def badge?
         if tag_stat.win_count_by(:"持久戦") < tag_stat.win_count_by(:"急戦")

@@ -5,7 +5,7 @@ module Swars
     class WinLoseStreakStat < Base
       delegate *[
         :ordered_ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def ten_win?
         max(:win) >= 10

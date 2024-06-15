@@ -5,7 +5,7 @@ module Swars
     class DailyWinLoseListStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 日別勝敗リスト
       # judge_id ではなく JOIN して judges.key で比較した方が速い "4.39 ms" → "2.83 ms"

@@ -2,13 +2,14 @@
 
 module Swars
   module User::Stat
-    class NamepuInfo
+    class BadTacticInfo
       include ApplicationMemoryRecord
       memory_record [
         { key: :"穴角戦法",       weight: 0.500, },
         { key: :"穴角向かい飛車", weight: 0.500, },
-        { key: :"筋違い角",       weight: 0.080, },
+        { key: :"稲庭戦法",       weight: 0.100, },
         { key: :"新米長玉",       weight: 0.100, },
+        { key: :"筋違い角",       weight: 0.080, },
         { key: :"手損角交換型",   weight: 0.000, },
         { key: :"風車",           weight: 0.010, },
         { key: :"新風車",         weight: 0.010, },

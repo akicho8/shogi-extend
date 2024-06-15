@@ -5,7 +5,7 @@ module Swars
     class GradeByRulesStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def to_chart
         s = ids_scope

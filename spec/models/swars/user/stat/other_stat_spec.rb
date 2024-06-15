@@ -12,7 +12,7 @@ module Swars
       it "works" do
         case1
         assert { @black.stat.other_stat.to_a       }
-        assert { @black.stat.other_stat.time_stats }
+        assert { @black.stat.other_stat.execution_time_explain }
       end
     end
   end

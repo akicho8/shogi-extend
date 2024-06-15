@@ -5,7 +5,7 @@ module Swars
     class ResignationStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 投了までの心の準備
       def to_chart

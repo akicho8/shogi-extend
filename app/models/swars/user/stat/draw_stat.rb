@@ -9,7 +9,7 @@ module Swars
         :ids_scope,
         :draw_count,
         :draw_only,
-      ], to: :@stat
+      ], to: :stat
 
       # 開幕千日手回数 (談合)
       def rigging_count

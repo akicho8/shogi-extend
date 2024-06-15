@@ -7,7 +7,7 @@ module BackendScript
 
     def script_body
       if user = Swars::User.find_by(user_key: current_swars_id)
-        user.stat(sample_max: 200).other_stat.time_stats
+        user.stat(sample_max: 200).other_stat.execution_time_explain
         # body = user.stat(sample_max: 200).as_json.pretty_inspect
         # h.tag.pre(body, style: "font-family:monospace")
       end

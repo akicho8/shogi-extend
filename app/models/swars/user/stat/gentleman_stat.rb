@@ -8,11 +8,11 @@ module Swars
       class << self
         def report(options = {})
           options = {
-            :user_keys => Swars::User::Vip.auto_crawl_user_keys,
+            :user_keys => User::Vip.auto_crawl_user_keys,
           }.merge(options)
 
           options[:user_keys].collect { |user_key|
-            if user = Swars::User[user_key]
+            if user = User[user_key]
               stat = user.stat(options)
               gentleman_stat = stat.gentleman_stat
               {
@@ -28,7 +28,7 @@ module Swars
 
       delegate *[
         :ids_count,
-      ], to: :@stat
+      ], to: :stat
 
       def badge?
         if final_score

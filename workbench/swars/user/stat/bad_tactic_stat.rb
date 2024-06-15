@@ -5,6 +5,6 @@ require "./setup"
 # Swars::User.create!.stat.gdiff_stat.average # => nil
 # Swars::User.create!.stat.gdiff_stat.abs     # => nil
 
-# s { Swars::User.create!.stat.gdiff_stat.reverse_kiryoku_sagi_count } # => 0
-# s { Swars::User["Taichan0601"].stat.gdiff_stat.reverse_kiryoku_sagi_count } # => 23
-tp Swars::User::Stat::NamepuStat.report(sample_max: 200)
+# s { Swars::User.create!.stat.gdiff_stat.row_grade_pretend_count } # => 0
+# s { Swars::User["Taichan0601"].stat.gdiff_stat.row_grade_pretend_count } # => 23
+tp Swars::User::Stat::BadTacticStat.report(sample_max: 200)

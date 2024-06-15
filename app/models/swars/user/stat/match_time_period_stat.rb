@@ -5,7 +5,7 @@ module Swars
     class MatchTimePeriodStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def to_chart
         ids = ids_scope.pluck(:battle_id)

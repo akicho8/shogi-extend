@@ -5,12 +5,12 @@ module Swars
     class TagStat < Base
       class << self
         def report(options = {})
-          Swars::User::Vip.auto_crawl_user_keys.collect { |user_key|
-            if user = Swars::User[user_key]
+          User::Vip.auto_crawl_user_keys.collect { |user_key|
+            if user = User[user_key]
               tag_stat = user.stat(options).tag_stat
               {
                 :user_key       => user.key,
-                :namepu_count   => tag_stat.namepu_count,
+                :bad_tactic_count   => tag_stat.bad_tactic_count,
                 :muriseme_level => tag_stat.muriseme_level,
                 # "ブッチ win"   => tag_stat.win_count_by(:"大駒全ブッチ"),
                 # "ブッチ lose"  => tag_stat.lose_count_by(:"大駒全ブッチ"),
@@ -25,13 +25,36 @@ module Swars
       end
 
       delegate *[
-      ], to: :@stat
+      ], to: :stat
 
       attr_reader :scope_ext
 
       def initialize(stat, scope_ext)
         super(stat)
         @scope_ext = scope_ext
+      end
+
+      ################################################################################ op_tag_stat から使う
+
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"角不成", swap: true)   # => {:win=>9, :lose=>4}
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"飛車不成", swap: true) # => {:win=>2, :lose=>3}
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                    # => true
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"角不成")                 # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")                  # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"飛車不成")               # => true
+
+      def taosita?(tag)
+        assert_tag(tag)
+        if v = ratios_hash[tag]
+          v < 0.5
+        end
+      end
+
+      def makasareta?(tag)
+        assert_tag(tag)
+        if v = ratios_hash[tag]
+          v > 0.5
+        end
       end
 
       ################################################################################
@@ -60,8 +83,8 @@ module Swars
         end
       end
 
-      def to_win_lose_chart(tag)
-        if judge_counts = to_win_lose_h(tag)
+      def to_win_lose_chart(tag, options = {})
+        if judge_counts = to_win_lose_h(tag, options)
           { judge_counts: judge_counts }
         end
       end
@@ -124,16 +147,26 @@ module Swars
         draw_counts_hash[tag] || 0
       end
 
-      def to_win_lose_h(tag)
+      def to_win_lose_h(tag, options = {})
         assert_tag(tag)
         win  = inside_counts_hash[[tag, :win]]
         lose = inside_counts_hash[[tag, :lose]]
         if win || lose
+          if options[:swap]
+            win, lose = lose, win
+          end
           {
             :win  => win || 0,
             :lose => lose || 0,
           }
         end
+      end
+
+      def win_lose_sum(tag)
+        assert_tag(tag)
+        win  = inside_counts_hash[[tag, :win]] || 0
+        lose = inside_counts_hash[[tag, :lose]] || 0
+        win + lose
       end
 
       ################################################################################
@@ -160,6 +193,23 @@ module Swars
 
       ################################################################################
 
+      def tag_chart_build(tag, options = {})
+        options = {
+          swap: false,
+        }.merge(options)
+
+        if judge_counts = to_win_lose_h(tag, options)
+          appear_ratio = win_lose_sum(tag).fdiv(@scope_ext.ids_count)
+          {
+            :tag          => tag,          # 戦法名
+            :appear_ratio => appear_ratio, # 遭遇率 (なくてもいい)
+            :judge_counts => judge_counts, # 勝敗数
+          }
+        end
+      end
+
+      ################################################################################
+
       private
 
       def inside_counts_hash
@@ -175,5 +225,3 @@ module Swars
     end
   end
 end
-# ~> -:4:in `<module:Swars>': uninitialized constant Swars::User (NameError)
-# ~> 	from -:3:in `<main>'

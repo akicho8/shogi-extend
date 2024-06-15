@@ -4,30 +4,22 @@ module Swars
   module User::Stat
     class LethargyStat < Base
       delegate *[
-        :lose_count,
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def exist?
-        (count || 0).positive?
+        count.positive?
       end
 
-      # 無気力な対局をした回数 (わざと負けた回数でもある)
-      def positive_count
-        if exist?
-          count
-        end
-      end
-
+      # 無気力な対局をした回数 (不自然に多い場合は故意に棋力を落としている場合もある)
+      # ほぼ100%の人が一度は負けているので lose_count.positive? で囲む効果はない
       def count
         @count ||= yield_self do
-          if lose_count.positive?
-            s = ids_scope.lose_only
-            s = s.joins(:battle => :final)
-            s = s.where(Final.arel_table[:key].eq_any([:TORYO, :CHECKMATE]))
-            s = s.where(Battle.arel_table[:turn_max].lteq(19))
-            s.count
-          end
+          s = ids_scope.lose_only
+          s = s.joins(:battle => :final)
+          s = s.where(Final.arel_table[:key].eq_any([:TORYO, :CHECKMATE]))
+          s = s.where(Battle.arel_table[:turn_max].lteq(19))
+          s.count
         end
       end
     end

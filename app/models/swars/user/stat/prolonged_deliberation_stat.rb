@@ -5,13 +5,7 @@ module Swars
     class ProlongedDeliberationStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
-
-      def positive_count
-        if count.positive?
-          count
-        end
-      end
+      ], to: :stat
 
       # 放置かと思うような大長考 (勝ち負け関係なし)
       def count

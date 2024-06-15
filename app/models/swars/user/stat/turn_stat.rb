@@ -5,7 +5,7 @@ module Swars
     class TurnStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def initialize(stat, scope)
         super(stat)

@@ -7,7 +7,7 @@ module Swars
         :ids_scope,
         :xmode_judge_stat,
         :xmode_stat,
-      ], to: :@stat
+      ], to: :stat
 
       def to_win_lose_chart
         if judge_counts = to_win_lose_h

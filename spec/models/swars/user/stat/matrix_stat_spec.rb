@@ -17,8 +17,8 @@ module Swars
       it "my_attack_items" do
         assert do
           @user.stat.matrix_stat.my_attack_items == [
-            {:tag => {"name" => "目くらまし戦法", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
-            {:tag => {"name" => "アヒル戦法",     "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :"目くらまし戦法", :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :"アヒル戦法",     :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
@@ -26,7 +26,7 @@ module Swars
       it "vs_attack_items" do
         assert do
           @user.stat.matrix_stat.vs_attack_items == [
-            {:tag => {"name" => "四間飛車", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
+            {:tag => :"四間飛車", :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
           ]
         end
       end
@@ -34,7 +34,7 @@ module Swars
       it "my_defense_items" do
         assert do
           @user.stat.matrix_stat.my_defense_items == [
-            {:tag => {"name" => "アヒル囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
+            {:tag => :"アヒル囲い", :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}},
           ]
         end
       end
@@ -42,32 +42,48 @@ module Swars
       it "vs_defense_items" do
         assert do
           @user.stat.matrix_stat.vs_defense_items == [
-            {:tag => {"name" => "美濃囲い", "count" => 1}, :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
+            {:tag => :"美濃囲い", :appear_ratio => 1.0, :judge_counts => {:lose => 0, :win => 1}},
           ]
         end
       end
+
+      it "my_technique_items" do
+        assert do
+          @user.stat.matrix_stat.my_technique_items == [
+            {:tag => :"垂れ歩", :appear_ratio => 1.0, :judge_counts => {:win => 1, :lose => 0}}
+          ]
+        end
+      end
+
+      it "vs_technique_items" do
+        assert do
+          @user.stat.matrix_stat.vs_technique_items == []
+        end
+      end
+
+      it "my_note_items" do
+        assert do
+          @user.stat.matrix_stat.my_note_items == [
+            {:tag=>:居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:対振り, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+          ]
+        end
+      end
+
+      it "vs_note_items" do
+        assert do
+          @user.stat.matrix_stat.vs_note_items == [
+            {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+          ]
+        end
+      end
+
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
-# >> User::Stat::MatrixStat
-# >>   戦法・囲い×自分・相手
-# >>     my_attack_items
-# >>     vs_attack_items
-# >>     my_defense_items
-# >>     vs_defense_items
-# >> 
-# >> Top 4 slowest examples (1.23 seconds, 33.5% of total time):
-# >>   User::Stat::MatrixStat 戦法・囲い×自分・相手 my_attack_items
-# >>     0.64206 seconds -:17
-# >>   User::Stat::MatrixStat 戦法・囲い×自分・相手 my_defense_items
-# >>     0.21416 seconds -:34
-# >>   User::Stat::MatrixStat 戦法・囲い×自分・相手 vs_defense_items
-# >>     0.19847 seconds -:42
-# >>   User::Stat::MatrixStat 戦法・囲い×自分・相手 vs_attack_items
-# >>     0.17795 seconds -:26
-# >> 
-# >> Finished in 3.68 seconds (files took 1.57 seconds to load)
-# >> 4 examples, 0 failures
-# >> 

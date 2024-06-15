@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :params,
         :ordered_ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 直近勝敗リスト
       def to_a

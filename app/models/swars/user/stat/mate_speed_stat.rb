@@ -5,7 +5,7 @@ module Swars
     class MateSpeedStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 詰ます速度 (1手平均)
       def average

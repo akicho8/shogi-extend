@@ -3,31 +3,53 @@
 module Swars
   module User::Stat
     class PieceStat < Base
+      class << self
+        def report(options = {})
+          options = {
+            sample_max: 500,
+          }.merge(options)
+
+          User::Vip.auto_crawl_user_keys.collect { |user_key|
+            if user = User[user_key]
+              stat = user.stat(options)
+              if stat.ids_count >= 100
+                piece_stat = stat.piece_stat
+                {
+                  :user_key => user.key,
+                  **piece_stat.to_report_h,
+                }
+              end
+            end
+          }.compact.sort_by { |e| e["最小率"] }
+        end
+      end
+
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def to_chart
-        if denominator.positive?
-          list = []
-          # 表面の駒
-          Bioshogi::Piece.each do |e|
-            list << {
-              :name  => e.any_name(false),
-              :value => ratio_of("#{e.sfen_char}0"),
-            }
-          end
-          # 裏面の駒
-          Bioshogi::Piece.each do |e|
-            if e.promotable
-              list << {
-                :name  => e.any_name(true, char_type: :single_char), # 1文字の漢字にする。例えば「成銀」ではなく「全」,
-                :value => ratio_of("#{e.sfen_char}1"),
-              }
+        @to_chart ||= yield_self do
+          if denominator.positive?
+            FrequencyInfo.collect do |e|
+              { name: e.name, value: ratio_of(e.two_char_key) }
             end
           end
-          list
         end
+      end
+
+      def chart_hash
+        @chart_hash ||= to_chart.each_with_object({}) { |e, h| h.update(e[:name] => e[:value]) }
+      end
+
+      def to_report_h
+        hv = {}
+        if e = to_chart.min_by { |e| e[:value] }
+          hv["最小駒"] = e[:name]
+          hv["最小率"] = "%.5f" % e[:value]
+        end
+        hv.update(chart_hash.transform_values { |e| "%.5f" % e })
+        hv
       end
 
       def ratio_of(key)
@@ -44,7 +66,7 @@ module Swars
         @counts_hash ||= yield_self do
           h = Hash.new(0)
           s = ids_scope
-          s = s.includes(:membership_extra) # SQLで参照しているわけではないので JOIN する必要はないが includes は重要
+          s = s.preload(:membership_extra)
           s.each do |e|
             if e = e.membership_extra
               h.update(e.used_piece_counts) { |_, a, b| a + b } # MySQL で hash を合体できれば置き換える

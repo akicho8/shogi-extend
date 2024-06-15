@@ -166,8 +166,8 @@ module Swars
         @think_stat ||= ThinkStat.new(self)
       end
 
-      def namepu_stat
-        @namepu_stat ||= NamepuStat.new(self)
+      def bad_tactic_stat
+        @bad_tactic_stat ||= BadTacticStat.new(self)
       end
 
       def pro_skill_exceed_stat

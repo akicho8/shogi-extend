@@ -1,5 +1,5 @@
 <template lang="pug">
-.SwarsUserShowTabContent6Etc.boxes(v-if="TheApp.tab_index === 6")
+.SwarsUserShowTabContent8Etc.boxes(v-if="TheApp.tab_index === 8")
   template(v-for="(row, i) in TheApp.info.etc_items")
     template(v-if="$gs.present_p(row.body) || development_p")
       .box.one_box.two_column
@@ -49,7 +49,7 @@
 import { support_child } from "./support_child.js"
 
 export default {
-  name: "SwarsUserShowTabContent6Etc",
+  name: "SwarsUserShowTabContent8Etc",
   mixins: [support_child],
   methods: {
     time_min(row) { return Math.floor(row.body / 60) },
@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="sass">
-.SwarsUserShowTabContent6Etc
+.SwarsUserShowTabContent8Etc
   .value_block
     // color: change_color($primary, $saturation: 40%, $lightness: 50%)
     color: change_color($info, $alpha: 0.8)

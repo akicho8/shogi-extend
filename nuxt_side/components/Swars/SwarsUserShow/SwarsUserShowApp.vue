@@ -20,14 +20,22 @@
         b-tab-item(label="対攻")
         b-tab-item(label="囲い")
         b-tab-item(label="対囲")
+        b-tab-item(label="手筋")
+        b-tab-item(label="対筋")
         b-tab-item(label="他")
+        b-tab-item(label="備考" v-if="info.my_note_items")
+        b-tab-item(label="対備" v-if="info.vs_note_items")
       SwarsUserShowTabContent0Day
       SwarsUserShowTabContent1Grade
-      SwarsUserShowTabContentPart(:tab_index="2" var_name="my_attack_items"  search_func="tag_search_path"    :vs_mode="false" right_label="使用率")
-      SwarsUserShowTabContentPart(:tab_index="3" var_name="vs_attack_items"  search_func="vs_tag_search_path" :vs_mode="true"  right_label="遭遇率")
-      SwarsUserShowTabContentPart(:tab_index="4" var_name="my_defense_items" search_func="tag_search_path"    :vs_mode="false" right_label="使用率")
-      SwarsUserShowTabContentPart(:tab_index="5" var_name="vs_attack_items"  search_func="vs_tag_search_path" :vs_mode="true"  right_label="遭遇率")
-      SwarsUserShowTabContent6Etc
+      SwarsUserShowTabContentPart(:tab_index="2"  var_name="my_attack_items"    :vs_mode="false")
+      SwarsUserShowTabContentPart(:tab_index="3"  var_name="vs_attack_items"    :vs_mode="true")
+      SwarsUserShowTabContentPart(:tab_index="4"  var_name="my_defense_items"   :vs_mode="false")
+      SwarsUserShowTabContentPart(:tab_index="5"  var_name="vs_defense_items"   :vs_mode="true")
+      SwarsUserShowTabContentPart(:tab_index="6"  var_name="my_technique_items" :vs_mode="false")
+      SwarsUserShowTabContentPart(:tab_index="7"  var_name="vs_technique_items" :vs_mode="true")
+      SwarsUserShowTabContent8Etc
+      SwarsUserShowTabContentPart(:tab_index="9"  var_name="my_note_items"      :vs_mode="false")
+      SwarsUserShowTabContentPart(:tab_index="10" var_name="vs_note_items"      :vs_mode="true")
     SwarsUserShowFooter
 
     DebugPre(v-if="development_p") {{$route.query.info}}
@@ -81,7 +89,7 @@ export default {
   },
 
   mounted() {
-    this.ga_click("プレイヤー情報")
+    // this.ga_click("プレイヤー情報")
   },
 
   methods: {

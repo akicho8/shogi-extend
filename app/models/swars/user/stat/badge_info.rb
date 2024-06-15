@@ -75,7 +75,7 @@ module Swars
         ################################################################################ 文言が特殊
 
         { key: "駒柱マン",           badge_params: { name: "🗽",   message: "駒柱の作り手",               }, if_cond: proc { win_stat.exist?(:"駒柱") }  },
-        { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱ぐと強くなる",     }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
+        { key: "パンツマン",         badge_params: { name: "🩲",   message: "パンツを脱いで強くなった",   }, if_cond: proc { win_stat.exist?(:"パンツを脱ぐ") }, },
         { key: "小部屋マン",         badge_params: { name: "🛖",   message: "銀冠の小部屋を活用した",     }, if_cond: proc { win_stat.exist?(:"銀冠の小部屋") },},
         { key: "都詰めマン",         badge_params: { name: "🏯",   message: "都詰めマスター (超レア)",    }, if_cond: proc { win_stat.exist?(:"都詰め") } },
         { key: "ブッチマン",         badge_params: { name: "🧠",   message: "大駒全ブッチの達人",         }, if_cond: proc { win_stat.exist?(:"大駒全ブッチ") },},
@@ -113,6 +113,13 @@ module Swars
         { key: "友対GGマン",         badge_params: { name: "❤️",   message: "友達対局で切磋琢磨した",             }, if_cond: proc { stat.xmode_judge_stat.friend_battle_sessatakuma? } },
         { key: "指導受けマン",       badge_params: { name: "👨‍🎓", message: "指導対局を受けた",                   }, if_cond: proc { stat.xmode_stat.versus_pro? } },
         { key: "プロ越えマン",       badge_params: { name: "🦁",   message: "野生のプロ棋士",                     }, if_cond: proc { stat.pro_skill_exceed_stat.counts_hash[:win] } },
+
+        ################################################################################
+
+        { key: "VS角不成勝ちマン",       badge_params: { name: "🖕",     message: "角不成者を倒した",               }, if_cond: proc { stat.op_tag_stat.taosita?(:"角不成")      } },
+        { key: "VS角不成負けマン",       badge_params: { name: "😮‍💨",   message: "角不成者に負けた",               }, if_cond: proc { stat.op_tag_stat.makasareta?(:"角不成")   } },
+        { key: "VS飛車不成勝ちマン",     badge_params: { name: "🖕",   message: "飛車不成者を倒した",             }, if_cond: proc { stat.op_tag_stat.taosita?(:"飛車不成")      } },
+        { key: "VS飛車不成負けマン",     badge_params: { name: "😮‍💨",   message: "飛車不成者に負けた",             }, if_cond: proc { stat.op_tag_stat.makasareta?(:"飛車不成")   } },
       ]
     end
   end

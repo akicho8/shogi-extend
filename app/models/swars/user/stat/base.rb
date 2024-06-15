@@ -6,6 +6,8 @@ module Swars
       include Assertion
       include Helper
 
+      attr_reader :stat
+
       delegate *[
         :badge_debug,
       ], to: :stat

@@ -5,7 +5,7 @@ module Swars
     class OtherStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
+      ], to: :stat
 
       def to_a
         # if ids_count.positive?
@@ -18,37 +18,27 @@ module Swars
         end
         av.each_with_object([]) do |e, m|
           body = @stat.instance_eval(&e.body)
-
-          if body
-            if e[:chart_type] == :simple
-              if e[:zero_skip]
-                if body == 0
-                  body = nil
-                end
-              end
-            end
-          end
-
+          body = not_zero_allow_then_zero_as_nil(e, body)
           if body || Rails.env.local?
-            h = {
-              :name          => e.name,
+            hv = {
+              :name          => e.display_name,
               :chart_type    => e.chart_type,
               :chart_options => e.chart_options,
               :body          => body,
             }
             if Rails.env.local?
               if e.bottom_message
-                h[:bottom_message] = @stat.instance_eval(&e.bottom_message)
+                hv[:bottom_message] = @stat.instance_eval(&e.bottom_message)
               end
             end
-            m << h
+            m << hv
           end
         end
       end
 
       # ボトルネックを探すときに使う
-      # tp Swars::User.find_by!(user_key: "SugarHuuko").stat.time_stats
-      def time_stats(sort: true)
+      # tp Swars::User.find_by!(user_key: "SugarHuuko").stat.execution_time_explain
+      def execution_time_explain(sort: true)
         av = OtherInfo.collect { |e|
           body = nil
           ms = Benchmark.ms { body = @stat.instance_eval(&e.body) }
@@ -64,6 +54,26 @@ module Swars
             "結果" => body,
           }
         end
+      end
+
+      private
+
+      def not_zero_allow_then_zero_as_nil(e, value)
+        if Rails.env.local?
+          if e.chart_type != :simple && e.chart_options.has_key?(:zero_allow)
+            raise ArgumentError, e.inspect
+          end
+        end
+
+        if e.chart_type == :simple
+          unless e.chart_options[:zero_allow]
+            if value == 0
+              value = nil
+            end
+          end
+        end
+
+        value
       end
     end
   end

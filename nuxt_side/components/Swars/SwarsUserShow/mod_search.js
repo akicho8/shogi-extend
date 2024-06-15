@@ -38,12 +38,12 @@ export const mod_search = {
       return this.search_path({"vs-grade": row.grade_name})
     },
 
-    tag_search_path(row) {
-      return this.search_path({tag: row.tag.name})
+    my_tag_search_path(row) {
+      return this.search_path({"tag": row.tag})
     },
 
     vs_tag_search_path(row) {
-      return this.search_path({"vs-tag": row.tag.name})
+      return this.search_path({"vs-tag": row.tag})
     },
 
     ////////////////////////////////////////////////////////////////////////////////

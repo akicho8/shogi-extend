@@ -5,7 +5,7 @@ module Swars
     class VsStat < Base
       delegate *[
         :op_scope,
-      ], to: :@stat
+      ], to: :stat
 
       # 対段級
       def to_chart

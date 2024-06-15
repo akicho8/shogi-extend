@@ -23,14 +23,14 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >> 
-# >> User::Stat::LethargyStat
+# >> Swars::User::Stat::LethargyStat
 # >>   無気力マン
 # >>     works
 # >> 
-# >> Top 1 slowest examples (1.76 seconds, 46.1% of total time):
-# >>   User::Stat::LethargyStat 無気力マン works
-# >>     1.76 seconds -:14
+# >> Top 1 slowest examples (1.54 seconds, 41.8% of total time):
+# >>   Swars::User::Stat::LethargyStat 無気力マン works
+# >>     1.54 seconds -:14
 # >> 
-# >> Finished in 3.81 seconds (files took 1.54 seconds to load)
+# >> Finished in 3.68 seconds (files took 2.04 seconds to load)
 # >> 1 example, 0 failures
 # >> 

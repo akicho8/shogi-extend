@@ -5,21 +5,15 @@ module Swars
     class WaitingToLeaveStat < Base
       delegate *[
         :ids_scope,
-      ], to: :@stat
-
-      def positive_count
-        if count.positive?
-          count
-        end
-      end
+      ], to: :stat
 
       # 相手退席待ち数
       def count
         @count ||= yield_self do
           s = ids_scope.lose_only
-          s = s.where(Membership.arel_table[:think_last].not_eq(nil))                               # 最後の考慮がある
-          s = s.where(Membership.arel_table[:think_max].not_eq(Membership.arel_table[:think_last])) # 最長考は最後ではない
-          s = s.where(Membership.arel_table[:think_max].gteq(threshold))                            # 最後ではないところで長考がある
+          s = s.where(Membership.arel_table[:think_last].not_eq(nil))                               # 最後の考量がある
+          s = s.where(Membership.arel_table[:think_max].not_eq(Membership.arel_table[:think_last])) # 長考は最後ではない
+          s = s.where(Membership.arel_table[:think_max].gteq(threshold))                            # 異常な長考がある
           s = s.joins(:battle)
           s = s.where(Battle.arel_table[:turn_max].gteq(14))
           s.count

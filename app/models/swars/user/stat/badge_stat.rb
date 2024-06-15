@@ -53,8 +53,8 @@ module Swars
       end
 
       # ボトルネックを探すときに使う
-      # tp Swars::User.find_by!(user_key: "SugarHuuko").stat.badge_stat.time_stats
-      def time_stats(sort: true)
+      # tp Swars::User.find_by!(user_key: "SugarHuuko").stat.badge_stat.execution_time_explain
+      def execution_time_explain(sort: true)
         av = BadgeInfo.values.shuffle.collect { |e|
           if_cond = nil
           ms = Benchmark.ms { if_cond = !!instance_eval(&e.if_cond) }

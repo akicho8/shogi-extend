@@ -8,7 +8,7 @@ module Swars
       delegate *[
         :ids_scope,
         :total_judge_counts,
-      ], to: :@stat
+      ], to: :stat
 
       # 投了を究めた率
       def toryo_ratio

@@ -6,7 +6,7 @@ module Swars
       delegate *[
         :ids_scope,
         :ids_count,
-      ], to: :@stat
+      ], to: :stat
 
       # 1日の平均対局数
       def average
