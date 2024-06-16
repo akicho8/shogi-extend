@@ -48,7 +48,7 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
     assert_text("条件なし", wait: 5)
     find("label", text: "10分").click
     find(:button, text: "絞り込む").click
-    assert_current_path "/swars/users/YamadaTaro/?tab_index=6&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86"
+    assert_current_path "/swars/users/YamadaTaro/?tab_index=8&query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86"
 
     # 検索に戻ったとき絞り込み条件を持っていっている
     find(".PageCloseButton", wait: 5).click
