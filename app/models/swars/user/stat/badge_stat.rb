@@ -45,6 +45,7 @@ module Swars
           "嬉野流率"            => stat.win_stat.to_h[:"嬉野流"],
           "棋風"                => stat.rarity_stat.ratios_hash,
           "1手詰を焦らした回数" => stat.mate_stat.count,
+          "必勝形で焦らした回数" => stat.mate2_stat.count,
           "絶対投了しない回数"  => stat.leave_alone_stat.count,
           "棋神降臨疑惑対局数"  => stat.fraud_stat.count,
           "最大連勝連敗"        => stat.win_lose_streak_stat.to_h,

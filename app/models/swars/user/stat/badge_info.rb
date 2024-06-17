@@ -17,6 +17,7 @@ module Swars
         { key: "無気力マン",         badge_params: { name: "🦥",   message: "無気力な対局をした",                      }, if_cond: proc { stat.lethargy_stat.exist? } },
         { key: "大長考マン",         badge_params: { name: "😴",   message: "対局放棄と受け取られかねない長考をした",  }, if_cond: proc { stat.prolonged_deliberation_stat.count.positive? } },
         { key: "1手詰じらしマン",    badge_params: { name: "😈",   message: "1手詰を焦らして歪んだ優越感に浸った",     }, if_cond: proc { stat.mate_stat.count.positive? } },
+        { key: "必勝形じらしマン",   badge_params: { name: "🦟",   message: "必勝形から焦らして優越感に浸った",        }, if_cond: proc { stat.mate2_stat.count.positive? } },
         { key: "相手退席待ちマン",   badge_params: { name: "🪰",   message: AITETAISEKIMATMAN_MESSAGE,                 }, if_cond: proc { stat.waiting_to_leave_stat.count.positive? } },
         { key: "角不成マン",         badge_params: { name: "☠",    message: "角不成で舐めプした",                    }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"角不成") }  },
         { key: "飛車不成マン",       badge_params: { name: "💀",   message: "飛車不成で舐めプした",                   }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"飛車不成") }  },
@@ -32,9 +33,9 @@ module Swars
 
         { key: "三間飛車マン",   badge_params: { name: "3⃣", message: "三間飛車の匠",          }, if_cond: proc { win_stat.match?(/三間|石田/) },},
         { key: "四間飛車マン",   badge_params: { name: "4⃣", message: "四間飛車の匠",          }, if_cond: proc { win_stat.match?(/(?<!右)四間飛車/) },},
-        { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車のパイオニア",  }, if_cond: proc { win_stat.include?("九間飛車") }, },
+        { key: "九間飛車マン",   badge_params: { name: "9⃣", message: "九間飛車の先駆者",      }, if_cond: proc { win_stat.include?("九間飛車") }, },
         { key: "中飛車マン",     badge_params: { name: "🀄",   message: "中飛車名人",            }, if_cond: proc { win_stat.include?("中飛車") },},
-        { key: "右四間飛車マン", badge_params: { name: "🪓",  message: "右四間に砕けないものはない", }, if_cond: proc { win_stat.include?("右四間") }, },
+        { key: "右四間飛車マン", badge_params: { name: "🪓",  message: "右四間飛車の匠",         }, if_cond: proc { win_stat.include?("右四間") }, },
         { key: "袖飛車マン",     badge_params: { name: "👘",   message: "袖飛車の奇人",          }, if_cond: proc { win_stat.exist?(:"袖飛車") },},
         { key: "一間飛車マン",   badge_params: { name: "1️⃣",    message: "一間飛車の異端児",      }, if_cond: proc { win_stat.include?("一間飛車") }, },
 

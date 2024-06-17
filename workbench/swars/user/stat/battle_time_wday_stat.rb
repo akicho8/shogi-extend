@@ -1,0 +1,9 @@
+require "./setup"
+_ { Swars::User["SugarHuuko"].stat.battle_time_wday_stat.to_chart } # => "164.88 ms"
+s { Swars::User["SugarHuuko"].stat.battle_time_wday_stat.to_chart } # => [{:name=>"日", :value=>2}, {:name=>"月", :value=>3}, {:name=>"火", :value=>0}, {:name=>"水", :value=>0}, {:name=>"木", :value=>7}, {:name=>"金", :value=>25}, {:name=>"土", :value=>13}]
+# >>   Swars::User Load (0.2ms)  SELECT `swars_users`.* FROM `swars_users` WHERE `swars_users`.`user_key` = 'SugarHuuko' LIMIT 1
+# >>   ↳ app/models/swars/user.rb:44:in `[]'
+# >>   Swars::Membership Ids (17.5ms)  SELECT `swars_memberships`.`id` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`user_id` = 17413 ORDER BY `swars_battles`.`battled_at` DESC LIMIT 50
+# >>   ↳ app/models/swars/user/stat/scope_ext.rb:54:in `scope_ids'
+# >>   Swars::Membership Count (0.4ms)  SELECT COUNT(*) AS `count_all`, DAYOFWEEK(DATE_SUB(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo'), INTERVAL 4 HOUR)) AS `dayofweek_date_sub_convert_tz_battled_at_utc_asia_tokyo_interval_4_hour` FROM `swars_memberships` INNER JOIN `swars_battles` ON `swars_battles`.`id` = `swars_memberships`.`battle_id` WHERE `swars_memberships`.`id` IN (100015085, 100015087, 100015089, 100015091, 100009154, 100009157, 100007479, 100007489, 100007493, 100007495, 100007498, 100003389, 100003392, 100003397, 100003411, 100003416, 99994325, 99994327, 99993733, 99993076, 99993078, 99993080, 99993082, 99993084, 99983693, 99679774, 99679777, 99675797, 99613479, 99613482, 99570919, 99570920, 99570923, 99570925, 99570927, 99570929, 99570930, 99570932, 99570935, 99570937, 99562447, 99561483, 99561485, 99387462, 99387464, 99387466, 99387469, 99386230, 99387471, 99387472) GROUP BY DAYOFWEEK(DATE_SUB(CONVERT_TZ(battled_at, 'UTC', 'Asia/Tokyo'), INTERVAL 4 HOUR))
+# >>   ↳ app/models/swars/user/stat/battle_time_wday_stat.rb:12:in `to_chart'

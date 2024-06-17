@@ -70,7 +70,7 @@ module Swars
 
       def list_build_by(tag_stat, context, options = {})
         scope_ext = tag_stat.scope_ext
-        tags = scope_ext.ids_scope.tag_counts_on(context, order: "count DESC")
+        tags = scope_ext.ids_scope.tag_counts_on(context, order: "count DESC, tags.id ASC") # count だけだと揺らぐため
         tags.each_with_object([]) do |tag, av|
           if v = tag_stat.tag_chart_build(tag.name.to_sym, options)
             av << v

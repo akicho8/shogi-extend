@@ -19,7 +19,7 @@ module Swars
         av.each_with_object([]) do |e, m|
           body = @stat.instance_eval(&e.body)
           body = not_zero_allow_then_zero_as_nil(e, body)
-          if body || Rails.env.local?
+          if body.present? || Rails.env.local?
             hv = {
               :name          => e.display_name,
               :chart_type    => e.chart_type,
@@ -65,7 +65,8 @@ module Swars
           end
         end
 
-        if e.chart_type == :simple
+        case e.chart_type
+        when :simple
           unless e.chart_options[:zero_allow]
             if value == 0
               value = nil

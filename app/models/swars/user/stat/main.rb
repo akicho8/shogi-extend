@@ -134,8 +134,12 @@ module Swars
         @right_king_stat ||= RightKingStat.new(self)
       end
 
-      def match_time_period_stat
-        @match_time_period_stat ||= MatchTimePeriodStat.new(self)
+      def battle_time_hour_stat
+        @battle_time_hour_stat ||= BattleTimeHourStat.new(self)
+      end
+
+      def battle_time_wday_stat
+        @battle_time_wday_stat ||= BattleTimeWdayStat.new(self)
       end
 
       def piece_stat
@@ -159,7 +163,11 @@ module Swars
       end
 
       def mate_stat
-        @mate_stat ||= MateStat.new(self)
+        @mate_stat ||= MateStat.new(self, :CHECKMATE)
+      end
+
+      def mate2_stat
+        @mate2_stat ||= MateStat.new(self, :TIMEOUT)
       end
 
       def think_stat

@@ -42,6 +42,7 @@ module Swars
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.count             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "切断逃亡",                         local_only: false, body: proc { judge_final_stat.count_by(:lose, :DISCONNECT) }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { mate_stat.count                               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "必勝形で詰まさず悦に入った",       local_only: false, body: proc { mate2_stat.count                              }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.count                           }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
@@ -156,6 +157,9 @@ module Swars
         { key: "1手詰を焦らして悦に入った時間 (最長)", body: proc { mate_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
         { key: "1手詰を焦らして悦に入った頻度",        body: proc { mate_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
 
+        { key: "必勝形から焦らして悦に入った時間 (最長)", body: proc { mate2_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
+        { key: "必勝形から焦らして悦に入った頻度",        body: proc { mate2_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
+
         ################################################################################
 
         { key:"負け", body: proc { judge_final_stat.to_chart(:lose) }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, },
@@ -213,7 +217,8 @@ module Swars
 
         { key: "1日の平均対局数", body: proc { daily_average_matches_stat.average }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "局", }, },
         { key: "1日の最高対局数", body: proc { daily_average_matches_stat.max     }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "局", }, },
-        { key: "対局時間帯",      body: proc { match_time_period_stat.to_chart    }, chart_type: :bar,    chart_options: { bar_type: :is_default, }, },
+        { key: "対局曜日",        body: proc { battle_time_wday_stat.to_chart     }, chart_type: :bar,    chart_options: { bar_type: :is_default, value_format: :percentage, }, },
+        { key: "対局時間帯",      body: proc { battle_time_hour_stat.to_chart     }, chart_type: :bar,    chart_options: { bar_type: :is_default, }, },
 
         ################################################################################
 

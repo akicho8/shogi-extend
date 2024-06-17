@@ -98,6 +98,22 @@ module Swars
       end
     end
 
+    describe "必勝時焦らしマン" do
+      def case1
+        @black = User.create!
+        @white = User.create!
+        Battle.create!(csa_seq: [["+7968GI", 599], ["-8232HI", 597], ["+5756FU", 1]], final_key: :TIMEOUT) do |e|
+          e.memberships.build(user: @black, judge_key: :win)
+          e.memberships.build(user: @white, judge_key: :lose)
+        end
+        @black.memberships.first.badge_key_with_messsage == [:"必勝時焦らしマン", "必勝局面から詰まさずに9分58秒焦らして歪んだ優越感に浸った"]
+      end
+
+      it "works" do
+        assert { case1 }
+      end
+    end
+
     describe "長考" do
       def test(min, judge_key)
         seconds = min.minutes

@@ -83,7 +83,6 @@ module Swars
           ]
         end
       end
-
     end
   end
 end
