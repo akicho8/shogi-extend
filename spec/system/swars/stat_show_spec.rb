@@ -16,22 +16,22 @@ RSpec.describe "プレイヤー情報", type: :system, swars_spec: true do
   it "タブを変更する" do
     visit2 "/swars/users/YamadaTaro"
 
-    tab_click_by_name("日付")
+    tab_click_by_name("日")
     within(".boxes") { assert_text "2020-01-01" }
 
-    tab_click_by_name("段級")
+    tab_click_by_name("段")
     within(".boxes") { assert_text "三段" }
 
-    tab_click_by_name("戦法")
+    tab_click_by_index(2)
     within(".boxes") { assert_text "対振り持久戦" }
 
-    tab_click_by_name("対攻")
+    tab_click_by_index(3)
     within(".boxes") { assert_text "" }
 
-    tab_click_by_name("囲い")
+    tab_click_by_index(4)
     within(".boxes") { assert_text "舟囲い" }
 
-    tab_click_by_name("対囲")
+    tab_click_by_index(5)
     within(".boxes") { assert_text "高美濃囲い" }
 
     tab_click_by_name("他")
