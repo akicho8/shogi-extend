@@ -163,8 +163,8 @@ module Swars
         ################################################################################
 
         { key: "投了までの心の準備",        body: proc { resignation_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
-        { key: "投了までの心の準備 (平均)", body: proc { resignation_stat.average      }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
         { key: "投了までの心の準備 (最長)", body: proc { resignation_stat.max          }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
+        { key: "投了までの心の準備 (平均)", body: proc { resignation_stat.average      }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
 
         ################################################################################
 

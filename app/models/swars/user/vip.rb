@@ -5,21 +5,25 @@ module Swars
     extend self
 
     def auto_crawl_user_keys
-      fetch(:swars_user_vip_auto_crawl_user_keys) + fetch(:honwaka_line_group_user_keys)
+      group(:honwaka, :pro, :youtuber, :sns, :comedian, :tiktoker, :amateur, :other, :heroz)
     end
 
     def long_time_keep_user_keys
-      fetch(:swars_user_vip_long_time_keep_user_keys) + fetch(:honwaka_line_group_user_keys)
+      group(:honwaka, :pro, :youtuber, :sns, :comedian, :tiktoker, :amateur, :other)
     end
 
     def protected_user_keys
-      fetch(:swars_user_vip_protected_user_keys)
+      group(:pro, :protected)
     end
 
     private
 
+    def group(*keys)
+      keys.flat_map { |e| fetch(e) }
+    end
+
     def fetch(...)
-      Rails.application.credentials.fetch(...)
+      Rails.application.credentials.swars.user_keys.fetch(...)
     end
   end
 end
