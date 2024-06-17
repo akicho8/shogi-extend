@@ -14,17 +14,17 @@
       SwarsUserShowDropdownMenu
       SwarsUserShowHead
       b-tabs(type="is-toggle" size="is-small" v-model="tab_index" position="is-centered" :animated="false" @input="$sound.play_click()" @click.native="tab_item_click_handle($event)")
-        b-tab-item(label="日付")
-        b-tab-item(label="段級")
-        b-tab-item(label="戦法")
-        b-tab-item(label="対攻")
-        b-tab-item(label="囲い")
-        b-tab-item(label="対囲")
-        b-tab-item(label="手筋")
-        b-tab-item(label="対筋")
-        b-tab-item(label="他")
-        b-tab-item(label="備考" v-if="info.my_note_items")
-        b-tab-item(label="対備" v-if="info.vs_note_items")
+        b-tab-item(headerClass="my_tab" label="日")
+        b-tab-item(headerClass="vs_tab" label="段")
+        b-tab-item(headerClass="my_tab" label="攻")
+        b-tab-item(headerClass="vs_tab" label="攻")
+        b-tab-item(headerClass="my_tab" label="守")
+        b-tab-item(headerClass="vs_tab" label="守")
+        b-tab-item(headerClass="my_tab" label="技")
+        b-tab-item(headerClass="vs_tab" label="技")
+        b-tab-item(headerClass="my_tab" label="他")
+        b-tab-item(headerClass="my_tab" label="備" v-if="info.my_note_items")
+        b-tab-item(headerClass="vs_tab" label="備" v-if="info.vs_note_items")
       SwarsUserShowTabContent0Day
       SwarsUserShowTabContent1Grade
       SwarsUserShowTabContentPart(:tab_index="2"  var_name="my_attack_items"    :vs_mode="false")
@@ -153,6 +153,14 @@ export default {
     margin-bottom: 0
 
   ////////////////////////////////////////////////////////////////////////////////
+
+  .b-tabs
+    .vs_tab
+      a
+        span
+          transform: rotate(180deg)
+    .my_tab
+      __css_keep__: 0
 
   .boxes
     margin-top: 1rem
