@@ -11,7 +11,7 @@ module Swars
         { weight:   0.8, key: "敗勢になると諦める度合い",         short_name: "敗勢諦め",       x_count: proc { mental_stat.heart_weak_level                             }, },
         { weight:   0.4, key: "無理攻めをした",                   short_name: "無理攻め",       x_count: proc { tag_stat.muriseme_level                                  }, },
         { weight:   8.0, key: "連続王手の千日手をして負けた",     short_name: "連続王手",       x_count: proc { judge_final_stat.count_by(:lose, :OUTE_SENNICHI)         }, },
-        { weight:   2.0, key: "先手で千日手にした回数",           short_name: "先手千日手",     x_count: proc { draw_stat.black_sennichi_count                           }, },
+        { weight:   2.0, key: "先手なのに千日手で逃げた回数",           short_name: "先手千日手",     x_count: proc { draw_stat.black_sennichi_count                           }, },
         { weight:   1.0, key: "舐めプ戦法を使った対局数",         short_name: "舐めプ戦法",     x_count: proc { bad_tactic_stat.bad_tactic_count                                 }, },
         { weight:  10.0, key: "指し手が異様に速い",               short_name: "指し手速い",     x_count: proc { think_stat.unusually_fast_ratio                          }, },
         { weight:   5.0, key: "指し手が異様に遅い",               short_name: "指し手遅い",     x_count: proc { think_stat.unusually_slow_ratio                          }, },

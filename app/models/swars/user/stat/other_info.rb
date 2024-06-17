@@ -45,7 +45,7 @@ module Swars
         { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.count                           }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
-        { key: "先手で千日手にした",               local_only: false, body: proc { draw_stat.black_sennichi_count                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "先手なのに千日手で逃げた",               local_only: false, body: proc { draw_stat.black_sennichi_count                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
