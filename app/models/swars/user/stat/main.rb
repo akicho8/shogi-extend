@@ -162,12 +162,12 @@ module Swars
         @resignation_stat ||= ResignationStat.new(self)
       end
 
-      def mate_stat
-        @mate_stat ||= MateStat.new(self, :CHECKMATE)
+      def taunt_mate_stat
+        @taunt_mate_stat ||= TauntStat.new(self, :CHECKMATE)
       end
 
-      def mate2_stat
-        @mate2_stat ||= MateStat.new(self, :TIMEOUT)
+      def taunt_timeout_stat
+        @taunt_timeout_stat ||= TauntStat.new(self, :TIMEOUT)
       end
 
       def think_stat
@@ -208,6 +208,10 @@ module Swars
 
       def judge_final_stat
         @judge_final_stat ||= JudgeFinalStat.new(self)
+      end
+
+      def unstable_network_stat
+        @unstable_network_stat ||= UnstableNetworkStat.new(self)
       end
 
       def daily_win_lose_list_stat

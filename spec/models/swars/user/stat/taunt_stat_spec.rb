@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module Swars
-  RSpec.describe User::Stat::MateStat, type: :model, swars_spec: true do
+  RSpec.describe User::Stat::TauntStat, type: :model, swars_spec: true do
     describe "1手詰を焦らして悦に入った回数" do
       def case1(last_sec)
         @black = User.create!
@@ -10,8 +10,8 @@ module Swars
         end
         stat = @black.stat
         [
-          stat.mate_stat.max,
-          stat.mate_stat.to_chart,
+          stat.taunt_mate_stat.max,
+          stat.taunt_mate_stat.to_chart,
         ]
       end
 
@@ -40,12 +40,12 @@ module Swars
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
 # >>
-# >> User::Stat::MateStat
+# >> User::Stat::TauntStat
 # >>   1手詰を焦らして悦に入った回数
 # >>     works
 # >>
 # >> Top 1 slowest examples (1.49 seconds, 41.8% of total time):
-# >>   User::Stat::MateStat 1手詰を焦らして悦に入った回数 works
+# >>   User::Stat::TauntStat 1手詰を焦らして悦に入った回数 works
 # >>     1.49 seconds -:18
 # >>
 # >> Finished in 3.56 seconds (files took 1.58 seconds to load)

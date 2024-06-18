@@ -2,10 +2,10 @@ require "./setup"
 
 Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"角不成", swap: true)   # => {:win=>9, :lose=>4}
 Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"飛車不成", swap: true) # => {:win=>2, :lose=>3}
-Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                    # => true
-Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"角不成")                 # => false
-Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")                  # => false
-Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"飛車不成")               # => true
+Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"角不成")                    # => true
+Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                 # => false
+Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"飛車不成")                  # => false
+Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")               # => true
 
 # op_tag_stat.ratios_hash[:"角不成"] # => 0.3076923076923077
 # op_tag_stat.ratios_hash[:"角不成"] # => 0.3076923076923077

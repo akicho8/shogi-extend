@@ -34,26 +34,26 @@ module Swars
         @scope_ext = scope_ext
       end
 
-      ################################################################################ op_tag_stat から使う
+      ################################################################################
 
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"角不成", swap: true)   # => {:win=>9, :lose=>4}
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"飛車不成", swap: true) # => {:win=>2, :lose=>3}
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                    # => true
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"角不成")                 # => false
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")                  # => false
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.makasareta?(:"飛車不成")               # => true
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"角不成")                   # => true
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                    # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"飛車不成")                 # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")                  # => true
 
       def taosita?(tag)
         assert_tag(tag)
         if v = ratios_hash[tag]
-          v < 0.5
+          v > 0.5
         end
       end
 
-      def makasareta?(tag)
+      def yarareta?(tag)
         assert_tag(tag)
         if v = ratios_hash[tag]
-          v > 0.5
+          v < 0.5
         end
       end
 

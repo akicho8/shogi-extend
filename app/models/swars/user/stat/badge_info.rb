@@ -16,11 +16,9 @@ module Swars
         { key: "絶対投了しないマン", badge_params: { name: "🪳",   message: "悔しかったので時間切れまで放置した",      }, if_cond: proc { stat.leave_alone_stat.count.positive? } },
         { key: "無気力マン",         badge_params: { name: "🦥",   message: "無気力な対局をした",                      }, if_cond: proc { stat.lethargy_stat.exist? } },
         { key: "大長考マン",         badge_params: { name: "😴",   message: "対局放棄と受け取られかねない長考をした",  }, if_cond: proc { stat.prolonged_deliberation_stat.count.positive? } },
-        { key: "1手詰じらしマン",    badge_params: { name: "😈",   message: "1手詰を焦らして歪んだ優越感に浸った",     }, if_cond: proc { stat.mate_stat.count.positive? } },
-        { key: "必勝形じらしマン",   badge_params: { name: "🦟",   message: "必勝形から焦らして優越感に浸った",        }, if_cond: proc { stat.mate2_stat.count.positive? } },
+        { key: "1手詰じらしマン",    badge_params: { name: "😈",   message: "1手詰を焦らして歪んだ優越感に浸った",     }, if_cond: proc { stat.taunt_mate_stat.count.positive? } },
+        { key: "必勝形じらしマン",   badge_params: { name: "😈",   message: "必勝形から焦らして優越感に浸った",        }, if_cond: proc { stat.taunt_timeout_stat.count.positive? } },
         { key: "相手退席待ちマン",   badge_params: { name: "🪰",   message: AITETAISEKIMATMAN_MESSAGE,                 }, if_cond: proc { stat.waiting_to_leave_stat.count.positive? } },
-        { key: "角不成マン",         badge_params: { name: "☠",    message: "角不成で舐めプした",                    }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"角不成") }  },
-        { key: "飛車不成マン",       badge_params: { name: "💀",   message: "飛車不成で舐めプした",                   }, if_cond: proc { stat.tag_stat.counts_hash.has_key?(:"飛車不成") }  },
         { key: "友対無双マン",       badge_params: { name: "💔",   message: "友達対局で友達を無くした",               }, if_cond: proc { stat.xmode_judge_stat.friend_kill_ratio } },
 
         ################################################################################
@@ -66,7 +64,7 @@ module Swars
         { key: "音無しマン",         badge_params: { name: "🦉",   message: "居飛穴音無しの構えの使い手", }, if_cond: proc { win_stat.exist?(:"居飛穴音無しの構え")                 },},
         { key: "スイーツマン",       badge_params: { name: "🍓",   message: "いちご囲いの使い手",         }, if_cond: proc { win_stat.exist?(:"いちご囲い")                  },},
         { key: "無敵囲いマン",       badge_params: { name: "🔰",   message: "無敵囲いのスペシャリスト",    }, if_cond: proc { win_stat.exist?(:"無敵囲い")                  },},
-        { key: "エルモマン",         badge_params: { name: "🐒",   message: "エルモ囲いの使い手",         }, if_cond: proc { win_stat.exist?(:"エルモ囲い")                  },},
+        { key: "エルモマン",         badge_params: { name: "🐵",   message: "エルモ囲いの使い手",         }, if_cond: proc { win_stat.exist?(:"エルモ囲い")                  },},
         { key: "鬼殺しマン",         badge_params: { name: "👹",   message: "鬼殺しの使い手",             }, if_cond: proc { win_stat.include?("鬼殺し") },},
         { key: "アヒルマン",         badge_params: { name: "🐥",   message: "アヒル戦法の名匠",           }, if_cond: proc { win_stat.exist?(:"アヒル戦法") },},
         { key: "稲庭マン",           badge_params: { name: "👾",   message: "稲庭戦法のエキスパート",     }, if_cond: proc { win_stat.exist?(:"稲庭戦法") },},
@@ -117,10 +115,14 @@ module Swars
 
         ################################################################################
 
-        { key: "VS角不成勝ちマン",       badge_params: { name: "🖕",     message: "角不成者を倒した",               }, if_cond: proc { stat.op_tag_stat.taosita?(:"角不成")      } },
-        { key: "VS角不成負けマン",       badge_params: { name: "😮‍💨",   message: "角不成者に負けた",               }, if_cond: proc { stat.op_tag_stat.makasareta?(:"角不成")   } },
-        { key: "VS飛車不成勝ちマン",     badge_params: { name: "🖕",   message: "飛車不成者を倒した",             }, if_cond: proc { stat.op_tag_stat.taosita?(:"飛車不成")      } },
-        { key: "VS飛車不成負けマン",     badge_params: { name: "😮‍💨",   message: "飛車不成者に負けた",             }, if_cond: proc { stat.op_tag_stat.makasareta?(:"飛車不成")   } },
+        { key: "角不成勝ちマン",         badge_params: { name: "🤡",    message: "角不成の舐めプをかました上で勝った",    }, if_cond: proc { stat.tag_stat.taosita?(:"角不成") }  },
+        { key: "角不成負けマン",         badge_params: { name: "🤕",    message: "角不成をしたら返り討ちにあった",       }, if_cond: proc { stat.tag_stat.yarareta?(:"角不成") }  },
+        { key: "飛車不成勝ちマン",       badge_params: { name: "🤡",    message: "飛車不成の舐めプをかました上で勝った", }, if_cond: proc { stat.tag_stat.taosita?(:"飛車不成") }  },
+        { key: "飛車不成負けマン",       badge_params: { name: "🤕",    message: "飛車不成をしたら返り討ちにあった",     }, if_cond: proc { stat.tag_stat.yarareta?(:"飛車不成") }  },
+        { key: "VS角不成勝ちマン",       badge_params: { name: "😏",    message: "角不成者を返り討ちにした",            }, if_cond: proc { stat.op_tag_stat.yarareta?(:"角不成")      } },
+        { key: "VS角不成負けマン",       badge_params: { name: "😒",    message: "角不成で舐めプされた上に負けた",       }, if_cond: proc { stat.op_tag_stat.taosita?(:"角不成")   } },
+        { key: "VS飛車不成勝ちマン",     badge_params: { name: "😏",    message: "飛車不成者を返り討ちにした",          }, if_cond: proc { stat.op_tag_stat.yarareta?(:"飛車不成")      } },
+        { key: "VS飛車不成負けマン",     badge_params: { name: "😒",    message: "飛車不成で舐めプされた上に負けた",     }, if_cond: proc { stat.op_tag_stat.taosita?(:"飛車不成")   } },
       ]
     end
   end

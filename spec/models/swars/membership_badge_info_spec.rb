@@ -98,7 +98,7 @@ module Swars
       end
     end
 
-    describe "必勝時焦らしマン" do
+    describe "必勝形焦らしマン" do
       def case1
         @black = User.create!
         @white = User.create!
@@ -106,7 +106,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.badge_key_with_messsage == [:"必勝時焦らしマン", "必勝局面から詰まさずに9分58秒焦らして歪んだ優越感に浸った"]
+        @black.memberships.first.badge_key_with_messsage == [:"必勝形焦らしマン", "必勝形から9分58秒焦らして歪んだ優越感に浸った"]
       end
 
       it "works" do

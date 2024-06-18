@@ -7,11 +7,30 @@ module Swars
     memory_record [
       # マッチしたら break なので順序重要
       {
+        key: "不安定マン",
+        message: "不安定な環境で対局を開始して迷惑をかけた",
+        badge_params: "📵",
+        if_cond: -> m {
+          if m.judge_key == "lose"
+            if m.battle.turn_max == 1
+              if m.battle.final_info.key == :DISCONNECT
+                true
+              end
+            end
+          end
+        },
+      }, {
         key: "切断マン",
         message: "悔しかったので切断した",
         badge_params: "💩",
         if_cond: -> m {
-          m.judge_key == "lose" && m.battle.turn_max >= 2 && m.battle.final_info.key == :DISCONNECT
+          if m.judge_key == "lose"
+            if m.battle.turn_max >= 2
+              if m.battle.final_info.key == :DISCONNECT
+                true
+              end
+            end
+          end
         },
       }, {
         key: "運営支えマン",
@@ -34,9 +53,9 @@ module Swars
           end
         },
       }, {
-        key: "必勝時焦らしマン",
-        message: -> m { "必勝局面から詰まさずに#{m.think_last_s}焦らして歪んだ優越感に浸った" },
-        badge_params: "🦟",
+        key: "必勝形焦らしマン",
+        message: -> m { "必勝形から#{m.think_last_s}焦らして歪んだ優越感に浸った" },
+        badge_params: "😈",
         if_cond: -> m {
           if m.judge_key == "win"
             if m.battle.final_info.key == :TIMEOUT
@@ -116,14 +135,14 @@ module Swars
       }, {
         key: "角不成マン",
         message: "角成らずで舐めプした",
-        badge_params: "☠",
+        badge_params: "🤡",
         if_cond: -> m {
           m.tag_names_for(:note).include?("角不成")
         }
       }, {
         key: "飛車不成マン",
         message: "飛車成らずで舐めプした",
-        badge_params: "💀",
+        badge_params: "🤡",
         if_cond: -> m {
           m.tag_names_for(:note).include?("飛車不成")
         },

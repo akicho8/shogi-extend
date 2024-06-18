@@ -2,7 +2,7 @@
 
 module Swars
   module User::Stat
-    class MateStat < Base
+    class TauntStat < Base
       delegate *[
         :ids_scope,
       ], to: :stat
