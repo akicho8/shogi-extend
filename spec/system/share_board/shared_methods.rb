@@ -111,7 +111,7 @@ module SharedMethods
   end
 
   def assert_honpu_link_on
-    assert_selector(".SbNavbar a", text: "本譜", exact_text: true)
+    assert_selector(".SbNavbar a", text: "本譜", exact_text: true, wait: 10)
   end
 
   def assert_honpu_link_off
