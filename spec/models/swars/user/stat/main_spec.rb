@@ -30,7 +30,7 @@ module Swars
       end
 
       it "各タブの情報" do
-        assert { @as_json["day_items"]       == [{"battled_on" => "2000-01-01", "day_type" => "info", "judge_counts" => {"win" => 1, "lose" => 0}}] }
+        assert { @as_json["day_items"]       == [{"battled_on" => "1999-12-31", "day_type" => nil, "judge_counts" => {"win" => 1, "lose" => 0}}] }
         assert { @as_json["vs_grade_items"]  == [{"grade_name" => "30級", "judge_counts" => {"win" => 1}, "appear_ratio" => 1.0}] }
         assert { @as_json["my_attack_items"] == [{"tag" => "新嬉野流", "appear_ratio" => 1.0, "judge_counts" => {"win" => 1, "lose" => 0}}] }
         assert { @as_json["vs_attack_items"] == [{"tag" => "2手目△３ニ飛戦法", "appear_ratio" => 1.0, "judge_counts" => {"lose" => 0, "win" => 1}}] }

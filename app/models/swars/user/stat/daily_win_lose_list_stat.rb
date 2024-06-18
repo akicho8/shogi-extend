@@ -3,6 +3,8 @@
 module Swars
   module User::Stat
     class DailyWinLoseListStat < Base
+      include TimeMod
+
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -14,7 +16,7 @@ module Swars
         s = s.joins(:battle)
         s = s.joins(:judge)
         s = s.select([
-            "DATE(#{battled_at}) AS battled_on",
+            "DATE(#{dawn_adjusted_battled_at}) AS battled_on",
             "COUNT(judges.key = 'win'  OR NULL) AS win",
             "COUNT(judges.key = 'lose' OR NULL) AS lose",
           ])
@@ -25,26 +27,9 @@ module Swars
           battled_on = e.battled_on.to_date
           {
             :battled_on   => battled_on,
-            :day_type     => day_type_for(battled_on),
+            :day_type     => date_to_day_type(battled_on),
             :judge_counts => { win: e.win, lose: e.lose },
           }
-        end
-      end
-
-      private
-
-      def battled_at
-        MysqlUtil.column_tokyo_timezone_cast(:battled_at)
-      end
-
-      def day_type_for(t)
-        case
-        when t.sunday?
-          :danger
-        when t.saturday?
-          :info
-        when HolidayJp.holiday?(t)
-          :danger
         end
       end
     end

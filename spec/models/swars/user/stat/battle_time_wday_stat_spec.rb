@@ -12,8 +12,8 @@ module Swars
     end
 
     it "works" do
-      assert { case1("2024-06-18 03:59") == "月" }
-      assert { case1("2024-06-18 04:00") == "火" }
+      assert { case1("2024-06-18 02:59") == "月" }
+      assert { case1("2024-06-18 03:00") == "火" }
     end
   end
 end

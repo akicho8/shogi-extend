@@ -3,6 +3,8 @@
 module Swars
   module User::Stat
     class DailyAverageMatchesStat < Base
+      include TimeMod
+
       delegate *[
         :ids_scope,
         :ids_count,
@@ -35,7 +37,7 @@ module Swars
             s = s.joins(:battle)
             s = s.group(:battled_on)
             s = s.select([
-                "DATE(#{battled_at}) AS battled_on",
+                "DATE(#{dawn_adjusted_battled_at}) AS battled_on",
                 "COUNT(*) AS count_all",
               ])
             Rails.logger.debug { s.to_t }
@@ -43,10 +45,6 @@ module Swars
             ActiveRecord::Base.connection.select_one(sql)
           end
         end
-      end
-
-      def battled_at
-        MysqlUtil.column_tokyo_timezone_cast(:battled_at)
       end
     end
   end

@@ -4,36 +4,20 @@ module Swars
   RSpec.describe User::Stat::DailyWinLoseListStat, type: :model, swars_spec: true do
     describe "日別勝敗リスト" do
       def case1(battled_at, judge_key)
+        @black = User.create!
         Battle.create!(battled_at: battled_at) do |e|
           e.memberships.build(user: @black, judge_key: judge_key)
+        end
+        if el = @black.stat.daily_win_lose_list_stat.to_chart.first
+          el[:battled_on].strftime("%F")
         end
       end
 
       it "works" do
-        @black = User.create!
-        case1("2000-01-01", :win)
-        case1("2000-01-02", :lose)
-        case1("2000-01-03", :draw)
-        assert do
-          @black.stat.daily_win_lose_list_stat.to_chart == [
-            {:battled_on => "2000-01-02".to_date, :day_type => :danger, :judge_counts => {:win => 0, :lose => 1}},
-            {:battled_on => "2000-01-01".to_date, :day_type => :info,   :judge_counts => {:win => 1, :lose => 0}},
-          ]
-        end
+        assert { case1("2000-01-02 02:59", :win)  == "2000-01-01" }
+        assert { case1("2000-01-02 03:00", :lose) == "2000-01-02" }
+        assert { case1("2000-01-01 00:00", :draw) == nil          }
       end
     end
   end
 end
-# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >>
-# >> User::Stat::DailyWinLoseListStat
-# >>   日別勝敗リスト
-# >>     works
-# >>
-# >> Top 1 slowest examples (0.52132 seconds, 20.1% of total time):
-# >>   User::Stat::DailyWinLoseListStat 日別勝敗リスト works
-# >>     0.52132 seconds -:17
-# >>
-# >> Finished in 2.59 seconds (files took 1.55 seconds to load)
-# >> 1 example, 0 failures
-# >>
