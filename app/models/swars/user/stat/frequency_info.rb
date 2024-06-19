@@ -59,7 +59,7 @@ module Swars
       ]
 
       def two_char_key
-        @freq_key ||= yield_self do
+        @two_char_key ||= yield_self do
           [
             Bioshogi::Piece.fetch(name).sfen_char,
             Bioshogi::Piece.basic_group[name] ? 0 : 1,

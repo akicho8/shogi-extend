@@ -63,9 +63,15 @@ module Swars
           assert { @black.stat.badge_stat.active?("切断マン") }
         end
 
+        it "詰まされマン" do
+          @black = User.create!
+          5.times { case1(:lose, :CHECKMATE) }
+          assert { @black.stat.badge_stat.active?("詰まされマン") }
+        end
+
         it "切れ負けマン" do
           @black = User.create!
-          case1(:lose, :TIMEOUT)
+          5.times { case1(:lose, :TIMEOUT) }
           assert { @black.stat.badge_stat.active?("切れ負けマン") }
         end
 
@@ -79,7 +85,7 @@ module Swars
   end
 end
 # >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
-# >> 
+# >>
 # >> Swars::User::Stat::JudgeFinalStat
 # >>   勝ち負け時の結末の内訳
 # >>     to_chart
@@ -98,7 +104,7 @@ end
 # >>       切断マン
 # >>       切れ負けマン
 # >>       投了マン
-# >> 
+# >>
 # >> Top 5 slowest examples (1.55 seconds, 37.5% of total time):
 # >>   Swars::User::Stat::JudgeFinalStat 勝ち負け時の結末の内訳 to_chart
 # >>     0.74007 seconds -:12
@@ -110,7 +116,7 @@ end
 # >>     0.17194 seconds -:26
 # >>   Swars::User::Stat::JudgeFinalStat 勝ち負け時の結末の内訳 バッジ 投了マン
 # >>     0.16107 seconds -:75
-# >> 
+# >>
 # >> Finished in 4.13 seconds (files took 1.63 seconds to load)
 # >> 8 examples, 0 failures
-# >> 
+# >>

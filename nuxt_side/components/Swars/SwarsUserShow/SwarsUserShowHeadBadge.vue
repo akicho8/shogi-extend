@@ -1,11 +1,11 @@
 <template lang="pug">
 .SwarsUserShowHeadBadge(v-if="TheApp.info.badge_items.length >= 1")
   .one_element(v-for="e in TheApp.info.badge_items" @click="TheApp.badge_click_handle(e)" :class="{'is-clickable': e.message}")
-    XemojiWrap.raw(:str="e.name")
+    XemojiWrap.raw(:str="e.icon")
     //- template(v-if="false")
-    //- b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.name}}
-    //- XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.name")
-    //- b-icon(         v-else-if="e.method === 'icon'" :icon="e.name" :type="e.type" size="is-small")
+    //- b-tag(          v-else-if="e.method === 'tag'" :type="e.type" rounded) {{e.icon}}
+    //- XemojiWrap.raw( v-else-if="e.method === 'raw'" :str="e.icon")
+    //- b-icon(         v-else-if="e.method === 'icon'" :icon="e.icon" :type="e.type" size="is-small")
 </template>
 
 <script>

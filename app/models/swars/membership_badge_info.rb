@@ -12,7 +12,7 @@ module Swars
         badge_params: "📵",
         if_cond: -> m {
           if m.judge_key == "lose"
-            if m.battle.turn_max == 1
+            if m.battle.turn_max < Config.establish_gteq
               if m.battle.final_info.key == :DISCONNECT
                 true
               end
@@ -25,7 +25,7 @@ module Swars
         badge_params: "💩",
         if_cond: -> m {
           if m.judge_key == "lose"
-            if m.battle.turn_max >= 2
+            if m.battle.turn_max >= Config.establish_gteq
               if m.battle.final_info.key == :DISCONNECT
                 true
               end
@@ -74,7 +74,7 @@ module Swars
         if_cond: -> m {
           if m.judge_key == "lose"
             if m.battle.final_info.key == :TIMEOUT
-              if m.battle.turn_max >= 14
+              if m.battle.turn_max >= Config.seiritsu_gteq
                 if t = m.battle.rule_info.toryo_houti_sec
                   if (m.think_last || 0) >= t
                     true
@@ -88,10 +88,10 @@ module Swars
         # 「絶対投了しないマン」より後に判定すること
         key: "相手退席待ちマン",
         message: -> m { "放置に痺れを切らした相手が離席したころを見計らって着手し逆時間切れ勝ちを狙ったが失敗した" },
-        badge_params: "🪰",
+        badge_params: "🧌",
         if_cond: -> m {
           m.judge_key == "lose" &&
-            m.battle.turn_max >= 14 &&
+            m.battle.turn_max >= Config.seiritsu_gteq &&
             m.think_last && m.think_max != m.think_last &&
             (t = m.battle.rule_info.taisekimati_sec) && m.think_max >= t
         },
@@ -151,28 +151,80 @@ module Swars
         message: "時間切れで負けた",
         badge_params: "⌛",
         if_cond: -> m {
-          m.judge_key == "lose" && m.battle.final_info.key == :TIMEOUT
+          if m.judge_key == "lose"
+            if m.battle.final_info.key == :TIMEOUT
+              true
+            end
+          end
         },
-      }, {
+      },
+
+      ################################################################################
+
+      {
         key: "開幕千日手",
         message: "最初から千日手にした",
         badge_params: "❓",
         if_cond: -> m {
-          m.judge_key == "draw" && m.battle.turn_max == 12
+          if m.judge_key == "draw"
+            if m.battle.turn_max == Config.sennitite_eq
+              true
+            end
+          end
+        },
+      }, {
+        key: "千日手逃げマン",
+        message: "先手なのに千日手で逃げた",
+        badge_params: "🍌",
+        if_cond: -> m {
+          if m.judge_key == "draw"
+            if m.location.key == "black"
+              if m.battle.turn_max > Config.sennitite_eq
+                true
+              end
+            end
+          end
         },
       }, {
         key: "ただの千日手",
         message: "千日手",
         badge_params: "🍌",
         if_cond: -> m {
-          m.judge_key == "draw" && m.battle.turn_max > 12
+          if m.judge_key == "draw"
+            if m.battle.turn_max > Config.sennitite_eq
+              true
+            end
+          end
+        },
+      },
+
+      ################################################################################
+
+      {
+        key: "棋力調整マン",
+        message: "わざと負けて棋力を調整した",
+        badge_params: "🦇",
+        if_cond: -> m {
+          if m.judge_key == "lose"
+            if m.battle.turn_max < Config.seiritsu_gteq
+              if m.battle.final_info.toryo_or_tsumi
+                true
+              end
+            end
+          end
         },
       }, {
         key: "無気力マン",
         message: "無気力な対局をした",
         badge_params: "🦥",
         if_cond: -> m {
-          m.judge_key == "lose" && m.battle.turn_max <= 19 && m.battle.final_info.toryo_or_tsumi
+          if m.judge_key == "lose"
+            if m.battle.turn_max.between?(Config.seiritsu_gteq, Config.mukiryoku_lteq)
+              if m.battle.final_info.toryo_or_tsumi
+                true
+              end
+            end
+          end
         },
       }, {
         key: "入玉勝ちマン",

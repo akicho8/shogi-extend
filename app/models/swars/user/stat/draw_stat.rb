@@ -3,8 +3,6 @@
 module Swars
   module User::Stat
     class DrawStat < Base
-      RIGGING_TURN_MAX = 12
-
       delegate *[
         :ids_scope,
         :draw_count,
@@ -16,18 +14,7 @@ module Swars
         @rigging_count ||= yield_self do
           if draw_count.positive?
             s = draw_only
-            s = s.joins(:battle).where(Battle.arel_table[:turn_max].eq(RIGGING_TURN_MAX))
-            s.count
-          end
-        end
-      end
-
-      # 一般的な千日手回数
-      def normal_count
-        @normal_count ||= yield_self do
-          if draw_count.positive?
-            s = draw_only
-            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(RIGGING_TURN_MAX))
+            s = s.joins(:battle).where(Battle.arel_table[:turn_max].eq(Config.sennitite_eq))
             s.count
           end
         end
@@ -38,8 +25,19 @@ module Swars
         @black_sennichi_count ||= yield_self do
           if draw_count.positive?
             s = draw_only
-            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(RIGGING_TURN_MAX))
+            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(Config.sennitite_eq))
             s = s.joins(:location).where(Location.arel_table[:key].eq(:black))
+            s.count
+          end
+        end
+      end
+
+      # 一般的な千日手回数
+      def normal_count
+        @normal_count ||= yield_self do
+          if draw_count.positive?
+            s = draw_only
+            s = s.joins(:battle).where(Battle.arel_table[:turn_max].gt(Config.sennitite_eq))
             s.count
           end
         end

@@ -61,6 +61,8 @@ module Swars
         @win_ratio ||= yield_self do
           if ids_count.positive?
             win_count.fdiv(ids_count)
+          else
+            0.0
           end
         end
       end

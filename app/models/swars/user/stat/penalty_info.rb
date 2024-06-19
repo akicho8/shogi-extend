@@ -16,6 +16,7 @@ module Swars
         { weight:  10.0, key: "指し手が異様に速い",               short_name: "指し手速い",     x_count: proc { think_stat.unusually_fast_ratio                              }, },
         { weight:   5.0, key: "指し手が異様に遅い",               short_name: "指し手遅い",     x_count: proc { think_stat.unusually_slow_ratio                              }, },
         { weight:   3.0, key: "無気力な対局の回数",               short_name: "無気力",         x_count: proc { lethargy_stat.count                                          }, },
+        { weight:   6.0, key: "わざと負けて棋力調整",             short_name: "棋力調整",       x_count: proc { skill_adjust_stat.count                                         }, },
         { weight:   4.0, key: "角不成をした対局数",               short_name: "角不成",         x_count: proc { tag_stat.count_by(:"角不成")                                 }, },
         { weight:   8.0, key: "飛車不成をした対局数",             short_name: "飛車不成",       x_count: proc { tag_stat.count_by(:"飛車不成")                               }, },
         { weight:  15.0, key: "1手詰を焦らした対局数",            short_name: "1手詰焦らし",    x_count: proc { taunt_mate_stat.count                                        }, },
@@ -27,7 +28,7 @@ module Swars
         { weight:  10.0, key: "切断逃亡",                         short_name: "切断逃亡",       x_count: proc { judge_final_stat.count_by(:lose, :DISCONNECT)                }, },
         { weight:  15.0, key: "放置",                             short_name: "放置",           x_count: proc { leave_alone_stat.count                                       }, },
         { weight:  20.0, key: "退席待ち狙いをした回数",           short_name: "退席待ち狙い",   x_count: proc { waiting_to_leave_stat.count                                  }, },
-        { weight:   5.0, key: "不安定な通信環境で対局",           short_name: "悪環境",         x_count: proc { unstable_network_stat.count                                      }, },
+        { weight:   5.0, key: "通信環境が不安定なのに対局",           short_name: "悪環境",         x_count: proc { unstable_network_stat.count                                      }, },
       ]
     end
   end

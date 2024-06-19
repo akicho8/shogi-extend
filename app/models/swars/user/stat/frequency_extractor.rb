@@ -29,7 +29,7 @@ module Swars
           if user = User[user_key]
             stat = user.stat(options)
             if stat.ids_count >= options[:battle_count_gteq]
-              stat.piece_stat.chart_hash
+              stat.piece_stat.ratios_hash
             end
           end
         }.compact

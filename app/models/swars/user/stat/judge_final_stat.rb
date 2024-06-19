@@ -3,8 +3,6 @@
 module Swars
   module User::Stat
     class JudgeFinalStat < Base
-      NUMBER_OF_MOVES_CONSIDERED_TO_BE_A_SUCCESSFUL_GAME = 2 # 2手指せば通信環境は正常である(通信不良なら1手目で終わる)
-
       delegate *[
         :ids_scope,
         :total_judge_counts,
@@ -22,7 +20,7 @@ module Swars
 
       # 特定の負け方を究めた率
       def kiwame_ratio(final_key)
-        if (count_by(:lose, final_key) || 0) >= 5
+        if (count_by(:lose, final_key) || 0) >= Config.kiwame_count_gteq
           ratio_by(:lose, final_key)
         end
       end
@@ -71,7 +69,7 @@ module Swars
           s = ids_scope
           s = s.joins(:battle => :final)
           s = s.joins(:judge)
-          s = s.where(Battle.arel_table[:turn_max].gteq(NUMBER_OF_MOVES_CONSIDERED_TO_BE_A_SUCCESSFUL_GAME))
+          s = s.where(Battle.arel_table[:turn_max].gteq(Config.establish_gteq))
           s = s.group(Judge.arel_table[:key], Final.arel_table[:key])
           s.count.transform_keys { |key| key.collect(&:to_sym) }
         end

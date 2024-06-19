@@ -14,7 +14,7 @@ module Swars
       ], to: :stat
 
       def as_json
-        active_badges.collect(&:badge_params)
+        active_badges.collect { |e| { icon: e.icon, message: e.message } }
       end
 
       def active_badges
@@ -69,7 +69,7 @@ module Swars
             "バッジ名" => e.name,
             "時間"     => "%.2f" % ms,
             "結果"     => if_cond ? "○" : "",
-            "絵"       => e.badge_params[:name],
+            "絵"       => e.icon,
           }
         end
       end

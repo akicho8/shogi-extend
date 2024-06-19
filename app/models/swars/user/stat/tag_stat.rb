@@ -61,7 +61,7 @@ module Swars
 
       def muriseme_level(tag = nil)
         tag ||= :"大駒全ブッチ"
-        if count_by(tag) >= 5        # 最低N回以上使って
+        if count_by(tag) >= Config.kiwame_count_gteq        # 最低N回以上使って
           # v = 0.5 - ratios_hash[tag] # 0.5 に足りないぶんだけ無理攻めしている
           # if v.positive?
           #   v

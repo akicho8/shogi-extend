@@ -2,7 +2,7 @@
 
 module Swars
   module User::Stat
-    class LethargyStat < Base
+    class SkillAdjustStat < Base
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -11,15 +11,12 @@ module Swars
         count.positive?
       end
 
-      # 無気力な対局をした回数
-      # ほぼ100%の人が一度は負けているので lose_count.positive? で囲む効果はない
-      # 最短14手で詰みがあるため14手以上を「無気力」とし14手未満を故意とする
       def count
         @count ||= yield_self do
           s = ids_scope.lose_only
           s = s.joins(:battle => :final)
           s = s.where(Final.arel_table[:key].eq_any([:TORYO, :CHECKMATE]))
-          s = s.where(Battle.arel_table[:turn_max].between(Config.seiritsu_gteq..Config.mukiryoku_lteq))
+          s = s.where(Battle.arel_table[:turn_max].lt(Config.seiritsu_gteq))
           s.count
         end
       end

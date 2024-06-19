@@ -262,6 +262,10 @@ module Swars
         @lethargy_stat ||= LethargyStat.new(self)
       end
 
+      def skill_adjust_stat
+        @skill_adjust_stat ||= SkillAdjustStat.new(self)
+      end
+
       def draw_stat
         @draw_stat ||= DrawStat.new(self)
       end

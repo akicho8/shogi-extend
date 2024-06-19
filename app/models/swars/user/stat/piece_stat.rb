@@ -28,18 +28,25 @@ module Swars
         :ids_scope,
       ], to: :stat
 
+      # 「飛」なら「飛」と「龍」の両方で平均を上まったか？ FIXME: bioshogi に移動する？
+      def many_used2(piece_name)
+        many_used1(piece_name) && many_used1(Bioshogi::Piece[piece_name.to_s].promoted_name.to_sym)
+      end
+
+      def many_used1(piece_name)
+        ratios_hash.fetch(piece_name) > FrequencyInfo[piece_name].ratio
+      end
+
       def to_chart
         @to_chart ||= yield_self do
-          if denominator.positive?
-            FrequencyInfo.collect do |e|
-              { name: e.name, value: ratio_of(e.two_char_key) }
-            end
+          FrequencyInfo.collect do |e|
+            { name: e.name, value: ratio_of(e.two_char_key) }
           end
         end
       end
 
-      def chart_hash
-        @chart_hash ||= to_chart.each_with_object({}) { |e, h| h.update(e[:name] => e[:value]) }
+      def ratios_hash
+        @ratios_hash ||= to_chart.each_with_object({}) { |e, h| h.update(e[:name].to_sym => e[:value]) }
       end
 
       def to_report_h
@@ -48,12 +55,16 @@ module Swars
           hv["最小駒"] = e[:name]
           hv["最小率"] = "%.5f" % e[:value]
         end
-        hv.update(chart_hash.transform_values { |e| "%.5f" % e })
+        hv.update(ratios_hash.transform_values { |e| "%.5f" % e })
         hv
       end
 
       def ratio_of(key)
-        counts_hash[key].fdiv(denominator)
+        if denominator.positive?
+          counts_hash[key].fdiv(denominator)
+        else
+          0.0
+        end
       end
 
       def denominator

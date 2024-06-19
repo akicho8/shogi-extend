@@ -134,44 +134,65 @@ module Swars
       end
     end
 
-    describe "無気力マン" do
+    describe "棋力調整マン" do
       def case1(n, final_key)
-        @black = User.create!
-        @white = User.create!
+        black = User.create!
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
-          e.memberships.build(user: @black, judge_key: :lose)
-          e.memberships.build(user: @white, judge_key: :win)
+          e.memberships.build(user: black, judge_key: :lose)
         end
-        @black.memberships.first.badge_key_with_messsage
+        black.memberships.first.badge_info.key == :"棋力調整マン"
       end
 
       it "works" do
-        result = [:"無気力マン", "無気力な対局をした"]
-        assert { case1(19, :TORYO)     == result }
-        assert { case1(20, :TORYO)     != result }
-        assert { case1(19, :CHECKMATE) == result }
-        assert { case1(20, :CHECKMATE) != result }
-        assert { case1(19, :TIMEOUT)   != result }
-        assert { case1(20, :TIMEOUT)   != result }
+        assert { case1(13, :TORYO) == true  }
+        assert { case1(14, :TORYO) == false }
+      end
+    end
+
+    describe "無気力マン" do
+      def case1(n, final_key)
+        black = User.create!
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
+          e.memberships.build(user: black, judge_key: :lose)
+        end
+        black.memberships.first.badge_info.key == :"無気力マン"
+      end
+
+      it "works" do
+        assert { case1(13, :TORYO) == false }
+        assert { case1(14, :TORYO) == true  }
+        assert { case1(44, :TORYO) == true  }
+        assert { case1(45, :TORYO) == false }
+      end
+    end
+
+    describe "開幕千日手" do
+      def case1(n)
+        @black = User.create!
+        Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DRAW_SENNICHI) do |e|
+          e.memberships.build(user: @black, judge_key: :draw)
+        end
+        @black.memberships.first.badge_info.key
+      end
+
+      it "works" do
+        assert { case1(12) == :"開幕千日手"   }
       end
     end
 
     describe "ただの千日手" do
-      def test(n)
+      def case1(n)
         @black = User.create!
         @white = User.create!
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: :DRAW_SENNICHI) do |e|
           e.memberships.build(user: @black, judge_key: :draw)
           e.memberships.build(user: @white, judge_key: :draw)
         end
-        @black.memberships.first.badge_key_with_messsage
+        @white.memberships.first.badge_info.key
       end
 
       it "works" do
-        test(4*4)                 # => [:ただの千日手, "千日手"]
-        test(3*4)                 # => [:開幕千日手, "最初から千日手にした"]
-        assert { test(4*4) == [:ただの千日手, "千日手"]             }
-        assert { test(3*4) == [:開幕千日手, "最初から千日手にした"] }
+        assert { case1(13) == :"ただの千日手" }
       end
     end
 
@@ -211,7 +232,7 @@ module Swars
 
     describe "段級差" do
       def case1(*keys)
-        Battle.create!(csa_seq: KifuGenerator.generate_n(20)) { |e|
+        Battle.create!(csa_seq: KifuGenerator.generate_n(45)) { |e|
           keys.each do |key|
             e.memberships.build(user: User.create!(grade_key: key))
           end

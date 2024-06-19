@@ -28,7 +28,7 @@ module Swars
 
         ################################################################################
 
-        { key: "指導対局で勝った (平手)", body: proc { pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "指導対局でプロに平手で勝った", body: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
 
         ################################################################################
 
@@ -36,7 +36,7 @@ module Swars
 
         ################################################################################
 
-        { key: "不安定な通信環境で対局",           local_only: false, body: proc { unstable_network_stat.count                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "通信環境が不安定なのに対局",           local_only: false, body: proc { unstable_network_stat.count                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "逆棋力詐欺",                       local_only: false, body: proc { gdiff_stat.row_grade_pretend_count            }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "投了せずに放置",                   local_only: false, body: proc { leave_alone_stat.count                        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
@@ -45,6 +45,7 @@ module Swars
         { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "必勝形から焦らして悦に入った",     local_only: false, body: proc { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.count                           }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
+        { key: "わざと負けて棋力調整",             local_only: false, body: proc { skill_adjust_stat.count                          }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "飛車不成",                         local_only: false, body: proc { tag_stat.counts_hash[:"飛車不成"]             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
         { key: "先手なのに千日手で逃げた",         local_only: false, body: proc { draw_stat.black_sennichi_count                }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, },
