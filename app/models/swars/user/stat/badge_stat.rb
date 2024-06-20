@@ -3,8 +3,6 @@
 module Swars
   module User::Stat
     class BadgeStat < Base
-      attr_reader :stat
-
       delegate *[
         :params,
         :tag_stat,
@@ -18,7 +16,7 @@ module Swars
       end
 
       def active_badges
-        BadgeInfo.find_all { |e| instance_eval(&e.if_cond) || badge_debug }
+        BadgeInfo.find_all { |e| stat.instance_eval(&e.if_cond) || badge_debug }
       end
 
       def active_badge_keys
@@ -30,26 +28,26 @@ module Swars
       end
 
       def active?(key)
-        instance_eval(&BadgeInfo[key].if_cond)
+        stat.instance_eval(&BadgeInfo[key].if_cond)
       end
 
       def to_debug_hash
         {
-          "対象サンプル数"      => stat.ids_count,
-          "勝ち数"              => stat.win_count,
-          "負け数"              => stat.lose_count,
-          "居飛車率"            => stat.win_stat.to_h[:"居飛車"],
-          "振り飛車率"          => stat.win_stat.to_h[:"振り飛車"],
-          "居玉勝率"            => stat.win_stat.to_h[:"居玉"],
-          "アヒル囲い率"        => stat.win_stat.to_h[:"アヒル囲い"],
-          "嬉野流率"            => stat.win_stat.to_h[:"嬉野流"],
-          "棋風"                => stat.rarity_stat.ratios_hash,
-          "1手詰を焦らした回数" => stat.taunt_mate_stat.count,
+          "対象サンプル数"       => stat.ids_count,
+          "勝ち数"               => stat.win_count,
+          "負け数"               => stat.lose_count,
+          "居飛車率"             => stat.win_stat.to_h[:"居飛車"],
+          "振り飛車率"           => stat.win_stat.to_h[:"振り飛車"],
+          "居玉勝率"             => stat.win_stat.to_h[:"居玉"],
+          "アヒル囲い率"         => stat.win_stat.to_h[:"アヒル囲い"],
+          "嬉野流率"             => stat.win_stat.to_h[:"嬉野流"],
+          "棋風"                 => stat.rarity_stat.ratios_hash,
+          "1手詰を焦らした回数"  => stat.taunt_mate_stat.count,
           "必勝形で焦らした回数" => stat.taunt_timeout_stat.count,
-          "絶対投了しない回数"  => stat.leave_alone_stat.count,
-          "棋神降臨疑惑対局数"  => stat.fraud_stat.count,
-          "最大連勝連敗"        => stat.win_lose_streak_stat.to_h,
-          "タグの重み"          => stat.win_stat.to_h,
+          "絶対投了しない回数"   => stat.leave_alone_stat.count,
+          "棋神降臨疑惑対局数"   => stat.fraud_stat.count,
+          "最大連勝連敗"         => stat.win_lose_streak_stat.to_h,
+          "タグの重み"           => stat.win_stat.to_h,
         }
       end
 
@@ -58,7 +56,7 @@ module Swars
       def execution_time_explain(sort: true)
         av = BadgeInfo.values.shuffle.collect { |e|
           if_cond = nil
-          ms = Benchmark.ms { if_cond = !!instance_eval(&e.if_cond) }
+          ms = Benchmark.ms { if_cond = !!stat.instance_eval(&e.if_cond) }
           [ms, e, if_cond]
         }
         if sort

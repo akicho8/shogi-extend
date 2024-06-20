@@ -8,15 +8,15 @@ module Swars
         :total_judge_counts,
       ], to: :stat
 
-      # 投了を究めた率
-      def toryo_ratio
-        kiwame_ratio(:TORYO)
-      end
+      # # 投了を究めた率
+      # def toryo_ratio
+      #   kiwame_ratio(:TORYO)
+      # end
 
-      # 詰まされるのを究めた率
-      def checkmate_ratio
-        kiwame_ratio(:CHECKMATE)
-      end
+      # # 詰まされるのを究めた率
+      # def checkmate_ratio
+      #   kiwame_ratio(:CHECKMATE)
+      # end
 
       # 特定の負け方を究めた率
       def kiwame_ratio(final_key)

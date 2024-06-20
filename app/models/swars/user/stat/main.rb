@@ -146,6 +146,10 @@ module Swars
         @piece_stat ||= PieceStat.new(self)
       end
 
+      def piece_master_stat
+        @piece_master_stat ||= PieceMasterStat.new(self)
+      end
+
       def note_stat
         @note_stat ||= NoteStat.new(self)
       end

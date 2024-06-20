@@ -55,6 +55,7 @@ module Swars
         if r.ban?
           @found_count += 1
           @rows = (@rows + [user.to_h.merge("マイページ" => r.oneline)]).take(@options[:log_limit])
+          AppLog.important(subject: "[BAN] #{user.key}", body: user.to_h.to_t)
         end
       end
       @all_users = (@all_users + [user.to_h]).take(@options[:log_limit])

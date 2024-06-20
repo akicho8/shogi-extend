@@ -28,20 +28,9 @@ module Swars
         :ids_scope,
       ], to: :stat
 
-      # 「飛」なら「飛」と「龍」の両方で平均を上まったか？ FIXME: bioshogi に移動する？
-      def many_used2(piece_name)
-        many_used1(piece_name) && many_used1(Bioshogi::Piece[piece_name.to_s].promoted_name.to_sym)
-      end
-
-      def many_used1(piece_name)
-        ratios_hash.fetch(piece_name) > FrequencyInfo[piece_name].ratio
-      end
-
       def to_chart
-        @to_chart ||= yield_self do
-          FrequencyInfo.collect do |e|
-            { name: e.name, value: ratio_of(e.two_char_key) }
-          end
+        @to_chart ||= FreqPieceInfo.collect do |e|
+          { name: e.name, value: ratio_of(e.two_char_key) }
         end
       end
 

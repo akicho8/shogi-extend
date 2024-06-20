@@ -39,7 +39,7 @@
 
 module Swars
   module User::Stat
-    class FrequencyInfo
+    class FreqPieceInfo
       include ApplicationMemoryRecord
       memory_record [
         { key: "杏", ratio: 0.0012432623567665045, },
