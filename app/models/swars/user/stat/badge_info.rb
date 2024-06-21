@@ -137,8 +137,8 @@ module Swars
         ################################################################################ 結末
 
         { key: "切断マン",       icon: "💩",   message: "切断の使い手",       if_cond: proc { (judge_final_stat.count_by(:lose, :DISCONNECT) || 0).positive? },},
-        { key: "投了マン",       icon: "🙇‍♂️", message: "投了を究めた",       if_cond: proc { (judge_final_stat.kiwame_ratio(:TORYO) || 0).positive? }, },
-        { key: "詰まされマン",   icon: "Ⓜ️",    message: "Mの傾向がある",      if_cond: proc { (judge_final_stat.kiwame_ratio(:CHECKMATE) || 0).positive? }, },
+        { key: "投了マン",       icon: "🙇‍♂️", message: "投了を究めた",       if_cond: proc { (judge_final_stat.kiwame_ratio(:TORYO) || 0) >= 1.0 }, },
+        { key: "詰まされマン",   icon: "Ⓜ️",    message: "Mの傾向がある",      if_cond: proc { (judge_final_stat.kiwame_ratio(:CHECKMATE) || 0) >= 1.0 }, },
         { key: "切れ負けマン",   icon: "⌛",   message: "切れ負けの常連",     if_cond: proc { (judge_final_stat.kiwame_ratio(:TIMEOUT) || 0) >= 0.25 },},
         { key: "タイムキーパー", icon: "⏰",   message: "時間の使い方が上手", if_cond: proc { (judge_final_stat.kiwame_ratio(:TIMEOUT) || 1.0).zero? },},
       ]
