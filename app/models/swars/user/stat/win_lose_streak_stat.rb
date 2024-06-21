@@ -11,17 +11,8 @@ module Swars
         max(:win) >= 10
       end
 
-      def ten_lose?
-        max(:lose) >= 10
-      end
-
       def waves_strong?
         max(:win) >= 8 && max(:lose) >= 8
-      end
-
-      # なければ nil を返す
-      def positive_max(key)
-        to_h[key]
       end
 
       # 連勝・連敗

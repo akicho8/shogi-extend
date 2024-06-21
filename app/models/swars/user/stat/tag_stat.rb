@@ -5,22 +5,22 @@ module Swars
     class TagStat < Base
       class << self
         def report(options = {})
-          User::Vip.auto_crawl_user_keys.collect { |user_key|
+          options = {
+            :user_keys  => User::Vip.auto_crawl_user_keys,
+            :sample_max => 200,
+          }.merge(options)
+
+          options[:user_keys].collect { |user_key|
             if user = User[user_key]
               tag_stat = user.stat(options).tag_stat
               {
-                :user_key       => user.key,
-                :bad_tactic_count   => tag_stat.bad_tactic_count,
-                :muriseme_level => tag_stat.muriseme_level,
-                # "ブッチ win"   => tag_stat.win_count_by(:"大駒全ブッチ"),
-                # "ブッチ lose"  => tag_stat.lose_count_by(:"大駒全ブッチ"),
-                # "ブッチ 効果"  => tag_stat.ratios_hash[:"大駒全ブッチ"].to_f.try { "%.2f" % self },
+                :user_key          => user.key,
+                "無理攻めペナ"     => tag_stat.reckless_attack_level,
+                "全駒全ブッチ効果" => tag_stat.ratios_hash[:"大駒全ブッチ"].try { "%.2f" % self },
+                "全駒全ブッチ"     => tag_stat.win_count_diff(:"大駒全ブッチ"),
               }
             end
-          }.compact.sort_by { |e| e[:muriseme_level].to_f }
-          #   .collect do |e|
-          #   e.merge(:muriseme_level => e[:muriseme_level].try { "%.2f" % self })
-          # end
+          }.compact.sort_by { |e| -e["無理攻めペナ"].to_f }
         end
       end
 
@@ -38,19 +38,21 @@ module Swars
 
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"角不成", swap: true)   # => {:win=>9, :lose=>4}
       # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.to_win_lose_h(:"飛車不成", swap: true) # => {:win=>2, :lose=>3}
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"角不成")                   # => true
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"角不成")                    # => false
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.yarareta?(:"飛車不成")                 # => false
-      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.taosita?(:"飛車不成")                  # => true
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.lose_with?(:"角不成")                   # => true
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.win_with?(:"角不成")                    # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.lose_with?(:"飛車不成")                 # => false
+      # Swars::User["chrono_"].stat(sample_max: 1000).op_tag_stat.win_with?(:"飛車不成")                  # => true
 
-      def taosita?(tag)
+      # tag を使ってトータルで勝ち越した
+      def win_with?(tag)
         assert_tag(tag)
         if v = ratios_hash[tag]
           v > 0.5
         end
       end
 
-      def yarareta?(tag)
+      # tag を使ってトータルで負け越した
+      def lose_with?(tag)
         assert_tag(tag)
         if v = ratios_hash[tag]
           v < 0.5
@@ -59,18 +61,19 @@ module Swars
 
       ################################################################################
 
-      def muriseme_level(tag = nil)
-        tag ||= :"大駒全ブッチ"
-        if count_by(tag) >= Config.kiwame_count_gteq        # 最低N回以上使って
-          # v = 0.5 - ratios_hash[tag] # 0.5 に足りないぶんだけ無理攻めしている
-          # if v.positive?
-          #   v
-          # end
-          diff = lose_count_by(tag) - win_count_by(tag)
-          if diff.positive?
-            diff
+      # 無理攻めの度合い
+      def reckless_attack_level
+        tag = :"大駒全ブッチ"
+        if count_by(tag) >= Config.master_count_gteq
+          diff = win_count_diff(tag)
+          if diff.negative?
+            -diff
           end
         end
+      end
+
+      def win_count_diff(tag)
+        win_count_by(tag) - lose_count_by(tag)
       end
 
       ################################################################################
@@ -195,7 +198,7 @@ module Swars
 
       def tag_chart_build(tag, options = {})
         options = {
-          swap: false,
+          :swap => false,
         }.merge(options)
 
         if judge_counts = to_win_lose_h(tag, options)

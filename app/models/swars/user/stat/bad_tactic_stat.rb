@@ -5,7 +5,11 @@ module Swars
     class BadTacticStat < Base
       class << self
         def report(options = {})
-          User::Vip.auto_crawl_user_keys.collect { |user_key|
+          options = {
+            :user_keys => User::Vip.auto_crawl_user_keys,
+          }.merge(options)
+
+          options[:user_keys].collect { |user_key|
             if user = User[user_key]
               bad_tactic_stat = user.stat(options).bad_tactic_stat
               {

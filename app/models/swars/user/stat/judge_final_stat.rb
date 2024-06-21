@@ -8,20 +8,12 @@ module Swars
         :total_judge_counts,
       ], to: :stat
 
-      # # 投了を究めた率
-      # def toryo_ratio
-      #   kiwame_ratio(:TORYO)
-      # end
-
-      # # 詰まされるのを究めた率
-      # def checkmate_ratio
-      #   kiwame_ratio(:CHECKMATE)
-      # end
-
       # 特定の負け方を究めた率
-      def kiwame_ratio(final_key)
-        if (count_by(:lose, final_key) || 0) >= Config.kiwame_count_gteq
-          ratio_by(:lose, final_key)
+      def master_ratio(final_key)
+        if count = count_by(:lose, final_key)
+          if count >= Config.master_count_gteq
+            ratio_by(:lose, final_key)
+          end
         end
       end
 

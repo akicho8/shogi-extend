@@ -5,7 +5,11 @@ module Swars
     class GdiffStat < Base
       class << self
         def report(options = {})
-          User::Vip.auto_crawl_user_keys.collect { |user_key|
+          options = {
+            :user_keys => User::Vip.auto_crawl_user_keys,
+          }.merge(options)
+
+          options[:user_keys].collect { |user_key|
             if user = User[user_key]
               gdiff_stat = user.stat(options).gdiff_stat
               {
@@ -33,7 +37,7 @@ module Swars
 
       # 段級位差平均の絶対値
       def abs
-        @abs ||= average&.abs
+        @abs ||= average.try { abs }
       end
 
       # 逆棋力詐欺 (恐怖の級位者状態)

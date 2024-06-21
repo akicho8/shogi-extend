@@ -6,10 +6,11 @@ module Swars
       class << self
         def report(options = {})
           options = {
-            sample_max: 500,
+            :user_keys  => User::Vip.auto_crawl_user_keys,
+            :sample_max => 500,
           }.merge(options)
 
-          User::Vip.auto_crawl_user_keys.collect { |user_key|
+          options[:user_keys].collect { |user_key|
             if user = User[user_key]
               stat = user.stat(options)
               if stat.ids_count >= 100

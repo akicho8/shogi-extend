@@ -18,7 +18,7 @@ module Swars
               {
                 "ウォーズID" => user.key,
                 "件数"       => stat.ids_count,
-                "点"         => gentleman_stat.final_score&.floor,
+                "点"         => gentleman_stat.final_score.try { floor },
                 **gentleman_stat.to_h,
               }
             end

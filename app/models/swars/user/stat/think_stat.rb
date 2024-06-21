@@ -5,7 +5,11 @@ module Swars
     class ThinkStat < Base
       class << self
         def report(options = {})
-          User::Vip.auto_crawl_user_keys.collect { |user_key|
+          options = {
+            :user_keys => User::Vip.auto_crawl_user_keys,
+          }.merge(options)
+
+          options[:user_keys].collect { |user_key|
             if user = User[user_key]
               think_stat = user.stat(options).think_stat
               {
@@ -30,7 +34,7 @@ module Swars
 
       # 平均思考
       def average
-        @average ||= ids_scope.average(:think_all_avg)&.to_f
+        @average ||= ids_scope.average(:think_all_avg).try { to_f }
       end
 
       # 指し手が異常に遅い度合い

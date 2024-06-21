@@ -32,7 +32,7 @@ module Swars
 
         ################################################################################
 
-        { key: "行動規範", local_only: false, body: proc { gentleman_stat.final_score&.floor }, chart_type: :simple, chart_options: { zero_allow: true, simple_type: :numeric_with_unit, unit: "点", }, },
+        { key: "行動規範", local_only: false, body: proc { gentleman_stat.final_score.try { floor } }, chart_type: :simple, chart_options: { zero_allow: true, simple_type: :numeric_with_unit, unit: "点", }, },
 
         ################################################################################
 
@@ -79,8 +79,8 @@ module Swars
 
         ################################################################################
 
-        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { win_lose_streak_stat.positive_max(:win)  }, },
-        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { win_lose_streak_stat.positive_max(:lose) }, },
+        { key: "連勝", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連勝", }, body: proc { win_lose_streak_stat.max(:win)  }, },
+        { key: "連敗", chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "連敗", }, body: proc { win_lose_streak_stat.max(:lose) }, },
 
         ################################################################################
 
