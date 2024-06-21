@@ -106,7 +106,7 @@ class KifuParser
   end
 
   def to_kento_tiny_url
-    @kento_tiny_url ||= TinyUrl.from(to_kento_url)
+    @to_kento_tiny_url ||= TinyUrl.from(to_kento_url)
   end
 
   # for app/models/battle_decorator/base.rb

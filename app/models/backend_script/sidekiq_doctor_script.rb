@@ -40,7 +40,7 @@ module BackendScript
     end
 
     def namespace
-      @ns ||= Sidekiq.redis { |conn| conn.respond_to?(:namespace) ? conn.namespace : nil }
+      @namespace ||= Sidekiq.redis { |conn| conn.respond_to?(:namespace) ? conn.namespace : nil }
     end
   end
 end
