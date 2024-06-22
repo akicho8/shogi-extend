@@ -27,11 +27,6 @@ module Swars
               :with_search_params => e.with_search_params,
               :body               => body,
             }
-            if Rails.env.local?
-              if e.bottom_message
-                hv[:bottom_message] = @stat.instance_eval(&e.bottom_message)
-              end
-            end
             m << hv
           end
         end

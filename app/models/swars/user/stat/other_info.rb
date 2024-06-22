@@ -133,7 +133,6 @@ module Swars
         {
           key: "勝敗別平均手数",
           body: proc { average_moves_by_outcome_stat.to_chart },
-          bottom_message: proc { average_moves_by_outcome_stat.bottom_message },
           chart_type: :pie,
           chart_options: { pie_type: :is_many_values, },
         },

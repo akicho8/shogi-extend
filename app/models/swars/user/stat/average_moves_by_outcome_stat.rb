@@ -21,22 +21,6 @@ module Swars
         end
       end
 
-      # こんなよくわからない二択のメッセージを出すより単刀直入に「不屈の闘志」を整数値で出す方がよい
-      def bottom_message
-        if averages_hash
-          win  = averages_hash[:win]
-          lose = averages_hash[:lose]
-          if win && lose
-            case
-            when lose < win
-              "負けそうなときは諦めがちなタイプ"
-            when lose > win
-              "負けそうなときも粘り強く指すタイプ"
-            end
-          end
-        end
-      end
-
       # {:win => 0.971469e2, :lose => 0.1110962e3, :draw => 0.29e2}
       def averages_hash
         @averages_hash ||= yield_self do
