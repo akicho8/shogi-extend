@@ -1,9 +1,10 @@
 <template lang="pug">
 .FriendlyPie.is-unselectable(:class="`pie_type_${info.chart_options.pie_type}`")
-  canvas(ref="main_canvas")
+  canvas(ref="main_canvas" @click="click_handle")
 </template>
 
 <script>
+import { Gs } from "@/components/models/gs.js"
 import { PaletteGenerator } from "@/components/models/palette_generator.js"
 
 const CHART_CONFIG_DEFAULT = {
@@ -60,6 +61,7 @@ export default {
   ],
   props: {
     info: { type: Object, required: true, },  // [{name: ..., value: ...}, ...]
+    callback_fn: { type: Function, required: false, }
     // chart_options: { type: Object, default: {}, },
   },
   created() {
@@ -91,6 +93,19 @@ export default {
   },
   mounted() {
     this.chart_create()
+  },
+  methods: {
+    click_handle(e) {
+      const active_points = this._chart_instance.getElementsAtEvent(e)
+      if (active_points.length >= 1) {
+        const index = active_points[0]["_index"]
+        const name = this.extract_labels[index]
+        this.debug_alert(name)
+        if (this.callback_fn) {
+          this.callback_fn(name)
+        }
+      }
+    },
   },
   computed: {
     data_list()      { return this.info.body || []             },

@@ -14,7 +14,7 @@ module Swars
 
         { key: "絶対投了しないマン",     icon: "🪳",   message: "悔しかったので時間切れまで放置した",     if_cond: proc { leave_alone_stat.count.positive? } },
         { key: "無気力マン",             icon: "🦥",   message: "無気力な対局をした",                     if_cond: proc { lethargy_stat.exist? } },
-        { key: "棋力調整マン",           icon: "🦇",   message: "わざと負けて棋力を調整した",             if_cond: proc { skill_adjust_stat.exist? } },
+        { key: "棋力調整マン",           icon: "🦇",   message: "わざと負けて棋力を調整した",             if_cond: proc { skill_adjust_stat.count.positive? } },
         { key: "大長考マン",             icon: "😴",   message: "対局放棄と受け取られかねない長考をした", if_cond: proc { prolonged_deliberation_stat.count.positive? } },
         { key: "1手詰じらしマン",        icon: "😈",   message: "1手詰を焦らして歪んだ優越感に浸った",    if_cond: proc { taunt_mate_stat.count.positive? } },
         { key: "必勝形じらしマン",       icon: "😈",   message: "必勝形から焦らして優越感に浸った",       if_cond: proc { taunt_timeout_stat.count.positive? } },

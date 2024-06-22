@@ -3,6 +3,29 @@
 module Swars
   module User::Stat
     class TauntStat < Base
+      class << self
+        def search_params(final_key)
+          {
+            "勝敗"     => "勝ち",
+            "最終思考" => [">=", threshold].join,
+            "結末"     => final_key,
+          }
+        end
+
+        def search_params_max(final_key)
+          {
+            **search_params(final_key),
+            :sort_column => "membership.think_last", # FIXME: いいのか？
+            :sort_order  => "desc",
+          }
+        end
+
+      end
+
+      cattr_accessor(:threshold) do
+        RuleInfo[:three_min].ittezume_jirasi_sec # 45秒
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -53,10 +76,6 @@ module Swars
         s = s.where(Membership.arel_table[:think_last].gteq(threshold))
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq(@final_key))
-      end
-
-      def threshold
-        RuleInfo[:three_min].ittezume_jirasi_sec # 45秒
       end
     end
   end

@@ -8,7 +8,7 @@ module Swars
         Battle.create!(csa_seq: KifuGenerator.generate_n(n), final_key: final_key) do |e|
           e.memberships.build(user: @black, judge_key: :lose)
         end
-        @black.stat.skill_adjust_stat.exist?
+        @black.stat.skill_adjust_stat.count.positive?
       end
 
       it "works" do

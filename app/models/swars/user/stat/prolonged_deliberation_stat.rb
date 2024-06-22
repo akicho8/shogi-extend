@@ -3,6 +3,18 @@
 module Swars
   module User::Stat
     class ProlongedDeliberationStat < Base
+      class << self
+        def search_params
+          {
+            "最大思考" => [">=", threshold].join,
+          }
+        end
+      end
+
+      cattr_accessor(:threshold) do
+        RuleInfo[:ten_min].kangaesugi_like_houti_sec
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -14,10 +26,6 @@ module Swars
           s = s.where(Membership.arel_table[:think_max].gteq(threshold))
           s.count
         end
-      end
-
-      def threshold
-        RuleInfo[:ten_min].kangaesugi_like_houti_sec
       end
     end
   end

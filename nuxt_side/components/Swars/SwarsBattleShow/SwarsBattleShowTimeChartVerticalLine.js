@@ -96,7 +96,7 @@ export default {
 
   watch: {
     chart_turn(v, ov) {
-      this.debug_alert(`watch chart_turn ${ov} => ${v}`)
+      this.clog(`watch chart_turn ${ov} => ${v}`)
       this._chart_config.chart_turn = v
       this.chart_update()
     },

@@ -3,13 +3,18 @@
 module Swars
   module User::Stat
     class SkillAdjustStat < Base
+      class << self
+        def search_params
+          {
+            "勝敗" => "負け",
+            "手数" => ["<", Config.seiritsu_gteq].join,
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat
-
-      def exist?
-        count.positive?
-      end
 
       def count
         @count ||= yield_self do

@@ -5,10 +5,10 @@
       .box.two_column
         .columns.is-mobile.is-gapless.is-marginless
           .column.is-paddingless.box_head
-            nuxt-link.box_title(
-              :tag="row.with_search_params ? 'a' : 'div'"
-              :to="row.with_search_params ? TheApp.search_path(row.with_search_params) : {}"
-              @click.native="row.with_search_params && $sound.play_click()"
+            component.box_title(
+              :is="row.with_search.params ? 'nuxt-link' : 'div'"
+              :to="row.with_search.params && TheApp.search_path(row.with_search.params)"
+              @click.native="row.with_search.params && $sound.play_click()"
               )
               | {{row.name}}
         .columns.is-gapless.is-centered
@@ -17,18 +17,18 @@
               WinLoseCircle(
                 v-if="row.body"
                 :info="row.body"
-                :to_fn="params => TheApp.search_path({...row.with_search_params, ...params})"
+                :to_fn="params => TheApp.search_path({...row.with_search.params, ...params})"
                 size="is-small")
             template(v-if="row.chart_type === 'bar'")
               FriendlyBar(:info="row")
             template(v-if="row.chart_type === 'pie'")
-              FriendlyPie(:info="row")
+              FriendlyPie(:info="row" :callback_fn="name => pie_click_handle(row, name)")
             template(v-if="row.chart_type === 'simple'")
-              nuxt-link.value_block.py-1(
+              component.value_block.py-1(
+                :is="row.with_search.params ? 'nuxt-link' : 'div'"
                 :class="`is_simple_type-${row.chart_options.simple_type}`"
-                :tag="row.with_search_params ? 'a' : 'div'"
-                :to="row.with_search_params ? TheApp.search_path(row.with_search_params) : {}"
-                @click.native="row.with_search_params && $sound.play_click()"
+                :to="row.with_search.params && TheApp.search_path(row.with_search.params)"
+                @click.native="row.with_search.params && $sound.play_click()"
                 )
                 template(v-if="row.chart_options.simple_type === 'second'")
                   template(v-if="time_min(row) >= 1")
@@ -55,6 +55,14 @@ export default {
   methods: {
     time_min(row) { return Math.floor(row.body / 60) },
     time_sec(row) { return row.body % 60             },
+
+    pie_click_handle(row, name) {
+      if (row.with_search.key) {
+        const params = {[row.with_search.key]: name}
+        const path = this.TheApp.search_path({...row.with_search.params, ...params})
+        this.$router.push(path)
+      }
+    },
   },
 }
 </script>

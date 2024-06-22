@@ -4,9 +4,9 @@
 
     // WIN
     .level-item.has-text-centered.win.win_lose_counts
-      nuxt-link.heading_with_title(
-        :tag="to_fn ? 'a' : 'div'"
-        :to="to_fn ? jump_path('win') : {}"
+      component.heading_with_title(
+        :is="to_fn ? 'nuxt-link' : 'div'"
+        :to="to_fn && jump_path('win')"
         @click.native="to_fn && $sound.play_click()"
         )
         .heading WIN
@@ -28,9 +28,9 @@
 
     // LOSE
     .level-item.has-text-centered.lose.win_lose_counts
-      nuxt-link.heading_with_title(
-        :tag="to_fn ? 'a' : 'div'"
-        :to="to_fn ? jump_path('lose') : {}"
+      component.heading_with_title(
+        :is="to_fn ? 'nuxt-link' : 'div'"
+        :to="to_fn && jump_path('lose')"
         @click.native="to_fn && $sound.play_click()"
         )
         .heading LOSE
