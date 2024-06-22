@@ -28,7 +28,7 @@ module Swars
 
         ################################################################################
 
-        { key: "指導対局でプロに平手で勝った", body: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: nil, }, },
+        { key: "指導対局でプロに平手で勝った", body: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProSkillExceedStat.search_params, }, },
 
         ################################################################################
 
@@ -41,7 +41,7 @@ module Swars
         { key: "逆棋力詐欺",                       local_only: false, body: proc { gdiff_stat.row_grade_pretend_count            }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: GdiffStat.search_params, }, },
         { key: "投了せずに放置",                   local_only: false, body: proc { leave_alone_stat.count                        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: LeaveAloneStat.search_params, }, },
 
-        { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: nil, }, },
+        { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: WaitingToLeaveStat.search_params, }, },
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.count             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProlongedDeliberationStat.search_params, }, },
         { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntStat.search_params("詰み"), }, },
         { key: "必勝形から焦らして悦に入った",     local_only: false, body: proc { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntStat.search_params("時間切れ"), }, },
@@ -148,7 +148,7 @@ module Swars
 
         ################################################################################
 
-        { key: "投了せずに放置した時間 (最長)", body: proc { leave_alone_stat.max               }, chart_type: :simple, chart_options: { simple_type: :second,                        }, },
+        { key: "投了せずに放置した時間 (最長)", body: proc { leave_alone_stat.max               }, chart_type: :simple, chart_options: { simple_type: :second,                        }, with_search: { params: LeaveAloneStat.search_params_max } },
         { key: "投了せずに放置した頻度",        body: proc { leave_alone_stat.to_chart          }, chart_type: :pie,    chart_options: { pie_type: :is_many_values,                   }, },
 
         ################################################################################
@@ -170,12 +170,12 @@ module Swars
         ################################################################################
 
         { key: "投了までの心の準備",        body: proc { resignation_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
-        { key: "投了までの心の準備 (最長)", body: proc { resignation_stat.max          }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
+        { key: "投了までの心の準備 (最長)", body: proc { resignation_stat.max          }, chart_type: :simple, chart_options: { simple_type: :second,      }, with_search: { params: ResignationStat.search_params_max }},
         { key: "投了までの心の準備 (平均)", body: proc { resignation_stat.average      }, chart_type: :simple, chart_options: { simple_type: :second,      }, },
 
         ################################################################################
 
-        { key: "最長考",   body: proc { think_stat.max                      }, chart_type: :simple, chart_options: { simple_type: :second, }, },
+        { key: "最長考",   body: proc { think_stat.max                      }, chart_type: :simple, chart_options: { simple_type: :second, }, with_search: { params: ThinkStat.search_params_max } },
         { key: "平均思考", body: proc { think_stat.average.try { round(2) } }, chart_type: :simple, chart_options: { simple_type: :second, }, },
 
         {
@@ -203,12 +203,13 @@ module Swars
 
         {
           key: "対戦相手との段級差 (平均)",
+          body: proc { gdiff_stat.average.try { round(2) } },
           chart_type: :simple,
           chart_options: {
             zero_allow: true,
             simple_type: :raw,
           },
-          body: proc { gdiff_stat.average.try { round(2) } }
+          with_search: { params: GdiffStat.search_params_sort },
         },
 
         ################################################################################
@@ -236,11 +237,12 @@ module Swars
 
         {
           key: "右玉ファミリー",
+          body: proc { right_king_stat.to_names_chart },
           chart_type: :pie,
           chart_options: {
             pie_type: :is_many_values,
           },
-          body: proc { right_king_stat.to_names_chart },
+          with_search: { key: "tag", },
         },
 
         ################################################################################

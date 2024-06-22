@@ -11,6 +11,14 @@ module Swars
             "最終思考" => [">=", RuleInfo[:ten_min].toryo_houti_sec].join,
           }
         end
+
+        def search_params_max
+          {
+            **search_params,
+            :sort_column => "membership.think_last",
+            :sort_order  => "desc",
+          }
+        end
       end
 
       delegate *[

@@ -6,7 +6,7 @@
     .level-item.has-text-centered.win.win_lose_counts
       component.heading_with_title(
         :is="to_fn ? 'nuxt-link' : 'div'"
-        :to="to_fn && jump_path('win')"
+        :to="jump_path('win')"
         @click.native="to_fn && $sound.play_click()"
         )
         .heading WIN
@@ -30,7 +30,7 @@
     .level-item.has-text-centered.lose.win_lose_counts
       component.heading_with_title(
         :is="to_fn ? 'nuxt-link' : 'div'"
-        :to="to_fn && jump_path('lose')"
+        :to="jump_path('lose')"
         @click.native="to_fn && $sound.play_click()"
         )
         .heading LOSE
@@ -85,13 +85,12 @@ export default {
   mixins: [chart_mixin],
 
   props: {
-    info:         { required: true,                },  // {win: 1, lose: 2}
+    info:         { required: true,                },  // { judge_counts: {win: 1, lose: 2} }
     size:         { default: "is-default",         },  // is-default or is-small
     narrowed:     { default: false,                },  // true: 狭くする
     total_show_p: { default: true,                 },  // true: win + lose の合計を表示する
-    // to_fn:    { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
-    to_fn: { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
-    jump_path_fn2: { type: Object, default: null,  },  // $emit にしていないのは is-clickable のフラグとするためでもある
+    to_fn:        { type: Function, default: null, },  // $emit にしていないのはフラグとして利用するため
+    search_key:   { default: "勝敗",               },  // WIN or LOSE をクリックしたときに飛ばすときのキー (これいる？)
   },
 
   created() {
@@ -115,34 +114,20 @@ export default {
   },
 
   methods: {
-    click_handle(judge_key) {
-      if (this.to_fn) {
-        this.to_fn(JudgeInfo.fetch(judge_key), this.info.click_func_options || {})
-      }
-    },
     jump_path(judge_key) {
       if (this.to_fn) {
-        // return this.to_fn({...this.jump_path_fn2, "勝敗": JudgeInfo.fetch(judge_key).name})
-        return this.to_fn({"勝敗": JudgeInfo.fetch(judge_key).name})
+        return this.to_fn({[this.search_key]: JudgeInfo.fetch(judge_key).name})
       }
     },
   },
 
   computed: {
-    win()           { return this.info.judge_counts.win ?? 0    },
-    lose()          { return this.info.judge_counts.lose ?? 0   },
-    win_lose_pair() { return [this.win, this.lose] },
-    total()         { return this.win + this.lose  },
-    rate()          { return this.win / this.total },
-
-    rate_human() {
-      if (this.total === 0) {
-        return ""
-      }
-      return Math.floor(this.rate * 100)
-    },
-
-    win_lose_clickable_p() { return !!this.to_fn           },
+    win()           { return this.info.judge_counts.win ?? 0                     },
+    lose()          { return this.info.judge_counts.lose ?? 0                    },
+    win_lose_pair() { return [this.win, this.lose]                               },
+    total()         { return this.win + this.lose                                },
+    rate()          { return this.win / this.total                               },
+    rate_human()    { return this.total === 0 ? "" : Math.floor(this.rate * 100) },
   },
 }
 </script>

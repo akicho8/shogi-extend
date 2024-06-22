@@ -19,7 +19,6 @@ module Swars
             :sort_order  => "desc",
           }
         end
-
       end
 
       cattr_accessor(:threshold) do

@@ -40,13 +40,14 @@ RSpec.describe QueryInfo do
   end
 
   it "比較演算子" do
-    assert { QueryInfo.parse("foo:>=").lookup_one(:foo)   == ">="                               }
-    assert { QueryInfo.parse("foo:>=-1").lookup_one(:foo) == {:operator => :gteq, :value => -1} }
-    assert { QueryInfo.parse("foo:>=1").lookup_one(:foo)  == {:operator => :gteq, :value => 1 } }
-    assert { QueryInfo.parse("foo:>").lookup_one(:foo)    == ">"                                }
-    assert { QueryInfo.parse("foo:>-1").lookup_one(:foo)  == {:operator => :gt,   :value => -1} }
-    assert { QueryInfo.parse("foo:>1").lookup_one(:foo)   == {:operator => :gt,   :value => 1 } }
-    assert { QueryInfo.parse("foo:=").lookup_one(:foo)    == "="                                }
-    assert { QueryInfo.parse("foo:==1").lookup_one(:foo)  == {:operator => :eq,   :value => 1 } }
+    assert { QueryInfo.parse("foo:>=").lookup_one(:foo)   == ">="                                 }
+    assert { QueryInfo.parse("foo:>=-1").lookup_one(:foo) == {:operator => :gteq,   :value => -1} }
+    assert { QueryInfo.parse("foo:>=1").lookup_one(:foo)  == {:operator => :gteq,   :value => 1 } }
+    assert { QueryInfo.parse("foo:>").lookup_one(:foo)    == ">"                                  }
+    assert { QueryInfo.parse("foo:>-1").lookup_one(:foo)  == {:operator => :gt,     :value => -1} }
+    assert { QueryInfo.parse("foo:>1").lookup_one(:foo)   == {:operator => :gt,     :value => 1 } }
+    assert { QueryInfo.parse("foo:=").lookup_one(:foo)    == "="                                  }
+    assert { QueryInfo.parse("foo:==1").lookup_one(:foo)  == {:operator => :eq,     :value => 1 } }
+    assert { QueryInfo.parse("foo:!=1").lookup_one(:foo)  == {:operator => :not_eq, :value => 1 } }
   end
 end

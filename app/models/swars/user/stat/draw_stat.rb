@@ -7,9 +7,9 @@ module Swars
         # 先手なのに千日手のものを引く
         def search_params
           {
-            "先後" => "先手",
             "結末" => "千日手",
             "手数" => [">", Config.sennitite_eq].join,
+            "先後" => "先手",
           }
         end
       end

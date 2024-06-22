@@ -3,6 +3,17 @@
 module Swars
   module User::Stat
     class ResignationStat < Base
+      class << self
+        def search_params_max
+          {
+            "勝敗"       => "負け",
+            "結末"       => "投了",
+            :sort_column => "membership.think_last",
+            :sort_order  => "desc",
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -65,7 +76,7 @@ module Swars
         @scope ||= yield_self do
           s = ids_scope.lose_only
           s = s.joins(:battle => :final)
-          s = s.where(Battle.arel_table[:turn_max].gteq(14))
+          s = s.where(Battle.arel_table[:turn_max].gteq(Config.seiritsu_gteq))
           s = s.where(Final.arel_table[:key].eq(:TORYO))
           s = Membership.where(id: s.ids) # join をはずすことで 0.3 ms 速くなる
         end

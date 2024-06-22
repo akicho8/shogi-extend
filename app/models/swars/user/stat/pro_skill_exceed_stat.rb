@@ -3,6 +3,16 @@
 module Swars
   module User::Stat
     class ProSkillExceedStat < Base
+      class << self
+        def search_params
+          {
+            "対局モード" => "指導",
+            "手合割"     => "平手",
+            "勝敗"       => "勝ち",
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
         :xmode_judge_stat,

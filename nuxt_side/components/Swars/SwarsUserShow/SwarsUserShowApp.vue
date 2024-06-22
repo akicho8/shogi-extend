@@ -178,6 +178,10 @@ export default {
       .vs_name
         margin-left: 0.5rem
 
+      a:hover
+        background-color: $white-ter
+        border-radius: 3px
+
       .box_head
         display: flex
         align-items: flex-start            // 遭遇率を右「上」に寄せるため
@@ -187,10 +191,6 @@ export default {
 
         a
           +is_decoration_off
-
-        a:hover
-          background-color: $white-ter
-          border-radius: 3px
 
         .box_title
           display: inline-flex

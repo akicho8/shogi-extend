@@ -24,11 +24,20 @@ module Swars
           end
         end
 
+        # 逆棋力詐欺
         def search_params
           {
             "対局モード" => "野良",
             "勝敗"       => "勝ち",
             "段級差"     => [">=", Config.gdiff_penalty_threshold].join,
+          }
+        end
+
+        # 「対戦相手との段級差 (平均)」用の検索リンク
+        def search_params_sort
+          {
+            :sort_column => "membership.grade_diff",
+            :sort_order  => "desc",
           }
         end
       end

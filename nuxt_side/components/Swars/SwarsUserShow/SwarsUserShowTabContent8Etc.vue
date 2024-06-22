@@ -24,7 +24,7 @@
             template(v-if="row.chart_type === 'pie'")
               FriendlyPie(:info="row" :callback_fn="name => pie_click_handle(row, name)")
             template(v-if="row.chart_type === 'simple'")
-              component.value_block.py-1(
+              component.value_block.py-1.px-2(
                 :is="row.with_search.params ? 'nuxt-link' : 'div'"
                 :class="`is_simple_type-${row.chart_options.simple_type}`"
                 :to="row.with_search.params && TheApp.search_path(row.with_search.params)"
@@ -42,8 +42,6 @@
                     | {{row.chart_options.unit}}
                 template(v-else)
                   | {{row.body}}
-            //- .bottom_message(v-if="row.bottom_message")
-            //-   | {{row.bottom_message}}
 </template>
 
 <script>
@@ -58,6 +56,7 @@ export default {
 
     pie_click_handle(row, name) {
       if (row.with_search.key) {
+        this.$sound.play_click()
         const params = {[row.with_search.key]: name}
         const path = this.TheApp.search_path({...row.with_search.params, ...params})
         this.$router.push(path)
@@ -69,25 +68,23 @@ export default {
 
 <style lang="sass">
 .SwarsUserShowTabContent8Etc
+  // 単位のサイズ
+  // 単位があると左にずれて見えるため少し右にずらすと視覚的に中央にあるように見える
+  $unit_size: $size-4
+
   .value_block
-    // color: change_color($primary, $saturation: 40%, $lightness: 50%)
     color: change_color($info, $alpha: 0.8)
-    // letter-spacing: 1rem
   .is_simple_type-second, .is_simple_type-numeric_with_unit
     position: relative
-    right: -1rem
+    right: calc(-1 * #{$unit_size} * 0.25) // 単位は1文字と仮定して少し右にずらす
   .is_simple_type-raw
     __css_keep__: 0
   .unit
-    margin: 0 0.5rem
+    margin-left: 0.5rem
     color: $grey-light
-    font-size: $size-3
+    font-size: $unit_size
   .box
     position: relative
-  .bottom_message
-    color: $grey-light
-    font-size: $size-7
-    margin-top: 0.25rem
 
 .STAGE-development
   .SwarsUserShowTabContent8Etc

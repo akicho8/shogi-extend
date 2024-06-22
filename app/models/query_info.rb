@@ -5,6 +5,7 @@ class QueryInfo
     ">=" => :gteq,
     ">"  => :gt,
     "==" => :eq,
+    "!=" => :not_eq,
     "<=" => :lteq,
     "<"  => :lt,
   }

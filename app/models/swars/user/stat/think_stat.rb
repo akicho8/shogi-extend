@@ -21,6 +21,13 @@ module Swars
             end
           }.compact.sort_by { |e| -e[:average].to_f }
         end
+
+        def search_params_max
+          {
+            :sort_column => "membership.think_max",
+            :sort_order  => "desc",
+          }
+        end
       end
 
       delegate *[

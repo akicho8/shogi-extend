@@ -6,9 +6,9 @@ module Swars
       class << self
         def search_params
           {
-            "結末"  => "切断",
-            "勝敗"  => "負け",
-            "手数"  => ["<", Config.establish_gteq].join,
+            "結末" => "切断",
+            "勝敗" => "負け",
+            "手数" => ["<", Config.establish_gteq].join,
           }
         end
       end
