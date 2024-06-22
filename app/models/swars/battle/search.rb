@@ -107,7 +107,7 @@ module Swars
             end
           end
 
-          if t = q.lookup_one("date") || q.lookup_one("日付")
+          if t = q.lookup_one("date") || q.lookup_one("日付") || q.lookup_one("日時")
             if t = DateRange.parse(t)
               s = s.where(id: @my.pluck(:battle_id))
               s = s.where(battled_at: t)
@@ -182,7 +182,7 @@ module Swars
             @selected = true
           end
 
-          if e = q.lookup_op("vs-grade-diff") || q.lookup_op("力差") || q.lookup_op("棋力差")
+          if e = q.lookup_op("vs-grade-diff") || q.lookup_op("力差") || q.lookup_op("棋力差") || q.lookup_op("段級差")
             m = @my.where(Membership.arel_table[:grade_diff].public_send(e[:operator], e[:value]))
             s = s.where(id: m.pluck(:battle_id))
             @selected = true

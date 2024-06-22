@@ -254,7 +254,7 @@ module Swars
           case
           when m.judge_info.key == :win
             case
-            when d >= 10
+            when d >= Config.gdiff_penalty_threshold
               v = { message: "恐怖の級位者として無双した", emoji: "😎" }
             when d >= 2
               v = { message: "#{s2}格上の人を倒した", icon: "numeric-#{d.clamp(0, 9)}-circle", :class => "has-text-gold" }

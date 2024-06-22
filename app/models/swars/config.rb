@@ -7,5 +7,7 @@ module Swars
     mattr_accessor(:mukiryoku_lteq) { 44 } # N手以下で無気力な対局と見なす
     # 対局数
     mattr_accessor(:master_count_gteq) { 5 } # N局以上あったときに率で判定する(技Aが1勝0敗のとき技Aを究めたは不自然なため)
+    # 棋力差
+    mattr_accessor(:gdiff_penalty_threshold) { 10 } # 恐怖の級位者と見なす段級差
   end
 end

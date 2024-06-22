@@ -45,7 +45,7 @@
               //-     span.mx-1 {{win}}
 
             b-table-column(v-slot="{row}")
-              a.no-decoration.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="$sound.play_click()")
+              a.is_decoration_off.has-text-grey(:href="image_search_url(row.user.name)" target="_blank" @click="$sound.play_click()")
                 b-icon(icon="account-question" size="is-small")
   DebugPre(v-if="development_p") {{config}}
 </template>

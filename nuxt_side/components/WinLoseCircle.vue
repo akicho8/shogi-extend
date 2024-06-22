@@ -1,10 +1,17 @@
 <template lang="pug">
 .WinLoseCircle.is-unselectable(:class="[size, {'is-narrow': narrowed}]")
   .level.is-mobile.win_lose_container
+
+    // WIN
     .level-item.has-text-centered.win.win_lose_counts
-      .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('win')")
+      nuxt-link.heading_with_title(
+        :tag="to_fn ? 'a' : 'div'"
+        :to="to_fn ? jump_path('win') : {}"
+        @click.native="to_fn && $sound.play_click()"
+        )
         .heading WIN
         .title {{win}}
+
     .level-item.has-text-centered.doughnut.is-narrow
       .chart_container
         //- view-source:https://www.chartjs.org/samples/latest/charts/doughnut.html
@@ -18,8 +25,14 @@
               | {{rate_human}}
         .total.has-text-weight-bold(v-if="total_show_p && total >= 1")
           | {{total}}
+
+    // LOSE
     .level-item.has-text-centered.lose.win_lose_counts
-      .heading_with_title(:class="{'is-clickable': win_lose_clickable_p}" @click="click_handle('lose')")
+      nuxt-link.heading_with_title(
+        :tag="to_fn ? 'a' : 'div'"
+        :to="to_fn ? jump_path('lose') : {}"
+        @click.native="to_fn && $sound.play_click()"
+        )
         .heading LOSE
         .title {{lose}}
 </template>
@@ -76,7 +89,9 @@ export default {
     size:         { default: "is-default",         },  // is-default or is-small
     narrowed:     { default: false,                },  // true: 狭くする
     total_show_p: { default: true,                 },  // true: win + lose の合計を表示する
-    click_func:   { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
+    // to_fn:    { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
+    to_fn: { type: Function, default: null, },  // $emit にしていないのは is-clickable のフラグとするためでもある
+    jump_path_fn2: { type: Object, default: null,  },  // $emit にしていないのは is-clickable のフラグとするためでもある
   },
 
   created() {
@@ -101,10 +116,16 @@ export default {
 
   methods: {
     click_handle(judge_key) {
-      if (this.click_func) {
-        this.click_func(JudgeInfo.fetch(judge_key), this.info.click_func_options || {})
+      if (this.to_fn) {
+        this.to_fn(JudgeInfo.fetch(judge_key), this.info.click_func_options || {})
       }
-    }
+    },
+    jump_path(judge_key) {
+      if (this.to_fn) {
+        // return this.to_fn({...this.jump_path_fn2, "勝敗": JudgeInfo.fetch(judge_key).name})
+        return this.to_fn({"勝敗": JudgeInfo.fetch(judge_key).name})
+      }
+    },
   },
 
   computed: {
@@ -121,7 +142,7 @@ export default {
       return Math.floor(this.rate * 100)
     },
 
-    win_lose_clickable_p() { return !!this.click_func           },
+    win_lose_clickable_p() { return !!this.to_fn           },
   },
 }
 </script>
@@ -154,10 +175,10 @@ export default {
 
       .heading_with_title
         padding: 0.5rem
-        &.is-clickable
-          &:hover
-            background-color: $white-ter
-            border-radius: 3px
+      a.heading_with_title
+        &:hover
+          background-color: $white-ter
+          border-radius: 3px
 
   // 中央の勝率
   .chart_container

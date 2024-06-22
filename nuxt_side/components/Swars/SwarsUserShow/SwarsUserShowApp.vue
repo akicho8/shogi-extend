@@ -8,6 +8,7 @@
       p query.sample_max: {{$gs.pretty_inspect($route.query.sample_max)}}
 
     b-loading(:active="$fetchState.pending")
+
     //- info を更新(最大100件タップ)したときに円が更新されるようにするために key が必要
     .MainContainer(v-if="!$fetchState.pending && !$fetchState.error" :key="info.onetime_key")
       PageCloseButton(@click="back_handle" position="is_absolute")
@@ -166,7 +167,7 @@ export default {
     margin-top: 1rem
     margin-bottom: 3rem
 
-    .one_box
+    .box
       margin: 0 0.75rem
       &:not(:first-child)
         margin-top: 0.75rem
@@ -177,57 +178,57 @@ export default {
       .vs_name
         margin-left: 0.5rem
 
-      .one_box_title
+      .box_head
         display: flex
-        align-items: center
-        justify-content: flex-start
+        align-items: flex-start            // 遭遇率を右「上」に寄せるため
+        justify-content: center            // デフォルトでは中央に寄せる
+        &.double_column                    // 「段級」と「遭遇率」のような場合は左右に配置する
+          justify-content: space-between
 
-        font-weight: bold
-        font-size: $size-5
+        a
+          +is_decoration_off
 
-      .use_rate_block
-        display: flex
-        align-items: center
-        justify-content: center
-        white-space: nowrap
-        font-size: $size-7
-        .use_rate_label
-          color: $grey-light
-        .use_rate_value
-          margin: 0 0.25em
-        .use_rate_unit
-          color: $grey-light
+        a:hover
+          background-color: $white-ter
+          border-radius: 3px
 
-      &.two_column
-        .WinLoseCircle
-          margin-top: 0.25rem
+        .box_title
+          display: inline-flex
+          align-items: center
+          justify-content: flex-start
+
+          font-weight: bold
+          font-size: $size-5
+
+        .box_title_sub
+          display: inline-flex
+          align-items: center
+          justify-content: center
+          white-space: nowrap
+          font-size: $size-7
+          .use_rate_label
+            color: $grey-light
+          .use_rate_value
+            margin: 0 0.25em
+          .use_rate_unit
+            color: $grey-light
+
+      .WinLoseCircle
+        margin-top: 0.25rem
 
       +tablet
         margin-left: auto
         margin-right: auto
         max-width: 28rem
 
-      .tactic_name_with_count_blocks
-        display: flex
-        flex-direction: column
-        justify-content: center
-        align-items: center
-
-        .tag_wrapper
-          color: inherit
-
-          display: flex
-          align-items: center
-          justify-content: center
-
-          // b-taglist は本来 "棒銀 棒金" のようなタグの並びを折り返すためにある
-          // しかし "棒銀[2]" のように数字をくっつける場合にも(不適切な形でbuefyの本家が)使っている
-          // そのため幅が狭いと "棒銀[2]" の数字が改行してしまう場合がある
-          // その対策
-          flex-wrap: nowrap
-
 .STAGE-development
   .SwarsUserShowApp
+    .column
+      border: 1px dashed change_color($primary, $alpha: 0.5)
     .boxes
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .box_title
+      border: 1px dashed change_color($primary, $alpha: 0.5)
+    .box_title_sub
       border: 1px dashed change_color($primary, $alpha: 0.5)
 </style>

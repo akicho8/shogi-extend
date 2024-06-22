@@ -3,6 +3,15 @@
 module Swars
   module User::Stat
     class LethargyStat < Base
+      class << self
+        def search_params
+          {
+            "勝敗" => "負け",
+            "手数" => ["<=", Config.mukiryoku_lteq].join, # FIXME: 同じ検索条件にできていない
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat

@@ -21,10 +21,11 @@ module Swars
           body = not_zero_allow_then_zero_as_nil(e, body)
           if body.present? || Rails.env.local?
             hv = {
-              :name          => e.display_name,
-              :chart_type    => e.chart_type,
-              :chart_options => e.chart_options,
-              :body          => body,
+              :name               => e.display_name,
+              :chart_type         => e.chart_type,
+              :chart_options      => e.chart_options,
+              :with_search_params => e.with_search_params,
+              :body               => body,
             }
             if Rails.env.local?
               if e.bottom_message

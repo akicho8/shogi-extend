@@ -1,19 +1,19 @@
 <template lang="pug">
 .SwarsUserShowTabContent0Day.boxes(v-if="TheApp.tab_index === 0")
   template(v-for="(row, i) in TheApp.info.day_items")
-    nuxt-link.box.one_box.two_column(
-      :key="`day_items/${i}`"
-      :to="TheApp.date_search_path(row)"
-      @click.native="$sound.play_click()"
-      )
+    .box
       .columns.is-mobile.is-gapless.is-marginless
-        .column.is-paddingless.one_box_title
-          | {{$time.format_md_or_ymd(row.battled_on) + " "}}
-          .ml-1(:class="TheApp.battled_on_to_css_class(row)")
-            | {{$time.format_wday_name(row.battled_on)}}
+        .column.is-paddingless.box_head.double_column
+          nuxt-link.box_title(:to="TheApp.search_path({'日付': $time.format_ymd(row.battled_on)})" @click.native="$sound.play_click()")
+            | {{$time.format_md_or_ymd(row.battled_on) + " "}}
+            .ml-1(:class="TheApp.battled_on_to_css_class(row)")
+              | ({{$time.format_wday_name(row.battled_on)}})
       .columns.is-mobile.is-gapless
         .column.is-paddingless
-          WinLoseCircle(:info="row" size="is-small" :narrowed="false")
+          WinLoseCircle(
+            :info="row"
+            :to_fn="params => TheApp.search_path({'日付': $time.format_ymd(row.battled_on), ...params})"
+            size="is-small")
 </template>
 
 <script>

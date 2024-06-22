@@ -3,6 +3,16 @@
 module Swars
   module User::Stat
     class LeaveAloneStat < Base
+      class << self
+        def search_params
+          {
+            "勝敗"     => "負け",
+            "結末"     => "時間切れ",
+            "最終思考" => [">=", RuleInfo[:ten_min].toryo_houti_sec].join,
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat
@@ -37,11 +47,7 @@ module Swars
         s = ids_scope.lose_only
         s = s.joins(:battle => :final)
         s = s.where(Final.arel_table[:key].eq(:TIMEOUT))
-        s = s.where(Membership.arel_table[:think_last].gteq(threshold))
-      end
-
-      def threshold
-        RuleInfo[:ten_min].toryo_houti_sec
+        s = s.where(Membership.arel_table[:think_last].gteq(RuleInfo[:ten_min].toryo_houti_sec))
       end
     end
   end

@@ -12,11 +12,6 @@ export const mod_search = {
       return {name: "swars-search", query: {query: query}}
     },
 
-    win_lose_click_handle(judge_info, params = {}) {
-      this.$sound.play_click()
-      this.$router.push(this.search_path({...params, "勝敗": judge_info.name}))
-    },
-
     ////////////////////////////////////////////////////////////////////////////////
 
     name_click_handle() {

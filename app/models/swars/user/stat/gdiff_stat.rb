@@ -23,6 +23,14 @@ module Swars
             e.merge("段級差平均" => e["段級差平均"].try { "%.2f" % self })
           end
         end
+
+        def search_params
+          {
+            "対局モード" => "野良",
+            "勝敗"       => "勝ち",
+            "段級差"     => [">=", Config.gdiff_penalty_threshold].join,
+          }
+        end
       end
 
       delegate *[
@@ -44,9 +52,9 @@ module Swars
       def row_grade_pretend_count
         @row_grade_pretend_count ||= yield_self do
           s = ids_scope.win_only
-          s = s.where(Membership.arel_table[:grade_diff].gteq(10))
           s = s.joins(:battle => :xmode)
           s = s.where(Xmode.arel_table[:key].eq(:"野良"))
+          s = s.where(Membership.arel_table[:grade_diff].gteq(Config.gdiff_penalty_threshold))
           s.count
         end
       end

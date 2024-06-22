@@ -3,6 +3,16 @@
 module Swars
   module User::Stat
     class UnstableNetworkStat < Base
+      class << self
+        def search_params
+          {
+            "結末"  => "切断",
+            "勝敗"  => "負け",
+            "手数"  => ["<", Config.establish_gteq].join,
+          }
+        end
+      end
+
       delegate *[
         :ids_scope,
       ], to: :stat

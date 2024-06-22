@@ -2,34 +2,35 @@
 .SwarsUserShowTabContent8Etc.boxes(v-if="TheApp.tab_index === 8")
   template(v-for="(row, i) in TheApp.info.etc_items")
     template(v-if="$gs.present_p(row.body) || development_p")
-      .box.one_box.two_column
+      .box.two_column
         .columns.is-mobile.is-gapless.is-marginless
-          .column.is-paddingless.has-text-weight-bold.is-size-5.is-flex.is-justify-content-center
-            | {{row.name}}
+          .column.is-paddingless.box_head
+            nuxt-link.box_title(
+              :tag="row.with_search_params ? 'a' : 'div'"
+              :to="row.with_search_params ? TheApp.search_path(row.with_search_params) : {}"
+              @click.native="row.with_search_params && $sound.play_click()"
+              )
+              | {{row.name}}
         .columns.is-gapless.is-centered
           .column.is-paddingless.has-text-weight-bold.is-size-1.is-flex.is-justify-content-center.is-flex-direction-column.is-align-items-center
             template(v-if="row.chart_type === 'win_lose_circle'")
               WinLoseCircle(
-                :info="row.body"
-                :click_func="(judge_info) => TheApp[row.chart_options.click_method](judge_info, row.chart_options.with_search_params)"
-                size="is-small"
                 v-if="row.body"
-                )
+                :info="row.body"
+                :to_fn="params => TheApp.search_path({...row.with_search_params, ...params})"
+                size="is-small")
             template(v-if="row.chart_type === 'bar'")
               FriendlyBar(:info="row")
             template(v-if="row.chart_type === 'pie'")
               FriendlyPie(:info="row")
             template(v-if="row.chart_type === 'simple'")
-              .value_block.py-1(:class="`is_simple_type-${row.chart_options.simple_type}`")
-                //- template(v-if="row.body == null")
-                //-   .has-text-grey-lighter
-                //-     | ？
-                //- template(v-else-if="typeof row.body === 'string'")
-                //-   .has-text-grey-lighter
-                //-     | {{row.body}}
-                //- template(v-else)
+              nuxt-link.value_block.py-1(
+                :class="`is_simple_type-${row.chart_options.simple_type}`"
+                :tag="row.with_search_params ? 'a' : 'div'"
+                :to="row.with_search_params ? TheApp.search_path(row.with_search_params) : {}"
+                @click.native="row.with_search_params && $sound.play_click()"
+                )
                 template(v-if="row.chart_options.simple_type === 'second'")
-                  //- span.unit 最長
                   template(v-if="time_min(row) >= 1")
                     | {{time_min(row)}}
                     span.unit 分
@@ -41,8 +42,8 @@
                     | {{row.chart_options.unit}}
                 template(v-else)
                   | {{row.body}}
-            .bottom_message(v-if="row.bottom_message")
-              | {{row.bottom_message}}
+            //- .bottom_message(v-if="row.bottom_message")
+            //-   | {{row.bottom_message}}
 </template>
 
 <script>
@@ -79,5 +80,9 @@ export default {
     color: $grey-light
     font-size: $size-7
     margin-top: 0.25rem
-</style>
 
+.STAGE-development
+  .SwarsUserShowTabContent8Etc
+    .value_block
+      border: 1px solid hsla(200, 50%, 50%, 1.0)
+</style>
