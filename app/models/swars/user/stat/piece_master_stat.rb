@@ -25,6 +25,7 @@ module Swars
 
       delegate *[
         :piece_stat,
+        :ids_count,
       ], to: :stat
 
       def to_report_h
@@ -34,8 +35,10 @@ module Swars
       end
 
       def win_average_above?(piece_name)
-        if stat.win_ratio > 0.5
-          average_above?(piece_name)
+        if ids_count >= Config.master_count_gteq
+          if stat.win_ratio > 0.5
+            average_above?(piece_name)
+          end
         end
       end
 

@@ -57,6 +57,7 @@ import { mod_default_key          } from "./mod_default_key.js"
 import { mod_columns              } from "./mod_columns.js"
 import { mod_link_to              } from "./mod_link_to.js"
 import { mod_search               } from "./mod_search.js"
+import { mod_shortcut             } from "./shortcut/mod_shortcut.js"
 import { mod_complement_user_keys } from "./mod_complement_user_keys.js"
 import { mod_tiresome             } from "./mod_tiresome.js"
 import { mod_per                  } from "./mod_per.js"
@@ -87,6 +88,7 @@ export default {
     mod_help,
     mod_default_key,
     mod_storage,
+    mod_shortcut,
   ],
 
   data() {
@@ -97,7 +99,7 @@ export default {
 
   provide() {
     return {
-      TheApp: this,
+      SW: this,
     }
   },
 
@@ -108,7 +110,7 @@ export default {
 
   mounted() {
     if (false) {
-      this.desktop_focus_to(this.$refs.main_search_form)
+      this.focus_to_search_input()
     }
   },
 
@@ -158,6 +160,11 @@ export default {
   },
 
   methods: {
+    focus_to_search_input() {
+      this.desktop_focus_to(this.$refs.main_search_form)
+      return true
+    },
+
     reset_handle() {
       // this.query = ""
       // this.xi.records = []

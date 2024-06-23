@@ -89,8 +89,8 @@ module Swars
 
         ################################################################################
 
-        { key: "10連勝",                 icon: "🔥",   message: "10連勝した",           if_cond: proc { win_lose_streak_stat.ten_win? },},
-        { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい", if_cond: proc { win_lose_streak_stat.waves_strong? },},
+        { key: "10連勝",                 icon: "🔥",   message: "勢いに乗ってたくさん勝った",  if_cond: proc { win_lose_streak_stat.ten_win? },},
+        { key: "波が激しいマン",         icon: "🌊",   message: "勝ち負けの波が激しい",        if_cond: proc { win_lose_streak_stat.waves_strong? },},
 
         ################################################################################
 
@@ -101,8 +101,8 @@ module Swars
         { key: "レア戦法マン",           icon: "🍀",   message: "変態戦法の匠",                                       if_cond: proc { experimental_style_stat.minority_ratio.try { self > 0.5 } },},
         { key: "長考マン",               icon: "🤯",   message: "考えすぎて負けがち",                                 if_cond: proc { overthinking_loss_stat.badge? } },
         { key: "ただの千日手",           icon: "🍌",   message: "千日手の使い手",                                     if_cond: proc { draw_stat.normal_count.try { positive? } } },
-        { key: "運営支えマン",           icon: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある",                 if_cond: proc { fraud_stat.count.positive? } },
-        { key: "示範マン",               icon: "🤵",   message: "行動規範を究めた",                                   if_cond: proc { gentleman_stat.badge? } },
+        { key: "運営支えマン",           icon: "🧙‍♂️",   message: "将棋ウォーズの運営を支える力がある",                 if_cond: proc { fraud_stat.count.positive? } },
+        { key: "示範マン",               icon: "🤵",   message: "マナーが良い",                                       if_cond: proc { gentleman_stat.badge_score.try { self >= 95 } } },
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 

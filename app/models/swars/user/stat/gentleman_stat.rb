@@ -3,7 +3,7 @@
 module Swars
   module User::Stat
     class GentlemanStat < Base
-      SCORE_DEFAULT = 100.0
+      SCORE_DEFAULT   = 100.0
 
       class << self
         def report(options = {})
@@ -30,9 +30,11 @@ module Swars
         :ids_count,
       ], to: :stat
 
-      def badge?
+      def badge_score
         if final_score
-          final_score >= SCORE_DEFAULT
+          if ids_count >= Config.master_count_gteq
+            final_score
+          end
         end
       end
 

@@ -9,7 +9,7 @@ span.SwarsBattleIndexTableCellStyleBoth
 export default {
   name: "SwarsBattleIndexTableCellStyleBoth",
   props: ["memberships"],
-  inject: ["TheApp"],
+  inject: ["SW"],
 }
 </script>
 
