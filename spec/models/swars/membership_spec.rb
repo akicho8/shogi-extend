@@ -53,7 +53,7 @@ module Swars
         assert { record.memberships[0].defense_tag_list == []                             }
         assert { record.memberships[1].defense_tag_list == []                             }
         assert { record.memberships[0].note_tag_list    == ["居飛車", "対振り", "対抗形"] }
-        assert { record.memberships[1].note_tag_list    == ["振り飛車", "対抗形"]         }
+        assert { record.memberships[1].note_tag_list    == ["振り飛車", "対居飛車", "対抗形"] }
       end
 
       it "タグ検索で LOWER を使う" do

@@ -18,37 +18,35 @@ module Swars
         case1("棋風", "準王道", "準変態") # alias
       end
 
-      it "works" do
-        case1("日付", "2000-01-01...2000-01-02", "2001")
-        case1("日時", "2000-01-01...2000-01-02", "2001")
-        case1("持ち時間", "10分", "3分")
-        case1("勝敗", "勝ち", "負け")
-        case1("結末", "投了", "切断")
-        case1("結末", "通信不調", "切断")
-        case1("先後", "▲", "△")
-        case1("相手の棋力", "30級", "29級")
-        case1("力差", ">=0", ">=1")
-        case1("棋力差", ">=0", ">=1")
-        case1("段級差", ">=0", ">=1")
-        case1("垢BAN", "and", "reject")
-        case1("対局モード", "野良", "友達")
-        case1("手合割", "平手", "角落ち")
-        case1("tag", "居飛車", "振り飛車")
-        case1("any-tag", "居飛車", "振り飛車")
-        case1("exclude-tag", "振り飛車", "居飛車")
-        case1("vs-tag", "振り飛車", "居飛車")
-        case1("vs-any-tag", "振り飛車", "居飛車")
-        case1("vs-exclude-tag", "居飛車", "振り飛車")
-        case1("手数", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern)
-        case1("中盤", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern)
-        case1("開戦", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern)
-        case1("最大思考", ">=1", "==0")
-        case1("平均思考", ">=1", "==0")
-        case1("最終思考", ">=1", "==0")
-        case1("棋神波形数", ">=1", "==0", csa_seq: KifuGenerator.fraud_pattern)
-        case1("棋神を模倣した指し手の数", ">=1", "==0", csa_seq: KifuGenerator.fraud_pattern)
-        case1("相手", "white_man", "unknown_man", white_key: "white_man")
-      end
+      it { case1("日付", "2000-01-01...2000-01-02", "2001") }
+      it { case1("日時", "2000-01-01...2000-01-02", "2001") }
+      it { case1("持ち時間", "10分", "3分") }
+      it { case1("勝敗", "勝ち", "負け") }
+      it { case1("結末", "投了", "切断") }
+      it { case1("結末", "投了", "通信不調") }
+      it { case1("先後", "▲", "△") }
+      it { case1("相手の棋力", "30級", "29級") }
+      it { case1("力差", ">=0", ">=1") }
+      it { case1("棋力差", ">=0", ">=1") }
+      it { case1("段級差", ">=0", ">=1") }
+      it { case1("垢BAN", "and", "reject") }
+      it { case1("対局モード", "野良", "友達") }
+      it { case1("手合割", "平手", "角落ち") }
+      it { case1("tag", "居飛車", "振り飛車") }
+      it { case1("any-tag", "居飛車", "振り飛車") }
+      it { case1("exclude-tag", "振り飛車", "居飛車") }
+      it { case1("vs-tag", "振り飛車", "居飛車") }
+      it { case1("vs-any-tag", "振り飛車", "居飛車") }
+      it { case1("vs-exclude-tag", "居飛車", "振り飛車") }
+      it { case1("手数", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }
+      it { case1("中盤", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }
+      it { case1("開戦", ">=1", "==0", csa_seq: KifuGenerator.outbreak_pattern) }
+      it { case1("最大思考", ">=1", "==0") }
+      it { case1("平均思考", ">=1", "==0") }
+      it { case1("最終思考", ">=1", "==0") }
+      it { case1("棋神波形数", ">=1", "==0", csa_seq: KifuGenerator.fraud_pattern) }
+      it { case1("棋神を模倣した指し手の数", ">=1", "==0", csa_seq: KifuGenerator.fraud_pattern) }
+      it { case1("相手", "white_man", "unknown_man", white_key: "white_man") }
     end
 
     describe "手合割" do

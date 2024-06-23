@@ -110,7 +110,7 @@ module Kiwi
     end
 
     it "tag_list" do
-      assert { lemon1.tag_list == ["居飛車", "相居飛車"] }
+      assert { lemon1.tag_list == ["居飛車", "相居飛車", "対居飛車"] }
     end
 
     it "古い動画を削除するとレコードと共にsystem以下の出力ファイルも消える" do

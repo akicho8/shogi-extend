@@ -106,19 +106,19 @@ module Swars
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
-        { key: "友対GGマン",             icon: "❤️",    message: "いい感じの友達対局をした",                        if_cond: proc { xmode_judge_stat.friend_battle_sessatakuma? } },
-        { key: "指導受けマン",           icon: "👨‍🎓", message: "指導対局を受けた",                                   if_cond: proc { xmode_stat.versus_pro? } },
+        { key: "友対GGマン",             icon: "❤️",   message: "いい感じの友達対局をした",                           if_cond: proc { xmode_judge_stat.friend_battle_sessatakuma? } },
+        { key: "指導受けマン",           icon: "👨‍🎓",   message: "指導対局を受けた",                                   if_cond: proc { xmode_stat.versus_pro? } },
         { key: "プロ越えマン",           icon: "🦁",   message: "野生のプロ棋士",                                     if_cond: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] } },
 
         ################################################################################
 
         { key: "角不成勝ちマン",         icon: "🤡",   message: "角不成の舐めプをかました上で勝った",                 if_cond: proc { tag_stat.win_with?(:"角不成") }  },
-        { key: "角不成負けマン",         icon: "🧟",   message: "角不成をして返り討ちにあった",                       if_cond: proc { tag_stat.lose_with?(:"角不成") }  },
+        { key: "角不成負けマン",         icon: "🧟",   message: "角不成をしたら返り討ちにあった",                     if_cond: proc { tag_stat.lose_with?(:"角不成") }  },
         { key: "飛車不成勝ちマン",       icon: "🤡",   message: "飛車不成の舐めプをかました上で勝った",               if_cond: proc { tag_stat.win_with?(:"飛車不成") }  },
-        { key: "飛車不成負けマン",       icon: "🧟",   message: "飛車不成をして返り討ちにあった",                     if_cond: proc { tag_stat.lose_with?(:"飛車不成") }  },
-        { key: "VS角不成勝ちマン",       icon: "😏",   message: "角不成者を返り討ちにした",                           if_cond: proc { op_tag_stat.lose_with?(:"角不成")      } },
+        { key: "飛車不成負けマン",       icon: "🧟",   message: "飛車不成をしたら返り討ちにあった",                   if_cond: proc { tag_stat.lose_with?(:"飛車不成") }  },
+        { key: "VS角不成勝ちマン",       icon: "🥊",   message: "角不成者を返り討ちにした",                           if_cond: proc { op_tag_stat.lose_with?(:"角不成")      } },
         { key: "VS角不成負けマン",       icon: "😒",   message: "角不成で舐めプされた上に負けた",                     if_cond: proc { op_tag_stat.win_with?(:"角不成")   } },
-        { key: "VS飛車不成勝ちマン",     icon: "😏",   message: "飛車不成者を返り討ちにした",                         if_cond: proc { op_tag_stat.lose_with?(:"飛車不成")      } },
+        { key: "VS飛車不成勝ちマン",     icon: "🥊",   message: "飛車不成者を返り討ちにした",                         if_cond: proc { op_tag_stat.lose_with?(:"飛車不成")      } },
         { key: "VS飛車不成負けマン",     icon: "😒",   message: "飛車不成で舐めプされた上に負けた",                   if_cond: proc { op_tag_stat.win_with?(:"飛車不成")   } },
 
         ################################################################################ 駒の使用率
