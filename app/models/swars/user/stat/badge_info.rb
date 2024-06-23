@@ -53,6 +53,7 @@ module Swars
         { key: "右玉マン",               icon: "➡",    message: "右玉の匠",                   if_cond: proc { win_stat.include?("右玉") }, },
         { key: "屋敷マン",               icon: "🥷",   message: "屋敷流二枚銀の使い手",       if_cond: proc { win_stat.include?("屋敷流二枚銀") },},
         { key: "UFOマン",                icon: "🛸",   message: "UFO銀の使い手",              if_cond: proc { win_stat.exist?(:"UFO銀") },},
+        { key: "魔界マン",               icon: "🧛‍♀️",   message: "魔界四間飛車の使い手",       if_cond: proc { win_stat.exist?(:"魔界四間飛車") },},
         { key: "カニ囲いマン",           icon: "🦀",   message: "カニ囲いの使い手",           if_cond: proc { win_stat.exist?(:"カニ囲い") },},
         { key: "たこ金マン",             icon: "🪁",   message: "きｍきｍ金の使い手",         if_cond: proc { win_stat.exist?(:"きｍきｍ金") },},
         { key: "カメレオンマン",         icon: "🦎",   message: "カメレオン戦法の使い手",     if_cond: proc { win_stat.exist?(:"カメレオン戦法") },},

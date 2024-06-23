@@ -30,6 +30,7 @@ BadgeStatOrConditionOnlyTagBadgeTestCaseList = [
   { expected_badge_key: "右玉マン",         tactic_key: "羽生流右玉",         },
   { expected_badge_key: "アヒルマン",       tactic_key: "アヒル囲い",         },
   { expected_badge_key: "UFOマン",          tactic_key: "UFO銀",              },
+  { expected_badge_key: "魔界マン",         tactic_key: "魔界四間飛車",       },
   { expected_badge_key: "レア戦法マン",     tactic_key: "裏アヒル囲い",       },
   { expected_badge_key: "カニ囲いマン",     tactic_key: "カニ囲い",           },
   { expected_badge_key: "カメレオンマン",   tactic_key: "カメレオン戦法",     },
