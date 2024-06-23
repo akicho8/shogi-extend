@@ -71,6 +71,7 @@ module Swars
         { key: "対振り",      body: proc { tag_stat.to_win_lose_chart(:"対振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対振り",   }, }, },
         { key: "対抗形",      body: proc { tag_stat.to_win_lose_chart(:"対抗形")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対抗形",   }, }, },
         { key: "相振り",      body: proc { tag_stat.to_win_lose_chart(:"相振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相振り",   }, }, },
+        { key: "相居玉",      body: proc { tag_stat.to_win_lose_chart(:"相居玉")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相居玉",   }, }, },
 
         ################################################################################
 
@@ -94,8 +95,6 @@ module Swars
         { key: "[win-lose] vs 飛車不成", display_name: "vs 飛車不成", local_only: false, body: proc { op_tag_stat.to_win_lose_chart(:"飛車不成", swap: true)     }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { "vs-tag": "飛車不成", }, }, },
 
         ################################################################################
-
-        { key: "[win-lose] 相居玉",      display_name: "相居玉",      local_only: false, body: proc { tag_stat.to_win_lose_chart(:"相居玉")                    }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相居玉",     }, }, },
 
         ################################################################################
 
