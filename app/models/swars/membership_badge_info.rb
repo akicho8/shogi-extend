@@ -38,7 +38,7 @@ module Swars
         badge_params: "🧙‍♂️",
         if_cond: -> m { m.fraud? },
       }, {
-        key: "1手詰じらしマン",
+        key: "1手詰焦らしマン",
         message: -> m { "1手詰を#{m.think_last_s}焦らして歪んだ優越感に浸った" },
         badge_params: "😈",
         if_cond: -> m {

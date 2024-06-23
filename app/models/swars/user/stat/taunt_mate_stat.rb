@@ -2,20 +2,28 @@
 
 module Swars
   module User::Stat
-    class TauntStat < Base
+    class TauntMateStat < Base
       class << self
-        def search_params(final_key)
+        def final_key
+          :CHECKMATE
+        end
+
+        def final_info
+          FinalInfo.fetch(final_key)
+        end
+
+        def search_params
           {
             "勝敗"     => "勝ち",
             "最終思考" => [">=", threshold].join,
-            "結末"     => final_key,
+            "結末"     => final_info.name,
           }
         end
 
-        def search_params_max(final_key)
+        def search_params_max
           {
-            **search_params(final_key),
-            :sort_column => "membership.think_last", # FIXME: いいのか？
+            **search_params,
+            :sort_column => "membership.think_last",
             :sort_order  => "desc",
           }
         end
@@ -28,11 +36,6 @@ module Swars
       delegate *[
         :ids_scope,
       ], to: :stat
-
-      def initialize(stat, final_key)
-        super(stat)
-        @final_key = final_key
-      end
 
       # 1手詰を焦らして悦に入った回数
       def count
@@ -74,7 +77,7 @@ module Swars
         s = ids_scope.win_only
         s = s.where(Membership.arel_table[:think_last].gteq(threshold))
         s = s.joins(:battle => :final)
-        s = s.where(Final.arel_table[:key].eq(@final_key))
+        s = s.where(Final.arel_table[:key].eq(self.class.final_key))
       end
     end
   end

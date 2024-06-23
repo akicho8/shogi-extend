@@ -167,11 +167,11 @@ module Swars
       end
 
       def taunt_mate_stat
-        @taunt_mate_stat ||= TauntStat.new(self, :CHECKMATE)
+        @taunt_mate_stat ||= TauntMateStat.new(self)
       end
 
       def taunt_timeout_stat
-        @taunt_timeout_stat ||= TauntStat.new(self, :TIMEOUT)
+        @taunt_timeout_stat ||= TauntTimeoutStat.new(self)
       end
 
       def think_stat

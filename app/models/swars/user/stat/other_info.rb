@@ -43,8 +43,8 @@ module Swars
 
         { key: "放置で離席させ逆時間切れ勝ち狙い", local_only: false, body: proc { waiting_to_leave_stat.count                   }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: WaitingToLeaveStat.search_params, }, },
         { key: "対局放棄と受け取られかねない長考", local_only: false, body: proc { prolonged_deliberation_stat.count             }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: ProlongedDeliberationStat.search_params, }, },
-        { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntStat.search_params("詰み"), }, },
-        { key: "必勝形から焦らして悦に入った",     local_only: false, body: proc { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntStat.search_params("時間切れ"), }, },
+        { key: "1手詰を焦らして悦に入った",        local_only: false, body: proc { taunt_mate_stat.count                         }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntMateStat.search_params, }, },
+        { key: "必勝形から焦らして悦に入った",     local_only: false, body: proc { taunt_timeout_stat.count                      }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: TauntTimeoutStat.search_params, }, },
         { key: "無気力な対局",                     local_only: false, body: proc { lethargy_stat.count                           }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: LethargyStat.search_params, }, },
         { key: "わざと負けて棋力調整",             local_only: false, body: proc { skill_adjust_stat.count                       }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: SkillAdjustStat.search_params, }, },
         { key: "角不成",                           local_only: false, body: proc { tag_stat.counts_hash[:"角不成"]               }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: { tag: "角不成", } }, },
@@ -157,10 +157,10 @@ module Swars
 
         ################################################################################
 
-        { key: "1手詰を焦らして悦に入った時間 (最長)", body: proc { taunt_mate_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, with_search: { params: TauntStat.search_params_max("詰み") } },
+        { key: "1手詰を焦らして悦に入った時間 (最長)", body: proc { taunt_mate_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, with_search: { params: TauntMateStat.search_params_max } },
         { key: "1手詰を焦らして悦に入った頻度",        body: proc { taunt_mate_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
 
-        { key: "必勝形から焦らして悦に入った時間 (最長)", body: proc { taunt_timeout_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, with_search: { params: TauntStat.search_params_max("時間切れ") } },
+        { key: "必勝形から焦らして悦に入った時間 (最長)", body: proc { taunt_timeout_stat.max      }, chart_type: :simple, chart_options: { simple_type: :second,      }, with_search: { params: TauntTimeoutStat.search_params_max } },
         { key: "必勝形から焦らして悦に入った頻度",        body: proc { taunt_timeout_stat.to_chart }, chart_type: :pie,    chart_options: { pie_type: :is_many_values, }, },
 
         ################################################################################

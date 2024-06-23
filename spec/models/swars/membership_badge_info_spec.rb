@@ -82,7 +82,7 @@ module Swars
       end
     end
 
-    describe "1手詰じらしマン" do
+    describe "1手詰焦らしマン" do
       def case1
         @black = User.create!
         @white = User.create!
@@ -90,7 +90,7 @@ module Swars
           e.memberships.build(user: @black, judge_key: :win)
           e.memberships.build(user: @white, judge_key: :lose)
         end
-        @black.memberships.first.badge_key_with_messsage == [:"1手詰じらしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
+        @black.memberships.first.badge_key_with_messsage == [:"1手詰焦らしマン", "1手詰を9分58秒焦らして歪んだ優越感に浸った"]
       end
 
       it "works" do
@@ -302,7 +302,7 @@ end
 # >>     works
 # >>   相手退席待ちマン
 # >>     works
-# >>   1手詰じらしマン
+# >>   1手詰焦らしマン
 # >>     works
 # >>   長考
 # >>     works
