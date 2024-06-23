@@ -11,7 +11,7 @@ module Swars
     end
 
     def as_json(*)
-      Rails.cache.fetch("distribution_ratio", expires_in: Rails.env.production? ? 1.days : 0) do
+      Rails.cache.fetch("distribution_ratio", expires_in: Rails.env.local? ? 0.days : 1.days) do
         to_h
       end
     end
@@ -125,7 +125,7 @@ module Swars
     end
 
     def ignore_keys
-      ["居玉", "力戦", "相振り飛車"]
+      ["居玉", "力戦"]
     end
 
     # レア度の分布情報を返す

@@ -284,12 +284,15 @@ module Swars
         infos = []
         infos += player.skill_set.attack_infos
         infos += player.skill_set.defense_infos
+
         rarity_infos = infos.collect { |e|
           if e = Bioshogi::Explain::DistributionRatio[e.key]
             RarityInfo.fetch(e[:rarity_key])
           end
         }.compact
-        if rarity_info = rarity_infos.compact.min_by(&:code)
+
+        # 複数ある場合は rarity_info.code の小さいものにする。つまり変態の方に寄せる。
+        if rarity_info = rarity_infos.min_by(&:code)
           self.style = rarity_info.style_info.db_record!
         else
           self.style = nil
@@ -298,5 +301,3 @@ module Swars
     end
   end
 end
-# ~> -:40:in `<module:Swars>': uninitialized constant Swars::ApplicationRecord (NameError)
-# ~>    from -:39:in `<main>'

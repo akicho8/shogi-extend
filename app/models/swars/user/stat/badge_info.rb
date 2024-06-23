@@ -97,7 +97,7 @@ module Swars
         { key: "心強すぎマン",           icon: "🫀",   message: "折れない心の持ち主",                                 if_cond: proc { mental_stat.hard_brain? },},
         { key: "廃指しマン",             icon: "😡",   message: "局後の検討をすることもなく感情的になって廃指しした", if_cond: proc { daily_average_matches_stat.max.try { self >= 30 } },},
 
-        { key: "レア戦法マン",           icon: "🍀",   message: "変態戦法の匠",                                       if_cond: proc { rarity_stat.minority?                    },},
+        { key: "レア戦法マン",           icon: "🍀",   message: "変態戦法の匠",                                       if_cond: proc { experimental_style_stat.minority_ratio.try { self > 0.5 } },},
         { key: "長考マン",               icon: "🤯",   message: "考えすぎて負けがち",                                 if_cond: proc { overthinking_loss_stat.badge? } },
         { key: "ただの千日手",           icon: "🍌",   message: "千日手の使い手",                                     if_cond: proc { draw_stat.normal_count.try { positive? } } },
         { key: "運営支えマン",           icon: "🧙‍♂️", message: "将棋ウォーズの運営を支える力がある",                 if_cond: proc { fraud_stat.count.positive? } },
@@ -105,7 +105,7 @@ module Swars
 
         ################################################################################ 対局モード x 対局ルール x 勝敗
 
-        { key: "友対GGマン",             icon: "❤️",    message: "友達対局で切磋琢磨した",                             if_cond: proc { xmode_judge_stat.friend_battle_sessatakuma? } },
+        { key: "友対GGマン",             icon: "❤️",    message: "いい感じの友達対局をした",                        if_cond: proc { xmode_judge_stat.friend_battle_sessatakuma? } },
         { key: "指導受けマン",           icon: "👨‍🎓", message: "指導対局を受けた",                                   if_cond: proc { xmode_stat.versus_pro? } },
         { key: "プロ越えマン",           icon: "🦁",   message: "野生のプロ棋士",                                     if_cond: proc { !user.grade_info.teacher && pro_skill_exceed_stat.counts_hash[:win] } },
 

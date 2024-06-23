@@ -41,7 +41,7 @@ module Swars
           "居玉勝率"             => stat.win_stat.to_h[:"居玉"],
           "アヒル囲い率"         => stat.win_stat.to_h[:"アヒル囲い"],
           "嬉野流率"             => stat.win_stat.to_h[:"嬉野流"],
-          "棋風"                 => stat.rarity_stat.ratios_hash,
+          "棋風"                 => stat.experimental_style_stat.ratios_hash,
           "1手詰を焦らした回数"  => stat.taunt_mate_stat.count,
           "必勝形で焦らした回数" => stat.taunt_timeout_stat.count,
           "絶対投了しない回数"   => stat.leave_alone_stat.count,

@@ -130,6 +130,14 @@ module Swars
         @rarity_stat ||= RarityStat.new(self)
       end
 
+      def style_stat
+        @style_stat ||= StyleStat.new(self)
+      end
+
+      def experimental_style_stat
+        @experimental_style_stat ||= ExperimentalStyleStat.new(self)
+      end
+
       def right_king_stat
         @right_king_stat ||= RightKingStat.new(self)
       end
