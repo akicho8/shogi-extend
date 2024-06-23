@@ -10,7 +10,7 @@ RSpec.describe "詳細", type: :system, swars_spec: true do
   describe "HTML" do
     def case1(params = {})
       visit2 "/swars/battles/#{@key}", params
-      assert_text "YamadaTaro"
+      assert_text "YamadaTaro", wait: 5
       assert_text "最後は時間切れ"
       assert_text "入玉宣言"
     end
