@@ -26,7 +26,7 @@ if defined?(RSpec)
 
     desc "基本的に system 以外のテスト"
     RSpec::Core::RakeTask.new(:fast) do |t|
-      t.pattern = "spec/{models,controllers}/**/*_spec.rb"
+      t.pattern = "spec/{models,controllers,channels,mailers,jobs}/**/*_spec.rb"
       t.rspec_opts = "-f p"
     end
 
