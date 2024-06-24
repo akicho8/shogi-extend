@@ -10,7 +10,7 @@ module Swars
     class << self
       def lookup(v)
         if v.kind_of?(String)
-          v = StringUtil.hankaku_format(v)
+          v = StringToolkit.hankaku_format(v)
         end
         super || invert_table[v]
       end

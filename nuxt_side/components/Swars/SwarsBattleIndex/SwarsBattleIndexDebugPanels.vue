@@ -34,12 +34,13 @@
       .panel-block
         pre {{$gs.pretty_inspect(APP.ls_default)}}
 
-  .column.is-6
-    .panel
-      .panel-heading
-        | $data
-      .panel-block
-        pre {{APP.$data}}
+  //- .column.is-6
+  //-   .panel
+  //-     .panel-heading
+  //-       | $data
+  //-     .panel-block
+  //-       pre {{APP.$data}}
+
   .column.is-6
     .panel
       .panel-heading
