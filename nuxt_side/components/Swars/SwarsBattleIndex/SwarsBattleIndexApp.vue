@@ -48,6 +48,10 @@
 </template>
 
 <script>
+// 名前クリックでプレイヤー情報に飛ばすときに検索クエリをつけたままにするか？
+// true だとクエリが外れずに使いにくい
+const QUERY_KEEP_P = false
+
 import _ from "lodash"
 
 import { support_parent           } from "./support_parent.js"
@@ -244,8 +248,8 @@ export default {
     LayoutInfo()     { return LayoutInfo                         },
     layout_info()    { return LayoutInfo.fetch(this.layout_key) },
 
-    // 現在のクエリを継続して使うとき用
-    user_stat_query() { return Gs.presence(Gs.query_compact(this.query)) },
+    current_query()  { return Gs.presence(Gs.query_compact(this.query)) }, // 現在のクエリを継続して使うとき用
+    query_for_link() { return QUERY_KEEP_P ? this.current_query : undefined },  // 名前クリックしたときのクエリ
   },
 }
 </script>
