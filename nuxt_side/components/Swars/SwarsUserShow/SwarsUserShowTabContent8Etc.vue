@@ -33,9 +33,9 @@
                 template(v-if="row.chart_options.simple_type === 'second'")
                   template(v-if="time_min(row) >= 1")
                     | {{time_min(row)}}
-                    span.unit 分
+                    span.unit.min 分
                   | {{time_sec(row)}}
-                  span.unit 秒
+                  span.unit.second 秒
                 template(v-else-if="row.chart_options.simple_type === 'numeric_with_unit'")
                   | {{row.body}}
                   span.unit
@@ -83,11 +83,15 @@ export default {
     margin-left: 0.5rem
     color: $grey-light
     font-size: $unit_size
+    &.min
+      margin-right: 0.5rem
   .box
     position: relative
 
 .STAGE-development
   .SwarsUserShowTabContent8Etc
     .value_block
+      border: 1px solid hsla(200, 50%, 50%, 1.0)
+    .unit
       border: 1px solid hsla(200, 50%, 50%, 1.0)
 </style>
