@@ -1,125 +1,125 @@
 <template lang="pug">
 b-table.SwarsBattleIndexTable(
-  v-if="$route.query.query || $gs.present_p(base.xi.records)"
+  v-if="$route.query.query || $gs.present_p(APP.xi.records)"
 
-  :total        = "base.xi.total"
-  :current-page = "base.xi.page"
-  :per-page     = "base.xi.per"
+  :total        = "APP.xi.total"
+  :current-page = "APP.xi.page"
+  :per-page     = "APP.xi.per"
 
-  :show-header="base.column_visible_p('tablet_header')"
+  :show-header="APP.column_visible_p('tablet_header')"
   paginated
   scrollable
-  :mobile-cards="base.column_visible_p('mobile_card')"
+  :mobile-cards="APP.column_visible_p('mobile_card')"
 
   :hoverable="false"
 
   backend-pagination
   pagination-simple
-  :data="base.xi.records"
-  @page-change="(page) => base.page_change_or_sort_handle({page})"
+  :data="APP.xi.records"
+  @page-change="(page) => APP.page_change_or_sort_handle({page})"
 
   backend-sorting
-  :default-sort-direction="base.xi.sort_order_default"
-  :default-sort="[base.xi.sort_column, base.xi.sort_order]"
-  @sort="(sort_column, sort_order) => base.page_change_or_sort_handle({sort_column, sort_order})"
-  :row-class="base.row_class"
+  :default-sort-direction="APP.xi.sort_order_default"
+  :default-sort="[APP.xi.sort_column, APP.xi.sort_order]"
+  @sort="(sort_column, sort_order) => APP.page_change_or_sort_handle({sort_column, sort_order})"
+  :row-class="APP.row_class"
   )
 
-  SwarsBattleIndexTableEmpty(slot="empty" v-if="!base.$fetchState.pending && $route.query.query && base.xi.total === 0")
+  SwarsBattleIndexTableEmpty(slot="empty" v-if="!APP.$fetchState.pending && $route.query.query && APP.xi.total === 0")
 
-  b-table-column(v-slot="{row}" field="id" :label="base.ColumnInfo.fetch('id').name" :visible="base.column_visible_p('id')" sortable centered numeric)
-    nuxt-link(:to="base.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
+  b-table-column(v-slot="{row}" field="id" :label="APP.ColumnInfo.fetch('id').name" :visible="APP.column_visible_p('id')" sortable centered numeric)
+    nuxt-link(:to="APP.show_route_params(row)" @click.native="$sound.play_click()") \#{{row.id}}
 
-  b-table-column(v-slot="{row}" label="自分" :visible="base.column_visible_p('membership_left')")
-    SwarsBattleIndexMembership(:base="base" :row="row" :membership="row.memberships[0]" :with_user_key="base.column_visible_p('user_key_left')")
+  b-table-column(v-slot="{row}" label="自分" :visible="APP.column_visible_p('membership_left')")
+    SwarsBattleIndexMembership(:row="row" :membership="row.memberships[0]" :with_user_key="APP.column_visible_p('user_key_left')")
 
-  b-table-column(v-slot="{row}" label="相手" :visible="base.column_visible_p('membership_right')")
-    SwarsBattleIndexMembership(:base="base" :row="row" :membership="row.memberships[1]" :with_user_key="base.column_visible_p('user_key_right')")
+  b-table-column(v-slot="{row}" label="相手" :visible="APP.column_visible_p('membership_right')")
+    SwarsBattleIndexMembership(:row="row" :membership="row.memberships[1]" :with_user_key="APP.column_visible_p('user_key_right')")
 
-  b-table-column(v-slot="{row}" field="membership.style_id" :label="base.ColumnInfo.fetch('style_key').name" :visible="base.column_visible_p('style_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="membership.style_id" :label="APP.ColumnInfo.fetch('style_key').name" :visible="APP.column_visible_p('style_key')" sortable centered)
     SwarsBattleIndexTableCellStyleBoth(:memberships="row.memberships")
 
-  b-table-column(v-slot="{row}" field="membership.judge_id" :label="base.ColumnInfo.fetch('judge_key').name" :visible="base.column_visible_p('judge_key')" sortable centered)
-    | {{base.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
+  b-table-column(v-slot="{row}" field="membership.judge_id" :label="APP.ColumnInfo.fetch('judge_key').name" :visible="APP.column_visible_p('judge_key')" sortable centered)
+    | {{APP.JudgeInfo.fetch(row.memberships[0].judge_key).name}}
 
-  b-table-column(v-slot="{row}" field="membership.location_id" :label="base.ColumnInfo.fetch('location_key').name" :visible="base.column_visible_p('location_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="membership.location_id" :label="APP.ColumnInfo.fetch('location_key').name" :visible="APP.column_visible_p('location_key')" sortable centered)
     template(v-if="row.preset_info.handicap_shift === 0")
-      | {{base.Location.fetch(row.memberships[0].location_key).name}}
+      | {{APP.Location.fetch(row.memberships[0].location_key).name}}
     template(v-else)
-      | {{base.Location.fetch(row.memberships[0].location_key).handicap_long_name}}
+      | {{APP.Location.fetch(row.memberships[0].location_key).handicap_long_name}}
 
-  b-table-column(v-slot="{row}" field="final_id" :label="base.ColumnInfo.fetch('final_key').name" :visible="base.column_visible_p('final_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="final_id" :label="APP.ColumnInfo.fetch('final_key').name" :visible="APP.column_visible_p('final_key')" sortable centered)
     span(:class="row.final_info.class") {{row.final_info.name}}
 
-  b-table-column(v-slot="{row}" field="turn_max" :label="base.ColumnInfo.fetch('turn_max').name" :visible="base.column_visible_p('turn_max')" sortable numeric centered)
+  b-table-column(v-slot="{row}" field="turn_max" :label="APP.ColumnInfo.fetch('turn_max').name" :visible="APP.column_visible_p('turn_max')" sortable numeric centered)
     | {{row.turn_max}}
 
-  b-table-column(v-slot="{row}" field="critical_turn" :label="base.ColumnInfo.fetch('critical_turn').name" :visible="base.column_visible_p('critical_turn')" sortable numeric centered)
+  b-table-column(v-slot="{row}" field="critical_turn" :label="APP.ColumnInfo.fetch('critical_turn').name" :visible="APP.column_visible_p('critical_turn')" sortable numeric centered)
     | {{row.critical_turn}}
 
-  b-table-column(v-slot="{row}" field="outbreak_turn" :label="base.ColumnInfo.fetch('outbreak_turn').name" :visible="base.column_visible_p('outbreak_turn')" sortable numeric centered)
+  b-table-column(v-slot="{row}" field="outbreak_turn" :label="APP.ColumnInfo.fetch('outbreak_turn').name" :visible="APP.column_visible_p('outbreak_turn')" sortable numeric centered)
     | {{row.outbreak_turn}}
 
-  b-table-column(v-slot="{row}" field="membership.grade_diff" :label="base.ColumnInfo.fetch('grade_diff').name" :visible="base.column_visible_p('grade_diff')" sortable numeric centered)
+  b-table-column(v-slot="{row}" field="membership.grade_diff" :label="APP.ColumnInfo.fetch('grade_diff').name" :visible="APP.column_visible_p('grade_diff')" sortable numeric centered)
     | {{row.grade_diff}}
 
-  b-table-column(v-slot="{row}" field="rule_id" :label="base.ColumnInfo.fetch('rule_key').name" :visible="base.column_visible_p('rule_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="rule_id" :label="APP.ColumnInfo.fetch('rule_key').name" :visible="APP.column_visible_p('rule_key')" sortable centered)
     | {{row.rule_info.name}}
 
-  b-table-column(v-slot="{row}" field="xmode_id" :label="base.ColumnInfo.fetch('xmode_key').name" :visible="base.column_visible_p('xmode_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="xmode_id" :label="APP.ColumnInfo.fetch('xmode_key').name" :visible="APP.column_visible_p('xmode_key')" sortable centered)
     | {{row.xmode_info.name}}
 
-  b-table-column(v-slot="{row}" field="preset_id" :label="base.ColumnInfo.fetch('preset_key').name" :visible="base.column_visible_p('preset_key')" sortable centered)
+  b-table-column(v-slot="{row}" field="preset_id" :label="APP.ColumnInfo.fetch('preset_key').name" :visible="APP.column_visible_p('preset_key')" sortable centered)
     | {{row.preset_info.name}}
 
-  b-table-column(v-slot="{row}" field="battled_at" :label="base.ColumnInfo.fetch('battled_at').name" :visible="base.column_visible_p('battled_at')" sortable centered)
+  b-table-column(v-slot="{row}" field="battled_at" :label="APP.ColumnInfo.fetch('battled_at').name" :visible="APP.column_visible_p('battled_at')" sortable centered)
     | {{$time.format_row(row.battled_at)}}
 
-  b-table-column(v-slot="{row}" :visible="base.operation_any_column_visible_p")
+  b-table-column(v-slot="{row}" :visible="APP.operation_any_column_visible_p")
     .buttons.are-small
       PiyoShogiButton(
-        v-if="base.column_visible_p('piyo_shogi')"
+        v-if="APP.column_visible_p('piyo_shogi')"
         type="button"
-        :href="base.kifu_vo(row).piyo_url"
+        :href="APP.kifu_vo(row).piyo_url"
         @click="$sound.play_click()"
         )
 
       KentoButton(
-        v-if="base.column_visible_p('kento')"
+        v-if="APP.column_visible_p('kento')"
         tag="a"
-        :href="base.kifu_vo(row).kento_url"
+        :href="APP.kifu_vo(row).kento_url"
         @click="$sound.play_click()"
         )
 
       KifCopyButton.kif_copy(
-        v-if="base.column_visible_p('kif_copy')"
-        @click="base.kifu_copy_handle(row, {format: 'kif'})"
+        v-if="APP.column_visible_p('kif_copy')"
+        @click="APP.kifu_copy_handle(row, {format: 'kif'})"
         title="KIF をクリップボードにコピーする"
         )
 
       KifCopyButton.ki2_copy(
-        v-if="base.column_visible_p('ki2_copy')"
-        @click="base.kifu_copy_handle(row, {format: 'ki2'})"
+        v-if="APP.column_visible_p('ki2_copy')"
+        @click="APP.kifu_copy_handle(row, {format: 'ki2'})"
         name="KI2"
         title="KI2 をクリップボードにコピーする"
         )
 
       a.button.kif_save_as_utf8(
-        v-if="base.column_visible_p('kif_save_as_utf8')"
-        :href="base.kifu_save_url(row, {body_encode: 'UTF-8'})"
-        @click="base.kifu_save_handle(row)"
+        v-if="APP.column_visible_p('kif_save_as_utf8')"
+        :href="APP.kifu_save_url(row, {body_encode: 'UTF-8'})"
+        @click="APP.kifu_save_handle(row)"
         title="KIF を UTF-8 でファイルに保存する"
         ) 保存
 
       a.button.kif_save_as_shiftjis(
-        v-if="base.column_visible_p('kif_save_as_shiftjis')"
-        :href="base.kifu_save_url(row, {body_encode: 'Shift_JIS'})"
-        @click="base.kifu_save_handle(row)"
+        v-if="APP.column_visible_p('kif_save_as_shiftjis')"
+        :href="APP.kifu_save_url(row, {body_encode: 'Shift_JIS'})"
+        @click="APP.kifu_save_handle(row)"
         title="KIF を Shift_JIS でファイルに保存する"
         ) 保存
 
       ShowButton(
-        v-if="base.column_visible_p('show')"
+        v-if="APP.column_visible_p('show')"
         tag="nuxt-link"
         :to="{name: 'swars-battles-key', params: {key: row.key}, query: {viewpoint: row.memberships[0].location_key}}"
         @click.native="$sound.play_click()"

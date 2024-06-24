@@ -44,7 +44,7 @@ export const mod_search = {
     // nuxt-link(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="$sound.play_click()") {{name}}
     //
     // ↓この方法だと同じURLでもアクセスする
-    // a(@click="SW.interactive_search({query: new_query})") {{name}}
+    // a(@click="APP.interactive_search({query: new_query})") {{name}}
     interactive_search(params) { // private
       if (this.$fetchState.pending) {
         this.debug_alert("interactive_search の処理中に interactive_search が再度呼ばれている")

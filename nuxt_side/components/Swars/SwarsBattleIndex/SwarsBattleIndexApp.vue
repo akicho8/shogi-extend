@@ -5,7 +5,7 @@
   DebugBox(v-if="development_p")
     p mounted_then_query_present_p: {{mounted_then_query_present_p}}
 
-  SwarsBattleIndexSidebar(:base="base")
+  SwarsBattleIndexSidebar()
 
   MainNavbar(wrapper-class="container is-fluid")
     template(slot="brand")
@@ -39,12 +39,12 @@
             p.control
               b-button.search_click_handle(@click="search_click_handle" icon-left="magnify" size="is-medium")
 
-          SwarsBattleIndexBoard(:base="base" v-if="layout_info.key === 'is_layout_board'")
-          SwarsBattleIndexTable(:base="base" v-if="layout_info.key === 'is_layout_table'")
+          SwarsBattleIndexBoard(v-if="layout_info.key === 'is_layout_board'")
+          SwarsBattleIndexTable(v-if="layout_info.key === 'is_layout_table'")
           template(v-if="xi && xi.stat")
             pre.box.mb-0.mt-4.is-size-7.has-background-white-ter.is-shadowless
               | {{xi.stat}}
-      SwarsBattleIndexDebugPanels(:base="base" v-if="development_p")
+      SwarsBattleIndexDebugPanels(v-if="development_p")
 </template>
 
 <script>
@@ -75,6 +75,7 @@ import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "SwarsBattleIndexApp",
+  inject: ["APP"],
   mixins: [
     support_parent,
     mod_link_to,
@@ -99,7 +100,7 @@ export default {
 
   provide() {
     return {
-      SW: this,
+      APP: this,
     }
   },
 
@@ -125,13 +126,13 @@ export default {
     }
 
     // if (this.$gs.blank_p(params.per)) {
-    //   if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
+    //   if (this.per_info.key !== this.APP.ParamInfo.fetch("per_key").default_for(this.APP)) {
     //     params.per = this.per_info.per
     //   }
     // }
 
     if (this.$gs.blank_p(params.per)) {
-      // if (this.per_info.key !== this.base.ParamInfo.fetch("per_key").default_for(this.base)) {
+      // if (this.per_info.key !== this.APP.ParamInfo.fetch("per_key").default_for(this.APP)) {
       params.per = this.per_info.per
       // }
     }
@@ -232,7 +233,7 @@ export default {
   },
 
   computed: {
-    base()            { return this            },
+    APP()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },
     ZipDlInfo()       { return ZipDlInfo       },
     ParamInfo()       { return ParamInfo },

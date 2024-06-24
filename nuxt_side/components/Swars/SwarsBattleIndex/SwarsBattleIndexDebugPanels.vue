@@ -11,13 +11,13 @@
     .panel
       .panel-heading
         | Methods
-      a.panel-block(@click="base.pc_data_reset") localStorageで管理する変数の初期化
-      a.panel-block(@click="base.ls_reset") localStorageのキー削除
-      a.panel-block(@click="base.column_all_set(true)") 全列表示
-      a.panel-block(@click="base.column_all_set(false)") 全列削除
-      a.panel-block(@click="base.tiresome_alert_check") ウォーズIDを記憶するダイアログ発動チェック
-      a.panel-block(@click="base.tiresome_count_increment") 自力入力した回数++
-      a.panel-block(@click="base.tiresome_alert_handle") ウォーズIDを記憶するダイアログ発動
+      a.panel-block(@click="APP.pc_data_reset") localStorageで管理する変数の初期化
+      a.panel-block(@click="APP.ls_reset") localStorageのキー削除
+      a.panel-block(@click="APP.column_all_set(true)") 全列表示
+      a.panel-block(@click="APP.column_all_set(false)") 全列削除
+      a.panel-block(@click="APP.tiresome_alert_check") ウォーズIDを記憶するダイアログ発動チェック
+      a.panel-block(@click="APP.tiresome_count_increment") 自力入力した回数++
+      a.panel-block(@click="APP.tiresome_alert_handle") ウォーズIDを記憶するダイアログ発動
       a.panel-block(@click="app_log({level: 'debug'})") app_log({level: 'debug'})
       a.panel-block(@click="app_log('xxx')") app_log('xxx')
 
@@ -26,34 +26,34 @@
       .panel-heading
         | 保持する変数値
       .panel-block
-        pre {{$gs.pretty_inspect(base.pc_attributes)}}
+        pre {{$gs.pretty_inspect(APP.pc_attributes)}}
   .column.is-4
     .panel
       .panel-heading
         | 保持する変数の初期値
       .panel-block
-        pre {{$gs.pretty_inspect(base.ls_default)}}
+        pre {{$gs.pretty_inspect(APP.ls_default)}}
 
   .column.is-6
     .panel
       .panel-heading
         | $data
       .panel-block
-        pre {{base.$data}}
+        pre {{APP.$data}}
   .column.is-6
     .panel
       .panel-heading
         | system_test_variables
       .panel-block.system_test_variables
         pre
-          | [layout_key={{base.layout_key}}]
-          | [scene_key={{base.scene_key}}]
-          | [per={{base.xi.per}}]
-          | [records_length={{base.xi.records ? base.xi.records.length : ''}}]
-          | [tiresome_count={{base.tiresome_count}}]
-          | [tiresome_previous_user_key={{base.tiresome_previous_user_key}}]
-          | [tiresome_modal_selected={{base.tiresome_modal_selected}}]
-          | [complement_user_keys={{base.complement_user_keys.join("|")}}]
+          | [layout_key={{APP.layout_key}}]
+          | [scene_key={{APP.scene_key}}]
+          | [per={{APP.xi.per}}]
+          | [records_length={{APP.xi.records ? APP.xi.records.length : ''}}]
+          | [tiresome_count={{APP.tiresome_count}}]
+          | [tiresome_previous_user_key={{APP.tiresome_previous_user_key}}]
+          | [tiresome_modal_selected={{APP.tiresome_modal_selected}}]
+          | [complement_user_keys={{APP.complement_user_keys.join("|")}}]
 </template>
 
 <script>

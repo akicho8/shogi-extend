@@ -6,7 +6,7 @@ span.SwarsBattleIndexTableCellStyleOne
       nuxt-link(:to="{name: 'swars-search', query: {query: new_query}}" @click.native="$sound.play_click()") {{name}}
     template(v-else)
       //- 同じURLでもアクセスする。href がわからない
-      a(@click="SW.interactive_search({query: new_query})") {{name}}
+      a(@click="APP.interactive_search({query: new_query})") {{name}}
   template(v-else)
     span.has-text-grey-light
       | ？
@@ -16,16 +16,16 @@ span.SwarsBattleIndexTableCellStyleOne
 export default {
   name: "SwarsBattleIndexTableCellStyleOne",
   props: ["style_key", "search_column_name"],
-  inject: ["SW"],
+  inject: ["APP"],
   methods: {
   },
   computed: {
     name() {
-      return this.SW.StyleInfo.fetch(this.style_key).name
+      return this.APP.StyleInfo.fetch(this.style_key).name
     },
     new_query() {
       const style_pair = [this.search_column_name, this.style_key].join(":")
-      return [this.SW.xi.current_swars_user_key, style_pair].join(" ")
+      return [this.APP.xi.current_swars_user_key, style_pair].join(" ")
     },
   },
 }

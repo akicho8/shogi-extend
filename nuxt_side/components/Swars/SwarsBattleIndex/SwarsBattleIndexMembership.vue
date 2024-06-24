@@ -3,12 +3,12 @@
   .icon_with_name
     template(v-if="has_badge && membership.badge_params")
       MembershipBadge(:params="membership.badge_params" )
-    SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="base.user_stat_query")
+    SwarsBattleShowUserLink(:membership="membership" :with_user_key="with_user_key" :query="APP.user_stat_query")
     //- template(v-if="row.xmode_info.key === '友達'")
     //-   XemojiWrap.is-flex-shrink-0.ml-2(str="👬")
-  b-taglist(v-if="base.column_visible_p('attack_tag_list') || base.column_visible_p('defense_tag_list')")
+  b-taglist(v-if="APP.column_visible_p('attack_tag_list') || APP.column_visible_p('defense_tag_list')")
     template(v-for="key in ['attack_tag_list', 'defense_tag_list']")
-      template(v-if="base.column_visible_p(key)")
+      template(v-if="APP.column_visible_p(key)")
         template(v-for="name in membership[key]")
           nuxt-link(:to="{name: 'swars-search', query: {query: new_query(name)}}" @click.native="$sound.play_click()")
             b-tag(rounded) {{name}}
@@ -31,7 +31,7 @@ export default {
     },
   },
   computed: {
-    has_badge() { return this.base.column_visible_p('badge') },
+    has_badge() { return this.APP.column_visible_p('badge') },
   },
 }
 </script>

@@ -7,7 +7,7 @@ export const mod_help = {
       this.$sound.play_click()
       this.modal_card_open({
         component: SwarsBattleIndexHelpModal,
-        props: { base: this.base },
+        props: { APP: this.APP },
       })
     },
   },

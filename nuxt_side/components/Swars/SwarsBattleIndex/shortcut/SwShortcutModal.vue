@@ -48,11 +48,11 @@
 
 export default {
   name: "SwShortcutModal",
-  inject: ["SW"],
+  inject: ["APP"],
   // mixins: [support_child],
   methods: {
     close_handle() {
-      this.SW.shortcut_modal_close_handle()
+      this.APP.shortcut_modal_close_handle()
     },
   },
 }
