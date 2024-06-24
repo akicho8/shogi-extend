@@ -74,9 +74,9 @@ module Swars
         { key: "振り飛車",    body: proc { tag_stat.to_win_lose_chart(:"振り飛車")             }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "振り飛車", }, }, },
         { key: "相居飛車",    body: proc { tag_stat.to_win_lose_chart(:"相居飛車")             }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相居飛車", }, }, },
         { key: "対居飛車",    body: proc { tag_stat.to_win_lose_chart(:"対居飛車")             }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対居飛車", }, }, },
-        { key: "対振り",      body: proc { tag_stat.to_win_lose_chart(:"対振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対振り",   }, }, },
+        { key: "対振り飛車",  body: proc { tag_stat.to_win_lose_chart(:"対振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対振り",   }, }, },
         { key: "対抗形",      body: proc { tag_stat.to_win_lose_chart(:"対抗形")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "対抗形",   }, }, },
-        { key: "相振り",      body: proc { tag_stat.to_win_lose_chart(:"相振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相振り",   }, }, },
+        { key: "相振り飛車",  body: proc { tag_stat.to_win_lose_chart(:"相振り")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相振り",   }, }, },
         { key: "相居玉",      body: proc { tag_stat.to_win_lose_chart(:"相居玉")               }, chart_type: :win_lose_circle, chart_options: {}, with_search: { params: { tag: "相居玉",   }, }, },
 
         ################################################################################
