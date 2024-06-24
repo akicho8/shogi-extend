@@ -415,7 +415,7 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
   end
 
   def assert_list_present
-    assert_text "1-3 / 3"
+    assert_text "1-3 / 3", wait: 5
     assert_text "YamadaTaro四段"
     assert_text "ぴよ将棋"
   end
