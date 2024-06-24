@@ -70,7 +70,12 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
         visit2 "/swars/search", complement_user_keys: "xxx"                   # 初期値を設定しておくと
         assert_var_eq(:complement_user_keys, "xxx")                           # Rails側からのコピーをかわせる
         search_by "　DevUser1　tag:a,b　手数:>=1　"                           # 入力が汚なくても
-        assert_var_eq(:complement_user_keys, "DevUser1 tag:a,b 手数:>=1|xxx") # squishして取り込んでいる
+        # complement_user_keys_prepend_key に影響して切り替わる
+        if false
+          assert_var_eq(:complement_user_keys, "DevUser1 tag:a,b 手数:>=1|xxx") # squishして取り込んでいる
+        else
+          assert_var_eq(:complement_user_keys, "DevUser1|xxx")                  # 取り込むのはウォーズIDだけ
+        end
       end
     end
 
@@ -132,7 +137,11 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
       visit2 "/swars/search", query: "YamadaTaro 持ち時間:10分"
       global_menu_open
       find(".swars_users_key_handle").click
-      assert_current_path "/swars/users/YamadaTaro/?query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86&tab_index=0"
+      if false
+        assert_current_path "/swars/users/YamadaTaro/?query=%E6%8C%81%E3%81%A1%E6%99%82%E9%96%93%3A10%E5%88%86&tab_index=0"
+      else
+        assert_current_path "/swars/users/YamadaTaro/?tab_index=0"
+      end
     end
   end
 
@@ -407,8 +416,8 @@ RSpec.describe "将棋ウォーズ棋譜検索", type: :system, swars_spec: true
 
   def assert_list_present
     assert_text "1-3 / 3"
-    assert_text "YamadaTaro 四段"
-    assert_text("ぴよ将棋")
+    assert_text "YamadaTaro四段"
+    assert_text "ぴよ将棋"
   end
 
   def assert_query(query)
