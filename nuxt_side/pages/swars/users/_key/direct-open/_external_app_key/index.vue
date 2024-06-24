@@ -33,9 +33,9 @@ export default {
         title: "これは何？",
         message: `
           <div class="content">
-            <p>この画面のURLは、直近の対局を<b>${this.external_app_info.name}</b>で開くショートカットになっています</p>
-            <p>なので、この状態で<b>ホーム画面に追加</b>、またはブークマークしておくと直近を最短で開けるようになります</p>
-            <p>検索して一番上の対局の${this.external_app_info.name}ボタンをタップする流れを自動化するイメージです</p>
+            <p>この画面のURLは直近の対局を<b>${this.external_app_info.name}</b>で開くショートカットになっています。</p>
+            <p>したがって、この状態で<b>ホーム画面に追加</b>、またはブークマークしておくと直近を最短で開けるようになります。</p>
+            <p>検索して一番上の対局の${this.external_app_info.name}ボタンをタップする流れを自動化するイメージです。</p>
           </div>`,
         confirmText: "わかった",
         type: 'is-info',
