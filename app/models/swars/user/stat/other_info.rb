@@ -23,10 +23,13 @@ module Swars
           },
         },
 
+        { key: "time format",       local_only: true, body: proc { 100                                        }, chart_type: :simple, chart_options: { simple_type: :second,                        }, with_search: { params: nil, key: nil } },
+        { key: "count format",      local_only: true, body: proc { 100                                        }, chart_type: :simple, chart_options: { simple_type: :numeric_with_unit, unit: "回", }, with_search: { params: nil }, },
+
+        ################################################################################
+
         { key: "ids_count",         local_only: true, body: proc { ids_count                                  }, chart_type: :simple, chart_options: {}, },
         { key: "win / lose / draw", local_only: true, body: proc { [win_count, lose_count, draw_count] * ", " }, chart_type: :simple, chart_options: {}, },
-        { key: "time format",       local_only: true, body: proc { 100                                        }, chart_type: :simple, chart_options: { simple_type: :second, }, with_search: { params: nil, key: nil } },
-
 
         ################################################################################
 

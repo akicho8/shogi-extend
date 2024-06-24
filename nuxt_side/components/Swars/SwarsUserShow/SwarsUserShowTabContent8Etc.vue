@@ -24,24 +24,7 @@
             template(v-if="row.chart_type === 'pie'")
               FriendlyPie(:info="row" :callback_fn="name => pie_click_handle(row, name)")
             template(v-if="row.chart_type === 'simple'")
-              component.value_block.py-1.px-2(
-                :is="row.with_search.params ? 'nuxt-link' : 'div'"
-                :class="`is_simple_type-${row.chart_options.simple_type}`"
-                :to="row.with_search.params && TheApp.search_path(row.with_search.params)"
-                @click.native="row.with_search.params && $sound.play_click()"
-                )
-                template(v-if="row.chart_options.simple_type === 'second'")
-                  template(v-if="time_min(row) >= 1")
-                    | {{time_min(row)}}
-                    span.unit.min 分
-                  | {{time_sec(row)}}
-                  span.unit.second 秒
-                template(v-else-if="row.chart_options.simple_type === 'numeric_with_unit'")
-                  | {{row.body}}
-                  span.unit
-                    | {{row.chart_options.unit}}
-                template(v-else)
-                  | {{row.body}}
+              SwarsUserShowTextContent(:info="row")
 </template>
 
 <script>
@@ -51,9 +34,6 @@ export default {
   name: "SwarsUserShowTabContent8Etc",
   mixins: [support_child],
   methods: {
-    time_min(row) { return Math.floor(row.body / 60) },
-    time_sec(row) { return row.body % 60             },
-
     pie_click_handle(row, name) {
       if (row.with_search.key) {
         this.$sound.play_click()
@@ -68,30 +48,5 @@ export default {
 
 <style lang="sass">
 .SwarsUserShowTabContent8Etc
-  // 単位のサイズ
-  // 単位があると左にずれて見えるため少し右にずらすと視覚的に中央にあるように見える
-  $unit_size: $size-4
-
-  .value_block
-    color: change_color($info, $alpha: 0.8)
-  .is_simple_type-second, .is_simple_type-numeric_with_unit
-    position: relative
-    right: calc(-1 * #{$unit_size} * 0.25) // 単位は1文字と仮定して少し右にずらす
-  .is_simple_type-raw
-    __css_keep__: 0
-  .unit
-    margin-left: 0.5rem
-    color: $grey-light
-    font-size: $unit_size
-    &.min
-      margin-right: 0.5rem
-  .box
-    position: relative
-
-.STAGE-development
-  .SwarsUserShowTabContent8Etc
-    .value_block
-      border: 1px solid hsla(200, 50%, 50%, 1.0)
-    .unit
-      border: 1px solid hsla(200, 50%, 50%, 1.0)
+  __css_keep__: 0
 </style>
