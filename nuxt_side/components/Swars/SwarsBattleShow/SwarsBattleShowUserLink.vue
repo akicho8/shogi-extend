@@ -16,14 +16,14 @@ import { JudgeInfo } from "../../models/judge_info.js"
 
 export default {
   props: {
-    membership:    { required: true },
-    with_user_key: { default: true  },
-    with_location:     { default: false },
-    with_judge:    { default: false },
+    membership:    { required: true     },
+    with_user_key: { default: true      },
+    with_location: { default: false     },
+    with_judge:    { default: false     },
     query:         { default: undefined }, // null にしてはいけない。null なら URL が "query=" になってしまう 
   },
   computed: {
-    JudgeInfo()  { return JudgeInfo },
+    JudgeInfo()  { return JudgeInfo                                       },
     judge_info() { return this.JudgeInfo.fetch(this.membership.judge_key) },
 
     css_class() {
@@ -31,7 +31,6 @@ export default {
         return `is-${this.membership.judge_key}`
       }
     },
-
   },
 }
 </script>

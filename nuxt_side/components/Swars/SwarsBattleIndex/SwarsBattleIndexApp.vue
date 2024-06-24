@@ -244,6 +244,7 @@ export default {
     LayoutInfo()     { return LayoutInfo                         },
     layout_info()    { return LayoutInfo.fetch(this.layout_key) },
 
+    // 現在のクエリを継続して使うとき用
     user_stat_query() { return Gs.presence(Gs.query_compact(this.query)) },
   },
 }
