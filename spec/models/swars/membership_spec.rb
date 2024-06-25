@@ -52,7 +52,7 @@ module Swars
         assert { record.memberships[1].attack_tag_list  == ["2手目△３ニ飛戦法"]          }
         assert { record.memberships[0].defense_tag_list == []                             }
         assert { record.memberships[1].defense_tag_list == []                             }
-        assert { record.memberships[0].note_tag_list    == ["居飛車", "対振り", "対抗形"] }
+        assert { record.memberships[0].note_tag_list    == ["居飛車", "対振り飛車", "対抗形"] }
         assert { record.memberships[1].note_tag_list    == ["振り飛車", "対居飛車", "対抗形"] }
       end
 

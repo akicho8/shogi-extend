@@ -65,7 +65,7 @@ module Swars
         assert do
           @user.stat.matrix_stat.my_note_items == [
             {:tag=>:居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:対振り, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
+            {:tag=>:対振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
             {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},

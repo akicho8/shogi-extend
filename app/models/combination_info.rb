@@ -3,6 +3,6 @@ class CombinationInfo
   memory_record [
     { key: "相居飛車", },
     { key: "対抗形",   },
-    { key: "相振り",   },
+    { key: "相振り飛車",   },
   ]
 end

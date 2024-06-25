@@ -9,7 +9,7 @@ module Swars
 
       { key: "ai_ibisha", name: "相居飛車",    },
       { key: "taikoukei", name: "対抗形",      },
-      { key: "aifuri",    name: "相振り",      },
+      { key: "aifuri",    name: "相振り飛車",      },
     ]
 
     def canvas_id
