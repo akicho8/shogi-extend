@@ -4,13 +4,16 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
   static get define() {
     return [
       {
+        _if: (c, e) => e.key === "c",
+        call: c => c.kifu_copy_first(),
+      }, {
+        _if: (c, e) => c.keyboard_single_key_equal(e, "/"),
+        call: c => c.focus_to_search_input(),
+      }, {
         _if: (c, e) => e.key === "?",
         call: c => c.shortcut_modal_shortcut_handle(),
       },
-      {
-        _if: (c, e) => c.keyboard_single_key_equal(e, "/"),
-        call: c => c.focus_to_search_input(),
-      },
+
       // {
       //   _if: (c, e) => c.keyboard_single_code_equal(e, "Enter"),
       //   call: c => c.chat_modal_shortcut_handle(),

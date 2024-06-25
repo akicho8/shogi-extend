@@ -8,10 +8,10 @@
         th 入力欄にフォーカスする
         td
           b-tag(type="is-primary") /
-      //- tr
-      //-   th 順番設定
-      //-   td
-      //-     b-tag(type="is-primary") o
+      tr
+        th 棋譜コピーする
+        td
+          b-tag(type="is-primary") c
       //- tr
       //-   th 対局時計
       //-   td

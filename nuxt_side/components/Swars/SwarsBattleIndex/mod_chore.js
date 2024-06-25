@@ -4,6 +4,15 @@ const QueryString = require("query-string")
 
 export const mod_chore = {
   methods: {
+    kifu_copy_first(options = {}) {
+      if (this.xi) {
+        const row = this.xi.records[0]
+        console.log(this.xi.records)
+        if (row) {
+          this.kifu_copy_handle(row, {format: "kif"})
+        }
+      }
+    },
     kifu_copy_handle(row, options = {}) {
       options = {
         format: "kif",
