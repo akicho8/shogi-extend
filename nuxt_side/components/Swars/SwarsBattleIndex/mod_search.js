@@ -75,8 +75,20 @@ export const mod_search = {
         this.$sound.play_click()
       })
     },
+
+    // page_forward(1):  前に進む
+    // page_forward(-1): 後ろに進む
+    page_forward(plus) {
+      this.page_change_or_sort_handle({page: this.next_page(plus)})
+      return true
+    },
+
+    next_page(plus) {
+      return Math.max(this.current_page + plus, 1)
+    },
   },
   computed: {
+    current_page() { return parseInt(this.$route.query.page ?? "1") },
     current_route_query() {
       return {
         query:       this.query,

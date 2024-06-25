@@ -1,15 +1,50 @@
+import { Gs } from "@/components/models/gs.js"
 import { MyLocalStorage  } from "@/components/models/my_local_storage.js"
 import _ from "lodash"
 const QueryString = require("query-string")
 
 export const mod_chore = {
   methods: {
-    kifu_copy_first(options = {}) {
+    // ################################################################################
+
+    // プレイヤー情報に移動する
+    goto_player_info(e) {
+      return this.goto_other_page(e, () => ({
+        name: "swars-users-key",
+        params: { key: this.xi.current_swars_user_key},
+      }))
+    },
+
+    // カスタム検索に移動する
+    goto_custom_search(e) {
+      return this.goto_other_page(e, () => ({
+        name: "swars-search-custom",
+        query: Gs.hash_compact({user_key: this.xi.current_swars_user_key}),
+      }))
+    },
+
+    goto_other_page(e, func) {
+      if (this.xi && Gs.present_p(this.xi.current_swars_user_key)) {
+        this.$sound.play_click()
+        const url = this.$router.resolve(func()).href
+        if (this.keyboard_meta_p(e)) {
+          this.other_window_open(url)
+        } else {
+          this.$router.push(url)
+        }
+        return true
+      }
+    },
+
+    // ################################################################################
+
+    kifu_copy_first(e, options = {}) {
       if (this.xi) {
         const row = this.xi.records[0]
-        console.log(this.xi.records)
         if (row) {
-          this.kifu_copy_handle(row, {format: "kif"})
+          // const format = this.keyboard_meta_p(e) ? "ki2" : "kif"
+          this.kifu_copy_handle(row, options)
+          return true
         }
       }
     },

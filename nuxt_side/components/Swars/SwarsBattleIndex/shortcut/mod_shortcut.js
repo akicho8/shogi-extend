@@ -16,7 +16,7 @@ export const mod_shortcut = {
       }
       const found = ShortcutInfo.values.find(o => o._if(this, e))
       if (found) {
-        if (found.call(this)) {
+        if (found.call(this, e)) {
           e.preventDefault()
         }
       }

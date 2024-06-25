@@ -36,7 +36,7 @@ export const mod_columns = {
 
     // 操作の列を表示する？
     operation_any_column_visible_p() {
-      return this.APP.ColumnInfo.operation_records.some(e => this.APP.column_visible_p(e.key))
+      return this.ColumnInfo.operation_records.some(e => this.column_visible_p(e.key))
     },
   },
 }

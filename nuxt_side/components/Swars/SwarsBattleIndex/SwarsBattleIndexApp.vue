@@ -79,7 +79,6 @@ import { Gs } from "@/components/models/gs.js"
 
 export default {
   name: "SwarsBattleIndexApp",
-  inject: ["APP"],
   mixins: [
     support_parent,
     mod_link_to,
@@ -191,6 +190,7 @@ export default {
     },
 
     scene_key_set(info, e) {
+      info = this.SceneInfo.fetch(info)
       this.$sound.play_click()
       this.talk(info.name)
       if (this.keyboard_meta_p(e)) {
@@ -200,9 +200,11 @@ export default {
         this.scene_key = info.key
       }
       this.app_log({subject: "局面", body: info.name})
+      return true
     },
 
     layout_key_set(info, e) {
+      info = this.LayoutInfo.fetch(info)
       this.$sound.play_click()
       this.talk(info.name)
       if (this.keyboard_meta_p(e)) {
@@ -211,6 +213,7 @@ export default {
         this.layout_key = info.key
       }
       this.app_log({subject: "レイアウト", body: info.name})
+      return true
     },
 
     ga_process(params) {
@@ -237,7 +240,6 @@ export default {
   },
 
   computed: {
-    APP()            { return this            },
     ExternalAppInfo() { return ExternalAppInfo },
     ZipDlInfo()       { return ZipDlInfo       },
     ParamInfo()       { return ParamInfo },

@@ -5,17 +5,49 @@
   table.modal-card-body.table.is-fullwidth.is-narrow
     tbody
       tr
-        th 入力欄にフォーカスする
+        th 棋譜コピー
+        td
+          b-tag(type="is-primary") c
+      tr
+        th 棋譜コピー (KI2)
+        td
+          b-tag(type="is-primary") x
+      tr
+        th 一覧
+        td
+          b-tag(type="is-primary") 1
+      tr
+        th 開戦
+        td
+          b-tag(type="is-primary") 2
+      tr
+        th 中盤
+        td
+          b-tag(type="is-primary") 3
+      tr
+        th 終局
+        td
+          b-tag(type="is-primary") 4
+      tr
+        th 入力欄にフォーカス
         td
           b-tag(type="is-primary") /
       tr
-        th 棋譜コピーする
+        th 次のページに移動
         td
-          b-tag(type="is-primary") c
-      //- tr
-      //-   th 対局時計
-      //-   td
-      //-     b-tag(type="is-primary") c
+          b-tag(type="is-primary") n
+      tr
+        th 前のページに移動
+        td
+          b-tag(type="is-primary") p
+      tr
+        th プレイヤー情報
+        td
+          b-tag(type="is-primary") i
+      tr
+        th カスタム検索
+        td
+          b-tag(type="is-primary") s
       //- tr
       //-   th チャットを開く
       //-   td
@@ -44,12 +76,11 @@
 </template>
 
 <script>
-// import { support_child } from "../support_child.js"
+import { support_child } from "../support_child.js"
 
 export default {
   name: "SwShortcutModal",
-  inject: ["APP"],
-  // mixins: [support_child],
+  mixins: [support_child],
   methods: {
     close_handle() {
       this.APP.shortcut_modal_close_handle()
