@@ -23,6 +23,7 @@
         .column
           b-field
             b-autocomplete#query(
+              spellcheck="false"
               max-height="50vh"
               size="is-medium"
               v-model.trim="query"

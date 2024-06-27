@@ -16,6 +16,7 @@ b-field.field_block.ScsInputTag(custom-class="is-small")
     allow-new
     icon="label"
     placeholder="Add a tag"
+    spellcheck="false"
     @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"

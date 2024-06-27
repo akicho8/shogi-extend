@@ -12,6 +12,7 @@ b-field.field_block.ScsInputVsUserKeys(custom-class="is-small")
     open-on-focus
     allow-new
     placeholder=""
+    spellcheck="false"
     @typing="typing_handle"
     @add="add_handle"
     @remove="remove_handle"

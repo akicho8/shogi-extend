@@ -2,7 +2,7 @@
 .SwarsCustomSearchFormAll.form_block
   b-field.field_block.new_query_field(label="" v-if="new_query_field_show")
     b-field(grouped)
-      b-input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off")
+      b-input(v-model.trim="TheApp.new_query" readonly expanded autocomplete="off" spellcheck="false")
       p.control
         b-button.has-text-weight-bold(@click="TheApp.search_click_handle" type="is-primary" :disabled="TheApp.swars_id_required_message")
           | 検索
@@ -15,7 +15,7 @@
           | 対象のウォーズID
           span.mx-2(class="has-text-grey has-text-weight-normal is-italic is-size-7")
             | 必須
-        b-input(v-model.trim="TheApp.user_key" placeholder="BOUYATETSU5" :size="TheApp.input_element_size" :disabled="!user_key_field_show")
+        b-input(v-model.trim="TheApp.user_key" placeholder="BOUYATETSU5" :size="TheApp.input_element_size" :disabled="!user_key_field_show" spellcheck="false")
 
     .column.is-6-tablet.is-4-desktop
       ScsCheckbox(label1="持ち時間"   :records="TheApp.xi.rule_infos"  var_name="rule_keys")
