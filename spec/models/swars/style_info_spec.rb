@@ -2,8 +2,8 @@ require "rails_helper"
 
 module Swars
   RSpec.describe StyleInfo, type: :model, swars_spec: true do
-    it "rarity_info" do
-      assert { StyleInfo.first.rarity_info }
+    it "works" do
+      assert { StyleInfo.fetch("王道") }
     end
   end
 end

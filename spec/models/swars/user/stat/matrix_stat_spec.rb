@@ -75,13 +75,7 @@ module Swars
 
       it "vs_note_items" do
         assert do
-          @user.stat.matrix_stat.vs_note_items == [
-            {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-            {:tag=>:対居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}},
-          ]
+          @user.stat.matrix_stat.vs_note_items == [{:tag=>:対居飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:対抗形, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:急戦, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:短手数, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}, {:tag=>:振り飛車, :appear_ratio=>1.0, :judge_counts=>{:win=>1, :lose=>0}}]
         end
       end
     end

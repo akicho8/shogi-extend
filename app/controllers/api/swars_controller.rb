@@ -36,9 +36,9 @@
 
 module Api
   class SwarsController < ::Api::ApplicationController
-    # http://localhost:3000/api/swars/distribution_ratio
-    def distribution_ratio
-      render json: Swars::DistributionRatio.new(params.to_unsafe_h.to_options)
+    # http://localhost:3000/api/swars/tag_frequency
+    def tag_frequency
+      render json: Swars::TagFrequency.new(params.to_unsafe_h.to_options)
     end
 
     concerning :CrawlReservationMethods do

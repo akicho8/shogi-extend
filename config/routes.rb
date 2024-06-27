@@ -119,7 +119,7 @@ Rails.application.routes.draw do
     post "swars/crawler_run(.:format)",          to: "swars#crawler_run"
     get "swars/download_config_fetch(.:format)", to: "swars#download_config_fetch"
     get "swars/custom_search_setup(.:format)",   to: "swars#custom_search_setup"
-    get "swars/distribution_ratio(.:format)",    to: "swars#distribution_ratio"
+    get "swars/tag_frequency(.:format)",    to: "swars#tag_frequency"
     get "swars/user_stat(.:format)",             to: "swars#user_stat"
 
     match "general/any_source_to(.:format)", to: "generals#any_source_to", via: :all, format: nil
