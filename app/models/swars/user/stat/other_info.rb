@@ -64,8 +64,7 @@ module Swars
 
         ################################################################################
 
-        { key: "棋風(複数考慮)",   local_only: true,  display_name: "棋風", body: proc { style_stat.to_chart              }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, with_search: { key: "棋風" }, },
-        { key: "棋風(単一)",       local_only: false, display_name: "棋風", body: proc { experimental_style_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, with_search: { key: "棋風" }, },
+        { key: "棋風", body: proc { style_stat.to_chart }, chart_type: :pie, chart_options: { pie_type: :is_many_values, }, with_search: { key: "棋風" }, },
 
         ################################################################################
 

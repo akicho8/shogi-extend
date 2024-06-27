@@ -2,10 +2,10 @@ module Swars
   class StyleInfo
     include ApplicationMemoryRecord
     memory_record [
-      { key: "王道",   },
-      { key: "準王道", },
-      { key: "準変態", },
-      { key: "変態",   },
+      { key: "王道",   segment: :majority, rarity_key: :rarity_key_SSR, },
+      { key: "準王道", segment: :majority, rarity_key: :rarity_key_SR,  },
+      { key: "準変態", segment: :minority, rarity_key: :rarity_key_R,   },
+      { key: "変態",   segment: :minority, rarity_key: :rarity_key_N,   },
     ]
 
     class << self
@@ -16,12 +16,10 @@ module Swars
       private
 
       def invert_table
-        @invert_table ||= inject({}) {|a, e| a.merge(e.name => e) }
+        @invert_table ||= inject({}) do |a, e|
+          a.merge({e.rarity_key => e})
+        end
       end
-    end
-
-    def rarity_info
-      RarityInfo.fetch(key)
     end
   end
 end

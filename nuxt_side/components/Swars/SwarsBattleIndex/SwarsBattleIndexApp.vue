@@ -23,6 +23,7 @@
         .column
           b-field
             b-autocomplete#query(
+              open-on-focus
               spellcheck="false"
               max-height="50vh"
               size="is-medium"
@@ -30,7 +31,6 @@
               :data="search_input_complement_list"
               type="search"
               placeholder="ウォーズIDを入力"
-              open-on-focus
               clearable
               expanded
               @select="search_select_handle"

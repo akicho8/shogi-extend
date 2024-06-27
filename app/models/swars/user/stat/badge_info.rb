@@ -98,7 +98,7 @@ module Swars
         { key: "心強すぎマン",           icon: "🫀",   message: "折れない心の持ち主",                                 if_cond: proc { mental_stat.hard_brain? },},
         { key: "廃指しマン",             icon: "😡",   message: "局後の検討をすることもなく感情的になって廃指しした", if_cond: proc { daily_average_matches_stat.max.try { self >= 30 } },},
 
-        { key: "レア戦法マン",           icon: "🍀",   message: "変態戦法の匠",                                       if_cond: proc { experimental_style_stat.minority_ratio.try { self > 0.5 } },},
+        { key: "レア戦法マン",           icon: "🍀",   message: "変態戦法の匠",                                       if_cond: proc { style_stat.minority_ratio.try { self > 0.5 } },},
         { key: "長考マン",               icon: "🤯",   message: "考えすぎて負けがち",                                 if_cond: proc { overthinking_loss_stat.badge? } },
         { key: "ただの千日手",           icon: "🍌",   message: "千日手の使い手",                                     if_cond: proc { draw_stat.normal_count.try { positive? } } },
         { key: "運営支えマン",           icon: "🧙‍♂️",   message: "将棋ウォーズの運営を支える力がある",                 if_cond: proc { fraud_stat.count.positive? } },

@@ -13,9 +13,9 @@ module Swars
 
       it "works" do
         style_stat = case1("新米長玉")
-        assert { style_stat.counts_hash == {:rarity_key_SSR => 1,   :rarity_key_SR => 0,   :rarity_key_R => 0,   :rarity_key_N => 0}   }
-        assert { style_stat.ratios_hash == {:rarity_key_SSR => 1.0, :rarity_key_SR => 0.0, :rarity_key_R => 0.0, :rarity_key_N => 0.0} }
-        assert { style_stat.denominator == 1 }
+        assert { style_stat.counts_hash  == {:"変態" => 1} }
+        assert { style_stat.ratios_hash  == {:"王道" => 0.0, :"準王道" => 0.0, :"準変態" => 0.0, :"変態" => 1.0} }
+        assert { style_stat.denominator  == 1 }
         assert { style_stat.majority_ratio == 0.0 }
         assert { style_stat.minority_ratio == 1.0 }
       end
@@ -33,3 +33,19 @@ module Swars
     end
   end
 end
+# >> Run options: exclude {:login_spec=>true, :slow_spec=>true}
+# >> 
+# >> Swars::User::Stat::StyleStat
+# >>   棋風
+# >>     works
+# >>     to_chart
+# >> 
+# >> Top 2 slowest examples (0.77407 seconds, 27.2% of total time):
+# >>   Swars::User::Stat::StyleStat 棋風 works
+# >>     0.5544 seconds -:14
+# >>   Swars::User::Stat::StyleStat 棋風 to_chart
+# >>     0.21966 seconds -:23
+# >> 
+# >> Finished in 2.85 seconds (files took 1.83 seconds to load)
+# >> 2 examples, 0 failures
+# >> 

@@ -281,22 +281,19 @@ module Swars
 
     concerning :StyleMethos do
       def style_update(player)
-        infos = []
-        infos += player.skill_set.attack_infos
-        infos += player.skill_set.defense_infos
-
-        rarity_infos = infos.collect { |e|
-          if e = Bioshogi::Explain::DistributionRatio[e.key]
-            RarityInfo.fetch(e[:rarity_key])
-          end
-        }.compact
-
-        # 複数ある場合は rarity_info.code の小さいものにする。つまり変態の方に寄せる。
-        if rarity_info = rarity_infos.min_by(&:code)
-          self.style = rarity_info.style_info.db_record!
+        if main_style_info = player.skill_set.main_style_info
+          self.style = Style.fetch(main_style_info.key)
         else
           self.style = nil
         end
+        # if Rails.env.local?
+        #   if changes_to_save["style_id"]
+        #     from, to = changes_to_save["style_id"]
+        #     if to
+        #       p style.key
+        #     end
+        #   end
+        # end
       end
     end
   end

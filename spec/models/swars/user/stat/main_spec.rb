@@ -38,7 +38,7 @@ module Swars
         assert { @as_json["vs_defense_items"] == [] }
         assert { @as_json["my_technique_items"] == [] }
         assert { @as_json["vs_technique_items"] == [] }
-        assert { @as_json["my_note_items"] == [{"tag"=>"居飛車", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}},{"tag"=>"対振り飛車", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}},{"tag"=>"対抗形", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
+        assert { @as_json["my_note_items"] == [{"tag"=>"対振り飛車", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}, {"tag"=>"居飛車", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}, {"tag"=>"対抗形", "appear_ratio"=>1.0, "judge_counts"=>{"win"=>1, "lose"=>0}}] }
         assert { @as_json["vs_note_items"] }
       end
 
