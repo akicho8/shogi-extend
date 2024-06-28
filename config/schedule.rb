@@ -59,6 +59,9 @@ every("5 3 * * *") do
     %(MediaBuilder.old_media_file_clean(execute: true, keep: 3)),
     %(AppLog.cleanup(execute: true)),
 
+    # チェック
+    %(Swars::SystemValidator.new.call),
+
     # 通知
     %(AppLog.important(subject: "cronは正常に終了しました", body: "OK")),
   ].join(";")

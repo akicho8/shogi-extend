@@ -17,7 +17,7 @@ export class ShortcutInfo extends ApplicationMemoryRecord {
         call: (c, e) => c.page_forward(-1),
       }, {
         _if: (c, e) => c.keyboard_single_key_equal(e, "/"),
-        call: (c, e) => c.focus_to_search_input(),
+        call: (c, e) => c.search_input_focus(),
       }, {
         _if: (c, e) => e.key === "1",
         call: (c, e) => c.layout_key_set("is_layout_table", e),

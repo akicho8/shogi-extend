@@ -114,8 +114,8 @@ export default {
   },
 
   mounted() {
-    if (false) {
-      this.focus_to_search_input()
+    if (true) {
+      this.search_input_blur()
     }
   },
 
@@ -161,12 +161,22 @@ export default {
       this.xnotice_run_all(this.xi)
 
       this.tiresome_alert_check()
+
+      // this.debug_alert(this.xi.records.length)
+
+      // if (Gs.present_p(this.xi.records)) {
+      //   this.search_input_blur()
+      // }
     })
   },
 
   methods: {
-    focus_to_search_input() {
+    search_input_focus() {
       this.desktop_focus_to(this.$refs.main_search_form)
+      return true
+    },
+    search_input_blur() {
+      this.desktop_blur_to(this.$refs.main_search_form)
       return true
     },
 

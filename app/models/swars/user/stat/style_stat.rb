@@ -14,8 +14,13 @@ module Swars
 
           options[:user_keys].each do |user_key|
             if user = User[user_key]
-              tp({user.key => user.battles.count})
-              user.battles.order(battled_at: :desc).limit(options[:max]).in_batches.each_record(&:remake)
+              scope = user.battles.where(Battle.arel_table[:updated_at].lt("2024/06/28 13:00".to_time))
+              AppLog.important("#{user.key} #{scope.count}")
+              tp({user.key => scope.count})
+              scope.limit(options[:max]).in_batches.each_record do |e|
+                p e.id
+                e.remake
+              end
             end
           end
         end

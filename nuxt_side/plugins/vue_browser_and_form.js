@@ -69,6 +69,11 @@ export const vue_browser_and_form = {
         this.focus_to(elem)
       }
     },
+    desktop_blur_to(elem) {
+      if (!MyMobile.mobile_p) {
+        this.blur_to(elem)
+      }
+    },
 
     // $nextTick ではフォーカスされない場合があるため setTimeout にしている
     // それでも 2msec だと効かない場合もあるため 0.1 秒待つようにしている
@@ -76,6 +81,11 @@ export const vue_browser_and_form = {
     focus_to(elem) {
       if (elem) {
         setTimeout(() => elem.focus(), 1)
+      }
+    },
+    blur_to(elem) {
+      if (elem) {
+        setTimeout(() => elem.blur(), 1)
       }
     },
   },

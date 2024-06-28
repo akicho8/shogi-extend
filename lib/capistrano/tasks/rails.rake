@@ -1,3 +1,5 @@
+require "shellwords"
+
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml", "config/secrets.yml"
 append :linked_files, "config/master.key"
@@ -61,13 +63,25 @@ namespace :rails do
     end
   end
 
+  # cap production rails:runner NOHUP=0 CODE='AppLog.important("now: #{Time.now}")'
+  # cap production rails:runner NOHUP=1 CODE='AppLog.important("now: #{Time.now}")'
   desc "CODEの内容を実行"
   task :runner do
     on roles(:all) do
       code = ENV["CODE"]
       nohup = ENV["NOHUP"] == "1"
-      command = "bin/rails runner"
-      execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
+      command = "bin/rails runner '#{code}'"
+      if false
+        execute "cd #{current_path} && #{nohup ? 'nohup' : ''} RAILS_ENV=#{fetch(:rails_env)} #{command} '#{code}' #{nohup ? '&' : ''}"
+      else
+        within current_path do
+          if nohup
+            execute :nohup, command # FIXME: ← すぐに return するにはここで後ろに & をつける必要があるのだが、そうすると動かなくなる
+          else
+            execute :bundle, :exec, command
+          end
+        end
+      end
     end
   end
 
