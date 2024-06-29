@@ -31,6 +31,15 @@ module QuickScriptNs
       false
     end
 
+    def button_label
+      "実行"
+    end
+
+    # auto, raw_html, pre_string, escaped_string, hash_array_table
+    def body_layout
+      
+    end
+
     def meta
       {
         :title        => "(title)",

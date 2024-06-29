@@ -1,2 +1,2 @@
-require "../setup"
+require "./setup"
 QuickScriptNs::CalcScript.new.call # => 0

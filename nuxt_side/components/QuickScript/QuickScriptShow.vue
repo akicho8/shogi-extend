@@ -34,31 +34,41 @@
             pre unknown: {{form_part.type}}
 
     div(v-if="params.get_button")
-      b-button.submit_handle(@click="submit_handle" type="is-primary") 実行
+      b-button.submit_handle(@click="submit_handle" type="is-primary") {{params.button_label}}
 
     | Response:
     template(v-if="false")
-    template(v-else-if="data_layout === 'table'")
+    template(v-else-if="body_layout_guess === 'raw_html'")
+      div(v-html="params.body")
+    template(v-else-if="body_layout_guess === 'pre_string'")
+      pre {{params.body}}
+    template(v-else-if="body_layout_guess === 'escaped_string'")
+      | {{params.body}}
+    template(v-else-if="body_layout_guess === 'hash_array_table'")
       b-table(
         :data="params.body"
         )
         template(v-for="column_name in column_names")
           b-table-column(v-slot="{row}" :field="column_name" :label="column_name")
+            //- nuxt-link(to="/share-board") foo1
+            //- nuxt-link(to="http://localhost:4000/share-board") foo2
+            //- nuxt-link(to="https://example.com/") foo3
             template(v-if="false")
-            template(v-else-if="value_type(row[column_name]) === 'url'")
+            template(v-else-if="value_type(row[column_name]) === 'outside_full_url'")
               div(v-html="$gs.auto_link(row[column_name])")
+            template(v-else-if="value_type(row[column_name]) === 'inside_url'")
+              nuxt-link(:to="row[column_name]['_nuxt_link'].to") {{row[column_name]['_nuxt_link'].name}}
             template(v-else)
               | {{row[column_name]}}
     template(v-else)
-      pre
-       | {{params.body}}
+      pre {{params.body}}
 
     hr
     | {{attributes}}
     hr
     | {{attributes.lhv}}
     hr
-    | data_layout = {{data_layout}}
+    | body_layout_guess = {{body_layout_guess}}
     | {{params.body}}
 
     //- DebugBox.is-hidden-mobile(v-if="development_p")
@@ -95,7 +105,7 @@ export default {
   watch: {
     "$route.query": "$fetch",
   },
-  fetchOnServer: true,
+  fetchOnServer: false,
   fetch() {
     return this.$axios.$get(`/api/quick_scripts/${this.$route.params.id}`, {params: this.$route.query}).then(params => {
       // 受けとる
@@ -127,7 +137,7 @@ export default {
       this.$set(this.attributes, form_part.key, value)
     },
     submit_handle() {
-      const router_options = {name: "script-id", params: {id: this.params["id"]}, query: this.current_query}
+      const router_options = {name: "script-id", params: {id: this.params["id"]}, query: this.attributes}
       this.$router.push(router_options, () => {
         this.$sound.play_click()
         console.log("Navigation succeeded")
@@ -140,30 +150,37 @@ export default {
     value_type(value) {
       if (typeof(value) === "string") {
         if (value.match(/^http/)) {
-          return "url"
+          return "outside_full_url"
+        }
+      }
+      if (_.isPlainObject(value)) {
+        if (Gs.present_p(value["_nuxt_link"])) {
+          return "inside_url"
         }
       }
     },
 
+    value_wrap(value) {
+      return value
+    },
   },
   computed: {
-    current_query() { return this.attributes },
-    data_layout() {
+    body_layout_guess() {
       if (this.params) {
-        if (Array.isArray(this.params.body)) {
-          if (_.isPlainObject(this.params.body[0])) {
-            return "table"
-          } else {
-            return "string"
+        if (this.params.body_layout === "auto") {
+          if (Array.isArray(this.params.body)) {
+            if (_.isPlainObject(this.params.body[0])) {
+              return "hash_array_table"
+            }
           }
         } else {
-          return "string"
+          return this.params.body_layout
         }
       }
     },
 
     column_names() {
-      if (this.data_layout === "table") {
+      if (this.body_layout_guess === "hash_array_table") {
         const hv = {}
         this.params.body.forEach(e => {
           _.each(e, (v, k) => { hv[k] = true })
@@ -171,7 +188,6 @@ export default {
         return Object.keys(hv)
       }
     },
-
   },
 }
 </script>
